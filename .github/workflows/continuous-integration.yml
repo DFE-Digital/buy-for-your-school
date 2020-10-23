@@ -1,5 +1,3 @@
-# TODO: Enable GitHub Actions on the repository to test all pull requests
-# https://github.com/<org>/<repo>/actions
 name: CI
 
 on: pull_request
