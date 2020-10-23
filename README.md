@@ -1,15 +1,3 @@
-# Using this template
-
-1. Search for `TODO` across the repository to customise the template to the new
-  project
-1. Be aware of [dxw RFCs](https://github.com/dxw/tech-team-rfcs), especially
-  those that have not resulted in a default code change in this repository:
-  - [rfc-013-use-docker-to-deploy-and-run-applications-in-containers](https://github.com/dxw/tech-team-rfcs/blob/master/rfc-013-use-docker-to-deploy-and-run-applications-in-containers.md)
-
-TODO: Remove this section from the README once complete
-
----
-
 # Buy for your school
 
 A service to help school buying professionals create tender documents that comply with the relevant government policy. These tender documents can then be used to start a procurement process saving schools time and money.
