@@ -16,15 +16,28 @@ A service to help school buying professionals create tender documents that compl
 
 ## Getting started
 
+1. `brew install postgres`
+1. `brew services start postgres`
+1. `createuser postgres --super`
 1. copy `/.env.example` into `/.env.development.local`.
 
   Our intention is that the example should include enough to get the application started quickly. If this is not the case, please ask another developer for a copy of their `/.env.development.local` file.
-
-TODO: Add getting started steps
+1. `rbenv install 2.6.3 && rbenv local 2.6.3`
+1. `gem install bundle`
+1. `bundle`
+1. `rake db:setup && RAILS_ENV=test rake db:setup`
+1. `rails server`
+1. Visit http://localhost:3000
 
 ## Running the tests
 
-TODO: Add testing instructions
+### The whole test suite
+
+`bundle exec rake`
+
+### RSpec only
+
+`bundle exec rspec`
 
 ## Running Brakeman
 
