@@ -10,11 +10,9 @@ TODO: Remove this section from the README once complete
 
 ---
 
-# Rails Template
+# Buy for your school
 
-TODO: replace README header with project name
-
-TODO: Add a summary of who the application is for and what it will do.
+A service to help school buying professionals create tender documents that comply with the relevant government policy. These tender documents can then be used to start a procurement process saving schools time and money.
 
 ## Getting started
 
