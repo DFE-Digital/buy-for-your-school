@@ -2,5 +2,5 @@
 
 Rails.application.routes.draw do
   get "health_check" => "application#health_check"
-  root to: "visitors#index"
+  root to: "application#health_check"
 end
