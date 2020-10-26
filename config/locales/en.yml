@@ -1,1 +1,18 @@
 en:
+  planning:
+    start_page:
+      page_title: "Identify the level of support you need for what you're buying"
+      overview_title: "Overview"
+      overview_body:
+        - "Get the right level of support you need to buy goods and services for your school."
+        - "By telling us about your experience and confidence levels in buying the goods or service, we will tailor the guidance that will be shown to you on screen."
+        - "More guidance will be shown if you need more support. For experienced buyers, the guidance will be hidden, but will be accessible to you within each page if you need it."
+      before_you_start_title: "Before you start"
+      before_you_start_list_title: "Consider:"
+      before_you_start_list_items:
+        - any previous experience in buying the goods or services you need
+        - your level of understanding of the procurement process
+        - your school's procurement policy
+        - support you have access to in your school
+        - information on the current contract
+      before_you_start_body: "It will take around 3 minutes to complete the process"
