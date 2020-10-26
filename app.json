@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/DFE-Digital/buy-for-your-school",
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "env": {
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    },
+    "RAILS_ENV": {
+      "value": "production"
+    },
+    "WEB_CONCURRENCY": {
+      "value": 2
+    }
+  }
+}
