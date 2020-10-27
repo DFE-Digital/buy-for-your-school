@@ -17,6 +17,11 @@ ARG RAILS_ENV
 ENV RAILS_ENV=${RAILS_ENV:-production}
 ENV RACK_ENV=${RAILS_ENV:-production}
 
+COPY package.json $INSTALL_PATH/package.json
+COPY package-lock.json $INSTALL_PATH/package-lock.json
+
+RUN npm install
+
 COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
