@@ -2,10 +2,10 @@
   "repository": "https://github.com/DFE-Digital/buy-for-your-school",
   "buildpacks": [
     {
-      "url": "heroku/ruby"
+      "url": "heroku/nodejs"
     },
     {
-      "url": "heroku/nodejs"
+      "url": "heroku/ruby"
     }
   ],
   "addons": [
