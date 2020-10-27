@@ -1,4 +1,4 @@
-FROM ruby:2.6.3 as release
+FROM ruby:2.6.6 as release
 MAINTAINER dxw <rails@dxw.com>
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
