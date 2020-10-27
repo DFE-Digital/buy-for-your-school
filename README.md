@@ -47,8 +47,7 @@ requests should not be merged before any relevant updates are made.
 
 ## Releasing changes
 
-When making a new release, update the [changelog](CHANGELOG.md) in the release
-pull request.
+When making a new release, follow the [release process](doc/release-process.md).
 
 ## Architecture decision records
 
