@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+$govuk-font-url-function: "image-url";
+$govuk-image-url-function: "font-url";
+
+@import "govuk-frontend/govuk/all";
