@@ -13,4 +13,16 @@ feature "Anyone can start the planning journey" do
 
     click_on(I18n.t("generic.button.soft_finish"))
   end
+
+  scenario "an answer must be provided" do
+    visit root_path
+
+    click_on(I18n.t("generic.button.start"))
+
+    # Omit a choice
+
+    click_on(I18n.t("generic.button.soft_finish"))
+
+    expect(page).to have_content("can't be blank")
+  end
 end
