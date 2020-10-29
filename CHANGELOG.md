@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can see a basic form to start the planning journey sourced by a
 Contentful fixture
 - planning form is styled as a GOV.UK form
+- validate that an answer is provided to a question
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

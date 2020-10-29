@@ -2,14 +2,17 @@
 
 class AnswersController < ApplicationController
   def create
-    plan = Plan.find(plan_id)
-    question = Question.find(question_id)
+    @plan = Plan.find(plan_id)
+    @question = Question.find(question_id)
 
-    answer = Answer.new(answer_params)
-    answer.question = question
-    answer.save
-
-    redirect_to plan_path(plan)
+    @answer = Answer.new(answer_params)
+    @answer.question = @question
+    if @answer.valid?
+      @answer.save
+      redirect_to plan_path(@plan)
+    else
+      render "questions/new"
+    end
   end
 
   private
