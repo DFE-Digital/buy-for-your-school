@@ -1,0 +1,48 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "jspwts36h1os"
+            }
+        },
+        "id": "1UjQurSOi5MWkcRuGxdXZS",
+        "type": "Entry",
+        "createdAt": "2020-09-07T10:56:40.585Z",
+        "updatedAt": "2020-09-14T22:16:54.633Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 7,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/which-service",
+        "title": "Which service do you need?",
+        "helpText": "Tell us which service you need.",
+        "type": "radios",
+        "options": [
+            "Catering",
+            "Cleaning"
+        ],
+        "next": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "47EI2X2T5EDTpJX9WjRR9p"
+            }
+        }
+    }
+}

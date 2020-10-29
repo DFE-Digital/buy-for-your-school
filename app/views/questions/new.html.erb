@@ -1,0 +1,12 @@
+<%= content_for :title, @question.title %>
+
+<h1><%= @question.title %></h1>
+<p><%= @question.help_text %></p>
+
+<%= form_with(url: plan_question_answers_path(@plan, @question), method: "post") do %>
+  <% @question.options.each do |option| %>
+    <%= radio_button_tag(:response, option.downcase) %>
+    <%= label_tag("response_#{option.downcase}", option) %>
+  <% end %>
+  <%= submit_tag I18n.t("generic.button.soft_finish") %>
+<% end %>

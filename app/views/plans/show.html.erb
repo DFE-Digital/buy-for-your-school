@@ -1,0 +1,5 @@
+<%= @plan.category %>
+<% @plan.questions.each do |question| %>
+  <%= question.title %>
+  <%= question.answer.response %>
+<% end %>
