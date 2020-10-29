@@ -1,4 +1,8 @@
 en:
+  generic:
+    button:
+      start: "Continue"
+      soft_finish: "Save and continue later"
   planning:
     start_page:
       page_title: "Identify the level of support you need for what you're buying"

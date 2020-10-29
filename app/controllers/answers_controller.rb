@@ -5,7 +5,11 @@ class AnswersController < ApplicationController
     plan = Plan.find(plan_id)
     question = Question.find(question_id)
 
-    Answer.create(response: params[:response], question: question)
+    answer = Answer.new
+    answer.response = params[:response]
+    answer.question = question
+    answer.save
+
     redirect_to plan_path(plan)
   end
 
