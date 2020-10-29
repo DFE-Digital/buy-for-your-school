@@ -5,8 +5,7 @@ class AnswersController < ApplicationController
     plan = Plan.find(plan_id)
     question = Question.find(question_id)
 
-    answer = Answer.new
-    answer.response = params[:response]
+    answer = Answer.new(answer_params)
     answer.question = question
     answer.save
 
@@ -21,5 +20,9 @@ class AnswersController < ApplicationController
 
   def question_id
     params[:question_id]
+  end
+
+  def answer_params
+    params.require(:answer).permit(:response)
   end
 end
