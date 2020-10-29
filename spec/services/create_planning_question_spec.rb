@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CreateQuestion do
+RSpec.describe CreatePlanningQuestion do
   describe "#call" do
     it "creates a local copy of the new question" do
       plan = create(:plan, :catering)

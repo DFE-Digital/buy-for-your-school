@@ -1,4 +1,4 @@
-class CreateQuestion
+class CreatePlanningQuestion
   attr_accessor :plan
   def initialize(plan:)
     self.plan = plan
