@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   def new
     @plan = Plan.find(plan_id)
     @question = CreateQuestion.new(plan: @plan).call
-
+    @answer = Answer.new
     # TODO: Creating a question requires us to check externally if one exists
     # based on the previous question. Instead of looping through at the start,
     # we assume there is and try to create one. If not, we jump to the end.
