@@ -19,4 +19,12 @@ module ContentfulHelpers
     allow(contentful_response).to receive(:raw)
       .and_return(fake_contentful_question_response)
   end
+
+  def stub_contentful_client
+    contentful_client = instance_double(Contentful::Client)
+    expect(Contentful::Client).to receive(:new)
+      .with(space: anything, access_token: anything)
+      .and_return(contentful_client)
+    contentful_client
+  end
 end
