@@ -5,7 +5,9 @@ class CreatePlanningQuestion
   end
 
   def call
-    Question.create(
+    # QUESTION: Should we explode if we find an unexpected type?
+
+    question = Question.create(
       title: contentful_response.dig("fields", "title"),
       help_text: contentful_response.dig("fields", "helpText"),
       contentful_type: contentful_response.dig("fields", "type"),
@@ -13,6 +15,10 @@ class CreatePlanningQuestion
       raw: contentful_response,
       plan: plan
     )
+
+    plan.update(next_entry_id: contentful_response.dig("fields", "next", "sys", "id"))
+
+    question
   end
 
   private

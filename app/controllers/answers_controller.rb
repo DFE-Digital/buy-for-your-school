@@ -9,7 +9,11 @@ class AnswersController < ApplicationController
     @answer.question = @question
     if @answer.valid?
       @answer.save
-      redirect_to plan_path(@plan)
+      if @plan.next_entry_id.present?
+        redirect_to new_plan_question_path(@plan)
+      else
+        redirect_to plan_path(@plan)
+      end
     else
       render "questions/new"
     end
