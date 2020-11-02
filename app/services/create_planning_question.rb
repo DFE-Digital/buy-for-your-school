@@ -20,6 +20,6 @@ class CreatePlanningQuestion
   def contentful_response
     @contentful_response ||= GetContentfulEntry
       .new
-      .call(entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"])
+      .call(entry_id: plan.next_entry_id)
   end
 end

@@ -2,7 +2,7 @@
 
 class PlansController < ApplicationController
   def new
-    plan = Plan.create(category: "catering")
+    plan = Plan.create(category: "catering", next_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"])
     redirect_to new_plan_question_path(plan)
   end
 
