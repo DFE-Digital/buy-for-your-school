@@ -1,13 +1,17 @@
 require "rails_helper"
 
 RSpec.describe GetContentfulQuestion do
+  let(:contentful_url) { "preview.contentful" }
   let(:contentful_space) { "abc" }
+  let(:contentful_environment) { "test" }
   let(:contentful_access_token) { "123" }
   let(:contentful_planning_start_entry_id) { "1a2b3c4d5" }
 
   around do |example|
     ClimateControl.modify(
+      CONTENTFUL_URL: contentful_url,
       CONTENTFUL_SPACE: contentful_space,
+      CONTENTFUL_ENVIRONMENT: contentful_environment,
       CONTENTFUL_ACCESS_TOKEN: contentful_access_token,
       CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_planning_start_entry_id
     ) do
@@ -22,7 +26,10 @@ RSpec.describe GetContentfulQuestion do
 
       contentful_client = instance_double(Contentful::Client)
       expect(Contentful::Client).to receive(:new)
-        .with(space: contentful_space, access_token: contentful_access_token)
+        .with(api_url: contentful_url,
+              space: contentful_space,
+              environment: contentful_environment,
+              access_token: contentful_access_token)
         .and_return(contentful_client)
 
       contentful_response = double(Contentful::Entry, id: contentful_planning_start_entry_id)

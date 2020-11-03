@@ -3,6 +3,7 @@
 if defined?(Dotenv)
   Dotenv.require_keys(
     "CONTENTFUL_SPACE",
+    "CONTENTFUL_ENVIRONMENT",
     "CONTENTFUL_ACCESS_TOKEN",
     "CONTENTFUL_PLANNING_START_ENTRY_ID"
   )

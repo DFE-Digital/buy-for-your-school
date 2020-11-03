@@ -10,6 +10,7 @@ class GetContentfulQuestion
   def contentful_client
     @contentful_client ||= Contentful::Client.new(
       space: ENV["CONTENTFUL_SPACE"],
+      environment: ENV["CONTENTFUL_ENVIRONMENT"],
       access_token: ENV["CONTENTFUL_ACCESS_TOKEN"]
     )
   end

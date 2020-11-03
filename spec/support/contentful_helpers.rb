@@ -6,10 +6,7 @@ module ContentfulHelpers
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")
     fake_contentful_question_response = JSON.parse(raw_response)
 
-    contentful_client = instance_double(Contentful::Client)
-    allow(Contentful::Client).to receive(:new)
-      .with(space: anything, access_token: anything)
-      .and_return(contentful_client)
+    contentful_client = stub_contentful_client
 
     contentful_response = double(Contentful::Entry, id: entry_id)
     allow(contentful_client).to receive(:entry)
@@ -23,7 +20,7 @@ module ContentfulHelpers
   def stub_contentful_client
     contentful_client = instance_double(Contentful::Client)
     expect(Contentful::Client).to receive(:new)
-      .with(space: anything, access_token: anything)
+      .with(space: anything, environment: anything, access_token: anything)
       .and_return(contentful_client)
     contentful_client
   end
