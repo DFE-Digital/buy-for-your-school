@@ -37,7 +37,7 @@ feature "Anyone can start the planning journey" do
 
     allow(contentful_client).to receive(:entry)
       .with(anything)
-      .and_raise(GetContentfulQuestion::EntryNotFound.new("The following Contentful error could not be found: sss "))
+      .and_raise(GetContentfulEntry::EntryNotFound.new("The following Contentful error could not be found: sss "))
 
     visit root_path
 

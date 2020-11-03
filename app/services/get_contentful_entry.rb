@@ -1,6 +1,6 @@
 require "contentful"
 
-class GetContentfulQuestion
+class GetContentfulEntry
   class EntryNotFound < StandardError
     attr_accessor :message
     def initialize(message)

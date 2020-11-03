@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GetContentfulQuestion do
+RSpec.describe GetContentfulEntry do
   let(:contentful_url) { "preview.contentful" }
   let(:contentful_space) { "abc" }
   let(:contentful_environment) { "test" }

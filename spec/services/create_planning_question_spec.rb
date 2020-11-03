@@ -19,8 +19,8 @@ RSpec.describe CreatePlanningQuestion do
   end
 
   def stub_contentful_question(response: {"fields" => {"title" => "Which service do you need?"}})
-    get_contentful_question_double = instance_double(GetContentfulQuestion)
-    allow(GetContentfulQuestion).to receive(:new).and_return(get_contentful_question_double)
+    get_contentful_question_double = instance_double(GetContentfulEntry)
+    allow(GetContentfulEntry).to receive(:new).and_return(get_contentful_question_double)
     allow(get_contentful_question_double).to receive(:call).and_return(response)
   end
 end
