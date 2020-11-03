@@ -14,6 +14,7 @@ Contentful fixture
 - planning form is styled as a GOV.UK form
 - validate that an answer is provided to a question
 - the first planning question comes directly from Contentful
+- handle the exceptional case when a Contentful entry is missing
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

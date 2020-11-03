@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  rescue_from GetContentfulQuestion::EntryNotFound do |exception|
+    @exception = exception
+    render "errors/contentful_entry_not_found", status: 500
+  end
+
   def new
     @plan = Plan.find(plan_id)
     @question = CreatePlanningQuestion.new(plan: @plan).call

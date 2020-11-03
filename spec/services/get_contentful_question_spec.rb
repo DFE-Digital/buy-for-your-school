@@ -44,5 +44,37 @@ RSpec.describe GetContentfulQuestion do
 
       expect(result).to eq(fake_contentful_question_response)
     end
+
+    context "when the Contentful entry cannot be found" do
+      it "returns an error message" do
+        missing_entry_id = "345vsdf7"
+        contentful_client = stub_contentful_client
+
+        allow(contentful_client).to receive(:entry)
+          .with(missing_entry_id)
+          .and_return(nil)
+
+        expect { described_class.new.call(entry_id: missing_entry_id) }
+          .to raise_error(GetContentfulEntry::EntryNotFound)
+      end
+
+      it "raises a rollbar event" do
+        contentful_client = stub_contentful_client
+
+        allow(contentful_client).to receive(:entry)
+          .with(anything)
+          .and_return(nil)
+
+        expect(Rollbar).to receive(:warning)
+          .with("The following Contentful entry identifier could not be found.",
+            contentful_url: ENV["CONTENTFUL_URL"],
+            contentful_space_id: ENV["CONTENTFUL_SPACE"],
+            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+            contentful_entry_id: "123")
+          .and_call_original
+        expect { described_class.new.call(entry_id: "123") }
+          .to raise_error(GetContentfulEntry::EntryNotFound)
+      end
+    end
   end
 end
