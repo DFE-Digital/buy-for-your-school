@@ -1,5 +1,7 @@
 feature "Anyone can start the planning journey" do
   scenario "Start page includs a call to action" do
+    stub_get_contentful_entry
+
     visit root_path
 
     click_on(I18n.t("generic.button.start"))
@@ -15,6 +17,8 @@ feature "Anyone can start the planning journey" do
   end
 
   scenario "an answer must be provided" do
+    stub_get_contentful_entry
+
     visit root_path
 
     click_on(I18n.t("generic.button.start"))

@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog 1.0.0].
 Contentful fixture
 - planning form is styled as a GOV.UK form
 - validate that an answer is provided to a question
+- the first planning question comes directly from Contentful
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

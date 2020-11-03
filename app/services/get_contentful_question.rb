@@ -1,8 +1,16 @@
+require "contentful"
+
 class GetContentfulQuestion
   def call
-    # TODO: Spec fixture only used for the first slice, needs a real API call
-    JSON.parse(
-      File.read("#{Rails.root}/spec/fixtures/contentful/radio-question-example.json")
+    contentful_client.entry("1UjQurSOi5MWkcRuGxdXZS").raw
+  end
+
+  private
+
+  def contentful_client
+    @contentful_client ||= Contentful::Client.new(
+      space: ENV["CONTENTFUL_SPACE"],
+      access_token: ENV["CONTENTFUL_ACCESS_TOKEN"]
     )
   end
 end

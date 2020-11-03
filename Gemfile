@@ -6,6 +6,7 @@ ruby "2.6.6"
 
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0"
+gem "contentful", "~> 2.15"
 gem "govuk_design_system_formbuilder", "~> 2.1"
 gem "high_voltage"
 gem "jbuilder", "~> 2.5"
