@@ -36,8 +36,8 @@ class CreatePlanningQuestion
 
   def contentful_response
     @contentful_response ||= GetContentfulEntry
-      .new
-      .call(entry_id: plan.next_entry_id)
+      .new(entry_id: plan.next_entry_id)
+      .call
   end
 
   def content_type

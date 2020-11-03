@@ -2,7 +2,6 @@
 
 class QuestionsController < ApplicationController
   rescue_from GetContentfulEntry::EntryNotFound do |exception|
-    @exception = exception
     render "errors/contentful_entry_not_found", status: 500
   end
 
