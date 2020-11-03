@@ -1,8 +1,8 @@
 require "contentful"
 
 class GetContentfulQuestion
-  def call
-    contentful_client.entry("1UjQurSOi5MWkcRuGxdXZS").raw
+  def call(entry_id:)
+    contentful_client.entry(entry_id).raw
   end
 
   private
