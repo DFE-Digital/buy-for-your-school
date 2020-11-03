@@ -20,3 +20,9 @@ en:
         - support you have access to in your school
         - information on the current contract
       before_you_start_body: "It will take around 3 minutes to complete the process"
+    errors:
+      contentful_entry_not_found: "An unexpected error occurred. The starting question has been revoked by the content team."
+  errors:
+    contentful_entry_not_found:
+      page_title: "An unexpected error occurred"
+      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."

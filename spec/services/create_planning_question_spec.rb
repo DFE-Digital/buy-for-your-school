@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CreateQuestion do
+RSpec.describe CreatePlanningQuestion do
   describe "#call" do
     it "creates a local copy of the new question" do
       plan = create(:plan, :catering)
@@ -19,8 +19,8 @@ RSpec.describe CreateQuestion do
   end
 
   def stub_contentful_question(response: {"fields" => {"title" => "Which service do you need?"}})
-    get_contentful_question_double = instance_double(GetContentfulQuestion)
-    allow(GetContentfulQuestion).to receive(:new).and_return(get_contentful_question_double)
+    get_contentful_question_double = instance_double(GetContentfulEntry)
+    allow(GetContentfulEntry).to receive(:new).and_return(get_contentful_question_double)
     allow(get_contentful_question_double).to receive(:call).and_return(response)
   end
 end

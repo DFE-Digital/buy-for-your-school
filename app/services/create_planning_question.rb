@@ -1,4 +1,4 @@
-class CreateQuestion
+class CreatePlanningQuestion
   attr_accessor :plan
   def initialize(plan:)
     self.plan = plan
@@ -18,6 +18,8 @@ class CreateQuestion
   private
 
   def contentful_response
-    @contentful_response ||= GetContentfulQuestion.new.call
+    @contentful_response ||= GetContentfulEntry
+      .new
+      .call(entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"])
   end
 end

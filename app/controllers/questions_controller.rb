@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  rescue_from GetContentfulEntry::EntryNotFound do |exception|
+    @exception = exception
+    render "errors/contentful_entry_not_found", status: 500
+  end
+
   def new
     @plan = Plan.find(plan_id)
-    @question = CreateQuestion.new(plan: @plan).call
+    @question = CreatePlanningQuestion.new(plan: @plan).call
     @answer = Answer.new
     # TODO: Creating a question requires us to check externally if one exists
     # based on the previous question. Instead of looping through at the start,
