@@ -20,7 +20,7 @@ module ContentfulHelpers
   def stub_contentful_client
     contentful_client = instance_double(Contentful::Client)
     expect(Contentful::Client).to receive(:new)
-      .with(space: anything, environment: anything, access_token: anything)
+      .with(api_url: anything, space: anything, environment: anything, access_token: anything)
       .and_return(contentful_client)
     contentful_client
   end

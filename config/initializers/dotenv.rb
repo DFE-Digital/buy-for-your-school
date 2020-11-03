@@ -2,6 +2,7 @@
 # https://github.com/bkeepers/dotenv#required-keys
 if defined?(Dotenv)
   Dotenv.require_keys(
+    "CONTENTFUL_URL",
     "CONTENTFUL_SPACE",
     "CONTENTFUL_ENVIRONMENT",
     "CONTENTFUL_ACCESS_TOKEN",

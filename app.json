@@ -21,6 +21,9 @@
     "WEB_CONCURRENCY": {
       "value": 2
     },
+    "CONTENTFUL_URL": {
+      "value": "cdn.contentful.com"
+    },
     "CONTENTFUL_ENVIRONMENT": {
       "value": "master"
     }
