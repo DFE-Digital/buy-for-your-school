@@ -40,7 +40,7 @@ RSpec.describe GetContentfulEntry do
       expect(contentful_response).to receive(:raw)
         .and_return(fake_contentful_question_response)
 
-      result = described_class.new.call(entry_id: contentful_planning_start_entry_id)
+      result = described_class.new(entry_id: contentful_planning_start_entry_id).call
 
       expect(result).to eq(fake_contentful_question_response)
     end
@@ -54,7 +54,7 @@ RSpec.describe GetContentfulEntry do
           .with(missing_entry_id)
           .and_return(nil)
 
-        expect { described_class.new.call(entry_id: missing_entry_id) }
+        expect { described_class.new(entry_id: missing_entry_id).call }
           .to raise_error(GetContentfulEntry::EntryNotFound)
       end
 
@@ -72,7 +72,7 @@ RSpec.describe GetContentfulEntry do
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
             contentful_entry_id: "123")
           .and_call_original
-        expect { described_class.new.call(entry_id: "123") }
+        expect { described_class.new(entry_id: "123").call }
           .to raise_error(GetContentfulEntry::EntryNotFound)
       end
     end

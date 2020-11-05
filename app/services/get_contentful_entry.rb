@@ -1,25 +1,20 @@
 require "contentful"
 
 class GetContentfulEntry
-  class EntryNotFound < StandardError
-    attr_accessor :message
-    def initialize(message)
-      @message = message
-    end
+  class EntryNotFound < StandardError; end
+
+  attr_accessor :entry_id
+
+  def initialize(entry_id:)
+    self.entry_id = entry_id
   end
 
-  def call(entry_id:)
+  def call
     response = contentful_client.entry(entry_id)
+
     if response.nil?
-      error_message = "The following Contentful entry identifier could not be found."
-      Rollbar.warning(
-        error_message,
-        contentful_url: ENV["CONTENTFUL_URL"],
-        contentful_space_id: ENV["CONTENTFUL_SPACE"],
-        contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-        contentful_entry_id: entry_id
-      )
-      raise EntryNotFound.new(error_message)
+      send_rollbar_warning
+      raise EntryNotFound
     end
 
     response.raw
@@ -33,6 +28,16 @@ class GetContentfulEntry
       space: ENV["CONTENTFUL_SPACE"],
       environment: ENV["CONTENTFUL_ENVIRONMENT"],
       access_token: ENV["CONTENTFUL_ACCESS_TOKEN"]
+    )
+  end
+
+  def send_rollbar_warning
+    Rollbar.warning(
+      "The following Contentful entry identifier could not be found.",
+      contentful_url: ENV["CONTENTFUL_URL"],
+      contentful_space_id: ENV["CONTENTFUL_SPACE"],
+      contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+      contentful_entry_id: entry_id
     )
   end
 end

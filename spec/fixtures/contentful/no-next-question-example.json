@@ -7,10 +7,10 @@
                 "id": "jspwts36h1os"
             }
         },
-        "id": "1UjQurSOi5MWkcRuGxdXZS",
+        "id": "5lYcZs1ootDrOnk09LDLZg",
         "type": "Entry",
-        "createdAt": "2020-09-07T10:56:40.585Z",
-        "updatedAt": "2020-09-14T22:16:54.633Z",
+        "createdAt": "2020-09-14T19:23:05.211Z",
+        "updatedAt": "2020-09-14T19:23:05.211Z",
         "environment": {
             "sys": {
                 "id": "master",
@@ -18,7 +18,7 @@
                 "linkType": "Environment"
             }
         },
-        "revision": 7,
+        "revision": 1,
         "contentType": {
             "sys": {
                 "type": "Link",
@@ -29,15 +29,14 @@
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/which-service",
-        "title": "Which service do you need?",
-        "helpText": "Tell us which service you need.",
+        "slug": "/which-goods",
+        "title": "Which goods do you need?",
+        "helpText": "Tell us which goods you need.",
         "type": "radios",
         "options": [
-            "Catering",
-            "Cleaning"
+            "Stationary",
+            "IT supplies"
         ],
-        "next": {
-        }
+        "next": {}
     }
 }
