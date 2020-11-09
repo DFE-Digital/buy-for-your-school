@@ -81,30 +81,6 @@ feature "Anyone can start the planning journey" do
     expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
   end
 
-  context "when Contentful entry wasn't a type of question" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "6EKsv389ETYcQql3htK3Z2"
-      ) do
-        example.run
-      end
-    end
-
-    scenario "returns an error message" do
-      stub_get_contentful_entry(
-        entry_id: "6EKsv389ETYcQql3htK3Z2",
-        fixture_filename: "a-non-question-example.json"
-      )
-
-      visit root_path
-
-      click_on(I18n.t("generic.button.start"))
-
-      expect(page).to have_content(I18n.t("errors.unexpected_contentful_type.page_title"))
-      expect(page).to have_content(I18n.t("errors.unexpected_contentful_type.page_body"))
-    end
-  end
-
   context "when Contentful entry is of type short_text" do
     around do |example|
       ClimateControl.modify(
@@ -127,6 +103,30 @@ feature "Anyone can start the planning journey" do
       click_on(I18n.t("generic.button.soft_finish"))
 
       expect(page).to have_content("Email@example")
+    end
+  end
+
+  context "when Contentful entry model wasn't a type of question" do
+    around do |example|
+      ClimateControl.modify(
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "6EKsv389ETYcQql3htK3Z2"
+      ) do
+        example.run
+      end
+    end
+
+    scenario "returns an error message" do
+      stub_get_contentful_entry(
+        entry_id: "6EKsv389ETYcQql3htK3Z2",
+        fixture_filename: "an-unexpected-model-example.json"
+      )
+
+      visit root_path
+
+      click_on(I18n.t("generic.button.start"))
+
+      expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_title"))
+      expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_body"))
     end
   end
 end

@@ -29,6 +29,7 @@
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/check-your-answers"
+        "slug": "/check-your-answers",
+        "type": "radios"
     }
 }

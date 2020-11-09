@@ -80,35 +80,35 @@ RSpec.describe CreatePlanningQuestion do
       end
     end
 
-    context "when the new question has an unexpected content type" do
+    context "when the new entry has an unexpected content model" do
       it "raises an error" do
         plan = create(:plan, :catering)
         fake_entry = fake_contentful_radio_question_entry(
-          contentful_fixture_filename: "a-non-question-example.json"
+          contentful_fixture_filename: "an-unexpected-model-example.json"
         )
 
         expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
-          .to raise_error(CreatePlanningQuestion::UnexpectedContentType)
+          .to raise_error(CreatePlanningQuestion::UnexpectedContentfulModel)
       end
 
       it "raises a rollbar event" do
         plan = create(:plan, :catering)
 
         fake_entry = fake_contentful_radio_question_entry(
-          contentful_fixture_filename: "a-non-question-example.json"
+          contentful_fixture_filename: "an-unexpected-model-example.json"
         )
 
         expect(Rollbar).to receive(:warning)
-          .with("An unexpected Entry type was found instead of a question",
+          .with("An unexpected Contentful type was found",
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
             contentful_entry_id: "6EKsv389ETYcQql3htK3Z2",
-            content_type: "unmanagedPage",
-            allowed_content_types: CreatePlanningQuestion::ALLOWED_CONTENTFUL_CONTENT_TYPES.join(", "))
+            content_model: "unmanagedPage",
+            allowed_content_models: CreatePlanningQuestion::ALLOWED_CONTENTFUL_MODELS.join(", "),
           .and_call_original
         expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
-          .to raise_error(CreatePlanningQuestion::UnexpectedContentType)
+          .to raise_error(CreatePlanningQuestion::UnexpectedContentfulModel)
       end
     end
   end

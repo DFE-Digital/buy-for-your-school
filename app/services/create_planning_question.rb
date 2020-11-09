@@ -1,7 +1,7 @@
 class CreatePlanningQuestion
-  class UnexpectedContentType < StandardError; end
+  class UnexpectedContentfulModel < StandardError; end
 
-  ALLOWED_CONTENTFUL_CONTENT_TYPES = %w[question].freeze
+  ALLOWED_CONTENTFUL_MODELS = %w[question].freeze
 
   attr_accessor :plan, :contentful_entry
   def initialize(plan:, contentful_entry:)
@@ -10,9 +10,9 @@ class CreatePlanningQuestion
   end
 
   def call
-    if unexpected_question_type?
+    if unexpected_contentful_model?
       send_rollbar_warning
-      raise UnexpectedContentType
+      raise UnexpectedContentfulModel
     end
 
     question = Question.create(
@@ -35,16 +35,16 @@ class CreatePlanningQuestion
     contentful_entry.id
   end
 
-  def content_type
+  def content_model
     contentful_entry.content_type.id
   end
 
-  def expected_question_type?
-    ALLOWED_CONTENTFUL_CONTENT_TYPES.include?(content_type)
+  def expected_contentful_model?
+    ALLOWED_CONTENTFUL_MODELS.include?(content_model)
   end
 
-  def unexpected_question_type?
-    !expected_question_type?
+  def unexpected_contentful_model?
+    !expected_contentful_model?
   end
 
   def title
@@ -76,13 +76,13 @@ class CreatePlanningQuestion
 
   def send_rollbar_warning
     Rollbar.warning(
-      "An unexpected Entry type was found instead of a #{ALLOWED_CONTENTFUL_CONTENT_TYPES.join(", ")}",
+      "An unexpected Contentful type was found",
       contentful_url: ENV["CONTENTFUL_URL"],
       contentful_space_id: ENV["CONTENTFUL_SPACE"],
       contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
       contentful_entry_id: content_entry_id,
-      content_type: content_type,
-      allowed_content_types: ALLOWED_CONTENTFUL_CONTENT_TYPES.join(", ")
+      content_model: content_model,
+      allowed_content_models: ALLOWED_CONTENTFUL_MODELS.join(", "),
     )
   end
 end
