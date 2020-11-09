@@ -54,6 +54,17 @@ RSpec.describe CreatePlanningQuestion do
         expect(question.help_text).to eq(nil)
         expect(question.options).to eq(nil)
       end
+
+      it "replaces spaces with underscores" do
+        plan = create(:plan, :catering)
+        fake_entry = fake_contentful_radio_question_entry(
+          contentful_fixture_filename: "short-text-question-example.json"
+        )
+
+        question, _answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
+
+        expect(question.contentful_type).to eq("short_text")
+      end
     end
 
     context "when the new question does not have a following question" do

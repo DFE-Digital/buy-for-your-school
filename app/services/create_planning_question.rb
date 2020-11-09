@@ -62,7 +62,7 @@ class CreatePlanningQuestion
   end
 
   def contentful_type
-    contentful_entry.type
+    contentful_entry.type.tr(" ", "_")
   end
 
   def raw
