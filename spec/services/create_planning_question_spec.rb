@@ -32,6 +32,20 @@ RSpec.describe CreatePlanningQuestion do
       end
     end
 
+    context "when the question is of type short_text" do
+      it "sets help_text and options to nil" do
+        plan = create(:plan, :catering)
+        fake_entry = fake_contentful_radio_question_entry(
+          contentful_fixture_filename: "short-text-question-example.json"
+        )
+
+        result = described_class.new(plan: plan, contentful_entry: fake_entry).call
+
+        expect(result.help_text).to eq(nil)
+        expect(result.options).to eq(nil)
+      end
+    end
+    
     context "when the new question does not have a following question" do
       it "updates the plan by setting the next_entry_id to nil" do
         plan = create(:plan, :catering)

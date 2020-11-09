@@ -15,11 +15,11 @@ class CreatePlanningQuestion
     end
 
     question = Question.create(
-      title: contentful_entry.title,
-      help_text: contentful_entry.help_text,
-      contentful_type: contentful_entry.type,
-      options: contentful_entry.options,
-      raw: contentful_entry.raw,
+      title: title,
+      help_text: help_text,
+      contentful_type: contentful_type,
+      options: options,
+      raw: raw,
       plan: plan
     )
 
@@ -50,6 +50,33 @@ class CreatePlanningQuestion
 
   def unexpected_question_type?
     !expected_question_type?
+  end
+
+  def title
+    contentful_entry.title
+  end
+
+  def help_text
+    return nil unless contentful_entry.respond_to?(:help_text)
+    contentful_entry.help_text
+  end
+
+  def options
+    return nil unless contentful_entry.respond_to?(:options)
+    contentful_entry.options
+  end
+
+  def contentful_type
+    contentful_entry.type
+  end
+
+  def raw
+    contentful_entry.raw
+  end
+
+  def next_entry_id
+    return nil unless contentful_entry.respond_to?(:next)
+    contentful_entry.next.id
   end
 
   def send_rollbar_warning
