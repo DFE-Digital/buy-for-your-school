@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
     @question = Question.find(question_id)
 
     @answer = Answer.new(answer_params)
+    @answer.response.capitalize!
     @answer.question = @question
     if @answer.valid?
       @answer.save
