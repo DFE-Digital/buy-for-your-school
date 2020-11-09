@@ -3,9 +3,10 @@ class CreatePlanningQuestion
 
   ALLOWED_CONTENTFUL_CONTENT_TYPES = %w[question].freeze
 
-  attr_accessor :plan
-  def initialize(plan:)
+  attr_accessor :plan, :contentful_entry
+  def initialize(plan:, contentful_entry:)
     self.plan = plan
+    self.contentful_entry = contentful_entry
   end
 
   def call
@@ -23,21 +24,15 @@ class CreatePlanningQuestion
       plan: plan
     )
 
-    plan.update(next_entry_id: contentful_entry.next.id)
+    plan.update(next_entry_id: next_entry_id)
 
-    question
+    [question, Answer.new]
   end
 
   private
 
   def content_entry_id
     contentful_entry.id
-  end
-
-  def contentful_entry
-    @contentful_entry ||= GetContentfulEntry
-      .new(entry_id: plan.next_entry_id)
-      .call
   end
 
   def content_type

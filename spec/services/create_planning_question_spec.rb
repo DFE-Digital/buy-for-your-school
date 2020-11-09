@@ -8,15 +8,14 @@ RSpec.describe CreatePlanningQuestion do
         fake_entry = fake_contentful_radio_question_entry(
           contentful_fixture_filename: "radio-question-example.json"
         )
-        stub_contentful_question(fake_entry: fake_entry)
 
-        result = described_class.new(plan: plan).call
+        question, _answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
 
-        expect(result.title).to eq("Which service do you need?")
-        expect(result.help_text).to eq("Tell us which service you need.")
-        expect(result.contentful_type).to eq("radios")
-        expect(result.options).to eq(["Catering", "Cleaning"])
-        expect(result.raw).to eq(fake_entry.raw)
+        expect(question.title).to eq("Which service do you need?")
+        expect(question.help_text).to eq("Tell us which service you need.")
+        expect(question.contentful_type).to eq("radios")
+        expect(question.options).to eq(["Catering", "Cleaning"])
+        expect(question.raw).to eq(fake_entry.raw)
       end
 
       it "updates the plan with a new next_entry_id" do
@@ -24,11 +23,22 @@ RSpec.describe CreatePlanningQuestion do
         fake_entry = fake_contentful_radio_question_entry(
           contentful_fixture_filename: "has-next-question-example.json"
         )
-        stub_contentful_question(fake_entry: fake_entry)
 
-        _result = described_class.new(plan: plan).call
+        _question, _answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
 
         expect(plan.next_entry_id).to eql("5lYcZs1ootDrOnk09LDLZg")
+      end
+
+      it "returns a fresh answer object" do
+        plan = create(:plan, :catering)
+        fake_entry = fake_contentful_radio_question_entry(
+          contentful_fixture_filename: "radio-question-example.json"
+        )
+
+        _question, answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
+
+        expect(answer).to be_kind_of(Answer)
+        expect(answer.response).to eql(nil)
       end
     end
 
@@ -39,22 +49,21 @@ RSpec.describe CreatePlanningQuestion do
           contentful_fixture_filename: "short-text-question-example.json"
         )
 
-        result = described_class.new(plan: plan, contentful_entry: fake_entry).call
+        question, _answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
 
-        expect(result.help_text).to eq(nil)
-        expect(result.options).to eq(nil)
+        expect(question.help_text).to eq(nil)
+        expect(question.options).to eq(nil)
       end
     end
-    
+
     context "when the new question does not have a following question" do
       it "updates the plan by setting the next_entry_id to nil" do
         plan = create(:plan, :catering)
         fake_entry = fake_contentful_radio_question_entry(
           contentful_fixture_filename: "radio-question-example.json"
         )
-        stub_contentful_question(fake_entry: fake_entry)
 
-        _result = described_class.new(plan: plan).call
+        _question, _answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
 
         expect(plan.next_entry_id).to eql(nil)
       end
@@ -66,9 +75,8 @@ RSpec.describe CreatePlanningQuestion do
         fake_entry = fake_contentful_radio_question_entry(
           contentful_fixture_filename: "a-non-question-example.json"
         )
-        stub_contentful_question(fake_entry: fake_entry)
 
-        expect { described_class.new(plan: plan).call }
+        expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
           .to raise_error(CreatePlanningQuestion::UnexpectedContentType)
       end
 
@@ -78,7 +86,6 @@ RSpec.describe CreatePlanningQuestion do
         fake_entry = fake_contentful_radio_question_entry(
           contentful_fixture_filename: "a-non-question-example.json"
         )
-        stub_contentful_question(fake_entry: fake_entry)
 
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Entry type was found instead of a question",
@@ -89,7 +96,7 @@ RSpec.describe CreatePlanningQuestion do
             content_type: "unmanagedPage",
             allowed_content_types: CreatePlanningQuestion::ALLOWED_CONTENTFUL_CONTENT_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(plan: plan).call }
+        expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
           .to raise_error(CreatePlanningQuestion::UnexpectedContentType)
       end
     end

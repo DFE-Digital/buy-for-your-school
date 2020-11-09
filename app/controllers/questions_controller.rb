@@ -14,8 +14,10 @@ class QuestionsController < ApplicationController
 
     redirect_to plan_path(@plan) unless @plan.next_entry_id.present?
 
-    @question = CreatePlanningQuestion.new(plan: @plan).call
-    @answer = Answer.new
+    contentful_entry = GetContentfulEntry.new(entry_id: @plan.next_entry_id).call
+    @question, @answer = CreatePlanningQuestion.new(
+      plan: @plan, contentful_entry: contentful_entry
+    ).call
   end
 
   private
