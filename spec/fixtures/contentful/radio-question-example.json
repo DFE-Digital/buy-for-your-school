@@ -36,8 +36,6 @@
         "options": [
             "Catering",
             "Cleaning"
-        ],
-        "next": {
-        }
+        ]
     }
 }
