@@ -16,6 +16,7 @@ Contentful fixture
 - the first planning question comes directly from Contentful
 - handle the exceptional case when a Contentful entry is missing
 - multiple radio questions can be answered in sequence
+- users can be asked to answer a short text question
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

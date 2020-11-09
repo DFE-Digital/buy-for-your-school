@@ -104,4 +104,29 @@ feature "Anyone can start the planning journey" do
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_type.page_body"))
     end
   end
+
+  context "when Contentful entry is of type short_text" do
+    around do |example|
+      ClimateControl.modify(
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "hfjJgWRg4xiiiImwVRDtZ"
+      ) do
+        example.run
+      end
+    end
+
+    scenario "user can answer using free text" do
+      stub_get_contentful_entry(
+        entry_id: "hfjJgWRg4xiiiImwVRDtZ",
+        fixture_filename: "short-text-question-example.json"
+      )
+
+      visit root_path
+      click_on(I18n.t("generic.button.start"))
+
+      fill_in "answer[response]", with: "email@example.com"
+      click_on(I18n.t("generic.button.soft_finish"))
+
+      expect(page).to have_content("Email@example")
+    end
+  end
 end
