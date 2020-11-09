@@ -15,15 +15,15 @@ class CreatePlanningQuestion
     end
 
     question = Question.create(
-      title: contentful_response.dig("fields", "title"),
-      help_text: contentful_response.dig("fields", "helpText"),
-      contentful_type: contentful_response.dig("fields", "type"),
-      options: contentful_response.dig("fields", "options"),
-      raw: contentful_response,
+      title: contentful_entry.title,
+      help_text: contentful_entry.help_text,
+      contentful_type: contentful_entry.type,
+      options: contentful_entry.options,
+      raw: contentful_entry.raw,
       plan: plan
     )
 
-    plan.update(next_entry_id: contentful_response.dig("fields", "next", "sys", "id"))
+    plan.update(next_entry_id: contentful_entry.next.id)
 
     question
   end
@@ -31,17 +31,17 @@ class CreatePlanningQuestion
   private
 
   def content_entry_id
-    contentful_response.dig("sys", "id")
+    contentful_entry.id
   end
 
-  def contentful_response
-    @contentful_response ||= GetContentfulEntry
+  def contentful_entry
+    @contentful_entry ||= GetContentfulEntry
       .new(entry_id: plan.next_entry_id)
       .call
   end
 
   def content_type
-    contentful_response.dig("sys", "contentType", "sys", "id")
+    contentful_entry.content_type.id
   end
 
   def expected_question_type?

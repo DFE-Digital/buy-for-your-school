@@ -17,7 +17,7 @@ class GetContentfulEntry
       raise EntryNotFound
     end
 
-    response.raw
+    response
   end
 
   private
