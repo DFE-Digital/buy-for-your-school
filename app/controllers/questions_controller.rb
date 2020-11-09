@@ -18,6 +18,8 @@ class QuestionsController < ApplicationController
     @question, @answer = CreatePlanningQuestion.new(
       plan: @plan, contentful_entry: contentful_entry
     ).call
+
+    render "new.#{@question.contentful_type}"
   end
 
   private

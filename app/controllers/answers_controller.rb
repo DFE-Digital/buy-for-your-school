@@ -15,7 +15,7 @@ class AnswersController < ApplicationController
         redirect_to plan_path(@plan)
       end
     else
-      render "questions/new"
+      render "questions/new.#{@question.contentful_type}"
     end
   end
 
