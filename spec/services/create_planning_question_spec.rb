@@ -105,10 +105,46 @@ RSpec.describe CreatePlanningQuestion do
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
             contentful_entry_id: "6EKsv389ETYcQql3htK3Z2",
             content_model: "unmanagedPage",
+            question_type: "radios",
             allowed_content_models: CreatePlanningQuestion::ALLOWED_CONTENTFUL_MODELS.join(", "),
+            allowed_question_types: CreatePlanningQuestion::ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
           .to raise_error(CreatePlanningQuestion::UnexpectedContentfulModel)
+      end
+    end
+
+    context "when the new question has an unexpected type" do
+      it "raises an error" do
+        plan = create(:plan, :catering)
+        fake_entry = fake_contentful_radio_question_entry(
+          contentful_fixture_filename: "an-unexpected-question-type-example.json"
+        )
+
+        expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
+          .to raise_error(CreatePlanningQuestion::UnexpectedContentfulQuestionType)
+      end
+
+      it "raises a rollbar event" do
+        plan = create(:plan, :catering)
+
+        fake_entry = fake_contentful_radio_question_entry(
+          contentful_fixture_filename: "an-unexpected-question-type-example.json"
+        )
+
+        expect(Rollbar).to receive(:warning)
+          .with("An unexpected Contentful type was found",
+            contentful_url: ENV["CONTENTFUL_URL"],
+            contentful_space_id: ENV["CONTENTFUL_SPACE"],
+            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+            contentful_entry_id: "8as7df68uhasdnuasdf",
+            content_model: "question",
+            question_type: "telepathy",
+            allowed_content_models: CreatePlanningQuestion::ALLOWED_CONTENTFUL_MODELS.join(", "),
+            allowed_question_types: CreatePlanningQuestion::ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", "))
+          .and_call_original
+        expect { described_class.new(plan: plan, contentful_entry: fake_entry).call }
+          .to raise_error(CreatePlanningQuestion::UnexpectedContentfulQuestionType)
       end
     end
   end

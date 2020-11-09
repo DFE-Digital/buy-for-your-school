@@ -9,6 +9,10 @@ class QuestionsController < ApplicationController
     render "errors/unexpected_contentful_model", status: 500
   end
 
+  rescue_from CreatePlanningQuestion::UnexpectedContentfulQuestionType do |exception|
+    render "errors/unexpected_contentful_question_type", status: 500
+  end
+
   def new
     @plan = Plan.find(plan_id)
 

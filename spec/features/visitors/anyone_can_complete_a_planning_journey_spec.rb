@@ -129,4 +129,28 @@ feature "Anyone can start the planning journey" do
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_body"))
     end
   end
+
+  context "when Contentful question entry wasn't an expected type" do
+    around do |example|
+      ClimateControl.modify(
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "8as7df68uhasdnuasdf"
+      ) do
+        example.run
+      end
+    end
+
+    scenario "returns an error message" do
+      stub_get_contentful_entry(
+        entry_id: "8as7df68uhasdnuasdf",
+        fixture_filename: "an-unexpected-question-type-example.json"
+      )
+
+      visit root_path
+
+      click_on(I18n.t("generic.button.start"))
+
+      expect(page).to have_content(I18n.t("errors.unexpected_contentful_question_type.page_title"))
+      expect(page).to have_content(I18n.t("errors.unexpected_contentful_question_type.page_body"))
+    end
+  end
 end
