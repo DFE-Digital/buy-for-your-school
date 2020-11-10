@@ -3,6 +3,10 @@ en:
     button:
       start: "Continue"
       soft_finish: "Save and continue later"
+  banner:
+    beta:
+      tag: "beta"
+      message: "This is a new service - your feedback will help us to improve it."
   planning:
     start_page:
       page_title: "Identify the level of support you need for what you're buying"
