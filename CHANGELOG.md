@@ -17,6 +17,7 @@ Contentful fixture
 - handle the exceptional case when a Contentful entry is missing
 - multiple radio questions can be answered in sequence
 - users can be asked to answer a short text question
+- Contentful can redirect users to preview endpoints
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
