@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
     @question = Question.find(question_id)
 
     @answer = Answer.new(answer_params)
+    @answer.response.capitalize!
     @answer.question = @question
     if @answer.valid?
       @answer.save
@@ -15,7 +16,7 @@ class AnswersController < ApplicationController
         redirect_to plan_path(@plan)
       end
     else
-      render "questions/new"
+      render "questions/new.#{@question.contentful_type}"
     end
   end
 
