@@ -28,8 +28,10 @@ RSpec.describe CreatePlanningQuestion do
 
         expect(plan.next_entry_id).to eql("5lYcZs1ootDrOnk09LDLZg")
       end
+    end
 
-      it "returns a fresh answer object" do
+    context "when the question is of type 'radios'" do
+      it "returns a fresh RadioAnswer object" do
         plan = create(:plan, :catering)
         fake_entry = fake_contentful_question_entry(
           contentful_fixture_filename: "radio-question-example.json"
@@ -37,12 +39,12 @@ RSpec.describe CreatePlanningQuestion do
 
         _question, answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
 
-        expect(answer).to be_kind_of(Answer)
+        expect(answer).to be_kind_of(RadioAnswer)
         expect(answer.response).to eql(nil)
       end
     end
 
-    context "when the question is of type short_text" do
+    context "when the question is of type 'short_text'" do
       it "sets help_text and options to nil" do
         plan = create(:plan, :catering)
         fake_entry = fake_contentful_question_entry(

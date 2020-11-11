@@ -7,7 +7,7 @@ class PlansController < ApplicationController
   end
 
   def show
-    @plan = Plan.includes(questions: [:answer]).find(plan_id)
+    @plan = Plan.includes(questions: [:answer, :radio_answer]).find(plan_id)
   end
 
   private

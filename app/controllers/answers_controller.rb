@@ -5,9 +5,10 @@ class AnswersController < ApplicationController
     @plan = Plan.find(plan_id)
     @question = Question.find(question_id)
 
-    @answer = Answer.new(answer_params)
-    @answer.response.capitalize!
+    @answer = AnswerFactory.new(question: @question).call
+    @answer.assign_attributes(answer_params)
     @answer.question = @question
+
     if @answer.valid?
       @answer.save
       if @plan.next_entry_id.present?

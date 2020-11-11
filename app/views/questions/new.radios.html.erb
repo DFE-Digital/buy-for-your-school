@@ -1,6 +1,6 @@
 <%= content_for :title, @question.title %>
 
-<%= form_for @answer, url: plan_question_answers_path(@plan, @question), method: "post" do |f| %>
+<%= form_for @answer, as: :answer, url: plan_question_answers_path(@plan, @question), method: "post" do |f| %>
   <%= f.hidden_field :response, value: nil %>
   <%= f.govuk_collection_radio_buttons :response,
     @question.radio_options,
