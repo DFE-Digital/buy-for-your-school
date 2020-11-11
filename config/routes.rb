@@ -9,4 +9,8 @@ Rails.application.routes.draw do
       resources :answers, only: [:create]
     end
   end
+
+  namespace :preview do
+    resources :entries, only: [:show]
+  end
 end

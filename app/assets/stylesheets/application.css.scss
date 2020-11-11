@@ -18,3 +18,7 @@ $govuk-font-url-function: "image-url";
 $govuk-image-url-function: "font-url";
 
 @import "govuk-frontend/govuk/all";
+
+.preview-tag {
+  background-color: $govuk-error-colour;
+}
