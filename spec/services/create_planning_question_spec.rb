@@ -65,7 +65,6 @@ RSpec.describe CreatePlanningQuestion do
 
         question, _answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
 
-        expect(question.help_text).to eq(nil)
         expect(question.options).to eq(nil)
       end
 

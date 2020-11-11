@@ -31,6 +31,7 @@
     "fields": {
         "slug": "/what-email-address-did-you-use",
         "title": "What email address did you use?",
+        "helpText": "This will help us recover your existing plans",
         "type": "short text"
     }
 }
