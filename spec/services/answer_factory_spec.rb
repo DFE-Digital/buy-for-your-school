@@ -17,5 +17,13 @@ RSpec.describe AnswerFactory do
         expect(result).to be_kind_of(RadioAnswer)
       end
     end
+
+    context "when the question is for short_text" do
+      it "returns a new ShortTextAnswer object" do
+        question = create(:question, :short_text)
+        result = described_class.new(question: question).call
+        expect(result).to be_kind_of(ShortTextAnswer)
+      end
+    end
   end
 end

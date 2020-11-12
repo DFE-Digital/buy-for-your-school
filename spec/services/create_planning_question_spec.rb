@@ -45,6 +45,18 @@ RSpec.describe CreatePlanningQuestion do
     end
 
     context "when the question is of type 'short_text'" do
+      it "returns a fresh ShortTextAnswer object" do
+        plan = create(:plan, :catering)
+        fake_entry = fake_contentful_question_entry(
+          contentful_fixture_filename: "short-text-question-example.json"
+        )
+
+        _question, answer = described_class.new(plan: plan, contentful_entry: fake_entry).call
+
+        expect(answer).to be_kind_of(ShortTextAnswer)
+        expect(answer.response).to eql(nil)
+      end
+
       it "sets help_text and options to nil" do
         plan = create(:plan, :catering)
         fake_entry = fake_contentful_question_entry(

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Anyone can start the planning journey" do
-  scenario "Start page includs a call to action" do
+  scenario "Start page includes a call to action" do
     stub_get_contentful_entry
 
     visit root_path

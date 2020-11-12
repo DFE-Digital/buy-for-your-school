@@ -5,6 +5,8 @@
   <% @plan.questions.each do |question| %>
     <% if question.radio_answer %>
       <%= render "radios_answer", question: question, answer: question.radio_answer %>
+    <% elsif question.short_text_answer %>
+      <%= render "short_text_answer", question: question, answer: question.short_text_answer %>
     <% else %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key"><%= question.title %></dt>
