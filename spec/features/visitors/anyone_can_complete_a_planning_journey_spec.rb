@@ -106,6 +106,35 @@ feature "Anyone can start the planning journey" do
     end
   end
 
+  context "when Contentful entry is of type long_text" do
+    around do |example|
+      ClimateControl.modify(
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "2jWIO1MrVIya9NZrFWT4e"
+      ) do
+        example.run
+      end
+    end
+
+    scenario "user can answer using free text with multiple lines" do
+      stub_get_contentful_entry(
+        entry_id: "2jWIO1MrVIya9NZrFWT4e",
+        fixture_filename: "long-text-question-example.json"
+      )
+
+      visit root_path
+      click_on(I18n.t("generic.button.start"))
+
+      fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum."
+      click_on(I18n.t("generic.button.soft_finish"))
+
+      within(".govuk-summary-list") do
+        paragraphs_elements = find_all("p")
+        expect(paragraphs_elements.first.text).to have_content("We would like a supplier to provide catering from September 2020.")
+        expect(paragraphs_elements.last.text).to have_content("They must be able to supply us for 3 years minumum.")
+      end
+    end
+  end
+
   context "when Contentful entry model wasn't a type of question" do
     around do |example|
       ClimateControl.modify(

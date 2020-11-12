@@ -24,6 +24,7 @@ Contentful fixture
 - multiple radio questions can be answered in sequence
 - users can be asked to answer a short text question
 - Contentful can redirect users to preview endpoints
+- users can be asked to answer a long text question
 
 [unreleased]: https://github.com/DfE/DFE-Digital/buy-for-your-school/compare/release-001...HEAD
 [release-002]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-001...release-002

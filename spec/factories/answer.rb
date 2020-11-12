@@ -10,4 +10,10 @@ FactoryBot.define do
 
     response { "Green" }
   end
+
+  factory :long_text_answer do
+    association :question, factory: :question, contentful_type: "long_text"
+
+    response { "Lots of green" }
+  end
 end

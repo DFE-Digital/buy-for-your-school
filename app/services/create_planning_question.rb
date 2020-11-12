@@ -3,7 +3,7 @@ class CreatePlanningQuestion
   class UnexpectedContentfulQuestionType < StandardError; end
 
   ALLOWED_CONTENTFUL_MODELS = %w[question].freeze
-  ALLOWED_CONTENTFUL_QUESTION_TYPES = ["radios", "short_text"].freeze
+  ALLOWED_CONTENTFUL_QUESTION_TYPES = ["radios", "short_text", "long_text"].freeze
 
   attr_accessor :plan, :contentful_entry
   def initialize(plan:, contentful_entry:)

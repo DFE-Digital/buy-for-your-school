@@ -17,5 +17,11 @@ FactoryBot.define do
       contentful_type { "short_text" }
       association :short_text_answer
     end
+
+    trait :long_text do
+      options { nil }
+      contentful_type { "long_text" }
+      association :long_text_answer
+    end
   end
 end
