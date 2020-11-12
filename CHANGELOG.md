@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-001] - 2020-11-12
+
 - address rails-template TODO
 - any user can see a start page for the planning journey
 - use GOV.UK Frontend framework
@@ -19,5 +21,7 @@ Contentful fixture
 - users can be asked to answer a short text question
 - Contentful can redirect users to preview endpoints
 
-[unreleased]: TODO
+[unreleased]: https://github.com/DfE/DFE-Digital/buy-for-your-school/compare/release-001...HEAD
+[release-001]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-000...release-001
+
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
