@@ -1,0 +1,34 @@
+{
+  "repository": "https://github.com/DFE-Digital/buy-for-your-school",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "env": {
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    },
+    "RAILS_ENV": {
+      "value": "production"
+    },
+    "WEB_CONCURRENCY": {
+      "value": 2
+    },
+    "CONTENTFUL_URL": {
+      "value": "cdn.contentful.com"
+    },
+    "CONTENTFUL_ENVIRONMENT": {
+      "value": "master"
+    },
+    "CONTENTFUL_PREVIEW_APP": {
+      "value": "false"
+    }
+  }
+}

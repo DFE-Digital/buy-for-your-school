@@ -1,33 +1,41 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  generic:
+    button:
+      start: "Continue"
+      soft_finish: "Save and continue later"
+  banner:
+    beta:
+      tag: "beta"
+      message: "This is a new service - your feedback will help us to improve it."
+    preview:
+      tag: "preview"
+      message: "This environment is only for previewing Contentful changes before publishing."
+  planning:
+    start_page:
+      page_title: "Identify the level of support you need for what you're buying"
+      overview_title: "Overview"
+      overview_body:
+        - "Get the right level of support you need to buy goods and services for your school."
+        - "By telling us about your experience and confidence levels in buying the goods or service, we will tailor the guidance that will be shown to you on screen."
+        - "More guidance will be shown if you need more support. For experienced buyers, the guidance will be hidden, but will be accessible to you within each page if you need it."
+      before_you_start_title: "Before you start"
+      before_you_start_list_title: "Consider:"
+      before_you_start_list_items:
+        - any previous experience in buying the goods or services you need
+        - your level of understanding of the procurement process
+        - your school's procurement policy
+        - support you have access to in your school
+        - information on the current contract
+      before_you_start_body: "It will take around 3 minutes to complete the process"
+    errors:
+      contentful_entry_not_found: "An unexpected error occurred. The starting question has been revoked by the content team."
+  errors:
+    contentful_entry_not_found:
+      page_title: "An unexpected error occurred"
+      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."
+    unexpected_contentful_model:
+      page_title: "An unexpected error occurred"
+      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."
+    unexpected_contentful_question_type:
+      page_title: "An unexpected error occurred"
+      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."
