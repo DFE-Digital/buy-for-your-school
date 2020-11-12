@@ -1,6 +1,6 @@
 <%= content_for :title, @question.title %>
 
-<%= form_for @answer, url: plan_question_answers_path(@plan, @question), method: "post" do |f| %>
+<%= form_for @answer, as: :answer, url: plan_question_answers_path(@plan, @question), method: "post" do |f| %>
   <%= f.govuk_text_field :response,
     label: { text: @question.title, size: 'xl' },
     width: "one-third"

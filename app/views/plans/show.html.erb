@@ -3,9 +3,6 @@
 <h1 class="govuk-heading-xl"><%= @plan.category.capitalize %></h1>
 <dl class="govuk-summary-list">
   <% @plan.questions.each do |question| %>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key"><%= question.title %></dt>
-      <dd class="govuk-summary-list__value"><%= question.answer.response %></dd>
-    </div>
+    <%= render "#{question.contentful_type}_answer", question: question, answer: question.answer %>
   <% end %>
 </dl>
