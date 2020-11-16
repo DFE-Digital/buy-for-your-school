@@ -30,16 +30,19 @@ RUN gem install bundler
 
 # bundle ruby gems based on the current environment, default to production
 RUN echo $RAILS_ENV
-RUN \
-  if [ "$RAILS_ENV" = "production" ]; then \
-    bundle install --without development test --retry 10; \
-  else \
-    bundle install --retry 10; \
-  fi
+RUN if [ "$RAILS_ENV" = "production" ]; then \
+      bundle install --without development test --retry 10; \
+    else \
+      bundle install --retry 10; \
+    fi
 
 COPY . $INSTALL_PATH
 
-RUN RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE="super secret" bundle exec rake assets:precompile --quiet
+# Compiling assets requires a key to exist: https://github.com/rails/rails/issues/32947
+RUN if [ "$RAILS_ENV" = "production" ]; then \
+      RAILS_ENV=production SECRET_KEY_BASE="key" bundle exec rake assets:precompile; \
+    fi
+
 
 # db setup
 COPY ./docker-entrypoint.sh /

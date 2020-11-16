@@ -8,7 +8,7 @@ A service to help school buying professionals create tender documents that compl
 1. copy `/.env.example` into `/.env.development.local`.
 
   Our intention is that the example should include enough to get the application started quickly. If this is not the case, please ask another developer for a copy of their `/.env.development.local` file.
-  
+
 1. `script/server`
 1. Visit http://localhost:3000
 
@@ -16,11 +16,30 @@ A service to help school buying professionals create tender documents that compl
 
 ### The whole test suite
 
-`bundle exec rake`
+* Using Docker has high parity, you don't have to install any dependencies but it takes longer to run (~20 seconds):
+
+    ```bash
+    docker-compose -f docker-compose.test.yml run --rm web bundle exec rake
+    ```
+* Without Docker is faster (~5 seconds) but has lower parity and you will need to install local dependencies on your machine first:
+
+    ```bash
+    brew install postgres
+    brew services start postgres
+    createuser postgres --super
+    rbenv install 2.6.6 && rbenv local 2.6.6
+    gem install bundle && bundle
+    RAILS_ENV=test rake db:setup
+    ```
+    ```ruby
+    script/test
+    ```
 
 ### RSpec only
 
-`bundle exec rspec`
+```
+bundle exec rspec spec/*
+```
 
 ## Running Brakeman
 

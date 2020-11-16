@@ -1,36 +1,39 @@
 version: "3.8"
 services:
-  web:
+  test:
     build:
       context: .
       args:
-        RAILS_ENV: "development"
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+        RAILS_ENV: "test"
+    command: bundle exec rake
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - test-db
     env_file:
-       - .env.development.local
+       - .env.test
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
+      DATABASE_URL: postgres://postgres:password@test-db:5432/buy-for-your-school-test
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
     volumes:
       - .:/srv/app
     tty: true
     stdin_open: true
     networks:
-      - dev
+      - test
 
-  db:
+  test-db:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
     networks:
-      - dev
+      - test
 
 networks:
-  dev:
+  test:
 volumes:
   db-data:
