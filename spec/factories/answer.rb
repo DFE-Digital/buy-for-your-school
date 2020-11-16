@@ -1,4 +1,10 @@
 FactoryBot.define do
+  factory :answer do
+    association :question, factory: :question, contentful_type: "radios"
+
+    response { "Green" }
+  end
+
   factory :radio_answer do
     association :question, factory: :question, contentful_type: "radios"
 
