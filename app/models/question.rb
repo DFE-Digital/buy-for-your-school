@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
   self.implicit_order_column = "created_at"
   belongs_to :plan
-
+  has_one :answer
   has_one :radio_answer
   has_one :short_text_answer
 
