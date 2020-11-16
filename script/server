@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# script/server: Launch the application and any extra required processes
+#                locally.
+
+set -e
+
+docker-compose up --detach
+docker attach buy-for-your-school_web_1

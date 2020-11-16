@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  web:
+    build:
+      context: .
+      args:
+        RAILS_ENV: "development"
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    env_file:
+       - .env.development.local
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
+    volumes:
+      - .:/srv/app
+    tty: true
+    stdin_open: true
+    networks:
+      - dev
+
+  db:
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - dev
+
+networks:
+  dev:
+volumes:
+  db-data:
