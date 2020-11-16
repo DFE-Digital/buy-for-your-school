@@ -8,8 +8,4 @@ class Question < ApplicationRecord
   def radio_options
     options.map { |option| OpenStruct.new(id: option.downcase, name: option.titleize) }
   end
-
-  def answer
-    @answer ||= radio_answer || short_text_answer
-  end
 end

@@ -9,13 +9,11 @@ FactoryBot.define do
     trait :radio do
       options { ["Red", "Green", "Blue"] }
       contentful_type { "radios" }
-      association :radio_answer
     end
 
     trait :short_text do
       options { nil }
       contentful_type { "short_text" }
-      association :short_text_answer
     end
   end
 end
