@@ -17,5 +17,13 @@ RSpec.describe AnswerFactory do
         expect(result).to be_kind_of(ShortTextAnswer)
       end
     end
+
+    context "when the question is for long_text" do
+      it "returns a new LongTextAnswer object" do
+        question = create(:question, :long_text)
+        result = described_class.new(question: question).call
+        expect(result).to be_kind_of(LongTextAnswer)
+      end
+    end
   end
 end

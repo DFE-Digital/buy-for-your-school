@@ -7,13 +7,13 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "hfjJgWRg4xiiiImwVRDtZ",
+        "id": "2jWIO1MrVIya9NZrFWT4e",
         "type": "Entry",
-        "createdAt": "2020-11-05T16:42:58.340Z",
-        "updatedAt": "2020-11-05T16:42:58.340Z",
+        "createdAt": "2020-11-11T11:26:20.994Z",
+        "updatedAt": "2020-11-11T11:26:20.994Z",
         "environment": {
             "sys": {
-                "id": "master",
+                "id": "develop",
                 "type": "Link",
                 "linkType": "Environment"
             }
@@ -29,9 +29,9 @@
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/what-email-address-did-you-use",
-        "title": "What email address did you use?",
-        "helpText": "This will help us recover your existing plans",
-        "type": "short text"
+        "slug": "/describe-what-you-need",
+        "title": "Describe what you need",
+        "helpText": "Briefly describe what you are looking to procure from your supplier.",
+        "type": "long text"
     }
 }
