@@ -33,7 +33,7 @@ class CreatePlanningQuestion
 
     plan.update(next_entry_id: next_entry_id)
 
-    [question, Answer.new]
+    [question, AnswerFactory.new(question: question).call]
   end
 
   private

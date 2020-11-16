@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Anyone can start the planning journey" do
-  scenario "Start page includs a call to action" do
+  scenario "Start page includes a call to action" do
     stub_get_contentful_entry
 
     visit root_path
@@ -102,7 +102,7 @@ feature "Anyone can start the planning journey" do
       fill_in "answer[response]", with: "email@example.com"
       click_on(I18n.t("generic.button.soft_finish"))
 
-      expect(page).to have_content("Email@example")
+      expect(page).to have_content("email@example")
     end
   end
 

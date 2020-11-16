@@ -2,6 +2,9 @@ require "rails_helper"
 
 RSpec.describe Question, type: :model do
   it { should belong_to(:plan) }
+  it { should have_one(:radio_answer) }
+  it { should have_one(:short_text_answer) }
+
   it "store the basic fields of a contentful response" do
     question = build(:question,
       :radio,
