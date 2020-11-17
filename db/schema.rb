@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_152711) do
+ActiveRecord::Schema.define(version: 2020_11_16_142721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,4 +59,8 @@ ActiveRecord::Schema.define(version: 2020_11_12_152711) do
     t.index ["question_id"], name: "index_short_text_answers_on_question_id"
   end
 
+  add_foreign_key "long_text_answers", "questions", on_delete: :cascade
+  add_foreign_key "questions", "plans", on_delete: :cascade
+  add_foreign_key "radio_answers", "questions", on_delete: :cascade
+  add_foreign_key "short_text_answers", "questions", on_delete: :cascade
 end

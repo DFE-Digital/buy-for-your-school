@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- add database foreign key constraints for better data integrity
+
 ## [release-002] - 2020-11-16
 
 - migrate answer database table into Radio and ShortText
