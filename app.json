@@ -1,13 +1,6 @@
 {
   "repository": "https://github.com/DFE-Digital/buy-for-your-school",
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    },
-    {
-      "url": "heroku/ruby"
-    }
-  ],
+  "stack": "container",
   "addons": [
     "heroku-postgresql"
   ],
