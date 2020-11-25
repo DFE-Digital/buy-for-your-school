@@ -41,6 +41,12 @@ A service to help school buying professionals create tender documents that compl
 bundle exec rspec spec/*
 ```
 
+## Starting a Rails console
+
+```
+script/console
+```
+
 ## Running Brakeman
 
 Run [Brakeman](https://brakemanscanner.org/) to highlight any security vulnerabilities:
