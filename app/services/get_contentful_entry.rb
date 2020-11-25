@@ -10,14 +10,19 @@ class GetContentfulEntry
   end
 
   def call
-    response = contentful_client.entry(entry_id)
+    if cache_hit?
+      entry = find_and_build_from_cache
+    else
+      entry = contentful_client.entry(entry_id)
+      store_in_cache(raw_contentful_response: entry)
+    end
 
-    if response.nil?
+    if entry.nil?
       send_rollbar_warning
       raise EntryNotFound
     end
 
-    response
+    entry
   end
 
   private
@@ -39,5 +44,39 @@ class GetContentfulEntry
       contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
       contentful_entry_id: entry_id
     )
+  end
+
+  def cache_key
+    @cache_key ||= "contentful:entry:#{entry_id}"
+  end
+
+  def cache_hit?
+    if ENV["CONTENTFUL_ENTRY_CACHING"] == "true"
+      redis_cache.exists?(cache_key)
+    else
+      false
+    end
+  end
+
+  def find_in_cache
+    redis_cache.get(cache_key)
+  end
+
+  def store_in_cache(raw_contentful_response:)
+    return unless ENV["CONTENTFUL_ENTRY_CACHING"] == "true"
+    return unless raw_contentful_response.present? &&
+      raw_contentful_response.respond_to?(:raw)
+
+    redis_cache.set(cache_key, raw_contentful_response.raw)
+  end
+
+  def find_and_build_from_cache
+    Contentful::ResourceBuilder.new(
+      JSON.parse(find_in_cache)
+    ).run
+  end
+
+  def redis_cache
+    RedisCache.redis
   end
 end

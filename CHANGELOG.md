@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [Unreleased]
 
 - add database foreign key constraints for better data integrity
+- Contentful entry requests use a new Redis read cache
 
 ## [release-002] - 2020-11-16
 
