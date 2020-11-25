@@ -1,5 +1,14 @@
-FROM ruby:2.6.6 as release
+# BUILD STAGE #
+FROM ruby:2.6.6 AS build
 MAINTAINER dxw <rails@dxw.com>
+
+ENV INSTALL_PATH /srv/app
+ARG RAILS_ENV
+ENV RAILS_ENV=${RAILS_ENV:-production}
+ENV RACK_ENV=${RAILS_ENV:-production}
+
+WORKDIR $INSTALL_PATH
+
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
   libpq-dev \
@@ -7,45 +16,46 @@ RUN apt-get update && apt-get install -qq -y \
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
         && apt-get install -y nodejs
 
+COPY package.json ./package.json
+COPY package-lock.json ./package-lock.json
+
+RUN npm install
+
+COPY Gemfile* ./
+RUN gem install bundler:2.1.4 --no-document
+
+ARG BUNDLE_EXTRA_GEM_GROUPS
+ENV BUNDLE_GEM_GROUPS=${BUNDLE_EXTRA_GEM_GROUPS:-"production"}
+RUN bundle config set no-cache "true"
+RUN bundle config set with $BUNDLE_GEM_GROUPS
+RUN bundle install --no-binstubs --retry=3 --jobs=4
+
+COPY . .
+
+# RELEASE STAGE #
+FROM ruby:2.6.6 AS release
+
 ENV INSTALL_PATH /srv/app
-RUN mkdir -p $INSTALL_PATH
-
-WORKDIR $INSTALL_PATH
-
-# set rails environment
 ARG RAILS_ENV
 ENV RAILS_ENV=${RAILS_ENV:-production}
 ENV RACK_ENV=${RAILS_ENV:-production}
 
-COPY package.json $INSTALL_PATH/package.json
-COPY package-lock.json $INSTALL_PATH/package-lock.json
+WORKDIR $INSTALL_PATH
 
-RUN npm install
+RUN gem install bundler:2.1.4 --no-document
 
-COPY Gemfile $INSTALL_PATH/Gemfile
-COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
+COPY --from=build /usr/local/bundle/ /usr/local/bundle/
+COPY --from=build $INSTALL_PATH $INSTALL_PATH
 
-RUN gem update --system
-RUN gem install bundler
+# Compiling assets requires a key to exist: https://github.com/rails/rails/issues/32947
+RUN if [ "$RAILS_ENV" = "production" ]; then \
+      RAILS_ENV=production SECRET_KEY_BASE="key" bundle exec rake assets:precompile; \
+    fi
 
-# bundle ruby gems based on the current environment, default to production
-RUN echo $RAILS_ENV
-RUN \
-  if [ "$RAILS_ENV" = "production" ]; then \
-    bundle install --without development test --retry 10; \
-  else \
-    bundle install --retry 10; \
-  fi
-
-COPY . $INSTALL_PATH
-
-RUN RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE="super secret" bundle exec rake assets:precompile --quiet
-
-# db setup
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 3000
 
-CMD ["rails", "server"]
+CMD ["bundle", "exec", "rails", "server"]
