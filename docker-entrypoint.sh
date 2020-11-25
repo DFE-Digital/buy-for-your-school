@@ -11,7 +11,7 @@ setup_database()
   echo "ENTRYPOINT: Finished database setup."
 }
 
-if [ -z ${DATABASE_URL+x} ]; then echo "Skipping database setup"; else setup_database; fi
+if [ -z ${DATABASE_URL+x} ]; then echo "ENTRYPOINT: Skipping database setup"; else setup_database; fi
 
 echo "ENTRYPOINT: Finished docker entrypoint."
 exec "$@"
