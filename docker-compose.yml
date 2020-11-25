@@ -11,10 +11,12 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
     env_file:
        - .env.development.local
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
+      REDIS_CACHE_URL: redis://redis:6379/1
     volumes:
       - .:/srv/app
     tty: true
@@ -31,7 +33,15 @@ services:
     networks:
       - dev
 
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data
+    networks:
+      - dev
+
 networks:
   dev:
 volumes:
   db-data:
+  redis-data:

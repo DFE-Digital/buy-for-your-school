@@ -15,6 +15,8 @@ gem "jquery-rails"
 gem "pg"
 gem "mini_racer"
 gem "puma", "~> 5.0"
+gem "redis", "~> 4.2"
+gem "redis-namespace"
 gem "rollbar"
 gem "rails", "~> 6.0.0"
 gem "sass-rails", "~> 6.0"
@@ -31,6 +33,7 @@ end
 
 group :test do
   gem "capybara", ">= 2.15"
+  gem "mock_redis"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov"
