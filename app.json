@@ -2,7 +2,8 @@
   "repository": "https://github.com/DFE-Digital/buy-for-your-school",
   "stack": "container",
   "addons": [
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "heroku-redis:hobby-dev"
   ],
   "env": {
     "SECRET_KEY_BASE": {

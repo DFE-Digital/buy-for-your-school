@@ -26,6 +26,8 @@ A service to help school buying professionals create tender documents that compl
     ```bash
     brew install postgres
     brew services start postgres
+    brew install redis
+    brew services start redis
     createuser postgres --super
     rbenv install 2.6.6 && rbenv local 2.6.6
     gem install bundle && bundle
