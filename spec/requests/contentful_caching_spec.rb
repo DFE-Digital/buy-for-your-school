@@ -39,6 +39,21 @@ RSpec.describe "Contentful Caching", type: :request do
       .to eq(raw_response)
   end
 
+  it "sets a TTL to 48 hours by default" do
+    plan = create(:plan, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
+    stub_get_contentful_entry(
+      entry_id: "1UjQurSOi5MWkcRuGxdXZS",
+      fixture_filename: "radio-question-example.json"
+    )
+
+    freeze_time do
+      get new_plan_question_path(plan)
+
+      expect(RedisCache.redis.ttl("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
+        .to eq(172_800)
+    end
+  end
+
   context "when caching has been disabled in ENV" do
     around do |example|
       ClimateControl.modify(

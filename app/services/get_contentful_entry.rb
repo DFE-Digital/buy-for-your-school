@@ -68,6 +68,7 @@ class GetContentfulEntry
       raw_contentful_response.respond_to?(:raw)
 
     redis_cache.set(cache_key, raw_contentful_response.raw)
+    redis_cache.expire(cache_key, 172_800) # 48 hours
   end
 
   def find_and_build_from_cache
