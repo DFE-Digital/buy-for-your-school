@@ -58,6 +58,10 @@ class GetContentfulEntry
     end
   end
 
+  def cache_ttl
+    ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 172_800) # 48 hours
+  end
+
   def find_in_cache
     redis_cache.get(cache_key)
   end
@@ -68,7 +72,7 @@ class GetContentfulEntry
       raw_contentful_response.respond_to?(:raw)
 
     redis_cache.set(cache_key, raw_contentful_response.raw)
-    redis_cache.expire(cache_key, 172_800) # 48 hours
+    redis_cache.expire(cache_key, cache_ttl)
   end
 
   def find_and_build_from_cache

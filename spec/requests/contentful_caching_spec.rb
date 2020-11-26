@@ -37,6 +37,8 @@ RSpec.describe "Contentful Caching", type: :request do
 
     expect(RedisCache.redis.get("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
       .to eq(raw_response)
+
+    RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")
   end
 
   it "sets a TTL to 48 hours by default" do
@@ -52,6 +54,8 @@ RSpec.describe "Contentful Caching", type: :request do
       expect(RedisCache.redis.ttl("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
         .to eq(172_800)
     end
+
+    RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")
   end
 
   context "when caching has been disabled in ENV" do
