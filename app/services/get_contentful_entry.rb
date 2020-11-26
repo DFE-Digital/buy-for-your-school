@@ -1,19 +1,18 @@
-require "contentful"
-
 class GetContentfulEntry
   class EntryNotFound < StandardError; end
 
   attr_accessor :entry_id
 
-  def initialize(entry_id:)
+  def initialize(entry_id:, contentful_connector: ContentfulConnector.new)
     self.entry_id = entry_id
+    @contentful_connector = contentful_connector
   end
 
   def call
     if cache_hit?
       entry = find_and_build_from_cache
     else
-      entry = contentful_client.entry(entry_id)
+      entry = @contentful_connector.get_entry_by_id(entry_id)
       store_in_cache(raw_contentful_response: entry)
     end
 
@@ -26,15 +25,6 @@ class GetContentfulEntry
   end
 
   private
-
-  def contentful_client
-    @contentful_client ||= Contentful::Client.new(
-      api_url: ENV["CONTENTFUL_URL"],
-      space: ENV["CONTENTFUL_SPACE"],
-      environment: ENV["CONTENTFUL_ENVIRONMENT"],
-      access_token: ENV["CONTENTFUL_ACCESS_TOKEN"]
-    )
-  end
 
   def send_rollbar_warning
     Rollbar.warning(

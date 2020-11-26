@@ -1,18 +1,10 @@
 require "rails_helper"
 
 RSpec.describe GetContentfulEntry do
-  let(:contentful_url) { "preview.contentful" }
-  let(:contentful_space) { "abc" }
-  let(:contentful_environment) { "test" }
-  let(:contentful_access_token) { "123" }
   let(:contentful_planning_start_entry_id) { "1a2b3c4d5" }
 
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_URL: contentful_url,
-      CONTENTFUL_SPACE: contentful_space,
-      CONTENTFUL_ENVIRONMENT: contentful_environment,
-      CONTENTFUL_ACCESS_TOKEN: contentful_access_token,
       CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_planning_start_entry_id
     ) do
       example.run
@@ -21,16 +13,12 @@ RSpec.describe GetContentfulEntry do
 
   describe "#call" do
     it "returns the contents of Contentful fixture (for now)" do
-      contentful_client = instance_double(Contentful::Client)
-      expect(Contentful::Client).to receive(:new)
-        .with(api_url: contentful_url,
-              space: contentful_space,
-              environment: contentful_environment,
-              access_token: contentful_access_token)
-        .and_return(contentful_client)
+      contentful_connector = instance_double(ContentfulConnector)
+      expect(ContentfulConnector).to receive(:new)
+        .and_return(contentful_connector)
 
       contentful_response = double(Contentful::Entry, id: contentful_planning_start_entry_id)
-      expect(contentful_client).to receive(:entry)
+      expect(contentful_connector).to receive(:get_entry_by_id)
         .with(contentful_planning_start_entry_id)
         .and_return(contentful_response)
 
@@ -42,9 +30,9 @@ RSpec.describe GetContentfulEntry do
     context "when the Contentful entry cannot be found" do
       it "returns an error message" do
         missing_entry_id = "345vsdf7"
-        contentful_client = stub_contentful_client
+        contentful_connector = stub_contentful_connector
 
-        allow(contentful_client).to receive(:entry)
+        allow(contentful_connector).to receive(:get_entry_by_id)
           .with(missing_entry_id)
           .and_return(nil)
 
@@ -53,9 +41,9 @@ RSpec.describe GetContentfulEntry do
       end
 
       it "raises a rollbar event" do
-        contentful_client = stub_contentful_client
+        contentful_client = stub_contentful_connector
 
-        allow(contentful_client).to receive(:entry)
+        allow(contentful_client).to receive(:get_entry_by_id)
           .with(anything)
           .and_return(nil)
 
