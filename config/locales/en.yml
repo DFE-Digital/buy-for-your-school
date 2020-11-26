@@ -1,4 +1,6 @@
 en:
+  app:
+    name: Buy for your school
   generic:
     button:
       start: "Continue"
