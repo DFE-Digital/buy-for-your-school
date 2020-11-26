@@ -5,14 +5,21 @@ module ContentfulHelpers
   )
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")
 
-    contentful_client = stub_contentful_client
+    contentful_connector = stub_contentful_connector
     contentful_response = fake_contentful_question_entry(contentful_fixture_filename: fixture_filename)
-    allow(contentful_client).to receive(:entry)
+    allow(contentful_connector).to receive(:get_entry_by_id)
       .with(entry_id)
       .and_return(contentful_response)
 
     allow(contentful_response).to receive(:raw)
       .and_return(raw_response)
+  end
+
+  def stub_contentful_connector
+    contentful_connector = instance_double(ContentfulConnector)
+    expect(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+    contentful_connector
   end
 
   def stub_contentful_client
