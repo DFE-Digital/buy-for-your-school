@@ -13,8 +13,7 @@ RSpec.describe "Contentful Caching", type: :request do
     plan = create(:plan, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
 
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/radio-question-example.json")
-
-    RedisCache.redis.set("contentful:entry:1UjQurSOi5MWkcRuGxdXZS", raw_response)
+    RedisCache.redis.set("contentful:entry:1UjQurSOi5MWkcRuGxdXZS", JSON.dump(raw_response))
 
     expect_any_instance_of(Contentful::Client).not_to receive(:entry)
 
@@ -36,7 +35,7 @@ RSpec.describe "Contentful Caching", type: :request do
     get new_plan_question_path(plan)
 
     expect(RedisCache.redis.get("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
-      .to eq(raw_response)
+      .to eq(JSON.dump(raw_response.to_json))
 
     RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")
   end

@@ -13,7 +13,7 @@ class GetContentfulEntry
       entry = find_and_build_from_cache
     else
       entry = @contentful_connector.get_entry_by_id(entry_id)
-      store_in_cache(raw_contentful_response: entry)
+      store_in_cache(entry: entry)
     end
 
     if entry.nil?
@@ -53,22 +53,23 @@ class GetContentfulEntry
   end
 
   def find_in_cache
-    redis_cache.get(cache_key)
+    # rubocop:disable Security/JSONLoad
+    serialised_json_string = redis_cache.get(cache_key)
+    unserialised_json_string = JSON.restore(serialised_json_string)
+    JSON.parse(unserialised_json_string)
+    # rubocop:enable Security/JSONLoad
   end
 
-  def store_in_cache(raw_contentful_response:)
+  def store_in_cache(entry:)
     return unless ENV["CONTENTFUL_ENTRY_CACHING"] == "true"
-    return unless raw_contentful_response.present? &&
-      raw_contentful_response.respond_to?(:raw)
+    return unless entry.present? && entry.respond_to?(:raw)
 
-    redis_cache.set(cache_key, raw_contentful_response.raw)
+    redis_cache.set(cache_key, JSON.dump(entry.raw.to_json))
     redis_cache.expire(cache_key, cache_ttl)
   end
 
   def find_and_build_from_cache
-    Contentful::ResourceBuilder.new(
-      JSON.parse(find_in_cache)
-    ).run
+    Contentful::ResourceBuilder.new(find_in_cache).run
   end
 
   def redis_cache
