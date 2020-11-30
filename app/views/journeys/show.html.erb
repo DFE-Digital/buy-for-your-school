@@ -1,0 +1,8 @@
+<%= content_for :title, @journey.category.capitalize %>
+
+<h1 class="govuk-heading-xl"><%= @journey.category.capitalize %></h1>
+<dl class="govuk-summary-list">
+  <% @journey.questions.each do |question| %>
+    <%= render "#{question.contentful_type}_answer", question: question, answer: question.answer %>
+  <% end %>
+</dl>

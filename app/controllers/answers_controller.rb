@@ -2,7 +2,7 @@
 
 class AnswersController < ApplicationController
   def create
-    @plan = Plan.find(plan_id)
+    @journey = Journey.find(journey_id)
     @question = Question.find(question_id)
 
     @answer = AnswerFactory.new(question: @question).call
@@ -11,10 +11,10 @@ class AnswersController < ApplicationController
 
     if @answer.valid?
       @answer.save
-      if @plan.next_entry_id.present?
-        redirect_to new_plan_question_path(@plan)
+      if @journey.next_entry_id.present?
+        redirect_to new_journey_question_path(@journey)
       else
-        redirect_to plan_path(@plan)
+        redirect_to journey_path(@journey)
       end
     else
       render "questions/new.#{@question.contentful_type}"
@@ -23,8 +23,8 @@ class AnswersController < ApplicationController
 
   private
 
-  def plan_id
-    params[:plan_id]
+  def journey_id
+    params[:journey_id]
   end
 
   def question_id

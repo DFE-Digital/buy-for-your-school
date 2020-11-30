@@ -1,6 +1,6 @@
 <%= content_for :title, @question.title %>
 
-<%= form_for @answer, as: :answer, url: plan_question_answers_path(@plan, @question), method: "post" do |f| %>
+<%= form_for @answer, as: :answer, url: journey_question_answers_path(@journey, @question), method: "post" do |f| %>
   <%= f.govuk_text_area :response,
     label: { text: @question.title, size: 'xl' },
     hint: { text: @question.help_text },

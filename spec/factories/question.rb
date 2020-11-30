@@ -4,7 +4,7 @@ FactoryBot.define do
     help_text { "Choose the primary colour closest to your choice" }
     raw { "{\"sys\":{}}" }
 
-    association :plan, factory: :plan
+    association :journey, factory: :journey
 
     trait :radio do
       options { ["Red", "Green", "Blue"] }

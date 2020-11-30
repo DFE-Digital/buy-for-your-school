@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Question, type: :model do
-  it { should belong_to(:plan) }
+  it { should belong_to(:journey) }
   it { should have_one(:radio_answer) }
   it { should have_one(:short_text_answer) }
 

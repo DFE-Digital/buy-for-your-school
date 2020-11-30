@@ -1,4 +1,4 @@
-class CreatePlanningQuestion
+class CreateJourneyQuestion
   class UnexpectedContentfulModel < StandardError; end
 
   class UnexpectedContentfulQuestionType < StandardError; end
@@ -6,9 +6,9 @@ class CreatePlanningQuestion
   ALLOWED_CONTENTFUL_MODELS = %w[question].freeze
   ALLOWED_CONTENTFUL_QUESTION_TYPES = ["radios", "short_text", "long_text"].freeze
 
-  attr_accessor :plan, :contentful_entry
-  def initialize(plan:, contentful_entry:)
-    self.plan = plan
+  attr_accessor :journey, :contentful_entry
+  def initialize(journey:, contentful_entry:)
+    self.journey = journey
     self.contentful_entry = contentful_entry
   end
 
@@ -29,10 +29,10 @@ class CreatePlanningQuestion
       contentful_type: question_type,
       options: options,
       raw: raw,
-      plan: plan
+      journey: journey
     )
 
-    plan.update(next_entry_id: next_entry_id)
+    journey.update(next_entry_id: next_entry_id)
 
     [question, AnswerFactory.new(question: question).call]
   end

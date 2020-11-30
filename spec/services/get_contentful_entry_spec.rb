@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe GetContentfulEntry do
-  let(:contentful_planning_start_entry_id) { "1a2b3c4d5" }
+  let(:contentful_journeyning_start_entry_id) { "1a2b3c4d5" }
 
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_planning_start_entry_id
+      CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_journeyning_start_entry_id
     ) do
       example.run
     end
@@ -17,12 +17,12 @@ RSpec.describe GetContentfulEntry do
       expect(ContentfulConnector).to receive(:new)
         .and_return(contentful_connector)
 
-      contentful_response = double(Contentful::Entry, id: contentful_planning_start_entry_id)
+      contentful_response = double(Contentful::Entry, id: contentful_journeyning_start_entry_id)
       expect(contentful_connector).to receive(:get_entry_by_id)
-        .with(contentful_planning_start_entry_id)
+        .with(contentful_journeyning_start_entry_id)
         .and_return(contentful_response)
 
-      result = described_class.new(entry_id: contentful_planning_start_entry_id).call
+      result = described_class.new(entry_id: contentful_journeyning_start_entry_id).call
 
       expect(result).to eq(contentful_response)
     end

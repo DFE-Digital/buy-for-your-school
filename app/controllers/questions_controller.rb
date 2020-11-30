@@ -5,22 +5,22 @@ class QuestionsController < ApplicationController
     render "errors/contentful_entry_not_found", status: 500
   end
 
-  rescue_from CreatePlanningQuestion::UnexpectedContentfulModel do |exception|
+  rescue_from CreateJourneyQuestion::UnexpectedContentfulModel do |exception|
     render "errors/unexpected_contentful_model", status: 500
   end
 
-  rescue_from CreatePlanningQuestion::UnexpectedContentfulQuestionType do |exception|
+  rescue_from CreateJourneyQuestion::UnexpectedContentfulQuestionType do |exception|
     render "errors/unexpected_contentful_question_type", status: 500
   end
 
   def new
-    @plan = Plan.find(plan_id)
+    @journey = Journey.find(journey_id)
 
-    redirect_to plan_path(@plan) unless @plan.next_entry_id.present?
+    redirect_to journey_path(@journey) unless @journey.next_entry_id.present?
 
-    contentful_entry = GetContentfulEntry.new(entry_id: @plan.next_entry_id).call
-    @question, @answer = CreatePlanningQuestion.new(
-      plan: @plan, contentful_entry: contentful_entry
+    contentful_entry = GetContentfulEntry.new(entry_id: @journey.next_entry_id).call
+    @question, @answer = CreateJourneyQuestion.new(
+      journey: @journey, contentful_entry: contentful_entry
     ).call
 
     render "new.#{@question.contentful_type}"
@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def plan_id
-    params[:plan_id]
+  def journey_id
+    params[:journey_id]
   end
 end

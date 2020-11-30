@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_142721) do
+ActiveRecord::Schema.define(version: 2020_11_30_155246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "category", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "next_entry_id"
+  end
 
   create_table "long_text_answers", force: :cascade do |t|
     t.uuid "question_id"
@@ -24,15 +31,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_142721) do
     t.index ["question_id"], name: "index_long_text_answers_on_question_id"
   end
 
-  create_table "plans", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "category", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "next_entry_id"
-  end
-
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "plan_id"
+    t.uuid "journey_id"
     t.string "title", null: false
     t.string "help_text"
     t.string "contentful_type", null: false
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_142721) do
     t.binary "raw", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["plan_id"], name: "index_questions_on_plan_id"
+    t.index ["journey_id"], name: "index_questions_on_journey_id"
   end
 
   create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_142721) do
   end
 
   add_foreign_key "long_text_answers", "questions", on_delete: :cascade
-  add_foreign_key "questions", "plans", on_delete: :cascade
+  add_foreign_key "questions", "journeys", on_delete: :cascade
   add_foreign_key "radio_answers", "questions", on_delete: :cascade
   add_foreign_key "short_text_answers", "questions", on_delete: :cascade
 end
