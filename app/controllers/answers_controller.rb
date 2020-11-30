@@ -3,21 +3,21 @@
 class AnswersController < ApplicationController
   def create
     @journey = Journey.find(journey_id)
-    @question = Question.find(question_id)
+    @step = Step.find(step_id)
 
-    @answer = AnswerFactory.new(question: @question).call
+    @answer = AnswerFactory.new(step: @step).call
     @answer.assign_attributes(answer_params)
-    @answer.question = @question
+    @answer.step = @step
 
     if @answer.valid?
       @answer.save
       if @journey.next_entry_id.present?
-        redirect_to new_journey_question_path(@journey)
+        redirect_to new_journey_step_path(@journey)
       else
         redirect_to journey_path(@journey)
       end
     else
-      render "questions/new.#{@question.contentful_type}"
+      render "steps/new.#{@step.contentful_type}"
     end
   end
 
@@ -27,8 +27,8 @@ class AnswersController < ApplicationController
     params[:journey_id]
   end
 
-  def question_id
-    params[:question_id]
+  def step_id
+    params[:step_id]
   end
 
   def answer_params

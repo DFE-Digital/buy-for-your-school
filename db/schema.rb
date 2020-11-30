@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_155246) do
+ActiveRecord::Schema.define(version: 2020_11_30_155247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,14 +24,30 @@ ActiveRecord::Schema.define(version: 2020_11_30_155246) do
   end
 
   create_table "long_text_answers", force: :cascade do |t|
-    t.uuid "question_id"
+    t.uuid "step_id"
     t.text "response", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_long_text_answers_on_question_id"
+    t.index ["step_id"], name: "index_long_text_answers_on_step_id"
   end
 
-  create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "step_id"
+    t.string "response", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id"], name: "index_radio_answers_on_step_id"
+  end
+
+  create_table "short_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "step_id"
+    t.string "response", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id"], name: "index_short_text_answers_on_step_id"
+  end
+
+  create_table "steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "journey_id"
     t.string "title", null: false
     t.string "help_text"
@@ -40,27 +56,11 @@ ActiveRecord::Schema.define(version: 2020_11_30_155246) do
     t.binary "raw", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["journey_id"], name: "index_questions_on_journey_id"
+    t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 
-  create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "question_id"
-    t.string "response", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_radio_answers_on_question_id"
-  end
-
-  create_table "short_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "question_id"
-    t.string "response", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_short_text_answers_on_question_id"
-  end
-
-  add_foreign_key "long_text_answers", "questions", on_delete: :cascade
-  add_foreign_key "questions", "journeys", on_delete: :cascade
-  add_foreign_key "radio_answers", "questions", on_delete: :cascade
-  add_foreign_key "short_text_answers", "questions", on_delete: :cascade
+  add_foreign_key "long_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "radio_answers", "steps", on_delete: :cascade
+  add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "steps", "journeys", on_delete: :cascade
 end

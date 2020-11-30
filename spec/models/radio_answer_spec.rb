@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe RadioAnswer, type: :model do
-  it { should belong_to(:question) }
+  it { should belong_to(:step) }
 
   it "captures the users response as a string" do
     answer = build(:radio_answer, response: "Yellow")

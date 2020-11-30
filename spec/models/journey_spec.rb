@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Journey, type: :model do
-  it { should have_many(:questions) }
+  it { should have_many(:steps) }
 
   it "captures the category" do
     journey = build(:journey, :catering)

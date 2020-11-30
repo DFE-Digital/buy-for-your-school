@@ -11,6 +11,6 @@ RSpec.describe "Entry previews", type: :request do
     get "/preview/entries/#{entry_id}"
 
     expect(response).to have_http_status(:found)
-    expect(response).to redirect_to("/journeys/#{fake_journey.id}/questions/new")
+    expect(response).to redirect_to("/journeys/#{fake_journey.id}/steps/new")
   end
 end

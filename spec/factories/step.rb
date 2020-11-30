@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :question do
+  factory :step do
     title { "What is your favourite colour?" }
     help_text { "Choose the primary colour closest to your choice" }
     raw { "{\"sys\":{}}" }

@@ -17,7 +17,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
     expect_any_instance_of(Contentful::Client).not_to receive(:entry)
 
-    get new_journey_question_path(journey)
+    get new_journey_step_path(journey)
 
     expect(response).to have_http_status(:success)
 
@@ -32,7 +32,7 @@ RSpec.describe "Contentful Caching", type: :request do
       fixture_filename: "radio-question-example.json"
     )
 
-    get new_journey_question_path(journey)
+    get new_journey_step_path(journey)
 
     expect(RedisCache.redis.get("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
       .to eq(JSON.dump(raw_response.to_json))
@@ -48,7 +48,7 @@ RSpec.describe "Contentful Caching", type: :request do
     )
 
     freeze_time do
-      get new_journey_question_path(journey)
+      get new_journey_step_path(journey)
 
       expect(RedisCache.redis.ttl("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
         .to eq(172_800)
@@ -75,7 +75,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
       expect(RedisCache).not_to receive(:redis)
 
-      get new_journey_question_path(journey)
+      get new_journey_step_path(journey)
     end
   end
 end
