@@ -1,15 +1,20 @@
 class GetContentfulEntry
   class EntryNotFound < StandardError; end
 
-  attr_accessor :entry_id
+  attr_accessor :entry_id, :cache
 
   def initialize(entry_id:, contentful_connector: ContentfulConnector.new)
     self.entry_id = entry_id
     @contentful_connector = contentful_connector
+    self.cache = Cache.new(
+      enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
+      key: "contentful:entry:#{entry_id}",
+      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 172_800) # 48 hours
+    )
   end
 
   def call
-    if cache_hit?
+    if cache.hit?
       entry = find_and_build_from_cache
     else
       entry = @contentful_connector.get_entry_by_id(entry_id)
@@ -36,43 +41,21 @@ class GetContentfulEntry
     )
   end
 
-  def cache_key
-    @cache_key ||= "contentful:entry:#{entry_id}"
+  def store_in_cache(entry:)
+    return unless entry.present? && entry.respond_to?(:raw)
+
+    cache.set(value: JSON.dump(entry.raw.to_json))
   end
 
-  def cache_hit?
-    if ENV["CONTENTFUL_ENTRY_CACHING"] == "true"
-      redis_cache.exists?(cache_key)
-    else
-      false
-    end
-  end
-
-  def cache_ttl
-    ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 172_800) # 48 hours
-  end
-
-  def find_in_cache
+  def load_from_cache
     # rubocop:disable Security/JSONLoad
-    serialised_json_string = redis_cache.get(cache_key)
+    serialised_json_string = cache.get
     unserialised_json_string = JSON.restore(serialised_json_string)
     JSON.parse(unserialised_json_string)
     # rubocop:enable Security/JSONLoad
   end
 
-  def store_in_cache(entry:)
-    return unless ENV["CONTENTFUL_ENTRY_CACHING"] == "true"
-    return unless entry.present? && entry.respond_to?(:raw)
-
-    redis_cache.set(cache_key, JSON.dump(entry.raw.to_json))
-    redis_cache.expire(cache_key, cache_ttl)
-  end
-
   def find_and_build_from_cache
-    Contentful::ResourceBuilder.new(find_in_cache).run
-  end
-
-  def redis_cache
-    RedisCache.redis
+    Contentful::ResourceBuilder.new(load_from_cache).run
   end
 end
