@@ -16,7 +16,7 @@ class StepsController < ApplicationController
   def new
     @journey = Journey.find(journey_id)
 
-    redirect_to journey_path(@journey) unless @journey.next_entry_id.present?
+    return redirect_to journey_path(@journey) unless @journey.next_entry_id.present?
 
     contentful_entry = GetContentfulEntry.new(entry_id: @journey.next_entry_id).call
     @step, @answer = CreateJourneyStep.new(
