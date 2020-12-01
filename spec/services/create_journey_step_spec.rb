@@ -9,7 +9,7 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "radio-question-example.json"
         )
 
-        step, _answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
@@ -24,46 +24,20 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "has-next-question-example.json"
         )
 
-        _step, _answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        _step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(journey.next_entry_id).to eql("5lYcZs1ootDrOnk09LDLZg")
       end
     end
 
-    context "when the step is of type 'radios'" do
-      it "returns a fresh RadioAnswer object" do
-        journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
-          contentful_fixture_filename: "radio-question-example.json"
-        )
-
-        _step, answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
-
-        expect(answer).to be_kind_of(RadioAnswer)
-        expect(answer.response).to eql(nil)
-      end
-    end
-
     context "when the question is of type 'short_text'" do
-      it "returns a fresh ShortTextAnswer object" do
-        journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
-          contentful_fixture_filename: "short-text-question-example.json"
-        )
-
-        _step, answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
-
-        expect(answer).to be_kind_of(ShortTextAnswer)
-        expect(answer.response).to eql(nil)
-      end
-
       it "sets help_text and options to nil" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_step_entry(
           contentful_fixture_filename: "short-text-question-example.json"
         )
 
-        step, _answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(step.options).to eq(nil)
       end
@@ -74,7 +48,7 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "short-text-question-example.json"
         )
 
-        step, _answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(step.contentful_type).to eq("short_text")
       end
@@ -87,7 +61,7 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "radio-question-example.json"
         )
 
-        _step, _answer = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        _step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(journey.next_entry_id).to eql(nil)
       end

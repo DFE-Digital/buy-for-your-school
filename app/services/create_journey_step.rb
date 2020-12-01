@@ -34,7 +34,7 @@ class CreateJourneyStep
 
     journey.update(next_entry_id: next_entry_id)
 
-    [step, AnswerFactory.new(step: step).call]
+    step
   end
 
   private

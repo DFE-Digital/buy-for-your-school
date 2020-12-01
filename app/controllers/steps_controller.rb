@@ -19,9 +19,17 @@ class StepsController < ApplicationController
     return redirect_to journey_path(@journey) unless @journey.next_entry_id.present?
 
     contentful_entry = GetContentfulEntry.new(entry_id: @journey.next_entry_id).call
-    @step, @answer = CreateJourneyStep.new(
+    @step = CreateJourneyStep.new(
       journey: @journey, contentful_entry: contentful_entry
     ).call
+
+    redirect_to journey_step_path(@journey, @step)
+  end
+
+  def show
+    @journey = Journey.find(journey_id)
+    @step = Step.find(params[:id])
+    @answer = AnswerFactory.new(step: @step).call
 
     render "new.#{@step.contentful_type}"
   end
