@@ -1,5 +1,6 @@
 class CreatePlanningQuestion
   class UnexpectedContentfulModel < StandardError; end
+
   class UnexpectedContentfulQuestionType < StandardError; end
 
   ALLOWED_CONTENTFUL_MODELS = %w[question].freeze
