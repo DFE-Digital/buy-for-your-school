@@ -1,14 +1,14 @@
-class CreatePlanningQuestion
+class CreateJourneyStep
   class UnexpectedContentfulModel < StandardError; end
 
-  class UnexpectedContentfulQuestionType < StandardError; end
+  class UnexpectedContentfulStepType < StandardError; end
 
   ALLOWED_CONTENTFUL_MODELS = %w[question].freeze
   ALLOWED_CONTENTFUL_QUESTION_TYPES = ["radios", "short_text", "long_text"].freeze
 
-  attr_accessor :plan, :contentful_entry
-  def initialize(plan:, contentful_entry:)
-    self.plan = plan
+  attr_accessor :journey, :contentful_entry
+  def initialize(journey:, contentful_entry:)
+    self.journey = journey
     self.contentful_entry = contentful_entry
   end
 
@@ -18,23 +18,23 @@ class CreatePlanningQuestion
       raise UnexpectedContentfulModel
     end
 
-    if unexpected_contentful_question_type?
+    if unexpected_contentful_step_type?
       send_rollbar_warning
-      raise UnexpectedContentfulQuestionType
+      raise UnexpectedContentfulStepType
     end
 
-    question = Question.create(
+    step = Step.create(
       title: title,
       help_text: help_text,
-      contentful_type: question_type,
+      contentful_type: step_type,
       options: options,
       raw: raw,
-      plan: plan
+      journey: journey
     )
 
-    plan.update(next_entry_id: next_entry_id)
+    journey.update(next_entry_id: next_entry_id)
 
-    [question, AnswerFactory.new(question: question).call]
+    [step, AnswerFactory.new(step: step).call]
   end
 
   private
@@ -55,12 +55,12 @@ class CreatePlanningQuestion
     !expected_contentful_model?
   end
 
-  def expected_contentful_question_type?
-    ALLOWED_CONTENTFUL_QUESTION_TYPES.include?(question_type)
+  def expected_contentful_step_type?
+    ALLOWED_CONTENTFUL_QUESTION_TYPES.include?(step_type)
   end
 
-  def unexpected_contentful_question_type?
-    !expected_contentful_question_type?
+  def unexpected_contentful_step_type?
+    !expected_contentful_step_type?
   end
 
   def title
@@ -77,7 +77,7 @@ class CreatePlanningQuestion
     contentful_entry.options
   end
 
-  def question_type
+  def step_type
     contentful_entry.type.tr(" ", "_")
   end
 
@@ -98,9 +98,9 @@ class CreatePlanningQuestion
       contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
       contentful_entry_id: content_entry_id,
       content_model: content_model,
-      question_type: question_type,
+      step_type: step_type,
       allowed_content_models: ALLOWED_CONTENTFUL_MODELS.join(", "),
-      allowed_question_types: ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", ")
+      allowed_step_types: ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", ")
     )
   end
 end

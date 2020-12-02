@@ -1,6 +1,6 @@
-class Question < ApplicationRecord
+class Step < ApplicationRecord
   self.implicit_order_column = "created_at"
-  belongs_to :plan
+  belongs_to :journey
 
   has_one :radio_answer
   has_one :short_text_answer

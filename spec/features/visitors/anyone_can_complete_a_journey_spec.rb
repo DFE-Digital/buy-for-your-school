@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Anyone can start the planning journey" do
+feature "Anyone can start a journey" do
   scenario "Start page includes a call to action" do
     stub_get_contentful_entry
 
@@ -32,7 +32,7 @@ feature "Anyone can start the planning journey" do
     expect(page).to have_content("can't be blank")
   end
 
-  context "when the starter question has a next question" do
+  context "when the starter step has a next step" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "47EI2X2T5EDTpJX9WjRR9p"
@@ -41,7 +41,7 @@ feature "Anyone can start the planning journey" do
       end
     end
 
-    scenario "there are 2 questions to answer" do
+    scenario "there are 2 steps to answer" do
       visit root_path
 
       stub_get_contentful_entry(
@@ -135,7 +135,7 @@ feature "Anyone can start the planning journey" do
     end
   end
 
-  context "when Contentful entry model wasn't a type of question" do
+  context "when Contentful entry model wasn't a type of step" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "6EKsv389ETYcQql3htK3Z2"
@@ -159,7 +159,7 @@ feature "Anyone can start the planning journey" do
     end
   end
 
-  context "when Contentful question entry wasn't an expected type" do
+  context "when Contentful step entry wasn't an expected type" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "8as7df68uhasdnuasdf"
@@ -178,8 +178,8 @@ feature "Anyone can start the planning journey" do
 
       click_on(I18n.t("generic.button.start"))
 
-      expect(page).to have_content(I18n.t("errors.unexpected_contentful_question_type.page_title"))
-      expect(page).to have_content(I18n.t("errors.unexpected_contentful_question_type.page_body"))
+      expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_title"))
+      expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_body"))
     end
   end
 end

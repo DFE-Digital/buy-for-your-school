@@ -10,14 +10,14 @@ RSpec.describe "Contentful Caching", type: :request do
   end
 
   it "checks the Redis cache instead of making an external request" do
-    plan = create(:plan, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
+    journey = create(:journey, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
 
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/radio-question-example.json")
     RedisCache.redis.set("contentful:entry:1UjQurSOi5MWkcRuGxdXZS", JSON.dump(raw_response))
 
     expect_any_instance_of(Contentful::Client).not_to receive(:entry)
 
-    get new_plan_question_path(plan)
+    get new_journey_step_path(journey)
 
     expect(response).to have_http_status(:success)
 
@@ -25,14 +25,14 @@ RSpec.describe "Contentful Caching", type: :request do
   end
 
   it "stores the external contentful response in the cache" do
-    plan = create(:plan, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
+    journey = create(:journey, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/radio-question-example.json")
     stub_get_contentful_entry(
       entry_id: "1UjQurSOi5MWkcRuGxdXZS",
       fixture_filename: "radio-question-example.json"
     )
 
-    get new_plan_question_path(plan)
+    get new_journey_step_path(journey)
 
     expect(RedisCache.redis.get("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
       .to eq(JSON.dump(raw_response.to_json))
@@ -41,14 +41,14 @@ RSpec.describe "Contentful Caching", type: :request do
   end
 
   it "sets a TTL to 48 hours by default" do
-    plan = create(:plan, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
+    journey = create(:journey, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
     stub_get_contentful_entry(
       entry_id: "1UjQurSOi5MWkcRuGxdXZS",
       fixture_filename: "radio-question-example.json"
     )
 
     freeze_time do
-      get new_plan_question_path(plan)
+      get new_journey_step_path(journey)
 
       expect(RedisCache.redis.ttl("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
         .to eq(172_800)
@@ -67,7 +67,7 @@ RSpec.describe "Contentful Caching", type: :request do
     end
 
     it "does not interact with the redis cache" do
-      plan = create(:plan, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
+      journey = create(:journey, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
       stub_get_contentful_entry(
         entry_id: "1UjQurSOi5MWkcRuGxdXZS",
         fixture_filename: "radio-question-example.json"
@@ -75,7 +75,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
       expect(RedisCache).not_to receive(:redis)
 
-      get new_plan_question_path(plan)
+      get new_journey_step_path(journey)
     end
   end
 end
