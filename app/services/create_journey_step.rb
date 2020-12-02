@@ -4,7 +4,7 @@ class CreateJourneyStep
   class UnexpectedContentfulStepType < StandardError; end
 
   ALLOWED_CONTENTFUL_MODELS = %w[question].freeze
-  ALLOWED_CONTENTFUL_QUESTION_TYPES = ["radios", "short_text", "long_text"].freeze
+  ALLOWED_CONTENTFUL_QUESTION_TYPES = %w[radios short_text long_text].freeze
 
   attr_accessor :journey, :contentful_entry
   def initialize(journey:, contentful_entry:)
