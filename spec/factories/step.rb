@@ -26,5 +26,12 @@ FactoryBot.define do
       contentful_type { "long_text" }
       association :long_text_answer
     end
+
+    trait :static_content do
+      options { nil }
+      contentful_model { "staticContent" }
+      contentful_type { "paragraphs" }
+      association :paragraph_content
+    end
   end
 end

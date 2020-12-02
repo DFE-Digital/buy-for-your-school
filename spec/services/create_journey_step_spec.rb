@@ -68,6 +68,24 @@ RSpec.describe CreateJourneyStep do
       end
     end
 
+    context "when the new entry has a body field" do
+      it "updates the step with the body" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_step_entry(
+          contentful_fixture_filename: "static-content-example.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.body).to eq("Procuring a new catering contract can \
+take up to 6 months to consult, create, review and award. \n\nUsually existing \
+contracts start and end in the month of September. We recommend starting this \
+process around March.")
+      end
+    end
+
     context "when the new entry has an unexpected content model" do
       it "raises an error" do
         journey = create(:journey, :catering)

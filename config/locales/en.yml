@@ -4,6 +4,7 @@ en:
   generic:
     button:
       start: "Continue"
+      next: "Continue"
       soft_finish: "Save and continue later"
   banner:
     beta:
