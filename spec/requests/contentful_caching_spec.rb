@@ -19,7 +19,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
     get new_journey_step_path(journey)
 
-    expect(response).to have_http_status(:success)
+    expect(response).to have_http_status(:found)
 
     RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")
   end
