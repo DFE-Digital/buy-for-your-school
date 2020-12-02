@@ -19,7 +19,7 @@ A service to help school buying professionals create tender documents that compl
 * Using Docker has high parity, you don't have to install any dependencies but it takes longer to run (~20 seconds):
 
     ```bash
-    docker-compose -f docker-compose.test.yml run --rm web bundle exec rake
+    docker-compose -f docker-compose.test.yml run --rm test bundle exec rake
     ```
 * Without Docker is faster (~5 seconds) but has lower parity and you will need to install local dependencies on your machine first:
 
