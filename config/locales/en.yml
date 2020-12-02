@@ -8,6 +8,8 @@ en:
     button:
       start: "Continue"
       next: "Continue"
+      change_answer: "Change"
+      update: "Update"
   banner:
     beta:
       tag: "beta"
