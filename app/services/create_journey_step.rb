@@ -26,6 +26,7 @@ class CreateJourneyStep
     step = Step.create(
       title: title,
       help_text: help_text,
+      contentful_model: content_model,
       contentful_type: step_type,
       options: options,
       raw: raw,

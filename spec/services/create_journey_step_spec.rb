@@ -13,6 +13,7 @@ RSpec.describe CreateJourneyStep do
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
+        expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq(["Catering", "Cleaning"])
         expect(step.raw).to eq(fake_entry.raw)

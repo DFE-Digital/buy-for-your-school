@@ -13,4 +13,8 @@ class Step < ApplicationRecord
   def answer
     @answer ||= radio_answer || short_text_answer || long_text_answer
   end
+
+  def question?
+    contentful_model == "question"
+  end
 end
