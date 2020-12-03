@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- fix primary key type on long_text_answers table to UUID
+- nightly task to warm the Contentful cache for all entries
+
 ## [release-003] - 2020-12-07
 
 - add database foreign key constraints for better data integrity
@@ -15,7 +18,6 @@ The format is based on [Keep a Changelog 1.0.0].
 - refactor name of "Question" to "Step"
 - refactor redis caching into reusable class
 - users can be shown a step in the journey that is only static content
-- fix primary key type on long_text_answers table to UUID
 
 ## [release-002] - 2020-11-16
 

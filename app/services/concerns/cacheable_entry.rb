@@ -9,7 +9,6 @@ module CacheableEntry
 
   def store_in_cache(cache:, key:, entry:)
     return unless entry.present? && entry.respond_to?(:raw)
-
     cache.set(key: key, value: JSON.dump(entry.raw.to_json))
   end
 

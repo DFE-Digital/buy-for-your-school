@@ -1,0 +1,8 @@
+warm_contentful_entry_cache:
+  cron: "0 3 * * *"
+  class: "WarmEntryCacheJob"
+  description: This is a content driven service and the content is sourced by
+    the Contentful API. As a single point of failure we have a Redis cache to
+    provide some resilience to downtime or minor connection issues. As this
+    service is used infrequently by real users, we automatically update the
+    cache.
