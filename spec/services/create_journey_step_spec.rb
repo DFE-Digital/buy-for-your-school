@@ -113,7 +113,7 @@ process around March.")
             content_model: "unmanagedPage",
             step_type: "radios",
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", "))
+            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
@@ -147,7 +147,7 @@ process around March.")
             content_model: "question",
             step_type: "telepathy",
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", "))
+            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
