@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - refactor name of "Plan" to "Journey"
 - refactor name of "Question" to "Step"
 - refactor redis caching into reusable class
+- users can be shown a step in the journey that is only static content
 
 ## [release-002] - 2020-11-16
 

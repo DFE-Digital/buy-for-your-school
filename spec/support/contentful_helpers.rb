@@ -45,6 +45,7 @@ module ContentfulHelpers
       id: hash_response.dig("sys", "id"),
       title: hash_response.dig("fields", "title"),
       help_text: hash_response.dig("fields", "helpText"),
+      body: hash_response.dig("fields", "body"),
       options: hash_response.dig("fields", "options"),
       type: hash_response.dig("fields", "type"),
       next: double(id: hash_response.dig("fields", "next", "sys", "id")),

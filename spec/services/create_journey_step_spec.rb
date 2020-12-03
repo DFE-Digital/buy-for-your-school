@@ -13,6 +13,7 @@ RSpec.describe CreateJourneyStep do
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
+        expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq(["Catering", "Cleaning"])
         expect(step.raw).to eq(fake_entry.raw)
@@ -67,6 +68,24 @@ RSpec.describe CreateJourneyStep do
       end
     end
 
+    context "when the new entry has a body field" do
+      it "updates the step with the body" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_step_entry(
+          contentful_fixture_filename: "static-content-example.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.body).to eq("Procuring a new catering contract can \
+take up to 6 months to consult, create, review and award. \n\nUsually existing \
+contracts start and end in the month of September. We recommend starting this \
+process around March.")
+      end
+    end
+
     context "when the new entry has an unexpected content model" do
       it "raises an error" do
         journey = create(:journey, :catering)
@@ -94,7 +113,7 @@ RSpec.describe CreateJourneyStep do
             content_model: "unmanagedPage",
             step_type: "radios",
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", "))
+            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
@@ -128,7 +147,7 @@ RSpec.describe CreateJourneyStep do
             content_model: "question",
             step_type: "telepathy",
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_QUESTION_TYPES.join(", "))
+            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
