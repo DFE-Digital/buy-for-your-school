@@ -9,17 +9,16 @@ class GetContentfulEntry
     @contentful_connector = contentful_connector
     self.cache = Cache.new(
       enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
-      key: "contentful:entry:#{entry_id}",
       ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 172_800) # 48 hours
     )
   end
 
   def call
-    if cache.hit?
-      entry = find_and_build_entry_from_cache(cache: cache)
+    if cache.hit?(key: cache_key)
+      entry = find_and_build_entry_from_cache(cache: cache, key: cache_key)
     else
       entry = @contentful_connector.get_entry_by_id(entry_id)
-      store_in_cache(cache: cache, entry: entry)
+      store_in_cache(cache: cache, key: cache_key, entry: entry)
     end
 
     if entry.nil?
@@ -31,6 +30,10 @@ class GetContentfulEntry
   end
 
   private
+
+  def cache_key
+    "contentful:entry:#{entry_id}"
+  end
 
   def send_rollbar_warning
     Rollbar.warning(
