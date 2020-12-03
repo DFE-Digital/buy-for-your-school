@@ -1,28 +1,28 @@
 require "rails_helper"
 
 RSpec.describe GetContentfulEntry do
-  let(:contentful_journeyning_start_entry_id) { "1a2b3c4d5" }
+  let(:contentful_journey_start_entry_id) { "1a2b3c4d5" }
 
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_journeyning_start_entry_id
+      CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_journey_start_entry_id
     ) do
       example.run
     end
   end
 
   describe "#call" do
-    it "returns the contents of Contentful fixture (for now)" do
+    it "requests and returns the required entry from Contentful" do
       contentful_connector = instance_double(ContentfulConnector)
       expect(ContentfulConnector).to receive(:new)
         .and_return(contentful_connector)
 
-      contentful_response = double(Contentful::Entry, id: contentful_journeyning_start_entry_id)
+      contentful_response = double(Contentful::Entry, id: contentful_journey_start_entry_id)
       expect(contentful_connector).to receive(:get_entry_by_id)
-        .with(contentful_journeyning_start_entry_id)
+        .with(contentful_journey_start_entry_id)
         .and_return(contentful_response)
 
-      result = described_class.new(entry_id: contentful_journeyning_start_entry_id).call
+      result = described_class.new(entry_id: contentful_journey_start_entry_id).call
 
       expect(result).to eq(contentful_response)
     end
