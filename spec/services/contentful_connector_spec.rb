@@ -37,4 +37,25 @@ RSpec.describe ContentfulConnector do
       expect(result).to eq(contentful_response)
     end
   end
+
+  describe "#get_all_entries" do
+    it "returns all Contentful entries by making a call to Contentful" do
+      contentful_client = instance_double(Contentful::Client)
+      expect(Contentful::Client).to receive(:new)
+        .with(api_url: contentful_url,
+              space: contentful_space,
+              environment: contentful_environment,
+              access_token: contentful_access_token)
+        .and_return(contentful_client)
+
+      contentful_response = double(Contentful::Array)
+      expect(contentful_client).to receive(:entries)
+        .and_return(contentful_response)
+
+      result = described_class.new.get_all_entries
+
+      expect(result).to eq(contentful_response)
+    end
+  end
+
 end

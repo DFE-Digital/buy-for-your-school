@@ -13,4 +13,8 @@ class ContentfulConnector
   def get_entry_by_id(entry_id)
     @contentful_client.entry(entry_id)
   end
+
+  def get_all_entries()
+    @contentful_client.entries()
+  end
 end
