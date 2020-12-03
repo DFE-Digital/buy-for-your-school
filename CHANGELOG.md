@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-003] - 2020-12-07
+
 - add database foreign key constraints for better data integrity
 - Contentful entry requests use a new Redis read cache
 - service name included in the header
@@ -34,7 +36,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DfE/DFE-Digital/buy-for-your-school/compare/release-001...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...HEAD
+[release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003
 [release-002]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-001...release-002
 [release-001]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-000...release-001
 
