@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_150359) do
+ActiveRecord::Schema.define(version: 2020_12_03_103421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "category", null: false
@@ -23,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_150359) do
     t.string "next_entry_id"
   end
 
-  create_table "long_text_answers", force: :cascade do |t|
+  create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.text "response", null: false
     t.datetime "created_at", precision: 6, null: false
