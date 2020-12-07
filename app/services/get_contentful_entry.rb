@@ -9,7 +9,7 @@ class GetContentfulEntry
     @contentful_connector = contentful_connector
     self.cache = Cache.new(
       enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
-      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 172_800) # 48 hours
+      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 48)
     )
   end
 
