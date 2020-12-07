@@ -16,7 +16,7 @@ class WarmEntryCacheJob < ApplicationJob
   def cache
     @cache ||= Cache.new(
       enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
-      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 48)
+      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72)
     )
   end
 end
