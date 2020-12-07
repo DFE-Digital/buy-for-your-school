@@ -86,6 +86,36 @@ process around March.")
       end
     end
 
+    context "when the new entry has a 'primaryCallToAction' field" do
+      it "updates the step with the body" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_step_entry(
+          contentful_fixture_filename: "primary-button-example.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.primary_call_to_action_text).to eq("Go onwards!")
+      end
+    end
+
+    context "when no 'primaryCallToAction' is provided" do
+      it "default copy is used for the button" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_step_entry(
+          contentful_fixture_filename: "no-primary-button-example.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
+      end
+    end
+
     context "when the new entry has an unexpected content model" do
       it "raises an error" do
         journey = create(:journey, :catering)

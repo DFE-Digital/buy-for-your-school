@@ -30,6 +30,7 @@ class CreateJourneyStep
       contentful_model: content_model,
       contentful_type: step_type,
       options: options,
+      primary_call_to_action_text: primary_call_to_action_text,
       raw: raw,
       journey: journey
     )
@@ -86,6 +87,11 @@ class CreateJourneyStep
 
   def step_type
     contentful_entry.type.tr(" ", "_")
+  end
+
+  def primary_call_to_action_text
+    return nil unless contentful_entry.respond_to?(:primary_call_to_action)
+    contentful_entry.primary_call_to_action
   end
 
   def raw

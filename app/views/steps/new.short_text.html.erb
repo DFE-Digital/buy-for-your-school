@@ -6,5 +6,5 @@
     hint: { text: @step.help_text },
     width: "one-third"
   %>
-  <%= f.submit I18n.t("generic.button.soft_finish"), class: "govuk-button" %>
+  <%= f.submit @step.primary_call_to_action_text, class: "govuk-button" %>
 <% end %>

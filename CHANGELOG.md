@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - fix primary key type on long_text_answers table to UUID
 - nightly task to warm the Contentful cache for all entries
+- form button content is configurable through Contentful
 
 ## [release-003] - 2020-12-07
 

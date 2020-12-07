@@ -15,7 +15,7 @@ feature "Anyone can start a journey" do
 
     choose("Catering")
 
-    click_on(I18n.t("generic.button.soft_finish"))
+    click_on(I18n.t("generic.button.next"))
   end
 
   scenario "an answer must be provided" do
@@ -27,7 +27,7 @@ feature "Anyone can start a journey" do
 
     # Omit a choice
 
-    click_on(I18n.t("generic.button.soft_finish"))
+    click_on(I18n.t("generic.button.next"))
 
     expect(page).to have_content("can't be blank")
   end
@@ -56,10 +56,11 @@ feature "Anyone can start a journey" do
         entry_id: "5lYcZs1ootDrOnk09LDLZg",
         fixture_filename: "no-next-question-example.json"
       )
-      click_on(I18n.t("generic.button.soft_finish"))
+
+      click_on(I18n.t("generic.button.next"))
 
       choose("Stationary")
-      click_on(I18n.t("generic.button.soft_finish"))
+      click_on(I18n.t("generic.button.next"))
 
       expect(page).to have_content("Catering")
       expect(page).to have_content("Stationary")
@@ -100,7 +101,7 @@ feature "Anyone can start a journey" do
       click_on(I18n.t("generic.button.start"))
 
       fill_in "answer[response]", with: "email@example.com"
-      click_on(I18n.t("generic.button.soft_finish"))
+      click_on(I18n.t("generic.button.next"))
 
       expect(page).to have_content("email@example")
     end
@@ -125,7 +126,7 @@ feature "Anyone can start a journey" do
       click_on(I18n.t("generic.button.start"))
 
       fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum."
-      click_on(I18n.t("generic.button.soft_finish"))
+      click_on(I18n.t("generic.button.next"))
 
       within(".govuk-summary-list") do
         paragraphs_elements = find_all("p")
@@ -162,6 +163,39 @@ feature "Anyone can start a journey" do
       end
 
       click_on(I18n.t("generic.button.next"))
+
+      expect(page).to have_content("Catering")
+    end
+  end
+
+  context "when the Contentful Entry has a 'primaryCallToAction' field" do
+    around do |example|
+      ClimateControl.modify(
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+      ) do
+        example.run
+      end
+    end
+
+    scenario "user can read static content and proceed without answering" do
+      stub_get_contentful_entry(
+        entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
+        fixture_filename: "primary-button-example.json"
+      )
+
+      visit root_path
+      click_on(I18n.t("generic.button.start"))
+
+      expect(page).to have_content("When you should start")
+
+      within(".static-content") do
+        paragraphs_elements = find_all("p")
+        expect(paragraphs_elements.first.text).to have_content("Procuring a new catering contract can take up to 6 months to consult, create, review and award.")
+        expect(paragraphs_elements.last.text).to have_content("Usually existing contracts start and end in the month of September. We recommend starting this process around March.")
+      end
+
+      expect(page).not_to have_content(I18n.t("generic.button.next"))
+      click_on("Go onwards!") # Language from fixture
 
       expect(page).to have_content("Catering")
     end
