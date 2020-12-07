@@ -32,5 +32,11 @@ module BuyForYourSchool
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # Automatically add UUID as the type of primary key on new tables, if you
+    # use the Rails migration generator with 'create'
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
   end
 end
