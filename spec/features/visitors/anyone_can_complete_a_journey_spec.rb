@@ -81,7 +81,7 @@ feature "Anyone can start a journey" do
     expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
   end
 
-  context "when Contentful entry is of type short_text" do
+  context "when the Contentful Entry is of type short_text" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "hfjJgWRg4xiiiImwVRDtZ"
@@ -106,7 +106,7 @@ feature "Anyone can start a journey" do
     end
   end
 
-  context "when Contentful entry is of type long_text" do
+  context "when the Contentful Entry is of type long_text" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "2jWIO1MrVIya9NZrFWT4e"
@@ -135,7 +135,7 @@ feature "Anyone can start a journey" do
     end
   end
 
-  context "when Contentful entry is of type static_content" do
+  context "when the Contentful Entry is of type static_content" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
@@ -167,7 +167,7 @@ feature "Anyone can start a journey" do
     end
   end
 
-  context "when Contentful entry model wasn't a type of question" do
+  context "when the Contentful Entry model wasn't of type 'question'" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "6EKsv389ETYcQql3htK3Z2"
@@ -191,7 +191,7 @@ feature "Anyone can start a journey" do
     end
   end
 
-  context "when Contentful step entry wasn't an expected type" do
+  context "when the Contentful Entry wasn't an expected step type" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "8as7df68uhasdnuasdf"
