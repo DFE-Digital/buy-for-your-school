@@ -1,7 +1,7 @@
 class Preview::EntriesController < ApplicationController
   def show
-    @plan = Plan.create(category: "catering", next_entry_id: entry_id)
-    redirect_to new_plan_question_path(@plan)
+    @journey = Journey.create(category: "catering", next_entry_id: entry_id)
+    redirect_to new_journey_step_path(@journey)
   end
 
   private

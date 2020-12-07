@@ -1,7 +1,10 @@
 en:
+  app:
+    name: Buy for your school
   generic:
     button:
       start: "Continue"
+      next: "Continue"
       soft_finish: "Save and continue later"
   banner:
     beta:
@@ -28,14 +31,14 @@ en:
         - information on the current contract
       before_you_start_body: "It will take around 3 minutes to complete the process"
     errors:
-      contentful_entry_not_found: "An unexpected error occurred. The starting question has been revoked by the content team."
+      contentful_entry_not_found: "An unexpected error occurred. The starting step has been revoked by the content team."
   errors:
     contentful_entry_not_found:
       page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."
+      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
     unexpected_contentful_model:
       page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."
-    unexpected_contentful_question_type:
+      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+    unexpected_contentful_step_type:
       page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required question. The team have been notified of this problem and you should be able to retry shortly."
+      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
