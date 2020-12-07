@@ -52,4 +52,4 @@ Let everybody know that a new release has been shipped.
 
 The usual place to do this is #sct-buy-for-your-school, with a message like:
 
-> 🚢 Release ### for Buy for your school is now live. Changes in this release: [link to changelog] 🚀
+> 🚢 Release ### for Buy for your school is now live. (Changes in this release)[https://github.com/DFE-Digital/buy-for-your-school/blob/develop/CHANGELOG.md#release-###---YYYY-MM-DD] 🚀
