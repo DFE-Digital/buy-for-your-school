@@ -16,4 +16,10 @@ FactoryBot.define do
 
     response { "Lots of green" }
   end
+
+  factory :single_date_answer do
+    association :step, factory: :step, contentful_type: "single_date"
+
+    response { 1.year.from_now }
+  end
 end
