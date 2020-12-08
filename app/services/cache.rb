@@ -1,8 +1,7 @@
 class Cache
   attr_accessor :enabled, :key, :ttl
-  def initialize(enabled:, key:, ttl:)
+  def initialize(enabled:, ttl:)
     self.enabled = enabled
-    self.key = key
     self.ttl = ttl
   end
 
@@ -10,7 +9,7 @@ class Cache
     @redis_cache ||= RedisCache.redis
   end
 
-  def hit?
+  def hit?(key:)
     if enabled == "true"
       redis_cache.exists?(key)
     else
@@ -18,11 +17,11 @@ class Cache
     end
   end
 
-  def get
+  def get(key:)
     redis_cache.get(key)
   end
 
-  def set(value:)
+  def set(key:, value:)
     return unless enabled == "true"
     redis_cache.set(key, value)
     redis_cache.expire(key, ttl)
