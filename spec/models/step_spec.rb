@@ -4,6 +4,8 @@ RSpec.describe Step, type: :model do
   it { should belong_to(:journey) }
   it { should have_one(:radio_answer) }
   it { should have_one(:short_text_answer) }
+  it { should have_one(:long_text_answer) }
+  it { should have_one(:single_date_answer) }
 
   it "store the basic fields of a contentful response" do
     step = build(:step,
@@ -39,6 +41,22 @@ RSpec.describe Step, type: :model do
         short_text_answer = create(:short_text_answer)
         step = create(:step, :short_text, short_text_answer: short_text_answer)
         expect(step.answer).to eq(short_text_answer)
+      end
+    end
+
+    context "when a LongTextAnswer is associated to the step" do
+      it "returns the LongTextAnswer object" do
+        long_text_answer = create(:long_text_answer)
+        step = create(:step, :long_text, long_text_answer: long_text_answer)
+        expect(step.answer).to eq(long_text_answer)
+      end
+    end
+
+    context "when a SingleDateAnswer is associated to the step" do
+      it "returns the SingleDateAnswer object" do
+        single_date_answer = create(:single_date_answer)
+        step = create(:step, :single_date, single_date_answer: single_date_answer)
+        expect(step.answer).to eq(single_date_answer)
       end
     end
   end

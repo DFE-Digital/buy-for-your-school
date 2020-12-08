@@ -67,141 +67,125 @@ feature "Anyone can start a journey" do
     end
   end
 
-  scenario "a Contentful entry_id does not exist" do
-    contentful_client = stub_contentful_client
+  context "when the Contentful model is of type question" do
+    context "when Contentful entry is of type short_text" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "hfjJgWRg4xiiiImwVRDtZ"
+        ) do
+          example.run
+        end
+      end
 
-    allow(contentful_client).to receive(:entry)
-      .with(anything)
-      .and_raise(GetContentfulEntry::EntryNotFound.new("The following Contentful error could not be found: sss "))
+      scenario "user can answer using free text" do
+        stub_get_contentful_entry(
+          entry_id: "hfjJgWRg4xiiiImwVRDtZ",
+          fixture_filename: "short-text-question-example.json"
+        )
 
-    visit root_path
+        visit root_path
+        click_on(I18n.t("generic.button.start"))
 
-    click_on(I18n.t("generic.button.start"))
+        fill_in "answer[response]", with: "email@example.com"
+        click_on(I18n.t("generic.button.next"))
 
-    expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))
-    expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
-  end
-
-  context "when the Contentful Entry is of type short_text" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "hfjJgWRg4xiiiImwVRDtZ"
-      ) do
-        example.run
+        expect(page).to have_content("email@example")
       end
     end
 
-    scenario "user can answer using free text" do
-      stub_get_contentful_entry(
-        entry_id: "hfjJgWRg4xiiiImwVRDtZ",
-        fixture_filename: "short-text-question-example.json"
-      )
+    context "when Contentful entry is of type long_text" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "2jWIO1MrVIya9NZrFWT4e"
+        ) do
+          example.run
+        end
+      end
 
-      visit root_path
-      click_on(I18n.t("generic.button.start"))
+      scenario "user can answer using free text with multiple lines" do
+        stub_get_contentful_entry(
+          entry_id: "2jWIO1MrVIya9NZrFWT4e",
+          fixture_filename: "long-text-question-example.json"
+        )
 
-      fill_in "answer[response]", with: "email@example.com"
-      click_on(I18n.t("generic.button.next"))
+        visit root_path
+        click_on(I18n.t("generic.button.start"))
 
-      expect(page).to have_content("email@example")
-    end
-  end
+        fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum."
+        click_on(I18n.t("generic.button.next"))
 
-  context "when the Contentful Entry is of type long_text" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "2jWIO1MrVIya9NZrFWT4e"
-      ) do
-        example.run
+        within(".govuk-summary-list") do
+          paragraphs_elements = find_all("p")
+          expect(paragraphs_elements.first.text).to have_content("We would like a supplier to provide catering from September 2020.")
+          expect(paragraphs_elements.last.text).to have_content("They must be able to supply us for 3 years minumum.")
+        end
       end
     end
 
-    scenario "user can answer using free text with multiple lines" do
-      stub_get_contentful_entry(
-        entry_id: "2jWIO1MrVIya9NZrFWT4e",
-        fixture_filename: "long-text-question-example.json"
-      )
-
-      visit root_path
-      click_on(I18n.t("generic.button.start"))
-
-      fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum."
-      click_on(I18n.t("generic.button.next"))
-
-      within(".govuk-summary-list") do
-        paragraphs_elements = find_all("p")
-        expect(paragraphs_elements.first.text).to have_content("We would like a supplier to provide catering from September 2020.")
-        expect(paragraphs_elements.last.text).to have_content("They must be able to supply us for 3 years minumum.")
-      end
-    end
-  end
-
-  context "when the Contentful Entry is of type static_content" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
-      ) do
-        example.run
-      end
-    end
-
-    scenario "user can read static content and proceed without answering" do
-      stub_get_contentful_entry(
-        entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
-        fixture_filename: "static-content-example.json"
-      )
-
-      visit root_path
-      click_on(I18n.t("generic.button.start"))
-
-      expect(page).to have_content("When you should start")
-
-      within(".static-content") do
-        paragraphs_elements = find_all("p")
-        expect(paragraphs_elements.first.text).to have_content("Procuring a new catering contract can take up to 6 months to consult, create, review and award.")
-        expect(paragraphs_elements.last.text).to have_content("Usually existing contracts start and end in the month of September. We recommend starting this process around March.")
+    context "when Contentful entry is of type single_date" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "55G5kpCLLL3h5yBQLiVlYy"
+        ) do
+          example.run
+        end
       end
 
-      click_on(I18n.t("generic.button.next"))
+      scenario "user can answer using a date input" do
+        stub_get_contentful_entry(
+          entry_id: "55G5kpCLLL3h5yBQLiVlYy",
+          fixture_filename: "single-date-example.json"
+        )
 
-      expect(page).to have_content("Catering")
+        visit root_path
+        click_on(I18n.t("generic.button.start"))
+
+        fill_in "answer[response(3i)]", with: "12"
+        fill_in "answer[response(2i)]", with: "8"
+        fill_in "answer[response(1i)]", with: "2020"
+
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("12 Aug 2020")
+      end
     end
   end
 
-  context "when the Contentful Entry has a 'primaryCallToAction' field" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
-      ) do
-        example.run
-      end
-    end
-
-    scenario "user can read static content and proceed without answering" do
-      stub_get_contentful_entry(
-        entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
-        fixture_filename: "primary-button-example.json"
-      )
-
-      visit root_path
-      click_on(I18n.t("generic.button.start"))
-
-      expect(page).to have_content("When you should start")
-
-      within(".static-content") do
-        paragraphs_elements = find_all("p")
-        expect(paragraphs_elements.first.text).to have_content("Procuring a new catering contract can take up to 6 months to consult, create, review and award.")
-        expect(paragraphs_elements.last.text).to have_content("Usually existing contracts start and end in the month of September. We recommend starting this process around March.")
+  context "when the Contentful model is of type staticContent" do
+    context "when Contentful entry is of type paragraphs" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+        ) do
+          example.run
+        end
       end
 
-      expect(page).not_to have_content(I18n.t("generic.button.next"))
-      click_on("Go onwards!") # Language from fixture
+      scenario "user can read static content and proceed without answering" do
+        stub_get_contentful_entry(
+          entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
+          fixture_filename: "static-content-example.json"
+        )
 
-      expect(page).to have_content("Catering")
+        visit root_path
+        click_on(I18n.t("generic.button.start"))
+
+        expect(page).to have_content("When you should start")
+
+        within(".static-content") do
+          paragraphs_elements = find_all("p")
+          expect(paragraphs_elements.first.text).to have_content("Procuring a new catering contract can take up to 6 months to consult, create, review and award.")
+          expect(paragraphs_elements.last.text).to have_content("Usually existing contracts start and end in the month of September. We recommend starting this process around March.")
+        end
+
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("Catering")
+      end
     end
   end
 
-  context "when the Contentful Entry model wasn't of type 'question'" do
+  context "when Contentful entry model wasn't an expected type" do
     around do |example|
       ClimateControl.modify(
         CONTENTFUL_PLANNING_START_ENTRY_ID: "6EKsv389ETYcQql3htK3Z2"
@@ -247,5 +231,20 @@ feature "Anyone can start a journey" do
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_body"))
     end
+  end
+
+  scenario "a Contentful entry_id does not exist" do
+    contentful_client = stub_contentful_client
+
+    allow(contentful_client).to receive(:entry)
+      .with(anything)
+      .and_raise(GetContentfulEntry::EntryNotFound.new("The following Contentful error could not be found: sss "))
+
+    visit root_path
+
+    click_on(I18n.t("generic.button.start"))
+
+    expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))
+    expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
   end
 end

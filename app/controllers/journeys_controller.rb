@@ -8,7 +8,7 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.includes(
-      steps: [:radio_answer, :short_text_answer]
+      steps: [:radio_answer, :short_text_answer, :long_text_answer]
     ).find(journey_id)
   end
 
