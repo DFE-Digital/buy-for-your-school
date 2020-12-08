@@ -121,6 +121,34 @@ feature "Anyone can start a journey" do
         end
       end
     end
+
+    context "when Contentful entry is of type single_date" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "55G5kpCLLL3h5yBQLiVlYy"
+        ) do
+          example.run
+        end
+      end
+
+      scenario "user can answer using a date input" do
+        stub_get_contentful_entry(
+          entry_id: "55G5kpCLLL3h5yBQLiVlYy",
+          fixture_filename: "single-date-example.json"
+        )
+
+        visit root_path
+        click_on(I18n.t("generic.button.start"))
+
+        fill_in "answer[response(3i)]", with: "12"
+        fill_in "answer[response(2i)]", with: "8"
+        fill_in "answer[response(1i)]", with: "2020"
+
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("12 Aug 2020")
+      end
+    end
   end
 
   context "when the Contentful model is of type staticContent" do

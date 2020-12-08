@@ -1,6 +1,9 @@
 en:
   app:
     name: Buy for your school
+  date:
+    formats:
+      default: "%-d %b %Y"
   generic:
     button:
       start: "Continue"

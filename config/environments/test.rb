@@ -62,5 +62,6 @@ Rails.application.configure do
     Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :radio_answer
     Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :short_text_answer
     Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :long_text_answer
+    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :single_date_answer
   end
 end

@@ -27,6 +27,13 @@ FactoryBot.define do
       association :long_text_answer
     end
 
+    trait :single_date do
+      options { nil }
+      contentful_model { "question" }
+      contentful_type { "single_date" }
+      association :single_date_answer
+    end
+
     trait :static_content do
       options { nil }
       contentful_model { "staticContent" }
