@@ -10,6 +10,7 @@ class JourneysController < ApplicationController
     @journey = Journey.includes(
       steps: [:radio_answer, :short_text_answer, :long_text_answer]
     ).find(journey_id)
+    @steps = @journey.steps.map { |step| StepPresenter.new(step) }
   end
 
   private

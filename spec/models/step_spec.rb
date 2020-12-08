@@ -60,20 +60,4 @@ RSpec.describe Step, type: :model do
       end
     end
   end
-
-  describe "#question?" do
-    context "when the contentful model is 'question'" do
-      it "returns true" do
-        step = build(:step, :radio, contentful_model: "question")
-        expect(step.question?).to eq(true)
-      end
-    end
-
-    context "when the contentful model is NOT 'question'" do
-      it "returns false" do
-        step = build(:step, contentful_model: "staticContent")
-        expect(step.question?).to eq(false)
-      end
-    end
-  end
 end
