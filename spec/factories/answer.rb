@@ -1,18 +1,18 @@
 FactoryBot.define do
   factory :radio_answer do
-    association :step, factory: :step, contentful_type: "radios"
+    association :step, factory: :step, contentful_type: "radios", contentful_model: "question"
 
     response { "Green" }
   end
 
   factory :short_text_answer do
-    association :step, factory: :step, contentful_type: "short_text"
+    association :step, factory: :step, contentful_type: "short_text", contentful_model: "question"
 
     response { "Green" }
   end
 
   factory :long_text_answer do
-    association :step, factory: :step, contentful_type: "long_text"
+    association :step, factory: :step, contentful_type: "long_text", contentful_model: "question"
 
     response { "Lots of green" }
   end
