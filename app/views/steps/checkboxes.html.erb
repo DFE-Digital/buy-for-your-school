@@ -1,0 +1,8 @@
+<%= render layout: layout do |f| %>
+  <%= f.govuk_collection_check_boxes :response,
+    checkbox_options(array_of_options: @step.options),
+    :id,
+    :name,
+    legend: { text: @step.title, size: "xl" }
+  %>
+<% end %>

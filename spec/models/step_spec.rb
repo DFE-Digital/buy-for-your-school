@@ -60,5 +60,13 @@ RSpec.describe Step, type: :model do
         expect(step.answer).to eq(single_date_answer)
       end
     end
+
+    context "when a CheckboxAnswers is associated to the step" do
+      it "returns the CheckboxAnswers object" do
+        checkbox_answers = create(:checkbox_answers)
+        step = create(:step, :checkbox_answers, checkbox_answers: checkbox_answers)
+        expect(step.answer).to eq(checkbox_answers)
+      end
+    end
   end
 end

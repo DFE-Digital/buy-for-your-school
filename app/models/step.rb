@@ -13,7 +13,8 @@ class Step < ApplicationRecord
       radio_answer ||
       short_text_answer ||
       long_text_answer ||
-      single_date_answer
+      single_date_answer ||
+      checkbox_answers
   end
 
   def primary_call_to_action_text
