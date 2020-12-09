@@ -3,4 +3,11 @@ class CheckboxAnswers < ActiveRecord::Base
   belongs_to :step
 
   validates :response, presence: true
+
+  def response=(args)
+    return if args.blank?
+    args.reject!(&:blank?) if args.is_a?(Array)
+
+    super(args)
+  end
 end
