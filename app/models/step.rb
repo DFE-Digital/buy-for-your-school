@@ -7,10 +7,6 @@ class Step < ApplicationRecord
   has_one :long_text_answer
   has_one :single_date_answer
 
-  def radio_options
-    options.map { |option| OpenStruct.new(id: option.downcase, name: option.titleize) }
-  end
-
   def answer
     @answer ||=
       radio_answer ||

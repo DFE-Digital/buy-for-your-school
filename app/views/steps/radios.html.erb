@@ -1,7 +1,7 @@
 <%= render layout: layout do |f| %>
   <%= f.hidden_field :response, value: nil %>
   <%= f.govuk_collection_radio_buttons :response,
-    @step.radio_options,
+    radio_options(array_of_options: @step.options),
     :id,
     ->(option) { option.name },
     :description,
