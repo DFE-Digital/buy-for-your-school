@@ -6,6 +6,7 @@ class Step < ApplicationRecord
   has_one :short_text_answer
   has_one :long_text_answer
   has_one :single_date_answer
+  has_one :checkbox_answers
 
   def answer
     @answer ||=

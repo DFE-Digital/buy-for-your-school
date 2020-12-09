@@ -6,6 +6,7 @@ RSpec.describe Step, type: :model do
   it { should have_one(:short_text_answer) }
   it { should have_one(:long_text_answer) }
   it { should have_one(:single_date_answer) }
+  it { should have_one(:checkbox_answers) }
 
   it "store the basic fields of a contentful response" do
     step = build(:step,
