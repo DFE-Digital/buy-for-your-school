@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - form button content is configurable through Contentful
 - users can be asked to provide a single date answer
 - add Webmock to prevent real http requests in the test suite
+- content users can see a journey map of all the Contentful steps
 
 ## [release-003] - 2020-12-07
 
