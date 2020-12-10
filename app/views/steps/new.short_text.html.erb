@@ -1,10 +1,7 @@
-<%= content_for :title, @step.title %>
-
-<%= form_for @answer, as: :answer, url: journey_step_answers_path(@journey, @step), method: "post" do |f| %>
+<%= render layout: "steps/form_wrapper" do |f| %>
   <%= f.govuk_text_field :response,
     label: { text: @step.title, size: 'xl' },
     hint: { text: @step.help_text },
     width: "one-third"
   %>
-  <%= f.submit @step.primary_call_to_action_text, class: "govuk-button" %>
 <% end %>
