@@ -30,12 +30,6 @@ module ContentfulHelpers
     contentful_client
   end
 
-  def stub_contentful_step(fake_entry: fake_contentful_step_entry)
-    get_contentful_step_double = instance_double(GetContentfulEntry)
-    allow(GetContentfulEntry).to receive(:new).and_return(get_contentful_step_double)
-    allow(get_contentful_step_double).to receive(:call).and_return(fake_entry)
-  end
-
   def fake_contentful_step_entry(contentful_fixture_filename:)
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
