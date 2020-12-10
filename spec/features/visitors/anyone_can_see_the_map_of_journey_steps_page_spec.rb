@@ -15,10 +15,16 @@ feature "Users can see all the steps of a journey" do
 
     visit new_journey_map_path
 
+    expect(page).to have_content(I18n.t("journey_map.page_title"))
+
     within(".govuk-list") do
       list_items = find_all("li")
-      expect(list_items.first.text).to have_content("5kZ9hIFDvNCEhjWs72SFwj")
-      expect(list_items.last.text).to have_content("hfjJgWRg4xiiiImwVRDtZ")
+      within(list_items.first) do
+        expect(page).to have_link("When you should start", href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/5kZ9hIFDvNCEhjWs72SFwj")
+      end
+      within(list_items.last) do
+        expect(page).to have_link("Which service do you need?", href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/hfjJgWRg4xiiiImwVRDtZ")
+      end
     end
   end
 end

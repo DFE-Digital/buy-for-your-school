@@ -34,6 +34,8 @@ en:
       before_you_start_body: "It will take around 3 minutes to complete the process"
     errors:
       contentful_entry_not_found: "An unexpected error occurred. The starting step has been revoked by the content team."
+  journey_map:
+    page_title: "Contentful entry map"
   errors:
     contentful_entry_not_found:
       page_title: "An unexpected error occurred"
