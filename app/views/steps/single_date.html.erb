@@ -1,4 +1,4 @@
-<%= render layout: "steps/form_wrapper" do |f| %>
+<%= render layout: layout do |f| %>
   <%= f.govuk_date_field :response,
     legend: { text: @step.title, size: "xl" },
     hint: { text: @step.help_text }

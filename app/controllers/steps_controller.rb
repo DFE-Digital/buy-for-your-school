@@ -31,7 +31,7 @@ class StepsController < ApplicationController
     @step = Step.find(params[:id])
     @answer = AnswerFactory.new(step: @step).call
 
-    render "new.#{@step.contentful_type}"
+    render @step.contentful_type, locals: {layout: "steps/new_form_wrapper"}
   end
 
   private
