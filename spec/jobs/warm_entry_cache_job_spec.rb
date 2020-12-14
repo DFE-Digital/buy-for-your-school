@@ -29,9 +29,8 @@ RSpec.describe WarmEntryCacheJob, type: :job do
       allow(GetAllContentfulEntries).to receive(:new).and_return(get_all_contentful_entries_double)
       allow(get_all_contentful_entries_double).to receive(:call).and_return(fake_contentful_entry_array)
 
-      perform_enqueued_jobs do
-        described_class.perform_later
-      end
+      described_class.perform_later
+      perform_enqueued_jobs
 
       expect(RedisCache.redis.get("contentful:entry:5kZ9hIFDvNCEhjWs72SFwj"))
         .to eql(
