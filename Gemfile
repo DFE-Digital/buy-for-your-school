@@ -39,6 +39,7 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov"
+  gem "webmock"
 end
 
 group :development do
