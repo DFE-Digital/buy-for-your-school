@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add Webmock to prevent real http requests in the test suite
 - content users can see a journey map of all the Contentful steps
 - users can be asked to provide multiple answers via a checkbox question
+- journey map shows an error to the content team if a duplicate entry is detected
 
 ## [release-003] - 2020-12-07
 

@@ -46,3 +46,6 @@ en:
     unexpected_contentful_step_type:
       page_title: "An unexpected error occurred"
       page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+    repeat_step_in_the_contentful_journey:
+      page_title: "An unexpected error occurred"
+      page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
