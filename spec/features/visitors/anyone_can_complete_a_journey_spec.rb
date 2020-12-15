@@ -1,6 +1,14 @@
 require "rails_helper"
 
 feature "Anyone can start a journey" do
+  around do |example|
+    ClimateControl.modify(
+      CONTENTFUL_PLANNING_START_ENTRY_ID: "1UjQurSOi5MWkcRuGxdXZS"
+    ) do
+      example.run
+    end
+  end
+
   scenario "Start page includes a call to action" do
     stub_get_contentful_entry
 
