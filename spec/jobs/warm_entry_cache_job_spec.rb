@@ -21,13 +21,10 @@ RSpec.describe WarmEntryCacheJob, type: :job do
     end
 
     it "asks GetAllContentfulEntries for the Contentful entries" do
-      raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/multiple-entries-example.json")
-      response_hash = JSON.parse(raw_response)
-      fake_contentful_entry_array = Contentful::ResourceBuilder.new(response_hash).run
-
-      get_all_contentful_entries_double = instance_double(GetAllContentfulEntries)
-      allow(GetAllContentfulEntries).to receive(:new).and_return(get_all_contentful_entries_double)
-      allow(get_all_contentful_entries_double).to receive(:call).and_return(fake_contentful_entry_array)
+      stub_get_contentful_entries(
+        entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
+        fixture_filename: "multiple-entries-example.json"
+      )
 
       described_class.perform_later
       perform_enqueued_jobs
