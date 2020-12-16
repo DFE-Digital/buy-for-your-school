@@ -26,4 +26,13 @@ class Cache
     redis_cache.set(key, value)
     redis_cache.expire(key, ttl)
   end
+
+  def extend_ttl_on_all_entries(extension: (60 * 60 * 24))
+    redis_cache.keys("contentful:entry:*").map do |key|
+      previous_ttl = redis_cache.ttl(key)
+      extended_ttl = extension + previous_ttl
+
+      redis_cache.expire(key, extended_ttl)
+    end
+  end
 end

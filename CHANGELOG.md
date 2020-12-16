@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - journey map shows an error to the content team if the journey doesn't end within 50 steps
 - refactor how we store and access a Step's associated Contentful Entry ID
 - users can edit their answers
+- only add Contentful entries that form part of a valid journey to the cache
 
 ## [release-003] - 2020-12-07
 

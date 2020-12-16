@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Cache do
+  after(:each) do
+    RedisCache.redis.flushdb
+  end
+
   it "requires a key, enabled flag and ttl" do
     result = described_class.new(enabled: "true", ttl: 123)
     expect(result.enabled).to eql("true")
@@ -77,6 +81,43 @@ RSpec.describe Cache do
         expect(redis).not_to receive(:expire).with("key-to-set", 123)
 
         cache.set(key: "key-to-set", value: "value-to-set")
+      end
+    end
+  end
+
+  describe "#extend_ttl_on_all_entries" do
+    it "only updates redis keys associated to contentful entries" do
+      cache = described_class.new(enabled: anything, ttl: anything)
+      redis = cache.redis_cache
+
+      redis.set("contentful:entry:123", "value")
+      expect(redis).to receive(:expire).with("contentful:entry:123", (60 * 60 * 24) + -1)
+
+      cache.extend_ttl_on_all_entries
+    end
+
+    context "when other redis keys exist" do
+      it "only updates redis keys associated to contentful entries" do
+        cache = described_class.new(enabled: anything, ttl: anything)
+        redis = cache.redis_cache
+
+        redis.set("another_key", "another_value")
+        expect(redis).not_to receive(:expire).with("another_key")
+
+        cache.extend_ttl_on_all_entries
+      end
+    end
+
+    context "when the key already has a TTL" do
+      it "sets a combined TTL with the existing and the extension" do
+        cache = described_class.new(enabled: anything, ttl: anything)
+        redis = cache.redis_cache
+
+        redis.set("contentful:entry:123", "value")
+        redis.expire("contentful:entry:123", 10)
+        expect(redis).to receive(:expire).with("contentful:entry:123", (60 * 60 * 24) + 10)
+
+        cache.extend_ttl_on_all_entries
       end
     end
   end
