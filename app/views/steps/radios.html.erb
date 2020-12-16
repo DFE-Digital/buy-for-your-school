@@ -1,6 +1,4 @@
-<%= content_for :title, @step.title %>
-
-<%= form_for @answer, as: :answer, url: journey_step_answers_path(@journey, @step), method: "post" do |f| %>
+<%= render layout: layout do |f| %>
   <%= f.hidden_field :response, value: nil %>
   <%= f.govuk_collection_radio_buttons :response,
     @step.radio_options,
@@ -11,5 +9,4 @@
     hint: { text: @step.help_text },
     inline: false
   %>
-  <%= f.submit @step.primary_call_to_action_text, class: "govuk-button" %>
 <% end %>

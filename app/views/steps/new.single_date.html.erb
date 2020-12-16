@@ -1,9 +1,0 @@
-<%= content_for :title, @step.title %>
-
-<%= form_for @answer, as: :answer, url: journey_step_answers_path(@journey, @step), method: "post" do |f| %>
-  <%= f.govuk_date_field :response,
-    legend: { text: @step.title, size: "xl" },
-    hint: { text: @step.help_text }
-  %>
-  <%= f.submit @step.primary_call_to_action_text, class: "govuk-button" %>
-<% end %>

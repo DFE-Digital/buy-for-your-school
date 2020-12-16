@@ -1,0 +1,8 @@
+<%= render layout: layout do |f| %>
+  <%= f.govuk_text_area :response,
+    label: { text: @step.title, size: 'xl' },
+    hint: { text: @step.help_text },
+    width: "one-third",
+    rows: 9
+  %>
+<% end %>

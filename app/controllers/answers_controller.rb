@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
         redirect_to journey_path(@journey)
       end
     else
-      render "steps/new.#{@step.contentful_type}"
+      render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
     end
   end
 
