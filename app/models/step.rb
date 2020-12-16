@@ -21,4 +21,9 @@ class Step < ApplicationRecord
     return I18n.t("generic.button.next") unless super.present?
     super
   end
+
+  # TODO: Change raw field type to jsonb
+  def raw
+    JSON.parse super.gsub("=>", ":")
+  end
 end
