@@ -49,3 +49,6 @@ en:
     repeat_step_in_the_contentful_journey:
       page_title: "An unexpected error occurred"
       page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
+    too_many_steps_in_the_contentful_journey:
+      page_title: "An unexpected error occurred"
+      page_body: "More than %{step_count} steps were found in the Contentful journey. Is the journey missing an end? The last Entry ID was: %{entry_id}"

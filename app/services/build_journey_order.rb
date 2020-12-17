@@ -1,5 +1,10 @@
 class BuildJourneyOrder
   class RepeatEntryDetected < StandardError; end
+
+  class TooManyChainedEntriesDetected < StandardError; end
+
+  ENTRY_JOURNEY_MAX_LENGTH = 50
+
   attr_accessor :entries, :starting_entry_id
 
   def initialize(entries:, starting_entry_id:)
@@ -27,6 +32,11 @@ class BuildJourneyOrder
     if entries.include?(entry)
       send_rollbar_error(message: "A repeated Contentful entry was found in the same journey", entry_id: entry.id)
       raise RepeatEntryDetected.new(entry.id)
+    end
+
+    if entries.count >= ENTRY_JOURNEY_MAX_LENGTH
+      send_rollbar_error(message: "More than #{ENTRY_JOURNEY_MAX_LENGTH} steps were found in a journey map", entry_id: entry.id)
+      raise TooManyChainedEntriesDetected.new(entry.id)
     end
 
     entries << entry if entry.present?

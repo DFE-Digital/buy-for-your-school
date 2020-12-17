@@ -52,5 +52,30 @@ feature "Users can see all the steps of a journey" do
         )
       end
     end
+
+    context "when the chain becomes obviously too long" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+        ) do
+          example.run
+        end
+      end
+
+      it "returns an error message" do
+        stub_const("BuildJourneyOrder::ENTRY_JOURNEY_MAX_LENGTH", 1)
+        stub_get_contentful_entries(
+          entry_id: "hfjJgWRg4xiiiImwVRDtZ",
+          fixture_filename: "closed-path-with-multiple-example.json"
+        )
+
+        visit new_journey_map_path
+
+        expect(page).to have_content(I18n.t("errors.too_many_steps_in_the_contentful_journey.page_title"))
+        expect(page).to have_content(
+          I18n.t("errors.too_many_steps_in_the_contentful_journey.page_body", entry_id: "hfjJgWRg4xiiiImwVRDtZ", step_count: 1)
+        )
+      end
+    end
   end
 end

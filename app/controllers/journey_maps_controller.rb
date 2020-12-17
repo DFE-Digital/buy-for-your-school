@@ -5,6 +5,10 @@ class JourneyMapsController < ApplicationController
     render "errors/repeat_step_in_the_contentful_journey", status: 500, locals: {error: exception}
   end
 
+  rescue_from BuildJourneyOrder::TooManyChainedEntriesDetected do |exception|
+    render "errors/too_many_steps_in_the_contentful_journey", status: 500, locals: {error: exception}
+  end
+
   def new
     entries = GetAllContentfulEntries.new.call
     @journey_map = BuildJourneyOrder.new(
