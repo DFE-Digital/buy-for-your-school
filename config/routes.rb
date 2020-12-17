@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   resource :journey_map, only: [:new]
   resources :journeys, only: [:new, :show] do
-    resources :steps, only: [:new, :show] do
-      resources :answers, only: [:create]
+    resources :steps, only: [:new, :show, :edit] do
+      resources :answers, only: [:create, :update]
     end
   end
 

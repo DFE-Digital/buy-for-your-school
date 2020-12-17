@@ -27,6 +27,21 @@ class AnswersController < ApplicationController
     end
   end
 
+  def update
+    @journey = Journey.find(journey_id)
+    @step = Step.find(step_id)
+    @answer = @step.answer
+
+    @answer.assign_attributes(answer_params)
+
+    if @answer.valid?
+      @answer.save
+      redirect_to journey_path(@journey)
+    else
+      render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}
+    end
+  end
+
   private
 
   def journey_id
