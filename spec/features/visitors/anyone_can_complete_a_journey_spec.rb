@@ -149,6 +149,33 @@ feature "Anyone can start a journey" do
         expect(page).to have_content("12 Aug 2020")
       end
     end
+
+    context "when Contentful entry is of type checkboxes" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "1DqhwF2XkJJ0Um6NSweWlZ"
+        ) do
+          example.run
+        end
+      end
+
+      scenario "user can select multiple answers" do
+        stub_get_contentful_entry(
+          entry_id: "1DqhwF2XkJJ0Um6NSweWlZ",
+          fixture_filename: "checkbox-example.json"
+        )
+
+        visit root_path
+        click_on(I18n.t("generic.button.start"))
+
+        check "Breakfast"
+        check "Lunch"
+
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("Breakfast, Lunch")
+      end
+    end
   end
 
   context "when the Contentful model is of type staticContent" do

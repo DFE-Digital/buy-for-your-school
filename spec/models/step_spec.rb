@@ -6,6 +6,7 @@ RSpec.describe Step, type: :model do
   it { should have_one(:short_text_answer) }
   it { should have_one(:long_text_answer) }
   it { should have_one(:single_date_answer) }
+  it { should have_one(:checkbox_answers) }
 
   it "store the basic fields of a contentful response" do
     step = build(:step,
@@ -57,6 +58,14 @@ RSpec.describe Step, type: :model do
         single_date_answer = create(:single_date_answer)
         step = create(:step, :single_date, single_date_answer: single_date_answer)
         expect(step.answer).to eq(single_date_answer)
+      end
+    end
+
+    context "when a CheckboxAnswers is associated to the step" do
+      it "returns the CheckboxAnswers object" do
+        checkbox_answers = create(:checkbox_answers)
+        step = create(:step, :checkbox_answers, checkbox_answers: checkbox_answers)
+        expect(step.answer).to eq(checkbox_answers)
       end
     end
   end

@@ -22,4 +22,10 @@ FactoryBot.define do
 
     response { 1.year.from_now }
   end
+
+  factory :checkbox_answers do
+    association :step, factory: :step, contentful_type: "checkboxes"
+
+    response { ["breakfast", "lunch", ""] }
+  end
 end

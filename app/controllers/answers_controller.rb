@@ -6,8 +6,14 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
 
     @answer = AnswerFactory.new(step: @step).call
-    @answer.assign_attributes(answer_params)
     @answer.step = @step
+
+    case @step.contentful_type
+    when "checkboxes"
+      @answer.assign_attributes(checkbox_params)
+    else
+      @answer.assign_attributes(answer_params)
+    end
 
     if @answer.valid?
       @answer.save
@@ -33,5 +39,9 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:response)
+  end
+
+  def checkbox_params
+    params.require(:answer).permit(response: [])
   end
 end

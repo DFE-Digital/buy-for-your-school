@@ -11,6 +11,7 @@ class AnswerFactory
     when "short_text" then ShortTextAnswer.new
     when "long_text" then LongTextAnswer.new
     when "single_date" then SingleDateAnswer.new
+    when "checkboxes" then CheckboxAnswers.new
     end
   end
 end
