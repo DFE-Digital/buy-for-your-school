@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-004] - 2020-12-17
+
 - fix primary key type on long_text_answers table to UUID
 - nightly task to warm the Contentful cache for all entries
 - form button content is configurable through Contentful
@@ -49,7 +51,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...HEAD
+[release-004]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...release-004
 [release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003
 [release-002]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-001...release-002
 [release-001]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-000...release-001
