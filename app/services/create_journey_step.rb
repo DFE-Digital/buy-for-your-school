@@ -4,7 +4,14 @@ class CreateJourneyStep
   class UnexpectedContentfulStepType < StandardError; end
 
   ALLOWED_CONTENTFUL_MODELS = %w[question staticContent].freeze
-  ALLOWED_CONTENTFUL_ENTRY_TYPES = %w[radios short_text long_text paragraphs].freeze
+  ALLOWED_CONTENTFUL_ENTRY_TYPES = %w[
+    radios
+    short_text
+    long_text
+    paragraphs
+    single_date
+    checkboxes
+  ].freeze
 
   attr_accessor :journey, :contentful_entry
   def initialize(journey:, contentful_entry:)
@@ -27,9 +34,11 @@ class CreateJourneyStep
       title: title,
       help_text: help_text,
       body: body,
+      contentful_id: content_entry_id,
       contentful_model: content_model,
       contentful_type: step_type,
       options: options,
+      primary_call_to_action_text: primary_call_to_action_text,
       raw: raw,
       journey: journey
     )
@@ -86,6 +95,11 @@ class CreateJourneyStep
 
   def step_type
     contentful_entry.type.tr(" ", "_")
+  end
+
+  def primary_call_to_action_text
+    return nil unless contentful_entry.respond_to?(:primary_call_to_action)
+    contentful_entry.primary_call_to_action
   end
 
   def raw

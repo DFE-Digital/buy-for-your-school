@@ -5,7 +5,7 @@ RSpec.describe CreateJourneyStep do
     context "when the new step is of type step" do
       it "creates a local copy of the new step" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "radio-question-example.json"
         )
 
@@ -13,15 +13,53 @@ RSpec.describe CreateJourneyStep do
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
+        expect(step.contentful_id).to eq("1UjQurSOi5MWkcRuGxdXZS")
         expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq(["Catering", "Cleaning"])
-        expect(step.raw).to eq(fake_entry.raw)
+        expect(step.raw).to eq(
+          "fields" => {
+            "helpText" => "Tell us which service you need.",
+            "options" => ["Catering", "Cleaning"],
+            "slug" => "/which-service",
+            "title" => "Which service do you need?",
+            "type" => "radios"
+          },
+          "sys" => {
+            "contentType" => {
+              "sys" => {
+                "id" => "question",
+                "linkType" => "ContentType",
+                "type" => "Link"
+              }
+            },
+            "createdAt" => "2020-09-07T10:56:40.585Z",
+            "environment" => {
+              "sys" => {
+                "id" => "master",
+                "linkType" => "Environment",
+                "type" => "Link"
+              }
+            },
+            "id" => "1UjQurSOi5MWkcRuGxdXZS",
+            "locale" => "en-US",
+            "revision" => 7,
+            "space" => {
+              "sys" => {
+                "id" => "jspwts36h1os",
+                "linkType" => "Space",
+                "type" => "Link"
+              }
+            },
+            "type" => "Entry",
+            "updatedAt" => "2020-09-14T22:16:54.633Z"
+          }
+        )
       end
 
       it "updates the journey with a new next_entry_id" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "has-next-question-example.json"
         )
 
@@ -34,7 +72,7 @@ RSpec.describe CreateJourneyStep do
     context "when the question is of type 'short_text'" do
       it "sets help_text and options to nil" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "short-text-question-example.json"
         )
 
@@ -45,7 +83,7 @@ RSpec.describe CreateJourneyStep do
 
       it "replaces spaces with underscores" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "short-text-question-example.json"
         )
 
@@ -58,7 +96,7 @@ RSpec.describe CreateJourneyStep do
     context "when the new step does not have a following step" do
       it "updates the journey by setting the next_entry_id to nil" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "radio-question-example.json"
         )
 
@@ -71,7 +109,7 @@ RSpec.describe CreateJourneyStep do
     context "when the new entry has a body field" do
       it "updates the step with the body" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "static-content-example.json"
         )
 
@@ -86,10 +124,40 @@ process around March.")
       end
     end
 
+    context "when the new entry has a 'primaryCallToAction' field" do
+      it "updates the step with the body" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_entry(
+          contentful_fixture_filename: "primary-button-example.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.primary_call_to_action_text).to eq("Go onwards!")
+      end
+    end
+
+    context "when no 'primaryCallToAction' is provided" do
+      it "default copy is used for the button" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_entry(
+          contentful_fixture_filename: "no-primary-button-example.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
+      end
+    end
+
     context "when the new entry has an unexpected content model" do
       it "raises an error" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "an-unexpected-model-example.json"
         )
 
@@ -100,7 +168,7 @@ process around March.")
       it "raises a rollbar event" do
         journey = create(:journey, :catering)
 
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "an-unexpected-model-example.json"
         )
 
@@ -123,7 +191,7 @@ process around March.")
     context "when the new step has an unexpected step type" do
       it "raises an error" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "an-unexpected-question-type-example.json"
         )
 
@@ -134,7 +202,7 @@ process around March.")
       it "raises a rollbar event" do
         journey = create(:journey, :catering)
 
-        fake_entry = fake_contentful_step_entry(
+        fake_entry = fake_contentful_entry(
           contentful_fixture_filename: "an-unexpected-question-type-example.json"
         )
 

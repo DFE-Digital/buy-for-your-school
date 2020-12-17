@@ -1,16 +1,19 @@
 require "rails_helper"
 
 RSpec.describe Cache do
+  after(:each) do
+    RedisCache.redis.flushdb
+  end
+
   it "requires a key, enabled flag and ttl" do
-    result = described_class.new(key: "redis-key", enabled: "true", ttl: 123)
-    expect(result.key).to eql("redis-key")
+    result = described_class.new(enabled: "true", ttl: 123)
     expect(result.enabled).to eql("true")
     expect(result.ttl).to eql(123)
   end
 
   describe "#redis_cache" do
     it "returns an object that quacks like a redis instance (since MockRedis is used in Test)" do
-      result = described_class.new(key: anything, enabled: anything, ttl: anything)
+      result = described_class.new(enabled: anything, ttl: anything)
         .redis_cache
 
       expect(result.respond_to?(:get)).to eq(true)
@@ -23,23 +26,23 @@ RSpec.describe Cache do
   describe "#hit?" do
     context "when enabled" do
       it "asks redis if that key exists" do
-        cache = described_class.new(key: "key-to-find", enabled: "true", ttl: anything)
+        cache = described_class.new(enabled: "true", ttl: anything)
         redis = cache.redis_cache
 
         expect(redis).to receive(:exists?).with("key-to-find")
 
-        cache.hit?
+        cache.hit?(key: "key-to-find")
       end
     end
 
     context "when disabled" do
       it "returns false" do
-        cache = described_class.new(key: "key-to-find", enabled: "false", ttl: anything)
+        cache = described_class.new(enabled: "false", ttl: anything)
         redis = cache.redis_cache
 
         expect(redis).not_to receive(:exists?).with("key-to-find")
 
-        result = cache.hit?
+        result = cache.hit?(key: "key-to-find")
         expect(result).to eq(false)
       end
     end
@@ -47,37 +50,74 @@ RSpec.describe Cache do
 
   describe "#get" do
     it "asks redis to get that key" do
-      cache = described_class.new(key: "key-to-find", enabled: "false", ttl: anything)
+      cache = described_class.new(enabled: "false", ttl: anything)
       redis = cache.redis_cache
 
       expect(redis).to receive(:get).with("key-to-find")
 
-      cache.get
+      cache.get(key: "key-to-find")
     end
   end
 
   describe "#set" do
     context "when enabled" do
       it "asks redis to set that key with the ttl" do
-        cache = described_class.new(key: "key-to-set", enabled: "true", ttl: 123)
+        cache = described_class.new(enabled: "true", ttl: 123)
         redis = cache.redis_cache
 
         expect(redis).to receive(:set).with("key-to-set", "value-to-set")
         expect(redis).to receive(:expire).with("key-to-set", 123)
 
-        cache.set(value: "value-to-set")
+        cache.set(key: "key-to-set", value: "value-to-set")
       end
     end
 
     context "when disabled" do
       it "does not ask redis to set that key" do
-        cache = described_class.new(key: "key-to-set", enabled: "false", ttl: 123)
+        cache = described_class.new(enabled: "false", ttl: 123)
         redis = cache.redis_cache
 
         expect(redis).not_to receive(:set).with("key-to-set", "value-to-set")
         expect(redis).not_to receive(:expire).with("key-to-set", 123)
 
-        cache.set(value: "value-to-set")
+        cache.set(key: "key-to-set", value: "value-to-set")
+      end
+    end
+  end
+
+  describe "#extend_ttl_on_all_entries" do
+    it "only updates redis keys associated to contentful entries" do
+      cache = described_class.new(enabled: anything, ttl: anything)
+      redis = cache.redis_cache
+
+      redis.set("contentful:entry:123", "value")
+      expect(redis).to receive(:expire).with("contentful:entry:123", (60 * 60 * 24) + -1)
+
+      cache.extend_ttl_on_all_entries
+    end
+
+    context "when other redis keys exist" do
+      it "only updates redis keys associated to contentful entries" do
+        cache = described_class.new(enabled: anything, ttl: anything)
+        redis = cache.redis_cache
+
+        redis.set("another_key", "another_value")
+        expect(redis).not_to receive(:expire).with("another_key")
+
+        cache.extend_ttl_on_all_entries
+      end
+    end
+
+    context "when the key already has a TTL" do
+      it "sets a combined TTL with the existing and the extension" do
+        cache = described_class.new(enabled: anything, ttl: anything)
+        redis = cache.redis_cache
+
+        redis.set("contentful:entry:123", "value")
+        redis.expire("contentful:entry:123", 10)
+        expect(redis).to receive(:expire).with("contentful:entry:123", (60 * 60 * 24) + 10)
+
+        cache.extend_ttl_on_all_entries
       end
     end
   end

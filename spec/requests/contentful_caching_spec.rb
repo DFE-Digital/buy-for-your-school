@@ -40,7 +40,7 @@ RSpec.describe "Contentful Caching", type: :request do
     RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")
   end
 
-  it "sets a TTL to 48 hours by default" do
+  it "sets a TTL to 72 hours by default" do
     journey = create(:journey, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
     stub_get_contentful_entry(
       entry_id: "1UjQurSOi5MWkcRuGxdXZS",
@@ -51,7 +51,7 @@ RSpec.describe "Contentful Caching", type: :request do
       get new_journey_step_path(journey)
 
       expect(RedisCache.redis.ttl("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
-        .to eq(172_800)
+        .to eq(60 * 60 * 72)
     end
 
     RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")

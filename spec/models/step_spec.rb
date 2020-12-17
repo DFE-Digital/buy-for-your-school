@@ -4,6 +4,9 @@ RSpec.describe Step, type: :model do
   it { should belong_to(:journey) }
   it { should have_one(:radio_answer) }
   it { should have_one(:short_text_answer) }
+  it { should have_one(:long_text_answer) }
+  it { should have_one(:single_date_answer) }
+  it { should have_one(:checkbox_answers) }
 
   it "store the basic fields of a contentful response" do
     step = build(:step,
@@ -18,11 +21,8 @@ RSpec.describe Step, type: :model do
   end
 
   it "captures the raw contentful response" do
-    contentful_json_response = JSON("foo": {})
-    step = build(:step,
-      raw: contentful_json_response)
-
-    expect(step.raw).to eql("{\"foo\":{}}")
+    step = build(:step, raw: {foo: "bar"})
+    expect(step.raw).to eql({"foo" => "bar"})
   end
 
   describe "#answer" do
@@ -41,20 +41,28 @@ RSpec.describe Step, type: :model do
         expect(step.answer).to eq(short_text_answer)
       end
     end
-  end
 
-  describe "#question?" do
-    context "when the contentful model is 'question'" do
-      it "returns true" do
-        step = build(:step, :radio, contentful_model: "question")
-        expect(step.question?).to eq(true)
+    context "when a LongTextAnswer is associated to the step" do
+      it "returns the LongTextAnswer object" do
+        long_text_answer = create(:long_text_answer)
+        step = create(:step, :long_text, long_text_answer: long_text_answer)
+        expect(step.answer).to eq(long_text_answer)
       end
     end
 
-    context "when the contentful model is NOT 'question'" do
-      it "returns false" do
-        step = build(:step, contentful_model: "staticContent")
-        expect(step.question?).to eq(false)
+    context "when a SingleDateAnswer is associated to the step" do
+      it "returns the SingleDateAnswer object" do
+        single_date_answer = create(:single_date_answer)
+        step = create(:step, :single_date, single_date_answer: single_date_answer)
+        expect(step.answer).to eq(single_date_answer)
+      end
+    end
+
+    context "when a CheckboxAnswers is associated to the step" do
+      it "returns the CheckboxAnswers object" do
+        checkbox_answers = create(:checkbox_answers)
+        step = create(:step, :checkbox_answers, checkbox_answers: checkbox_answers)
+        expect(step.answer).to eq(checkbox_answers)
       end
     end
   end

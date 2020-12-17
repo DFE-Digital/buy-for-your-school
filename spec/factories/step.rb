@@ -2,7 +2,8 @@ FactoryBot.define do
   factory :step do
     title { "What is your favourite colour?" }
     help_text { "Choose the primary colour closest to your choice" }
-    raw { "{\"sys\":{}}" }
+    raw { "{\"sys\":{\"id\"=>\"123\"}}" }
+    contentful_id { "123" }
 
     association :journey, factory: :journey
 
@@ -25,6 +26,20 @@ FactoryBot.define do
       contentful_model { "question" }
       contentful_type { "long_text" }
       association :long_text_answer
+    end
+
+    trait :single_date do
+      options { nil }
+      contentful_model { "question" }
+      contentful_type { "single_date" }
+      association :single_date_answer
+    end
+
+    trait :checkbox_answers do
+      options { ["Brown", "Gold"] }
+      contentful_model { "question" }
+      contentful_type { "checkboxes" }
+      association :checkbox_answers
     end
 
     trait :static_content do

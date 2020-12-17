@@ -9,6 +9,7 @@ services:
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - "3000:3000"
+    image: "buy_for_your_school:dev"
     depends_on:
       - db
       - redis
@@ -17,6 +18,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
       REDIS_CACHE_URL: redis://redis:6379/1
+      REDIS_SIDEKIQ_URL: redis://redis:6379/2
     volumes:
       - .:/srv/app
     tty: true
@@ -37,6 +39,17 @@ services:
     image: redis
     volumes:
       - redis-data:/data
+    networks:
+      - dev
+
+  sidekiq:
+    image: buy_for_your_school:dev
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/srv/app
     networks:
       - dev
 

@@ -4,4 +4,4 @@
 <div class="static-content">
   <%= simple_format(@step.body, wrapper_tag: "p", class: "govuk-body") %>
 </div>
-<%= link_to I18n.t("generic.button.next"), new_journey_step_path, class: "govuk-button" %>
+<%= link_to @step.primary_call_to_action_text, new_journey_step_path, class: "govuk-button" %>

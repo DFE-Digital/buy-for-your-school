@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-004] - 2020-12-17
+
+- fix primary key type on long_text_answers table to UUID
+- nightly task to warm the Contentful cache for all entries
+- form button content is configurable through Contentful
+- users can be asked to provide a single date answer
+- add Webmock to prevent real http requests in the test suite
+- content users can see a journey map of all the Contentful steps
+- users can be asked to provide multiple answers via a checkbox question
+- journey map shows an error to the content team if a duplicate entry is detected
+- journey map shows an error to the content team if the journey doesn't end within 50 steps
+- refactor how we store and access a Step's associated Contentful Entry ID
+- users can edit their answers
+- only add Contentful entries that form part of a valid journey to the cache
+
 ## [release-003] - 2020-12-07
 
 - add database foreign key constraints for better data integrity
@@ -36,7 +51,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...HEAD
+[release-004]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...release-004
 [release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003
 [release-002]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-001...release-002
 [release-001]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-000...release-001
