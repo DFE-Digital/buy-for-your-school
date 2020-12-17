@@ -1,4 +1,10 @@
 class BuildJourneyOrder
+  class RepeatEntryDetected < StandardError; end
+
+  class TooManyChainedEntriesDetected < StandardError; end
+
+  ENTRY_JOURNEY_MAX_LENGTH = 50
+
   attr_accessor :entries, :starting_entry_id
 
   def initialize(entries:, starting_entry_id:)
@@ -22,6 +28,17 @@ class BuildJourneyOrder
 
   def recursive_path(entry_lookup:, next_entry_id:, entries:)
     entry = entry_lookup.fetch(next_entry_id, nil)
+
+    if entries.include?(entry)
+      send_rollbar_error(message: "A repeated Contentful entry was found in the same journey", entry_id: entry.id)
+      raise RepeatEntryDetected.new(entry.id)
+    end
+
+    if entries.count >= ENTRY_JOURNEY_MAX_LENGTH
+      send_rollbar_error(message: "More than #{ENTRY_JOURNEY_MAX_LENGTH} steps were found in a journey map", entry_id: entry.id)
+      raise TooManyChainedEntriesDetected.new(entry.id)
+    end
+
     entries << entry if entry.present?
 
     if entry.respond_to?(:next)
@@ -33,5 +50,15 @@ class BuildJourneyOrder
     else
       entries
     end
+  end
+
+  def send_rollbar_error(message:, entry_id:)
+    Rollbar.error(
+      message,
+      contentful_url: ENV["CONTENTFUL_URL"],
+      contentful_space_id: ENV["CONTENTFUL_SPACE"],
+      contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+      contentful_entry_id: entry_id
+    )
   end
 end
