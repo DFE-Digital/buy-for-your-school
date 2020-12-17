@@ -1,6 +1,6 @@
 class ChangeStepRawFieldToJsonB < ActiveRecord::Migration[6.1]
   def up
-    add_column :steps, :raw_jsonb, :jsonb, null: false
+    add_column :steps, :raw_jsonb, :jsonb
     ActiveRecord::Base.transaction do
       Step.all.map do |step|
         hash = JSON.parse(step.raw.gsub("=>", ":"))
@@ -9,10 +9,11 @@ class ChangeStepRawFieldToJsonB < ActiveRecord::Migration[6.1]
     end
     remove_column :steps, :raw
     rename_column :steps, :raw_jsonb, :raw
+    change_column :steps, :raw, :jsonb, null: false
   end
 
   def down
-    add_column :steps, :raw_binary, :binary, null: false
+    add_column :steps, :raw_binary, :binary
     ActiveRecord::Base.transaction do
       Step.all.map do |step|
         string = step.raw.to_s
@@ -21,5 +22,6 @@ class ChangeStepRawFieldToJsonB < ActiveRecord::Migration[6.1]
     end
     remove_column :steps, :raw
     rename_column :steps, :raw_binary, :raw
+    change_column :steps, :raw, :binary, null: false
   end
 end
