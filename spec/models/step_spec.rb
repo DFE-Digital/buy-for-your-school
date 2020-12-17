@@ -21,11 +21,8 @@ RSpec.describe Step, type: :model do
   end
 
   it "captures the raw contentful response" do
-    contentful_json_response = JSON("foo": {})
-    step = build(:step,
-      raw: contentful_json_response)
-
-    expect(step.raw).to eql("{\"foo\":{}}")
+    step = build(:step, raw: {foo: "bar"})
+    expect(step.raw).to eql({"foo" => "bar"})
   end
 
   describe "#answer" do

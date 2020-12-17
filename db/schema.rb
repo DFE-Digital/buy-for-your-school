@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_09_122555) do
+ActiveRecord::Schema.define(version: 2020_12_16_160028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -70,12 +70,13 @@ ActiveRecord::Schema.define(version: 2020_12_09_122555) do
     t.string "help_text"
     t.string "contentful_type", null: false
     t.string "options", array: true
-    t.binary "raw", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "body"
     t.string "contentful_model"
     t.string "primary_call_to_action_text"
+    t.string "contentful_id", null: false
+    t.jsonb "raw", null: false
     t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 

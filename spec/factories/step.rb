@@ -2,7 +2,8 @@ FactoryBot.define do
   factory :step do
     title { "What is your favourite colour?" }
     help_text { "Choose the primary colour closest to your choice" }
-    raw { "{\"sys\":{}}" }
+    raw { "{\"sys\":{\"id\"=>\"123\"}}" }
+    contentful_id { "123" }
 
     association :journey, factory: :journey
 

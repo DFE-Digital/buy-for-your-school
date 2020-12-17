@@ -34,6 +34,7 @@ class CreateJourneyStep
       title: title,
       help_text: help_text,
       body: body,
+      contentful_id: content_entry_id,
       contentful_model: content_model,
       contentful_type: step_type,
       options: options,
