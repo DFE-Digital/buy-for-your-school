@@ -4,7 +4,9 @@ class AddContentfulIdToStep < ActiveRecord::Migration[6.1]
 
     ActiveRecord::Base.transaction do
       Step.all.map do |step|
-        contentful_id = step.raw.dig("sys", "id")
+        contentful_id = JSON.parse(
+          step.raw.gsub("=>", ":")
+        ).dig("sys", "id")
         step.update(contentful_id: contentful_id)
       end
     end
