@@ -2,7 +2,7 @@
 
 class JourneysController < ApplicationController
   def new
-    journey = Journey.create(category: "catering", next_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"])
+    journey = CreateJourney.new(category: "catering").call
     redirect_to new_journey_step_path(journey)
   end
 
