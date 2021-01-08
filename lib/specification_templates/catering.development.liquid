@@ -1,0 +1,33 @@
+<article id="specification">
+  <section>
+    <h2 class="govuk-heading-m">Menus and ordering</h2>
+    <h3 class="govuk-heading-s">Food standards</h3>
+    <ol class="govuk-list govuk-list--number">
+      <li>
+        <p class="govuk-body">It will be the suppliers responsibility to ensure that all food served within the school day complies with both current and future government legislation and guidelines on the provision of healthy school meals. </p>
+        <p class="govuk-body">The supplier should encourage the use of seasonal produce and promotion of healthy eating to pupils wherever practical and desirable.</p>
+        <p class="govuk-body">It will be the suppliers responsibility to comply fully with DfE food and nutrient based standards, and to promote and comply with this policy throughout the contract term through effective menu planning.</p>
+      </li>
+      {% if answer_NxJWpbiFeEAmvcw17EysX %}
+        <li>
+          <p class="govuk-body">The school also requires the service to comply with the following non-mandatory food standards or schemes:</p>
+          <p class="govuk-body">{{answer_NxJWpbiFeEAmvcw17EysX}}</p>
+        </li>
+      {% endif %}
+      <li>
+        <p class="govuk-body">The supplier must work with the school to provide safe and enjoyable meals for any pupils with allergies or intolerances, ensuring that the ingredients, preparation and handling of food for those children are completely allergen-free.</p>
+      </li>
+      {% if answer_5xxbqrasSXH9x9Lt3YhRkX contains "yes" %}
+        <li>
+          <p class="govuk-body">The supplier is required to track allergen information through their supply chain and must be able to demonstrate their allergen tracking plan.</p>
+        </li>
+      {% endif %}
+      {% if answer_4HfGoYL6s806Azx93jp5IY %}
+        <li>
+          <p class="govuk-body">The school has the following objectives around the quantity, quality or variety of food offered, beyond the mandatory standards:</p>
+          <p class="govuk-body">{{answer_4HfGoYL6s806Azx93jp5IY}}</p>
+        </li>
+      {% endif %}
+    </ol>
+  </section>
+</article>

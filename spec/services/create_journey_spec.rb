@@ -22,7 +22,7 @@ RSpec.describe CreateJourney do
     end
 
     it "stores a copy of the Liquid template" do
-      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/catering.liquid")
+      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/basic_catering.liquid")
       finder = instance_double(FindLiquidTemplate)
       allow(FindLiquidTemplate).to receive(:new).with(category: "catering")
         .and_return(finder)
@@ -31,7 +31,7 @@ RSpec.describe CreateJourney do
       described_class.new(category: "catering").call
 
       expect(Journey.last.liquid_template)
-        .to eql("<section id=\"blocks\">\n  {% if answer_55G5kpCLLL3h5yBQLiVlYy %}\n    <article>\n      <p class=\"govuk-body\">I'm the first article and should be seen</p>\n    </article>\n  {% endif %}\n</section>\n")
+        .to eql("<article id=\"specification\">\n  {% if answer_55G5kpCLLL3h5yBQLiVlYy %}\n    <section>\n      <p class=\"govuk-body\">I'm the first article and should be seen</p>\n    </section>\n  {% endif %}\n</article>\n")
     end
   end
 end

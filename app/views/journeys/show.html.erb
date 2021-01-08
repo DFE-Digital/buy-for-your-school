@@ -8,3 +8,6 @@
     <% end %>
   <% end %>
 </dl>
+
+<h1 class="govuk-heading-l"><%= I18n.t("journey.specification.header") %></h1>
+<%= @specification_template.render(@answers).html_safe %>

@@ -11,6 +11,14 @@ class JourneysController < ApplicationController
       steps: [:radio_answer, :short_text_answer, :long_text_answer]
     ).find(journey_id)
     @steps = @journey.steps.map { |step| StepPresenter.new(step) }
+
+    @answers = @journey.steps.that_are_questions.each_with_object({}) { |step, hash|
+      hash["answer_#{step.contentful_id}"] = step.answer.response.to_s
+    }
+
+    @specification_template = Liquid::Template.parse(
+      @journey.liquid_template, error_mode: :strict
+    )
   end
 
   private
