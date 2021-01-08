@@ -20,5 +20,16 @@ RSpec.describe CreateJourney do
       described_class.new(category: "catering").call
       expect(Journey.last.next_entry_id).to eql("1UjQurSOi5MWkcRuGxdXZS")
     end
+
+    it "stores a copy of the Liquid template" do
+      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/catering.liquid")
+      allow(File).to receive(:read).with("lib/specification_templates/catering.liquid")
+        .and_return(fake_liquid_template)
+
+      described_class.new(category: "catering").call
+
+      expect(Journey.last.liquid_template)
+        .to eql("<section id=\"blocks\">\n  {% if answer_55G5kpCLLL3h5yBQLiVlYy %}\n    <article>\n      <p class=\"govuk-body\">I'm the first article and should be seen</p>\n    </article>\n  {% endif %}\n</section>\n")
+    end
   end
 end
