@@ -46,7 +46,6 @@ FactoryBot.define do
       options { nil }
       contentful_model { "staticContent" }
       contentful_type { "paragraphs" }
-      association :paragraph_content
     end
   end
 end
