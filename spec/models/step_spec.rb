@@ -25,6 +25,16 @@ RSpec.describe Step, type: :model do
     expect(step.raw).to eql({"foo" => "bar"})
   end
 
+  describe "#that_are_questions" do
+    it "only returns steps that have the question contentful_model" do
+      question_step = create(:step, :radio)
+      static_content_step = create(:step, :static_content)
+
+      expect(described_class.that_are_questions).to include(question_step)
+      expect(described_class.that_are_questions).not_to include(static_content_step)
+    end
+  end
+
   describe "#answer" do
     context "when a RadioAnswer is associated to the step" do
       it "returns the RadioAnswer object" do
