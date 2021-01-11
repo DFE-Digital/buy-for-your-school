@@ -23,8 +23,10 @@ RSpec.describe CreateJourney do
 
     it "stores a copy of the Liquid template" do
       fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/catering.liquid")
-      allow(File).to receive(:read).with("lib/specification_templates/catering.liquid")
-        .and_return(fake_liquid_template)
+      finder = instance_double(FindLiquidTemplate)
+      allow(FindLiquidTemplate).to receive(:new).with(category: "catering")
+        .and_return(finder)
+      allow(finder).to receive(:call).and_return(fake_liquid_template)
 
       described_class.new(category: "catering").call
 

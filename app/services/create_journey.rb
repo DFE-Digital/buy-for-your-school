@@ -14,6 +14,6 @@ class CreateJourney
   end
 
   private def liquid_template
-    File.read("lib/specification_templates/#{category}.liquid")
+    FindLiquidTemplate.new(category: category).call
   end
 end
