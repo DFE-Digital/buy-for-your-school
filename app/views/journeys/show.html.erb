@@ -4,7 +4,15 @@
 <dl class="govuk-summary-list">
   <% @steps.each do |step| %>
     <% if step.question? %>
-      <%= render "#{step.contentful_type}_answer", step: step, answer: step.answer %>
+      <% if step.answer %>
+        <%= render "#{step.contentful_type}_answer", step: step, answer: step.answer %>
+      <% else %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= step.title %></dt>
+        <dd class="govuk-summary-list__value"><%= "Not started" %></dd>
+        <dd class="govuk-summary-list__actions"><%= link_to "Start", journey_step_path(@journey, step), class: "govuk-link" %></dd>
+      </div>
+      <% end %>
     <% end %>
   <% end %>
 </dl>
