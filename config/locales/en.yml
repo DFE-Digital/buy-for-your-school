@@ -57,3 +57,6 @@ en:
     too_many_steps_in_the_contentful_journey:
       page_title: "An unexpected error occurred"
       page_body: "More than %{step_count} steps were found in the Contentful journey. Is the journey missing an end? The last Entry ID was: %{entry_id}"
+    specification_template_invalid:
+      page_title: "An unexpected error occurred"
+      page_body: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."

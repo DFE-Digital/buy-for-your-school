@@ -282,4 +282,18 @@ feature "Anyone can start a journey" do
     expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))
     expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
   end
+
+  context "when the Liquid template was invalid" do
+    it "raises an error" do
+      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/invalid.liquid")
+      allow_any_instance_of(FindLiquidTemplate).to receive(:file).and_return(fake_liquid_template)
+
+      visit root_path
+
+      click_on(I18n.t("generic.button.start"))
+
+      expect(page).to have_content(I18n.t("errors.specification_template_invalid.page_title"))
+      expect(page).to have_content(I18n.t("errors.specification_template_invalid.page_body"))
+    end
+  end
 end
