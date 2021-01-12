@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [Unreleased]
 
 - users can see an initial slice of their specification as HTML at the end of their journey
+- users can download their specification as a document in the .docx format
 
 ## [release-004] - 2020-12-17
 
