@@ -10,6 +10,37 @@ RSpec.describe BuildJourneyOrder do
       end
     end
 
+    context "when the journey includes a node which doesn't exist" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "fake-id"
+        ) do
+          example.run
+        end
+      end
+
+      it "raises a rollbar event" do
+        fake_entries = fake_contentful_entry_array(
+          contentful_fixture_filename: "repeat-entry-example.json"
+        )
+
+        expect(Rollbar).to receive(:error)
+          .with("A specified Contentful entry was not found",
+            contentful_url: ENV["CONTENTFUL_URL"],
+            contentful_space_id: ENV["CONTENTFUL_SPACE"],
+            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+            contentful_entry_id: "fake-id")
+          .and_call_original
+
+        expect {
+          described_class.new(
+            entries: fake_entries,
+            starting_entry_id: "fake-id"
+          ).call
+        }.to raise_error(BuildJourneyOrder::MissingEntryDetected)
+      end
+    end
+
     context "when there are multiple entries" do
       it "returns each ID in the order they appear" do
         fake_entries = fake_contentful_entry_array(
