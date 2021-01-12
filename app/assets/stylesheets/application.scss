@@ -1,0 +1,9 @@
+$govuk-font-url-function: 'font-url';
+$govuk-image-url-function: 'image-url';
+
+@import "base/frontend";
+@import "components/specification";
+
+.preview-tag {
+  background-color: $govuk-error-colour;
+}
