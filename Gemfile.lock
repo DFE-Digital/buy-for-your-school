@@ -158,6 +158,7 @@ GEM
     launchy (2.5.0)
       addressable (~> 2.7)
     libv8 (8.4.255.0)
+    liquid (5.0.0)
     listen (3.4.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -366,6 +367,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   launchy
+  liquid
   listen (>= 3.0.5, < 3.5)
   mini_racer
   mock_redis

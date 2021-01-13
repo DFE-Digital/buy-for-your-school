@@ -1,0 +1,36 @@
+<article id="specification">
+  <section>
+    <h2>Menus and ordering</h2>
+    <h3>Food standards</h3>
+    <ol>
+      <li>
+        <p>It will be the suppliers responsibility to ensure that all food served within the school day complies with both current and future government legislation and guidelines on the provision of healthy school meals. </p>
+        <p>The supplier should encourage the use of seasonal produce and promotion of healthy eating to pupils wherever practical and desirable.</p>
+        <p>It will be the suppliers responsibility to comply fully with DfE food and nutrient based standards, and to promote and comply with this policy throughout the contract term through effective menu planning.</p>
+      </li>
+      <!-- /food-standards -->
+      {% if answer_NxJWpbiFeEAmvcw17EysX %}
+        <li>
+          <p>The school also requires the service to comply with the following non-mandatory food standards or schemes:</p>
+          <p>{{answer_NxJWpbiFeEAmvcw17EysX}}</p>
+        </li>
+      {% endif %}
+      <li>
+        <p>The supplier must work with the school to provide safe and enjoyable meals for any pupils with allergies or intolerances, ensuring that the ingredients, preparation and handling of food for those children are completely allergen-free.</p>
+      </li>
+      <!-- /track-allergens -->
+      {% if answer_5xxbqrasSXH9x9Lt3YhRkX contains "yes" %}
+        <li>
+          <p>The supplier is required to track allergen information through their supply chain and must be able to demonstrate their allergen tracking plan.</p>
+        </li>
+      {% endif %}
+      <!-- /food-objectives -->
+      {% if answer_4HfGoYL6s806Azx93jp5IY %}
+        <li>
+          <p>The school has the following objectives around the quantity, quality or variety of food offered, beyond the mandatory standards:</p>
+          <p>{{answer_4HfGoYL6s806Azx93jp5IY}}</p>
+        </li>
+      {% endif %}
+    </ol>
+  </section>
+</article>

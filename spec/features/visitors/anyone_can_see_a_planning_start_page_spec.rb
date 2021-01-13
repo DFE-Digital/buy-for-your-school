@@ -1,3 +1,5 @@
+require "rails_helper"
+
 feature "Users can see a start page for planning their purchase" do
   scenario "Start page content is shown on the root path" do
     visit root_path

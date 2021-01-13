@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
+  rescue_from FindLiquidTemplate::InvalidLiquidSyntax do |exception|
+    render "errors/specification_template_invalid", status: 500, locals: {error: exception}
+  end
+
   def new
-    journey = Journey.create(category: "catering", next_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"])
+    journey = CreateJourney.new(category: "catering").call
     redirect_to new_journey_step_path(journey)
   end
 
@@ -11,6 +15,14 @@ class JourneysController < ApplicationController
       steps: [:radio_answer, :short_text_answer, :long_text_answer]
     ).find(journey_id)
     @steps = @journey.steps.map { |step| StepPresenter.new(step) }
+
+    @answers = @journey.steps.that_are_questions.each_with_object({}) { |step, hash|
+      hash["answer_#{step.contentful_id}"] = step.answer.response.to_s
+    }
+
+    @specification_template = Liquid::Template.parse(
+      @journey.liquid_template, error_mode: :strict
+    )
   end
 
   private
