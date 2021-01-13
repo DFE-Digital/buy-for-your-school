@@ -17,11 +17,7 @@ class AnswersController < ApplicationController
 
     if @answer.valid?
       @answer.save
-      if @journey.next_entry_id.present?
-        redirect_to new_journey_step_path(@journey)
-      else
-        redirect_to journey_path(@journey)
-      end
+      redirect_to journey_path(@journey)
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
     end
