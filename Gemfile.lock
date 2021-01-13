@@ -137,6 +137,10 @@ GEM
       activesupport (~> 6.1.0, >= 6.1)
     hashdiff (1.0.1)
     high_voltage (3.1.2)
+    htmltoword (1.1.1)
+      actionpack
+      nokogiri
+      rubyzip (>= 1.0)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -364,6 +368,7 @@ DEPENDENCIES
   faker
   govuk_design_system_formbuilder (~> 2.1)
   high_voltage
+  htmltoword
   jbuilder (~> 2.5)
   jquery-rails
   launchy

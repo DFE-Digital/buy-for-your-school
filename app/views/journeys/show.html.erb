@@ -10,4 +10,5 @@
 </dl>
 
 <h1 class="govuk-heading-l"><%= I18n.t("journey.specification.header") %></h1>
+<%= link_to "Download (.docx)", journey_path(@journey, format: :docx), class: "govuk-button" %>
 <%= @specification_template.render(@answers).html_safe %>
