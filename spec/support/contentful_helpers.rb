@@ -3,16 +3,11 @@ module ContentfulHelpers
     entry_id: "1UjQurSOi5MWkcRuGxdXZS",
     fixture_filename: "radio-question-example.json"
   )
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")
-
     contentful_connector = stub_contentful_connector
     contentful_response = fake_contentful_entry(contentful_fixture_filename: fixture_filename)
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(entry_id)
       .and_return(contentful_response)
-
-    allow(contentful_response).to receive(:raw)
-      .and_return(raw_response)
   end
 
   def stub_get_contentful_entries(
