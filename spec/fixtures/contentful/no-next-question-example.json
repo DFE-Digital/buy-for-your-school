@@ -36,6 +36,14 @@
         "options": [
             "Stationary",
             "IT supplies"
+        ],
+        "extendedOptions": [
+          {
+              "value": "Stationary"
+          },
+          {
+              "value": "IT supplies"
+          }
         ]
     }
 }

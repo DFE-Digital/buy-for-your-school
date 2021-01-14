@@ -89,6 +89,14 @@
                     "Catering",
                     "Cleaning"
                 ],
+                "extendedOptions": [
+                  {
+                      "value": "Catering"
+                  },
+                  {
+                      "value": "Cleaning"
+                  }
+                ],
                 "next": {
                     "sys": {
                         "type": "Link",

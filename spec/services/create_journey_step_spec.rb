@@ -21,6 +21,7 @@ RSpec.describe CreateJourneyStep do
           "fields" => {
             "helpText" => "Tell us which service you need.",
             "options" => ["Catering", "Cleaning"],
+            "extendedOptions" => [{"value" => "Catering"}, {"value" => "Cleaning"}],
             "slug" => "/which-service",
             "title" => "Which service do you need?",
             "type" => "radios"

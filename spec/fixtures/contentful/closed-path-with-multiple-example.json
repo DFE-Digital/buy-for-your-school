@@ -88,6 +88,14 @@
                 "options": [
                     "Catering",
                     "Cleaning"
+                ],
+                "extendedOptions": [
+                  {
+                      "value": "Catering"
+                  },
+                  {
+                      "value": "Cleaning"
+                  }
                 ]
             }
         }
