@@ -1,12 +1,13 @@
 <%= render layout: layout do |f| %>
   <%= f.hidden_field :response, value: nil %>
-  <%= f.govuk_collection_radio_buttons :response,
-    radio_options(array_of_options: @step.options),
-    :id,
-    ->(option) { option.name },
-    :description,
-    legend: { text: @step.title, size: 'xl' },
-    hint: { text: @step.help_text },
-    inline: false
-  %>
+  <%= f.govuk_radio_buttons_fieldset(:response, legend: { size: 'm', text: @step.title }) do %>
+    <% if @step.help_text.present? %>
+      <span class="govuk-hint">
+        <%= @step.help_text %>
+      </span>
+    <% end %>
+    <% @step.options.each do |option| %>
+      <%= f.govuk_radio_button :response, option["value"].downcase, label: { text: option["value"] } %>
+    <% end %>
+  <% end %>
 <% end %>

@@ -16,7 +16,7 @@ RSpec.describe CreateJourneyStep do
         expect(step.contentful_id).to eq("1UjQurSOi5MWkcRuGxdXZS")
         expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
-        expect(step.options).to eq(["Catering", "Cleaning"])
+        expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",

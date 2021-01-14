@@ -17,7 +17,7 @@ RSpec.describe Step, type: :model do
 
     expect(step.title).to eql("foo")
     expect(step.help_text).to eql("bar")
-    expect(step.options).to eql(["baz", "boo"])
+    expect(step.options).to eql([{"value" => "baz"}, {"value" => "boo"}])
   end
 
   it "captures the raw contentful response" do
@@ -73,6 +73,36 @@ RSpec.describe Step, type: :model do
         checkbox_answers = create(:checkbox_answers)
         step = create(:step, :checkbox_answers, checkbox_answers: checkbox_answers)
         expect(step.answer).to eq(checkbox_answers)
+      end
+    end
+  end
+
+  describe "#options" do
+    # TODO: This will need updating when options are set on the step with the new format
+    it "returns a hash of options" do
+      step = build(:step,
+        :radio,
+        options: "",
+        raw: {
+          fields: {
+            "extendedOptions" => [
+              {"value" => "foo", "other_config" => false}
+            ]
+          }
+        })
+
+      expect(step.options).to eql([{"value" => "foo", "other_config" => false}])
+    end
+
+    # TODO: Remove this when we no longer need to support options coming from
+    # contentful in this old format
+    context "when options exist in the old flat list format" do
+      it "returns these values converted into a simple hash of values" do
+        step = build(:step,
+          :radio,
+          options: ["Yes", "No"])
+
+        expect(step.options).to eql([{"value" => "Yes"}, {"value" => "No"}])
       end
     end
   end
