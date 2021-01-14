@@ -26,7 +26,6 @@ RSpec.describe "Contentful Caching", type: :request do
 
   it "stores the external contentful response in the cache" do
     journey = create(:journey, next_entry_id: "1UjQurSOi5MWkcRuGxdXZS")
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/radio-question-example.json")
     stub_get_contentful_entry(
       entry_id: "1UjQurSOi5MWkcRuGxdXZS",
       fixture_filename: "radio-question-example.json"
@@ -35,7 +34,7 @@ RSpec.describe "Contentful Caching", type: :request do
     get new_journey_step_path(journey)
 
     expect(RedisCache.redis.get("contentful:entry:1UjQurSOi5MWkcRuGxdXZS"))
-      .to eq(JSON.dump(raw_response.to_json))
+      .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"1UjQurSOi5MWkcRuGxdXZS\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"options\\\":[\\\"Catering\\\",\\\"Cleaning\\\"]}}\"")
 
     RedisCache.redis.del("contentful:entry:1UjQurSOi5MWkcRuGxdXZS")
   end
