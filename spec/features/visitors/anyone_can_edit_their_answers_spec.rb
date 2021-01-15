@@ -44,6 +44,23 @@ feature "Users can edit their answers" do
     end
   end
 
+  context "when the question is checkbox_answers" do
+    let(:answer) { create(:checkbox_answers, response: ["breakfast", "lunch", ""]) }
+
+    scenario "The edited answer is saved" do
+      visit journey_path(answer.step.journey)
+
+      click_on(I18n.t("generic.button.change_answer"))
+
+      uncheck "Breakfast"
+
+      click_on(I18n.t("generic.button.update"))
+
+      expect(page).not_to have_content("Breakfast")
+      expect(page).to have_content("Lunch")
+    end
+  end
+
   context "An error is thrown" do
     scenario "When an answer is invalid" do
       visit journey_path(answer.step.journey)
