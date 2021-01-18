@@ -32,11 +32,6 @@
         "slug": "/everyday-services",
         "type": "checkboxes",
         "title": "Everyday services that are required and need to be considered",
-        "options": [
-            "breakfast",
-            "lunch",
-            "dinner"
-        ],
         "extendedOptions": [
           { "value": "breakfast" },
           { "value": "lunch" },

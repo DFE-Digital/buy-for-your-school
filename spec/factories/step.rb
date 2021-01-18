@@ -8,7 +8,7 @@ FactoryBot.define do
     association :journey, factory: :journey
 
     trait :radio do
-      options { ["Red", "Green", "Blue"] }
+      options { [{"value" => "Red"}, {"value" => "Green"}, {"value" => "Blue"}] }
       contentful_model { "question" }
       contentful_type { "radios" }
       association :radio_answer
@@ -36,7 +36,7 @@ FactoryBot.define do
     end
 
     trait :checkbox_answers do
-      options { ["Brown", "Gold"] }
+      options { [{"value" => "Brown"}, {"value" => "Gold"}] }
       contentful_model { "question" }
       contentful_type { "checkboxes" }
       association :checkbox_answers
