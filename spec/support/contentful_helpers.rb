@@ -50,7 +50,7 @@ module ContentfulHelpers
       title: hash_response.dig("fields", "title"),
       help_text: hash_response.dig("fields", "helpText"),
       body: hash_response.dig("fields", "body"),
-      options: hash_response.dig("fields", "options"),
+      extended_options: hash_response.dig("fields", "extendedOptions"),
       type: hash_response.dig("fields", "type"),
       next: double(id: hash_response.dig("fields", "next", "sys", "id")),
       primary_call_to_action: hash_response.dig("fields", "primaryCallToAction"),

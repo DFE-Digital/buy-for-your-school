@@ -89,8 +89,8 @@ class CreateJourneyStep
   end
 
   def options
-    return nil unless contentful_entry.respond_to?(:options)
-    contentful_entry.options
+    return nil unless contentful_entry.respond_to?(:extended_options)
+    contentful_entry.extended_options
   end
 
   def step_type

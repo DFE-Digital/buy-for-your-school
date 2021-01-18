@@ -13,7 +13,7 @@ RSpec.describe Step, type: :model do
       :radio,
       title: "foo",
       help_text: "bar",
-      options: ["baz", "boo"])
+      options: [{"value" => "baz"}, {"value" => "boo"}])
 
     expect(step.title).to eql("foo")
     expect(step.help_text).to eql("bar")
@@ -82,28 +82,9 @@ RSpec.describe Step, type: :model do
     it "returns a hash of options" do
       step = build(:step,
         :radio,
-        options: "",
-        raw: {
-          fields: {
-            "extendedOptions" => [
-              {"value" => "foo", "other_config" => false}
-            ]
-          }
-        })
+        options: [{"value" => "foo", "other_config" => false}])
 
       expect(step.options).to eql([{"value" => "foo", "other_config" => false}])
-    end
-
-    # TODO: Remove this when we no longer need to support options coming from
-    # contentful in this old format
-    context "when options exist in the old flat list format" do
-      it "returns these values converted into a simple hash of values" do
-        step = build(:step,
-          :radio,
-          options: ["Yes", "No"])
-
-        expect(step.options).to eql([{"value" => "Yes"}, {"value" => "No"}])
-      end
     end
   end
 end

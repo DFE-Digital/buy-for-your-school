@@ -24,7 +24,7 @@ FactoryBot.define do
   end
 
   factory :checkbox_answers do
-    association :step, factory: :step, options: ["breakfast", "lunch", ""], contentful_type: "checkboxes", contentful_model: "question"
+    association :step, factory: :step, options: [{"value" => "Breakfast"}, {"value" => "Lunch"}], contentful_type: "checkboxes", contentful_model: "question"
 
     response { ["breakfast", "lunch", ""] }
   end

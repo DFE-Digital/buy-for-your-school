@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can see an initial slice of their specification as HTML at the end of their journey
 - users can download their specification as a document in the .docx format
 - checkbox answers are editable
+- radio and select questions are created with the new `ExtendedOptions` field
 
 ## [release-004] - 2020-12-17
 
