@@ -18,13 +18,13 @@ FactoryBot.define do
   end
 
   factory :single_date_answer do
-    association :step, factory: :step, contentful_type: "single_date"
+    association :step, factory: :step, contentful_type: "single_date", contentful_model: "question"
 
     response { 1.year.from_now }
   end
 
   factory :checkbox_answers do
-    association :step, factory: :step, contentful_type: "checkboxes"
+    association :step, factory: :step, options: ["breakfast", "lunch", ""], contentful_type: "checkboxes", contentful_model: "question"
 
     response { ["breakfast", "lunch", ""] }
   end

@@ -32,7 +32,12 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
     @answer = @step.answer
 
-    @answer.assign_attributes(answer_params)
+    case @step.contentful_type
+    when "checkboxes"
+      @answer.assign_attributes(checkbox_params)
+    else
+      @answer.assign_attributes(answer_params)
+    end
 
     if @answer.valid?
       @answer.save
