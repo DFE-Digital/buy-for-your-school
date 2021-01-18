@@ -36,6 +36,11 @@
             "breakfast",
             "lunch",
             "dinner"
+        ],
+        "extendedOptions": [
+          { "value": "breakfast" },
+          { "value": "lunch" },
+          { "value": "dinner" }
         ]
     }
 }
