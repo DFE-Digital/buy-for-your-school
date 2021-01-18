@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - questions are now all loaded at the start of a journey, rather than step by step
 - users start the journey at the task list instead of the first question
 - check your answers pattern has been replaced by a task list
+- radio questions can be configured to ask the user for additional text
 
 ## [release-004] - 2020-12-17
 

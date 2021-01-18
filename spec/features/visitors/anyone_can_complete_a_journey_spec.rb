@@ -161,6 +161,42 @@ feature "Anyone can start a journey" do
         expect(page).to have_checked_field("answer-response-lunch-field")
       end
     end
+
+    context "when Contentful entry is of type radios" do
+      context "when extra configuration is passed to collect further info" do
+        around do |example|
+          ClimateControl.modify(
+            CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
+          ) do
+            example.run
+          end
+        end
+
+        scenario "asks the user for further information" do
+          stub_get_contentful_entries(
+            entry_id: "contentful-starting-step",
+            fixture_filename: "closed-path-with-multiple-example.json"
+          )
+          journey = CreateJourney.new(category: "catering").call
+          step = journey.steps.find_by(contentful_id: "contentful-radio-question")
+
+          visit journey_step_path(journey, step)
+
+          click_on(I18n.t("generic.button.start"))
+
+          choose("Catering")
+          fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
+
+          click_on(I18n.t("generic.button.next"))
+
+          click_on(step.title)
+
+          expect(page).to have_checked_field("Catering")
+          expect(find_field("answer-further-information-field").value)
+            .to eql("The school needs the kitchen cleaned once a day")
+        end
+      end
+    end
   end
 
   context "when the Contentful model is of type staticContent" do

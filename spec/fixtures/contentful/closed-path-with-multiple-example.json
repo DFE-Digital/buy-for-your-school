@@ -87,7 +87,9 @@
                 "type": "radios",
                 "extendedOptions": [
                   {
-                      "value": "Catering"
+                      "value": "Catering",
+                      "display_further_information": true,
+                      "further_information_help_text": "Do a thing"
                   },
                   {
                       "value": "Cleaning"
