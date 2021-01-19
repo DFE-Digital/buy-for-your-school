@@ -1,6 +1,6 @@
 module ContentfulHelpers
   def stub_get_contentful_entry(
-    entry_id: "1UjQurSOi5MWkcRuGxdXZS",
+    entry_id: "contentful-radio-question",
     fixture_filename: "radio-question-example.json"
   )
     contentful_connector = stub_contentful_connector
@@ -11,7 +11,7 @@ module ContentfulHelpers
   end
 
   def stub_get_contentful_entries(
-    entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
+    entry_id: "contentful-starting-step",
     fixture_filename: "multiple-entries-example.json"
   )
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")

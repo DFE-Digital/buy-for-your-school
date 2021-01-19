@@ -15,7 +15,7 @@
                         "id": "rwl7tyzv9sys"
                     }
                 },
-                "id": "5kZ9hIFDvNCEhjWs72SFwj",
+                "id": "contentful-starting-step",
                 "type": "Entry",
                 "createdAt": "2020-12-02T10:48:35.748Z",
                 "updatedAt": "2020-12-02T10:48:35.748Z",
@@ -45,7 +45,7 @@
                     "sys": {
                         "type": "Link",
                         "linkType": "Entry",
-                        "id": "hfjJgWRg4xiiiImwVRDtZ"
+                        "id": "contentful-radio-question"
                     }
                 }
             }
@@ -59,7 +59,7 @@
                         "id": "rwl7tyzv9sys"
                     }
                 },
-                "id": "hfjJgWRg4xiiiImwVRDtZ",
+                "id": "contentful-radio-question",
                 "type": "Entry",
                 "createdAt": "2020-11-04T12:28:30.442Z",
                 "updatedAt": "2020-11-26T16:39:54.188Z",

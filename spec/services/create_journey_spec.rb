@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe CreateJourney do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "1UjQurSOi5MWkcRuGxdXZS"
+      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-radio-question"
     ) do
       example.run
     end
@@ -18,7 +18,7 @@ RSpec.describe CreateJourney do
 
     it "the sets the starting Contentful Entry ID" do
       described_class.new(category: "catering").call
-      expect(Journey.last.next_entry_id).to eql("1UjQurSOi5MWkcRuGxdXZS")
+      expect(Journey.last.next_entry_id).to eql("contentful-radio-question")
     end
 
     it "stores a copy of the Liquid template" do

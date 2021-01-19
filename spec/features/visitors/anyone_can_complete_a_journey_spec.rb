@@ -3,7 +3,7 @@ require "rails_helper"
 feature "Anyone can start a journey" do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "1UjQurSOi5MWkcRuGxdXZS"
+      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-radio-question"
     ) do
       example.run
     end
@@ -190,7 +190,7 @@ feature "Anyone can start a journey" do
     context "when Contentful entry is of type paragraphs" do
       around do |example|
         ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
         ) do
           example.run
         end
@@ -198,7 +198,7 @@ feature "Anyone can start a journey" do
 
       scenario "user can read static content and proceed without answering" do
         stub_get_contentful_entry(
-          entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
+          entry_id: "contentful-starting-step",
           fixture_filename: "static-content-example.json"
         )
 

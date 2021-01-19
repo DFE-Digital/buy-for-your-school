@@ -4,7 +4,7 @@ RSpec.describe BuildJourneyOrder do
   describe "#call" do
     around do |example|
       ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
       ) do
         example.run
       end
@@ -44,7 +44,7 @@ RSpec.describe BuildJourneyOrder do
     context "when the journey visits the same node twice" do
       around do |example|
         ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
         ) do
           example.run
         end
@@ -60,13 +60,13 @@ RSpec.describe BuildJourneyOrder do
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "5kZ9hIFDvNCEhjWs72SFwj")
+            contentful_entry_id: "contentful-starting-step")
           .and_call_original
 
         expect {
           described_class.new(
             entries: fake_entries,
-            starting_entry_id: "5kZ9hIFDvNCEhjWs72SFwj"
+            starting_entry_id: "contentful-starting-step"
           ).call
         }.to raise_error(BuildJourneyOrder::RepeatEntryDetected)
       end
@@ -75,7 +75,7 @@ RSpec.describe BuildJourneyOrder do
     context "when the journey visits more than the maximum permitted number of entries" do
       around do |example|
         ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
         ) do
           example.run
         end
@@ -95,13 +95,13 @@ RSpec.describe BuildJourneyOrder do
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "hfjJgWRg4xiiiImwVRDtZ")
+            contentful_entry_id: "contentful-radio-question")
           .and_call_original
 
         expect {
           described_class.new(
             entries: fake_entries,
-            starting_entry_id: "5kZ9hIFDvNCEhjWs72SFwj"
+            starting_entry_id: "contentful-starting-step"
           ).call
         }.to raise_error(BuildJourneyOrder::TooManyChainedEntriesDetected)
       end
