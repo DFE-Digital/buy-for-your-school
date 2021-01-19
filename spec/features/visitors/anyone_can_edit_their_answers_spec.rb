@@ -3,26 +3,21 @@ require "rails_helper"
 feature "Users can edit their answers" do
   let(:answer) { create(:short_text_answer, response: "answer") }
 
-  scenario "The journey summary page displays a change link" do
-    visit journey_path(answer.step.journey)
-
-    expect(page).to have_content("answer")
-    expect(page).to have_content("Change")
-  end
-
   context "when the question is short_text" do
     let(:answer) { create(:short_text_answer, response: "answer") }
 
     scenario "The edited answer is saved" do
       visit journey_path(answer.step.journey)
 
-      click_on(I18n.t("generic.button.change_answer"))
+      click_on(answer.step.title)
 
       fill_in "answer[response]", with: "email@example.com"
 
       click_on(I18n.t("generic.button.update"))
 
-      expect(page).to have_content("email@example.com")
+      click_on(answer.step.title)
+
+      expect(find_field("answer-response-field").value).to eql("email@example.com")
     end
   end
 
@@ -32,7 +27,7 @@ feature "Users can edit their answers" do
     scenario "The edited answer is saved" do
       visit journey_path(answer.step.journey)
 
-      click_on(I18n.t("generic.button.change_answer"))
+      click_on(answer.step.title)
 
       fill_in "answer[response(3i)]", with: "12"
       fill_in "answer[response(2i)]", with: "8"
@@ -40,7 +35,11 @@ feature "Users can edit their answers" do
 
       click_on(I18n.t("generic.button.update"))
 
-      expect(page).to have_content("12 Aug 2020")
+      click_on(answer.step.title)
+
+      expect(find_field("answer_response_3i").value).to eql("12")
+      expect(find_field("answer_response_2i").value).to eql("8")
+      expect(find_field("answer_response_1i").value).to eql("2020")
     end
   end
 
@@ -50,14 +49,16 @@ feature "Users can edit their answers" do
     scenario "The edited answer is saved" do
       visit journey_path(answer.step.journey)
 
-      click_on(I18n.t("generic.button.change_answer"))
+      click_on(answer.step.title)
 
       uncheck "Breakfast"
 
       click_on(I18n.t("generic.button.update"))
 
-      expect(page).not_to have_content("Breakfast")
-      expect(page).to have_content("Lunch")
+      click_on(answer.step.title)
+
+      expect(page).not_to have_checked_field("answer-response-breakfast-field")
+      expect(page).to have_checked_field("answer-response-lunch-field")
     end
   end
 
@@ -65,7 +66,7 @@ feature "Users can edit their answers" do
     scenario "When an answer is invalid" do
       visit journey_path(answer.step.journey)
 
-      click_on(I18n.t("generic.button.change_answer"))
+      click_on(answer.step.title)
 
       fill_in "answer[response]", with: ""
 

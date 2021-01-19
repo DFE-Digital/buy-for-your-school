@@ -3,6 +3,8 @@ class BuildJourneyOrder
 
   class TooManyChainedEntriesDetected < StandardError; end
 
+  class MissingEntryDetected < StandardError; end
+
   ENTRY_JOURNEY_MAX_LENGTH = 50
 
   attr_accessor :entries, :starting_entry_id
@@ -27,7 +29,12 @@ class BuildJourneyOrder
   end
 
   def recursive_path(entry_lookup:, next_entry_id:, entries:)
-    entry = entry_lookup.fetch(next_entry_id, nil)
+    begin
+      entry = entry_lookup.fetch(next_entry_id)
+    rescue KeyError
+      send_rollbar_error(message: "A specified Contentful entry was not found", entry_id: next_entry_id)
+      raise MissingEntryDetected.new(next_entry_id)
+    end
 
     if entries.include?(entry)
       send_rollbar_error(message: "A repeated Contentful entry was found in the same journey", entry_id: entry.id)

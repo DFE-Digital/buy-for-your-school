@@ -39,6 +39,10 @@ en:
   journey:
     specification:
       header: "Your specification"
+  task_list:
+    status:
+      not_started: Not started
+      completed: Completed
   journey_map:
     page_title: "Contentful entry map"
   errors:

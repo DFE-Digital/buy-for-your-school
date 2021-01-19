@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can download their specification as a document in the .docx format
 - checkbox answers are editable
 - radio and select questions are created with the new `ExtendedOptions` field
+- questions are now all loaded at the start of a journey, rather than step by step
+- users start the journey at the task list instead of the first question
+- check your answers pattern has been replaced by a task list
 
 ## [release-004] - 2020-12-17
 

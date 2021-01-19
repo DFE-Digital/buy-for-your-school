@@ -1,7 +1,12 @@
 class Preview::EntriesController < ApplicationController
   def show
-    @journey = Journey.create(category: "catering", next_entry_id: entry_id)
-    redirect_to new_journey_step_path(@journey)
+    @journey = Journey.create(category: "catering")
+    contentful_entry = GetContentfulEntry.new(entry_id: entry_id).call
+    @step = CreateJourneyStep.new(
+      journey: @journey, contentful_entry: contentful_entry
+    ).call
+
+    redirect_to journey_step_path(@journey, @step)
   end
 
   private
