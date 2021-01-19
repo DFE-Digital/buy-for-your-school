@@ -16,4 +16,19 @@ feature "Users can see their catering specification" do
       expect(page).to have_content(answer.response)
     end
   end
+
+  scenario "renders responses that need extra formatting" do
+    liquid_template = stub_liquid_template(filename: "food_catering.liquid")
+    journey = create(:journey, :catering, liquid_template: liquid_template)
+    step = create(:step, :radio, radio_answer: nil, journey: journey, contentful_id: "NxJWpbiFeEAmvcw17EysX")
+    _answer = create(:radio_answer, step: step, response: "Red tractor", further_information: "Lots more detail")
+
+    visit journey_path(journey)
+
+    expect(page).to have_content(I18n.t("journey.specification.header"))
+
+    within("article#specification") do
+      expect(page).to have_content("Red tractor - Lots more detail")
+    end
+  end
 end
