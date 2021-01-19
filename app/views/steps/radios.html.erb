@@ -1,6 +1,6 @@
 <%= render layout: layout do |f| %>
   <%= f.hidden_field :response, value: nil %>
-  <%= f.govuk_radio_buttons_fieldset(:response, legend: { size: 'xl', text: @step.title }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:response, legend: { size: "l", text: @step.title }) do %>
     <% if @step.help_text.present? %>
       <span class="govuk-hint">
         <%= @step.help_text %>
