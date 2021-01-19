@@ -23,7 +23,7 @@ feature "Users can see all the steps of a journey" do
         expect(page).to have_link("When you should start", href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/contentful-starting-step")
       end
       within(list_items.last) do
-        expect(page).to have_link("Which service do you need?", href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/contentful-radio-question")
+        expect(page).to have_link("Everyday services that are required and need to be considered", href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/contentful-checkboxes-question")
       end
     end
   end
