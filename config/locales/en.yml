@@ -1,6 +1,6 @@
 en:
   app:
-    name: Buy for your school
+    name: Get help buying for schools
   date:
     formats:
       default: "%-d %b %Y"
