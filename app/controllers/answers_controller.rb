@@ -54,7 +54,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:response)
+    params.require(:answer).permit(:response, :further_information)
   end
 
   def checkbox_params

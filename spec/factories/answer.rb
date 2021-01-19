@@ -3,6 +3,7 @@ FactoryBot.define do
     association :step, factory: :step, contentful_type: "radios", contentful_model: "question"
 
     response { "Green" }
+    further_information { nil }
   end
 
   factory :short_text_answer do
