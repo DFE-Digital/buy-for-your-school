@@ -64,7 +64,9 @@ feature "Anyone can start a journey" do
         fill_in "answer[response]", with: "email@example.com"
         click_on(I18n.t("generic.button.next"))
 
-        expect(page).to have_content("email@example")
+        click_on(step.title)
+
+        expect(find_field("answer-response-field").value).to eql("email@example.com")
       end
     end
 
@@ -87,14 +89,12 @@ feature "Anyone can start a journey" do
 
         visit journey_step_path(journey, step)
 
-        fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum."
+        fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\nThey must be able to supply us for 3 years minumum."
         click_on(I18n.t("generic.button.next"))
 
-        within(".govuk-summary-list") do
-          paragraphs_elements = find_all("p")
-          expect(paragraphs_elements.first.text).to have_content("We would like a supplier to provide catering from September 2020.")
-          expect(paragraphs_elements.last.text).to have_content("They must be able to supply us for 3 years minumum.")
-        end
+        click_on(step.title)
+
+        expect(find_field("answer-response-field").value).to eql("We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum.")
       end
     end
 
@@ -123,7 +123,11 @@ feature "Anyone can start a journey" do
 
         click_on(I18n.t("generic.button.next"))
 
-        expect(page).to have_content("12 Aug 2020")
+        click_on(step.title)
+
+        expect(find_field("answer_response_3i").value).to eql("12")
+        expect(find_field("answer_response_2i").value).to eql("8")
+        expect(find_field("answer_response_1i").value).to eql("2020")
       end
     end
 
@@ -151,7 +155,10 @@ feature "Anyone can start a journey" do
 
         click_on(I18n.t("generic.button.next"))
 
-        expect(page).to have_content("Breakfast, Lunch")
+        click_on(step.title)
+
+        expect(page).to have_checked_field("answer-response-breakfast-field")
+        expect(page).to have_checked_field("answer-response-lunch-field")
       end
     end
   end
