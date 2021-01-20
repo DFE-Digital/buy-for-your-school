@@ -33,9 +33,13 @@
         "title": "Which goods do you need?",
         "helpText": "Tell us which goods you need.",
         "type": "radios",
-        "options": [
-            "Stationary",
-            "IT supplies"
+        "extendedOptions": [
+          {
+              "value": "Stationary"
+          },
+          {
+              "value": "IT supplies"
+          }
         ]
     }
 }

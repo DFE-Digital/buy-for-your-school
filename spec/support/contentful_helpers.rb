@@ -1,22 +1,17 @@
 module ContentfulHelpers
   def stub_get_contentful_entry(
-    entry_id: "1UjQurSOi5MWkcRuGxdXZS",
+    entry_id: "contentful-radio-question",
     fixture_filename: "radio-question-example.json"
   )
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")
-
     contentful_connector = stub_contentful_connector
     contentful_response = fake_contentful_entry(contentful_fixture_filename: fixture_filename)
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(entry_id)
       .and_return(contentful_response)
-
-    allow(contentful_response).to receive(:raw)
-      .and_return(raw_response)
   end
 
   def stub_get_contentful_entries(
-    entry_id: "5kZ9hIFDvNCEhjWs72SFwj",
+    entry_id: "contentful-starting-step",
     fixture_filename: "multiple-entries-example.json"
   )
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")
@@ -55,7 +50,7 @@ module ContentfulHelpers
       title: hash_response.dig("fields", "title"),
       help_text: hash_response.dig("fields", "helpText"),
       body: hash_response.dig("fields", "body"),
-      options: hash_response.dig("fields", "options"),
+      extended_options: hash_response.dig("fields", "extendedOptions"),
       type: hash_response.dig("fields", "type"),
       next: double(id: hash_response.dig("fields", "next", "sys", "id")),
       primary_call_to_action: hash_response.dig("fields", "primaryCallToAction"),

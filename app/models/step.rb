@@ -8,6 +8,8 @@ class Step < ApplicationRecord
   has_one :single_date_answer
   has_one :checkbox_answers
 
+  scope :that_are_questions, -> { where(contentful_model: "question") }
+
   def answer
     @answer ||=
       radio_answer ||
@@ -20,5 +22,9 @@ class Step < ApplicationRecord
   def primary_call_to_action_text
     return I18n.t("generic.button.next") unless super.present?
     super
+  end
+
+  def options_list
+    options.map { |hash| hash["value"] }
   end
 end

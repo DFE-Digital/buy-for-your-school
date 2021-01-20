@@ -15,7 +15,7 @@
                         "id": "rwl7tyzv9sys"
                     }
                 },
-                "id": "5kZ9hIFDvNCEhjWs72SFwj",
+                "id": "contentful-starting-step",
                 "type": "Entry",
                 "createdAt": "2020-12-02T10:48:35.748Z",
                 "updatedAt": "2020-12-02T10:48:35.748Z",
@@ -85,15 +85,19 @@
                 "title": "Which service do you need?",
                 "helpText": "Tell us which service you need.",
                 "type": "radios",
-                "options": [
-                    "Catering",
-                    "Cleaning"
+                "extendedOptions": [
+                  {
+                      "value": "Catering"
+                  },
+                  {
+                      "value": "Cleaning"
+                  }
                 ],
                 "next": {
                     "sys": {
                         "type": "Link",
                         "linkType": "Entry",
-                        "id": "5kZ9hIFDvNCEhjWs72SFwj"
+                        "id": "contentful-starting-step"
                     }
                 }
             }
@@ -107,7 +111,7 @@
                         "id": "rwl7tyzv9sys"
                     }
                 },
-                "id": "5kZ9hIFDvNCEhjWs72SFwj",
+                "id": "contentful-starting-step",
                 "type": "Entry",
                 "createdAt": "2020-12-02T10:48:35.748Z",
                 "updatedAt": "2020-12-02T10:48:35.748Z",

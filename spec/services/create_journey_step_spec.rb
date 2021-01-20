@@ -13,14 +13,14 @@ RSpec.describe CreateJourneyStep do
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
-        expect(step.contentful_id).to eq("1UjQurSOi5MWkcRuGxdXZS")
+        expect(step.contentful_id).to eq("contentful-radio-question")
         expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
-        expect(step.options).to eq(["Catering", "Cleaning"])
+        expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",
-            "options" => ["Catering", "Cleaning"],
+            "extendedOptions" => [{"value" => "Catering"}, {"value" => "Cleaning"}],
             "slug" => "/which-service",
             "title" => "Which service do you need?",
             "type" => "radios"
@@ -41,7 +41,7 @@ RSpec.describe CreateJourneyStep do
                 "type" => "Link"
               }
             },
-            "id" => "1UjQurSOi5MWkcRuGxdXZS",
+            "id" => "contentful-radio-question",
             "locale" => "en-US",
             "revision" => 7,
             "space" => {

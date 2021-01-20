@@ -17,11 +17,7 @@ class AnswersController < ApplicationController
 
     if @answer.valid?
       @answer.save
-      if @journey.next_entry_id.present?
-        redirect_to new_journey_step_path(@journey)
-      else
-        redirect_to journey_path(@journey)
-      end
+      redirect_to journey_path(@journey)
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
     end
@@ -32,7 +28,12 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
     @answer = @step.answer
 
-    @answer.assign_attributes(answer_params)
+    case @step.contentful_type
+    when "checkboxes"
+      @answer.assign_attributes(checkbox_params)
+    else
+      @answer.assign_attributes(answer_params)
+    end
 
     if @answer.valid?
       @answer.save
@@ -53,7 +54,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:response)
+    params.require(:answer).permit(:response, :further_information)
   end
 
   def checkbox_params

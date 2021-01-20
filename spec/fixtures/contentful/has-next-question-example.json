@@ -33,9 +33,13 @@
         "title": "Which service do you need?",
         "helpText": "Tell us which service you need.",
         "type": "radios",
-        "options": [
-            "Catering",
-            "Cleaning"
+        "extendedOptions": [
+          {
+              "value": "Catering"
+          },
+          {
+              "value": "Cleaning"
+          }
         ],
         "next": {
             "sys": {

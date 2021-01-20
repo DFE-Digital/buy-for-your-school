@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_160028) do
+ActiveRecord::Schema.define(version: 2021_01_18_123111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_160028) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "next_entry_id"
+    t.jsonb "liquid_template"
   end
 
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_160028) do
     t.string "response", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "further_information"
     t.index ["step_id"], name: "index_radio_answers_on_step_id"
   end
 
@@ -69,7 +71,6 @@ ActiveRecord::Schema.define(version: 2020_12_16_160028) do
     t.string "title", null: false
     t.string "help_text"
     t.string "contentful_type", null: false
-    t.string "options", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "body"
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_160028) do
     t.string "primary_call_to_action_text"
     t.string "contentful_id", null: false
     t.jsonb "raw", null: false
+    t.jsonb "options"
     t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 

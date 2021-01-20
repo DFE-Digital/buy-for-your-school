@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-005] - 2021-1-19
+
+- users can see an initial slice of their specification as HTML at the end of their journey
+- users can download their specification as a document in the .docx format
+- checkbox answers are editable
+- radio and select questions are created with the new `ExtendedOptions` field
+- questions are now all loaded at the start of a journey, rather than step by step
+- users start the journey at the task list instead of the first question
+- check your answers pattern has been replaced by a task list
+- radio questions can be configured to ask the user for additional text
+- update the service name to the latest decision
+
 ## [release-004] - 2020-12-17
 
 - fix primary key type on long_text_answers table to UUID
@@ -51,7 +63,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...HEAD
+[release-005]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...release-005
 [release-004]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...release-004
 [release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003
 [release-002]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-001...release-002

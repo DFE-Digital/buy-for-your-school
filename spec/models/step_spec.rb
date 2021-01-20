@@ -13,16 +13,26 @@ RSpec.describe Step, type: :model do
       :radio,
       title: "foo",
       help_text: "bar",
-      options: ["baz", "boo"])
+      options: [{"value" => "baz"}, {"value" => "boo"}])
 
     expect(step.title).to eql("foo")
     expect(step.help_text).to eql("bar")
-    expect(step.options).to eql(["baz", "boo"])
+    expect(step.options).to eql([{"value" => "baz"}, {"value" => "boo"}])
   end
 
   it "captures the raw contentful response" do
     step = build(:step, raw: {foo: "bar"})
     expect(step.raw).to eql({"foo" => "bar"})
+  end
+
+  describe "#that_are_questions" do
+    it "only returns steps that have the question contentful_model" do
+      question_step = create(:step, :radio)
+      static_content_step = create(:step, :static_content)
+
+      expect(described_class.that_are_questions).to include(question_step)
+      expect(described_class.that_are_questions).not_to include(static_content_step)
+    end
   end
 
   describe "#answer" do
@@ -64,6 +74,17 @@ RSpec.describe Step, type: :model do
         step = create(:step, :checkbox_answers, checkbox_answers: checkbox_answers)
         expect(step.answer).to eq(checkbox_answers)
       end
+    end
+  end
+
+  describe "#options" do
+    # TODO: This will need updating when options are set on the step with the new format
+    it "returns a hash of options" do
+      step = build(:step,
+        :radio,
+        options: [{"value" => "foo", "other_config" => false}])
+
+      expect(step.options).to eql([{"value" => "foo", "other_config" => false}])
     end
   end
 end

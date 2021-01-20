@@ -1,6 +1,6 @@
 en:
   app:
-    name: Buy for your school
+    name: Get help buying for schools
   date:
     formats:
       default: "%-d %b %Y"
@@ -36,6 +36,13 @@ en:
       before_you_start_body: "It will take around 3 minutes to complete the process"
     errors:
       contentful_entry_not_found: "An unexpected error occurred. The starting step has been revoked by the content team."
+  journey:
+    specification:
+      header: "Your specification"
+  task_list:
+    status:
+      not_started: Not started
+      completed: Completed
   journey_map:
     page_title: "Contentful entry map"
   errors:
@@ -54,3 +61,6 @@ en:
     too_many_steps_in_the_contentful_journey:
       page_title: "An unexpected error occurred"
       page_body: "More than %{step_count} steps were found in the Contentful journey. Is the journey missing an end? The last Entry ID was: %{entry_id}"
+    specification_template_invalid:
+      page_title: "An unexpected error occurred"
+      page_body: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."

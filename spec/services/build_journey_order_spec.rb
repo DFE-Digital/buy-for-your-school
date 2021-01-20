@@ -4,31 +4,47 @@ RSpec.describe BuildJourneyOrder do
   describe "#call" do
     around do |example|
       ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+        CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
       ) do
         example.run
       end
     end
 
-    context "when there are multiple entries" do
-      it "returns each ID in the order they appear" do
+    context "when the journey includes a node which doesn't exist" do
+      around do |example|
+        ClimateControl.modify(
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "fake-id"
+        ) do
+          example.run
+        end
+      end
+
+      it "raises a rollbar event" do
         fake_entries = fake_contentful_entry_array(
-          contentful_fixture_filename: "closed-path-with-multiple-example.json"
+          contentful_fixture_filename: "repeat-entry-example.json"
         )
 
-        result = described_class.new(
-          entries: fake_entries,
-          starting_entry_id: "5kZ9hIFDvNCEhjWs72SFwj"
-        ).call
+        expect(Rollbar).to receive(:error)
+          .with("A specified Contentful entry was not found",
+            contentful_url: ENV["CONTENTFUL_URL"],
+            contentful_space_id: ENV["CONTENTFUL_SPACE"],
+            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+            contentful_entry_id: "fake-id")
+          .and_call_original
 
-        expect(result).to match([fake_entries.first, fake_entries.last])
+        expect {
+          described_class.new(
+            entries: fake_entries,
+            starting_entry_id: "fake-id"
+          ).call
+        }.to raise_error(BuildJourneyOrder::MissingEntryDetected)
       end
     end
 
     context "when the journey visits the same node twice" do
       around do |example|
         ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
         ) do
           example.run
         end
@@ -44,13 +60,13 @@ RSpec.describe BuildJourneyOrder do
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "5kZ9hIFDvNCEhjWs72SFwj")
+            contentful_entry_id: "contentful-starting-step")
           .and_call_original
 
         expect {
           described_class.new(
             entries: fake_entries,
-            starting_entry_id: "5kZ9hIFDvNCEhjWs72SFwj"
+            starting_entry_id: "contentful-starting-step"
           ).call
         }.to raise_error(BuildJourneyOrder::RepeatEntryDetected)
       end
@@ -59,7 +75,7 @@ RSpec.describe BuildJourneyOrder do
     context "when the journey visits more than the maximum permitted number of entries" do
       around do |example|
         ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "5kZ9hIFDvNCEhjWs72SFwj"
+          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
         ) do
           example.run
         end
@@ -79,13 +95,13 @@ RSpec.describe BuildJourneyOrder do
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "hfjJgWRg4xiiiImwVRDtZ")
+            contentful_entry_id: "contentful-radio-question")
           .and_call_original
 
         expect {
           described_class.new(
             entries: fake_entries,
-            starting_entry_id: "5kZ9hIFDvNCEhjWs72SFwj"
+            starting_entry_id: "contentful-starting-step"
           ).call
         }.to raise_error(BuildJourneyOrder::TooManyChainedEntriesDetected)
       end
