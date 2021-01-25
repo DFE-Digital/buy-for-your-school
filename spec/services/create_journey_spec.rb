@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe CreateJourney do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
+      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step",
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run
     end
@@ -11,9 +12,8 @@ RSpec.describe CreateJourney do
 
   describe "#call" do
     it "creates a new journey" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-starting-step",
-        fixture_filename: "closed-path-with-multiple-example.json"
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json"
       )
       expect { described_class.new(category: "catering").call }
         .to change { Journey.count }.by(1)
@@ -21,9 +21,8 @@ RSpec.describe CreateJourney do
     end
 
     it "stores a copy of the Liquid template" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-starting-step",
-        fixture_filename: "closed-path-with-multiple-example.json"
+      stub_contentful_category(
+        fixture_filename: "category-with-liquid-template.json"
       )
       fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/basic_catering.liquid")
       finder = instance_double(FindLiquidTemplate)

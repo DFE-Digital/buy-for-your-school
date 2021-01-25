@@ -13,7 +13,7 @@ class JourneysController < ApplicationController
     render "errors/unexpected_contentful_step_type", status: 500
   end
 
-  rescue_from BuildJourneyOrder::MissingEntryDetected do |exception|
+  rescue_from GetContentfulEntry::EntryNotFound do |exception|
     render "errors/contentful_entry_not_found", status: 500
   end
 

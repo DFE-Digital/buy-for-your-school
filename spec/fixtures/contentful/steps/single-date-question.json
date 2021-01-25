@@ -1,0 +1,43 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "single-date-question",
+        "type": "Entry",
+        "createdAt": "2020-12-08T10:43:19.102Z",
+        "updatedAt": "2020-12-08T10:43:19.102Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/starting-date",
+        "type": "single date",
+        "title": "When will this start?",
+        "next": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "contentful-checkboxes-question"
+            }
+          }
+    }
+}

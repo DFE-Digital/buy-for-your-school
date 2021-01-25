@@ -3,17 +3,15 @@ require "rails_helper"
 feature "Anyone can start a journey" do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
+      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-category-entry",
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run
     end
   end
 
   scenario "Start page includes a call to action" do
-    stub_get_contentful_entries(
-      entry_id: "contentful-starting-step",
-      fixture_filename: "closed-path-with-multiple-example.json"
-    )
+    stub_contentful_category(fixture_filename: "radio-question.json")
 
     visit root_path
 
@@ -24,15 +22,26 @@ feature "Anyone can start a journey" do
     expect(page).to have_content("Not started")
   end
 
-  scenario "an answer must be provided" do
-    stub_get_contentful_entries(
-      entry_id: "contentful-starting-step",
-      fixture_filename: "closed-path-with-multiple-example.json"
-    )
-    journey = CreateJourney.new(category: "catering").call
-    step = journey.steps.find_by(contentful_id: "contentful-radio-question")
+  def click_first_link_in_task_list
+    within("ol.app-task-list") do
+      first("a").click
+    end
+  end
 
-    visit journey_step_path(journey, step)
+  def start_journey_from_category_and_go_to_question(category:)
+    stub_contentful_category(
+      fixture_filename: category
+    )
+
+    visit root_path
+
+    click_on(I18n.t("generic.button.start"))
+
+    click_first_link_in_task_list
+  end
+
+  scenario "an answer must be provided" do
+    start_journey_from_category_and_go_to_question(category: "radio-question.json")
 
     # Omit a choice
 
@@ -43,79 +52,34 @@ feature "Anyone can start a journey" do
 
   context "when the Contentful model is of type question" do
     context "when Contentful entry is of type short_text" do
-      around do |example|
-        ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
-        ) do
-          example.run
-        end
-      end
-
       scenario "user can answer using free text" do
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "closed-path-with-multiple-example.json"
-        )
-        journey = CreateJourney.new(category: "catering").call
-        step = journey.steps.find_by(contentful_id: "contentful-short-text-question")
-
-        visit journey_step_path(journey, step)
+        start_journey_from_category_and_go_to_question(category: "short-text-question.json")
 
         fill_in "answer[response]", with: "email@example.com"
         click_on(I18n.t("generic.button.next"))
 
-        click_on(step.title)
+        click_first_link_in_task_list
 
         expect(find_field("answer-response-field").value).to eql("email@example.com")
       end
     end
 
     context "when Contentful entry is of type long_text" do
-      around do |example|
-        ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
-        ) do
-          example.run
-        end
-      end
-
       scenario "user can answer using free text with multiple lines" do
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "closed-path-with-multiple-example.json"
-        )
-        journey = CreateJourney.new(category: "catering").call
-        step = journey.steps.find_by(contentful_id: "contentful-long-text-question")
-
-        visit journey_step_path(journey, step)
+        start_journey_from_category_and_go_to_question(category: "long-text-question.json")
 
         fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\nThey must be able to supply us for 3 years minumum."
         click_on(I18n.t("generic.button.next"))
 
-        click_on(step.title)
+        click_first_link_in_task_list
 
         expect(find_field("answer-response-field").value).to eql("We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum.")
       end
     end
 
     context "when Contentful entry is of type single_date" do
-      around do |example|
-        ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
-        ) do
-          example.run
-        end
-      end
-
       scenario "user can answer using a date input" do
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "closed-path-with-multiple-example.json"
-        )
-        journey = CreateJourney.new(category: "catering").call
-        step = journey.steps.find_by(contentful_id: "contentful-single-date-question")
-
-        visit journey_step_path(journey, step)
+        start_journey_from_category_and_go_to_question(category: "single-date-question.json")
 
         fill_in "answer[response(3i)]", with: "12"
         fill_in "answer[response(2i)]", with: "8"
@@ -123,7 +87,7 @@ feature "Anyone can start a journey" do
 
         click_on(I18n.t("generic.button.next"))
 
-        click_on(step.title)
+        click_first_link_in_task_list
 
         expect(find_field("answer_response_3i").value).to eql("12")
         expect(find_field("answer_response_2i").value).to eql("8")
@@ -132,30 +96,15 @@ feature "Anyone can start a journey" do
     end
 
     context "when Contentful entry is of type checkboxes" do
-      around do |example|
-        ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
-        ) do
-          example.run
-        end
-      end
-
       scenario "user can select multiple answers" do
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "closed-path-with-multiple-example.json"
-        )
-        journey = CreateJourney.new(category: "catering").call
-        step = journey.steps.find_by(contentful_id: "contentful-checkboxes-question")
-
-        visit journey_step_path(journey, step)
+        start_journey_from_category_and_go_to_question(category: "checkboxes-question.json")
 
         check "Breakfast"
         check "Lunch"
 
         click_on(I18n.t("generic.button.next"))
 
-        click_on(step.title)
+        click_first_link_in_task_list
 
         expect(page).to have_checked_field("answer-response-breakfast-field")
         expect(page).to have_checked_field("answer-response-lunch-field")
@@ -164,32 +113,15 @@ feature "Anyone can start a journey" do
 
     context "when Contentful entry is of type radios" do
       context "when extra configuration is passed to collect further info" do
-        around do |example|
-          ClimateControl.modify(
-            CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
-          ) do
-            example.run
-          end
-        end
-
         scenario "asks the user for further information" do
-          stub_get_contentful_entries(
-            entry_id: "contentful-starting-step",
-            fixture_filename: "closed-path-with-multiple-example.json"
-          )
-          journey = CreateJourney.new(category: "catering").call
-          step = journey.steps.find_by(contentful_id: "contentful-radio-question")
-
-          visit journey_step_path(journey, step)
-
-          click_on(I18n.t("generic.button.start"))
+          start_journey_from_category_and_go_to_question(category: "extended-radio-question.json")
 
           choose("Catering")
           fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
 
           click_on(I18n.t("generic.button.next"))
 
-          click_on(step.title)
+          click_first_link_in_task_list
 
           expect(page).to have_checked_field("Catering")
           expect(find_field("answer-further-information-field").value)
@@ -201,53 +133,27 @@ feature "Anyone can start a journey" do
 
   context "when the Contentful model is of type staticContent" do
     context "when Contentful entry is of type paragraphs" do
-      around do |example|
-        ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
-        ) do
-          example.run
-        end
-      end
+      scenario "the content is not displayed in the task list" do
+        stub_contentful_category(fixture_filename: "static-content.json")
 
-      scenario "user can read static content and proceed without answering" do
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "closed-path-with-multiple-example.json"
-        )
-        journey = CreateJourney.new(category: "catering").call
-        step = journey.steps.find_by(contentful_id: "contentful-starting-step")
+        visit root_path
 
-        visit journey_step_path(journey, step)
+        click_on(I18n.t("generic.button.start"))
 
-        expect(page).to have_content("When you should start")
+        # We should really remove static content entirely, since it doesn't
+        # appear in the task list pattern.
 
-        within(".static-content") do
-          paragraphs_elements = find_all("p")
-          expect(paragraphs_elements.first.text).to have_content("Procuring a new catering contract can take up to 6 months to consult, create, review and award.")
-          expect(paragraphs_elements.last.text).to have_content("Usually existing contracts start and end in the month of September. We recommend starting this process around March.")
-        end
+        # TODO: Talk to design and see if static content is actually included
+        # anywhere in the journey, or if we can ditch support.
 
-        click_on(I18n.t("generic.button.next"))
-
-        expect(page).to have_content("Catering")
+        expect(page).not_to have_content("When you should start")
       end
     end
   end
 
   context "when Contentful entry model wasn't an expected type" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-unexpected-model"
-      ) do
-        example.run
-      end
-    end
-
     scenario "returns an error message" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-unexpected-model",
-        fixture_filename: "path-with-unexpected-model.json"
-      )
+      stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")
 
       visit new_journey_path
 
@@ -256,20 +162,9 @@ feature "Anyone can start a journey" do
     end
   end
 
-  context "when the Contentful Entry wasn't an expected step type" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-unexpected-step-type"
-      ) do
-        example.run
-      end
-    end
-
+  context "when the Contentful Entry wasn't an expected question type" do
     scenario "returns an error message" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-unexpected-step-type",
-        fixture_filename: "path-with-unexpected-step-type.json"
-      )
+      stub_contentful_category(fixture_filename: "unexpected-contentful-question-type.json")
 
       visit new_journey_path
 
@@ -288,10 +183,16 @@ feature "Anyone can start a journey" do
     end
 
     scenario "a Contentful entry_id does not exist" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-fake-entry-id",
-        fixture_filename: "closed-path-with-multiple-example.json"
+      contentful_connector = instance_double(ContentfulConnector)
+      stub_contentful_category(
+        fixture_filename: "missing-entry-id.json",
+        stub_steps: false,
+        contentful_connector: contentful_connector
       )
+
+      allow(contentful_connector).to receive(:get_entry_by_id)
+        .with("missing-entry-id")
+        .and_return(nil)
 
       visit new_journey_path
 

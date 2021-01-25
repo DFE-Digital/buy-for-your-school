@@ -25,6 +25,32 @@ module ContentfulHelpers
       .and_return(raw_response)
   end
 
+  def stub_contentful_category(
+    fixture_filename:,
+    stub_steps: true,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
+
+    expect(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector).at_least(:once) # This twice is a problem..
+
+    # Mock the GET request for the Category Entry
+    allow(contentful_connector).to receive(:get_entry_by_id)
+      .with(category.id)
+      .and_return(category)
+
+    # For each step in the category mock a GET request
+    if stub_steps
+      category.steps.each do |step|
+        step = fake_contentful_entry(contentful_fixture_filename: "steps/#{step.id}.json")
+        allow(contentful_connector).to receive(:get_entry_by_id)
+          .with(step.id)
+          .and_return(step)
+      end
+    end
+  end
+
   def stub_contentful_connector
     contentful_connector = instance_double(ContentfulConnector)
     expect(ContentfulConnector).to receive(:new)
@@ -38,6 +64,19 @@ module ContentfulHelpers
       .with(api_url: anything, space: anything, environment: anything, access_token: anything)
       .and_return(contentful_client)
     contentful_client
+  end
+
+  def fake_contentful_category(contentful_fixture_filename:)
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/#{contentful_fixture_filename}")
+    hash_response = JSON.parse(raw_response)
+
+    steps = hash_response.dig("fields", "steps").map { |step| double(id: step.dig("sys", "id")) }
+
+    double(
+      Contentful::Entry,
+      id: hash_response.dig("sys", "id"),
+      steps: steps
+    )
   end
 
   def fake_contentful_entry(contentful_fixture_filename:)
