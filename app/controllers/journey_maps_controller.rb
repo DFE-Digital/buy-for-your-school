@@ -9,10 +9,6 @@ class JourneyMapsController < ApplicationController
     render "errors/contentful_entry_not_found", status: 500
   end
 
-  rescue_from BuildJourneyOrder::TooManyChainedEntriesDetected do |exception|
-    render "errors/too_many_steps_in_the_contentful_journey", status: 500, locals: {error: exception}
-  end
-
   def new
     @journey_map = GetEntriesInCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
   end
