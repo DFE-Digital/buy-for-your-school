@@ -56,17 +56,6 @@ RSpec.describe CreateJourneyStep do
           }
         )
       end
-
-      it "updates the journey with a new next_entry_id" do
-        journey = create(:journey, :catering)
-        fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "has-next-question-example.json"
-        )
-
-        _step = described_class.new(journey: journey, contentful_entry: fake_entry).call
-
-        expect(journey.next_entry_id).to eql("5lYcZs1ootDrOnk09LDLZg")
-      end
     end
 
     context "when the question is of type 'short_text'" do
@@ -90,19 +79,6 @@ RSpec.describe CreateJourneyStep do
         step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(step.contentful_type).to eq("short_text")
-      end
-    end
-
-    context "when the new step does not have a following step" do
-      it "updates the journey by setting the next_entry_id to nil" do
-        journey = create(:journey, :catering)
-        fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "radio-question-example.json"
-        )
-
-        _step = described_class.new(journey: journey, contentful_entry: fake_entry).call
-
-        expect(journey.next_entry_id).to eql(nil)
       end
     end
 
