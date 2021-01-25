@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe CreateJourney do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step",
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run

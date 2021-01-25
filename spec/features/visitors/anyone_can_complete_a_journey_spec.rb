@@ -3,7 +3,6 @@ require "rails_helper"
 feature "Anyone can start a journey" do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-category-entry",
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run
@@ -174,14 +173,6 @@ feature "Anyone can start a journey" do
   end
 
   context "when the starting entry id doesn't exist" do
-    around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-fake-entry-id"
-      ) do
-        example.run
-      end
-    end
-
     scenario "a Contentful entry_id does not exist" do
       contentful_connector = instance_double(ContentfulConnector)
       stub_contentful_category(

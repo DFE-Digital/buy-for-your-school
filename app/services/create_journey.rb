@@ -8,7 +8,6 @@ class CreateJourney
   def call
     journey = Journey.create(
       category: category,
-      next_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"],
       liquid_template: liquid_template
     )
 

@@ -8,7 +8,6 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step",
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
       CONTENTFUL_ENTRY_CACHING: "true"
     ) do

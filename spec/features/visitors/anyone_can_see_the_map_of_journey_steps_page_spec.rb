@@ -1,7 +1,6 @@
 feature "Users can see all the steps of a journey" do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step",
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run
@@ -47,7 +46,6 @@ feature "Users can see all the steps of a journey" do
     context "when the same entry is found twice" do
       around do |example|
         ClimateControl.modify(
-          CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step",
           CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
         ) do
           example.run
