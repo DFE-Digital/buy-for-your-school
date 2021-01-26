@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- specification is no longer displayed before all tasks are completed
+
 ## [release-005] - 2021-1-19
 
 - users can see an initial slice of their specification as HTML at the end of their journey
