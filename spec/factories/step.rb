@@ -11,35 +11,30 @@ FactoryBot.define do
       options { [{"value" => "Red"}, {"value" => "Green"}, {"value" => "Blue"}] }
       contentful_model { "question" }
       contentful_type { "radios" }
-      association :radio_answer
     end
 
     trait :short_text do
       options { nil }
       contentful_model { "question" }
       contentful_type { "short_text" }
-      association :short_text_answer
     end
 
     trait :long_text do
       options { nil }
       contentful_model { "question" }
       contentful_type { "long_text" }
-      association :long_text_answer
     end
 
     trait :single_date do
       options { nil }
       contentful_model { "question" }
       contentful_type { "single_date" }
-      association :single_date_answer
     end
 
     trait :checkbox_answers do
       options { [{"value" => "Brown"}, {"value" => "Gold"}] }
       contentful_model { "question" }
       contentful_type { "checkboxes" }
-      association :checkbox_answers
     end
 
     trait :static_content do
