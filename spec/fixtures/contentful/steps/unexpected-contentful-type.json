@@ -30,6 +30,6 @@
     },
     "fields": {
         "slug": "/check-your-answers",
-        "type": "telepathy"
+        "type": "radios"
     }
 }

@@ -2,7 +2,7 @@ feature "Users can preview a journey step" do
   scenario "the appropriate step is displayed" do
     stub_get_contentful_entry(
       entry_id: "contentful-radio-question",
-      fixture_filename: "radio-question-example.json"
+      fixture_filename: "steps/contentful-radio-question.json"
     )
 
     visit preview_entry_path("contentful-radio-question")

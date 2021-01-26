@@ -6,7 +6,7 @@ RSpec.describe CreateJourneyStep do
       it "creates a local copy of the new step" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "radio-question-example.json"
+          contentful_fixture_filename: "steps/contentful-radio-question.json"
         )
 
         step = described_class.new(journey: journey, contentful_entry: fake_entry).call
@@ -62,7 +62,7 @@ RSpec.describe CreateJourneyStep do
       it "sets help_text and options to nil" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "short-text-question-example.json"
+          contentful_fixture_filename: "steps/short-text-question.json"
         )
 
         step = described_class.new(journey: journey, contentful_entry: fake_entry).call
@@ -73,7 +73,7 @@ RSpec.describe CreateJourneyStep do
       it "replaces spaces with underscores" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "short-text-question-example.json"
+          contentful_fixture_filename: "steps/short-text-question.json"
         )
 
         step = described_class.new(journey: journey, contentful_entry: fake_entry).call
@@ -86,7 +86,7 @@ RSpec.describe CreateJourneyStep do
       it "updates the step with the body" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "static-content-example.json"
+          contentful_fixture_filename: "steps/static-content.json"
         )
 
         step, _answer = described_class.new(
@@ -104,7 +104,7 @@ process around March.")
       it "updates the step with the body" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "primary-button-example.json"
+          contentful_fixture_filename: "steps/primary-button.json"
         )
 
         step, _answer = described_class.new(
@@ -119,7 +119,7 @@ process around March.")
       it "default copy is used for the button" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "no-primary-button-example.json"
+          contentful_fixture_filename: "steps/no-primary-button.json"
         )
 
         step, _answer = described_class.new(
@@ -134,7 +134,7 @@ process around March.")
       it "raises an error" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "an-unexpected-model-example.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
         expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
@@ -145,7 +145,7 @@ process around March.")
         journey = create(:journey, :catering)
 
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "an-unexpected-model-example.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
         expect(Rollbar).to receive(:warning)
@@ -153,8 +153,8 @@ process around March.")
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "6EKsv389ETYcQql3htK3Z2",
-            content_model: "unmanagedPage",
+            contentful_entry_id: "unexpected-contentful-type",
+            content_model: "telepathy",
             step_type: "radios",
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
             allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
@@ -168,7 +168,7 @@ process around March.")
       it "raises an error" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "an-unexpected-question-type-example.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
         expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
@@ -179,7 +179,7 @@ process around March.")
         journey = create(:journey, :catering)
 
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "an-unexpected-question-type-example.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
         expect(Rollbar).to receive(:warning)
@@ -187,7 +187,7 @@ process around March.")
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "8as7df68uhasdnuasdf",
+            contentful_entry_id: "unexpected-contentful-question-type",
             content_model: "question",
             step_type: "telepathy",
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
