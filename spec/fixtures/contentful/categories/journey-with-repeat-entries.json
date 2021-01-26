@@ -35,14 +35,14 @@
             "sys": {
                 "type": "Link",
                 "linkType": "Entry",
-                "id": "contentful-radio-question"
+                "id": "radio-question"
             }
           },
           {
             "sys": {
                 "type": "Link",
                 "linkType": "Entry",
-                "id": "contentful-radio-question"
+                "id": "radio-question"
             }
           }
         ]

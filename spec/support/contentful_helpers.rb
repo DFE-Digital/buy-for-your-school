@@ -1,6 +1,6 @@
 module ContentfulHelpers
   def stub_get_contentful_entry(
-    entry_id: "contentful-radio-question",
+    entry_id: "radio-question",
     fixture_filename: "radio-question-example.json"
   )
     contentful_connector = stub_contentful_connector

@@ -13,7 +13,7 @@ RSpec.describe GetEntriesInCategory do
       # INFO: We should test this is a Contentful::Entry however it wasn't
       # possible to create an instance_double due to an unusual way the object
       # is constructed within the gem. Creating the object seems overly complex.
-      expect(result.first.id).to eq("contentful-radio-question")
+      expect(result.first.id).to eq("radio-question")
     end
 
     context "when the category entry cannot be found" do
@@ -49,7 +49,7 @@ RSpec.describe GetEntriesInCategory do
             contentful_url: ENV["CONTENTFUL_URL"],
             contentful_space_id: ENV["CONTENTFUL_SPACE"],
             contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "contentful-radio-question")
+            contentful_entry_id: "radio-question")
           .and_call_original
 
         expect {

@@ -22,7 +22,7 @@ feature "Users can see all the steps of a journey" do
         expect(page)
           .to have_link(
             "Which service do you need?",
-            href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/contentful-radio-question"
+            href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/radio-question"
           )
       end
       within(list_items[1]) do
@@ -59,7 +59,7 @@ feature "Users can see all the steps of a journey" do
 
         expect(page).to have_content(I18n.t("errors.repeat_step_in_the_contentful_journey.page_title"))
         expect(page).to have_content(
-          I18n.t("errors.repeat_step_in_the_contentful_journey.page_body", entry_id: "contentful-radio-question")
+          I18n.t("errors.repeat_step_in_the_contentful_journey.page_body", entry_id: "radio-question")
         )
       end
     end

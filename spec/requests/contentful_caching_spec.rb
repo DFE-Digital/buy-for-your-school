@@ -23,8 +23,8 @@ RSpec.describe "Contentful Caching", type: :request do
       raw_category_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/radio-question.json")
       RedisCache.redis.set("contentful:entry:contentful-category-entry", JSON.dump(raw_category_response))
 
-      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/steps/contentful-radio-question.json")
-      RedisCache.redis.set("contentful:entry:contentful-radio-question", JSON.dump(raw_step_response))
+      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/steps/radio-question.json")
+      RedisCache.redis.set("contentful:entry:radio-question", JSON.dump(raw_step_response))
 
       expect_any_instance_of(Contentful::Client).not_to receive(:entry)
 
@@ -32,7 +32,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
       expect(response).to have_http_status(:found)
 
-      RedisCache.redis.del("contentful:entry:contentful-radio-question")
+      RedisCache.redis.del("contentful:entry:radio-question")
     end
 
     it "stores the external contentful response in the cache" do
@@ -42,10 +42,10 @@ RSpec.describe "Contentful Caching", type: :request do
 
       get new_journey_path
 
-      expect(RedisCache.redis.get("contentful:entry:contentful-radio-question"))
-        .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"contentful-radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}]}}\"")
+      expect(RedisCache.redis.get("contentful:entry:radio-question"))
+        .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}]}}\"")
 
-      RedisCache.redis.del("contentful:entry:contentful-radio-question")
+      RedisCache.redis.del("contentful:entry:radio-question")
     end
 
     it "sets a TTL to 72 hours by default" do
@@ -56,11 +56,11 @@ RSpec.describe "Contentful Caching", type: :request do
       freeze_time do
         get new_journey_path
 
-        expect(RedisCache.redis.ttl("contentful:entry:contentful-radio-question"))
+        expect(RedisCache.redis.ttl("contentful:entry:radio-question"))
           .to eq(60 * 60 * 72)
       end
 
-      RedisCache.redis.del("contentful:entry:contentful-radio-question")
+      RedisCache.redis.del("contentful:entry:radio-question")
     end
   end
 

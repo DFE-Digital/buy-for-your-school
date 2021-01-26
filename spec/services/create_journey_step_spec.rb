@@ -6,14 +6,14 @@ RSpec.describe CreateJourneyStep do
       it "creates a local copy of the new step" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_entry(
-          contentful_fixture_filename: "steps/contentful-radio-question.json"
+          contentful_fixture_filename: "steps/radio-question.json"
         )
 
         step = described_class.new(journey: journey, contentful_entry: fake_entry).call
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
-        expect(step.contentful_id).to eq("contentful-radio-question")
+        expect(step.contentful_id).to eq("radio-question")
         expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
@@ -41,7 +41,7 @@ RSpec.describe CreateJourneyStep do
                 "type" => "Link"
               }
             },
-            "id" => "contentful-radio-question",
+            "id" => "radio-question",
             "locale" => "en-US",
             "revision" => 7,
             "space" => {
