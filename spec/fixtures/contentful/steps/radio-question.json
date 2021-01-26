@@ -7,7 +7,7 @@
                 "id": "jspwts36h1os"
             }
         },
-        "id": "contentful-starting-step",
+        "id": "radio-question",
         "type": "Entry",
         "createdAt": "2020-09-07T10:56:40.585Z",
         "updatedAt": "2020-09-14T22:16:54.633Z",
@@ -35,16 +35,10 @@
         "type": "radios",
         "extendedOptions": [
           {
-              "value": "Catering",
-              "help_text": "",
-              "display_further_information": true,
-              "further_information_help_text": "Briefly describe why you need catering"
+              "value": "Catering"
           },
           {
-              "value": "Cleaning",
-              "help_text": "All interior areas of the school only",
-              "display_further_information": false,
-              "further_information_help_text": "Briefly describe why you need cleaning"
+              "value": "Cleaning"
           }
         ]
     }

@@ -1,0 +1,37 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "short-text-question",
+        "type": "Entry",
+        "createdAt": "2020-11-05T16:42:58.340Z",
+        "updatedAt": "2020-11-05T16:42:58.340Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/what-email-address-did-you-use",
+        "title": "What email address did you use?",
+        "helpText": "This will help us recover your existing plans",
+        "type": "short text"
+    }
+}

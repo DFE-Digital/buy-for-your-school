@@ -4,21 +4,21 @@
             "sys": {
                 "type": "Link",
                 "linkType": "Space",
-                "id": "jspwts36h1os"
+                "id": "rwl7tyzv9sys"
             }
         },
-        "id": "8as7df68uhasdnuasdf",
+        "id": "single-date-question",
         "type": "Entry",
-        "createdAt": "2020-09-02T15:56:05.472Z",
-        "updatedAt": "2020-09-02T16:19:00.652Z",
+        "createdAt": "2020-12-08T10:43:19.102Z",
+        "updatedAt": "2020-12-08T10:43:19.102Z",
         "environment": {
             "sys": {
-                "id": "master",
+                "id": "develop",
                 "type": "Link",
                 "linkType": "Environment"
             }
         },
-        "revision": 2,
+        "revision": 1,
         "contentType": {
             "sys": {
                 "type": "Link",
@@ -29,7 +29,15 @@
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/check-your-answers",
-        "type": "telepathy"
+        "slug": "/starting-date",
+        "type": "single date",
+        "title": "When will this start?",
+        "next": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "contentful-checkboxes-question"
+            }
+          }
     }
 }

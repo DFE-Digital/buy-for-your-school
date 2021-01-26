@@ -3,14 +3,6 @@ require "rails_helper"
 RSpec.describe GetContentfulEntry do
   let(:contentful_journey_start_entry_id) { "1a2b3c4d5" }
 
-  around do |example|
-    ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: contentful_journey_start_entry_id
-    ) do
-      example.run
-    end
-  end
-
   describe "#call" do
     it "requests and returns the required entry from Contentful" do
       contentful_connector = instance_double(ContentfulConnector)

@@ -7,10 +7,10 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "1DqhwF2XkJJ0Um6NSweWlZ",
+        "id": "long-text-question",
         "type": "Entry",
-        "createdAt": "2020-12-09T11:53:52.744Z",
-        "updatedAt": "2020-12-09T11:53:52.744Z",
+        "createdAt": "2020-11-11T11:26:20.994Z",
+        "updatedAt": "2020-11-11T11:26:20.994Z",
         "environment": {
             "sys": {
                 "id": "develop",
@@ -29,13 +29,16 @@
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/everyday-services",
-        "type": "checkboxes",
-        "title": "Everyday services that are required and need to be considered",
-        "extendedOptions": [
-          { "value": "breakfast" },
-          { "value": "lunch" },
-          { "value": "dinner" }
-        ]
+        "slug": "/describe-what-you-need",
+        "title": "Describe what you need",
+        "helpText": "Briefly describe what you are looking to procure from your supplier.",
+        "type": "long text",
+        "next": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "contentful-single-date-question"
+            }
+          }
     }
 }

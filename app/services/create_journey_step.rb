@@ -30,7 +30,7 @@ class CreateJourneyStep
       raise UnexpectedContentfulStepType
     end
 
-    step = Step.create(
+    Step.create(
       title: title,
       help_text: help_text,
       body: body,
@@ -42,10 +42,6 @@ class CreateJourneyStep
       raw: raw,
       journey: journey
     )
-
-    journey.update(next_entry_id: next_entry_id)
-
-    step
   end
 
   private
@@ -104,11 +100,6 @@ class CreateJourneyStep
 
   def raw
     contentful_entry.raw
-  end
-
-  def next_entry_id
-    return nil unless contentful_entry.respond_to?(:next)
-    contentful_entry.next.id
   end
 
   def send_rollbar_warning

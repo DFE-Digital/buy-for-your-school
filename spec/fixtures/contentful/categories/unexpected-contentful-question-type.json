@@ -4,41 +4,39 @@
             "sys": {
                 "type": "Link",
                 "linkType": "Space",
-                "id": "jspwts36h1os"
+                "id": "rwl7tyzv9sys"
             }
         },
-        "id": "contentful-radio-question",
+        "id": "contentful-category-entry",
         "type": "Entry",
-        "createdAt": "2020-09-07T10:56:40.585Z",
-        "updatedAt": "2020-09-14T22:16:54.633Z",
+        "createdAt": "2021-01-20T12:19:10.220Z",
+        "updatedAt": "2021-01-20T15:06:12.067Z",
         "environment": {
             "sys": {
-                "id": "master",
+                "id": "develop",
                 "type": "Link",
                 "linkType": "Environment"
             }
         },
-        "revision": 7,
+        "revision": 2,
         "contentType": {
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "question"
+                "id": "category"
             }
         },
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/which-service",
-        "title": "Which service do you need?",
-        "helpText": "Tell us which service you need.",
-        "type": "radios",
-        "extendedOptions": [
+        "title": "Catering",
+        "steps": [
           {
-              "value": "Catering"
-          },
-          {
-              "value": "Cleaning"
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "unexpected-contentful-question-type"
+            }
           }
         ]
     }

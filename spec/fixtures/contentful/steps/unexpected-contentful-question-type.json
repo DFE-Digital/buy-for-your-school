@@ -7,7 +7,7 @@
                 "id": "jspwts36h1os"
             }
         },
-        "id": "6EKsv389ETYcQql3htK3Z2",
+        "id": "unexpected-contentful-question-type",
         "type": "Entry",
         "createdAt": "2020-09-02T15:56:05.472Z",
         "updatedAt": "2020-09-02T16:19:00.652Z",
@@ -23,13 +23,13 @@
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "unmanagedPage"
+                "id": "question"
             }
         },
         "locale": "en-US"
     },
     "fields": {
         "slug": "/check-your-answers",
-        "type": "radios"
+        "type": "telepathy"
     }
 }
