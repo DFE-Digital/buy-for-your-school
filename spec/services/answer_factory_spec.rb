@@ -35,4 +35,12 @@ RSpec.describe AnswerFactory do
       end
     end
   end
+
+  context "when the step is for number" do
+    it "returns a new NumberAnswer object" do
+      step = create(:step, :number)
+      result = described_class.new(step: step).call
+      expect(result).to be_kind_of(NumberAnswer)
+    end
+  end
 end

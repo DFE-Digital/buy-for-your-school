@@ -29,4 +29,10 @@ FactoryBot.define do
 
     response { ["breakfast", "lunch", ""] }
   end
+
+  factory :number_answer do
+    association :step, factory: :step, contentful_type: "number", contentful_model: "question"
+
+    response { 150 }
+  end
 end

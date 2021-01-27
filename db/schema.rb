@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 2021_02_02_170113) do
     t.index ["step_id"], name: "index_long_text_answers_on_step_id"
   end
 
+  create_table "number_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "step_id"
+    t.integer "response", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id"], name: "index_number_answers_on_step_id"
+  end
+
   create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.string "response", null: false

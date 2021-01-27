@@ -37,6 +37,12 @@ FactoryBot.define do
       contentful_type { "checkboxes" }
     end
 
+    trait :number do
+      options { nil }
+      contentful_model { "question" }
+      contentful_type { "number" }
+    end
+
     trait :static_content do
       options { nil }
       contentful_model { "staticContent" }

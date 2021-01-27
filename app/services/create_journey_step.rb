@@ -11,6 +11,7 @@ class CreateJourneyStep
     paragraphs
     single_date
     checkboxes
+    number
   ].freeze
 
   attr_accessor :journey, :contentful_entry
