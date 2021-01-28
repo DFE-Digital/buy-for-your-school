@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [Unreleased]
 
 - specification templates are now sourced from the Contentful Category entry
+- refactor how we find all journey answers into isolated service
 
 ## [release-005] - 2021-1-19
 

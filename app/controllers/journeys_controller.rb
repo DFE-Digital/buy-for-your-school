@@ -28,24 +28,11 @@ class JourneysController < ApplicationController
     ).find(journey_id)
     @steps = @journey.steps.map { |step| StepPresenter.new(step) }
 
-    # TODO: Move this logic into a tested class along with a Presenter factory
-    @answers = @journey.steps.that_are_questions.each_with_object({}) { |step, hash|
-      answer = case step.answer.class.name
-      when "ShortTextAnswer" then ShortTextAnswerPresenter.new(step.answer)
-      when "LongTextAnswer" then LongTextAnswerPresenter.new(step.answer)
-      when "RadioAnswer" then RadioAnswerPresenter.new(step.answer)
-      when "SingleDateAnswer" then SingleDateAnswerPresenter.new(step.answer)
-      when "CheckboxAnswers" then CheckboxesAnswerPresenter.new(step.answer)
-      else
-        step.answer
-      end
-      hash["answer_#{step.contentful_id}"] = answer&.response.to_s
-    }
-
     @specification_template = Liquid::Template.parse(
       @journey.liquid_template, error_mode: :strict
     )
 
+    @answers = FindAllJourneyAnswers.new(journey: @journey).call
     specification_html = @specification_template.render(@answers)
 
     respond_to do |format|
