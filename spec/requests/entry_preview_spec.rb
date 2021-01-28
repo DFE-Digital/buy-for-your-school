@@ -9,7 +9,7 @@ RSpec.describe "Entry previews", type: :request do
       .and_return(fake_journey)
 
     fake_get_contentful_entry = instance_double(Contentful::Entry)
-    allow_any_instance_of(GetContentfulEntry).to receive(:call)
+    allow_any_instance_of(GetEntry).to receive(:call)
       .and_return(fake_get_contentful_entry)
 
     fake_step = create(:step, :radio)

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GetContentfulEntry do
+RSpec.describe GetEntry do
   let(:contentful_journey_start_entry_id) { "1a2b3c4d5" }
 
   describe "#call" do
@@ -29,7 +29,7 @@ RSpec.describe GetContentfulEntry do
           .and_return(nil)
 
         expect { described_class.new(entry_id: missing_entry_id).call }
-          .to raise_error(GetContentfulEntry::EntryNotFound)
+          .to raise_error(GetEntry::EntryNotFound)
       end
 
       it "raises a rollbar event" do
@@ -47,7 +47,7 @@ RSpec.describe GetContentfulEntry do
             contentful_entry_id: "123")
           .and_call_original
         expect { described_class.new(entry_id: "123").call }
-          .to raise_error(GetContentfulEntry::EntryNotFound)
+          .to raise_error(GetEntry::EntryNotFound)
       end
     end
   end

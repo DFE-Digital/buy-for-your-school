@@ -8,8 +8,8 @@ class GetEntriesInCategory
 
   def call
     category_entry = begin
-      GetContentfulEntry.new(entry_id: category_entry_id).call
-    rescue GetContentfulEntry::EntryNotFound
+      GetEntry.new(entry_id: category_entry_id).call
+    rescue GetEntry::EntryNotFound
       send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
       raise
     end
@@ -25,7 +25,7 @@ class GetEntriesInCategory
     end
 
     question_entry_ids.map { |entry_id|
-      GetContentfulEntry.new(entry_id: entry_id).call
+      GetEntry.new(entry_id: entry_id).call
     }
   end
 

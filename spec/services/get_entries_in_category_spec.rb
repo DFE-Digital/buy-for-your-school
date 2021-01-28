@@ -36,7 +36,7 @@ RSpec.describe GetEntriesInCategory do
 
         expect {
           described_class.new(category_entry_id: "a-category-id-that-does-not-exist").call
-        }.to raise_error(GetContentfulEntry::EntryNotFound)
+        }.to raise_error(GetEntry::EntryNotFound)
       end
     end
 
