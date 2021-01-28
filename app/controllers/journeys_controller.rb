@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
-  rescue_from FindLiquidTemplate::InvalidLiquidSyntax do |exception|
+  rescue_from GetCategory::InvalidLiquidSyntax do |exception|
     render "errors/specification_template_invalid", status: 500, locals: {error: exception}
   end
 
@@ -18,7 +18,7 @@ class JourneysController < ApplicationController
   end
 
   def new
-    journey = CreateJourney.new(category: "catering").call
+    journey = CreateJourney.new(category_name: "catering").call
     redirect_to journey_path(journey)
   end
 

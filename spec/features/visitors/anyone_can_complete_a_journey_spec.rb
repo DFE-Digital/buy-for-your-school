@@ -187,8 +187,7 @@ feature "Anyone can start a journey" do
 
   context "when the Liquid template was invalid" do
     it "raises an error" do
-      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/invalid.liquid")
-      allow_any_instance_of(FindLiquidTemplate).to receive(:file).and_return(fake_liquid_template)
+      stub_contentful_category(fixture_filename: "category-with-invalid-liquid-template.json")
 
       visit root_path
 
