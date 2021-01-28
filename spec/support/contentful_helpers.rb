@@ -27,12 +27,16 @@ module ContentfulHelpers
 
     # For each step in the category mock a GET request
     if stub_steps
-      category.steps.each do |step|
-        step = fake_contentful_entry(contentful_fixture_filename: "steps/#{step.id}.json")
-        allow(contentful_connector).to receive(:get_entry_by_id)
-          .with(step.id)
-          .and_return(step)
-      end
+      stub_contentful_category_steps(category: category, contentful_connector: contentful_connector)
+    end
+  end
+
+  def stub_contentful_category_steps(category:, contentful_connector:)
+    category.steps.each do |step|
+      step = fake_contentful_entry(contentful_fixture_filename: "steps/#{step.id}.json")
+      allow(contentful_connector).to receive(:get_entry_by_id)
+        .with(step.id)
+        .and_return(step)
     end
   end
 
