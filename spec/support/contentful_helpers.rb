@@ -75,7 +75,8 @@ module ContentfulHelpers
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      steps: steps
+      steps: steps,
+      specification_template: hash_response.dig("fields", "specification_template")
     )
   end
 
