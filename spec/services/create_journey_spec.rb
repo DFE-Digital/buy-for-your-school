@@ -12,7 +12,8 @@ RSpec.describe CreateJourney do
   describe "#call" do
     it "creates a new journey" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json"
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
       )
       expect { described_class.new(category: "catering").call }
         .to change { Journey.count }.by(1)
@@ -21,7 +22,8 @@ RSpec.describe CreateJourney do
 
     it "stores a copy of the Liquid template" do
       stub_contentful_category(
-        fixture_filename: "category-with-liquid-template.json"
+        fixture_filename: "category-with-liquid-template.json",
+        stub_steps: false
       )
       fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/basic_catering.liquid")
       finder = instance_double(FindLiquidTemplate)
