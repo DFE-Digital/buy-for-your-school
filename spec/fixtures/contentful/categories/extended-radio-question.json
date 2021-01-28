@@ -38,6 +38,7 @@
                 "id": "extended-radio-question"
             }
           }
-        ]
+        ],
+        "specification_template": "<h1>Liquid {{templating}}</h1>"
     }
 }

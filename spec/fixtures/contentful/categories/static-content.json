@@ -38,6 +38,7 @@
                 "id": "static-content"
             }
           }
-        ]
+        ],
+        "specification_template": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
     }
 }
