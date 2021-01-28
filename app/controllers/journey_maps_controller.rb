@@ -10,6 +10,7 @@ class JourneyMapsController < ApplicationController
   end
 
   def new
-    @journey_map = GetEntriesInCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    @journey_map = GetEntriesInCategory.new(category: category).call
   end
 end

@@ -5,7 +5,8 @@ class WarmEntryCacheJob < ApplicationJob
   sidekiq_options retry: 5
 
   def perform
-    entries = GetEntriesInCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    entries = GetEntriesInCategory.new(category: category).call
 
     entries.each do |entry|
       store_in_cache(cache: cache, key: "contentful:entry:#{entry.id}", entry: entry)

@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe WarmEntryCacheJob, type: :job do
   include ActiveJob::TestHelper
 
-  before(:each) { ActiveJob::Base.queue_adapter = :test }
+  before(:each) do
+    ActiveJob::Base.queue_adapter = :test
+  end
   after(:each) { RedisCache.redis.flushdb }
 
   around do |example|
@@ -23,9 +25,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
     end
 
     it "asks GetAllContentfulEntries for the Contentful entries" do
-      stub_contentful_category(
-        fixture_filename: "journey-with-multiple-entries.json"
-      )
+      stub_contentful_category(fixture_filename: "journey-with-multiple-entries.json")
 
       described_class.perform_later
       perform_enqueued_jobs
@@ -43,6 +43,11 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
     context "when the journey order cannot be built" do
       it "does not add new items to the cache" do
+        stub_contentful_category(
+          fixture_filename: "journey-with-multiple-entries.json",
+          stub_steps: false
+        )
+
         allow_any_instance_of(GetEntriesInCategory)
           .to receive(:call)
           .and_raise(GetEntriesInCategory::RepeatEntryDetected)
@@ -55,6 +60,11 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
       it "extends the TTL on all existing items by 24 hours" do
         RedisCache.redis.set("contentful:entry:contentful-starting-step", "\"{\\}\"")
+
+        stub_contentful_category(
+          fixture_filename: "journey-with-multiple-entries.json",
+          stub_steps: false
+        )
 
         allow_any_instance_of(GetEntriesInCategory)
           .to receive(:call)

@@ -11,7 +11,8 @@ class CreateJourney
       liquid_template: liquid_template
     )
 
-    question_entries = GetEntriesInCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    question_entries = GetEntriesInCategory.new(category: category).call
     question_entries.each do |entry|
       CreateJourneyStep.new(
         journey: journey, contentful_entry: entry

@@ -174,15 +174,8 @@ feature "Anyone can start a journey" do
 
   context "when the starting entry id doesn't exist" do
     scenario "a Contentful entry_id does not exist" do
-      contentful_connector = instance_double(ContentfulConnector)
-      stub_contentful_category(
-        fixture_filename: "missing-entry-id.json",
-        stub_steps: false,
-        contentful_connector: contentful_connector
-      )
-
-      allow(contentful_connector).to receive(:get_entry_by_id)
-        .with("missing-entry-id")
+      allow(stub_contentful_connector).to receive(:get_entry_by_id)
+        .with("contentful-category-entry")
         .and_return(nil)
 
       visit new_journey_path
