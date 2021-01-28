@@ -10,21 +10,6 @@ module ContentfulHelpers
       .and_return(contentful_response)
   end
 
-  def stub_get_contentful_entries(
-    entry_id: "contentful-starting-step",
-    fixture_filename: "multiple-entries-example.json"
-  )
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{fixture_filename}")
-
-    contentful_connector = stub_contentful_connector
-    contentful_response = fake_contentful_entry_array(contentful_fixture_filename: fixture_filename)
-    allow(contentful_connector).to receive(:get_all_entries)
-      .and_return(contentful_response)
-
-    allow(contentful_response).to receive(:raw)
-      .and_return(raw_response)
-  end
-
   def stub_contentful_category(
     fixture_filename:,
     stub_steps: true,
@@ -96,12 +81,5 @@ module ContentfulHelpers
       raw: hash_response,
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id"))
     )
-  end
-
-  def fake_contentful_entry_array(contentful_fixture_filename:)
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
-    response_hash = JSON.parse(raw_response)
-
-    Contentful::ResourceBuilder.new(response_hash).run
   end
 end
