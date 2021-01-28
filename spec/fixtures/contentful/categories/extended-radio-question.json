@@ -39,6 +39,6 @@
             }
           }
         ],
-        "specification_template": "<h1>Liquid {{templating}}</h1>"
+        "specification_template": "<article id='specification'><h1>{{answer_extended-radio-question}}</h1></article>"
     }
 }

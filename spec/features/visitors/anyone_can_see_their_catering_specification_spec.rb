@@ -1,11 +1,13 @@
 feature "Users can see their catering specification" do
   scenario "HTML" do
-    liquid_template = stub_liquid_template(filename: "food_catering.liquid")
-    journey = create(:journey, :catering, liquid_template: liquid_template)
-    step = create(:step, :long_text, long_text_answer: nil, journey: journey, contentful_id: "NxJWpbiFeEAmvcw17EysX")
-    answer = create(:long_text_answer, step: step, response: "Red tractor")
+    stub_contentful_category(fixture_filename: "category-with-dynamic-liquid-template.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
 
-    visit journey_path(journey)
+    click_first_link_in_task_list
+
+    choose("Catering")
+    click_on(I18n.t("generic.button.next"))
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
@@ -13,22 +15,25 @@ feature "Users can see their catering specification" do
       expect(page).to have_content("Menus and ordering")
       expect(page).to have_content("Food standards")
       expect(page).to have_content("The school also requires the service to comply with the following non-mandatory food standards or schemes:")
-      expect(page).to have_content(answer.response)
+      expect(page).to have_content("Catering")
     end
   end
 
   scenario "renders responses that need extra formatting" do
-    liquid_template = stub_liquid_template(filename: "food_catering.liquid")
-    journey = create(:journey, :catering, liquid_template: liquid_template)
-    step = create(:step, :radio, radio_answer: nil, journey: journey, contentful_id: "NxJWpbiFeEAmvcw17EysX")
-    _answer = create(:radio_answer, step: step, response: "Red tractor", further_information: "Lots more detail")
+    stub_contentful_category(fixture_filename: "extended-radio-question.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
 
-    visit journey_path(journey)
+    click_first_link_in_task_list
+
+    choose("Catering")
+    fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
+    click_on(I18n.t("generic.button.next"))
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
     within("article#specification") do
-      expect(page).to have_content("Red tractor - Lots more detail")
+      expect(page).to have_content("Catering - The school needs the kitchen cleaned once a day")
     end
   end
 end
