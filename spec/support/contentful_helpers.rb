@@ -1,5 +1,5 @@
 module ContentfulHelpers
-  def stub_get_contentful_entry(
+  def stub_contentful_entry(
     entry_id: "radio-question",
     fixture_filename: "radio-question-example.json"
   )
