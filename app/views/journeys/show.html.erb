@@ -3,25 +3,30 @@
 <h1 class="govuk-heading-xl"><%= @journey.category.capitalize %></h1>
 <ol class="app-task-list">
   <li>
-    <ul class="app-task-list__items">
-      <% @steps.each do |step| %>
-        <% if step.question? %>
-        <li class="app-task-list__item">
-          <% if step.answer %>
-            <span class="app-task-list__task-name">
-              <%= link_to step.title, edit_journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
-            </span>
-            <strong class="govuk-tag app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.completed") %></strong>
-          <% else %>
-            <span class="app-task-list__task-name">
-              <%= link_to step.title, journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
-            </span>
-            <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
+    <% @journey.section_ordering.each_pair do |section_title, section_step_ids| %>
+      <h2 class="app-task-list__section">
+        <%= section_title %>
+      </h2>
+      <ul class="app-task-list__items">
+        <% @steps.select{|step| section_step_ids.include?(step.contentful_id) }.each do |step| %>
+          <% if step.question? %>
+          <li class="app-task-list__item">
+            <% if step.answer %>
+              <span class="app-task-list__task-name">
+                <%= link_to step.title, edit_journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
+              </span>
+              <strong class="govuk-tag app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.completed") %></strong>
+            <% else %>
+              <span class="app-task-list__task-name">
+                <%= link_to step.title, journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
+              </span>
+              <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
+            <% end %>
+          </li>
           <% end %>
-        </li>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
+    <% end %>
   </li>
 </ol>
 

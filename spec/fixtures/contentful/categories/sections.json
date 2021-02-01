@@ -1,0 +1,67 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "2xAVAM1lxUie3bPHxUBBqD",
+        "type": "Entry",
+        "createdAt": "2021-01-20T12:19:10.220Z",
+        "updatedAt": "2021-02-01T10:47:35.480Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 8,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "category"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "title": "Catering",
+        "steps": [
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "NxJWpbiFeEAmvcw17EysX"
+                }
+            },
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "55G5kpCLLL3h5yBQLiVlYy"
+                }
+            }
+        ],
+        "sections": [
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "2vYq2ZOv0xMytOdOU0zN7O"
+                }
+            },
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "4JYwWdtRvfOfeCS9Imk5Z3"
+                }
+            }
+        ],
+        "specificationTemplate": "<article id='specification'>\n  <section>\n    <h2>Menus and ordering</h2>\n    <h3>Food standards</h2>\n    <ol>\n      {% if answer_NxJWpbiFeEAmvcw17EysX %}\n        <li>\n          <p class='govuk-body'>The school also requires the service to comply with the following non-mandatory food standards or schemes:</p>\n          <p class='govuk-body'>{{answer_NxJWpbiFeEAmvcw17EysX}}</p>\n        </li>\n      {% endif %}\n    </ol>\n  </section>\n</artcile>"
+    }
+}

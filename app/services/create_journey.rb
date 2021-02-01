@@ -8,10 +8,13 @@ class CreateJourney
   def call
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
 
-    journey = Journey.create(
+    journey = Journey.new(
       category: category_name,
       liquid_template: category.specification_template
     )
+
+    journey.section_ordering = GetSectionsInCategory.new(category: category).call
+    journey.save
 
     question_entries = GetEntriesInCategory.new(category: category).call
     question_entries.each do |entry|
