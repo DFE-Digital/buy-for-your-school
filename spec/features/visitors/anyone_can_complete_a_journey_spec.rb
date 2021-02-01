@@ -21,24 +21,6 @@ feature "Anyone can start a journey" do
     expect(page).to have_content("Not started")
   end
 
-  def click_first_link_in_task_list
-    within("ol.app-task-list") do
-      first("a").click
-    end
-  end
-
-  def start_journey_from_category_and_go_to_question(category:)
-    stub_contentful_category(
-      fixture_filename: category
-    )
-
-    visit root_path
-
-    click_on(I18n.t("generic.button.start"))
-
-    click_first_link_in_task_list
-  end
-
   scenario "an answer must be provided" do
     start_journey_from_category_and_go_to_question(category: "radio-question.json")
 
@@ -174,15 +156,8 @@ feature "Anyone can start a journey" do
 
   context "when the starting entry id doesn't exist" do
     scenario "a Contentful entry_id does not exist" do
-      contentful_connector = instance_double(ContentfulConnector)
-      stub_contentful_category(
-        fixture_filename: "missing-entry-id.json",
-        stub_steps: false,
-        contentful_connector: contentful_connector
-      )
-
-      allow(contentful_connector).to receive(:get_entry_by_id)
-        .with("missing-entry-id")
+      allow(stub_contentful_connector).to receive(:get_entry_by_id)
+        .with("contentful-category-entry")
         .and_return(nil)
 
       visit new_journey_path
@@ -194,8 +169,7 @@ feature "Anyone can start a journey" do
 
   context "when the Liquid template was invalid" do
     it "raises an error" do
-      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/invalid.liquid")
-      allow_any_instance_of(FindLiquidTemplate).to receive(:file).and_return(fake_liquid_template)
+      stub_contentful_category(fixture_filename: "category-with-invalid-liquid-template.json")
 
       visit root_path
 

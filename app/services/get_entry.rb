@@ -1,4 +1,4 @@
-class GetContentfulEntry
+class GetEntry
   class EntryNotFound < StandardError; end
   include CacheableEntry
 

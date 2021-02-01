@@ -31,14 +31,7 @@
     "fields": {
         "title": "Catering",
         "steps": [
-          {
-            "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "short-text-question"
-            }
-          }
         ],
-        "specification_template": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
+        "specification_template": "<h1>{{{invalid Liquid%}}}</h1>"
     }
 }

@@ -34,7 +34,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include ContentfulHelpers
-  config.include LiquidHelpers
+  config.include JourneyHelpers, type: :feature
   config.include ActiveSupport::Testing::TimeHelpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

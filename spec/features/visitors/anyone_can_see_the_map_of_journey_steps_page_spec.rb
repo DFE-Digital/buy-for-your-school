@@ -53,7 +53,10 @@ feature "Users can see all the steps of a journey" do
       end
 
       it "returns an error message" do
-        stub_contentful_category(fixture_filename: "journey-with-repeat-entries.json")
+        stub_contentful_category(
+          fixture_filename: "journey-with-repeat-entries.json",
+          stub_steps: false
+        )
 
         visit new_journey_map_path
 

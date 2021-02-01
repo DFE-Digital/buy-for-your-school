@@ -12,9 +12,10 @@ RSpec.describe CreateJourney do
   describe "#call" do
     it "creates a new journey" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json"
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
       )
-      expect { described_class.new(category: "catering").call }
+      expect { described_class.new(category_name: "catering").call }
         .to change { Journey.count }.by(1)
       expect(Journey.last.category).to eql("catering")
     end
@@ -23,16 +24,11 @@ RSpec.describe CreateJourney do
       stub_contentful_category(
         fixture_filename: "category-with-liquid-template.json"
       )
-      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/basic_catering.liquid")
-      finder = instance_double(FindLiquidTemplate)
-      allow(FindLiquidTemplate).to receive(:new).with(category: "catering")
-        .and_return(finder)
-      allow(finder).to receive(:call).and_return(fake_liquid_template)
 
-      described_class.new(category: "catering").call
+      described_class.new(category_name: "catering").call
 
       expect(Journey.last.liquid_template)
-        .to eql("<article id=\"specification\">\n  {% if answer_contentful-starting-step %}\n    <section>\n      <p class=\"govuk-body\">I'm the first article and should be seen</p>\n    </section>\n  {% endif %}\n</article>\n")
+        .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
     end
   end
 end

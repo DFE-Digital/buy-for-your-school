@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
-  rescue_from FindLiquidTemplate::InvalidLiquidSyntax do |exception|
+  rescue_from GetCategory::InvalidLiquidSyntax do |exception|
     render "errors/specification_template_invalid", status: 500, locals: {error: exception}
   end
 
@@ -13,12 +13,12 @@ class JourneysController < ApplicationController
     render "errors/unexpected_contentful_step_type", status: 500
   end
 
-  rescue_from GetContentfulEntry::EntryNotFound do |exception|
+  rescue_from GetEntry::EntryNotFound do |exception|
     render "errors/contentful_entry_not_found", status: 500
   end
 
   def new
-    journey = CreateJourney.new(category: "catering").call
+    journey = CreateJourney.new(category_name: "catering").call
     redirect_to journey_path(journey)
   end
 

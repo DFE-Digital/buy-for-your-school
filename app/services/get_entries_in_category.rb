@@ -1,21 +1,14 @@
 class GetEntriesInCategory
   class RepeatEntryDetected < StandardError; end
 
-  attr_accessor :category_entry_id
-  def initialize(category_entry_id:)
-    self.category_entry_id = category_entry_id
+  attr_accessor :category
+  def initialize(category:)
+    self.category = category
   end
 
   def call
-    category_entry = begin
-      GetContentfulEntry.new(entry_id: category_entry_id).call
-    rescue GetContentfulEntry::EntryNotFound
-      send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
-      raise
-    end
-
     question_entry_ids = []
-    category_entry.steps.each do |step|
+    category.steps.each do |step|
       if question_entry_ids.include?(step.id)
         send_rollbar_error(message: "A repeated Contentful entry was found in the same journey", entry_id: step.id)
         raise RepeatEntryDetected.new(step.id)
@@ -25,7 +18,7 @@ class GetEntriesInCategory
     end
 
     question_entry_ids.map { |entry_id|
-      GetContentfulEntry.new(entry_id: entry_id).call
+      GetEntry.new(entry_id: entry_id).call
     }
   end
 
