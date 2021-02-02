@@ -13,7 +13,7 @@ class CreateJourney
       liquid_template: category.specification_template
     )
 
-    question_entries = GetEntriesInCategory.new(category: category).call
+    question_entries = GetStepsFromCategory.new(category: category).call
     question_entries.each do |entry|
       CreateJourneyStep.new(
         journey: journey, contentful_entry: entry

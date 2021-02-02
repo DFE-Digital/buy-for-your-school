@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GetEntriesInCategory do
+RSpec.describe GetStepsFromCategory do
   describe "#call" do
     it "returns the list of entry objects referenced by the category list" do
       category = fake_contentful_category(
@@ -33,7 +33,7 @@ RSpec.describe GetEntriesInCategory do
 
         expect {
           described_class.new(category: category).call
-        }.to raise_error(GetEntriesInCategory::RepeatEntryDetected)
+        }.to raise_error(GetStepsFromCategory::RepeatEntryDetected)
       end
     end
   end

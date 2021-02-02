@@ -1,4 +1,4 @@
-class GetEntriesInCategory
+class GetStepsFromCategory
   class RepeatEntryDetected < StandardError; end
 
   attr_accessor :category
