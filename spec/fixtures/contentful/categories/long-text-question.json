@@ -30,15 +30,6 @@
     },
     "fields": {
         "title": "Catering",
-        "steps": [
-          {
-            "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "long-text-question"
-            }
-          }
-        ],
         "sections": [
           {
             "sys": {

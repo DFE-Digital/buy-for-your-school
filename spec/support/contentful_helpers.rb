@@ -109,7 +109,6 @@ module ContentfulHelpers
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
-    steps = hash_response.dig("fields", "steps").map { |step| double(id: step.dig("sys", "id")) }
     sections = hash_response.dig("fields", "sections").map { |section|
       double(id: section.dig("sys", "id"))
     }
@@ -117,7 +116,6 @@ module ContentfulHelpers
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      steps: steps,
       sections: sections,
       specification_template: hash_response.dig("fields", "specification_template")
     )

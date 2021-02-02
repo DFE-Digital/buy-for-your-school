@@ -30,15 +30,6 @@
     },
     "fields": {
         "title": "Catering",
-        "steps": [
-          {
-            "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "missing-entry-id"
-            }
-          }
-        ],
         "sections": [],
         "specification_template": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
     }

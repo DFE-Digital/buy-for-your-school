@@ -1,6 +1,10 @@
 require "rails_helper"
 
 feature "Users can view the task list" do
+  it "tasks are grouped by their section" do
+
+  end
+  
   context "When a question has been answered" do
     let(:answer) { create(:short_text_answer, response: "answer") }
 
