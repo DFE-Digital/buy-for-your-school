@@ -48,9 +48,9 @@ RSpec.describe WarmEntryCacheJob, type: :job do
           stub_steps: false
         )
 
-        allow_any_instance_of(GetStepsFromCategory)
+        allow_any_instance_of(GetStepsFromSection)
           .to receive(:call)
-          .and_raise(GetStepsFromCategory::RepeatEntryDetected)
+          .and_raise(GetStepsFromSection::RepeatEntryDetected)
 
         described_class.perform_later
         perform_enqueued_jobs
@@ -66,9 +66,9 @@ RSpec.describe WarmEntryCacheJob, type: :job do
           stub_steps: false
         )
 
-        allow_any_instance_of(GetStepsFromCategory)
+        allow_any_instance_of(GetStepsFromSection)
           .to receive(:call)
-          .and_raise(GetStepsFromCategory::RepeatEntryDetected)
+          .and_raise(GetStepsFromSection::RepeatEntryDetected)
 
         freeze_time do
           ttl_extension = 60 * 60 * 24

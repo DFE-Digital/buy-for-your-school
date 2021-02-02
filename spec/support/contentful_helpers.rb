@@ -12,20 +12,24 @@ module ContentfulHelpers
 
   def stub_contentful_category(
     fixture_filename:,
+    stub_sections: true,
     stub_steps: true,
-    contentful_connector: instance_double(ContentfulConnector)
+    contentful_connector: instance_double(ContentfulConnector) # TODO: I suspect the double doesn't do anything and we need stub_contentful_connector
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
-    allow(ContentfulConnector).to receive(:new)
+    expect(ContentfulConnector).to receive(:new)
       .and_return(contentful_connector)
 
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(category.id)
       .and_return(category)
 
-    if stub_steps
-      stub_contentful_category_steps(category: category, contentful_connector: contentful_connector)
+    if stub_sections
+      sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
+      if stub_steps
+        stub_contentful_section_steps(sections: sections, contentful_connector: contentful_connector)
+      end
     end
 
     category

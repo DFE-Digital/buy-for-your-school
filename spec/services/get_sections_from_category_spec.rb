@@ -7,11 +7,10 @@ RSpec.describe GetSectionsFromCategory do
         fixture_filename: "radio-question.json",
         stub_steps: false
       )
-      sections = stub_contentful_sections(category: category)
 
       result = described_class.new(category: category).call
 
-      expect(result).to eq(sections)
+      expect(result).to eq(category.sections)
     end
   end
 end

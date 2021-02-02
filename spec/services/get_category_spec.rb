@@ -5,7 +5,7 @@ RSpec.describe GetCategory do
     it "returns a Contenetful::Entry for the category_entry_id" do
       stub_contentful_category(
         fixture_filename: "static-content.json",
-        stub_steps: false
+        stub_sections: false
       )
       result = described_class.new(category_entry_id: "contentful-category-entry").call
       expect(result.id).to eql("contentful-category-entry")
