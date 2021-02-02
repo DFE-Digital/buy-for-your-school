@@ -31,6 +31,44 @@ module ContentfulHelpers
     category
   end
 
+  def stub_contentful_sections(
+    category:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    fake_sections = category.sections.map { |section|
+      fake_section = fake_contentful_section(contentful_fixture_filename: "sections/#{section.id}.json")
+      expect(contentful_connector).to receive(:get_entry_by_id)
+        .with(fake_section.id)
+        .and_return(fake_section)
+      fake_section
+    }
+
+    allow(category).to receive(:sections).and_return(fake_sections)
+    fake_sections
+  end
+
+  def stub_contentful_section_steps(
+    sections:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    sections.each do |section|
+      fake_steps = section.steps.map { |step|
+        fake_step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
+        expect(contentful_connector).to receive(:get_entry_by_id)
+          .with(fake_step.id)
+          .and_return(fake_step)
+        fake_step
+      }
+      allow(section).to receive(:steps).and_return(fake_steps)
+    end
+  end
+
   def stub_contentful_category_steps(
     category:,
     contentful_connector: instance_double(ContentfulConnector)
@@ -68,12 +106,28 @@ module ContentfulHelpers
     hash_response = JSON.parse(raw_response)
 
     steps = hash_response.dig("fields", "steps").map { |step| double(id: step.dig("sys", "id")) }
+    sections = hash_response.dig("fields", "sections").map { |section|
+      double(id: section.dig("sys", "id"))
+    }
 
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       steps: steps,
+      sections: sections,
       specification_template: hash_response.dig("fields", "specification_template")
+    )
+  end
+
+  def fake_contentful_section(contentful_fixture_filename:)
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
+    hash_response = JSON.parse(raw_response)
+
+    double(
+      Contentful::Entry,
+      id: hash_response.dig("sys", "id"),
+      title: hash_response.dig("fields", "title"),
+      steps: hash_response.dig("fields", "steps").map { |step_hash| double(id: step_hash.dig("sys", "id")) }
     )
   end
 
