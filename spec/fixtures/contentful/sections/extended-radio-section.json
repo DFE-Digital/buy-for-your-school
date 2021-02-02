@@ -7,10 +7,10 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "contentful-category-entry",
+        "id": "extended-radio-section",
         "type": "Entry",
-        "createdAt": "2021-01-20T12:19:10.220Z",
-        "updatedAt": "2021-01-20T15:06:12.067Z",
+        "createdAt": "2021-02-01T10:47:10.257Z",
+        "updatedAt": "2021-02-01T10:47:10.257Z",
         "environment": {
             "sys": {
                 "id": "develop",
@@ -18,28 +18,26 @@
                 "linkType": "Environment"
             }
         },
-        "revision": 2,
+        "revision": 1,
         "contentType": {
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "category"
+                "id": "section"
             }
         },
         "locale": "en-US"
     },
     "fields": {
-        "title": "Catering",
+        "title": "Section A",
         "steps": [
-          {
-            "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "missing-entry-id"
+            {
+              "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "extended-radio-question"
+              }
             }
-          }
-        ],
-        "sections": [],
-        "specification_template": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
+        ]
     }
 }

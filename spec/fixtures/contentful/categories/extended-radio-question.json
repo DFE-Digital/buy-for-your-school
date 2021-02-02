@@ -39,6 +39,15 @@
             }
           }
         ],
+        "sections": [
+          {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "extended-radio-section"
+            }
+          }
+        ],
         "specification_template": "<article id='specification'><h1>{{answer_extended-radio-question}}</h1></article>"
     }
 }
