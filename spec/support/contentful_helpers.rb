@@ -4,7 +4,7 @@ module ContentfulHelpers
     fixture_filename: "radio-question-example.json"
   )
     contentful_connector = stub_contentful_connector
-    contentful_response = fake_contentful_entry(contentful_fixture_filename: fixture_filename)
+    contentful_response = fake_contentful_step(contentful_fixture_filename: fixture_filename)
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(entry_id)
       .and_return(contentful_response)
@@ -41,7 +41,7 @@ module ContentfulHelpers
       .and_return(contentful_connector)
 
     category.steps.each do |step|
-      step = fake_contentful_entry(contentful_fixture_filename: "steps/#{step.id}.json")
+      step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
       allow(contentful_connector).to receive(:get_entry_by_id)
         .with(step.id)
         .and_return(step)
@@ -77,7 +77,7 @@ module ContentfulHelpers
     )
   end
 
-  def fake_contentful_entry(contentful_fixture_filename:)
+  def fake_contentful_step(contentful_fixture_filename:)
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
