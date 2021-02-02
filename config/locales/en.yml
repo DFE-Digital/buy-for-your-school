@@ -45,6 +45,10 @@ en:
       completed: Completed
   journey_map:
     page_title: "Contentful entry map"
+  resume:
+    notification:
+      title: "Returning to this specification"
+      body: "You can return to this page to make changes or view your specification at any time, either by bookmarking this page in your browser or by making a note of the following address:"
   errors:
     contentful_entry_not_found:
       page_title: "An unexpected error occurred"

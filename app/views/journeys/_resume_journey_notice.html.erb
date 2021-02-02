@@ -1,0 +1,15 @@
+<div class="govuk-notification-banner" role="region" id="govuk-recovery-advice-banner" aria-labelledby="govuk-recovery-advice-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-recovery-advice-banner-title">
+      <%= I18n.t("resume.notification.title") %>
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-body">
+      <%= I18n.t("resume.notification.body") %>
+    </p>
+    <p class="govuk-body">
+      <code><%=journey_url(@journey) %></code>
+    </p>
+  </div>
+</div>
