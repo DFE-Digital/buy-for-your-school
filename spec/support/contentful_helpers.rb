@@ -17,8 +17,8 @@ module ContentfulHelpers
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
-    expect(ContentfulConnector).to receive(:new)
-      .and_return(contentful_connector).once
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
 
     # Mock the GET request for the Category Entry
     allow(contentful_connector).to receive(:get_entry_by_id)
@@ -39,9 +39,8 @@ module ContentfulHelpers
   )
     return if category.steps.count.zero?
 
-    expect(ContentfulConnector).to receive(:new)
+    allow(ContentfulConnector).to receive(:new)
       .and_return(contentful_connector)
-      .exactly(category.steps.count)
 
     category.steps.each do |step|
       step = fake_contentful_entry(contentful_fixture_filename: "steps/#{step.id}.json")
