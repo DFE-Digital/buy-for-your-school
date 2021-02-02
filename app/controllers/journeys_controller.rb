@@ -27,6 +27,9 @@ class JourneysController < ApplicationController
       steps: [:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers]
     ).find(journey_id)
     @steps = @journey.steps.map { |step| StepPresenter.new(step) }
+    @section_groups = @journey.section_groups.each_with_object({}) { |group, result|
+      result[group[0]] = @steps.select { |step| group[1].include?(step.contentful_id) }
+    }
 
     @specification_template = Liquid::Template.parse(
       @journey.liquid_template, error_mode: :strict
