@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - specification templates are now sourced from the Contentful Category entry
 - refactor how we find all journey answers into isolated service
+- users are now told how they can resume a journey, and an address is provided for this
+- robots.txt now excludes all journey and step pages
 
 ## [release-005] - 2021-1-19
 
