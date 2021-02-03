@@ -18,7 +18,8 @@ class FindAllJourneyAnswers
       when "CheckboxAnswers" then CheckboxesAnswerPresenter.new(step.answer)
       else raise UnexpectedAnswer.new("Trying to present an unknown type of answer: #{step.answer.class.name}")
       end
-      hash["answer_#{step.contentful_id}"] = answer&.response.to_s
+
+      hash["answer_#{step.contentful_id}"] = answer.response.to_s
     }
   end
 end
