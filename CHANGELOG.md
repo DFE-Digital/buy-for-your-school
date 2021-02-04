@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - start page now has revised copy with details on eligibility and what to expect
 - The journey map is now clearer about what happens when you click a link
 - The journey map now includes links to preview a step
+- The journey map now displays markup to include a step's answer in the specification template
 
 ## [release-005] - 2021-1-19
 

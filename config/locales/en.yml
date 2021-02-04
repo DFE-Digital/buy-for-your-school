@@ -61,6 +61,7 @@ en:
     page_title: "Contentful entry map"
     edit_step_link_text: "Edit step in Contentful"
     preview_step_link_text: "Preview step in service"
+    spec_template_tag_title: "Specification tag"
   resume:
     notification:
       title: "Returning to this specification"

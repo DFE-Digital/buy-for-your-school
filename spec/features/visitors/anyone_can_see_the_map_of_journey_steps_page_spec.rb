@@ -33,6 +33,10 @@ feature "Users can see all the steps of a journey" do
             I18n.t("journey_map.preview_step_link_text"),
             href: preview_entry_path("radio-question")
           )
+        expect(page)
+          .to have_content(
+            "{{ answer_radio-question }}"
+          )
       end
       within(list_items[1]) do
         expect(page)
@@ -49,6 +53,10 @@ feature "Users can see all the steps of a journey" do
             I18n.t("journey_map.preview_step_link_text"),
             href: preview_entry_path("short-text-question")
           )
+        expect(page)
+          .to have_content(
+            "{{ answer_short-text-question }}"
+          )
       end
       within(list_items[2]) do
         expect(page)
@@ -64,6 +72,10 @@ feature "Users can see all the steps of a journey" do
           .to have_link(
             I18n.t("journey_map.preview_step_link_text"),
             href: preview_entry_path("long-text-question")
+          )
+        expect(page)
+          .to have_content(
+            "{{ answer_long-text-question }}"
           )
       end
     end
