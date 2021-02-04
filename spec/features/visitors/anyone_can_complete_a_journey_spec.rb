@@ -45,6 +45,37 @@ feature "Anyone can start a journey" do
       end
     end
 
+    context "when Contentful entry is of type numbers" do
+      scenario "user can answer using a number input" do
+        start_journey_from_category_and_go_to_question(category: "number-question.json")
+
+        fill_in "answer[response]", with: "190"
+        click_on(I18n.t("generic.button.next"))
+
+        click_first_link_in_task_list
+
+        expect(find_field("answer-response-field").value).to eql("190")
+      end
+
+      scenario "users receive an error when not entering a number" do
+        start_journey_from_category_and_go_to_question(category: "number-question.json")
+
+        fill_in "answer[response]", with: "foo"
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("is not a number")
+      end
+
+      scenario "users receive an error when entering a decimal number" do
+        start_journey_from_category_and_go_to_question(category: "number-question.json")
+
+        fill_in "answer[response]", with: "435.65"
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("must be an integer")
+      end
+    end
+
     context "when Contentful entry is of type long_text" do
       scenario "user can answer using free text with multiple lines" do
         start_journey_from_category_and_go_to_question(category: "long-text-question.json")

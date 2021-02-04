@@ -1,0 +1,2 @@
+class NumberAnswerPresenter < SimpleDelegator
+end
