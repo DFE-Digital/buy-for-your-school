@@ -20,22 +20,34 @@ feature "Users can see all the steps of a journey" do
       list_items = find_all("li")
       within(list_items[0]) do
         expect(page)
+          .to have_content(
+            "Which service do you need?"
+          )
+        expect(page)
           .to have_link(
-            "Which service do you need?",
+            I18n.t("journey_map.edit_step_link_text"),
             href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/radio-question"
           )
       end
       within(list_items[1]) do
         expect(page)
+          .to have_content(
+            "What email address did you use?"
+          )
+        expect(page)
           .to have_link(
-            "What email address did you use?",
+            I18n.t("journey_map.edit_step_link_text"),
             href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/short-text-question"
           )
       end
       within(list_items[2]) do
         expect(page)
+          .to have_content(
+            "Describe what you need"
+          )
+        expect(page)
           .to have_link(
-            "Describe what you need",
+            I18n.t("journey_map.edit_step_link_text"),
             href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/long-text-question"
           )
       end

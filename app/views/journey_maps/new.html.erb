@@ -4,7 +4,8 @@
 <ol class="govuk-list govuk-list--number">
   <% @steps.each do |entry| %>
     <li>
-      <%= link_to entry.title, "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/#{entry.id}", target: :blank, class: "govuk-link" %>
+      <b><%= entry.title %></b><br>
+      <small><%= link_to I18n.t("journey_map.edit_step_link_text"), "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/#{entry.id}", target: :blank, class: "govuk-link" %></small>
     </li>
   <% end %>
 </ol>
