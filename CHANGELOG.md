@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - steps/questions/tasks in the task lists are now grouped by Contentful Section entries
 - start page now has revised copy with details on eligibility and what to expect
 - The journey map is now clearer about what happens when you click a link
+- The journey map now includes links to preview a step
 
 ## [release-005] - 2021-1-19
 

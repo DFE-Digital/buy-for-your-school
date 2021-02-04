@@ -28,6 +28,11 @@ feature "Users can see all the steps of a journey" do
             I18n.t("journey_map.edit_step_link_text"),
             href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/radio-question"
           )
+        expect(page)
+          .to have_link(
+            I18n.t("journey_map.preview_step_link_text"),
+            href: preview_entry_path("radio-question")
+          )
       end
       within(list_items[1]) do
         expect(page)
@@ -39,6 +44,11 @@ feature "Users can see all the steps of a journey" do
             I18n.t("journey_map.edit_step_link_text"),
             href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/short-text-question"
           )
+        expect(page)
+          .to have_link(
+            I18n.t("journey_map.preview_step_link_text"),
+            href: preview_entry_path("short-text-question")
+          )
       end
       within(list_items[2]) do
         expect(page)
@@ -49,6 +59,11 @@ feature "Users can see all the steps of a journey" do
           .to have_link(
             I18n.t("journey_map.edit_step_link_text"),
             href: "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/long-text-question"
+          )
+        expect(page)
+          .to have_link(
+            I18n.t("journey_map.preview_step_link_text"),
+            href: preview_entry_path("long-text-question")
           )
       end
     end
