@@ -35,6 +35,13 @@
             "sys": {
                 "type": "Link",
                 "linkType": "Entry",
+                "id": "radio-section"
+            }
+          },
+          {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
                 "id": "long-text-section"
             }
           }

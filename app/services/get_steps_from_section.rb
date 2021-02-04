@@ -1,16 +1,16 @@
-class GetEntriesInCategory
+class GetStepsFromSection
   class RepeatEntryDetected < StandardError; end
 
-  attr_accessor :category
-  def initialize(category:)
-    self.category = category
+  attr_accessor :section
+  def initialize(section:)
+    self.section = section
   end
 
   def call
     question_entry_ids = []
-    category.steps.each do |step|
+    section.steps.each do |step|
       if question_entry_ids.include?(step.id)
-        send_rollbar_error(message: "A repeated Contentful entry was found in the same journey", entry_id: step.id)
+        send_rollbar_error(message: "A repeated Contentful entry was found in the same section", entry_id: step.id)
         raise RepeatEntryDetected.new(step.id)
       else
         question_entry_ids << step.id

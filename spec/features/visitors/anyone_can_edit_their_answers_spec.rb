@@ -1,6 +1,10 @@
 require "rails_helper"
 
 feature "Users can edit their answers" do
+  before do
+    journey = answer.step.journey
+    journey.update(section_groups: {"Section A" => [answer.step.contentful_id]})
+  end
   let(:answer) { create(:short_text_answer, response: "answer") }
 
   context "when the question is short_text" do

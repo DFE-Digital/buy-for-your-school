@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - refactor how we find all journey answers into isolated service
 - users are now told how they can resume a journey, and an address is provided for this
 - robots.txt now excludes all journey and step pages
+- steps/questions/tasks in the task lists are now grouped by Contentful Section entries
 
 ## [release-005] - 2021-1-19
 

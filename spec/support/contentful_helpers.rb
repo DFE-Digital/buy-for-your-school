@@ -4,7 +4,7 @@ module ContentfulHelpers
     fixture_filename: "radio-question-example.json"
   )
     contentful_connector = stub_contentful_connector
-    contentful_response = fake_contentful_entry(contentful_fixture_filename: fixture_filename)
+    contentful_response = fake_contentful_step(contentful_fixture_filename: fixture_filename)
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(entry_id)
       .and_return(contentful_response)
@@ -12,25 +12,65 @@ module ContentfulHelpers
 
   def stub_contentful_category(
     fixture_filename:,
+    stub_sections: true,
     stub_steps: true,
     contentful_connector: instance_double(ContentfulConnector) # TODO: I suspect the double doesn't do anything and we need stub_contentful_connector
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
     expect(ContentfulConnector).to receive(:new)
-      .and_return(contentful_connector).once
+      .and_return(contentful_connector)
 
-    # Mock the GET request for the Category Entry
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(category.id)
       .and_return(category)
 
-    # For each step in the category mock a GET request
-    if stub_steps
-      stub_contentful_category_steps(category: category, contentful_connector: contentful_connector)
+    if stub_sections
+      sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
+      if stub_steps
+        stub_contentful_section_steps(sections: sections, contentful_connector: contentful_connector)
+      end
     end
 
     category
+  end
+
+  def stub_contentful_sections(
+    category:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    fake_sections = category.sections.map { |section|
+      fake_section = fake_contentful_section(contentful_fixture_filename: "sections/#{section.id}.json")
+      expect(contentful_connector).to receive(:get_entry_by_id)
+        .with(fake_section.id)
+        .and_return(fake_section)
+      fake_section
+    }
+
+    allow(category).to receive(:sections).and_return(fake_sections)
+    fake_sections
+  end
+
+  def stub_contentful_section_steps(
+    sections:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    sections.each do |section|
+      fake_steps = section.steps.map { |step|
+        fake_step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
+        expect(contentful_connector).to receive(:get_entry_by_id)
+          .with(fake_step.id)
+          .and_return(fake_step)
+        fake_step
+      }
+      allow(section).to receive(:steps).and_return(fake_steps)
+    end
   end
 
   def stub_contentful_category_steps(
@@ -39,12 +79,11 @@ module ContentfulHelpers
   )
     return if category.steps.count.zero?
 
-    expect(ContentfulConnector).to receive(:new)
+    allow(ContentfulConnector).to receive(:new)
       .and_return(contentful_connector)
-      .exactly(category.steps.count)
 
     category.steps.each do |step|
-      step = fake_contentful_entry(contentful_fixture_filename: "steps/#{step.id}.json")
+      step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
       allow(contentful_connector).to receive(:get_entry_by_id)
         .with(step.id)
         .and_return(step)
@@ -70,17 +109,31 @@ module ContentfulHelpers
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
-    steps = hash_response.dig("fields", "steps").map { |step| double(id: step.dig("sys", "id")) }
+    sections = hash_response.dig("fields", "sections").map { |section|
+      double(id: section.dig("sys", "id"))
+    }
 
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      steps: steps,
+      sections: sections,
       specification_template: hash_response.dig("fields", "specification_template")
     )
   end
 
-  def fake_contentful_entry(contentful_fixture_filename:)
+  def fake_contentful_section(contentful_fixture_filename:)
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
+    hash_response = JSON.parse(raw_response)
+
+    double(
+      Contentful::Entry,
+      id: hash_response.dig("sys", "id"),
+      title: hash_response.dig("fields", "title"),
+      steps: hash_response.dig("fields", "steps").map { |step_hash| double(id: step_hash.dig("sys", "id")) }
+    )
+  end
+
+  def fake_contentful_step(contentful_fixture_filename:)
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
