@@ -121,6 +121,11 @@ feature "Anyone can start a journey" do
         expect(page).to have_checked_field("answer-response-breakfast-field")
         expect(page).to have_checked_field("answer-response-lunch-field")
       end
+
+      scenario "options follow the capitalisation given" do
+        start_journey_from_category_and_go_to_question(category: "checkboxes-question.json")
+        expect(page).to have_content("Morning break")
+      end
     end
 
     context "when Contentful entry is of type radios" do

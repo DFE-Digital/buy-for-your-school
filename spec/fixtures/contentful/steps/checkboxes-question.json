@@ -33,9 +33,10 @@
         "type": "checkboxes",
         "title": "Everyday services that are required and need to be considered",
         "extendedOptions": [
-          { "value": "breakfast" },
-          { "value": "lunch" },
-          { "value": "dinner" }
+          { "value": "Breakfast" },
+          { "value": "Morning break" },
+          { "value": "Lunch" },
+          { "value": "Dinner" }
         ]
     }
 }
