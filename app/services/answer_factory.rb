@@ -11,6 +11,7 @@ class AnswerFactory
     case step.contentful_type
     when "radios" then RadioAnswer.new
     when "number" then NumberAnswer.new
+    when "currency" then CurrencyAnswer.new
     when "short_text" then ShortTextAnswer.new
     when "long_text" then LongTextAnswer.new
     when "single_date" then SingleDateAnswer.new

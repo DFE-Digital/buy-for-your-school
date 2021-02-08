@@ -17,6 +17,7 @@ class FindAllJourneyAnswers
       when "SingleDateAnswer" then SingleDateAnswerPresenter.new(step.answer)
       when "CheckboxAnswers" then CheckboxesAnswerPresenter.new(step.answer)
       when "NumberAnswer" then NumberAnswerPresenter.new(step.answer)
+      when "CurrencyAnswer" then CurrencyAnswerPresenter.new(step.answer)
       else raise UnexpectedAnswer.new("Trying to present an unknown type of answer: #{step.answer.class.name}")
       end
 

@@ -35,4 +35,10 @@ FactoryBot.define do
 
     response { 150 }
   end
+
+  factory :currency_answer do
+    association :step, factory: :step, contentful_type: "currency", contentful_model: "question"
+
+    response { 1000.01 }
+  end
 end

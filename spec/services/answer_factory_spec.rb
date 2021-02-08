@@ -43,4 +43,12 @@ RSpec.describe AnswerFactory do
       expect(result).to be_kind_of(NumberAnswer)
     end
   end
+
+  context "when the step is for currency" do
+    it "returns a new CurrencyAnswer object" do
+      step = create(:step, :currency)
+      result = described_class.new(step: step).call
+      expect(result).to be_kind_of(CurrencyAnswer)
+    end
+  end
 end
