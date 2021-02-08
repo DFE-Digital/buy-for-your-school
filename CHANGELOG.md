@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - The journey map now displays markup to include a step's answer in the specification template
 - users can answer questions which expect a number
 - checkbox questions no longer alter the capitalisation of options
+- fix ordering of section and step items
 
 ## [release-005] - 2021-1-19
 
