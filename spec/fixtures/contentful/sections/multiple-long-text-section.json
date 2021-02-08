@@ -1,0 +1,50 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "long-text-section",
+        "type": "Entry",
+        "createdAt": "2021-02-01T10:47:10.257Z",
+        "updatedAt": "2021-02-01T10:47:10.257Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "section"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "title": "Section B",
+        "steps": [
+            {
+              "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "long-text-question"
+              }
+            },
+            {
+              "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "short-text-question"
+              }
+            }
+        ]
+    }
+}

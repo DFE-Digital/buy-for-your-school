@@ -2,10 +2,11 @@
 
 <h1 class="govuk-heading-xl"><%= @journey.category.capitalize %></h1>
 <ol class="app-task-list">
-  <% @section_groups.each_pair do |section_title, steps| %>
-    <h2 class="app-task-list__section"><%= section_title %></h2>
+  
+  <% section_group_with_steps(journey: @journey, steps: @steps).each do |grouping| %>
+    <h2 class="app-task-list__section"><%= grouping["title"] %></h2>
     <li>
-      <%= render "step_list", journey: @journey, steps: steps %>
+      <%= render "step_list", journey: @journey, steps: grouping["steps"] %>
     </li>
   <% end %>
 </ol>
