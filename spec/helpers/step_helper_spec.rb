@@ -6,8 +6,8 @@ RSpec.describe StepHelper, type: :helper do
       options = ["red", "blue"]
       result = helper.checkbox_options(array_of_options: options)
       expect(result).to match([
-        OpenStruct.new(id: "red", name: "Red"),
-        OpenStruct.new(id: "blue", name: "Blue")
+        OpenStruct.new(id: "red", name: "red"),
+        OpenStruct.new(id: "blue", name: "blue")
       ])
     end
   end
