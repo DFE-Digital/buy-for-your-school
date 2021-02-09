@@ -105,6 +105,23 @@ feature "Anyone can start a journey" do
         expect(find_field("answer_response_2i").value).to eql("8")
         expect(find_field("answer_response_1i").value).to eql("2020")
       end
+
+      scenario "the date input does not accept text" do
+        start_journey_from_category_and_go_to_question(category: "single-date-question.json")
+
+        fill_in "answer[response(3i)]", with: "32"
+        fill_in "answer[response(2i)]", with: "13"
+        fill_in "answer[response(1i)]", with: "2020"
+
+        click_on(I18n.t("generic.button.next"))
+        save_and_open_page
+
+        expect(page).to have_content("invalid date")
+
+        expect(find_field("answer_response_3i").value).to eql("32")
+        expect(find_field("answer_response_2i").value).to eql("13")
+        expect(find_field("answer_response_1i").value).to eql("2020")
+      end
     end
 
     context "when Contentful entry is of type checkboxes" do

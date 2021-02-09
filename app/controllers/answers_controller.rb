@@ -14,7 +14,7 @@ class AnswersController < ApplicationController
     else
       @answer.assign_attributes(answer_params)
     end
-
+    
     if @answer.valid?
       @answer.save
       redirect_to journey_path(@journey)
