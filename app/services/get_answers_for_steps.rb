@@ -1,13 +1,13 @@
-class FindAllJourneyAnswers
+class GetAnswersForSteps
   class UnexpectedAnswer < StandardError; end
 
-  attr_accessor :journey
-  def initialize(journey:)
-    self.journey = journey
+  attr_accessor :visible_steps
+  def initialize(visible_steps:)
+    self.visible_steps = visible_steps
   end
 
   def call
-    @answers = @journey.steps.that_are_questions.each_with_object({}) { |step, hash|
+    visible_steps.each_with_object({}) { |step, hash|
       next unless step.answer
 
       answer = case step.answer.class.name
