@@ -48,4 +48,16 @@ feature "Users can view the task list" do
       expect(page).to have_content(I18n.t("task_list.status.completed"))
     end
   end
+
+  context "When a question has been hidden" do
+    it "should not appear in the task list" do
+      stub_contentful_category(fixture_filename: "hidden-field.json")
+      visit root_path
+
+      click_on(I18n.t("generic.button.start"))
+
+      expect(page).not_to have_content("You should NOT be able to see this question")
+      expect(page).to have_content("You should be able to see this question")
+    end
+  end
 end

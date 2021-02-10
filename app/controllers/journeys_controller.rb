@@ -24,14 +24,22 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.includes(
-      steps: [:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers, :number_answer, :currency_answer]
+      steps: [
+        :radio_answer,
+        :short_text_answer,
+        :long_text_answer,
+        :single_date_answer,
+        :checkbox_answers,
+        :number_answer,
+        :currency_answer
+      ]
     ).find(journey_id)
-    @steps = @journey.steps.map { |step| StepPresenter.new(step) }
+
+    @steps = @journey.steps.viewable.map { |step| StepPresenter.new(step) }
 
     @specification_template = Liquid::Template.parse(
       @journey.liquid_template, error_mode: :strict
     )
-
     @answers = FindAllJourneyAnswers.new(journey: @journey).call
     specification_html = @specification_template.render(@answers)
 
