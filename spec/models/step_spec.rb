@@ -163,5 +163,82 @@ RSpec.describe Step, type: :model do
         end
       end
     end
+
+    describe "#check_to_hide_additional_step!" do
+      let(:journey) { create(:journey) }
+
+      context "when the additional_step_rule field is nil" do
+        it "returns nil" do
+          step = build(:step)
+          expect(step.check_to_hide_additional_step!).to eq(nil)
+        end
+      end
+
+      context "when the additional_step_rule exists" do
+        it "only changes the additional steps within the same journey" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+          create(:radio_answer, step: step, response: "Blue")
+
+          another_step_to_hide = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: false)
+
+          another_step_from_a_different_journey_to_keep_visible = create(:step,
+            :radio,
+            contentful_id: "123",
+            hidden: false)
+
+          step.check_to_hide_additional_step!
+
+          expect(another_step_to_hide.reload.hidden).to eq(true)
+          expect(another_step_from_a_different_journey_to_keep_visible.reload.hidden).to eq(false)
+        end
+
+        context "when the required_answer does not match the answer exactly" do
+          it "updates the referenced step's hidden field to true" do
+            step = create(:step,
+              :radio,
+              journey: journey,
+              additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+            create(:radio_answer, step: step, response: "Blue")
+
+            step_to_show = create(:step,
+              :radio,
+              journey: journey,
+              contentful_id: "123",
+              hidden: false)
+
+            step.check_to_hide_additional_step!
+
+            expect(step_to_show.reload.hidden).to eq(true)
+          end
+        end
+
+        context "when the required_answer has different case to the answer" do
+          it "does not hide the step" do
+            step = create(:step,
+              :radio,
+              journey: journey,
+              additional_step_rule: {"required_answer" => "RED", "question_identifier" => "123"})
+            create(:radio_answer, step: step, response: "red")
+
+            step_to_show = create(:step,
+              :radio,
+              journey: journey,
+              contentful_id: "123",
+              hidden: false)
+
+            step.check_to_hide_additional_step!
+
+            expect(step_to_show.reload.hidden).to eq(false)
+          end
+        end
+      end
+    end
   end
 end

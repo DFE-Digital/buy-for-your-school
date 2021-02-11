@@ -18,6 +18,7 @@ class SaveAnswer
     if answer.valid?
       answer.save
       answer.step.check_to_show_additional_step!
+      answer.step.check_to_hide_additional_step!
       result.success = true
     end
 

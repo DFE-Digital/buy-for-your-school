@@ -16,6 +16,7 @@ RSpec.describe SaveAnswer do
       answer = create(:short_text_answer)
 
       expect(answer.step).to receive(:check_to_show_additional_step!)
+      expect(answer.step).to receive(:check_to_hide_additional_step!)
 
       described_class.new(answer: answer).call(answer_params: {})
     end
