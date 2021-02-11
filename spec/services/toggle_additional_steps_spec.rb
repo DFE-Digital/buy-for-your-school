@@ -116,6 +116,56 @@ RSpec.describe ToggleAdditionalSteps do
             expect(step_to_show.reload.hidden).to eq(false)
           end
         end
+
+        context "when the referenced step also has an additional_step_rule rule" do
+          it "hides both connected questions" do
+            first_step = create(:step,
+              :radio,
+              journey: journey,
+              additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"},
+              hidden: false)
+            create(:radio_answer, step: first_step, response: "Changed from red")
+
+            second_step = create(:step,
+              :radio,
+              journey: journey,
+              contentful_id: "123",
+              additional_step_rule: {"required_answer" => "Blue", "question_identifier" => "456"},
+              hidden: false)
+            create(:radio_answer, step: second_step, response: "Blue")
+
+            third_step = create(:step,
+              :radio,
+              journey: journey,
+              contentful_id: "456",
+              hidden: false)
+
+            described_class.new(step: first_step).call
+
+            expect(second_step.reload.hidden).to eq(true)
+            expect(third_step.reload.hidden).to eq(true)
+          end
+        end
+      end
+
+      context "when the answer response is an array" do
+        it "checks for a match against all answers" do
+          step = create(:step,
+            :checkbox_answers,
+            journey: journey,
+            additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+          create(:checkbox_answers, step: step, response: ["Blue", "Red"])
+
+          step_to_show = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: true)
+
+          described_class.new(step: step).call
+
+          expect(step_to_show.reload.hidden).to eq(false)
+        end
       end
     end
   end

@@ -96,10 +96,25 @@ feature "Users can edit their answers" do
       start_journey_from_category_and_go_to_question(category: "show-additional-question.json")
 
       choose("School expert")
-
       click_on(I18n.t("generic.button.next"))
 
-      expect(page).to have_content("What support do you have available?")
+      # This question should be made visible after the previous step
+      click_on("What colour is the sky?")
+      choose("Red")
+      click_on(I18n.t("generic.button.next"))
+
+      # This question should be made visible after the previous step
+      click_on("You should NOT be able to see this question?")
+      choose("School expert")
+      click_on(I18n.t("generic.button.next"))
+
+      # Edit the first question to remove the chain of hidden questions
+      click_on("What support do you have available?")
+      choose("None")
+      click_on(I18n.t("generic.button.update"))
+
+      expect(page).not_to have_content("What colour is the sky? ")
+      expect(page).not_to have_content("You should NOT be able to see this question?")
     end
   end
 end
