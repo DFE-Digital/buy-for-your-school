@@ -8,15 +8,11 @@ class AnswersController < ApplicationController
     @answer = AnswerFactory.new(step: @step).call
     @answer.step = @step
 
-    case @step.contentful_type
-    when "checkboxes"
-      @answer.assign_attributes(checkbox_params)
-    else
-      @answer.assign_attributes(answer_params)
-    end
+    result = SaveAnswer.new(answer: @answer)
+      .call(checkbox_params: checkbox_params, answer_params: answer_params)
+    @answer = result.object
 
-    if @answer.valid?
-      @answer.save
+    if result.success?
       redirect_to journey_path(@journey)
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
@@ -26,17 +22,12 @@ class AnswersController < ApplicationController
   def update
     @journey = Journey.find(journey_id)
     @step = Step.find(step_id)
-    @answer = @step.answer
 
-    case @step.contentful_type
-    when "checkboxes"
-      @answer.assign_attributes(checkbox_params)
-    else
-      @answer.assign_attributes(answer_params)
-    end
+    result = SaveAnswer.new(answer: @step.answer)
+      .call(checkbox_params: checkbox_params, answer_params: answer_params)
+    @answer = result.object
 
-    if @answer.valid?
-      @answer.save
+    if result.success?
       redirect_to journey_path(@journey)
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}
