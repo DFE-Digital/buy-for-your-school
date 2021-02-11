@@ -42,6 +42,13 @@
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
+                    "id": "hidden-field-that-shows-an-additional-question"
+                }
+            },
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
                     "id": "hidden-field"
                 }
             }

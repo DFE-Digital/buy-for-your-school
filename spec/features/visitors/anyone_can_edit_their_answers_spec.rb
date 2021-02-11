@@ -90,4 +90,16 @@ feature "Users can edit their answers" do
       expect(page).to have_content("can't be blank")
     end
   end
+
+  context "when Contentful entry includes a 'show additional question' rule" do
+    scenario "an additional question is shown" do
+      start_journey_from_category_and_go_to_question(category: "show-additional-question.json")
+
+      choose("School expert")
+
+      click_on(I18n.t("generic.button.next"))
+
+      expect(page).to have_content("What support do you have available?")
+    end
+  end
 end

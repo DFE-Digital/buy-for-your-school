@@ -7,7 +7,7 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "show-additional-question",
+        "id": "hidden-field-that-shows-an-additional-question",
         "type": "Entry",
         "createdAt": "2020-11-04T12:28:24.460Z",
         "updatedAt": "2021-02-09T11:28:12.031Z",
@@ -31,24 +31,20 @@
     "fields": {
         "slug": "/available-support",
         "type": "radios",
-        "title": "What support do you have available?",
+        "title": "What colour is the sky?",
         "helpText": "Tell us what support you have available to you.",
         "extendedOptions": [
             {
-                "value": "School expert",
-                "display_further_information": true,
-                "further_information_help_text": "Explain why this is the case"
+                "value": "Red"
             },
             {
-                "value": "External expert"
-            },
-            {
-                "value": "None"
+                "value": "Blue"
             }
         ],
+        "alwaysShowTheUser": false,
         "showAdditionalQuestion": {
-            "required_answer": "School expert",
-            "question_identifier": "hidden-field-that-shows-an-additional-question"
+            "required_answer": "Red",
+            "question_identifier": "hidden-field"
         }
     }
 }
