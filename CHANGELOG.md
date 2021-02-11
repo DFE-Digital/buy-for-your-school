@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can answer questions which expect a currency
 - questions can be hidden from view
 - specification warning if there are incomplete tasks
+- hidden questions can be shown through a new show_additional_question field for each question
 
 ## [release-005] - 2021-1-19
 

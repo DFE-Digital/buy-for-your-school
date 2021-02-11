@@ -31,4 +31,13 @@ class Step < ApplicationRecord
   def options_list
     options.map { |hash| hash["value"] }
   end
+
+  def check_to_show_additional_step!
+    return unless additional_step_rule
+    return unless additional_step_rule["required_answer"].downcase == answer.response.downcase
+
+    journey.steps
+      .find_by(contentful_id: additional_step_rule["question_identifier"])
+      .update(hidden: false)
+  end
 end

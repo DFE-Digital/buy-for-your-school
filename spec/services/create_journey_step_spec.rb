@@ -159,12 +159,12 @@ process around March.")
           journey: journey, contentful_entry: fake_entry
         ).call
 
-        expect(step.additional_step_rule).to eql([
+        expect(step.additional_step_rule).to eql(
           {
-            "required_answer" => "Breakfast",
+            "required_answer" => "School expert",
             "question_identifier" => "hidden-field"
           }
-        ])
+        )
       end
     end
 

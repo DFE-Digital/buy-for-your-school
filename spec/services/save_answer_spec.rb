@@ -12,6 +12,14 @@ RSpec.describe SaveAnswer do
       expect(result.object.response).to eql("A little text")
     end
 
+    it "checks to see if any other steps need to be updated" do
+      answer = create(:short_text_answer)
+
+      expect(answer.step).to receive(:check_to_show_additional_step!)
+
+      described_class.new(answer: answer).call(answer_params: {})
+    end
+
     context "when the step is a checkbox question" do
       it "updates the answer with the checkbox_params" do
         answer = create(:checkbox_answers)

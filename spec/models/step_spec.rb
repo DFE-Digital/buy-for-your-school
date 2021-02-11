@@ -87,4 +87,81 @@ RSpec.describe Step, type: :model do
       expect(step.options).to eql([{"value" => "foo", "other_config" => false}])
     end
   end
+
+  describe "#check_to_show_additional_step!" do
+    let(:journey) { create(:journey) }
+
+    context "when the additional_step_rule field is nil" do
+      it "returns nil" do
+        step = build(:step)
+        expect(step.check_to_show_additional_step!).to eq(nil)
+      end
+    end
+
+    context "when the additional_step_rule exists" do
+      it "only changes the additional steps within the same journey" do
+        step = create(:step,
+          :radio,
+          journey: journey,
+          additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+        create(:radio_answer, step: step, response: "Red")
+
+        another_step_to_show = create(:step,
+          :radio,
+          journey: journey,
+          contentful_id: "123",
+          hidden: true)
+
+        another_step_from_a_different_journey_to_keep_hidden = create(:step,
+          :radio,
+          contentful_id: "123",
+          hidden: true)
+
+        step.check_to_show_additional_step!
+
+        expect(another_step_to_show.reload.hidden).to eq(false)
+        expect(another_step_from_a_different_journey_to_keep_hidden.reload.hidden).to eq(true)
+      end
+
+      context "when the required_answer matches the answer exactly" do
+        it "updates the referenced step's hidden field to false" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+          create(:radio_answer, step: step, response: "Red")
+
+          step_to_show = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: true)
+
+          step.check_to_show_additional_step!
+
+          expect(step_to_show.reload.hidden).to eq(false)
+        end
+      end
+
+      context "when the required_answer has different case to the answer" do
+        it "returns the updated step" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rule: {"required_answer" => "RED", "question_identifier" => "123"})
+          create(:radio_answer, step: step, response: "red")
+
+          step_to_show = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: true)
+
+          step.check_to_show_additional_step!
+
+          expect(step_to_show.reload.hidden).to eq(false)
+        end
+      end
+    end
+  end
 end
