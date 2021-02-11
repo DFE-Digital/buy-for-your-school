@@ -42,6 +42,7 @@ class CreateJourneyStep
       options: options,
       primary_call_to_action_text: primary_call_to_action_text,
       hidden: hidden,
+      additional_step_rule: additional_step_rule,
       raw: raw,
       journey: journey
     )
@@ -105,6 +106,11 @@ class CreateJourneyStep
     return false unless contentful_entry.respond_to?(:always_show_the_user)
     return false if contentful_entry.always_show_the_user.nil?
     !contentful_entry.always_show_the_user
+  end
+
+  def additional_step_rule
+    return nil unless contentful_entry.respond_to?(:show_additional_question)
+    contentful_entry.show_additional_question
   end
 
   def raw
