@@ -15,8 +15,9 @@ RSpec.describe SaveAnswer do
     it "checks to see if any other steps need to be updated" do
       answer = create(:short_text_answer)
 
-      expect(answer.step).to receive(:check_to_show_additional_step!)
-      expect(answer.step).to receive(:check_to_hide_additional_step!)
+      toggle_service = instance_double(ToggleAdditionalSteps)
+      expect(ToggleAdditionalSteps).to receive(:new).with(step: answer.step).and_return(toggle_service)
+      expect(toggle_service).to receive(:call)
 
       described_class.new(answer: answer).call(answer_params: {})
     end
