@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can answer questions which expect a number
 - checkbox questions no longer alter the capitalisation of options
 - fix ordering of section and step items
+- users can answer questions which expect a currency
 
 ## [release-005] - 2021-1-19
 

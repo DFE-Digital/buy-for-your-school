@@ -24,7 +24,7 @@ class JourneysController < ApplicationController
 
   def show
     @journey = Journey.includes(
-      steps: [:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers, :number_answer]
+      steps: [:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers, :number_answer, :currency_answer]
     ).find(journey_id)
     @steps = @journey.steps.map { |step| StepPresenter.new(step) }
 

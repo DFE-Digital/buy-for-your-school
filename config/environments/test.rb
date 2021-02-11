@@ -65,5 +65,6 @@ Rails.application.configure do
     Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :single_date_answer
     Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :checkbox_answers
     Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
+    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
   end
 end

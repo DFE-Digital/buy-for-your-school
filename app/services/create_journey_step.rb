@@ -12,6 +12,7 @@ class CreateJourneyStep
     single_date
     checkboxes
     number
+    currency
   ].freeze
 
   attr_accessor :journey, :contentful_entry

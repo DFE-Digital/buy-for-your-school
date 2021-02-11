@@ -8,6 +8,7 @@ class Step < ApplicationRecord
   has_one :single_date_answer
   has_one :checkbox_answers
   has_one :number_answer
+  has_one :currency_answer
 
   scope :that_are_questions, -> { where(contentful_model: "question") }
 
@@ -18,7 +19,8 @@ class Step < ApplicationRecord
       long_text_answer ||
       single_date_answer ||
       checkbox_answers ||
-      number_answer
+      number_answer ||
+      currency_answer
   end
 
   def primary_call_to_action_text

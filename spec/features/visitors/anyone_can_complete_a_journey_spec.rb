@@ -76,6 +76,28 @@ feature "Anyone can start a journey" do
       end
     end
 
+    context "when Contentful entry is of type currency" do
+      scenario "user can answer using a currency number input" do
+        start_journey_from_category_and_go_to_question(category: "currency-question.json")
+
+        fill_in "answer[response]", with: "1,000.01"
+        click_on(I18n.t("generic.button.next"))
+
+        click_first_link_in_task_list
+
+        expect(find_field("answer-response-field").value).to eql("1000.01")
+      end
+
+      scenario "throws error when non numerical values are entered" do
+        start_journey_from_category_and_go_to_question(category: "currency-question.json")
+
+        fill_in "answer[response]", with: "one hundred pounds"
+        click_on(I18n.t("generic.button.next"))
+
+        expect(page).to have_content("does not accept £ signs or other non numerical characters")
+      end
+    end
+
     context "when Contentful entry is of type long_text" do
       scenario "user can answer using free text with multiple lines" do
         start_journey_from_category_and_go_to_question(category: "long-text-question.json")

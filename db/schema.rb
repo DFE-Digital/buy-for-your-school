@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 2021_02_02_170113) do
     t.index ["step_id"], name: "index_checkbox_answers_on_step_id"
   end
 
+  create_table "currency_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "step_id"
+    t.decimal "response", precision: 11, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", precision: 6, null: false
