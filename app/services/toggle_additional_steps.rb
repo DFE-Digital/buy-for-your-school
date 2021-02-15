@@ -8,7 +8,7 @@ class ToggleAdditionalSteps
   def call
     return unless additional_step_rule
 
-    check_to_show_additional_step! if additional_step.hidden?
+    check_to_show_additional_steps! if additional_step.hidden?
     check_to_hide_additional_steps! unless additional_step.hidden?
   end
 
@@ -44,10 +44,10 @@ class ToggleAdditionalSteps
     end
   end
 
-  def check_to_show_additional_step!
+  def check_to_show_additional_steps!
     return unless matching_answer?
 
-    additional_step.update(hidden: false)
+    recursively_toggle_additional_steps!(next_step_id: additional_step_id, hidden_state: false)
   end
 
   def check_to_hide_additional_steps!

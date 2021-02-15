@@ -115,6 +115,14 @@ feature "Users can edit their answers" do
 
       expect(page).not_to have_content("What colour is the sky? ")
       expect(page).not_to have_content("You should NOT be able to see this question?")
+
+      # Edit the first question to add back the full chain of hidden questions
+      click_on("What support do you have available?")
+      choose("School expert")
+      click_on(I18n.t("generic.button.update"))
+
+      expect(page).to have_content("What colour is the sky? ")
+      expect(page).to have_content("You should NOT be able to see this question?")
     end
   end
 end
