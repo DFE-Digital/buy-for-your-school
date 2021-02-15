@@ -32,4 +32,16 @@ feature "Users can see their catering specification" do
       expect(page).to have_content("Catering - The school needs the kitchen cleaned once a day")
     end
   end
+
+  context "when the spec is incomplete" do
+    it "warns the user that the contents are in a partially completed state" do
+      stub_contentful_category(fixture_filename: "extended-radio-question.json")
+      visit root_path
+      click_on(I18n.t("generic.button.start"))
+
+      # Don't answer any questions to create a in progress spec
+
+      expect(page).to have_content("There are incomplete tasks, this specification is not ready for use.")
+    end
+  end
 end
