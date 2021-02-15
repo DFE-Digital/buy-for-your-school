@@ -11,6 +11,11 @@ RSpec.describe SingleDateAnswer, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:response) }
+    it "validates missing response" do
+      answer = build(:single_date_answer, response: nil)
+
+      expect(answer.valid?).to eq(false)
+      expect(answer.errors.full_messages.first).to include(I18n.t("activerecord.errors.models.single_date_answer.attributes.response"))
+    end
   end
 end

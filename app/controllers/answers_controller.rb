@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  include DateHelper
+
   def create
     @journey = Journey.find(journey_id)
     @step = Step.find(step_id)
@@ -9,7 +11,7 @@ class AnswersController < ApplicationController
     @answer.step = @step
 
     result = SaveAnswer.new(answer: @answer)
-      .call(checkbox_params: checkbox_params, answer_params: answer_params)
+      .call(checkbox_params: checkbox_params, answer_params: answer_params, date_params: date_params)
     @answer = result.object
 
     if result.success?
@@ -24,7 +26,7 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
 
     result = SaveAnswer.new(answer: @step.answer)
-      .call(checkbox_params: checkbox_params, answer_params: answer_params)
+      .call(checkbox_params: checkbox_params, answer_params: answer_params, date_params: date_params)
     @answer = result.object
 
     if result.success?
@@ -50,5 +52,11 @@ class AnswersController < ApplicationController
 
   def checkbox_params
     params.require(:answer).permit(response: [])
+  end
+
+  def date_params
+    answer = params.require(:answer).permit(:response)
+    date_hash = {day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"]}
+    {response: format_date(date_hash)}
   end
 end

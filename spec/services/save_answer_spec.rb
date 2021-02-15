@@ -34,6 +34,19 @@ RSpec.describe SaveAnswer do
       end
     end
 
+    context "when the step is a date question" do
+      it "updates the answer with the date_params" do
+        answer = build(:single_date_answer, response: nil)
+        date = Date.new(2000, 1, 29)
+        params = {response: date}
+
+        result = described_class.new(answer: answer).call(date_params: params)
+
+        expect(result.success?).to eql(true)
+        expect(result.object.response).to eql(date)
+      end
+    end
+
     context "when the answer is invalid" do
       it "does not try to save the answer" do
         answer = create(:checkbox_answers)
