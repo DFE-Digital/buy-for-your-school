@@ -4,4 +4,8 @@ class Journey < ApplicationRecord
   has_many :visible_steps, -> { where(steps: {hidden: false}) }, class_name: "Step"
 
   validates :liquid_template, presence: true
+
+  def all_steps_completed?
+    visible_steps.all? { |step| step.answer.present? }
+  end
 end
