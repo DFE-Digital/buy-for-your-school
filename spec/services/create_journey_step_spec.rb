@@ -17,13 +17,15 @@ RSpec.describe CreateJourneyStep do
         expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
+        expect(step.hidden).to eq(false)
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",
             "extendedOptions" => [{"value" => "Catering"}, {"value" => "Cleaning"}],
             "slug" => "/which-service",
             "title" => "Which service do you need?",
-            "type" => "radios"
+            "type" => "radios",
+            "alwaysShowTheUser" => true
           },
           "sys" => {
             "contentType" => {
@@ -127,6 +129,21 @@ process around March.")
         ).call
 
         expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
+      end
+    end
+
+    context "when no 'alwaysShowTheUser' is provided" do
+      it "default hidden to true" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_step(
+          contentful_fixture_filename: "steps/no-hidden-field.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.hidden).to eq(false)
       end
     end
 

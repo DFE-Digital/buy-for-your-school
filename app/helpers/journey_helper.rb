@@ -6,6 +6,7 @@ module JourneyHelper
 
     journey.section_groups.each do |section|
       ordered_step_objects = section["steps"].each_with_object([]) { |step, result|
+        next unless step_lookup[step["contentful_id"]]
         result[step["order"]] = step_lookup[step["contentful_id"]].first
       }
       section["steps"] = ordered_step_objects.compact

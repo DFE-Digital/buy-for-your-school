@@ -4,6 +4,7 @@ FactoryBot.define do
     help_text { "Choose the primary colour closest to your choice" }
     contentful_id { SecureRandom.hex }
     raw { |attrs| {"sys": {"id" => attrs["contentful_id"]}} }
+    hidden { false }
 
     association :journey, factory: :journey
 
