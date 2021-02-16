@@ -188,11 +188,12 @@ feature "Anyone can start a journey" do
         click_on(I18n.t("generic.button.next"))
 
         # This question should be made visible after the previous step
+        expect(page).not_to have_content("You should NOT be able to see this question?")
         click_on("What colour is the sky?")
         choose("Red")
         click_on(I18n.t("generic.button.next"))
 
-        # This question should be made visible after the previous step
+        # This question should only be made visible after the previous step
         click_on("You should NOT be able to see this question?")
         choose("School expert")
         click_on(I18n.t("generic.button.next"))
