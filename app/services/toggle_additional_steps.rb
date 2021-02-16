@@ -34,37 +34,51 @@ class ToggleAdditionalSteps
     journey_steps.find_by(contentful_id: additional_step_id)
   end
 
-  def matching_answer?
-    expected_answer = additional_step_rule["required_answer"].downcase
-    case answer.response.class.name
+  def matching_answer?(a:, b:)
+    expected_answer = a.downcase
+    case b.class.name
     when "Array"
-      answer.response.map(&:downcase).include?(expected_answer)
+      b.map(&:downcase).include?(expected_answer)
     else
-      expected_answer == answer.response.downcase
+      expected_answer == b.downcase
     end
   end
 
   def check_to_show_additional_steps!
-    return unless matching_answer?
-
-    recursively_toggle_additional_steps!(next_step_id: additional_step_id, hidden_state: false)
+    recursively_show_additional_steps!(current_step: step, next_step_id: additional_step_id)
   end
 
   def check_to_hide_additional_steps!
-    return if matching_answer?
+    return if matching_answer?(a: step.additional_step_rule["required_answer"], b: step.answer.response)
 
-    recursively_toggle_additional_steps!(next_step_id: additional_step_id, hidden_state: true)
+    recursively_hide_additional_steps!(current_step: step, next_step_id: additional_step_id)
   end
 
-  def recursively_toggle_additional_steps!(next_step_id:, hidden_state:)
+  def recursively_hide_additional_steps!(current_step:, next_step_id:)
     if next_step_id
 
       next_step = journey_steps.find_by(contentful_id: next_step_id)
-      next_step.update(hidden: hidden_state)
+      next_step.update(hidden: true)
 
-      recursively_toggle_additional_steps!(
-        next_step_id: next_step.additional_step_rule&.fetch("question_identifier", nil),
-        hidden_state: hidden_state
+      recursively_hide_additional_steps!(
+        current_step: next_step,
+        next_step_id: next_step.additional_step_rule&.fetch("question_identifier", nil)
+      )
+    end
+  end
+
+  def recursively_show_additional_steps!(current_step:, next_step_id:)
+    return unless current_step.answer && current_step.additional_step_rule
+
+    if next_step_id
+      return unless matching_answer?(a: current_step.additional_step_rule["required_answer"], b: current_step.answer.response)
+
+      next_step = journey_steps.find_by(contentful_id: next_step_id)
+      next_step.update(hidden: false)
+
+      recursively_show_additional_steps!(
+        current_step: next_step,
+        next_step_id: next_step.additional_step_rule&.fetch("question_identifier", nil)
       )
     end
   end
