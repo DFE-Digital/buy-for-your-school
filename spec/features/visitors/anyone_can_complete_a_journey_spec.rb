@@ -127,6 +127,17 @@ feature "Anyone can start a journey" do
         expect(find_field("answer_response_2i").value).to eql("8")
         expect(find_field("answer_response_1i").value).to eql("2020")
       end
+
+      scenario "date validations" do
+        start_journey_from_category_and_go_to_question(category: "single-date-question.json")
+
+        fill_in "answer[response(3i)]", with: "2"
+        fill_in "answer[response(2i)]", with: "0"
+        fill_in "answer[response(1i)]", with: "0"
+
+        click_on(I18n.t("generic.button.next"))
+        expect(page).to have_content(I18n.t("activerecord.errors.models.single_date_answer.attributes.response"))
+      end
     end
 
     context "when Contentful entry is of type checkboxes" do
