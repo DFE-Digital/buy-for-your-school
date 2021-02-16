@@ -168,6 +168,25 @@ feature "Anyone can start a journey" do
         end
       end
     end
+
+    context "when Contentful entry includes a 'show additional question' rule" do
+      scenario "additional questions are shown" do
+        start_journey_from_category_and_go_to_question(category: "show-additional-question.json")
+
+        choose("School expert")
+        click_on(I18n.t("generic.button.next"))
+
+        # This question should be made visible after the previous step
+        click_on("What colour is the sky?")
+        choose("Red")
+        click_on(I18n.t("generic.button.next"))
+
+        # This question should be made visible after the previous step
+        click_on("You should NOT be able to see this question?")
+        choose("School expert")
+        click_on(I18n.t("generic.button.next"))
+      end
+    end
   end
 
   context "when the Contentful model is of type staticContent" do

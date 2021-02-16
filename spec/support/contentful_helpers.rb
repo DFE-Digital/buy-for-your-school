@@ -148,6 +148,7 @@ module ContentfulHelpers
       next: double(id: hash_response.dig("fields", "next", "sys", "id")),
       primary_call_to_action: hash_response.dig("fields", "primaryCallToAction"),
       always_show_the_user: hash_response.dig("fields", "alwaysShowTheUser"),
+      show_additional_question: hash_response.dig("fields", "showAdditionalQuestion"),
       raw: hash_response,
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id"))
     )

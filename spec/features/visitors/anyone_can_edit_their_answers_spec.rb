@@ -90,4 +90,39 @@ feature "Users can edit their answers" do
       expect(page).to have_content("can't be blank")
     end
   end
+
+  context "when Contentful entry includes a 'show additional question' rule" do
+    scenario "an additional question is shown" do
+      start_journey_from_category_and_go_to_question(category: "show-additional-question.json")
+
+      choose("School expert")
+      click_on(I18n.t("generic.button.next"))
+
+      # This question should be made visible after the previous step
+      click_on("What colour is the sky?")
+      choose("Red")
+      click_on(I18n.t("generic.button.next"))
+
+      # This question should be made visible after the previous step
+      click_on("You should NOT be able to see this question?")
+      choose("School expert")
+      click_on(I18n.t("generic.button.next"))
+
+      # Edit the first question to remove the chain of hidden questions
+      click_on("What support do you have available?")
+      choose("None")
+      click_on(I18n.t("generic.button.update"))
+
+      expect(page).not_to have_content("What colour is the sky? ")
+      expect(page).not_to have_content("You should NOT be able to see this question?")
+
+      # Edit the first question to add back the full chain of hidden questions
+      click_on("What support do you have available?")
+      choose("School expert")
+      click_on(I18n.t("generic.button.update"))
+
+      expect(page).to have_content("What colour is the sky? ")
+      expect(page).to have_content("You should NOT be able to see this question?")
+    end
+  end
 end

@@ -1,0 +1,50 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "hidden-field-that-shows-an-additional-question",
+        "type": "Entry",
+        "createdAt": "2020-11-04T12:28:24.460Z",
+        "updatedAt": "2021-02-09T11:28:12.031Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 11,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/available-support",
+        "type": "radios",
+        "title": "What colour is the sky?",
+        "helpText": "Tell us what support you have available to you.",
+        "extendedOptions": [
+            {
+                "value": "Red"
+            },
+            {
+                "value": "Blue"
+            }
+        ],
+        "alwaysShowTheUser": false,
+        "showAdditionalQuestion": {
+            "required_answer": "Red",
+            "question_identifier": "hidden-field"
+        }
+    }
+}
