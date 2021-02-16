@@ -32,6 +32,7 @@
         "slug": "/starting-date",
         "type": "single date",
         "title": "When will this start?",
+        "helpText": "This will help set the timetable",
         "next": {
             "sys": {
                 "type": "Link",
