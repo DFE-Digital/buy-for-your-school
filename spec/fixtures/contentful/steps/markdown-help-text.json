@@ -1,0 +1,45 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "jspwts36h1os"
+            }
+        },
+        "id": "markdown-help-text",
+        "type": "Entry",
+        "createdAt": "2020-09-07T10:56:40.585Z",
+        "updatedAt": "2020-09-14T22:16:54.633Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 7,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/which-service",
+        "title": "Which service do you need?",
+        "helpText": "Paragraph Test: Paragraph 1\n\nParagraph Test: Paragraph 2\n\n**Bold text** test\n\n- List item one\n- List item two\n- List item three",
+        "type": "radios",
+        "extendedOptions": [
+          {
+              "value": "Catering"
+          },
+          {
+              "value": "Cleaning"
+          }
+        ]
+    }
+}
