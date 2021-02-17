@@ -27,8 +27,4 @@ class Step < ApplicationRecord
     return I18n.t("generic.button.next") unless super.present?
     super
   end
-
-  def options_list
-    options.map { |hash| hash["value"] }
-  end
 end
