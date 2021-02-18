@@ -39,7 +39,9 @@
                 "further_information_help_text": "You should tell us more"
             },
             {
-              "value": "No"
+                "value": "No",
+                "further_information_required": true,
+                "further_information_help_text": "You should tell us more"
             }
         ],
         "alwaysShowTheUser": true

@@ -165,15 +165,22 @@ feature "Anyone can start a journey" do
           start_journey_from_category_and_go_to_question(category: "extended-checkboxes-question.json")
 
           check("Yes")
-          fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
+          fill_in "answer[yes_further_information]", with: "The first piece of further information"
+
+          check("No")
+          fill_in "answer[no_further_information]", with: "A second piece of further information"
 
           click_on(I18n.t("generic.button.next"))
 
           click_first_link_in_task_list
 
           expect(page).to have_checked_field("Yes")
-          expect(find_field("answer-further-information-field").value)
-            .to eql("The school needs the kitchen cleaned once a day")
+          expect(find_field("answer-yes-further-information-field").value)
+            .to eql("The first piece of further information")
+
+          expect(page).to have_checked_field("No")
+          expect(find_field("answer-no-further-information-field").value)
+            .to eql("A second piece of further information")
         end
       end
     end

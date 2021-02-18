@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_145518) do
     t.string "response", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "further_information"
+    t.jsonb "further_information"
     t.index ["step_id"], name: "index_checkbox_answers_on_step_id"
   end
 

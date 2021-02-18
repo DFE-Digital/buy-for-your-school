@@ -51,7 +51,20 @@ class AnswersController < ApplicationController
   end
 
   def checkbox_params
-    params.require(:answer).permit(:further_information, response: [])
+    answer_params = params.require(:answer)
+
+    if @step.options
+      allowed_further_information_keys = @step.options.map { |option|
+        "#{option["value"].tr(" ", "_").downcase}_further_information".to_sym
+      }
+    end
+
+    further_information_params = answer_params.permit(*allowed_further_information_keys)
+    further_information = further_information_params.to_hash
+
+    all_params = answer_params.permit(response: [])
+    all_params[:further_information] = further_information
+    all_params
   end
 
   def date_params
