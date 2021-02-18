@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - hidden questions can be rehidden again after changing the original answer
 - hidden questions that were at one point answered, will be reshown with a change to an earlier question
 - fix Redis connection errors on Heroku
+- users can be asked extended checkbox questions which ask for further information
 
 ## [release-005] - 2021-1-19
 

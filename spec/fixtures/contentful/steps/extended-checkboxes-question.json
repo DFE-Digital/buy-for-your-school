@@ -1,0 +1,47 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "extended-checkboxes-question",
+        "type": "Entry",
+        "createdAt": "2021-02-17T14:09:56.405Z",
+        "updatedAt": "2021-02-17T14:38:07.806Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 2,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/extended-checkboxes",
+        "type": "checkboxes",
+        "title": "Extended checkboxes",
+        "extendedOptions": [
+            {
+                "value": "Yes",
+                "further_information_required": true,
+                "further_information_help_text": "You should tell us more"
+            },
+            {
+              "value": "No"
+            }
+        ],
+        "alwaysShowTheUser": true
+    }
+}

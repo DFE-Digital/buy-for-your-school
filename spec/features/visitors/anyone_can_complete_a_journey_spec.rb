@@ -159,6 +159,23 @@ feature "Anyone can start a journey" do
         start_journey_from_category_and_go_to_question(category: "checkboxes-question.json")
         expect(page).to have_content("Morning break")
       end
+
+      context "when extra configuration is passed to collect further info" do
+        scenario "asks the user for further information" do
+          start_journey_from_category_and_go_to_question(category: "extended-checkboxes-question.json")
+
+          check("Yes")
+          fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
+
+          click_on(I18n.t("generic.button.next"))
+
+          click_first_link_in_task_list
+
+          expect(page).to have_checked_field("Yes")
+          expect(find_field("answer-further-information-field").value)
+            .to eql("The school needs the kitchen cleaned once a day")
+        end
+      end
     end
 
     context "when Contentful entry is of type radios" do

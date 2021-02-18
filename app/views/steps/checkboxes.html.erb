@@ -1,8 +1,19 @@
 <%= render layout: layout do |f| %>
-  <%= f.govuk_collection_check_boxes :response,
-    checkbox_options(array_of_options: @step.options_list),
-    :id,
-    :name,
-    legend: { text: @step.title, size: "l" }
-  %>
+  <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step.title, size: "l" } do %>
+    <% if @step.help_text.present? %>
+      <span class="govuk-hint">
+        <%= @step.help_text %>
+      </span>
+    <% end %>
+
+    <% @step.options.each do |option| %>
+      <% if option["further_information_required"] == true %>
+        <%= f.govuk_check_box :response, option["value"].downcase, label: { text: option["value"] } do %>
+          <%= f.govuk_text_field :further_information, label: { text: option["further_information_help_text"] } %>
+        <% end %>
+      <% else %>
+        <%= f.govuk_check_box :response, option["value"].downcase, label: { text: option["value"] } %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
