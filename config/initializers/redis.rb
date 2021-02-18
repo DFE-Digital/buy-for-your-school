@@ -6,7 +6,7 @@ module RedisCache
       else
         Redis::Namespace.new(
           "buy_for_your_school",
-          redis: Redis.new(url: ENV["REDIS_CACHE_URL"])
+          redis: Redis.new(url: ENV["REDIS_URL"], db: 1)
         )
       end
     end
