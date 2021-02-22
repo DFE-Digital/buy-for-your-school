@@ -1,8 +1,23 @@
 <%= render layout: layout do |f| %>
-  <%= f.govuk_collection_check_boxes :response,
-    checkbox_options(array_of_options: @step.options_list),
-    :id,
-    :name,
-    legend: { text: @step.title, size: "l" }
-  %>
+  <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step.title, size: "l" } do %>
+    <% if @step.help_text.present? %>
+      <span class="govuk-hint">
+        <%= @step.help_text %>
+      </span>
+    <% end %>
+
+    <% @step.options.each do |option| %>
+      <% machine_value = option["value"].tr(" ", "_").downcase %>
+
+      <% if option["further_information_required"] == true %>
+        <% f.object = monkey_patch_form_object_with_further_information_field(form_object: f.object, associated_choice: machine_value) %>
+        <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
+          <%= f.govuk_text_field "#{machine_value}_further_information",
+            label: { text: option["further_information_help_text"] } %>
+        <% end %>
+      <% else %>
+        <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
