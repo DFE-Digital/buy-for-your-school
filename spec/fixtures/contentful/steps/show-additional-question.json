@@ -48,7 +48,7 @@
         ],
         "showAdditionalQuestion": {
             "required_answer": "School expert",
-            "question_identifier": "hidden-field-that-shows-an-additional-question"
+            "question_identifier": ["hidden-field-that-shows-an-additional-question"]
         }
     }
 }
