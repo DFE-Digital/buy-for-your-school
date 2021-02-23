@@ -2,9 +2,9 @@
   <%= f.hidden_field :response, value: nil %>
   <%= f.govuk_radio_buttons_fieldset(:response, legend: { size: "l", text: @step.title }) do %>
     <% if @step.help_text.present? %>
-      <span class="govuk-hint">
-        <%= @step.help_text %>
-      </span>
+      <div class="govuk-hint">
+        <%= @step.help_text_html.html_safe %>
+      </div>
     <% end %>
 
     <% @step.options.each do |option| %>

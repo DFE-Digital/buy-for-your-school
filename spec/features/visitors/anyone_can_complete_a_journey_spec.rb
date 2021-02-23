@@ -245,6 +245,29 @@ feature "Anyone can start a journey" do
     end
   end
 
+  context "when the help text contains Markdown" do
+    scenario "paragraph breaks are parsed as expected" do
+      start_journey_from_category_and_go_to_question(category: "markdown-help-text.json")
+
+      expect(page.html).to include("<p>Paragraph Test: Paragraph 1</p>")
+      expect(page.html).to include("<p>Paragraph Test: Paragraph 2</p>")
+    end
+
+    scenario "bold text is parsed as expected" do
+      start_journey_from_category_and_go_to_question(category: "markdown-help-text.json")
+
+      expect(page.html).to include("<strong>Bold text</strong> test")
+    end
+
+    scenario "lists are parsed as expected" do
+      start_journey_from_category_and_go_to_question(category: "markdown-help-text.json")
+
+      expect(page.html).to include("<li>List item one</li>")
+      expect(page.html).to include("<li>List item two</li>")
+      expect(page.html).to include("<li>List item three</li>")
+    end
+  end
+
   context "when Contentful entry model wasn't an expected type" do
     scenario "returns an error message" do
       stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")

@@ -1,7 +1,7 @@
 <%= render layout: layout do |f| %>
   <%= f.govuk_text_field :response,
     label: { text: @step.title, size: "l" },
-    hint: { text: @step.help_text },
+    hint: -> { @step.help_text_html.html_safe },
     width: "one-third"
   %>
 <% end %>

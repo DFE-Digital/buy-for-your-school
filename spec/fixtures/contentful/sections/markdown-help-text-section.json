@@ -7,10 +7,10 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "single-date-question",
+        "id": "radio-section",
         "type": "Entry",
-        "createdAt": "2020-12-08T10:43:19.102Z",
-        "updatedAt": "2020-12-08T10:43:19.102Z",
+        "createdAt": "2021-02-01T10:47:10.257Z",
+        "updatedAt": "2021-02-01T10:47:10.257Z",
         "environment": {
             "sys": {
                 "id": "develop",
@@ -23,22 +23,21 @@
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "question"
+                "id": "section"
             }
         },
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/starting-date",
-        "type": "single date",
-        "title": "When will this start?",
-        "helpText": "This will help set the timetable",
-        "next": {
-            "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "contentful-checkboxes-question"
+        "title": "Section A",
+        "steps": [
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "markdown-help-text"
+                }
             }
-          }
+        ]
     }
 }

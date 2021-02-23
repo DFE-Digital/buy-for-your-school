@@ -27,4 +27,8 @@ class Step < ApplicationRecord
     return I18n.t("generic.button.next") unless super.present?
     super
   end
+
+  def help_text_html
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(help_text)
+  end
 end
