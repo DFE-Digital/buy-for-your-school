@@ -168,6 +168,10 @@ feature "Anyone can start a journey" do
           fill_in "answer[yes_further_information]", with: "The first piece of further information"
 
           check("No")
+          expect(page).not_to have_content("No_further_information") # It should not create a label which one isn't specified
+          within("span.govuk-visually-hidden") do
+            expect(page).to have_content("Optional further information") # Default the hidden label to something understandable for screen readers
+          end
           fill_in "answer[no_further_information]", with: "A second piece of further information"
 
           click_on(I18n.t("generic.button.next"))

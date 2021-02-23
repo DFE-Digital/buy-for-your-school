@@ -40,8 +40,7 @@
             },
             {
                 "value": "No",
-                "display_further_information": true,
-                "further_information_help_text": "You should tell us more"
+                "display_further_information": true
             }
         ],
         "alwaysShowTheUser": true

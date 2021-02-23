@@ -13,7 +13,7 @@
         <% f.object = monkey_patch_form_object_with_further_information_field(form_object: f.object, associated_choice: machine_value) %>
         <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
           <%= f.govuk_text_field "#{machine_value}_further_information",
-            label: { text: option["further_information_help_text"] } %>
+            label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
         <% end %>
       <% else %>
         <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } %>
