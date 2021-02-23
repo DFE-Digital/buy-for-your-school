@@ -162,7 +162,7 @@ process around March.")
         expect(step.additional_step_rules).to eql([
           {
             "required_answer" => "School expert",
-            "question_identifier" => ["hidden-field-that-shows-an-additional-question"]
+            "question_identifiers" => ["hidden-field-that-shows-an-additional-question"]
           }
         ])
       end

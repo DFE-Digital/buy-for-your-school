@@ -49,13 +49,13 @@
         "showAdditionalQuestion": [
           {
               "required_answer": "Yes",
-              "question_identifier": [
+              "question_identifiers": [
                   "ZoOchclnfw6tPZ0xfYL0h"
               ]
           },
           {
               "required_answer": "No",
-              "question_identifier": [
+              "question_identifiers": [
                   "wSeEY4HlESoDJSUsE2wJQ"
               ]
           }

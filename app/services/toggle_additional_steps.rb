@@ -28,20 +28,20 @@ class ToggleAdditionalSteps
 
   def additional_step_ids
     additional_step_rules.map { |rule|
-      rule["question_identifier"]
+      rule["question_identifiers"]
     }.flatten
   end
 
   def additional_steps_to_show
     matching_next_step_ids = step.additional_step_rules.map { |rule|
-      rule.fetch("question_identifier", nil) if step.answer && matching_answer?(a: rule["required_answer"], b: step.answer.response)
+      rule.fetch("question_identifiers", nil) if step.answer && matching_answer?(a: rule["required_answer"], b: step.answer.response)
     }.flatten
     journey_steps.where(contentful_id: matching_next_step_ids)
   end
 
   def additional_steps_to_hide
     non_matching_next_step_ids = step.additional_step_rules.map { |rule|
-      rule.fetch("question_identifier", nil) unless matching_answer?(a: rule["required_answer"], b: step.answer.response)
+      rule.fetch("question_identifiers", nil) unless matching_answer?(a: rule["required_answer"], b: step.answer.response)
     }.flatten
     journey_steps.where(contentful_id: non_matching_next_step_ids)
   end
@@ -72,7 +72,7 @@ class ToggleAdditionalSteps
         next unless next_step.additional_step_rules
 
         all_next_step_ids = next_step.additional_step_rules.map { |rule|
-          rule.fetch("question_identifier", nil)
+          rule.fetch("question_identifiers", nil)
         }
         all_next_steps = journey_steps.where(contentful_id: all_next_step_ids)
 
@@ -93,7 +93,7 @@ class ToggleAdditionalSteps
         next unless next_step.additional_step_rules
 
         matching_next_step_ids = next_step.additional_step_rules.map { |rule|
-          rule.fetch("question_identifier", nil) if next_step.answer && matching_answer?(a: rule["required_answer"], b: next_step.answer.response)
+          rule.fetch("question_identifiers", nil) if next_step.answer && matching_answer?(a: rule["required_answer"], b: next_step.answer.response)
         }
         matching_next_steps = journey_steps.where(contentful_id: matching_next_step_ids)
 
