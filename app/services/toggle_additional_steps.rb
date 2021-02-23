@@ -8,8 +8,8 @@ class ToggleAdditionalSteps
   def call
     return unless additional_step_rule
 
-    check_to_show_additional_steps! if additional_step.hidden?
-    check_to_hide_additional_steps! unless additional_step.hidden?
+    check_to_show_additional_steps!
+    check_to_hide_additional_steps!
   end
 
   private
