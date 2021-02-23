@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix Redis connection errors on Heroku
 - users can be asked extended checkbox questions which ask for further information
 - markdown in help text fields is now parsed into HTML
+- show and hide more than one additional question at a time
 
 ## [release-005] - 2021-1-19
 

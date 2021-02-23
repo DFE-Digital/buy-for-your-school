@@ -17,7 +17,7 @@ RSpec.describe ToggleAdditionalSteps do
           step = create(:step,
             :radio,
             journey: journey,
-            additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+            additional_step_rule: {"required_answer" => "Red", "question_identifier" => ["123"]})
           create(:radio_answer, step: step, response: "Red")
 
           another_step_to_show = create(:step,
@@ -37,12 +37,46 @@ RSpec.describe ToggleAdditionalSteps do
           expect(another_step_from_a_different_journey_to_keep_hidden.reload.hidden).to eq(true)
         end
 
+        it "shows all additional_steps within the same journey" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rule: {
+              "required_answer" => "Red",
+              "question_identifier" => ["123", "456"]
+            })
+          create(:radio_answer, step: step, response: "Red")
+
+          first_additional_step_to_show = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: true)
+
+          second_additional_step_to_show = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "456",
+            hidden: true)
+
+          another_step_from_a_different_journey_to_keep_hidden = create(:step,
+            :radio,
+            contentful_id: "123",
+            hidden: true)
+
+          described_class.new(step: step).call
+
+          expect(first_additional_step_to_show.reload.hidden).to eq(false)
+          expect(second_additional_step_to_show.reload.hidden).to eq(false)
+          expect(another_step_from_a_different_journey_to_keep_hidden.reload.hidden).to eq(true)
+        end
+
         context "when the required_answer matches the answer exactly" do
           it "updates the referenced step's hidden field to false" do
             step = create(:step,
               :radio,
               journey: journey,
-              additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+              additional_step_rule: {"required_answer" => "Red", "question_identifier" => ["123"]})
             create(:radio_answer, step: step, response: "Red")
 
             step_to_show = create(:step,
@@ -62,7 +96,7 @@ RSpec.describe ToggleAdditionalSteps do
             step = create(:step,
               :radio,
               journey: journey,
-              additional_step_rule: {"required_answer" => "RED", "question_identifier" => "123"})
+              additional_step_rule: {"required_answer" => "RED", "question_identifier" => ["123"]})
             create(:radio_answer, step: step, response: "red")
 
             step_to_show = create(:step,
@@ -82,7 +116,7 @@ RSpec.describe ToggleAdditionalSteps do
             first_step = create(:step,
               :radio,
               journey: journey,
-              additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"},
+              additional_step_rule: {"required_answer" => "Red", "question_identifier" => ["123"]},
               hidden: false)
             create(:radio_answer, step: first_step, response: "Red")
 
@@ -90,7 +124,7 @@ RSpec.describe ToggleAdditionalSteps do
               :radio,
               journey: journey,
               contentful_id: "123",
-              additional_step_rule: {"required_answer" => "Blue", "question_identifier" => "456"},
+              additional_step_rule: {"required_answer" => "Blue", "question_identifier" => ["456"]},
               hidden: true)
             create(:radio_answer, step: second_step, response: "Blue")
 
@@ -113,7 +147,7 @@ RSpec.describe ToggleAdditionalSteps do
           step = create(:step,
             :radio,
             journey: journey,
-            additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+            additional_step_rule: {"required_answer" => "Red", "question_identifier" => ["123"]})
           create(:radio_answer, step: step, response: "Blue")
 
           step_to_show = create(:step,
@@ -127,12 +161,46 @@ RSpec.describe ToggleAdditionalSteps do
           expect(step_to_show.reload.hidden).to eq(true)
         end
 
+        it "hides all additional_steps within the same journey" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rule: {
+              "required_answer" => "Red",
+              "question_identifier" => ["123", "456"]
+            })
+          create(:radio_answer, step: step, response: "NOT Red")
+
+          first_additional_step_to_hide = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: false)
+
+          second_additional_step_to_hide = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "456",
+            hidden: false)
+
+          another_step_from_a_different_journey_to_keep_hidden = create(:step,
+            :radio,
+            contentful_id: "123",
+            hidden: true)
+
+          described_class.new(step: step).call
+
+          expect(first_additional_step_to_hide.reload.hidden).to eq(true)
+          expect(second_additional_step_to_hide.reload.hidden).to eq(true)
+          expect(another_step_from_a_different_journey_to_keep_hidden.reload.hidden).to eq(true)
+        end
+
         context "when the required_answer has different case to the answer" do
           it "does not hide the step" do
             step = create(:step,
               :radio,
               journey: journey,
-              additional_step_rule: {"required_answer" => "RED", "question_identifier" => "123"})
+              additional_step_rule: {"required_answer" => "RED", "question_identifier" => ["123"]})
             create(:radio_answer, step: step, response: "red")
 
             step_to_show = create(:step,
@@ -152,7 +220,7 @@ RSpec.describe ToggleAdditionalSteps do
             first_step = create(:step,
               :radio,
               journey: journey,
-              additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"},
+              additional_step_rule: {"required_answer" => "Red", "question_identifier" => ["123"]},
               hidden: false)
             create(:radio_answer, step: first_step, response: "Changed from red")
 
@@ -160,7 +228,7 @@ RSpec.describe ToggleAdditionalSteps do
               :radio,
               journey: journey,
               contentful_id: "123",
-              additional_step_rule: {"required_answer" => "Blue", "question_identifier" => "456"},
+              additional_step_rule: {"required_answer" => "Blue", "question_identifier" => ["456"]},
               hidden: false)
             create(:radio_answer, step: second_step, response: "Blue")
 
@@ -183,7 +251,7 @@ RSpec.describe ToggleAdditionalSteps do
           step = create(:step,
             :checkbox_answers,
             journey: journey,
-            additional_step_rule: {"required_answer" => "Red", "question_identifier" => "123"})
+            additional_step_rule: {"required_answer" => "Red", "question_identifier" => ["123"]})
           create(:checkbox_answers, step: step, response: ["Blue", "Red"])
 
           step_to_show = create(:step,

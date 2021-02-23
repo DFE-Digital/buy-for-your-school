@@ -44,7 +44,7 @@
         "alwaysShowTheUser": false,
         "showAdditionalQuestion": {
             "required_answer": "Red",
-            "question_identifier": "hidden-field"
+            "question_identifier": ["hidden-field"]
         }
     }
 }
