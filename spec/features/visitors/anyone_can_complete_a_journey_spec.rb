@@ -278,6 +278,12 @@ feature "Anyone can start a journey" do
 
       expect(page.html).to include("Which service do you need?")
     end
+
+    scenario "step page still renders when question is a short text" do
+      start_journey_from_category_and_go_to_question(category: "nil-help-text-short-text.json")
+
+      expect(page.html).to include("What email address did you use?")
+    end
   end
 
   context "when Contentful entry model wasn't an expected type" do

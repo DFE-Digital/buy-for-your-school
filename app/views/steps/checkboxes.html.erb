@@ -2,7 +2,7 @@
   <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step.title, size: "l" } do %>
     <% if @step.help_text.present? %>
       <span class="govuk-hint">
-        <%= @step.help_text_html.html_safe %>
+        <%= @step.help_text_html %>
       </span>
     <% end %>
 

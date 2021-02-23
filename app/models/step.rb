@@ -29,6 +29,7 @@ class Step < ApplicationRecord
   end
 
   def help_text_html
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(help_text)
+    return unless help_text.present?
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(help_text).html_safe
   end
 end
