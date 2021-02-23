@@ -206,6 +206,35 @@ feature "Anyone can start a journey" do
             .to eql("The school needs the kitchen cleaned once a day")
         end
       end
+
+      context "when extended question is of type single" do
+        scenario "a single text field is displayed" do
+          start_journey_from_category_and_go_to_question(category: "extended-radio-question.json")
+
+          choose("Catering")
+
+          expect(page).to have_selector("input#answer-further-information-field")
+        end
+      end
+
+      context "when extended question is of type long" do
+        scenario "a long text area is displayed" do
+          start_journey_from_category_and_go_to_question(category: "extended-long-answer-radio-question.json")
+
+          choose("Catering")
+
+          expect(page).to have_selector("textarea#answer-further-information-field")
+        end
+      end
+
+      context "when there is no extended question" do
+        scenario "no extra text field is displayed" do
+          start_journey_from_category_and_go_to_question(category: "radio-question.json")
+
+          expect(page).to_not have_selector("textarea#answer-further-information-field")
+          expect(page).to_not have_selector("input#answer-further-information-field")
+        end
+      end
     end
 
     context "when Contentful entry includes a 'show additional question' rule" do
