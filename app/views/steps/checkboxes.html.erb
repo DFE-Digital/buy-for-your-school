@@ -9,7 +9,7 @@
     <% @step.options.each do |option| %>
       <% machine_value = option["value"].tr(" ", "_").downcase %>
 
-      <% if option["further_information_required"] == true %>
+      <% if option["display_further_information"] == true %>
         <% f.object = monkey_patch_form_object_with_further_information_field(form_object: f.object, associated_choice: machine_value) %>
         <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
           <%= f.govuk_text_field "#{machine_value}_further_information",
