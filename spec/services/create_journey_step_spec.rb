@@ -18,7 +18,7 @@ RSpec.describe CreateJourneyStep do
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
         expect(step.hidden).to eq(false)
-        expect(step.additional_step_rule).to eq(nil)
+        expect(step.additional_step_rules).to eq(nil)
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",
@@ -159,7 +159,7 @@ process around March.")
           journey: journey, contentful_entry: fake_entry
         ).call
 
-        expect(step.additional_step_rule).to eql(
+        expect(step.additional_step_rules).to eql(
           {
             "required_answer" => "School expert",
             "question_identifier" => ["hidden-field-that-shows-an-additional-question"]

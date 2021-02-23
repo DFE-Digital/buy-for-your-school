@@ -6,7 +6,7 @@ class ToggleAdditionalSteps
   end
 
   def call
-    return unless additional_step_rule
+    return unless additional_step_rules
 
     check_to_show_additional_steps!
     check_to_hide_additional_steps!
@@ -22,12 +22,12 @@ class ToggleAdditionalSteps
     @journey_steps ||= journey.steps
   end
 
-  def additional_step_rule
-    step.additional_step_rule
+  def additional_step_rules
+    step.additional_step_rules
   end
 
   def additional_step_ids
-    additional_step_rule["question_identifier"]
+    additional_step_rules["question_identifier"]
   end
 
   def additional_step
@@ -49,7 +49,7 @@ class ToggleAdditionalSteps
   end
 
   def check_to_hide_additional_steps!
-    return if matching_answer?(a: step.additional_step_rule["required_answer"], b: step.answer.response)
+    return if matching_answer?(a: step.additional_step_rules["required_answer"], b: step.answer.response)
 
     recursively_hide_additional_steps!(next_step_ids: additional_step_ids)
   end
@@ -61,17 +61,17 @@ class ToggleAdditionalSteps
 
       recursively_hide_additional_steps!(
         next_step_ids: next_steps.map { |next_step|
-          next_step.additional_step_rule&.fetch("question_identifier", nil)
+          next_step.additional_step_rules&.fetch("question_identifier", nil)
         }.flatten.compact
       )
     end
   end
 
   def recursively_show_additional_steps!(current_step:, next_step_ids:)
-    return unless current_step.answer && current_step.additional_step_rule
+    return unless current_step.answer && current_step.additional_step_rules
 
     if next_step_ids
-      return unless matching_answer?(a: current_step.additional_step_rule["required_answer"], b: current_step.answer.response)
+      return unless matching_answer?(a: current_step.additional_step_rules["required_answer"], b: current_step.answer.response)
 
       next_steps = journey_steps.where(contentful_id: next_step_ids)
       next_steps.update_all(hidden: false)
@@ -79,7 +79,7 @@ class ToggleAdditionalSteps
       next_steps.map { |next_step|
         recursively_show_additional_steps!(
           current_step: next_step,
-          next_step_ids: next_step.additional_step_rule&.fetch("question_identifier", nil)
+          next_step_ids: next_step.additional_step_rules&.fetch("question_identifier", nil)
         )
       }
     end

@@ -5,6 +5,7 @@ FactoryBot.define do
     contentful_id { SecureRandom.hex }
     raw { |attrs| {"sys": {"id" => attrs["contentful_id"]}} }
     hidden { false }
+    additional_step_rules { nil }
 
     association :journey, factory: :journey
 
