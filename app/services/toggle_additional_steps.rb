@@ -8,15 +8,11 @@ class ToggleAdditionalSteps
   def call
     return unless additional_step_rules
 
-    check_to_show_additional_steps!
-    check_to_hide_additional_steps!
+    recursively_show_additional_steps!(current_step: step, next_steps: additional_steps_to_show(step: step))
+    recursively_hide_additional_steps!(next_steps: additional_steps_to_hide)
   end
 
   private
-
-  def answer
-    step.answer
-  end
 
   def journey_steps
     @journey_steps ||= journey.steps
@@ -54,14 +50,6 @@ class ToggleAdditionalSteps
     else
       expected_answer == b.downcase
     end
-  end
-
-  def check_to_show_additional_steps!
-    recursively_show_additional_steps!(current_step: step, next_steps: additional_steps_to_show)
-  end
-
-  def check_to_hide_additional_steps!
-    recursively_hide_additional_steps!(next_steps: additional_steps_to_hide)
   end
 
   def recursively_hide_additional_steps!(next_steps:)
