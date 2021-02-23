@@ -28,7 +28,7 @@ class ToggleAdditionalSteps
     }.flatten
   end
 
-  def additional_steps_to_show
+  def additional_steps_to_show(step:)
     matching_next_step_ids = step.additional_step_rules.map { |rule|
       rule.fetch("question_identifiers", nil) if step.answer && matching_answer?(a: rule["required_answer"], b: step.answer.response)
     }.flatten
@@ -80,14 +80,9 @@ class ToggleAdditionalSteps
       next_steps.map { |next_step|
         next unless next_step.additional_step_rules
 
-        matching_next_step_ids = next_step.additional_step_rules.map { |rule|
-          rule.fetch("question_identifiers", nil) if next_step.answer && matching_answer?(a: rule["required_answer"], b: next_step.answer.response)
-        }
-        matching_next_steps = journey_steps.where(contentful_id: matching_next_step_ids)
-
         recursively_show_additional_steps!(
           current_step: next_step,
-          next_steps: matching_next_steps
+          next_steps: additional_steps_to_show(step: next_step)
         )
       }
     end
