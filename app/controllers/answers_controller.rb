@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
   def create
     @journey = Journey.find(journey_id)
     @step = Step.find(step_id)
+    @step_presenter = StepPresenter.new(@step)
 
     @answer = AnswerFactory.new(step: @step).call
     @answer.step = @step
@@ -24,6 +25,7 @@ class AnswersController < ApplicationController
   def update
     @journey = Journey.find(journey_id)
     @step = Step.find(step_id)
+    @step_presenter = StepPresenter.new(@step)
 
     result = SaveAnswer.new(answer: @step.answer)
       .call(checkbox_params: checkbox_params, answer_params: answer_params, date_params: date_params)
