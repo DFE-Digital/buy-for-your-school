@@ -6,7 +6,7 @@
 
 <ol class="app-task-list">
 
-  <% section_group_with_steps(journey: @journey, steps: @steps).each do |grouping| %>
+  <% section_group_with_steps(journey: @journey, steps: @step_presenters).each do |grouping| %>
     <h2 class="app-task-list__section"><%= grouping["title"] %></h2>
     <li>
       <%= render "step_list", journey: @journey, steps: grouping["steps"] %>
