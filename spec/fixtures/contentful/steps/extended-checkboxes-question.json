@@ -35,12 +35,12 @@
         "extendedOptions": [
             {
                 "value": "Yes",
-                "further_information_required": true,
+                "display_further_information": true,
                 "further_information_help_text": "You should tell us more"
             },
             {
                 "value": "No",
-                "further_information_required": true,
+                "display_further_information": true,
                 "further_information_help_text": "You should tell us more"
             }
         ],
