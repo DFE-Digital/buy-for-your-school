@@ -70,7 +70,7 @@ RSpec.describe GetAnswersForSteps do
       it "does not try to prepare that answer in the result" do
         journey = create(:journey)
         answerable_step = create(:step, :radio, journey: journey)
-        _answer = create(:short_text_answer, step: answerable_step)
+        _answer = create(:radio_answer, step: answerable_step)
         unanswerable_step = create(:step, :radio, journey: journey)
 
         result = described_class.new(visible_steps: [answerable_step]).call
