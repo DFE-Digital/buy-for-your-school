@@ -187,6 +187,35 @@ feature "Anyone can start a journey" do
             .to eql("A second piece of further information")
         end
       end
+
+      context "when extended question is of type single" do
+        scenario "a single text field is displayed" do
+          start_journey_from_category_and_go_to_question(category: "extended-checkboxes-question.json")
+
+          check("Yes")
+
+          expect(page).to have_selector("input#answer-yes-further-information-field")
+        end
+      end
+
+      context "when extended question is of type long" do
+        scenario "a long text area is displayed" do
+          start_journey_from_category_and_go_to_question(category: "extended-long-answer-checkboxes-question.json")
+
+          check("Yes")
+
+          expect(page).to have_selector("textarea#answer-yes-further-information-field")
+        end
+      end
+
+      context "when there is no extended question" do
+        scenario "no extra text field is displayed" do
+          start_journey_from_category_and_go_to_question(category: "checkboxes-question.json")
+
+          expect(page).to_not have_selector("textarea#answer-yes-further-information-field")
+          expect(page).to_not have_selector("input#answer-yes-further-information-field")
+        end
+      end
     end
 
     context "when Contentful entry is of type radios" do
