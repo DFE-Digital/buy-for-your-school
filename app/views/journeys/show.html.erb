@@ -25,4 +25,4 @@
   </div>
 <% end %>
 <%= link_to "Download (.docx)", journey_path(@journey, format: :docx), class: "govuk-button" %>
-<%= @specification_template.render(@answers).html_safe %>
+<%= @specification_html.html_safe %>
