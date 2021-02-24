@@ -16,4 +16,4 @@ jobs:
       - name: Build
         run: docker-compose -f docker-compose.ci.yml build
       - name: Test
-        run: docker-compose -f docker-compose.ci.yml run --rm test bundle exec rake
+        run: docker-compose -f docker-compose.ci.yml run --rm test script/test
