@@ -7,13 +7,13 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "nil-help-text-section",
+        "id": "nil-help-text-short-text",
         "type": "Entry",
-        "createdAt": "2021-02-01T10:47:10.257Z",
-        "updatedAt": "2021-02-01T10:47:10.257Z",
+        "createdAt": "2020-11-05T16:42:58.340Z",
+        "updatedAt": "2020-11-05T16:42:58.340Z",
         "environment": {
             "sys": {
-                "id": "develop",
+                "id": "master",
                 "type": "Link",
                 "linkType": "Environment"
             }
@@ -23,21 +23,14 @@
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "section"
+                "id": "question"
             }
         },
         "locale": "en-US"
     },
     "fields": {
-        "title": "Section A",
-        "steps": [
-            {
-                "sys": {
-                    "type": "Link",
-                    "linkType": "Entry",
-                    "id": "nil-help-text"
-                }
-            }
-        ]
+        "slug": "/what-email-address-did-you-use",
+        "title": "What email address did you use?",
+        "type": "short text"
     }
 }

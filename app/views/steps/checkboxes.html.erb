@@ -1,8 +1,8 @@
 <%= render layout: layout do |f| %>
-  <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step.title, size: "l" } do %>
+  <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step_presenter.title, size: "l" } do %>
     <% if @step.help_text.present? %>
       <span class="govuk-hint">
-        <%= @step.help_text_html.html_safe %>
+        <%= @step_presenter.help_text_html %>
       </span>
     <% end %>
 

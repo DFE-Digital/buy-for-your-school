@@ -33,7 +33,7 @@ class JourneysController < ApplicationController
       :number_answer,
       :currency_answer
     ])
-    @steps = @visible_steps.map { |step| StepPresenter.new(step) }
+    @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
     @specification_template = Liquid::Template.parse(
       @journey.liquid_template, error_mode: :strict

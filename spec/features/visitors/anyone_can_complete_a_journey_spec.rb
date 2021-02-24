@@ -273,10 +273,16 @@ feature "Anyone can start a journey" do
   end
 
   context "when the help text is nil" do
-    scenario "paragraph breaks are parsed as expected" do
-      start_journey_from_category_and_go_to_question(category: "nil-help-text.json")
+    scenario "step page still renders when question is a radio" do
+      start_journey_from_category_and_go_to_question(category: "nil-help-text-radios.json")
 
       expect(page.html).to include("Which service do you need?")
+    end
+
+    scenario "step page still renders when question is a short text" do
+      start_journey_from_category_and_go_to_question(category: "nil-help-text-short-text.json")
+
+      expect(page.html).to include("What email address did you use?")
     end
   end
 

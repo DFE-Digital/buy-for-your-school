@@ -4,41 +4,40 @@
             "sys": {
                 "type": "Link",
                 "linkType": "Space",
-                "id": "jspwts36h1os"
+                "id": "rwl7tyzv9sys"
             }
         },
-        "id": "nil-help-text",
+        "id": "nil-help-text-section",
         "type": "Entry",
-        "createdAt": "2020-09-07T10:56:40.585Z",
-        "updatedAt": "2020-09-14T22:16:54.633Z",
+        "createdAt": "2021-02-01T10:47:10.257Z",
+        "updatedAt": "2021-02-01T10:47:10.257Z",
         "environment": {
             "sys": {
-                "id": "master",
+                "id": "develop",
                 "type": "Link",
                 "linkType": "Environment"
             }
         },
-        "revision": 7,
+        "revision": 1,
         "contentType": {
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "question"
+                "id": "section"
             }
         },
         "locale": "en-US"
     },
     "fields": {
-        "slug": "/which-service",
-        "title": "Which service do you need?",
-        "type": "radios",
-        "extendedOptions": [
-          {
-              "value": "Catering"
-          },
-          {
-              "value": "Cleaning"
-          }
+        "title": "Section A",
+        "steps": [
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "nil-help-text-radios"
+                }
+            }
         ]
     }
 }
