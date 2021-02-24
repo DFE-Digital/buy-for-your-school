@@ -14,13 +14,15 @@ class Step < ApplicationRecord
 
   def answer
     @answer ||=
-      radio_answer ||
-      short_text_answer ||
-      long_text_answer ||
-      single_date_answer ||
-      checkbox_answers ||
-      number_answer ||
-      currency_answer
+      case contentful_type
+      when "radios" then radio_answer
+      when "short_text" then short_text_answer
+      when "long_text" then long_text_answer
+      when "single_date" then single_date_answer
+      when "checkboxes" then checkbox_answers
+      when "number" then number_answer
+      when "currency" then currency_answer
+      end
   end
 
   def primary_call_to_action_text
