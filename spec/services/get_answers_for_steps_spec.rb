@@ -44,7 +44,7 @@ RSpec.describe GetAnswersForSteps do
     end
 
     context "when the answer is of type checkbox_answers" do
-      it_behaves_like "returns the answer in a hash", :checkbox_answers, CheckboxesAnswerPresenter, "Foo, Bar"
+      it_behaves_like "returns the answer in a hash", :checkbox_answers, CheckboxesAnswerPresenter, ["Foo", "Bar"]
     end
 
     context "when a step does not have an answer" do
