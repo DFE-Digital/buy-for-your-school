@@ -152,7 +152,7 @@ process around March.")
       it "stores the rule as JSON" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/show-additional-question.json"
+          contentful_fixture_filename: "steps/show-one-additional-question.json"
         )
 
         step, _answer = described_class.new(
