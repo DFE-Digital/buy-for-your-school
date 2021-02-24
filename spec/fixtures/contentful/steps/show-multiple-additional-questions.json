@@ -46,9 +46,19 @@
                 "value": "None"
             }
         ],
-        "showAdditionalQuestion": {
-            "required_answer": "School expert",
-            "question_identifier": ["hidden-field-that-shows-an-additional-question"]
-        }
+        "showAdditionalQuestion": [
+          {
+              "required_answer": "Yes",
+              "question_identifiers": [
+                  "ZoOchclnfw6tPZ0xfYL0h"
+              ]
+          },
+          {
+              "required_answer": "No",
+              "question_identifiers": [
+                  "wSeEY4HlESoDJSUsE2wJQ"
+              ]
+          }
+        ]
     }
 }

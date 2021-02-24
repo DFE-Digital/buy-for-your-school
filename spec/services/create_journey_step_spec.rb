@@ -18,7 +18,7 @@ RSpec.describe CreateJourneyStep do
         expect(step.contentful_type).to eq("radios")
         expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
         expect(step.hidden).to eq(false)
-        expect(step.additional_step_rule).to eq(nil)
+        expect(step.additional_step_rules).to eq(nil)
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",
@@ -152,19 +152,19 @@ process around March.")
       it "stores the rule as JSON" do
         journey = create(:journey, :catering)
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/show-additional-question.json"
+          contentful_fixture_filename: "steps/show-one-additional-question.json"
         )
 
         step, _answer = described_class.new(
           journey: journey, contentful_entry: fake_entry
         ).call
 
-        expect(step.additional_step_rule).to eql(
+        expect(step.additional_step_rules).to eql([
           {
             "required_answer" => "School expert",
-            "question_identifier" => ["hidden-field-that-shows-an-additional-question"]
+            "question_identifiers" => ["hidden-field-that-shows-an-additional-question"]
           }
-        )
+        ])
       end
     end
 

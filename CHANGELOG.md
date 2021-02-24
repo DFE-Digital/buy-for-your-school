@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can be asked extended checkbox questions which ask for further information
 - markdown in help text fields is now parsed into HTML
 - show and hide more than one additional question at a time
+- users can be presenting with forking/branching question chains based on any one answer
 
 ## [release-005] - 2021-1-19
 
