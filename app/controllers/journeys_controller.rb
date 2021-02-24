@@ -45,7 +45,7 @@ class JourneysController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        render docx: "specification.docx", content: @specification_html, layout: "specficiation"
+        render docx: "specification.docx", content: @specification_html
       end
     end
   end
