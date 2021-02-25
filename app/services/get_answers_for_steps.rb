@@ -1,6 +1,8 @@
 class GetAnswersForSteps
   class UnexpectedAnswer < StandardError; end
 
+  include AnswerHelper
+
   attr_accessor :visible_steps
   def initialize(visible_steps:)
     self.visible_steps = visible_steps
@@ -24,8 +26,9 @@ class GetAnswersForSteps
       if answer.respond_to?(:further_information)
         hash["extended_answer_#{step.contentful_id}"] = if answer.further_information.is_a?(Hash)
           answer.further_information.each_pair.each_with_object([]) do |(key, value), array|
+            key_without_prefix = key.gsub("_further_information", "")
             array << {
-              "response" => key.gsub("_further_information", "").capitalize,
+              "response" => human_readable_option(string: key_without_prefix),
               "further_information" => value
             }
           end

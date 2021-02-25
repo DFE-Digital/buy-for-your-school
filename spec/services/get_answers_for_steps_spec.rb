@@ -45,17 +45,17 @@ RSpec.describe GetAnswersForSteps do
       context "when the answer has further_information" do
         it "also includes an extended_answer hash in the response" do
           answer = create(:radio_answer,
-            response: "yes",
+            response: "yes please",
             further_information: "More yes info")
           result = described_class.new(visible_steps: [answer.step]).call
           expect(result).to include(
-            {"answer_#{answer.step.contentful_id}" => "Yes"}
+            {"answer_#{answer.step.contentful_id}" => "Yes please"}
           )
           expect(result).to include(
             {
               "extended_answer_#{answer.step.contentful_id}" => [
                 {
-                  "response" => "Yes",
+                  "response" => "Yes please",
                   "further_information" => "More yes info"
                 }
               ]
@@ -71,21 +71,21 @@ RSpec.describe GetAnswersForSteps do
       context "when the answer has further_information" do
         it "includes those values as distinct variables in the response" do
           answer = create(:checkbox_answers,
-            response: ["yes", "no"],
+            response: ["I would really like this", "I would hate this"],
             further_information: {
-              "yes_further_information" => "More yes info",
-              "no_further_information" => "More no info"
+              "i_would_really_like_this_further_information" => "More yes info",
+              "i_would_hate_this_further_information" => "More no info"
             })
           result = described_class.new(visible_steps: [answer.step]).call
           expect(result).to include(
             {
               "extended_answer_#{answer.step.contentful_id}" => [
                 {
-                  "response" => "Yes",
+                  "response" => "I would really like this",
                   "further_information" => "More yes info"
                 },
                 {
-                  "response" => "No",
+                  "response" => "I would hate this",
                   "further_information" => "More no info"
                 }
               ]
