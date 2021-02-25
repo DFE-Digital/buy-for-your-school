@@ -264,6 +264,14 @@ feature "Anyone can start a journey" do
           expect(page).to_not have_selector("input#answer-further-information-field")
         end
       end
+
+      context "when a divider is present" do
+        scenario "the last question is separated with an or" do
+          start_journey_from_category_and_go_to_question(category: "radio-question-with-divider.json")
+
+          expect(page).to have_selector(govuk-radios__divider") # - need to find right syntax for this
+        end
+      end
     end
 
     context "when Contentful entry includes a 'show additional question' rule" do
