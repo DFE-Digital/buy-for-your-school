@@ -41,7 +41,7 @@ feature "Users can see their catering specification" do
 
       # Don't answer any questions to create a in progress spec
 
-      expect(page).to have_content("There are incomplete tasks, this specification is not ready for use.")
+      expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
     end
   end
 end
