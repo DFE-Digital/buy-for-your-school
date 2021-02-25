@@ -264,6 +264,21 @@ feature "Anyone can start a journey" do
           expect(page).to_not have_selector("input#answer-further-information-field")
         end
       end
+
+      context "when an 'or separator' has been configured" do
+        scenario "shows an or separator" do
+          start_journey_from_category_and_go_to_question(category: "radio-question-with-separator.json")
+
+          expect(page).to have_selector("div.govuk-radios__divider")
+          within("div.govuk-radios__divider") do
+            expect(page).to have_content("or")
+          end
+
+          # Check that the "Or" separator appears in the correct position
+          expect(page.body.index("Catering") > page.body.index("or")).to eq(true)
+          expect(page.body.index("or") < page.body.index("Cleaning")).to eq(true)
+        end
+      end
     end
 
     context "when Contentful entry includes a 'show additional question' rule" do

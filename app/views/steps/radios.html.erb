@@ -8,6 +8,9 @@
     <% end %>
 
     <% @step.options.each do |option| %>
+      <% if option.fetch("separated_by_or", nil) == true %>
+        <div class="govuk-radios__divider">or</div>
+      <% end %>
         <%= f.govuk_radio_button :response, option["value"].downcase, label: { text: option["value"] }, hint: { text: option["help_text"] } do %>
           <% if option["display_further_information"] == "single" || option["display_further_information"] == true %>
             <%= f.govuk_text_field :further_information, label: { text: option["further_information_help_text"] } %>
