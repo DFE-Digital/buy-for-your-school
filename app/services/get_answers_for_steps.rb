@@ -21,6 +21,15 @@ class GetAnswersForSteps
       else raise UnexpectedAnswer.new("Trying to present an unknown type of answer: #{step.answer.class.name}")
       end
 
+      if answer.respond_to?(:further_information)
+        hash["extended_answer_#{step.contentful_id}"] = [
+          {
+            "response" => answer.response,
+            "further_information" => answer.further_information
+          }
+        ]
+      end
+
       hash["answer_#{step.contentful_id}"] = answer.response.to_s
     }
   end

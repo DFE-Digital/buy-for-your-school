@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - create an extended further information text box option for radio answers
 - create extended further information text box option for checkbox answers
 - radio questions can be configured with an "or" separator
+- specification can show further information for radio answers
 
 ## [release-005] - 2021-1-19
 

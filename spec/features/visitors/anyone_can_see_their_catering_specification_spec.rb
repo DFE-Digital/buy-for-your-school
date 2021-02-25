@@ -30,6 +30,7 @@ feature "Users can see their catering specification" do
 
     within("article#specification") do
       expect(page).to have_content("Catering")
+      expect(page).to have_content("The school needs the kitchen cleaned once a day")
     end
   end
 
