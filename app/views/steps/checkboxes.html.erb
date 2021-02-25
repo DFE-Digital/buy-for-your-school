@@ -8,21 +8,25 @@
 
     <% @step.options.each do |option| %>
       <% machine_value = option["value"].tr(" ", "_").downcase %>
-
+      <% if option.fetch("separated_by_or", nil) == true %>
+        <div class="govuk-radios__divider">or</div>
+      <% end %>
+      
       <% f.object = monkey_patch_form_object_with_further_information_field(form_object: f.object, associated_choice: machine_value) %>
-        <% if option["display_further_information"] == true || option["display_further_information"] == "single" %>
-          <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
-            <%= f.govuk_text_field "#{machine_value}_further_information",
-              label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
-          <% end %>
-        <% elsif option["display_further_information"] == "long" %>
-          <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
-            <%= f.govuk_text_area "#{machine_value}_further_information", rows: 6,
-              label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
-          <% end %>
-        <% else %>
-          <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } %>
+
+      <% if option["display_further_information"] == true || option["display_further_information"] == "single" %>
+        <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
+          <%= f.govuk_text_field "#{machine_value}_further_information",
+            label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
         <% end %>
+      <% elsif option["display_further_information"] == "long" %>
+        <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } do %>
+          <%= f.govuk_text_area "#{machine_value}_further_information", rows: 6,
+            label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
+        <% end %>
+      <% else %>
+        <%= f.govuk_check_box :response, machine_value, label: { text: option["value"] } %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
