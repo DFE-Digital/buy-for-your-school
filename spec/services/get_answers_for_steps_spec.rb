@@ -67,6 +67,32 @@ RSpec.describe GetAnswersForSteps do
 
     context "when the answer is of type checkbox_answers" do
       it_behaves_like "returns the answer in a hash", :checkbox_answers, CheckboxesAnswerPresenter, ["Foo", "Bar"]
+
+      context "when the answer has further_information" do
+        it "includes those values as distinct variables in the response" do
+          answer = create(:checkbox_answers,
+            response: ["yes", "no"],
+            further_information: {
+              "yes_further_information" => "More yes info",
+              "no_further_information" => "More no info"
+            })
+          result = described_class.new(visible_steps: [answer.step]).call
+          expect(result).to include(
+            {
+              "extended_answer_#{answer.step.contentful_id}" => [
+                {
+                  "response" => "Yes",
+                  "further_information" => "More yes info"
+                },
+                {
+                  "response" => "No",
+                  "further_information" => "More no info"
+                }
+              ]
+            }
+          )
+        end
+      end
     end
 
     context "when a step does not have an answer" do

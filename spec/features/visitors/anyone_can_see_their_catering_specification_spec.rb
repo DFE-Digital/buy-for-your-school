@@ -34,6 +34,30 @@ feature "Users can see their catering specification" do
     end
   end
 
+  scenario "renders checkbox responses that have further information" do
+    stub_contentful_category(fixture_filename: "extended-checkboxes-question.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
+
+    click_first_link_in_task_list
+
+    check("Yes")
+    fill_in "answer[yes_further_information]", with: "More info for yes"
+    check("No")
+    fill_in "answer[no_further_information]", with: "More info for no"
+
+    click_on(I18n.t("generic.button.next"))
+
+    expect(page).to have_content(I18n.t("journey.specification.header"))
+
+    within("article#specification") do
+      expect(page).to have_content("Yes")
+      expect(page).to have_content("More info for yes")
+      expect(page).to have_content("No")
+      expect(page).to have_content("More info for no")
+    end
+  end
+
   context "when the spec is incomplete" do
     it "warns the user that the contents are in a partially completed state" do
       stub_contentful_category(fixture_filename: "extended-radio-question.json")
