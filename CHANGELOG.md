@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can be presenting with forking/branching question chains based on any one answer
 - create an extended further information text box option for radio answers
 - create extended further information text box option for checkbox answers
+- radio questions can be configured with an "or" separator
 
 ## [release-005] - 2021-1-19
 
