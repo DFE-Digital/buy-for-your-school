@@ -11,6 +11,7 @@
       <% if option.fetch("separated_by_or", nil) == true %>
         <div class="govuk-radios__divider">or</div>
       <% end %>
+      <% if option["display_further_information"] %>
         <%= f.govuk_radio_button :response, option["value"].downcase, label: { text: option["value"] }, hint: { text: option["help_text"] } do %>
           <% if option["display_further_information"] == "single" || option["display_further_information"] == true %>
             <%= f.govuk_text_field :further_information, label: { text: option["further_information_help_text"] } %>
@@ -18,6 +19,10 @@
             <%= f.govuk_text_area :further_information, rows: 6, label: { text: option["further_information_help_text"] } %>
           <% end %>
         <% end %>
+      <% else %>
+        <!-- We have to include this if there is no block given, selecting an option causes a page jump as a conditional element is toggled by the form builder -->
+        <%= f.govuk_radio_button :response, option["value"].downcase, label: { text: option["value"] }, hint: { text: option["help_text"] } %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
