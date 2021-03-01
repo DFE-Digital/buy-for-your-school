@@ -29,4 +29,8 @@ class Step < ApplicationRecord
     return I18n.t("generic.button.next") unless super.present?
     super
   end
+
+  def skippable?
+    skip_call_to_action_text.present?
+  end
 end
