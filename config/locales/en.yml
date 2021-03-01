@@ -53,7 +53,7 @@ en:
   journey:
     specification:
       header: "Your specification"
-      warning: "There are incomplete tasks, this specification is not ready for use."
+      warning: "You have not completed all the tasks. There may be information missing from your specification."
   task_list:
     status:
       not_started: Not started
