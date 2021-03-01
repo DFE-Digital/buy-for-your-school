@@ -7,7 +7,7 @@
     <% end %>
 
     <% @step.options.each do |option| %>
-      <% machine_value = option["value"].tr(" ", "_").downcase %>
+      <% machine_value = machine_readable_option(string: option["value"]) %>
       <% if option.fetch("separated_by_or", nil) == true %>
         <div class="govuk-radios__divider">or</div>
       <% end %>

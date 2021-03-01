@@ -41,10 +41,58 @@ RSpec.describe GetAnswersForSteps do
 
     context "when the answer is of type radio_answer" do
       it_behaves_like "returns the answer in a hash", :radio_answer, RadioAnswerPresenter, "Catering"
+
+      context "when the answer has further_information" do
+        it "also includes an extended_answer hash in the response" do
+          answer = create(:radio_answer,
+            response: "yes please",
+            further_information: "More yes info")
+          result = described_class.new(visible_steps: [answer.step]).call
+          expect(result).to include(
+            {"answer_#{answer.step.contentful_id}" => "Yes please"}
+          )
+          expect(result).to include(
+            {
+              "extended_answer_#{answer.step.contentful_id}" => [
+                {
+                  "response" => "Yes please",
+                  "further_information" => "More yes info"
+                }
+              ]
+            }
+          )
+        end
+      end
     end
 
     context "when the answer is of type checkbox_answers" do
       it_behaves_like "returns the answer in a hash", :checkbox_answers, CheckboxesAnswerPresenter, ["Foo", "Bar"]
+
+      context "when the answer has further_information" do
+        it "includes those values as distinct variables in the response" do
+          answer = create(:checkbox_answers,
+            response: ["I would really like this", "I would hate this"],
+            further_information: {
+              "i_would_really_like_this_further_information" => "More yes info",
+              "i_would_hate_this_further_information" => "More no info"
+            })
+          result = described_class.new(visible_steps: [answer.step]).call
+          expect(result).to include(
+            {
+              "extended_answer_#{answer.step.contentful_id}" => [
+                {
+                  "response" => "I would really like this",
+                  "further_information" => "More yes info"
+                },
+                {
+                  "response" => "I would hate this",
+                  "further_information" => "More no info"
+                }
+              ]
+            }
+          )
+        end
+      end
     end
 
     context "when a step does not have an answer" do

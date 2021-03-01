@@ -1,7 +1,7 @@
 class RadioAnswerPresenter < SimpleDelegator
-  def response
-    return super.capitalize if further_information.blank?
+  include AnswerHelper
 
-    "#{super.capitalize} - #{further_information}"
+  def response
+    human_readable_option(string: super)
   end
 end

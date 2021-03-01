@@ -15,7 +15,7 @@ feature "Users can see their catering specification" do
     end
   end
 
-  scenario "renders responses that need extra formatting" do
+  scenario "renders radio responses that have futher information" do
     stub_contentful_category(fixture_filename: "extended-radio-question.json")
     visit root_path
     click_on(I18n.t("generic.button.start"))
@@ -29,7 +29,32 @@ feature "Users can see their catering specification" do
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
     within("article#specification") do
-      expect(page).to have_content("Catering - The school needs the kitchen cleaned once a day")
+      expect(page).to have_content("Catering")
+      expect(page).to have_content("The school needs the kitchen cleaned once a day")
+    end
+  end
+
+  scenario "renders checkbox responses that have further information" do
+    stub_contentful_category(fixture_filename: "extended-checkboxes-question.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
+
+    click_first_link_in_task_list
+
+    check("Yes")
+    fill_in "answer[yes_further_information]", with: "More info for yes"
+    check("No")
+    fill_in "answer[no_further_information]", with: "More info for no"
+
+    click_on(I18n.t("generic.button.next"))
+
+    expect(page).to have_content(I18n.t("journey.specification.header"))
+
+    within("article#specification") do
+      expect(page).to have_content("Yes")
+      expect(page).to have_content("More info for yes")
+      expect(page).to have_content("No")
+      expect(page).to have_content("More info for no")
     end
   end
 
