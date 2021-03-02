@@ -302,6 +302,23 @@ feature "Anyone can start a journey" do
     end
   end
 
+  context "when the question is skippable" do
+    scenario "allows the user to not select an answer" do
+      start_journey_from_category_and_go_to_question(category: "skippable-checkboxes-question.json")
+
+      check("Lunch")
+      click_on("None of the above")
+
+      within(".app-task-list") do
+        expect(page).to have_content("Complete")
+      end
+
+      click_first_link_in_task_list
+
+      expect(page).not_to have_checked_field("Lunch")
+    end
+  end
+
   context "when the Contentful model is of type staticContent" do
     context "when Contentful entry is of type paragraphs" do
       scenario "the content is not displayed in the task list" do

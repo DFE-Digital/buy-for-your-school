@@ -53,6 +53,8 @@ class AnswersController < ApplicationController
   end
 
   def checkbox_params
+    return {skipped: true, response: nil, further_information: nil} if skip_answer?
+
     answer_params = params.require(:answer)
 
     if @step.options
@@ -73,5 +75,9 @@ class AnswersController < ApplicationController
     answer = params.require(:answer).permit(:response)
     date_hash = {day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"]}
     {response: format_date(date_hash)}
+  end
+
+  def skip_answer?
+    params.fetch("skip", false)
   end
 end

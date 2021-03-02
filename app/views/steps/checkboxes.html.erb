@@ -29,4 +29,11 @@
       <% end %>
     <% end %>
   <% end %>
+
+  <% if @step_presenter.skippable? %>
+    <div class="govuk-radios__divider">or</div>
+    <div class="govuk-form-group">
+      <%= f.button @step_presenter.skip_call_to_action_text, type: "submit", name: "skip", value: "true", class: "govuk-button govuk-button--secondary" %>
+    </div>
+  <% end %>
 <% end %>
