@@ -10,7 +10,7 @@
 <p class="govuk-body"><%= I18n.t("specifying.start_page.who_for_can_use_body") %></p>
 <ul class="govuk-list govuk-list--bullet"">
   <% I18n.t("specifying.start_page.who_for_can_use_list").each do |list_item| %>
-    <li><%= list_item %></li>
+    <li><%= list_item.html_safe %></li>
   <% end %>
 </ul>
 <p class="govuk-body"><%= I18n.t("specifying.start_page.who_for_cannot_use_body") %></p>

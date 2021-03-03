@@ -12,9 +12,12 @@ feature "Users can see a start page for specifying their purchase" do
 
     expect(page).to have_content(I18n.t("specifying.start_page.who_for_title"))
     expect(page).to have_content(I18n.t("specifying.start_page.who_for_can_use_body"))
-    I18n.t("specifying.start_page.who_for_can_use_list").each do |list_item|
-      expect(page).to have_content(list_item)
-    end
+
+    expect(page).to have_content("are responsible for procuring a new catering service for a school")
+    expect(page).to have_link("procuring a new catering service", href: "/planning")
+    expect(page).to have_content(I18n.t("specifying.start_page.who_for_can_use_list")[1])
+    expect(page).to have_content(I18n.t("specifying.start_page.who_for_can_use_list")[2])
+
     expect(page).to have_content(I18n.t("specifying.start_page.who_for_cannot_use_body"))
     I18n.t("specifying.start_page.who_for_cannot_use_list").each do |list_item|
       expect(page).to have_content(list_item)
