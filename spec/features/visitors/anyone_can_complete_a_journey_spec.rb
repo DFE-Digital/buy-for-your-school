@@ -16,7 +16,7 @@ feature "Anyone can start a journey" do
 
     click_on(I18n.t("generic.button.start"))
 
-    expect(page).to have_content(I18n.t("planning.start_page.page_title"))
+    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
     expect(page).to have_content("Which service do you need?")
     expect(page).to have_content("Not started")
   end
