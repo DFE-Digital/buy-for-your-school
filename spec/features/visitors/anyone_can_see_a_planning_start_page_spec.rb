@@ -41,4 +41,16 @@ feature "Users can see a start page for planning their purchase" do
     expect(page).to have_content("See where to get help with buying for schools if you need it.")
     expect(page).to have_link("get help with buying for schools", href: "https://www.gov.uk/guidance/buying-for-schools/get-help-with-buying-for-schools")
   end
+
+  scenario "can navigate back to the home page" do
+    visit root_path
+
+    click_on("procuring a new catering service for a school")
+
+    expect(page).to have_content(I18n.t("planning.start_page.page_title"))
+
+    click_on("Back")
+
+    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+  end
 end
