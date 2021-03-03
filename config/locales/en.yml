@@ -17,6 +17,9 @@ en:
     preview:
       tag: "preview"
       message: "This environment is only for previewing Contentful changes before publishing."
+  planning:
+    start_page:
+      page_title: "Catering services"
   specifying:
     start_page:
       page_title: Create a specification to procure a catering service for your school
