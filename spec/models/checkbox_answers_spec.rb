@@ -22,7 +22,7 @@ RSpec.describe CheckboxAnswers, type: :model do
     context "when the step is skippable" do
       it "does not validate the presence of the response" do
         skippable_step = create(:step, :checkbox_answers, skip_call_to_action_text: "None of the above")
-        answer = build(:checkbox_answers, step: skippable_step, response: "")
+        answer = build(:checkbox_answers, step: skippable_step, response: "", skipped: true)
 
         answer.save
 

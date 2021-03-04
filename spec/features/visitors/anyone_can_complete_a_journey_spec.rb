@@ -306,6 +306,9 @@ feature "Anyone can start a journey" do
     scenario "allows the user to not select an answer" do
       start_journey_from_category_and_go_to_question(category: "skippable-checkboxes-question.json")
 
+      click_on(I18n.t("generic.button.next"))
+      expect(page).to have_content("can't be blank")
+
       check("Lunch")
       click_on("None of the above")
 
