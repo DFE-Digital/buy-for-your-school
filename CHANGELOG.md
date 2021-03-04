@@ -79,13 +79,13 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [release-001] - 2020-11-12
 
 - address rails-template TODO
-- any user can see a start page for the planning journey
+- any user can see a start page for the specifying journey
 - use GOV.UK Frontend framework
-- users can see a basic form to start the planning journey sourced by a
+- users can see a basic form to start the specifying journey sourced by a
 Contentful fixture
-- planning form is styled as a GOV.UK form
+- specifying form is styled as a GOV.UK form
 - validate that an answer is provided to a question
-- the first planning question comes directly from Contentful
+- the first specifying question comes directly from Contentful
 - handle the exceptional case when a Contentful entry is missing
 - multiple radio questions can be answered in sequence
 - users can be asked to answer a short text question

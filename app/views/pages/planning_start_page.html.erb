@@ -1,39 +1,284 @@
 <%= content_for :title, I18n.t("planning.start_page.page_title") %>
+<%= link_to "Back", root_path, class: "govuk-back-link" %>
 
 <h1 class="govuk-heading-xl"><%= I18n.t("planning.start_page.page_title") %></h1>
 
-<% I18n.t("planning.start_page.overview_body").each do |paragraph| %>
-  <p class="govuk-body"><%= paragraph %></p>
-<% end %>
+<p class="govuk-body">How to procure a catering contract for your school.</p>
 
-<h2 class="govuk-heading-l"><%= I18n.t("planning.start_page.who_for_title") %></h2>
-<p class="govuk-body"><%= I18n.t("planning.start_page.who_for_can_use_body") %></p>
-<ul class="govuk-list govuk-list--bullet"">
-  <% I18n.t("planning.start_page.who_for_can_use_list").each do |list_item| %>
-    <li><%= list_item %></li>
-  <% end %>
-</ul>
-<p class="govuk-body"><%= I18n.t("planning.start_page.who_for_cannot_use_body") %></p>
-<ul class="govuk-list govuk-list--bullet"">
-  <% I18n.t("planning.start_page.who_for_cannot_use_list").each do |list_item| %>
-    <li><%= list_item %></li>
-  <% end %>
-</ul>
+<div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          Before you start
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+      <p class="govuk-body">A catering contract typically takes between 3 to 6 months to complete.</p>
 
-<h2 class="govuk-heading-l"><%= I18n.t("planning.start_page.how_service_works_title") %></h2>
-<p class="govuk-body"><%= I18n.t("planning.start_page.how_service_works_document_body") %></p>
-<ul class="govuk-list govuk-list--bullet"">
-  <% I18n.t("planning.start_page.how_service_works_document_list").each do |list_item| %>
-    <li><%= list_item %></li>
-  <% end %>
-</ul>
-<p class="govuk-body"><%= I18n.t("planning.start_page.how_service_works_themes_body") %></p>
-<ul class="govuk-list govuk-list--bullet"">
-  <% I18n.t("planning.start_page.how_service_works_themes_list").each do |list_item| %>
-    <li><%= list_item %></li>
-  <% end %>
-</ul>
+      <p class="govuk-body">If you have an existing contract, you will need to find out the:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>end date</li>
+        <li>notice period</li>
+      </ul>
 
-<p class="govuk-body"><%= I18n.t("planning.start_page.pause_and_resume_body") %></p>
+      <p class="govuk-body">This will help you to plan when to start your procurement. It's best to start a new contract:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>at the beginning of the academic year</li>
+        <li>after long school holiday, for example, Christmas or Easter</li>
+      </ul>
+    </div>
+  </div>
 
-<%= link_to I18n.t("generic.button.start"), new_journey_path, class: "govuk-button" %>
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          Ways to procure a catering contract
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+      <p class="govuk-body">A catering contract is a high value procurement. We generally say high is over 40,000.</p>
+      <p class="govuk-body">You must run your own buying process, inviting suppliers to submit bids for the work.</p>
+      <p class="govuk-body">If you estimate that the contract is likely to be close to or over £189,330 you may have to <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/buying-things-that-are-over-the-eu-procurement-threshold" class="govuk-link">run a compliant buying process</a> because it exceeds the procurement thresholds.</p>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          Rules, regulations and requirements
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+      <p class="govuk-body">You'll need to be aware of some of the rules, regulations and requirements that can apply to a catering contract.</p>
+
+      <h3 class="govuk-heading-m">Standards for school food</h3>
+
+      <p class="govuk-body">Your school must comply with <a href="https://www.gov.uk/government/publications/standards-for-school-food-in-england" class="govuk-link">Standards for school food in England</a>.</p>
+
+      <h3 class="govuk-heading-m">Procurement threshold rules</h3>
+      <p class="govuk-body">If, over the lifetime of your contract, the value of your provision is over the <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/buying-things-that-are-over-the-eu-procurement-threshold" class="govuk-link">procurement threshold</a>, you'll need to advertise a contract notice on the <a href="https://www.gov.uk/find-tender" class="govuk-link">Find a Tender</a> service.</p>
+
+      <h3 class="govuk-heading-m">TUPE and LGPS (Local Government Pension Scheme)</h3>
+
+      <p class="govuk-body">Consider whether <a href="https://www.gov.uk/guidance/staff-transfers-public-service-pension-schemes" class="govuk-link">TUPE</a> and LGPS will apply, especially if you're looking to outsource or come away from your local authority for the first time.</p>
+      <p class="govuk-body">When you give notice of termination to your current provider, you should also request details of any staff that will be subject to TUPE transfer.</p>
+      <p class="govuk-body">This anonymised information should include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>salary details</li>
+        <li>terms conditions</li>
+        <li>pension details</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Disclosure and Barring Service (DBS) checks</h3>
+      <p class="govuk-body">You'll need confirmation from suppliers that they've had the relevant DBS checks.</p>
+      <p class="govuk-body">It's your responsibility to check that everyone involved in the catering contract is DBS checked.</p>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          In-house catering
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+      <p class="govuk-body">Running the service in-house is another option. You may want to consider whether this is right for your school before you procure a contract. There are benefits and challenges to running the service yourself.</p>
+      <h3 class="govuk-heading-m">Benefits</h3>
+      <p class="govuk-body">You might be able to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>increase uptake of school meals</li>
+        <li>negotiate better prices from suppliers</li>
+        <li>increase food quality</li>
+        <li>respond quicker if your equipment is broken or faulty</li>
+        <li>develop staff skills through bespoke training</li>
+        <li>generate income by offering your catering services to other schools or nurseries</li>
+        <li>be in control of your expenditure</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Staff training</h3>
+      <p class="govuk-body">Consider how you will provide initial training on:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>food specifications</li>
+        <li>menu building</li>
+        <li>health and safety</li>
+        <li>food hygiene</li>
+        <li>food preparation skills</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Costs and spending</h3>
+      <p class="govuk-body">You should fully understand your costings so you can:</p>
+      <ul class="govuk-list govuk-list--bullet">
+      <li>plan for increased spending, for example, staffing, equipment, food and utilities</li>
+      <li>plan for maintenance of equipment</li>
+      <li>avoid expensive budgeting errors</li>
+      <li>keep staff up to date with legislation and regulations by allowing time and money for on-going training</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Managing demand</h3>
+      <p class="govuk-body">You should:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>get regular feedback from parents, pupils and governors</li>
+        <li>check you have enough dining space to accommodate increased demand</li>
+      </ul>
+
+
+      <h3 class="govuk-heading-m">TUPE and LGPS</h3>
+      <p class="govuk-body">If you're moving away from a local authority, you'll need to obtain TUPE and LGPS information.</p>
+      <p class="govuk-body">There may be time frames around when the local authority is obliged to release this information.</p>
+      <p class="govuk-body">These time frames can cause delays and further expense if you award the contract without having the details.</p>
+
+      <h3 class="govuk-heading-m">Invite your local authority to tender</h3>
+      <p class="govuk-body">Invite your local authority to tender and involve them in the process. This way the TUPE and LGPS information must be provided during their bidding process.</p>
+
+      <h3 class="govuk-heading-m">Disclosure and Barring Service (DBS) checks</h3>
+      <p class="govuk-body">It's your responsibility to check that everyone involved in the catering contract is DBS checked.</p>
+
+      <h3 class="govuk-heading-m">Equipment and maintenance</h3>
+      <p class="govuk-body">Find out:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>what equipment the current provider may be repossess</li>
+        <li>which maintenance contracts your provider covers</li>
+        <li>whether maintenance checks are up to date</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          Starting a procurement process
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+      <h3 class="govuk-heading-m">Who to involve</h3>
+
+      <p class="govuk-body">Make sure the headteacher and school governors have agreed to go ahead with procuring a new catering contract before you start.</p>
+      <p class="govuk-body">Throughout the process you should talk to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>school governors</li>
+        <li>senior leadership team</li>
+        <li>staff involved in school catering</li>
+      </ul>
+
+      <p class="govuk-body">Try to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>keep staff informed</li>
+        <li>address any concerns the staff may have</li>
+        <li>be aware that staff may wish to contact their union</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Talk to other schools</h3>
+      <p class="govuk-body">You may find it helpful to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>ask other schools if they’re looking to renew their catering contract</li>
+        <li>negotiate bulk deals and discounts with suppliers</li>
+      </ul>
+      <p class="govuk-body">This may help you to get better value and spread the workload with other schools.</p>
+
+      <h3 class="govuk-heading-m">Get feedback about supplier</h3>
+      <p class="govuk-body">When selecting the suppliers, you may want to talk to other schools they serve and get feedback on the service they offer.</p>
+
+      <h3 class="govuk-heading-m">Supplier samples</h3>
+      <p class="govuk-body">You may want to ask potential suppliers to produce sample meals for you to try as this will form part of your specification and tender requirements</p>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          Writing your requirements
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+      <p class="govuk-body">This is the document that you give to suppliers explaining what you want to buy, sometimes called a specification.</p>
+
+      <p class="govuk-body">It should tell potential suppliers what you need so that they can decide if they want to bid for the contract.</p>
+
+      <p class="govuk-body"><a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/writing-a-specification" class="govuk-link">Read about how to write a specification</a></p>
+
+
+      <p class="govuk-body">Below are some of the things that you should include. You can also <a href="../start">use our tool to create a specification</a>.</p>
+
+
+      <h3 class="govuk-heading-m">Objectives</h3>
+      <p class="govuk-body">Your objectives are important because it helps a supplier to decide whether they are a good fit for your school. Include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your mission statement</li>
+        <li>goals your school has</li>
+        <li>policies that relate to catering</li>
+        <li>objectives that relates to social value</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Contract management</h3>
+      <p class="govuk-body">Set out how you expect the contract to be managed to ensure a good working relationship. Include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your requirements on how the contract should be managed, such as any review meetings, how to monitor performance or costs, how complaints are managed and so on</li>
+        <li>what operational overheads the supplier will cover</li>
+        <li>any staff that the supplier will need to provide, and staff that need to be transferred</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Service parameters</h3>
+      <p class="govuk-body">Tell suppliers what service you want them to provide and who for. Include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>when you want the service to start</li>
+        <li>current services types, and times they are provided</li>
+        <li>customer numbers</li>
+        <li>free school meal numbers</li>
+        <li>the services you would like the supplier to provide</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Menu and ordering</h3>
+      <p class="govuk-body">Give suppliers some information about the food you would like them to serve and how it should be ordered and paid for. Include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>any requirements for the food served</li>
+        <li>ingredients or allergens to be avoided</li>
+        <li>ordering and payment systems you have, or would like to be provided</li>
+        <li>who is responsible for any dinner money debt</li>
+      </ul>
+
+      <h3 class="govuk-heading-m">Facilities</h3>
+      <p class="govuk-body">Outline the spaces and equipment that you have available for use. Include:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the condition of any kitchens and if they are ready for service</li>
+        <li>equipment available to a supplier</li>
+        <li>a description of the dining areas</li>
+        <li>who sets up and clears away before and after service</li>
+        <li>cleaning responsibilities</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section ">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          What to do next
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+      <p class="govuk-body">Once you have your specification, you will need to decide if you will be using the open or restricted procedure.</p>
+      <p class="govuk-body">You can then prepare your invitation to tender.</p>
+      <p class="govuk-body">Find out what the next steps are if you are:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/buying-high-value-things-under-the-eu-procurement-threshold" class="govuk-link">under the procurement threshold</a></li>
+        <li><a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/buying-things-that-are-over-the-eu-procurement-threshold" class="govuk-link">over the procurement threshold</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 class="govuk-heading-m">Where to get help</h2>
+<p class="govuk-body">See where to <a href="https://www.gov.uk/guidance/buying-for-schools/get-help-with-buying-for-schools" class="govuk-link">get help with buying for schools</a> if you need it.</p>
