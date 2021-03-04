@@ -316,6 +316,8 @@ feature "Anyone can start a journey" do
       click_first_link_in_task_list
 
       expect(page).not_to have_checked_field("Lunch")
+
+      expect(CheckboxAnswers.last.skipped).to be true
     end
   end
 
