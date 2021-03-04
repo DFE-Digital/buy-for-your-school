@@ -41,6 +41,7 @@ class CreateJourneyStep
       contentful_type: step_type,
       options: options,
       primary_call_to_action_text: primary_call_to_action_text,
+      skip_call_to_action_text: skip_call_to_action_text,
       hidden: hidden,
       additional_step_rules: additional_step_rules,
       raw: raw,
@@ -100,6 +101,11 @@ class CreateJourneyStep
   def primary_call_to_action_text
     return nil unless contentful_entry.respond_to?(:primary_call_to_action)
     contentful_entry.primary_call_to_action
+  end
+
+  def skip_call_to_action_text
+    return nil unless contentful_entry.respond_to?(:skip_call_to_action)
+    contentful_entry.skip_call_to_action
   end
 
   def hidden

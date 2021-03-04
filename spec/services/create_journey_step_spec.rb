@@ -133,6 +133,21 @@ process around March.")
       end
     end
 
+    context "when no 'skipCallToAction' is provided" do
+      it "default copy is used for the button" do
+        journey = create(:journey, :catering)
+        fake_entry = fake_contentful_step(
+          contentful_fixture_filename: "steps/skippable-checkboxes-question.json"
+        )
+
+        step, _answer = described_class.new(
+          journey: journey, contentful_entry: fake_entry
+        ).call
+
+        expect(step.skip_call_to_action_text).to eq("None of the above")
+      end
+    end
+
     context "when no 'alwaysShowTheUser' is provided" do
       it "default hidden to true" do
         journey = create(:journey, :catering)

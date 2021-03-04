@@ -77,6 +77,20 @@ RSpec.describe Step, type: :model do
     end
   end
 
+  describe "#skippable?" do
+    it "returns true if there is skip_call_to_action_text" do
+      step = build(:step, skip_call_to_action_text: "None of the above")
+      result = step.skippable?
+      expect(result).to eq(true)
+    end
+
+    it "returns false if there is NOT skip_call_to_action_text" do
+      step = build(:step, skip_call_to_action_text: nil)
+      result = step.skippable?
+      expect(result).to eq(false)
+    end
+  end
+
   describe "#options" do
     # TODO: This will need updating when options are set on the step with the new format
     it "returns a hash of options" do

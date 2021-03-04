@@ -6,6 +6,8 @@ FactoryBot.define do
     raw { |attrs| {"sys": {"id" => attrs["contentful_id"]}} }
     hidden { false }
     additional_step_rules { nil }
+    primary_call_to_action_text { nil }
+    skip_call_to_action_text { nil }
 
     association :journey, factory: :journey
 

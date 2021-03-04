@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_102716) do
+ActiveRecord::Schema.define(version: 2021_03_02_110746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_102716) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "further_information"
+    t.boolean "skipped", default: false
     t.index ["step_id"], name: "index_checkbox_answers_on_step_id"
   end
 
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_102716) do
     t.jsonb "options"
     t.boolean "hidden", default: false
     t.jsonb "additional_step_rules"
+    t.string "skip_call_to_action_text"
     t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 
