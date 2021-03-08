@@ -93,3 +93,12 @@ config/master.key
 .env.*
 !.env.example
 !.env.test
+
+# Terraform files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+.terraformrc
+terraform.rc
