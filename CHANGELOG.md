@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - specification can show further information for checkbox answers
 - checkbox answers can be completed without choosing a given answer
 - fix planning page link back to the service
+- checkbox answers are not automatically joined by commas for the specification
 
 ## [release-005] - 2021-1-19
 

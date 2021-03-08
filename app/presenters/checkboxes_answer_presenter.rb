@@ -1,8 +1,5 @@
 class CheckboxesAnswerPresenter < SimpleDelegator
   def response
-    super.reject(&:blank?).map { |answer|
-      answer.tr!("_", " ")
-      answer.capitalize!
-    }.join(", ")
+    super.reject(&:blank?)
   end
 end
