@@ -78,6 +78,7 @@ RSpec.describe GetAnswersForSteps do
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
             response: ["Foo", "Bar"],
+            concatenated_response: "Foo, Bar",
             skipped: false,
             selected_answers: [
               {
@@ -108,6 +109,7 @@ RSpec.describe GetAnswersForSteps do
           assertion = {
             "answer_#{answer.step.contentful_id}" => {
               response: ["Foo"],
+              concatenated_response: "Foo",
               skipped: false,
               selected_answers: [
                 {

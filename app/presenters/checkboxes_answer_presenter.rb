@@ -6,6 +6,7 @@ class CheckboxesAnswerPresenter < SimpleDelegator
   def to_param
     {
       response: response,
+      concatenated_response: concatenated_response,
       skipped: skipped,
       selected_answers: selected_answers
     }
