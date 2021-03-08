@@ -32,6 +32,7 @@ feature "Users can see a start page for planning their purchase" do
     expect(page).to have_content("Writing your requirements")
     page.find(:xpath, "//*[contains(text(),'Writing your requirements')]").click
     expect(page).to have_content("This is the document that you give to suppliers explaining what you want to buy, sometimes called a specification.")
+    expect(page).to have_link("use our tool to create a specification", href: root_path)
 
     expect(page).to have_content("What to do next")
     page.find(:xpath, "//*[contains(text(),'What to do next')]").click
