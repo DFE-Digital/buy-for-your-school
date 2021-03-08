@@ -4,4 +4,8 @@ class CurrencyAnswerPresenter < SimpleDelegator
   def response
     number_to_currency(super, unit: "£", precision: 2)
   end
+
+  def to_param
+    response
+  end
 end

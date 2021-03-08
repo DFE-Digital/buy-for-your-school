@@ -42,7 +42,7 @@ class GetAnswersForSteps
         end
       end
 
-      hash["answer_#{step.contentful_id}"] = answer.response.to_s
+      hash["answer_#{step.contentful_id}"] = answer.to_param
     }
   end
 end

@@ -8,4 +8,64 @@ RSpec.describe CheckboxesAnswerPresenter do
       expect(presenter.response).to eq(["Yes", "No", "Morning break"])
     end
   end
+
+  describe "#to_param" do
+    it "returns a hash of options" do
+      step = build(:checkbox_answers,
+        response: ["Yes", "No"],
+        skipped: false,
+        further_information: {
+          yes_further_information: "More yes info",
+          no_further_information: "More no info"
+        })
+
+      presenter = described_class.new(step)
+
+      expect(presenter.to_param).to eql({
+        response: ["Yes", "No"],
+        skipped: false,
+        concatenated_response: "Yes, No",
+        selected_answers: [
+          {
+            machine_value: :yes,
+            human_value: "Yes",
+            further_information: "More yes info"
+          },
+          {
+            machine_value: :no,
+            human_value: "No",
+            further_information: "More no info"
+          }
+        ]
+      })
+    end
+
+    context "when there is no response" do
+      it "sets the response to an empty array" do
+        step = build(:checkbox_answers, response: [])
+        presenter = described_class.new(step)
+        expect(presenter.to_param).to include({response: []})
+      end
+
+      it "sets the concatenated_response to an array with an empty hash" do
+        step = build(:checkbox_answers, response: [])
+        presenter = described_class.new(step)
+        expect(presenter.to_param).to include({selected_answers: []})
+      end
+
+      it "sets the concatenated_response to a nil" do
+        step = build(:checkbox_answers, response: [])
+        presenter = described_class.new(step)
+        expect(presenter.to_param).to include({concatenated_response: nil})
+      end
+    end
+
+    context "when the answer is skipped" do
+      it "sets the skipped value to true" do
+        step = build(:checkbox_answers, skipped: true)
+        presenter = described_class.new(step)
+        expect(presenter.to_param).to include({skipped: true})
+      end
+    end
+  end
 end

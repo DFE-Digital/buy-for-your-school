@@ -4,4 +4,8 @@ class LongTextAnswerPresenter < SimpleDelegator
   def response
     simple_format(super)
   end
+
+  def to_param
+    response
+  end
 end

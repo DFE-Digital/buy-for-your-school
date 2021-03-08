@@ -5,7 +5,9 @@ RSpec.shared_examples "returns the answer in a hash" do |factory_name, presenter
     answer = create(factory_name, response: response)
     result = described_class.new(visible_steps: [answer.step]).call
     expect(result).to include(
-      {"answer_#{answer.step.contentful_id}" => presenter.new(answer).response}
+      {
+        "answer_#{answer.step.contentful_id}" => presenter.new(answer).to_param
+      }
     )
   end
 end
@@ -66,31 +68,58 @@ RSpec.describe GetAnswersForSteps do
     end
 
     context "when the answer is of type checkbox_answers" do
-      it_behaves_like "returns the answer in a hash", :checkbox_answers, CheckboxesAnswerPresenter, ["Foo", "Bar"]
+      it "returns the answer information in a hash" do
+        answer = create(:checkbox_answers,
+          response: ["Foo", "Bar"],
+          skipped: false,
+          further_information: {"foo_further_information" => "More yes info"})
 
-      context "when the answer has further_information" do
-        it "includes those values as distinct variables in the response" do
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: ["Foo", "Bar"],
+            skipped: false,
+            selected_answers: [
+              {
+                machine_value: :foo,
+                human_value: "Foo",
+                further_information: "More yes info"
+              },
+              {
+                machine_value: :bar,
+                human_value: "Bar",
+                further_information: nil
+              }
+            ]
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
+
+      context "when there is no further_information at all" do
+        it "returns no further_information in selected_answers" do
           answer = create(:checkbox_answers,
-            response: ["I would really like this", "I would hate this"],
-            further_information: {
-              "i_would_really_like_this_further_information" => "More yes info",
-              "i_would_hate_this_further_information" => "More no info"
-            })
+            response: ["Foo"],
+            skipped: false,
+            further_information: nil)
+
           result = described_class.new(visible_steps: [answer.step]).call
-          expect(result).to include(
-            {
-              "extended_answer_#{answer.step.contentful_id}" => [
+          assertion = {
+            "answer_#{answer.step.contentful_id}" => {
+              response: ["Foo"],
+              skipped: false,
+              selected_answers: [
                 {
-                  "response" => "I would really like this",
-                  "further_information" => "More yes info"
-                },
-                {
-                  "response" => "I would hate this",
-                  "further_information" => "More no info"
+                  machine_value: :foo,
+                  human_value: "Foo",
+                  further_information: nil
                 }
               ]
             }
-          )
+          }
+
+          expect(result).to match(a_hash_including(assertion))
         end
       end
     end
