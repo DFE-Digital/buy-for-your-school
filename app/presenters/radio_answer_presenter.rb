@@ -6,6 +6,9 @@ class RadioAnswerPresenter < SimpleDelegator
   end
 
   def to_param
-    response
+    {
+      response: response,
+      further_information: further_information
+    }
   end
 end

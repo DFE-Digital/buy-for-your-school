@@ -42,7 +42,21 @@ RSpec.describe GetAnswersForSteps do
     end
 
     context "when the answer is of type radio_answer" do
-      it_behaves_like "returns the answer in a hash", :radio_answer, RadioAnswerPresenter, "Catering"
+      it "returns the answer information in a hash" do
+        answer = create(:radio_answer,
+          response: "Yes please",
+          further_information: nil)
+
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "Yes please",
+            further_information: nil
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
 
       context "when the answer has further_information" do
         it "also includes an extended_answer hash in the response" do
@@ -50,9 +64,6 @@ RSpec.describe GetAnswersForSteps do
             response: "yes please",
             further_information: "More yes info")
           result = described_class.new(visible_steps: [answer.step]).call
-          expect(result).to include(
-            {"answer_#{answer.step.contentful_id}" => "Yes please"}
-          )
           expect(result).to include(
             {
               "extended_answer_#{answer.step.contentful_id}" => [
