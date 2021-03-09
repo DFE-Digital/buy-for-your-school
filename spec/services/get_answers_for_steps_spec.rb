@@ -112,6 +112,21 @@ RSpec.describe GetAnswersForSteps do
       end
     end
 
+    context "when the answer is of type number_answer" do
+      it "returns the answer information in a hash" do
+        answer = create(:number_answer, response: 2)
+
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "2"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
+    end
+
     context "when the answer is of type checkbox_answers" do
       it "returns the answer information in a hash" do
         answer = create(:checkbox_answers,
