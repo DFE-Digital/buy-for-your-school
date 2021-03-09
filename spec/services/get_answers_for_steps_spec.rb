@@ -34,7 +34,17 @@ RSpec.describe GetAnswersForSteps do
     end
 
     context "when the answer is of type long_text_answer" do
-      it_behaves_like "returns the answer in a hash", :long_text_answer, LongTextAnswerPresenter, "<p>Red Blue Yellow</p>"
+      it "returns the answer information in a hash" do
+        answer = create(:long_text_answer, response: "Red\r\n\r\n\r\nBlue")
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "<p>Red</p>\n\n<p>Blue</p>"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
     end
 
     context "when the answer is of type single_date_answer" do
