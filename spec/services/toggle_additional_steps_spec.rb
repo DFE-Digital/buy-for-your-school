@@ -142,6 +142,29 @@ RSpec.describe ToggleAdditionalSteps do
         end
       end
 
+      context "when a branching question is shown based on more than on matching answer" do
+        it "continues to show the next step (rather than hiding it again when it doesn't match the second rule)" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rules: [
+              {"required_answer" => "red", "question_identifiers" => ["123"]},
+              {"required_answer" => "blue", "question_identifiers" => ["123"]}
+            ])
+          create(:radio_answer, step: step, response: "red")
+
+          step_to_show = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            hidden: true)
+
+          described_class.new(step: step).call
+
+          expect(step_to_show.reload.hidden).to eq(false)
+        end
+      end
+
       context "when the answers DO NOT match" do
         it "updates the referenced step's hidden field to true" do
           step = create(:step,
