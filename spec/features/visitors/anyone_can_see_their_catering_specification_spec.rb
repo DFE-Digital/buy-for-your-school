@@ -58,6 +58,18 @@ feature "Users can see their catering specification" do
     end
   end
 
+  scenario "questions that are skipped can be identified" do
+    stub_contentful_category(fixture_filename: "skippable-checkboxes-question.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
+
+    click_first_link_in_task_list
+
+    click_on("None of the above")
+
+    expect(page).to have_content("Skipped question detected")
+  end
+
   context "when the spec is incomplete" do
     it "warns the user that the contents are in a partially completed state" do
       stub_contentful_category(fixture_filename: "extended-radio-question.json")

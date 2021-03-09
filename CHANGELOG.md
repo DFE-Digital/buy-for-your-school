@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix planning page link back to the service
 - checkbox answers are not automatically joined by commas for the specification
 - answer data is all available through the single `answer_x` convention, this has replaced `extended_answer_x` which has now been removed
+- checkbox answers that are skipped can be identified in the specification
 
 ## [release-005] - 2021-1-19
 
