@@ -6,6 +6,8 @@ class CurrencyAnswerPresenter < SimpleDelegator
   end
 
   def to_param
-    response
+    {
+      response: response
+    }
   end
 end
