@@ -4,6 +4,8 @@ class SingleDateAnswerPresenter < SimpleDelegator
   end
 
   def to_param
-    response
+    {
+      response: response
+    }
   end
 end

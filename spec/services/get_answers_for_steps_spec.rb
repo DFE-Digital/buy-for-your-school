@@ -38,7 +38,18 @@ RSpec.describe GetAnswersForSteps do
     end
 
     context "when the answer is of type single_date_answer" do
-      it_behaves_like "returns the answer in a hash", :single_date_answer, SingleDateAnswerPresenter, "12 Jan 2020"
+      it "returns the answer information in a hash" do
+        answer = create(:single_date_answer, response: Date.new(2000, 12, 30))
+
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "30 Dec 2000"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
     end
 
     context "when the answer is of type radio_answer" do
