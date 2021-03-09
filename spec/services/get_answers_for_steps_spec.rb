@@ -17,6 +17,12 @@ RSpec.describe GetAnswersForSteps do
       )
     end
 
+    it "returns a hash with_indifferent_access so Liquid can use the string syntax for access" do
+      answer = create(:short_text_answer, response: "Red")
+      result = described_class.new(visible_steps: [answer.step]).call
+      expect(result).to include({"answer_#{answer.step.contentful_id}" => {"response" => "Red"}})
+    end
+
     context "when the answer is of type short_text_answer" do
       it "returns the answer information in a hash" do
         answer = create(:short_text_answer, response: "Red")
@@ -64,36 +70,17 @@ RSpec.describe GetAnswersForSteps do
       it "returns the answer information in a hash" do
         answer = create(:radio_answer,
           response: "Yes please",
-          further_information: nil)
+          further_information: "More yes info")
 
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
             response: "Yes please",
-            further_information: nil
+            further_information: "More yes info"
           }
         }
 
         expect(result).to match(a_hash_including(assertion))
-      end
-
-      context "when the answer has further_information" do
-        it "also includes an extended_answer hash in the response" do
-          answer = create(:radio_answer,
-            response: "yes please",
-            further_information: "More yes info")
-          result = described_class.new(visible_steps: [answer.step]).call
-          expect(result).to include(
-            {
-              "extended_answer_#{answer.step.contentful_id}" => [
-                {
-                  "response" => "Yes please",
-                  "further_information" => "More yes info"
-                }
-              ]
-            }
-          )
-        end
       end
     end
 
