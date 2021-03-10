@@ -14,9 +14,9 @@
       <% if option["display_further_information"] %>
         <%= f.govuk_radio_button :response, option["value"], label: { text: option["value"] }, hint: { text: option["help_text"] } do %>
           <% if option["display_further_information"] == "single" || option["display_further_information"] == true %>
-            <%= f.govuk_text_field :further_information, label: { text: option["further_information_help_text"] } %>
+            <%= f.govuk_text_field :further_information, label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
           <% elsif option["display_further_information"] == "long" %>
-            <%= f.govuk_text_area :further_information, rows: 6, label: { text: option["further_information_help_text"] } %>
+            <%= f.govuk_text_area :further_information, rows: 6, label: { text: option.fetch("further_information_help_text", "Optional further information"), hidden: !option.keys.include?("further_information_help_text") } %>
           <% end %>
         <% end %>
       <% else %>

@@ -37,8 +37,7 @@
           {
               "value": "Catering",
               "help_text": "",
-              "display_further_information": true,
-              "further_information_help_text": "Briefly describe why you need catering"
+              "display_further_information": true
           },
           {
               "value": "Cleaning",

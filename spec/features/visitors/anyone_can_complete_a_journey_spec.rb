@@ -224,6 +224,12 @@ feature "Anyone can start a journey" do
           start_journey_from_category_and_go_to_question(category: "extended-radio-question.json")
 
           choose("Catering")
+
+          expect(page).not_to have_content("No_further_information") # It should not create a label when one isn't specified
+          within("span.govuk-visually-hidden") do
+            expect(page).to have_content("Optional further information") # Default the hidden label to something understandable for screen readers
+          end
+
           fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
 
           click_on(I18n.t("generic.button.next"))
