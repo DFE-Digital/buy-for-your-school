@@ -59,7 +59,7 @@ feature "Users can edit their answers" do
   end
 
   context "when the question is checkbox_answers" do
-    let(:answer) { create(:checkbox_answers, response: ["breakfast", "lunch", ""]) }
+    let(:answer) { create(:checkbox_answers, response: ["Breakfast", "Lunch", ""]) }
 
     scenario "The edited answer is saved" do
       visit journey_path(answer.step.journey)
