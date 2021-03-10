@@ -1,15 +1,5 @@
 require "rails_helper"
 
-RSpec.shared_examples "returns the answer in a hash" do |factory_name, presenter, response|
-  it "returns the response for a #{factory_name} in the result" do
-    answer = create(factory_name, response: response)
-    result = described_class.new(visible_steps: [answer.step]).call
-    expect(result).to include(
-      {"answer_#{answer.step.contentful_id}" => presenter.new(answer).response}
-    )
-  end
-end
-
 RSpec.describe GetAnswersForSteps do
   describe "#call" do
     it "only returns answers for the given journey" do
@@ -20,77 +10,165 @@ RSpec.describe GetAnswersForSteps do
 
       expect(result).to be_a(Hash)
       expect(result).to include(
-        {"answer_#{relevant_answer.step.contentful_id}" => "Red"}
+        {"answer_#{relevant_answer.step.contentful_id}" => {response: "Red"}}
       )
       expect(result).not_to include(
-        {"answer_#{irrelevant_answer.step.contentful_id}" => "Blue"}
+        {"answer_#{irrelevant_answer.step.contentful_id}" => {response: "Blue"}}
       )
+    end
+
+    it "returns a hash with_indifferent_access so Liquid can use the string syntax for access" do
+      answer = create(:short_text_answer, response: "Red")
+      result = described_class.new(visible_steps: [answer.step]).call
+      expect(result).to include({"answer_#{answer.step.contentful_id}" => {"response" => "Red"}})
     end
 
     context "when the answer is of type short_text_answer" do
-      it_behaves_like "returns the answer in a hash", :short_text_answer, ShortTextAnswerPresenter, "Red"
+      it "returns the answer information in a hash" do
+        answer = create(:short_text_answer, response: "Red")
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "Red"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
     end
 
     context "when the answer is of type long_text_answer" do
-      it_behaves_like "returns the answer in a hash", :long_text_answer, LongTextAnswerPresenter, "<p>Red Blue Yellow</p>"
+      it "returns the answer information in a hash" do
+        answer = create(:long_text_answer, response: "Red\r\n\r\n\r\nBlue")
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "<p>Red</p>\n\n<p>Blue</p>"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
     end
 
     context "when the answer is of type single_date_answer" do
-      it_behaves_like "returns the answer in a hash", :single_date_answer, SingleDateAnswerPresenter, "12 Jan 2020"
+      it "returns the answer information in a hash" do
+        answer = create(:single_date_answer, response: Date.new(2000, 12, 30))
+
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "30 Dec 2000"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
     end
 
     context "when the answer is of type radio_answer" do
-      it_behaves_like "returns the answer in a hash", :radio_answer, RadioAnswerPresenter, "Catering"
+      it "returns the answer information in a hash" do
+        answer = create(:radio_answer,
+          response: "Yes please",
+          further_information: "More yes info")
 
-      context "when the answer has further_information" do
-        it "also includes an extended_answer hash in the response" do
-          answer = create(:radio_answer,
-            response: "yes please",
-            further_information: "More yes info")
-          result = described_class.new(visible_steps: [answer.step]).call
-          expect(result).to include(
-            {"answer_#{answer.step.contentful_id}" => "Yes please"}
-          )
-          expect(result).to include(
-            {
-              "extended_answer_#{answer.step.contentful_id}" => [
-                {
-                  "response" => "Yes please",
-                  "further_information" => "More yes info"
-                }
-              ]
-            }
-          )
-        end
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "Yes please",
+            further_information: "More yes info"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
+    end
+
+    context "when the answer is of type currency_answer" do
+      it "returns the answer information in a hash" do
+        answer = create(:currency_answer, response: 100.01)
+
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "£100.01"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
+    end
+
+    context "when the answer is of type number_answer" do
+      it "returns the answer information in a hash" do
+        answer = create(:number_answer, response: 2)
+
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: "2"
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
       end
     end
 
     context "when the answer is of type checkbox_answers" do
-      it_behaves_like "returns the answer in a hash", :checkbox_answers, CheckboxesAnswerPresenter, ["Foo", "Bar"]
+      it "returns the answer information in a hash" do
+        answer = create(:checkbox_answers,
+          response: ["Foo", "Bar"],
+          skipped: false,
+          further_information: {"foo_further_information" => "More yes info"})
 
-      context "when the answer has further_information" do
-        it "includes those values as distinct variables in the response" do
+        result = described_class.new(visible_steps: [answer.step]).call
+        assertion = {
+          "answer_#{answer.step.contentful_id}" => {
+            response: ["Foo", "Bar"],
+            concatenated_response: "Foo, Bar",
+            skipped: false,
+            selected_answers: [
+              {
+                machine_value: :foo,
+                human_value: "Foo",
+                further_information: "More yes info"
+              },
+              {
+                machine_value: :bar,
+                human_value: "Bar",
+                further_information: nil
+              }
+            ]
+          }
+        }
+
+        expect(result).to match(a_hash_including(assertion))
+      end
+
+      context "when there is no further_information at all" do
+        it "returns no further_information in selected_answers" do
           answer = create(:checkbox_answers,
-            response: ["I would really like this", "I would hate this"],
-            further_information: {
-              "i_would_really_like_this_further_information" => "More yes info",
-              "i_would_hate_this_further_information" => "More no info"
-            })
+            response: ["Foo"],
+            skipped: false,
+            further_information: nil)
+
           result = described_class.new(visible_steps: [answer.step]).call
-          expect(result).to include(
-            {
-              "extended_answer_#{answer.step.contentful_id}" => [
+          assertion = {
+            "answer_#{answer.step.contentful_id}" => {
+              response: ["Foo"],
+              concatenated_response: "Foo",
+              skipped: false,
+              selected_answers: [
                 {
-                  "response" => "I would really like this",
-                  "further_information" => "More yes info"
-                },
-                {
-                  "response" => "I would hate this",
-                  "further_information" => "More no info"
+                  machine_value: :foo,
+                  human_value: "Foo",
+                  further_information: nil
                 }
               ]
             }
-          )
+          }
+
+          expect(result).to match(a_hash_including(assertion))
         end
       end
     end

@@ -51,9 +51,9 @@ feature "Users can see their catering specification" do
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
     within("article#specification") do
-      expect(page).to have_content("Yes")
+      expect(page).to have_content("yes")
       expect(page).to have_content("More info for yes")
-      expect(page).to have_content("No")
+      expect(page).to have_content("no")
       expect(page).to have_content("More info for no")
     end
   end
