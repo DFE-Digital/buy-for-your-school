@@ -6,6 +6,7 @@ en:
       default: "%-d %b %Y"
   generic:
     button:
+      back: "Back"
       start: "Start"
       next: "Continue"
       change_answer: "Change"
