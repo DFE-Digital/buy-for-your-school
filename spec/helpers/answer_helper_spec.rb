@@ -9,8 +9,8 @@ RSpec.describe AnswerHelper, type: :helper do
   end
 
   describe "#machine_readable_option" do
-    it "replaces spaces with underscores and downcases the string" do
-      result = helper.machine_readable_option(string: "A LONG key with inconsistent casing")
+    it "replaces spaces with underscores, removes special characters and downcases the string" do
+      result = helper.machine_readable_option(string: "A LONG key with inconsistent casing &*()%$")
       expect(result).to eql("a_long_key_with_inconsistent_casing")
     end
   end
