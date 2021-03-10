@@ -136,7 +136,7 @@ GEM
       raabro (~> 1.4)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    govuk_design_system_formbuilder (2.1.9)
+    govuk_design_system_formbuilder (2.2.0)
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
@@ -372,7 +372,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
-  govuk_design_system_formbuilder (~> 2.1)
+  govuk_design_system_formbuilder (~> 2.2)
   high_voltage
   htmltoword
   jbuilder (~> 2.11)
