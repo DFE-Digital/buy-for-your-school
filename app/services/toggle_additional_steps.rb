@@ -8,8 +8,8 @@ class ToggleAdditionalSteps
   def call
     return unless additional_step_rules
 
-    recursively_show_additional_steps!(current_step: step, next_steps: additional_steps_to_show(step: step))
     recursively_hide_additional_steps!(next_steps: additional_steps_to_hide)
+    recursively_show_additional_steps!(current_step: step, next_steps: additional_steps_to_show(step: step))
   end
 
   private
