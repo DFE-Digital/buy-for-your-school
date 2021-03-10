@@ -53,7 +53,7 @@ class AnswersController < ApplicationController
   end
 
   def checkbox_params
-    return {skipped: true, response: nil, further_information: nil} if skip_answer?
+    return {skipped: true, response: [""], further_information: nil} if skip_answer?
 
     answer_params = params.require(:answer)
 
