@@ -57,6 +57,7 @@ en:
     specification:
       header: "Your specification"
       warning: "You have not completed all the tasks. There may be information missing from your specification."
+      button: "View your specification"
   task_list:
     status:
       not_started: Not started

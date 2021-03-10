@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - answer data is all available through the single `answer_x` convention, this has replaced `extended_answer_x` which has now been removed
 - checkbox answers that are skipped can be identified in the specification
 - fix branching so multiple rules can show the same question
+- the specification lives on it's own page, separate to the task list
 
 ## [release-005] - 2021-1-19
 

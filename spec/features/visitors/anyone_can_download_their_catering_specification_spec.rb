@@ -5,6 +5,7 @@ feature "Users can see their catering specification" do
     choose("Catering")
 
     click_on(I18n.t("generic.button.next"))
+    click_on(I18n.t("journey.specification.button"))
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
