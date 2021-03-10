@@ -6,6 +6,6 @@ module AnswerHelper
   end
 
   def machine_readable_option(string:)
-    string.tr(" ", "_").downcase
+    string.parameterize(separator: "_")
   end
 end
