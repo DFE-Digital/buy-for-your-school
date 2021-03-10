@@ -16,6 +16,17 @@ feature "Users can see their catering specification" do
     end
   end
 
+  scenario "navigates back to the task list" do
+    stub_contentful_category(fixture_filename: "extended-radio-question.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
+
+    click_on(I18n.t("journey.specification.button"))
+
+    click_on(I18n.t("generic.button.back"))
+    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+  end
+
   scenario "renders radio responses that have futher information" do
     stub_contentful_category(fixture_filename: "extended-radio-question.json")
     visit root_path

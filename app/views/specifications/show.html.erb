@@ -1,4 +1,5 @@
 <%= content_for :title, @journey.category.capitalize %>
+<%= link_to I18n.t("generic.button.back"), journey_path(@journey), class: "govuk-back-link" %>
 
 <h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.header") %></h1>
 <% unless @journey.all_steps_completed? %>
