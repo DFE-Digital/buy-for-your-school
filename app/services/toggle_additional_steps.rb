@@ -61,7 +61,7 @@ class ToggleAdditionalSteps
 
         all_next_step_ids = next_step.additional_step_rules.map { |rule|
           rule.fetch("question_identifiers", nil)
-        }
+        }.flatten
         all_next_steps = journey_steps.where(contentful_id: all_next_step_ids)
 
         recursively_hide_additional_steps!(

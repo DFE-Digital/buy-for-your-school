@@ -142,6 +142,51 @@ RSpec.describe ToggleAdditionalSteps do
         end
       end
 
+      context "when a branching question has multiple branches itself" do
+        it "should hide itself and all connected branches" do
+          step = create(:step,
+            :radio,
+            journey: journey,
+            additional_step_rules: [
+              {"required_answer" => "Red", "question_identifiers" => ["123"]},
+              {"required_answer" => "Blue", "question_identifiers" => ["456"]}
+            ],
+            hidden: false)
+
+          create(:radio_answer, step: step, response: "Blue")
+
+          first_step_to_hide = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "123",
+            additional_step_rules: [
+              {"required_answer" => "Yellow", "question_identifiers" => ["8"]},
+              {"required_answer" => "Green", "question_identifiers" => ["9"]}
+            ],
+            hidden: false)
+
+          second_step_to_hide = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "8",
+            additional_step_rules: [],
+            hidden: false)
+
+          third_step_to_hide = create(:step,
+            :radio,
+            journey: journey,
+            contentful_id: "9",
+            additional_step_rules: [],
+            hidden: false)
+
+          described_class.new(step: step).call
+
+          expect(first_step_to_hide.reload.hidden).to eq(true)
+          expect(second_step_to_hide.reload.hidden).to eq(true)
+          expect(third_step_to_hide.reload.hidden).to eq(true)
+        end
+      end
+
       context "when a branching question is shown based on more than on matching answer" do
         it "continues to show the next step (rather than hiding it again when it doesn't match the second rule)" do
           step = create(:step,
