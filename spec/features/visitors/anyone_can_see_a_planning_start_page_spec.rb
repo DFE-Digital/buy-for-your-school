@@ -50,7 +50,7 @@ feature "Users can see a start page for planning their purchase" do
 
     expect(page).to have_content(I18n.t("planning.start_page.page_title"))
 
-    click_on("Back")
+    click_on(I18n.t("generic.button.back"))
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
   end

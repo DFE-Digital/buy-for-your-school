@@ -4,6 +4,7 @@ feature "Users can see their catering specification" do
 
     choose("Catering")
     click_on(I18n.t("generic.button.next"))
+    click_on(I18n.t("journey.specification.button"))
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
@@ -13,6 +14,17 @@ feature "Users can see their catering specification" do
       expect(page).to have_content("The school also requires the service to comply with the following non-mandatory food standards or schemes:")
       expect(page).to have_content("Catering")
     end
+  end
+
+  scenario "navigates back to the task list" do
+    stub_contentful_category(fixture_filename: "extended-radio-question.json")
+    visit root_path
+    click_on(I18n.t("generic.button.start"))
+
+    click_on(I18n.t("journey.specification.button"))
+
+    click_on(I18n.t("generic.button.back"))
+    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
   end
 
   scenario "renders radio responses that have futher information" do
@@ -25,6 +37,7 @@ feature "Users can see their catering specification" do
     choose("Catering")
     fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
     click_on(I18n.t("generic.button.next"))
+    click_on(I18n.t("journey.specification.button"))
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
@@ -47,6 +60,7 @@ feature "Users can see their catering specification" do
     fill_in "answer[no_further_information]", with: "More info for no"
 
     click_on(I18n.t("generic.button.next"))
+    click_on(I18n.t("journey.specification.button"))
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
@@ -66,6 +80,7 @@ feature "Users can see their catering specification" do
     click_first_link_in_task_list
 
     click_on("None of the above")
+    click_on(I18n.t("journey.specification.button"))
 
     expect(page).to have_content("Skipped question detected")
   end
@@ -78,6 +93,7 @@ feature "Users can see their catering specification" do
 
       # Don't answer any questions to create a in progress spec
 
+      click_on(I18n.t("journey.specification.button"))
       expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
     end
   end
