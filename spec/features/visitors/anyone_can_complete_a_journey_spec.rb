@@ -446,4 +446,19 @@ feature "Anyone can start a journey" do
       expect(page).to have_content(I18n.t("errors.specification_template_invalid.page_body"))
     end
   end
+
+  context "when a user answers a question" do
+    scenario "the user is returned to the same place in the task list " do
+      start_journey_from_category_and_go_to_question(category: "long-text-question.json")
+      journey = Journey.last
+
+      fill_in "answer[response]", with: "This is my long answer"
+
+      click_on(I18n.t("generic.button.next"))
+
+      answer = LongTextAnswer.last
+
+      expect(page).to have_current_path(journey_url(journey, anchor: answer.step.id), url: true)
+    end
+  end
 end
