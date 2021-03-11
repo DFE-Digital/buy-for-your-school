@@ -316,6 +316,11 @@ feature "Anyone can start a journey" do
       expect(page).to have_content("can't be blank")
 
       check("Lunch")
+      check("Dinner")
+      click_on(I18n.t("generic.button.next"))
+
+      click_first_link_in_task_list
+
       click_on("None of the above")
 
       within(".app-task-list") do
@@ -325,7 +330,6 @@ feature "Anyone can start a journey" do
       click_first_link_in_task_list
 
       expect(page).not_to have_checked_field("Lunch")
-
       expect(CheckboxAnswers.last.skipped).to be true
     end
   end
