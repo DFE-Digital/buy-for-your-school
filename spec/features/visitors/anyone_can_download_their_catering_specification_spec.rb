@@ -48,6 +48,8 @@ feature "Users can see their catering specification" do
         .and_call_original
 
       click_on("Download (.docx)")
+
+      expect(page.response_headers["Content-Disposition"]).to match(/filename="specification-incomplete.docx"/)
     end
   end
 end
