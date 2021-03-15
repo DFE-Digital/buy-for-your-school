@@ -14,12 +14,12 @@ class SpecificationsController < ApplicationController
     ])
     @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
-    @specification_template = Liquid::Template.parse(
-      @journey.liquid_template, error_mode: :strict
+    specification_renderer = SpecificationRenderer.new(
+      template: @journey.liquid_template,
+      answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call
     )
 
-    @answers = GetAnswersForSteps.new(visible_steps: @visible_steps).call
-    @specification_html = @specification_template.render(@answers)
+    @specification_html = specification_renderer.to_html
 
     respond_to do |format|
       format.html

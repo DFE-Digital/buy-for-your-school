@@ -3,13 +3,13 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "9e0249e5929623c7ab1fd850ad5e15b49356e4a7ab235bc0373e98998bd3b321",
+      "fingerprint": "3863b51add0146069c24410ec1bfc99015d680679d275ce49f27cc22b6dc8f9e",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/specifications/show.html.erb",
       "line": 15,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "Liquid::Template.parse(Journey.find(journey_id).liquid_template, :error_mode => :strict).render(GetAnswersForSteps.new(:visible_steps => Journey.find(journey_id).visible_steps.includes([:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers, :number_answer, :currency_answer])).call)",
+      "code": "SpecificationRenderer.new(:template => Journey.find(journey_id).liquid_template, :answers => GetAnswersForSteps.new(:visible_steps => Journey.find(journey_id).visible_steps.includes([:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers, :number_answer, :currency_answer])).call).to_html",
       "render_path": [
         {
           "type": "controller",
@@ -32,6 +32,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-03-11 12:09:01 +0000",
+  "updated": "2021-03-15 12:25:24 +0000",
   "brakeman_version": "5.0.0"
 }
