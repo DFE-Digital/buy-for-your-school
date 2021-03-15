@@ -2,6 +2,7 @@
 
 class AnswersController < ApplicationController
   include DateHelper
+  include AnswerHelper
 
   def create
     @journey = Journey.find(journey_id)
@@ -59,7 +60,8 @@ class AnswersController < ApplicationController
 
     if @step.options
       allowed_further_information_keys = @step.options.map { |option|
-        "#{option["value"].tr(" ", "_").downcase}_further_information".to_sym
+        key = machine_readable_option(string: option["value"])
+        "#{key}_further_information".to_sym
       }
     end
 

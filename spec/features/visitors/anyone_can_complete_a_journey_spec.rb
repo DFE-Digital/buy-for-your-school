@@ -168,11 +168,15 @@ feature "Anyone can start a journey" do
           fill_in "answer[yes_further_information]", with: "The first piece of further information"
 
           check("No")
-          expect(page).not_to have_content("No_further_information") # It should not create a label which one isn't specified
+          expect(page).not_to have_content("No_further_information") # It should not create a label when text for one isn't provided
           within("span.govuk-visually-hidden") do
             expect(page).to have_content("Optional further information") # Default the hidden label to something understandable for screen readers
           end
           fill_in "answer[no_further_information]", with: "A second piece of further information"
+
+          # We are testing a value that includes a comma
+          check("Other, please specify")
+          fill_in "answer[other_please_specify_further_information]", with: "Other information"
 
           click_on(I18n.t("generic.button.next"))
 
@@ -185,6 +189,10 @@ feature "Anyone can start a journey" do
           expect(page).to have_checked_field("No")
           expect(find_field("answer-no-further-information-field").value)
             .to eql("A second piece of further information")
+
+          expect(page).to have_checked_field("Other, please specify")
+          expect(find_field("answer-other-please-specify-further-information-field").value)
+            .to eql("Other information")
         end
       end
 
