@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - checkbox answers that are skipped can be identified in the specification
 - fix branching so multiple rules can show the same question
 - the specification lives on it's own page, separate to the task list
+- fix checkbox questions where further information couldn't be saved for an option that included a special character
 
 ## [release-005] - 2021-1-19
 

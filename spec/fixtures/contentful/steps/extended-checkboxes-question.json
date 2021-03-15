@@ -41,6 +41,11 @@
             {
                 "value": "No",
                 "display_further_information": true
+            },
+            {
+                "value": "Other, please specify",
+                "further_information_help_text": "Tell us all about it",
+                "display_further_information": true
             }
         ],
         "alwaysShowTheUser": true
