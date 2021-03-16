@@ -24,7 +24,10 @@ class SpecificationsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        render docx: "specification.docx", content: @specification_html
+        file_name = @journey.all_steps_completed? ? "specification.docx" : "specification-incomplete.docx"
+        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_steps_completed?)
+
+        render docx: file_name, content: document_html
       end
     end
   end
