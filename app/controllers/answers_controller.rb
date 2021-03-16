@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
     @answer = result.object
 
     if result.success?
-      redirect_to journey_path(@journey)
+      redirect_to journey_path(@journey, anchor: @step.id)
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
     end
@@ -33,7 +33,7 @@ class AnswersController < ApplicationController
     @answer = result.object
 
     if result.success?
-      redirect_to journey_path(@journey)
+      redirect_to journey_path(@journey, anchor: @step.id)
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}
     end

@@ -1,7 +1,7 @@
 <ul class="app-task-list__items">
   <% steps.each do |step| %>
     <% if step.question? %>
-    <li class="app-task-list__item">
+    <li class="app-task-list__item", id="<%= step.id %>">
       <% if step.answer %>
         <span class="app-task-list__task-name">
           <%= link_to step.title, edit_journey_step_path(journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>

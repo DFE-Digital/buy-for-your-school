@@ -125,4 +125,17 @@ feature "Users can edit their answers" do
       expect(page).to have_content("You should NOT be able to see this question?")
     end
   end
+  context "when a user edits an answer" do
+    scenario "the user is returned to the same place in the task list " do
+      visit journey_path(answer.step.journey)
+
+      click_on(answer.step.title)
+
+      fill_in "answer[response]", with: "email@example.com"
+
+      click_on(I18n.t("generic.button.update"))
+
+      expect(page).to have_current_path(journey_url(answer.step.journey, anchor: answer.step.id), url: true)
+    end
+  end
 end
