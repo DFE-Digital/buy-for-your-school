@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - the specification lives on it's own page, separate to the task list
 - fix checkbox questions where further information couldn't be saved for an option that included a special character
 - further information for options that include special characters is now available to the specification
+- incomplete specification documents include a warning within the document as well as the file name
 
 ## [release-005] - 2021-1-19
 

@@ -24,7 +24,9 @@ class SpecificationsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        render docx: "specification.docx", content: @specification_html
+        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_steps_completed?)
+
+        render docx: "specification.docx", content: document_html
       end
     end
   end
