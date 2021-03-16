@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix branching so multiple rules can show the same question
 - the specification lives on it's own page, separate to the task list
 - fix checkbox questions where further information couldn't be saved for an option that included a special character
+- further information for options that include special characters is now available to the specification
 
 ## [release-005] - 2021-1-19
 

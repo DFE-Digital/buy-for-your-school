@@ -1,4 +1,6 @@
 class CheckboxesAnswerPresenter < SimpleDelegator
+  include AnswerHelper
+
   def response
     super.reject(&:blank?)
   end
@@ -22,7 +24,7 @@ class CheckboxesAnswerPresenter < SimpleDelegator
     return [] if response.empty?
 
     response.each_with_object([]) do |human_readable_choice, array|
-      machine_readable_key = human_readable_choice.parameterize.to_sym
+      machine_readable_key = machine_readable_option(string: human_readable_choice).to_sym
       matching_further_information = further_information&.fetch("#{machine_readable_key}_further_information", nil)
 
       array << {

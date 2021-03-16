@@ -67,5 +67,26 @@ RSpec.describe CheckboxesAnswerPresenter do
         expect(presenter.to_param).to include({skipped: true})
       end
     end
+
+    context "when the option includes special characters" do
+      it "the further_information is correctly returned" do
+        step = build(:checkbox_answers,
+          response: ["Other, please specify"],
+          further_information: {"other_please_specify_further_information": "Sinks and stuff"})
+        presenter = described_class.new(step)
+        expect(presenter.to_param).to eql({
+          response: ["Other, please specify"],
+          skipped: false,
+          concatenated_response: "Other, please specify",
+          selected_answers: [
+            {
+              machine_value: :other_please_specify,
+              human_value: "Other, please specify",
+              further_information: "Sinks and stuff"
+            }
+          ]
+        })
+      end
+    end
   end
 end
