@@ -11,4 +11,9 @@ class RadioAnswerPresenter < SimpleDelegator
       further_information: further_information
     }
   end
+
+  def further_information
+    return unless super
+    super["#{machine_readable_option(string: response)}_further_information"]
+  end
 end

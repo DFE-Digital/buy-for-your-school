@@ -74,7 +74,7 @@ class AnswersController < ApplicationController
     further_information_params = answer_params.permit(*allowed_further_information_keys)
     further_information = further_information_params.to_hash
 
-    all_params = answer_params.permit(response: [])
+    all_params = answer_params.permit(:response, response: [])
     all_params[:further_information] = further_information
     all_params
   end

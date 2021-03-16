@@ -35,7 +35,7 @@ feature "Users can see their catering specification" do
     click_first_link_in_task_list
 
     choose("Catering")
-    fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
+    fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
     click_on(I18n.t("generic.button.next"))
     click_on(I18n.t("journey.specification.button"))
 

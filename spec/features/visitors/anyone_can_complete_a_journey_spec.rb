@@ -232,20 +232,19 @@ feature "Anyone can start a journey" do
           start_journey_from_category_and_go_to_question(category: "extended-radio-question.json")
 
           choose("Catering")
-
           expect(page).not_to have_content("No_further_information") # It should not create a label when one isn't specified
           within("span.govuk-visually-hidden") do
             expect(page).to have_content("Optional further information") # Default the hidden label to something understandable for screen readers
           end
 
-          fill_in "answer[further_information]", with: "The school needs the kitchen cleaned once a day"
+          fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
 
           click_on(I18n.t("generic.button.next"))
 
           click_first_link_in_task_list
 
           expect(page).to have_checked_field("Catering")
-          expect(find_field("answer-further-information-field").value)
+          expect(find_field("answer-catering-further-information-field").value)
             .to eql("The school needs the kitchen cleaned once a day")
         end
       end
@@ -256,7 +255,7 @@ feature "Anyone can start a journey" do
 
           choose("Catering")
 
-          expect(page).to have_selector("input#answer-further-information-field")
+          expect(page).to have_selector("input#answer-catering-further-information-field")
         end
       end
 
@@ -266,7 +265,7 @@ feature "Anyone can start a journey" do
 
           choose("Catering")
 
-          expect(page).to have_selector("textarea#answer-further-information-field")
+          expect(page).to have_selector("textarea#answer-catering-further-information-field")
         end
       end
 
@@ -274,8 +273,8 @@ feature "Anyone can start a journey" do
         scenario "no extra text field is displayed" do
           start_journey_from_category_and_go_to_question(category: "radio-question.json")
 
-          expect(page).to_not have_selector("textarea#answer-further-information-field")
-          expect(page).to_not have_selector("input#answer-further-information-field")
+          expect(page).to_not have_selector("textarea#answer-catering-further-information-field")
+          expect(page).to_not have_selector("input#answer-catering-further-information-field")
         end
       end
 

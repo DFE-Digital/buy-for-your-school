@@ -9,7 +9,7 @@ class SaveAnswer
     result = Result.new(false, answer)
 
     case step.contentful_type
-    when "checkboxes", "radio"
+    when "checkboxes", "radios"
       answer.assign_attributes(further_information_params)
     when "single_date"
       answer.assign_attributes(date_params)
