@@ -70,7 +70,7 @@ RSpec.describe GetAnswersForSteps do
       it "returns the answer information in a hash" do
         answer = create(:radio_answer,
           response: "Yes please",
-          further_information: "More yes info")
+          further_information: {yes_please_further_information: "More yes info"})
 
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {

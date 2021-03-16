@@ -12,8 +12,11 @@ class AnswersController < ApplicationController
     @answer = AnswerFactory.new(step: @step).call
     @answer.step = @step
 
-    result = SaveAnswer.new(answer: @answer)
-      .call(checkbox_params: checkbox_params, answer_params: answer_params, date_params: date_params)
+    result = SaveAnswer.new(answer: @answer).call(
+      further_information_params: further_information_params,
+      answer_params: answer_params,
+      date_params: date_params
+    )
     @answer = result.object
 
     if result.success?
@@ -28,8 +31,11 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
     @step_presenter = StepPresenter.new(@step)
 
-    result = SaveAnswer.new(answer: @step.answer)
-      .call(checkbox_params: checkbox_params, answer_params: answer_params, date_params: date_params)
+    result = SaveAnswer.new(answer: @step.answer).call(
+      further_information_params: further_information_params,
+      answer_params: answer_params,
+      date_params: date_params
+    )
     @answer = result.object
 
     if result.success?
@@ -53,7 +59,7 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:response, :further_information)
   end
 
-  def checkbox_params
+  def further_information_params
     return {skipped: true, response: [""], further_information: nil} if skip_answer?
 
     answer_params = params.require(:answer)
@@ -68,7 +74,7 @@ class AnswersController < ApplicationController
     further_information_params = answer_params.permit(*allowed_further_information_keys)
     further_information = further_information_params.to_hash
 
-    all_params = answer_params.permit(response: [])
+    all_params = answer_params.permit(:response, response: [])
     all_params[:further_information] = further_information
     all_params
   end

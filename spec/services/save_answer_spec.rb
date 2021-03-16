@@ -27,7 +27,7 @@ RSpec.describe SaveAnswer do
         answer = create(:checkbox_answers)
         params = ActionController::Parameters.new(response: ["A", "B"]).permit!
 
-        result = described_class.new(answer: answer).call(checkbox_params: params)
+        result = described_class.new(answer: answer).call(further_information_params: params)
 
         expect(result.success?).to eql(true)
         expect(result.object.response).to eql(["A", "B"])

@@ -5,12 +5,12 @@ class SaveAnswer
     self.step = answer.step
   end
 
-  def call(answer_params: {}, checkbox_params: {}, date_params: {})
+  def call(answer_params: {}, further_information_params: {}, date_params: {})
     result = Result.new(false, answer)
 
     case step.contentful_type
-    when "checkboxes"
-      answer.assign_attributes(checkbox_params)
+    when "checkboxes", "radios"
+      answer.assign_attributes(further_information_params)
     when "single_date"
       answer.assign_attributes(date_params)
     else
