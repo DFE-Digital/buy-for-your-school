@@ -6,6 +6,17 @@ Rails.application.routes.draw do
 
   get "planning" => "high_voltage/pages#show", "id" => "planning_start_page"
 
+  # DfE Sign In
+  resource :sessions,
+    only: %i[create new],
+    as: :dfe,
+    path: "/dfe/sessions",
+    controller: "sessions"
+
+  get "/auth/dfe/callback", to: "sessions#create"
+  get "/auth/dfe/signout", to: "sessions#destroy"
+  get "/auth/failure", to: redirect("/dfe/sessions/new", status: 303)
+
   resource :journey_map, only: [:new]
   resources :journeys, only: [:new, :show] do
     resource :specification, only: [:show]
