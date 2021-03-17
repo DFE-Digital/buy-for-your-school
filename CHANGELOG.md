@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - incomplete specification documents include a warning within the document as well as the file name
 - users return to the same place in the task list after answering a question
 - fix extended radio questions so that further_information can be remembered when it can be provided through multiple fields
+- flash messages can be shown in notification banners
 
 ## [release-005] - 2021-1-19
 
