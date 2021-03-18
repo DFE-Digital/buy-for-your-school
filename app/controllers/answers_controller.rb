@@ -76,6 +76,11 @@ class AnswersController < ApplicationController
 
     all_params = answer_params.permit(:response, response: [])
     all_params[:further_information] = further_information
+
+    if @step.contentful_type == "checkboxes"
+      all_params[:skipped] = false
+    end
+
     all_params
   end
 

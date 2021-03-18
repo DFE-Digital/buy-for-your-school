@@ -339,6 +339,26 @@ feature "Anyone can start a journey" do
       expect(page).not_to have_checked_field("Lunch")
       expect(CheckboxAnswers.last.skipped).to be true
     end
+
+    context "when the question has already been skipped" do
+      scenario "selecting an answer marks the question as not being skipped" do
+        start_journey_from_category_and_go_to_question(category: "skippable-checkboxes-question.json")
+
+        click_on("None of the above")
+
+        within(".app-task-list") do
+          expect(page).to have_content("Complete")
+        end
+
+        click_first_link_in_task_list
+
+        check("Lunch")
+        check("Dinner")
+        click_on(I18n.t("generic.button.update"))
+
+        expect(CheckboxAnswers.last.skipped).to be false
+      end
+    end
   end
 
   context "when the Contentful model is of type staticContent" do
