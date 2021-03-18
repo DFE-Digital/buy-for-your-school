@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
   def health_check
     render json: {rails: "OK"}, status: :ok
   end
+
+  protected
+
+  def current_user
+    @current_user ||= FindUserFromSession.new(session_hash: session.to_hash).call.present?
+  end
 end
