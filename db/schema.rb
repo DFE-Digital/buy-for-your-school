@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_114040) do
+ActiveRecord::Schema.define(version: 2021_03_18_105104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -101,6 +101,12 @@ ActiveRecord::Schema.define(version: 2021_03_16_114040) do
     t.jsonb "additional_step_rules"
     t.string "skip_call_to_action_text"
     t.index ["journey_id"], name: "index_steps_on_journey_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "dfe_sign_in_uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
