@@ -2,9 +2,9 @@
 
 Rails.application.routes.draw do
   get "health_check" => "application#health_check"
-  root to: "high_voltage/pages#show", id: "specifying_start_page"
+  root to: "pages#show", id: "specifying_start_page"
 
-  get "planning" => "high_voltage/pages#show", "id" => "planning_start_page"
+  get "planning" => "pages#show", "id" => "planning_start_page"
 
   # DfE Sign In
   resource :sessions,
