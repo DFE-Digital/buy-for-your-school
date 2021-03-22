@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   namespace :preview do
     resources :entries, only: [:show]
   end
+
+  get "dashboard", to: "dashboard#show"
 end

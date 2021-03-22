@@ -64,6 +64,12 @@ en:
         warning:
           incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
   specification:
+  dashboard:
+    header: "Specifications dashboard"
+    create:
+      header: "Create a new specification"
+      body: "Create a new specification for a catering procurement."
+      link: "Create a new specification"
   task_list:
     status:
       not_started: Not started
