@@ -24,4 +24,12 @@ options = {
   }
 }
 
-Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
+if DfESignIn.bypass?
+  Rails.application.config.middleware.use OmniAuth::Builder do
+    provider :developer,
+      fields: %i[uid],
+      uid_field: :uid
+  end
+else
+  Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
+end

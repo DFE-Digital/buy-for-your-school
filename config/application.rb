@@ -8,6 +8,8 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require "./lib/dfe_sign_in"
+
 module BuyForYourSchool
   class Application < Rails::Application
     config.generators do |g|

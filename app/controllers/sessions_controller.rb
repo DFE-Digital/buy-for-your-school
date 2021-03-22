@@ -2,6 +2,7 @@
 
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
+  protect_from_forgery except: :bypass_callback
 
   def new
     # This is defined by the class name of our Omniauth strategy
@@ -14,6 +15,7 @@ class SessionsController < ApplicationController
 
     redirect_to new_journey_path
   end
+  alias_method :bypass_callback, :create
 
   def failure
     Rollbar.error("Sign in failed unexpectedly")

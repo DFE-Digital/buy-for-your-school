@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get "/auth/dfe/callback", to: "sessions#create"
   get "/auth/dfe/signout", to: "sessions#destroy"
   get "/auth/failure", to: "sessions#failure"
+  post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 
   resource :journey_map, only: [:new]
   resources :journeys, only: [:new, :show] do
