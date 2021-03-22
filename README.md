@@ -5,6 +5,7 @@ A service to help school buying professionals create tender documents that compl
 1. [Getting started](/doc/getting-started.md)
 1. [Release process](/doc/release-process.md)
 1. [Managing environment variables](/doc/managing-environment-variables.md)
+1. [DfE Sign-in](/doc/dfe-sign-in.md)
 
 ## Making changes
 
