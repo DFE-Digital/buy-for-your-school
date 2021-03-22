@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     UserSession.new(session: session)
       .persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
 
-    redirect_to new_journey_path
+    redirect_to dashboard_path
   end
   alias_method :bypass_callback, :create
 

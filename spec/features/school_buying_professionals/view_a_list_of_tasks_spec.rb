@@ -22,6 +22,14 @@ feature "Users can view the task list" do
     end
   end
 
+  scenario "user can navigate back to the dashboard" do
+    start_journey_from_category(category: "extended-radio-question.json")
+
+    click_on(I18n.t("generic.button.back"))
+
+    expect(page).to have_content(I18n.t("dashboard.header"))
+  end
+
   context "When a question has been answered" do
     scenario "The task is marked as completed" do
       stub_contentful_category(fixture_filename: "multiple-sections.json")
