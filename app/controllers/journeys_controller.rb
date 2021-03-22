@@ -17,6 +17,10 @@ class JourneysController < ApplicationController
     render "errors/contentful_entry_not_found", status: 500
   end
 
+  def index
+    @journeys = Journey.all
+  end
+
   def new
     journey = CreateJourney.new(category_name: "catering").call
     redirect_to journey_path(journey)
