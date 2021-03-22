@@ -20,7 +20,7 @@ module SignInHelpers
   end
 
   def user_is_signed_in(user: anything)
-    allow_any_instance_of(FindUserFromSession)
+    allow_any_instance_of(FindOrCreateUserFromSession)
       .to receive(:call)
       .and_return(user)
   end
