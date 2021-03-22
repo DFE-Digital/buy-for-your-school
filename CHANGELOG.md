@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix extended radio questions so that further_information can be remembered when it can be provided through multiple fields
 - flash messages can be shown in notification banners
 - fix checkbox answer to save choices after previously skipping
+- users can sign in using DfE Sign-in
 
 ## [release-005] - 2021-1-19
 
