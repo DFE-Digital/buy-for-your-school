@@ -477,7 +477,7 @@ feature "Anyone can start a journey" do
 
       answer = LongTextAnswer.last
 
-      expect(page).to have_current_path(journey_url(journey, anchor: answer.step.id), url: true)
+      expect(page).to have_current_path(journey_url(journey, anchor: answer.step.id))
     end
   end
 end
