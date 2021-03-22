@@ -8,6 +8,7 @@ en:
     button:
       back: "Back"
       start: "Start"
+      sign_out: "Sign out"
       next: "Continue"
       change_answer: "Change"
       update: "Update"

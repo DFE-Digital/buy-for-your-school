@@ -61,4 +61,47 @@ RSpec.describe "Authentication", type: :request do
       expect(response).to redirect_to(new_dfe_path)
     end
   end
+
+  describe "Sign out" do
+    it "asks UserSession to repudiate the user's session data" do
+      user_exists_in_dfe_sign_in
+      expect_any_instance_of(UserSession).to receive(:repudiate!)
+
+      get auth_dfe_signout_path
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    context "when there is no sign out token (they are already signed out from the applications point of view)" do
+      it "redirects the user to the root path" do
+        user_exists_in_dfe_sign_in
+        allow_any_instance_of(UserSession)
+          .to receive(:should_be_signed_out_of_dsi?).and_return(false)
+
+        get auth_dfe_signout_path
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "when there is a sign out token" do
+      around do |example|
+        ClimateControl.modify(
+          DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443"
+        ) do
+          example.run
+        end
+      end
+
+      it "redirects to DSI with the users token" do
+        user_exists_in_dfe_sign_in
+        allow_any_instance_of(UserSession)
+          .to receive(:should_be_signed_out_of_dsi?).and_return(true)
+
+        get auth_dfe_signout_path
+
+        expect(response).to redirect_to("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=&post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fdfe%2Fsignout")
+      end
+    end
+  end
 end

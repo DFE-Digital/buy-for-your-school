@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  helper_method :current_user
   def current_user
     @current_user ||= begin
       user = FindOrCreateUserFromSession.new(session_hash: session.to_hash).call

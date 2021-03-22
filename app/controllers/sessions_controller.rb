@@ -9,8 +9,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    session[:dfe_sign_in_uid] = dfe_sign_in_uid
-    flash[:success] = "You have signed in as DSI user: #{dfe_sign_in_uid}."
+    UserSession.new(session: session)
+      .persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
+
     redirect_to new_journey_path
   end
 
@@ -19,14 +20,15 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    redirect_to root_path
+    user_session = UserSession.new(session: session)
+    sign_out_url_copy = user_session.sign_out_url.dup
+
+    user_session.repudiate!
+
+    redirect_to sign_out_url_copy
   end
 
   private def auth_hash
     request.env["omniauth.auth"]
-  end
-
-  private def dfe_sign_in_uid
-    auth_hash["uid"]
   end
 end

@@ -1,7 +1,10 @@
 module SignInHelpers
   def user_exists_in_dfe_sign_in(dsi_uid: SecureRandom.uuid)
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-      uid: dsi_uid
+      uid: dsi_uid,
+      credentials: {
+        id_token: "a-long-secret-given-by-dsi-to-use-to-sign-the-user-out-of-dsi-as-a-whole"
+      }
     )
   end
 

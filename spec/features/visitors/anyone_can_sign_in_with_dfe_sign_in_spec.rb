@@ -10,6 +10,10 @@ feature "Anyone can sign in with DfE Sign-in" do
       user_starts_the_journey
 
       expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+
+      within("header") do
+        expect(page).to have_content(I18n.t("generic.button.sign_out"))
+      end
     end
 
     scenario "can move between pages without reauthenticating by relying on session data" do
