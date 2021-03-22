@@ -4,9 +4,7 @@ feature "Users can view the task list" do
   before { user_is_signed_in }
 
   it "tasks are grouped by their section" do
-    stub_contentful_category(fixture_filename: "multiple-sections.json")
-
-    user_starts_the_journey
+    start_journey_from_category(category: "multiple-sections.json")
 
     within(".app-task-list") do
       expect(page).to have_content("Section A")
@@ -52,9 +50,7 @@ feature "Users can view the task list" do
 
   context "When a question has been hidden" do
     it "should not appear in the task list" do
-      stub_contentful_category(fixture_filename: "hidden-field.json")
-
-      user_starts_the_journey
+      start_journey_from_category(category: "hidden-field.json")
 
       expect(page).not_to have_content("You should NOT be able to see this question")
       expect(page).to have_content("You should be able to see this question")
