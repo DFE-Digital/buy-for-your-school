@@ -5,6 +5,8 @@ feature "Users can preview a journey step" do
       fixture_filename: "steps/radio-question.json"
     )
 
+    user_is_signed_in
+
     visit preview_entry_path("radio-question")
 
     expect(page).to have_content("Which service do you need?")

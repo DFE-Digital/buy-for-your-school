@@ -1,4 +1,6 @@
 feature "Users can see their catering specification" do
+  before { user_is_signed_in }
+
   context "when the journey has been completed" do
     scenario "HTML" do
       start_journey_from_category_and_go_to_question(category: "category-with-liquid-template.json")
@@ -32,8 +34,7 @@ feature "Users can see their catering specification" do
         fixture_filename: "category-with-liquid-template.json"
       )
 
-      visit root_path
-      click_on(I18n.t("generic.button.start"))
+      user_starts_the_journey
 
       # Omit answering a question to simulate an incomplete spec
 

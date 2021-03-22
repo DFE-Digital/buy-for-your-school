@@ -1,6 +1,7 @@
 require "rails_helper"
 
 feature "Anyone can start a journey" do
+  before { user_is_signed_in }
   around do |example|
     ClimateControl.modify(
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
@@ -12,9 +13,7 @@ feature "Anyone can start a journey" do
   scenario "Start page includes a call to action" do
     stub_contentful_category(fixture_filename: "radio-question.json")
 
-    visit root_path
-
-    click_on(I18n.t("generic.button.start"))
+    user_starts_the_journey
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
     expect(page).to have_content("Which service do you need?")

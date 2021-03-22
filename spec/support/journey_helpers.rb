@@ -10,11 +10,7 @@ module JourneyHelpers
       fixture_filename: category
     )
 
-    user_exists_in_dfe_sign_in
-
-    visit root_path
-
-    click_on(I18n.t("generic.button.start"))
+    user_signs_in_and_starts_the_journey
 
     click_first_link_in_task_list
   end

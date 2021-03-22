@@ -16,4 +16,11 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= FindUserFromSession.new(session_hash: session.to_hash).call.present?
   end
+
+  def authenticate_user!
+    return if current_user
+
+    session.delete(:dfe_sign_in_uid)
+    redirect_to new_dfe_path
+  end
 end

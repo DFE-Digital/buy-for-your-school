@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "Users can edit their answers" do
+  before { user_is_signed_in }
+
   before do
     journey = answer.step.journey
     journey.update(section_groups: [

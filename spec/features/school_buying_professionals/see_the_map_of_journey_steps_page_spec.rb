@@ -1,4 +1,6 @@
 feature "Users can see all the steps of a journey" do
+  before { user_is_signed_in }
+
   around do |example|
     ClimateControl.modify(
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
