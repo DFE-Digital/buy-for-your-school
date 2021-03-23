@@ -17,7 +17,21 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content(I18n.t("dashboard.header"))
   end
 
-  scenario "Dashboard prompts user to start a new journey" do
+  scenario "user can view existing specifications" do
+    create(:journey, created_at: Time.local(2021, 2, 15, 12, 0, 0))
+
+    visit dashboard_path
+
+    expect(page).to have_content(I18n.t("dashboard.existing.header"))
+    expect(page).to have_content(I18n.t("dashboard.existing.body"))
+
+    click_on(I18n.t("dashboard.existing.link"))
+
+    expect(page).to have_content(I18n.t("journey.index.existing.header"))
+    expect(page).to have_content("15 February 2021")
+  end
+
+  scenario "user can start a new specification" do
     stub_contentful_category(fixture_filename: "radio-question.json")
 
     visit dashboard_path

@@ -73,6 +73,10 @@ en:
       header: "Create a new specification"
       body: "Create a new specification for a catering procurement."
       link: "Create a new specification"
+    existing:
+      header: "Existing specifications"
+      body: "Continue with a draft specification, and review completed specifications."
+      link: "Existing specifications"
   task_list:
     status:
       not_started: Not started
