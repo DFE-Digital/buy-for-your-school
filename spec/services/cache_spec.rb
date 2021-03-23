@@ -85,6 +85,39 @@ RSpec.describe Cache do
     end
   end
 
+  describe ".delete" do
+    context "when the key exists" do
+      it "removes the key from redis and returns nil" do
+        redis = RedisCache.redis
+        allow(RedisCache).to receive(:redis).and_return(redis)
+
+        target_key = "a-key:that-exists"
+        redis.set(target_key, "a-dummy-value")
+
+        expect(redis).to receive(:del).with(target_key).and_call_original
+
+        described_class.delete(key: target_key)
+
+        expect(redis.get(target_key)).to eq(nil)
+      end
+    end
+
+    context "when the key doesn't already exist" do
+      it "returns nil" do
+        redis = RedisCache.redis
+        allow(RedisCache).to receive(:redis).and_return(redis)
+
+        target_key = "a-key:that-does-not-exist"
+
+        expect(redis).to receive(:del).with(target_key).and_call_original
+
+        described_class.delete(key: target_key)
+
+        expect(redis.get(target_key)).to eq(nil)
+      end
+    end
+  end
+
   describe "#extend_ttl_on_all_entries" do
     it "only updates redis keys associated to contentful entries" do
       cache = described_class.new(enabled: anything, ttl: anything)
