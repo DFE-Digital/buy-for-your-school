@@ -1,4 +1,6 @@
 feature "Users can see their catering specification" do
+  before { user_is_signed_in }
+
   scenario "HTML" do
     start_journey_from_category_and_go_to_question(category: "category-with-dynamic-liquid-template.json")
 
@@ -18,8 +20,7 @@ feature "Users can see their catering specification" do
 
   scenario "navigates back to the task list" do
     stub_contentful_category(fixture_filename: "extended-radio-question.json")
-    visit root_path
-    click_on(I18n.t("generic.button.start"))
+    user_starts_the_journey
 
     click_on(I18n.t("journey.specification.button"))
 
@@ -29,9 +30,7 @@ feature "Users can see their catering specification" do
 
   scenario "renders radio responses that have futher information" do
     stub_contentful_category(fixture_filename: "extended-radio-question.json")
-    visit root_path
-    click_on(I18n.t("generic.button.start"))
-
+    user_starts_the_journey
     click_first_link_in_task_list
 
     choose("Catering")
@@ -49,9 +48,7 @@ feature "Users can see their catering specification" do
 
   scenario "renders checkbox responses that have further information" do
     stub_contentful_category(fixture_filename: "extended-checkboxes-question.json")
-    visit root_path
-    click_on(I18n.t("generic.button.start"))
-
+    user_starts_the_journey
     click_first_link_in_task_list
 
     check("Yes")
@@ -74,9 +71,7 @@ feature "Users can see their catering specification" do
 
   scenario "questions that are skipped can be identified" do
     stub_contentful_category(fixture_filename: "skippable-checkboxes-question.json")
-    visit root_path
-    click_on(I18n.t("generic.button.start"))
-
+    user_starts_the_journey
     click_first_link_in_task_list
 
     click_on("None of the above")
@@ -88,8 +83,7 @@ feature "Users can see their catering specification" do
   context "when the spec is incomplete" do
     it "warns the user that the contents are in a partially completed state" do
       stub_contentful_category(fixture_filename: "extended-radio-question.json")
-      visit root_path
-      click_on(I18n.t("generic.button.start"))
+      user_starts_the_journey
 
       # Don't answer any questions to create a in progress spec
 

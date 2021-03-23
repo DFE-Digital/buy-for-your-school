@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Entry previews", type: :request do
+  before { user_is_signed_in }
+
   it "creates a dummy journey and redirects to the question creation flow" do
     entry_id = "123"
     fake_journey = create(:journey)

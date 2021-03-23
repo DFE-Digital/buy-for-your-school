@@ -2,9 +2,21 @@
 
 Rails.application.routes.draw do
   get "health_check" => "application#health_check"
-  root to: "high_voltage/pages#show", id: "specifying_start_page"
+  root to: "pages#show", id: "specifying_start_page"
 
-  get "planning" => "high_voltage/pages#show", "id" => "planning_start_page"
+  get "planning" => "pages#show", "id" => "planning_start_page"
+
+  # DfE Sign In
+  resource :sessions,
+    only: %i[create new],
+    as: :dfe,
+    path: "/dfe/sessions",
+    controller: "sessions"
+
+  get "/auth/dfe/callback", to: "sessions#create"
+  get "/auth/dfe/signout", to: "sessions#destroy"
+  get "/auth/failure", to: "sessions#failure"
+  post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 
   resource :journey_map, only: [:new]
   resources :journeys, only: [:new, :show] do

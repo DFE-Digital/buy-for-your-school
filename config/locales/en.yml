@@ -8,6 +8,7 @@ en:
     button:
       back: "Back"
       start: "Start"
+      sign_out: "Sign out"
       next: "Continue"
       change_answer: "Change"
       update: "Update"
@@ -92,3 +93,7 @@ en:
     specification_template_invalid:
       page_title: "An unexpected error occurred"
       page_body: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."
+    sign_in:
+      unexpected_failure:
+        page_title: "An unexpected error occurred"
+        page_body: "The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly."

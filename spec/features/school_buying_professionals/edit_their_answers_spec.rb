@@ -1,6 +1,8 @@
 require "rails_helper"
 
 feature "Users can edit their answers" do
+  before { user_is_signed_in }
+
   before do
     journey = answer.step.journey
     journey.update(section_groups: [
@@ -135,7 +137,7 @@ feature "Users can edit their answers" do
 
       click_on(I18n.t("generic.button.update"))
 
-      expect(page).to have_current_path(journey_url(answer.step.journey, anchor: answer.step.id), url: true)
+      expect(page).to have_current_path(journey_url(answer.step.journey, anchor: answer.step.id))
     end
   end
 end
