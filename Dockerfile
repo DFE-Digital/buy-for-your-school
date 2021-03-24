@@ -30,7 +30,22 @@ RUN bundle config set no-cache "true"
 RUN bundle config set with $BUNDLE_GEM_GROUPS
 RUN bundle install --no-binstubs --retry=3 --jobs=4
 
-COPY . .
+# Copy app code (sorted by vague frequency of change for caching)
+RUN mkdir -p ${INSTALL_PATH}/log
+RUN mkdir -p ${INSTALL_PATH}/tmp
+
+COPY config.ru ${INSTALL_PATH}/config.ru
+COPY Rakefile ${INSTALL_PATH}/Rakefile
+
+COPY public ${INSTALL_PATH}/public
+COPY vendor ${INSTALL_PATH}/vendor
+COPY bin ${INSTALL_PATH}/bin
+COPY lib ${INSTALL_PATH}/lib
+COPY config ${INSTALL_PATH}/config
+COPY db ${INSTALL_PATH}/db
+COPY script ${INSTALL_PATH}/script
+COPY app ${INSTALL_PATH}/app
+# End
 
 # RELEASE STAGE #
 FROM ruby:2.6.6 AS release
