@@ -11,9 +11,7 @@ feature "Anyone can start a journey" do
   end
 
   scenario "Start page includes a call to action" do
-    stub_contentful_category(fixture_filename: "radio-question.json")
-
-    user_starts_the_journey
+    start_journey_from_category(category: "radio-question.json")
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
     expect(page).to have_content("Which service do you need?")
@@ -363,11 +361,7 @@ feature "Anyone can start a journey" do
   context "when the Contentful model is of type staticContent" do
     context "when Contentful entry is of type paragraphs" do
       scenario "the content is not displayed in the task list" do
-        stub_contentful_category(fixture_filename: "static-content.json")
-
-        visit root_path
-
-        click_on(I18n.t("generic.button.start"))
+        start_journey_from_category(category: "static-content.json")
 
         # We should really remove static content entirely, since it doesn't
         # appear in the task list pattern.
@@ -454,11 +448,7 @@ feature "Anyone can start a journey" do
 
   context "when the Liquid template was invalid" do
     it "raises an error" do
-      stub_contentful_category(fixture_filename: "category-with-invalid-liquid-template.json")
-
-      visit root_path
-
-      click_on(I18n.t("generic.button.start"))
+      start_journey_from_category(category: "category-with-invalid-liquid-template.json")
 
       expect(page).to have_content(I18n.t("errors.specification_template_invalid.page_title"))
       expect(page).to have_content(I18n.t("errors.specification_template_invalid.page_body"))

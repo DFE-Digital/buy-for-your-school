@@ -30,11 +30,9 @@ feature "Users can see their catering specification" do
 
   context "when the journey has not yet been completed" do
     scenario "includes an incomple warning" do
-      stub_contentful_category(
-        fixture_filename: "category-with-liquid-template.json"
+      start_journey_from_category(
+        category: "category-with-liquid-template.json"
       )
-
-      user_starts_the_journey
 
       # Omit answering a question to simulate an incomplete spec
 

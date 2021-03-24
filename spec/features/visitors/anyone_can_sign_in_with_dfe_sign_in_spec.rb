@@ -60,7 +60,7 @@ feature "Anyone can sign in with DfE Sign-in" do
       .with("Sign in failed unexpectedly")
       .and_call_original
 
-    user_starts_the_journey
+    visit dashboard_path
 
     expect(page).to have_content(I18n.t("errors.sign_in.unexpected_failure.page_title"))
     expect(page).to have_content(I18n.t("errors.sign_in.unexpected_failure.page_body"))

@@ -35,4 +35,12 @@ feature "Users can see a start page for specifying their purchase" do
 
     expect(page).to have_content(I18n.t("specifying.start_page.pause_and_resume_body"))
   end
+
+  scenario "The start button takes the user to the dashboard" do
+    visit root_path
+
+    click_on(I18n.t("generic.button.start"))
+
+    expect(page).to have_content(I18n.t("dashboard.header"))
+  end
 end

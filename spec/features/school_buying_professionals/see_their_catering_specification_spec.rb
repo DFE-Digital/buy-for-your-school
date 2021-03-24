@@ -19,8 +19,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "navigates back to the task list" do
-    stub_contentful_category(fixture_filename: "extended-radio-question.json")
-    user_starts_the_journey
+    start_journey_from_category(category: "extended-radio-question.json")
 
     click_on(I18n.t("journey.specification.button"))
 
@@ -29,9 +28,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "renders radio responses that have futher information" do
-    stub_contentful_category(fixture_filename: "extended-radio-question.json")
-    user_starts_the_journey
-    click_first_link_in_task_list
+    start_journey_from_category_and_go_to_question(category: "extended-radio-question.json")
 
     choose("Catering")
     fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
@@ -47,9 +44,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "renders checkbox responses that have further information" do
-    stub_contentful_category(fixture_filename: "extended-checkboxes-question.json")
-    user_starts_the_journey
-    click_first_link_in_task_list
+    start_journey_from_category_and_go_to_question(category: "extended-checkboxes-question.json")
 
     check("Yes")
     fill_in "answer[yes_further_information]", with: "More info for yes"
@@ -70,9 +65,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "questions that are skipped can be identified" do
-    stub_contentful_category(fixture_filename: "skippable-checkboxes-question.json")
-    user_starts_the_journey
-    click_first_link_in_task_list
+    start_journey_from_category_and_go_to_question(category: "skippable-checkboxes-question.json")
 
     click_on("None of the above")
     click_on(I18n.t("journey.specification.button"))
@@ -82,8 +75,7 @@ feature "Users can see their catering specification" do
 
   context "when the spec is incomplete" do
     it "warns the user that the contents are in a partially completed state" do
-      stub_contentful_category(fixture_filename: "extended-radio-question.json")
-      user_starts_the_journey
+      start_journey_from_category(category: "extended-radio-question.json")
 
       # Don't answer any questions to create a in progress spec
 
