@@ -1,4 +1,5 @@
 require "rails_helper"
+require "vcap_parser"
 
 RSpec.describe VcapParser do
   describe ".load_service_environment_variables!" do

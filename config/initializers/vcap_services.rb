@@ -1,2 +1,0 @@
-require "vcap_parser"
-VcapParser.load_service_environment_variables!
