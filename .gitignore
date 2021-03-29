@@ -108,3 +108,7 @@ terraform.rc
 *.sql
 *.csv
 *.xls
+
+# App env yaml files
+*_app_env.yml
+*_app_env.yaml
