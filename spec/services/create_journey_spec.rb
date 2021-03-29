@@ -59,5 +59,19 @@ RSpec.describe CreateJourney do
         }
       ])
     end
+
+    context "when the journey cannot be saved" do
+      it "raises an error" do
+        stub_contentful_category(
+          fixture_filename: "category-with-liquid-template.json",
+          stub_sections: true,
+          stub_steps: false
+        )
+
+        # Force a validation error by not providing a category_name
+        expect { described_class.new(category_name: nil).call }
+          .to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 end

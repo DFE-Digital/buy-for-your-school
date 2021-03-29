@@ -14,7 +14,7 @@ class CreateJourney
     )
 
     journey.section_groups = build_section_groupings(sections: sections)
-    journey.save
+    journey.save!
 
     sections.each do |section|
       question_entries = GetStepsFromSection.new(section: section).call
