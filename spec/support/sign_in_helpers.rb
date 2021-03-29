@@ -22,7 +22,7 @@ module SignInHelpers
     user_starts_the_journey
   end
 
-  def user_is_signed_in(user: anything)
+  def user_is_signed_in(user: build(:user))
     allow_any_instance_of(FindOrCreateUserFromSession)
       .to receive(:call)
       .and_return(user)

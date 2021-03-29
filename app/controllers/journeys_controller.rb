@@ -22,7 +22,7 @@ class JourneysController < ApplicationController
   end
 
   def new
-    journey = CreateJourney.new(category_name: "catering").call
+    journey = CreateJourney.new(category_name: "catering", user: current_user).call
     redirect_to journey_path(journey)
   end
 

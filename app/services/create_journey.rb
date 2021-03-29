@@ -1,8 +1,9 @@
 class CreateJourney
-  attr_accessor :category_name
+  attr_accessor :category_name, :user
 
-  def initialize(category_name:)
+  def initialize(category_name:, user:)
     self.category_name = category_name
+    self.user = user
   end
 
   def call
@@ -10,7 +11,8 @@ class CreateJourney
     sections = GetSectionsFromCategory.new(category: category).call
     journey = Journey.new(
       category: category_name,
-      liquid_template: category.specification_template
+      liquid_template: category.specification_template,
+      user: user
     )
 
     journey.section_groups = build_section_groupings(sections: sections)
