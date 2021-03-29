@@ -29,7 +29,7 @@ class JourneysController < ApplicationController
   end
 
   def show
-    @journey = Journey.find(journey_id)
+    @journey = current_journey
     @visible_steps = @journey.visible_steps.includes([
       :radio_answer,
       :short_text_answer,

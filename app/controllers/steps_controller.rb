@@ -4,7 +4,7 @@ class StepsController < ApplicationController
   before_action :check_user_belongs_to_journey?
 
   def show
-    @journey = Journey.find(journey_id)
+    @journey = current_journey
 
     @step = Step.find(params[:id])
     @step_presenter = StepPresenter.new(@step)
@@ -15,7 +15,7 @@ class StepsController < ApplicationController
   end
 
   def edit
-    @journey = Journey.find(journey_id)
+    @journey = current_journey
 
     @step = Step.find(params[:id])
     @step_presenter = StepPresenter.new(@step)
