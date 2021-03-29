@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  before_action :check_user_belongs_to_journey?
+
   include DateHelper
   include AnswerHelper
 

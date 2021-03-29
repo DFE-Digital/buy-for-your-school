@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SpecificationsController < ApplicationController
+  before_action :check_user_belongs_to_journey?
+
   def show
     @journey = Journey.find(journey_id)
     @visible_steps = @journey.visible_steps.includes([

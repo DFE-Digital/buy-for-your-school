@@ -29,4 +29,14 @@ class ApplicationController < ActionController::Base
     session.delete(:dfe_sign_in_uid)
     redirect_to new_dfe_path
   end
+
+  def current_journey
+    journey_id = params[:journey_id].present? ? params[:journey_id] : params[:id]
+    @current_journey ||= Journey.find(journey_id)
+  end
+
+  def check_user_belongs_to_journey?
+    return true if current_journey.user == current_user
+    render file: "public/404.html", status: :not_found, layout: false
+  end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
+  before_action :check_user_belongs_to_journey?, only: %w[show]
+
   rescue_from GetCategory::InvalidLiquidSyntax do |exception|
     render "errors/specification_template_invalid", status: 500, locals: {error: exception}
   end
