@@ -4,6 +4,7 @@ RSpec.describe Journey, type: :model do
   it { should have_many(:steps) }
 
   describe "validations" do
+    it { is_expected.to validate_presence_of(:category) }
     it { is_expected.to validate_presence_of(:liquid_template) }
   end
 
