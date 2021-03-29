@@ -18,7 +18,7 @@ class JourneysController < ApplicationController
   end
 
   def index
-    @journeys = Journey.all
+    @journeys = current_user.journeys
   end
 
   def new

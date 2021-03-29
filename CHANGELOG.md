@@ -51,6 +51,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can sign in using DfE Sign-in
 - users can sign out using DfE Sign-in
 - add new dashboard page with the ability to create new specifications
+- users can only see their past journeys from the dashboard
 
 ## [release-005] - 2021-1-19
 

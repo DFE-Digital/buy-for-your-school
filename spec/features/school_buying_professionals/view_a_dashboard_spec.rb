@@ -18,7 +18,9 @@ feature "Anyone can view a dashboard" do
   end
 
   scenario "user can view existing specifications" do
-    create(:journey, created_at: Time.local(2021, 2, 15, 12, 0, 0))
+    user = create(:user)
+    user_is_signed_in(user: user)
+    create(:journey, user: user, created_at: Time.local(2021, 2, 15, 12, 0, 0))
 
     visit dashboard_path
 
