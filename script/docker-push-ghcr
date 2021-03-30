@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# exit on failures
+set -e
+set -o pipefail
+
+echo "$GHCR_PASSWORD" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+docker build --build-arg RAILS_ENV=production  -t "$GHCR_REPO:$DOCKER_TAG" .
+docker push "$GHCR_REPO:$DOCKER_TAG"
