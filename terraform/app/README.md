@@ -4,7 +4,7 @@ We use terraform to create the services needed by the application and to deploy 
 
 We use terraform workspaces to keep the terraform state seperate for each environment.
 
-At the time of writing, we store our state in an s3 bucket on the PaaS in the `sct-research` space. This is planned to move to a new space, `sct-terraform`.
+The terraform state is stored in an S3 bucket in the `sct-terraform` Cloud Foundry space
 
 ### Setup
 
@@ -19,7 +19,7 @@ $ export CF_PASSWORD="password"
 ```
 - get the terraform state S3 Bucket AWS credentials
 ```
-$ cf target -s sct-research
+$ cf target -s sct-terraform
 $ cf service-key terraform-state terraform-state-key
 {
  "aws_access_key_id": "AWS_ACCESS_KEY",
