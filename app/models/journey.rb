@@ -10,4 +10,11 @@ class Journey < ApplicationRecord
   def all_steps_completed?
     visible_steps.all? { |step| step.answer.present? }
   end
+
+  def freshen!
+    attributes = {}
+    attributes[:stale] = false unless stale == false
+
+    update(attributes)
+  end
 end

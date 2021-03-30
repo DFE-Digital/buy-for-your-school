@@ -32,6 +32,15 @@ RSpec.describe CreateJourney do
       expect(Journey.last.user).to eq(user)
     end
 
+    it "sets started to true (until questions have been answered)" do
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
+      )
+      described_class.new(category_name: "catering", user: build(:user)).call
+      expect(Journey.last.started).to eq(true)
+    end
+
     it "stores a copy of the Liquid template" do
       stub_contentful_category(
         fixture_filename: "category-with-liquid-template.json"

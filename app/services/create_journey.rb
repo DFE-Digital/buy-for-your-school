@@ -11,8 +11,9 @@ class CreateJourney
     sections = GetSectionsFromCategory.new(category: category).call
     journey = Journey.new(
       category: category_name,
-      liquid_template: category.specification_template,
-      user: user
+      user: user,
+      started: true,
+      liquid_template: category.specification_template
     )
 
     journey.section_groups = build_section_groupings(sections: sections)
