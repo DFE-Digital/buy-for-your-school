@@ -19,6 +19,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      tf_var_docker_image: ${{ steps.tf_var_docker_image.outputs.value }}
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -28,6 +30,9 @@ jobs:
         run: echo "DOCKER_IMAGE=$GHCR_REPO:$DOCKER_TAG" >> $GITHUB_ENV
       - name: Set TFVAR Docker Image environment variable
         run: echo "TF_VAR_docker_image=$DOCKER_IMAGE" >> $GITHUB_ENV
+      - name: Set TFVAR Docker Image output
+        id: tf_var_docker_image
+        run: echo "::set-output name=value::$TF_VAR_docker_image"
       - name: Build
         run: script/docker-push-ghcr
 
@@ -37,6 +42,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Set TFVAR Docker Image environment variable
+        run: echo "TF_VAR_docker_image=${{needs.build.outputs.tf_var_docker_image}}" >> $GITHUB_ENV
       - name: Deploy terraform to staging
         env:
           TF_VAR_environment: "staging"
