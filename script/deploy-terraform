@@ -44,6 +44,9 @@ terraform init
 # select the correct workspace
 terraform workspace select "$TF_VAR_environment"
 
+# plan the terraform
+terraform plan
+
 # apply the terraform
 terraform apply -auto-approve
 
