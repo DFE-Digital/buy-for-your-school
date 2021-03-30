@@ -15,9 +15,21 @@ RSpec.describe CreateJourney do
         fixture_filename: "category-with-no-steps.json",
         stub_steps: false
       )
-      expect { described_class.new(category_name: "catering").call }
+      expect { described_class.new(category_name: "catering", user: build(:user)).call }
         .to change { Journey.count }.by(1)
       expect(Journey.last.category).to eql("catering")
+    end
+
+    it "associates the new journey with the given user" do
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
+      )
+      user = create(:user)
+
+      described_class.new(category_name: "catering", user: user).call
+
+      expect(Journey.last.user).to eq(user)
     end
 
     it "stores a copy of the Liquid template" do
@@ -25,7 +37,7 @@ RSpec.describe CreateJourney do
         fixture_filename: "category-with-liquid-template.json"
       )
 
-      described_class.new(category_name: "catering").call
+      described_class.new(category_name: "catering", user: build(:user)).call
 
       expect(Journey.last.liquid_template)
         .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
@@ -36,7 +48,7 @@ RSpec.describe CreateJourney do
         fixture_filename: "multiple-sections-and-steps.json"
       )
 
-      described_class.new(category_name: "catering").call
+      described_class.new(category_name: "catering", user: build(:user)).call
 
       journey = Journey.last
 
@@ -58,6 +70,20 @@ RSpec.describe CreateJourney do
           ]
         }
       ])
+    end
+
+    context "when the journey cannot be saved" do
+      it "raises an error" do
+        stub_contentful_category(
+          fixture_filename: "category-with-liquid-template.json",
+          stub_sections: true,
+          stub_steps: false
+        )
+
+        # Force a validation error by not providing a category_name
+        expect { described_class.new(category_name: nil, user: build(:user)).call }
+          .to raise_error(ActiveRecord::RecordInvalid)
+      end
     end
   end
 end

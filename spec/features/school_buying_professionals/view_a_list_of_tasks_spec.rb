@@ -1,7 +1,8 @@
 require "rails_helper"
 
 feature "Users can view the task list" do
-  before { user_is_signed_in }
+  let(:user) { create(:user) }
+  before { user_is_signed_in(user: user) }
 
   it "tasks are grouped by their section" do
     start_journey_from_category(category: "multiple-sections.json")
@@ -35,18 +36,21 @@ feature "Users can view the task list" do
       stub_contentful_category(fixture_filename: "multiple-sections.json")
 
       answer = create(:short_text_answer, response: "answer")
-      answer.step.journey.update(section_groups: [
-        {
-          "order" => 0,
-          "title" => "Section A",
-          "steps" => [
-            {
-              "contentful_id" => answer.step.contentful_id,
-              "order" => 0
-            }
-          ]
-        }
-      ])
+      answer.step.journey.update(
+        user: user,
+        section_groups: [
+          {
+            "order" => 0,
+            "title" => "Section A",
+            "steps" => [
+              {
+                "contentful_id" => answer.step.contentful_id,
+                "order" => 0
+              }
+            ]
+          }
+        ]
+      )
 
       user_starts_the_journey
 

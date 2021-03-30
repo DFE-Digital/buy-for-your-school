@@ -22,17 +22,15 @@ feature "Anyone can sign in with DfE Sign-in" do
 
       user_exists_in_dfe_sign_in(dsi_uid: user.dfe_sign_in_uid)
       user_starts_the_journey
-
       expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
-
-      visit root_path
 
       # Undo the OmniAuth stub to check we don't require it again
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(foo: :bar)
 
-      answer = create(:short_text_answer)
-      visit edit_journey_step_path(answer.step.journey, answer.step)
-      expect(page).to have_content(answer.step.title)
+      journey = create(:journey, user: user)
+      step = create(:step, :radio, journey: journey)
+      visit journey_step_path(journey, step)
+      expect(page).to have_content(step.title)
     end
   end
 

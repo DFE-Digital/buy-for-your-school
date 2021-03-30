@@ -1,10 +1,11 @@
 require "rails_helper"
 
 feature "Users can see how to resume a journey" do
-  before { user_is_signed_in }
+  let(:user) { create(:user) }
+  before { user_is_signed_in(user: user) }
 
   context "on the task list" do
-    let(:journey) { create(:journey) }
+    let(:journey) { create(:journey, user: user) }
 
     scenario "displays the notification banner" do
       visit journey_path(journey)

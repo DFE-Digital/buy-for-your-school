@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  before_action :check_user_belongs_to_journey?
+
   include DateHelper
   include AnswerHelper
 
   def create
-    @journey = Journey.find(journey_id)
+    @journey = current_journey
     @step = Step.find(step_id)
     @step_presenter = StepPresenter.new(@step)
 
@@ -27,7 +29,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @journey = Journey.find(journey_id)
+    @journey = current_journey
     @step = Step.find(step_id)
     @step_presenter = StepPresenter.new(@step)
 

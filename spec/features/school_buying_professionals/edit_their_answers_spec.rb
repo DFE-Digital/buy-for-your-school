@@ -1,22 +1,26 @@
 require "rails_helper"
 
 feature "Users can edit their answers" do
-  before { user_is_signed_in }
+  let(:user) { create(:user) }
+  before { user_is_signed_in(user: user) }
 
   before do
     journey = answer.step.journey
-    journey.update(section_groups: [
-      {
-        "order" => 0,
-        "title" => "Section A",
-        "steps" => [
-          {
-            "contentful_id" => answer.step.contentful_id,
-            "order" => 0
-          }
-        ]
-      }
-    ])
+    journey.update(
+      user: user,
+      section_groups: [
+        {
+          "order" => 0,
+          "title" => "Section A",
+          "steps" => [
+            {
+              "contentful_id" => answer.step.contentful_id,
+              "order" => 0
+            }
+          ]
+        }
+      ]
+    )
   end
   let(:answer) { create(:short_text_answer, response: "answer") }
 

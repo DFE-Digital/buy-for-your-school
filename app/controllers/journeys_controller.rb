@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
+  before_action :check_user_belongs_to_journey?, only: %w[show]
+
   rescue_from GetCategory::InvalidLiquidSyntax do |exception|
     render "errors/specification_template_invalid", status: 500, locals: {error: exception}
   end
@@ -17,13 +19,17 @@ class JourneysController < ApplicationController
     render "errors/contentful_entry_not_found", status: 500
   end
 
+  def index
+    @journeys = current_user.journeys
+  end
+
   def new
-    journey = CreateJourney.new(category_name: "catering").call
+    journey = CreateJourney.new(category_name: "catering", user: current_user).call
     redirect_to journey_path(journey)
   end
 
   def show
-    @journey = Journey.find(journey_id)
+    @journey = current_journey
     @visible_steps = @journey.visible_steps.includes([
       :radio_answer,
       :short_text_answer,
