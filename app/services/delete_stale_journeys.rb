@@ -1,7 +1,8 @@
 class DeleteStaleJourneys
   def call
-    Journey.where(started: false)
-      .where("last_worked_on > ?", 1.month.ago)
-      .destroy_all
+    qualifying_journeys = Journey.where(started: false)
+      .where("last_worked_on < ?", 1.month.ago)
+    qualifying_journeys.destroy_all
+  end
   end
 end
