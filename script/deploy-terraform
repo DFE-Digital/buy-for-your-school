@@ -27,6 +27,9 @@ cd terraform/app
 echo "---" > "${TF_VAR_environment}_app_env.yml"
 echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith("APP_ENV_" + $e) ) ) | keys[] as $k | "\($k[($e + "_" | length):]): \(.[$k])"' >> "${TF_VAR_environment}_app_env.yml"
 
+# DEBUG: Print the first line which is a safe APPLICATION_URL to verify the file is created correctly
+head -2 "${TF_VAR_environment}_app_env.yml" | tail -n +2
+
 # deploy terraform using tfenv
 if [ ! -e ~/.tfenv ]
 then
