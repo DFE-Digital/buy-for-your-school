@@ -25,15 +25,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Set Docker tag environment variable
-        run: |
-          echo "DOCKER_TAG=${GITHUB_RUN_ID}-${GITHUB_SHA}" >> $GITHUB_ENV
-          echo "**** GITHUB_RUN_ID: ${GITHUB_RUN_ID}"
-          echo "**** GITHUB_SHA: ${GITHUB_SHA}"
+        run: echo "DOCKER_TAG=${GITHUB_RUN_ID}-${GITHUB_SHA}" >> $GITHUB_ENV
       - name: Set Docker Image environment variable
-        run: |
-          echo "DOCKER_IMAGE=$GHCR_REPO:$DOCKER_TAG" >> $GITHUB_ENV
-          echo "**** GHCR_REPO: ${GHCR_REPO}"
-          echo "**** DOCKER_TAG: ${DOCKER_TAG}"
+        run: echo "DOCKER_IMAGE=$GHCR_REPO:$DOCKER_TAG" >> $GITHUB_ENV
       - name: Set TFVAR Docker Image environment variable
         run: echo "TF_VAR_docker_image=$DOCKER_IMAGE" >> $GITHUB_ENV
       - name: Set TFVAR Docker Image output
@@ -48,8 +42,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: DEBUG
-        run: echo "${{steps.tf_var_docker_image.outputs.value}}"
       - name: Set TFVAR Docker Image environment variable
         run: echo "TF_VAR_docker_image=${{needs.build.outputs.tf_var_docker_image}}" >> $GITHUB_ENV
       - name: Deploy terraform to staging
