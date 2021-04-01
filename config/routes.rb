@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: "pages#show", id: "specifying_start_page"
 
   get "planning" => "pages#show", "id" => "planning_start_page"
+  post "/api/contentful/entry_updated" => "api/contentful/entries#changed"
 
   # DfE Sign In
   resource :sessions,
