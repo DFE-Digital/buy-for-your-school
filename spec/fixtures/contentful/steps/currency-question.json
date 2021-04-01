@@ -1,0 +1,37 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "currency-question",
+        "type": "Currency",
+        "createdAt": "2020-11-05T16:42:58.340Z",
+        "updatedAt": "2020-11-05T16:42:58.340Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/what-funds-does-the-school-have-available-for-the-maintenance-or-replacement-of-heavy-equipment-in-the-coming-year",
+        "title": "What funds does the school have available for the maintenance or replacement of heavy equipment in the coming year?",
+        "helpText": "Give an estimate of the funds available.",
+        "type": "currency"
+    }
+}

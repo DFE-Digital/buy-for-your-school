@@ -1,59 +1,73 @@
 require "rails_helper"
 
 RSpec.describe "Contentful Caching", type: :request do
+  before { user_is_signed_in }
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_ENTRY_CACHING: "true"
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run
     end
   end
 
-  it "checks the Redis cache instead of making an external request" do
-    journey = create(:journey, next_entry_id: "contentful-radio-question")
+  context "when caching is enabled" do
+    around do |example|
+      ClimateControl.modify(
+        CONTENTFUL_ENTRY_CACHING: "true"
+      ) do
+        example.run
+      end
+    end
+    after(:each) { RedisCache.redis.flushdb }
 
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/radio-question-example.json")
-    RedisCache.redis.set("contentful:entry:contentful-radio-question", JSON.dump(raw_response))
+    it "checks the Redis cache instead of making an external request" do
+      # TODO: In reality we do not cache categories, but should
+      raw_category_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/radio-question.json")
+      RedisCache.redis.set("contentful:entry:contentful-category-entry", JSON.dump(raw_category_response))
 
-    expect_any_instance_of(Contentful::Client).not_to receive(:entry)
+      # TODO: In reality we do not cache sections, but should
+      raw_section_response = File.read("#{Rails.root}/spec/fixtures/contentful/sections/radio-section.json")
+      RedisCache.redis.set("contentful:entry:radio-section", JSON.dump(raw_section_response))
 
-    get new_journey_step_path(journey)
+      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/steps/radio-question.json")
+      RedisCache.redis.set("contentful:entry:radio-question", JSON.dump(raw_step_response))
 
-    expect(response).to have_http_status(:found)
+      expect_any_instance_of(Contentful::Client).not_to receive(:entry)
 
-    RedisCache.redis.del("contentful:entry:contentful-radio-question")
-  end
+      get new_journey_path
 
-  it "stores the external contentful response in the cache" do
-    journey = create(:journey, next_entry_id: "contentful-radio-question")
-    stub_get_contentful_entry(
-      entry_id: "contentful-radio-question",
-      fixture_filename: "radio-question-example.json"
-    )
+      expect(response).to have_http_status(:found)
 
-    get new_journey_step_path(journey)
-
-    expect(RedisCache.redis.get("contentful:entry:contentful-radio-question"))
-      .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"contentful-radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}]}}\"")
-
-    RedisCache.redis.del("contentful:entry:contentful-radio-question")
-  end
-
-  it "sets a TTL to 72 hours by default" do
-    journey = create(:journey, next_entry_id: "contentful-radio-question")
-    stub_get_contentful_entry(
-      entry_id: "contentful-radio-question",
-      fixture_filename: "radio-question-example.json"
-    )
-
-    freeze_time do
-      get new_journey_step_path(journey)
-
-      expect(RedisCache.redis.ttl("contentful:entry:contentful-radio-question"))
-        .to eq(60 * 60 * 72)
+      RedisCache.redis.del("contentful:entry:radio-question")
     end
 
-    RedisCache.redis.del("contentful:entry:contentful-radio-question")
+    it "stores the external contentful response in the cache" do
+      stub_contentful_category(
+        fixture_filename: "radio-question.json"
+      )
+
+      get new_journey_path
+
+      expect(RedisCache.redis.get("contentful:entry:radio-question"))
+        .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\"")
+
+      RedisCache.redis.del("contentful:entry:radio-question")
+    end
+
+    it "sets a TTL to 72 hours by default" do
+      stub_contentful_category(
+        fixture_filename: "radio-question.json"
+      )
+
+      freeze_time do
+        get new_journey_path
+
+        expect(RedisCache.redis.ttl("contentful:entry:radio-question"))
+          .to eq(60 * 60 * 72)
+      end
+
+      RedisCache.redis.del("contentful:entry:radio-question")
+    end
   end
 
   context "when caching has been disabled in ENV" do
@@ -66,15 +80,13 @@ RSpec.describe "Contentful Caching", type: :request do
     end
 
     it "does not interact with the redis cache" do
-      journey = create(:journey, next_entry_id: "contentful-radio-question")
-      stub_get_contentful_entry(
-        entry_id: "contentful-radio-question",
-        fixture_filename: "radio-question-example.json"
+      stub_contentful_category(
+        fixture_filename: "radio-question.json"
       )
 
       expect(RedisCache).not_to receive(:redis)
 
-      get new_journey_step_path(journey)
+      get new_journey_path
     end
   end
 end

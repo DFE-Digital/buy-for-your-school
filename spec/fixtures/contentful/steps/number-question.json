@@ -1,0 +1,37 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "number-question",
+        "type": "Number",
+        "createdAt": "2020-11-05T16:42:58.340Z",
+        "updatedAt": "2020-11-05T16:42:58.340Z",
+        "environment": {
+            "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/how-many-days-of-the-year-will-the-service-operate",
+        "title": "How many days of the year will the service operate?",
+        "helpText": "This is the maximum number of days including expected periods of school closures, such as snow days, inset days and polling days. It does not include unexpected periods of closures.",
+        "type": "number"
+    }
+}

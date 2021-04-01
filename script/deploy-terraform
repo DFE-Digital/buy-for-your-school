@@ -1,0 +1,53 @@
+#!/bin/bash
+# script to deploy terraform
+# exit on error or if a variable is unbound
+set -eu
+
+TF_VAR_environment="${TF_VAR_environment:-}"
+
+if [ -z "$TF_VAR_environment" ]
+then
+  echo "TF_VAR_environment not set. Exiting ..."
+  exit 1
+fi
+
+# Set env_TF_VAR_ environment variables from GITHUB_SECRETS_JSON
+eval $(echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith($e + "_TF_VAR_") ) ) | keys[] as $k | "export \($k[($e + "_" | length):])=\(.[$k])"')
+
+# Disable the shellcheck check for unassigned variables. We export this var
+# in Github Actions, but Shellcheck complains because there are lowercase
+# characters in it
+
+# shellcheck disable=2154
+echo "deploying $TF_VAR_environment"
+
+cd terraform/app
+
+# Create app_env yaml file from GITHUB_SECRETS_JSON
+echo "---" > "${TF_VAR_environment}_app_env.yml"
+echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith("APP_ENV_" + $e) ) ) | keys[] as $k | "\($k[("APP_ENV_" + $e + "_" | length):]): \(.[$k])"' >> "${TF_VAR_environment}_app_env.yml"
+
+# deploy terraform using tfenv
+if [ ! -e ~/.tfenv ]
+then
+git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+fi
+export PATH="$HOME/.tfenv/bin:$PATH"
+tfenv install
+
+# CF_PASSWORD, CF_USER, AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID
+# must be set for the following commands to run
+
+# initialise terraform
+terraform init
+
+# select the correct workspace
+terraform workspace select "$TF_VAR_environment"
+
+# plan the terraform
+terraform plan
+
+# apply the terraform
+terraform apply -auto-approve
+
+echo "$TF_VAR_environment has been deployed"

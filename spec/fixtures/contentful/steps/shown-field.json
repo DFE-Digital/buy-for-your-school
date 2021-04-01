@@ -1,0 +1,49 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "shown-field",
+        "type": "Entry",
+        "createdAt": "2020-11-04T12:28:24.460Z",
+        "updatedAt": "2021-02-09T11:28:12.031Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 11,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/available-support",
+        "type": "radios",
+        "title": "You should be able to see this question?",
+        "helpText": "Tell us what support you have available to you.",
+        "extendedOptions": [
+            {
+                "value": "School expert"
+            },
+            {
+                "value": "External expert"
+            },
+            {
+                "value": "None"
+            }
+        ],
+        "alwaysShowTheUser": true
+    }
+}

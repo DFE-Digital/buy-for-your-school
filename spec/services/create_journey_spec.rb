@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe CreateJourney do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step"
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
     ) do
       example.run
     end
@@ -11,30 +11,79 @@ RSpec.describe CreateJourney do
 
   describe "#call" do
     it "creates a new journey" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-starting-step",
-        fixture_filename: "closed-path-with-multiple-example.json"
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
       )
-      expect { described_class.new(category: "catering").call }
+      expect { described_class.new(category_name: "catering", user: build(:user)).call }
         .to change { Journey.count }.by(1)
       expect(Journey.last.category).to eql("catering")
     end
 
-    it "stores a copy of the Liquid template" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-starting-step",
-        fixture_filename: "closed-path-with-multiple-example.json"
+    it "associates the new journey with the given user" do
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
       )
-      fake_liquid_template = File.read("#{Rails.root}/spec/fixtures/specification_templates/basic_catering.liquid")
-      finder = instance_double(FindLiquidTemplate)
-      allow(FindLiquidTemplate).to receive(:new).with(category: "catering")
-        .and_return(finder)
-      allow(finder).to receive(:call).and_return(fake_liquid_template)
+      user = create(:user)
 
-      described_class.new(category: "catering").call
+      described_class.new(category_name: "catering", user: user).call
+
+      expect(Journey.last.user).to eq(user)
+    end
+
+    it "stores a copy of the Liquid template" do
+      stub_contentful_category(
+        fixture_filename: "category-with-liquid-template.json"
+      )
+
+      described_class.new(category_name: "catering", user: build(:user)).call
 
       expect(Journey.last.liquid_template)
-        .to eql("<article id=\"specification\">\n  {% if answer_contentful-starting-step %}\n    <section>\n      <p class=\"govuk-body\">I'm the first article and should be seen</p>\n    </section>\n  {% endif %}\n</article>\n")
+        .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
+    end
+
+    it "stores the section grouping on the journey in the expected order" do
+      stub_contentful_category(
+        fixture_filename: "multiple-sections-and-steps.json"
+      )
+
+      described_class.new(category_name: "catering", user: build(:user)).call
+
+      journey = Journey.last
+
+      expect(journey.reload.section_groups).to eq([
+        {
+          "order" => 0,
+          "title" => "Section A",
+          "steps" => [
+            {"contentful_id" => "radio-question", "order" => 0},
+            {"contentful_id" => "single-date-question", "order" => 1}
+          ]
+        },
+        {
+          "order" => 1,
+          "title" => "Section B",
+          "steps" => [
+            {"contentful_id" => "long-text-question", "order" => 0},
+            {"contentful_id" => "short-text-question", "order" => 1}
+          ]
+        }
+      ])
+    end
+
+    context "when the journey cannot be saved" do
+      it "raises an error" do
+        stub_contentful_category(
+          fixture_filename: "category-with-liquid-template.json",
+          stub_sections: true,
+          stub_steps: false
+        )
+
+        # Force a validation error by not providing a category_name
+        expect { described_class.new(category_name: nil, user: build(:user)).call }
+          .to raise_error(ActiveRecord::RecordInvalid)
+      end
     end
   end
 end

@@ -8,6 +8,8 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require "./lib/dfe_sign_in"
+
 module BuyForYourSchool
   class Application < Rails::Application
     config.generators do |g|
@@ -40,5 +42,9 @@ module BuyForYourSchool
     end
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.default_locale = :en
+    config.i18n.enforce_available_locales = false
   end
 end

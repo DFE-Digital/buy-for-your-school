@@ -1,0 +1,43 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "radio-section",
+        "type": "Entry",
+        "createdAt": "2021-02-01T10:47:10.257Z",
+        "updatedAt": "2021-02-01T10:47:10.257Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "section"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "title": "Section A",
+        "steps": [
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "radio-question"
+                }
+            }
+        ]
+    }
+}

@@ -6,6 +6,56 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-006] - 2021-04-01
+
+- specification templates are now sourced from the Contentful Category entry
+- refactor how we find all journey answers into isolated service
+- users are now told how they can resume a journey, and an address is provided for this
+- robots.txt now excludes all journey and step pages
+- steps/questions/tasks in the task lists are now grouped by Contentful Section entries
+- start page now has revised copy with details on eligibility and what to expect
+- The journey map is now clearer about what happens when you click a link
+- The journey map now includes links to preview a step
+- The journey map now displays markup to include a step's answer in the specification template
+- users can answer questions which expect a number
+- checkbox questions no longer alter the capitalisation of options
+- fix ordering of section and step items
+- users can answer questions which expect a currency
+- questions can be hidden from view
+- specification warning if there are incomplete tasks
+- hidden questions can be shown through a new show_additional_question field for each question
+- hidden questions can be rehidden again after changing the original answer
+- hidden questions that were at one point answered, will be reshown with a change to an earlier question
+- fix Redis connection errors on Heroku
+- users can be asked extended checkbox questions which ask for further information
+- markdown in help text fields is now parsed into HTML
+- show and hide more than one additional question at a time
+- users can be presenting with forking/branching question chains based on any one answer
+- create an extended further information text box option for radio answers
+- create extended further information text box option for checkbox answers
+- radio questions can be configured with an "or" separator
+- specification can show further information for radio answers
+- specification can show further information for checkbox answers
+- checkbox answers can be completed without choosing a given answer
+- fix planning page link back to the service
+- checkbox answers are not automatically joined by commas for the specification
+- answer data is all available through the single `answer_x` convention, this has replaced `extended_answer_x` which has now been removed
+- checkbox answers that are skipped can be identified in the specification
+- fix branching so multiple rules can show the same question
+- the specification lives on it's own page, separate to the task list
+- fix checkbox questions where further information couldn't be saved for an option that included a special character
+- further information for options that include special characters is now available to the specification
+- incomplete specification documents include a warning within the document as well as the file name
+- users return to the same place in the task list after answering a question
+- fix extended radio questions so that further_information can be remembered when it can be provided through multiple fields
+- flash messages can be shown in notification banners
+- fix checkbox answer to save choices after previously skipping
+- users can sign in using DfE Sign-in
+- users can sign out using DfE Sign-in
+- add new dashboard page with the ability to create new specifications
+- users can only see their past journeys from the dashboard
+- new API endpoint to allow Contentful to invalidate cached entries, allowing caching to stay on which prevents the app from being very slow/crashing on journey start
+
 ## [release-005] - 2021-1-19
 
 - users can see an initial slice of their specification as HTML at the end of their journey
@@ -50,20 +100,21 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [release-001] - 2020-11-12
 
 - address rails-template TODO
-- any user can see a start page for the planning journey
+- any user can see a start page for the specifying journey
 - use GOV.UK Frontend framework
-- users can see a basic form to start the planning journey sourced by a
+- users can see a basic form to start the specifying journey sourced by a
 Contentful fixture
-- planning form is styled as a GOV.UK form
+- specifying form is styled as a GOV.UK form
 - validate that an answer is provided to a question
-- the first planning question comes directly from Contentful
+- the first specifying question comes directly from Contentful
 - handle the exceptional case when a Contentful entry is missing
 - multiple radio questions can be answered in sequence
 - users can be asked to answer a short text question
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...HEAD
+[release-006]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...release-006
 [release-005]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...release-005
 [release-004]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...release-004
 [release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003

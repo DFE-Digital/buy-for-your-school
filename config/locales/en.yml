@@ -6,7 +6,9 @@ en:
       default: "%-d %b %Y"
   generic:
     button:
-      start: "Continue"
+      back: "Back"
+      start: "Start"
+      sign_out: "Sign out"
       next: "Continue"
       change_answer: "Change"
       update: "Update"
@@ -19,32 +21,75 @@ en:
       message: "This environment is only for previewing Contentful changes before publishing."
   planning:
     start_page:
-      page_title: "Identify the level of support you need for what you're buying"
-      overview_title: "Overview"
+      page_title: "Catering services"
+  specifying:
+    start_page:
+      page_title: Create a specification to procure a catering service for your school
       overview_body:
-        - "Get the right level of support you need to buy goods and services for your school."
-        - "By telling us about your experience and confidence levels in buying the goods or service, we will tailor the guidance that will be shown to you on screen."
-        - "More guidance will be shown if you need more support. For experienced buyers, the guidance will be hidden, but will be accessible to you within each page if you need it."
-      before_you_start_title: "Before you start"
-      before_you_start_list_title: "Consider:"
-      before_you_start_list_items:
-        - any previous experience in buying the goods or services you need
-        - your level of understanding of the procurement process
-        - your school's procurement policy
-        - support you have access to in your school
-        - information on the current contract
-      before_you_start_body: "It will take around 3 minutes to complete the process"
+        - Use this service to create a specification for a new catering service for a single school in England.
+      who_for_title: Who this service is for
+      who_for_can_use_body: "You can use this service if you:"
+      who_for_can_use_list:
+        - are responsible for <a href="/planning" class="govuk-link">procuring a new catering service for a school</a>
+        - are procuring for one school – either a local authority maintained school or an academy in a single or multi-academy trust
+        - intend to run your own procurement process or choose a supplier from a framework – read more about the different procurement routes you can take
+      who_for_cannot_use_body: "You currently cannot use this service to create a specification for any of the following:"
+      who_for_cannot_use_list:
+        - any other service outside of catering
+        - goods, supplies or equipment only
+        - multiple schools at the same time
+      how_service_works_title: How this service works
+      how_service_works_document_body: "Use this service to create a document that:"
+      how_service_works_document_list:
+        - describes the service your school is looking for
+        - collates all the information that any suppliers interested in your contract need to know
+        - includes all the standard regulations and requirements that school catering suppliers must comply with – we’ll add these automatically for you, you do not need to know what these are
+      how_service_works_themes_body: "We’ll guide you through a series of questions about your school and your requirements, including specific questions around the following themes:"
+      how_service_works_themes_list:
+        - any mission statement, food policy or goals your school has that are relevant to the new service
+        - any objectives you may have relating to social value
+        - any requirements you may have relating to management of the contract, operational overheads and staff
+        - the dates, types, times and customer numbers of existing catering services
+        - any requirements for the food served, as well as ordering and payment systems
+        - the catering spaces and equipment available to a supplier in your school
+      pause_and_resume_body: You can pause and resume your specification at any time.
     errors:
       contentful_entry_not_found: "An unexpected error occurred. The starting step has been revoked by the content team."
   journey:
+    index:
+      existing:
+        header: "Existing specifications"
     specification:
       header: "Your specification"
+      warning: "You have not completed all the tasks. There may be information missing from your specification."
+      button: "View your specification"
+      download:
+        warning:
+          incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
+  specification:
+  dashboard:
+    header: "Specifications dashboard"
+    create:
+      header: "Create a new specification"
+      body: "Create a new specification for a catering procurement."
+      link: "Create a new specification"
+    existing:
+      header: "Existing specifications"
+      body: "Continue with a draft specification, and review completed specifications."
+      link: "Existing specifications"
   task_list:
     status:
       not_started: Not started
       completed: Completed
   journey_map:
     page_title: "Contentful entry map"
+    edit_step_link_text: "Edit step in Contentful"
+    preview_step_link_text: "Preview step in service"
+    spec_template_tag_title: "Specification tag"
+  resume:
+    notification:
+      title: "Returning to this specification"
+      body: "You can return to this page to make changes or view your specification at any time, either by bookmarking this page in your browser or by making a note of the following address:"
   errors:
     contentful_entry_not_found:
       page_title: "An unexpected error occurred"
@@ -58,9 +103,10 @@ en:
     repeat_step_in_the_contentful_journey:
       page_title: "An unexpected error occurred"
       page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
-    too_many_steps_in_the_contentful_journey:
-      page_title: "An unexpected error occurred"
-      page_body: "More than %{step_count} steps were found in the Contentful journey. Is the journey missing an end? The last Entry ID was: %{entry_id}"
     specification_template_invalid:
       page_title: "An unexpected error occurred"
       page_body: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."
+    sign_in:
+      unexpected_failure:
+        page_title: "An unexpected error occurred"
+        page_body: "The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly."

@@ -1,30 +1,44 @@
 class CreateJourney
-  attr_accessor :category
+  attr_accessor :category_name, :user
 
-  def initialize(category:)
-    self.category = category
+  def initialize(category_name:, user:)
+    self.category_name = category_name
+    self.user = user
   end
 
   def call
-    journey = Journey.create(
-      category: category,
-      next_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"],
-      liquid_template: liquid_template
+    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    sections = GetSectionsFromCategory.new(category: category).call
+    journey = Journey.new(
+      category: category_name,
+      liquid_template: category.specification_template,
+      user: user
     )
-    entries = GetAllContentfulEntries.new.call
-    question_entries = BuildJourneyOrder.new(
-      entries: entries.to_a,
-      starting_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"]
-    ).call
-    question_entries.each do |entry|
-      CreateJourneyStep.new(
-        journey: journey, contentful_entry: entry
-      ).call
+
+    journey.section_groups = build_section_groupings(sections: sections)
+    journey.save!
+
+    sections.each do |section|
+      question_entries = GetStepsFromSection.new(section: section).call
+      question_entries.each do |entry|
+        CreateJourneyStep.new(
+          journey: journey, contentful_entry: entry
+        ).call
+      end
     end
+
     journey
   end
 
-  private def liquid_template
-    FindLiquidTemplate.new(category: category).call
+  private def build_section_groupings(sections:)
+    sections.each_with_object([]).with_index { |(section, result), index|
+      result[index] = {
+        order: index,
+        title: section.title,
+        steps: section.steps.each_with_object([]).with_index { |(step, result), index|
+          result << {contentful_id: step.id, order: index}
+        }
+      }
+    }
   end
 end

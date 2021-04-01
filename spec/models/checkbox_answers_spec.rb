@@ -1,7 +1,10 @@
 require "rails_helper"
 
 RSpec.describe CheckboxAnswers, type: :model do
-  it { should belong_to(:step) }
+  it "should belong_to a step" do
+    association = described_class.reflect_on_association(:step)
+    expect(association.macro).to eq(:belongs_to)
+  end
 
   describe "#response" do
     it "returns an array of strings" do
@@ -11,7 +14,21 @@ RSpec.describe CheckboxAnswers, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:response) }
+    it "is not valid if there is no response" do
+      answer = build(:checkbox_answers, response: [])
+      expect(answer).not_to be_valid
+    end
+
+    context "when the step is skippable" do
+      it "does not validate the presence of the response" do
+        skippable_step = create(:step, :checkbox_answers, skip_call_to_action_text: "None of the above")
+        answer = build(:checkbox_answers, step: skippable_step, response: "", skipped: true)
+
+        answer.save
+
+        expect(answer.persisted?).to be true
+      end
+    end
   end
 
   describe "#response=" do

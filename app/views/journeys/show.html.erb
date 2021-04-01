@@ -1,30 +1,17 @@
 <%= content_for :title, @journey.category.capitalize %>
 
-<h1 class="govuk-heading-xl"><%= @journey.category.capitalize %></h1>
+<%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
+<h1 class="govuk-heading-xl"><%= I18n.t("specifying.start_page.page_title") %></h1>
+
+<%= render "resume_journey_notice" %>
+
 <ol class="app-task-list">
-  <li>
-    <ul class="app-task-list__items">
-      <% @steps.each do |step| %>
-        <% if step.question? %>
-        <li class="app-task-list__item">
-          <% if step.answer %>
-            <span class="app-task-list__task-name">
-              <%= link_to step.title, edit_journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
-            </span>
-            <strong class="govuk-tag app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.completed") %></strong>
-          <% else %>
-            <span class="app-task-list__task-name">
-              <%= link_to step.title, journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
-            </span>
-            <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
-          <% end %>
-        </li>
-        <% end %>
-      <% end %>
-    </ul>
-  </li>
+  <% section_group_with_steps(journey: @journey, steps: @step_presenters).each do |grouping| %>
+    <h2 class="app-task-list__section"><%= grouping["title"] %></h2>
+    <li>
+      <%= render "step_list", journey: @journey, steps: grouping["steps"] %>
+    </li>
+  <% end %>
 </ol>
 
-<h1 class="govuk-heading-l"><%= I18n.t("journey.specification.header") %></h1>
-<%= link_to "Download (.docx)", journey_path(@journey, format: :docx), class: "govuk-button" %>
-<%= @specification_template.render(@answers).html_safe %>
+<%= link_to I18n.t("journey.specification.button"), journey_specification_path(@journey), class: "govuk-button" %>

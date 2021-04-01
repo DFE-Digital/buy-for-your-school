@@ -1,0 +1,37 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "rwl7tyzv9sys"
+      }
+    },
+    "id": "static-content",
+    "type": "Entry",
+    "createdAt": "2020-12-02T10:48:35.748Z",
+    "updatedAt": "2020-12-02T10:48:35.748Z",
+    "environment": {
+      "sys": {
+        "id": "develop",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 1,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "staticContent"
+      }
+    },
+    "locale": "en-US"
+  },
+  "fields": {
+    "slug": "/timelines",
+    "title": "When you should start",
+    "body": "Procuring a new catering contract can take up to 6 months to consult, create, review and award. \n\nUsually existing contracts start and end in the month of September. We recommend starting this process around March.",
+    "type": "paragraphs"
+  }
+}

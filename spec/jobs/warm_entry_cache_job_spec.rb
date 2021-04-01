@@ -3,12 +3,14 @@ require "rails_helper"
 RSpec.describe WarmEntryCacheJob, type: :job do
   include ActiveJob::TestHelper
 
-  before(:each) { ActiveJob::Base.queue_adapter = :test }
+  before(:each) do
+    ActiveJob::Base.queue_adapter = :test
+  end
   after(:each) { RedisCache.redis.flushdb }
 
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_PLANNING_START_ENTRY_ID: "contentful-starting-step",
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
       CONTENTFUL_ENTRY_CACHING: "true"
     ) do
       example.run
@@ -23,34 +25,32 @@ RSpec.describe WarmEntryCacheJob, type: :job do
     end
 
     it "asks GetAllContentfulEntries for the Contentful entries" do
-      stub_get_contentful_entries(
-        entry_id: "contentful-starting-step",
-        fixture_filename: "multiple-entries-example.json"
-      )
+      stub_contentful_category(fixture_filename: "journey-with-multiple-entries.json")
 
       described_class.perform_later
       perform_enqueued_jobs
 
-      expect(RedisCache.redis.get("contentful:entry:contentful-starting-step"))
+      expect(RedisCache.redis.get("contentful:entry:radio-question"))
         .to eql(
-          "\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"rwl7tyzv9sys\\\"}},\\\"id\\\":\\\"contentful-starting-step\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-12-02T10:48:35.748Z\\\",\\\"updatedAt\\\":\\\"2020-12-02T10:48:35.748Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"develop\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":1,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"staticContent\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/timelines\\\",\\\"title\\\":\\\"When you should start\\\",\\\"body\\\":\\\"Procuring a new catering contract can take up to 6 months to consult, create, review and award. \\\\n\\\\nUsually existing contracts start and end in the month of September. We recommend starting this process around March.\\\",\\\"type\\\":\\\"paragraphs\\\",\\\"next\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Entry\\\",\\\"id\\\":\\\"hfjJgWRg4xiiiImwVRDtZ\\\"}}}}\""
+          "\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\""
         )
-      expect(RedisCache.redis.get("contentful:entry:hfjJgWRg4xiiiImwVRDtZ"))
-        .to eql(
-          "\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"rwl7tyzv9sys\\\"}},\\\"id\\\":\\\"hfjJgWRg4xiiiImwVRDtZ\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-11-04T12:28:30.442Z\\\",\\\"updatedAt\\\":\\\"2020-11-26T16:39:54.188Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"develop\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":6,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/dev-start-which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}]}}\""
-        )
+      expect(RedisCache.redis.get("contentful:entry:short-text-question"))
+        .not_to be_nil
+
+      expect(RedisCache.redis.get("contentful:entry:long-text-question"))
+        .not_to be_nil
     end
 
     context "when the journey order cannot be built" do
       it "does not add new items to the cache" do
-        allow_any_instance_of(BuildJourneyOrder)
-          .to receive(:call)
-          .and_raise(BuildJourneyOrder::RepeatEntryDetected)
-
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "repeat-entry-example.json"
+        stub_contentful_category(
+          fixture_filename: "journey-with-multiple-entries.json",
+          stub_steps: false
         )
+
+        allow_any_instance_of(GetStepsFromSection)
+          .to receive(:call)
+          .and_raise(GetStepsFromSection::RepeatEntryDetected)
 
         described_class.perform_later
         perform_enqueued_jobs
@@ -61,14 +61,14 @@ RSpec.describe WarmEntryCacheJob, type: :job do
       it "extends the TTL on all existing items by 24 hours" do
         RedisCache.redis.set("contentful:entry:contentful-starting-step", "\"{\\}\"")
 
-        allow_any_instance_of(BuildJourneyOrder)
-          .to receive(:call)
-          .and_raise(BuildJourneyOrder::RepeatEntryDetected)
-
-        stub_get_contentful_entries(
-          entry_id: "contentful-starting-step",
-          fixture_filename: "repeat-entry-example.json"
+        stub_contentful_category(
+          fixture_filename: "journey-with-multiple-entries.json",
+          stub_steps: false
         )
+
+        allow_any_instance_of(GetStepsFromSection)
+          .to receive(:call)
+          .and_raise(GetStepsFromSection::RepeatEntryDetected)
 
         freeze_time do
           ttl_extension = 60 * 60 * 24

@@ -1,15 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "Entry previews", type: :request do
+  before { user_is_signed_in }
+
   it "creates a dummy journey and redirects to the question creation flow" do
     entry_id = "123"
     fake_journey = create(:journey)
     expect(Journey).to receive(:create)
-      .with(category: anything)
+      .with(category: anything, user: anything, liquid_template: anything)
       .and_return(fake_journey)
 
     fake_get_contentful_entry = instance_double(Contentful::Entry)
-    allow_any_instance_of(GetContentfulEntry).to receive(:call)
+    allow_any_instance_of(GetEntry).to receive(:call)
       .and_return(fake_get_contentful_entry)
 
     fake_step = create(:step, :radio)

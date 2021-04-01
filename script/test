@@ -6,3 +6,4 @@
 set -e
 
 bundle exec rake
+bundle exec brakeman -o /dev/stdout

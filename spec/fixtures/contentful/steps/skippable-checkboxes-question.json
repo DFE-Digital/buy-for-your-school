@@ -1,0 +1,43 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "skippable-checkboxes-question",
+        "type": "Entry",
+        "createdAt": "2020-12-09T11:53:52.744Z",
+        "updatedAt": "2020-12-09T11:53:52.744Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/everyday-services",
+        "type": "checkboxes",
+        "title": "Everyday services that are required and need to be considered",
+        "extendedOptions": [
+          { "value": "Breakfast" },
+          { "value": "Morning break" },
+          { "value": "Lunch" },
+          { "value": "Dinner" }
+        ],
+        "skipCallToAction": "None of the above"
+    }
+}

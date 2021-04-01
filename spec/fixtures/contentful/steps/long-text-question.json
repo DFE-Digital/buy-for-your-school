@@ -1,0 +1,44 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "rwl7tyzv9sys"
+            }
+        },
+        "id": "long-text-question",
+        "type": "Entry",
+        "createdAt": "2020-11-11T11:26:20.994Z",
+        "updatedAt": "2020-11-11T11:26:20.994Z",
+        "environment": {
+            "sys": {
+                "id": "develop",
+                "type": "Link",
+                "linkType": "Environment"
+            }
+        },
+        "revision": 1,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "question"
+            }
+        },
+        "locale": "en-US"
+    },
+    "fields": {
+        "slug": "/describe-what-you-need",
+        "title": "Describe what you need",
+        "helpText": "Briefly describe what you are looking to procure from your supplier.",
+        "type": "long text",
+        "next": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "contentful-single-date-question"
+            }
+          }
+    }
+}

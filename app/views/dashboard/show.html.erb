@@ -1,0 +1,26 @@
+<%= content_for :title, I18n.t("dashboard.header") %>
+<%= link_to I18n.t("generic.button.back"), root_path, class: "govuk-back-link" %>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
+      <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
+      <ul class="govuk-list">
+        <li><%= link_to I18n.t("dashboard.existing.link"), journeys_path, class: "govuk-link" %></li>
+      </ul>
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
+      <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
+      <ul class="govuk-list">
+        <li><a href="start_new-specification" class="govuk-link"><%= link_to I18n.t("dashboard.create.link"), new_journey_path, class: "govuk-link" %></a></li>
+      </ul>
+  </div>
+
+  </div>

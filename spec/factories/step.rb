@@ -2,8 +2,12 @@ FactoryBot.define do
   factory :step do
     title { "What is your favourite colour?" }
     help_text { "Choose the primary colour closest to your choice" }
-    raw { {"sys": {"id" => "123"}} }
-    contentful_id { "123" }
+    contentful_id { SecureRandom.hex }
+    raw { |attrs| {"sys": {"id" => attrs["contentful_id"]}} }
+    hidden { false }
+    additional_step_rules { nil }
+    primary_call_to_action_text { nil }
+    skip_call_to_action_text { nil }
 
     association :journey, factory: :journey
 
@@ -11,35 +15,42 @@ FactoryBot.define do
       options { [{"value" => "Red"}, {"value" => "Green"}, {"value" => "Blue"}] }
       contentful_model { "question" }
       contentful_type { "radios" }
-      association :radio_answer
     end
 
     trait :short_text do
       options { nil }
       contentful_model { "question" }
       contentful_type { "short_text" }
-      association :short_text_answer
     end
 
     trait :long_text do
       options { nil }
       contentful_model { "question" }
       contentful_type { "long_text" }
-      association :long_text_answer
     end
 
     trait :single_date do
       options { nil }
       contentful_model { "question" }
       contentful_type { "single_date" }
-      association :single_date_answer
     end
 
     trait :checkbox_answers do
       options { [{"value" => "Brown"}, {"value" => "Gold"}] }
       contentful_model { "question" }
       contentful_type { "checkboxes" }
-      association :checkbox_answers
+    end
+
+    trait :number do
+      options { nil }
+      contentful_model { "question" }
+      contentful_type { "number" }
+    end
+
+    trait :currency do
+      options { nil }
+      contentful_model { "question" }
+      contentful_type { "currency" }
     end
 
     trait :static_content do

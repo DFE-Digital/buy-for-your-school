@@ -11,6 +11,8 @@ class CreateJourneyStep
     paragraphs
     single_date
     checkboxes
+    number
+    currency
   ].freeze
 
   attr_accessor :journey, :contentful_entry
@@ -30,7 +32,7 @@ class CreateJourneyStep
       raise UnexpectedContentfulStepType
     end
 
-    step = Step.create(
+    Step.create(
       title: title,
       help_text: help_text,
       body: body,
@@ -39,13 +41,12 @@ class CreateJourneyStep
       contentful_type: step_type,
       options: options,
       primary_call_to_action_text: primary_call_to_action_text,
+      skip_call_to_action_text: skip_call_to_action_text,
+      hidden: hidden,
+      additional_step_rules: additional_step_rules,
       raw: raw,
       journey: journey
     )
-
-    journey.update(next_entry_id: next_entry_id)
-
-    step
   end
 
   private
@@ -102,13 +103,24 @@ class CreateJourneyStep
     contentful_entry.primary_call_to_action
   end
 
-  def raw
-    contentful_entry.raw
+  def skip_call_to_action_text
+    return nil unless contentful_entry.respond_to?(:skip_call_to_action)
+    contentful_entry.skip_call_to_action
   end
 
-  def next_entry_id
-    return nil unless contentful_entry.respond_to?(:next)
-    contentful_entry.next.id
+  def hidden
+    return false unless contentful_entry.respond_to?(:always_show_the_user)
+    return false if contentful_entry.always_show_the_user.nil?
+    !contentful_entry.always_show_the_user
+  end
+
+  def additional_step_rules
+    return nil unless contentful_entry.respond_to?(:show_additional_question)
+    contentful_entry.show_additional_question
+  end
+
+  def raw
+    contentful_entry.raw
   end
 
   def send_rollbar_warning

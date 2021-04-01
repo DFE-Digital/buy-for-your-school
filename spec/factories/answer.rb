@@ -27,6 +27,19 @@ FactoryBot.define do
   factory :checkbox_answers do
     association :step, factory: :step, options: [{"value" => "Breakfast"}, {"value" => "Lunch"}], contentful_type: "checkboxes", contentful_model: "question"
 
-    response { ["breakfast", "lunch", ""] }
+    response { ["Breakfast", "Lunch", ""] }
+    skipped { false }
+  end
+
+  factory :number_answer do
+    association :step, factory: :step, contentful_type: "number", contentful_model: "question"
+
+    response { 150 }
+  end
+
+  factory :currency_answer do
+    association :step, factory: :step, contentful_type: "currency", contentful_model: "question"
+
+    response { 1000.01 }
   end
 end

@@ -5,16 +5,15 @@ class WarmEntryCacheJob < ApplicationJob
   sidekiq_options retry: 5
 
   def perform
-    entries = BuildJourneyOrder.new(
-      entries: GetAllContentfulEntries.new.call,
-      starting_entry_id: ENV["CONTENTFUL_PLANNING_START_ENTRY_ID"]
-    ).call
+    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    sections = GetSectionsFromCategory.new(category: category).call
+    steps = sections.map { |section| GetStepsFromSection.new(section: section).call }
 
-    entries.each do |entry|
+    # TODO: Cache category and sections too
+    [steps].flatten.each do |entry|
       store_in_cache(cache: cache, key: "contentful:entry:#{entry.id}", entry: entry)
     end
-  rescue BuildJourneyOrder::RepeatEntryDetected,
-    BuildJourneyOrder::TooManyChainedEntriesDetected
+  rescue GetStepsFromSection::RepeatEntryDetected
     cache.extend_ttl_on_all_entries
   end
 

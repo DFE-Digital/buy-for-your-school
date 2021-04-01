@@ -51,6 +51,7 @@
           <a class="govuk-header__link govuk-header__link--service-name" href="/">
             <%= I18n.t("app.name") %>
           </a>
+          <%= render "layouts/navigation_links" %>
         </div>
       </div>
     </header>
@@ -67,6 +68,7 @@
         </p>
       </div>
       <main class="govuk-main-wrapper " id="main-content" role="main">
+        <%= render partial: "layouts/messages" %>
         <%= yield %>
       </main>
     </div>

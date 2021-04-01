@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_123111) do
+ActiveRecord::Schema.define(version: 2021_03_25_145645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,15 +22,27 @@ ActiveRecord::Schema.define(version: 2021_01_18_123111) do
     t.string "response", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "further_information"
+    t.boolean "skipped", default: false
     t.index ["step_id"], name: "index_checkbox_answers_on_step_id"
+  end
+
+  create_table "currency_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "step_id"
+    t.decimal "response", precision: 11, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id"], name: "index_currency_answers_on_step_id"
   end
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "next_entry_id"
-    t.jsonb "liquid_template"
+    t.jsonb "liquid_template", null: false
+    t.jsonb "section_groups"
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_journeys_on_user_id"
   end
 
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -41,12 +53,20 @@ ActiveRecord::Schema.define(version: 2021_01_18_123111) do
     t.index ["step_id"], name: "index_long_text_answers_on_step_id"
   end
 
+  create_table "number_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "step_id"
+    t.integer "response", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["step_id"], name: "index_number_answers_on_step_id"
+  end
+
   create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.string "response", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "further_information"
+    t.jsonb "further_information"
     t.index ["step_id"], name: "index_radio_answers_on_step_id"
   end
 
@@ -79,7 +99,16 @@ ActiveRecord::Schema.define(version: 2021_01_18_123111) do
     t.string "contentful_id", null: false
     t.jsonb "raw", null: false
     t.jsonb "options"
+    t.boolean "hidden", default: false
+    t.jsonb "additional_step_rules"
+    t.string "skip_call_to_action_text"
     t.index ["journey_id"], name: "index_steps_on_journey_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "dfe_sign_in_uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade

@@ -1,7 +1,12 @@
 class Preview::EntriesController < ApplicationController
   def show
-    @journey = Journey.create(category: "catering")
-    contentful_entry = GetContentfulEntry.new(entry_id: entry_id).call
+    @journey = Journey.create(
+      category: "catering",
+      user: current_user,
+      liquid_template: "<p>N/A</p>"
+    )
+
+    contentful_entry = GetEntry.new(entry_id: entry_id).call
     @step = CreateJourneyStep.new(
       journey: @journey, contentful_entry: contentful_entry
     ).call

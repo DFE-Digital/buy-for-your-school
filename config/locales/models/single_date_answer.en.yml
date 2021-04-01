@@ -1,0 +1,8 @@
+---
+en:
+  activerecord:
+    errors:
+      models:
+        single_date_answer:
+          attributes:
+            response: Provide a real date for this answer

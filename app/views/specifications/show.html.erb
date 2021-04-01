@@ -1,0 +1,15 @@
+<%= content_for :title, @journey.category.capitalize %>
+<%= link_to I18n.t("generic.button.back"), journey_path(@journey), class: "govuk-back-link" %>
+
+<h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.header") %></h1>
+<% unless @journey.all_steps_completed? %>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      <%= I18n.t("journey.specification.warning") %>
+    </strong>
+  </div>
+<% end %>
+<%= link_to "Download (.docx)", journey_specification_path(@journey, format: :docx), class: "govuk-button" %>
+<%= @specification_html.html_safe %>
