@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-006] - 2021-04-01
+
 - specification templates are now sourced from the Contentful Category entry
 - refactor how we find all journey answers into isolated service
 - users are now told how they can resume a journey, and an address is provided for this
@@ -111,7 +113,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...HEAD
+[release-006]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...release-006
 [release-005]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...release-005
 [release-004]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...release-004
 [release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003
