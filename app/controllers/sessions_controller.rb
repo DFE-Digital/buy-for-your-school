@@ -4,11 +4,6 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
   protect_from_forgery except: :bypass_callback
 
-  def new
-    # This is defined by the class name of our Omniauth strategy
-    redirect_to "/auth/dfe"
-  end
-
   def create
     UserSession.new(session: session)
       .persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
