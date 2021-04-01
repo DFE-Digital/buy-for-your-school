@@ -16,4 +16,7 @@ resource "cloudfoundry_app" "web_app" {
   routes {
     route = cloudfoundry_route.shared_route.id
   }
+  routes {
+    route = cloudfoundry_route.custom_route.id
+  }
 }

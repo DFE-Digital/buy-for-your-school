@@ -6,6 +6,10 @@ data "cloudfoundry_domain" "shared" {
   name = local.shared_cloudfoundry_domain
 }
 
+data "cloudfoundry_domain" "custom" {
+  name = local.custom_cloudfoundry_domain
+}
+
 data "cloudfoundry_service" "redis" {
   name = "redis"
 }

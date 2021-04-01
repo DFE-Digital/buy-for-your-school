@@ -21,6 +21,12 @@ variable "shared_cloudfoundry_domain" {
   type        = string
 }
 
+variable "custom_cloudfoundry_domain" {
+  description = "Custom Cloud Foundry domain"
+  default     = "education.gov.uk"
+  type        = string
+}
+
 variable "redis_class" {
   description = "Redis class"
   default     = "tiny-5_x"
