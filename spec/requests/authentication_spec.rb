@@ -18,7 +18,7 @@ RSpec.describe "Authentication", type: :request do
     end
 
     it "users can access the new session endpoint" do
-      get new_dfe_path
+      post "/auth/dfe"
       expect(response).to have_http_status(:found)
     end
 
@@ -36,29 +36,29 @@ RSpec.describe "Authentication", type: :request do
   describe "Endpoints that do require authentication" do
     it "users cannot access the new journey path" do
       get new_journey_path
-      expect(response).to redirect_to(new_dfe_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "users cannot access an existing journey" do
       journey = create(:journey)
       get journey_path(journey)
-      expect(response).to redirect_to(new_dfe_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "users cannot edit an answer" do
       answer = create(:radio_answer)
       get edit_journey_step_path(answer.step.journey, answer.step)
-      expect(response).to redirect_to(new_dfe_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "users cannot see the journey map" do
       get new_journey_map_path
-      expect(response).to redirect_to(new_dfe_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "users cannot see the preview endpoints" do
       get preview_entry_path("an-entry-id")
-      expect(response).to redirect_to(new_dfe_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 

@@ -37,7 +37,7 @@
 <p class="govuk-body"><%= I18n.t("specifying.start_page.pause_and_resume_body") %></p>
 
 <% if DfESignIn.bypass? %>
-  <%= link_to "#{I18n.t("generic.button.start")} (bypass DSI)", "/auth/developer", class: "govuk-button" %>
+  <%= button_to "#{I18n.t("generic.button.start")} (bypass DSI)", "/auth/developer", class: "govuk-button" %>
 <% else %>
-  <%= link_to I18n.t("generic.button.start"), new_dfe_path, class: "govuk-button" %>
+  <%= button_to I18n.t("generic.button.start"), "/auth/dfe", class: "govuk-button" %>
 <% end %>

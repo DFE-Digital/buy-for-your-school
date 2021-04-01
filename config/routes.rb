@@ -8,12 +8,6 @@ Rails.application.routes.draw do
   post "/api/contentful/entry_updated" => "api/contentful/entries#changed"
 
   # DfE Sign In
-  resource :sessions,
-    only: %i[create new],
-    as: :dfe,
-    path: "/dfe/sessions",
-    controller: "sessions"
-
   get "/auth/dfe/callback", to: "sessions#create"
   get "/auth/dfe/signout", to: "sessions#destroy"
   get "/auth/failure", to: "sessions#failure"

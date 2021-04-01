@@ -58,7 +58,8 @@ feature "Anyone can sign in with DfE Sign-in" do
       .with("Sign in failed unexpectedly")
       .and_call_original
 
-    visit dashboard_path
+    visit root_path
+    click_button I18n.t("generic.button.start")
 
     expect(page).to have_content(I18n.t("errors.sign_in.unexpected_failure.page_title"))
     expect(page).to have_content(I18n.t("errors.sign_in.unexpected_failure.page_body"))
