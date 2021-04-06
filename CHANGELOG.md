@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - prevent concurrent sign ins
 
+- Create Task model; fetch tasks from Contentful and create them in the
+  database.
+
 ## [release-009] - 2021-05-21
 
 - fix multiple specification fields
