@@ -22,14 +22,17 @@ class CreateJourney
 
     contentful_sections.each do |contentful_section|
       CreateSection.new(journey: journey, contentful_section: contentful_section).call
-    end
 
-    contentful_sections.each do |section|
-      question_entries = GetStepsFromSection.new(section: section).call
+      question_entries = GetStepsFromSection.new(section: contentful_section).call
       question_entries.each do |entry|
         CreateJourneyStep.new(
           journey: journey, contentful_entry: entry
         ).call
+      end
+
+      tasks = GetTasksFromSection.new(section: contentful_section).call
+      tasks.each do |task|
+        CreateTask.new(section: contentful_section, contentful_task: task)
       end
     end
 
