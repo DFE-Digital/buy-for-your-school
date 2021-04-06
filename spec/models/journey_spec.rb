@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Journey, type: :model do
   it { should have_many(:steps) }
+  it { should have_many(:sections) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:category) }
