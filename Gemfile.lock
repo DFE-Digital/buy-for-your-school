@@ -176,7 +176,7 @@ GEM
     launchy (2.5.0)
       addressable (~> 2.7)
     libv8 (8.4.255.0)
-    liquid (5.0.0)
+    liquid (5.0.1)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
