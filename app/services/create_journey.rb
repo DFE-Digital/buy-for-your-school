@@ -36,6 +36,13 @@ class CreateJourney
       end
     end
 
+    contentful_sections.each do |section|
+      tasks = GetTasksFromSection.new(section: section).call
+      tasks.each do |task|
+        CreateTask.new(section: section, contentful_task: task)
+      end
+    end
+
     journey
   end
 
