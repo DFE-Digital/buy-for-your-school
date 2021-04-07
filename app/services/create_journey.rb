@@ -8,7 +8,7 @@ class CreateJourney
 
   def call
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
-    sections = GetSectionsFromCategory.new(category: category).call
+    contentful_sections = GetSectionsFromCategory.new(category: category).call
     journey = Journey.new(
       category: category_name,
       user: user,
@@ -17,10 +17,14 @@ class CreateJourney
       liquid_template: category.specification_template
     )
 
-    journey.section_groups = build_section_groupings(sections: sections)
+    journey.section_groups = build_section_groupings(sections: contentful_sections)
     journey.save!
 
-    sections.each do |section|
+    contentful_sections.each do |contentful_section|
+      CreateSection.new(journey: journey, contentful_section: contentful_section).call
+    end
+
+    contentful_sections.each do |section|
       question_entries = GetStepsFromSection.new(section: section).call
       question_entries.each do |entry|
         CreateJourneyStep.new(

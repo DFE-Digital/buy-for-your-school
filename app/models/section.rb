@@ -3,5 +3,5 @@ class Section < ApplicationRecord
   belongs_to :journey
   has_many :tasks
 
-  validates :title, presence: true
+  validates :title, :contentful_id, presence: true
 end
