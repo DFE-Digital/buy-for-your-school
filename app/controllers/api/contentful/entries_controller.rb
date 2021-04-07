@@ -1,6 +1,7 @@
 class Api::Contentful::EntriesController < ApplicationController
   skip_before_action :authenticate_user!
   http_basic_authenticate_with name: "api", password: ENV["CONTENTFUL_WEBHOOK_API_KEY"]
+  skip_before_action :verify_authenticity_token
 
   def changed
     Cache.delete(key: cache_key)
