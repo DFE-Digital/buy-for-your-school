@@ -19,6 +19,25 @@ RSpec.describe DeleteStaleJourneys do
       expect(ShortTextAnswer.count).to eq(0)
     end
 
+    it "only destroys journeys we think of as stale" do
+      stale_journey = create(:journey, started: false, last_worked_on: 2.months.ago)
+
+      about_to_become_stale_journey = create(:journey, started: false, last_worked_on: 1.month.ago)
+      recently_created_journey = create(:journey, started: false, last_worked_on: 4.days.ago)
+      recently_active_journey = create(:journey, started: true, last_worked_on: 4.days.ago)
+      old_active_journey = create(:journey, started: true, last_worked_on: 2.months.ago)
+
+      DeleteStaleJourneys.new.call
+
+      remaining_journeys = Journey.all
+      expect(remaining_journeys).not_to include(stale_journey)
+
+      expect(remaining_journeys).to include(about_to_become_stale_journey)
+      expect(remaining_journeys).to include(recently_created_journey)
+      expect(remaining_journeys).to include(recently_active_journey)
+      expect(remaining_journeys).to include(old_active_journey)
+    end
+
     context "when the journey is marked as started" do
       it "is not destroyed regardless of last_worked_on" do
         legacy_journey_with_no_activity = create(:journey, started: true, last_worked_on: nil)
