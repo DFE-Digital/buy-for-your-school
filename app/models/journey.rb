@@ -13,6 +13,7 @@ class Journey < ApplicationRecord
 
   def freshen!
     attributes = {}
+    attributes[:last_worked_on] = Time.zone.now
     attributes[:started] = true unless started == true
 
     update(attributes)

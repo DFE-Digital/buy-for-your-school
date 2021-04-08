@@ -13,6 +13,7 @@ class CreateJourney
       category: category_name,
       user: user,
       started: true,
+      last_worked_on: Time.zone.now,
       liquid_template: category.specification_template
     )
 

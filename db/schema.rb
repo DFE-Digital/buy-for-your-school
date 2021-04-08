@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 2021_04_01_100528) do
     t.index ["user_id"], name: "index_journeys_on_user_id"
     t.boolean "started", default: true
     t.index ["started"], name: "index_journeys_on_started"
+    t.datetime "last_worked_on"
+    t.index ["last_worked_on"], name: "index_journeys_on_last_worked_on"
   end
 
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
