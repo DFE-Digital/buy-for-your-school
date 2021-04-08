@@ -54,4 +54,9 @@ feature "Users can see a start page for planning their purchase" do
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
   end
+
+  scenario "the start page has the right content headers" do
+    visit root_path
+    expect(page).to have_xpath("//meta[@name=\"robots\" and contains(@content, \"noindex,nofollow\")]", visible: false)
+  end
 end

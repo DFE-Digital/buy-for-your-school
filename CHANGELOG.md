@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- Add `noindex,nofollow` meta tag to all pages, as per Gov.UK guidance
+
 ## [release-006] - 2021-04-01
 
 - specification templates are now sourced from the Contentful Category entry
