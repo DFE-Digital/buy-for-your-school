@@ -13,7 +13,7 @@ class Journey < ApplicationRecord
 
   def freshen!
     attributes = {}
-    attributes[:stale] = false unless stale == false
+    attributes[:started] = true unless started == true
 
     update(attributes)
   end
