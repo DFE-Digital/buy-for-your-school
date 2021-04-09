@@ -75,9 +75,22 @@ RSpec.describe SaveAnswer do
         step = create(:step, :radio, journey: journey)
         answer = create(:short_text_answer, step: step)
 
-        _result = described_class.new(answer: answer).call(answer_params: {})
+        _result = described_class.new(answer: answer).call(params: {})
 
         expect(journey.reload.started).to eq(true)
+      end
+    end
+
+    context "when the answer includes script characters" do
+      it "removes them from the answer that is then saved" do
+        answer = create(:short_text_answer)
+        params = ActionController::Parameters.new(response: "<script>alert('problem');</script>A little text").permit!
+
+        expect_any_instance_of(StringSanitiser).to receive(:call).and_call_original
+
+        result = described_class.new(answer: answer).call(params: params)
+
+        expect(result.object.response).to eql("A little text")
       end
     end
   end

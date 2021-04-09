@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix API auth by switching mechanism from Basic to Token
 - remove `Returning to this specification` URL from task list
 - Add Tasks to the database when iterating through Sections from Contentful
+- fix XSS vulnerability by sanitising all user answers
 
 ## [release-006] - 2021-04-01
 

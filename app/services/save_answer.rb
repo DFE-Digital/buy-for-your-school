@@ -8,7 +8,8 @@ class SaveAnswer
   def call(params:)
     result = Result.new(false, answer)
 
-    answer.assign_attributes(params.to_hash)
+    safe_params = StringSanitiser.new(args: params.to_hash).call
+    answer.assign_attributes(safe_params)
 
     if answer.valid?
       answer.save
