@@ -7,14 +7,17 @@ class WarmEntryCacheJob < ApplicationJob
   def perform
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
-    steps = sections.map { |section| GetStepsFromSection.new(section: section).call }
+    steps = begin
+      sections.map { |section| GetStepsFromSection.new(section: section).call }
+    rescue GetStepsFromSection::RepeatEntryDetected
+      cache.extend_ttl_on_all_entries
+      return
+    end
 
     # TODO: Cache category and sections too
     [steps].flatten.each do |entry|
       store_in_cache(cache: cache, key: "contentful:entry:#{entry.id}", entry: entry)
     end
-  rescue GetStepsFromSection::RepeatEntryDetected
-    cache.extend_ttl_on_all_entries
   end
 
   private
