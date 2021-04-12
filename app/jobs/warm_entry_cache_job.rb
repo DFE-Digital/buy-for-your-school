@@ -5,6 +5,8 @@ class WarmEntryCacheJob < ApplicationJob
   sidekiq_options retry: 5
 
   def perform
+    Rollbar.info("Cache warming task started…")
+
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
     steps = begin
@@ -18,6 +20,8 @@ class WarmEntryCacheJob < ApplicationJob
     [steps].flatten.each do |entry|
       store_in_cache(cache: cache, key: "contentful:entry:#{entry.id}", entry: entry)
     end
+
+    Rollbar.info("Cache warming task complete.")
   end
 
   private
