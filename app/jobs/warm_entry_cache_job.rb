@@ -2,7 +2,6 @@ class WarmEntryCacheJob < ApplicationJob
   include CacheableEntry
 
   queue_as :caching
-  sidekiq_options retry: 5
 
   def perform
     Rollbar.info("Cache warming task started…")
