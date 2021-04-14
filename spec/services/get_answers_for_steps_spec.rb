@@ -205,5 +205,19 @@ RSpec.describe GetAnswersForSteps do
         expect(result.keys).not_to include("answer_#{unanswerable_step.contentful_id}")
       end
     end
+
+    context "when the answer includes script characters" do
+      it "removes them  from the answer that is then saved" do
+        answer = create(:short_text_answer,
+          response: "<script>alert('problem');</script>A little text")
+
+        expect_any_instance_of(StringSanitiser).to receive(:call).and_call_original
+
+        result = described_class.new(visible_steps: [answer.step]).call
+
+        expect(result["answer_#{answer.step.contentful_id}"])
+          .to eql({"response" => "alert('problem');A little text"})
+      end
+    end
   end
 end

@@ -90,7 +90,7 @@ RSpec.describe SaveAnswer do
 
         result = described_class.new(answer: answer).call(params: params)
 
-        expect(result.object.response).to eql("A little text")
+        expect(result.object.response).to eql("alert('problem');A little text")
       end
     end
   end

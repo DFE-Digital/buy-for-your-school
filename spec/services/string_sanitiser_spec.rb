@@ -5,14 +5,20 @@ RSpec.describe StringSanitiser do
     it "strips malicious tags from every value in a hash" do
       args = {key: "<script>alert('problem');</script>Some allowed text"}
       result = described_class.new(args: args).call
-      expect(result).to eq(key: "Some allowed text")
+      expect(result).to eq(key: "alert('problem');Some allowed text")
+    end
+
+    it "doesn't strip safe tags" do
+      args = {key: "<p>paragraph</p><b>bold</b><i>italic</i>"}
+      result = described_class.new(args: args).call
+      expect(result).to eq(key: "<p>paragraph</p><b>bold</b><i>italic</i>")
     end
 
     context "when the value is an Array" do
       it "strips malicious tags from every value of the array (only going 1 level deep)" do
         args = {key: ["<script>alert('problem');</script>Some allowed text", "<a href='evil.com'>Link</a>"]}
         result = described_class.new(args: args).call
-        expect(result).to eq(key: ["Some allowed text", "Link"])
+        expect(result).to eq(key: ["alert('problem');Some allowed text", "Link"])
       end
 
       context "when the array contains non string values" do
@@ -40,7 +46,7 @@ RSpec.describe StringSanitiser do
         result = described_class.new(args: args).call
         expect(result).to eq(
           first_hash_key: {
-            second_hash_key: "2",
+            second_hash_key: "alert('problem');2",
             nested_hash: {
               third_hash_key: "Link"
             }
