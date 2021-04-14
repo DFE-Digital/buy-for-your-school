@@ -58,6 +58,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add new dashboard page with the ability to create new specifications
 - users can only see their past journeys from the dashboard
 - new API endpoint to allow Contentful to invalidate cached entries, allowing caching to stay on which prevents the app from being very slow/crashing on journey start
+- automatically delete Journey and associated records if we deem it to have become stale, to reclaim the unused database rows
 
 ## [release-005] - 2021-1-19
 

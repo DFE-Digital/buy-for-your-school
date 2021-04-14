@@ -68,5 +68,17 @@ RSpec.describe SaveAnswer do
         expect(result.success?).to eql(false)
       end
     end
+
+    context "when the associated journey is unstarted" do
+      it "updates the journey to be started" do
+        journey = create(:journey, started: false)
+        step = create(:step, :radio, journey: journey)
+        answer = create(:short_text_answer, step: step)
+
+        _result = described_class.new(answer: answer).call(answer_params: {})
+
+        expect(journey.reload.started).to eq(true)
+      end
+    end
   end
 end

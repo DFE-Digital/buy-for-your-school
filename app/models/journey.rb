@@ -10,4 +10,12 @@ class Journey < ApplicationRecord
   def all_steps_completed?
     visible_steps.all? { |step| step.answer.present? }
   end
+
+  def freshen!
+    attributes = {}
+    attributes[:last_worked_on] = Time.zone.now
+    attributes[:started] = true unless started == true
+
+    update(attributes)
+  end
 end
