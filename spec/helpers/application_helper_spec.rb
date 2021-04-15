@@ -54,4 +54,10 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe "#footer_message" do
+    it "returns the footer message by default" do
+      expect(helper.footer_message).to eq(I18n.t("banner.footer.message", support_email: ENV.fetch("SUPPORT_EMAIL")))
+    end
+  end
 end
