@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - remove `Returning to this specification` URL from task list
 - Add Tasks to the database when iterating through Sections from Contentful
 - fix XSS vulnerability by sanitising all user answers
+- support specification templates that exceed 50,000 characters in Contentful
 
 ## [release-006] - 2021-04-01
 
