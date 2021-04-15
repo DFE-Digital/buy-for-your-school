@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe SaveAnswer do
   describe "#call" do
-    it "updates the answer with the answer_params" do
+    it "updates the answer with the params" do
       answer = create(:short_text_answer)
       params = ActionController::Parameters.new(response: "A little text").permit!
 
-      result = described_class.new(answer: answer).call(answer_params: params)
+      result = described_class.new(answer: answer).call(params: params)
 
       expect(result.success?).to eql(true)
       expect(result.object.response).to eql("A little text")
@@ -19,7 +19,7 @@ RSpec.describe SaveAnswer do
       expect(ToggleAdditionalSteps).to receive(:new).with(step: answer.step).and_return(toggle_service)
       expect(toggle_service).to receive(:call)
 
-      described_class.new(answer: answer).call(answer_params: {})
+      described_class.new(answer: answer).call(params: {})
     end
 
     context "when the step is a checkbox question" do
@@ -27,7 +27,7 @@ RSpec.describe SaveAnswer do
         answer = create(:checkbox_answers)
         params = ActionController::Parameters.new(response: ["A", "B"]).permit!
 
-        result = described_class.new(answer: answer).call(further_information_params: params)
+        result = described_class.new(answer: answer).call(params: params)
 
         expect(result.success?).to eql(true)
         expect(result.object.response).to eql(["A", "B"])
@@ -40,7 +40,7 @@ RSpec.describe SaveAnswer do
         date = Date.new(2000, 1, 29)
         params = {response: date}
 
-        result = described_class.new(answer: answer).call(date_params: params)
+        result = described_class.new(answer: answer).call(params: params)
 
         expect(result.success?).to eql(true)
         expect(result.object.response).to eql(date)
@@ -54,7 +54,7 @@ RSpec.describe SaveAnswer do
         allow(answer).to receive(:valid?).and_return(false)
         expect(answer).not_to receive(:save)
 
-        described_class.new(answer: answer).call(answer_params: {})
+        described_class.new(answer: answer).call(params: {})
       end
 
       it "returns a failed result" do
@@ -63,7 +63,7 @@ RSpec.describe SaveAnswer do
 
         allow(answer).to receive(:valid?).and_return(false)
 
-        result = described_class.new(answer: answer).call(answer_params: params)
+        result = described_class.new(answer: answer).call(params: params)
 
         expect(result.success?).to eql(false)
       end
@@ -75,9 +75,22 @@ RSpec.describe SaveAnswer do
         step = create(:step, :radio, journey: journey)
         answer = create(:short_text_answer, step: step)
 
-        _result = described_class.new(answer: answer).call(answer_params: {})
+        _result = described_class.new(answer: answer).call(params: {})
 
         expect(journey.reload.started).to eq(true)
+      end
+    end
+
+    context "when the answer includes script characters" do
+      it "removes them from the answer that is then saved" do
+        answer = create(:short_text_answer)
+        params = ActionController::Parameters.new(response: "<script>alert('problem');</script>A little text").permit!
+
+        expect_any_instance_of(StringSanitiser).to receive(:call).and_call_original
+
+        result = described_class.new(answer: answer).call(params: params)
+
+        expect(result.object.response).to eql("alert('problem');A little text")
       end
     end
   end

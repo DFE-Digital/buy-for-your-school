@@ -14,11 +14,7 @@ class AnswersController < ApplicationController
     @answer = AnswerFactory.new(step: @step).call
     @answer.step = @step
 
-    result = SaveAnswer.new(answer: @answer).call(
-      further_information_params: further_information_params,
-      answer_params: answer_params,
-      date_params: date_params
-    )
+    result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
     @answer = result.object
 
     if result.success?
@@ -33,11 +29,7 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
     @step_presenter = StepPresenter.new(@step)
 
-    result = SaveAnswer.new(answer: @step.answer).call(
-      further_information_params: further_information_params,
-      answer_params: answer_params,
-      date_params: date_params
-    )
+    result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
     @answer = result.object
 
     if result.success?
@@ -55,6 +47,17 @@ class AnswersController < ApplicationController
 
   def step_id
     params[:step_id]
+  end
+
+  def prepared_params(step:)
+    case step.contentful_type
+    when "checkboxes", "radios"
+      further_information_params
+    when "single_date"
+      date_params
+    else
+      answer_params
+    end
   end
 
   def answer_params
