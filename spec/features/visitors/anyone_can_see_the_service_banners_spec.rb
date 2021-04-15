@@ -3,7 +3,8 @@ feature "Users can see the service banners" do
     visit root_path
 
     expect(page).to have_content(I18n.t("banner.beta.tag"))
-    expect(page).to have_content(I18n.t("banner.beta.message"))
+    expect(page.html).to include(I18n.t("banner.beta.message", support_email: ENV.fetch("SUPPORT_EMAIL")))
+    expect(page).to have_content(ENV["SUPPORT_EMAIL"])
   end
 
   context "when the app is configured as a Contenetful preview app" do

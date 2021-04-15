@@ -39,7 +39,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe "#banner_message" do
     it "returns the beta message by default" do
-      expect(helper.banner_message).to eq(I18n.t("banner.beta.message"))
+      expect(helper.banner_message).to eq(I18n.t("banner.beta.message", support_email: ENV.fetch("SUPPORT_EMAIL")))
     end
 
     context "when PREVIEW_APP is configured to true" do

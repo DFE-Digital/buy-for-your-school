@@ -12,6 +12,6 @@ module ApplicationHelper
 
   def banner_message
     return I18n.t("banner.preview.message") if ENV["CONTENTFUL_PREVIEW_APP"].eql?("true")
-    I18n.t("banner.beta.message")
+    I18n.t("banner.beta.message", support_email: ENV.fetch("SUPPORT_EMAIL"))
   end
 end
