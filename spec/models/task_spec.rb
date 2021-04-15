@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe Section, type: :model do
-  it { should belong_to(:journey) }
+RSpec.describe Task, type: :model do
+  it { should belong_to(:section) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:title) }

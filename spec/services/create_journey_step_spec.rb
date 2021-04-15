@@ -5,7 +5,7 @@ RSpec.describe CreateJourneyStep do
     context "when the new step is of type step" do
       it "creates a local copy of the new step" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/radio-question.json"
         )
 
@@ -64,7 +64,7 @@ RSpec.describe CreateJourneyStep do
     context "when the question is of type 'short_text'" do
       it "sets help_text and options to nil" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
@@ -75,7 +75,7 @@ RSpec.describe CreateJourneyStep do
 
       it "replaces spaces with underscores" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
@@ -88,7 +88,7 @@ RSpec.describe CreateJourneyStep do
     context "when the new entry has a body field" do
       it "updates the step with the body" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/static-content.json"
         )
 
@@ -106,7 +106,7 @@ process around March.")
     context "when the new entry has a 'primaryCallToAction' field" do
       it "updates the step with the body" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/primary-button.json"
         )
 
@@ -121,7 +121,7 @@ process around March.")
     context "when no 'primaryCallToAction' is provided" do
       it "default copy is used for the button" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/no-primary-button.json"
         )
 
@@ -136,7 +136,7 @@ process around March.")
     context "when no 'skipCallToAction' is provided" do
       it "default copy is used for the button" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/skippable-checkboxes-question.json"
         )
 
@@ -151,7 +151,7 @@ process around March.")
     context "when no 'alwaysShowTheUser' is provided" do
       it "default hidden to true" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/no-hidden-field.json"
         )
 
@@ -166,7 +166,7 @@ process around March.")
     context "when 'showAdditionalQuestion' is provided" do
       it "stores the rule as JSON" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/show-one-additional-question.json"
         )
 
@@ -186,7 +186,7 @@ process around March.")
     context "when the new entry has an unexpected content model" do
       it "raises an error" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
@@ -197,7 +197,7 @@ process around March.")
       it "raises a rollbar event" do
         journey = create(:journey, :catering)
 
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
@@ -220,7 +220,7 @@ process around March.")
     context "when the new step has an unexpected step type" do
       it "raises an error" do
         journey = create(:journey, :catering)
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
@@ -231,7 +231,7 @@ process around March.")
       it "raises a rollbar event" do
         journey = create(:journey, :catering)
 
-        fake_entry = fake_contentful_step(
+        fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
