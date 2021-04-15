@@ -3,5 +3,7 @@ class DeleteStaleJourneysJob < ApplicationJob
 
   def perform
     DeleteStaleJourneys.new.call
+
+    Rollbar.info("Delete stale journeys task complete.")
   end
 end
