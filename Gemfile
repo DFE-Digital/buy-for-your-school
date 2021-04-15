@@ -8,7 +8,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "climate_control"
 gem "coffee-rails", "~> 5.0"
 gem "contentful", "~> 2.16"
-gem "govuk_design_system_formbuilder", "~> 2.4"
+gem "govuk_design_system_formbuilder", "~> 2.5"
 gem "high_voltage"
 gem "htmltoword"
 gem "jbuilder", "~> 2.11"
