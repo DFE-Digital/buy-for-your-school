@@ -4,8 +4,6 @@ class WarmEntryCacheJob < ApplicationJob
   queue_as :caching
 
   def perform
-    Rollbar.info("Cache warming task started…")
-
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
     steps = begin
