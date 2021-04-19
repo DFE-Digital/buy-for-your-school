@@ -12,7 +12,7 @@ then
 fi
 
 # Set env_TF_VAR_ environment variables from GITHUB_SECRETS_JSON
-eval $(echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith($e + "_TF_VAR_") ) ) | keys[] as $k | "export \($k[($e + "_" | length):])=\(.[$k])"')
+eval $(echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith($e + "_TF_VAR_") ) ) | keys[] as $k | "export TF_VAR_\($k[($e + "_TF_VAR_" | length):] | ascii_downcase)=\(.[$k])"')
 
 # Disable the shellcheck check for unassigned variables. We export this var
 # in Github Actions, but Shellcheck complains because there are lowercase
