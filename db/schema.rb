@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_111600) do
+ActiveRecord::Schema.define(version: 2021_04_19_082411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -42,11 +42,11 @@ ActiveRecord::Schema.define(version: 2021_04_07_111600) do
     t.jsonb "liquid_template", null: false
     t.jsonb "section_groups"
     t.uuid "user_id"
-    t.index ["user_id"], name: "index_journeys_on_user_id"
     t.boolean "started", default: true
-    t.index ["started"], name: "index_journeys_on_started"
     t.datetime "last_worked_on"
     t.index ["last_worked_on"], name: "index_journeys_on_last_worked_on"
+    t.index ["started"], name: "index_journeys_on_started"
+    t.index ["user_id"], name: "index_journeys_on_user_id"
   end
 
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -115,7 +115,9 @@ ActiveRecord::Schema.define(version: 2021_04_07_111600) do
     t.boolean "hidden", default: false
     t.jsonb "additional_step_rules"
     t.string "skip_call_to_action_text"
+    t.string "task_id"
     t.index ["journey_id"], name: "index_steps_on_journey_id"
+    t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

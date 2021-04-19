@@ -1,6 +1,7 @@
 class Step < ApplicationRecord
   self.implicit_order_column = "created_at"
   belongs_to :journey
+  belongs_to :task, optional: true
 
   has_one :radio_answer
   has_one :short_text_answer

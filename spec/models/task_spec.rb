@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Task, type: :model do
   it { should belong_to(:section) }
+  it { should have_many(:steps) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:title) }
