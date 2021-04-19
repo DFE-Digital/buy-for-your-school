@@ -10,6 +10,7 @@ FactoryBot.define do
     skip_call_to_action_text { nil }
 
     association :journey, factory: :journey
+    association :task, factory: :task
 
     trait :radio do
       options { [{"value" => "Red"}, {"value" => "Green"}, {"value" => "Blue"}] }
