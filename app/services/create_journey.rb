@@ -50,7 +50,7 @@ class CreateJourney
         end
       end
     end
-    
+
     journey
   end
 

@@ -109,6 +109,25 @@ module ContentfulHelpers
     end
   end
 
+  def stub_contentful_task_steps(
+    tasks:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    tasks.each do |task|
+      fake_steps = task.steps.map { |step|
+        fake_step = fake_contentful_step_or_task(contentful_fixture_filename: "steps/#{step.id}.json")
+        expect(contentful_connector).to receive(:get_entry_by_id)
+          .with(fake_step.id)
+          .and_return(fake_step)
+        fake_step
+      }
+      allow(task).to receive(:steps).and_return(fake_steps)
+    end
+  end
+
   def stub_contentful_connector
     contentful_connector = instance_double(ContentfulConnector)
     expect(ContentfulConnector).to receive(:new)
