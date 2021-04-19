@@ -27,6 +27,8 @@ locals {
     local.app_env,
   )
 
+  syslog_drain_url = var.syslog_drain_url
+
   web_app_docker_image               = var.docker_image
   web_app_instances                  = var.web_app_instances
   web_app_disk_quota                 = var.web_app_disk_quota
