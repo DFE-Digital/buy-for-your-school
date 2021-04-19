@@ -32,6 +32,27 @@ RSpec.describe CreateJourney do
       expect(Journey.last.user).to eq(user)
     end
 
+    it "sets started to true (until questions have been answered)" do
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
+      )
+      described_class.new(category_name: "catering", user: build(:user)).call
+      expect(Journey.last.started).to eq(true)
+    end
+
+    it "sets last_worked_on to now" do
+      travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
+      stub_contentful_category(
+        fixture_filename: "category-with-no-steps.json",
+        stub_steps: false
+      )
+
+      described_class.new(category_name: "catering", user: build(:user)).call
+
+      expect(Journey.last.last_worked_on).to eq(Time.zone.now)
+    end
+
     it "stores a copy of the Liquid template" do
       stub_contentful_category(
         fixture_filename: "category-with-liquid-template.json"

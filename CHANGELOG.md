@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-007] - 2021-05-19
+
+- Add `noindex,nofollow` meta tag to all pages, as per Gov.UK guidance
+- fix API auth by switching mechanism from Basic to Token
+- remove `Returning to this specification` URL from task list
+- Add Tasks to the database when iterating through Sections from Contentful
+- fix XSS vulnerability by sanitising all user answers
+
 ## [release-006] - 2021-04-01
 
 - specification templates are now sourced from the Contentful Category entry
@@ -55,6 +63,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add new dashboard page with the ability to create new specifications
 - users can only see their past journeys from the dashboard
 - new API endpoint to allow Contentful to invalidate cached entries, allowing caching to stay on which prevents the app from being very slow/crashing on journey start
+- automatically delete Journey and associated records if we deem it to have become stale, to reclaim the unused database rows
 
 ## [release-005] - 2021-1-19
 
@@ -113,7 +122,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-007...HEAD
+[release-007]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...release-007
 [release-006]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...release-006
 [release-005]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-004...release-005
 [release-004]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-003...release-004

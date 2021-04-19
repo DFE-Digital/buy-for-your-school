@@ -7,8 +7,8 @@ ruby "2.6.6"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "climate_control"
 gem "coffee-rails", "~> 5.0"
-gem "contentful", "~> 2.15"
-gem "govuk_design_system_formbuilder", "~> 2.2"
+gem "contentful", "~> 2.16"
+gem "govuk_design_system_formbuilder", "~> 2.5"
 gem "high_voltage"
 gem "htmltoword"
 gem "jbuilder", "~> 2.11"
@@ -33,7 +33,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 
 group :development do
-  gem "listen", ">= 3.0.5", "< 3.5"
+  gem "listen", ">= 3.0.5", "< 3.6"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"

@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Journey, type: :model do
   it { should have_many(:steps) }
+  it { should have_many(:sections) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:category) }
@@ -61,6 +62,31 @@ RSpec.describe Journey, type: :model do
         _hidden_step_without_an_answer = create(:step, :radio, journey: journey, hidden: true)
 
         expect(journey.all_steps_completed?).to be true
+      end
+    end
+  end
+
+  describe "freshen!" do
+    it "set started to true" do
+      journey = build(:journey, :catering)
+      journey.freshen!
+      expect(journey.reload.started).to eq(true)
+    end
+
+    it "sets the last_worked_on to now" do
+      travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
+      journey = build(:journey, :catering)
+
+      journey.freshen!
+
+      expect(journey.last_worked_on).to eq(Time.zone.now)
+    end
+
+    context "when started is already true" do
+      it "does not update the record" do
+        journey = build(:journey, :catering, started: true)
+        expect(journey).not_to receive(:update).with(started: true)
+        journey.freshen!
       end
     end
   end

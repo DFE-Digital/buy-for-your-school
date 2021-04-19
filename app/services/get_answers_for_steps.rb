@@ -23,7 +23,9 @@ class GetAnswersForSteps
       else raise UnexpectedAnswer.new("Trying to present an unknown type of answer: #{step.answer.class.name}")
       end
 
-      hash["answer_#{step.contentful_id}"] = answer.to_param.with_indifferent_access
+      safe_answer = StringSanitiser.new(args: answer.to_param).call
+
+      hash["answer_#{step.contentful_id}"] = safe_answer.with_indifferent_access
     }
   end
 end

@@ -20,8 +20,9 @@ RSpec.describe "Cache invalidation", type: :request do
       }
     }
 
-    headers = {"HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic
-      .encode_credentials("api", ENV["CONTENTFUL_WEBHOOK_API_KEY"])}
+    credentials = ActionController::HttpAuthentication::Token
+      .encode_credentials(ENV["CONTENTFUL_WEBHOOK_API_KEY"])
+    headers = {"AUTHORIZATION" => credentials}
 
     post "/api/contentful/entry_updated", {
       params: fake_contentful_webook_payload,
@@ -45,9 +46,13 @@ RSpec.describe "Cache invalidation", type: :request do
         }
       }
 
-      # No basic auth
+      credentials = ActionController::HttpAuthentication::Token
+        .encode_credentials("an invalid token!")
+      headers = {"AUTHORIZATION" => credentials}
+
       post "/api/contentful/entry_updated",
         params: fake_contentful_webook_payload,
+        headers: headers,
         as: :json
 
       expect(response).to have_http_status(:unauthorized)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_145645) do
+ActiveRecord::Schema.define(version: 2021_04_07_111600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,6 +43,10 @@ ActiveRecord::Schema.define(version: 2021_03_25_145645) do
     t.jsonb "section_groups"
     t.uuid "user_id"
     t.index ["user_id"], name: "index_journeys_on_user_id"
+    t.boolean "started", default: true
+    t.index ["started"], name: "index_journeys_on_started"
+    t.datetime "last_worked_on"
+    t.index ["last_worked_on"], name: "index_journeys_on_last_worked_on"
   end
 
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -68,6 +72,15 @@ ActiveRecord::Schema.define(version: 2021_03_25_145645) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "further_information"
     t.index ["step_id"], name: "index_radio_answers_on_step_id"
+  end
+
+  create_table "sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "journey_id"
+    t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "contentful_id"
+    t.index ["journey_id"], name: "index_sections_on_journey_id"
   end
 
   create_table "short_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -103,6 +116,15 @@ ActiveRecord::Schema.define(version: 2021_03_25_145645) do
     t.jsonb "additional_step_rules"
     t.string "skip_call_to_action_text"
     t.index ["journey_id"], name: "index_steps_on_journey_id"
+  end
+
+  create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "section_id"
+    t.string "title", null: false
+    t.string "contentful_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["section_id"], name: "index_tasks_on_section_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

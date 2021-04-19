@@ -1,4 +1,6 @@
 class Preview::EntriesController < ApplicationController
+  before_action :check_app_is_running_in_preview_env
+
   def show
     @journey = Journey.create(
       category: "catering",
@@ -18,5 +20,10 @@ class Preview::EntriesController < ApplicationController
 
   def entry_id
     params[:id]
+  end
+
+  def check_app_is_running_in_preview_env
+    return if ENV["CONTENTFUL_PREVIEW_APP"].eql?("true")
+    render file: "public/404.html", status: :not_found, layout: false
   end
 end

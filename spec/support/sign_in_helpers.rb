@@ -14,7 +14,7 @@ module SignInHelpers
 
   def user_starts_the_journey
     visit root_path
-    click_link I18n.t("generic.button.start")
+    click_button I18n.t("generic.button.start")
     click_link I18n.t("dashboard.create.link")
   end
 
