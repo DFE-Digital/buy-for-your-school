@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- auto deploy research and preview environments
+
 ## [release-007] - 2021-05-19
 
 - Add `noindex,nofollow` meta tag to all pages, as per Gov.UK guidance
