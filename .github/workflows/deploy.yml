@@ -50,6 +50,12 @@ jobs:
         run: |
           script/deploy-terraform
         if: github.ref == 'refs/heads/develop'
+      - name: Deploy terraform to research
+        env:
+          TF_VAR_environment: "research"
+        run: |
+          script/deploy-terraform
+        if: github.ref == 'refs/heads/research'
       - name: Deploy terraform to prod
         env:
           TF_VAR_environment: "prod"
