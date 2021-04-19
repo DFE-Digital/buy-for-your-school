@@ -5,11 +5,14 @@ RSpec.describe CreateJourneyStep do
     context "when the new step is of type step" do
       it "creates a local copy of the new step" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/radio-question.json"
         )
 
-        step = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        step = described_class.new(task: task, contentful_entry: fake_entry).call
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
@@ -64,22 +67,28 @@ RSpec.describe CreateJourneyStep do
     context "when the question is of type 'short_text'" do
       it "sets help_text and options to nil" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
-        step = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        step = described_class.new(task: task, contentful_entry: fake_entry).call
 
         expect(step.options).to eq(nil)
       end
 
       it "replaces spaces with underscores" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
-        step = described_class.new(journey: journey, contentful_entry: fake_entry).call
+        step = described_class.new(task: task, contentful_entry: fake_entry).call
 
         expect(step.contentful_type).to eq("short_text")
       end
@@ -88,12 +97,15 @@ RSpec.describe CreateJourneyStep do
     context "when the new entry has a body field" do
       it "updates the step with the body" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/static-content.json"
         )
 
         step, _answer = described_class.new(
-          journey: journey, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry
         ).call
 
         expect(step.body).to eq("Procuring a new catering contract can \
@@ -106,12 +118,15 @@ process around March.")
     context "when the new entry has a 'primaryCallToAction' field" do
       it "updates the step with the body" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/primary-button.json"
         )
 
         step, _answer = described_class.new(
-          journey: journey, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry
         ).call
 
         expect(step.primary_call_to_action_text).to eq("Go onwards!")
@@ -121,12 +136,15 @@ process around March.")
     context "when no 'primaryCallToAction' is provided" do
       it "default copy is used for the button" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/no-primary-button.json"
         )
 
         step, _answer = described_class.new(
-          journey: journey, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry
         ).call
 
         expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
@@ -136,12 +154,15 @@ process around March.")
     context "when no 'skipCallToAction' is provided" do
       it "default copy is used for the button" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/skippable-checkboxes-question.json"
         )
 
         step, _answer = described_class.new(
-          journey: journey, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry
         ).call
 
         expect(step.skip_call_to_action_text).to eq("None of the above")
@@ -151,12 +172,15 @@ process around March.")
     context "when no 'alwaysShowTheUser' is provided" do
       it "default hidden to true" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/no-hidden-field.json"
         )
 
         step, _answer = described_class.new(
-          journey: journey, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry
         ).call
 
         expect(step.hidden).to eq(false)
@@ -166,12 +190,15 @@ process around March.")
     context "when 'showAdditionalQuestion' is provided" do
       it "stores the rule as JSON" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/show-one-additional-question.json"
         )
 
         step, _answer = described_class.new(
-          journey: journey, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry
         ).call
 
         expect(step.additional_step_rules).to eql([
@@ -186,16 +213,21 @@ process around March.")
     context "when the new entry has an unexpected content model" do
       it "raises an error" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
-        expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
+        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
       end
 
       it "raises a rollbar event" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
 
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
@@ -212,7 +244,7 @@ process around March.")
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
             allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
+        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
       end
     end
@@ -220,16 +252,21 @@ process around March.")
     context "when the new step has an unexpected step type" do
       it "raises an error" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
+
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
-        expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
+        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
       end
 
       it "raises a rollbar event" do
         journey = create(:journey, :catering)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
 
         fake_entry = fake_contentful_step_or_task(
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
@@ -246,7 +283,7 @@ process around March.")
             allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
             allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(journey: journey, contentful_entry: fake_entry).call }
+        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
           .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
       end
     end

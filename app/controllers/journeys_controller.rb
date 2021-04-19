@@ -7,7 +7,7 @@ class JourneysController < ApplicationController
     render "errors/specification_template_invalid", status: 500, locals: {error: exception}
   end
 
-  rescue_from CreateJourneyStep::UnexpectedContentfulModel do |exception|
+  rescue_from CreateJourneyStep::UnexpectedContentfulModel, CreateTask::UnexpectedContentfulModel do |exception|
     render "errors/unexpected_contentful_model", status: 500
   end
 

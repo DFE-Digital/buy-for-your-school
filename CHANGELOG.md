@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - Create Task model; fetch tasks from Contentful and create them in the
   database.
+- Break direct association between Journey and Steps. Create new association
+  between Tasks and Steps.
 
 ## [release-009] - 2021-05-21
 

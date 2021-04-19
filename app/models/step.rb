@@ -1,6 +1,6 @@
 class Step < ApplicationRecord
   self.implicit_order_column = "created_at"
-  belongs_to :journey
+  belongs_to :task
 
   has_one :radio_answer
   has_one :short_text_answer
@@ -32,5 +32,9 @@ class Step < ApplicationRecord
 
   def skippable?
     skip_call_to_action_text.present?
+  end
+
+  def journey
+    task.section.journey
   end
 end
