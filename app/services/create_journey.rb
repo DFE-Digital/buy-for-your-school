@@ -21,25 +21,33 @@ class CreateJourney
     journey.save!
 
     contentful_sections.each do |contentful_section|
-      CreateSection.new(journey: journey, contentful_section: contentful_section).call
+      section = CreateSection.new(journey: journey, contentful_section: contentful_section).call
 
-      question_entries = GetStepsFromSection.new(section: contentful_section).call
-      question_entries.each do |entry|
-        CreateJourneyStep.new(
-          journey: journey, contentful_entry: entry
-        ).call
-      end
+      if contentful_section.respond_to?(:tasks) && !contentful_section.tasks.any?
+        question_entries = GetStepsFromSection.new(section: contentful_section).call
+        question_entries.each do |entry|
+          step = CreateJourneyStep.new(
+            journey: journey, contentful_entry: entry
+          ).call
+          if step
+            fake_contentful_task = OpenStruct.new(title: step.title, id: step.contentful_id)
+            task = CreateTask.new(section: section, contentful_task: fake_contentful_task).call
+            step.task = task
+            step.save
+          end
+        end
+      else
+        tasks = GetTasksFromSection.new(section: contentful_section).call
+        tasks.each do |task|
+          CreateTask.new(section: section, contentful_task: task).call
 
-      tasks = GetTasksFromSection.new(section: contentful_section).call
-      tasks.each do |task|
-        CreateTask.new(section: contentful_section, contentful_task: task)
-      end
-    end
-
-    contentful_sections.each do |section|
-      tasks = GetTasksFromSection.new(section: section).call
-      tasks.each do |task|
-        CreateTask.new(section: section, contentful_task: task)
+          question_entries = GetStepsFromTask(task: task).call
+          question_entries.each do |entry|
+            CreateJourneyStep.new(
+              journey: journey, contentful_entry: entry, task: task
+            ).call
+          end
+        end
       end
     end
 

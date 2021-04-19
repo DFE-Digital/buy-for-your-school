@@ -15,10 +15,11 @@ class CreateJourneyStep
     currency
   ].freeze
 
-  attr_accessor :journey, :contentful_entry
-  def initialize(journey:, contentful_entry:)
+  attr_accessor :journey, :contentful_entry, :task
+  def initialize(journey:, contentful_entry:, task: nil)
     self.journey = journey
     self.contentful_entry = contentful_entry
+    self.task = task
   end
 
   def call
@@ -45,7 +46,8 @@ class CreateJourneyStep
       hidden: hidden,
       additional_step_rules: additional_step_rules,
       raw: raw,
-      journey: journey
+      journey: journey,
+      task: task
     )
   end
 

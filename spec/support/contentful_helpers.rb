@@ -14,6 +14,7 @@ module ContentfulHelpers
     fixture_filename:,
     stub_sections: true,
     stub_steps: true,
+    stub_tasks: false,
     contentful_connector: instance_double(ContentfulConnector) # TODO: I suspect the double doesn't do anything and we need stub_contentful_connector
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
@@ -29,6 +30,9 @@ module ContentfulHelpers
       sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
       if stub_steps
         stub_contentful_section_steps(sections: sections, contentful_connector: contentful_connector)
+      end
+      if stub_tasks
+        stub_contentful_section_tasks(sections: sections, contentful_connector: contentful_connector)
       end
     end
 
@@ -69,6 +73,7 @@ module ContentfulHelpers
           .and_return(fake_step)
         fake_step
       }
+
       allow(section).to receive(:steps).and_return(fake_steps)
     end
   end
@@ -106,6 +111,25 @@ module ContentfulHelpers
         fake_task
       }
       allow(section).to receive(:tasks).and_return(fake_tasks)
+    end
+  end
+
+  def stub_contentful_task_steps(
+    tasks:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    tasks.each do |task|
+      fake_steps = task.steps.map { |step|
+        fake_step = fake_contentful_step_or_task(contentful_fixture_filename: "steps/#{step.id}.json")
+        expect(contentful_connector).to receive(:get_entry_by_id)
+          .with(fake_step.id)
+          .and_return(fake_step)
+        fake_step
+      }
+      allow(task).to receive(:steps).and_return(fake_steps)
     end
   end
 

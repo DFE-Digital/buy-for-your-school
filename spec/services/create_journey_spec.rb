@@ -106,5 +106,41 @@ RSpec.describe CreateJourney do
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end
+
+    context "when the journey has steps NOT nested within tasks" do
+      it "creates a task for each step and associates the step with the task" do
+        stub_contentful_category(
+          fixture_filename: "multiple-sections-and-steps.json"
+        )
+
+        described_class.new(category_name: "catering", user: build(:user)).call
+
+        expect(Section.count).to eq 2
+        expect(Task.count).to eq Step.count
+        Task.all.each do |task|
+          expect(task.steps.count).to eq 1
+          expect(task.steps.first.title).to eq task.title
+        end
+      end
+    end
+
+    context "when the journey has steps nested within tasks" do
+      it "creates the tasks, then associates the steps with the task" do
+        stub_contentful_category(
+          fixture_filename: "sections-with-tasks.json",
+          stub_sections: true,
+          stub_steps: false,
+          stub_tasks: true
+        )
+
+        described_class.new(category_name: "catering", user: build(:user)).call
+
+        task = Task.all.first
+
+        expect(Task.all.count).to eq 1
+        expect(Step.all.count).to eq 1
+        expect(Step.first.task).to eq task
+      end
+    end
   end
 end

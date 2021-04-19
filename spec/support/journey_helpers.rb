@@ -13,6 +13,17 @@ module JourneyHelpers
     user_signs_in_and_starts_the_journey
   end
 
+  def start_journey_with_tasks_from_category(category:)
+    stub_contentful_category(
+      fixture_filename: category,
+      stub_sections: true,
+      stub_steps: false,
+      stub_tasks: true
+    )
+
+    user_signs_in_and_starts_the_journey
+  end
+
   def start_journey_from_category_and_go_to_question(category:)
     start_journey_from_category(category: category)
 
