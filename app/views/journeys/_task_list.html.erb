@@ -1,0 +1,10 @@
+<ul class="app-task-list__items app-native-task-list__items">
+  <% tasks.each do |task| %>
+    <li class="app-task-list__item app-native-task-list__item" id="<%= task.id %>">
+      <span class="app-task-list__task-name">
+        <%= link_to task.title, journey_task_path(journey, task), class: "govuk-link", 'aria-describedby': task.id + "-status"%>
+      </span>
+      <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= task.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
+    </li>
+  <% end %>
+</ul>

@@ -46,7 +46,6 @@ class CreateJourneyStep
       hidden: hidden,
       additional_step_rules: additional_step_rules,
       raw: raw,
-      journey: journey,
       task: task
     )
   end

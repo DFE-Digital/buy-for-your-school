@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 2021_04_19_082411) do
   end
 
   create_table "steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "journey_id"
     t.string "title", null: false
     t.string "help_text"
     t.string "contentful_type", null: false
@@ -116,7 +115,6 @@ ActiveRecord::Schema.define(version: 2021_04_19_082411) do
     t.jsonb "additional_step_rules"
     t.string "skip_call_to_action_text"
     t.string "task_id"
-    t.index ["journey_id"], name: "index_steps_on_journey_id"
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
@@ -138,5 +136,4 @@ ActiveRecord::Schema.define(version: 2021_04_19_082411) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
-  add_foreign_key "steps", "journeys", on_delete: :cascade
 end

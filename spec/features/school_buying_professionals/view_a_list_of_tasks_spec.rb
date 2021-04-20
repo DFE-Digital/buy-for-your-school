@@ -36,6 +36,7 @@ feature "Users can view the task list" do
       stub_contentful_category(fixture_filename: "multiple-sections.json")
 
       answer = create(:short_text_answer, response: "answer")
+
       answer.step.journey.update(
         user: user,
         section_groups: [
@@ -56,6 +57,7 @@ feature "Users can view the task list" do
 
       visit journey_path(answer.step.journey)
 
+
       expect(page).to have_content(I18n.t("task_list.status.completed"))
     end
   end
@@ -66,6 +68,24 @@ feature "Users can view the task list" do
 
       expect(page).not_to have_content("You should NOT be able to see this question")
       expect(page).to have_content("You should be able to see this question")
+    end
+  end
+
+  context "When the sections & tasks are retrieved from the database (new task list process)" do
+    it "shows the section title" do
+      start_journey_with_tasks_from_category(category: "sections-with-tasks.json")
+      within(".app-task-list") do
+        expect(page).to have_content("Section with tasks")
+      end
+    end
+
+    it "shows the tasks within the section" do
+      start_journey_with_tasks_from_category(category: "sections-with-tasks.json")
+
+      within(".app-task-list") do
+        binding.pry
+        expect(page).to have_content("Task 1")
+      end
     end
   end
 end

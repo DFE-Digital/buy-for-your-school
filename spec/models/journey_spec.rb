@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Journey, type: :model do
-  it { should have_many(:steps) }
   it { should have_many(:sections) }
 
   describe "validations" do
@@ -18,11 +17,13 @@ RSpec.describe Journey, type: :model do
     context "when all steps have been completed" do
       it "returns true" do
         journey = create(:journey)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
 
-        step_1 = create(:step, :radio, journey: journey)
+        step_1 = create(:step, :radio, task: task)
         create(:radio_answer, step: step_1)
 
-        step_2 = create(:step, :radio, journey: journey)
+        step_2 = create(:step, :radio, task: task)
         create(:radio_answer, step: step_2)
 
         expect(journey.all_steps_completed?).to be true
@@ -32,8 +33,10 @@ RSpec.describe Journey, type: :model do
     context "when no steps have been completed" do
       it "returns false " do
         journey = create(:journey)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
 
-        create_list(:step, 2, :radio, journey: journey)
+        create_list(:step, 2, :radio, task: task)
 
         expect(journey.all_steps_completed?).to be false
       end
@@ -43,10 +46,10 @@ RSpec.describe Journey, type: :model do
       it "returns false" do
         journey = create(:journey)
 
-        step_1 = create(:step, :radio, journey: journey)
+        step_1 = create(:step, :radio)
         create(:radio_answer, step: step_1)
 
-        create(:step, :radio, journey: journey)
+        create(:step, :radio)
 
         expect(journey.all_steps_completed?).to be false
       end
@@ -55,11 +58,13 @@ RSpec.describe Journey, type: :model do
     context "when there are uncompleted hidden steps" do
       it "ignores them and returns true" do
         journey = create(:journey)
+        section = create(:section, journey: journey)
+        task = create(:task, section: section)
 
-        step_1 = create(:step, :radio, journey: journey)
+        step_1 = create(:step, :radio, task: task)
         create(:radio_answer, step: step_1)
 
-        _hidden_step_without_an_answer = create(:step, :radio, journey: journey, hidden: true)
+        _hidden_step_without_an_answer = create(:step, :radio, hidden: true)
 
         expect(journey.all_steps_completed?).to be true
       end

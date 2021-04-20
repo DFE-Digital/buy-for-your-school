@@ -1,5 +1,6 @@
 class DeleteStaleJourneys
   def call
+    binding.pry
     qualifying_journeys = Journey.where(started: false)
       .where("last_worked_on < ?", date_a_journey_can_be_inactive_until)
     qualifying_journeys.destroy_all

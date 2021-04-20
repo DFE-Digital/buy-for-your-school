@@ -9,7 +9,6 @@ FactoryBot.define do
     primary_call_to_action_text { nil }
     skip_call_to_action_text { nil }
 
-    association :journey, factory: :journey
     association :task, factory: :task
 
     trait :radio do

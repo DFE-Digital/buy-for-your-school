@@ -7,19 +7,7 @@ feature "Users can edit their answers" do
   before do
     journey = answer.step.journey
     journey.update(
-      user: user,
-      section_groups: [
-        {
-          "order" => 0,
-          "title" => "Section A",
-          "steps" => [
-            {
-              "contentful_id" => answer.step.contentful_id,
-              "order" => 0
-            }
-          ]
-        }
-      ]
+      user: user
     )
   end
   let(:answer) { create(:short_text_answer, response: "answer") }
@@ -28,7 +16,8 @@ feature "Users can edit their answers" do
     let(:answer) { create(:short_text_answer, response: "answer") }
 
     scenario "The edited answer is saved" do
-      visit journey_path(answer.step.journey)
+      journey = answer.step.task.section.journey
+      visit journey_path(journey)
 
       click_on(answer.step.title)
 

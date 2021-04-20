@@ -3,11 +3,49 @@
 <%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
 <h1 class="govuk-heading-xl"><%= I18n.t("specifying.start_page.page_title") %></h1>
 
+<!--<ol class="app-task-list">-->
+  <%# section_group_with_steps(journey: @journey, steps: @step_presenters).each do |grouping| %>
+<!--    <h2 class="app-task-list__section"><%#= grouping["title"] %></h2>-->
+<!--    <li>-->
+      <%#= render "step_list", journey: @journey, steps: grouping["steps"] %>
+<!--    </li>-->
+  <%# end %>
+<!--</ol>-->
+
 <ol class="app-task-list">
-  <% section_group_with_steps(journey: @journey, steps: @step_presenters).each do |grouping| %>
-    <h2 class="app-task-list__section"><%= grouping["title"] %></h2>
+  <% @sections.each do |section| %>
+    <h2 class="app-task-list__section"><%= section.title %></h2>
     <li>
-      <%= render "step_list", journey: @journey, steps: grouping["steps"] %>
+      <ul class="app-task-list__items">
+        <% section.tasks.each do |task| %>
+          <% if task&.visible_steps.count > 1 %>
+            <li class="app-task-list__item" id="<%= task.id %>">
+              <span class="app-task-list__task-name">
+                <%= link_to task.title, journey_task_path(@journey, task), class: "govuk-link", 'aria-describedby': task.id + "-status"%>
+              </span>
+              <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= task.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
+            </li>
+          <% elsif task&.visible_steps.count == 1 %>
+            <%= step = StepPresenter.new(task.visible_steps.first) %>
+            <%#= binding.pry %>
+            <% if step.question? %>
+              <li class="app-task-list__item" id="<%= step.id %>">
+                <% if step.answer %>
+                  <span class="app-task-list__task-name">
+                    <%= link_to step.title, edit_journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
+                  </span>
+                  <strong class="govuk-tag app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.completed") %></strong>
+                <% else %>
+                  <span class="app-task-list__task-name">
+                    <%= link_to step.title, journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
+                  </span>
+                  <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
     </li>
   <% end %>
 </ol>
