@@ -24,7 +24,7 @@ You must have have been given 'Space developer' access to the intended space, fo
     ```
 1. Change space
     ```
-    $ cf space <space name>
+    $ cf target -s <space name>
     ```
 1. View available services
     ```
