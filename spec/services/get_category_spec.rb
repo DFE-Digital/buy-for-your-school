@@ -70,7 +70,7 @@ RSpec.describe GetCategory do
 
         # It should leave the original fields as they were
         expect(result.specification_template).to eql("<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>")
-        expect(result.specification_template_part_2).to eql("<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>")
+        expect(result.specification_template_part2).to eql("<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>")
 
         # The result object can be asked for the combined specification template
         expect(result.combined_specification_template)

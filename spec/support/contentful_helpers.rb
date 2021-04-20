@@ -133,16 +133,16 @@ module ContentfulHelpers
     }
 
     combined_specification_template = [
-      hash_response.dig("fields", "specification_template"),
-      hash_response.dig("fields", "specification_template_part_2")
+      hash_response.dig("fields", "specificationTemplate"),
+      hash_response.dig("fields", "specificationTemplatePart2")
     ].compact.join("\n")
 
     category_double = double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       sections: sections,
-      specification_template: hash_response.dig("fields", "specification_template"),
-      specification_template_part_2: hash_response.dig("fields", "specification_template_part_2"),
+      specification_template: hash_response.dig("fields", "specificationTemplate"),
+      specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),
       combined_specification_template: combined_specification_template
     )
 
