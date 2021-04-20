@@ -59,5 +59,39 @@ RSpec.describe GetCategory do
         }.to raise_error(GetCategory::InvalidLiquidSyntax)
       end
     end
+
+    context "when there are multiple specification fields on the category (specification_template_x)" do
+      it "returns a merged and sorted set separated by newlines" do
+        stub_contentful_category(
+          fixture_filename: "multiple-specification-templates.json",
+          stub_sections: false
+        )
+        result = described_class.new(category_entry_id: "contentful-category-entry").call
+
+        # It should leave the original fields as they were
+        expect(result.specification_template).to eql("<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>")
+        expect(result.specification_template_part_2).to eql("<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>")
+
+        # The result object can be asked for the combined specification template
+        expect(result.combined_specification_template)
+          .to eql("<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>\n<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>")
+      end
+    end
+
+    context "when there are multiple specification fields on the category (specification_template_x)" do
+      it "validates both specification field inputs" do
+        stub_contentful_category(
+          fixture_filename: "multiple-specification-templates.json",
+          stub_sections: false
+        )
+
+        expect(Liquid::Template).to receive(:parse).with(
+          "<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>\n<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>",
+          error_mode: :strict
+        )
+
+        _result = described_class.new(category_entry_id: "contentful-category-entry").call
+      end
+    end
   end
 end

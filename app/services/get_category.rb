@@ -1,3 +1,7 @@
+class Contentful::Entry
+  attr_accessor :combined_specification_template
+end
+
 class GetCategory
   class InvalidLiquidSyntax < StandardError; end
 
@@ -14,8 +18,12 @@ class GetCategory
       raise
     end
 
+    # INFO: Due to a 50k character limit within Contentful we check to see if
+    # we need to combine this value from multiple fields set on a Contentful Category.
+    category.combined_specification_template = combined_specification_templates(category: category)
+
     begin
-      validate_liquid(template: category.specification_template)
+      validate_liquid(template: category.combined_specification_template)
     rescue Liquid::SyntaxError => error
       send_rollbar_error(message: "A user couldn't start a journey because of an invalid Specification", entry_id: category_entry_id)
       raise InvalidLiquidSyntax.new(message: error.message)
@@ -38,5 +46,23 @@ class GetCategory
 
   def validate_liquid(template:)
     Liquid::Template.parse(template, error_mode: :strict)
+  end
+
+  def combined_specification_templates(category:)
+    specification_template_array = []
+
+    # Allow a new `specification_template_part_x` field to be added in Contentful
+    # without requiring an additional code change.
+    all_specification_fields = (category.public_methods - Object.methods)
+      .grep(/^specification_template(_part_[0-9]+)*(?<!=)$/)
+      .sort
+
+    all_specification_fields.each do |specification_field|
+      if category.respond_to?(specification_field)
+        specification_template_array << category.send(specification_field)
+      end
+    end
+
+    specification_template_array.compact.join("\n")
   end
 end

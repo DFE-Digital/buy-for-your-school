@@ -132,12 +132,24 @@ module ContentfulHelpers
       double(id: section.dig("sys", "id"))
     }
 
-    double(
+    combined_specification_template = [
+      hash_response.dig("fields", "specification_template"),
+      hash_response.dig("fields", "specification_template_part_2")
+    ].compact.join("\n")
+
+    category_double = double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       sections: sections,
-      specification_template: hash_response.dig("fields", "specification_template")
+      specification_template: hash_response.dig("fields", "specification_template"),
+      specification_template_part_2: hash_response.dig("fields", "specification_template_part_2"),
+      combined_specification_template: combined_specification_template
     )
+
+    allow(category_double).to receive(:combined_specification_template=)
+      .with(combined_specification_template)
+
+    category_double
   end
 
   def fake_contentful_section(contentful_fixture_filename:)
