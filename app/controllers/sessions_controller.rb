@@ -5,8 +5,9 @@ class SessionsController < ApplicationController
   protect_from_forgery except: :bypass_callback
 
   def create
-    UserSession.new(session: session)
-      .persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
+    user_session = UserSession.new(session: session)
+    user_session.persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
+    user_session.invalidate_other_user_sessions(omniauth_hash: auth_hash)
 
     redirect_to dashboard_path
   end
