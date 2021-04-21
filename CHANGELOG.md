@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- fix multiple specification fields
+
 ## [release-008] - 2021-05-19
 
 - auto deploy research and preview environments

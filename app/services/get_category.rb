@@ -54,7 +54,7 @@ class GetCategory
     # Allow a new `specification_template_part_x` field to be added in Contentful
     # without requiring an additional code change.
     all_specification_fields = (category.public_methods - Object.methods)
-      .grep(/^specification_template(_part_[0-9]+)*(?<!=)$/)
+      .grep(/^specification_template(_part[0-9]+)*(?<!=)$/)
       .sort
 
     all_specification_fields.each do |specification_field|

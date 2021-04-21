@@ -42,7 +42,7 @@
                 }
             }
         ],
-        "specification_template": "<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>",
-        "specification_template_part_2": "<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>"
+        "specificationTemplate": "<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>",
+        "specificationTemplatePart2": "<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>"
     }
 }
