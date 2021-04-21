@@ -4,4 +4,8 @@ class Task < ApplicationRecord
   has_many :steps, dependent: :destroy
 
   validates :title, :contentful_id, presence: true
+
+  def visible_steps
+    steps.where(hidden: false)
+  end
 end

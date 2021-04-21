@@ -68,4 +68,58 @@ feature "Users can view the task list" do
       expect(page).to have_content("You should be able to see this question")
     end
   end
+
+  context "When the sections & tasks are retrieved from the database (new task list process)" do
+    context "When there is a task with a single step" do
+      it "shows the section title" do
+        start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+        within(".app-task-list") do
+          expect(page).to have_content("Section with a single task")
+        end
+      end
+
+      it "shows the step title, not the task title" do
+        start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+
+        within(".app-task-list") do
+          expect(page).to have_content("Everyday services that are required and need to be considered")
+          expect(page).to_not have_content("Task with a single step")
+        end
+      end
+    end
+
+    context "When there is a task with a single HIDDEN step" do
+      it "shows the section title" do
+        start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
+        within(".app-task-list") do
+          expect(page).to have_content("Section with a hidden task")
+        end
+      end
+
+      it "does not show the task nor step title" do
+        start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
+
+        within(".app-task-list") do
+          expect(page).to_not have_content("Task with a hidden step")
+        end
+      end
+    end
+
+    context "When there is a task with multiple steps" do
+      it "shows the section title" do
+        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+        within(".app-task-list") do
+          expect(page).to have_content("Section with multiple tasks")
+        end
+      end
+
+      it "shows the task titles within the section" do
+        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+        within(".app-task-list") do
+          expect(page).to have_content("Task with multiple steps")
+        end
+      end
+    end
+  end
 end

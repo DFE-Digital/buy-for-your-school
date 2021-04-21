@@ -30,16 +30,7 @@ class JourneysController < ApplicationController
 
   def show
     @journey = current_journey
-    @visible_steps = @journey.visible_steps.includes([
-      :radio_answer,
-      :short_text_answer,
-      :long_text_answer,
-      :single_date_answer,
-      :checkbox_answers,
-      :number_answer,
-      :currency_answer
-    ])
-    @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
+    @sections = @journey.sections.includes(:tasks)
   end
 
   private

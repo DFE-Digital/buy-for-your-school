@@ -8,7 +8,7 @@ RSpec.describe CreateJourneyStep do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/radio-question.json"
         )
 
@@ -70,7 +70,7 @@ RSpec.describe CreateJourneyStep do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
@@ -84,7 +84,7 @@ RSpec.describe CreateJourneyStep do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
@@ -100,7 +100,7 @@ RSpec.describe CreateJourneyStep do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/static-content.json"
         )
 
@@ -121,7 +121,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/primary-button.json"
         )
 
@@ -139,7 +139,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/no-primary-button.json"
         )
 
@@ -157,7 +157,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/skippable-checkboxes-question.json"
         )
 
@@ -175,7 +175,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/no-hidden-field.json"
         )
 
@@ -193,7 +193,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/show-one-additional-question.json"
         )
 
@@ -216,7 +216,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
@@ -229,7 +229,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
@@ -255,7 +255,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
@@ -268,7 +268,7 @@ process around March.")
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        fake_entry = fake_contentful_step_or_task(
+        fake_entry = fake_contentful_step(
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 

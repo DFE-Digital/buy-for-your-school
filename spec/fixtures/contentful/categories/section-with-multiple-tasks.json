@@ -1,7 +1,4 @@
 {
-  "metadata": {
-    "tags": []
-  },
   "sys": {
     "space": {
       "sys": {
@@ -10,10 +7,10 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "checkboxes-task",
+    "id": "contentful-category-entry",
     "type": "Entry",
-    "createdAt": "2021-04-12T09:38:48.990Z",
-    "updatedAt": "2021-04-12T10:11:05.670Z",
+    "createdAt": "2021-01-20T12:19:10.220Z",
+    "updatedAt": "2021-01-20T15:06:12.067Z",
     "environment": {
       "sys": {
         "id": "develop",
@@ -21,26 +18,27 @@
         "linkType": "Environment"
       }
     },
-    "revision": 3,
+    "revision": 2,
     "contentType": {
       "sys": {
         "type": "Link",
         "linkType": "ContentType",
-        "id": "task"
+        "id": "category"
       }
     },
     "locale": "en-US"
   },
   "fields": {
-    "title": "Task with a single step",
-    "steps": [
+    "title": "Catering",
+    "sections": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "checkboxes-question"
+          "id": "multiple-tasks-section"
         }
       }
-    ]
+    ],
+    "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
   }
 }

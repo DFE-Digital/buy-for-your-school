@@ -1,7 +1,4 @@
 {
-  "metadata": {
-    "tags": []
-  },
   "sys": {
     "space": {
       "sys": {
@@ -10,10 +7,10 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "checkboxes-task",
+    "id": "tasks-section",
     "type": "Entry",
-    "createdAt": "2021-04-12T09:38:48.990Z",
-    "updatedAt": "2021-04-12T10:11:05.670Z",
+    "createdAt": "2021-04-12T10:41:36.073Z",
+    "updatedAt": "2021-04-12T10:42:51.119Z",
     "environment": {
       "sys": {
         "id": "develop",
@@ -21,26 +18,24 @@
         "linkType": "Environment"
       }
     },
-    "revision": 3,
+    "revision": 2,
     "contentType": {
       "sys": {
         "type": "Link",
         "linkType": "ContentType",
-        "id": "task"
+        "id": "section"
       }
     },
     "locale": "en-US"
   },
   "fields": {
-    "title": "Task with a single step",
-    "steps": [
-      {
-        "sys": {
-          "type": "Link",
-          "linkType": "Entry",
-          "id": "checkboxes-question"
-        }
+    "title": "Section with a hidden task",
+    "tasks": [{
+      "sys": {
+        "type": "Link",
+        "linkType": "Entry",
+        "id": "hidden-task"
       }
-    ]
+    }]
   }
 }
