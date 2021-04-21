@@ -19,7 +19,7 @@ This service has numerous environments and each needs to be paired and configure
 |                | Enabled      | DfE Sign-in Env                                                       | DfE manage service |
 | :------------- | :----------: | :-------------------------------------------------------------------: | :----------------: |
 |  Development   |  false       |                                                                       |                    |
-|  Staging       |  true        | [test-integration](https://test-interactions.signin.education.gov.uk) | [manage](https://test-manage.signin.education.gov.uk/services/FD39DCFC-9B60-46C4-ACDC-699A2468B46F/service-configuration)
-|  Research      |  false       |                                                                       |                    |
-|  Preview       |  false       |                                                                       |                    |
-|  Production    |  false       |                                                                       |                    |
+|  Staging       |  true        | [pre-prod](https://pp-services.signin.education.gov.uk/) | [manage](https://pp-manage.signin.education.gov.uk/services/00487750-C9B8-414C-8746-1076885456E0/service-configuration)
+|  Research       | true        | [pre-prod](https://pp-services.signin.education.gov.uk/) | [manage](https://pp-manage.signin.education.gov.uk/services/00487750-C9B8-414C-8746-1076885456E0/service-configuration)
+|  Preview       |  true        | [pre-prod](https://pp-services.signin.education.gov.uk/) | [manage](https://pp-manage.signin.education.gov.uk/services/00487750-C9B8-414C-8746-1076885456E0/service-configuration)
+|  Production    |  true        | [prod](https://manage.signin.education.gov.uk)           | [manage](https://manage.signin.education.gov.uk/services/9D1B3879-3495-4D3F-AB7A-ED9B8E968EFF/service-configuration) |
