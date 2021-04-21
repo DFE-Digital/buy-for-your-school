@@ -31,6 +31,6 @@
     "fields": {
         "title": "Catering",
         "sections": [],
-        "specification_template": "<h1>{{{invalid Liquid%}}}</h1>"
+        "specificationTemplate": "<h1>{{{invalid Liquid%}}}</h1>"
     }
 }

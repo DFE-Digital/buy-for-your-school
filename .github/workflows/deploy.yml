@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - research
 
 env:
   GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}

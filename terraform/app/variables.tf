@@ -82,6 +82,10 @@ variable "docker_image" {
   type        = string
 }
 
+variable "syslog_drain_url" {
+  description = "Syslog drain URL"
+  type        = string
+}
 
 variable "web_app_instances" {
   description = "Web app instance number"

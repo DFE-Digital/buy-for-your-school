@@ -1,4 +1,7 @@
 {
+    "metadata": {
+        "tags": []
+    },
     "sys": {
         "space": {
             "sys": {
@@ -10,7 +13,7 @@
         "id": "contentful-category-entry",
         "type": "Entry",
         "createdAt": "2021-01-20T12:19:10.220Z",
-        "updatedAt": "2021-01-20T15:06:12.067Z",
+        "updatedAt": "2021-04-15T13:27:29.725Z",
         "environment": {
             "sys": {
                 "id": "develop",
@@ -18,7 +21,7 @@
                 "linkType": "Environment"
             }
         },
-        "revision": 2,
+        "revision": 78,
         "contentType": {
             "sys": {
                 "type": "Link",
@@ -31,14 +34,15 @@
     "fields": {
         "title": "Catering",
         "sections": [
-          {
-            "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "markdown-help-text-section"
+            {
+                "sys": {
+                    "type": "Link",
+                    "linkType": "Entry",
+                    "id": "radio-section"
+                }
             }
-          }
         ],
-        "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
+        "specificationTemplate": "<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>",
+        "specificationTemplatePart2": "<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>"
     }
 }

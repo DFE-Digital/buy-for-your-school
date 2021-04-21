@@ -14,7 +14,7 @@ class CreateJourney
       user: user,
       started: true,
       last_worked_on: Time.zone.now,
-      liquid_template: category.specification_template
+      liquid_template: category.combined_specification_template
     )
 
     journey.section_groups = build_section_groupings(sections: contentful_sections)

@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-009] - 2021-05-21
+
+- fix multiple specification fields
+- content security policy
+- remove humans.txt
+
 ## [release-008] - 2021-05-19
 
 - auto deploy research and preview environments
@@ -17,6 +23,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - remove `Returning to this specification` URL from task list
 - Add Tasks to the database when iterating through Sections from Contentful
 - fix XSS vulnerability by sanitising all user answers
+- support specification templates that exceed 50,000 characters in Contentful
 
 ## [release-006] - 2021-04-01
 
@@ -126,7 +133,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...HEAD
+[release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
 [release-008]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-007...release-008
 [release-007]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...release-007
 [release-006]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-005...release-006

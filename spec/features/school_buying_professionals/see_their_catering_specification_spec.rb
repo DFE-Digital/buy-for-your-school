@@ -83,4 +83,18 @@ feature "Users can see their catering specification" do
       expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
     end
   end
+
+  context "when the spec template is configured using multiple sections" do
+    it "renders both parts in the spec" do
+      start_journey_from_category_and_go_to_question(category: "multiple-specification-templates.json")
+
+      choose("Catering")
+      click_on(I18n.t("generic.button.next"))
+      click_on(I18n.t("journey.specification.button"))
+
+      expect(page).to have_content(I18n.t("journey.specification.header"))
+      expect(page).to have_content("Part 1")
+      expect(page).to have_content("Part 2")
+    end
+  end
 end
