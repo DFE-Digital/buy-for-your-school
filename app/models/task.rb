@@ -8,4 +8,8 @@ class Task < ApplicationRecord
   def visible_steps
     steps.where(hidden: false)
   end
+
+  def has_single_visible_step?
+    visible_steps.count == 1
+  end
 end

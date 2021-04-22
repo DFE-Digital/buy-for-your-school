@@ -18,4 +18,26 @@ RSpec.describe Task, type: :model do
       expect(task.visible_steps).to eq [step_1]
     end
   end
+
+  describe "#has_single_visible_step?" do
+    context "when the task has one visible step" do
+      it "returns true" do
+        task = create(:task)
+        _step_1 = create(:step, :radio, hidden: false, task: task)
+        _step_2 = create(:step, :radio, hidden: true, task: task)
+
+        expect(task.has_single_visible_step?).to be true
+      end
+    end
+
+    context "when the task has more than one visible step" do
+      it "returns true" do
+        task = create(:task)
+        _step_1 = create(:step, :radio, hidden: false, task: task)
+        _step_2 = create(:step, :radio, hidden: false, task: task)
+
+        expect(task.has_single_visible_step?).to be false
+      end
+    end
+  end
 end
