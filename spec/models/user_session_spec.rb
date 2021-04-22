@@ -129,4 +129,63 @@ RSpec.describe UserSession, type: :model do
       end
     end
   end
+
+  describe "#invalidate_other_user_sessions" do
+    after(:each) do
+      RedisSessions.redis.flushdb
+      RedisSessionLookup.redis.flushdb
+    end
+
+    let(:session) do
+      double(ActionDispatch::Request::Session, id:
+        double(Rack::Session::SessionId, private_id: "2::5347845262539"))
+    end
+
+    let(:omniauth_hash) do
+      {
+        "uid" => "123",
+        "credentials" => {
+          "id_token" => "456"
+        }
+      }
+    end
+
+    context "when no other session exists for that DfE Sign in user" do
+      it "does not delete any pre-existing session data from the Redis session store" do
+        user_session = described_class.new(session: session)
+
+        fake_session_redis = MockRedis.new
+        allow(RedisSessions).to receive(:redis).and_return(fake_session_redis)
+        expect(fake_session_redis).not_to receive(:del)
+
+        user_session.invalidate_other_user_sessions(omniauth_hash: omniauth_hash)
+      end
+
+      it "adds a new session lookup" do
+        user_session = described_class.new(session: session)
+
+        fake_session_lookup_redis = MockRedis.new
+        allow(RedisSessionLookup).to receive(:redis).and_return(fake_session_lookup_redis)
+        expect(fake_session_lookup_redis).to receive(:set).with("user_dsi_id:123", "2::5347845262539")
+
+        user_session.invalidate_other_user_sessions(omniauth_hash: omniauth_hash)
+      end
+    end
+
+    context "when a session already exists for that DfE Sign in user" do
+      it "deletes the pre-existing session data" do
+        RedisSessions.redis.set("session:2::5347845262539",
+          Marshal.dump({"_csrf_token" => "1", "dfe_sign_in_uid" => "123"}))
+        RedisSessionLookup.redis.set("user_dsi_id:123", "2::5347845262539")
+
+        user_session = described_class.new(session: session)
+
+        fake_session_redis = MockRedis.new
+        allow(RedisSessions).to receive(:redis).and_return(fake_session_redis)
+        expect(fake_session_redis).to receive(:del).with("session:2::5347845262539")
+
+        user_session.invalidate_other_user_sessions(omniauth_hash: omniauth_hash)
+      end
+    end
+  end
 end

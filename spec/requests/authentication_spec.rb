@@ -104,4 +104,36 @@ RSpec.describe "Authentication", type: :request do
       end
     end
   end
+
+  describe "Concurrent sign ins" do
+    context "when a DSI user is already signed in" do
+      after(:each) do
+        RedisSessions.redis.flushdb
+        RedisSessionLookup.redis.flushdb
+      end
+
+      before(:each) do
+        # Simulate what session_store does with a new session
+        RedisSessions.redis.set("redis:6379::2:1098345703928457320948572304",
+          Marshal.dump({"_csrf_token" => "1", "dfe_sign_in_uid" => "123"}))
+
+        # Simulate how we create a session lookup store
+        RedisSessionLookup.redis.set("user_dsi_id:123", "2::1098345703928457320948572304")
+      end
+
+      it "destroys the previous users session so they have to authenticate again" do
+        user_exists_in_dfe_sign_in(dsi_uid: "123")
+
+        mock_redis = MockRedis.new
+        allow(RedisSessions).to receive(:redis).and_return(mock_redis)
+        expect(mock_redis).to receive(:del)
+          .with("session:2::1098345703928457320948572304")
+          .and_return(0)
+
+        get auth_dfe_callback_path
+
+        expect(response).to have_http_status(:found)
+      end
+    end
+  end
 end

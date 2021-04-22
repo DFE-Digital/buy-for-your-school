@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - force SSL in production to only accept HTTPS traffic, enable HSTS and secure tower cookies
 
+- prevent concurrent sign ins
+
 ## [release-009] - 2021-05-21
 
 - fix multiple specification fields
