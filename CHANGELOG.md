@@ -15,7 +15,8 @@ The format is based on [Keep a Changelog 1.0.0].
   database.
 - Break direct association between Journey and Steps. Create new association
   between Tasks and Steps.
-- Show Tasks on Journey page; clicking on a Task name takes you to a task page.  
+- Show Tasks on Journey page; clicking on a Task name takes you to a task page. 
+- Show Steps on Task page and allow users to answer questions from Task page
 
 ## [release-009] - 2021-05-21
 

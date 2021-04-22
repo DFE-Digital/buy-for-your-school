@@ -86,6 +86,34 @@ feature "Users can view the task list" do
           expect(page).to_not have_content("Task with a single step")
         end
       end
+
+      it "has a back link on the step page that takes you to the journey page" do
+        start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+
+        within(".app-task-list") do
+          click_on "Everyday services that are required and need to be considered"
+        end
+
+        click_on "Back"
+
+        expect(page).to have_content "Section with a single task"
+      end
+
+      it "allows the user to complete the step, and returns to the journey page" do
+        start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+
+        within(".app-task-list") do
+          click_on "Everyday services that are required and need to be considered"
+        end
+
+        check "Lunch"
+        click_on "Continue"
+
+        expect(page).to have_content "Section with a single task"
+        within(".app-task-list") do
+          expect(page).to have_content("Complete")
+        end
+      end
     end
 
     context "When there is a task with a single HIDDEN step" do
