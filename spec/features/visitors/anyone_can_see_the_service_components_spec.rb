@@ -1,9 +1,10 @@
-feature "Users can see the service banners" do
+feature "Users can see the service components" do
   scenario "A beta phase banner helps set expectations of the service" do
     visit root_path
 
     expect(page).to have_content(I18n.t("banner.beta.tag"))
-    expect(page).to have_content(I18n.t("banner.beta.message"))
+    expect(page.html).to include(I18n.t("banner.beta.message", support_email: ENV.fetch("SUPPORT_EMAIL")))
+    expect(page).to have_content(ENV["SUPPORT_EMAIL"])
   end
 
   context "when the app is configured as a Contenetful preview app" do
@@ -21,5 +22,12 @@ feature "Users can see the service banners" do
       expect(page).to have_content(I18n.t("banner.preview.tag"))
       expect(page).to have_content(I18n.t("banner.preview.message"))
     end
+  end
+
+  scenario "A footer provides other information for the service" do
+    visit root_path
+
+    expect(page.html).to include(I18n.t("banner.footer.message", support_email: ENV.fetch("SUPPORT_EMAIL")))
+    expect(page).to have_content(ENV["SUPPORT_EMAIL"])
   end
 end

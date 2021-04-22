@@ -15,7 +15,11 @@ en:
   banner:
     beta:
       tag: "beta"
-      message: "This is a new service - your feedback will help us to improve it."
+      message:
+          This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
+    footer:
+      message:
+        For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
     preview:
       tag: "preview"
       message: "This environment is only for previewing Contentful changes before publishing."
