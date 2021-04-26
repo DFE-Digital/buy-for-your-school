@@ -1,4 +1,4 @@
-redis_session_uri = URI(ENV.fetch("REDIS_URL"))
+redis_session_uri = URI(ENV.fetch("REDIS_URL", "redis://localhost:6379"))
 
 BuyForYourSchool::Application.config.session_store :redis_store,
   servers: ["#{redis_session_uri}/0/session"],
