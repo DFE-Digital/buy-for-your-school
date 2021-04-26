@@ -17,3 +17,7 @@ jobs:
         run: docker-compose -f docker-compose.ci.yml build
       - name: Test
         run: docker-compose -f docker-compose.ci.yml run --rm test script/test
+      - name: Report coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: f27c74bc43e61214bd49410e3e328cdf31c7d3d07cb533aa8e4798850ad00a56
