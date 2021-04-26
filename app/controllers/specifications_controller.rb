@@ -25,10 +25,4 @@ class SpecificationsController < ApplicationController
       end
     end
   end
-
-  private
-
-  def journey_id
-    params[:journey_id]
-  end
 end

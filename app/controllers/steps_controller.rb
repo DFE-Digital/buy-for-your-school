@@ -40,8 +40,4 @@ class StepsController < ApplicationController
   def parent_task
     @step.task
   end
-
-  def journey_id
-    params[:journey_id]
-  end
 end

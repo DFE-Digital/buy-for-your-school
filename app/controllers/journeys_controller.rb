@@ -32,10 +32,4 @@ class JourneysController < ApplicationController
     @journey = current_journey
     @sections = @journey.sections.includes(:tasks)
   end
-
-  private
-
-  def journey_id
-    params[:id]
-  end
 end
