@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [Unreleased]
 
 - error pages are styled
+- document how to manage live environment variables
 
 ## [release-010] - 2021-05-27
 
