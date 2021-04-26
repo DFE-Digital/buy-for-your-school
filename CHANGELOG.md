@@ -5,18 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
+
 - add header and footer information for feedback and data requests
-
 - force SSL in production to only accept HTTPS traffic, enable HSTS and secure tower cookies
-
 - prevent concurrent sign ins
-
 - Create Task model; fetch tasks from Contentful and create them in the
   database.
 - Break direct association between Journey and Steps. Create new association
   between Tasks and Steps.
-- Show Tasks on Journey page; clicking on a Task name takes you to a task page. 
+- Show Tasks on Journey page; clicking on a Task name takes you to a task page.
 - Show Steps on Task page and allow users to answer questions from Task page
+- fix CI not running RSpec
 
 ## [release-009] - 2021-05-21
 

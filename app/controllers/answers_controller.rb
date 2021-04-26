@@ -53,10 +53,6 @@ class AnswersController < ApplicationController
     @step.task
   end
 
-  def journey_id
-    params[:journey_id]
-  end
-
   def step_id
     params[:step_id]
   end

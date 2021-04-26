@@ -1,9 +1,35 @@
 #!/bin/sh
 
-# script/server: Launch the application and any extra required processes
-#                locally.
+# script/test: Run the test suite for the application. Optionally pass in a path
+#              to an individual test file to run a single test.
 
 set -e
 
-bundle exec rake
-bundle exec brakeman -o /dev/stdout
+cd "$(dirname "$0")/.."
+
+if [ -n "$DEBUG" ]; then
+  set -x
+fi
+
+echo "==> Updating..."
+
+TEST_FILE=$1
+
+if [ -n "$TEST_FILE" ]; then
+  echo "==> Running the tests matching '$TEST_FILE'..."
+  bundle exec rspec --pattern "$TEST_FILE"
+else
+  if [ -n "$CI" ]; then
+    echo "==> Linting Ruby..."
+    bundle exec standardrb
+  else
+    echo "==> Linting Ruby in fix mode..."
+    bundle exec standardrb --fix
+  fi
+
+  echo "==> Running the tests..."
+  bundle exec rspec
+
+  echo "==> Running Brakeman"
+  bundle exec brakeman
+fi
