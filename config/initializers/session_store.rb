@@ -1,3 +1,4 @@
+# Error?
 redis_session_uri = URI(ENV.fetch("REDIS_URL"))
 
 BuyForYourSchool::Application.config.session_store :redis_store,
