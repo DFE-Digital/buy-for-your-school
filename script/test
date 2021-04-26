@@ -31,5 +31,5 @@ else
   bundle exec rspec
 
   echo "==> Running Brakeman"
-  bundle exec brakeman
+  bundle exec brakeman -o /dev/stdout
 fi
