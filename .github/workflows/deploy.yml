@@ -36,6 +36,14 @@ jobs:
         run: echo "::set-output name=value::$TF_VAR_docker_image"
       - name: Build
         run: script/docker-push-ghcr
+      - name: Notify
+        uses: 8398a7/action-slack@v3
+        if: failure()
+        with:
+          fields: workflow,job,commit,repo,ref,author,took
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy:
     needs: build
@@ -69,3 +77,11 @@ jobs:
         run: |
           script/deploy-terraform
         if: github.ref == 'refs/heads/main'
+      - name: Notify
+        uses: 8398a7/action-slack@v3
+        if: failure()
+        with:
+          fields: workflow,job,commit,repo,ref,author,took
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
