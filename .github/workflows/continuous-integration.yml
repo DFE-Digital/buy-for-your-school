@@ -17,11 +17,3 @@ jobs:
         run: docker-compose -f docker-compose.ci.yml build
       - name: Test
         run: docker-compose -f docker-compose.ci.yml run --rm test script/test
-      - name: Notify
-        uses: 8398a7/action-slack@v3
-        if: failure()
-        with:
-          fields: workflow,job,commit,repo,ref,author,took
-          status: ${{ job.status }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
