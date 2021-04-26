@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Show Tasks on Journey page; clicking on a Task name takes you to a task page.
 - Show Steps on Task page and allow users to answer questions from Task page
 - fix CI not running RSpec
+- existing specification page displays useful message when no specs exist
 
 ## [release-009] - 2021-05-21
 
