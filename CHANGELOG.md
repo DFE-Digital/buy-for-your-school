@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Show Steps on Task page and allow users to answer questions from Task page
 - fix CI not running RSpec
 - existing specification page displays useful message when no specs exist
+- fix text input field width to fit full screen width
 
 ## [release-009] - 2021-05-21
 
