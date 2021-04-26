@@ -1,6 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Authentication", type: :request do
+  after(:each) do
+    RedisSessions.redis.flushdb
+    RedisSessionLookup.redis.flushdb
+  end
+
   describe "Endpoints that don't require authentication" do
     it "the health_check endpoint is not authenticated" do
       get health_check_path
