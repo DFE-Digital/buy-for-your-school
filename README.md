@@ -23,7 +23,13 @@ in doc/architecture/decisions and contributed to with the
 
 ## Access
 
-TODO: Where can people find the service and the different environments?
+| Environment    | URL                                                            |
+| :------------- | :------------------------------------------------------------: |
+|  Development   | http://localhost:3000                                          |
+|  Research      | https://buy-for-your-school-research.london.cloudapps.digital  |
+|  Preview       | https://buy-for-your-school-preview.london.cloudapps.digital   |
+|  Staging       | https://staging-get-help-buying-for-schools.education.gov.uk   |
+|  Production    | https://get-help-buying-for-schools.education.gov.uk           |
 
 ## Source
 
