@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Step, type: :model do
-  it { should belong_to(:journey) }
+  it { should belong_to(:task) }
   it { should have_one(:radio_answer) }
   it { should have_one(:short_text_answer) }
   it { should have_one(:long_text_answer) }

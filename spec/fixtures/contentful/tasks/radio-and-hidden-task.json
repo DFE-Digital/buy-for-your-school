@@ -32,13 +32,27 @@
     "locale": "en-US"
   },
   "fields": {
-    "title": "Task with a single step",
+    "title": "Task with visible and hidden steps",
     "steps": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "checkboxes-question"
+          "id": "hidden-field"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "radio-with-separator-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "radio-question"
         }
       }
     ]

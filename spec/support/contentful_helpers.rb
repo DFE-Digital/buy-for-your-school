@@ -4,7 +4,7 @@ module ContentfulHelpers
     fixture_filename: "radio-question-example.json"
   )
     contentful_connector = stub_contentful_connector
-    contentful_response = fake_contentful_step_or_task(contentful_fixture_filename: fixture_filename)
+    contentful_response = fake_contentful_step(contentful_fixture_filename: fixture_filename)
     allow(contentful_connector).to receive(:get_entry_by_id)
       .with(entry_id)
       .and_return(contentful_response)
@@ -14,6 +14,7 @@ module ContentfulHelpers
     fixture_filename:,
     stub_sections: true,
     stub_steps: true,
+    stub_tasks: false,
     contentful_connector: instance_double(ContentfulConnector) # TODO: I suspect the double doesn't do anything and we need stub_contentful_connector
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
@@ -29,6 +30,9 @@ module ContentfulHelpers
       sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
       if stub_steps
         stub_contentful_section_steps(sections: sections, contentful_connector: contentful_connector)
+      end
+      if stub_tasks
+        stub_contentful_section_tasks(sections: sections, contentful_connector: contentful_connector)
       end
     end
 
@@ -63,7 +67,7 @@ module ContentfulHelpers
 
     sections.each do |section|
       fake_steps = section.steps.map { |step|
-        fake_step = fake_contentful_step_or_task(contentful_fixture_filename: "steps/#{step.id}.json")
+        fake_step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
         expect(contentful_connector).to receive(:get_entry_by_id)
           .with(fake_step.id)
           .and_return(fake_step)
@@ -83,7 +87,7 @@ module ContentfulHelpers
       .and_return(contentful_connector)
 
     category.steps.each do |step|
-      step = fake_contentful_step_or_task(contentful_fixture_filename: "steps/#{step.id}.json")
+      step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
       allow(contentful_connector).to receive(:get_entry_by_id)
         .with(step.id)
         .and_return(step)
@@ -99,13 +103,33 @@ module ContentfulHelpers
 
     sections.each do |section|
       fake_tasks = section.tasks.map { |task|
-        fake_task = fake_contentful_step_or_task(contentful_fixture_filename: "tasks/#{task.id}.json")
+        fake_task = fake_contentful_task(contentful_fixture_filename: "tasks/#{task.id}.json")
         expect(contentful_connector).to receive(:get_entry_by_id)
           .with(fake_task.id)
           .and_return(fake_task)
         fake_task
       }
       allow(section).to receive(:tasks).and_return(fake_tasks)
+      stub_contentful_task_steps(tasks: fake_tasks, contentful_connector: contentful_connector)
+    end
+  end
+
+  def stub_contentful_task_steps(
+    tasks:,
+    contentful_connector: instance_double(ContentfulConnector)
+  )
+    allow(ContentfulConnector).to receive(:new)
+      .and_return(contentful_connector)
+
+    tasks.each do |task|
+      fake_steps = task.steps.map { |step|
+        fake_step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
+        allow(contentful_connector).to receive(:get_entry_by_id)
+          .with(fake_step.id)
+          .and_return(fake_step)
+        fake_step
+      }
+      allow(task).to receive(:steps).and_return(fake_steps)
     end
   end
 
@@ -168,7 +192,25 @@ module ContentfulHelpers
     )
   end
 
-  def fake_contentful_step_or_task(contentful_fixture_filename:)
+  def fake_contentful_task(contentful_fixture_filename:)
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
+    hash_response = JSON.parse(raw_response)
+
+    task = double(
+      Contentful::Entry,
+      id: hash_response.dig("sys", "id"),
+      title: hash_response.dig("fields", "title"),
+      raw: hash_response,
+      content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id"))
+    )
+
+    steps = hash_response.dig("fields", "steps").map { |step_hash| double(id: step_hash.dig("sys", "id")) }
+
+    allow(task).to receive(:steps).and_return steps
+    task
+  end
+
+  def fake_contentful_step(contentful_fixture_filename:)
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 

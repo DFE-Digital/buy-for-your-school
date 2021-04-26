@@ -32,13 +32,20 @@
     "locale": "en-US"
   },
   "fields": {
-    "title": "Task with a single step",
+    "title": "Task with multiple steps",
     "steps": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
           "id": "checkboxes-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "radio-question"
         }
       }
     ]

@@ -27,8 +27,9 @@ feature "Anyone can sign in with DfE Sign-in" do
       # Undo the OmniAuth stub to check we don't require it again
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(foo: :bar)
 
-      journey = create(:journey, user: user)
-      step = create(:step, :radio, journey: journey)
+      step = create(:step, :radio)
+      journey = step.journey
+      journey.update(user: user)
       visit journey_step_path(journey, step)
       expect(page).to have_content(step.title)
     end

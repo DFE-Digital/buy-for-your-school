@@ -1,4 +1,6 @@
 class CreateTask
+  class UnexpectedContentfulModel < StandardError; end
+
   attr_accessor :section, :contentful_task
 
   def initialize(section:, contentful_task:)
@@ -8,7 +10,11 @@ class CreateTask
 
   def call
     task = Task.new(section: section, title: contentful_task.title, contentful_id: contentful_task.id)
-    task.save!
-    task
+    begin
+      task.save!
+      task
+    rescue ActiveRecord::RecordInvalid
+      raise UnexpectedContentfulModel
+    end
   end
 end

@@ -32,13 +32,13 @@
     "locale": "en-US"
   },
   "fields": {
-    "title": "Task with a single step",
+    "title": "Hidden task",
     "steps": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "checkboxes-question"
+          "id": "hidden-field"
         }
       }
     ]
