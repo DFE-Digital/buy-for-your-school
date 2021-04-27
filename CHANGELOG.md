@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - error pages are styled
 - document how to manage live environment variables
+- Update all fixtures to include tasks
 
 ## [release-010] - 2021-05-27
 

@@ -30,12 +30,12 @@
     },
     "fields": {
         "title": "Section A",
-        "steps": [
+        "tasks": [
             {
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
-                    "id": "radio-question"
+                    "id": "radio-task"
                 }
             }
         ]

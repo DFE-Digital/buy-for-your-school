@@ -30,12 +30,12 @@
     },
     "fields": {
         "title": "Section B",
-        "steps": [
+        "tasks": [
             {
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "long-text-question"
+                  "id": "long-text-task"
               }
             }
         ]

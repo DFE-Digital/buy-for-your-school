@@ -30,19 +30,19 @@
     },
     "fields": {
         "title": "Section B",
-        "steps": [
+        "tasks": [
             {
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "long-text-question"
+                  "id": "long-text-task"
               }
             },
             {
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "short-text-question"
+                  "id": "short-text-task"
               }
             }
         ]
