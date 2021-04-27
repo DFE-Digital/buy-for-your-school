@@ -6,8 +6,9 @@ RSpec.describe DeleteStaleJourneys do
 
   describe "#call" do
     it "destroys a journey and all associated records" do
-      journey = create(:journey, started: false, last_worked_on: (1.month + 1.day).ago)
-      step = create(:step, :radio, journey: journey)
+      step = create(:step, :radio)
+      journey = step.journey
+      journey.update(started: false, last_worked_on: (1.month + 1.day).ago)
       _radio_answer = create(:radio_answer, step: step)
       _short_text_answer = create(:short_text_answer, step: step)
 

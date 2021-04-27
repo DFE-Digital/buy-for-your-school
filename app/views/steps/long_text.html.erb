@@ -2,7 +2,7 @@
   <%= f.govuk_text_area :response,
     label: { text: @step_presenter.title, size: "l" },
     hint: -> { @step_presenter.help_text_html },
-    width: "one-third",
+    width: "full",
     rows: 9
   %>
 <% end %>

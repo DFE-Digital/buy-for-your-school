@@ -7,10 +7,12 @@ class Preview::EntriesController < ApplicationController
       user: current_user,
       liquid_template: "<p>N/A</p>"
     )
+    section = Section.create(title: "Preview Section", journey: @journey)
+    task = Task.create(title: "Preview Task", section: section)
 
     contentful_entry = GetEntry.new(entry_id: entry_id).call
     @step = CreateJourneyStep.new(
-      journey: @journey, contentful_entry: contentful_entry
+      task: task, contentful_entry: contentful_entry
     ).call
 
     redirect_to journey_step_path(@journey, @step)

@@ -71,8 +71,9 @@ RSpec.describe SaveAnswer do
 
     context "when the associated journey is unstarted" do
       it "updates the journey to be started" do
-        journey = create(:journey, started: false)
-        step = create(:step, :radio, journey: journey)
+        step = create(:step, :radio)
+        journey = step.journey
+        journey.update(started: false)
         answer = create(:short_text_answer, step: step)
 
         _result = described_class.new(answer: answer).call(params: {})

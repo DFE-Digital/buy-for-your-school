@@ -32,13 +32,13 @@
     "locale": "en-US"
   },
   "fields": {
-    "name": "Task 1",
+    "title": "Task with a single step",
     "steps": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "1DqhwF2XkJJ0Um6NSweWlZ"
+          "id": "checkboxes-question"
         }
       }
     ]

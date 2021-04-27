@@ -5,15 +5,7 @@ class SpecificationsController < ApplicationController
 
   def show
     @journey = current_journey
-    @visible_steps = @journey.visible_steps.includes([
-      :radio_answer,
-      :short_text_answer,
-      :long_text_answer,
-      :single_date_answer,
-      :checkbox_answers,
-      :number_answer,
-      :currency_answer
-    ])
+    @visible_steps = @journey.visible_steps
     @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
     specification_renderer = SpecificationRenderer.new(
@@ -32,11 +24,5 @@ class SpecificationsController < ApplicationController
         render docx: file_name, content: document_html
       end
     end
-  end
-
-  private
-
-  def journey_id
-    params[:journey_id]
   end
 end

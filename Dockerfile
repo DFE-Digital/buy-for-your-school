@@ -44,6 +44,7 @@ COPY lib ${INSTALL_PATH}/lib
 COPY config ${INSTALL_PATH}/config
 COPY db ${INSTALL_PATH}/db
 COPY script ${INSTALL_PATH}/script
+COPY spec ${INSTALL_PATH}/spec
 COPY app ${INSTALL_PATH}/app
 # End
 

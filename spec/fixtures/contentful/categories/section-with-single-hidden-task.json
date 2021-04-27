@@ -7,10 +7,10 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "tasks-section",
+    "id": "contentful-category-entry",
     "type": "Entry",
-    "createdAt": "2021-04-12T10:41:36.073Z",
-    "updatedAt": "2021-04-12T10:42:51.119Z",
+    "createdAt": "2021-01-20T12:19:10.220Z",
+    "updatedAt": "2021-01-20T15:06:12.067Z",
     "environment": {
       "sys": {
         "id": "develop",
@@ -23,19 +23,22 @@
       "sys": {
         "type": "Link",
         "linkType": "ContentType",
-        "id": "section"
+        "id": "category"
       }
     },
     "locale": "en-US"
   },
   "fields": {
-    "title": "Section with tasks",
-    "tasks": [{
-      "sys": {
-        "type": "Link",
-        "linkType": "Entry",
-        "id": "checkboxes-task"
+    "title": "Catering",
+    "sections": [
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "hidden-task-section"
+        }
       }
-    }]
+    ],
+    "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
   }
 }

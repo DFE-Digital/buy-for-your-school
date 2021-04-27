@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-010] - 2021-05-27
+
+- add header and footer information for feedback and data requests
+- force SSL in production to only accept HTTPS traffic, enable HSTS and secure tower cookies
+- prevent concurrent sign ins
+- Create Task model; fetch tasks from Contentful and create them in the
+  database.
+- Break direct association between Journey and Steps. Create new association
+  between Tasks and Steps.
+- Show Tasks on Journey page; clicking on a Task name takes you to a task page.
+- Show Steps on Task page and allow users to answer questions from Task page
+- fix CI not running RSpec
+- existing specification page displays useful message when no specs exist
+- fix text input field width to fit full screen width
+- document where to find the service in the readme
+
 ## [release-009] - 2021-05-21
 
 - fix multiple specification fields
@@ -133,7 +149,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...HEAD
+[release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
 [release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
 [release-008]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-007...release-008
 [release-007]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...release-007

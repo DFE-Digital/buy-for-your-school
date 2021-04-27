@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :steps, only: [:new, :show, :edit] do
       resources :answers, only: [:create, :update]
     end
+    resources :tasks, only: [:show]
   end
 
   namespace :preview do

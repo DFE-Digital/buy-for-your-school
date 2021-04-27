@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     return if current_user
 
     session.delete(:dfe_sign_in_uid)
-    redirect_to root_path
+    redirect_to root_path, notice: "You've been signed out."
   end
 
   def current_journey

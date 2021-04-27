@@ -33,6 +33,16 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content("15 February 2021")
   end
 
+  scenario "when a user has no specifications a message is shown" do
+    user = create(:user)
+    user_is_signed_in(user: user)
+
+    visit journeys_path
+
+    expect(page).to have_content(I18n.t("journey.index.existing.empty"))
+    expect(page).to have_content(I18n.t("dashboard.create.link"))
+  end
+
   scenario "user can start a new specification" do
     stub_contentful_category(fixture_filename: "radio-question.json")
 

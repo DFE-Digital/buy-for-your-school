@@ -18,7 +18,11 @@ class AnswersController < ApplicationController
     @answer = result.object
 
     if result.success?
-      redirect_to journey_path(@journey, anchor: @step.id)
+      if parent_task.has_single_visible_step?
+        redirect_to journey_path(@journey, anchor: @step.id)
+      else
+        redirect_to journey_task_path(@journey, parent_task)
+      end
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
     end
@@ -33,7 +37,11 @@ class AnswersController < ApplicationController
     @answer = result.object
 
     if result.success?
-      redirect_to journey_path(@journey, anchor: @step.id)
+      if parent_task.has_single_visible_step?
+        redirect_to journey_path(@journey, anchor: @step.id)
+      else
+        redirect_to journey_task_path(@journey, parent_task)
+      end
     else
       render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}
     end
@@ -41,8 +49,8 @@ class AnswersController < ApplicationController
 
   private
 
-  def journey_id
-    params[:journey_id]
+  def parent_task
+    @step.task
   end
 
   def step_id

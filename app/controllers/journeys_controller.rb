@@ -7,7 +7,7 @@ class JourneysController < ApplicationController
     render "errors/specification_template_invalid", status: 500, locals: {error: exception}
   end
 
-  rescue_from CreateJourneyStep::UnexpectedContentfulModel do |exception|
+  rescue_from CreateJourneyStep::UnexpectedContentfulModel, CreateTask::UnexpectedContentfulModel do |exception|
     render "errors/unexpected_contentful_model", status: 500
   end
 
@@ -30,21 +30,6 @@ class JourneysController < ApplicationController
 
   def show
     @journey = current_journey
-    @visible_steps = @journey.visible_steps.includes([
-      :radio_answer,
-      :short_text_answer,
-      :long_text_answer,
-      :single_date_answer,
-      :checkbox_answers,
-      :number_answer,
-      :currency_answer
-    ])
-    @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
-  end
-
-  private
-
-  def journey_id
-    params[:id]
+    @sections = @journey.sections.includes(:tasks)
   end
 end

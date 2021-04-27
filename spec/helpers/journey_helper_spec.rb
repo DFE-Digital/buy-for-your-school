@@ -3,10 +3,12 @@ require "rails_helper"
 RSpec.describe JourneyHelper, type: :helper do
   describe "#section_group_with_steps" do
     it "returns an ordered array of steps" do
-      journey = create(:journey, section_groups: "", steps: [])
-      step_1 = StepPresenter.new(create(:step, :radio, journey: journey))
-      step_2 = StepPresenter.new(create(:step, :long_text, journey: journey))
-      step_3 = StepPresenter.new(create(:step, :short_text, journey: journey))
+      journey = create(:journey, section_groups: "")
+      section = create(:section, journey: journey)
+      task = create(:task, section: section)
+      step_1 = StepPresenter.new(create(:step, :radio, task: task))
+      step_2 = StepPresenter.new(create(:step, :long_text, task: task))
+      step_3 = StepPresenter.new(create(:step, :short_text, task: task))
 
       section_groups = [
         {
@@ -47,11 +49,13 @@ RSpec.describe JourneyHelper, type: :helper do
 
   context "when the ordering we want does not match the order saved in the database" do
     it "the ordering defined by 'order' is preserved" do
-      journey = create(:journey, section_groups: "", steps: [])
-      step_1 = StepPresenter.new(create(:step, :radio, title: "First question", journey: journey))
-      step_2 = StepPresenter.new(create(:step, :long_text, title: "Second question", journey: journey))
-      step_3 = StepPresenter.new(create(:step, :short_text, title: "Third question", journey: journey))
-      step_4 = StepPresenter.new(create(:step, :short_text, title: "Fourth question", journey: journey))
+      journey = create(:journey, section_groups: "")
+      section = create(:section, journey: journey)
+      task = create(:task, section: section)
+      step_1 = StepPresenter.new(create(:step, :radio, title: "First question", task: task))
+      step_2 = StepPresenter.new(create(:step, :long_text, title: "Second question", task: task))
+      step_3 = StepPresenter.new(create(:step, :short_text, title: "Third question", task: task))
+      step_4 = StepPresenter.new(create(:step, :short_text, title: "Fourth question", task: task))
 
       section_groups = [
         {

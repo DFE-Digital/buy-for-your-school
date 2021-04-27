@@ -5,7 +5,7 @@ module RedisCache
         MockRedis.new
       else
         Redis::Namespace.new(
-          "buy_for_your_school",
+          "caching",
           redis: Redis.new(url: ENV["REDIS_URL"], db: 1)
         )
       end
