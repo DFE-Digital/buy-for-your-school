@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - existing specification page displays useful message when no specs exist
 - fix text input field width to fit full screen width
 - document where to find the service in the readme
+- cache CI builds to reduce build times
 
 ## [release-009] - 2021-05-21
 

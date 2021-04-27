@@ -3,9 +3,9 @@ services:
   test:
     build:
       context: .
+      target: test
       args:
         RAILS_ENV: "test"
-        BUNDLE_EXTRA_GEM_GROUPS: "test"
     command: bundle exec rake
     ports:
       - "3000:3000"
