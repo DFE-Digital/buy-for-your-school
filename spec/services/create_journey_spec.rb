@@ -12,8 +12,7 @@ RSpec.describe CreateJourney do
   describe "#call" do
     it "creates a new journey" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json",
-        stub_steps: false
+        fixture_filename: "category-with-no-steps.json"
       )
       expect { described_class.new(category_name: "catering", user: build(:user)).call }
         .to change { Journey.count }.by(1)
@@ -22,8 +21,7 @@ RSpec.describe CreateJourney do
 
     it "associates the new journey with the given user" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json",
-        stub_steps: false
+        fixture_filename: "category-with-no-steps.json"
       )
       user = create(:user)
 
@@ -34,8 +32,7 @@ RSpec.describe CreateJourney do
 
     it "sets started to true (until questions have been answered)" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json",
-        stub_steps: false
+        fixture_filename: "category-with-no-steps.json"
       )
       described_class.new(category_name: "catering", user: build(:user)).call
       expect(Journey.last.started).to eq(true)
@@ -44,8 +41,7 @@ RSpec.describe CreateJourney do
     it "sets last_worked_on to now" do
       travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json",
-        stub_steps: false
+        fixture_filename: "category-with-no-steps.json"
       )
 
       described_class.new(category_name: "catering", user: build(:user)).call
@@ -97,8 +93,7 @@ RSpec.describe CreateJourney do
       it "raises an error" do
         stub_contentful_category(
           fixture_filename: "category-with-liquid-template.json",
-          stub_sections: true,
-          stub_steps: false
+          stub_sections: true
         )
 
         # Force a validation error by not providing a category_name
