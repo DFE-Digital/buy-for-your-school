@@ -5,7 +5,7 @@ class Api::Contentful::EntriesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def changed
-    Rollbar.info("Accepted request to cache bust key: #{cache_key}", params: params)
+    Rollbar.info("Accepted request to cache bust Contentful Entry", cache_key: cache_key)
 
     Cache.delete(key: cache_key)
     render json: {status: "OK"}, status: :ok
