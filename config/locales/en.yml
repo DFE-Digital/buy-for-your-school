@@ -85,6 +85,7 @@ en:
   task_list:
     status:
       not_started: Not started
+      in_progress: In progress
       completed: Completed
   task:
     buttons:
