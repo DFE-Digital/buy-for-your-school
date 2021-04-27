@@ -86,6 +86,9 @@ en:
     status:
       not_started: Not started
       completed: Completed
+  task:
+    buttons:
+      back: Back to all questions
   journey_map:
     page_title: "Contentful entry map"
     edit_step_link_text: "Edit step in Contentful"
