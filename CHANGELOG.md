@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-010] - 2021-05-27
+
 - add header and footer information for feedback and data requests
 - force SSL in production to only accept HTTPS traffic, enable HSTS and secure tower cookies
 - prevent concurrent sign ins
@@ -147,7 +149,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...HEAD
+[release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
 [release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
 [release-008]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-007...release-008
 [release-007]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-006...release-007
