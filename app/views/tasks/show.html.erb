@@ -4,7 +4,6 @@
 <h1 class="govuk-heading-xl"><%= @task.title %></h1>
 
 <ol class="app-task-list">
-  <h2 class="app-task-list__task"><%= @task.title %></h2>
   <li>
     <ul class="app-task-list__items">
       <% @steps.each do |step| %>
@@ -23,10 +22,9 @@
             <% end %>
           </li>
         <% end %>
-      </ul>
-    </li>
-  <% end %>
+      <% end %>
+    </ul>
+  </li>
 </ol>
 
-<%= link_to I18n.t("journey.specification.button"), journey_specification_path(@journey), class: "govuk-button" %>
-
+<%= link_to I18n.t("task.buttons.back"), journey_path(@journey), class: "govuk-button" %>
