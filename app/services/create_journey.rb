@@ -17,7 +17,6 @@ class CreateJourney
       liquid_template: category.combined_specification_template
     )
 
-    journey.section_groups = build_section_groupings(sections: contentful_sections)
     journey.save!
 
     contentful_sections.each do |contentful_section|
@@ -52,17 +51,5 @@ class CreateJourney
     end
 
     journey
-  end
-
-  private def build_section_groupings(sections:)
-    sections.each_with_object([]).with_index { |(section, result), index|
-      result[index] = {
-        order: index,
-        title: section.title,
-        steps: section.steps.each_with_object([]).with_index { |(step, result), index|
-          result << {contentful_id: step.id, order: index}
-        }
-      }
-    }
   end
 end
