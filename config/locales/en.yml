@@ -63,6 +63,7 @@ en:
     index:
       existing:
         header: "Existing specifications"
+        empty: "You currently have no existing specifications, return to create a new specification"
     specification:
       header: "Your specification"
       warning: "You have not completed all the tasks. There may be information missing from your specification."
