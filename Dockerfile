@@ -29,8 +29,7 @@ RUN mkdir -p ${DEPS_HOME}
 WORKDIR $DEPS_HOME
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && apt-get install -y nodejs \
-  && npm install --global yarn
+  && apt-get install -y nodejs
 
 # Install Javascript dependencies
 COPY package-lock.json $DEPS_HOME/package-lock.json
