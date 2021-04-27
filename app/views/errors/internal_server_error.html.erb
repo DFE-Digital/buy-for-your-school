@@ -1,0 +1,16 @@
+<%= content_for :page_title_prefix, t("errors.internal_server_error.page_title") %>
+<main class="govuk-main-wrapper" id="main-content" role="main">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-xl">
+        <%= t("errors.internal_server_error.page_title") %>
+      </h2>
+      <p class="govuk-body">
+        <%= t("errors.internal_server_error.page_body") %>
+      </p>
+      <p class="govuk-body">
+        <%= link_to t("errors.go_home"), root_path, class: "govuk-link" %>
+      </p>
+    </div>
+  </div>
+</main>
