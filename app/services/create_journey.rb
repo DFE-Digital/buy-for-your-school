@@ -22,30 +22,15 @@ class CreateJourney
     contentful_sections.each do |contentful_section|
       section = CreateSection.new(journey: journey, contentful_section: contentful_section).call
 
-      # The entire `if` block here exists to support our fixtures which do not nest steps
-      # within tasks. Once we update our fixtures to the "new way" of doing things, this
-      # entire `if` block can be discarded.
-      if contentful_section.respond_to?(:tasks) && !contentful_section.tasks.any?
-        question_entries = GetStepsFromSection.new(section: contentful_section).call
+      contentful_tasks = GetTasksFromSection.new(section: contentful_section).call
+      contentful_tasks.each do |contentful_task|
+        task = CreateTask.new(section: section, contentful_task: contentful_task).call
+
+        question_entries = GetStepsFromTask.new(task: contentful_task).call
         question_entries.each do |entry|
-          fake_contentful_task = OpenStruct.new(title: entry.title, id: entry.id)
-          task = CreateTask.new(section: section, contentful_task: fake_contentful_task).call
-
           CreateJourneyStep.new(
-            task: task, contentful_entry: entry
+            contentful_entry: entry, task: task
           ).call
-        end
-      else
-        contentful_tasks = GetTasksFromSection.new(section: contentful_section).call
-        contentful_tasks.each do |contentful_task|
-          task = CreateTask.new(section: section, contentful_task: contentful_task).call
-
-          question_entries = GetStepsFromTask.new(task: contentful_task).call
-          question_entries.each do |entry|
-            CreateJourneyStep.new(
-              contentful_entry: entry, task: task
-            ).call
-          end
         end
       end
     end
