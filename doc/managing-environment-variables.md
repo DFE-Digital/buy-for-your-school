@@ -8,3 +8,5 @@ To manage sensitive environment variables:
 
 1. Add the new key and safe default value to the `/.env.example` file eg. `ROLLBAR_TOKEN=ROLLBAR_TOKEN`
 2. Add the new key and real value to your local `/.env.development.local` file, which should never be checked into Git. This file will look something like `ROLLBAR_TOKEN=123456789`
+
+Add critical environment variable keys to the Dockerfile where `rake assets:precompile` is run.

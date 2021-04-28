@@ -29,8 +29,7 @@ RUN mkdir -p ${DEPS_HOME}
 WORKDIR $DEPS_HOME
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && apt-get install -y nodejs \
-  && npm install --global yarn
+  && apt-get install -y nodejs
 
 # Install Javascript dependencies
 COPY package-lock.json $DEPS_HOME/package-lock.json
@@ -84,9 +83,19 @@ RUN mkdir -p tmp/pids
 RUN cp -R $DEPS_HOME/node_modules $APP_HOME/node_modules
 RUN cp -R $DEPS_HOME/node_modules/govuk-frontend/govuk/assets $APP_HOME/app/assets
 
-RUN if [ "$RAILS_ENV" = "production" ]; then \
-      RAILS_ENV=production SECRET_KEY_BASE="key" bundle exec rake assets:precompile; \
-    fi
+RUN RAILS_ENV=production \
+    SECRET_KEY_BASE="key" \
+    APPLICATION_URL= \
+    CONTENTFUL_URL= \
+    CONTENTFUL_SPACE= \
+    CONTENTFUL_ENVIRONMENT= \
+    CONTENTFUL_ACCESS_TOKEN= \
+    CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID= \
+    CONTENTFUL_PREVIEW_APP= \
+    CONTENTFUL_ENTRY_CACHING= \
+    SUPPORT_EMAIL= \
+    REDIS_URL= \
+    bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
