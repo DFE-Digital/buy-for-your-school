@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- error pages are styled
+
 ## [release-010] - 2021-05-27
 
 - add header and footer information for feedback and data requests

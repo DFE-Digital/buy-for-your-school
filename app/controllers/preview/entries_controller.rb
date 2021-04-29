@@ -26,6 +26,6 @@ class Preview::EntriesController < ApplicationController
 
   def check_app_is_running_in_preview_env
     return if ENV["CONTENTFUL_PREVIEW_APP"].eql?("true")
-    render file: "public/404.html", status: :not_found, layout: false
+    render "errors/not_found", status: 404
   end
 end
