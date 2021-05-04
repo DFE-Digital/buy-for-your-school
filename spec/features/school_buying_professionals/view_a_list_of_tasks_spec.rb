@@ -36,25 +36,12 @@ feature "Users can view the task list" do
       stub_contentful_category(fixture_filename: "multiple-sections.json")
 
       answer = create(:short_text_answer, response: "answer")
-      answer.step.journey.update(
-        user: user,
-        section_groups: [
-          {
-            "order" => 0,
-            "title" => "Section A",
-            "steps" => [
-              {
-                "contentful_id" => answer.step.contentful_id,
-                "order" => 0
-              }
-            ]
-          }
-        ]
-      )
+      journey = answer.step.journey
+      journey.update(user: user)
 
       user_starts_the_journey
 
-      visit journey_path(answer.step.journey)
+      visit journey_path(journey)
 
       expect(page).to have_content(I18n.t("task_list.status.completed"))
     end

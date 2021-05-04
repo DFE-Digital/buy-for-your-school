@@ -30,12 +30,12 @@
     },
     "fields": {
         "title": "Section A",
-        "steps": [
+        "tasks": [
             {
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
-                    "id": "markdown-help-text"
+                    "id": "markdown-help-text-task"
                 }
             }
         ]

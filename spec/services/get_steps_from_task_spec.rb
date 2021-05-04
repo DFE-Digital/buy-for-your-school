@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe GetStepsFromTask do
   describe "#call" do
     it "returns the list of entry objects referenced by the step list" do
-      task = fake_contentful_section(
+      task = fake_contentful_task(
         contentful_fixture_filename: "tasks/checkboxes-task.json"
       )
       stub_contentful_task_steps(tasks: [task])

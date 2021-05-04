@@ -29,6 +29,9 @@ RSpec.describe "Contentful Caching", type: :request do
       raw_section_response = File.read("#{Rails.root}/spec/fixtures/contentful/sections/radio-section.json")
       RedisCache.redis.set("contentful:entry:radio-section", JSON.dump(raw_section_response))
 
+      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/tasks/radio-task.json")
+      RedisCache.redis.set("contentful:entry:radio-task", JSON.dump(raw_step_response))
+
       raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/steps/radio-question.json")
       RedisCache.redis.set("contentful:entry:radio-question", JSON.dump(raw_step_response))
 

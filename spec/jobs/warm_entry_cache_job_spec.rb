@@ -44,8 +44,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
     context "when the journey order cannot be built" do
       it "does not add new items to the cache" do
         stub_contentful_category(
-          fixture_filename: "journey-with-multiple-entries.json",
-          stub_steps: false
+          fixture_filename: "journey-with-multiple-entries.json"
         )
 
         allow_any_instance_of(GetStepsFromSection)
@@ -62,8 +61,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
         RedisCache.redis.set("contentful:entry:contentful-starting-step", "\"{\\}\"")
 
         stub_contentful_category(
-          fixture_filename: "journey-with-multiple-entries.json",
-          stub_steps: false
+          fixture_filename: "journey-with-multiple-entries.json"
         )
 
         allow_any_instance_of(GetStepsFromSection)

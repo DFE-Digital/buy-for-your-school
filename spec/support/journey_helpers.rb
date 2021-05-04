@@ -17,7 +17,6 @@ module JourneyHelpers
     stub_contentful_category(
       fixture_filename: category,
       stub_sections: true,
-      stub_steps: false,
       stub_tasks: true
     )
 

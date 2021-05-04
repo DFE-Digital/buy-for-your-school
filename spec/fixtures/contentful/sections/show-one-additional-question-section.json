@@ -30,26 +30,26 @@
     },
     "fields": {
         "title": "Section A",
-        "steps": [
+        "tasks": [
             {
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
-                    "id": "show-one-additional-question"
+                    "id": "show-one-additional-question-task"
                 }
             },
             {
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
-                    "id": "hidden-field-that-shows-an-additional-question"
+                    "id": "hidden-field-that-shows-an-additional-question-task"
                 }
             },
             {
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
-                    "id": "hidden-field"
+                    "id": "hidden-field-task"
                 }
             }
         ]

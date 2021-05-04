@@ -30,26 +30,12 @@
     },
     "fields": {
         "title": "Section A",
-        "steps": [
+        "tasks": [
             {
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "radio-question"
-              }
-            },
-            {
-              "sys": {
-                  "type": "Link",
-                  "linkType": "Entry",
-                  "id": "short-text-question"
-              }
-            },
-            {
-              "sys": {
-                  "type": "Link",
-                  "linkType": "Entry",
-                  "id": "long-text-question"
+                  "id": "checkboxes-and-radio-task"
               }
             }
         ]
