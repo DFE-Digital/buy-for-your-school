@@ -6,7 +6,7 @@ RSpec.describe CreateSection do
 
   describe "#call" do
     it "creates a new section" do
-      expect { described_class.new(journey: journey, contentful_section: contentful_section).call }
+      expect { described_class.new(journey: journey, contentful_section: contentful_section, order: order).call }
         .to change { Section.count }.by(1)
       expect(Section.last.title).to eql("Section A")
       expect(Section.last.journey).to eql(journey)

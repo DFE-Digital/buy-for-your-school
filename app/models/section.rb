@@ -5,4 +5,6 @@ class Section < ApplicationRecord
   has_many :steps, through: :tasks, class_name: "Step"
 
   validates :title, :contentful_id, presence: true
+
+  default_scope { order(created_at: :asc) }
 end
