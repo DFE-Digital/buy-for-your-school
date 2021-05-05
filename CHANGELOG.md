@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Update all fixtures to include tasks
 - Update the specs to work with the new task-enabled fixtures
 - Remove `Journey#section_groups` and sever the direct Journey -> Steps association
+- tasks now have their completion status indicated on the task list
 
 ## [release-010] - 2021-05-27
 

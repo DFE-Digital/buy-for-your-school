@@ -31,6 +31,13 @@
               <span class="app-task-list__task-name">
                 <%= link_to task.title, journey_task_path(@journey, task), class: "govuk-link", 'aria-describedby': task.id + "-status"%>
               </span>
+              <% if task.status == Task::COMPLETED %>
+                <strong class="govuk-tag app-task-list__tag" id="<%= task.id + "-status" %>"><%= I18n.t("task_list.status.completed") %></strong>
+              <% elsif task.status == Task::IN_PROGRESS %>
+                <strong class="govuk-tag govuk-tag--blue app-task-list__tag" id="<%= task.id + "-status" %>"><%= I18n.t("task_list.status.in_progress") %></strong>
+              <% elsif task.status == Task::NOT_STARTED %>
+                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= task.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
+              <% end %>
             </li>
           <% end %>
         <% end %>
