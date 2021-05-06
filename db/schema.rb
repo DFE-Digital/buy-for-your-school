@@ -10,12 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_11_161352) do
+ActiveRecord::Schema.define(version: 2021_05_18_084959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "activity_log", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "journey_id"
+    t.string "user_id"
+    t.string "contentful_category_id"
+    t.string "contentful_section_id"
+    t.string "contentful_task_id"
+    t.string "contentful_step_id"
+    t.string "action"
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["action"], name: "index_activity_log_on_action"
+    t.index ["contentful_category_id"], name: "index_activity_log_on_contentful_category_id"
+    t.index ["contentful_section_id"], name: "index_activity_log_on_contentful_section_id"
+    t.index ["contentful_step_id"], name: "index_activity_log_on_contentful_step_id"
+    t.index ["contentful_task_id"], name: "index_activity_log_on_contentful_task_id"
+    t.index ["journey_id"], name: "index_activity_log_on_journey_id"
+    t.index ["user_id"], name: "index_activity_log_on_user_id"
+  end
 
   create_table "checkbox_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
