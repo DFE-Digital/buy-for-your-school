@@ -12,6 +12,7 @@ if [ -n "$DEBUG" ]; then
 fi
 
 echo "==> Updating..."
+script/update
 
 TEST_FILE=$1
 
