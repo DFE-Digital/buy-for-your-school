@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Remove `Journey#section_groups` and sever the direct Journey -> Steps association
 - tasks now have their completion status indicated on the task list
 
-## [release-010] - 2021-05-27
+## [release-010] - 2021-04-27
 
 - add header and footer information for feedback and data requests
 - force SSL in production to only accept HTTPS traffic, enable HSTS and secure tower cookies
@@ -31,17 +31,17 @@ The format is based on [Keep a Changelog 1.0.0].
 - cache CI builds to reduce build times
 - log information about contentful cache busting webhooks for debugging
 
-## [release-009] - 2021-05-21
+## [release-009] - 2021-04-21
 
 - fix multiple specification fields
 - content security policy
 - remove humans.txt
 
-## [release-008] - 2021-05-19
+## [release-008] - 2021-04-19
 
 - auto deploy research and preview environments
 
-## [release-007] - 2021-05-19
+## [release-007] - 2021-04-19
 
 - Add `noindex,nofollow` meta tag to all pages, as per Gov.UK guidance
 - fix API auth by switching mechanism from Basic to Token
