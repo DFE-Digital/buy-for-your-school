@@ -23,9 +23,59 @@ feature "Users can view the task list" do
     end
   end
 
-  scenario "user can navigate back to the dashboard" do
+  scenario "user can navigate back to the task list from a task view" do
+    start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+    within(".app-task-list") do
+      click_on "Task with multiple steps"
+    end
+
+    click_on(I18n.t("generic.button.back"))
+
+    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+  end
+
+  scenario "user can navigate back to the list of journeys from a task list" do
     start_journey_from_category(category: "extended-radio-question.json")
 
+    click_on(I18n.t("generic.button.back"))
+
+    expect(page).to have_content(I18n.t("journey.index.existing.header"))
+  end
+
+  context "When a task has one question" do
+    scenario "user can navigate back to the task list from a question" do
+      start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+
+      within(".app-task-list") do
+        click_on "Everyday services that are required and need to be considered"
+      end
+
+      click_on(I18n.t("generic.button.back"))
+
+      expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+    end
+  end
+
+  context "When a task has more than one question" do
+    scenario "user can navigate back to the task view from a question" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      within(".app-task-list") do
+        click_on "Task with multiple steps"
+      end
+
+      click_on "Everyday services that are required and need to be considered"
+      click_on(I18n.t("generic.button.back"))
+
+      expect(page).to have_content("Task with multiple steps")
+    end
+  end
+
+  scenario "user can navigate back to the dashboard from a question" do
+    start_journey_from_category(category: "extended-radio-question.json")
+
+    click_on(I18n.t("generic.button.back"))
     click_on(I18n.t("generic.button.back"))
 
     expect(page).to have_content(I18n.t("dashboard.header"))
@@ -36,25 +86,12 @@ feature "Users can view the task list" do
       stub_contentful_category(fixture_filename: "multiple-sections.json")
 
       answer = create(:short_text_answer, response: "answer")
-      answer.step.journey.update(
-        user: user,
-        section_groups: [
-          {
-            "order" => 0,
-            "title" => "Section A",
-            "steps" => [
-              {
-                "contentful_id" => answer.step.contentful_id,
-                "order" => 0
-              }
-            ]
-          }
-        ]
-      )
+      journey = answer.step.journey
+      journey.update(user: user)
 
       user_starts_the_journey
 
-      visit journey_path(answer.step.journey)
+      visit journey_path(journey)
 
       expect(page).to have_content(I18n.t("task_list.status.completed"))
     end

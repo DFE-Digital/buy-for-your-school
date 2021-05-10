@@ -15,7 +15,6 @@ env:
   CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
 
 jobs:
   build:
@@ -48,11 +47,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+      GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Set TFVAR Docker Image environment variable
-        run: echo "TF_VAR_docker_image=${{needs.build.outputs.tf_var_docker_image}}" >> $GITHUB_ENV
       - name: Deploy terraform to staging
         env:
           TF_VAR_environment: "staging"

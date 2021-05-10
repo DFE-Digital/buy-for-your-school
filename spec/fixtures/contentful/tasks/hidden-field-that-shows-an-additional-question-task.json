@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "tags": []
+  },
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "rwl7tyzv9sys"
+      }
+    },
+    "id": "hidden-field-that-shows-an-additional-question-task",
+    "type": "Entry",
+    "createdAt": "2021-04-12T09:38:48.990Z",
+    "updatedAt": "2021-04-12T10:11:05.670Z",
+    "environment": {
+      "sys": {
+        "id": "develop",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 3,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "task"
+      }
+    },
+    "locale": "en-US"
+  },
+  "fields": {
+    "title": "Hidden field with additional question task",
+    "steps": [
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "hidden-field-that-shows-an-additional-question"
+        }
+      }
+    ]
+  }
+}

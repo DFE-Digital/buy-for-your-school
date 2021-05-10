@@ -36,7 +36,6 @@ feature "Users can view their existing journeys" do
       start_journey_from_category(category: "radio-question.json")
 
       click_on(I18n.t("generic.button.back"))
-      click_on(I18n.t("dashboard.existing.link"))
 
       expect(page).to have_content("15 February 2021")
       expect(page).not_to have_content("20 March 2021")

@@ -6,7 +6,6 @@ RSpec.describe GetStepsFromSection do
       section = fake_contentful_section(
         contentful_fixture_filename: "sections/journey-with-multiple-entries-section.json"
       )
-      stub_contentful_section_steps(sections: [section])
 
       result = described_class.new(section: section).call
 

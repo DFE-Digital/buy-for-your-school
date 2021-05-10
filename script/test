@@ -12,6 +12,7 @@ if [ -n "$DEBUG" ]; then
 fi
 
 echo "==> Updating..."
+script/update
 
 TEST_FILE=$1
 
@@ -31,5 +32,5 @@ else
   bundle exec rspec
 
   echo "==> Running Brakeman"
-  bundle exec brakeman
+  bundle exec brakeman -o /dev/stdout
 fi

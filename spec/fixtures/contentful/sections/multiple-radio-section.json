@@ -30,19 +30,19 @@
     },
     "fields": {
         "title": "Section A",
-        "steps": [
+        "tasks": [
             {
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "radio-question"
+                  "id": "radio-task"
               }
             },
             {
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "single-date-question"
+                  "id": "single-date-task"
               }
             }
         ]

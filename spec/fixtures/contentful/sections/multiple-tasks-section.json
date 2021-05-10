@@ -37,13 +37,14 @@
         "linkType": "Entry",
         "id": "checkboxes-task"
       }
-    },
-    {
-      "sys": {
-      "type": "Link",
-      "linkType": "Entry",
-      "id": "checkboxes-and-radio-task"
+      },
+      {
+        "sys": {
+        "type": "Link",
+        "linkType": "Entry",
+        "id": "checkboxes-and-radio-task"
+       }
      }
-   }]
+    ]
   }
 }

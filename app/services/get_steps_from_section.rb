@@ -8,12 +8,14 @@ class GetStepsFromSection
 
   def call
     question_entry_ids = []
-    section.steps.each do |step|
-      if question_entry_ids.include?(step.id)
-        send_rollbar_error(message: "A repeated Contentful entry was found in the same section", entry_id: step.id)
-        raise RepeatEntryDetected.new(step.id)
-      else
-        question_entry_ids << step.id
+    section.tasks.each do |task|
+      task.steps.each do |step|
+        if question_entry_ids.include?(step.id)
+          send_rollbar_error(message: "A repeated Contentful entry was found in the same section", entry_id: step.id)
+          raise RepeatEntryDetected.new(step.id)
+        else
+          question_entry_ids << step.id
+        end
       end
     end
 

@@ -6,7 +6,16 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
-## [release-010] - 2021-05-27
+## [release-011] - 2021-05-10
+
+- error pages are styled
+- document how to manage live environment variables
+- Update all fixtures to include tasks
+- Update the specs to work with the new task-enabled fixtures
+- Remove `Journey#section_groups` and sever the direct Journey -> Steps association
+- tasks now have their completion status indicated on the task list
+
+## [release-010] - 2021-04-27
 
 - add header and footer information for feedback and data requests
 - force SSL in production to only accept HTTPS traffic, enable HSTS and secure tower cookies
@@ -21,18 +30,20 @@ The format is based on [Keep a Changelog 1.0.0].
 - existing specification page displays useful message when no specs exist
 - fix text input field width to fit full screen width
 - document where to find the service in the readme
+- cache CI builds to reduce build times
+- log information about contentful cache busting webhooks for debugging
 
-## [release-009] - 2021-05-21
+## [release-009] - 2021-04-21
 
 - fix multiple specification fields
 - content security policy
 - remove humans.txt
 
-## [release-008] - 2021-05-19
+## [release-008] - 2021-04-19
 
 - auto deploy research and preview environments
 
-## [release-007] - 2021-05-19
+## [release-007] - 2021-04-19
 
 - Add `noindex,nofollow` meta tag to all pages, as per Gov.UK guidance
 - fix API auth by switching mechanism from Basic to Token
@@ -149,7 +160,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...HEAD
+[release-011]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...release-011
 [release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
 [release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
 [release-008]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-007...release-008

@@ -37,6 +37,6 @@ class ApplicationController < ActionController::Base
 
   def check_user_belongs_to_journey?
     return true if current_journey.user == current_user
-    render file: "public/404.html", status: :not_found, layout: false
+    render "errors/not_found", status: 404
   end
 end

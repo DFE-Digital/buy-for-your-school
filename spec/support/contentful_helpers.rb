@@ -13,8 +13,7 @@ module ContentfulHelpers
   def stub_contentful_category(
     fixture_filename:,
     stub_sections: true,
-    stub_steps: true,
-    stub_tasks: false,
+    stub_tasks: true,
     contentful_connector: instance_double(ContentfulConnector) # TODO: I suspect the double doesn't do anything and we need stub_contentful_connector
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
@@ -28,9 +27,6 @@ module ContentfulHelpers
 
     if stub_sections
       sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
-      if stub_steps
-        stub_contentful_section_steps(sections: sections, contentful_connector: contentful_connector)
-      end
       if stub_tasks
         stub_contentful_section_tasks(sections: sections, contentful_connector: contentful_connector)
       end
@@ -104,7 +100,7 @@ module ContentfulHelpers
     sections.each do |section|
       fake_tasks = section.tasks.map { |task|
         fake_task = fake_contentful_task(contentful_fixture_filename: "tasks/#{task.id}.json")
-        expect(contentful_connector).to receive(:get_entry_by_id)
+        allow(contentful_connector).to receive(:get_entry_by_id)
           .with(fake_task.id)
           .and_return(fake_task)
         fake_task
@@ -179,17 +175,27 @@ module ContentfulHelpers
   def fake_contentful_section(contentful_fixture_filename:)
     raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
+    contentful_connector = instance_double(ContentfulConnector)
 
-    steps = hash_response.dig("fields", "steps")
     tasks = hash_response.dig("fields", "tasks")
 
-    double(
+    section = double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       title: hash_response.dig("fields", "title"),
-      steps: steps.nil? ? {} : steps.map { |step_hash| double(id: step_hash.dig("sys", "id")) },
-      tasks: tasks.nil? ? {} : tasks.map { |task_hash| double(id: task_hash.dig("sys", "id")) }
+      tasks: tasks.map { |task_hash| double(id: task_hash.dig("sys", "id")) }
     )
+
+    fake_tasks = section.tasks.map { |task|
+      fake_task = fake_contentful_task(contentful_fixture_filename: "tasks/#{task.id}.json")
+      allow(contentful_connector).to receive(:get_entry_by_id)
+        .with(fake_task.id)
+        .and_return(fake_task)
+      fake_task
+    }
+    allow(section).to receive(:tasks).and_return(fake_tasks)
+    stub_contentful_task_steps(tasks: fake_tasks, contentful_connector: contentful_connector)
+    section
   end
 
   def fake_contentful_task(contentful_fixture_filename:)

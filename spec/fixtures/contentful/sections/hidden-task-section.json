@@ -34,7 +34,7 @@
       "sys": {
         "type": "Link",
         "linkType": "Entry",
-        "id": "hidden-task"
+        "id": "hidden-field-task"
       }
     }]
   }

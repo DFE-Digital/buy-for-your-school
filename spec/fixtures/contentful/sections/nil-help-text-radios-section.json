@@ -30,12 +30,12 @@
     },
     "fields": {
         "title": "Section A",
-        "steps": [
+        "tasks": [
             {
                 "sys": {
                     "type": "Link",
                     "linkType": "Entry",
-                    "id": "nil-help-text-radios"
+                    "id": "nil-help-text-radios-task"
                 }
             }
         ]
