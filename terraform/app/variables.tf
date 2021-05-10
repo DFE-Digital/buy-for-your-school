@@ -101,7 +101,7 @@ variable "web_app_disk_quota" {
 
 variable "web_app_timeout" {
   description = "Web app timeout"
-  default     = 120
+  default     = 300
   type        = number
 }
 
@@ -125,7 +125,7 @@ variable "web_worker_disk_quota" {
 
 variable "web_worker_timeout" {
   description = "Web worker timeout"
-  default     = 120
+  default     = 300
   type        = number
 }
 
