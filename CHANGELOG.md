@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-011] - 2021-05-10
+
 - error pages are styled
 - document how to manage live environment variables
 - Update all fixtures to include tasks
@@ -158,7 +160,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...HEAD
+[release-011]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...release-011
 [release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
 [release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
 [release-008]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-007...release-008
