@@ -9,10 +9,10 @@ RSpec.describe Section, type: :model do
   end
 
   describe "default_order" do
-    it "orders by created_at ASC" do
-      oldest_section = create(:section, created_at: 3.days.ago)
-      middle_aged_section = create(:section, created_at: 2.days.ago)
-      youngest_section = create(:section, created_at: 1.days.ago)
+    it "orders by order ASC" do
+      oldest_section = create(:section, order: 0)
+      middle_aged_section = create(:section, order: 1)
+      youngest_section = create(:section, order: 2)
 
       result = described_class.all
 

@@ -1,6 +1,6 @@
 class Section < ApplicationRecord
-  self.implicit_order_column = "created_at"
-  default_scope { order('created_at ASC') }
+  self.implicit_order_column = "order"
+  default_scope { order(:order) }
 
   belongs_to :journey
   has_many :tasks, dependent: :destroy

@@ -3,5 +3,6 @@ FactoryBot.define do
     title { "Section title" }
     contentful_id { "5m26U35YLau4cOaJq6FXZA" }
     association :journey
+    order { 0 }
   end
 end
