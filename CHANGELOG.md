@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-012] - 2021-05-11
+
+- sections are listed in the order set in Contentful rather than database insert order
+
 ## [release-011] - 2021-05-10
 
 - error pages are styled
@@ -150,7 +154,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - any user can see a start page for the specifying journey
 - use GOV.UK Frontend framework
 - users can see a basic form to start the specifying journey sourced by a
-Contentful fixture
+  Contentful fixture
 - specifying form is styled as a GOV.UK form
 - validate that an answer is provided to a question
 - the first specifying question comes directly from Contentful
@@ -160,7 +164,8 @@ Contentful fixture
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-012...HEAD
+[release-012]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...release-012
 [release-011]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...release-011
 [release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
 [release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
@@ -172,5 +177,4 @@ Contentful fixture
 [release-003]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-002...release-003
 [release-002]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-001...release-002
 [release-001]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-000...release-001
-
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

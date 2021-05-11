@@ -40,5 +40,5 @@ locals {
   web_worker_instances            = var.web_worker_instances
   web_worker_disk_quota           = var.web_worker_disk_quota
   web_worker_timeout              = var.web_worker_timeout
-  web_worker_health_check_timeout = var.web_worker_timeout
+  web_worker_health_check_timeout = 180
 }
