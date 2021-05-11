@@ -19,8 +19,12 @@ class CreateJourney
 
     journey.save!
 
-    contentful_sections.each do |contentful_section|
-      section = CreateSection.new(journey: journey, contentful_section: contentful_section).call
+    contentful_sections.each_with_index do |contentful_section, index|
+      section = CreateSection.new(
+        journey: journey,
+        contentful_section: contentful_section,
+        order: index
+      ).call
 
       contentful_tasks = GetTasksFromSection.new(section: contentful_section).call
       contentful_tasks.each do |contentful_task|
