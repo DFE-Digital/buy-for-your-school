@@ -43,7 +43,7 @@ feature "Users can view the task list" do
     expect(page).to have_content(I18n.t("journey.index.existing.header"))
   end
 
-  context "When a task has one question" do
+  context "when a task has one question" do
     scenario "user can navigate back to the task list from a question" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
@@ -57,7 +57,7 @@ feature "Users can view the task list" do
     end
   end
 
-  context "When a task has more than one question" do
+  context "when a task has more than one question" do
     scenario "user can navigate back to the task view from a question" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
@@ -81,7 +81,7 @@ feature "Users can view the task list" do
     expect(page).to have_content(I18n.t("dashboard.header"))
   end
 
-  context "When a question has been answered" do
+  context "when a question has been answered" do
     scenario "The task is marked as completed" do
       stub_contentful_category(fixture_filename: "multiple-sections.json")
 
@@ -97,7 +97,7 @@ feature "Users can view the task list" do
     end
   end
 
-  context "When a question has been hidden" do
+  context "when a question has been hidden" do
     it "should not appear in the task list" do
       start_journey_from_category(category: "hidden-field.json")
 
@@ -106,8 +106,8 @@ feature "Users can view the task list" do
     end
   end
 
-  context "When the sections & tasks are retrieved from the database (new task list process)" do
-    context "When there is a task with a single step" do
+  context "when the sections & tasks are retrieved from the database (new task list process)" do
+    context "when there is a task with a single step" do
       it "shows the section title" do
         start_journey_with_tasks_from_category(category: "section-with-single-task.json")
         within(".app-task-list") do
@@ -153,7 +153,7 @@ feature "Users can view the task list" do
       end
     end
 
-    context "When there is a task with a single HIDDEN step" do
+    context "when there is a task with a single HIDDEN step" do
       it "shows the section title" do
         start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
         within(".app-task-list") do
@@ -170,7 +170,7 @@ feature "Users can view the task list" do
       end
     end
 
-    context "When there is a task with multiple steps" do
+    context "when there is a task with multiple steps" do
       it "shows the section title" do
         start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
         within(".app-task-list") do
