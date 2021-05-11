@@ -12,7 +12,7 @@ class Preview::EntriesController < ApplicationController
 
     contentful_entry = GetEntry.new(entry_id: entry_id).call
     @step = CreateStep.new(
-      task: task, contentful_entry: contentful_entry
+      task: task, contentful_entry: contentful_entry, order: 0
     ).call
 
     redirect_to journey_step_path(@journey, @step)
