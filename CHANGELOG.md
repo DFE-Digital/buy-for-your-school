@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-012] - 2021-05-11
+
 - sections are listed in the order set in Contentful rather than database insert order
 
 ## [release-011] - 2021-05-10
@@ -162,7 +164,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-012...HEAD
+[release-012]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...release-012
 [release-011]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...release-011
 [release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
 [release-009]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-008...release-009
