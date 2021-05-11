@@ -4,7 +4,7 @@ feature "Users can view the task list" do
   let(:user) { create(:user) }
   before { user_is_signed_in(user: user) }
 
-  it "tasks are grouped by their section" do
+  scenario "tasks are grouped by their section" do
     start_journey_from_category(category: "multiple-sections.json")
 
     within(".app-task-list") do
@@ -98,7 +98,7 @@ feature "Users can view the task list" do
   end
 
   context "when a question has been hidden" do
-    it "should not appear in the task list" do
+    scenario "should not appear in the task list" do
       start_journey_from_category(category: "hidden-field.json")
 
       expect(page).not_to have_content("You should NOT be able to see this question")
@@ -108,14 +108,14 @@ feature "Users can view the task list" do
 
   context "when the sections & tasks are retrieved from the database (new task list process)" do
     context "when there is a task with a single step" do
-      it "shows the section title" do
+      scenario "shows the section title" do
         start_journey_with_tasks_from_category(category: "section-with-single-task.json")
         within(".app-task-list") do
           expect(page).to have_content("Section with a single task")
         end
       end
 
-      it "shows the step title, not the task title" do
+      scenario "shows the step title, not the task title" do
         start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
         within(".app-task-list") do
@@ -124,7 +124,7 @@ feature "Users can view the task list" do
         end
       end
 
-      it "has a back link on the step page that takes you to the journey page" do
+      scenario "has a back link on the step page that takes you to the journey page" do
         start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
         within(".app-task-list") do
@@ -136,7 +136,7 @@ feature "Users can view the task list" do
         expect(page).to have_content "Section with a single task"
       end
 
-      it "allows the user to complete the step, and returns to the journey page" do
+      scenario "allows the user to complete the step, and returns to the journey page" do
         start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
         within(".app-task-list") do
@@ -154,14 +154,14 @@ feature "Users can view the task list" do
     end
 
     context "when there is a task with a single HIDDEN step" do
-      it "shows the section title" do
+      scenario "shows the section title" do
         start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
         within(".app-task-list") do
           expect(page).to have_content("Section with a hidden task")
         end
       end
 
-      it "does not show the task nor step title" do
+      scenario "does not show the task nor step title" do
         start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
 
         within(".app-task-list") do
@@ -171,14 +171,14 @@ feature "Users can view the task list" do
     end
 
     context "when there is a task with multiple steps" do
-      it "shows the section title" do
+      scenario "shows the section title" do
         start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
         within(".app-task-list") do
           expect(page).to have_content("Section with multiple tasks")
         end
       end
 
-      it "shows the task titles within the section" do
+      scenario "shows the task titles within the section" do
         start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
         within(".app-task-list") do
