@@ -105,7 +105,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.body).to eq("Procuring a new catering contract can \
