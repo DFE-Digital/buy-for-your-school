@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CreateJourneyStep do
+RSpec.describe CreateStep do
   describe "#call" do
     context "when the new step is of type step" do
       it "creates a local copy of the new step" do
@@ -221,7 +221,7 @@ process around March.")
         )
 
         expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
+          .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
 
       it "raises a rollbar event" do
@@ -241,11 +241,11 @@ process around March.")
             contentful_entry_id: "unexpected-contentful-type",
             content_model: "telepathy",
             step_type: "radios",
-            allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+            allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
+            allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
+          .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
     end
 
@@ -260,7 +260,7 @@ process around March.")
         )
 
         expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
+          .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
 
       it "raises a rollbar event" do
@@ -280,11 +280,11 @@ process around March.")
             contentful_entry_id: "unexpected-contentful-question-type",
             content_model: "question",
             step_type: "telepathy",
-            allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+            allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
+            allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
+          .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end
   end

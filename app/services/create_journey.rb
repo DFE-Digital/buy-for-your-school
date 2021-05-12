@@ -32,7 +32,7 @@ class CreateJourney
 
         question_entries = GetStepsFromTask.new(task: contentful_task).call
         question_entries.each do |entry|
-          CreateJourneyStep.new(
+          CreateStep.new(
             contentful_entry: entry, task: task
           ).call
         end
