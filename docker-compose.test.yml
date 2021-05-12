@@ -6,7 +6,7 @@ services:
       target: test
       args:
         RAILS_ENV: 'test'
-    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- bundle exec rake"
+    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- script/test"
     ports:
       - '3000:3000'
     depends_on:
@@ -18,6 +18,8 @@ services:
       DATABASE_URL: postgres://postgres:password@test-db:5432/buy-for-your-school-test
       REDIS_URL: redis://test-redis:6379
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
+      DOCKER: 'true'
+      AUTOMATICALLY_FIX_LINTING: 'true'
     volumes:
       - .:/srv/app
     tty: true
