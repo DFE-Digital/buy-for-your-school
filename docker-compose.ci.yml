@@ -9,7 +9,7 @@ services:
       cache_from:
         - app_test:latest
     image: app_test
-    command: bundle exec rake
+    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- bundle exec rake"
     ports:
       - '3000:3000'
     depends_on:
