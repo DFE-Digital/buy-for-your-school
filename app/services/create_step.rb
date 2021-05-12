@@ -1,4 +1,4 @@
-class CreateJourneyStep
+class CreateStep
   class UnexpectedContentfulModel < StandardError; end
 
   class UnexpectedContentfulStepType < StandardError; end
