@@ -3,7 +3,7 @@ FactoryBot.define do
     title { "What is your favourite colour?" }
     help_text { "Choose the primary colour closest to your choice" }
     contentful_id { SecureRandom.hex }
-    raw { |attrs| {"sys": {"id" => attrs["contentful_id"]}} }
+    raw { |attrs| {sys: {"id" => attrs["contentful_id"]}} }
     hidden { false }
     additional_step_rules { nil }
     primary_call_to_action_text { nil }
