@@ -1,23 +1,25 @@
-version: "3.8"
+version: '3.8'
 services:
   test:
     build:
       context: .
       target: test
       args:
-        RAILS_ENV: "test"
-    command: bundle exec rake
+        RAILS_ENV: 'test'
+    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- script/test"
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - test-db
       - test-redis
     env_file:
-       - .env.test
+      - .env.test
     environment:
       DATABASE_URL: postgres://postgres:password@test-db:5432/buy-for-your-school-test
       REDIS_URL: redis://test-redis:6379
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
+      DOCKER: 'true'
+      AUTOMATICALLY_FIX_LINTING: 'true'
     volumes:
       - .:/srv/app
     tty: true

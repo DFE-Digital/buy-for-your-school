@@ -110,7 +110,7 @@ CMD ["bundle", "exec", "rails", "server"]
 # ------------------------------------------------------------------------------
 FROM web as test
 
-RUN apt-get install -qq -y shellcheck
+RUN apt-get install -qq -y shellcheck wait-for-it
 
 COPY package.json ${APP_HOME}/package.json
 COPY package-lock.json ${APP_HOME}/package-lock.json
