@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [release-012] - 2021-05-11
 
 - sections are listed in the order set in Contentful rather than database insert order
+- fix github secret limit by moving from repo secrets to environment secrets
 
 ## [release-011] - 2021-05-10
 
