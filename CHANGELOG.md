@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [Unreleased]
 
 - prevent random CI failures due to missing Redis connections
+- GitHub action that allows manual cloning from master to staging with one-click for content testing
 
 ## [release-012] - 2021-05-11
 
