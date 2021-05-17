@@ -31,9 +31,9 @@ class CreateJourney
         task = CreateTask.new(section: section, contentful_task: contentful_task).call
 
         question_entries = GetStepsFromTask.new(task: contentful_task).call
-        question_entries.each do |entry|
+        question_entries.each_with_index do |entry, index|
           CreateStep.new(
-            contentful_entry: entry, task: task
+            contentful_entry: entry, task: task, order: index
           ).call
         end
       end

@@ -15,10 +15,12 @@ class CreateStep
     currency
   ].freeze
 
-  attr_accessor :task, :contentful_entry
-  def initialize(task:, contentful_entry:)
+  attr_accessor :task, :contentful_entry, :order
+
+  def initialize(task:, contentful_entry:, order:)
     self.task = task
     self.contentful_entry = contentful_entry
+    self.order = order
   end
 
   def call
@@ -45,7 +47,8 @@ class CreateStep
       hidden: hidden,
       additional_step_rules: additional_step_rules,
       raw: raw,
-      task: task
+      task: task,
+      order: order
     )
   end
 

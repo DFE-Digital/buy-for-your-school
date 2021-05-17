@@ -22,17 +22,17 @@ RSpec.describe "Contentful Caching", type: :request do
 
     it "checks the Redis cache instead of making an external request" do
       # TODO: In reality we do not cache categories, but should
-      raw_category_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/radio-question.json")
+      raw_category_response = File.read("#{Rails.root}/spec/fixtures/contentful/001-categories/radio-question.json")
       RedisCache.redis.set("contentful:entry:contentful-category-entry", JSON.dump(raw_category_response))
 
       # TODO: In reality we do not cache sections, but should
-      raw_section_response = File.read("#{Rails.root}/spec/fixtures/contentful/sections/radio-section.json")
+      raw_section_response = File.read("#{Rails.root}/spec/fixtures/contentful/002-sections/radio-section.json")
       RedisCache.redis.set("contentful:entry:radio-section", JSON.dump(raw_section_response))
 
-      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/tasks/radio-task.json")
+      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/003-tasks/radio-task.json")
       RedisCache.redis.set("contentful:entry:radio-task", JSON.dump(raw_step_response))
 
-      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/steps/radio-question.json")
+      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/004-steps/radio-question.json")
       RedisCache.redis.set("contentful:entry:radio-question", JSON.dump(raw_step_response))
 
       expect_any_instance_of(Contentful::Client).not_to receive(:entry)
