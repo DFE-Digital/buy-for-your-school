@@ -3,6 +3,14 @@ class WarmEntryCacheJob < ApplicationJob
 
   queue_as :caching
 
+  # The `GetEntry` service will cache any request for an entry.
+  #
+  # 1. This job will request all required entries for the journey.
+  # 2. If an entry is found in the cache already, nothing happens.
+  # 3. If an entry is not found in the cache this job will ask
+  #    Contentful for it and cache the result.
+  #
+  # Finder services should all use `GetEntry` in their implementations.
   def perform
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
@@ -11,11 +19,6 @@ class WarmEntryCacheJob < ApplicationJob
     rescue GetStepsFromSection::RepeatEntryDetected
       cache.extend_ttl_on_all_entries
       return
-    end
-
-    # TODO: Cache category and sections too
-    [steps].flatten.each do |entry|
-      store_in_cache(cache: cache, key: "contentful:entry:#{entry.id}", entry: entry)
     end
 
     Rollbar.info("Cache warming task complete.")
