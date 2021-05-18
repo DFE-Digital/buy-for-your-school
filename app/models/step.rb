@@ -1,5 +1,7 @@
 class Step < ApplicationRecord
-  self.implicit_order_column = "created_at"
+  self.implicit_order_column = "order"
+  default_scope { order(:order) }
+
   belongs_to :task
 
   has_one :radio_answer

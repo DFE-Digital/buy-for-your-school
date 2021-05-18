@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CreateJourneyStep do
+RSpec.describe CreateStep do
   describe "#call" do
     context "when the new step is of type step" do
       it "creates a local copy of the new step" do
@@ -12,7 +12,7 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "steps/radio-question.json"
         )
 
-        step = described_class.new(task: task, contentful_entry: fake_entry).call
+        step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
@@ -22,6 +22,7 @@ RSpec.describe CreateJourneyStep do
         expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
         expect(step.hidden).to eq(false)
         expect(step.additional_step_rules).to eq(nil)
+        expect(step.order).to eq(0)
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",
@@ -74,7 +75,7 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
-        step = described_class.new(task: task, contentful_entry: fake_entry).call
+        step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
 
         expect(step.options).to eq(nil)
       end
@@ -88,7 +89,7 @@ RSpec.describe CreateJourneyStep do
           contentful_fixture_filename: "steps/short-text-question.json"
         )
 
-        step = described_class.new(task: task, contentful_entry: fake_entry).call
+        step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
 
         expect(step.contentful_type).to eq("short_text")
       end
@@ -105,7 +106,7 @@ RSpec.describe CreateJourneyStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.body).to eq("Procuring a new catering contract can \
@@ -126,7 +127,7 @@ process around March.")
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.primary_call_to_action_text).to eq("Go onwards!")
@@ -144,7 +145,7 @@ process around March.")
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
@@ -162,7 +163,7 @@ process around March.")
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.skip_call_to_action_text).to eq("None of the above")
@@ -180,7 +181,7 @@ process around March.")
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.hidden).to eq(false)
@@ -198,7 +199,7 @@ process around March.")
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry
+          task: task, contentful_entry: fake_entry, order: 0
         ).call
 
         expect(step.additional_step_rules).to eql([
@@ -220,8 +221,8 @@ process around March.")
           contentful_fixture_filename: "steps/unexpected-contentful-type.json"
         )
 
-        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
+        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+          .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
 
       it "raises a rollbar event" do
@@ -241,11 +242,11 @@ process around March.")
             contentful_entry_id: "unexpected-contentful-type",
             content_model: "telepathy",
             step_type: "radios",
-            allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+            allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
+            allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulModel)
+        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+          .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
     end
 
@@ -259,8 +260,8 @@ process around March.")
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
         )
 
-        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
+        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+          .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
 
       it "raises a rollbar event" do
@@ -280,11 +281,11 @@ process around March.")
             contentful_entry_id: "unexpected-contentful-question-type",
             content_model: "question",
             step_type: "telepathy",
-            allowed_content_models: CreateJourneyStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateJourneyStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+            allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
+            allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(task: task, contentful_entry: fake_entry).call }
-          .to raise_error(CreateJourneyStep::UnexpectedContentfulStepType)
+        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+          .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end
   end

@@ -22,7 +22,7 @@ RSpec.describe "Entry previews", type: :request do
         .and_return(fake_get_contentful_entry)
 
       fake_step = create(:step, :radio)
-      allow_any_instance_of(CreateJourneyStep).to receive(:call)
+      allow_any_instance_of(CreateStep).to receive(:call)
         .and_return(fake_step)
 
       get "/preview/entries/#{entry_id}"

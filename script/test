@@ -20,12 +20,12 @@ if [ -n "$TEST_FILE" ]; then
   echo "==> Running the tests matching '$TEST_FILE'..."
   bundle exec rspec --pattern "$TEST_FILE"
 else
-  if [ -n "$CI" ]; then
-    echo "==> Linting Ruby..."
-    bundle exec standardrb
-  else
+  if [ -n "$AUTOMATICALLY_FIX_LINTING" ]; then
     echo "==> Linting Ruby in fix mode..."
     bundle exec standardrb --fix
+  else
+    echo "==> Linting Ruby..."
+    bundle exec standardrb
   fi
 
   echo "==> Running the tests..."

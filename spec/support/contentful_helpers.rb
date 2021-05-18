@@ -145,7 +145,7 @@ module ContentfulHelpers
   end
 
   def fake_contentful_category(contentful_fixture_filename:)
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/categories/#{contentful_fixture_filename}")
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/001-categories/#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
     sections = hash_response.dig("fields", "sections").map { |section|
@@ -173,7 +173,7 @@ module ContentfulHelpers
   end
 
   def fake_contentful_section(contentful_fixture_filename:)
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/002-#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
     contentful_connector = instance_double(ContentfulConnector)
 
@@ -199,7 +199,7 @@ module ContentfulHelpers
   end
 
   def fake_contentful_task(contentful_fixture_filename:)
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/003-#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
     task = double(
@@ -217,7 +217,7 @@ module ContentfulHelpers
   end
 
   def fake_contentful_step(contentful_fixture_filename:)
-    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/#{contentful_fixture_filename}")
+    raw_response = File.read("#{Rails.root}/spec/fixtures/contentful/004-#{contentful_fixture_filename}")
     hash_response = JSON.parse(raw_response)
 
     double(

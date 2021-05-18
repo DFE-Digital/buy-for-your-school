@@ -72,7 +72,7 @@ RSpec.describe CheckboxesAnswerPresenter do
       it "the further_information is correctly returned" do
         step = build(:checkbox_answers,
           response: ["Other, please specify"],
-          further_information: {"other_please_specify_further_information": "Sinks and stuff"})
+          further_information: {other_please_specify_further_information: "Sinks and stuff"})
         presenter = described_class.new(step)
         expect(presenter.to_param).to eql({
           response: ["Other, please specify"],

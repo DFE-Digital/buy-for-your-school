@@ -2,6 +2,6 @@
   "name": "rails-template",
   "private": true,
   "dependencies": {
-    "govuk-frontend": "^3.11.0"
+    "govuk-frontend": "^3.12.0"
   }
 }

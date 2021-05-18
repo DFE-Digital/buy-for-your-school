@@ -13,10 +13,10 @@ RSpec.describe "Cache invalidation", type: :request do
     RedisCache.redis.set("contentful:entry:6zeSz4F4YtD66gT5SFpnSB", "a dummy value")
 
     fake_contentful_webook_payload = {
-      "entityId": "6zeSz4F4YtD66gT5SFpnSB",
-      "spaceId": "rwl7tyzv9sys",
-      "parameters": {
-        "text": "Entity version: 62"
+      entityId: "6zeSz4F4YtD66gT5SFpnSB",
+      spaceId: "rwl7tyzv9sys",
+      parameters: {
+        text: "Entity version: 62"
       }
     }
 
@@ -36,10 +36,10 @@ RSpec.describe "Cache invalidation", type: :request do
 
   it "logs information of the event in Rollbar for debugging" do
     fake_contentful_webook_payload = {
-      "entityId": "6zeSz4F4YtD66gT5SFpnSB",
-      "spaceId": "rwl7tyzv9sys",
-      "parameters": {
-        "text": "Entity version: 62"
+      entityId: "6zeSz4F4YtD66gT5SFpnSB",
+      spaceId: "rwl7tyzv9sys",
+      parameters: {
+        text: "Entity version: 62"
       }
     }
 
@@ -65,10 +65,10 @@ RSpec.describe "Cache invalidation", type: :request do
       RedisCache.redis.set("contentful:entry:6zeSz4F4YtD66gT5SFpnSB", "a dummy value")
 
       fake_contentful_webook_payload = {
-        "entityId": "6zeSz4F4YtD66gT5SFpnSB",
-        "spaceId": "rwl7tyzv9sys",
-        "parameters": {
-          "text": "Entity version: 62"
+        entityId: "6zeSz4F4YtD66gT5SFpnSB",
+        spaceId: "rwl7tyzv9sys",
+        parameters: {
+          text: "Entity version: 62"
         }
       }
 
