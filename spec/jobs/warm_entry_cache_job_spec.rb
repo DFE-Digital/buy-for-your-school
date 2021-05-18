@@ -57,8 +57,30 @@ RSpec.describe WarmEntryCacheJob, type: :job do
         expect(RedisCache.redis).not_to receive(:set).with("contentful:entry:radio-question", anything)
       end
 
+      it "raises an error to the team via Rollbar to indicate an issue" do
+        stub_contentful_category(
+          fixture_filename: "journey-with-repeat-entries.json"
+        )
+
+        allow_any_instance_of(GetStepsFromSection)
+          .to receive(:call)
+          .and_raise(GetStepsFromSection::RepeatEntryDetected)
+
+        expect(Rollbar).to receive(:error)
+          .with("A repeated Contentful entry was found in the same task", anything)
+          .and_call_original
+
+        expect(Rollbar).to receive(:error)
+          .with("Cache warming task failed. The old cached data was extended by 24 hours.")
+          .and_call_original
+
+        described_class.perform_later
+        perform_enqueued_jobs
+      end
+
       it "extends the TTL on all existing items by 24 hours" do
-        RedisCache.redis.set("contentful:entry:radio-question", "\"{\\}\"")
+        old_cache_value = "\"{\\}\""
+        RedisCache.redis.set("contentful:entry:radio-question", old_cache_value)
 
         stub_contentful_category(
           fixture_filename: "journey-with-repeat-entries.json"
@@ -69,26 +91,16 @@ RSpec.describe WarmEntryCacheJob, type: :job do
           .and_raise(GetStepsFromSection::RepeatEntryDetected)
 
         freeze_time do
-          ttl_default = 60 * 60 * 72
           ttl_extension = 60 * 60 * 24
-          existing_ttl = -1
-
-          # When section is first stored in the cache it is set with a default TTL
-          expect(RedisCache.redis)
-            .to receive(:expire)
-            .with("contentful:entry:journey-with-repeat-entries-section", ttl_default)
-
-          # All cached items are extended by 24 hours
-          expect(RedisCache.redis)
-          .to receive(:expire)
-          .with("contentful:entry:journey-with-repeat-entries-section", ttl_extension + existing_ttl)
-
-          expect(RedisCache.redis)
-            .to receive(:expire)
-            .with("contentful:entry:radio-question", ttl_extension + existing_ttl)
 
           described_class.perform_later
           perform_enqueued_jobs
+
+          expect(RedisCache.redis.ttl("contentful:entry:journey-with-repeat-entries-section")).to eql(ttl_extension)
+          expect(RedisCache.redis.ttl("contentful:entry:radio-question")).to eql(ttl_extension)
+
+          # The content of the cache should not be changed to the contents of the fixture.
+          expect(RedisCache.redis.get("contentful:entry:radio-question")).to eql(old_cache_value)
         end
       end
     end
