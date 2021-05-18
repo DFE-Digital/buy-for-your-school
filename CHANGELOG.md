@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-013] - 2021-05-18
+
 - prevent random CI failures due to missing Redis connections
 - GitHub action that allows manual cloning from master to staging with one-click for content testing
 - steps are listed in the order set in Contentful rather than database insert order
@@ -169,7 +171,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-012...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-013...HEAD
+[release-013]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-012...release-013
 [release-012]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...release-012
 [release-011]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-010...release-011
 [release-010]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-009...release-010
