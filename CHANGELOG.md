@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - remove now unused GetStepFromSection service to complete code migration to get steps from tasks
 - answering steps in a task may take you to the next step unless you've answered them all
 - tasks with no answers take the user straight to the first question instead of the task page
+- swap task view pattern for the check your answers pattern
 
 ## [release-013] - 2021-05-18
 

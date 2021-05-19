@@ -68,7 +68,7 @@ feature "Users can view a task" do
       expect(page).to have_content "Which service do you need?"
     end
 
-    it "has a back link on the step page that takes you to the task list" do
+    it "has a back link on the step page that takes you to the check your answers page" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
@@ -93,7 +93,7 @@ feature "Users can view a task" do
       expect(page).to have_content "What email address did you use?"
     end
 
-    it "allows the user to click on a step to supply the last answer in a task, and be taken to the task page" do
+    it "allows the user to click on a step to supply the last answer in a task, and be taken to the check your answers page" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
@@ -113,8 +113,8 @@ feature "Users can view a task" do
       click_on(I18n.t("generic.button.next"))
 
       expect(page).to have_content "Task with multiple steps"
-      within(".app-task-list") do
-        expect(page).to have_content("Complete")
+      within(".govuk-summary-list") do
+        expect(page).to have_content("Catering")
       end
     end
   end

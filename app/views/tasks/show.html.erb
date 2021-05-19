@@ -3,28 +3,12 @@
 
 <h1 class="govuk-heading-xl"><%= @task.title %></h1>
 
-<ol class="app-task-list tasks">
-  <li>
-    <ul class="app-task-list__items">
-      <% @steps.each do |step| %>
-        <% if step.question? %>
-          <li class="app-task-list__item step__item" id="<%= step.id %>">
-            <% if step.answer %>
-                <span class="app-task-list__task-name">
-                  <%= link_to step.title, edit_journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
-                </span>
-              <strong class="govuk-tag app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.completed") %></strong>
-            <% else %>
-                <span class="app-task-list__task-name">
-                  <%= link_to step.title, journey_step_path(@journey, step), class: "govuk-link", 'aria-describedby': step.id + "-status"%>
-                </span>
-              <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="<%= step.id + "-status" %>"><%= I18n.t("task_list.status.not_started") %></strong>
-            <% end %>
-          </li>
-        <% end %>
-      <% end %>
-    </ul>
-  </li>
-</ol>
+<dl class="govuk-summary-list">
+  <% @steps.each do |step| %>
+    <% if step.question? %>
+      <%= render "#{step.contentful_type}_answer", step: step, answer: step.answer %>
+    <% end %>
+  <% end %>
+</dl>
 
 <%= link_to I18n.t("task.buttons.back"), journey_path(@journey), class: "govuk-button" %>
