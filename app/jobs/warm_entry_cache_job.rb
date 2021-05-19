@@ -17,7 +17,8 @@ class WarmEntryCacheJob < ApplicationJob
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
     tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
-    steps = begin
+
+    begin
       tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
     rescue GetStepsFromTask::RepeatEntryDetected
       restore_old_cache
