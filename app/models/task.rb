@@ -61,6 +61,11 @@ class Task < ApplicationRecord
 
     remaining_ids.first
   end
+
+  def steps_with_answers
+    eager_loaded_steps.select(&:answered?)
+  end
+
   private
 
   def eager_loaded_steps

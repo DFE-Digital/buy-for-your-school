@@ -197,4 +197,20 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  describe "#steps_with_answers" do
+    it "returns all steps with answers" do
+      task = create(:task)
+
+      step_1 = create(:step, :radio, task: task, order: 0)
+      # Omit an answer for step 1
+
+      step_2 = create(:step, :radio, task: task, order: 1)
+      _answer_2 = create(:radio_answer, step: step_2)
+
+      result = task.steps_with_answers
+
+      expect(result).to include(step_2)
+      expect(result).not_to include(step_1)
+    end
+  end
 end
