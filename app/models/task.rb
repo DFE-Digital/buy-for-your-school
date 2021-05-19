@@ -46,6 +46,10 @@ class Task < ApplicationRecord
 
     NOT_STARTED
   end
+
+  def all_steps_answered?
+    eager_loaded_steps.all?(&:answered?)
+  end
   private
 
   def eager_loaded_steps

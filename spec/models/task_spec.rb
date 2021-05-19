@@ -100,4 +100,34 @@ RSpec.describe Task, type: :model do
       expect(task.status).to eq Task::COMPLETED
     end
   end
+
+  describe "#all_steps_answered?" do
+    it "returns true when all steps have answers" do
+      task = create(:task)
+      step = create(:step, :radio, task: task)
+      _answer = create(:radio_answer, step: step)
+
+      expect(task.all_steps_answered?).to eq(true)
+    end
+
+    it "returns false when no steps have answers" do
+      task = create(:task)
+      _step = create(:step, :radio, task: task)
+      # Omit the creation of an answer
+
+      expect(task.all_steps_answered?).to eq(false)
+    end
+
+    it "returns false when some steps have answers" do
+      task = create(:task)
+
+      step_1 = create(:step, :radio, task: task)
+      _answer_1 = create(:radio_answer, step: step_1)
+
+      _step_2 = create(:step, :radio, task: task)
+      # Omit the creation of an answer for step 2
+
+      expect(task.all_steps_answered?).to eq(false)
+    end
+  end
 end
