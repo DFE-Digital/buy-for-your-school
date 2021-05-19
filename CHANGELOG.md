@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- remove now unused GetStepFromSection service to complete code migration to get steps from tasks
+
 ## [release-013] - 2021-05-18
 
 - prevent random CI failures due to missing Redis connections
