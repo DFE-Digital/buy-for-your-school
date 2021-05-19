@@ -50,6 +50,17 @@ class Task < ApplicationRecord
   def all_steps_answered?
     eager_loaded_steps.all?(&:answered?)
   end
+
+  def next_unanswered_step_id
+    step_ids = eager_loaded_steps.pluck(:id)
+    answered_step_ids = steps_with_answers.pluck(:id)
+
+    remaining_ids = step_ids - answered_step_ids
+
+    return nil if remaining_ids.empty?
+
+    remaining_ids.first
+  end
   private
 
   def eager_loaded_steps

@@ -130,4 +130,71 @@ RSpec.describe Task, type: :model do
       expect(task.all_steps_answered?).to eq(false)
     end
   end
+
+  describe "#next_unanswered_step_id" do
+    context "when no steps have answers" do
+      it "returns the first step ID" do
+        task = create(:task)
+
+        step_1 = create(:step, :radio, task: task, order: 0)
+        _step_2 = create(:step, :radio, task: task, order: 1)
+
+        result = task.next_unanswered_step_id
+
+        expect(result).to eq(step_1.id)
+      end
+    end
+
+    context "when all steps have answers" do
+      it "returns nil" do
+        task = create(:task)
+
+        step_1 = create(:step, :radio, task: task, order: 0)
+        _answer_1 = create(:radio_answer, step: step_1)
+
+        step_2 = create(:step, :radio, task: task, order: 1)
+        _answer_2 = create(:radio_answer, step: step_2)
+
+        result = task.next_unanswered_step_id
+
+        expect(result).to eq(nil)
+      end
+    end
+
+    context "when only the first step has been answered" do
+      it "returns the second step ID" do
+        task = create(:task)
+
+        step_1 = create(:step, :radio, task: task, order: 0)
+        _answer_1 = create(:radio_answer, step: step_1)
+
+        step_2 = create(:step, :radio, task: task, order: 1)
+        # Omit an answer for step 2
+
+        result = task.next_unanswered_step_id
+
+        expect(result).to eq(step_2.id)
+      end
+    end
+
+    context "when a middle step has been answered" do
+      it "returns the first step ID" do
+        task = create(:task)
+
+        step_1 = create(:step, :radio, task: task, order: 0)
+        # Omit an answer for step 1
+
+        step_2 = create(:step, :radio, task: task, order: 1)
+        _answer_2 = create(:radio_answer, step: step_2)
+
+        _step_3 = create(:step, :radio, task: task, order: 2)
+        # Omit an answer for step 3
+
+        result = task.next_unanswered_step_id
+
+        expect(result).to eq(step_1.id)
+      end
+    end
+  end
+
 end
