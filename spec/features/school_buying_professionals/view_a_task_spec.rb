@@ -63,7 +63,7 @@ feature "Users can view a task" do
       expect(page).to have_content "Task with multiple steps"
     end
 
-    it "allows the user to click on a step to supply an answer, and returns to the task page" do
+    it "allows the user to click on a step to supply an answer, and be taken to the next step" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
@@ -71,8 +71,33 @@ feature "Users can view a task" do
       end
 
       click_on "Which service do you need?"
+
       choose "Catering"
-      click_on "Continue"
+      click_on(I18n.t("generic.button.next"))
+
+      expect(page).to have_content "What email address did you use?"
+    end
+
+    it "allows the user to click on a step to supply the last answer in a task, and be taken to the task page" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      within(".app-task-list") do
+        click_on "Task with multiple steps"
+      end
+
+      click_on "Which service do you need?"
+
+      choose "Catering"
+      click_on(I18n.t("generic.button.next"))
+
+      fill_in "answer[response]", with: "This is my short answer"
+      click_on(I18n.t("generic.button.next"))
+
+      fill_in "answer[response]", with: "This is my long answer"
+      click_on(I18n.t("generic.button.next"))
+
+      check("Breakfast")
+      click_on(I18n.t("generic.button.next"))
 
       expect(page).to have_content "Task with multiple steps"
       within(".app-task-list") do

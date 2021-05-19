@@ -188,6 +188,9 @@ feature "Users can view the task list" do
         choose("School expert")
         click_on("Continue")
 
+        # We get taken to the next question so we go back to the task page
+        click_on(I18n.t("generic.button.back"))
+
         # Check that "What colour is in the sky added to the correct place in the list"
         steps = find_all(".app-task-list__item.step__item")
         within(".app-task-list") do
