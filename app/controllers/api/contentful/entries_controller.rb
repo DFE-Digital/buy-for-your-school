@@ -12,7 +12,7 @@ class Api::Contentful::EntriesController < ApplicationController
   end
 
   private def cache_key
-    "contentful:entry:#{changed_params["entityId"]}"
+    "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{changed_params["entityId"]}"
   end
 
   private def changed_params
