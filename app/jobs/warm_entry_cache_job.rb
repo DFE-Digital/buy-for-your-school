@@ -41,17 +41,17 @@ class WarmEntryCacheJob < ApplicationJob
 
   def backup_old_cache
     move_cached_items(
-      keys: RedisCache.redis.keys("contentful:entry:*"),
-      old_key_prefix: "contentful:entry:",
-      new_key_prefix: "backup:contentful:entry:"
+      keys: RedisCache.redis.keys("#{Cache::ENTRY_CACHE_KEY_PREFIX}:*"),
+      old_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
+      new_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:"
     )
   end
 
   def restore_old_cache
     move_cached_items(
-      keys: RedisCache.redis.keys("backup:contentful:entry:*"),
-      old_key_prefix: "backup:contentful:entry:",
-      new_key_prefix: "contentful:entry:"
+      keys: RedisCache.redis.keys("backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:*"),
+      old_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
+      new_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:"
     )
   end
 

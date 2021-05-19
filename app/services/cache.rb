@@ -1,5 +1,8 @@
 class Cache
   attr_accessor :enabled, :key, :ttl
+
+  ENTRY_CACHE_KEY_PREFIX = "contentful:entry".freeze
+
   def initialize(enabled:, ttl:)
     self.enabled = enabled
     self.ttl = ttl
@@ -32,7 +35,7 @@ class Cache
   end
 
   def extend_ttl_on_all_entries(extension: (60 * 60 * 24))
-    redis_cache.keys("contentful:entry:*").map do |key|
+    redis_cache.keys("#{Cache::ENTRY_CACHE_KEY_PREFIX}:*").map do |key|
       previous_ttl = redis_cache.ttl(key)
       extended_ttl = extension + previous_ttl
 

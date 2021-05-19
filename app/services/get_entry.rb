@@ -32,7 +32,7 @@ class GetEntry
   private
 
   def cache_key
-    "contentful:entry:#{entry_id}"
+    "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{entry_id}"
   end
 
   def send_rollbar_warning
