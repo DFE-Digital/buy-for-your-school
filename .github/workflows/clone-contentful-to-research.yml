@@ -21,3 +21,10 @@ jobs:
 
       - name: Clone master environment to a new research environment
         run: contentful space --space-id ${{ secrets.APP_ENV_PROD_CONTENTFUL_SPACE }} environment create --name research --environment-id research --source master
+
+      - name: Cache bust the research category record to refresh the environment
+        run: |
+          curl -XPOST -H 'Authorization: Token ${{ secrets.CONTENTFUL_WEBHOOK_API_KEY }}' -H "Content-type: application/json" -d '{
+            "entityId": "${{ secrets.APP_ENV_PROD_CONTENTFUL_DEFAULT_CATEGORY_ENTRY }}",
+            "spaceId": "${{ secrets.APP_ENV_PROD_CONTENTFUL_SPACE }}"
+          }' '${{ secrets.RESEARCH_URL }}/api/contentful/entry_updated'
