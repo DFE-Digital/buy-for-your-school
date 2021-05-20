@@ -2,7 +2,7 @@ feature "Users can see their catering specification" do
   before { user_is_signed_in }
 
   scenario "HTML" do
-    start_journey_from_category_and_go_to_question(category: "category-with-dynamic-liquid-template.json")
+    start_journey_from_category_and_go_to_first_section(category: "category-with-dynamic-liquid-template.json")
 
     choose("Catering")
     click_on(I18n.t("generic.button.next"))
@@ -28,7 +28,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "renders radio responses that have futher information" do
-    start_journey_from_category_and_go_to_question(category: "extended-radio-question.json")
+    start_journey_from_category_and_go_to_first_section(category: "extended-radio-question.json")
 
     choose("Catering")
     fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
@@ -44,7 +44,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "renders checkbox responses that have further information" do
-    start_journey_from_category_and_go_to_question(category: "extended-checkboxes-question.json")
+    start_journey_from_category_and_go_to_first_section(category: "extended-checkboxes-question.json")
 
     check("Yes")
     fill_in "answer[yes_further_information]", with: "More info for yes"
@@ -65,7 +65,7 @@ feature "Users can see their catering specification" do
   end
 
   scenario "questions that are skipped can be identified" do
-    start_journey_from_category_and_go_to_question(category: "skippable-checkboxes-question.json")
+    start_journey_from_category_and_go_to_first_section(category: "skippable-checkboxes-question.json")
 
     click_on("None of the above")
     click_on(I18n.t("journey.specification.button"))
@@ -86,7 +86,7 @@ feature "Users can see their catering specification" do
 
   context "when the spec template is configured using multiple sections" do
     it "renders both parts in the spec" do
-      start_journey_from_category_and_go_to_question(category: "multiple-specification-templates.json")
+      start_journey_from_category_and_go_to_first_section(category: "multiple-specification-templates.json")
 
       choose("Catering")
       click_on(I18n.t("generic.button.next"))

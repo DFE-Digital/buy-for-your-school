@@ -11,9 +11,9 @@ class StepsController < ApplicationController
 
     @answer = AnswerFactory.new(step: @step).call
     @back_url = if !parent_task || parent_task.has_single_visible_step?
-      journey_path(@journey, anchor: @step.id)
+      journey_path(@journey, anchor: @step.id, back_link: true)
     else
-      journey_task_path(@journey, parent_task)
+      journey_task_path(@journey, parent_task, back_link: true)
     end
 
     render @step.contentful_type, locals: {layout: "steps/new_form_wrapper"}
@@ -27,9 +27,9 @@ class StepsController < ApplicationController
 
     @answer = @step.answer
     @back_url = if !parent_task || parent_task.has_single_visible_step?
-      journey_path(@journey, anchor: @step.id)
+      journey_path(@journey, anchor: @step.id, back_link: true)
     else
-      journey_task_path(@journey, parent_task)
+      journey_task_path(@journey, parent_task, back_link: true)
     end
 
     render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}

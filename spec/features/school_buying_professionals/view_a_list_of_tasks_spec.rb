@@ -30,6 +30,10 @@ feature "Users can view the task list" do
       click_on "Task with multiple steps"
     end
 
+    # Back to the Task page
+    click_on(I18n.t("generic.button.back"))
+
+    # Back to the Journey page
     click_on(I18n.t("generic.button.back"))
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
@@ -74,7 +78,6 @@ feature "Users can view the task list" do
         click_on "Task with multiple steps"
       end
 
-      click_on "Everyday services that are required and need to be considered"
       click_on(I18n.t("generic.button.back"))
 
       expect(page).to have_content("Task with multiple steps")
@@ -175,6 +178,7 @@ feature "Users can view the task list" do
         Step.find_by(title: "What colour is the sky?").update(created_at: 1.days.ago)
 
         click_on("One additional question task")
+        click_on(I18n.t("generic.button.back"))
 
         steps = find_all(".app-task-list__item.step__item")
         within(".app-task-list") do

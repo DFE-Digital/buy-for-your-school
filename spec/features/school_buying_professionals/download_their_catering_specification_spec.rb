@@ -3,7 +3,7 @@ feature "Users can see their catering specification" do
 
   context "when the journey has been completed" do
     scenario "HTML" do
-      start_journey_from_category_and_go_to_question(category: "category-with-liquid-template.json")
+      start_journey_from_category_and_go_to_first_section(category: "category-with-liquid-template.json")
 
       common_specification_html = "<article id='specification'><h1>Liquid </h1></article>"
       expect(Htmltoword::Document)

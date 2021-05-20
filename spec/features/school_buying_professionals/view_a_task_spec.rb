@@ -5,14 +5,31 @@ feature "Users can view a task" do
   before { user_is_signed_in(user: user) }
 
   context "When there is a task with multiple steps" do
-    it "the Task title takes you to a Task page" do
+    it "the Task title takes you to the first step" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
       end
 
-      expect(page).to have_content "Task with multiple steps"
+      expect(page).to have_content "Which service do you need?"
+    end
+
+    context "when a task has at least one answered step" do
+      it "takes the user to the task page" do
+        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+        task = Task.find_by(title: "Task with multiple steps")
+        step = task.steps.first
+        create(:radio_answer, step: step)
+
+        within(".app-task-list") do
+          click_on "Task with multiple steps"
+        end
+
+        expect(page).to have_content("Task with multiple steps")
+        expect(page).to have_content("Which service do you need?")
+      end
     end
 
     it "the back link takes you to the journey page" do
@@ -22,18 +39,19 @@ feature "Users can view a task" do
         click_on "Task with multiple steps"
       end
 
-      expect(page).to have_content "Back"
-
-      click_on "Back"
+      click_on I18n.t("generic.button.back")
       expect(page).to have_content "Task with multiple steps"
     end
 
-    it "shows a list of the task's steps" do
+    it "shows a list of the task steps" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
       end
+
+      # Unstarded tasks take the user straight to the first step so we have to go back
+      click_on(I18n.t("generic.button.back"))
 
       expect(page).to have_content "Which service do you need?"
       expect(page).to have_content "Everyday services that are required and need to be considered"
@@ -57,8 +75,7 @@ feature "Users can view a task" do
         click_on "Task with multiple steps"
       end
 
-      click_on "Which service do you need?"
-      click_on "Back"
+      click_on(I18n.t("generic.button.back"))
 
       expect(page).to have_content "Task with multiple steps"
     end
@@ -69,8 +86,6 @@ feature "Users can view a task" do
       within(".app-task-list") do
         click_on "Task with multiple steps"
       end
-
-      click_on "Which service do you need?"
 
       choose "Catering"
       click_on(I18n.t("generic.button.next"))
@@ -84,8 +99,6 @@ feature "Users can view a task" do
       within(".app-task-list") do
         click_on "Task with multiple steps"
       end
-
-      click_on "Which service do you need?"
 
       choose "Catering"
       click_on(I18n.t("generic.button.next"))
