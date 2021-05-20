@@ -14,7 +14,7 @@ RSpec.describe "Entry previews", type: :request do
       entry_id = "123"
       fake_journey = create(:journey)
       expect(Journey).to receive(:create)
-        .with(category: anything, user: anything, liquid_template: anything)
+        .with(category: anything, contentful_id: anything, user: anything, liquid_template: anything)
         .and_return(fake_journey)
 
       fake_get_contentful_entry = instance_double(Contentful::Entry)

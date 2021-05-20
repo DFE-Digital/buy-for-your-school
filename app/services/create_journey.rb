@@ -11,6 +11,7 @@ class CreateJourney
     contentful_sections = GetSectionsFromCategory.new(category: category).call
     journey = Journey.new(
       category: category.title,
+      contentful_id: category.id,
       user: user,
       started: true,
       last_worked_on: Time.zone.now,

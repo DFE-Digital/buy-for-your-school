@@ -16,7 +16,9 @@ RSpec.describe CreateJourney do
       )
       expect { described_class.new(category_id: "contentful-category-entry", user: build(:user)).call }
         .to change { Journey.count }.by(1)
-      expect(Journey.last.category).to eql("Catering")
+      last_journey = Journey.last
+      expect(last_journey.category).to eql("Catering")
+      expect(last_journey.contentful_id).to eql("contentful-category-entry")
     end
 
     it "associates the new journey with the given user" do
