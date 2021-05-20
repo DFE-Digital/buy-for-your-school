@@ -1,16 +1,16 @@
 class CreateJourney
-  attr_accessor :category_name, :user
+  attr_accessor :category_id, :user
 
-  def initialize(category_name:, user:)
-    self.category_name = category_name
+  def initialize(category_id:, user:)
+    self.category_id = category_id
     self.user = user
   end
 
   def call
-    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
+    category = GetCategory.new(category_entry_id: category_id).call
     contentful_sections = GetSectionsFromCategory.new(category: category).call
     journey = Journey.new(
-      category: category_name,
+      category: category.title,
       user: user,
       started: true,
       last_worked_on: Time.zone.now,

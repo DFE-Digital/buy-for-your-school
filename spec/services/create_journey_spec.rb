@@ -14,9 +14,9 @@ RSpec.describe CreateJourney do
       stub_contentful_category(
         fixture_filename: "category-with-no-steps.json"
       )
-      expect { described_class.new(category_name: "catering", user: build(:user)).call }
+      expect { described_class.new(category_id: "contentful-category-entry", user: build(:user)).call }
         .to change { Journey.count }.by(1)
-      expect(Journey.last.category).to eql("catering")
+      expect(Journey.last.category).to eql("Catering")
     end
 
     it "associates the new journey with the given user" do
@@ -25,7 +25,7 @@ RSpec.describe CreateJourney do
       )
       user = create(:user)
 
-      described_class.new(category_name: "catering", user: user).call
+      described_class.new(category_id: "contentful-category-entry", user: user).call
 
       expect(Journey.last.user).to eq(user)
     end
@@ -34,7 +34,7 @@ RSpec.describe CreateJourney do
       stub_contentful_category(
         fixture_filename: "category-with-no-steps.json"
       )
-      described_class.new(category_name: "catering", user: build(:user)).call
+      described_class.new(category_id: "contentful-category-entry", user: build(:user)).call
       expect(Journey.last.started).to eq(true)
     end
 
@@ -44,7 +44,7 @@ RSpec.describe CreateJourney do
         fixture_filename: "category-with-no-steps.json"
       )
 
-      described_class.new(category_name: "catering", user: build(:user)).call
+      described_class.new(category_id: "contentful-category-entry", user: build(:user)).call
 
       expect(Journey.last.last_worked_on).to eq(Time.zone.now)
     end
@@ -54,7 +54,7 @@ RSpec.describe CreateJourney do
         fixture_filename: "category-with-liquid-template.json"
       )
 
-      described_class.new(category_name: "catering", user: build(:user)).call
+      described_class.new(category_id: "contentful-category-entry", user: build(:user)).call
 
       expect(Journey.last.liquid_template)
         .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
@@ -63,12 +63,12 @@ RSpec.describe CreateJourney do
     context "when the journey cannot be saved" do
       it "raises an error" do
         stub_contentful_category(
-          fixture_filename: "category-with-liquid-template.json",
+          fixture_filename: "category-with-no-title.json",
           stub_sections: true
         )
 
-        # Force a validation error by not providing a category_name
-        expect { described_class.new(category_name: nil, user: build(:user)).call }
+        # Force a validation error by not providing an invalid category ID
+        expect { described_class.new(category_id: "contentful-category-entry", user: build(:user)).call }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end
