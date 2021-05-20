@@ -183,6 +183,7 @@ module ContentfulHelpers
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       title: hash_response.dig("fields", "title"),
+      raw: hash_response,
       tasks: tasks.map { |task_hash| double(id: task_hash.dig("sys", "id")) }
     )
 

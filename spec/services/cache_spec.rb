@@ -123,8 +123,8 @@ RSpec.describe Cache do
       cache = described_class.new(enabled: anything, ttl: anything)
       redis = cache.redis_cache
 
-      redis.set("contentful:entry:123", "value")
-      expect(redis).to receive(:expire).with("contentful:entry:123", (60 * 60 * 24) + -1)
+      redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:123", "value")
+      expect(redis).to receive(:expire).with("#{Cache::ENTRY_CACHE_KEY_PREFIX}:123", (60 * 60 * 24) + -1)
 
       cache.extend_ttl_on_all_entries
     end
@@ -146,9 +146,9 @@ RSpec.describe Cache do
         cache = described_class.new(enabled: anything, ttl: anything)
         redis = cache.redis_cache
 
-        redis.set("contentful:entry:123", "value")
-        redis.expire("contentful:entry:123", 10)
-        expect(redis).to receive(:expire).with("contentful:entry:123", (60 * 60 * 24) + 10)
+        redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:123", "value")
+        redis.expire("#{Cache::ENTRY_CACHE_KEY_PREFIX}:123", 10)
+        expect(redis).to receive(:expire).with("#{Cache::ENTRY_CACHE_KEY_PREFIX}:123", (60 * 60 * 24) + 10)
 
         cache.extend_ttl_on_all_entries
       end

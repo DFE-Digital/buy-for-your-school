@@ -16,5 +16,25 @@ RSpec.describe GetStepsFromTask do
       # is constructed within the gem. Creating the object seems overly complex.
       expect(result.first.id).to eq("checkboxes-question")
     end
+
+    context "when the same entry is found twice" do
+      it "returns an error message" do
+        task = fake_contentful_task(
+          contentful_fixture_filename: "tasks/repeat-entries-task.json"
+        )
+
+        expect(Rollbar).to receive(:error)
+          .with("A repeated Contentful entry was found in the same task",
+            contentful_url: ENV["CONTENTFUL_URL"],
+            contentful_space_id: ENV["CONTENTFUL_SPACE"],
+            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+            contentful_entry_id: "radio-question")
+          .and_call_original
+
+        expect {
+          described_class.new(task: task).call
+        }.to raise_error(GetStepsFromTask::RepeatEntryDetected)
+      end
+    end
   end
 end

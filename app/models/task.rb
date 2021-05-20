@@ -24,15 +24,7 @@ class Task < ApplicationRecord
   end
 
   def answered_questions_count
-    visible_steps.includes([
-      :short_text_answer,
-      :long_text_answer,
-      :radio_answer,
-      :checkbox_answers,
-      :currency_answer,
-      :number_answer,
-      :single_date_answer
-    ]).count { |step| step.answered? }
+    visible_steps_with_answers.count
   end
 
   def status
@@ -45,5 +37,38 @@ class Task < ApplicationRecord
     end
 
     NOT_STARTED
+  end
+
+  def all_steps_answered?
+    eager_loaded_visible_steps.all?(&:answered?)
+  end
+
+  def visible_steps_with_answers
+    eager_loaded_visible_steps.select(&:answered?)
+  end
+
+  def next_unanswered_step_id
+    step_ids = eager_loaded_visible_steps.pluck(:id)
+    answered_step_ids = visible_steps_with_answers.pluck(:id)
+
+    remaining_ids = step_ids - answered_step_ids
+
+    return nil if remaining_ids.empty?
+
+    remaining_ids.first
+  end
+
+  private
+
+  def eager_loaded_visible_steps
+    @eager_loaded_visible_steps ||= visible_steps.includes(
+      %i[short_text_answer
+         long_text_answer
+         radio_answer
+         checkbox_answers
+         currency_answer
+         number_answer
+         single_date_answer]
+    )
   end
 end
