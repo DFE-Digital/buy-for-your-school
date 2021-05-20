@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   def show
     @journey = current_journey
     @task = Task.find(task_id)
-    steps = @task.eager_loaded_visible_steps
+    steps = @task.eager_loaded_visible_steps.ordered
     @steps = steps.map { |step| StepPresenter.new(step) }
   end
 
