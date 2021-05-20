@@ -28,13 +28,8 @@ class Task < ApplicationRecord
   end
 
   def status
-    if answered_questions_count == visible_steps_count
-      return COMPLETED
-    end
-
-    if answered_questions_count > 0
-      return IN_PROGRESS
-    end
+    return COMPLETED if answered_questions_count == visible_steps_count
+    return IN_PROGRESS if answered_questions_count.positive?
 
     NOT_STARTED
   end
