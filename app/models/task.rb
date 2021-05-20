@@ -58,8 +58,6 @@ class Task < ApplicationRecord
     remaining_ids.first
   end
 
-  private
-
   def eager_loaded_visible_steps
     @eager_loaded_visible_steps ||= visible_steps.includes(
       %i[short_text_answer
