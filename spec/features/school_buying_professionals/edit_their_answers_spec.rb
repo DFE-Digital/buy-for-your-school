@@ -85,7 +85,7 @@ feature "Users can edit their answers" do
 
   context "when Contentful entry includes a 'show additional question' rule" do
     scenario "an additional question is shown" do
-      start_journey_from_category_and_go_to_question(category: "show-one-additional-question.json")
+      start_journey_from_category_and_go_to_first_section(category: "show-one-additional-question.json")
 
       choose("School expert")
       click_on(I18n.t("generic.button.next"))

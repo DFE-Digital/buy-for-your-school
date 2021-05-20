@@ -1,6 +1,12 @@
 module JourneyHelpers
+  def click_first_link_in_section_list
+    within("ol.app-task-list.sections") do
+      first("a").click
+    end
+  end
+
   def click_first_link_in_task_list
-    within("ol.app-task-list") do
+    within("ol.app-task-list.tasks") do
       first("a").click
     end
   end
@@ -23,9 +29,8 @@ module JourneyHelpers
     user_signs_in_and_starts_the_journey
   end
 
-  def start_journey_from_category_and_go_to_question(category:)
+  def start_journey_from_category_and_go_to_first_section(category:)
     start_journey_from_category(category: category)
-
-    click_first_link_in_task_list
+    click_first_link_in_section_list
   end
 end
