@@ -54,10 +54,12 @@ RSpec.describe Task, type: :model do
   describe "#answered_questions_count" do
     it "returns the number of visible questions which have been answered" do
       task = create(:task)
+
       step_1 = create(:step, :radio, hidden: false, task: task)
       create(:radio_answer, step: step_1)
       step_2 = create(:step, :radio, hidden: true, task: task)
       create(:radio_answer, step: step_2)
+
       create(:step, :radio, hidden: false, task: task)
       create(:step, :radio, hidden: true, task: task)
 
@@ -129,6 +131,15 @@ RSpec.describe Task, type: :model do
 
       expect(task.all_steps_answered?).to eq(false)
     end
+
+    context "when there is a hidden step without an answer" do
+      it "ignores it and returns true" do
+        task = create(:task)
+        _hidden_step = create(:step, :radio, task: task, hidden: true)
+
+        expect(task.all_steps_answered?).to eq(true)
+      end
+    end
   end
 
   describe "#next_unanswered_step_id" do
@@ -197,7 +208,7 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe "#steps_with_answers" do
+  describe "#visible_steps_with_answers" do
     it "returns all steps with answers" do
       task = create(:task)
 
@@ -207,10 +218,36 @@ RSpec.describe Task, type: :model do
       step_2 = create(:step, :radio, task: task, order: 1)
       _answer_2 = create(:radio_answer, step: step_2)
 
-      result = task.steps_with_answers
+      result = task.visible_steps_with_answers
 
       expect(result).to include(step_2)
       expect(result).not_to include(step_1)
+    end
+
+    context "when there is a hidden step without an answer" do
+      it "returns an empty array" do
+        task = create(:task)
+
+        _step = create(:step, :radio, task: task, order: 0, hidden: true)
+        # Omit an answer for hidden step
+
+        result = task.visible_steps_with_answers
+
+        expect(result).to eq([])
+      end
+    end
+
+    context "when there is a hidden step with an answer" do
+      it "returns an empty array" do
+        task = create(:task)
+
+        step = create(:step, :radio, task: task, order: 0, hidden: true)
+        _answer = create(:radio_answer, step: step)
+
+        result = task.visible_steps_with_answers
+
+        expect(result).to eq([])
+      end
     end
   end
 end
