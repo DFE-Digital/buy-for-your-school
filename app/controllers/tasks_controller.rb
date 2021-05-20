@@ -28,6 +28,7 @@ class TasksController < ApplicationController
 
   def redirect_to_first_step_if_task_has_no_answers
     return unless task.answered_questions_count.zero?
+    return if params.fetch(:back_link, nil).present?
 
     redirect_to journey_step_path(current_journey, task.next_unanswered_step_id)
   end

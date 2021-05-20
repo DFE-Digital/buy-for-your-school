@@ -476,8 +476,6 @@ feature "Anyone can start a journey" do
       journey = Journey.last
       task = journey.sections.first.tasks.first
 
-      click_first_link_in_task_list
-
       choose("Catering")
       click_on(I18n.t("generic.button.next"))
 
