@@ -469,4 +469,29 @@ feature "Anyone can start a journey" do
       expect(page).to have_current_path(journey_url(journey, anchor: answer.step.id))
     end
   end
+
+  context "when a task has more than 1 question" do
+    scenario "the user is taken straight to the next question" do
+      start_journey_from_category_and_go_to_question(category: "task-with-multiple-steps.json")
+      journey = Journey.last
+      task = journey.sections.first.tasks.first
+
+      click_first_link_in_task_list
+
+      choose("Catering")
+      click_on(I18n.t("generic.button.next"))
+
+      fill_in "answer[response]", with: "This is my short answer"
+      click_on(I18n.t("generic.button.next"))
+
+      fill_in "answer[response]", with: "This is my long answer"
+      click_on(I18n.t("generic.button.next"))
+
+      check("Breakfast")
+      click_on(I18n.t("generic.button.next"))
+
+      expect(page).to have_content("Task with multiple steps")
+      expect(page).to have_current_path(journey_task_url(journey, task))
+    end
+  end
 end

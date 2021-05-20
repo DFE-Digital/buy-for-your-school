@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "tags": []
+  },
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "rwl7tyzv9sys"
+      }
+    },
+    "id": "multiple-steps",
+    "type": "Entry",
+    "createdAt": "2021-04-12T09:38:48.990Z",
+    "updatedAt": "2021-04-12T10:11:05.670Z",
+    "environment": {
+      "sys": {
+        "id": "develop",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 3,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "task"
+      }
+    },
+    "locale": "en-US"
+  },
+  "fields": {
+    "title": "Task with multiple steps",
+    "steps": [
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "radio-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "short-text-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "long-text-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "checkboxes-question"
+        }
+      }
+    ]
+  }
+}
