@@ -56,12 +56,12 @@ class Task < ApplicationRecord
   def eager_loaded_visible_steps
     @eager_loaded_visible_steps ||= visible_steps.includes(
       %i[short_text_answer
-         long_text_answer
-         radio_answer
-         checkbox_answers
-         currency_answer
-         number_answer
-         single_date_answer]
+        long_text_answer
+        radio_answer
+        checkbox_answers
+        currency_answer
+        number_answer
+        single_date_answer]
     ).ordered
   end
 end

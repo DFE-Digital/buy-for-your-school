@@ -160,6 +160,7 @@ module ContentfulHelpers
     category_double = double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
+      title: hash_response.dig("fields", "title"),
       sections: sections,
       specification_template: hash_response.dig("fields", "specificationTemplate"),
       specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),

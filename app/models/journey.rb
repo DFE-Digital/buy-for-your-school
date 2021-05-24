@@ -5,7 +5,7 @@ class Journey < ApplicationRecord
   has_many :steps, through: :tasks, class_name: "Step"
   belongs_to :user
 
-  validates :category, :liquid_template, presence: true
+  validates :category, :contentful_id, :liquid_template, presence: true
 
   def visible_steps
     steps.where(hidden: false)
