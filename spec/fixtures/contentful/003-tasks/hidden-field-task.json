@@ -32,7 +32,7 @@
     "locale": "en-US"
   },
   "fields": {
-    "title": "Hidden task",
+    "title": "Hidden field task",
     "steps": [
       {
         "sys": {

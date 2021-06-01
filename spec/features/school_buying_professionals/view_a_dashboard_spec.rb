@@ -54,7 +54,7 @@ feature "Anyone can view a dashboard" do
     click_on(I18n.t("dashboard.create.link"))
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
-    expect(page).to have_content("Which service do you need?")
+    expect(page).to have_content("Radio task")
     expect(page).to have_content("Not started")
   end
 end
