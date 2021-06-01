@@ -5,6 +5,7 @@ class RecordAction
 
   ALLOWED_ACTION_TYPES = %w[
     begin_journey
+    view_journey
   ].freeze
 
   def initialize(

@@ -53,4 +53,18 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content("Radio task")
     expect(page).to have_content("Not started")
   end
+
+  scenario "when a user revisits an existing journey an action is recorded in the event log" do
+    user = create(:user)
+    user_is_signed_in(user: user)
+    journey = create(:journey, user: user, created_at: Time.local(2021, 2, 15, 12, 0, 0), contentful_id: "12345678")
+
+    visit journey_path(journey)
+
+    last_logged_event = ActivityLogItem.last
+    expect(last_logged_event.action).to eq("view_journey")
+    expect(last_logged_event.journey_id).to eq(journey.id)
+    expect(last_logged_event.user_id).to eq(user.id)
+    expect(last_logged_event.contentful_category_id).to eq("12345678")
+  end
 end
