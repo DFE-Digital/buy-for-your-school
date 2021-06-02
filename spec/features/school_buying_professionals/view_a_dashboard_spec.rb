@@ -27,31 +27,27 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content(I18n.t("dashboard.existing.header"))
     expect(page).to have_content(I18n.t("dashboard.existing.body"))
 
-    click_on(I18n.t("dashboard.existing.link"))
-
-    expect(page).to have_content(I18n.t("journey.index.existing.header"))
     expect(page).to have_content("15 February 2021")
   end
 
-  scenario "when a user has no specifications a message is shown" do
+  scenario "user can see the start specification content on the dashboard" do
     user = create(:user)
     user_is_signed_in(user: user)
-
-    visit journeys_path
-
-    expect(page).to have_content(I18n.t("journey.index.existing.empty"))
-    expect(page).to have_content(I18n.t("dashboard.create.link"))
-  end
-
-  scenario "user can start a new specification" do
-    stub_contentful_category(fixture_filename: "radio-question.json")
 
     visit dashboard_path
 
     expect(page).to have_content(I18n.t("dashboard.create.header"))
     expect(page).to have_content(I18n.t("dashboard.create.body"))
 
-    click_on(I18n.t("dashboard.create.link"))
+    expect(page).to have_button(I18n.t("dashboard.create.button"))
+  end
+
+  scenario "user can start a new specification from the dashboard" do
+    stub_contentful_category(fixture_filename: "radio-question.json")
+
+    visit dashboard_path
+
+    click_on(I18n.t("dashboard.create.button"))
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
     expect(page).to have_content("Radio task")

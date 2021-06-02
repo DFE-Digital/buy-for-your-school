@@ -1,6 +1,6 @@
 <%= content_for :title, @journey.category.capitalize %>
 
-<%= link_to I18n.t("generic.button.back"), journeys_path, class: "govuk-back-link" %>
+<%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
 <h1 class="govuk-heading-xl"><%= I18n.t("specifying.start_page.page_title") %></h1>
 
 <ol class="app-task-list sections">
