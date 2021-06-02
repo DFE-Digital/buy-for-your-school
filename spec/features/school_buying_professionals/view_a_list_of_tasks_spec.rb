@@ -15,11 +15,11 @@ feature "Users can view the task list" do
     task_lists = find_all(".app-task-list__items")
 
     within(task_lists[0]) do
-      expect(page).to have_content("Which service do you need?")
+      expect(page).to have_content("Radio task")
     end
 
     within(task_lists[1]) do
-      expect(page).to have_content("Describe what you need")
+      expect(page).to have_content("Long text task")
     end
   end
 
@@ -60,7 +60,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        click_on "Everyday services that are required and need to be considered"
+        click_on "Task with a single step"
       end
 
       click_on(I18n.t("generic.button.back"))
@@ -105,12 +105,12 @@ feature "Users can view the task list" do
       end
     end
 
-    scenario "shows the step title, not the task title" do
+    scenario "shows the task title, not the step title" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        expect(page).to have_content("Everyday services that are required and need to be considered")
-        expect(page).to_not have_content("Task with a single step")
+        expect(page).to have_content("Task with a single step")
+        expect(page).to_not have_content("Everyday services that are required and need to be considered")
       end
     end
 
@@ -118,7 +118,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        click_on "Everyday services that are required and need to be considered"
+        click_on "Task with a single step"
       end
 
       click_on "Back"
@@ -130,7 +130,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        click_on "Everyday services that are required and need to be considered"
+        click_on "Task with a single step"
       end
 
       check "Lunch"
@@ -147,8 +147,8 @@ feature "Users can view the task list" do
     scenario "should not appear in the task list" do
       start_journey_from_category(category: "hidden-field.json")
 
-      expect(page).not_to have_content("You should NOT be able to see this question")
-      expect(page).to have_content("You should be able to see this question")
+      expect(page).not_to have_content("Hidden field task")
+      expect(page).to have_content("Shown field task")
     end
 
     scenario "shows the section title" do

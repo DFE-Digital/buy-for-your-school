@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- always show task title even if it contains a single step
 - replace journeys_path with a unified dashboard
 
 ## [release-014] - 2021-05-20
