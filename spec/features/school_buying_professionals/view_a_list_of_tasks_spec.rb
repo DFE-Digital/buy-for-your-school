@@ -223,45 +223,51 @@ feature "Users can view the task list" do
   end
 
 
+
+
   # TODO: test other presenter formatted responses in the view: date, currency, number, long-text
+  # 1. radio
+  # 2. short-text
+  # 3. long-text
+  # 4. checkbox
+  # 5. currency
+  # 6. date
+  # 7. number
   describe "formatted responses" do
-    it "checkboxes present as CSVs" do
+
+    before :each do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
-      # TODO:
-      # 1. radio
-      # 2. short-text
-      # 3. long-text
-      # 4. checkbox
-      # 5. currency
-      # 6. date
-      # 7. number
-
-      # goes straight to radio step
       within ".app-task-list" do
-        click_on "Task with multiple steps"
+        click_on "Task containing multiple steps with formatted answers"
       end
 
-      # go back to list of steps
       click_on "Back"
+    end
 
-      # 4th (last) checkbox question
+
+    # SingleDateAnswerPresenter#response
+    specify do
+      click_link "single-date"
+      fill_in "answer[response(3i)]", with: "12"
+      fill_in "answer[response(2i)]", with: "8"
+      fill_in "answer[response(1i)]", with: "2020"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "12 Aug 2020"
+    end
+
+    # CheckboxesAnswerPresenter#concatenated_response
+    specify do
       click_link "checkbox"
-
-      # fill answers
       check "Lunch"
       check "Dinner"
-
-      # takes you to the next step, the skipped first radio step
       click_on "Continue"
-
-      # go back to list of steps, to see submitted checkbox response
       click_on "Back"
-
-      # check for formatted response
       expect(page).to_not have_content '["Lunch", "Dinner"]'
       expect(page).to have_content "Lunch, Dinner"
     end
   end
+
 
 end
