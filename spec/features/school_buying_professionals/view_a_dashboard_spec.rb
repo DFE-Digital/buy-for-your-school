@@ -30,7 +30,7 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content("15 February 2021")
   end
 
-  scenario "user can start a new specification" do
+  scenario "user can see the start specification content on the dashboard" do
     user = create(:user)
     user_is_signed_in(user: user)
 
@@ -42,7 +42,7 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_button(I18n.t("dashboard.create.button"))
   end
 
-  scenario "user starts a new specification" do
+  scenario "user can start a new specification from the dashboard" do
     stub_contentful_category(fixture_filename: "radio-question.json")
 
     visit dashboard_path
