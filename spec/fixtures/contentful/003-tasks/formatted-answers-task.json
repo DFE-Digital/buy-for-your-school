@@ -1,4 +1,7 @@
 {
+  "metadata": {
+    "tags": []
+  },
   "sys": {
     "space": {
       "sys": {
@@ -7,10 +10,10 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "tasks-section",
+    "id": "formatted-answers-task",
     "type": "Entry",
-    "createdAt": "2021-04-12T10:41:36.073Z",
-    "updatedAt": "2021-04-12T10:42:51.119Z",
+    "createdAt": "2021-04-12T09:38:48.990Z",
+    "updatedAt": "2021-04-12T10:11:05.670Z",
     "environment": {
       "sys": {
         "id": "develop",
@@ -18,38 +21,52 @@
         "linkType": "Environment"
       }
     },
-    "revision": 2,
+    "revision": 3,
     "contentType": {
       "sys": {
         "type": "Link",
         "linkType": "ContentType",
-        "id": "section"
+        "id": "task"
       }
     },
     "locale": "en-US"
   },
   "fields": {
-    "title": "Section with multiple tasks",
-    "tasks": [
+    "title": "Task containing multiple steps with formatted answers",
+    "steps": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "checkboxes-task"
+          "id": "long-text-question"
         }
       },
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "checkboxes-and-radio-task"
+          "id": "checkboxes-question"
         }
       },
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "formatted-answers-task"
+          "id": "number-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "currency-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "single-date-question"
         }
       }
     ]
