@@ -221,4 +221,47 @@ feature "Users can view the task list" do
       end
     end
   end
+
+
+  # TODO: test other presenter formatted responses in the view: date, currency, number, long-text
+  describe "formatted responses" do
+    it "checkboxes present as CSVs" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      # TODO:
+      # 1. radio
+      # 2. short-text
+      # 3. long-text
+      # 4. checkbox
+      # 5. currency
+      # 6. date
+      # 7. number
+
+      # goes straight to radio step
+      within ".app-task-list" do
+        click_on "Task with multiple steps"
+      end
+
+      # go back to list of steps
+      click_on "Back"
+
+      # 4th (last) checkbox question
+      click_link "checkbox"
+
+      # fill answers
+      check "Lunch"
+      check "Dinner"
+
+      # takes you to the next step, the skipped first radio step
+      click_on "Continue"
+
+      # go back to list of steps, to see submitted checkbox response
+      click_on "Back"
+
+      # check for formatted response
+      expect(page).to_not have_content '["Lunch", "Dinner"]'
+      expect(page).to have_content "Lunch, Dinner"
+    end
+  end
+
 end
