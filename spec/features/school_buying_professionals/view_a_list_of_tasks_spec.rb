@@ -44,13 +44,12 @@ feature "Users can view the task list" do
 
     click_on(I18n.t("generic.button.back"))
 
-    expect(page).to have_content(I18n.t("journey.index.existing.header"))
+    expect(page).to have_content(I18n.t("dashboard.existing.header"))
   end
 
   scenario "user can navigate back to the dashboard from a step" do
     start_journey_from_category(category: "extended-radio-question.json")
 
-    click_on(I18n.t("generic.button.back"))
     click_on(I18n.t("generic.button.back"))
 
     expect(page).to have_content(I18n.t("dashboard.header"))
