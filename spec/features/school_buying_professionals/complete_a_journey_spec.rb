@@ -14,7 +14,7 @@ feature "Anyone can start a journey" do
     start_journey_from_category(category: "radio-question.json")
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
-    expect(page).to have_content("Which service do you need?")
+    expect(page).to have_content("Radio task")
     expect(page).to have_content("Not started")
   end
 
@@ -299,13 +299,13 @@ feature "Anyone can start a journey" do
         click_on(I18n.t("generic.button.next"))
 
         # This question should be made visible after the previous step
-        expect(page).not_to have_content("You should NOT be able to see this question?")
-        click_on("What colour is the sky?")
+        expect(page).not_to have_content("What colour is the sky?")
+        click_on("Hidden field with additional question task")
         choose("Red")
         click_on(I18n.t("generic.button.next"))
 
         # This question should only be made visible after the previous step
-        click_on("You should NOT be able to see this question?")
+        click_on("Hidden field task")
         choose("School expert")
         click_on(I18n.t("generic.button.next"))
       end
