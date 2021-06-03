@@ -50,11 +50,11 @@ feature "Users can view a task" do
         click_on "Task with multiple steps"
       end
 
-      # Unstarded tasks take the user straight to the first step so we have to go back
+      # Unstarted tasks take the user straight to the first step so we have to go back
       click_on(I18n.t("generic.button.back"))
 
       expect(page).to have_content "Which service do you need?"
-      expect(page).to have_content "Everyday services that are required and need to be considered"
+      expect(page).to have_content "Everyday services that are required and need to be considered" # TODO: #675 refactor multiple
     end
 
     it "does not show hidden steps" do
