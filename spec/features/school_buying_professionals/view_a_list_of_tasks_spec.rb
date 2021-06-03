@@ -4,6 +4,83 @@ feature "Users can view the task list" do
   let(:user) { create(:user) }
   before { user_is_signed_in(user: user) }
 
+  describe "and see their answers" do
+    before :each do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      within ".app-task-list" do
+        click_on "Task containing every type of step"
+      end
+      click_on "Back"
+    end
+
+    # RadioAnswerPresenter#response
+    specify do
+      click_link "radio"
+      choose "Cleaning"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "Cleaning"
+    end
+
+    # ShortTextAnswerPresenter#response
+    specify do
+      click_link "short-text"
+      fill_in "answer[response]", with: "hello_world@example.com"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "hello_world@example.com"
+    end
+
+    # LongTextAnswerPresenter#response
+    specify do
+      click_link "long-text"
+      fill_in "answer[response]", with: "\r\n\r\nfoo\r\n\r\n"
+      click_on "Continue"
+      click_on "Back"
+      expect(page.html).to include "<dd class=\"govuk-summary-list__value\"><p></p>\n\n<p>foo</p></dd>"
+    end
+
+    # CurrencyAnswerPresenter#response
+    specify do
+      click_link "currency"
+      fill_in "answer[response]", with: "2,999.99001"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "£2,999.99"
+    end
+
+    # NumberAnswerPresenter#response
+    specify do
+      click_link "number"
+      fill_in "answer[response]", with: "123"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "123"
+    end
+
+    # SingleDateAnswerPresenter#response
+    specify do
+      click_link "single-date"
+      fill_in "answer[response(3i)]", with: "1"
+      fill_in "answer[response(2i)]", with: "6"
+      fill_in "answer[response(1i)]", with: "2021"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "1 Jun 2021"
+    end
+
+    # CheckboxesAnswerPresenter#concatenated_response
+    specify do
+      click_link "checkbox"
+      check "Lunch"
+      check "Dinner"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to_not have_content '["Lunch", "Dinner"]'
+      expect(page).to have_content "Lunch, Dinner"
+    end
+  end
+
   scenario "tasks are grouped by their section" do
     start_journey_from_category(category: "multiple-sections.json")
 
@@ -110,7 +187,7 @@ feature "Users can view the task list" do
 
       within(".app-task-list") do
         expect(page).to have_content("Task with a single step")
-        expect(page).to_not have_content("Everyday services that are required and need to be considered")
+        expect(page).to_not have_content("Everyday services that are required and need to be considered") # TODO: #675 refactor multiple
       end
     end
 
@@ -221,53 +298,5 @@ feature "Users can view the task list" do
       end
     end
   end
-
-
-
-
-  # TODO: test other presenter formatted responses in the view: date, currency, number, long-text
-  # 1. radio
-  # 2. short-text
-  # 3. long-text
-  # 4. checkbox
-  # 5. currency
-  # 6. date
-  # 7. number
-  describe "formatted responses" do
-
-    before :each do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
-
-      within ".app-task-list" do
-        click_on "Task containing multiple steps with formatted answers"
-      end
-
-      click_on "Back"
-    end
-
-
-    # SingleDateAnswerPresenter#response
-    specify do
-      click_link "single-date"
-      fill_in "answer[response(3i)]", with: "12"
-      fill_in "answer[response(2i)]", with: "8"
-      fill_in "answer[response(1i)]", with: "2020"
-      click_on "Continue"
-      click_on "Back"
-      expect(page).to have_content "12 Aug 2020"
-    end
-
-    # CheckboxesAnswerPresenter#concatenated_response
-    specify do
-      click_link "checkbox"
-      check "Lunch"
-      check "Dinner"
-      click_on "Continue"
-      click_on "Back"
-      expect(page).to_not have_content '["Lunch", "Dinner"]'
-      expect(page).to have_content "Lunch, Dinner"
-    end
-  end
-
 
 end

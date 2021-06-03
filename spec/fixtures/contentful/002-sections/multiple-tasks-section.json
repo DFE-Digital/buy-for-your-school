@@ -49,7 +49,7 @@
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "formatted-answers-task"
+          "id": "every-question-type-task"
         }
       }
     ]

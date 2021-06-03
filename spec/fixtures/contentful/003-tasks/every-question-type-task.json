@@ -10,7 +10,7 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "formatted-answers-task",
+    "id": "every-question-type-task",
     "type": "Entry",
     "createdAt": "2021-04-12T09:38:48.990Z",
     "updatedAt": "2021-04-12T10:11:05.670Z",
@@ -32,7 +32,7 @@
     "locale": "en-US"
   },
   "fields": {
-    "title": "Task containing multiple steps with formatted answers",
+    "title": "Task containing every type of step",
     "steps": [
       {
         "sys": {
@@ -45,7 +45,21 @@
         "sys": {
           "type": "Link",
           "linkType": "Entry",
+          "id": "short-text-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
           "id": "checkboxes-question"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "radio-question"
         }
       },
       {
