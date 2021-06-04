@@ -11,4 +11,9 @@
   <% end %>
 </dl>
 
-<%= link_to I18n.t("task.buttons.back"), journey_path(@journey), class: "govuk-button" %>
+<% if @task.next_unanswered_step_id %>
+  <%= link_to I18n.t("task.button.continue"), journey_step_path(@journey, @task.next_unanswered_step_id), class: "govuk-button" %>
+<% end %>
+
+<br />
+<%= link_to I18n.t("task.button.back"), journey_path(@journey), class: "govuk-back-link" %>
