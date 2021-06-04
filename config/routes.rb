@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     resources :tasks, only: [:show]
   end
 
+  # 681 - guard against use of back button after form validation errors
+  get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
+
   namespace :preview do
     resources :entries, only: [:show]
   end
