@@ -15,6 +15,25 @@ feature "Users can view a task" do
       expect(page).to have_content "Which service do you need?"
     end
 
+    it "records an action in the event log that a task has begun" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      within(".app-task-list") do
+        click_on "Task with multiple steps"
+      end
+
+      journey = Journey.first
+      task = Task.find_by(title: "Task with multiple steps")
+
+      last_logged_event = ActivityLogItem.last
+      expect(last_logged_event.action).to eq("begin_task")
+      expect(last_logged_event.journey_id).to eq(journey.id)
+      expect(last_logged_event.user_id).to eq(user.id)
+      expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(last_logged_event.contentful_section_id).to eq("tasks-section")
+      expect(last_logged_event.contentful_task_id).to eq(task.id)
+    end
+
     context "when a task has at least one answered step" do
       it "takes the user to the task page" do
         start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
@@ -29,6 +48,28 @@ feature "Users can view a task" do
 
         expect(page).to have_content("Task with multiple steps")
         expect(page).to have_content("Which service do you need?")
+      end
+
+      it "records an action in the event log that an in-progress task has been revisited" do
+        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+        task = Task.find_by(title: "Task with multiple steps")
+        step = task.steps.first
+        create(:radio_answer, step: step)
+
+        within(".app-task-list") do
+          click_on "Task with multiple steps"
+        end
+
+        journey = Journey.first
+
+        last_logged_event = ActivityLogItem.last
+        expect(last_logged_event.action).to eq("view_task")
+        expect(last_logged_event.journey_id).to eq(journey.id)
+        expect(last_logged_event.user_id).to eq(user.id)
+        expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+        expect(last_logged_event.contentful_section_id).to eq("tasks-section")
+        expect(last_logged_event.contentful_task_id).to eq(task.id)
       end
     end
 
