@@ -32,6 +32,9 @@ feature "Users can view a task" do
       expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
       expect(last_logged_event.contentful_section_id).to eq("tasks-section")
       expect(last_logged_event.contentful_task_id).to eq(task.id)
+      expect(last_logged_event.data["task_status"]).to eq(Task::NOT_STARTED)
+      expect(last_logged_event.data["task_total_steps"]).to eq(4)
+      expect(last_logged_event.data["task_answered_questions"]).to eq(0)
     end
 
     context "when a task has at least one answered step" do
@@ -69,7 +72,46 @@ feature "Users can view a task" do
         expect(last_logged_event.user_id).to eq(user.id)
         expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
         expect(last_logged_event.contentful_section_id).to eq("tasks-section")
-        expect(last_logged_event.contentful_task_id).to eq(task.id)
+        expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
+        expect(last_logged_event.data["task_status"]).to eq(Task::IN_PROGRESS)
+        expect(last_logged_event.data["task_total_steps"]).to eq(4)
+        expect(last_logged_event.data["task_answered_questions"]).to eq(1)
+      end
+    end
+
+    context "when all questions in a task have been answered" do
+      it "records an action in the event log that a completed task has been revisited" do
+        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+        within(".app-task-list") do
+          click_on "Task with multiple steps"
+        end
+
+        choose "Catering"
+        click_on(I18n.t("generic.button.next"))
+
+        fill_in "answer[response]", with: "This is my short answer"
+        click_on(I18n.t("generic.button.next"))
+
+        fill_in "answer[response]", with: "This is my long answer"
+        click_on(I18n.t("generic.button.next"))
+
+        check("Breakfast")
+        click_on(I18n.t("generic.button.next"))
+
+        task = Task.find_by(title: "Task with multiple steps")
+        journey = Journey.first
+
+        last_logged_event = ActivityLogItem.last
+        expect(last_logged_event.action).to eq("view_task")
+        expect(last_logged_event.journey_id).to eq(journey.id)
+        expect(last_logged_event.user_id).to eq(user.id)
+        expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+        expect(last_logged_event.contentful_section_id).to eq("tasks-section")
+        expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
+        expect(last_logged_event.data["task_status"]).to eq(Task::COMPLETED)
+        expect(last_logged_event.data["task_total_steps"]).to eq(4)
+        expect(last_logged_event.data["task_answered_questions"]).to eq(4)
       end
     end
 

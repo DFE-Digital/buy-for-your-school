@@ -14,7 +14,12 @@ class TasksController < ApplicationController
       user_id: current_user.id,
       contentful_category_id: @journey.contentful_id,
       contentful_section_id: task.section.contentful_id,
-      contentful_task_id: task.id
+      contentful_task_id: task.contentful_id,
+      data: {
+        task_status: task.status,
+        task_total_steps: task.visible_steps_count,
+        task_answered_questions: task.answered_questions_count
+      }
     ).call
   end
 
@@ -45,7 +50,12 @@ class TasksController < ApplicationController
       user_id: current_user.id,
       contentful_category_id: @journey.contentful_id,
       contentful_section_id: task.section.contentful_id,
-      contentful_task_id: task.id
+      contentful_task_id: task.contentful_id,
+      data: {
+        task_status: task.status,
+        task_total_steps: task.visible_steps_count,
+        task_answered_questions: task.answered_questions_count
+      }
     ).call
 
     redirect_to journey_step_path(current_journey, task.next_unanswered_step_id)
