@@ -77,14 +77,17 @@ en:
     existing:
       header: "Existing specifications"
       body: "Continue with a draft specification, and review completed specifications."
+  # /journeys#show
   task_list:
     status:
       not_started: Not started
       in_progress: In progress
       completed: Completed
+  # /tasks#show
   task:
-    buttons:
-      back: Back to all questions
+    button:
+      back: Return to task list
+      continue: Continue answering these questions
   journey_map:
     page_title: "Contentful entry map"
     edit_step_link_text: "Edit step in Contentful"
