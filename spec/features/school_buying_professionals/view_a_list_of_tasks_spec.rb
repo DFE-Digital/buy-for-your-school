@@ -298,5 +298,4 @@ feature "Users can view the task list" do
       end
     end
   end
-
 end
