@@ -8,6 +8,7 @@ class RecordAction
     view_journey
     begin_task
     view_task
+    view_specification
   ].freeze
 
   def initialize(
