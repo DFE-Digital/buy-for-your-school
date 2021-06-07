@@ -15,6 +15,12 @@ PREVIEW_TF_VAR_SYSLOG_DRAIN_URL=
 RESEARCH_TF_VAR_SYSLOG_DRAIN_URL=
 ```
 
+For help putting together the drain URL, there is a [service-specific guide in
+the CloudFoundry
+documentation](https://docs.cloudfoundry.org/devguide/services/log-management-thirdparty-svc.html)
+which includes LogIt. We use the TCP-SSL port with the `syslog-tls://` URL
+scheme.
+
 Remember to deploy the application again to propagate environment variable changes.
 
 ## GPaaS
