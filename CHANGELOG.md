@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add state to Journey (initial, stale, archive or remove)
 - drop Journey.last_worked_on in favour of updated_at
 - add category title column to the dashboard
+- add date validation logic which can be controlled in Contentful
 
 ## [release-015] - 2021-06-17
 

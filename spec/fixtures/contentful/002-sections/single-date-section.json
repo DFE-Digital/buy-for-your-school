@@ -37,6 +37,13 @@
                   "linkType": "Entry",
                   "id": "single-date-task"
               }
+            },
+            {
+              "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "single-date-validation-task"
+              }
             }
         ]
     }

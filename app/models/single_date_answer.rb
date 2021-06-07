@@ -1,6 +1,9 @@
-# SingleDateAnswer is used to capture a single date answer to a {Step}.
+# Persist {Step} response for questions of type 'single_date'
+#
 class SingleDateAnswer < ApplicationRecord
   include TaskCounters
+
+  validates_with DateValidator
 
   belongs_to :step
 
