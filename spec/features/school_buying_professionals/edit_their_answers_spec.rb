@@ -132,5 +132,24 @@ feature "Users can edit their answers" do
 
       expect(page).to have_current_path(journey_url(answer.step.journey, anchor: answer.step.id))
     end
+
+    scenario "an action is recorded" do
+      visit journey_path(answer.step.journey)
+
+      click_on(title)
+
+      fill_in "answer[response]", with: "email@example.com"
+
+      click_on(I18n.t("generic.button.update"))
+
+      update_answer_logged_event = ActivityLogItem.where(action: "update_answer").first
+      expect(update_answer_logged_event.journey_id).to eq(answer.step.journey.id)
+      expect(update_answer_logged_event.user_id).to eq(user.id)
+      expect(update_answer_logged_event.contentful_category_id).to eq("12345678")
+      expect(update_answer_logged_event.contentful_section_id).to eq(answer.step.task.section.contentful_id)
+      expect(update_answer_logged_event.contentful_task_id).to eq(answer.step.task.contentful_id)
+      expect(update_answer_logged_event.contentful_step_id).to eq(answer.step.contentful_id)
+      expect(update_answer_logged_event.data["success"]).to eq true
+    end
   end
 end
