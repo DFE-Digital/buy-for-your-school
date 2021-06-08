@@ -15,7 +15,7 @@ feature "Users can view the task list" do
 
     # RadioAnswerPresenter#response
     specify do
-      click_link "radio"
+      click_link "radios"
       choose "Cleaning"
       click_on "Continue"
       click_on "Back"
@@ -24,7 +24,7 @@ feature "Users can view the task list" do
 
     # ShortTextAnswerPresenter#response
     specify do
-      click_link "short-text"
+      click_link "short_text"
       fill_in "answer[response]", with: "hello_world@example.com"
       click_on "Continue"
       click_on "Back"
@@ -33,11 +33,11 @@ feature "Users can view the task list" do
 
     # LongTextAnswerPresenter#response
     specify do
-      click_link "long-text"
+      click_link "long_text"
       fill_in "answer[response]", with: "\r\n\r\nfoo\r\n\r\n"
       click_on "Continue"
       click_on "Back"
-      expect(page.html).to include "<dd class=\"govuk-summary-list__value\"><p></p>\n\n<p>foo</p></dd>"
+      expect(page.html).to include "<p></p>\n\n<p>foo</p>"
     end
 
     # CurrencyAnswerPresenter#response
@@ -60,7 +60,7 @@ feature "Users can view the task list" do
 
     # SingleDateAnswerPresenter#response
     specify do
-      click_link "single-date"
+      click_link "single_date"
       fill_in "answer[response(3i)]", with: "1"
       fill_in "answer[response(2i)]", with: "6"
       fill_in "answer[response(1i)]", with: "2021"
@@ -71,7 +71,7 @@ feature "Users can view the task list" do
 
     # CheckboxesAnswerPresenter#concatenated_response
     specify do
-      click_link "checkbox"
+      click_link "checkboxes"
       check "Lunch"
       check "Dinner"
       click_on "Continue"

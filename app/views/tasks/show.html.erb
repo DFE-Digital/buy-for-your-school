@@ -6,7 +6,7 @@
 <dl class="govuk-summary-list">
   <% @steps.each do |step| %>
     <% if step.question? %>
-      <%= render "#{step.contentful_type}_answer", step: step, answer: step.answer %>
+      <%= render "answer", step: step %>
     <% end %>
   <% end %>
 </dl>

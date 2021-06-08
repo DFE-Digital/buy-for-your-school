@@ -19,5 +19,4 @@ feature "Back link works after failed form validations" do
 
     expect(page).to have_content "Describe what you need"
   end
-
 end
