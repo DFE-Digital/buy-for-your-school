@@ -8,6 +8,8 @@ class RecordAction
     view_journey
     begin_task
     view_task
+    begin_step
+    view_step
     view_specification
   ].freeze
 

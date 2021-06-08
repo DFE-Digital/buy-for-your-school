@@ -25,16 +25,18 @@ feature "Users can view a task" do
       journey = Journey.first
       task = Task.find_by(title: "Task with multiple steps")
 
-      last_logged_event = ActivityLogItem.last
-      expect(last_logged_event.action).to eq("begin_task")
-      expect(last_logged_event.journey_id).to eq(journey.id)
-      expect(last_logged_event.user_id).to eq(user.id)
-      expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
-      expect(last_logged_event.contentful_section_id).to eq("tasks-section")
-      expect(last_logged_event.contentful_task_id).to eq(task.id)
-      expect(last_logged_event.data["task_status"]).to eq(Task::NOT_STARTED)
-      expect(last_logged_event.data["task_total_steps"]).to eq(4)
-      expect(last_logged_event.data["task_answered_questions"]).to eq(0)
+      # The process of starting a task also records entering the first step. We
+      # explicitly select the event with the "begin_task" action and check it
+      # matches our expectations.
+      begin_task_logged_event = ActivityLogItem.where(action: "begin_task").first
+      expect(begin_task_logged_event.journey_id).to eq(journey.id)
+      expect(begin_task_logged_event.user_id).to eq(user.id)
+      expect(begin_task_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(begin_task_logged_event.contentful_section_id).to eq("tasks-section")
+      expect(begin_task_logged_event.contentful_task_id).to eq(task.contentful_id)
+      expect(begin_task_logged_event.data["task_status"]).to eq(Task::NOT_STARTED)
+      expect(begin_task_logged_event.data["task_total_steps"]).to eq(4)
+      expect(begin_task_logged_event.data["task_answered_questions"]).to eq(0)
     end
 
     context "when a task has at least one answered step" do
