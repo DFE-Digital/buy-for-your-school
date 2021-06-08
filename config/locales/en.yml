@@ -88,6 +88,7 @@ en:
     button:
       back: Return to task list
       continue: Continue answering these questions
+      next: Continue to the next task
   journey_map:
     page_title: "Contentful entry map"
     edit_step_link_text: "Edit step in Contentful"

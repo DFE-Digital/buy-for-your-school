@@ -164,30 +164,64 @@ feature "Users can view the task list" do
     start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
     # straight to first step
-    within(".app-task-list") do
+    within ".app-task-list" do
       click_on "Task with multiple steps"
     end
 
     # list of steps
-    click_on("Back")
-    expect(page).to have_content("Return to task list")
+    click_on "Back"
+    expect(page).to have_content "Return to task list"
 
     # list of tasks
-    click_on("Return to task list")
-    expect(page).to have_content("Create a specification to procure a catering service for your school")
+    click_on "Return to task list"
+    expect(page).to have_content "Create a specification to procure a catering service for your school"
   end
 
   context "when a task has more than one unanswered step" do
     scenario "user can see a link to continue answering questions" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
+      within ".app-task-list" do
+        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
 
-      click_on("Back")
+      click_on "Back"
+      click_on "Continue answering these questions"
+      expect(page).to have_content "Which service do you need?"
+      choose "Catering"
+      click_on "Continue"
+      click_on "Back"
+      click_on "Continue answering these questions"
+      expect(page).to have_content "What email address did you use?"
+    end
+  end
 
-      expect(page).to have_content("Continue answering these questions")
+  context "when a task with multiple steps has been completed" do
+    scenario "user can see a link to continue to the next task" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      within ".app-task-list" do
+        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+      end
+
+      choose "Catering"
+      click_on "Continue"
+
+      fill_in "answer[response]", with: "email@example.com"
+      click_on "Continue"
+
+      fill_in "answer[response]", with: "I'm looking to procure..."
+      click_on "Continue"
+
+      check "Breakfast"
+      click_on "Continue"
+
+      click_on "Continue to the next task" # > every-question-type-task.json 1st question
+
+      expect(page).to have_content "Briefly describe what you are looking to procure"
+
+      click_on "Back" # > every-question-type-task.json
+      expect(page).to have_content "Task containing every type of step"
     end
   end
 

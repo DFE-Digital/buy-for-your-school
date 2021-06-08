@@ -3,9 +3,10 @@ class TasksController < ApplicationController
 
   def show
     @journey = current_journey
-    @task = Task.find(task_id)
-    steps = @task.eager_loaded_visible_steps.ordered
+    @current_task = task
+    steps = @current_task.eager_loaded_visible_steps.ordered
     @steps = steps.map { |step| StepPresenter.new(step) }
+    @next_task = next_task
   end
 
   private
@@ -16,6 +17,11 @@ class TasksController < ApplicationController
 
   def task_id
     params[:id]
+  end
+
+  def next_task
+    next_task_id = current_journey.tasks.find_index { |t| t.id == task_id } + 1
+    current_journey.tasks[next_task_id]
   end
 
   def redirect_to_first_step_if_task_has_no_answers
