@@ -26,6 +26,8 @@ class JourneysController < ApplicationController
 
   def show
     @journey = current_journey
-    @sections = @journey.sections.includes(:tasks)
+    @sections = @journey.sections.includes(:tasks).map do |section|
+      SectionPresenter.new(section)
+    end
   end
 end
