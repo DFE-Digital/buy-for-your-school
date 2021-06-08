@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - replace back to task list button with a link
 - add button to continue completing the current task
 - add button to continue to the next incomplete task if the current is complete
+- track key user actions throughout the journey
 
 ## [release-014] - 2021-05-20
 
