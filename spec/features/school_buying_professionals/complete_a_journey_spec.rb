@@ -503,4 +503,75 @@ feature "Anyone can start a journey" do
       expect(page).to have_content("Catering")
     end
   end
+
+  context "when a new journey is begun" do
+    scenario "records that action in the event log" do
+      start_journey_from_category(category: "radio-question.json")
+
+      first_logged_event = ActivityLogItem.first
+      expect(first_logged_event.action).to eq("begin_journey")
+      expect(first_logged_event.journey_id).to eq(Journey.last.id)
+      expect(first_logged_event.user_id).to eq(User.last.id)
+      expect(first_logged_event.contentful_category_id).to eq(ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"])
+    end
+  end
+
+  context "when a user views a step which has not been answered" do
+    scenario "an action is recorded" do
+      start_journey_from_category_and_go_to_first_section(category: "radio-question.json")
+
+      step = Step.last
+
+      last_logged_event = ActivityLogItem.last
+      expect(last_logged_event.action).to eq("begin_step")
+      expect(last_logged_event.journey_id).to eq(Journey.last.id)
+      expect(last_logged_event.user_id).to eq(User.last.id)
+      expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(last_logged_event.contentful_section_id).to eq(step.task.section.contentful_id)
+      expect(last_logged_event.contentful_task_id).to eq(step.task.contentful_id)
+      expect(last_logged_event.contentful_step_id).to eq(step.contentful_id)
+    end
+  end
+
+  context "when a user views a previously answered step" do
+    scenario "an action is recorded" do
+      start_journey_with_tasks_from_category(category: "radio-question.json")
+
+      journey = Journey.last
+      task = Task.find_by(title: "Radio task")
+      step = task.steps.first
+      create(:radio_answer, step: step)
+
+      visit edit_journey_step_path(journey, step)
+
+      last_logged_event = ActivityLogItem.last
+      expect(last_logged_event.action).to eq("view_step")
+      expect(last_logged_event.journey_id).to eq(journey.id)
+      expect(last_logged_event.user_id).to eq(User.last.id)
+      expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(last_logged_event.contentful_section_id).to eq(step.task.section.contentful_id)
+      expect(last_logged_event.contentful_task_id).to eq(step.task.contentful_id)
+      expect(last_logged_event.contentful_step_id).to eq(step.contentful_id)
+    end
+  end
+
+  context "when a user answers a question" do
+    scenario "an action is recorded" do
+      start_journey_from_category_and_go_to_first_section(category: "long-text-question.json")
+      journey = Journey.last
+
+      fill_in "answer[response]", with: "This is my long answer"
+
+      click_on(I18n.t("generic.button.next"))
+
+      save_answer_logged_event = ActivityLogItem.where(action: "save_answer").first
+      expect(save_answer_logged_event.journey_id).to eq(journey.id)
+      expect(save_answer_logged_event.user_id).to eq(User.last.id)
+      expect(save_answer_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(save_answer_logged_event.contentful_section_id).to eq(Section.last.contentful_id)
+      expect(save_answer_logged_event.contentful_task_id).to eq(Task.last.contentful_id)
+      expect(save_answer_logged_event.contentful_step_id).to eq(Step.last.contentful_id)
+      expect(save_answer_logged_event.data["success"]).to eq true
+    end
+  end
 end
