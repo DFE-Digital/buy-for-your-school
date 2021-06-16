@@ -8,9 +8,10 @@
   </div>
 
   <% if @current_user.journeys.any? %>
-    <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
-        <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
+    <div class="govuk-grid-column-full">
+      <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button" %>
+      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
+      <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
 
       <table class="govuk-table">
         <thead class="govuk-table__head">
@@ -29,15 +30,12 @@
         </tbody>
       </table>
     </div>
-    <div class="govuk-grid-column-one-third">
-      <%= button_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button", method: :get %>
-    </div>
   <% else %>
     <div class="govuk-grid-column-one-half">
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
 
-      <%= button_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button", method: :get %>
+      <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button" %>
     </div>
   <% end %>
 
