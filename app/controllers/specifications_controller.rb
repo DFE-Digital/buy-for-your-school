@@ -13,6 +13,17 @@ class SpecificationsController < ApplicationController
       answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call
     )
 
+    RecordAction.new(
+      action: "view_specification",
+      journey_id: @journey.id,
+      user_id: current_user.id,
+      contentful_category_id: @journey.contentful_id,
+      data: {
+        format: request.format.symbol,
+        all_steps_completed: @journey.all_steps_completed?
+      }
+    ).call
+
     @specification_html = specification_renderer.to_html
 
     respond_to do |format|

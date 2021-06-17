@@ -9,6 +9,20 @@ RSpec.describe CheckboxesAnswerPresenter do
     end
   end
 
+  describe "#concatenated_response" do
+    it "returns a string of comma separated values" do
+      step = build(:checkbox_answers, response: ["Yes", "No", "Morning break"])
+      presenter = described_class.new(step)
+      expect(presenter.concatenated_response).to eq("Yes, No, Morning break")
+    end
+
+    it "returns nil if empty" do
+      step = build(:checkbox_answers, response: [])
+      presenter = described_class.new(step)
+      expect(presenter.concatenated_response).to eq(nil)
+    end
+  end
+
   describe "#to_param" do
     it "returns a hash of options" do
       step = build(:checkbox_answers,

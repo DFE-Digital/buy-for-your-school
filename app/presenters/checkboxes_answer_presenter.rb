@@ -5,6 +5,12 @@ class CheckboxesAnswerPresenter < SimpleDelegator
     super.reject(&:blank?)
   end
 
+  def concatenated_response
+    return nil if response.empty?
+
+    response.join(", ")
+  end
+
   def to_param
     {
       response: response,
@@ -12,12 +18,6 @@ class CheckboxesAnswerPresenter < SimpleDelegator
       skipped: skipped,
       selected_answers: selected_answers
     }
-  end
-
-  private def concatenated_response
-    return nil if response.empty?
-
-    response.join(", ")
   end
 
   private def selected_answers

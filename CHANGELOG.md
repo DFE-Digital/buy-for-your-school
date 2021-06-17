@@ -6,10 +6,21 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+## [release-015] - 2021-06-17
+
+- always show task title even if it contains a single step
+- replace journeys_path with a unified dashboard
+- replace back to task list button with a link
+- add button to continue completing the current task
+- add button to continue to the next incomplete task if the current is complete
+- track key user actions throughout the journey
+
 ## [release-014] - 2021-05-20
 
 - remove now unused GetStepFromSection service to complete code migration to get steps from tasks
 - answering steps in a task may take you to the next step unless you've answered them all
+- tasks with no answers take the user straight to the first question instead of the task page
+- swap task view pattern for the check your answers pattern
 
 ## [release-013] - 2021-05-18
 
@@ -176,7 +187,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-014...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-015...HEAD
+[release-015]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-014...release-015
 [release-014]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-013...release-014
 [release-013]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-012...release-013
 [release-012]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-011...release-012

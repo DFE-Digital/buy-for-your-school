@@ -3,7 +3,8 @@ class Preview::EntriesController < ApplicationController
 
   def show
     @journey = Journey.create(
-      category: "catering",
+      category: "Preview",
+      contentful_id: 0,
       user: current_user,
       liquid_template: "<p>N/A</p>"
     )

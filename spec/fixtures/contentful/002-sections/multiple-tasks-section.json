@@ -32,19 +32,26 @@
     "title": "Section with multiple tasks",
     "tasks": [
       {
-      "sys": {
-        "type": "Link",
-        "linkType": "Entry",
-        "id": "checkboxes-task"
-      }
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "checkboxes-task"
+        }
       },
       {
         "sys": {
-        "type": "Link",
-        "linkType": "Entry",
-        "id": "checkboxes-and-radio-task"
-       }
-     }
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "checkboxes-and-radio-task"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "every-question-type-task"
+        }
+      }
     ]
   }
 }

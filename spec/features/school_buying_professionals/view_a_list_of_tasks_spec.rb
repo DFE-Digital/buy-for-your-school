@@ -4,6 +4,83 @@ feature "Users can view the task list" do
   let(:user) { create(:user) }
   before { user_is_signed_in(user: user) }
 
+  describe "and see their answers" do
+    before :each do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      within ".app-task-list" do
+        click_on "Task containing every type of step"
+      end
+      click_on "Back"
+    end
+
+    # RadioAnswerPresenter#response
+    specify do
+      click_link "radios"
+      choose "Cleaning"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "Cleaning"
+    end
+
+    # ShortTextAnswerPresenter#response
+    specify do
+      click_link "short_text"
+      fill_in "answer[response]", with: "hello_world@example.com"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "hello_world@example.com"
+    end
+
+    # LongTextAnswerPresenter#response
+    specify do
+      click_link "long_text"
+      fill_in "answer[response]", with: "\r\n\r\nfoo\r\n\r\n"
+      click_on "Continue"
+      click_on "Back"
+      expect(page.html).to include "<p></p>\n\n<p>foo</p>"
+    end
+
+    # CurrencyAnswerPresenter#response
+    specify do
+      click_link "currency"
+      fill_in "answer[response]", with: "2,999.99001"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "£2,999.99"
+    end
+
+    # NumberAnswerPresenter#response
+    specify do
+      click_link "number"
+      fill_in "answer[response]", with: "123"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "123"
+    end
+
+    # SingleDateAnswerPresenter#response
+    specify do
+      click_link "single_date"
+      fill_in "answer[response(3i)]", with: "1"
+      fill_in "answer[response(2i)]", with: "6"
+      fill_in "answer[response(1i)]", with: "2021"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to have_content "1 Jun 2021"
+    end
+
+    # CheckboxesAnswerPresenter#concatenated_response
+    specify do
+      click_link "checkboxes"
+      check "Lunch"
+      check "Dinner"
+      click_on "Continue"
+      click_on "Back"
+      expect(page).to_not have_content '["Lunch", "Dinner"]'
+      expect(page).to have_content "Lunch, Dinner"
+    end
+  end
+
   scenario "tasks are grouped by their section" do
     start_journey_from_category(category: "multiple-sections.json")
 
@@ -15,11 +92,11 @@ feature "Users can view the task list" do
     task_lists = find_all(".app-task-list__items")
 
     within(task_lists[0]) do
-      expect(page).to have_content("Which service do you need?")
+      expect(page).to have_content("Radio task")
     end
 
     within(task_lists[1]) do
-      expect(page).to have_content("Describe what you need")
+      expect(page).to have_content("Long text task")
     end
   end
 
@@ -30,6 +107,10 @@ feature "Users can view the task list" do
       click_on "Task with multiple steps"
     end
 
+    # Back to the Task page
+    click_on(I18n.t("generic.button.back"))
+
+    # Back to the Journey page
     click_on(I18n.t("generic.button.back"))
 
     expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
@@ -40,13 +121,12 @@ feature "Users can view the task list" do
 
     click_on(I18n.t("generic.button.back"))
 
-    expect(page).to have_content(I18n.t("journey.index.existing.header"))
+    expect(page).to have_content(I18n.t("dashboard.existing.header"))
   end
 
   scenario "user can navigate back to the dashboard from a step" do
     start_journey_from_category(category: "extended-radio-question.json")
 
-    click_on(I18n.t("generic.button.back"))
     click_on(I18n.t("generic.button.back"))
 
     expect(page).to have_content(I18n.t("dashboard.header"))
@@ -57,7 +137,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        click_on "Everyday services that are required and need to be considered"
+        click_on "Task with a single step"
       end
 
       click_on(I18n.t("generic.button.back"))
@@ -74,10 +154,74 @@ feature "Users can view the task list" do
         click_on "Task with multiple steps"
       end
 
-      click_on "Everyday services that are required and need to be considered"
       click_on(I18n.t("generic.button.back"))
 
       expect(page).to have_content("Task with multiple steps")
+    end
+  end
+
+  scenario "user can navigate back to the task list from a list of questions" do
+    start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+    # straight to first step
+    within ".app-task-list" do
+      click_on "Task with multiple steps"
+    end
+
+    # list of steps
+    click_on "Back"
+    expect(page).to have_content "Return to task list"
+
+    # list of tasks
+    click_on "Return to task list"
+    expect(page).to have_content "Create a specification to procure a catering service for your school"
+  end
+
+  context "when a task has more than one unanswered step" do
+    scenario "user can see a link to continue answering questions" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      within ".app-task-list" do
+        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+      end
+
+      click_on "Back"
+      click_on "Continue answering these questions"
+      expect(page).to have_content "Which service do you need?"
+      choose "Catering"
+      click_on "Continue"
+      click_on "Back"
+      click_on "Continue answering these questions"
+      expect(page).to have_content "What email address did you use?"
+    end
+  end
+
+  context "when a task with multiple steps has been completed" do
+    scenario "user can see a link to continue to the next task" do
+      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+
+      within ".app-task-list" do
+        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+      end
+
+      choose "Catering"
+      click_on "Continue"
+
+      fill_in "answer[response]", with: "email@example.com"
+      click_on "Continue"
+
+      fill_in "answer[response]", with: "I'm looking to procure..."
+      click_on "Continue"
+
+      check "Breakfast"
+      click_on "Continue"
+
+      click_on "Continue to the next task" # > every-question-type-task.json 1st question
+
+      expect(page).to have_content "Briefly describe what you are looking to procure"
+
+      click_on "Back" # > every-question-type-task.json
+      expect(page).to have_content "Task containing every type of step"
     end
   end
 
@@ -103,12 +247,12 @@ feature "Users can view the task list" do
       end
     end
 
-    scenario "shows the step title, not the task title" do
+    scenario "shows the task title, not the step title" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        expect(page).to have_content("Everyday services that are required and need to be considered")
-        expect(page).to_not have_content("Task with a single step")
+        expect(page).to have_content("Task with a single step")
+        expect(page).to_not have_content("Everyday services that are required and need to be considered") # TODO: #675 refactor multiple
       end
     end
 
@@ -116,7 +260,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        click_on "Everyday services that are required and need to be considered"
+        click_on "Task with a single step"
       end
 
       click_on "Back"
@@ -128,7 +272,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
-        click_on "Everyday services that are required and need to be considered"
+        click_on "Task with a single step"
       end
 
       check "Lunch"
@@ -145,8 +289,8 @@ feature "Users can view the task list" do
     scenario "should not appear in the task list" do
       start_journey_from_category(category: "hidden-field.json")
 
-      expect(page).not_to have_content("You should NOT be able to see this question")
-      expect(page).to have_content("You should be able to see this question")
+      expect(page).not_to have_content("Hidden field task")
+      expect(page).to have_content("Shown field task")
     end
 
     scenario "shows the section title" do
@@ -175,16 +319,17 @@ feature "Users can view the task list" do
         Step.find_by(title: "What colour is the sky?").update(created_at: 1.days.ago)
 
         click_on("One additional question task")
+        click_on(I18n.t("generic.button.back"))
 
-        steps = find_all(".app-task-list__item.step__item")
-        within(".app-task-list") do
+        steps = find_all(".govuk-summary-list__row")
+        within(".govuk-summary-list") do
           expect(steps[0]).to have_content("What support do you have available?")
           # Hidden field "What colour is the sky?" is correctly omitted at this point
           expect(steps[1]).to have_content("What email address did you use?")
         end
 
         # Answer the first question to unlock "What colour is the sky?"
-        click_on("What support do you have available?")
+        first(".govuk-summary-list__row").click_on(I18n.t("generic.button.change_answer"))
         choose("School expert")
         click_on("Continue")
 
@@ -192,8 +337,8 @@ feature "Users can view the task list" do
         click_on(I18n.t("generic.button.back"))
 
         # Check that "What colour is in the sky added to the correct place in the list"
-        steps = find_all(".app-task-list__item.step__item")
-        within(".app-task-list") do
+        steps = find_all(".govuk-summary-list__row")
+        within(".govuk-summary-list") do
           expect(steps[0]).to have_content("What support do you have available?")
           expect(steps[1]).to have_content("What colour is the sky?")
           expect(steps[2]).to have_content("What email address did you use?")

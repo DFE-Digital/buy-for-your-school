@@ -3,7 +3,7 @@ feature "Users can see their catering specification" do
 
   context "when the journey has been completed" do
     scenario "HTML" do
-      start_journey_from_category_and_go_to_question(category: "category-with-liquid-template.json")
+      start_journey_from_category_and_go_to_first_section(category: "category-with-liquid-template.json")
 
       common_specification_html = "<article id='specification'><h1>Liquid </h1></article>"
       expect(Htmltoword::Document)
@@ -49,6 +49,40 @@ feature "Users can see their catering specification" do
       click_on("Download (.docx)")
 
       expect(page.response_headers["Content-Disposition"]).to match(/filename="specification-incomplete.docx"/)
+    end
+  end
+
+  context "when viewing a journey" do
+    let(:user) { create(:user) }
+    before { user_is_signed_in(user: user) }
+
+    scenario "requesting the HTML version records an action" do
+      start_journey_from_category(category: "category-with-liquid-template.json")
+
+      click_on(I18n.t("journey.specification.button"))
+
+      journey = Journey.last
+      last_logged_event = ActivityLogItem.last
+      expect(last_logged_event.action).to eq("view_specification")
+      expect(last_logged_event.journey_id).to eq(journey.id)
+      expect(last_logged_event.user_id).to eq(user.id)
+      expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(last_logged_event.data["format"]).to eq("html")
+    end
+
+    scenario "requesting the .docx version records an action" do
+      start_journey_from_category(category: "category-with-liquid-template.json")
+
+      click_on(I18n.t("journey.specification.button"))
+      click_on("Download (.docx)")
+
+      journey = Journey.last
+      last_logged_event = ActivityLogItem.last
+      expect(last_logged_event.action).to eq("view_specification")
+      expect(last_logged_event.journey_id).to eq(journey.id)
+      expect(last_logged_event.user_id).to eq(user.id)
+      expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
+      expect(last_logged_event.data["format"]).to eq("docx")
     end
   end
 end

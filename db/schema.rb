@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_084959) do
+ActiveRecord::Schema.define(version: 2021_05_20_155735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_084959) do
     t.uuid "user_id"
     t.boolean "started", default: true
     t.datetime "last_worked_on"
+    t.string "contentful_id"
     t.index ["last_worked_on"], name: "index_journeys_on_last_worked_on"
     t.index ["started"], name: "index_journeys_on_started"
     t.index ["user_id"], name: "index_journeys_on_user_id"

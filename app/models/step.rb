@@ -1,6 +1,5 @@
 class Step < ApplicationRecord
   self.implicit_order_column = "order"
-  default_scope { order(:order) }
 
   belongs_to :task
 
@@ -13,6 +12,7 @@ class Step < ApplicationRecord
   has_one :currency_answer
 
   scope :that_are_questions, -> { where(contentful_model: "question") }
+  scope :ordered, -> { order(:order) }
 
   def answer
     @answer ||=

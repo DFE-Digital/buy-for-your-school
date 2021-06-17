@@ -14,13 +14,16 @@ Rails.application.routes.draw do
   post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 
   resource :journey_map, only: [:new]
-  resources :journeys, only: [:index, :new, :show] do
+  resources :journeys, only: [:new, :show] do
     resource :specification, only: [:show]
     resources :steps, only: [:new, :show, :edit] do
       resources :answers, only: [:create, :update]
     end
     resources :tasks, only: [:show]
   end
+
+  # 681 - guard against use of back button after form validation errors
+  get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
 
   namespace :preview do
     resources :entries, only: [:show]
