@@ -34,7 +34,7 @@ en:
       who_for_title: Who this service is for
       who_for_can_use_body: "You can use this service if you:"
       who_for_can_use_list:
-        - are responsible for <a href="/planning" class="govuk-link">procuring a new catering service for a school</a>
+        - are responsible for <a href="https://buy-for-your-school-prototypes.herokuapp.com/beta/phase-5/catering" class="govuk-link">procuring a new catering service for a school</a>
         - are procuring for one school – either a local authority maintained school or an academy in a single or multi-academy trust
         - intend to run your own procurement process or choose a supplier from a framework – read more about the different procurement routes you can take
       who_for_cannot_use_body: "You currently cannot use this service to create a specification for any of the following:"
