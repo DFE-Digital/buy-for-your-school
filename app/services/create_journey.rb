@@ -28,13 +28,21 @@ class CreateJourney
       ).call
 
       contentful_tasks = GetTasksFromSection.new(section: contentful_section).call
-      contentful_tasks.each do |contentful_task|
-        task = CreateTask.new(section: section, contentful_task: contentful_task).call
+      contentful_tasks.each_with_index do |contentful_task, index|
+
+        task = CreateTask.new(
+          section: section,
+          contentful_task: contentful_task,
+          order: index
+        ).call
 
         question_entries = GetStepsFromTask.new(task: contentful_task).call
+
         question_entries.each_with_index do |entry, index|
           CreateStep.new(
-            contentful_entry: entry, task: task, order: index
+            contentful_entry: entry,
+            task: task,
+            order: index
           ).call
         end
       end

@@ -34,8 +34,7 @@ class TasksController < ApplicationController
   end
 
   def next_task
-    next_task_id = current_journey.tasks.find_index { |t| t.id == task_id } + 1
-    current_journey.tasks[next_task_id]
+    current_journey.tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
   end
 
   def redirect_to_first_step_if_task_has_no_answers
