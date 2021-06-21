@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- add explicit ordering to the task model to allow continuing to the next unanswered task
+
 ## [release-015] - 2021-06-17
 
 - always show task title even if it contains a single step
