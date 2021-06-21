@@ -27,6 +27,10 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content(I18n.t("dashboard.existing.header"))
     expect(page).to have_content(I18n.t("dashboard.existing.body"))
 
+    expect(page).to have_link(I18n.t("dashboard.create.button"))
+    link_div = find_link(I18n.t("dashboard.create.button")).find(:xpath, "..")
+    expect(link_div[:class]).to eq("govuk-grid-column-full")
+
     expect(page).to have_content("15 February 2021")
   end
 
@@ -39,7 +43,7 @@ feature "Anyone can view a dashboard" do
     expect(page).to have_content(I18n.t("dashboard.create.header"))
     expect(page).to have_content(I18n.t("dashboard.create.body"))
 
-    expect(page).to have_button(I18n.t("dashboard.create.button"))
+    expect(page).to have_link(I18n.t("dashboard.create.button"))
   end
 
   scenario "user can start a new specification from the dashboard" do
