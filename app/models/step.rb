@@ -14,6 +14,8 @@ class Step < ApplicationRecord
   scope :that_are_questions, -> { where(contentful_model: "question") }
   scope :ordered, -> { order(:order) }
 
+  after_save :update_task_counters
+
   def answer
     @answer ||=
       case contentful_type
@@ -42,5 +44,9 @@ class Step < ApplicationRecord
 
   def journey
     task.section.journey
+  end
+
+  def update_task_counters
+    task.save
   end
 end
