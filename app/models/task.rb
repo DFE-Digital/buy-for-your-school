@@ -5,6 +5,8 @@ class Task < ApplicationRecord
 
   validates :title, :contentful_id, presence: true
 
+  before_save :tally_steps
+
   attr_accessor
 
   NOT_STARTED = 0
@@ -15,27 +17,19 @@ class Task < ApplicationRecord
     steps.where(hidden: false)
   end
 
-  def visible_steps_count
-    visible_steps.count
-  end
-
   def has_single_visible_step?
-    visible_steps_count == 1
-  end
-
-  def answered_questions_count
-    visible_steps_with_answers.count
+    step_tally["visible"] == 1
   end
 
   def status
-    return COMPLETED if answered_questions_count == visible_steps_count
-    return IN_PROGRESS if answered_questions_count.positive?
+    return COMPLETED if all_steps_answered?
+    return IN_PROGRESS if step_tally["answered"].positive?
 
     NOT_STARTED
   end
 
   def all_steps_answered?
-    eager_loaded_visible_steps.all?(&:answered?)
+    step_tally["visible"] == step_tally["answered"]
   end
 
   def visible_steps_with_answers
@@ -43,18 +37,16 @@ class Task < ApplicationRecord
   end
 
   def next_unanswered_step_id
+    return nil if all_steps_answered?
+
     step_ids = eager_loaded_visible_steps.pluck(:id)
     answered_step_ids = visible_steps_with_answers.pluck(:id)
-
     remaining_ids = step_ids - answered_step_ids
-
-    return nil if remaining_ids.empty?
-
     remaining_ids.first
   end
 
   def eager_loaded_visible_steps
-    @eager_loaded_visible_steps ||= visible_steps.includes(
+    visible_steps.includes(
       %i[short_text_answer
         long_text_answer
         radio_answer
@@ -63,5 +55,14 @@ class Task < ApplicationRecord
         number_answer
         single_date_answer]
     ).ordered
+  end
+
+  private def tally_steps
+    self.step_tally = {
+      total: steps.count,
+      visible: visible_steps.count,
+      hidden: steps.where(hidden: true).count,
+      answered: visible_steps_with_answers.count
+    }
   end
 end

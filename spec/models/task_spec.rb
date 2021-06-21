@@ -19,16 +19,6 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe "#visible_steps_count" do
-    it "returns the number of visible steps" do
-      task = create(:task)
-      create(:step, :radio, hidden: false, task: task)
-      create(:step, :radio, hidden: true, task: task)
-
-      expect(task.visible_steps_count).to eq 1
-    end
-  end
-
   describe "#has_single_visible_step?" do
     context "when the task has one visible step" do
       it "returns true" do
@@ -51,19 +41,47 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe "#answered_questions_count" do
-    it "returns the number of visible questions which have been answered" do
-      task = create(:task)
+  describe "#step_tally" do
+    let(:task) { create(:task) }
 
-      step_1 = create(:step, :radio, hidden: false, task: task)
-      create(:radio_answer, step: step_1)
-      step_2 = create(:step, :radio, hidden: true, task: task)
-      create(:radio_answer, step: step_2)
+    it "returns a hash of counted steps in different states" do
+      expect(task.step_tally["visible"]).to eq 0
+      expect(task.step_tally["answered"]).to eq 0
+      expect(task.step_tally["total"]).to eq 0
+      expect(task.step_tally["hidden"]).to eq 0
+    end
 
-      create(:step, :radio, hidden: false, task: task)
+    it "increments as steps are added" do
+      create(:step, :currency, hidden: false, task: task)
+      expect(task.step_tally["hidden"]).to eq 0
+      expect(task.step_tally["visible"]).to eq 1
+      expect(task.step_tally["total"]).to eq 1
+
+      create(:step, :number, hidden: true, task: task)
+      expect(task.step_tally["visible"]).to eq 1
+      expect(task.step_tally["hidden"]).to eq 1
+      expect(task.step_tally["total"]).to eq 2
+    end
+
+    it "updates as steps are edited" do
+      step_1 = create(:step, :currency, hidden: true, task: task)
+      step_2 = create(:step, :number, hidden: true, task: task)
+
+      expect(task.step_tally["hidden"]).to eq 2
+      step_1.update(hidden: false)
+      expect(task.step_tally["hidden"]).to eq 1
+      step_2.update(hidden: false)
+      expect(task.step_tally["hidden"]).to eq 0
+    end
+
+    it "counts how many are answered" do
       create(:step, :radio, hidden: true, task: task)
+      step = create(:step, :radio, hidden: false, task: task)
+      answer = create(:radio_answer, step: step)
 
-      expect(task.answered_questions_count).to eq 1
+      expect(task.step_tally["answered"]).to eq 1
+      answer.destroy
+      expect(task.step_tally["answered"]).to eq 0
     end
   end
 

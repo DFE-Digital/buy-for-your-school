@@ -46,4 +46,20 @@ RSpec.describe CheckboxAnswers, type: :model do
       end
     end
   end
+
+  describe "#update_task_counters" do
+    it "increments the task tally via callback" do
+      task = create(:task)
+      expect(task.step_tally["answered"]).to eq 0
+
+      step_1 = create(:step, :checkbox_answers, hidden: false, task: task)
+      answer_1 = create(:checkbox_answers, step: step_1)
+
+      expect(task.step_tally["answered"]).to eq 1
+
+      answer_1.destroy
+
+      expect(task.step_tally["answered"]).to eq 0
+    end
+  end
 end

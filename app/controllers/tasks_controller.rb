@@ -4,9 +4,9 @@ class TasksController < ApplicationController
   def show
     @journey = current_journey
     @current_task = task
-    steps = @current_task.eager_loaded_visible_steps.ordered
+    steps = @current_task.eager_loaded_visible_steps
     @steps = steps.map { |step| StepPresenter.new(step) }
-    @next_task = next_task
+    @next_task = next_unanswered_task
 
     RecordAction.new(
       action: "view_task",
@@ -17,8 +17,8 @@ class TasksController < ApplicationController
       contentful_task_id: task.contentful_id,
       data: {
         task_status: task.status,
-        task_total_steps: task.visible_steps_count,
-        task_answered_questions: task.answered_questions_count
+        task_total_steps: task.step_tally["visible"],
+        task_answered_questions: task.step_tally["answered"]
       }
     ).call
   end
@@ -33,12 +33,12 @@ class TasksController < ApplicationController
     params[:id]
   end
 
-  def next_task
+  def next_unanswered_task
     current_journey.tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
   end
 
   def redirect_to_first_step_if_task_has_no_answers
-    return unless task.answered_questions_count.zero?
+    return unless task.step_tally["answered"].zero?
     return if params.fetch(:back_link, nil).present?
 
     @journey = current_journey
@@ -52,8 +52,8 @@ class TasksController < ApplicationController
       contentful_task_id: task.contentful_id,
       data: {
         task_status: task.status,
-        task_total_steps: task.visible_steps_count,
-        task_answered_questions: task.answered_questions_count
+        task_total_steps: task.step_tally["visible"],
+        task_answered_questions: task.step_tally["answered"]
       }
     ).call
 
