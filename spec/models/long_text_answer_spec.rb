@@ -13,18 +13,6 @@ RSpec.describe LongTextAnswer, type: :model do
   end
 
   describe "#update_task_counters" do
-    it "increments the task tally via callback" do
-      task = create(:task)
-      expect(task.step_tally["answered"]).to eq 0
-
-      step_1 = create(:step, :long_text, hidden: false, task: task)
-      answer_1 = create(:long_text_answer, step: step_1)
-
-      expect(task.step_tally["answered"]).to eq 1
-
-      answer_1.destroy
-
-      expect(task.step_tally["answered"]).to eq 0
-    end
+    it_behaves_like "task_counters", :long_text, :long_text_answer
   end
 end
