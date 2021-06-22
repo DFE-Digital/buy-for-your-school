@@ -1,3 +1,4 @@
+# GetTasksFromSection service retrieves the {Task}s associated with the given {Section}.
 class GetTasksFromSection
   attr_accessor :section
 

@@ -1,3 +1,4 @@
+# CreateStep service is responsible for constructing a {Step} for the given task.
 class CreateStep
   class UnexpectedContentfulModel < StandardError; end
 
@@ -23,6 +24,11 @@ class CreateStep
     self.order = order
   end
 
+  # Creates and persists a new Step.
+  #
+  # This relies on the passed-in `contentful_entry` to construct the object.
+  #
+  # @return [Step]
   def call
     if unexpected_contentful_model?
       send_rollbar_warning
@@ -104,12 +110,14 @@ private
     contentful_entry.type.tr(" ", "_")
   end
 
+  # @see https://design-system.service.gov.uk/components/button/
   def primary_call_to_action_text
     return nil unless contentful_entry.respond_to?(:primary_call_to_action)
 
     contentful_entry.primary_call_to_action
   end
 
+  # @see https://design-system.service.gov.uk/components/button/
   def skip_call_to_action_text
     return nil unless contentful_entry.respond_to?(:skip_call_to_action)
 

@@ -1,3 +1,4 @@
+# GetEntry service is responsible for fetching and caching Contentful entries.
 class GetEntry
   class EntryNotFound < StandardError; end
   include CacheableEntry

@@ -1,3 +1,4 @@
+# AnswerFactory is responsible for determining the right answer type for a {Step}.
 class AnswerFactory
   class UnexpectedQuestionType < StandardError; end
 
@@ -7,6 +8,9 @@ class AnswerFactory
     self.step = step
   end
 
+  # Returns the right answer type based on the provided {Step} `contentful_type`.
+  #
+  # @return [Mixed]
   def call
     case step.contentful_type
     when "radios" then RadioAnswer.new

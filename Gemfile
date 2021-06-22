@@ -55,6 +55,7 @@ group :development do
   gem "rails-erd"
   gem "rails_layout"
   gem "spring-commands-rspec"
+  gem "yard-junk"
 end
 
 group :development, :test do

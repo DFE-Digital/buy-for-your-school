@@ -1,3 +1,4 @@
+# SingleDateAnswer is used to capture a single date answer to a {Step}.
 class SingleDateAnswer < ApplicationRecord
   include TaskCounters
 

@@ -1,3 +1,4 @@
+# CheckboxAnswers is used to capture a checkbox value answer to a {Step}.
 class CheckboxAnswers < ApplicationRecord
   include TaskCounters
 
@@ -7,6 +8,11 @@ class CheckboxAnswers < ApplicationRecord
             presence: true,
             unless: proc { |answer| answer.step.skippable? && answer.skipped }
 
+  # Overridden response accessor that ensures no blank checkbox values are set.
+  #
+  # @param [Array] args
+  #
+  # @return [Array, nil] array of answers or nil.
   def response=(args)
     return if args.blank?
 

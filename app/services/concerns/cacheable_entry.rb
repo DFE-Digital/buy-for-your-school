@@ -1,3 +1,4 @@
+# A concern to allow the caching of Contentful entries.
 module CacheableEntry
   extend ActiveSupport::Concern
 

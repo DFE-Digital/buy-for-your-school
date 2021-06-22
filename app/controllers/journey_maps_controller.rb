@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# JourneyMapsController is responsible for providing a map of specification steps to their Contentful answer tags.
 class JourneyMapsController < ApplicationController
   unless Rails.env.development?
     rescue_from GetStepsFromTask::RepeatEntryDetected do |exception|

@@ -1,3 +1,4 @@
+# RecordAction service is responsible for the functionality to create {ActivityLogItem}s for various user actions.
 class RecordAction
   class UnexpectedActionType < StandardError; end
 
@@ -35,6 +36,7 @@ class RecordAction
     self.data = data
   end
 
+  # @return [ActivityLogItem]
   def call
     if unexpected_action_type?
       send_rollbar_warning

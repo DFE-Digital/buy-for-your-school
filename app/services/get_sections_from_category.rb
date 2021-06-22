@@ -1,3 +1,4 @@
+# GetSectionsFromCategory retrieves the {Section}s under the given category.
 class GetSectionsFromCategory
   attr_accessor :category
 

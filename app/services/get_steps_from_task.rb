@@ -1,3 +1,4 @@
+# GetStepsFromTask service retrieves the {Step}s associated to the given {Task}.
 class GetStepsFromTask
   class RepeatEntryDetected < StandardError; end
 
