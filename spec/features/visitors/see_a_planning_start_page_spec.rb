@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Users can see a start page for planning their purchase" do
-  scenario "Start page content is shown on the root path" do
+  xscenario "Start page content is shown on the root path" do
     visit root_path
 
     click_on("procuring a new catering service for a school")
@@ -43,7 +43,7 @@ feature "Users can see a start page for planning their purchase" do
     expect(page).to have_link("get help with buying for schools", href: "https://www.gov.uk/guidance/buying-for-schools/get-help-with-buying-for-schools")
   end
 
-  scenario "can navigate back to the home page" do
+  xscenario "can navigate back to the home page" do
     visit root_path
 
     click_on("procuring a new catering service for a school")
