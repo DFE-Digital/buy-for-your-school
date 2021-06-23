@@ -1,4 +1,4 @@
-# 6. use-coveralls-to-monitor-test-coverage
+# 9. use-coveralls-to-monitor-test-coverage
 
 Date: 2020-10-09
 

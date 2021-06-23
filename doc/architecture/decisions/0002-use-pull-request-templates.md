@@ -1,4 +1,4 @@
-# 1. use-pull-request-templates
+# 2. use-pull-request-templates
 
 Date: 2019-08-16
 
