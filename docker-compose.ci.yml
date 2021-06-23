@@ -22,7 +22,7 @@ services:
       REDIS_URL: redis://test-redis:6379
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
       DOCKER: 'true'
-      AUTOMATICALLY_FIX_LINTING: 'true'
+      # AUTOMATICALLY_FIX_LINTING: 'true' # NB: on hold during transition to rubocop-govuk
     networks:
       - test
 
