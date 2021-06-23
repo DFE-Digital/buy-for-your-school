@@ -8,4 +8,4 @@ require_relative "config/application"
 Rails.application.load_tasks
 
 desc "Run all the tests"
-task default: %i[spec standard]
+task default: %i[spec rubocop]
