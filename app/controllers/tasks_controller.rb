@@ -3,10 +3,13 @@ class TasksController < ApplicationController
 
   def show
     @journey = current_journey
+
     @current_task = task
-    steps = @current_task.eager_loaded_visible_steps
-    @steps = steps.map { |step| StepPresenter.new(step) }
     @next_task = next_unanswered_task
+
+    @steps = task.eager_loaded_visible_steps.map do |step|
+      StepPresenter.new(step)
+    end
 
     RecordAction.new(
       action: "view_task",
