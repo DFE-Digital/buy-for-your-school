@@ -68,19 +68,21 @@ Running the server:
 
 The project uses [Pry](https://github.com/pry/pry) with [Byebug](https://github.com/deivid-rodriguez/byebug) in place of [IRB](https://guides.rubyonrails.org/command_line.html#bin-rails-console)
 
-- Start console locally `$ bundle exec rails console`
-- Utility script for containerised equivalent `$ script/console`
+- Start a console locally `$ bundle exec rails console`
+- Convenience script for containerised equivalent `$ script/console`
 
 ## Testing
 
-- Run test suite `$ bundle exec rspec`
+- Run test suite `$ bundle exec rspec` or `bundle exec rake spec`
+- Run lint check `$ bundle exec rubocop` or `bundle exec rake rubocop`
 - Run test suite and lint check `bundle exec rake`
-- [deprecated] utility `$ script/test` (rbenv/bundle/migrations/rspec/standardrb/brakeman)
 
 Running in the test docker environment can be achieved by prefixing the previous commands with:
-```bash
+```
 $ docker-compose -f docker-compose.test.yml run --rm test
 ```
+
+`script/test` is the Docker command target chaining dependency updates, migrations, testing, linting and security checks.
 
 ## Security
 
