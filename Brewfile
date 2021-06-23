@@ -1,5 +1,0 @@
-brew "adr-tools"
-brew "asdf"
-brew "cloudfoundry/tap/cf-cli@7"
-brew "contentful-cli"
-brew "docker"

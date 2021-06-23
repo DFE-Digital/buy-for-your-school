@@ -2,21 +2,22 @@
 
 ## Setup
 
-1. Install [Homebrew](https://brew.sh)
-1. Obtain [Contentful API Keys](https://app.contentful.com)
-1. Copy `/.env.example` into `/.env.development.local`
-
-Using Docker has high parity, you don't have to install any dependencies but it takes longer to run.
-Without Docker is faster but has lower parity and you will need to install local dependencies on your machine first.
+Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies but it takes longer to run.
+Without [Docker](https://docs.docker.com/docker-for-mac/install) is faster but has lower parity and you will need to install local dependencies on your machine first.
 The preferred option is to run code locally against containerised services.
 
-## Local Environment
+1. Install [Homebrew](https://brew.sh)
+1. Copy and edit `/Brewfile.example` to `/Brewfile`
+1. Run `$ brew bundle` to install any missing dependencies
+1. Obtain [Contentful API Keys](https://app.contentful.com) or ask another member of the development team
+1. Copy and edit `/.env.example` to `/.env.development.local`
 
-1. Install [Docker](https://docs.docker.com/docker-for-mac/install) and [ASDF](https://asdf-vm.com)
-    ```
-    $ brew bundle
-    ```
-1. Install Postgres (optional)
+
+### Optional Steps
+
+Example step-by-step guide using [ASDF](https://asdf-vm.com) for dependencies.
+
+1. Install Postgres
     ```
     $ asdf plugin add postgres
     $ POSTGRES_EXTRA_CONFIGURE_OPTIONS=--with-uuid=e2fs asdf install postgres latest
@@ -24,17 +25,20 @@ The preferred option is to run code locally against containerised services.
     $ createuser postgres --super
     $ createdb postgres
     ```
-1. Install Redis (optional)
+1. Install Redis
     ```
     $ asdf plugin add redis
     $ asdf install redis latest
     $ redis-server
     ```
-1. Install Node (optional)
+1. Install Node
     ```
     $ asdf plugin add nodejs
     $ asdf install nodejs latest
     ```
+
+## Development
+
 1. Install [Ruby](https://gds-way.cloudapps.digital/manuals/programming-languages/ruby.html#conventional-tooling) (or use alternative installers like [Rbenv](https://github.com/rbenv/rbenv), [RVM](https://github.com/rvm/rvm), [Chruby](https://github.com/postmodern/chruby))
     ```
     $ asdf plugin add ruby
@@ -55,11 +59,10 @@ The preferred option is to run code locally against containerised services.
     $ RAILS_ENV=test rake db:setup
     ```
 
+Running the server:
 
-## Development
-
-- Start server locally `$ bundle exec rails server`
-- Utility script for containerised equivalent `$ script/server`
+- `$ bundle exec rails server`
+- Or use the utility script for a containerised equivalent `$ script/server`
 
 ## Debugging
 
