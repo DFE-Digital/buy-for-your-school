@@ -1,4 +1,4 @@
-# 8. use sidekiq for asynchronous tasks
+# 11. use sidekiq for asynchronous tasks
 
 Date: 2020-11-30
 

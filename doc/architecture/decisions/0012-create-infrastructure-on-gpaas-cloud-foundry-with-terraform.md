@@ -1,4 +1,4 @@
-# 9. Create infrastructure on GPaas Cloud Foundry with Terraform
+# 12. Create infrastructure on GPaas Cloud Foundry with Terraform
 
 Date: 2021-03-09
 
