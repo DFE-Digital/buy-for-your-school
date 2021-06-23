@@ -74,6 +74,8 @@ en:
       header: "Create a new specification"
       body: "Create a new specification for a catering procurement."
       button: "Create a new specification"
+    edit:
+      button: "Review and edit"
     existing:
       header: "Existing specifications"
       body: "Continue with a draft specification, and review completed specifications."
