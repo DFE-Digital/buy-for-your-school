@@ -4,7 +4,7 @@ Date: 2019-09-06
 
 ## Status
 
-Accepted
+Superceded by [16. Use rubocop-govuk for code linting](0016-use-rubocop-govuk-for-code-linting.md)
 
 ## Context
 
