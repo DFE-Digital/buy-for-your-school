@@ -51,6 +51,7 @@ end
 
 group :development do
   gem "better_errors"
+  gem "binding_of_caller"
   gem "rails_layout"
   gem "spring-commands-rspec"
 end
@@ -62,7 +63,8 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"
-  gem "pry"
+  gem "pry-byebug"
+  gem "pry-rails"
   gem "rspec-rails"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
