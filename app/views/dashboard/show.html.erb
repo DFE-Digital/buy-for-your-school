@@ -24,7 +24,9 @@
           <% @current_user.journeys.each do |journey| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell"><%= journey.created_at.strftime("%e %B %Y") %></td>
-              <td class="govuk-table__cell govuk-table__cell--numeric"><a href="<%= journey_path(journey) %>" class="govuk-link">Review and edit</a></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                <%= link_to I18n.t("dashboard.edit.button"), journey_path(journey), class: "govuk-link" %>
+              </td>
             </tr>
           <% end %>
         </tbody>
