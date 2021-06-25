@@ -7,11 +7,11 @@ RSpec.describe CreateTask do
   describe "#call" do
     it "creates a new task" do
       expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }
-        .to change { Task.count }.by(1)
+        .to change(Task, :count).by(1)
       expect(Task.last.title).to eql("Task 1")
       expect(Task.last.contentful_id).to eql("5m26U35YLau4cOaJq6FXZA")
       expect(Task.last.section).to eql(section)
-      expect(Task.last.order).to eql(0)
+      expect(Task.last.order).to be(0)
     end
   end
 end

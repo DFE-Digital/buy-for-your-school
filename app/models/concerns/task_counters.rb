@@ -3,7 +3,7 @@ module TaskCounters
   included do
     after_commit :update_task_counters
 
-    private
+  private
 
     def update_task_counters
       step.update_task_counters

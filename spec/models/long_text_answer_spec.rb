@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe LongTextAnswer, type: :model do
-  it { should belong_to(:step) }
+  it { is_expected.to belong_to(:step) }
 
   it "captures the users response as a string" do
     answer = build(:long_text_answer, response: "Yellow")

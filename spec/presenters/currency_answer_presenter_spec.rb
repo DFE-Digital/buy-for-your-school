@@ -13,7 +13,7 @@ RSpec.describe CurrencyAnswerPresenter do
     it "returns a hash of currency_answer" do
       step = build(:currency_answer, response: 100.00)
       presenter = described_class.new(step)
-      expect(presenter.to_param).to eql({response: "£100.00"})
+      expect(presenter.to_param).to eql({ response: "£100.00" })
     end
   end
 end

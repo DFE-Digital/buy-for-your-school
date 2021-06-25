@@ -2,9 +2,10 @@ require "rails_helper"
 
 feature "Users can view a task" do
   let(:user) { create(:user) }
+
   before { user_is_signed_in(user: user) }
 
-  context "When there is a task with multiple steps" do
+  context "when there is a task with multiple steps" do
     it "the Task title takes you to the first step" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
@@ -117,17 +118,6 @@ feature "Users can view a task" do
       end
     end
 
-    it "the back link takes you to the journey page" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
-      end
-
-      click_on I18n.t("generic.button.back")
-      expect(page).to have_content "Task with multiple steps"
-    end
-
     it "shows a list of the task steps" do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
 
@@ -149,7 +139,7 @@ feature "Users can view a task" do
         click_on "Task with visible and hidden steps"
       end
 
-      expect(page).to_not have_content "You should NOT be able to see this question?"
+      expect(page).not_to have_content "You should NOT be able to see this question?"
       expect(page).to have_content "Which service do you need?"
     end
 

@@ -6,8 +6,8 @@ RSpec.describe SpecificationRenderer do
       renderer = described_class.new(
         template: '<p>HTML paragraph rendering a variable: "{{ variable_name }}"</p>',
         answers: {
-          "variable_name" => "variable value"
-        }
+          "variable_name" => "variable value",
+        },
       )
       expect(renderer.to_html).to eql('<p>HTML paragraph rendering a variable: "variable value"</p>')
     end
@@ -19,8 +19,8 @@ RSpec.describe SpecificationRenderer do
         renderer = described_class.new(
           template: '<p>HTML paragraph rendering a variable: "{{ variable_name }}"</p>',
           answers: {
-            "variable_name" => "variable value"
-          }
+            "variable_name" => "variable value",
+          },
         )
         expect(renderer.to_document_html(journey_complete: true))
           .to eql('<p>HTML paragraph rendering a variable: "variable value"</p>')
@@ -32,8 +32,8 @@ RSpec.describe SpecificationRenderer do
         renderer = described_class.new(
           template: '<p>HTML paragraph rendering a variable: "{{ variable_name }}"</p>',
           answers: {
-            "variable_name" => "variable value"
-          }
+            "variable_name" => "variable value",
+          },
         )
         warning_html = I18n.t("journey.specification.download.warning.incomplete")
         common_html = '<p>HTML paragraph rendering a variable: "variable value"</p>'

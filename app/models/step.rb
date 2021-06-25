@@ -34,7 +34,8 @@ class Step < ApplicationRecord
   end
 
   def primary_call_to_action_text
-    return I18n.t("generic.button.next") unless super.present?
+    return I18n.t("generic.button.next") if super.blank?
+
     super
   end
 

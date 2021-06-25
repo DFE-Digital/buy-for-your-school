@@ -12,7 +12,7 @@ class SaveAnswer
     answer.assign_attributes(safe_params)
 
     if answer.valid?
-      answer.save
+      answer.save!
       answer.step.journey.freshen!
       ToggleAdditionalSteps.new(step: answer.step).call
       result.success = true

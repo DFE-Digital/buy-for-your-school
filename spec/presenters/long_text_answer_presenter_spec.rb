@@ -21,7 +21,7 @@ RSpec.describe LongTextAnswerPresenter do
     it "returns a hash of long_text_answer" do
       step = build(:long_text_answer, response: "First line\r\nSecond line")
       presenter = described_class.new(step)
-      expect(presenter.to_param).to eql({response: "<p>First line\n<br />Second line</p>"})
+      expect(presenter.to_param).to eql({ response: "<p>First line\n<br />Second line</p>" })
     end
   end
 end

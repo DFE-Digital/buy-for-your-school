@@ -2,15 +2,15 @@ require "rails_helper"
 
 RSpec.describe UserSession, type: :model do
   include Rails.application.routes.url_helpers
-  let(:session) { double(ActionDispatch::Request::Session) }
+  let(:session) { instance_double(ActionDispatch::Request::Session) }
 
   describe "#persist_successful_dfe_sign_in_claim!" do
     it "stores the DfE Sign-in UID in the session" do
       omniauth_hash = {
         "uid" => "123",
         "credentials" => {
-          "id_token" => "456"
-        }
+          "id_token" => "456",
+        },
       }
 
       user_session = described_class.new(session: session)
@@ -35,7 +35,7 @@ RSpec.describe UserSession, type: :model do
 
   describe "#should_be_signed_out_of_dsi?" do
     it "returns true when there is a sign out token" do
-      session_with_sign_out_token = double(ActionDispatch::Request::Session)
+      session_with_sign_out_token = instance_double(ActionDispatch::Request::Session)
       allow(session_with_sign_out_token)
         .to receive(:key?)
         .with(:dfe_sign_in_sign_out_token)
@@ -53,7 +53,7 @@ RSpec.describe UserSession, type: :model do
     end
 
     it "returns false when the sign out token value is blank" do
-      session_with_sign_out_token = double(ActionDispatch::Request::Session)
+      session_with_sign_out_token = instance_double(ActionDispatch::Request::Session)
       allow(session_with_sign_out_token)
         .to receive(:key?)
         .with(:dfe_sign_in_sign_out_token)
@@ -71,7 +71,7 @@ RSpec.describe UserSession, type: :model do
     end
 
     it "returns false when there is no sign out token" do
-      session_without_sign_in_token = double(ActionDispatch::Request::Session)
+      session_without_sign_in_token = instance_double(ActionDispatch::Request::Session)
       allow(session_without_sign_in_token)
         .to receive(:key?)
         .with(:dfe_sign_in_sign_out_token)
@@ -87,14 +87,14 @@ RSpec.describe UserSession, type: :model do
   describe "#sign_out_url" do
     around do |example|
       ClimateControl.modify(
-        DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443"
+        DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443",
       ) do
         example.run
       end
     end
 
     it "returns a URL that can be sent to DfE Sign-in to sign the user out of their service" do
-      session_with_sign_out_token = double(ActionDispatch::Request::Session)
+      session_with_sign_out_token = instance_double(ActionDispatch::Request::Session)
 
       allow(session_with_sign_out_token)
         .to receive(:key?)
@@ -115,7 +115,7 @@ RSpec.describe UserSession, type: :model do
 
     context "when the user has no sign out token" do
       it "redirects the user to the root path" do
-        session_without_sign_in_token = double(ActionDispatch::Request::Session)
+        session_without_sign_in_token = instance_double(ActionDispatch::Request::Session)
         allow(session_without_sign_in_token)
           .to receive(:key?)
           .with(:dfe_sign_in_sign_out_token)
@@ -131,22 +131,22 @@ RSpec.describe UserSession, type: :model do
   end
 
   describe "#invalidate_other_user_sessions" do
-    after(:each) do
+    after do
       RedisSessions.redis.flushdb
       RedisSessionLookup.redis.flushdb
     end
 
     let(:session) do
-      double(ActionDispatch::Request::Session, id:
-        double(Rack::Session::SessionId, private_id: "2::5347845262539"))
+      instance_double(ActionDispatch::Request::Session, id:
+        instance_double(Rack::Session::SessionId, private_id: "2::5347845262539"))
     end
 
     let(:omniauth_hash) do
       {
         "uid" => "123",
         "credentials" => {
-          "id_token" => "456"
-        }
+          "id_token" => "456",
+        },
       }
     end
 
@@ -175,7 +175,7 @@ RSpec.describe UserSession, type: :model do
     context "when a session already exists for that DfE Sign in user" do
       it "deletes the pre-existing session data" do
         RedisSessions.redis.set("session:2::5347845262539",
-          Marshal.dump({"_csrf_token" => "1", "dfe_sign_in_uid" => "123"}))
+                                Marshal.dump({ "_csrf_token" => "1", "dfe_sign_in_uid" => "123" }))
         RedisSessionLookup.redis.set("user_dsi_id:123", "2::5347845262539")
 
         user_session = described_class.new(session: session)

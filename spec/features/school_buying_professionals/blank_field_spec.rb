@@ -2,6 +2,7 @@ require "rails_helper"
 
 feature "Back link works after failed form validations" do
   let(:user) { create(:user) }
+
   before { user_is_signed_in(user: user) }
 
   it "clears the validation error rather than raise a routing error" do

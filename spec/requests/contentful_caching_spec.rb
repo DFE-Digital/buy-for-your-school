@@ -2,9 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Contentful Caching", type: :request do
   before { user_is_signed_in }
+
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
     ) do
       example.run
     end
@@ -13,26 +14,27 @@ RSpec.describe "Contentful Caching", type: :request do
   context "when caching is enabled" do
     around do |example|
       ClimateControl.modify(
-        CONTENTFUL_ENTRY_CACHING: "true"
+        CONTENTFUL_ENTRY_CACHING: "true",
       ) do
         example.run
       end
     end
-    after(:each) { RedisCache.redis.flushdb }
+
+    after { RedisCache.redis.flushdb }
 
     it "checks the Redis cache instead of making an external request" do
       # TODO: In reality we do not cache categories, but should
-      raw_category_response = File.read("#{Rails.root}/spec/fixtures/contentful/001-categories/radio-question.json")
+      raw_category_response = File.read(Rails.root.join("spec/fixtures/contentful/001-categories/radio-question.json"))
       RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:contentful-category-entry", JSON.dump(raw_category_response))
 
       # TODO: In reality we do not cache sections, but should
-      raw_section_response = File.read("#{Rails.root}/spec/fixtures/contentful/002-sections/radio-section.json")
+      raw_section_response = File.read(Rails.root.join("spec/fixtures/contentful/002-sections/radio-section.json"))
       RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-section", JSON.dump(raw_section_response))
 
-      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/003-tasks/radio-task.json")
+      raw_step_response = File.read(Rails.root.join("spec/fixtures/contentful/003-tasks/radio-task.json"))
       RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-task", JSON.dump(raw_step_response))
 
-      raw_step_response = File.read("#{Rails.root}/spec/fixtures/contentful/004-steps/radio-question.json")
+      raw_step_response = File.read(Rails.root.join("spec/fixtures/contentful/004-steps/radio-question.json"))
       RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question", JSON.dump(raw_step_response))
 
       expect_any_instance_of(Contentful::Client).not_to receive(:entry)
@@ -46,7 +48,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
     it "stores the external contentful response in the cache" do
       stub_contentful_category(
-        fixture_filename: "radio-question.json"
+        fixture_filename: "radio-question.json",
       )
 
       get new_journey_path
@@ -59,7 +61,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
     it "sets a TTL to 72 hours by default" do
       stub_contentful_category(
-        fixture_filename: "radio-question.json"
+        fixture_filename: "radio-question.json",
       )
 
       freeze_time do
@@ -76,7 +78,7 @@ RSpec.describe "Contentful Caching", type: :request do
   context "when caching has been disabled in ENV" do
     around do |example|
       ClimateControl.modify(
-        CONTENTFUL_ENTRY_CACHING: "false"
+        CONTENTFUL_ENTRY_CACHING: "false",
       ) do
         example.run
       end
@@ -84,7 +86,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
     it "does not interact with the redis cache" do
       stub_contentful_category(
-        fixture_filename: "radio-question.json"
+        fixture_filename: "radio-question.json",
       )
 
       expect(RedisCache).not_to receive(:redis)

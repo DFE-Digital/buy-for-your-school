@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Journey, type: :model do
-  it { should have_many(:sections) }
+  it { is_expected.to have_many(:sections) }
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:category) }
@@ -20,11 +20,11 @@ RSpec.describe Journey, type: :model do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        step_1 = create(:step, :radio, task: task)
-        create(:radio_answer, step: step_1)
+        step1 = create(:step, :radio, task: task)
+        create(:radio_answer, step: step1)
 
-        step_2 = create(:step, :radio, task: task)
-        create(:radio_answer, step: step_2)
+        step2 = create(:step, :radio, task: task)
+        create(:radio_answer, step: step2)
 
         expect(journey.all_steps_completed?).to be true
       end
@@ -48,10 +48,11 @@ RSpec.describe Journey, type: :model do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        step_1 = create(:step, :radio, task: task)
-        create(:radio_answer, step: step_1)
+        step = create(:step, :radio, task: task)
+        create(:radio_answer, step: step)
 
         create(:step, :radio, task: task)
+        # Omit answer for step 2
 
         expect(journey.all_steps_completed?).to be false
       end
@@ -63,10 +64,11 @@ RSpec.describe Journey, type: :model do
         section = create(:section, journey: journey)
         task = create(:task, section: section)
 
-        step_1 = create(:step, :radio, task: task)
-        create(:radio_answer, step: step_1)
+        step = create(:step, :radio, task: task)
+        create(:radio_answer, step: step)
 
-        _hidden_step_without_an_answer = create(:step, :radio, task: task, hidden: true)
+        create(:step, :radio, task: task, hidden: true)
+        # Omit answer for step 2
 
         expect(journey.all_steps_completed?).to be true
       end

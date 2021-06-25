@@ -10,7 +10,7 @@ feature "Users can see the service components" do
   context "when the app is configured as a Contenetful preview app" do
     around do |example|
       ClimateControl.modify(
-        CONTENTFUL_PREVIEW_APP: "true"
+        CONTENTFUL_PREVIEW_APP: "true",
       ) do
         example.run
       end

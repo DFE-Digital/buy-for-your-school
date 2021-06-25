@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ShortTextAnswer, type: :model do
-  it { should belong_to(:step) }
+  it { is_expected.to belong_to(:step) }
 
   it "captures the users response as a string" do
     answer = build(:short_text_answer, response: "Yellow")

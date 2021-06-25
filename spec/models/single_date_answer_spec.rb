@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SingleDateAnswer, type: :model do
-  it { should belong_to(:step) }
+  it { is_expected.to belong_to(:step) }
 
   describe "#response" do
     it "returns a date" do

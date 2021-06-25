@@ -21,9 +21,8 @@ if [ -n "$TEST_FILE" ]; then
   bundle exec rspec --pattern "$TEST_FILE"
 else
   if [ -n "$AUTOMATICALLY_FIX_LINTING" ]; then
-    echo "==> Automatic linting on hold!"
-    # echo "==> Linting Ruby in fix mode..."
-    # bundle exec rake rubocop:auto_correct
+    echo "==> Linting Ruby in fix mode..."
+    bundle exec rake rubocop:auto_correct
   else
     echo "==> Linting Ruby..."
     bundle exec rake rubocop

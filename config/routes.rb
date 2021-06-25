@@ -14,10 +14,10 @@ Rails.application.routes.draw do
   post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 
   resource :journey_map, only: [:new]
-  resources :journeys, only: [:new, :show] do
+  resources :journeys, only: %i[new show] do
     resource :specification, only: [:show]
-    resources :steps, only: [:new, :show, :edit] do
-      resources :answers, only: [:create, :update]
+    resources :steps, only: %i[new show edit] do
+      resources :answers, only: %i[create update]
     end
     resources :tasks, only: [:show]
   end

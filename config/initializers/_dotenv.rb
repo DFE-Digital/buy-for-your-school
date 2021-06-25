@@ -11,6 +11,6 @@ if defined?(Dotenv)
     "CONTENTFUL_PREVIEW_APP",
     "CONTENTFUL_ENTRY_CACHING",
     "SUPPORT_EMAIL",
-    "REDIS_URL"
+    "REDIS_URL",
   )
 end

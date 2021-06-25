@@ -16,7 +16,7 @@ class AnswerFactory
     when "long_text" then LongTextAnswer.new
     when "single_date" then SingleDateAnswer.new
     when "checkboxes" then CheckboxAnswers.new
-    else raise UnexpectedQuestionType.new "Trying to create answer for unknown question type #{step.contentful_type}"
+    else raise UnexpectedQuestionType, "Trying to create answer for unknown question type #{step.contentful_type}"
     end
   end
 end

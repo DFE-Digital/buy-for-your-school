@@ -6,8 +6,8 @@ feature "Users can view their existing journeys" do
   it "lists existing journeys" do
     user = create(:user)
     user_is_signed_in(user: user)
-    create(:journey, user: user, created_at: Time.local(2021, 2, 15, 12, 0, 0))
-    create(:journey, user: user, created_at: Time.local(2021, 3, 20, 12, 0, 0))
+    create(:journey, user: user, created_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
+    create(:journey, user: user, created_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
 
     visit dashboard_path
 
@@ -21,8 +21,8 @@ feature "Users can view their existing journeys" do
 
       another_user = create(:user)
       _another_users_journey = create(:journey,
-        user: another_user,
-        created_at: Time.local(2021, 3, 20, 12, 0, 0))
+                                      user: another_user,
+                                      created_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
 
       signed_in_user = create(:user)
       user_is_signed_in(user: signed_in_user)

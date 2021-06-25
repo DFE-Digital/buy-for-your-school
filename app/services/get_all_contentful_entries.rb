@@ -18,14 +18,14 @@ class GetAllContentfulEntries
     response
   end
 
-  private
+private
 
   def send_rollbar_error
     Rollbar.warning(
       "Could not retrieve all entries from the following contentful environment.",
       contentful_url: ENV["CONTENTFUL_URL"],
       contentful_space_id: ENV["CONTENTFUL_SPACE"],
-      contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"]
+      contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
     )
   end
 end

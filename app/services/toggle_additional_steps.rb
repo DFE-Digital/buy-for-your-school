@@ -12,7 +12,7 @@ class ToggleAdditionalSteps
     recursively_show_additional_steps!(current_step: step, next_steps: additional_steps_to_show(step: step))
   end
 
-  private
+private
 
   def journey_steps
     @journey_steps ||= journey.steps
@@ -30,25 +30,25 @@ class ToggleAdditionalSteps
 
   def additional_steps_to_show(step:)
     matching_next_step_ids = step.additional_step_rules.map { |rule|
-      rule.fetch("question_identifiers", nil) if step.answer && matching_answer?(a: rule["required_answer"], b: step.answer.response)
+      rule.fetch("question_identifiers", nil) if step.answer && matching_answer?(expected: rule["required_answer"], response: step.answer.response)
     }.flatten
     journey_steps.where(contentful_id: matching_next_step_ids)
   end
 
   def additional_steps_to_hide
     non_matching_next_step_ids = step.additional_step_rules.map { |rule|
-      rule.fetch("question_identifiers", nil) unless matching_answer?(a: rule["required_answer"], b: step.answer.response)
+      rule.fetch("question_identifiers", nil) unless matching_answer?(expected: rule["required_answer"], response: step.answer.response)
     }.flatten
     journey_steps.where(contentful_id: non_matching_next_step_ids)
   end
 
-  def matching_answer?(a:, b:)
-    expected_answer = a.downcase
-    case b.class.name
+  def matching_answer?(expected:, response:)
+    expected_answer = expected.downcase
+    case response.class.name
     when "Array"
-      b.map(&:downcase).include?(expected_answer)
+      response.map(&:downcase).include?(expected_answer)
     else
-      expected_answer == b.downcase
+      expected_answer == response.downcase
     end
   end
 
@@ -56,7 +56,7 @@ class ToggleAdditionalSteps
     if next_steps
       next_steps.update_all(hidden: true)
 
-      next_steps.map { |next_step|
+      next_steps.map do |next_step|
         next unless next_step.additional_step_rules
 
         all_next_step_ids = next_step.additional_step_rules.map { |rule|
@@ -65,9 +65,9 @@ class ToggleAdditionalSteps
         all_next_steps = journey_steps.where(contentful_id: all_next_step_ids)
 
         recursively_hide_additional_steps!(
-          next_steps: all_next_steps
+          next_steps: all_next_steps,
         )
-      }
+      end
     end
   end
 
@@ -77,14 +77,14 @@ class ToggleAdditionalSteps
     if next_steps
       next_steps.update_all(hidden: false)
 
-      next_steps.map { |next_step|
+      next_steps.map do |next_step|
         next unless next_step.additional_step_rules
 
         recursively_show_additional_steps!(
           current_step: next_step,
-          next_steps: additional_steps_to_show(step: next_step)
+          next_steps: additional_steps_to_show(step: next_step),
         )
-      }
+      end
     end
   end
 end

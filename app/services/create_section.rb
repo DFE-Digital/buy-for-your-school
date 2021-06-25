@@ -12,7 +12,7 @@ class CreateSection
       journey: journey,
       contentful_id: contentful_section.id,
       title: contentful_section.title,
-      order: order
+      order: order,
     )
     section.save!
     section

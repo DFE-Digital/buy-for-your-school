@@ -34,7 +34,7 @@ class CreateStep
       raise UnexpectedContentfulStepType
     end
 
-    Step.create(
+    Step.create!(
       title: title,
       help_text: help_text,
       body: body,
@@ -48,11 +48,11 @@ class CreateStep
       additional_step_rules: additional_step_rules,
       raw: raw,
       task: task,
-      order: order
+      order: order,
     )
   end
 
-  private
+private
 
   def content_entry_id
     contentful_entry.id
@@ -84,16 +84,19 @@ class CreateStep
 
   def help_text
     return nil unless contentful_entry.respond_to?(:help_text)
+
     contentful_entry.help_text
   end
 
   def body
     return nil unless contentful_entry.respond_to?(:body)
+
     contentful_entry.body
   end
 
   def options
     return nil unless contentful_entry.respond_to?(:extended_options)
+
     contentful_entry.extended_options
   end
 
@@ -103,22 +106,26 @@ class CreateStep
 
   def primary_call_to_action_text
     return nil unless contentful_entry.respond_to?(:primary_call_to_action)
+
     contentful_entry.primary_call_to_action
   end
 
   def skip_call_to_action_text
     return nil unless contentful_entry.respond_to?(:skip_call_to_action)
+
     contentful_entry.skip_call_to_action
   end
 
   def hidden
     return false unless contentful_entry.respond_to?(:always_show_the_user)
     return false if contentful_entry.always_show_the_user.nil?
+
     !contentful_entry.always_show_the_user
   end
 
   def additional_step_rules
     return nil unless contentful_entry.respond_to?(:show_additional_question)
+
     contentful_entry.show_additional_question
   end
 
@@ -136,7 +143,7 @@ class CreateStep
       content_model: content_model,
       step_type: step_type,
       allowed_content_models: ALLOWED_CONTENTFUL_MODELS.join(", "),
-      allowed_step_types: ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", ")
+      allowed_step_types: ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "),
     )
   end
 end

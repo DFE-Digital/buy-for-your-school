@@ -13,7 +13,7 @@ RSpec.describe SingleDateAnswerPresenter do
     it "returns a hash of single_date_answer" do
       step = build(:single_date_answer, response: Date.new(2000, 12, 30))
       presenter = described_class.new(step)
-      expect(presenter.to_param).to eql({response: "30 Dec 2000"})
+      expect(presenter.to_param).to eql({ response: "30 Dec 2000" })
     end
   end
 end

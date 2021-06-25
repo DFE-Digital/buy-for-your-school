@@ -7,7 +7,7 @@ class LongTextAnswerPresenter < SimpleDelegator
 
   def to_param
     {
-      response: response
+      response: response,
     }
   end
 end

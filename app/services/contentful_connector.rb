@@ -2,11 +2,11 @@ require "contentful"
 
 class ContentfulConnector
   def initialize
-    @contentful_client ||= Contentful::Client.new(
+    @contentful_client = Contentful::Client.new(
       api_url: ENV["CONTENTFUL_URL"],
       space: ENV["CONTENTFUL_SPACE"],
       environment: ENV["CONTENTFUL_ENVIRONMENT"],
-      access_token: ENV["CONTENTFUL_ACCESS_TOKEN"]
+      access_token: ENV["CONTENTFUL_ACCESS_TOKEN"],
     )
   end
 

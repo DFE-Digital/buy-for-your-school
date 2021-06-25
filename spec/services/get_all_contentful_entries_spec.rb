@@ -7,7 +7,7 @@ RSpec.describe GetAllContentfulEntries do
       expect(ContentfulConnector).to receive(:new)
         .and_return(contentful_connector)
 
-      contentful_response = double(Contentful::Array)
+      contentful_response = instance_double(Contentful::Array)
 
       expect(contentful_connector).to receive(:get_all_entries)
         .and_return(contentful_response)
@@ -36,9 +36,9 @@ RSpec.describe GetAllContentfulEntries do
 
         expect(Rollbar).to receive(:warning)
           .with("Could not retrieve all entries from the following contentful environment.",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"])
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"])
           .and_call_original
         expect { described_class.new.call }
           .to raise_error(GetAllContentfulEntries::NoEntriesFound)

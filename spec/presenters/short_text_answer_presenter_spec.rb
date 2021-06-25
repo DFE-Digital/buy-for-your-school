@@ -13,7 +13,7 @@ RSpec.describe ShortTextAnswerPresenter do
     it "returns a hash of short_text_answer" do
       step = build(:short_text_answer, response: "Red")
       presenter = described_class.new(step)
-      expect(presenter.to_param).to eql({response: "Red"})
+      expect(presenter.to_param).to eql({ response: "Red" })
     end
   end
 end

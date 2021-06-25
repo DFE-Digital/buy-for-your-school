@@ -5,7 +5,7 @@ feature "Anyone can view a dashboard" do
 
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
     ) do
       example.run
     end
@@ -20,7 +20,7 @@ feature "Anyone can view a dashboard" do
   scenario "user can view existing specifications" do
     user = create(:user)
     user_is_signed_in(user: user)
-    create(:journey, user: user, created_at: Time.local(2021, 2, 15, 12, 0, 0))
+    create(:journey, user: user, created_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
 
     visit dashboard_path
 
@@ -61,7 +61,7 @@ feature "Anyone can view a dashboard" do
   scenario "when a user revisits an existing journey an action is recorded in the event log" do
     user = create(:user)
     user_is_signed_in(user: user)
-    journey = create(:journey, user: user, created_at: Time.local(2021, 2, 15, 12, 0, 0), contentful_id: "12345678")
+    journey = create(:journey, user: user, created_at: Time.zone.local(2021, 2, 15, 12, 0, 0), contentful_id: "12345678")
 
     visit journey_path(journey)
 

@@ -4,7 +4,7 @@ RSpec.describe GetTasksFromSection do
   describe "#call" do
     it "returns the list of entry objects referenced by the task list" do
       section = fake_contentful_section(
-        contentful_fixture_filename: "sections/multiple-tasks-section.json"
+        contentful_fixture_filename: "sections/multiple-tasks-section.json",
       )
       stub_contentful_section_tasks(sections: [section])
 

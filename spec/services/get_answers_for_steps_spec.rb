@@ -10,17 +10,17 @@ RSpec.describe GetAnswersForSteps do
 
       expect(result).to be_a(Hash)
       expect(result).to include(
-        {"answer_#{relevant_answer.step.contentful_id}" => {response: "Red"}}
+        { "answer_#{relevant_answer.step.contentful_id}" => { response: "Red" } },
       )
       expect(result).not_to include(
-        {"answer_#{irrelevant_answer.step.contentful_id}" => {response: "Blue"}}
+        { "answer_#{irrelevant_answer.step.contentful_id}" => { response: "Blue" } },
       )
     end
 
     it "returns a hash with_indifferent_access so Liquid can use the string syntax for access" do
       answer = create(:short_text_answer, response: "Red")
       result = described_class.new(visible_steps: [answer.step]).call
-      expect(result).to include({"answer_#{answer.step.contentful_id}" => {"response" => "Red"}})
+      expect(result).to include({ "answer_#{answer.step.contentful_id}" => { "response" => "Red" } })
     end
 
     context "when the answer is of type short_text_answer" do
@@ -29,8 +29,8 @@ RSpec.describe GetAnswersForSteps do
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: "Red"
-          }
+            response: "Red",
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -43,8 +43,8 @@ RSpec.describe GetAnswersForSteps do
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: "<p>Red</p>\n\n<p>Blue</p>"
-          }
+            response: "<p>Red</p>\n\n<p>Blue</p>",
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -58,8 +58,8 @@ RSpec.describe GetAnswersForSteps do
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: "30 Dec 2000"
-          }
+            response: "30 Dec 2000",
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -69,15 +69,15 @@ RSpec.describe GetAnswersForSteps do
     context "when the answer is of type radio_answer" do
       it "returns the answer information in a hash" do
         answer = create(:radio_answer,
-          response: "Yes please",
-          further_information: {yes_please_further_information: "More yes info"})
+                        response: "Yes please",
+                        further_information: { yes_please_further_information: "More yes info" })
 
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
             response: "Yes please",
-            further_information: "More yes info"
-          }
+            further_information: "More yes info",
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -91,8 +91,8 @@ RSpec.describe GetAnswersForSteps do
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: "£100.01"
-          }
+            response: "£100.01",
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -106,8 +106,8 @@ RSpec.describe GetAnswersForSteps do
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: "2"
-          }
+            response: "2",
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -117,29 +117,29 @@ RSpec.describe GetAnswersForSteps do
     context "when the answer is of type checkbox_answers" do
       it "returns the answer information in a hash" do
         answer = create(:checkbox_answers,
-          response: ["Foo", "Bar"],
-          skipped: false,
-          further_information: {"foo_further_information" => "More yes info"})
+                        response: %w[Foo Bar],
+                        skipped: false,
+                        further_information: { "foo_further_information" => "More yes info" })
 
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: ["Foo", "Bar"],
+            response: %w[Foo Bar],
             concatenated_response: "Foo, Bar",
             skipped: false,
             selected_answers: [
               {
                 machine_value: :foo,
                 human_value: "Foo",
-                further_information: "More yes info"
+                further_information: "More yes info",
               },
               {
                 machine_value: :bar,
                 human_value: "Bar",
-                further_information: nil
-              }
-            ]
-          }
+                further_information: nil,
+              },
+            ],
+          },
         }
 
         expect(result).to match(a_hash_including(assertion))
@@ -148,24 +148,24 @@ RSpec.describe GetAnswersForSteps do
       context "when there is no further_information at all" do
         it "returns no further_information in selected_answers" do
           answer = create(:checkbox_answers,
-            response: ["Foo"],
-            skipped: false,
-            further_information: nil)
+                          response: %w[Foo],
+                          skipped: false,
+                          further_information: nil)
 
           result = described_class.new(visible_steps: [answer.step]).call
           assertion = {
             "answer_#{answer.step.contentful_id}" => {
-              response: ["Foo"],
+              response: %w[Foo],
               concatenated_response: "Foo",
               skipped: false,
               selected_answers: [
                 {
                   machine_value: :foo,
                   human_value: "Foo",
-                  further_information: nil
-                }
-              ]
-            }
+                  further_information: nil,
+                },
+              ],
+            },
           }
 
           expect(result).to match(a_hash_including(assertion))
@@ -211,14 +211,14 @@ RSpec.describe GetAnswersForSteps do
     context "when the answer includes script characters" do
       it "removes them  from the answer that is then saved" do
         answer = create(:short_text_answer,
-          response: "<script>alert('problem');</script>A little text")
+                        response: "<script>alert('problem');</script>A little text")
 
         expect_any_instance_of(StringSanitiser).to receive(:call).and_call_original
 
         result = described_class.new(visible_steps: [answer.step]).call
 
         expect(result["answer_#{answer.step.contentful_id}"])
-          .to eql({"response" => "alert('problem');A little text"})
+          .to eql({ "response" => "alert('problem');A little text" })
       end
     end
   end
