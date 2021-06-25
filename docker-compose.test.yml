@@ -19,7 +19,6 @@ services:
       REDIS_URL: redis://test-redis:6379
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
       DOCKER: 'true'
-      AUTOMATICALLY_FIX_LINTING: 'true'
     volumes:
       - .:/srv/app
     tty: true
