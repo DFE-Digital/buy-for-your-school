@@ -1,4 +1,4 @@
-Result = Struct.new(:success, :object, :error_message) {
+Result = Struct.new(:success, :object, :error_message) do
   def success?
     success == true
   end
@@ -6,4 +6,4 @@ Result = Struct.new(:success, :object, :error_message) {
   def failure?
     !success
   end
-}
+end

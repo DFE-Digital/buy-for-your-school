@@ -41,10 +41,10 @@ RSpec.describe GetEntry do
 
         expect(Rollbar).to receive(:warning)
           .with("The following Contentful entry identifier could not be found.",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "123")
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_entry_id: "123")
           .and_call_original
         expect { described_class.new(entry_id: "123").call }
           .to raise_error(GetEntry::EntryNotFound)

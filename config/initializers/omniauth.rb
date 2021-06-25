@@ -20,15 +20,15 @@ options = {
     host: dfe_sign_in_issuer_uri.host,
     identifier: dfe_sign_in_identifier,
     secret: dfe_sign_in_secret,
-    redirect_uri: dfe_sign_in_redirect_uri
-  }
+    redirect_uri: dfe_sign_in_redirect_uri,
+  },
 }
 
 if DfESignIn.bypass?
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :developer,
-      fields: %i[uid],
-      uid_field: :uid
+             fields: %i[uid],
+             uid_field: :uid
   end
 else
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options

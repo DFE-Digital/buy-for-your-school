@@ -3,12 +3,12 @@ module SignInHelpers
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       uid: dsi_uid,
       credentials: {
-        id_token: "a-long-secret-given-by-dsi-to-use-to-sign-the-user-out-of-dsi-as-a-whole"
-      }
+        id_token: "a-long-secret-given-by-dsi-to-use-to-sign-the-user-out-of-dsi-as-a-whole",
+      },
     )
   end
 
-  def user_sign_in_attempt_fails(dsi_uid: SecureRandom.uuid)
+  def user_sign_in_attempt_fails(*)
     OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
   end
 

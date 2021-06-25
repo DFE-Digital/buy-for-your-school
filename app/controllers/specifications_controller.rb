@@ -10,7 +10,7 @@ class SpecificationsController < ApplicationController
 
     specification_renderer = SpecificationRenderer.new(
       template: @journey.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call
+      answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call,
     )
 
     RecordAction.new(
@@ -20,8 +20,8 @@ class SpecificationsController < ApplicationController
       contentful_category_id: @journey.contentful_id,
       data: {
         format: request.format.symbol,
-        all_steps_completed: @journey.all_steps_completed?
-      }
+        all_steps_completed: @journey.all_steps_completed?,
+      },
     ).call
 
     @specification_html = specification_renderer.to_html

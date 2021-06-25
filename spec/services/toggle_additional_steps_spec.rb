@@ -17,21 +17,21 @@ RSpec.describe ToggleAdditionalSteps do
       context "when the answers match" do
         it "only shows the additional steps within the same journey" do
           step = create(:step,
-            :radio,
-            task: task,
-            additional_step_rules: [{"required_answer" => "Red", "question_identifiers" => ["123"]}])
+                        :radio,
+                        task: task,
+                        additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }])
           create(:radio_answer, step: step, response: "Red")
 
           another_step_to_show = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            hidden: true)
+                                        :radio,
+                                        task: task,
+                                        contentful_id: "123",
+                                        hidden: true)
 
           another_step_from_a_different_journey_to_keep_hidden = create(:step,
-            :radio,
-            contentful_id: "123",
-            hidden: true)
+                                                                        :radio,
+                                                                        contentful_id: "123",
+                                                                        hidden: true)
 
           described_class.new(step: step).call
 
@@ -41,30 +41,30 @@ RSpec.describe ToggleAdditionalSteps do
 
         it "shows all additional_steps within the same journey" do
           step = create(:step,
-            :radio,
-            task: task,
-            additional_step_rules: [{
-              "required_answer" => "Red",
-              "question_identifiers" => ["123", "456"]
-            }])
+                        :radio,
+                        task: task,
+                        additional_step_rules: [{
+                          "required_answer" => "Red",
+                          "question_identifiers" => %w[123 456],
+                        }])
           create(:radio_answer, step: step, response: "Red")
 
           first_additional_step_to_show = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            hidden: true)
+                                                 :radio,
+                                                 task: task,
+                                                 contentful_id: "123",
+                                                 hidden: true)
 
           second_additional_step_to_show = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "456",
-            hidden: true)
+                                                  :radio,
+                                                  task: task,
+                                                  contentful_id: "456",
+                                                  hidden: true)
 
           another_step_from_a_different_journey_to_keep_hidden = create(:step,
-            :radio,
-            contentful_id: "123",
-            hidden: true)
+                                                                        :radio,
+                                                                        contentful_id: "123",
+                                                                        hidden: true)
 
           described_class.new(step: step).call
 
@@ -76,16 +76,16 @@ RSpec.describe ToggleAdditionalSteps do
         context "when the required_answer matches the answer exactly" do
           it "updates the referenced step's hidden field to false" do
             step = create(:step,
-              :radio,
-              task: task,
-              additional_step_rules: [{"required_answer" => "Red", "question_identifiers" => ["123"]}])
+                          :radio,
+                          task: task,
+                          additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }])
             create(:radio_answer, step: step, response: "Red")
 
             step_to_show = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "123",
-              hidden: true)
+                                  :radio,
+                                  task: task,
+                                  contentful_id: "123",
+                                  hidden: true)
 
             described_class.new(step: step).call
 
@@ -96,16 +96,16 @@ RSpec.describe ToggleAdditionalSteps do
         context "when the required_answer has different case to the answer" do
           it "returns the updated step" do
             step = create(:step,
-              :radio,
-              task: task,
-              additional_step_rules: [{"required_answer" => "RED", "question_identifiers" => ["123"]}])
+                          :radio,
+                          task: task,
+                          additional_step_rules: [{ "required_answer" => "RED", "question_identifiers" => %w[123] }])
             create(:radio_answer, step: step, response: "red")
 
             step_to_show = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "123",
-              hidden: true)
+                                  :radio,
+                                  task: task,
+                                  contentful_id: "123",
+                                  hidden: true)
 
             described_class.new(step: step).call
 
@@ -116,25 +116,25 @@ RSpec.describe ToggleAdditionalSteps do
         context "when the referenced step also has an additional_step_rules rule" do
           it "shows both connected questions" do
             first_step = create(:step,
-              :radio,
-              task: task,
-              additional_step_rules: [{"required_answer" => "Red", "question_identifiers" => ["123"]}],
-              hidden: false)
+                                :radio,
+                                task: task,
+                                additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }],
+                                hidden: false)
             create(:radio_answer, step: first_step, response: "Red")
 
             second_step = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "123",
-              additional_step_rules: [{"required_answer" => "Blue", "question_identifiers" => ["456"]}],
-              hidden: true)
+                                 :radio,
+                                 task: task,
+                                 contentful_id: "123",
+                                 additional_step_rules: [{ "required_answer" => "Blue", "question_identifiers" => %w[456] }],
+                                 hidden: true)
             create(:radio_answer, step: second_step, response: "Blue")
 
             third_step = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "456",
-              hidden: true)
+                                :radio,
+                                task: task,
+                                contentful_id: "456",
+                                hidden: true)
 
             described_class.new(step: first_step).call
 
@@ -145,41 +145,41 @@ RSpec.describe ToggleAdditionalSteps do
       end
 
       context "when a branching question has multiple branches itself" do
-        it "should hide itself and all connected branches" do
+        it "hides itself and all connected branches" do
           step = create(:step,
-            :radio,
-            task: task,
-            additional_step_rules: [
-              {"required_answer" => "Red", "question_identifiers" => ["123"]},
-              {"required_answer" => "Blue", "question_identifiers" => ["456"]}
-            ],
-            hidden: false)
+                        :radio,
+                        task: task,
+                        additional_step_rules: [
+                          { "required_answer" => "Red", "question_identifiers" => %w[123] },
+                          { "required_answer" => "Blue", "question_identifiers" => %w[456] },
+                        ],
+                        hidden: false)
 
           create(:radio_answer, step: step, response: "Blue")
 
           first_step_to_hide = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            additional_step_rules: [
-              {"required_answer" => "Yellow", "question_identifiers" => ["8"]},
-              {"required_answer" => "Green", "question_identifiers" => ["9"]}
-            ],
-            hidden: false)
+                                      :radio,
+                                      task: task,
+                                      contentful_id: "123",
+                                      additional_step_rules: [
+                                        { "required_answer" => "Yellow", "question_identifiers" => %w[8] },
+                                        { "required_answer" => "Green", "question_identifiers" => %w[9] },
+                                      ],
+                                      hidden: false)
 
           second_step_to_hide = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "8",
-            additional_step_rules: [],
-            hidden: false)
+                                       :radio,
+                                       task: task,
+                                       contentful_id: "8",
+                                       additional_step_rules: [],
+                                       hidden: false)
 
           third_step_to_hide = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "9",
-            additional_step_rules: [],
-            hidden: false)
+                                      :radio,
+                                      task: task,
+                                      contentful_id: "9",
+                                      additional_step_rules: [],
+                                      hidden: false)
 
           described_class.new(step: step).call
 
@@ -192,19 +192,19 @@ RSpec.describe ToggleAdditionalSteps do
       context "when a branching question is shown based on more than on matching answer" do
         it "continues to show the next step (rather than hiding it again when it doesn't match the second rule)" do
           step = create(:step,
-            :radio,
-            task: task,
-            additional_step_rules: [
-              {"required_answer" => "red", "question_identifiers" => ["123"]},
-              {"required_answer" => "blue", "question_identifiers" => ["123"]}
-            ])
+                        :radio,
+                        task: task,
+                        additional_step_rules: [
+                          { "required_answer" => "red", "question_identifiers" => %w[123] },
+                          { "required_answer" => "blue", "question_identifiers" => %w[123] },
+                        ])
           create(:radio_answer, step: step, response: "red")
 
           step_to_show = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            hidden: true)
+                                :radio,
+                                task: task,
+                                contentful_id: "123",
+                                hidden: true)
 
           described_class.new(step: step).call
 
@@ -215,16 +215,16 @@ RSpec.describe ToggleAdditionalSteps do
       context "when the answers DO NOT match" do
         it "updates the referenced step's hidden field to true" do
           step = create(:step,
-            :radio,
-            task: task,
-            additional_step_rules: [{"required_answer" => "Red", "question_identifiers" => ["123"]}])
+                        :radio,
+                        task: task,
+                        additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }])
           create(:radio_answer, step: step, response: "Blue")
 
           step_to_show = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            hidden: false)
+                                :radio,
+                                task: task,
+                                contentful_id: "123",
+                                hidden: false)
 
           described_class.new(step: step).call
 
@@ -233,30 +233,30 @@ RSpec.describe ToggleAdditionalSteps do
 
         it "hides all additional_steps within the same journey" do
           step = create(:step,
-            :radio,
-            task: task,
-            additional_step_rules: [{
-              "required_answer" => "Red",
-              "question_identifiers" => ["123", "456"]
-            }])
+                        :radio,
+                        task: task,
+                        additional_step_rules: [{
+                          "required_answer" => "Red",
+                          "question_identifiers" => %w[123 456],
+                        }])
           create(:radio_answer, step: step, response: "NOT Red")
 
           first_additional_step_to_hide = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            hidden: false)
+                                                 :radio,
+                                                 task: task,
+                                                 contentful_id: "123",
+                                                 hidden: false)
 
           second_additional_step_to_hide = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "456",
-            hidden: false)
+                                                  :radio,
+                                                  task: task,
+                                                  contentful_id: "456",
+                                                  hidden: false)
 
           another_step_from_a_different_journey_to_keep_hidden = create(:step,
-            :radio,
-            contentful_id: "123",
-            hidden: true)
+                                                                        :radio,
+                                                                        contentful_id: "123",
+                                                                        hidden: true)
 
           described_class.new(step: step).call
 
@@ -268,16 +268,16 @@ RSpec.describe ToggleAdditionalSteps do
         context "when the required_answer has different case to the answer" do
           it "does not hide the step" do
             step = create(:step,
-              :radio,
-              task: task,
-              additional_step_rules: [{"required_answer" => "RED", "question_identifiers" => ["123"]}])
+                          :radio,
+                          task: task,
+                          additional_step_rules: [{ "required_answer" => "RED", "question_identifiers" => %w[123] }])
             create(:radio_answer, step: step, response: "red")
 
             step_to_show = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "123",
-              hidden: false)
+                                  :radio,
+                                  task: task,
+                                  contentful_id: "123",
+                                  hidden: false)
 
             described_class.new(step: step).call
 
@@ -288,25 +288,25 @@ RSpec.describe ToggleAdditionalSteps do
         context "when the referenced step also has an additional_step_rules rule" do
           it "hides both connected questions" do
             first_step = create(:step,
-              :radio,
-              task: task,
-              additional_step_rules: [{"required_answer" => "Red", "question_identifiers" => ["123"]}],
-              hidden: false)
+                                :radio,
+                                task: task,
+                                additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }],
+                                hidden: false)
             create(:radio_answer, step: first_step, response: "Changed from red")
 
             second_step = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "123",
-              additional_step_rules: [{"required_answer" => "Blue", "question_identifiers" => ["456"]}],
-              hidden: false)
+                                 :radio,
+                                 task: task,
+                                 contentful_id: "123",
+                                 additional_step_rules: [{ "required_answer" => "Blue", "question_identifiers" => %w[456] }],
+                                 hidden: false)
             create(:radio_answer, step: second_step, response: "Blue")
 
             third_step = create(:step,
-              :radio,
-              task: task,
-              contentful_id: "456",
-              hidden: false)
+                                :radio,
+                                task: task,
+                                contentful_id: "456",
+                                hidden: false)
 
             described_class.new(step: first_step).call
 
@@ -319,16 +319,16 @@ RSpec.describe ToggleAdditionalSteps do
       context "when the answer response is an array" do
         it "checks for a match against all answers" do
           step = create(:step,
-            :checkbox_answers,
-            task: task,
-            additional_step_rules: [{"required_answer" => "Red", "question_identifiers" => ["123"]}])
-          create(:checkbox_answers, step: step, response: ["Blue", "Red"])
+                        :checkbox_answers,
+                        task: task,
+                        additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }])
+          create(:checkbox_answers, step: step, response: %w[Blue Red])
 
           step_to_show = create(:step,
-            :radio,
-            task: task,
-            contentful_id: "123",
-            hidden: true)
+                                :radio,
+                                task: task,
+                                contentful_id: "123",
+                                hidden: true)
 
           described_class.new(step: step).call
 

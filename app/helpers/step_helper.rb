@@ -2,9 +2,9 @@
 
 module StepHelper
   def checkbox_options(array_of_options:)
-    array_of_options.map { |option|
+    array_of_options.map do |option|
       OpenStruct.new(id: option.downcase, name: option)
-    }
+    end
   end
 
   def monkey_patch_form_object_with_further_information_field(

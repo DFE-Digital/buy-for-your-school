@@ -9,7 +9,7 @@ RSpec.describe CreateStep do
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/radio-question.json"
+          contentful_fixture_filename: "steps/radio-question.json",
         )
 
         step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
@@ -19,34 +19,34 @@ RSpec.describe CreateStep do
         expect(step.contentful_id).to eq("radio-question")
         expect(step.contentful_model).to eq("question")
         expect(step.contentful_type).to eq("radios")
-        expect(step.options).to eq([{"value" => "Catering"}, {"value" => "Cleaning"}])
+        expect(step.options).to eq([{ "value" => "Catering" }, { "value" => "Cleaning" }])
         expect(step.hidden).to eq(false)
         expect(step.additional_step_rules).to eq(nil)
         expect(step.order).to eq(0)
         expect(step.raw).to eq(
           "fields" => {
             "helpText" => "Tell us which service you need.",
-            "extendedOptions" => [{"value" => "Catering"}, {"value" => "Cleaning"}],
+            "extendedOptions" => [{ "value" => "Catering" }, { "value" => "Cleaning" }],
             "slug" => "/which-service",
             "title" => "Which service do you need?",
             "type" => "radios",
-            "alwaysShowTheUser" => true
+            "alwaysShowTheUser" => true,
           },
           "sys" => {
             "contentType" => {
               "sys" => {
                 "id" => "question",
                 "linkType" => "ContentType",
-                "type" => "Link"
-              }
+                "type" => "Link",
+              },
             },
             "createdAt" => "2020-09-07T10:56:40.585Z",
             "environment" => {
               "sys" => {
                 "id" => "master",
                 "linkType" => "Environment",
-                "type" => "Link"
-              }
+                "type" => "Link",
+              },
             },
             "id" => "radio-question",
             "locale" => "en-US",
@@ -55,12 +55,12 @@ RSpec.describe CreateStep do
               "sys" => {
                 "id" => "jspwts36h1os",
                 "linkType" => "Space",
-                "type" => "Link"
-              }
+                "type" => "Link",
+              },
             },
             "type" => "Entry",
-            "updatedAt" => "2020-09-14T22:16:54.633Z"
-          }
+            "updatedAt" => "2020-09-14T22:16:54.633Z",
+          },
         )
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe CreateStep do
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/short-text-question.json"
+          contentful_fixture_filename: "steps/short-text-question.json",
         )
 
         step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
@@ -86,7 +86,7 @@ RSpec.describe CreateStep do
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/short-text-question.json"
+          contentful_fixture_filename: "steps/short-text-question.json",
         )
 
         step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
@@ -102,11 +102,11 @@ RSpec.describe CreateStep do
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/static-content.json"
+          contentful_fixture_filename: "steps/static-content.json",
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0
+          task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
         expect(step.body).to eq("Procuring a new catering contract can \
@@ -123,11 +123,11 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/primary-button.json"
+          contentful_fixture_filename: "steps/primary-button.json",
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0
+          task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
         expect(step.primary_call_to_action_text).to eq("Go onwards!")
@@ -141,11 +141,11 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/no-primary-button.json"
+          contentful_fixture_filename: "steps/no-primary-button.json",
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0
+          task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
         expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
@@ -159,11 +159,11 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/skippable-checkboxes-question.json"
+          contentful_fixture_filename: "steps/skippable-checkboxes-question.json",
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0
+          task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
         expect(step.skip_call_to_action_text).to eq("None of the above")
@@ -177,11 +177,11 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/no-hidden-field.json"
+          contentful_fixture_filename: "steps/no-hidden-field.json",
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0
+          task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
         expect(step.hidden).to eq(false)
@@ -195,18 +195,18 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/show-one-additional-question.json"
+          contentful_fixture_filename: "steps/show-one-additional-question.json",
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0
+          task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
         expect(step.additional_step_rules).to eql([
           {
             "required_answer" => "School expert",
-            "question_identifiers" => ["hidden-field-that-shows-an-additional-question"]
-          }
+            "question_identifiers" => %w[hidden-field-that-shows-an-additional-question],
+          },
         ])
       end
     end
@@ -218,7 +218,7 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-type.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-type.json",
         )
 
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
@@ -231,19 +231,19 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-type.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-type.json",
         )
 
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Contentful type was found",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "unexpected-contentful-type",
-            content_model: "telepathy",
-            step_type: "radios",
-            allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_entry_id: "unexpected-contentful-type",
+                content_model: "telepathy",
+                step_type: "radios",
+                allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
+                allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
@@ -257,7 +257,7 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json",
         )
 
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
@@ -270,19 +270,19 @@ process around March.")
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json"
+          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json",
         )
 
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Contentful type was found",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "unexpected-contentful-question-type",
-            content_model: "question",
-            step_type: "telepathy",
-            allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-            allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_entry_id: "unexpected-contentful-question-type",
+                content_model: "question",
+                step_type: "telepathy",
+                allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
+                allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)

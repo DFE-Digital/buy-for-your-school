@@ -26,6 +26,7 @@ class Cache
 
   def set(key:, value:)
     return unless enabled == "true"
+
     redis_cache.set(key, value)
     redis_cache.expire(key, ttl)
   end

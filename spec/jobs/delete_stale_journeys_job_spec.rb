@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe DeleteStaleJourneysJob, type: :job do
   include ActiveJob::TestHelper
 
-  before(:each) do
+  before do
     ActiveJob::Base.queue_adapter = :test
   end
 

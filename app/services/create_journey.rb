@@ -15,34 +15,33 @@ class CreateJourney
       user: user,
       started: true,
       last_worked_on: Time.zone.now,
-      liquid_template: category.combined_specification_template
+      liquid_template: category.combined_specification_template,
     )
 
     journey.save!
 
-    contentful_sections.each_with_index do |contentful_section, index|
+    contentful_sections.each_with_index do |contentful_section, section_index|
       section = CreateSection.new(
         journey: journey,
         contentful_section: contentful_section,
-        order: index
+        order: section_index,
       ).call
 
       contentful_tasks = GetTasksFromSection.new(section: contentful_section).call
-      contentful_tasks.each_with_index do |contentful_task, index|
-
+      contentful_tasks.each_with_index do |contentful_task, task_index|
         task = CreateTask.new(
           section: section,
           contentful_task: contentful_task,
-          order: index
+          order: task_index,
         ).call
 
         question_entries = GetStepsFromTask.new(task: contentful_task).call
 
-        question_entries.each_with_index do |entry, index|
+        question_entries.each_with_index do |entry, question_index|
           CreateStep.new(
             contentful_entry: entry,
             task: task,
-            order: index
+            order: question_index,
           ).call
         end
       end

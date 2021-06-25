@@ -9,7 +9,7 @@ class GetEntry
     @contentful_connector = contentful_connector
     self.cache = Cache.new(
       enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
-      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72)
+      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72),
     )
   end
 
@@ -29,7 +29,7 @@ class GetEntry
     entry
   end
 
-  private
+private
 
   def cache_key
     "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{entry_id}"
@@ -41,7 +41,7 @@ class GetEntry
       contentful_url: ENV["CONTENTFUL_URL"],
       contentful_space_id: ENV["CONTENTFUL_SPACE"],
       contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-      contentful_entry_id: entry_id
+      contentful_entry_id: entry_id,
     )
   end
 end

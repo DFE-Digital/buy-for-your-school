@@ -13,9 +13,9 @@ class GetCategory
   def call
     category = begin
       GetEntry.new(entry_id: category_entry_id).call
-    rescue GetEntry::EntryNotFound
-      send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
-      raise
+               rescue GetEntry::EntryNotFound
+                 send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
+                 raise
     end
 
     # INFO: Due to a 50k character limit within Contentful we check to see if
@@ -24,15 +24,15 @@ class GetCategory
 
     begin
       validate_liquid(template: category.combined_specification_template)
-    rescue Liquid::SyntaxError => error
+    rescue Liquid::SyntaxError => e
       send_rollbar_error(message: "A user couldn't start a journey because of an invalid Specification", entry_id: category_entry_id)
-      raise InvalidLiquidSyntax.new(message: error.message)
+      raise InvalidLiquidSyntax.new(message: e.message)
     end
 
     category
   end
 
-  private
+private
 
   def send_rollbar_error(message:, entry_id:)
     Rollbar.error(
@@ -40,7 +40,7 @@ class GetCategory
       contentful_url: ENV["CONTENTFUL_URL"],
       contentful_space_id: ENV["CONTENTFUL_SPACE"],
       contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-      contentful_entry_id: entry_id
+      contentful_entry_id: entry_id,
     )
   end
 

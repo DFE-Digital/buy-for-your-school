@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Cache do
-  after(:each) do
+  after do
     RedisCache.redis.flushdb
   end
 
   it "requires a key, enabled flag and ttl" do
     result = described_class.new(enabled: "true", ttl: 123)
     expect(result.enabled).to eql("true")
-    expect(result.ttl).to eql(123)
+    expect(result.ttl).to be(123)
   end
 
   describe "#redis_cache" do

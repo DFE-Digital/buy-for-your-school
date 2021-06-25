@@ -26,8 +26,8 @@ class AnswersController < ApplicationController
       contentful_task_id: @step.task.contentful_id,
       contentful_step_id: @step.contentful_id,
       data: {
-        success: result.success?
-      }
+        success: result.success?,
+      },
     ).call
 
     if result.success?
@@ -39,7 +39,7 @@ class AnswersController < ApplicationController
         redirect_to journey_step_path(@journey, parent_task.next_unanswered_step_id)
       end
     else
-      render "steps/#{@step.contentful_type}", locals: {layout: "steps/new_form_wrapper"}
+      render "steps/#{@step.contentful_type}", locals: { layout: "steps/new_form_wrapper" }
     end
   end
 
@@ -60,8 +60,8 @@ class AnswersController < ApplicationController
       contentful_task_id: @step.task.contentful_id,
       contentful_step_id: @step.contentful_id,
       data: {
-        success: result.success?
-      }
+        success: result.success?,
+      },
     ).call
 
     if result.success?
@@ -71,11 +71,11 @@ class AnswersController < ApplicationController
         redirect_to journey_task_path(@journey, parent_task)
       end
     else
-      render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}
+      render "steps/#{@step.contentful_type}", locals: { layout: "steps/edit_form_wrapper" }
     end
   end
 
-  private
+private
 
   def parent_task
     @step.task
@@ -101,15 +101,15 @@ class AnswersController < ApplicationController
   end
 
   def further_information_params
-    return {skipped: true, response: [""], further_information: nil} if skip_answer?
+    return { skipped: true, response: [""], further_information: nil } if skip_answer?
 
     answer_params = params.require(:answer)
 
     if @step.options
-      allowed_further_information_keys = @step.options.map { |option|
+      allowed_further_information_keys = @step.options.map do |option|
         key = machine_readable_option(string: option["value"])
         "#{key}_further_information".to_sym
-      }
+      end
     end
 
     further_information_params = answer_params.permit(*allowed_further_information_keys)
@@ -127,8 +127,8 @@ class AnswersController < ApplicationController
 
   def date_params
     answer = params.require(:answer).permit(:response)
-    date_hash = {day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"]}
-    {response: format_date(date_hash)}
+    date_hash = { day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"] }
+    { response: format_date(date_hash) }
   end
 
   def skip_answer?

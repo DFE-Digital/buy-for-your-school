@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Cache invalidation", type: :request do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_WEBHOOK_API_KEY: "an API key"
+      CONTENTFUL_WEBHOOK_API_KEY: "an API key",
     ) do
       example.run
     end
@@ -16,18 +16,18 @@ RSpec.describe "Cache invalidation", type: :request do
       entityId: "6zeSz4F4YtD66gT5SFpnSB",
       spaceId: "rwl7tyzv9sys",
       parameters: {
-        text: "Entity version: 62"
-      }
+        text: "Entity version: 62",
+      },
     }
 
     credentials = ActionController::HttpAuthentication::Token
       .encode_credentials(ENV["CONTENTFUL_WEBHOOK_API_KEY"])
-    headers = {"AUTHORIZATION" => credentials}
+    headers = { "AUTHORIZATION" => credentials }
 
     post "/api/contentful/entry_updated", {
       params: fake_contentful_webook_payload,
       headers: headers,
-      as: :json
+      as: :json,
     }
 
     expect(response).to have_http_status(:ok)
@@ -39,24 +39,24 @@ RSpec.describe "Cache invalidation", type: :request do
       entityId: "6zeSz4F4YtD66gT5SFpnSB",
       spaceId: "rwl7tyzv9sys",
       parameters: {
-        text: "Entity version: 62"
-      }
+        text: "Entity version: 62",
+      },
     }
 
     credentials = ActionController::HttpAuthentication::Token
       .encode_credentials(ENV["CONTENTFUL_WEBHOOK_API_KEY"])
-    headers = {"AUTHORIZATION" => credentials}
+    headers = { "AUTHORIZATION" => credentials }
 
     expect(Rollbar).to receive(:info)
       .with(
         "Accepted request to cache bust Contentful Entry",
-        cache_key: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB"
+        cache_key: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB",
       ).and_call_original
 
     post "/api/contentful/entry_updated", {
       params: fake_contentful_webook_payload,
       headers: headers,
-      as: :json
+      as: :json,
     }
   end
 
@@ -68,18 +68,18 @@ RSpec.describe "Cache invalidation", type: :request do
         entityId: "6zeSz4F4YtD66gT5SFpnSB",
         spaceId: "rwl7tyzv9sys",
         parameters: {
-          text: "Entity version: 62"
-        }
+          text: "Entity version: 62",
+        },
       }
 
       credentials = ActionController::HttpAuthentication::Token
         .encode_credentials("an invalid token!")
-      headers = {"AUTHORIZATION" => credentials}
+      headers = { "AUTHORIZATION" => credentials }
 
       post "/api/contentful/entry_updated",
-        params: fake_contentful_webook_payload,
-        headers: headers,
-        as: :json
+           params: fake_contentful_webook_payload,
+           headers: headers,
+           as: :json
 
       expect(response).to have_http_status(:unauthorized)
       expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB"))

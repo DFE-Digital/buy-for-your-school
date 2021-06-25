@@ -20,6 +20,6 @@ class Journey < ApplicationRecord
     attributes[:last_worked_on] = Time.zone.now
     attributes[:started] = true unless started == true
 
-    update(attributes)
+    update!(attributes)
   end
 end

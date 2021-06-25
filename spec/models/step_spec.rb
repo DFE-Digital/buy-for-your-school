@@ -1,28 +1,28 @@
 require "rails_helper"
 
 RSpec.describe Step, type: :model do
-  it { should belong_to(:task) }
-  it { should have_one(:radio_answer) }
-  it { should have_one(:short_text_answer) }
-  it { should have_one(:long_text_answer) }
-  it { should have_one(:single_date_answer) }
-  it { should have_one(:checkbox_answers) }
+  it { is_expected.to belong_to(:task) }
+  it { is_expected.to have_one(:radio_answer) }
+  it { is_expected.to have_one(:short_text_answer) }
+  it { is_expected.to have_one(:long_text_answer) }
+  it { is_expected.to have_one(:single_date_answer) }
+  it { is_expected.to have_one(:checkbox_answers) }
 
   it "store the basic fields of a contentful response" do
     step = build(:step,
-      :radio,
-      title: "foo",
-      help_text: "bar",
-      options: [{"value" => "baz"}, {"value" => "boo"}])
+                 :radio,
+                 title: "foo",
+                 help_text: "bar",
+                 options: [{ "value" => "baz" }, { "value" => "boo" }])
 
     expect(step.title).to eql("foo")
     expect(step.help_text).to eql("bar")
-    expect(step.options).to eql([{"value" => "baz"}, {"value" => "boo"}])
+    expect(step.options).to eql([{ "value" => "baz" }, { "value" => "boo" }])
   end
 
   it "captures the raw contentful response" do
-    step = build(:step, raw: {foo: "bar"})
-    expect(step.raw).to eql({"foo" => "bar"})
+    step = build(:step, raw: { foo: "bar" })
+    expect(step.raw).to eql({ "foo" => "bar" })
   end
 
   describe "#that_are_questions" do
@@ -95,10 +95,10 @@ RSpec.describe Step, type: :model do
     # TODO: This will need updating when options are set on the step with the new format
     it "returns a hash of options" do
       step = build(:step,
-        :radio,
-        options: [{"value" => "foo", "other_config" => false}])
+                   :radio,
+                   options: [{ "value" => "foo", "other_config" => false }])
 
-      expect(step.options).to eql([{"value" => "foo", "other_config" => false}])
+      expect(step.options).to eql([{ "value" => "foo", "other_config" => false }])
     end
   end
 end

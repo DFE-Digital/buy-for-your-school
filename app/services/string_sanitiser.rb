@@ -21,12 +21,14 @@ class StringSanitiser
     end
   end
 
-  private def sanitize(value)
+private
+
+  def sanitize(value)
     safe_list_sanitizer = Rails::Html::SafeListSanitizer.new
     safe_list_sanitizer.sanitize(value, tags: allowed_html_tags)
   end
 
-  private def allowed_html_tags
+  def allowed_html_tags
     %w[p b i]
   end
 end

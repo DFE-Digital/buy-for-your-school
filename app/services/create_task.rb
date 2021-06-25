@@ -14,8 +14,8 @@ class CreateTask
       section: section,
       title: contentful_task.title,
       contentful_id: contentful_task.id,
-      order: order
-      )
+      order: order,
+    )
     begin
       task.save!
       task

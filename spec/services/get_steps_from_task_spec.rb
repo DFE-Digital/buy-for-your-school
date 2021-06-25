@@ -4,7 +4,7 @@ RSpec.describe GetStepsFromTask do
   describe "#call" do
     it "returns the list of entry objects referenced by the step list" do
       task = fake_contentful_task(
-        contentful_fixture_filename: "tasks/checkboxes-task.json"
+        contentful_fixture_filename: "tasks/checkboxes-task.json",
       )
       stub_contentful_task_steps(tasks: [task])
 
@@ -20,15 +20,15 @@ RSpec.describe GetStepsFromTask do
     context "when the same entry is found twice" do
       it "returns an error message" do
         task = fake_contentful_task(
-          contentful_fixture_filename: "tasks/repeat-entries-task.json"
+          contentful_fixture_filename: "tasks/repeat-entries-task.json",
         )
 
         expect(Rollbar).to receive(:error)
           .with("A repeated Contentful entry was found in the same task",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "radio-question")
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_entry_id: "radio-question")
           .and_call_original
 
         expect {

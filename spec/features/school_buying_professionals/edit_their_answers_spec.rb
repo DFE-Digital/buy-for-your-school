@@ -2,15 +2,15 @@ require "rails_helper"
 
 feature "Users can edit their answers" do
   let(:user) { create(:user) }
-  before { user_is_signed_in(user: user) }
-
-  before do
-    journey = answer.step.journey
-    journey.update(user: user)
-  end
-
   let(:answer) { create(:short_text_answer, response: "answer") }
   let(:title) { answer.step.task.title }
+
+  before do
+    user_is_signed_in(user: user)
+
+    journey = answer.step.journey
+    journey.update!(user: user)
+  end
 
   context "when the question is short_text" do
     let(:answer) { create(:short_text_answer, response: "answer") }
@@ -71,7 +71,7 @@ feature "Users can edit their answers" do
     end
   end
 
-  context "An error is thrown" do
+  context "when an error is thrown" do
     scenario "When an answer is invalid" do
       visit journey_path(answer.step.journey)
 

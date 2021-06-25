@@ -11,7 +11,7 @@ RSpec.describe ContentfulConnector do
       CONTENTFUL_URL: contentful_url,
       CONTENTFUL_SPACE: contentful_space,
       CONTENTFUL_ENVIRONMENT: contentful_environment,
-      CONTENTFUL_ACCESS_TOKEN: contentful_access_token
+      CONTENTFUL_ACCESS_TOKEN: contentful_access_token,
     ) do
       example.run
     end
@@ -48,7 +48,7 @@ RSpec.describe ContentfulConnector do
               access_token: contentful_access_token)
         .and_return(contentful_client)
 
-      contentful_response = double(Contentful::Array)
+      contentful_response = instance_double(Contentful::Array)
       expect(contentful_client).to receive(:entries)
         .and_return(contentful_response)
 
