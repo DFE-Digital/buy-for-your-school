@@ -7,7 +7,7 @@ class JourneyMapsController < ApplicationController
              status: 500, locals: { error: exception }
     end
 
-    rescue_from GetEntry::EntryNotFound do |_exception|
+    rescue_from GetEntry::EntryNotFound do
       render "errors/contentful_entry_not_found",
              status: 500
     end
