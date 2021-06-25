@@ -10,11 +10,12 @@ class StepsController < ApplicationController
     @step_presenter = StepPresenter.new(@step)
 
     @answer = AnswerFactory.new(step: @step).call
-    @back_url = if !parent_task || parent_task.has_single_visible_step?
-      journey_path(@journey, anchor: @step.id, back_link: true)
-    else
-      journey_task_path(@journey, parent_task, back_link: true)
-    end
+    @back_url =
+      if !parent_task || parent_task.has_single_visible_step?
+        journey_path(@journey, anchor: @step.id, back_link: true)
+      else
+        journey_task_path(@journey, parent_task, back_link: true)
+      end
 
     RecordAction.new(
       action: "begin_step",
@@ -25,10 +26,10 @@ class StepsController < ApplicationController
       # tasks. This saves us from having to implement extra logic.
       contentful_section_id: @step.task&.section&.contentful_id,
       contentful_task_id: @step&.task&.contentful_id,
-      contentful_step_id: @step.contentful_id
+      contentful_step_id: @step.contentful_id,
     ).call
 
-    render @step.contentful_type, locals: {layout: "steps/new_form_wrapper"}
+    render @step.contentful_type, locals: { layout: "steps/new_form_wrapper" }
   end
 
   def edit
@@ -38,11 +39,12 @@ class StepsController < ApplicationController
     @step_presenter = StepPresenter.new(@step)
 
     @answer = @step.answer
-    @back_url = if !parent_task || parent_task.has_single_visible_step?
-      journey_path(@journey, anchor: @step.id, back_link: true)
-    else
-      journey_task_path(@journey, parent_task, back_link: true)
-    end
+    @back_url =
+      if !parent_task || parent_task.has_single_visible_step?
+        journey_path(@journey, anchor: @step.id, back_link: true)
+      else
+        journey_task_path(@journey, parent_task, back_link: true)
+      end
 
     RecordAction.new(
       action: "view_step",
@@ -51,13 +53,13 @@ class StepsController < ApplicationController
       contentful_category_id: @journey.contentful_id,
       contentful_section_id: @step.task.section.contentful_id,
       contentful_task_id: @step.task.contentful_id,
-      contentful_step_id: @step.contentful_id
+      contentful_step_id: @step.contentful_id,
     ).call
 
-    render "steps/#{@step.contentful_type}", locals: {layout: "steps/edit_form_wrapper"}
+    render "steps/#{@step.contentful_type}", locals: { layout: "steps/edit_form_wrapper" }
   end
 
-  private
+private
 
   def parent_task
     @step.task

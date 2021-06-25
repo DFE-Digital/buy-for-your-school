@@ -6,7 +6,7 @@ RSpec.describe RecordAction do
       action = described_class.new(
         action: "begin_journey",
         journey_id: "12345678",
-        user_id: "23456789"
+        user_id: "23456789",
       ).call
 
       expect(action.action).to eq("begin_journey")
@@ -17,7 +17,7 @@ RSpec.describe RecordAction do
         action = described_class.new(
           action: "begin_journey",
           journey_id: "12345678",
-          user_id: "23456789"
+          user_id: "23456789",
         ).call
 
         expect(action.contentful_category_id).to be_nil
@@ -38,7 +38,7 @@ RSpec.describe RecordAction do
           contentful_section_id: "45678901",
           contentful_task_id: "56789012",
           contentful_step_id: "67890123",
-          data: {}
+          data: {},
         ).call
 
         expect(action.journey_id).to eq("12345678")
@@ -57,7 +57,7 @@ RSpec.describe RecordAction do
           described_class.new(
             action: "invalid_action",
             journey_id: "12345678",
-            user_id: "23456789"
+            user_id: "23456789",
           ).call
         }
           .to raise_error(RecordAction::UnexpectedActionType)
@@ -66,21 +66,21 @@ RSpec.describe RecordAction do
       it "raises a rollbar event" do
         expect(Rollbar).to receive(:warning)
           .with("An attempt was made to log an action with an invalid type",
-            action: "invalid_action",
-            journey_id: "12345678",
-            user_id: "23456789",
-            contentful_category_id: nil,
-            contentful_section_id: nil,
-            contentful_task_id: nil,
-            contentful_step_id: nil,
-            data: nil,
-            allowed_action_types: RecordAction::ALLOWED_ACTION_TYPES.join(", "))
+                action: "invalid_action",
+                journey_id: "12345678",
+                user_id: "23456789",
+                contentful_category_id: nil,
+                contentful_section_id: nil,
+                contentful_task_id: nil,
+                contentful_step_id: nil,
+                data: nil,
+                allowed_action_types: RecordAction::ALLOWED_ACTION_TYPES.join(", "))
           .and_call_original
         expect {
           described_class.new(
             action: "invalid_action",
             journey_id: "12345678",
-            user_id: "23456789"
+            user_id: "23456789",
           ).call
         }
           .to raise_error(RecordAction::UnexpectedActionType)

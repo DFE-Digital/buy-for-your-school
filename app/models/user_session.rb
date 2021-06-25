@@ -18,7 +18,7 @@ class UserSession
   end
 
   def should_be_signed_out_of_dsi?
-    session.key?(:dfe_sign_in_sign_out_token) && !session[:dfe_sign_in_sign_out_token].blank?
+    session.key?(:dfe_sign_in_sign_out_token) && session[:dfe_sign_in_sign_out_token].present?
   end
 
   def sign_out_url
@@ -26,10 +26,10 @@ class UserSession
 
     query = {
       post_logout_redirect_uri: auth_dfe_signout_url,
-      id_token_hint: session[:dfe_sign_in_sign_out_token]
+      id_token_hint: session[:dfe_sign_in_sign_out_token],
     }
 
-    "#{ENV.fetch("DFE_SIGN_IN_ISSUER")}/session/end?#{query.to_query}"
+    "#{ENV.fetch('DFE_SIGN_IN_ISSUER')}/session/end?#{query.to_query}"
   end
 
   # Sign out concurrent logins

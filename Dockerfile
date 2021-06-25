@@ -112,6 +112,9 @@ FROM web as test
 
 RUN apt-get install -qq -y shellcheck wait-for-it
 
+COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
+COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml
+
 COPY package.json ${APP_HOME}/package.json
 COPY package-lock.json ${APP_HOME}/package-lock.json
 

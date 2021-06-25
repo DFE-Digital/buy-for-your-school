@@ -107,7 +107,7 @@ RSpec.describe TaskPresenter do
     it "returns the uuid appended by status" do
       step = create(:step, :currency, contentful_model: "question")
       presenter = described_class.new(step)
-      expect(presenter.status_id).to match /[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}-status/
+      expect(presenter.status_id).to match(/[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}-status/)
     end
   end
 end

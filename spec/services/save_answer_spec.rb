@@ -8,7 +8,7 @@ RSpec.describe SaveAnswer do
 
       result = described_class.new(answer: answer).call(params: params)
 
-      expect(result.success?).to eql(true)
+      expect(result.success?).to be(true)
       expect(result.object.response).to eql("A little text")
     end
 
@@ -25,12 +25,12 @@ RSpec.describe SaveAnswer do
     context "when the step is a checkbox question" do
       it "updates the answer with the checkbox_params" do
         answer = create(:checkbox_answers)
-        params = ActionController::Parameters.new(response: ["A", "B"]).permit!
+        params = ActionController::Parameters.new(response: %w[A B]).permit!
 
         result = described_class.new(answer: answer).call(params: params)
 
-        expect(result.success?).to eql(true)
-        expect(result.object.response).to eql(["A", "B"])
+        expect(result.success?).to be(true)
+        expect(result.object.response).to eql(%w[A B])
       end
     end
 
@@ -38,11 +38,11 @@ RSpec.describe SaveAnswer do
       it "updates the answer with the date_params" do
         answer = build(:single_date_answer, response: nil)
         date = Date.new(2000, 1, 29)
-        params = {response: date}
+        params = { response: date }
 
         result = described_class.new(answer: answer).call(params: params)
 
-        expect(result.success?).to eql(true)
+        expect(result.success?).to be(true)
         expect(result.object.response).to eql(date)
       end
     end
@@ -65,7 +65,7 @@ RSpec.describe SaveAnswer do
 
         result = described_class.new(answer: answer).call(params: params)
 
-        expect(result.success?).to eql(false)
+        expect(result.success?).to be(false)
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe SaveAnswer do
       it "updates the journey to be started" do
         step = create(:step, :radio)
         journey = step.journey
-        journey.update(started: false)
+        journey.update!(started: false)
         answer = create(:short_text_answer, step: step)
 
         _result = described_class.new(answer: answer).call(params: {})

@@ -2,6 +2,7 @@ require "rails_helper"
 
 feature "Users can view a list of sections" do
   let(:user) { create(:user) }
+
   before { user_is_signed_in(user: user) }
 
   it "the user can see multiple sections" do
@@ -19,9 +20,9 @@ feature "Users can view a list of sections" do
 
       # Manually modify the created_at to simlate slow database inserts/selects
       first_section = Section.find_by(title: "Section A")
-      first_section.update(created_at: Time.now - 2.hour)
+      first_section.update!(created_at: Time.zone.now - 2.hours)
       second_section = Section.find_by(title: "Section B")
-      second_section.update(created_at: Time.now - 1.hour)
+      second_section.update!(created_at: Time.zone.now - 1.hour)
 
       # Refresh the page to reload the updated sections
       visit current_path

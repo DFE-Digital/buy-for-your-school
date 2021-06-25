@@ -13,7 +13,7 @@ RSpec.describe NumberAnswerPresenter do
     it "returns a hash of number_answer" do
       step = build(:number_answer, response: 1)
       presenter = described_class.new(step)
-      expect(presenter.to_param).to eql({response: "1"})
+      expect(presenter.to_param).to eql({ response: "1" })
     end
   end
 end

@@ -16,11 +16,13 @@ class CheckboxesAnswerPresenter < SimpleDelegator
       response: response,
       concatenated_response: concatenated_response,
       skipped: skipped,
-      selected_answers: selected_answers
+      selected_answers: selected_answers,
     }
   end
 
-  private def selected_answers
+private
+
+  def selected_answers
     return [] if response.empty?
 
     response.each_with_object([]) do |human_readable_choice, array|
@@ -30,7 +32,7 @@ class CheckboxesAnswerPresenter < SimpleDelegator
       array << {
         machine_value: machine_readable_key,
         human_value: human_readable_choice,
-        further_information: matching_further_information
+        further_information: matching_further_information,
       }
     end
   end

@@ -2,9 +2,10 @@ require "rails_helper"
 
 feature "Anyone can start a journey" do
   before { user_is_signed_in }
+
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
     ) do
       example.run
     end
@@ -217,8 +218,8 @@ feature "Anyone can start a journey" do
         scenario "no extra text field is displayed" do
           start_journey_from_category_and_go_to_first_section(category: "checkboxes-question.json")
 
-          expect(page).to_not have_selector("textarea#answer-yes-further-information-field")
-          expect(page).to_not have_selector("input#answer-yes-further-information-field")
+          expect(page).not_to have_selector("textarea#answer-yes-further-information-field")
+          expect(page).not_to have_selector("input#answer-yes-further-information-field")
         end
       end
     end
@@ -270,8 +271,8 @@ feature "Anyone can start a journey" do
         scenario "no extra text field is displayed" do
           start_journey_from_category_and_go_to_first_section(category: "radio-question.json")
 
-          expect(page).to_not have_selector("textarea#answer-catering-further-information-field")
-          expect(page).to_not have_selector("input#answer-catering-further-information-field")
+          expect(page).not_to have_selector("textarea#answer-catering-further-information-field")
+          expect(page).not_to have_selector("input#answer-catering-further-information-field")
         end
       end
 

@@ -4,7 +4,8 @@ class StepPresenter < SimpleDelegator
   end
 
   def help_text_html
-    return unless help_text.present?
+    return if help_text.blank?
+
     Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(help_text).html_safe
   end
 

@@ -41,7 +41,7 @@ class RecordAction
       raise UnexpectedActionType
     end
 
-    ActivityLogItem.create(
+    ActivityLogItem.create!(
       action: action_type,
       journey_id: journey_id,
       user_id: user_id,
@@ -49,11 +49,11 @@ class RecordAction
       contentful_section_id: contentful_section_id,
       contentful_task_id: contentful_task_id,
       contentful_step_id: contentful_step_id,
-      data: data
+      data: data,
     )
   end
 
-  private
+private
 
   def valid_action_type?
     ALLOWED_ACTION_TYPES.include?(action_type)
@@ -74,7 +74,7 @@ class RecordAction
       contentful_task_id: contentful_task_id,
       contentful_step_id: contentful_step_id,
       data: data,
-      allowed_action_types: ALLOWED_ACTION_TYPES.join(", ")
+      allowed_action_types: ALLOWED_ACTION_TYPES.join(", "),
     )
   end
 end

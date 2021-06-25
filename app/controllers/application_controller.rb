@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def health_check
-    render json: {rails: "OK"}, status: :ok
+    render json: { rails: "OK" }, status: :ok
   end
 
-  protected
+protected
 
   helper_method :current_user
   def current_user
@@ -31,12 +31,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_journey
-    journey_id = params[:journey_id].present? ? params[:journey_id] : params[:id]
+    journey_id = params[:journey_id].presence || params[:id]
     @current_journey ||= Journey.find(journey_id)
   end
 
   def check_user_belongs_to_journey?
     return true if current_journey.user == current_user
+
     render "errors/not_found", status: 404
   end
 end

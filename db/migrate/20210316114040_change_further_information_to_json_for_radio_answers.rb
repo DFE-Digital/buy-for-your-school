@@ -4,8 +4,8 @@ class ChangeFurtherInformationToJsonForRadioAnswers < ActiveRecord::Migration[6.
     ActiveRecord::Base.transaction do
       RadioAnswer.all.map do |radio|
         machine_value = radio.response.parameterize(separator: "_")
-        hash = {machine_value => radio.further_information}
-        radio.update(further_information_jsonb: hash)
+        hash = { machine_value => radio.further_information }
+        radio.update!(further_information_jsonb: hash)
       end
     end
     remove_column :radio_answers, :further_information
@@ -18,7 +18,7 @@ class ChangeFurtherInformationToJsonForRadioAnswers < ActiveRecord::Migration[6.
       RadioAnswer.all.map do |radio|
         machine_value = radio.response.parameterize(separator: "_")
         matching_further_information = radio.further_information[machine_value]
-        radio.update(further_information_string: matching_further_information)
+        radio.update!(further_information_string: matching_further_information)
       end
     end
     remove_column :radio_answers, :further_information

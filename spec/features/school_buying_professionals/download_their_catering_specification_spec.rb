@@ -31,7 +31,7 @@ feature "Users can see their catering specification" do
   context "when the journey has not yet been completed" do
     scenario "includes an incomple warning" do
       start_journey_from_category(
-        category: "category-with-liquid-template.json"
+        category: "category-with-liquid-template.json",
       )
 
       # Omit answering a question to simulate an incomplete spec
@@ -54,6 +54,7 @@ feature "Users can see their catering specification" do
 
   context "when viewing a journey" do
     let(:user) { create(:user) }
+
     before { user_is_signed_in(user: user) }
 
     scenario "requesting the HTML version records an action" do

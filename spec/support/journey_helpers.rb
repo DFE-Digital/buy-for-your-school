@@ -13,7 +13,7 @@ module JourneyHelpers
 
   def start_journey_from_category(category:)
     stub_contentful_category(
-      fixture_filename: category
+      fixture_filename: category,
     )
 
     user_signs_in_and_starts_the_journey
@@ -23,7 +23,7 @@ module JourneyHelpers
     stub_contentful_category(
       fixture_filename: category,
       stub_sections: true,
-      stub_tasks: true
+      stub_tasks: true,
     )
 
     user_signs_in_and_starts_the_journey

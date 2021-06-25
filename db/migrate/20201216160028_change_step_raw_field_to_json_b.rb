@@ -4,7 +4,7 @@ class ChangeStepRawFieldToJsonB < ActiveRecord::Migration[6.1]
     ActiveRecord::Base.transaction do
       Step.all.map do |step|
         hash = JSON.parse(step.raw.gsub("=>", ":"))
-        step.update(raw_jsonb: hash)
+        step.update!(raw_jsonb: hash)
       end
     end
     remove_column :steps, :raw
@@ -17,7 +17,7 @@ class ChangeStepRawFieldToJsonB < ActiveRecord::Migration[6.1]
     ActiveRecord::Base.transaction do
       Step.all.map do |step|
         string = step.raw.to_s
-        step.update(raw_binary: string)
+        step.update!(raw_binary: string)
       end
     end
     remove_column :steps, :raw

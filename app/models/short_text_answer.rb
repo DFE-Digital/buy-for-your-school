@@ -1,4 +1,4 @@
-class ShortTextAnswer < ActiveRecord::Base
+class ShortTextAnswer < ApplicationRecord
   include TaskCounters
 
   self.implicit_order_column = "created_at"

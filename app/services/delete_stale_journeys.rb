@@ -5,8 +5,10 @@ class DeleteStaleJourneys
     qualifying_journeys.destroy_all
   end
 
-  private def date_a_journey_can_be_inactive_until
-    return 1.month.ago unless ENV["DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR"].present?
+private
+
+  def date_a_journey_can_be_inactive_until
+    return 1.month.ago if ENV["DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR"].blank?
 
     day_count = ENV["DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR"].to_i
     day_count.days.ago

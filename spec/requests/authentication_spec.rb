@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Authentication", type: :request do
-  after(:each) do
+  after do
     RedisSessions.redis.flushdb
     RedisSessionLookup.redis.flushdb
   end
@@ -92,7 +92,7 @@ RSpec.describe "Authentication", type: :request do
     context "when there is a sign out token" do
       around do |example|
         ClimateControl.modify(
-          DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443"
+          DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443",
         ) do
           example.run
         end
@@ -112,15 +112,15 @@ RSpec.describe "Authentication", type: :request do
 
   describe "Concurrent sign ins" do
     context "when a DSI user is already signed in" do
-      after(:each) do
+      after do
         RedisSessions.redis.flushdb
         RedisSessionLookup.redis.flushdb
       end
 
-      before(:each) do
+      before do
         # Simulate what session_store does with a new session
         RedisSessions.redis.set("redis:6379::2:1098345703928457320948572304",
-          Marshal.dump({"_csrf_token" => "1", "dfe_sign_in_uid" => "123"}))
+                                Marshal.dump({ "_csrf_token" => "1", "dfe_sign_in_uid" => "123" }))
 
         # Simulate how we create a session lookup store
         RedisSessionLookup.redis.set("user_dsi_id:123", "2::1098345703928457320948572304")

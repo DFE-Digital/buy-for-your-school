@@ -4,7 +4,7 @@ RSpec.describe GetSectionsFromCategory do
   describe "#call" do
     it "returns an array of sections" do
       category = stub_contentful_category(
-        fixture_filename: "radio-question.json"
+        fixture_filename: "radio-question.json",
       )
 
       result = described_class.new(category: category).call

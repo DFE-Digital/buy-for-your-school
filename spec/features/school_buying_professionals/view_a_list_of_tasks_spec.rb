@@ -2,10 +2,11 @@ require "rails_helper"
 
 feature "Users can view the task list" do
   let(:user) { create(:user) }
+
   before { user_is_signed_in(user: user) }
 
   describe "and see their answers" do
-    before :each do
+    before do
       start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
       within ".app-task-list" do
         click_on "Task containing every type of step"
@@ -76,7 +77,7 @@ feature "Users can view the task list" do
       check "Dinner"
       click_on "Continue"
       click_on "Back"
-      expect(page).to_not have_content '["Lunch", "Dinner"]'
+      expect(page).not_to have_content '["Lunch", "Dinner"]'
       expect(page).to have_content "Lunch, Dinner"
     end
   end
@@ -231,7 +232,7 @@ feature "Users can view the task list" do
 
       answer = create(:short_text_answer, response: "answer")
       journey = answer.step.journey
-      journey.update(user: user)
+      journey.update!(user: user)
 
       user_starts_the_journey
 
@@ -252,7 +253,7 @@ feature "Users can view the task list" do
 
       within(".app-task-list") do
         expect(page).to have_content("Task with a single step")
-        expect(page).to_not have_content("Everyday services that are required and need to be considered") # TODO: #675 refactor multiple
+        expect(page).not_to have_content("Everyday services that are required and need to be considered") # TODO: #675 refactor multiple
       end
     end
 
@@ -304,7 +305,7 @@ feature "Users can view the task list" do
       start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
 
       within(".app-task-list") do
-        expect(page).to_not have_content("Task with a hidden step")
+        expect(page).not_to have_content("Task with a hidden step")
       end
     end
 
@@ -314,9 +315,9 @@ feature "Users can view the task list" do
 
         # Simulate the bug by changing the created_at to a time that incorrectly
         # puts the hidden record at the bottom of the list
-        Step.find_by(title: "What support do you have available?").update(created_at: 3.days.ago)
-        Step.find_by(title: "What email address did you use?").update(created_at: 2.days.ago)
-        Step.find_by(title: "What colour is the sky?").update(created_at: 1.days.ago)
+        Step.find_by(title: "What support do you have available?").update!(created_at: 3.days.ago)
+        Step.find_by(title: "What email address did you use?").update!(created_at: 2.days.ago)
+        Step.find_by(title: "What colour is the sky?").update!(created_at: 1.day.ago)
 
         click_on("One additional question task")
         click_on(I18n.t("generic.button.back"))

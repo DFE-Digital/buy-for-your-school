@@ -29,7 +29,7 @@ feature "Anyone can sign in with DfE Sign-in" do
 
       step = create(:step, :radio)
       journey = step.journey
-      journey.update(user: user)
+      journey.update!(user: user)
       visit journey_step_path(journey, step)
       expect(page).to have_content(step.title)
     end

@@ -30,12 +30,12 @@ class WarmEntryCacheJob < ApplicationJob
     Rollbar.info("Cache warming task complete.")
   end
 
-  private
+private
 
   def cache
     @cache ||= Cache.new(
       enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
-      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72)
+      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72),
     )
   end
 
@@ -43,7 +43,7 @@ class WarmEntryCacheJob < ApplicationJob
     move_cached_items(
       keys: RedisCache.redis.keys("#{Cache::ENTRY_CACHE_KEY_PREFIX}:*"),
       old_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
-      new_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:"
+      new_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
     )
   end
 
@@ -51,12 +51,12 @@ class WarmEntryCacheJob < ApplicationJob
     move_cached_items(
       keys: RedisCache.redis.keys("backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:*"),
       old_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
-      new_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:"
+      new_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
     )
   end
 
   def move_cached_items(keys:, old_key_prefix:, new_key_prefix:)
-    keys.map { |key|
+    keys.map do |key|
       entry_id = key.sub(old_key_prefix, "")
       new_cache_key = "#{new_key_prefix}#{entry_id}"
 
@@ -64,6 +64,6 @@ class WarmEntryCacheJob < ApplicationJob
 
       cache.set(key: new_cache_key, value: value)
       Cache.delete(key: key)
-    }
+    end
   end
 end

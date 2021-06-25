@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe CreateJourney do
   around do |example|
     ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry"
+      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
     ) do
       example.run
     end
@@ -12,10 +12,10 @@ RSpec.describe CreateJourney do
   describe "#call" do
     it "creates a new journey" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json"
+        fixture_filename: "category-with-no-steps.json",
       )
       expect { described_class.new(category_id: "contentful-category-entry", user: build(:user)).call }
-        .to change { Journey.count }.by(1)
+        .to change(Journey, :count).by(1)
       last_journey = Journey.last
       expect(last_journey.category).to eql("Catering")
       expect(last_journey.contentful_id).to eql("contentful-category-entry")
@@ -23,7 +23,7 @@ RSpec.describe CreateJourney do
 
     it "associates the new journey with the given user" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json"
+        fixture_filename: "category-with-no-steps.json",
       )
       user = create(:user)
 
@@ -34,7 +34,7 @@ RSpec.describe CreateJourney do
 
     it "sets started to true (until questions have been answered)" do
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json"
+        fixture_filename: "category-with-no-steps.json",
       )
       described_class.new(category_id: "contentful-category-entry", user: build(:user)).call
       expect(Journey.last.started).to eq(true)
@@ -43,7 +43,7 @@ RSpec.describe CreateJourney do
     it "sets last_worked_on to now" do
       travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
       stub_contentful_category(
-        fixture_filename: "category-with-no-steps.json"
+        fixture_filename: "category-with-no-steps.json",
       )
 
       described_class.new(category_id: "contentful-category-entry", user: build(:user)).call
@@ -53,7 +53,7 @@ RSpec.describe CreateJourney do
 
     it "stores a copy of the Liquid template" do
       stub_contentful_category(
-        fixture_filename: "category-with-liquid-template.json"
+        fixture_filename: "category-with-liquid-template.json",
       )
 
       described_class.new(category_id: "contentful-category-entry", user: build(:user)).call
@@ -66,7 +66,7 @@ RSpec.describe CreateJourney do
       it "raises an error" do
         stub_contentful_category(
           fixture_filename: "category-with-no-title.json",
-          stub_sections: true
+          stub_sections: true,
         )
 
         # Force a validation error by not providing an invalid category ID

@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe StepHelper, type: :helper do
   describe "#checkbox_options" do
     it "returns an array of OpenStruct objects" do
-      options = ["red", "blue"]
+      options = %w[red blue]
       result = helper.checkbox_options(array_of_options: options)
       expect(result).to match([
         OpenStruct.new(id: "red", name: "red"),
-        OpenStruct.new(id: "blue", name: "blue")
+        OpenStruct.new(id: "blue", name: "blue"),
       ])
     end
   end
@@ -17,7 +17,7 @@ RSpec.describe StepHelper, type: :helper do
       object = OpenStruct.new
       result = helper.monkey_patch_form_object_with_further_information_field(
         form_object: object,
-        associated_choice: "foo"
+        associated_choice: "foo",
       )
       expect(result).to eq(object)
     end
@@ -26,7 +26,7 @@ RSpec.describe StepHelper, type: :helper do
       object = OpenStruct.new
       result = helper.monkey_patch_form_object_with_further_information_field(
         form_object: object,
-        associated_choice: "foo"
+        associated_choice: "foo",
       )
       expect(result.foo_further_information).to eq(nil)
       expect(result.foo_further_information = "bar").to eql("bar")
@@ -34,10 +34,10 @@ RSpec.describe StepHelper, type: :helper do
 
     context "when the object has a further_information field" do
       it "adds a singleton method with the same value as the return value" do
-        object = OpenStruct.new(further_information: {"foo_further_information" => :bar})
+        object = OpenStruct.new(further_information: { "foo_further_information" => :bar })
         result = helper.monkey_patch_form_object_with_further_information_field(
           form_object: object,
-          associated_choice: "foo"
+          associated_choice: "foo",
         )
         expect(result.foo_further_information).to eq(:bar)
       end

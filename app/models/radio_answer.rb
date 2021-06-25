@@ -1,4 +1,4 @@
-class RadioAnswer < ActiveRecord::Base
+class RadioAnswer < ApplicationRecord
   include TaskCounters
 
   self.implicit_order_column = "created_at"

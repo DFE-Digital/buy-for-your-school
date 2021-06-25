@@ -3,15 +3,16 @@ require "rails_helper"
 RSpec.describe WarmEntryCacheJob, type: :job do
   include ActiveJob::TestHelper
 
-  before(:each) do
+  before do
     ActiveJob::Base.queue_adapter = :test
   end
-  after(:each) { RedisCache.redis.flushdb }
+
+  after { RedisCache.redis.flushdb }
 
   around do |example|
     ClimateControl.modify(
       CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
-      CONTENTFUL_ENTRY_CACHING: "true"
+      CONTENTFUL_ENTRY_CACHING: "true",
     ) do
       example.run
     end
@@ -32,7 +33,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
       expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question"))
         .to eql(
-          "\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\""
+          "\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\"",
         )
       expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:short-text-question"))
         .not_to be_nil
@@ -44,7 +45,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
     context "when the journey order cannot be built due to an entry being repeated" do
       it "does not add new items to the cache" do
         stub_contentful_category(
-          fixture_filename: "journey-with-repeat-entries.json"
+          fixture_filename: "journey-with-repeat-entries.json",
         )
 
         allow_any_instance_of(GetStepsFromTask)
@@ -59,7 +60,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
       it "raises an error to the team via Rollbar to indicate an issue" do
         stub_contentful_category(
-          fixture_filename: "journey-with-repeat-entries.json"
+          fixture_filename: "journey-with-repeat-entries.json",
         )
 
         allow_any_instance_of(GetStepsFromTask)
@@ -82,7 +83,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
         RedisCache.redis.expire("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question", default_caching_ttl)
 
         stub_contentful_category(
-          fixture_filename: "journey-with-repeat-entries.json"
+          fixture_filename: "journey-with-repeat-entries.json",
         )
 
         allow_any_instance_of(GetStepsFromTask)

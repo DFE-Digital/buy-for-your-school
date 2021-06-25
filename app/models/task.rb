@@ -48,21 +48,23 @@ class Task < ApplicationRecord
   def eager_loaded_visible_steps
     visible_steps.includes(
       %i[short_text_answer
-        long_text_answer
-        radio_answer
-        checkbox_answers
-        currency_answer
-        number_answer
-        single_date_answer]
+         long_text_answer
+         radio_answer
+         checkbox_answers
+         currency_answer
+         number_answer
+         single_date_answer],
     ).ordered
   end
 
-  private def tally_steps
+private
+
+  def tally_steps
     self.step_tally = {
       total: steps.count,
       visible: visible_steps.count,
       hidden: steps.where(hidden: true).count,
-      answered: visible_steps_with_answers.count
+      answered: visible_steps_with_answers.count,
     }
   end
 end

@@ -1,4 +1,4 @@
-class LongTextAnswer < ActiveRecord::Base
+class LongTextAnswer < ApplicationRecord
   include TaskCounters
 
   self.implicit_order_column = "created_at"

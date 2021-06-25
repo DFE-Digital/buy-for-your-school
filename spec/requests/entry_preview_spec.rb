@@ -42,7 +42,7 @@ RSpec.describe "Entry previews", type: :request do
     it "does not create a dummy journey and shows not_found" do
       get "/preview/entries/123"
 
-      expect(Journey).to_not receive(:create)
+      expect(Journey).not_to receive(:create)
       expect(response).to have_http_status(:not_found)
     end
   end

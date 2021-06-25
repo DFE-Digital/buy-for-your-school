@@ -10,14 +10,14 @@ RSpec.describe CreateSection do
         described_class.new(
           journey: journey,
           contentful_section: contentful_section,
-          order: 0
+          order: 0,
         ).call
-      }.to change { Section.count }.by(1)
+      }.to change(Section, :count).by(1)
 
       new_section = Section.last
       expect(new_section.title).to eql("Section A")
       expect(new_section.journey).to eql(journey)
-      expect(new_section.order).to eql(0)
+      expect(new_section.order).to be(0)
     end
   end
 end

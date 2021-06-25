@@ -5,7 +5,7 @@ RSpec.describe GetCategory do
     it "returns a Contenetful::Entry for the category_entry_id" do
       stub_contentful_category(
         fixture_filename: "static-content.json",
-        stub_sections: false
+        stub_sections: false,
       )
       result = described_class.new(category_entry_id: "contentful-category-entry").call
       expect(result.id).to eql("contentful-category-entry")
@@ -23,10 +23,10 @@ RSpec.describe GetCategory do
 
         expect(Rollbar).to receive(:error)
           .with("A Contentful category entry was not found",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "a-category-id-that-does-not-exist")
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_entry_id: "a-category-id-that-does-not-exist")
           .and_call_original
 
         expect {
@@ -49,10 +49,10 @@ RSpec.describe GetCategory do
 
         expect(Rollbar).to receive(:error)
           .with("A user couldn't start a journey because of an invalid Specification",
-            contentful_url: ENV["CONTENTFUL_URL"],
-            contentful_space_id: ENV["CONTENTFUL_SPACE"],
-            contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-            contentful_entry_id: "contentful-category-entry").and_call_original
+                contentful_url: ENV["CONTENTFUL_URL"],
+                contentful_space_id: ENV["CONTENTFUL_SPACE"],
+                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_entry_id: "contentful-category-entry").and_call_original
 
         expect {
           described_class.new(category_entry_id: "contentful-category-entry").call
@@ -64,7 +64,7 @@ RSpec.describe GetCategory do
       it "returns a merged and sorted set separated by newlines" do
         stub_contentful_category(
           fixture_filename: "multiple-specification-templates.json",
-          stub_sections: false
+          stub_sections: false,
         )
         result = described_class.new(category_entry_id: "contentful-category-entry").call
 
@@ -76,18 +76,16 @@ RSpec.describe GetCategory do
         expect(result.combined_specification_template)
           .to eql("<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>\n<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>")
       end
-    end
 
-    context "when there are multiple specification fields on the category (specification_template_x)" do
       it "validates both specification field inputs" do
         stub_contentful_category(
           fixture_filename: "multiple-specification-templates.json",
-          stub_sections: false
+          stub_sections: false,
         )
 
         expect(Liquid::Template).to receive(:parse).with(
           "<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>\n<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>",
-          error_mode: :strict
+          error_mode: :strict,
         )
 
         _result = described_class.new(category_entry_id: "contentful-category-entry").call

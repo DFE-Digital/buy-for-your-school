@@ -21,12 +21,12 @@ class TasksController < ApplicationController
       data: {
         task_status: task.status,
         task_total_steps: task.step_tally["visible"],
-        task_answered_questions: task.step_tally["answered"]
-      }
+        task_answered_questions: task.step_tally["answered"],
+      },
     ).call
   end
 
-  private
+private
 
   def task
     @task ||= Task.find(task_id)
@@ -56,8 +56,8 @@ class TasksController < ApplicationController
       data: {
         task_status: task.status,
         task_total_steps: task.step_tally["visible"],
-        task_answered_questions: task.step_tally["answered"]
-      }
+        task_answered_questions: task.step_tally["answered"],
+      },
     ).call
 
     redirect_to journey_step_path(current_journey, task.next_unanswered_step_id)

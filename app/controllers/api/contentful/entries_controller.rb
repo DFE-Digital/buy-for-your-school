@@ -8,18 +8,20 @@ class Api::Contentful::EntriesController < ApplicationController
     Rollbar.info("Accepted request to cache bust Contentful Entry", cache_key: cache_key)
 
     Cache.delete(key: cache_key)
-    render json: {status: "OK"}, status: :ok
+    render json: { status: "OK" }, status: :ok
   end
 
-  private def cache_key
-    "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{changed_params["entityId"]}"
+private
+
+  def cache_key
+    "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{changed_params['entityId']}"
   end
 
-  private def changed_params
+  def changed_params
     params.permit("entityId")
   end
 
-  private def authenticate_api_user!
+  def authenticate_api_user!
     authenticate_or_request_with_http_token do |token, _options|
       token == ENV["CONTENTFUL_WEBHOOK_API_KEY"]
     end
