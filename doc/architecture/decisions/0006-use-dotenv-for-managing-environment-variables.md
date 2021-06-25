@@ -1,4 +1,4 @@
-# 3. use-dotenv-for-managing-environment-variables
+# 6. use-dotenv-for-managing-environment-variables
 
 Date: 2019-09-19
 

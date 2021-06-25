@@ -1,0 +1,18 @@
+---
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+    - config/rails.yml
+    - config/rake.yml
+    - config/rspec.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+require: rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 2.6.6

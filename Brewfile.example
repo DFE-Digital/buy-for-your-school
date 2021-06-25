@@ -1,0 +1,27 @@
+# Required by the `pg` gem
+brew "libpq"
+
+# Install Docker
+# brew "docker"
+
+# Install Ruby via Rbenv
+# brew "rbenv"
+# or
+# Use ASDF to manage Ruby, and optionally Postgres, Redis, Node etc.
+# brew "asdf"
+
+# Install services locally via Homebrew (optional)
+# brew "postgresql"
+# brew "redis"
+
+# Additional tools
+# ----------------------
+
+# Install `adr` for handling Architecure Decision Records (optional)
+# brew "adr-tools"
+
+# Install `cf` for working with GPaaS (optional)
+# brew "cloudfoundry/tap/cf-cli@7"
+
+# Depends upon Node v16.3.0 (optional)
+# brew "contentful-cli"

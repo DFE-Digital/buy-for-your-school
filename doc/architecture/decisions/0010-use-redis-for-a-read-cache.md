@@ -1,4 +1,4 @@
-# 7. use-redis-for-a-read-cache
+# 10. use-redis-for-a-read-cache
 
 Date: 2020-11-25
 

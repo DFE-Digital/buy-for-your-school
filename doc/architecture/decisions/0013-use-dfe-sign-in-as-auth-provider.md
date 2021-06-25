@@ -1,4 +1,4 @@
-# 10. use-dfe-sign-in-as-auth-provider
+# 13. use-dfe-sign-in-as-auth-provider
 
 Date: 2021-03-22
 

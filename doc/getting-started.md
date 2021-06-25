@@ -1,58 +1,97 @@
 # Getting started
 
-1. [Install Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
-1. copy `/.env.example` into `/.env.development.local`.
+## Setup
 
-  Our intention is that the example should include enough to get the application started quickly. If this is not the case, please ask another developer for a copy of their `/.env.development.local` file.
+Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies but it takes longer to run.
+Without [Docker](https://docs.docker.com/docker-for-mac/install) is faster but has lower parity and you will need to install local dependencies on your machine first.
+The preferred option is to run code locally against containerised services.
 
-1. `script/server`
-1. Visit http://localhost:3000
+1. Install [Homebrew](https://brew.sh)
+1. Copy and edit `/Brewfile.example` to `/Brewfile`
+1. Run `$ brew bundle` to install any missing dependencies
+1. Obtain [Contentful API Keys](https://app.contentful.com) or ask another member of the development team
+1. Copy and edit `/.env.example` to `/.env.development.local`
 
-## Running the tests
 
-### The whole test suite
+### Optional Steps
 
-* Using Docker has high parity, you don't have to install any dependencies but it takes longer to run (~20 seconds):
+Example step-by-step guide using [ASDF](https://asdf-vm.com) for dependencies.
 
-    ```bash
-    docker-compose -f docker-compose.test.yml run --rm test bundle exec rake
+1. Install Postgres
     ```
-* Without Docker is faster (~5 seconds) but has lower parity and you will need to install local dependencies on your machine first:
-
-    ```bash
-    brew install postgres
-    brew services start postgres
-    brew install redis
-    brew services start redis
-    createuser postgres --super
-    rbenv install 2.6.6 && rbenv local 2.6.6
-    gem install bundle && bundle
-    RAILS_ENV=test rake db:setup
+    $ asdf plugin add postgres
+    $ POSTGRES_EXTRA_CONFIGURE_OPTIONS=--with-uuid=e2fs asdf install postgres latest
+    $ pg_ctl start
+    $ createuser postgres --super
+    $ createdb postgres
     ```
-    ```ruby
-    script/test
+1. Install Redis
+    ```
+    $ asdf plugin add redis
+    $ asdf install redis latest
+    $ redis-server
+    ```
+1. Install Node
+    ```
+    $ asdf plugin add nodejs
+    $ asdf install nodejs latest
     ```
 
-### RSpec only
+## Development
 
+1. Install [Ruby](https://gds-way.cloudapps.digital/manuals/programming-languages/ruby.html#conventional-tooling) (or use alternative installers like [Rbenv](https://github.com/rbenv/rbenv), [RVM](https://github.com/rvm/rvm), [Chruby](https://github.com/postmodern/chruby))
+    ```
+    $ asdf plugin add ruby
+    $ asdf install ruby 2.6.6
+    ```
+1. Install the gems
+    ```
+    $ gem install bundle
+    $ bundle
+    ```
+1. Additional install configuration (if required)
+    ```
+    $ gem install pg -- --with-pg-config=$(asdf which pg_config)
+    ```
+1. Prepare the databases
+    ```
+    $ rake db:setup
+    $ RAILS_ENV=test rake db:setup
+    ```
+
+Running the server:
+
+- `$ bundle exec rails server`
+- Or use the utility script for a containerised equivalent `$ script/server`
+
+## Debugging
+
+The project uses [Pry](https://github.com/pry/pry) with [Byebug](https://github.com/deivid-rodriguez/byebug) in place of [IRB](https://guides.rubyonrails.org/command_line.html#bin-rails-console)
+
+- Start a console locally `$ bundle exec rails console`
+- Convenience script for containerised equivalent `$ script/console`
+
+## Testing
+
+- Run test suite `$ bundle exec rspec` or `bundle exec rake spec`
+- Run lint check `$ bundle exec rubocop` or `bundle exec rake rubocop`
+- Run test suite and lint check `bundle exec rake`
+
+Running in the test docker environment can be achieved by prefixing the previous commands with:
 ```
-bundle exec rspec spec/*
+$ docker-compose -f docker-compose.test.yml run --rm test
 ```
 
-## Starting a Rails console
+`script/test` is the Docker command target chaining dependency updates, migrations, testing, linting and security checks.
 
-```
-script/console
-```
-
-## Running Brakeman
+## Security
 
 Run [Brakeman](https://brakemanscanner.org/) to highlight any security vulnerabilities:
-```bash
-brakeman
+```
+$ brakeman
 ```
 
 To pipe the results to a file:
-```bash
-brakeman -o report.text
+```
+$ brakeman -o report.text
 ```
