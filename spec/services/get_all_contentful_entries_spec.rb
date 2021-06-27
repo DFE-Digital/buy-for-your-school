@@ -4,12 +4,12 @@ RSpec.describe GetAllContentfulEntries do
   describe "#call" do
     it "requests and returns all entries from Contentful" do
       contentful_connector = instance_double(ContentfulConnector)
-      expect(ContentfulConnector).to receive(:new)
+      allow(ContentfulConnector).to receive(:new)
         .and_return(contentful_connector)
 
       contentful_response = instance_double(Contentful::Array)
 
-      expect(contentful_connector).to receive(:get_all_entries)
+      allow(contentful_connector).to receive(:get_all_entries)
         .and_return(contentful_response)
 
       result = described_class.new.call

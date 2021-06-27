@@ -6,11 +6,11 @@ RSpec.describe GetEntry do
   describe "#call" do
     it "requests and returns the required entry from Contentful" do
       contentful_connector = instance_double(ContentfulConnector)
-      expect(ContentfulConnector).to receive(:new)
+      allow(ContentfulConnector).to receive(:new)
         .and_return(contentful_connector)
 
       contentful_response = double(Contentful::Entry, id: contentful_journey_start_entry_id)
-      expect(contentful_connector).to receive(:get_entry_by_id)
+      allow(contentful_connector).to receive(:get_entry_by_id)
         .with(contentful_journey_start_entry_id)
         .and_return(contentful_response)
 

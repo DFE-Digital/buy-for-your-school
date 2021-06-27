@@ -4,6 +4,7 @@ class GetAnswersForSteps
   include AnswerHelper
 
   attr_accessor :visible_steps
+
   def initialize(visible_steps:)
     self.visible_steps = visible_steps
   end

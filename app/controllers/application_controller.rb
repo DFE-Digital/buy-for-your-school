@@ -38,6 +38,6 @@ protected
   def check_user_belongs_to_journey?
     return true if current_journey.user == current_user
 
-    render "errors/not_found", status: 404
+    render "errors/not_found", status: :not_found
   end
 end

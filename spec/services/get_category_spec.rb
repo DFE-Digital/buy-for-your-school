@@ -14,7 +14,7 @@ RSpec.describe GetCategory do
     context "when the category entry cannot be found" do
       it "sends a message to rollbar" do
         contentful_connector = instance_double(ContentfulConnector)
-        expect(ContentfulConnector).to receive(:new)
+        allow(ContentfulConnector).to receive(:new)
           .and_return(contentful_connector)
 
         allow(contentful_connector).to receive(:get_entry_by_id)

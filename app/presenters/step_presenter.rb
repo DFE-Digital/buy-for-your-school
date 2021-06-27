@@ -10,7 +10,7 @@ class StepPresenter < SimpleDelegator
   end
 
   def status_id
-    id + "-status"
+    "#{id}-status"
   end
 
   def response
