@@ -5,6 +5,8 @@ class Task < ApplicationRecord
   self.implicit_order_column = "created_at"
 
   belongs_to :section
+
+  # Contentful validates that at least 1 step is present
   has_many :steps, dependent: :destroy
 
   validates :title, :contentful_id, presence: true
@@ -17,17 +19,16 @@ class Task < ApplicationRecord
   IN_PROGRESS = 1
   COMPLETED = 2
 
-  def completed_steps
-    visible_questions_with_answers + visible_statements_acknowledged
-  end
-
-  def has_single_visible_step?
-    tally_for(:visible) == 1
-  end
-
-  # Returns the status of the current task.
+  # @param key [Symbol, String] step_tally key
   #
-  # @return [Integer] {NOT_STARTED}, {IN_PROGRESS} or {COMPLETED}
+  # @return [Integer]
+  def tally_for(key)
+    step_tally.fetch(key.to_s, 0)
+  end
+
+  # Use tally to infer state
+  #
+  # @return [Integer] 0, 1, 2
   def status
     return COMPLETED if all_steps_completed?
     return IN_PROGRESS if tally_for(:completed).positive?
@@ -35,14 +36,30 @@ class Task < ApplicationRecord
     NOT_STARTED
   end
 
+  # Use tally to infer state
+  #
+  # @return [Boolean]
+  def has_single_visible_step?
+    tally_for(:visible) == 1
+  end
+
+  # Use tally to infer state - visible steps vs. completed
+  #
+  # @return [Boolean]
   def all_steps_completed?
     tally_for(:visible) == tally_for(:completed)
   end
 
+  # Use tally to infer state - visible questions vs. answered
+  #
+  # @return [Boolean]
   def all_questions_answered?
     tally_for(:questions) == tally_for(:answered)
   end
 
+  # Use tally to infer state - visible statements vs. acknowledged
+  #
+  # @return [Boolean]
   def all_statements_acknowledged?
     tally_for(:statements) == tally_for(:acknowledged)
   end
@@ -55,7 +72,14 @@ class Task < ApplicationRecord
     steps.visible.that_are_statements.where(id: statement_ids.to_a)
   end
 
-  def acknowledge_statement!(step)
+  def completed_steps
+    visible_questions_with_answers + visible_statements_acknowledged
+  end
+
+  # Record step UUID confirming statement as read
+  #
+  # @return [Boolean]
+  def acknowledge_statement(step)
     statement_ids << step.id
     save!
   end
@@ -95,10 +119,6 @@ class Task < ApplicationRecord
     ).ordered
   end
 
-  def tally_for(key)
-    step_tally.fetch(key.to_s, 0)
-  end
-
 private
 
   # Returns a hash containing tallies of the steps on this task.
@@ -107,15 +127,17 @@ private
   #
   # @return [Hash<Symbol, Integer>]
   def tally_steps
+    visible_steps = steps.visible
+
     self.step_tally = {
-      visible: steps.visible.count,                           # visible steps
-      hidden: steps.hidden.count,                             # hidden steps
-      total: steps.count,                                     # all steps
-      completed: completed_steps.count,                       # all completed steps
-      statements: steps.visible.that_are_statements.count,    # visible statement steps
-      acknowledged: statement_ids.count,                      # completed statement steps
-      questions: steps.visible.that_are_questions.count,      # visible question steps
-      answered: visible_questions_with_answers.count,         # completed question steps
+      visible: visible_steps.count,                         # visible steps
+      hidden: steps.hidden.count,                           # hidden steps
+      total: steps.count,                                   # all steps
+      completed: completed_steps.count,                     # visible completed steps
+      statements: visible_steps.that_are_statements.count,  # visible statement steps
+      acknowledged: statement_ids.count,                    # visible completed statement steps
+      questions: visible_steps.that_are_questions.count,    # visible question steps
+      answered: visible_questions_with_answers.count,       # visible completed question steps
     }
   end
 end

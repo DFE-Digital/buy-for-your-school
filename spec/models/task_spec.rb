@@ -85,7 +85,7 @@ RSpec.describe Task, type: :model do
       expect(task.step_tally["acknowledged"]).to eq 0
       expect(task.step_tally["completed"]).to eq 0
 
-      task.acknowledge_statement!(step)
+      task.acknowledge_statement(step)
 
       expect(task.step_tally["acknowledged"]).to eq 1
       expect(task.step_tally["completed"]).to eq 1
@@ -134,11 +134,11 @@ RSpec.describe Task, type: :model do
     let(:task) { create(:task) }
 
     it "returns true when all steps have been acknowledged" do
-      step = create(:step, :static_content, task: task)
+      statement = create(:step, :static_content, task: task)
 
       expect(task.all_statements_acknowledged?).to be(false)
 
-      task.acknowledge_statement!(step)
+      task.acknowledge_statement(statement)
 
       expect(task.all_statements_acknowledged?).to be(true)
     end
@@ -181,8 +181,19 @@ RSpec.describe Task, type: :model do
   end
 
   describe "#all_steps_completed?" do
-    skip
-    # TODO: mix of questions and statements
+    let(:task) { create(:task) }
+
+    it "returns true if all questions have been answered and statements acknowledged" do
+      question = create(:step, :radio, task: task)
+      statement = create(:step, :static_content, task: task)
+
+      expect(task.all_steps_completed?).to be false
+
+      create(:radio_answer, step: question)
+      task.acknowledge_statement(statement)
+
+      expect(task.all_steps_completed?).to be true
+    end
   end
 
   describe "#next_incomplete_step_id" do

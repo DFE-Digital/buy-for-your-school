@@ -8,7 +8,7 @@ class SpecificationsController < ApplicationController
   # The action of viewing a specification is recorded.
   def show
     @journey = current_journey
-    @visible_steps = @journey.visible_steps
+    @visible_steps = @journey.steps.visible
     @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
     specification_renderer = SpecificationRenderer.new(
@@ -23,7 +23,7 @@ class SpecificationsController < ApplicationController
       contentful_category_id: @journey.category.contentful_id,
       data: {
         format: request.format.symbol,
-        all_steps_completed: @journey.all_steps_completed?,
+        all_tasks_completed: @journey.all_tasks_completed?,
       },
     ).call
 
@@ -32,8 +32,8 @@ class SpecificationsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        file_name = @journey.all_steps_completed? ? "specification.docx" : "specification-incomplete.docx"
-        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_steps_completed?)
+        file_name = @journey.all_tasks_completed? ? "specification.docx" : "specification-incomplete.docx"
+        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_tasks_completed?)
 
         render docx: file_name, content: document_html
       end

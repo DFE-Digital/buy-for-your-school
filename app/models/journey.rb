@@ -17,13 +17,12 @@ class Journey < ApplicationRecord
   # remove - user-defined flag so it can be safely deleted (soft delete)
   enum state: { initial: 0, stale: 1, archive: 2, remove: 3 }
 
-  # @return [Step::ActiveRecord_AssociationRelation]
-  def visible_steps
-    steps.where(hidden: false)
-  end
-
-  def all_steps_completed?
-    visible_steps.all? { |step| step.answer.present? }
+  # Determine whether spec is a draft
+  #
+  # @see SpecificationsController#show
+  #
+  def all_tasks_completed?
+    tasks.all?(&:all_steps_completed?)
   end
 
   # Updates the state to indicate that a journey has been started.
