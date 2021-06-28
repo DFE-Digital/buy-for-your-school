@@ -1,0 +1,2 @@
+filename: doc/erd
+exclude: "ActiveRecord::InternalMetadata,ActiveRecord::SchemaMigration"
