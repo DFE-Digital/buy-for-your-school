@@ -26,6 +26,6 @@ class TaskPresenter < SimpleDelegator
   end
 
   def status_id
-    id + "-status"
+    "#{id}-status"
   end
 end

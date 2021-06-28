@@ -13,7 +13,7 @@ RSpec.describe "Entry previews", type: :request do
     it "creates a dummy journey and redirects to the question creation flow" do
       entry_id = "123"
       fake_journey = create(:journey)
-      expect(Journey).to receive(:create)
+      allow(Journey).to receive(:create)
         .with(category: anything, contentful_id: anything, user: anything, liquid_template: anything)
         .and_return(fake_journey)
 

@@ -131,7 +131,7 @@ RSpec.describe "Authentication", type: :request do
 
         mock_redis = MockRedis.new
         allow(RedisSessions).to receive(:redis).and_return(mock_redis)
-        expect(mock_redis).to receive(:del)
+        allow(mock_redis).to receive(:del)
           .with("session:2::1098345703928457320948572304")
           .and_return(0)
 

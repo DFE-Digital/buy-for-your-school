@@ -6,6 +6,7 @@ class GetCategory
   class InvalidLiquidSyntax < StandardError; end
 
   attr_accessor :category_entry_id
+
   def initialize(category_entry_id:)
     self.category_entry_id = category_entry_id
   end
@@ -13,9 +14,9 @@ class GetCategory
   def call
     category = begin
       GetEntry.new(entry_id: category_entry_id).call
-               rescue GetEntry::EntryNotFound
-                 send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
-                 raise
+    rescue GetEntry::EntryNotFound
+      send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
+      raise
     end
 
     # INFO: Due to a 50k character limit within Contentful we check to see if

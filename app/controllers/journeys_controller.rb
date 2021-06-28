@@ -5,24 +5,31 @@ class JourneysController < ApplicationController
 
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
-      render "errors/specification_template_invalid", status: 500, locals: { error: exception }
+      render "errors/specification_template_invalid",
+             status: :internal_server_error, locals: { error: exception }
     end
 
     rescue_from CreateStep::UnexpectedContentfulModel, CreateTask::UnexpectedContentfulModel do
-      render "errors/unexpected_contentful_model", status: 500
+      render "errors/unexpected_contentful_model",
+             status: :internal_server_error
     end
 
     rescue_from CreateStep::UnexpectedContentfulStepType do
-      render "errors/unexpected_contentful_step_type", status: 500
+      render "errors/unexpected_contentful_step_type",
+             status: :internal_server_error
     end
 
     rescue_from GetEntry::EntryNotFound do
-      render "errors/contentful_entry_not_found", status: 500
+      render "errors/contentful_entry_not_found",
+             status: :internal_server_error
     end
   end
 
   def new
-    journey = CreateJourney.new(category_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"], user: current_user).call
+    journey = CreateJourney.new(
+      category_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"],
+      user: current_user,
+    ).call
 
     RecordAction.new(
       action: "begin_journey",

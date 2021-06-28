@@ -29,7 +29,7 @@ private
   def check_app_is_running_in_preview_env
     return if ENV["CONTENTFUL_PREVIEW_APP"].eql?("true")
 
-    render "errors/not_found", status: 404
+    render "errors/not_found", status: :not_found
   end
 end
 # rubocop:enable Rails/SaveBang

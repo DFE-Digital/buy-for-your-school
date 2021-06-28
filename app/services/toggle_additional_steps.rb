@@ -1,5 +1,6 @@
 class ToggleAdditionalSteps
   attr_accessor :journey, :step
+
   def initialize(step:)
     self.journey = step.journey
     self.step = step

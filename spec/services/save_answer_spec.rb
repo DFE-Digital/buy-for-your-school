@@ -16,7 +16,7 @@ RSpec.describe SaveAnswer do
       answer = create(:short_text_answer)
 
       toggle_service = instance_double(ToggleAdditionalSteps)
-      expect(ToggleAdditionalSteps).to receive(:new).with(step: answer.step).and_return(toggle_service)
+      allow(ToggleAdditionalSteps).to receive(:new).with(step: answer.step).and_return(toggle_service)
       expect(toggle_service).to receive(:call)
 
       described_class.new(answer: answer).call(params: {})
