@@ -17,14 +17,17 @@ brew "libpq"
 # Additional tools
 # ----------------------
 
-# Install `adr` for handling Architecure Decision Records (optional)
+# Install `adr` for handling Architecture Decision Records (optional)
 # brew "adr-tools"
 
 # Install `cf` for working with GPaaS (optional)
 # brew "cloudfoundry/tap/cf-cli@7"
 
+# Install `codeclimate` for identifying code improvements (optional)
+# brew "codeclimate/formulae/codeclimate"
+
 # Depends upon Node v16.3.0 (optional)
 # brew "contentful-cli"
 
-# Install `graphviz` for generating ERDs
+# Install `graphviz` for generating Entity Relationship Diagrams (optional)
 # brew "graphviz"
