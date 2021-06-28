@@ -1,5 +1,6 @@
 class SaveAnswer
   attr_accessor :answer, :step
+
   def initialize(answer:)
     self.answer = answer
     self.step = answer.step

@@ -1,5 +1,6 @@
 class GetSectionsFromCategory
   attr_accessor :category
+
   def initialize(category:)
     self.category = category
   end

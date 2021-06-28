@@ -20,7 +20,7 @@ RSpec.describe ContentfulConnector do
   describe "#get_entry_by_id" do
     it "returns a Contentful entry by making a call to Contentful" do
       contentful_client = instance_double(Contentful::Client)
-      expect(Contentful::Client).to receive(:new)
+      allow(Contentful::Client).to receive(:new)
         .with(api_url: contentful_url,
               space: contentful_space,
               environment: contentful_environment,
@@ -28,7 +28,7 @@ RSpec.describe ContentfulConnector do
         .and_return(contentful_client)
 
       contentful_response = double(Contentful::Entry, id: "123")
-      expect(contentful_client).to receive(:entry)
+      allow(contentful_client).to receive(:entry)
         .with("123")
         .and_return(contentful_response)
 
@@ -41,7 +41,7 @@ RSpec.describe ContentfulConnector do
   describe "#get_all_entries" do
     it "returns all Contentful entries by making a call to Contentful" do
       contentful_client = instance_double(Contentful::Client)
-      expect(Contentful::Client).to receive(:new)
+      allow(Contentful::Client).to receive(:new)
         .with(api_url: contentful_url,
               space: contentful_space,
               environment: contentful_environment,
@@ -49,7 +49,7 @@ RSpec.describe ContentfulConnector do
         .and_return(contentful_client)
 
       contentful_response = instance_double(Contentful::Array)
-      expect(contentful_client).to receive(:entries)
+      allow(contentful_client).to receive(:entries)
         .and_return(contentful_response)
 
       result = described_class.new.get_all_entries

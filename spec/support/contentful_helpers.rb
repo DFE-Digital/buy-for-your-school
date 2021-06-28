@@ -18,7 +18,7 @@ module ContentfulHelpers
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
-    expect(ContentfulConnector).to receive(:new)
+    allow(ContentfulConnector).to receive(:new)
       .and_return(contentful_connector)
 
     allow(contentful_connector).to receive(:get_entry_by_id)
@@ -44,7 +44,7 @@ module ContentfulHelpers
 
     fake_sections = category.sections.map do |section|
       fake_section = fake_contentful_section(contentful_fixture_filename: "sections/#{section.id}.json")
-      expect(contentful_connector).to receive(:get_entry_by_id)
+      allow(contentful_connector).to receive(:get_entry_by_id)
         .with(fake_section.id)
         .and_return(fake_section)
       fake_section
@@ -64,7 +64,7 @@ module ContentfulHelpers
     sections.each do |section|
       fake_steps = section.steps.map do |step|
         fake_step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
-        expect(contentful_connector).to receive(:get_entry_by_id)
+        allow(contentful_connector).to receive(:get_entry_by_id)
           .with(fake_step.id)
           .and_return(fake_step)
         fake_step
@@ -131,14 +131,14 @@ module ContentfulHelpers
 
   def stub_contentful_connector
     contentful_connector = instance_double(ContentfulConnector)
-    expect(ContentfulConnector).to receive(:new)
+    allow(ContentfulConnector).to receive(:new)
       .and_return(contentful_connector)
     contentful_connector
   end
 
   def stub_contentful_client
     contentful_client = instance_double(Contentful::Client)
-    expect(Contentful::Client).to receive(:new)
+    allow(Contentful::Client).to receive(:new)
       .with(api_url: anything, space: anything, environment: anything, access_token: anything)
       .and_return(contentful_client)
     contentful_client

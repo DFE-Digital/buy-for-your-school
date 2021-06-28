@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:2.6.6 as base
+FROM ruby:3.0.1 as base
 MAINTAINER dxw <rails@dxw.com>
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
@@ -40,7 +40,6 @@ RUN npm install
 COPY Gemfile $DEPS_HOME/Gemfile
 COPY Gemfile.lock $DEPS_HOME/Gemfile.lock
 RUN gem update --system
-RUN gem install bundler -v 2.2.16
 
 ENV BUNDLE_GEM_GROUPS=$RAILS_ENV
 RUN bundle config set frozen "true"

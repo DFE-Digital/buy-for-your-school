@@ -9,8 +9,10 @@ RSpec.describe "Cache invalidation", type: :request do
     end
   end
 
+  let(:prefix) { Cache::ENTRY_CACHE_KEY_PREFIX }
+
   it "removes any matching entry ID from the cache" do
-    RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB", "a dummy value")
+    RedisCache.redis.set("#{prefix}:6zeSz4F4YtD66gT5SFpnSB", "a dummy value")
 
     fake_contentful_webook_payload = {
       entityId: "6zeSz4F4YtD66gT5SFpnSB",
@@ -24,14 +26,13 @@ RSpec.describe "Cache invalidation", type: :request do
       .encode_credentials(ENV["CONTENTFUL_WEBHOOK_API_KEY"])
     headers = { "AUTHORIZATION" => credentials }
 
-    post "/api/contentful/entry_updated", {
-      params: fake_contentful_webook_payload,
-      headers: headers,
-      as: :json,
-    }
+    post "/api/contentful/entry_updated",
+         params: fake_contentful_webook_payload,
+         headers: headers,
+         as: :json
 
     expect(response).to have_http_status(:ok)
-    expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB")).to eq(nil)
+    expect(RedisCache.redis.get("#{prefix}:6zeSz4F4YtD66gT5SFpnSB")).to eq(nil)
   end
 
   it "logs information of the event in Rollbar for debugging" do
@@ -50,19 +51,18 @@ RSpec.describe "Cache invalidation", type: :request do
     expect(Rollbar).to receive(:info)
       .with(
         "Accepted request to cache bust Contentful Entry",
-        cache_key: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB",
+        cache_key: "#{prefix}:6zeSz4F4YtD66gT5SFpnSB",
       ).and_call_original
 
-    post "/api/contentful/entry_updated", {
-      params: fake_contentful_webook_payload,
-      headers: headers,
-      as: :json,
-    }
+    post "/api/contentful/entry_updated",
+         params: fake_contentful_webook_payload,
+         headers: headers,
+         as: :json
   end
 
   context "when no basic auth was provided" do
     it "does not delete anything from the cache and returns 401" do
-      RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB", "a dummy value")
+      RedisCache.redis.set("#{prefix}:6zeSz4F4YtD66gT5SFpnSB", "a dummy value")
 
       fake_contentful_webook_payload = {
         entityId: "6zeSz4F4YtD66gT5SFpnSB",
@@ -82,8 +82,7 @@ RSpec.describe "Cache invalidation", type: :request do
            as: :json
 
       expect(response).to have_http_status(:unauthorized)
-      expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:6zeSz4F4YtD66gT5SFpnSB"))
-        .to eq("a dummy value")
+      expect(RedisCache.redis.get("#{prefix}:6zeSz4F4YtD66gT5SFpnSB")).to eq("a dummy value")
     end
   end
 end

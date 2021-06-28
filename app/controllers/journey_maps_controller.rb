@@ -4,12 +4,12 @@ class JourneyMapsController < ApplicationController
   unless Rails.env.development?
     rescue_from GetStepsFromTask::RepeatEntryDetected do |exception|
       render "errors/repeat_step_in_the_contentful_journey",
-             status: 500, locals: { error: exception }
+             status: :internal_server_error, locals: { error: exception }
     end
 
     rescue_from GetEntry::EntryNotFound do
       render "errors/contentful_entry_not_found",
-             status: 500
+             status: :internal_server_error
     end
   end
 
