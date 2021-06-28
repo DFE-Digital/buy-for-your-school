@@ -24,11 +24,13 @@ private
     step.additional_step_rules
   end
 
-  def additional_step_ids
-    additional_step_rules.map { |rule|
-      rule["question_identifiers"]
-    }.flatten
-  end
+  # Unused
+  #
+  # def additional_step_ids
+  #   additional_step_rules.map { |rule|
+  #     rule["question_identifiers"]
+  #   }.flatten
+  # end
 
   def additional_steps_to_show(step:)
     matching_next_step_ids = step.additional_step_rules.map { |rule|

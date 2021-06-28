@@ -3,6 +3,10 @@ class StepPresenter < SimpleDelegator
     contentful_model == "question"
   end
 
+  def statement?
+    contentful_model == "staticContent"
+  end
+
   def help_text_html
     return if help_text.blank?
 

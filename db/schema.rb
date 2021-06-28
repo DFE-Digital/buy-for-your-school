@@ -158,8 +158,10 @@ ActiveRecord::Schema.define(version: 2021_07_05_160257) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "order"
     t.jsonb "step_tally"
+    t.text "statement_ids", default: [], null: false, array: true
     t.index ["order"], name: "index_tasks_on_order"
     t.index ["section_id"], name: "index_tasks_on_section_id"
+    t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

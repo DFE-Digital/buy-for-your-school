@@ -16,6 +16,11 @@ class Step < ApplicationRecord
   has_one :currency_answer
 
   scope :that_are_questions, -> { where(contentful_model: "question") }
+  scope :that_are_statements, -> { where(contentful_model: "staticContent") }
+
+  scope :visible, -> { where(hidden: false) }
+  scope :hidden, -> { where(hidden: true) }
+
   scope :ordered, -> { order(:order) }
 
   after_save :update_task_counters

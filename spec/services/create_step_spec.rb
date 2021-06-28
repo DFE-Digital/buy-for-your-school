@@ -113,10 +113,7 @@ RSpec.describe CreateStep do
           task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
-        expect(step.body).to eq("Procuring a new catering contract can \
-take up to 6 months to consult, create, review and award. \n\nUsually existing \
-contracts start and end in the month of September. We recommend starting this \
-process around March.")
+        expect(step.body).to eq("static-content.json body")
       end
     end
 

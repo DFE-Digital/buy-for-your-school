@@ -9,16 +9,6 @@ RSpec.describe Task, type: :model do
     it { is_expected.to validate_presence_of(:contentful_id) }
   end
 
-  describe "#visible_steps" do
-    it "only returns steps which are not hidden" do
-      task = create(:task)
-      step = create(:step, :radio, hidden: false, task: task)
-      create(:step, :radio, hidden: true, task: task)
-
-      expect(task.visible_steps).to eq [step]
-    end
-  end
-
   describe "#has_single_visible_step?" do
     context "when the task has one visible step" do
       it "returns true" do
@@ -46,9 +36,11 @@ RSpec.describe Task, type: :model do
 
     it "returns a hash of counted steps in different states" do
       expect(task.step_tally["visible"]).to eq 0
-      expect(task.step_tally["answered"]).to eq 0
+      expect(task.step_tally["completed"]).to eq 0
       expect(task.step_tally["total"]).to eq 0
       expect(task.step_tally["hidden"]).to eq 0
+      expect(task.step_tally["statements"]).to eq 0
+      expect(task.step_tally["questions"]).to eq 0
     end
 
     it "increments as steps are added" do
@@ -74,14 +66,29 @@ RSpec.describe Task, type: :model do
       expect(task.step_tally["hidden"]).to eq 0
     end
 
-    it "counts how many are answered" do
+    it "counts how many questions are answered" do
       create(:step, :radio, hidden: true, task: task)
       step = create(:step, :radio, hidden: false, task: task)
       answer = create(:radio_answer, step: step)
 
       expect(task.step_tally["answered"]).to eq 1
+      expect(task.step_tally["completed"]).to eq 1
       answer.destroy!
       expect(task.step_tally["answered"]).to eq 0
+      expect(task.step_tally["completed"]).to eq 0
+    end
+
+    it "counts how many statements are acknowledged" do
+      create(:step, :static_content, hidden: true, task: task)
+      step = create(:step, :static_content, hidden: false, task: task)
+
+      expect(task.step_tally["acknowledged"]).to eq 0
+      expect(task.step_tally["completed"]).to eq 0
+
+      task.acknowledge_statement!(step)
+
+      expect(task.step_tally["acknowledged"]).to eq 1
+      expect(task.step_tally["completed"]).to eq 1
     end
   end
 
@@ -123,46 +130,62 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe "#all_steps_answered?" do
-    it "returns true when all steps have answers" do
-      task = create(:task)
+  describe "#all_statements_acknowledged?" do
+    let(:task) { create(:task) }
+
+    it "returns true when all steps have been acknowledged" do
+      step = create(:step, :static_content, task: task)
+
+      expect(task.all_statements_acknowledged?).to be(false)
+
+      task.acknowledge_statement!(step)
+
+      expect(task.all_statements_acknowledged?).to be(true)
+    end
+  end
+
+  describe "#all_questions_answered?" do
+    let(:task) { create(:task) }
+
+    it "returns true when all questions have answers" do
       step = create(:step, :radio, task: task)
       create(:radio_answer, step: step)
 
-      expect(task.all_steps_answered?).to be(true)
+      expect(task.all_questions_answered?).to be(true)
     end
 
-    it "returns false when no steps have answers" do
-      task = create(:task)
+    it "returns false when no questions have answers" do
       create(:step, :radio, task: task)
       # Omit answer
 
-      expect(task.all_steps_answered?).to eq(false)
+      expect(task.all_questions_answered?).to be(false)
     end
 
-    it "returns false when some steps have answers" do
-      task = create(:task)
-
+    it "returns false when some questions have answers" do
       step = create(:step, :radio, task: task)
       create(:radio_answer, step: step)
 
       create(:step, :radio, task: task)
       # Omit answer for step 2
 
-      expect(task.all_steps_answered?).to eq(false)
+      expect(task.all_questions_answered?).to be(false)
     end
 
-    context "when there is a hidden step without an answer" do
+    context "when there is a hidden question without an answer" do
       it "ignores it and returns true" do
-        task = create(:task)
         create(:step, :radio, task: task, hidden: true)
 
-        expect(task.all_steps_answered?).to eq(true)
+        expect(task.all_questions_answered?).to be(true)
       end
     end
   end
 
-  describe "#next_unanswered_step_id" do
+  describe "#all_steps_completed?" do
+    skip
+    # TODO: mix of questions and statements
+  end
+
+  describe "#next_incomplete_step_id" do
     context "when no steps have answers" do
       it "returns the first step ID" do
         task = create(:task)
@@ -170,7 +193,7 @@ RSpec.describe Task, type: :model do
         step = create(:step, :radio, task: task, order: 0)
         create(:step, :radio, task: task, order: 1)
 
-        result = task.next_unanswered_step_id
+        result = task.next_incomplete_step_id
 
         expect(result).to eq(step.id)
       end
@@ -186,7 +209,7 @@ RSpec.describe Task, type: :model do
         step2 = create(:step, :radio, task: task, order: 1)
         create(:radio_answer, step: step2)
 
-        result = task.next_unanswered_step_id
+        result = task.next_incomplete_step_id
 
         expect(result).to eq(nil)
       end
@@ -202,7 +225,7 @@ RSpec.describe Task, type: :model do
         step2 = create(:step, :radio, task: task, order: 1)
         # Omit answer for step 2
 
-        result = task.next_unanswered_step_id
+        result = task.next_incomplete_step_id
 
         expect(result).to eq(step2.id)
       end
@@ -221,14 +244,14 @@ RSpec.describe Task, type: :model do
         create(:step, :radio, task: task, order: 2)
         # Omit answer for step 3
 
-        result = task.next_unanswered_step_id
+        result = task.next_incomplete_step_id
 
         expect(result).to eq(step1.id)
       end
     end
   end
 
-  describe "#visible_steps_with_answers" do
+  describe "#visible_questions_with_answers" do
     it "returns all steps with answers" do
       task = create(:task)
 
@@ -238,7 +261,7 @@ RSpec.describe Task, type: :model do
       step2 = create(:step, :radio, task: task, order: 1)
       create(:radio_answer, step: step2)
 
-      result = task.visible_steps_with_answers
+      result = task.visible_questions_with_answers
 
       expect(result).to include(step2)
       expect(result).not_to include(step1)
@@ -251,7 +274,7 @@ RSpec.describe Task, type: :model do
         create(:step, :radio, task: task, order: 0, hidden: true)
         # Omit answer for hidden step
 
-        result = task.visible_steps_with_answers
+        result = task.visible_questions_with_answers
 
         expect(result).to eq([])
       end
@@ -264,7 +287,7 @@ RSpec.describe Task, type: :model do
         step = create(:step, :radio, task: task, order: 0, hidden: true)
         create(:radio_answer, step: step)
 
-        result = task.visible_steps_with_answers
+        result = task.visible_questions_with_answers
 
         expect(result).to eq([])
       end

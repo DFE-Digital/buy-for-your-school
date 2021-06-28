@@ -2,15 +2,15 @@ class TaskPresenter < SimpleDelegator
   # @see views/journeys/show
   #
   def step
-    StepPresenter.new(*visible_steps)
+    StepPresenter.new(*steps.visible)
   end
 
   def one_step?
-    visible_steps.one?
+    steps.visible.one?
   end
 
   def many_steps?
-    visible_steps.count > 1
+    steps.visible.count > 1
   end
 
   def not_started?

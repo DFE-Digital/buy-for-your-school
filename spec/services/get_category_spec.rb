@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe GetCategory do
   describe "#call" do
-    it "returns a Contenetful::Entry for the category_entry_id" do
+    it "returns a Contentful::Entry for the category_entry_id" do
       stub_contentful_category(
         fixture_filename: "static-content.json",
         stub_sections: false,

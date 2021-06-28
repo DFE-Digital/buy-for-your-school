@@ -40,10 +40,10 @@ class AnswersController < ApplicationController
     if result.success?
       if parent_task.has_single_visible_step?
         redirect_to journey_path(@journey, anchor: @step.id)
-      elsif parent_task.all_steps_answered?
+      elsif parent_task.all_steps_completed?
         redirect_to journey_task_path(@journey, parent_task)
       else
-        redirect_to journey_step_path(@journey, parent_task.next_unanswered_step_id)
+        redirect_to journey_step_path(@journey, parent_task.next_incomplete_step_id)
       end
     else
       render "steps/#{@step.contentful_type}", locals: { layout: "steps/new_form_wrapper" }

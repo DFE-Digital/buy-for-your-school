@@ -359,18 +359,16 @@ feature "Anyone can start a journey" do
     end
   end
 
+  # "Task list Pattern" and "Interrupt Pattern"
+  #
+  #   Used for compulsory additions to the user's document
+  #   requiring no response only acknowledgement.
   context "when the Contentful model is of type staticContent" do
     context "when Contentful entry is of type paragraphs" do
       scenario "the content is not displayed in the task list" do
         start_journey_from_category(category: "static-content.json")
 
-        # We should really remove static content entirely, since it doesn't
-        # appear in the task list pattern.
-
-        # TODO: Talk to design and see if static content is actually included
-        # anywhere in the journey, or if we can ditch support.
-
-        expect(page).not_to have_content("When you should start")
+        expect(page).not_to have_content("static-content.json title")
       end
     end
   end
