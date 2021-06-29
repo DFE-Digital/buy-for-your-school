@@ -1,3 +1,6 @@
+# UserSession is used to store and maintain DfE sign-in details on the session for the current user.
+#
+# @see SessionsController
 class UserSession
   include Rails.application.routes.url_helpers
 
@@ -7,11 +10,19 @@ class UserSession
     self.session = session
   end
 
+  # Stores user sign-in information in the session.
+  #
+  # @param [Hash] omniauth_hash
+  #
+  # @return [String]
   def persist_successful_dfe_sign_in_claim!(omniauth_hash:)
     session[:dfe_sign_in_uid] = omniauth_hash.fetch("uid")
     session[:dfe_sign_in_sign_out_token] = omniauth_hash.dig("credentials", "id_token")
   end
 
+  # Removes user sign-in information from the session.
+  #
+  # @return [String]
   def repudiate!
     session.delete(:dfe_sign_in_uid)
     session.delete(:dfe_sign_in_sign_out_token)
@@ -21,6 +32,7 @@ class UserSession
     session.key?(:dfe_sign_in_sign_out_token) && session[:dfe_sign_in_sign_out_token].present?
   end
 
+  # @return [String]
   def sign_out_url
     return root_path unless should_be_signed_out_of_dsi?
 

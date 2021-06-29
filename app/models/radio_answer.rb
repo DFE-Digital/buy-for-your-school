@@ -1,7 +1,7 @@
+# RadioAnswer is used to capture a radio button answer to a {Step}.
 class RadioAnswer < ApplicationRecord
   include TaskCounters
 
-  self.implicit_order_column = "created_at"
   belongs_to :step
 
   validates :response, presence: true

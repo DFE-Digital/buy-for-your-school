@@ -1,11 +1,21 @@
+# CurrencyAnswer is used to capture a currency answer to a {Step}.
 class CurrencyAnswer < ApplicationRecord
   include TaskCounters
 
-  self.implicit_order_column = "created_at"
   belongs_to :step
 
-  validates :response, presence: true, numericality: { greater_than_or_equal_to: 0, message: "does not accept £ signs or other non numerical characters" }
+  validates :response,
+            presence: true,
+            numericality: {
+              greater_than_or_equal_to: 0,
+              message: "does not accept £ signs or other non numerical characters",
+            }
 
+  # Overridden response accessor that ensures no commas are present in the currency value.
+  #
+  # @param [Float, String] value
+  #
+  # @return [Float]
   def response=(value)
     if value.is_a?(String)
       super(value.delete(","))

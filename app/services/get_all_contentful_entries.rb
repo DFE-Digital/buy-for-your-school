@@ -1,5 +1,6 @@
 require "contentful"
 
+# GetAllContentfulEntries service fetches all Contentful entries via the ContentfulConnector.
 class GetAllContentfulEntries
   class NoEntriesFound < StandardError; end
 

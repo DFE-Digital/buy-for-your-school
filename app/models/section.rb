@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
+# A Section belongs to a {Journey} and consists of {Task}s.
 class Section < ApplicationRecord
   self.implicit_order_column = "order"
+
   default_scope { order(:order) }
 
   belongs_to :journey

@@ -2,6 +2,7 @@ class Contentful::Entry
   attr_accessor :combined_specification_template
 end
 
+# GetCategory service fetches a Contentful category and validates its Liquid template.
 class GetCategory
   class InvalidLiquidSyntax < StandardError; end
 

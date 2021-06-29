@@ -25,6 +25,11 @@ class JourneysController < ApplicationController
     end
   end
 
+  # Creates a new {Journey} under the default Contentful category.
+  #
+  # The action of creating a new journey is recorded.
+  #
+  # @see CreateJourney
   def new
     journey = CreateJourney.new(
       category_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"],
@@ -40,6 +45,9 @@ class JourneysController < ApplicationController
     redirect_to journey_path(journey)
   end
 
+  # Retrieves the specified {Journey} and its sections.
+  #
+  # The action of viewing a journey is recorded.
   def show
     @journey = current_journey
     @sections = @journey.sections.includes(:tasks).map do |section|

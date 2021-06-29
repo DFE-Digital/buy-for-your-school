@@ -1,3 +1,4 @@
+# StringSanitiser service is responsible for sanitising user answers to ensure they are safe to be persisted.
 class StringSanitiser
   attr_accessor :args
 

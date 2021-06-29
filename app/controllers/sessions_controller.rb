@@ -4,6 +4,9 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
   protect_from_forgery except: :bypass_callback
 
+  # Creates a user session with DfE Sign-in claim.
+  #
+  # @see UserSession
   def create
     user_session = UserSession.new(session: session)
     user_session.persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
@@ -17,6 +20,9 @@ class SessionsController < ApplicationController
     Rollbar.error("Sign in failed unexpectedly")
   end
 
+  # Ends the current user session.
+  #
+  # @see UserSession
   def destroy
     user_session = UserSession.new(session: session)
     sign_out_url_copy = user_session.sign_out_url.dup

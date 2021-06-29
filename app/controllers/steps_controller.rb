@@ -3,6 +3,9 @@
 class StepsController < ApplicationController
   before_action :check_user_belongs_to_journey?
 
+  # Retrieves the specified step.
+  #
+  # The action of beginning a step is recorded.
   def show
     @journey = current_journey
 
@@ -32,6 +35,9 @@ class StepsController < ApplicationController
     render @step.contentful_type, locals: { layout: "steps/new_form_wrapper" }
   end
 
+  # Allows for step editing.
+  #
+  # The action of viewing a step is recorded.
   def edit
     @journey = current_journey
 

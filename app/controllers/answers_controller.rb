@@ -6,6 +6,13 @@ class AnswersController < ApplicationController
   include DateHelper
   include AnswerHelper
 
+  # Creates and persists an answer for the specified {Step}.
+  #
+  # The action of saving an answer is recorded.
+  #
+  # On success, redirects to the next available step, the parent {Task} or {Journey} views.
+  #
+  # @see SaveAnswer
   def create
     @journey = current_journey
     @step = Step.find(step_id)
@@ -43,6 +50,13 @@ class AnswersController < ApplicationController
     end
   end
 
+  # Updates an answer for the specified {Step}.
+  #
+  # The action of updating an answer is recorded.
+  #
+  # On success, redirects the parent {Task} or {Journey} views.
+  #
+  # @see SaveAnswer
   def update
     @journey = current_journey
     @step = Step.find(step_id)
@@ -77,14 +91,25 @@ class AnswersController < ApplicationController
 
 private
 
+  # @return [Task]
   def parent_task
     @step.task
   end
 
+  # @return [String]
   def step_id
     params[:step_id]
   end
 
+  # Fetches the necessary parameters depending on the {Step} type.
+  #
+  # @param [Step] step
+  #
+  # @see further_information_params
+  # @see date_params
+  # @see answer_params
+  #
+  # @return [Mixed]
   def prepared_params(step:)
     case step.contentful_type
     when "checkboxes", "radios"
@@ -96,10 +121,21 @@ private
     end
   end
 
+  # Retrieves the `response` and `further_information` for answer types other
+  # than `checkboxes`, `radios` and `single_date`.
+  #
+  # @return [Object]
   def answer_params
     params.require(:answer).permit(:response, :further_information)
   end
 
+  # Retrieves the `reponse` with special handling for `checkboxes` and
+  # `radios` types to ensure their `further_information` values are stored
+  # correctly.
+  #
+  # @see AnswerHelper
+  #
+  # @return [Object]
   def further_information_params
     return { skipped: true, response: [""], further_information: nil } if skip_answer?
 
@@ -125,6 +161,11 @@ private
     all_params
   end
 
+  # Converts `single_date` responses into Dates.
+  #
+  # @see DateHelper
+  #
+  # @return [Object]
   def date_params
     answer = params.require(:answer).permit(:response)
     date_hash = { day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"] }
