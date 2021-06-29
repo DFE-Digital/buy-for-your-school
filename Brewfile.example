@@ -25,3 +25,6 @@ brew "libpq"
 
 # Depends upon Node v16.3.0 (optional)
 # brew "contentful-cli"
+
+# Install `graphviz` for generating ERDs
+# brew "graphviz"
