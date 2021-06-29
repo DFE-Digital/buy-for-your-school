@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Step < ApplicationRecord
   self.implicit_order_column = "order"
 

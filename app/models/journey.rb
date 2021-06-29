@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class Journey < ApplicationRecord
   self.implicit_order_column = "created_at"
+
   has_many :sections, dependent: :destroy
   has_many :tasks, through: :sections, class_name: "Task"
   has_many :steps, through: :tasks, class_name: "Step"

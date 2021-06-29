@@ -112,3 +112,6 @@ terraform.rc
 # App env yaml files
 *_app_env.yml
 *_app_env.yaml
+
+# ERD file
+doc/erd.pdf
