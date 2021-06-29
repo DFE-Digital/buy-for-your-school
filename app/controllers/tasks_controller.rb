@@ -5,7 +5,7 @@ class TasksController < ApplicationController
     @journey = current_journey
 
     @current_task = task
-    @next_task = next_unanswered_task
+    @next_task = @journey.next_unanswered_task
 
     @steps = task.eager_loaded_visible_steps.map do |step|
       StepPresenter.new(step)
@@ -34,10 +34,6 @@ private
 
   def task_id
     params[:id]
-  end
-
-  def next_unanswered_task
-    current_journey.tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
   end
 
   def redirect_to_first_step_if_task_has_no_answers

@@ -13,6 +13,19 @@ RSpec.describe Journey, type: :model do
     expect(journey.category).to eql("catering")
   end
 
+  describe "next_unanswered_task" do
+    context "when steps have been completed in order" do
+      it "presents last unanswered task" do
+
+      end
+    end
+
+    context "when steps have been completed not in order" do
+
+    end
+
+  end
+
   describe "all_steps_completed?" do
     context "when all steps have been completed" do
       it "returns true" do

@@ -11,6 +11,10 @@ class Journey < ApplicationRecord
     steps.where(hidden: false)
   end
 
+  def next_unanswered_task
+    tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
+  end
+
   def all_steps_completed?
     visible_steps.all? { |step| step.answer.present? }
   end
