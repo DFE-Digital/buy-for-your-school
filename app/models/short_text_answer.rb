@@ -1,3 +1,4 @@
+# ShortTextAnswer is used to capture a short text answer to a {Step}.
 class ShortTextAnswer < ApplicationRecord
   include TaskCounters
 

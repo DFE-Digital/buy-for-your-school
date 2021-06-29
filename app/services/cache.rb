@@ -1,3 +1,4 @@
+# Cache provides the functionality for managing the Redis cache.
 class Cache
   attr_accessor :enabled, :key, :ttl
 

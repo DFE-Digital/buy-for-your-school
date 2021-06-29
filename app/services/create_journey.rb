@@ -1,3 +1,4 @@
+# CreateJourney service is responsible for constructing a {Journey} for the given user and category.
 class CreateJourney
   attr_accessor :category_id, :user
 
@@ -6,6 +7,16 @@ class CreateJourney
     self.user = user
   end
 
+  # Creates and persists a new Journey for the given category.
+  #
+  # This relies on additional services to construct the sections, tasks, and steps
+  # within this journey.
+  #
+  # @see CreateSection
+  # @see CreateTask
+  # @see CreateStep
+  #
+  # @return [Journey]
   def call
     category = GetCategory.new(category_entry_id: category_id).call
     contentful_sections = GetSectionsFromCategory.new(category: category).call

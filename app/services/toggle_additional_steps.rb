@@ -1,3 +1,4 @@
+# ToggleAdditionalSteps service is responsible for showing and hiding additional steps.
 class ToggleAdditionalSteps
   attr_accessor :journey, :step
 

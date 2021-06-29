@@ -1,3 +1,4 @@
+# RadioAnswer is used to capture a radio button answer to a {Step}.
 class RadioAnswer < ApplicationRecord
   include TaskCounters
 

@@ -1,3 +1,4 @@
+# CreateSection service is responsible for constructing a {Section} for the given journey.
 class CreateSection
   attr_accessor :journey, :contentful_section, :order
 
@@ -7,6 +8,9 @@ class CreateSection
     @order = order
   end
 
+  # Creates and persists a new Section.
+  #
+  # @return [Section]
   def call
     section = Section.new(
       journey: journey,

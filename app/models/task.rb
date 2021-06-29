@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# A Task belongs to a {Section} and consists of many {Step}s.
 class Task < ApplicationRecord
   self.implicit_order_column = "created_at"
 
@@ -16,6 +17,9 @@ class Task < ApplicationRecord
   IN_PROGRESS = 1
   COMPLETED = 2
 
+  # Returns all visible steps.
+  #
+  # @return [Step::ActiveRecord_AssociationRelation]
   def visible_steps
     steps.where(hidden: false)
   end
@@ -24,6 +28,9 @@ class Task < ApplicationRecord
     step_tally["visible"] == 1
   end
 
+  # Returns the status of the current task.
+  #
+  # @return [Integer] {NOT_STARTED}, {IN_PROGRESS} or {COMPLETED}
   def status
     return COMPLETED if all_steps_answered?
     return IN_PROGRESS if step_tally["answered"].positive?
@@ -35,10 +42,14 @@ class Task < ApplicationRecord
     step_tally["visible"] == step_tally["answered"]
   end
 
+  # Returns all visible steps that have been answered.
+  #
+  # @return [Step::ActiveRecord_AssociationRelation]
   def visible_steps_with_answers
     eager_loaded_visible_steps.select(&:answered?)
   end
 
+  # @return [String/Nil] `nil` if all steps are answered.
   def next_unanswered_step_id
     return nil if all_steps_answered?
 
@@ -48,6 +59,9 @@ class Task < ApplicationRecord
     remaining_ids.first
   end
 
+  # Returns all visible steps with eagerly-loaded answers.
+  #
+  # @return [Step::ActiveRecord_AssociationRelation]
   def eager_loaded_visible_steps
     visible_steps.includes(
       %i[short_text_answer
@@ -62,6 +76,11 @@ class Task < ApplicationRecord
 
 private
 
+  # Returns a hash containing tallies of the steps on this task.
+  #
+  # Includes total, visible, hidden, and answered step tallies.
+  #
+  # @return [Hash<Symbol, Integer>]
   def tally_steps
     self.step_tally = {
       total: steps.count,

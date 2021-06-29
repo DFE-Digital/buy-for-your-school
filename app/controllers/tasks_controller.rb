@@ -1,6 +1,9 @@
 class TasksController < ApplicationController
   before_action :redirect_to_first_step_if_task_has_no_answers, only: [:show]
 
+  # Renders the task with its steps.
+  #
+  # The action fo viewing a task is recorded.
   def show
     @journey = current_journey
 
@@ -28,18 +31,22 @@ class TasksController < ApplicationController
 
 private
 
+  # @return [Task]
   def task
     @task ||= Task.find(task_id)
   end
 
+  # @return [String]
   def task_id
     params[:id]
   end
 
+  # @return [Task, nil]
   def next_unanswered_task
     current_journey.tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
   end
 
+  # This is recorded as the beginning of a task.
   def redirect_to_first_step_if_task_has_no_answers
     return unless task.step_tally["answered"].zero?
     return if params.fetch(:back_link, nil).present?

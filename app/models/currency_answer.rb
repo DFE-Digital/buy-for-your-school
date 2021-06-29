@@ -1,3 +1,4 @@
+# CurrencyAnswer is used to capture a currency answer to a {Step}.
 class CurrencyAnswer < ApplicationRecord
   include TaskCounters
 
@@ -10,6 +11,11 @@ class CurrencyAnswer < ApplicationRecord
               message: "does not accept £ signs or other non numerical characters",
             }
 
+  # Overridden response accessor that ensures no commas are present in the currency value.
+  #
+  # @param [Float, String] value
+  #
+  # @return [Float]
   def response=(value)
     if value.is_a?(String)
       super(value.delete(","))

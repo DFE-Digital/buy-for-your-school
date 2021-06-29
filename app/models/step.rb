@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# A Step belongs to a {Task} and may have one of
+# {RadioAnswer}, {ShortTextAnswer}, {LongTextAnswer}, {SingleDateAnswer}, {CheckboxAnswers}, {NumberAnswer}, {CurrencyAnswer}.
 class Step < ApplicationRecord
   self.implicit_order_column = "order"
 
@@ -18,6 +20,9 @@ class Step < ApplicationRecord
 
   after_save :update_task_counters
 
+  # Returns the answer to this step.
+  #
+  # @return [Mixed]
   def answer
     @answer ||=
       case contentful_type
@@ -35,6 +40,10 @@ class Step < ApplicationRecord
     !answer.nil?
   end
 
+  # Returns the text for the primary call-to-action button.
+  # @see https://design-system.service.gov.uk/components/button/
+  #
+  # @return [String]
   def primary_call_to_action_text
     return I18n.t("generic.button.next") if super.blank?
 
@@ -45,10 +54,19 @@ class Step < ApplicationRecord
     skip_call_to_action_text.present?
   end
 
+  # This method fetches the {Journey} associated to this step's {Task}'s {Section}.
+  #
+  # @return [Journey]
   def journey
     task.section.journey
   end
 
+  # This method calls the owning {Task}'s save method to update its step tallies.
+  #
+  # This is used by the {TaskCounters} concern as a callback for when step answers
+  # are committed.
+  #
+  # @return [Boolean]
   def update_task_counters
     task.save
   end

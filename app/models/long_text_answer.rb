@@ -1,3 +1,4 @@
+# LongTextAnswer is used to capture a long text answer to a {Step}.
 class LongTextAnswer < ApplicationRecord
   include TaskCounters
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ApplicationHelper provides banner and footer tags.
 module ApplicationHelper
   def custom_banner_tag_class
     return "preview-tag" if ENV["CONTENTFUL_PREVIEW_APP"].eql?("true")
