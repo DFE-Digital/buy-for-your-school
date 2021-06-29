@@ -77,10 +77,7 @@ The project uses [Pry](https://github.com/pry/pry) with [Byebug](https://github.
 - Run lint check `$ bundle exec rubocop` or `bundle exec rake rubocop`
 - Run test suite and lint check `bundle exec rake`
 
-Running in the test docker environment can be achieved by prefixing the previous commands with:
-```
-$ docker-compose -f docker-compose.test.yml run --rm test
-```
+- Convenience script for containerised equivalent `$ script/spec`. You may specify an optional command to run against the test environement, i.e. rubocop `$ script/spec rubocop`. On its own it will run the default rake task, which includes `spec` and `rubocop`.
 
 `script/test` is the Docker command target chaining dependency updates, migrations, testing, linting and security checks.
 

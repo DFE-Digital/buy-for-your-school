@@ -12,6 +12,7 @@ A service to help school buying professionals create tender documents that compl
 1. [DfE Sign-in](/doc/dfe-sign-in.md)
 1. [Console access](/doc/console-access.md)
 1. [Logging](/doc/logging.md)
+1. [Clean-up](/doc/clean-up.md)
 
 ## Making changes
 
