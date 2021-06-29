@@ -15,13 +15,15 @@ RSpec.describe Journey, type: :model do
 
   describe "next_unanswered_task" do
     context "when steps have been completed in order" do
-      it "presents last unanswered task" do
+      xit "presents last unanswered task" do
 
       end
     end
 
     context "when steps have been completed not in order" do
+      xit "presents next unanswered task" do
 
+      end
     end
 
   end
