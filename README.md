@@ -1,5 +1,9 @@
 # Buy for your school
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/f119cce1678a8a67cca7/maintainability)](https://codeclimate.com/github/DFE-Digital/buy-for-your-school/maintainability)
+![CI](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/continuous-integration.yml/badge.svg)
+![Deploy](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/deploy.yml/badge.svg)
+
 A service to help school buying professionals create tender documents that comply with the relevant government policy. These tender documents can then be used to start a procurement process saving schools time and money.
 
 1. [Getting started](/doc/getting-started.md)
