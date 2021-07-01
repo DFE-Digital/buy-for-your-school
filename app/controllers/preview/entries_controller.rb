@@ -3,11 +3,10 @@ class Preview::EntriesController < ApplicationController
   before_action :check_app_is_running_in_preview_env
 
   def show
+    category = Category.create(title: "Preview", contentful_id: 0, liquid_template: "<p>N/A</p>")
     @journey = Journey.create(
-      category: "Preview",
-      contentful_id: 0,
+      category: category,
       user: current_user,
-      liquid_template: "<p>N/A</p>",
     )
     section = Section.create(title: "Preview Section", journey: @journey)
     task = Task.create(title: "Preview Task", section: section)

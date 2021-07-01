@@ -4,12 +4,18 @@
 class Journey < ApplicationRecord
   self.implicit_order_column = "created_at"
 
+  belongs_to :user
+  belongs_to :category, counter_cache: true
+
   has_many :sections, dependent: :destroy
   has_many :tasks, through: :sections, class_name: "Task"
   has_many :steps, through: :tasks, class_name: "Step"
-  belongs_to :user
 
-  validates :category, :contentful_id, :liquid_template, presence: true
+  # initial - the initial state all Journeys are in
+  # stale - automatic flag for Journeys that have not been touched for a while and could be purged
+  # archive - user-defined flag so it may be hidden from their dashboard
+  # remove - user-defined flag so it can be safely deleted (soft delete)
+  enum state: { initial: 0, stale: 1, archive: 2, remove: 3 }
 
   # @return [Step::ActiveRecord_AssociationRelation]
   def visible_steps
@@ -20,14 +26,13 @@ class Journey < ApplicationRecord
     visible_steps.all? { |step| step.answer.present? }
   end
 
-  # Updates the `last_worked_on` and `started` attributes to indicate that a journey has been started.
+  # Updates the state to indicate that a journey has been started.
   #
   # This ensures started journeys are not removed during automated clean up.
   #
   # @return [Boolean]
   def freshen!
     attributes = {}
-    attributes[:last_worked_on] = Time.zone.now
     attributes[:started] = true unless started == true
 
     update!(attributes)

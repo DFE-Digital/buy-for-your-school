@@ -18,7 +18,7 @@ class TasksController < ApplicationController
       action: "view_task",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
       contentful_section_id: task.section.contentful_id,
       contentful_task_id: task.contentful_id,
       data: {
@@ -57,7 +57,7 @@ private
       action: "begin_task",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
       contentful_section_id: task.section.contentful_id,
       contentful_task_id: task.contentful_id,
       data: {

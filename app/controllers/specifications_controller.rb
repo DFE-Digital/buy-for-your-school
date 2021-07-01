@@ -12,7 +12,7 @@ class SpecificationsController < ApplicationController
     @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
     specification_renderer = SpecificationRenderer.new(
-      template: @journey.liquid_template,
+      template: @journey.category.liquid_template,
       answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call,
     )
 
@@ -20,7 +20,7 @@ class SpecificationsController < ApplicationController
       action: "view_specification",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
       data: {
         format: request.format.symbol,
         all_steps_completed: @journey.all_steps_completed?,
