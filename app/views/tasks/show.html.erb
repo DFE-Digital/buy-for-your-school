@@ -16,6 +16,15 @@
   <%= link_to I18n.t("task.button.continue"), journey_step_path(@journey, @current_task.next_unanswered_step_id), class: "govuk-button" %>
 <% elsif @next_task&.next_unanswered_step_id %>
   <%= link_to I18n.t("task.button.next"), journey_step_path(@journey, @next_task.next_unanswered_step_id), class: "govuk-button" %>
+  <%=  @next_task.next_unanswered_step_id %><br>
+  <%= @journey.next_unanswered_task.title %>
+
+  <ul>
+  <% @journey.all_unanswered_tasks.each do |step| %>
+    <li><%= "#{step.title} - #{step.id}" %></li>
+    <% end  %>
+  </ul>
+
 <% end %>
 
 <br />

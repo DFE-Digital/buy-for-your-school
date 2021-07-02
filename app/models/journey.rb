@@ -12,7 +12,13 @@ class Journey < ApplicationRecord
   end
 
   def next_unanswered_task
-    tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
+    tasks.order(:section_id, :order).reject(&:all_steps_answered?).first
+  end
+
+  #method to list all unanswered tasks ordered by section & order
+
+  def all_unanswered_tasks
+    tasks.order(:section_id, :order).reject(&:all_steps_answered?)
   end
 
   def all_steps_completed?

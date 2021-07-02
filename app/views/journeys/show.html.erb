@@ -3,9 +3,16 @@
 <%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
 <h1 class="govuk-heading-xl"><%= I18n.t("specifying.start_page.page_title") %></h1>
 
+
+
 <ol class="app-task-list sections">
   <% @sections.each do |section| %>
     <h2 class="app-task-list__section"><%= section.title %></h2>
+    <ul>
+      <% section.tasks.each do |task| %>
+        <li><%= "#{task.title}- #{task.order}" %></li>
+        <% end %>
+    </ul>
     <li>
       <ul class="app-task-list__items">
         <% section.tasks.each do |task| %>
