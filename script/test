@@ -29,8 +29,8 @@ else
   echo "==> Running the tests..."
   bundle exec rspec
 
-  echo "==> CC Test Reporter Before Build..."
-  cc-test-reporter after-build -t simplecov
+  echo "==> CC Test Reporter After Build..."
+  cc-test-reporter GIT_BRANCH=$GITHUB_HEAD_REF GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF) after-build -t simplecov
 
   echo "==> Running Brakeman"
   bundle exec brakeman -o /dev/stdout
