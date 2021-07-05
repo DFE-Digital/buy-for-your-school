@@ -94,6 +94,7 @@ RUN RAILS_ENV=production \
     CONTENTFUL_ENTRY_CACHING= \
     SUPPORT_EMAIL= \
     REDIS_URL= \
+    CC_TEST_REPORTER_ID= \
     bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
@@ -110,6 +111,9 @@ CMD ["bundle", "exec", "rails", "server"]
 FROM web as test
 
 RUN apt-get install -qq -y shellcheck wait-for-it
+
+RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/bin/cc-test-reporter
+RUN chmod +x /usr/bin/cc-test-reporter
 
 COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
 COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml

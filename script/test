@@ -23,8 +23,14 @@ else
   echo "==> Linting Ruby..."
   bundle exec rake rubocop
 
+  echo "==> CC Test Reporter Before Build..."
+  cc-test-reporter before-build
+
   echo "==> Running the tests..."
   bundle exec rspec
+
+  echo "==> CC Test Reporter Before Build..."
+  cc-test-reporter after-build -t simplecov
 
   echo "==> Running Brakeman"
   bundle exec brakeman -o /dev/stdout
