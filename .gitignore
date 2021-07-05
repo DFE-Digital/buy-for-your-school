@@ -117,3 +117,5 @@ terraform.rc
 
 # ERD file
 doc/erd.pdf
+
+.tool-versions
