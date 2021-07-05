@@ -1,6 +1,7 @@
 # Buy for your school
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f119cce1678a8a67cca7/maintainability)](https://codeclimate.com/github/DFE-Digital/buy-for-your-school/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f119cce1678a8a67cca7/test_coverage)](https://codeclimate.com/github/DFE-Digital/buy-for-your-school/test_coverage)
 ![CI](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/continuous-integration.yml/badge.svg)
 ![Deploy](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/deploy.yml/badge.svg)
 
