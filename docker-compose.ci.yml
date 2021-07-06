@@ -25,6 +25,7 @@ services:
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GITHUB_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
+      ANDREW: ${ANDREW}
     networks:
       - test
 
