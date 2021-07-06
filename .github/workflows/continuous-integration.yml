@@ -6,6 +6,10 @@ on:
     branches:
       - main
       - develop
+env:
+  CC_TEST_REPORTER_ID: ${{ secrets.GHCR_USERNAME }}
+  GIT_BRANCH: ${GITHUB_SHA}
+  GIT_COMMIT_SHA: ${GITHUB_REF}
 
 jobs:
   test:
