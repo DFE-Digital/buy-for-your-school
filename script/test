@@ -23,13 +23,13 @@ else
   echo "==> Linting Ruby..."
   bundle exec rake rubocop
 
-  echo "==> CC Test Reporter Before Build... BRANCH $GITHUB_REF COMMIT $GITHUB_SHA"
+  echo "==> CC Test Reporter Before Build... APP_URL $APPLICATION_URL CC_TEST_ID $CC_TEST_REPORTER_ID"
   cc-test-reporter before-build
 
   echo "==> Running the tests..."
   bundle exec rspec
 
-  echo "==> CC Test Reporter After Build... BRANCH $GITHUB_REF COMMIT $GITHUB_SHA"
+  echo "==> CC Test Reporter After Build... APP_URL '$APPLICATION_URL' CC_TEST_ID '$CC_TEST_REPORTER_ID'"
   GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA cc-test-reporter after-build --debug -t simplecov
 
   echo "==> Running Brakeman"
