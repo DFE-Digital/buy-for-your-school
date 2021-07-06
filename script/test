@@ -20,17 +20,21 @@ if [ -n "$TEST_FILE" ]; then
   echo "==> Running the tests matching '$TEST_FILE'..."
   bundle exec rspec --pattern "$TEST_FILE"
 else
+
+  DATE=$(date)
+  echo "==> Current date is '$DATE'"
+
   echo "==> Linting Ruby..."
   bundle exec rake rubocop
 
-  echo "==> CC Test Reporter Before Build... Date=$GIT_COMMITTED_AT"
-  cc-test-reporter before-build
+  echo "==> CC Test Reporter Before Build..."
+  GIT_COMMITTED_AT=$DATE cc-test-reporter before-build
 
   echo "==> Running the tests..."
   bundle exec rspec
 
-  echo "==> CC Test Reporter After Build... $Date=GIT_COMMITTED_AT"
-  cc-test-reporter after-build --debug -t simplecov
+  echo "==> CC Test Reporter After Build... "
+  GIT_COMMITTED_AT=$DATE cc-test-reporter after-build --debug -t simplecov
 
   echo "==> Running Brakeman"
   bundle exec brakeman -o /dev/stdout
