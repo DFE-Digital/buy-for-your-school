@@ -30,7 +30,7 @@ else
   bundle exec rspec
 
   echo "==> CC Test Reporter After Build..."
-  cc-test-reporter after-build -t simplecov
+  cc-test-reporter after-build --debug -t simplecov
 
   echo "==> Running Brakeman"
   bundle exec brakeman -o /dev/stdout

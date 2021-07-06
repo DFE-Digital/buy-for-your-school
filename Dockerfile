@@ -73,7 +73,6 @@ COPY config ${APP_HOME}/config
 COPY db ${APP_HOME}/db
 COPY script ${APP_HOME}/script
 COPY app ${APP_HOME}/app
-COPY .git ${APP_HOME}/.git
 # End
 
 # Create tmp/pids
