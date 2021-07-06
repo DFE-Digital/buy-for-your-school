@@ -8,9 +8,7 @@ on:
       - develop
 env:
   CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-  GIT_BRANCH: ${{ GITHUB_REF }}
-  GIT_COMMIT_SHA: ${{ GITHUB_SHA }}
-  ANDREW: 'var from ci.yml'
+  GIT_BRANCH: ${{ github.ref }}
 
 jobs:
   test:
