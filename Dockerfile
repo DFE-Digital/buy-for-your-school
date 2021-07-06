@@ -95,8 +95,8 @@ RUN RAILS_ENV=production \
     SUPPORT_EMAIL= \
     REDIS_URL= \
     CC_TEST_REPORTER_ID= \
-    GIT_BRANCH=$GITHUB_HEAD_REF\
-    GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF)\
+    GITHUB_REF= \
+    GITHUB_SHA= \
     bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
