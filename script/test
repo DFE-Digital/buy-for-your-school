@@ -11,7 +11,7 @@ if [ -n "$DEBUG" ]; then
   set -x
 fi
 
-DATE=$(date +'%ct')
+DATE=$(date +'%s')
 echo "==> Current date is '$DATE'"
 
 echo "==> Updating..."
