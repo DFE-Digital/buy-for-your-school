@@ -3,14 +3,10 @@ require "rails_helper"
 RSpec.describe Journey, type: :model do
   it { is_expected.to have_many(:sections) }
 
-  describe "validations" do
-    it { is_expected.to validate_presence_of(:category) }
-    it { is_expected.to validate_presence_of(:liquid_template) }
-  end
-
   it "captures the category" do
-    journey = build(:journey, :catering)
-    expect(journey.category).to eql("catering")
+    category = build(:category, :catering)
+    journey = build(:journey, category: category)
+    expect(journey.category.title).to eql("Catering")
   end
 
   describe "all_steps_completed?" do
@@ -77,23 +73,26 @@ RSpec.describe Journey, type: :model do
 
   describe "freshen!" do
     it "set started to true" do
-      journey = build(:journey, :catering)
+      category = build(:category, :catering)
+      journey = build(:journey, category: category)
       journey.freshen!
       expect(journey.reload.started).to eq(true)
     end
 
-    it "sets the last_worked_on to now" do
+    it "sets the updated_at to now" do
       travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
-      journey = build(:journey, :catering)
+      category = build(:category, :catering)
+      journey = build(:journey, category: category)
 
       journey.freshen!
 
-      expect(journey.last_worked_on).to eq(Time.zone.now)
+      expect(journey.updated_at).to eq(Time.zone.now)
     end
 
     context "when started is already true" do
       it "does not update the record" do
-        journey = build(:journey, :catering, started: true)
+        category = build(:category, :catering)
+        journey = build(:journey, category: category, started: true)
         expect(journey).not_to receive(:update).with(started: true)
         journey.freshen!
       end

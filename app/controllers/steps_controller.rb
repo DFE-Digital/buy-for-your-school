@@ -24,7 +24,7 @@ class StepsController < ApplicationController
       action: "begin_step",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
       # We safe navigate here because in preview we don't have sections or
       # tasks. This saves us from having to implement extra logic.
       contentful_section_id: @step.task&.section&.contentful_id,
@@ -56,7 +56,7 @@ class StepsController < ApplicationController
       action: "view_step",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
       contentful_section_id: @step.task.section.contentful_id,
       contentful_task_id: @step.task.contentful_id,
       contentful_step_id: @step.contentful_id,

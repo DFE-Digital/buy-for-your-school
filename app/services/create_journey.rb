@@ -1,9 +1,9 @@
 # CreateJourney service is responsible for constructing a {Journey} for the given user and category.
 class CreateJourney
-  attr_accessor :category_id, :user
+  attr_accessor :category, :user
 
-  def initialize(category_id:, user:)
-    self.category_id = category_id
+  def initialize(category:, user:)
+    self.category = category
     self.user = user
   end
 
@@ -18,15 +18,11 @@ class CreateJourney
   #
   # @return [Journey]
   def call
-    category = GetCategory.new(category_entry_id: category_id).call
-    contentful_sections = GetSectionsFromCategory.new(category: category).call
+    contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
+    contentful_sections = GetSectionsFromCategory.new(category: contentful_category).call
     journey = Journey.new(
-      category: category.title,
-      contentful_id: category.id,
+      category: category,
       user: user,
-      started: true,
-      last_worked_on: Time.zone.now,
-      liquid_template: category.combined_specification_template,
     )
 
     journey.save!

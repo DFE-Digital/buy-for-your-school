@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_124139) do
+ActiveRecord::Schema.define(version: 2021_07_05_160257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 2021_06_21_124139) do
     t.index ["user_id"], name: "index_activity_log_on_user_id"
   end
 
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.string "description"
+    t.string "contentful_id", null: false
+    t.jsonb "liquid_template", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "journeys_count"
+  end
+
   create_table "checkbox_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.string "response", default: [], array: true
@@ -56,15 +66,13 @@ ActiveRecord::Schema.define(version: 2021_06_21_124139) do
   end
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "category", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.jsonb "liquid_template", null: false
     t.uuid "user_id"
     t.boolean "started", default: true
-    t.datetime "last_worked_on"
-    t.string "contentful_id"
-    t.index ["last_worked_on"], name: "index_journeys_on_last_worked_on"
+    t.uuid "category_id"
+    t.integer "state", default: 0
+    t.index ["category_id"], name: "index_journeys_on_category_id"
     t.index ["started"], name: "index_journeys_on_started"
     t.index ["user_id"], name: "index_journeys_on_user_id"
   end
