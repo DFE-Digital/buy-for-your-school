@@ -117,3 +117,6 @@ terraform.rc
 
 # ERD file
 doc/erd.pdf
+
+# File where software versions are managed by asdf
+.tool-versions

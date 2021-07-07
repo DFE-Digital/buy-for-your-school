@@ -31,8 +31,9 @@ class JourneysController < ApplicationController
   #
   # @see CreateJourney
   def new
+    category = get_category
     journey = CreateJourney.new(
-      category_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"],
+      category: category,
       user: current_user,
     ).call
 
@@ -40,7 +41,7 @@ class JourneysController < ApplicationController
       action: "begin_journey",
       journey_id: journey.id,
       user_id: current_user.id,
-      contentful_category_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"],
+      contentful_category_id: category.contentful_id,
     ).call
     redirect_to journey_path(journey)
   end
@@ -58,7 +59,17 @@ class JourneysController < ApplicationController
       action: "view_journey",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
     ).call
+  end
+
+private
+
+  def get_category(category_id = ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"])
+    Category.find_or_create_by!(contentful_id: category_id) do |category|
+      contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
+      category.title = contentful_category.title
+      category.liquid_template = contentful_category.combined_specification_template
+    end
   end
 end

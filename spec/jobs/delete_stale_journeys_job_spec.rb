@@ -18,10 +18,10 @@ RSpec.describe DeleteStaleJourneysJob, type: :job do
       more_than_one_month_ago = (1.month + 1.day).ago
       less_than_one_month_ago = (1.month - 1.day).ago
 
-      legacy_journey = create(:journey, started: true, last_worked_on: nil)
-      unstarted_journey = create(:journey, started: false, last_worked_on: more_than_one_month_ago)
-      becoming_stale_journey = create(:journey, started: false, last_worked_on: less_than_one_month_ago)
-      active_journey = create(:journey, started: true, last_worked_on: more_than_one_month_ago)
+      legacy_journey = create(:journey, started: true)
+      unstarted_journey = create(:journey, started: false, updated_at: more_than_one_month_ago)
+      becoming_stale_journey = create(:journey, started: false, updated_at: less_than_one_month_ago)
+      active_journey = create(:journey, started: true, updated_at: more_than_one_month_ago)
 
       described_class.perform_later
       perform_enqueued_jobs
