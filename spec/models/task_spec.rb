@@ -79,8 +79,8 @@ RSpec.describe Task, type: :model do
     end
 
     it "counts how many statements are acknowledged" do
-      create(:step, :static_content, hidden: true, task: task)
-      step = create(:step, :static_content, hidden: false, task: task)
+      create(:step, :statement, hidden: true, task: task)
+      step = create(:step, :statement, hidden: false, task: task)
 
       expect(task.step_tally["acknowledged"]).to eq 0
       expect(task.step_tally["completed"]).to eq 0
@@ -134,7 +134,7 @@ RSpec.describe Task, type: :model do
     let(:task) { create(:task) }
 
     it "returns true when all steps have been acknowledged" do
-      statement = create(:step, :static_content, task: task)
+      statement = create(:step, :statement, task: task)
 
       expect(task.all_statements_acknowledged?).to be(false)
 
@@ -185,7 +185,7 @@ RSpec.describe Task, type: :model do
 
     it "returns true if all questions have been answered and statements acknowledged" do
       question = create(:step, :radio, task: task)
-      statement = create(:step, :static_content, task: task)
+      statement = create(:step, :statement, task: task)
 
       expect(task.all_steps_completed?).to be false
 

@@ -16,7 +16,7 @@ class Step < ApplicationRecord
   has_one :currency_answer
 
   scope :that_are_questions, -> { where(contentful_model: "question") }
-  scope :that_are_statements, -> { where(contentful_model: "staticContent") }
+  scope :that_are_statements, -> { where(contentful_model: "statement") }
 
   scope :visible, -> { where(hidden: false) }
   scope :hidden, -> { where(hidden: true) }

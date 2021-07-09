@@ -1,37 +1,49 @@
-# CreateStep service is responsible for constructing a {Step} for the given task.
+# Convert a {Contentful::Entry} into a {Step}
+#
 class CreateStep
   class UnexpectedContentfulModel < StandardError; end
 
   class UnexpectedContentfulStepType < StandardError; end
 
+  # Steps are either Questions or Statements
+  #
   ALLOWED_CONTENTFUL_MODELS = %w[
     question
-    staticContent
+    statement
   ].freeze
 
-  ALLOWED_CONTENTFUL_ENTRY_TYPES = %w[
-    radios
-    short_text
+  # Contentful Question Model defined types
+  #
+  ALLOWED_CONTENTFUL_QUESTION_TYPES = %w[
     long_text
-    paragraphs
-    single_date
+    short_text
     checkboxes
-    number
+    radios
     currency
+    number
+    single_date
   ].freeze
+
+  # Contentful Statement Model defined types
+  #
+  ALLOWED_CONTENTFUL_STATEMENT_TYPES = %w[
+    markdown
+  ].freeze
+
+  ALLOWED_STEP_TYPES = ALLOWED_CONTENTFUL_QUESTION_TYPES + ALLOWED_CONTENTFUL_STATEMENT_TYPES
 
   attr_accessor :task, :contentful_entry, :order
 
+  # @param task [Task] persisted task
+  # @param contentful_entry [Contentful::Entry] Contentful Client object
+  # @param order [Integer] position within the task
+  #
   def initialize(task:, contentful_entry:, order:)
     self.task = task
     self.contentful_entry = contentful_entry
     self.order = order
   end
 
-  # Creates and persists a new Step.
-  #
-  # This relies on the passed-in `contentful_entry` to construct the object.
-  #
   # @return [Step]
   def call
     if unexpected_contentful_model?
@@ -39,7 +51,7 @@ class CreateStep
       raise UnexpectedContentfulModel
     end
 
-    if unexpected_contentful_step_type?
+    if unexpected_step_type?
       send_rollbar_warning
       raise UnexpectedContentfulStepType
     end
@@ -54,7 +66,7 @@ class CreateStep
       options: options,
       primary_call_to_action_text: primary_call_to_action_text,
       skip_call_to_action_text: skip_call_to_action_text,
-      hidden: hidden,
+      hidden: hidden?,
       additional_step_rules: additional_step_rules,
       raw: raw,
       task: task,
@@ -64,57 +76,69 @@ class CreateStep
 
 private
 
+  # @return [String]
   def content_entry_id
     contentful_entry.id
   end
 
+  # @return [String] question, statement
   def content_model
     contentful_entry.content_type.id
   end
 
+  # @return [Boolean]
   def expected_contentful_model?
     ALLOWED_CONTENTFUL_MODELS.include?(content_model)
   end
 
+  # @return [Boolean]
   def unexpected_contentful_model?
     !expected_contentful_model?
   end
 
-  def expected_contentful_step_type?
-    ALLOWED_CONTENTFUL_ENTRY_TYPES.include?(step_type)
+  # @return [Boolean]
+  def expected_step_type?
+    ALLOWED_STEP_TYPES.include?(step_type)
   end
 
-  def unexpected_contentful_step_type?
-    !expected_contentful_step_type?
+  # @return [Boolean]
+  def unexpected_step_type?
+    !expected_step_type?
   end
 
+  # @return [String]
   def title
     contentful_entry.title
   end
 
+  # @return [Nil, String]
   def help_text
     return nil unless contentful_entry.respond_to?(:help_text)
 
     contentful_entry.help_text
   end
 
+  # @return [Nil, String]
   def body
     return nil unless contentful_entry.respond_to?(:body)
 
     contentful_entry.body
   end
 
+  # @return [Nil, String]
   def options
     return nil unless contentful_entry.respond_to?(:extended_options)
 
     contentful_entry.extended_options
   end
 
+  # @return [String]
   def step_type
     contentful_entry.type.tr(" ", "_")
   end
 
   # @see https://design-system.service.gov.uk/components/button/
+  # @return [Nil, String]
   def primary_call_to_action_text
     return nil unless contentful_entry.respond_to?(:primary_call_to_action)
 
@@ -122,25 +146,29 @@ private
   end
 
   # @see https://design-system.service.gov.uk/components/button/
+  # @return [Nil, String]
   def skip_call_to_action_text
     return nil unless contentful_entry.respond_to?(:skip_call_to_action)
 
     contentful_entry.skip_call_to_action
   end
 
-  def hidden
+  # @return [Boolean]
+  def hidden?
     return false unless contentful_entry.respond_to?(:always_show_the_user)
     return false if contentful_entry.always_show_the_user.nil?
 
     !contentful_entry.always_show_the_user
   end
 
+  # @return [Nil, Array<Hash>]
   def additional_step_rules
     return nil unless contentful_entry.respond_to?(:show_additional_question)
 
     contentful_entry.show_additional_question
   end
 
+  # @return [String]
   def raw
     contentful_entry.raw
   end
@@ -155,7 +183,7 @@ private
       content_model: content_model,
       step_type: step_type,
       allowed_content_models: ALLOWED_CONTENTFUL_MODELS.join(", "),
-      allowed_step_types: ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "),
+      allowed_step_types: ALLOWED_STEP_TYPES.join(", "),
     )
   end
 end

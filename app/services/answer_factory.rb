@@ -9,10 +9,10 @@ class AnswerFactory
     self.step = step
   end
 
-  # Returns the right answer type based on the provided {Step} `contentful_type`.
-  #
   # @return [Mixed]
   def call
+    return if statement?
+
     case step.contentful_type
     when "radios" then RadioAnswer.new
     when "number" then NumberAnswer.new
@@ -23,5 +23,12 @@ class AnswerFactory
     when "checkboxes" then CheckboxAnswers.new
     else raise UnexpectedQuestionType, "Trying to create answer for unknown question type #{step.contentful_type}"
     end
+  end
+
+private
+
+  # @return [Boolean]
+  def statement?
+    step.contentful_model == "statement"
   end
 end

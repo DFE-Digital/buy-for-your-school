@@ -61,7 +61,15 @@ class AnswersController < ApplicationController
     @step = Step.find(step_id)
     @step_presenter = StepPresenter.new(@step)
 
-    result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
+    result =
+      if @step_presenter.question?
+        # Save the question answer
+        SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
+      elsif @step_presenter.statement?
+        # Acknowledge the statement
+        @step.task.statement_ids << @step.id unless @step.task.statement_ids.include?(@step.id)
+        Result.new(@step.task.save!)
+      end
 
     @answer = result.object
 

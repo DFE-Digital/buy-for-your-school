@@ -6,13 +6,21 @@ class StepPresenter < SimpleDelegator
 
   # @return [Boolean]
   def statement?
-    contentful_model == "staticContent"
+    contentful_model == "statement"
   end
 
+  # @return [String]
+  def body_html
+    return unless contentful_type == "markdown"
+
+    render_markdown(body)
+  end
+
+  # @return [String]
   def help_text_html
     return if help_text.blank?
 
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(help_text).html_safe
+    render_markdown(help_text)
   end
 
   # @return [String]
@@ -32,5 +40,14 @@ class StepPresenter < SimpleDelegator
       when "number" then NumberAnswerPresenter.new(answer).response
       when "currency" then CurrencyAnswerPresenter.new(answer).response
       end
+  end
+
+private
+
+  # @param text [String]
+  #
+  # @return [String]
+  def render_markdown(text)
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(text).html_safe
   end
 end

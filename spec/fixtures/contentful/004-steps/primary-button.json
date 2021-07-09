@@ -23,7 +23,7 @@
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "staticContent"
+                "id": "statement"
             }
         },
         "locale": "en-US"
@@ -32,7 +32,7 @@
         "slug": "/004/steps/primary-button.json",
         "title": "primary-button.json title",
         "body": "primary-button.json body",
-        "type": "paragraphs",
+        "type": "markdown",
         "primaryCallToAction": "Go onwards!"
     }
 }

@@ -251,7 +251,7 @@ RSpec.describe CreateStep do
                 content_model: "telepathy",
                 step_type: "radios",
                 allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-                allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+                allowed_step_types: CreateStep::ALLOWED_STEP_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
@@ -292,7 +292,7 @@ RSpec.describe CreateStep do
                 content_model: "question",
                 step_type: "telepathy",
                 allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-                allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+                allowed_step_types: CreateStep::ALLOWED_STEP_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)

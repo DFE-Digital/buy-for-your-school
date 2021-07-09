@@ -1,38 +1,38 @@
 require "rails_helper"
 
 RSpec.describe StepPresenter do
-  describe "#statement?" do
-    context "when the contentful model is 'staticContent'" do
+  context "when the contentful model is 'statement'" do
+    describe "#statement?" do
       it "returns true" do
-        step = build(:step, :static_content)
+        step = build(:step, :statement)
         presenter = described_class.new(step)
         expect(presenter.statement?).to be true
       end
     end
 
-    context "when the contentful model is NOT 'staticContent'" do
+    describe "#question?" do
+      it "returns false" do
+        step = build(:step, :statement)
+        presenter = described_class.new(step)
+        expect(presenter.question?).to be false
+      end
+    end
+  end
+
+  context "when the contentful model is 'question'" do
+    describe "#statement?" do
       it "returns false" do
         step = build(:step, :radio)
         presenter = described_class.new(step)
         expect(presenter.statement?).to be false
       end
     end
-  end
 
-  describe "#question?" do
-    context "when the contentful model is 'question'" do
+    describe "#question?" do
       it "returns true" do
         step = build(:step, :radio)
         presenter = described_class.new(step)
         expect(presenter.question?).to be true
-      end
-    end
-
-    context "when the contentful model is NOT 'question'" do
-      it "returns false" do
-        step = build(:step, :static_content)
-        presenter = described_class.new(step)
-        expect(presenter.question?).to be false
       end
     end
   end

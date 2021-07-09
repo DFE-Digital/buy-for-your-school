@@ -23,7 +23,7 @@
             "sys": {
                 "type": "Link",
                 "linkType": "ContentType",
-                "id": "staticContent"
+                "id": "statement"
             }
         },
         "locale": "en-US"
@@ -32,6 +32,6 @@
         "slug": "/004/steps/no-primary-button.json",
         "title": "no-primary-button.json title",
         "body": "no-primary-button.json body",
-        "type": "paragraphs"
+        "type": "markdown"
     }
 }

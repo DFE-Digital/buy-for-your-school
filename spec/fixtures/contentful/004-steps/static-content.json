@@ -23,7 +23,7 @@
       "sys": {
         "type": "Link",
         "linkType": "ContentType",
-        "id": "staticContent"
+        "id": "statement"
       }
     },
     "locale": "en-US"
@@ -32,6 +32,6 @@
     "slug": "/004/steps/static-content.json",
     "title": "static-content.json title",
     "body": "static-content.json body",
-    "type": "paragraphs"
+    "type": "markdown"
   }
 }

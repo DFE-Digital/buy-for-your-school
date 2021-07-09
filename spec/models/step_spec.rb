@@ -28,10 +28,20 @@ RSpec.describe Step, type: :model do
   describe "#that_are_questions" do
     it "only returns steps that have the question contentful_model" do
       question_step = create(:step, :radio)
-      static_content_step = create(:step, :static_content)
+      statement_step = create(:step, :statement)
 
       expect(described_class.that_are_questions).to include(question_step)
-      expect(described_class.that_are_questions).not_to include(static_content_step)
+      expect(described_class.that_are_questions).not_to include(statement_step)
+    end
+  end
+
+  describe "#that_are_statements" do
+    it "only returns steps that have the statement contentful_model" do
+      statement_step = create(:step, :statement)
+      question_step = create(:step, :radio)
+
+      expect(described_class.that_are_statements).to include(statement_step)
+      expect(described_class.that_are_statements).not_to include(question_step)
     end
   end
 
