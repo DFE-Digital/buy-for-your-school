@@ -45,6 +45,7 @@ group :test do
   gem "capybara", ">= 2.15"
   gem "mock_redis"
   gem "selenium-webdriver"
+  gem 'webdrivers', '~> 4.0', require: false
   gem "shoulda-matchers"
   gem "simplecov"
   gem "webmock"
