@@ -7,7 +7,7 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "static-content",
+    "id": "statement-step",
     "type": "Entry",
     "createdAt": "2020-12-02T10:48:35.748Z",
     "updatedAt": "2020-12-02T10:48:35.748Z",
@@ -29,9 +29,10 @@
     "locale": "en-US"
   },
   "fields": {
-    "slug": "/004/steps/static-content.json",
-    "title": "static-content.json title",
-    "body": "static-content.json body",
-    "type": "markdown"
+    "slug": "/004/steps/statement-step.json",
+    "title": "statement-step.json title",
+    "body": "#### Heading 4",
+    "type": "markdown",
+    "primaryCallToAction": "Acknowledge!"
   }
 }

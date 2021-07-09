@@ -85,13 +85,6 @@ class Task < ApplicationRecord
     save!
   end
 
-  # Returns all visible steps that have been answered.
-  #
-  # @return [Step::ActiveRecord_AssociationRelation]
-  def visible_steps_with_answers
-    eager_loaded_visible_steps.select(&:answered?)
-  end
-
   # @return [String, Nil] `nil` if all steps are complete.
   def next_incomplete_step_id
     return nil if all_steps_completed?

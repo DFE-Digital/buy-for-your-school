@@ -29,8 +29,8 @@ feature "Anyone can start a journey" do
     expect(page).to have_content("can't be blank")
   end
 
-  context "when the Contentful model is of type question" do
-    context "when Contentful entry is of type short_text" do
+  context "when the Contentful model is a 'question'" do
+    context "when Contentful entry is of type 'short_text'" do
       scenario "user can answer using free text" do
         start_journey_from_category_and_go_to_first_section(category: "short-text-question.json")
 
@@ -43,7 +43,7 @@ feature "Anyone can start a journey" do
       end
     end
 
-    context "when Contentful entry is of type numbers" do
+    context "when Contentful entry is of type 'numbers'" do
       scenario "user can answer using a number input" do
         start_journey_from_category_and_go_to_first_section(category: "number-question.json")
 
@@ -74,7 +74,7 @@ feature "Anyone can start a journey" do
       end
     end
 
-    context "when Contentful entry is of type currency" do
+    context "when Contentful entry is of type 'currency'" do
       scenario "user can answer using a currency number input" do
         start_journey_from_category_and_go_to_first_section(category: "currency-question.json")
 
@@ -96,7 +96,7 @@ feature "Anyone can start a journey" do
       end
     end
 
-    context "when Contentful entry is of type long_text" do
+    context "when Contentful entry is of type 'long_text'" do
       scenario "user can answer using free text with multiple lines" do
         start_journey_from_category_and_go_to_first_section(category: "long-text-question.json")
 
@@ -109,7 +109,7 @@ feature "Anyone can start a journey" do
       end
     end
 
-    context "when Contentful entry is of type single_date" do
+    context "when Contentful entry is of type 'single_date'" do
       scenario "user can answer using a date input" do
         start_journey_from_category_and_go_to_first_section(category: "single-date-question.json")
 
@@ -138,7 +138,7 @@ feature "Anyone can start a journey" do
       end
     end
 
-    context "when Contentful entry is of type checkboxes" do
+    context "when Contentful entry is of type 'checkboxes'" do
       scenario "user can select multiple answers" do
         start_journey_from_category_and_go_to_first_section(category: "checkboxes-question.json")
 
@@ -224,7 +224,7 @@ feature "Anyone can start a journey" do
       end
     end
 
-    context "when Contentful entry is of type radios" do
+    context "when Contentful entry is of type 'radios'" do
       context "when extra configuration is passed to collect further info" do
         scenario "asks the user for further information" do
           start_journey_from_category_and_go_to_first_section(category: "extended-radio-question.json")
@@ -359,16 +359,30 @@ feature "Anyone can start a journey" do
     end
   end
 
-  # "Task list Pattern" and "Interrupt Pattern"
-  #
-  #   Used for compulsory additions to the user's document
-  #   requiring no response only acknowledgement.
-  context "when the Contentful model is of type staticContent" do
-    context "when Contentful entry is of type paragraphs" do
-      scenario "the content is not displayed in the task list" do
-        start_journey_from_category(category: "static-content.json")
+  context "when the Contentful model is a 'statement'" do
+    context "when Contentful entry is of type 'markdown'" do
+      scenario "the statement is not displayed in the task list" do
+        start_journey_from_category(category: "statement.json")
 
-        expect(page).not_to have_content("static-content.json title")
+        expect(page).not_to have_content("statement-step.json title")
+      end
+
+      scenario "the statement can be acknowledged" do
+        start_journey_from_category(category: "statement.json")
+
+        journey = Journey.last
+        task = Task.find_by(title: "Task with a single statement step")
+        step = task.steps.first
+
+        visit journey_step_path(journey, step)
+
+        expect(page).to have_content("statement-step.json title")
+        expect(page.html).to include("<h4>Heading 4</h4>")
+        expect(page).to have_button("Acknowledge!")
+
+        click_on("Acknowledge!")
+
+        expect(Task.find(task.id).statement_ids).to include(step.id)
       end
     end
   end

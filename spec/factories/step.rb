@@ -19,6 +19,7 @@ FactoryBot.define do
       options { nil }
       contentful_model { "statement" }
       contentful_type { "markdown" }
+      body { "## Heading 2" }
     end
 
     #

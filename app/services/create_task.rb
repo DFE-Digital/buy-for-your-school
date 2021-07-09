@@ -31,6 +31,7 @@ class CreateTask
     begin
       task.save!
       task
+    # TODO: why might the record be invalid? we are missing coverage here
     rescue ActiveRecord::RecordInvalid
       raise UnexpectedContentfulModel
     end

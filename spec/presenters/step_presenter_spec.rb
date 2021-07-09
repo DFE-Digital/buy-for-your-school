@@ -64,4 +64,12 @@ RSpec.describe StepPresenter do
       expect(presenter.help_text_html).to include("<p>Choose the primary colour closest to your choice</p>\n")
     end
   end
+
+  describe "#body_html" do
+    it "returns the body converted from markdown" do
+      step = create(:step, :statement)
+      presenter = described_class.new(step)
+      expect(presenter.body_html).to include("<h2>Heading 2</h2>\n")
+    end
+  end
 end

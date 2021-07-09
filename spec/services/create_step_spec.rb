@@ -98,7 +98,7 @@ RSpec.describe CreateStep do
       end
     end
 
-    context "when the new entry has a body field" do
+    context "when the new entry has a 'body' field" do
       it "updates the step with the body" do
         category = create(:category, :catering)
         journey = create(:journey, category: category)
@@ -106,14 +106,14 @@ RSpec.describe CreateStep do
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/static-content.json",
+          contentful_fixture_filename: "steps/statement-step.json",
         )
 
         step, _answer = described_class.new(
           task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
-        expect(step.body).to eq("static-content.json body")
+        expect(step.body).to eq("#### Heading 4")
       end
     end
 
