@@ -23,7 +23,7 @@ RSpec.describe Journey, type: :model do
       create(:radio_answer, step: step2)
 
       task3 = create(:task, section: section)
-      step3 = create(:step, :radio, task: task3)
+      create(:step, :radio, task: task3)
 
       expect(journey.next_unanswered_task).to eq(task3)
     end

@@ -217,6 +217,8 @@ feature "Users can view the task list" do
       check "Breakfast"
       click_on "Continue"
 
+
+
       click_on "Continue to the next task" # > every-question-type-task.json 1st question
 
       expect(page).to have_content "Briefly describe what you are looking to procure"

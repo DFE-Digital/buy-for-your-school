@@ -14,6 +14,7 @@ module SignInHelpers
 
   def user_starts_the_journey
     visit root_path
+    save_and_open_screenshot
     click_button I18n.t("generic.button.start")
     click_on I18n.t("dashboard.create.button")
   end
