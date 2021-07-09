@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :category do
-    title { "Catering" }
+    title { "Catering" } # TODO: make title generic
+    description { "Catering description" }
     contentful_id { "12345678" }
     liquid_template { "Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}" }
 

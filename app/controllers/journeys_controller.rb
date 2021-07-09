@@ -70,6 +70,7 @@ private
     Category.find_or_create_by!(contentful_id: category_id) do |category|
       contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
       category.title = contentful_category.title
+      category.description = contentful_category.description
       category.liquid_template = contentful_category.combined_specification_template
     end
   end
