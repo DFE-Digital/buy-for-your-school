@@ -51,28 +51,33 @@ RSpec.describe CreateJourney do
       expect(Journey.last.updated_at).to eq(Time.zone.now)
     end
 
-    xit "stores a copy of the Liquid template" do
-      stub_contentful_category(
-        fixture_filename: "category-with-liquid-template.json",
-      )
-
-      described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call
-
-      expect(Journey.last.liquid_template)
-        .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
-    end
-
-    context "when the journey cannot be saved" do
-      xit "raises an error" do
+    # TODO: move liquid template specs to the Category
+    describe "WIP multiple categories" do
+      it "stores a copy of the Liquid template" do
         stub_contentful_category(
-          fixture_filename: "category-with-no-title.json",
-          stub_sections: true,
+          fixture_filename: "category-with-liquid-template.json",
         )
 
-        # Force a validation error by not providing an invalid category ID
-        expect { described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call }
-          .to raise_error(ActiveRecord::RecordInvalid)
+        described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call
+
+        # From fixtures
+        # .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
+        expect(Journey.last.category.liquid_template)
+          .to eql("Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}") # from factory
       end
+
+      # TODO: test when a journey cannot be saved
+      # context "when the journey cannot be saved" do
+      #   it "raises an error" do
+      #     stub_contentful_category(
+      #       fixture_filename: "category-with-no-title.json",
+      #       stub_sections: true,
+      #     )
+      #     # Force a validation error by not providing an invalid category ID
+      #     expect { described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call }
+      #       .to raise_error(ActiveRecord::RecordInvalid)
+      #   end
+      # end
     end
   end
 end

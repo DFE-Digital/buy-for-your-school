@@ -9,7 +9,7 @@ RSpec.describe Journey, type: :model do
     expect(journey.category.title).to eql("Catering")
   end
 
-  describe "all_tasks_completed?" do
+  describe "#all_tasks_completed?" do
     context "when all steps have been completed" do
       it "returns true" do
         journey = create(:journey)
@@ -71,11 +71,11 @@ RSpec.describe Journey, type: :model do
     end
   end
 
-  describe "freshen!" do
+  describe "#start!" do
     it "set started to true" do
       category = build(:category, :catering)
       journey = build(:journey, category: category)
-      journey.freshen!
+      journey.start!
       expect(journey.reload.started).to eq(true)
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Journey, type: :model do
       category = build(:category, :catering)
       journey = build(:journey, category: category)
 
-      journey.freshen!
+      journey.start!
 
       expect(journey.updated_at).to eq(Time.zone.now)
     end
@@ -94,7 +94,7 @@ RSpec.describe Journey, type: :model do
         category = build(:category, :catering)
         journey = build(:journey, category: category, started: true)
         expect(journey).not_to receive(:update).with(started: true)
-        journey.freshen!
+        journey.start!
       end
     end
   end

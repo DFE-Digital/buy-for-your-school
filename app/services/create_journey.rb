@@ -1,54 +1,59 @@
-# CreateJourney service is responsible for constructing a {Journey} for the given user and category.
+# Create {Journey} using entries returned by {ContentfulConnector}
+#
+# @see JourneysController#create
+# @see CreateSection#call
+# @see CreateTask#call
+# @see CreateStep#call
+#
 class CreateJourney
   attr_accessor :category, :user
 
-  def initialize(category:, user:)
-    self.category = category
+  # @param user [User] current user
+  # @param category [Category] chosen category
+  #
+  def initialize(user:, category:)
     self.user = user
+    self.category = category
   end
 
-  # Creates and persists a new Journey for the given category.
-  #
-  # This relies on additional services to construct the sections, tasks, and steps
-  # within this journey.
-  #
-  # @see CreateSection
-  # @see CreateTask
-  # @see CreateStep
-  #
   # @return [Journey]
   def call
-    contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
-    contentful_sections = GetSectionsFromCategory.new(category: contentful_category).call
-    journey = Journey.new(
-      category: category,
-      user: user,
-    )
-
+    journey = Journey.new(category: category, user: user)
     journey.save!
 
+    # Contentful::Entry[category]
+    contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
+    # Contentful::Entry[section]
+    contentful_sections = GetSectionsFromCategory.new(category: contentful_category).call
+
     contentful_sections.each_with_index do |contentful_section, section_index|
+      # Section
       section = CreateSection.new(
         journey: journey,
         contentful_section: contentful_section,
         order: section_index,
       ).call
 
+      # Contentful::Entry[task]
       contentful_tasks = GetTasksFromSection.new(section: contentful_section).call
+
       contentful_tasks.each_with_index do |contentful_task, task_index|
+        # Task
         task = CreateTask.new(
           section: section,
           contentful_task: contentful_task,
           order: task_index,
         ).call
 
-        question_entries = GetStepsFromTask.new(task: contentful_task).call
+        # Contentful::Entry[step]
+        contentful_steps = GetStepsFromTask.new(task: contentful_task).call
 
-        question_entries.each_with_index do |entry, question_index|
+        contentful_steps.each_with_index do |entry, step_index|
+          # Step
           CreateStep.new(
             contentful_entry: entry,
             task: task,
-            order: question_index,
+            order: step_index,
           ).call
         end
       end

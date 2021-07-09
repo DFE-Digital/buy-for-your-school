@@ -33,10 +33,9 @@ class Journey < ApplicationRecord
 
   # Mark as started once a step has been completed.
   # @see SaveAnswer
-  # This ensures started journeys are not removed during automated clean up.
   #
   # @return [Boolean]
-  def freshen!
+  def start!
     attributes = {}
     attributes[:started] = true unless started == true
 

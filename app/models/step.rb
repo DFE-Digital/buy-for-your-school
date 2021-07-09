@@ -52,9 +52,7 @@ class Step < ApplicationRecord
   #
   # @return [String]
   def primary_call_to_action_text
-    return I18n.t("generic.button.next") if super.blank?
-
-    super
+    super || I18n.t("generic.button.next")
   end
 
   # @return [Boolean]
@@ -62,8 +60,6 @@ class Step < ApplicationRecord
     skip_call_to_action_text.present?
   end
 
-  # This method fetches the {Journey} associated to this step's {Task}'s {Section}.
-  #
   # @return [Journey]
   def journey
     task.section.journey
