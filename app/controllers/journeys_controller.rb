@@ -31,7 +31,7 @@ class JourneysController < ApplicationController
   #
   # @see CreateJourney
   def new
-    category = get_category
+    category = get_category(params[:category_id])
     journey = CreateJourney.new(
       category: category,
       user: current_user,
@@ -66,12 +66,7 @@ class JourneysController < ApplicationController
 
 private
 
-  def get_category(category_id = ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"])
-    Category.find_or_create_by!(contentful_id: category_id) do |category|
-      contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
-      category.title = contentful_category.title
-      category.description = contentful_category.description
-      category.liquid_template = contentful_category.combined_specification_template
-    end
+  def get_category(category_id)
+    Category.find(category_id)
   end
 end

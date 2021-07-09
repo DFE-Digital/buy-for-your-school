@@ -34,4 +34,9 @@ class JourneyMapsController < ApplicationController
   def index
     @categories = ContentfulConnector.new.get_entries_by_type("category")
   end
+
+  def index
+    @categories = Category.all.order(:title)
+    @category_input = CategoryInput.new
+  end
 end
