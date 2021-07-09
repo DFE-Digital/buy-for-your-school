@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-# A Task belongs to a {Section} and consists of many {Step}s.
+# A Task belongs to a {Section} and has of many {Step}s.
 class Task < ApplicationRecord
-  self.implicit_order_column = "created_at"
+  self.implicit_order_column = "order"
+
+  default_scope { order(:order) }
 
   belongs_to :section
 
