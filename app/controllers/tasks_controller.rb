@@ -47,6 +47,7 @@ private
 
   # Log 'begin_task'
   #
+  # This is recorded as the beginning of a task.
   def redirect_to_first_step_if_task_has_no_answers
     return unless task.tally_for(:completed).zero?
     return if params.fetch(:back_link, nil).present?
