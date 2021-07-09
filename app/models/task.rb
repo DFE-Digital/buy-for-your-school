@@ -2,7 +2,9 @@
 
 # A Task belongs to a {Section} and consists of many {Step}s.
 class Task < ApplicationRecord
-  self.implicit_order_column = "created_at"
+  self.implicit_order_column = "order"
+
+  default_scope { order(:order) }
 
   belongs_to :section
   has_many :steps, dependent: :destroy

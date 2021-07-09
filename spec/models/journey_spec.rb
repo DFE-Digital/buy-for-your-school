@@ -9,6 +9,26 @@ RSpec.describe Journey, type: :model do
     expect(journey.category.title).to eql("Catering")
   end
 
+  describe "next_unanswered_task" do
+    it "presents last unanswered task" do
+      journey = create(:journey)
+      section = create(:section, journey: journey)
+
+      task1 = create(:task, section: section)
+      step1 = create(:step, :radio, task: task1)
+      create(:radio_answer, step: step1)
+
+      task2 = create(:task, section: section)
+      step2 = create(:step, :radio, task: task2)
+      create(:radio_answer, step: step2)
+
+      task3 = create(:task, section: section)
+      step3 = create(:step, :radio, task: task3)
+
+      expect(journey.next_unanswered_task).to eq(task3)
+    end
+  end
+
   describe "all_steps_completed?" do
     context "when all steps have been completed" do
       it "returns true" do

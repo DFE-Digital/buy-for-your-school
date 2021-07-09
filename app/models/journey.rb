@@ -26,6 +26,10 @@ class Journey < ApplicationRecord
     visible_steps.all? { |step| step.answer.present? }
   end
 
+  def next_unanswered_task
+    tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
+  end
+
   # Updates the state to indicate that a journey has been started.
   #
   # This ensures started journeys are not removed during automated clean up.
