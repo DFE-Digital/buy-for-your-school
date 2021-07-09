@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# A Journey belongs to a {User} and consists of {Section}s.
+# The top-level entity tracking user progress
+# @see DashboardController#show
+#
 class Journey < ApplicationRecord
   self.implicit_order_column = "created_at"
 
@@ -11,22 +13,26 @@ class Journey < ApplicationRecord
   has_many :tasks, through: :sections, class_name: "Task"
   has_many :steps, through: :tasks, class_name: "Step"
 
-  # initial - the initial state all Journeys are in
-  # stale - automatic flag for Journeys that have not been touched for a while and could be purged
-  # archive - user-defined flag so it may be hidden from their dashboard
-  # remove - user-defined flag so it can be safely deleted (soft delete)
+  # Automatic and User-defined flags
+  # @see DeleteStaleJourneys
+  #
+  # initial (default)       - no actionable state
+  # stale (automatic)       - unedited for a time
+  # archive (user-defined)  - hide in dashboard
+  # remove (user-defined)   - delete (permanent/soft)
   enum state: { initial: 0, stale: 1, archive: 2, remove: 3 }
 
   # Determine whether spec is a draft
   #
   # @see SpecificationsController#show
   #
+  # @return [Boolean]
   def all_tasks_completed?
     tasks.all?(&:all_steps_completed?)
   end
 
-  # Updates the state to indicate that a journey has been started.
-  #
+  # Mark as started once a step has been completed.
+  # @see SaveAnswer
   # This ensures started journeys are not removed during automated clean up.
   #
   # @return [Boolean]

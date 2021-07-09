@@ -6,10 +6,12 @@ class JourneysController < ApplicationController
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
       render "errors/specification_template_invalid",
-             status: :internal_server_error, locals: { error: exception }
+             status: :internal_server_error,
+             locals: { error: exception }
     end
 
-    rescue_from CreateStep::UnexpectedContentfulModel, CreateTask::UnexpectedContentfulModel do
+    rescue_from CreateStep::UnexpectedContentfulModel,
+                CreateTask::UnexpectedContentfulModel do
       render "errors/unexpected_contentful_model",
              status: :internal_server_error
     end
@@ -25,9 +27,7 @@ class JourneysController < ApplicationController
     end
   end
 
-  # Creates a new {Journey} under the default Contentful category.
-  #
-  # The action of creating a new journey is recorded.
+  # Log 'begin_journey'
   #
   # @see CreateJourney
   def new
@@ -43,12 +43,13 @@ class JourneysController < ApplicationController
       user_id: current_user.id,
       contentful_category_id: category.contentful_id,
     ).call
+
     redirect_to journey_path(journey)
   end
 
-  # Retrieves the specified {Journey} and its sections.
+  # Log 'view_journey'
   #
-  # The action of viewing a journey is recorded.
+  # @see SectionPresenter
   def show
     @journey = current_journey
     @sections = @journey.sections.includes(:tasks).map do |section|

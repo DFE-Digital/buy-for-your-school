@@ -1,8 +1,11 @@
+# Parse Liquid templates and render HTML
+#
 class SpecificationRenderer
+  # @param template [String]
+  # @param answers [Hash] `answer_extended-checkboxes-question`
+  #
   def initialize(template:, answers:)
-    @template = Liquid::Template.parse(
-      template, error_mode: :strict
-    )
+    @template = Liquid::Template.parse(template, error_mode: :strict)
     @answers = answers
   end
 

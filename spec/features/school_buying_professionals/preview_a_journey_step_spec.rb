@@ -1,3 +1,5 @@
+# @see ContentfulHelpers
+
 feature "Users can preview a journey step" do
   context "when the user is on the preview environment" do
     around do |example|
@@ -14,7 +16,7 @@ feature "Users can preview a journey step" do
 
       user_is_signed_in
 
-      visit preview_entry_path("radio-question")
+      visit preview_entry_path("radio-question") # "/preview/entries/radio-question"
 
       expect(page).to have_content("Which service do you need?")
       expect(page).to have_content("Catering")

@@ -3,9 +3,11 @@
 class SpecificationsController < ApplicationController
   before_action :check_user_belongs_to_journey?
 
-  # Puts together a specification view in HTML and .docx.
+  # Render HTML and DOCX formats
   #
-  # The action of viewing a specification is recorded.
+  # Log 'view_specification'
+  #
+  # @see SpecificationRenderer
   def show
     @journey = current_journey
     @visible_steps = @journey.steps.visible

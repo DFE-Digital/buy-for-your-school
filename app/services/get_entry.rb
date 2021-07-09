@@ -1,10 +1,14 @@
-# GetEntry service is responsible for fetching and caching Contentful entries.
+# Fetch entries from Contentful and cache in Redis
+#
 class GetEntry
   class EntryNotFound < StandardError; end
   include CacheableEntry
 
   attr_accessor :entry_id, :cache
 
+  # @param entry_id [String] Contentful Entry ID
+  # @param contentful_connector [ContentfulConnector] Contentful API wrapper
+  #
   def initialize(entry_id:, contentful_connector: ContentfulConnector.new)
     self.entry_id = entry_id
     @contentful_connector = contentful_connector
@@ -14,6 +18,10 @@ class GetEntry
     )
   end
 
+  # @raise [EntryNotFound]
+  #
+  # @return [Contentful::Entry]
+  #
   def call
     if cache.hit?(key: cache_key)
       entry = find_and_build_entry_from_cache(cache: cache, key: cache_key)
@@ -32,6 +40,7 @@ class GetEntry
 
 private
 
+  # @return [String]
   def cache_key
     "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{entry_id}"
   end

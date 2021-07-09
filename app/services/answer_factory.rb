@@ -1,4 +1,5 @@
-# AnswerFactory is responsible for determining the right answer type for a {Step}.
+# Select appropriate answer model for {Step} question
+#
 class AnswerFactory
   class UnexpectedQuestionType < StandardError; end
 

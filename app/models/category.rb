@@ -1,4 +1,5 @@
-# Represent categories of spend and consist of {Journey}s
+# Top-level entity within Contentful CMS
+#
 class Category < ApplicationRecord
   has_many :journeys, dependent: :destroy
 

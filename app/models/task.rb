@@ -6,7 +6,6 @@ class Task < ApplicationRecord
 
   belongs_to :section
 
-  # Contentful validates that at least 1 step is present
   has_many :steps, dependent: :destroy
 
   validates :title, :contentful_id, presence: true

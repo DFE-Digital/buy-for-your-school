@@ -1,16 +1,19 @@
 class CheckboxesAnswerPresenter < SimpleDelegator
   include AnswerHelper
 
+  # @return [String, Nil]
   def response
     super.reject(&:blank?)
   end
 
+  # @return [String]
   def concatenated_response
     return nil if response.empty?
 
     response.join(", ")
   end
 
+  # @return [Hash]
   def to_param
     {
       response: response,

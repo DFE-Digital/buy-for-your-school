@@ -41,11 +41,13 @@ class Step < ApplicationRecord
       end
   end
 
+  # @return [Boolean]
   def answered?
     !answer.nil?
   end
 
-  # Returns the text for the primary call-to-action button.
+  # Button text to advance through steps
+  #
   # @see https://design-system.service.gov.uk/components/button/
   #
   # @return [String]
@@ -55,6 +57,7 @@ class Step < ApplicationRecord
     super
   end
 
+  # @return [Boolean]
   def skippable?
     skip_call_to_action_text.present?
   end
@@ -66,10 +69,9 @@ class Step < ApplicationRecord
     task.section.journey
   end
 
-  # This method calls the owning {Task}'s save method to update its step tallies.
+  # Trigger Task#tally_steps callback to refresh `Task.step_tally`
   #
-  # This is used by the {TaskCounters} concern as a callback for when step answers
-  # are committed.
+  # @see {TaskCounters} concern
   #
   # @return [Boolean]
   def update_task_counters

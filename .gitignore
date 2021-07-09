@@ -118,5 +118,8 @@ terraform.rc
 # ERD file
 doc/erd.pdf
 
-# File where software versions are managed by asdf
+# File where software versions are managed by ASDF
 .tool-versions
+
+# Compiled YARD documentation
+documentation

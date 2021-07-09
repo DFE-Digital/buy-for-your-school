@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
-# JourneyMapsController is responsible for providing a map of specification steps to their Contentful answer tags.
+# Renders internal template tags used by Content Designers working with Contentful.
+# Used when drafting Liquid template logic in a specification before publishing.
+#
+# @example
+#   {{ answer_<%= entry.id %> }}
+#
 class JourneyMapsController < ApplicationController
   unless Rails.env.development?
     rescue_from GetStepsFromTask::RepeatEntryDetected do |exception|
       render "errors/repeat_step_in_the_contentful_journey",
-             status: :internal_server_error, locals: { error: exception }
+             status: :internal_server_error,
+             locals: { error: exception }
     end
 
     rescue_from GetEntry::EntryNotFound do

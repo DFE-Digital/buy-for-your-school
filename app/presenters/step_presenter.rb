@@ -1,8 +1,10 @@
 class StepPresenter < SimpleDelegator
+  # @return [Boolean]
   def question?
     contentful_model == "question"
   end
 
+  # @return [Boolean]
   def statement?
     contentful_model == "staticContent"
   end
@@ -13,10 +15,12 @@ class StepPresenter < SimpleDelegator
     Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(help_text).html_safe
   end
 
+  # @return [String]
   def status_id
     "#{id}-status"
   end
 
+  # @return [String]
   def response
     @response ||=
       case contentful_type

@@ -11,7 +11,7 @@ class CurrencyAnswer < ApplicationRecord
               message: "does not accept £ signs or other non numerical characters",
             }
 
-  # Overridden response accessor that ensures no commas are present in the currency value.
+  # Ensure no commas are present in the currency value
   #
   # @param [Float, String] value
   #

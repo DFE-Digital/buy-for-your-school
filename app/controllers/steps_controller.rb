@@ -3,16 +3,18 @@
 class StepsController < ApplicationController
   before_action :check_user_belongs_to_journey?
 
-  # Retrieves the specified step.
+  # Log 'begin_step'
   #
-  # The action of beginning a step is recorded.
+  # @see StepPresenter
   def show
     @journey = current_journey
 
+    # TODO: wrap the step in its delegator presenter and update instance variable in templates
     @step = Step.find(params[:id])
     @step_presenter = StepPresenter.new(@step)
 
     @answer = AnswerFactory.new(step: @step).call
+    # TODO: extract @back_url to a shared private method
     @back_url =
       if !parent_task || parent_task.has_single_visible_step?
         journey_path(@journey, anchor: @step.id, back_link: true)
@@ -35,16 +37,18 @@ class StepsController < ApplicationController
     render @step.contentful_type, locals: { layout: "steps/new_form_wrapper" }
   end
 
-  # Allows for step editing.
+  # Log 'view_step'
   #
-  # The action of viewing a step is recorded.
+  # @see StepPresenter
   def edit
     @journey = current_journey
 
+    # TODO: wrap the step in its delegator presenter and update instance variable in templates
     @step = Step.find(params[:id])
     @step_presenter = StepPresenter.new(@step)
 
     @answer = @step.answer
+    # TODO: extract @back_url to a shared private method
     @back_url =
       if !parent_task || parent_task.has_single_visible_step?
         journey_path(@journey, anchor: @step.id, back_link: true)
