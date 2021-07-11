@@ -6,8 +6,20 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+### Scheduled Diary Studies using the live environment.
+
+- bump Ruby to version `3.0.1`
+- document code using Yard
+- use CodeClimate in CI pipeline to highlight areas of improvement
+- change from `standardrb` to `rubocop-govuk` and convert lint style
+- generate PDF format Emtity Relationship Diagram with upon DB migrations
+- add status badges to `README`
+- use Pry in the Rails console
+- add additional dev tools to optional `Brewfile`
+- implement "Interrupt Pattern" which introduces a step that is not semantically a question but a statement
 - add explicit ordering to the task model to allow continuing to the next unanswered task
-- change from standardrb to rubocop-govuk
+- add extensible tally of counted steps to the task
+- remove staticContent entity and add Statement entity in Contentful (currently only in develop)
 
 ## [release-015] - 2021-06-17
 
