@@ -8,7 +8,6 @@ class StepsController < ApplicationController
   # @see StepPresenter
   def show
     @journey = current_journey
-
     # TODO: wrap the step in its delegator presenter and update instance variable in templates
     @step = Step.find(params[:id])
     @step_presenter = StepPresenter.new(@step)

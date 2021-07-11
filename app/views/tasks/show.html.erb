@@ -5,9 +5,14 @@
 
 <dl class="govuk-summary-list">
   <% @steps.each do |step| %>
-    <% if step.question? %>
-      <%= render "answer", step: step %>
-    <% end %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= step.title %>
+      </dt>
+      <%= render "question", step: step if step.question? %>
+      <%= render "statement", step: step if step.statement? %>
+    </div>
+
   <% end %>
 </dl>
 

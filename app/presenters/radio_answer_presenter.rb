@@ -1,12 +1,7 @@
 class RadioAnswerPresenter < SimpleDelegator
   include AnswerHelper
 
-  # @return [String]
-  def response
-    human_readable_option(string: super)
-  end
-
-  # @return [Hash]
+  # @return [Hash<Symbol>]
   def to_param
     {
       response: response,
@@ -14,6 +9,12 @@ class RadioAnswerPresenter < SimpleDelegator
     }
   end
 
+  # @return [String]
+  def response
+    human_readable_option(string: super)
+  end
+
+  # @return [Nil, String]
   def further_information
     return unless super
 

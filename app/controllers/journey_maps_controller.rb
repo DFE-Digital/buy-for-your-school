@@ -20,10 +20,14 @@ class JourneyMapsController < ApplicationController
     end
   end
 
+  # TODO: introduce service function JourneyMapper#call that receives a category_id and returns steps
   def new
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
     tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
+    # TODO: wrap steps in presenter and relocate the link_to Contentful url there
     @steps = tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
+
+    flash[:notice] = "#{category.environment.id.capitalize} Environment"
   end
 end

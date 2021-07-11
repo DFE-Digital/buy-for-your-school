@@ -1,7 +1,7 @@
 class CheckboxesAnswerPresenter < SimpleDelegator
   include AnswerHelper
 
-  # @return [String, Nil]
+  # @return [String, nil]
   def response
     super.reject(&:blank?)
   end
@@ -25,6 +25,7 @@ class CheckboxesAnswerPresenter < SimpleDelegator
 
 private
 
+  # @return [Array]
   def selected_answers
     return [] if response.empty?
 

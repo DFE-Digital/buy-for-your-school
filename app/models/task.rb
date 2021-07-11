@@ -77,14 +77,6 @@ class Task < ApplicationRecord
     visible_questions_with_answers + visible_statements_acknowledged
   end
 
-  # Record step UUID confirming statement as read
-  #
-  # @return [Boolean]
-  def acknowledge_statement(step)
-    statement_ids << step.id
-    save!
-  end
-
   # @return [String, Nil] `nil` if all steps are complete.
   def next_incomplete_step_id
     return nil if all_steps_completed?

@@ -1,8 +1,13 @@
-# DateHelper provides string to date conversion functionality.
+# frozen_string_literal: true
+
+# Date coercion helpers
+#
+# @see AnswersController#date_params
+#
 module DateHelper
-  # Converts a hash with `day`, `month` and `year` values into a Date.
+  # Convert a hash with `day`, `month` and `year` values into a Date.
   #
-  # @param [Hash<Symbol, String>] params
+  # @param params [Hash<Symbol, String>]
   #
   # @return [Date, nil]
   def format_date(params)

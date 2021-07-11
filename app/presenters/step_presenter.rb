@@ -1,4 +1,11 @@
 class StepPresenter < SimpleDelegator
+  # Enable statement step to render in preview when it has no persisted Task
+  #
+  # @return [Task]
+  def task
+    super || Task.create
+  end
+
   # @return [Boolean]
   def question?
     contentful_model == "question"

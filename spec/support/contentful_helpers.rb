@@ -169,6 +169,7 @@ module ContentfulHelpers
       specification_template: hash_response.dig("fields", "specificationTemplate"),
       specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),
       combined_specification_template: combined_specification_template,
+      environment: double(id: "test"),
     )
 
     allow(category_double).to receive(:combined_specification_template=)

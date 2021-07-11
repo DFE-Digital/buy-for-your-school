@@ -80,12 +80,12 @@ RSpec.describe Task, type: :model do
 
     it "counts how many statements are acknowledged" do
       create(:step, :statement, hidden: true, task: task)
-      step = create(:step, :statement, hidden: false, task: task)
+      statement = create(:step, :statement, hidden: false, task: task)
 
       expect(task.step_tally["acknowledged"]).to eq 0
       expect(task.step_tally["completed"]).to eq 0
 
-      task.acknowledge_statement(step)
+      statement.acknowledge!
 
       expect(task.step_tally["acknowledged"]).to eq 1
       expect(task.step_tally["completed"]).to eq 1
@@ -138,7 +138,7 @@ RSpec.describe Task, type: :model do
 
       expect(task.all_statements_acknowledged?).to be(false)
 
-      task.acknowledge_statement(statement)
+      statement.acknowledge!
 
       expect(task.all_statements_acknowledged?).to be(true)
     end
@@ -190,7 +190,7 @@ RSpec.describe Task, type: :model do
       expect(task.all_steps_completed?).to be false
 
       create(:radio_answer, step: question)
-      task.acknowledge_statement(statement)
+      statement.acknowledge!
 
       expect(task.all_steps_completed?).to be true
     end

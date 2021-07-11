@@ -6,7 +6,6 @@
   <%= @step_presenter.body_html %>
 </div>
 
-<%= form_for @step.task, as: :task, method: "put", url: journey_step_answer_path(@journey, @step) do |f| %>
+<%= form_for @step_presenter.task, as: :task, method: "put", url: journey_step_answer_path(@journey, @step) do |f| %>
   <%= f.submit @step_presenter.primary_call_to_action_text, class: "govuk-button" %>
 <% end %>
-

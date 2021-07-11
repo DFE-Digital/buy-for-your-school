@@ -26,6 +26,7 @@ class AnswersController < ApplicationController
     result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
     @answer = result.object
 
+    # TODO: refactor to a private #record_answer method that accepts the action string
     RecordAction.new(
       action: "save_answer",
       journey_id: @journey.id,
@@ -73,6 +74,7 @@ class AnswersController < ApplicationController
 
     @answer = result.object
 
+    # TODO: refactor to a private #record_answer method that accepts the action string
     RecordAction.new(
       action: "update_answer",
       journey_id: @journey.id,
@@ -109,7 +111,7 @@ private
     params[:step_id]
   end
 
-  # @param [Step] step
+  # @param step [Step]
   #
   # @return [Hash]
   def prepared_params(step:)
@@ -123,27 +125,28 @@ private
     end
   end
 
-  # Retrieves the `response` and `further_information` for answer types other
-  # than `checkboxes`, `radios` and `single_date`.
+  # Validate answer params
   #
   # @return [Hash]
+  # @raise [ActionController::ParameterMissing]
   def answer_params
     params.require(:answer).permit(:response, :further_information)
   end
 
-  # Retrieves the `reponse` with special handling for `checkboxes` and
-  # `radios` types to ensure their `further_information` values are stored
-  # correctly.
+  # Build machine-readable `further_information` value for {CheckboxAnswers} and {RadioAnswer}
   #
   # @see AnswerHelper
   #
-  # @return [Hash]
+  # @return [ActionController::Parameters]
+  # @raise [ActionController::ParameterMissing]
   def further_information_params
     return { skipped: true, response: [""], further_information: nil } if skip_answer?
 
     answer_params = params.require(:answer)
 
+    # [{"value"=>"Catering"}, {"value"=>"Cleaning"}]
     if @step.options
+      # %i[catering_further_information cleaning_further_information]
       allowed_further_information_keys = @step.options.map do |option|
         key = machine_readable_option(string: option["value"])
         "#{key}_further_information".to_sym
@@ -165,7 +168,7 @@ private
 
   # @see DateHelper
   #
-  # @return [Hash]
+  # @return [Hash<Symbol>] { response: Date }
   def date_params
     answer = params.require(:answer).permit(:response)
     date_hash = { day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"] }

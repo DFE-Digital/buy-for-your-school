@@ -46,6 +46,19 @@ class Step < ApplicationRecord
     !answer.nil?
   end
 
+  # @return [Boolean]
+  def acknowledged?
+    task.statement_ids.include?(id)
+  end
+
+  # Record step UUID confirming statement as read
+  #
+  # @return [Boolean]
+  def acknowledge!
+    task.statement_ids << id
+    task.save!
+  end
+
   # Button text to advance through steps
   #
   # @see https://design-system.service.gov.uk/components/button/
