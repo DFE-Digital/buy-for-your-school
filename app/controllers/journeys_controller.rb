@@ -31,7 +31,7 @@ class JourneysController < ApplicationController
   #
   # @see CreateJourney
   def new
-    category = get_category(params[:category_id])
+    category = Category.find(params[:category_id])
     journey = CreateJourney.new(
       category: category,
       user: current_user,
@@ -62,11 +62,5 @@ class JourneysController < ApplicationController
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
     ).call
-  end
-
-private
-
-  def get_category(category_id)
-    Category.find(category_id)
   end
 end

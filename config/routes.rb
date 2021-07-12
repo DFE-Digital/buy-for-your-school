@@ -24,9 +24,7 @@ Rails.application.routes.draw do
   end
 
   post "categories/new_spec", to: "categories#new_spec"
-  post "categories/new_journey_mapper", to: "categories#new_journey_mapper"
   get "journeys/new/:category_id", to: "journeys#new", as: :new_journey
-  get "journeys_maps/new/:category_id", to: "journey_maps#new", as: :new_journey_map
 
   # 681 - guard against use of back button after form validation errors
   get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
