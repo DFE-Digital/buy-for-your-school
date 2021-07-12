@@ -20,6 +20,11 @@ The format is based on [Keep a Changelog 1.0.0].
 - add explicit ordering to the task model to allow continuing to the next unanswered task
 - add extensible tally of counted steps to the task
 - remove staticContent entity and add Statement entity in Contentful (currently only in develop)
+- change from standardrb to rubocop-govuk
+- introduce Category model to mirror Contentful category entity and Rake task for data migration
+- add state to Journey (initial, stale, archive or remove)
+- drop Journey.last_worked_on in favour of updated_at
+- add category title column to the dashboard
 
 ## [release-015] - 2021-06-17
 

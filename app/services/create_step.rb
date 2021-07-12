@@ -48,11 +48,13 @@ class CreateStep
   def call
     if unexpected_contentful_model?
       send_rollbar_warning
+      # TODO: pass unexpected model to the exception so it is logged
       raise UnexpectedContentfulModel
     end
 
     if unexpected_step_type?
       send_rollbar_warning
+      # TODO: pass unexpected step type to the exception so it is logged
       raise UnexpectedContentfulStepType
     end
 
