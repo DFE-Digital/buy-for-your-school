@@ -1,3 +1,6 @@
+#
+# Convenience navigation methods
+# TODO: remove stubbing/fixtures
 module JourneyHelpers
   def click_create_spec_link
     click_on "Create a new specification"
@@ -15,6 +18,7 @@ module JourneyHelpers
     end
   end
 
+  # TODO: remove stub_contentful_category in favour of shared setup using factories
   def start_journey_from_category(category:)
     contentful_category = stub_contentful_category(
       fixture_filename: category,
@@ -24,6 +28,7 @@ module JourneyHelpers
     user_signs_in_and_starts_the_journey(category.id)
   end
 
+  # TODO: remove stub_contentful_category in favour of shared setup using factories
   def start_journey_with_tasks_from_category(category:)
     contentful_category = stub_contentful_category(
       fixture_filename: category,

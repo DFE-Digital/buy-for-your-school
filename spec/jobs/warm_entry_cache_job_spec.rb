@@ -10,10 +10,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
   after { RedisCache.redis.flushdb }
 
   around do |example|
-    ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
-      CONTENTFUL_ENTRY_CACHING: "true",
-    ) do
+    ClimateControl.modify(CONTENTFUL_ENTRY_CACHING: "true") do
       example.run
     end
   end

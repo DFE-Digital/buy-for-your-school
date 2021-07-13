@@ -3,14 +3,6 @@ require "rails_helper"
 feature "Anyone can start a journey" do
   before { user_is_signed_in }
 
-  around do |example|
-    ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
-    ) do
-      example.run
-    end
-  end
-
   scenario "Start page includes a call to action" do
     start_journey_from_category(category: "radio-question.json")
 
@@ -522,7 +514,7 @@ feature "Anyone can start a journey" do
       expect(first_logged_event.action).to eq("begin_journey")
       expect(first_logged_event.journey_id).to eq(Journey.last.id)
       expect(first_logged_event.user_id).to eq(User.last.id)
-      expect(first_logged_event.contentful_category_id).to eq(ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"])
+      expect(first_logged_event.contentful_category_id).to eq("contentful-category-entry")
     end
   end
 
