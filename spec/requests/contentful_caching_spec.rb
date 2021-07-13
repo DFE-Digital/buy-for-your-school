@@ -3,14 +3,6 @@ require "rails_helper"
 RSpec.describe "Contentful Caching", type: :request do
   before { user_is_signed_in }
 
-  around do |example|
-    ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
-    ) do
-      example.run
-    end
-  end
-
   context "when caching is enabled" do
     around do |example|
       ClimateControl.modify(
