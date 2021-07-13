@@ -8,7 +8,7 @@ class CheckboxAnswers < ApplicationRecord
             presence: true,
             unless: proc { |answer| answer.step.skippable? && answer.skipped }
 
-  # Overridden response accessor that ensures no blank checkbox values are set.
+  # Ensure no blank checkbox values are set
   #
   # @param [Array] args
   #

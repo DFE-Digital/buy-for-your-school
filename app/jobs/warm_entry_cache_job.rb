@@ -14,6 +14,7 @@ class WarmEntryCacheJob < ApplicationJob
   def perform
     backup_old_cache
 
+    # TODO: iterate over categories
     category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
     sections = GetSectionsFromCategory.new(category: category).call
     tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }

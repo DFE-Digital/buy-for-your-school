@@ -9,13 +9,19 @@ RSpec.describe CreateJourney do
     end
   end
 
+  let(:user) { build(:user) }
+  let(:category) { build(:category, contentful_id: "contentful-category-entry") }
+
   describe "#call" do
     it "creates a new journey" do
       stub_contentful_category(
         fixture_filename: "category-with-no-steps.json",
       )
-      expect { described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call }
-        .to change(Journey, :count).by(1)
+
+      expect {
+        described_class.new(category: category, user: user).call
+      }.to change(Journey, :count).by(1)
+
       last_journey = Journey.last
       expect(last_journey.category.title).to eql("Catering")
       expect(last_journey.category.contentful_id).to eql("contentful-category-entry")
@@ -25,9 +31,8 @@ RSpec.describe CreateJourney do
       stub_contentful_category(
         fixture_filename: "category-with-no-steps.json",
       )
-      user = create(:user)
 
-      described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: user).call
+      described_class.new(category: category, user: user).call
 
       expect(Journey.last.user).to eq(user)
     end
@@ -36,7 +41,7 @@ RSpec.describe CreateJourney do
       stub_contentful_category(
         fixture_filename: "category-with-no-steps.json",
       )
-      described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call
+      described_class.new(category: category, user: user).call
       expect(Journey.last.started).to eq(true)
     end
 
@@ -46,33 +51,39 @@ RSpec.describe CreateJourney do
         fixture_filename: "category-with-no-steps.json",
       )
 
-      described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call
+      described_class.new(category: category, user: user).call
 
       expect(Journey.last.updated_at).to eq(Time.zone.now)
     end
 
-    xit "stores a copy of the Liquid template" do
-      stub_contentful_category(
-        fixture_filename: "category-with-liquid-template.json",
-      )
-
-      described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call
-
-      expect(Journey.last.liquid_template)
-        .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
-    end
-
-    context "when the journey cannot be saved" do
-      xit "raises an error" do
+    # TODO: move liquid template specs to the Category
+    describe "WIP multiple categories" do
+      it "stores a copy of the Liquid template" do
         stub_contentful_category(
-          fixture_filename: "category-with-no-title.json",
-          stub_sections: true,
+          fixture_filename: "category-with-liquid-template.json",
         )
 
-        # Force a validation error by not providing an invalid category ID
-        expect { described_class.new(category: build(:category, contentful_id: "contentful-category-entry"), user: build(:user)).call }
-          .to raise_error(ActiveRecord::RecordInvalid)
+        described_class.new(category: category, user: user).call
+
+        # From fixtures
+        # .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
+        expect(Journey.last.category.liquid_template)
+          .to eql("Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}") # from factory
       end
+
+      # TODO: test when a journey cannot be saved
+      # context "when the journey cannot be saved" do
+      #   it "raises an error" do
+      #     stub_contentful_category(
+      #       fixture_filename: "category-with-no-title.json",
+      #       stub_sections: true,
+      #     )
+      #     # Force a validation error by not providing an invalid category ID
+      #     expect {
+      #       described_class.new(category: category, user: user).call
+      #     }.to raise_error(ActiveRecord::RecordInvalid)
+      #   end
+      # end
     end
   end
 end

@@ -4,7 +4,7 @@ Date: 2020-11-30
 
 ## Status
 
-Accepted
+![Accepted](https://img.shields.io/badge/adr-accepted-green)
 
 ## Context
 

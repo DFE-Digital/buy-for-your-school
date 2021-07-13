@@ -5,10 +5,13 @@
   <% @steps.each do |entry| %>
     <li class="govuk-!-margin-bottom-4">
       <b><%= entry.title %></b><br>
+      <i><%= entry.type %></i><br>
       <small>
-        <%= link_to I18n.t("journey_map.edit_step_link_text"), "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/#{entry.id}", target: :blank, class: "govuk-link" %> &middot;
+        <%= link_to I18n.t("journey_map.edit_step_link_text"), "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/#{entry.id}", target: :blank, class: "govuk-link" %>
+        &middot;
         <%= link_to I18n.t("journey_map.preview_step_link_text"), preview_entry_path(entry.id), target: :blank, class: "govuk-link" %><br>
-        <%= I18n.t("journey_map.spec_template_tag_title") %>: <code>{{ answer_<%= entry.id %> }}</code>
+        <%# TODO: why do step entries use "answer_" as a prefix? %>
+          <%= I18n.t("journey_map.spec_template_tag_title") %>: <code>{{ answer_<%= entry.id %> }}</code>
       </small>
     </li>
   <% end %>

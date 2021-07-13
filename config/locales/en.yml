@@ -92,7 +92,7 @@ en:
       continue: Continue answering these questions
       next: Continue to the next task
   journey_map:
-    page_title: "Contentful entry map"
+    page_title: "Template Designer"
     edit_step_link_text: "Edit step in Contentful"
     preview_step_link_text: "Preview step in service"
     spec_template_tag_title: "Specification tag"

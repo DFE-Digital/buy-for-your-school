@@ -1,4 +1,5 @@
-# RecordAction service is responsible for the functionality to create {ActivityLogItem}s for various user actions.
+# Log user actions as {ActivityLogItem}s
+#
 class RecordAction
   class UnexpectedActionType < StandardError; end
 

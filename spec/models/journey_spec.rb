@@ -9,7 +9,7 @@ RSpec.describe Journey, type: :model do
     expect(journey.category.title).to eql("Catering")
   end
 
-  describe "all_steps_completed?" do
+  describe "#all_tasks_completed?" do
     context "when all steps have been completed" do
       it "returns true" do
         journey = create(:journey)
@@ -22,7 +22,7 @@ RSpec.describe Journey, type: :model do
         step2 = create(:step, :radio, task: task)
         create(:radio_answer, step: step2)
 
-        expect(journey.all_steps_completed?).to be true
+        expect(journey.all_tasks_completed?).to be true
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe Journey, type: :model do
 
         create_list(:step, 2, :radio, task: task)
 
-        expect(journey.all_steps_completed?).to be false
+        expect(journey.all_tasks_completed?).to be false
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Journey, type: :model do
         create(:step, :radio, task: task)
         # Omit answer for step 2
 
-        expect(journey.all_steps_completed?).to be false
+        expect(journey.all_tasks_completed?).to be false
       end
     end
 
@@ -66,16 +66,16 @@ RSpec.describe Journey, type: :model do
         create(:step, :radio, task: task, hidden: true)
         # Omit answer for step 2
 
-        expect(journey.all_steps_completed?).to be true
+        expect(journey.all_tasks_completed?).to be true
       end
     end
   end
 
-  describe "freshen!" do
+  describe "#start!" do
     it "set started to true" do
       category = build(:category, :catering)
       journey = build(:journey, category: category)
-      journey.freshen!
+      journey.start!
       expect(journey.reload.started).to eq(true)
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Journey, type: :model do
       category = build(:category, :catering)
       journey = build(:journey, category: category)
 
-      journey.freshen!
+      journey.start!
 
       expect(journey.updated_at).to eq(Time.zone.now)
     end
@@ -94,7 +94,7 @@ RSpec.describe Journey, type: :model do
         category = build(:category, :catering)
         journey = build(:journey, category: category, started: true)
         expect(journey).not_to receive(:update).with(started: true)
-        journey.freshen!
+        journey.start!
       end
     end
   end

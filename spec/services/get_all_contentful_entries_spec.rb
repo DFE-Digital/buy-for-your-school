@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# TODO: Is GetAllContentfulEntries still being used?
+#
 RSpec.describe GetAllContentfulEntries do
   describe "#call" do
     it "requests and returns all entries from Contentful" do

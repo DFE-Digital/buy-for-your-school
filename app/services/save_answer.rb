@@ -14,7 +14,7 @@ class SaveAnswer
 
     if answer.valid?
       answer.save!
-      answer.step.journey.freshen!
+      answer.step.journey.start!
       ToggleAdditionalSteps.new(step: answer.step).call
       result.success = true
     end

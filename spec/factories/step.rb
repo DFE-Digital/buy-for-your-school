@@ -11,6 +11,21 @@ FactoryBot.define do
 
     association :task, factory: :task
 
+    #
+    # Statements
+    #
+
+    trait :statement do
+      options { nil }
+      contentful_model { "statement" }
+      contentful_type { "markdown" }
+      body { "## Heading 2" }
+    end
+
+    #
+    # Questions
+    #
+
     trait :radio do
       options { [{ "value" => "Red" }, { "value" => "Green" }, { "value" => "Blue" }] }
       contentful_model { "question" }
@@ -51,12 +66,6 @@ FactoryBot.define do
       options { nil }
       contentful_model { "question" }
       contentful_type { "currency" }
-    end
-
-    trait :static_content do
-      options { nil }
-      contentful_model { "staticContent" }
-      contentful_type { "paragraphs" }
     end
   end
 end

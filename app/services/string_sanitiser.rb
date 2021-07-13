@@ -1,4 +1,5 @@
-# StringSanitiser service is responsible for sanitising user answers to ensure they are safe to be persisted.
+# Permit only paragraph, bold and italic HTML tags
+#
 class StringSanitiser
   attr_accessor :args
 

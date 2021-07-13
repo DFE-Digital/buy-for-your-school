@@ -1,11 +1,15 @@
-# GetTasksFromSection service retrieves the {Task}s associated with the given {Section}.
+# Fetch and cache Contentful tasks for the section
+#
 class GetTasksFromSection
+  # @return [Contentful::Entry]
   attr_accessor :section
 
+  # @param section [Contentful::Entry]
   def initialize(section:)
     self.section = section
   end
 
+  # @return [Array<Contentful::Entry>]
   def call
     return [] unless section.respond_to?(:tasks)
 

@@ -30,12 +30,13 @@
     },
     "fields": {
         "title": "Catering",
+        "description": "Catering description",
         "sections": [
           {
             "sys": {
                 "type": "Link",
                 "linkType": "Entry",
-                "id": "static-content-section"
+                "id": "statement-section"
             }
           }
         ],

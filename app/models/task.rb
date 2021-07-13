@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-# A Task belongs to a {Section} and consists of many {Step}s.
+# A Task belongs to a {Section} and has of many {Step}s.
 class Task < ApplicationRecord
-  self.implicit_order_column = "created_at"
+  self.implicit_order_column = "order"
+
+  default_scope { order(:order) }
 
   belongs_to :section
+
   has_many :steps, dependent: :destroy
 
   validates :title, :contentful_id, presence: true
@@ -17,45 +20,71 @@ class Task < ApplicationRecord
   IN_PROGRESS = 1
   COMPLETED = 2
 
-  # Returns all visible steps.
+  # @param key [Symbol, String] step_tally key
   #
-  # @return [Step::ActiveRecord_AssociationRelation]
-  def visible_steps
-    steps.where(hidden: false)
+  # @return [Integer]
+  def tally_for(key)
+    step_tally.fetch(key.to_s, 0)
   end
 
-  def has_single_visible_step?
-    step_tally["visible"] == 1
-  end
-
-  # Returns the status of the current task.
+  # Use tally to infer state
   #
-  # @return [Integer] {NOT_STARTED}, {IN_PROGRESS} or {COMPLETED}
+  # @return [Integer] 0, 1, 2
   def status
-    return COMPLETED if all_steps_answered?
-    return IN_PROGRESS if step_tally["answered"].positive?
+    return COMPLETED if all_steps_completed?
+    return IN_PROGRESS if tally_for(:completed).positive?
 
     NOT_STARTED
   end
 
-  def all_steps_answered?
-    step_tally["visible"] == step_tally["answered"]
-  end
-
-  # Returns all visible steps that have been answered.
+  # Use tally to infer state
   #
-  # @return [Step::ActiveRecord_AssociationRelation]
-  def visible_steps_with_answers
-    eager_loaded_visible_steps.select(&:answered?)
+  # @return [Boolean]
+  def has_single_visible_step?
+    tally_for(:visible) == 1
   end
 
-  # @return [String/Nil] `nil` if all steps are answered.
-  def next_unanswered_step_id
-    return nil if all_steps_answered?
+  # Use tally to infer state - visible steps vs. completed
+  #
+  # @return [Boolean]
+  def all_steps_completed?
+    tally_for(:visible) == tally_for(:completed)
+  end
+
+  # Use tally to infer state - visible questions vs. answered
+  #
+  # @return [Boolean]
+  def all_questions_answered?
+    tally_for(:questions) == tally_for(:answered)
+  end
+
+  # Use tally to infer state - visible statements vs. acknowledged
+  #
+  # @return [Boolean]
+  def all_statements_acknowledged?
+    tally_for(:statements) == tally_for(:acknowledged)
+  end
+
+  def visible_questions_with_answers
+    eager_loaded_visible_steps.that_are_questions.select(&:answered?)
+  end
+
+  def visible_statements_acknowledged
+    steps.visible.that_are_statements.where(id: statement_ids.to_a)
+  end
+
+  def completed_steps
+    visible_questions_with_answers + visible_statements_acknowledged
+  end
+
+  # @return [String, Nil] `nil` if all steps are complete.
+  def next_incomplete_step_id
+    return nil if all_steps_completed?
 
     step_ids = eager_loaded_visible_steps.pluck(:id)
-    answered_step_ids = visible_steps_with_answers.pluck(:id)
-    remaining_ids = step_ids - answered_step_ids
+    answered_question_ids = visible_questions_with_answers.pluck(:id)
+
+    remaining_ids = step_ids - answered_question_ids - statement_ids.to_a
     remaining_ids.first
   end
 
@@ -63,14 +92,16 @@ class Task < ApplicationRecord
   #
   # @return [Step::ActiveRecord_AssociationRelation]
   def eager_loaded_visible_steps
-    visible_steps.includes(
-      %i[short_text_answer
-         long_text_answer
-         radio_answer
-         checkbox_answers
-         currency_answer
-         number_answer
-         single_date_answer],
+    steps.visible.includes(
+      %i[
+        short_text_answer
+        long_text_answer
+        radio_answer
+        checkbox_answers
+        currency_answer
+        number_answer
+        single_date_answer
+      ],
     ).ordered
   end
 
@@ -82,11 +113,17 @@ private
   #
   # @return [Hash<Symbol, Integer>]
   def tally_steps
+    visible_steps = steps.visible
+
     self.step_tally = {
-      total: steps.count,
-      visible: visible_steps.count,
-      hidden: steps.where(hidden: true).count,
-      answered: visible_steps_with_answers.count,
+      visible: visible_steps.count,                         # visible steps
+      hidden: steps.hidden.count,                           # hidden steps
+      total: steps.count,                                   # all steps
+      completed: completed_steps.count,                     # visible completed steps
+      statements: visible_steps.that_are_statements.count,  # visible statement steps
+      acknowledged: statement_ids.count,                    # visible completed statement steps
+      questions: visible_steps.that_are_questions.count,    # visible question steps
+      answered: visible_questions_with_answers.count,       # visible completed question steps
     }
   end
 end

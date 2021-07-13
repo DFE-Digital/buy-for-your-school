@@ -7,7 +7,7 @@
                 "id": "rwl7tyzv9sys"
             }
         },
-        "id": "static-content-section",
+        "id": "statement-section",
         "type": "Entry",
         "createdAt": "2021-02-01T10:47:10.257Z",
         "updatedAt": "2021-02-01T10:47:10.257Z",
@@ -35,7 +35,7 @@
               "sys": {
                   "type": "Link",
                   "linkType": "Entry",
-                  "id": "static-content-task"
+                  "id": "statement-task"
               }
             }
         ]

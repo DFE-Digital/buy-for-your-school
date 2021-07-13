@@ -1,20 +1,38 @@
 require "rails_helper"
 
 RSpec.describe StepPresenter do
-  describe "#question?" do
-    context "when the contentful model is 'question'" do
+  context "when the contentful model is 'statement'" do
+    describe "#statement?" do
       it "returns true" do
-        step = build(:step, :radio, contentful_model: "question")
+        step = build(:step, :statement)
         presenter = described_class.new(step)
-        expect(presenter.question?).to be true
+        expect(presenter.statement?).to be true
       end
     end
 
-    context "when the contentful model is NOT 'question'" do
+    describe "#question?" do
       it "returns false" do
-        step = build(:step, contentful_model: "staticContent")
+        step = build(:step, :statement)
         presenter = described_class.new(step)
         expect(presenter.question?).to be false
+      end
+    end
+  end
+
+  context "when the contentful model is 'question'" do
+    describe "#statement?" do
+      it "returns false" do
+        step = build(:step, :radio)
+        presenter = described_class.new(step)
+        expect(presenter.statement?).to be false
+      end
+    end
+
+    describe "#question?" do
+      it "returns true" do
+        step = build(:step, :radio)
+        presenter = described_class.new(step)
+        expect(presenter.question?).to be true
       end
     end
   end
@@ -33,7 +51,7 @@ RSpec.describe StepPresenter do
 
   describe "#status_id" do
     it "returns the uuid appended by status" do
-      step = create(:step, :currency, contentful_model: "question")
+      step = create(:step, :currency)
       presenter = described_class.new(step)
       expect(presenter.status_id).to match(/[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}-status/)
     end
@@ -41,9 +59,17 @@ RSpec.describe StepPresenter do
 
   describe "#help_text_html" do
     it "returns the uuid appended by status" do
-      step = create(:step, :currency, contentful_model: "question")
+      step = create(:step, :currency)
       presenter = described_class.new(step)
       expect(presenter.help_text_html).to include("<p>Choose the primary colour closest to your choice</p>\n")
+    end
+  end
+
+  describe "#body_html" do
+    it "returns the body converted from markdown" do
+      step = create(:step, :statement)
+      presenter = described_class.new(step)
+      expect(presenter.body_html).to include("<h2>Heading 2</h2>\n")
     end
   end
 end

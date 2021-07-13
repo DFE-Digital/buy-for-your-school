@@ -1,3 +1,6 @@
+#
+# Mock Contentful data loaded from JSON fixtures
+#
 module ContentfulHelpers
   def stub_contentful_entry(
     entry_id: "radio-question",
@@ -161,10 +164,12 @@ module ContentfulHelpers
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       title: hash_response.dig("fields", "title"),
+      description: hash_response.dig("fields", "description"),
       sections: sections,
       specification_template: hash_response.dig("fields", "specificationTemplate"),
       specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),
       combined_specification_template: combined_specification_template,
+      environment: double(id: "test"),
     )
 
     allow(category_double).to receive(:combined_specification_template=)

@@ -1,6 +1,7 @@
-# Represent categories of spend and consist of {Journey}s
+# Top-level entity within Contentful CMS
+#
 class Category < ApplicationRecord
   has_many :journeys, dependent: :destroy
 
-  validates :title, :contentful_id, :liquid_template, presence: true
+  validates :title, :description, :contentful_id, :liquid_template, presence: true
 end
