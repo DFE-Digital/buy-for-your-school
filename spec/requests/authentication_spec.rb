@@ -40,7 +40,8 @@ RSpec.describe "Authentication", type: :request do
 
   describe "Endpoints that do require authentication" do
     it "users cannot access the new journey path" do
-      get new_journey_path
+      category = create(:category, :catering)
+      get new_journey_path(category)
       expect(response).to redirect_to(root_path)
     end
 

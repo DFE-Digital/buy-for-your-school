@@ -3,6 +3,20 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render partial: "list_for_specs" %>
+    <% if @categories.any? %>
+      <%= form_with url: categories_new_spec_path do |f| %>
+        <%= f.govuk_radio_buttons_fieldset(:category_id, legend: { size: "l", text: I18n.t("categories.header") }) do %>
+            <div class="govuk-hint">
+              <%= I18n.t("categories.support_info") %>
+            </div>
+            <% @categories.each_with_index do |category, index| %>
+              <%= f.govuk_radio_button :category_id, category.id, label: { text: category.title }, hint: { text: category.description }, checked: index.zero? %>
+            <% end %>
+        <% end %>
+        <%= f.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+      <% end %>
+    <% else %>
+      <h1 class="govuk-heading-l"><%= I18n.t("categories.not_found") %></h1>
+    <% end %>
   </div>
 </div>

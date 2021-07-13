@@ -16,25 +16,31 @@ module JourneyHelpers
   end
 
   def start_journey_from_category(category:)
-    stub_contentful_category(
+    contentful_category = stub_contentful_category(
       fixture_filename: category,
     )
+    persisted_category = persist_category(contentful_category)
 
-    user_signs_in_and_starts_the_journey
+    user_signs_in_and_starts_the_journey(persisted_category.id)
   end
 
   def start_journey_with_tasks_from_category(category:)
-    stub_contentful_category(
+    contentful_category = stub_contentful_category(
       fixture_filename: category,
       stub_sections: true,
       stub_tasks: true,
     )
+    persisted_category = persist_category(contentful_category)
 
-    user_signs_in_and_starts_the_journey
+    user_signs_in_and_starts_the_journey(persisted_category.id)
   end
 
   def start_journey_from_category_and_go_to_first_section(category:)
     start_journey_from_category(category: category)
     click_first_link_in_section_list
+  end
+
+  def persist_category(contentful_category)
+    Category.create!(title: contentful_category.title, liquid_template: contentful_category.combined_specification_template, contentful_id: contentful_category.id)
   end
 end

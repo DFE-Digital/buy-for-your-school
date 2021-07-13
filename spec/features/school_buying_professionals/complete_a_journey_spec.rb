@@ -426,9 +426,10 @@ feature "Anyone can start a journey" do
 
   context "when Contentful entry model wasn't an expected type" do
     scenario "returns an error message" do
-      stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")
+      contentful_category = stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")
+      category = persist_category(contentful_category)
 
-      visit new_journey_path
+      visit new_journey_path(category)
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_body"))
@@ -437,9 +438,10 @@ feature "Anyone can start a journey" do
 
   context "when the Contentful Entry wasn't an expected question type" do
     scenario "returns an error message" do
-      stub_contentful_category(fixture_filename: "unexpected-contentful-question-type.json")
+      contentful_category = stub_contentful_category(fixture_filename: "unexpected-contentful-question-type.json")
+      category = persist_category(contentful_category)
 
-      visit new_journey_path
+      visit new_journey_path(category)
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_body"))
@@ -451,8 +453,8 @@ feature "Anyone can start a journey" do
       allow(stub_contentful_connector).to receive(:get_entry_by_id)
         .with("contentful-category-entry")
         .and_return(nil)
-
-      visit new_journey_path
+      category = Category.create!(title: "Catering", liquid_template: "{}", contentful_id: "contentful-category-entry")
+      visit new_journey_path(category.id)
 
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))

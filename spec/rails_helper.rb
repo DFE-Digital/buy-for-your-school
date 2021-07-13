@@ -35,6 +35,7 @@ end
 RSpec.configure do |config|
   config.include ContentfulHelpers
   config.include JourneyHelpers, type: :feature
+  config.include JourneyHelpers, type: :request
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SignInHelpers, type: :feature
   config.include SignInHelpers, type: :request
