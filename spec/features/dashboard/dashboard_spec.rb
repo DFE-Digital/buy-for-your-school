@@ -34,8 +34,10 @@ feature "Specification dashboard" do
 
     specify { expect(page).to have_current_path "/dashboard" }
 
+    # TODO: remove stub_contentful_category in favour of shared setup using factories
     scenario "they can start a new specification" do
       stub_contentful_category(fixture_filename: "radio-question.json")
+
       click_create_spec_link
 
       within "ul.app-task-list__items" do
