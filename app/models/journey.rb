@@ -30,6 +30,11 @@ class Journey < ApplicationRecord
     tasks.order(:section_id, :order).reject(&:all_steps_answered?).last
   end
 
+  def all_unanswered_tasks
+    tasks.includes(:section).order("sections.order asc")
+    #tasks.order(:order).reject(&:all_steps_answered?)
+  end
+
   # Updates the state to indicate that a journey has been started.
   #
   # This ensures started journeys are not removed during automated clean up.
