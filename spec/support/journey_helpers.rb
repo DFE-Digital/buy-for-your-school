@@ -1,4 +1,8 @@
 module JourneyHelpers
+  def click_create_spec_link
+    click_on "Create a new specification"
+  end
+
   def click_first_link_in_section_list
     within("ol.app-task-list.sections") do
       first("a").click

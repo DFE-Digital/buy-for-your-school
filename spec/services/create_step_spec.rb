@@ -98,7 +98,7 @@ RSpec.describe CreateStep do
       end
     end
 
-    context "when the new entry has a body field" do
+    context "when the new entry has a 'body' field" do
       it "updates the step with the body" do
         category = create(:category, :catering)
         journey = create(:journey, category: category)
@@ -106,17 +106,14 @@ RSpec.describe CreateStep do
         task = create(:task, section: section)
 
         fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/static-content.json",
+          contentful_fixture_filename: "steps/statement-step.json",
         )
 
         step, _answer = described_class.new(
           task: task, contentful_entry: fake_entry, order: 0,
         ).call
 
-        expect(step.body).to eq("Procuring a new catering contract can \
-take up to 6 months to consult, create, review and award. \n\nUsually existing \
-contracts start and end in the month of September. We recommend starting this \
-process around March.")
+        expect(step.body).to eq("#### Heading 4")
       end
     end
 
@@ -254,7 +251,7 @@ process around March.")
                 content_model: "telepathy",
                 step_type: "radios",
                 allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-                allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+                allowed_step_types: CreateStep::ALLOWED_STEP_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
@@ -295,7 +292,7 @@ process around March.")
                 content_model: "question",
                 step_type: "telepathy",
                 allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
-                allowed_step_types: CreateStep::ALLOWED_CONTENTFUL_ENTRY_TYPES.join(", "))
+                allowed_step_types: CreateStep::ALLOWED_STEP_TYPES.join(", "))
           .and_call_original
         expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)

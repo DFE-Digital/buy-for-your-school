@@ -2,6 +2,7 @@
 #
 # @see Step#update_task_counters
 # @see Task#tally_steps
+#
 module TaskCounters
   extend ActiveSupport::Concern
   included do

@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
+# TODO: refactor AnswersController as ResponseController
 class AnswersController < ApplicationController
   before_action :check_user_belongs_to_journey?
 
   include DateHelper
   include AnswerHelper
 
-  # Creates and persists an answer for the specified {Step}.
+  # Redirect to:
+  #  - task only step completed  -> journey
+  #  - task all steps completed  -> task
+  #  - task incomplete           -> step
   #
-  # The action of saving an answer is recorded.
-  #
-  # On success, redirects to the next available step, the parent {Task} or {Journey} views.
+  # Log 'save_answer'
   #
   # @see SaveAnswer
   def create
@@ -24,6 +26,7 @@ class AnswersController < ApplicationController
     result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
     @answer = result.object
 
+    # TODO: refactor to a private #record_answer method that accepts the action string
     RecordAction.new(
       action: "save_answer",
       journey_id: @journey.id,
@@ -40,31 +43,38 @@ class AnswersController < ApplicationController
     if result.success?
       if parent_task.has_single_visible_step?
         redirect_to journey_path(@journey, anchor: @step.id)
-      elsif parent_task.all_steps_answered?
+      elsif parent_task.all_steps_completed?
         redirect_to journey_task_path(@journey, parent_task)
       else
-        redirect_to journey_step_path(@journey, parent_task.next_unanswered_step_id)
+        redirect_to journey_step_path(@journey, parent_task.next_incomplete_step_id)
       end
     else
       render "steps/#{@step.contentful_type}", locals: { layout: "steps/new_form_wrapper" }
     end
   end
 
-  # Updates an answer for the specified {Step}.
-  #
-  # The action of updating an answer is recorded.
-  #
-  # On success, redirects the parent {Task} or {Journey} views.
+  # Log 'update_answer'
   #
   # @see SaveAnswer
   def update
     @journey = current_journey
+    # TODO: refactor decorated Step to shared private method
     @step = Step.find(step_id)
     @step_presenter = StepPresenter.new(@step)
 
-    result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
+    result =
+      if @step_presenter.question?
+        # Save the question answer
+        SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
+      elsif @step_presenter.statement?
+        # Acknowledge the statement
+        @step.task.statement_ids << @step.id unless @step.task.statement_ids.include?(@step.id)
+        Result.new(@step.task.save!)
+      end
+
     @answer = result.object
 
+    # TODO: refactor to a private #record_answer method that accepts the action string
     RecordAction.new(
       action: "update_answer",
       journey_id: @journey.id,
@@ -101,15 +111,9 @@ private
     params[:step_id]
   end
 
-  # Fetches the necessary parameters depending on the {Step} type.
+  # @param step [Step]
   #
-  # @param [Step] step
-  #
-  # @see further_information_params
-  # @see date_params
-  # @see answer_params
-  #
-  # @return [Mixed]
+  # @return [Hash]
   def prepared_params(step:)
     case step.contentful_type
     when "checkboxes", "radios"
@@ -121,27 +125,28 @@ private
     end
   end
 
-  # Retrieves the `response` and `further_information` for answer types other
-  # than `checkboxes`, `radios` and `single_date`.
+  # Validate answer params
   #
-  # @return [Object]
+  # @return [Hash]
+  # @raise [ActionController::ParameterMissing]
   def answer_params
     params.require(:answer).permit(:response, :further_information)
   end
 
-  # Retrieves the `reponse` with special handling for `checkboxes` and
-  # `radios` types to ensure their `further_information` values are stored
-  # correctly.
+  # Build machine-readable `further_information` value for {CheckboxAnswers} and {RadioAnswer}
   #
   # @see AnswerHelper
   #
-  # @return [Object]
+  # @return [ActionController::Parameters]
+  # @raise [ActionController::ParameterMissing]
   def further_information_params
     return { skipped: true, response: [""], further_information: nil } if skip_answer?
 
     answer_params = params.require(:answer)
 
+    # [{"value"=>"Catering"}, {"value"=>"Cleaning"}]
     if @step.options
+      # %i[catering_further_information cleaning_further_information]
       allowed_further_information_keys = @step.options.map do |option|
         key = machine_readable_option(string: option["value"])
         "#{key}_further_information".to_sym
@@ -161,17 +166,16 @@ private
     all_params
   end
 
-  # Converts `single_date` responses into Dates.
-  #
   # @see DateHelper
   #
-  # @return [Object]
+  # @return [Hash<Symbol>] { response: Date }
   def date_params
     answer = params.require(:answer).permit(:response)
     date_hash = { day: answer["response(3i)"], month: answer["response(2i)"], year: answer["response(1i)"] }
     { response: format_date(date_hash) }
   end
 
+  # @return [Boolean]
   def skip_answer?
     params.fetch("skip", false)
   end

@@ -3,12 +3,15 @@ class GetAnswersForSteps
 
   include AnswerHelper
 
+  # @return [Step::ActiveRecord_AssociationRelation]
   attr_accessor :visible_steps
 
+  # @param visible_steps [Step::ActiveRecord_AssociationRelation]
   def initialize(visible_steps:)
     self.visible_steps = visible_steps
   end
 
+  # @return [Hash]
   def call
     visible_steps.each_with_object({}) do |step, hash|
       next unless step.answer
@@ -26,7 +29,6 @@ class GetAnswersForSteps
         end
 
       safe_answer = StringSanitiser.new(args: answer.to_param).call
-
       hash["answer_#{step.contentful_id}"] = safe_answer.with_indifferent_access
     end
   end

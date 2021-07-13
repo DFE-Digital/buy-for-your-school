@@ -25,17 +25,20 @@ Example step-by-step guide using [ASDF](https://asdf-vm.com) for dependencies.
     $ createuser postgres --super
     $ createdb postgres
     ```
+
 1. Install Redis
     ```
     $ asdf plugin add redis
     $ asdf install redis latest
     $ redis-server
     ```
+
 1. Install Node
     ```
     $ asdf plugin add nodejs
     $ asdf install nodejs latest
     ```
+
 
 ## Development
 
@@ -44,15 +47,18 @@ Example step-by-step guide using [ASDF](https://asdf-vm.com) for dependencies.
     $ asdf plugin add ruby
     $ asdf install ruby 2.6.6
     ```
+
 1. Install the gems
     ```
     $ gem install bundle
     $ bundle
     ```
+
 1. Additional install configuration (if required)
     ```
     $ gem install pg -- --with-pg-config=$(asdf which pg_config)
     ```
+
 1. Prepare the databases
     ```
     $ rake db:setup

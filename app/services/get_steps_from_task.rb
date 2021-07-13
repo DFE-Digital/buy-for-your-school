@@ -1,13 +1,17 @@
-# GetStepsFromTask service retrieves the {Step}s associated to the given {Task}.
+# Fetch and cache unique Contentful steps for the task
+#
 class GetStepsFromTask
   class RepeatEntryDetected < StandardError; end
 
+  # @return [Contentful::Entry]
   attr_accessor :task
 
+  # @param task [Contentful::Entry]
   def initialize(task:)
     self.task = task
   end
 
+  # @return [Array<Contentful::Entry>]
   def call
     return [] unless task.respond_to?(:steps)
 

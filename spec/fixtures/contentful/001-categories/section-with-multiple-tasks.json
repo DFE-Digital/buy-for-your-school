@@ -30,6 +30,7 @@
   },
   "fields": {
     "title": "Catering",
+    "description": "Catering description",
     "sections": [
       {
         "sys": {

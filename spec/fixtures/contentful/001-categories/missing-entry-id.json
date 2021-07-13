@@ -30,6 +30,7 @@
     },
     "fields": {
         "title": "Catering",
+        "description": "Catering description",
         "sections": [],
         "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
     }

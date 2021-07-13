@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe CreateSection do
-  let(:journey) { FactoryBot.create(:journey) }
+  let(:journey) { create(:journey) }
   let(:contentful_section) { double(id: "5m26U35YLau4cOaJq6FXZA", title: "Section A") }
 
   describe "#call" do

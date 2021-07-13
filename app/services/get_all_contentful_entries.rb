@@ -1,6 +1,9 @@
 require "contentful"
 
-# GetAllContentfulEntries service fetches all Contentful entries via the ContentfulConnector.
+# Function using Contentful client wrapper
+#
+# @deprecated Using {WarmEntryCacheJob} instead?
+#
 class GetAllContentfulEntries
   class NoEntriesFound < StandardError; end
 
@@ -8,6 +11,9 @@ class GetAllContentfulEntries
     @contentful_connector = contentful_connector
   end
 
+  # @raise [GetAllContentfulEntries::NoEntriesFound]
+  #
+  # @return [Contentful::Array]
   def call
     response = @contentful_connector.get_all_entries
 

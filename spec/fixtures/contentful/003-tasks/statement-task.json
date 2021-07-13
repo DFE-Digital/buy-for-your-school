@@ -10,7 +10,7 @@
         "id": "rwl7tyzv9sys"
       }
     },
-    "id": "static-content-task",
+    "id": "statement-task",
     "type": "Entry",
     "createdAt": "2021-04-12T09:38:48.990Z",
     "updatedAt": "2021-04-12T10:11:05.670Z",
@@ -32,13 +32,13 @@
     "locale": "en-US"
   },
   "fields": {
-    "title": "Static content task",
+    "title": "Task with a single statement step",
     "steps": [
       {
         "sys": {
           "type": "Link",
           "linkType": "Entry",
-          "id": "static-content"
+          "id": "statement-step"
         }
       }
     ]

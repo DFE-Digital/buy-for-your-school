@@ -1,10 +1,10 @@
-# 2. use-pull-request-templates
+# 2. Use Pull Request Templates
 
 Date: 2019-08-16
 
 ## Status
 
-Accepted
+![Accepted](https://img.shields.io/badge/adr-accepted-green)
 
 ## Context
 

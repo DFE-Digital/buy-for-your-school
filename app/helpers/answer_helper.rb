@@ -1,22 +1,28 @@
 # frozen_string_literal: true
 
-# AnswerHelper provides utility methods to convert further information keys between
-# human-readable and machine-readable representations.
+# String coercion helpers
 #
-# e.g. `name="answer[No thank you]"` to `name="answer[no_thank_you_further_information]"`
+# @see AnswersController#further_information_params
+# @see RadioAnswerPresenter
+# @see CheckboxesAnswerPresenter
+#
+# @example
+#
+#   `name="answer[No thank you]"` to `name="answer[no_thank_you_further_information]"`
+#
 module AnswerHelper
-  # Converts a key with underscores to a human-readable representation.
+  # Revert a string from snake_case
   #
-  # @param [String] string
+  # @param string [String]
   #
   # @return [String]
   def human_readable_option(string:)
     string.tr("_", " ").capitalize
   end
 
-  # Converts a human-readable string to a machine-readable representation with underscores.
+  # Convert a string to snake_case
   #
-  # @param [String] string
+  # @param string [String]
   #
   # @return [String]
   def machine_readable_option(string:)

@@ -36,8 +36,16 @@ feature "Users can view a task" do
       expect(begin_task_logged_event.contentful_section_id).to eq("tasks-section")
       expect(begin_task_logged_event.contentful_task_id).to eq(task.contentful_id)
       expect(begin_task_logged_event.data["task_status"]).to eq(Task::NOT_STARTED)
-      expect(begin_task_logged_event.data["task_total_steps"]).to eq(4)
-      expect(begin_task_logged_event.data["task_answered_questions"]).to eq(0)
+      expect(begin_task_logged_event.data["task_step_tally"]).to eq({
+        "total" => 4,
+        "hidden" => 0,
+        "visible" => 4,
+        "answered" => 0,
+        "completed" => 0,
+        "questions" => 4,
+        "statements" => 0,
+        "acknowledged" => 0,
+      })
     end
 
     context "when a task has at least one answered step" do
@@ -77,8 +85,16 @@ feature "Users can view a task" do
         expect(last_logged_event.contentful_section_id).to eq("tasks-section")
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
         expect(last_logged_event.data["task_status"]).to eq(Task::IN_PROGRESS)
-        expect(last_logged_event.data["task_total_steps"]).to eq(4)
-        expect(last_logged_event.data["task_answered_questions"]).to eq(1)
+        expect(last_logged_event.data["task_step_tally"]).to eq({
+          "total" => 4,
+          "hidden" => 0,
+          "visible" => 4,
+          "answered" => 1,
+          "completed" => 1,
+          "questions" => 4,
+          "statements" => 0,
+          "acknowledged" => 0,
+        })
       end
     end
 
@@ -113,8 +129,16 @@ feature "Users can view a task" do
         expect(last_logged_event.contentful_section_id).to eq("tasks-section")
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
         expect(last_logged_event.data["task_status"]).to eq(Task::COMPLETED)
-        expect(last_logged_event.data["task_total_steps"]).to eq(4)
-        expect(last_logged_event.data["task_answered_questions"]).to eq(4)
+        expect(last_logged_event.data["task_step_tally"]).to eq({
+          "total" => 4,
+          "hidden" => 0,
+          "visible" => 4,
+          "answered" => 4,
+          "completed" => 4,
+          "questions" => 4,
+          "statements" => 0,
+          "acknowledged" => 0,
+        })
       end
     end
 

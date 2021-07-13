@@ -2,14 +2,17 @@
 <%= link_to I18n.t("generic.button.back"), root_path, class: "govuk-back-link" %>
 
 <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
 
-  <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
-  </div>
+    <% if @journeys.none? %>
+      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
+      <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
 
-  <% if @current_user.journeys.any? %>
-    <div class="govuk-grid-column-full">
       <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button" %>
+    <% else %>
+      <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button" %>
+
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
 
@@ -17,13 +20,16 @@
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Date started</th>
+            <th scope="col" class="govuk-table__header">Category</th>
             <th scope="col" class="govuk-table__header govuk-table__cell--numeric"> </th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <% @current_user.journeys.each do |journey| %>
+          <% @journeys.each do |journey| %>
             <tr class="govuk-table__row">
+              <%# TODO: create a top-level journey presenter for created_at %>
               <td class="govuk-table__cell"><%= journey.created_at.strftime("%e %B %Y") %></td>
+              <td class="govuk-table__cell"><%= journey.category.title %></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= link_to I18n.t("dashboard.edit.button"), journey_path(journey), class: "govuk-link" %>
               </td>
@@ -31,15 +37,7 @@
           <% end %>
         </tbody>
       </table>
-    </div>
-  <% else %>
-    <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
-      <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
+    <% end %>
 
-      <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button" %>
-    </div>
-  <% end %>
-
-
+  </div>
 </div>

@@ -16,6 +16,11 @@ class Step < ApplicationRecord
   has_one :currency_answer
 
   scope :that_are_questions, -> { where(contentful_model: "question") }
+  scope :that_are_statements, -> { where(contentful_model: "statement") }
+
+  scope :visible, -> { where(hidden: false) }
+  scope :hidden, -> { where(hidden: true) }
+
   scope :ordered, -> { order(:order) }
 
   after_save :update_task_counters
@@ -36,35 +41,46 @@ class Step < ApplicationRecord
       end
   end
 
+  # @return [Boolean]
   def answered?
     !answer.nil?
   end
 
-  # Returns the text for the primary call-to-action button.
+  # @return [Boolean]
+  def acknowledged?
+    task.statement_ids.include?(id)
+  end
+
+  # Record step UUID confirming statement as read
+  #
+  # @return [Boolean]
+  def acknowledge!
+    task.statement_ids << id
+    task.save!
+  end
+
+  # Button text to advance through steps
+  #
   # @see https://design-system.service.gov.uk/components/button/
   #
   # @return [String]
   def primary_call_to_action_text
-    return I18n.t("generic.button.next") if super.blank?
-
-    super
+    super || I18n.t("generic.button.next")
   end
 
+  # @return [Boolean]
   def skippable?
     skip_call_to_action_text.present?
   end
 
-  # This method fetches the {Journey} associated to this step's {Task}'s {Section}.
-  #
   # @return [Journey]
   def journey
     task.section.journey
   end
 
-  # This method calls the owning {Task}'s save method to update its step tallies.
+  # Trigger Task#tally_steps callback to refresh `Task.step_tally`
   #
-  # This is used by the {TaskCounters} concern as a callback for when step answers
-  # are committed.
+  # @see {TaskCounters} concern
   #
   # @return [Boolean]
   def update_task_counters

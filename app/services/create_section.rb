@@ -1,15 +1,18 @@
-# CreateSection service is responsible for constructing a {Section} for the given journey.
+# Convert a {Contentful::Entry} into a {Section}
+#
 class CreateSection
   attr_accessor :journey, :contentful_section, :order
 
+  # @param journey [Journey] persisted journey
+  # @param contentful_section [Contentful::Entry] Contentful Client object
+  # @param order [Integer] position within the category
+  #
   def initialize(journey:, contentful_section:, order:)
     @journey = journey
     @contentful_section = contentful_section
     @order = order
   end
 
-  # Creates and persists a new Section.
-  #
   # @return [Section]
   def call
     section = Section.new(

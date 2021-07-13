@@ -10,9 +10,12 @@
       <ul class="app-task-list__items">
         <% section.tasks.each do |task| %>
           <% if task.one_step? %>
+
             <% if task.step.question? %>
               <li class="app-task-list__item step__item" id="<%= task.step.id %>">
+
                 <% if task.step.answered? %>
+                  <%# Accessibility - screen readers are not reading the status out %>
                   <span class="app-task-list__task-name">
                     <%= link_to task.title, edit_journey_step_path(@journey, task.step), class: "govuk-link", 'aria-describedby': task.step.status_id %>
                   </span>
@@ -29,6 +32,7 @@
                 <% end %>
               </li>
             <% end %>
+
           <% elsif task.many_steps? %>
             <li class="app-task-list__item task__item" id="<%= task.id %>">
               <span class="app-task-list__task-name">

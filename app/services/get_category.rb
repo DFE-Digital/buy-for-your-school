@@ -2,16 +2,20 @@ class Contentful::Entry
   attr_accessor :combined_specification_template
 end
 
-# GetCategory service fetches a Contentful category and validates its Liquid template.
+# Fetch and cache a Contentful category then concatenate and validate the Liquid template
+#
 class GetCategory
   class InvalidLiquidSyntax < StandardError; end
 
+  # @return [String]
   attr_accessor :category_entry_id
 
+  # @param category_entry_id [String] Contentful Entry ID
   def initialize(category_entry_id:)
     self.category_entry_id = category_entry_id
   end
 
+  # @return [Contentful::Entry]
   def call
     category = begin
       GetEntry.new(entry_id: category_entry_id).call
