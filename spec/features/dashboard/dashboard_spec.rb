@@ -32,6 +32,8 @@ feature "Specification dashboard" do
       visit dashboard_path
     end
 
+    specify { expect(page).to have_current_path "/dashboard" }
+
     scenario "they can start a new specification" do
       stub_contentful_category(fixture_filename: "radio-question.json")
       click_create_spec_link
@@ -40,10 +42,6 @@ feature "Specification dashboard" do
         expect(find("a.govuk-link")).to have_text "Radio task"
         expect(find("strong.govuk-tag--grey")).to have_text "Not started"
       end
-    end
-
-    it "has a path of /dashboard" do
-      expect(page).to have_current_path "/dashboard"
     end
 
     it "is full page width" do
