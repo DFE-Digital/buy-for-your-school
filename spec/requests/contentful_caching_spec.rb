@@ -57,7 +57,7 @@ RSpec.describe "Contentful Caching", type: :request do
       )
       category = persist_category(contentful_category)
 
-      get new_journey_path(category)
+      get new_journey_path(category.id)
 
       expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question"))
         .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\"")
@@ -72,7 +72,7 @@ RSpec.describe "Contentful Caching", type: :request do
       category = persist_category(contentful_category)
 
       freeze_time do
-        get new_journey_path(category)
+        get new_journey_path(category.id)
 
         expect(RedisCache.redis.ttl("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question"))
           .to eq(60 * 60 * 72)
@@ -99,7 +99,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
       expect(RedisCache).not_to receive(:redis)
 
-      get new_journey_path(category)
+      get new_journey_path(category.id)
     end
   end
 end

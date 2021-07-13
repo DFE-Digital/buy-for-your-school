@@ -429,7 +429,7 @@ feature "Anyone can start a journey" do
       contentful_category = stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")
       category = persist_category(contentful_category)
 
-      visit new_journey_path(category)
+      visit new_journey_path(category.id)
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_body"))
@@ -441,7 +441,7 @@ feature "Anyone can start a journey" do
       contentful_category = stub_contentful_category(fixture_filename: "unexpected-contentful-question-type.json")
       category = persist_category(contentful_category)
 
-      visit new_journey_path(category)
+      visit new_journey_path(category.id)
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_body"))
@@ -453,7 +453,7 @@ feature "Anyone can start a journey" do
       allow(stub_contentful_connector).to receive(:get_entry_by_id)
         .with("contentful-category-entry")
         .and_return(nil)
-      category = Category.create!(title: "Catering", liquid_template: "{}", contentful_id: "contentful-category-entry")
+      category = create(:category, contentful_id: "contentful-category-entry")
       visit new_journey_path(category.id)
 
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))

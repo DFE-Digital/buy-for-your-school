@@ -19,9 +19,9 @@ module JourneyHelpers
     contentful_category = stub_contentful_category(
       fixture_filename: category,
     )
-    persisted_category = persist_category(contentful_category)
+    category = persist_category(contentful_category)
 
-    user_signs_in_and_starts_the_journey(persisted_category.id)
+    user_signs_in_and_starts_the_journey(category.id)
   end
 
   def start_journey_with_tasks_from_category(category:)
@@ -30,9 +30,9 @@ module JourneyHelpers
       stub_sections: true,
       stub_tasks: true,
     )
-    persisted_category = persist_category(contentful_category)
+    category = persist_category(contentful_category)
 
-    user_signs_in_and_starts_the_journey(persisted_category.id)
+    user_signs_in_and_starts_the_journey(category.id)
   end
 
   def start_journey_from_category_and_go_to_first_section(category:)
@@ -41,6 +41,6 @@ module JourneyHelpers
   end
 
   def persist_category(contentful_category)
-    Category.create!(title: contentful_category.title, liquid_template: contentful_category.combined_specification_template, contentful_id: contentful_category.id)
+    Category.create!(title: contentful_category.title, description: contentful_category.description, liquid_template: contentful_category.combined_specification_template, contentful_id: contentful_category.id)
   end
 end
