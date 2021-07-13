@@ -1,4 +1,5 @@
-# Log user actions as {ActivityLogItem}s
+# Track user activity in the controllers actions.
+#
 #
 class RecordAction
   class UnexpectedActionType < StandardError; end
