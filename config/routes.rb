@@ -15,16 +15,13 @@ Rails.application.routes.draw do
 
   resources :journey_maps, only: %i[index show]
   resources :categories, only: %i[index]
-  resources :journeys, only: %i[show] do
+  resources :journeys, only: %i[show create] do
     resource :specification, only: [:show]
     resources :steps, only: %i[new show edit] do
       resources :answers, only: %i[create update]
     end
     resources :tasks, only: [:show]
   end
-
-  post "categories/new_spec", to: "categories#new_spec"
-  get "journeys/new/:category_id", to: "journeys#new", as: :new_journey
 
   # 681 - guard against use of back button after form validation errors
   get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")

@@ -6,7 +6,7 @@
     <% if @categories.none? %>
       <h1 class="govuk-heading-l"><%= I18n.t("categories.not_found") %></h1>      
     <% else %>
-      <%= form_with url: categories_new_spec_path do |f| %>
+      <%= form_with url: journeys_path do |f| %>
         <%= f.govuk_radio_buttons_fieldset(:category_id, legend: { size: "l", text: I18n.t("categories.header") }) do %>
             <div class="govuk-hint">
               <%= I18n.t("categories.support_info") %>

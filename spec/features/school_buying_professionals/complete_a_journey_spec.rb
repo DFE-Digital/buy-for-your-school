@@ -426,10 +426,7 @@ feature "Anyone can start a journey" do
 
   context "when Contentful entry model wasn't an expected type" do
     scenario "returns an error message" do
-      contentful_category = stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")
-      category = persist_category(contentful_category)
-
-      visit new_journey_path(category.id)
+      start_journey_from_category(category: "unexpected-contentful-type.json")
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_body"))
@@ -438,10 +435,7 @@ feature "Anyone can start a journey" do
 
   context "when the Contentful Entry wasn't an expected question type" do
     scenario "returns an error message" do
-      contentful_category = stub_contentful_category(fixture_filename: "unexpected-contentful-question-type.json")
-      category = persist_category(contentful_category)
-
-      visit new_journey_path(category.id)
+      start_journey_from_category(category: "unexpected-contentful-question-type.json")
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_body"))
@@ -454,7 +448,8 @@ feature "Anyone can start a journey" do
         .with("contentful-category-entry")
         .and_return(nil)
       category = create(:category, contentful_id: "contentful-category-entry")
-      visit new_journey_path(category.id)
+
+      user_signs_in_and_starts_the_journey(category.id)
 
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
