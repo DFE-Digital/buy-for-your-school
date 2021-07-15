@@ -8,11 +8,11 @@ feature "Categories page" do
       visit categories_path
     end
 
-    it "redirects to the hompage" do
+    it "redirects to the homepage" do
       expect(page).to have_current_path "/"
     end
 
-    it "specifying.start_page.page_title" do
+    it "has the home page title" do
       expect(page.title).to have_text "Create a specification to procure a catering service for your school"
     end
 
