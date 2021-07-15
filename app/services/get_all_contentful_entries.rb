@@ -25,6 +25,15 @@ class GetAllContentfulEntries
     response
   end
 
+  # @param [String] type Contentful entry type (e.g. task, category)
+  #
+  # @see ContentfulConnector#get_all_entries_by_type
+  #
+  # @return [Contentful::Array]
+  def by_type(type)
+    @contentful_connector.get_all_entries_by_type(type)
+  end
+
 private
 
   def send_rollbar_error

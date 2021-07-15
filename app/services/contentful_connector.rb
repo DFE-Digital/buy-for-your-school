@@ -17,4 +17,8 @@ class ContentfulConnector
   def get_all_entries
     @contentful_client.entries
   end
+
+  def get_all_entries_by_type(type)
+    @contentful_client.entries(content_type: type)
+  end
 end
