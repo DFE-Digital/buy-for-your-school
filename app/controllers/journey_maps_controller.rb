@@ -32,6 +32,6 @@ class JourneyMapsController < ApplicationController
   end
 
   def index
-    @categories = GetAllContentfulEntries.new.by_type("category")
+    @categories = ContentfulConnector.new.get_entries_by_type("category")
   end
 end
