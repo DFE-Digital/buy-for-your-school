@@ -13,7 +13,7 @@ RSpec.describe CreateStep do
           contentful_fixture_filename: "steps/radio-question.json",
         )
 
-        step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
+        step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
 
         expect(step.title).to eq("Which service do you need?")
         expect(step.help_text).to eq("Tell us which service you need.")
@@ -77,7 +77,7 @@ RSpec.describe CreateStep do
           contentful_fixture_filename: "steps/short-text-question.json",
         )
 
-        step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
+        step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
 
         expect(step.options).to eq(nil)
       end
@@ -92,7 +92,7 @@ RSpec.describe CreateStep do
           contentful_fixture_filename: "steps/short-text-question.json",
         )
 
-        step = described_class.new(task: task, contentful_entry: fake_entry, order: 0).call
+        step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
 
         expect(step.contentful_type).to eq("short_text")
       end
@@ -110,7 +110,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0,
+          task: task, contentful_step: fake_entry, order: 0,
         ).call
 
         expect(step.body).to eq("#### Heading 4")
@@ -129,7 +129,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0,
+          task: task, contentful_step: fake_entry, order: 0,
         ).call
 
         expect(step.primary_call_to_action_text).to eq("Go onwards!")
@@ -148,7 +148,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0,
+          task: task, contentful_step: fake_entry, order: 0,
         ).call
 
         expect(step.primary_call_to_action_text).to eq(I18n.t("generic.button.next"))
@@ -167,7 +167,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0,
+          task: task, contentful_step: fake_entry, order: 0,
         ).call
 
         expect(step.skip_call_to_action_text).to eq("None of the above")
@@ -186,7 +186,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0,
+          task: task, contentful_step: fake_entry, order: 0,
         ).call
 
         expect(step.hidden).to eq(false)
@@ -205,7 +205,7 @@ RSpec.describe CreateStep do
         )
 
         step, _answer = described_class.new(
-          task: task, contentful_entry: fake_entry, order: 0,
+          task: task, contentful_step: fake_entry, order: 0,
         ).call
 
         expect(step.additional_step_rules).to eql([
@@ -228,7 +228,7 @@ RSpec.describe CreateStep do
           contentful_fixture_filename: "steps/unexpected-contentful-type.json",
         )
 
-        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
 
@@ -253,7 +253,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
                 allowed_step_types: CreateStep::ALLOWED_STEP_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
     end
@@ -269,7 +269,7 @@ RSpec.describe CreateStep do
           contentful_fixture_filename: "steps/unexpected-contentful-question-type.json",
         )
 
-        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
 
@@ -294,7 +294,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: CreateStep::ALLOWED_CONTENTFUL_MODELS.join(", "),
                 allowed_step_types: CreateStep::ALLOWED_STEP_TYPES.join(", "))
           .and_call_original
-        expect { described_class.new(task: task, contentful_entry: fake_entry, order: 0).call }
+        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end
