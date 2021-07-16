@@ -5,15 +5,14 @@ RSpec.describe "Contentful Caching", type: :request do
 
   context "when caching is enabled" do
     around do |example|
-      ClimateControl.modify(
-        CONTENTFUL_ENTRY_CACHING: "true",
-      ) do
+      ClimateControl.modify(CONTENTFUL_ENTRY_CACHING: "true") do
         example.run
       end
     end
 
     after { RedisCache.redis.flushdb }
 
+    # TODO: revise this spec and understand the todos below
     it "checks the Redis cache instead of making an external request" do
       # TODO: In reality we do not cache categories, but should
       raw_category_response = File.read(Rails.root.join("spec/fixtures/contentful/001-categories/radio-question.json"))

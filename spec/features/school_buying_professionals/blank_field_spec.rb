@@ -6,7 +6,7 @@ feature "Back link works after failed form validations" do
   before { user_is_signed_in(user: user) }
 
   it "clears the validation error rather than raise a routing error" do
-    start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+    start_journey_from_category(category: "section-with-multiple-tasks.json")
 
     within ".app-task-list" do
       click_on "Task containing every type of step"

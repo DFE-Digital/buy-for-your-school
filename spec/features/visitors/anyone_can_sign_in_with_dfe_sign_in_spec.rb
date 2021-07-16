@@ -58,9 +58,7 @@ feature "Anyone can sign in with DfE Sign-in" do
   scenario "sign in fails" do
     user_sign_in_attempt_fails
 
-    expect(Rollbar).to receive(:error)
-      .with("Sign in failed unexpectedly")
-      .and_call_original
+    expect(Rollbar).to receive(:error).with("Sign in failed unexpectedly").and_call_original
 
     visit root_path
     click_button I18n.t("generic.button.start")

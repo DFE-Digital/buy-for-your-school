@@ -16,12 +16,12 @@ class ContentfulConnector
   end
 
   # @return [Contentful::Entry]
-  def get_entry_by_id(entry_id)
+  def by_id(entry_id)
     @contentful_client.entry(entry_id)
   end
 
   # @return [Contentful::Array]
-  def get_all_entries_by_type(type)
+  def by_type(type)
     @contentful_client.entries(content_type: type)
   end
 end

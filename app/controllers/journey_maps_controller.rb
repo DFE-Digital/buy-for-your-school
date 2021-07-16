@@ -20,6 +20,11 @@ class JourneyMapsController < ApplicationController
     end
   end
 
+  # TODO: add missing feature spec ASAP
+  def index
+    @categories = ContentfulConnector.new.by_type("category")
+  end
+
   # TODO: introduce service function JourneyMapper#call that receives a category_id and returns steps
   def show
     contentful_category = GetCategory.new(category_entry_id: params[:id]).call
@@ -29,9 +34,5 @@ class JourneyMapsController < ApplicationController
     @steps = tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
 
     flash[:notice] = "#{contentful_category.environment.id.capitalize} Environment"
-  end
-
-  def index
-    @categories = ContentfulConnector.new.get_entries_by_type("category")
   end
 end

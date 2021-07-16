@@ -6,7 +6,7 @@ RSpec.describe GetTasksFromSection do
       section = fake_contentful_section(
         contentful_fixture_filename: "sections/multiple-tasks-section.json",
       )
-      stub_contentful_section_tasks(sections: [section])
+      stub_contentful_tasks(sections: [section])
 
       result = described_class.new(section: section).call
 

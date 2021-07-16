@@ -3,23 +3,18 @@ require "rails_helper"
 RSpec.describe GetCategory do
   describe "#call" do
     it "returns a Contentful::Entry for the category_entry_id" do
-      stub_contentful_category(
-        fixture_filename: "statement.json",
-        stub_sections: false,
-      )
+      stub_contentful_category(fixture_filename: "statement.json", stub_sections: false)
+
       result = described_class.new(category_entry_id: "contentful-category-entry").call
-      expect(result.id).to eql("contentful-category-entry")
+      expect(result.id).to eql "contentful-category-entry"
     end
 
     context "when the category entry cannot be found" do
       it "sends a message to rollbar" do
         contentful_connector = instance_double(ContentfulConnector)
-        allow(ContentfulConnector).to receive(:new)
-          .and_return(contentful_connector)
 
-        allow(contentful_connector).to receive(:get_entry_by_id)
-          .with(anything)
-          .and_return(nil)
+        allow(ContentfulConnector).to receive(:new).and_return(contentful_connector)
+        allow(contentful_connector).to receive(:by_id).with(anything).and_return(nil)
 
         expect(Rollbar).to receive(:error)
           .with("A Contentful category entry was not found",

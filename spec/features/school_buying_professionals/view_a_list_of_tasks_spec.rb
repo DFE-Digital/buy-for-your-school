@@ -7,7 +7,7 @@ feature "Users can view the task list" do
 
   describe "and see their answers" do
     before do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
       within ".app-task-list" do
         click_on "Task containing every type of step"
       end
@@ -102,7 +102,7 @@ feature "Users can view the task list" do
   end
 
   scenario "user can navigate back to the task list from a task view" do
-    start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+    start_journey_from_category(category: "section-with-multiple-tasks.json")
 
     within(".app-task-list") do
       click_on "Task with multiple steps"
@@ -135,7 +135,7 @@ feature "Users can view the task list" do
 
   context "when a task has one step" do
     scenario "user can navigate back to the task list from a step" do
-      start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+      start_journey_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
         click_on "Task with a single step"
@@ -149,7 +149,7 @@ feature "Users can view the task list" do
 
   context "when a task has more than one step" do
     scenario "user can navigate back to the task view from a question" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
@@ -162,7 +162,7 @@ feature "Users can view the task list" do
   end
 
   scenario "user can navigate back to the task list from a list of questions" do
-    start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+    start_journey_from_category(category: "section-with-multiple-tasks.json")
 
     # straight to first step
     within ".app-task-list" do
@@ -180,7 +180,7 @@ feature "Users can view the task list" do
 
   context "when a task has more than one unanswered step" do
     scenario "user can see a link to continue answering questions" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within ".app-task-list" do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
@@ -199,7 +199,7 @@ feature "Users can view the task list" do
 
   context "when a task with multiple steps has been completed" do
     scenario "user can see a link to continue to the next task" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within ".app-task-list" do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
@@ -243,14 +243,14 @@ feature "Users can view the task list" do
     end
 
     scenario "shows the section title" do
-      start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+      start_journey_from_category(category: "section-with-single-task.json")
       within(".app-task-list") do
         expect(page).to have_content("Section with a single task")
       end
     end
 
     scenario "shows the task title, not the step title" do
-      start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+      start_journey_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
         expect(page).to have_content("Task with a single step")
@@ -259,7 +259,7 @@ feature "Users can view the task list" do
     end
 
     scenario "has a back link on the step page that takes you to the journey page" do
-      start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+      start_journey_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
         click_on "Task with a single step"
@@ -271,7 +271,7 @@ feature "Users can view the task list" do
     end
 
     scenario "allows the user to complete the step, and returns to the journey page" do
-      start_journey_with_tasks_from_category(category: "section-with-single-task.json")
+      start_journey_from_category(category: "section-with-single-task.json")
 
       within(".app-task-list") do
         click_on "Task with a single step"
@@ -296,14 +296,14 @@ feature "Users can view the task list" do
     end
 
     scenario "shows the section title" do
-      start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
+      start_journey_from_category(category: "section-with-single-hidden-task.json")
       within(".app-task-list") do
         expect(page).to have_content("Section with a hidden task")
       end
     end
 
     scenario "does not show the task nor step title" do
-      start_journey_with_tasks_from_category(category: "section-with-single-hidden-task.json")
+      start_journey_from_category(category: "section-with-single-hidden-task.json")
 
       within(".app-task-list") do
         expect(page).not_to have_content("Task with a hidden step")
@@ -312,7 +312,7 @@ feature "Users can view the task list" do
 
     context "when that step becomes visible" do
       it "appears in the order defined in Contentful rather than at the end" do
-        start_journey_with_tasks_from_category(category: "show-one-additional-question-in-order.json")
+        start_journey_from_category(category: "show-one-additional-question-in-order.json")
 
         # Simulate the bug by changing the created_at to a time that incorrectly
         # puts the hidden record at the bottom of the list
@@ -351,14 +351,14 @@ feature "Users can view the task list" do
 
   context "when there is a task with multiple steps" do
     scenario "shows the section title" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
       within(".app-task-list") do
         expect(page).to have_content("Section with multiple tasks")
       end
     end
 
     scenario "shows the task titles within the section" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         expect(page).to have_content("Task with multiple steps")

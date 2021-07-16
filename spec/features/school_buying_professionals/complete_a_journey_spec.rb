@@ -436,9 +436,8 @@ feature "Anyone can start a journey" do
 
   context "when the starting entry id doesn't exist" do
     scenario "a Contentful entry_id does not exist" do
-      allow(stub_contentful_connector).to receive(:get_entry_by_id)
-        .with("contentful-category-entry")
-        .and_return(nil)
+      allow(stub_contentful_connector).to receive(:by_id).with("contentful-category-entry").and_return(nil)
+
       category = create(:category, contentful_id: "contentful-category-entry")
 
       user_signs_in_and_starts_the_journey(category.id)
@@ -537,7 +536,7 @@ feature "Anyone can start a journey" do
 
   context "when a user views a previously answered step" do
     scenario "an action is recorded" do
-      start_journey_with_tasks_from_category(category: "radio-question.json")
+      start_journey_from_category(category: "radio-question.json")
 
       journey = Journey.last
       task = Task.find_by(title: "Radio task")

@@ -7,7 +7,7 @@ feature "Users can view a task" do
 
   context "when there is a task with multiple steps" do
     it "the Task title takes you to the first step" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
@@ -17,7 +17,7 @@ feature "Users can view a task" do
     end
 
     it "records an action in the event log that a task has begun" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
@@ -50,7 +50,7 @@ feature "Users can view a task" do
 
     context "when a task has at least one answered step" do
       it "takes the user to the task page" do
-        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+        start_journey_from_category(category: "section-with-multiple-tasks.json")
 
         task = Task.find_by(title: "Task with multiple steps")
         step = task.steps.first
@@ -65,7 +65,7 @@ feature "Users can view a task" do
       end
 
       it "records an action in the event log that an in-progress task has been revisited" do
-        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+        start_journey_from_category(category: "section-with-multiple-tasks.json")
 
         task = Task.find_by(title: "Task with multiple steps")
         step = task.steps.first
@@ -100,7 +100,7 @@ feature "Users can view a task" do
 
     context "when all questions in a task have been answered" do
       it "records an action in the event log that a completed task has been revisited" do
-        start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+        start_journey_from_category(category: "section-with-multiple-tasks.json")
 
         within(".app-task-list") do
           click_on "Task with multiple steps"
@@ -143,7 +143,7 @@ feature "Users can view a task" do
     end
 
     it "shows a list of the task steps" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
@@ -157,7 +157,7 @@ feature "Users can view a task" do
     end
 
     it "does not show hidden steps" do
-      start_journey_with_tasks_from_category(category: "section-with-visible-and-hidden-tasks.json")
+      start_journey_from_category(category: "section-with-visible-and-hidden-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with visible and hidden steps"
@@ -168,7 +168,7 @@ feature "Users can view a task" do
     end
 
     it "has a back link on the step page that takes you to the check your answers page" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
@@ -180,7 +180,7 @@ feature "Users can view a task" do
     end
 
     it "allows the user to click on a step to supply an answer, and be taken to the next step" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"
@@ -193,7 +193,7 @@ feature "Users can view a task" do
     end
 
     it "allows the user to click on a step to supply the last answer in a task, and be taken to the check your answers page" do
-      start_journey_with_tasks_from_category(category: "section-with-multiple-tasks.json")
+      start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
         click_on "Task with multiple steps"

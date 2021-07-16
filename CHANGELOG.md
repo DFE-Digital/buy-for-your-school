@@ -13,24 +13,25 @@ The format is based on [Keep a Changelog 1.0.0].
 - change from `standardrb` to `rubocop-govuk` and convert lint style
 - generate PDF format Entity Relationship Diagram with upon DB migrations
 - add status badges to `README`
-- use Pry in the Rails console
-- add additional dev tools to optional `Brewfile`
-- remove unused `GetAllContentfulEntries` service
-- add explicit ordering to the task model to allow continuing to the next unanswered task
-- add extensible tally of counted steps to the task
+- use `pry` in the Rails console
+- add additional developer tools to optional `Brewfile`
+- remove unused `GetAllContentfulEntries` service object
 
 **Non-question steps**
 - implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
 - remove `staticContent` entity and add `Statement` entity in Contentful (currently only in develop)
 
 **Multiple Categories**
-- introduce `Category` model to mirror Contentful category entity and Rake task for data migration
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
+- introduce `Category` model to mirror Contentful category entity
 - add category `title` column to the dashboard
-- add `journey_maps#index` to allow the viewing of Contentful data for a specific category
-- add `categories#index` to allow the creation of a specification for a particular category
+- add `journey_maps#index` to allow content designers to switch category
+- add `categories#index` to enable users to create a specification from a chosen category
+- WIP: data migration
 
 **Dashboard functionality**
+- add explicit ordering to the task model to allow continuing to the next unanswered task
+- add extensible tally of counted steps to the task
 - add state to `Journey` (initial, stale, archive or remove)
 - drop `Journey.last_worked_on` in favour of `updated_at`
 
