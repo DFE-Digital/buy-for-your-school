@@ -223,6 +223,10 @@ feature "Users can view the task list" do
 
       click_on "Back" # > every-question-type-task.json
       expect(page).to have_content "Task containing every type of step"
+
+      #
+
+
     end
   end
 
