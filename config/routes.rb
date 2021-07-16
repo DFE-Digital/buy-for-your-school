@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
   post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 
-  resources :journey_maps, only: [:new]
+  resources :journey_maps, only: %i[index show]
   resources :categories, only: %i[index]
   resources :journeys, only: %i[show create] do
     resource :specification, only: [:show]

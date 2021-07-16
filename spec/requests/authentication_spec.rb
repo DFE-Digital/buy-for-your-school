@@ -58,7 +58,7 @@ RSpec.describe "Authentication", type: :request do
     end
 
     it "users cannot see the journey map" do
-      get new_journey_map_path
+      get journey_maps_path
       expect(response).to redirect_to(root_path)
     end
 

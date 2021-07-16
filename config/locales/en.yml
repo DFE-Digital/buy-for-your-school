@@ -98,6 +98,7 @@ en:
       next: Continue to the next task
   journey_map:
     page_title: "Template Designer"
+    category_selection_header: "Choose a category"
     edit_step_link_text: "Edit step in Contentful"
     preview_step_link_text: "Preview step in service"
     spec_template_tag_title: "Specification tag"
