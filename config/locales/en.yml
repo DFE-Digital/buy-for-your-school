@@ -79,6 +79,11 @@ en:
     existing:
       header: "Existing specifications"
       body: "Continue with a draft specification, and review completed specifications."
+  # /categories
+  categories:
+    header: "Choose the type of specification you want to build"
+    support_info: "We currently only support catering and multifunctional devices."
+    not_found: "No categories found"
   # /journeys#show
   task_list:
     status:
