@@ -18,7 +18,7 @@ class GetEntry
     )
   end
 
-  # @raise [EntryNotFound]
+  # @raise [GetEntry::EntryNotFound]
   #
   # @return [Contentful::Entry]
   #

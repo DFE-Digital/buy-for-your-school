@@ -1,8 +1,4 @@
-require "rails_helper"
-
-# Rendered text is referred to by the I18n.t key
-#
-feature "Specification dashboard" do
+RSpec.feature "Specification dashboard" do
   context "when the user is not signed in" do
     before do
       visit dashboard_path

@@ -7,9 +7,9 @@ RSpec.describe ToggleAdditionalSteps do
     let(:task) { create(:task, section: section) }
 
     context "when the additional_step_rules field is nil" do
-      it "returns nil" do
+      it "returns false" do
         step = build(:step)
-        expect(described_class.new(step: step).call).to eq(nil)
+        expect(described_class.new(step: step).call).to be false
       end
     end
 

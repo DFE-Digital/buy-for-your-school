@@ -6,6 +6,9 @@ class SaveAnswer
     self.step = answer.step
   end
 
+  # Ensure journey is flagged as having been started
+  #
+  #
   def call(params:)
     result = Result.new(false, answer)
 
