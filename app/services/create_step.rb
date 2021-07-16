@@ -32,15 +32,15 @@ class CreateStep
 
   ALLOWED_STEP_TYPES = ALLOWED_CONTENTFUL_QUESTION_TYPES + ALLOWED_CONTENTFUL_STATEMENT_TYPES
 
-  attr_accessor :task, :contentful_entry, :order
+  attr_accessor :task, :contentful_step, :order
 
   # @param task [Task] persisted task
-  # @param contentful_entry [Contentful::Entry] Contentful Client object
+  # @param contentful_step [Contentful::Entry] Contentful Client object
   # @param order [Integer] position within the task
   #
-  def initialize(task:, contentful_entry:, order:)
+  def initialize(task:, contentful_step:, order:)
     self.task = task
-    self.contentful_entry = contentful_entry
+    self.contentful_step = contentful_step
     self.order = order
   end
 
@@ -80,12 +80,12 @@ private
 
   # @return [String]
   def content_entry_id
-    contentful_entry.id
+    contentful_step.id
   end
 
   # @return [String] question, statement
   def content_model
-    contentful_entry.content_type.id
+    contentful_step.content_type.id
   end
 
   # @return [Boolean]
@@ -110,69 +110,69 @@ private
 
   # @return [String]
   def title
-    contentful_entry.title
+    contentful_step.title
   end
 
   # @return [Nil, String]
   def help_text
-    return nil unless contentful_entry.respond_to?(:help_text)
+    return nil unless contentful_step.respond_to?(:help_text)
 
-    contentful_entry.help_text
+    contentful_step.help_text
   end
 
   # @return [Nil, String]
   def body
-    return nil unless contentful_entry.respond_to?(:body)
+    return nil unless contentful_step.respond_to?(:body)
 
-    contentful_entry.body
+    contentful_step.body
   end
 
   # @return [Nil, String]
   def options
-    return nil unless contentful_entry.respond_to?(:extended_options)
+    return nil unless contentful_step.respond_to?(:extended_options)
 
-    contentful_entry.extended_options
+    contentful_step.extended_options
   end
 
   # @return [String]
   def step_type
-    contentful_entry.type.tr(" ", "_")
+    contentful_step.type.tr(" ", "_")
   end
 
   # @see https://design-system.service.gov.uk/components/button/
   # @return [Nil, String]
   def primary_call_to_action_text
-    return nil unless contentful_entry.respond_to?(:primary_call_to_action)
+    return nil unless contentful_step.respond_to?(:primary_call_to_action)
 
-    contentful_entry.primary_call_to_action
+    contentful_step.primary_call_to_action
   end
 
   # @see https://design-system.service.gov.uk/components/button/
   # @return [Nil, String]
   def skip_call_to_action_text
-    return nil unless contentful_entry.respond_to?(:skip_call_to_action)
+    return nil unless contentful_step.respond_to?(:skip_call_to_action)
 
-    contentful_entry.skip_call_to_action
+    contentful_step.skip_call_to_action
   end
 
   # @return [Boolean]
   def hidden?
-    return false unless contentful_entry.respond_to?(:always_show_the_user)
-    return false if contentful_entry.always_show_the_user.nil?
+    return false unless contentful_step.respond_to?(:always_show_the_user)
+    return false if contentful_step.always_show_the_user.nil?
 
-    !contentful_entry.always_show_the_user
+    !contentful_step.always_show_the_user
   end
 
   # @return [Nil, Array<Hash>]
   def additional_step_rules
-    return nil unless contentful_entry.respond_to?(:show_additional_question)
+    return nil unless contentful_step.respond_to?(:show_additional_question)
 
-    contentful_entry.show_additional_question
+    contentful_step.show_additional_question
   end
 
   # @return [String]
   def raw
-    contentful_entry.raw
+    contentful_step.raw
   end
 
   def send_rollbar_warning
