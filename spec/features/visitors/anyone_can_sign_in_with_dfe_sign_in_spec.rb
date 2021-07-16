@@ -3,11 +3,12 @@ require "rails_helper"
 feature "Anyone can sign in with DfE Sign-in" do
   context "when the user exists in the service" do
     scenario "signs in successfully" do
-      stub_contentful_category(fixture_filename: "radio-question.json")
+      contentful_category = stub_contentful_category(fixture_filename: "radio-question.json")
+      category = persist_category(contentful_category)
       user = create(:user)
 
       user_exists_in_dfe_sign_in(dsi_uid: user.dfe_sign_in_uid)
-      user_starts_the_journey
+      user_starts_the_journey(category.id)
 
       expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
 
@@ -17,11 +18,12 @@ feature "Anyone can sign in with DfE Sign-in" do
     end
 
     scenario "can move between pages without reauthenticating by relying on session data" do
-      stub_contentful_category(fixture_filename: "radio-question.json")
+      contentful_category = stub_contentful_category(fixture_filename: "radio-question.json")
+      category = persist_category(contentful_category)
       user = create(:user)
 
       user_exists_in_dfe_sign_in(dsi_uid: user.dfe_sign_in_uid)
-      user_starts_the_journey
+      user_starts_the_journey(category.id)
       expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
 
       # Undo the OmniAuth stub to check we don't require it again
@@ -37,14 +39,15 @@ feature "Anyone can sign in with DfE Sign-in" do
 
   context "when the user doesn't exist in the service" do
     scenario "new users can sign in" do
-      stub_contentful_category(fixture_filename: "radio-question.json")
+      contentful_category = stub_contentful_category(fixture_filename: "radio-question.json")
+      category = persist_category(contentful_category)
 
       a_dsi_uid_we_have_not_seen_before = "7f2cbd01-6779-4524-acc4-0c6ef52120b5"
 
       # Omit the creation of a fake user to simulate a user not found scenario
 
       user_exists_in_dfe_sign_in(dsi_uid: a_dsi_uid_we_have_not_seen_before)
-      user_starts_the_journey
+      user_starts_the_journey(category.id)
 
       expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
       new_user = User.find_by(dfe_sign_in_uid: a_dsi_uid_we_have_not_seen_before)

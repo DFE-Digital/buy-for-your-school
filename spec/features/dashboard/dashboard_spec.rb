@@ -35,8 +35,9 @@ feature "Specification dashboard" do
     specify { expect(page).to have_current_path "/dashboard" }
 
     scenario "they can start a new specification" do
-      stub_contentful_category(fixture_filename: "radio-question.json")
+      persist_category(stub_contentful_category(fixture_filename: "radio-question.json"))
       click_create_spec_link
+      click_on "Continue"
 
       within "ul.app-task-list__items" do
         expect(find("a.govuk-link")).to have_text "Radio task"

@@ -228,13 +228,14 @@ feature "Users can view the task list" do
 
   context "when a task includes a step that has been answered" do
     scenario "the task is marked as completed" do
-      stub_contentful_category(fixture_filename: "multiple-sections.json")
+      contentful_category = stub_contentful_category(fixture_filename: "multiple-sections.json")
+      category = persist_category(contentful_category)
 
       answer = create(:short_text_answer, response: "answer")
       journey = answer.step.journey
       journey.update!(user: user)
 
-      user_starts_the_journey
+      user_starts_the_journey(category.id)
 
       visit journey_path(journey)
 

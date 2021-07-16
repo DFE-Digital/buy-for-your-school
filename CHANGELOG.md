@@ -25,6 +25,10 @@ The format is based on [Keep a Changelog 1.0.0].
 - add state to Journey (initial, stale, archive or remove)
 - drop Journey.last_worked_on in favour of updated_at
 - add category title column to the dashboard
+- add `journey_maps#index` to allow the viewing of Contentful data for a specific category
+- remove unused GetAllContentfulEntries service
+- add `categories#index` to allow the creation of a specification for a particular category
+- remove references to hard-coded category `ENV` variable in `JourneyController`
 
 ## [release-015] - 2021-06-17
 

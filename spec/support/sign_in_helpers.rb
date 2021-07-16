@@ -12,15 +12,17 @@ module SignInHelpers
     OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
   end
 
-  def user_starts_the_journey
+  def user_starts_the_journey(category_id)
     visit root_path
     click_button I18n.t("generic.button.start")
     click_on I18n.t("dashboard.create.button")
+    find("#category-id-#{category_id}-field").click
+    click_on I18n.t("generic.button.next")
   end
 
-  def user_signs_in_and_starts_the_journey
+  def user_signs_in_and_starts_the_journey(category_id)
     user_exists_in_dfe_sign_in
-    user_starts_the_journey
+    user_starts_the_journey(category_id)
   end
 
   def user_is_signed_in(user: build(:user))
