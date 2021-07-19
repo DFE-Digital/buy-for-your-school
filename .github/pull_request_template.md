@@ -1,8 +1,8 @@
 <!--
-  1. Do you need to update the CHANGELOG?
-  2. New dependency? Is there an accompanying ADR?
-  3. Have you included feature/functional spec coverage? (unit test and in browser test)
-  4. Have you documented your code using valid Yard syntax?
+  1. New dependency? Is there an accompanying ADR?
+  2. New route? Is the code covered by functional (unit) and feature (browser) tests?
+  3. New method/class? Have you documented your code using valid Yard syntax?
+  4. Do you need to update the CHANGELOG?
 -->
 
 ## Changes in this PR
