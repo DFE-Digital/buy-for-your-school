@@ -26,7 +26,7 @@ class GetEntry
     if cache.hit?(key: cache_key)
       entry = find_and_build_entry_from_cache(cache: cache, key: cache_key)
     else
-      entry = @contentful_connector.get_entry_by_id(entry_id)
+      entry = @contentful_connector.by_id(entry_id)
       store_in_cache(cache: cache, key: cache_key, entry: entry)
     end
 

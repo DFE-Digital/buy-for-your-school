@@ -9,6 +9,7 @@ RSpec.describe "Cache invalidation", type: :request do
     end
   end
 
+  # TODO: remove this and all the string interpolation
   let(:prefix) { Cache::ENTRY_CACHE_KEY_PREFIX }
 
   it "removes any matching entry ID from the cache" do

@@ -17,7 +17,7 @@ RSpec.describe ContentfulConnector do
     end
   end
 
-  describe "#get_entry_by_id" do
+  describe "#by_id" do
     it "returns a Contentful entry by ID by making a call to Contentful" do
       contentful_client = instance_double(Contentful::Client)
       allow(Contentful::Client).to receive(:new)
@@ -32,13 +32,13 @@ RSpec.describe ContentfulConnector do
         .with("123")
         .and_return(contentful_response)
 
-      result = described_class.new.get_entry_by_id("123")
+      result = described_class.new.by_id("123")
 
       expect(result).to eq(contentful_response)
     end
   end
 
-  describe "#get_all_entries_by_type" do
+  describe "#by_type" do
     it "returns Contentful entries by type by making a call to Contentful" do
       contentful_client = instance_double(Contentful::Client)
       allow(Contentful::Client).to receive(:new)
@@ -50,10 +50,10 @@ RSpec.describe ContentfulConnector do
 
       contentful_response = double(Contentful::Array)
       allow(contentful_client).to receive(:entries)
-        .with({ content_type: "test_type" })
+        .with(content_type: "test_type")
         .and_return(contentful_response)
 
-      results = described_class.new.get_all_entries_by_type("test_type")
+      results = described_class.new.by_type("test_type")
 
       expect(results).to eq(contentful_response)
     end
