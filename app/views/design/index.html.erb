@@ -1,4 +1,4 @@
-<%= content_for :title, I18n.t("journey_map.category_selection_header") %>
+<%= content_for :title, I18n.t("design.category_selection_header") %>
 <%= link_to I18n.t("generic.button.back"), root_path, class: "govuk-back-link" %>
 
 <div class="govuk-grid-row">
@@ -6,10 +6,10 @@
     <% if @categories.none? %>
       <h1 class="govuk-heading-l"><%= I18n.t("categories.not_found") %></h1>
     <% else %>
-      <h1 class="govuk-heading-xl"><%= I18n.t("journey_map.category_selection_header") %></h1>
+      <h1 class="govuk-heading-xl"><%= I18n.t("design.category_selection_header") %></h1>
       <ul class="govuk-list govuk-list--bullet">
         <% @categories.each do |category| %>
-          <li><%= link_to category.title, journey_map_path(category.id), class: "govuk-link" %></li>
+          <li><%= link_to category.title, design_path(category.slug), class: "govuk-link" %></li>
         <% end %>
       </ul>
     <% end %>

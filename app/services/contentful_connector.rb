@@ -24,4 +24,12 @@ class ContentfulConnector
   def by_type(type)
     @contentful_client.entries(content_type: type)
   end
+
+  # @param type [String]
+  # @param slug [String]
+  #
+  # @return [Contentful::Entry]
+  def by_slug(type, slug)
+    @contentful_client.entries(content_type: type, "fields.slug" => slug).first
+  end
 end

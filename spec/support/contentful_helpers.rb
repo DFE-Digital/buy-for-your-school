@@ -20,6 +20,7 @@ module ContentfulHelpers
     contentful_category = stub_contentful_category(fixture_filename: category_fixtures.first, contentful_connector: contentful_connector)
 
     allow(contentful_array).to receive(:each).and_yield(contentful_category)
+    allow(contentful_array).to receive(:none?).and_return(false)
     allow(contentful_connector).to receive(:by_type).with("category").and_return(contentful_array)
   end
 
@@ -32,6 +33,7 @@ module ContentfulHelpers
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
     allow(contentful_connector).to receive(:by_id).with(category.id).and_return(category)
+    allow(contentful_connector).to receive(:by_slug).with("category", category.slug).and_return(category)
 
     if stub_sections
       sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
@@ -127,6 +129,7 @@ module ContentfulHelpers
       specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),
       combined_specification_template: combined_specification_template,
       environment: double(id: "test"),
+      slug: hash_response.dig("fields", "slug"),
     )
 
     allow(category_double).to receive(:combined_specification_template=)
