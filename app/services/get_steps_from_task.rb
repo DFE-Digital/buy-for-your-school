@@ -11,6 +11,8 @@ class GetStepsFromTask
     self.task = task
   end
 
+  # @raise [GetStepsFromTask::RepeatEntryDetected]
+  #
   # @return [Array<Contentful::Entry>]
   def call
     return [] unless task.respond_to?(:steps)

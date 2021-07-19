@@ -11,6 +11,19 @@ FactoryBot.define do
 
     association :task, factory: :task
 
+    # @see specs/feature/additional_steps_spec
+    trait :additional_steps do
+      title { "has additional steps" }
+      help_text { "answer yes for more steps" }
+      order { 0 }
+      contentful_model { "question" }
+      contentful_type { "radios" }
+      options { [{ "value" => "yes" }, { "value" => "no" }] }
+      additional_step_rules do
+        [{ "required_answer" => "yes", "question_identifiers" => %w[123 456] }]
+      end
+    end
+
     #
     # Statements
     #

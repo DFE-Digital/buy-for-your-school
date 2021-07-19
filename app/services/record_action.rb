@@ -38,6 +38,8 @@ class RecordAction
     self.data = data
   end
 
+  # @raise [RecordAction::UnexpectedActionType]
+  #
   # @return [ActivityLogItem]
   def call
     if unexpected_action_type?
