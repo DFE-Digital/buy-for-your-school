@@ -1,5 +1,5 @@
 {
-  "name": "rails-template",
+  "name": "sct-buy-for-your-school",
   "private": true,
   "dependencies": {
     "govuk-frontend": "^3.13.0"
