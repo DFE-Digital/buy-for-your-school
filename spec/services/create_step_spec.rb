@@ -19,7 +19,7 @@ RSpec.describe CreateStep do
         step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
 
         expect(step.title).to eq "Which service do you need?"
-        expect(step.help_text).to eq "Tell us which service you need." 
+        expect(step.help_text).to eq "Tell us which service you need."
         expect(step.contentful_id).to eq "radio-question"
         expect(step.contentful_model).to eq "question"
         expect(step.contentful_type).to eq "radios"
