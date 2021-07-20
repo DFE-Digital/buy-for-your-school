@@ -22,7 +22,7 @@ RSpec.feature "Toggling additional steps" do
                task: step.task)
 
         user_is_signed_in(user: user)
-        visit journey_path(journey)
+        visit_journey
       end
 
       it "changes the state badge" do
@@ -31,14 +31,14 @@ RSpec.feature "Toggling additional steps" do
 
         # answer question revealing additional steps
         choose "yes"
-        click_on "Continue"
+        click_continue
 
         # continue to newly revealed statement step
         within ".govuk-body" do
           expect(find("h2")).to have_text "Heading 2"
         end
         # acknowledge the statement
-        click_on "Continue"
+        click_continue
 
         # FIXME: continue to newly revealed question step
         # expect(find("label.govuk-label--l")).to have_text "question?"
@@ -57,15 +57,51 @@ RSpec.feature "Toggling additional steps" do
     context "when there are no additional steps" do
       before do
         user_is_signed_in(user: user)
-        visit journey_path(journey)
+        visit_journey
       end
 
       it "does not change the state badge" do
         click_on "Task title"
         choose "yes"
-        click_on "Continue"
+        click_continue
         expect(find("strong.app-task-list__tag")).to have_text "Completed"
       end
     end
   end
 end
+
+# context "when Contentful entry includes a 'show additional question' rule" do
+#     scenario "an additional question is shown" do
+#       start_journey_from_category(category: "show-one-additional-question.json")
+#       click_first_link_in_section_list
+
+#       choose "School expert"
+#       click_continue
+
+#       # This question should be made visible after the previous step
+#       click_on "Hidden field with additional question task"
+#       choose "Red"
+#       click_continue
+
+#       # This question should be made visible after the previous step
+#       click_on "Hidden field task"
+#       choose "School expert"
+#       click_continue
+
+#       # Edit the first question to remove the chain of hidden questions
+#       click_on "One additional question task"
+#       choose "None"
+#       click_update
+
+#       expect(page).not_to have_content "Hidden field with additional question task"
+#       expect(page).not_to have_content "Hidden field task"
+
+#       # Edit the first question to add back the full chain of hidden questions
+#       click_on "One additional question task"
+#       choose "School expert"
+#       click_update
+
+#       expect(page).to have_content "Hidden field with additional question task"
+#       expect(page).to have_content "Hidden field task"
+#     end
+#   end

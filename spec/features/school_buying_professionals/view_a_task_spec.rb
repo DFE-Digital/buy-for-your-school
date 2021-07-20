@@ -1,12 +1,11 @@
-require "rails_helper"
-
-feature "Users can view a task" do
+RSpec.feature "Users can view a task" do
   let(:user) { create(:user) }
 
   before { user_is_signed_in(user: user) }
 
   context "when there is a task with multiple steps" do
     it "the Task title takes you to the first step" do
+      # TODO: replace fixture with factory
       start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
@@ -107,16 +106,16 @@ feature "Users can view a task" do
         end
 
         choose "Catering"
-        click_on(I18n.t("generic.button.next"))
+        click_continue
 
         fill_in "answer[response]", with: "This is my short answer"
-        click_on(I18n.t("generic.button.next"))
+        click_continue
 
         fill_in "answer[response]", with: "This is my long answer"
-        click_on(I18n.t("generic.button.next"))
+        click_continue
 
         check("Breakfast")
-        click_on(I18n.t("generic.button.next"))
+        click_continue
 
         task = Task.find_by(title: "Task with multiple steps")
         journey = Journey.first
@@ -187,7 +186,7 @@ feature "Users can view a task" do
       end
 
       choose "Catering"
-      click_on(I18n.t("generic.button.next"))
+      click_continue
 
       expect(page).to have_content "What email address did you use?"
     end
@@ -200,16 +199,16 @@ feature "Users can view a task" do
       end
 
       choose "Catering"
-      click_on(I18n.t("generic.button.next"))
+      click_continue
 
       fill_in "answer[response]", with: "This is my short answer"
-      click_on(I18n.t("generic.button.next"))
+      click_continue
 
       fill_in "answer[response]", with: "This is my long answer"
-      click_on(I18n.t("generic.button.next"))
+      click_continue
 
       check("Breakfast")
-      click_on(I18n.t("generic.button.next"))
+      click_continue
 
       expect(page).to have_content "Task with multiple steps"
       within(".govuk-summary-list") do

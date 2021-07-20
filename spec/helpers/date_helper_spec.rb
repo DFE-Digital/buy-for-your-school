@@ -9,7 +9,7 @@ RSpec.describe DateHelper, type: :helper do
 
     it "returns nil when passed nil" do
       params = {}
-      expect(helper.format_date(params)).to eq(nil)
+      expect(helper.format_date(params)).to be_nil
     end
 
     it "returns nil when the date params are incomplete" do

@@ -1,13 +1,15 @@
-feature "Users can see their catering specification" do
+RSpec.feature "Users can see their catering specification" do
   before { user_is_signed_in }
 
   scenario "HTML" do
-    start_journey_from_category_and_go_to_first_section(category: "category-with-dynamic-liquid-template.json")
+    start_journey_from_category(category: "category-with-dynamic-liquid-template.json")
+    click_first_link_in_section_list
 
-    choose("Catering")
-    click_on(I18n.t("generic.button.next"))
-    click_on(I18n.t("journey.specification.button"))
+    choose "Catering"
+    click_continue
+    click_view
 
+    # TODO: remove I18n.t from specs
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
     within("article#specification") do
@@ -21,19 +23,20 @@ feature "Users can see their catering specification" do
   scenario "navigates back to the task list" do
     start_journey_from_category(category: "extended-radio-question.json")
 
-    click_on(I18n.t("journey.specification.button"))
+    click_view
 
     click_on(I18n.t("generic.button.back"))
-    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
   end
 
   scenario "renders radio responses that have futher information" do
-    start_journey_from_category_and_go_to_first_section(category: "extended-radio-question.json")
+    start_journey_from_category(category: "extended-radio-question.json")
+    click_first_link_in_section_list
 
-    choose("Catering")
+    choose "Catering"
     fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
-    click_on(I18n.t("generic.button.next"))
-    click_on(I18n.t("journey.specification.button"))
+    click_continue
+    click_view
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
@@ -44,15 +47,16 @@ feature "Users can see their catering specification" do
   end
 
   scenario "renders checkbox responses that have further information" do
-    start_journey_from_category_and_go_to_first_section(category: "extended-checkboxes-question.json")
+    start_journey_from_category(category: "extended-checkboxes-question.json")
+    click_first_link_in_section_list
 
-    check("Yes")
+    check "Yes"
     fill_in "answer[yes_further_information]", with: "More info for yes"
-    check("No")
+    check "No"
     fill_in "answer[no_further_information]", with: "More info for no"
 
-    click_on(I18n.t("generic.button.next"))
-    click_on(I18n.t("journey.specification.button"))
+    click_continue
+    click_view
 
     expect(page).to have_content(I18n.t("journey.specification.header"))
 
@@ -65,10 +69,11 @@ feature "Users can see their catering specification" do
   end
 
   scenario "questions that are skipped can be identified" do
-    start_journey_from_category_and_go_to_first_section(category: "skippable-checkboxes-question.json")
+    start_journey_from_category(category: "skippable-checkboxes-question.json")
+    click_first_link_in_section_list
 
-    click_on("None of the above")
-    click_on(I18n.t("journey.specification.button"))
+    click_on "None of the above"
+    click_view
 
     expect(page).to have_content("Skipped question detected")
   end
@@ -79,18 +84,19 @@ feature "Users can see their catering specification" do
 
       # Don't answer any questions to create a in progress spec
 
-      click_on(I18n.t("journey.specification.button"))
+      click_view
       expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
     end
   end
 
   context "when the spec template is configured using multiple sections" do
     it "renders both parts in the spec" do
-      start_journey_from_category_and_go_to_first_section(category: "multiple-specification-templates.json")
+      start_journey_from_category(category: "multiple-specification-templates.json")
+      click_first_link_in_section_list
 
-      choose("Catering")
-      click_on(I18n.t("generic.button.next"))
-      click_on(I18n.t("journey.specification.button"))
+      choose "Catering"
+      click_continue
+      click_view
 
       expect(page).to have_content(I18n.t("journey.specification.header"))
       expect(page).to have_content("Part 1")

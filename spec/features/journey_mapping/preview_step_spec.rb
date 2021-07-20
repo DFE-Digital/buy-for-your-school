@@ -1,6 +1,6 @@
 # @see ContentfulHelpers
 
-feature "Content Designers can preview a journey step" do
+RSpec.feature "Content Designers can preview a journey step" do
   before do
     stub_contentful_entry(
       entry_id: "radio-question",
