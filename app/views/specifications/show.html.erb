@@ -11,5 +11,6 @@
     </strong>
   </div>
 <% end %>
+<!-- TODO refactor link label into locale file -->
 <%= link_to "Download (.docx)", journey_specification_path(@journey, format: :docx), class: "govuk-button" %>
 <%= @specification_html.html_safe %>

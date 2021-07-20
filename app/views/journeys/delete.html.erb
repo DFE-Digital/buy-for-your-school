@@ -1,0 +1,50 @@
+<%= content_for :title, @journey.category.title.capitalize %>
+
+<%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
+<h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.delete.header.confirmed")  %></h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <p class="govuk-body govuk-!-font-weight-bold">Specification</p>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><!-- TODO descriptive title ticket #124 --> Title</p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <p class="govuk-body govuk-!-font-weight-bold">Category</p>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><%= @journey.category.title %></p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <p class="govuk-body govuk-!-font-weight-bold">Date started</p>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><%= @journey.created_at.strftime("%e %B %Y") %></p>
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-6">
+  <div class="govuk-grid-column-full">
+    <!-- TODO pass in descriptive title ticket #124-->
+    <p class="govuk-body"><%= I18n.t("journey.specification.delete.confirmed", title: "XXX") %></p>
+    <p class="govuk-body">
+      <%= I18n.t("journey.specification.delete.support.message",
+                 link: link_to(I18n.t("journey.specification.delete.support.link"),
+                               journey_specification_path(@journey, format: :docx), class: "govuk-link")).html_safe %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-button-group">
+  <%= link_to I18n.t("journey.specification.delete.button.dashboard"), dashboard_path, class: "govuk-link govuk-button" %>
+</div>
+
+
+

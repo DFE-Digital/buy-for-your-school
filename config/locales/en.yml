@@ -66,7 +66,24 @@ en:
       button: "View your specification"
       download:
         warning:
+          #/ TODO Not keen on HTML inside local yml files, refactor.
           incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
+      delete:
+        header:
+          confirm: "Delete specification"
+          confirmed: "Delete specification confirmed"
+        warning: "There is currently no way to retrieve any specification that is deleted."
+        confirmed: "Specification %{title} was successfully deleted."
+        download:
+          message: "You can %{link} before deleting."
+          link: "download this specification"
+        support:
+          message: "If you did this in error you will need to %{link}"
+          link : "contact support."
+        button:
+          delete: "Delete specification"
+          cancel: "Cancel"
+          dashboard: "Continue to dashboard"
   specification:
   dashboard:
     header: "Specifications dashboard"
@@ -75,7 +92,9 @@ en:
       body: "Create a new specification for a catering procurement."
       button: "Create a new specification"
     edit:
-      button: "Review and edit"
+      button: "Edit"
+    delete:
+      button: "Delete"
     existing:
       header: "Existing specifications"
       body: "Continue with a draft specification, and review completed specifications."

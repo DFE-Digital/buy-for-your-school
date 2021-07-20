@@ -6,13 +6,15 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- allow users to (soft) delete a specification.
+
 ### Scheduled Diary Studies using the live environment.
 
 - bump Ruby to version `3.0.1`
 - document code using Yard
 - use CodeClimate in CI pipeline to highlight areas of improvement
 - change from `standardrb` to `rubocop-govuk` and convert lint style
-- generate PDF format Emtity Relationship Diagram with upon DB migrations
+- generate PDF format Entity Relationship Diagram with upon DB migrations
 - add status badges to `README`
 - use Pry in the Rails console
 - add additional dev tools to optional `Brewfile`

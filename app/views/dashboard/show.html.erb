@@ -32,6 +32,8 @@
               <td class="govuk-table__cell"><%= journey.category.title %></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= link_to I18n.t("dashboard.edit.button"), journey_path(journey), class: "govuk-link" %>
+                -
+                <%= link_to I18n.t("dashboard.delete.button"), journey_path(journey, confirm: true), method: :delete, class: "govuk-link" %>
               </td>
             </tr>
           <% end %>
