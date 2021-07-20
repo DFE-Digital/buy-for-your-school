@@ -110,12 +110,12 @@ RSpec.feature "Content Designers can see" do
 
       context "when the map isn't valid" do
         let(:fixture) { "journey-with-repeat-entries" }
-  
+
         describe "the same entry is found twice" do
           it "returns an error message" do
             # errors.repeat_step_in_the_contentful_journey.page_title
             expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
-  
+
             # errors.repeat_step_in_the_contentful_journey.page_body, entry_id: "radio-question"
             expect(find("p.govuk-body")).to have_text <<~DUPLICATE.chomp
               One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: radio-question
