@@ -1,4 +1,8 @@
 RSpec.feature "Content Designers can see" do
+  before do
+    user_is_signed_in
+  end
+
   context "when there are no categories" do
     before do
       contentful_connector = stub_contentful_connector
@@ -11,7 +15,6 @@ RSpec.feature "Content Designers can see" do
     end
 
     it "categories.not_found" do
-      pp page.source
       expect(find("h1.govuk-heading-l")).to have_text "No categories found"
     end
   end
@@ -19,13 +22,11 @@ RSpec.feature "Content Designers can see" do
   context "when there are categories" do
     let(:fixture) { "journey-with-multiple-entries" }
 
-    before do
-      user_is_signed_in
-      stub_contentful_category(fixture_filename: "#{fixture}.json")
-    end
-
     context "when on index page" do
       before do
+        stub_multiple_contentful_categories(category_fixtures: [
+          "#{fixture}.json",
+        ])
         visit "/design"
       end
 
@@ -51,6 +52,7 @@ RSpec.feature "Content Designers can see" do
 
     context "when on show page" do
       before do
+        stub_contentful_category(fixture_filename: "#{fixture}.json")
         visit "/design/catering"
       end
 
@@ -105,20 +107,20 @@ RSpec.feature "Content Designers can see" do
           end
         end
       end
-    end
 
-    context "when the map isn't valid" do
-      let(:fixture) { "journey-with-repeat-entries" }
-
-      describe "the same entry is found twice" do
-        it "returns an error message" do
-          # errors.repeat_step_in_the_contentful_journey.page_title
-          expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
-
-          # errors.repeat_step_in_the_contentful_journey.page_body, entry_id: "radio-question"
-          expect(find("p.govuk-body")).to have_text <<~DUPLICATE.chomp
-            One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: radio-question
-          DUPLICATE
+      context "when the map isn't valid" do
+        let(:fixture) { "journey-with-repeat-entries" }
+  
+        describe "the same entry is found twice" do
+          it "returns an error message" do
+            # errors.repeat_step_in_the_contentful_journey.page_title
+            expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
+  
+            # errors.repeat_step_in_the_contentful_journey.page_body, entry_id: "radio-question"
+            expect(find("p.govuk-body")).to have_text <<~DUPLICATE.chomp
+              One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: radio-question
+            DUPLICATE
+          end
         end
       end
     end
