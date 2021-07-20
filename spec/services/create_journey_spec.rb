@@ -17,7 +17,7 @@ RSpec.describe CreateJourney do
       }.to change(Journey, :count).by(1)
 
       last_journey = Journey.last
-      expect(last_journey.category.title).to eql "Catering"
+      expect(last_journey.category.title).to eql "category title"
       expect(last_journey.category.contentful_id).to eql "contentful-category-entry"
     end
 

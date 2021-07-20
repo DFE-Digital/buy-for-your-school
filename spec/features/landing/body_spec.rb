@@ -1,10 +1,10 @@
-require "rails_helper"
+RSpec.feature "Users can see a start page for specifying their purchase" do
+  before do
+    visit "/"
+  end
 
-feature "Users can see a start page for specifying their purchase" do
   scenario "Start page content is shown on the root path" do
-    visit root_path
-
-    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure something for your school"
 
     I18n.t("specifying.start_page.overview_body").each do |paragraph|
       expect(page).to have_content(paragraph)
@@ -36,11 +36,20 @@ feature "Users can see a start page for specifying their purchase" do
     expect(page).to have_content(I18n.t("specifying.start_page.pause_and_resume_body"))
   end
 
-  scenario "The start button takes the user to the dashboard" do
-    visit root_path
+  specify "the start button leads to the dashboard" do
+    within "main.govuk-main-wrapper" do
+      expect(find("form.button_to")["action"]).to eql "/auth/dfe"
+      # generic.button.start
+      expect(page).to have_button "Start", class: "govuk-button"
 
-    click_on(I18n.t("generic.button.start"))
+      click_on "Start"
+    end
 
-    expect(page).to have_content(I18n.t("dashboard.header"))
+    # FIXME: DfE Sign In should appear here
+
+    # dashboard.header
+    expect(find("h1.govuk-heading-xl")).to have_content "Specifications dashboard"
+
+    expect(page).to have_current_path "/dashboard"
   end
 end

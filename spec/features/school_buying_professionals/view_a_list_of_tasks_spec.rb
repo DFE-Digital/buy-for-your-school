@@ -1,12 +1,11 @@
-require "rails_helper"
-
-feature "Users can view the task list" do
+RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
 
   before { user_is_signed_in(user: user) }
 
   describe "and see their answers" do
     before do
+      # TODO: replace fixture with factory
       start_journey_from_category(category: "section-with-multiple-tasks.json")
       within ".app-task-list" do
         click_on "Task containing every type of step"
@@ -114,7 +113,7 @@ feature "Users can view the task list" do
     # Back to the Journey page
     click_on(I18n.t("generic.button.back"))
 
-    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
   end
 
   scenario "user can navigate back to the list of journeys from a task list" do
@@ -143,7 +142,7 @@ feature "Users can view the task list" do
 
       click_on(I18n.t("generic.button.back"))
 
-      expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+      expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
     end
   end
 
@@ -175,7 +174,7 @@ feature "Users can view the task list" do
 
     # list of tasks
     click_on "Return to task list"
-    expect(page).to have_content "Create a specification to procure a catering service for your school"
+    expect(page).to have_content "Create a specification to procure catering for your school"
   end
 
   context "when a task has more than one unanswered step" do
@@ -235,7 +234,12 @@ feature "Users can view the task list" do
       journey = answer.step.journey
       journey.update!(user: user)
 
-      user_starts_the_journey(category.id)
+      # user_starts_the_journey(category.id)
+      visit "/"
+      click_start
+      click_create
+      find("label", text: category.title).click
+      click_continue
 
       visit journey_path(journey)
 

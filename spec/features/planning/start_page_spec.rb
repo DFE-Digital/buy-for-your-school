@@ -1,6 +1,5 @@
-require "rails_helper"
-
-feature "Users can see a start page for planning their purchase" do
+RSpec.feature "Users can see a start page for planning their purchase" do
+  # TODO: reinstate spec once new content is finalised
   xscenario "Start page content is shown on the root path" do
     visit root_path
 
@@ -52,7 +51,7 @@ feature "Users can see a start page for planning their purchase" do
 
     click_on(I18n.t("generic.button.back"))
 
-    expect(page).to have_content(I18n.t("specifying.start_page.page_title"))
+    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure something for your school"
   end
 
   scenario "the start page has the right content headers" do
