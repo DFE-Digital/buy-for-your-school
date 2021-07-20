@@ -1,4 +1,4 @@
-<%= content_for :title, @journey.category.title.capitalize %>
+<%= content_for :title, I18n.t("journey.specification.delete.header.confirmed") %>
 
 <%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
 <h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.delete.header.confirmed")  %></h1>
