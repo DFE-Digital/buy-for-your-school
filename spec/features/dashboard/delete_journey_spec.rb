@@ -33,7 +33,6 @@ RSpec.feature "Delete a journey" do
              user: user,
              category: create(:category, :catering),
              created_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
-
     end
 
     before do
