@@ -1,7 +1,9 @@
 <%= content_for :title, @journey.category.title.capitalize %>
 
 <%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
-<h1 class="govuk-heading-xl"><%= I18n.t("specifying.start_page.page_title") %></h1>
+<h1 class="govuk-heading-xl">
+  <%= I18n.t("specifying.start_page.page_title", category: @journey.category.title.downcase) %>
+</h1>
 
 <ol class="app-task-list sections">
   <% @sections.each do |section| %>

@@ -1,11 +1,15 @@
-feature "Content Designers can see" do
-  before { user_is_signed_in }
+RSpec.feature "Content Designers can see" do
+  let(:fixture) { "journey-with-multiple-entries" }
+
+  before do
+    user_is_signed_in
+
+    stub_contentful_category(fixture_filename: "#{fixture}.json")
+
+    visit "/journey_maps/contentful-category-entry"
+  end
 
   specify "all the steps in a category" do
-    contentful_category = stub_contentful_category(fixture_filename: "journey-with-multiple-entries.json")
-
-    visit journey_map_path(contentful_category.id)
-
     # journey_map.page_title
     expect(page.title).to have_text "Template Designer"
     expect(find("h1.govuk-heading-xl")).to have_text "Template Designer"
@@ -58,12 +62,10 @@ feature "Content Designers can see" do
   end
 
   context "when the map isn't valid" do
+    let(:fixture) { "journey-with-repeat-entries" }
+
     describe "the same entry is found twice" do
       it "returns an error message" do
-        contentful_category = stub_contentful_category(fixture_filename: "journey-with-repeat-entries.json")
-
-        visit journey_map_path(contentful_category.id)
-
         # errors.repeat_step_in_the_contentful_journey.page_title
         expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
 

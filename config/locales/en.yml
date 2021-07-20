@@ -28,7 +28,7 @@ en:
       page_title: "Catering services"
   specifying:
     start_page:
-      page_title: Create a specification to procure a catering service for your school
+      page_title: Create a specification to procure %{category} for your school
       overview_body:
         - Use this service to create a specification for a new catering service for a single school in England.
       who_for_title: Who this service is for
