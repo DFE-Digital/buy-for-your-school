@@ -8,15 +8,29 @@ FactoryBot.define do
     additional_step_rules { nil }
     primary_call_to_action_text { nil }
     skip_call_to_action_text { nil }
+    options { nil }
+    body { nil }
 
     association :task, factory: :task
+
+    # @see specs/feature/additional_steps_spec
+    trait :additional_steps do
+      title { "has additional steps" }
+      help_text { "answer yes for more steps" }
+      order { 0 }
+      contentful_model { "question" }
+      contentful_type { "radios" }
+      options { [{ "value" => "yes" }, { "value" => "no" }] }
+      additional_step_rules do
+        [{ "required_answer" => "yes", "question_identifiers" => %w[123 456] }]
+      end
+    end
 
     #
     # Statements
     #
 
     trait :statement do
-      options { nil }
       contentful_model { "statement" }
       contentful_type { "markdown" }
       body { "## Heading 2" }
@@ -33,19 +47,16 @@ FactoryBot.define do
     end
 
     trait :short_text do
-      options { nil }
       contentful_model { "question" }
       contentful_type { "short_text" }
     end
 
     trait :long_text do
-      options { nil }
       contentful_model { "question" }
       contentful_type { "long_text" }
     end
 
     trait :single_date do
-      options { nil }
       contentful_model { "question" }
       contentful_type { "single_date" }
     end
@@ -57,13 +68,11 @@ FactoryBot.define do
     end
 
     trait :number do
-      options { nil }
       contentful_model { "question" }
       contentful_type { "number" }
     end
 
     trait :currency do
-      options { nil }
       contentful_model { "question" }
       contentful_type { "currency" }
     end

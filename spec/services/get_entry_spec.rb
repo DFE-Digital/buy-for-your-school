@@ -1,43 +1,33 @@
 require "rails_helper"
 
 RSpec.describe GetEntry do
-  let(:contentful_journey_start_entry_id) { "1a2b3c4d5" }
+  let(:entry_id) { "1a2b3c4d5" }
+
+  let(:connector) { stub_contentful_connector }
 
   describe "#call" do
     it "requests and returns the required entry from Contentful" do
-      contentful_connector = instance_double(ContentfulConnector)
-      allow(ContentfulConnector).to receive(:new)
-        .and_return(contentful_connector)
+      entry = double(Contentful::Entry, id: entry_id)
 
-      contentful_response = double(Contentful::Entry, id: contentful_journey_start_entry_id)
-      allow(contentful_connector).to receive(:get_entry_by_id)
-        .with(contentful_journey_start_entry_id)
-        .and_return(contentful_response)
+      allow(connector).to receive(:by_id).with(entry_id).and_return(entry)
 
-      result = described_class.new(entry_id: contentful_journey_start_entry_id).call
+      result = described_class.new(entry_id: entry_id).call
 
-      expect(result).to eq(contentful_response)
+      expect(result).to eq entry
     end
 
     context "when the Contentful entry cannot be found" do
       it "returns an error message" do
         missing_entry_id = "345vsdf7"
-        contentful_connector = stub_contentful_connector
 
-        allow(contentful_connector).to receive(:get_entry_by_id)
-          .with(missing_entry_id)
-          .and_return(nil)
+        allow(connector).to receive(:by_id).with(missing_entry_id).and_return(nil)
 
         expect { described_class.new(entry_id: missing_entry_id).call }
           .to raise_error(GetEntry::EntryNotFound)
       end
 
       it "raises a rollbar event" do
-        contentful_client = stub_contentful_connector
-
-        allow(contentful_client).to receive(:get_entry_by_id)
-          .with(anything)
-          .and_return(nil)
+        allow(connector).to receive(:by_id).with(anything).and_return(nil)
 
         expect(Rollbar).to receive(:warning)
           .with("The following Contentful entry identifier could not be found.",

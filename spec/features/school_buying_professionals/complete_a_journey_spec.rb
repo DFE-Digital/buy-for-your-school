@@ -3,14 +3,6 @@ require "rails_helper"
 feature "Anyone can start a journey" do
   before { user_is_signed_in }
 
-  around do |example|
-    ClimateControl.modify(
-      CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID: "contentful-category-entry",
-    ) do
-      example.run
-    end
-  end
-
   scenario "Start page includes a call to action" do
     start_journey_from_category(category: "radio-question.json")
 
@@ -426,9 +418,7 @@ feature "Anyone can start a journey" do
 
   context "when Contentful entry model wasn't an expected type" do
     scenario "returns an error message" do
-      stub_contentful_category(fixture_filename: "unexpected-contentful-type.json")
-
-      visit new_journey_path
+      start_journey_from_category(category: "unexpected-contentful-type.json")
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_model.page_body"))
@@ -437,9 +427,7 @@ feature "Anyone can start a journey" do
 
   context "when the Contentful Entry wasn't an expected question type" do
     scenario "returns an error message" do
-      stub_contentful_category(fixture_filename: "unexpected-contentful-question-type.json")
-
-      visit new_journey_path
+      start_journey_from_category(category: "unexpected-contentful-question-type.json")
 
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_title"))
       expect(page).to have_content(I18n.t("errors.unexpected_contentful_step_type.page_body"))
@@ -448,11 +436,11 @@ feature "Anyone can start a journey" do
 
   context "when the starting entry id doesn't exist" do
     scenario "a Contentful entry_id does not exist" do
-      allow(stub_contentful_connector).to receive(:get_entry_by_id)
-        .with("contentful-category-entry")
-        .and_return(nil)
+      allow(stub_contentful_connector).to receive(:by_id).with("contentful-category-entry").and_return(nil)
 
-      visit new_journey_path
+      category = create(:category, contentful_id: "contentful-category-entry")
+
+      user_signs_in_and_starts_the_journey(category.id)
 
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_title"))
       expect(page).to have_content(I18n.t("errors.contentful_entry_not_found.page_body"))
@@ -525,7 +513,7 @@ feature "Anyone can start a journey" do
       expect(first_logged_event.action).to eq("begin_journey")
       expect(first_logged_event.journey_id).to eq(Journey.last.id)
       expect(first_logged_event.user_id).to eq(User.last.id)
-      expect(first_logged_event.contentful_category_id).to eq(ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"])
+      expect(first_logged_event.contentful_category_id).to eq("contentful-category-entry")
     end
   end
 
@@ -548,7 +536,7 @@ feature "Anyone can start a journey" do
 
   context "when a user views a previously answered step" do
     scenario "an action is recorded" do
-      start_journey_with_tasks_from_category(category: "radio-question.json")
+      start_journey_from_category(category: "radio-question.json")
 
       journey = Journey.last
       task = Task.find_by(title: "Radio task")

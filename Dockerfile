@@ -4,10 +4,6 @@
 FROM ruby:3.0.1 as base
 MAINTAINER dxw <rails@dxw.com>
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
-RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
   libpq-dev \
@@ -28,7 +24,9 @@ FROM base AS dependencies
 RUN mkdir -p ${DEPS_HOME}
 WORKDIR $DEPS_HOME
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y nodejs
 
 # Install Javascript dependencies
@@ -89,7 +87,6 @@ RUN RAILS_ENV=production \
     CONTENTFUL_SPACE= \
     CONTENTFUL_ENVIRONMENT= \
     CONTENTFUL_ACCESS_TOKEN= \
-    CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID= \
     CONTENTFUL_PREVIEW_APP= \
     CONTENTFUL_ENTRY_CACHING= \
     SUPPORT_EMAIL= \

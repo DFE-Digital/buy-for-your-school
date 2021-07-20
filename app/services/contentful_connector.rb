@@ -1,6 +1,11 @@
 require "contentful"
 
+# Wrapper initialising Contentful Client
+#
 class ContentfulConnector
+  # Switch draft/published content and environment using env vars
+  #
+  # @return [Contentful::Client]
   def initialize
     @contentful_client = Contentful::Client.new(
       api_url: ENV["CONTENTFUL_URL"],
@@ -10,11 +15,13 @@ class ContentfulConnector
     )
   end
 
-  def get_entry_by_id(entry_id)
+  # @return [Contentful::Entry]
+  def by_id(entry_id)
     @contentful_client.entry(entry_id)
   end
 
-  def get_all_entries
-    @contentful_client.entries
+  # @return [Contentful::Array]
+  def by_type(type)
+    @contentful_client.entries(content_type: type)
   end
 end

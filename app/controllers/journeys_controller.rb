@@ -31,8 +31,10 @@ class JourneysController < ApplicationController
   # Log 'begin_journey'
   #
   # @see CreateJourney
-  def new
-    category = get_category
+  def create
+    return redirect_to categories_path unless params[:category_id]
+
+    category = Category.find(params[:category_id])
     journey = CreateJourney.new(
       category: category,
       user: current_user,

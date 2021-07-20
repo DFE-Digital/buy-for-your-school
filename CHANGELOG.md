@@ -6,27 +6,38 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
-- allow users to (soft) delete a specification.
-
-### Scheduled Diary Studies using the live environment.
-
+**House keeping**
 - bump Ruby to version `3.0.1`
 - document code using Yard
 - use CodeClimate in CI pipeline to highlight areas of improvement
 - change from `standardrb` to `rubocop-govuk` and convert lint style
 - generate PDF format Entity Relationship Diagram with upon DB migrations
 - add status badges to `README`
-- use Pry in the Rails console
-- add additional dev tools to optional `Brewfile`
-- implement "Interrupt Pattern" which introduces a step that is not semantically a question but a statement
+- use `pry` in the Rails console
+- add additional developer tools to optional `Brewfile`
+- remove unused `GetAllContentfulEntries` service object
+
+**Non-question steps**
+- implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
+- remove `staticContent` entity and add `Statement` entity in Contentful (currently only in develop)
+
+**Multiple Categories**
+- remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
+- introduce `Category` model to mirror Contentful category entity
+- add category `title` column to the dashboard
+- add `journey_maps#index` to allow content designers to switch category
+- add `categories#index` to enable users to create a specification from a chosen category
+- WIP: data migration
+
+**Dashboard functionality**
 - add explicit ordering to the task model to allow continuing to the next unanswered task
 - add extensible tally of counted steps to the task
-- remove staticContent entity and add Statement entity in Contentful (currently only in develop)
-- change from standardrb to rubocop-govuk
-- introduce Category model to mirror Contentful category entity and Rake task for data migration
-- add state to Journey (initial, stale, archive or remove)
-- drop Journey.last_worked_on in favour of updated_at
-- add category title column to the dashboard
+- add state to `Journey` (initial, stale, archive or remove)
+- drop `Journey.last_worked_on` in favour of `updated_at`
+
+
+## Diary Studies using the live environment
+
 
 ## [release-015] - 2021-06-17
 
