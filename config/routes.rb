@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :journey_maps, only: %i[index show]
   resources :categories, only: %i[index]
-  resources :journeys, only: %i[show create] do
+  resources :journeys, only: %i[show create destroy] do
     resource :specification, only: [:show]
     resources :steps, only: %i[new show edit] do
       resources :answers, only: %i[create update]

@@ -37,7 +37,7 @@
     <p class="govuk-body">
       <%= I18n.t("journey.specification.delete.support.message",
                  link: link_to(I18n.t("journey.specification.delete.support.link"),
-                               journey_specification_path(@journey, format: :docx), class: "govuk-link")).html_safe %>
+                               "mailto:#{ENV["SUPPORT_EMAIL"]}", class: "govuk-link")).html_safe %>
     </p>
   </div>
 </div>
