@@ -32,16 +32,21 @@ class CreateStep
 
   ALLOWED_STEP_TYPES = ALLOWED_CONTENTFUL_QUESTION_TYPES + ALLOWED_CONTENTFUL_STATEMENT_TYPES
 
-  attr_accessor :task, :contentful_step, :order
+  # @return [Task]
+  attr_reader :task
+  # @return [Contentful::Entry]
+  attr_reader :contentful_step
+  # @return [Integer]
+  attr_reader :order
 
   # @param task [Task] persisted task
   # @param contentful_step [Contentful::Entry] Contentful Client object
   # @param order [Integer] position within the task
   #
   def initialize(task:, contentful_step:, order:)
-    self.task = task
-    self.contentful_step = contentful_step
-    self.order = order
+    @task = task
+    @contentful_step = contentful_step
+    @order = order
   end
 
   # @return [Step]
@@ -58,6 +63,13 @@ class CreateStep
       raise UnexpectedContentfulStepType
     end
 
+    create_step
+  end
+
+private
+
+  # @return [Step]
+  def create_step
     Step.create!(
       title: title,
       help_text: help_text,
@@ -75,8 +87,6 @@ class CreateStep
       order: order,
     )
   end
-
-private
 
   # @return [String]
   def content_entry_id
@@ -155,6 +165,9 @@ private
     contentful_step.skip_call_to_action
   end
 
+  # Determines if this step should be hidden in the task list.
+  # Applies to steps dependent on answers of other steps.
+  #
   # @return [Boolean]
   def hidden?
     return false unless contentful_step.respond_to?(:always_show_the_user)
