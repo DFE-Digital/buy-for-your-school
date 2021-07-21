@@ -1,19 +1,15 @@
-require "rails_helper"
-
-# Rendered text is referred to by the I18n.t key
-#
-feature "Categories page" do
+RSpec.feature "Categories page" do
   context "when the user is not signed in" do
     before do
-      visit categories_path
+      visit "/categories"
     end
 
     it "redirects to the homepage" do
       expect(page).to have_current_path "/"
     end
 
-    it "has the home page title" do
-      expect(page.title).to have_text "Create a specification to procure a catering service for your school"
+    it "specifying.start_page.page_title" do
+      expect(page.title).to have_text "Create a specification to procure something for your school"
     end
 
     it "renders a banner notice" do
@@ -28,18 +24,18 @@ feature "Categories page" do
 
     before do
       user_is_signed_in(user: user)
+      visit "/categories"
     end
 
     it "is full page width" do
-      visit categories_path
       expect(page).to have_css "div.govuk-grid-column-full"
     end
 
-    context "and there are no categories" do
-      before do
-        visit categories_path
-      end
+    it "categories.header" do
+      expect(page.title).to have_text "Choose the type of specification you want to build"
+    end
 
+    context "and there are no categories" do
       it "has a heading stating that there are no categories" do
         expect(find("h1.govuk-heading-l")).to have_text "No categories found"
       end
@@ -47,33 +43,34 @@ feature "Categories page" do
 
     context "and there are two categories" do
       before do
-        create(:category, title: "Catering")
-        create(:category, title: "MFD")
-        visit categories_path
+        create(:category, :mfd)
+        create(:category, :catering)
+        visit "/categories"
       end
 
-      it "has a form with the right caption" do
+      it "categories.header" do
         within "div.govuk-form-group" do
           expect(find("legend.govuk-fieldset__legend.govuk-fieldset__legend--l")).to have_text "Choose the type of specification you want to build"
         end
       end
 
-      it "has a form with the right hint" do
+      it "categories.support_info" do
         within "div.govuk-form-group" do
           expect(find("div.govuk-hint")).to have_text "We currently only support catering and multifunctional devices."
         end
       end
 
-      it "lists the available categories" do
+      it "lists the available categories alphabetically" do
         within "div.govuk-form-group" do
           find(:radio_button, "Catering")
-          find(:radio_button, "MFD")
+          find(:radio_button, "Multi-functional devices")
         end
       end
 
-      it "selects the first category" do
+      it "defaults to selecting the first category" do
         within "div.govuk-form-group" do
           expect(find(:radio_button, "Catering")).to be_checked
+          expect(find(:radio_button, "Multi-functional devices")).not_to be_checked
         end
       end
 

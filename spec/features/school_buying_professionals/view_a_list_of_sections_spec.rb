@@ -1,11 +1,10 @@
-require "rails_helper"
-
-feature "Users can view a list of sections" do
+RSpec.feature "Users can view a list of sections" do
   let(:user) { create(:user) }
 
   before { user_is_signed_in(user: user) }
 
   it "the user can see multiple sections" do
+    # TODO: replace fixture with factory
     start_journey_from_category(category: "multiple-sections.json")
 
     within(".app-task-list") do
