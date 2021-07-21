@@ -22,7 +22,7 @@
     <%= stylesheet_link_tag "application", media: 'all', "data-turbolinks-track" => "reload" %>
     <%= csrf_meta_tags %>
 
-    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+    <meta property="og:image" content="<%=image_path("govuk-opengraph-image.png")%>">
 
     <%= csp_meta_tag %>
   </head>
