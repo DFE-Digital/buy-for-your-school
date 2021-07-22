@@ -77,5 +77,4 @@ class JourneysController < ApplicationController
       render :delete
     end
   end
-
 end
