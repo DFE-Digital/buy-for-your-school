@@ -33,9 +33,6 @@ class CreateStep
 
   ALLOWED_STEP_TYPES = ALLOWED_CONTENTFUL_QUESTION_TYPES + ALLOWED_CONTENTFUL_STATEMENT_TYPES
 
-  # @return [Task]
-  attr_reader :task
-
   # @param task [Task] persisted task
   # @param contentful_step [Contentful::Entry] Contentful Client object
   # @param order [Integer] position within the task
@@ -83,7 +80,7 @@ private
       hidden: hidden?,
       additional_step_rules: additional_step_rules,
       raw: raw,
-      task: task,
+      task: @task,
       order: @order,
     )
   end

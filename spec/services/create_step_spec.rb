@@ -1,5 +1,13 @@
 RSpec.describe CreateStep do
   describe "#call" do
+    subject(:service) do
+      described_class.new(
+        task: task,
+        contentful_step: contentful_step,
+        order: 0,
+      )
+    end
+
     let(:category) { create(:category, :catering) }
     let(:journey) { create(:journey, category: category) }
     let(:section) { create(:section, journey: journey) }
@@ -13,7 +21,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "radio-question" }
 
       it "creates a local copy of the new step" do
-        step = described_class.new(task: task, contentful_step: contentful_step, order: 0).call
+        step = service.call
 
         expect(step.title).to eq "Which service do you need?"
         expect(step.help_text).to eq "Tell us which service you need."
@@ -70,13 +78,13 @@ RSpec.describe CreateStep do
       let(:fixture) { "short-text-question" }
 
       it "sets help_text and options to nil" do
-        step = described_class.new(task: task, contentful_step: contentful_step, order: 0).call
+        step = service.call
 
         expect(step.options).to be_nil
       end
 
       it "replaces spaces with underscores" do
-        step = described_class.new(task: task, contentful_step: contentful_step, order: 0).call
+        step = service.call
 
         expect(step.contentful_type).to eq "short_text"
       end
@@ -86,9 +94,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "statement-step" }
 
       it "updates the step with the body" do
-        step, _answer = described_class.new(
-          task: task, contentful_step: contentful_step, order: 0,
-        ).call
+        step, _answer = service.call
 
         expect(step.body).to eq "#### Heading 4"
       end
@@ -98,9 +104,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "primary-button" }
 
       it "updates the step with the body" do
-        step, _answer = described_class.new(
-          task: task, contentful_step: contentful_step, order: 0,
-        ).call
+        step, _answer = service.call
 
         expect(step.primary_call_to_action_text).to eq "Go onwards!"
       end
@@ -110,9 +114,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "no-primary-button" }
 
       it "default copy is used for the button" do
-        step, _answer = described_class.new(
-          task: task, contentful_step: contentful_step, order: 0,
-        ).call
+        step, _answer = service.call
 
         expect(step.primary_call_to_action_text).to eq "Continue"
       end
@@ -122,9 +124,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "skippable-checkboxes-question" }
 
       it "default copy is used for the button" do
-        step, _answer = described_class.new(
-          task: task, contentful_step: contentful_step, order: 0,
-        ).call
+        step, _answer = service.call
 
         expect(step.skip_call_to_action_text).to eq "None of the above"
       end
@@ -134,9 +134,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "no-hidden-field" }
 
       it "default hidden to true" do
-        step, _answer = described_class.new(
-          task: task, contentful_step: contentful_step, order: 0,
-        ).call
+        step, _answer = service.call
 
         expect(step.hidden).to be false
       end
@@ -146,9 +144,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "show-one-additional-question" }
 
       it "stores the rule as JSON" do
-        step, _answer = described_class.new(
-          task: task, contentful_step: contentful_step, order: 0,
-        ).call
+        step, _answer = service.call
 
         expect(step.additional_step_rules).to eql([
           {
@@ -163,7 +159,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "unexpected-contentful-type" }
 
       it "raises an error" do
-        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
+        expect { service.call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
 
@@ -179,7 +175,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: "question, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
-        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
+        expect { service.call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
     end
@@ -188,7 +184,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "unexpected-contentful-question-type" }
 
       it "raises an error" do
-        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
+        expect { service.call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
 
@@ -204,7 +200,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: "question, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
-        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
+        expect { service.call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end
