@@ -2,7 +2,6 @@
 
 class JourneysController < ApplicationController
   before_action :check_user_belongs_to_journey?, only: %w[show destroy]
-  before_action :get_journey, only: %w[show destroy]
 
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
@@ -54,6 +53,7 @@ class JourneysController < ApplicationController
   #
   # @see SectionPresenter
   def show
+    @journey = current_journey
     @sections = @journey.sections.includes(:tasks).map do |section|
       SectionPresenter.new(section)
     end
@@ -73,23 +73,9 @@ class JourneysController < ApplicationController
     if params[:confirm] == "true"
       render :confirm_delete
     else
-      @journey.remove!
+      @current_journey.remove!
       render :delete
     end
   end
 
-private
-
-  def get_journey
-    @journey = current_journey
-  end
-
-  def get_category(category_id = ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"])
-    Category.find_or_create_by!(contentful_id: category_id) do |category|
-      contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
-      category.title = contentful_category.title
-      category.description = contentful_category.description
-      category.liquid_template = contentful_category.combined_specification_template
-    end
-  end
 end
