@@ -182,22 +182,18 @@ module ContentfulHelpers
   def fake_contentful_step(contentful_fixture_filename:)
     raw_response = File.read(Rails.root.join("spec/fixtures/contentful/004-#{contentful_fixture_filename}"))
     hash_response = JSON.parse(raw_response)
+    hash_response.deep_transform_keys!(&:underscore)
+    hash_response.deep_symbolize_keys!
 
     double(
       Contentful::Entry,
-      id: hash_response.dig("sys", "id"),
-      title: hash_response.dig("fields", "title"),
-      help_text: hash_response.dig("fields", "helpText"),
-      body: hash_response.dig("fields", "body"),
-      extended_options: hash_response.dig("fields", "extendedOptions"),
-      type: hash_response.dig("fields", "type"),
-      next: double(id: hash_response.dig("fields", "next", "sys", "id")),
-      primary_call_to_action: hash_response.dig("fields", "primaryCallToAction"),
-      skip_call_to_action: hash_response.dig("fields", "skipCallToAction"),
-      always_show_the_user: hash_response.dig("fields", "alwaysShowTheUser"),
-      show_additional_question: hash_response.dig("fields", "showAdditionalQuestion"),
+      id: hash_response.dig(:sys, :id),
+      title: hash_response.dig(:fields, :title),
+      type: hash_response.dig(:fields, :title),
+      next: double(id: hash_response.dig(:fields, :next, :sys, :id)),
       raw: hash_response,
-      content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
+      content_type: double(id: hash_response.dig(:sys, :content_type, :sys, :id)),
+      fields: hash_response[:fields],
     )
   end
 end

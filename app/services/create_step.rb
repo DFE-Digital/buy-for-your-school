@@ -1,4 +1,5 @@
 # Convert a {Contentful::Entry} into a {Step}
+# Steps may have different fields available depending on their type.
 #
 class CreateStep
   class UnexpectedContentfulModel < StandardError; end
@@ -34,10 +35,6 @@ class CreateStep
 
   # @return [Task]
   attr_reader :task
-  # @return [Contentful::Entry]
-  attr_reader :contentful_step
-  # @return [Integer]
-  attr_reader :order
 
   # @param task [Task] persisted task
   # @param contentful_step [Contentful::Entry] Contentful Client object
@@ -49,6 +46,9 @@ class CreateStep
     @order = order
   end
 
+  # @raise [UnexpectedContentfulModel]
+  # @raise [UnexpectedContentfulStepType]
+  #
   # @return [Step]
   def call
     if unexpected_contentful_model?
@@ -84,18 +84,18 @@ private
       additional_step_rules: additional_step_rules,
       raw: raw,
       task: task,
-      order: order,
+      order: @order,
     )
   end
 
   # @return [String]
   def content_entry_id
-    contentful_step.id
+    @contentful_step.id
   end
 
   # @return [String] question, statement
   def content_model
-    contentful_step.content_type.id
+    @contentful_step.content_type.id
   end
 
   # @return [Boolean]
@@ -120,49 +120,42 @@ private
 
   # @return [String]
   def title
-    contentful_step.title
+    @contentful_step.fields[:title]
   end
 
   # @return [Nil, String]
   def help_text
-    return nil unless contentful_step.respond_to?(:help_text)
-
-    contentful_step.help_text
+    @contentful_step.fields[:help_text]
   end
 
+  # Applies to statements.
+  #
   # @return [Nil, String]
   def body
-    return nil unless contentful_step.respond_to?(:body)
-
-    contentful_step.body
+    @contentful_step.fields[:body]
   end
 
   # @return [Nil, String]
   def options
-    return nil unless contentful_step.respond_to?(:extended_options)
-
-    contentful_step.extended_options
+    @contentful_step.fields[:extended_options]
   end
 
   # @return [String]
   def step_type
-    contentful_step.type.tr(" ", "_")
+    # TODO: Make step types camel-case in Contentful
+    @contentful_step.fields[:type]&.tr(" ", "_")
   end
 
   # @see https://design-system.service.gov.uk/components/button/
   # @return [Nil, String]
   def primary_call_to_action_text
-    return nil unless contentful_step.respond_to?(:primary_call_to_action)
-
-    contentful_step.primary_call_to_action
+    @contentful_step.fields[:primary_call_to_action]
   end
 
   # @see https://design-system.service.gov.uk/components/button/
   # @return [Nil, String]
   def skip_call_to_action_text
-    return nil unless contentful_step.respond_to?(:skip_call_to_action)
-
-    contentful_step.skip_call_to_action
+    @contentful_step.fields[:skip_call_to_action]
   end
 
   # Determines if this step should be hidden in the task list.
@@ -170,22 +163,19 @@ private
   #
   # @return [Boolean]
   def hidden?
-    return false unless contentful_step.respond_to?(:always_show_the_user)
-    return false if contentful_step.always_show_the_user.nil?
+    return false if @contentful_step.fields[:always_show_the_user].nil?
 
-    !contentful_step.always_show_the_user
+    !@contentful_step.fields[:always_show_the_user]
   end
 
   # @return [Nil, Array<Hash>]
   def additional_step_rules
-    return nil unless contentful_step.respond_to?(:show_additional_question)
-
-    contentful_step.show_additional_question
+    @contentful_step.fields[:show_additional_question]
   end
 
   # @return [String]
   def raw
-    contentful_step.raw
+    @contentful_step.raw
   end
 
   def send_rollbar_warning

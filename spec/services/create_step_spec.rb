@@ -5,18 +5,15 @@ RSpec.describe CreateStep do
     let(:section) { create(:section, journey: journey) }
     let(:task) { create(:task, section: section) }
 
+    let(:contentful_step) do
+      fake_contentful_step(contentful_fixture_filename: "steps/#{fixture}.json")
+    end
+
     context "when the new step is of type step" do
+      let(:fixture) { "radio-question" }
+
       it "creates a local copy of the new step" do
-        # category = create(:category, :catering)
-        # journey = create(:journey, category: category)
-        # section = create(:section, journey: journey)
-        # task = create(:task, section: section)
-
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/radio-question.json",
-        )
-
-        step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
+        step = described_class.new(task: task, contentful_step: contentful_step, order: 0).call
 
         expect(step.title).to eq "Which service do you need?"
         expect(step.help_text).to eq "Tell us which service you need."
@@ -29,26 +26,26 @@ RSpec.describe CreateStep do
         expect(step.order).to eq 0
         expect(step.raw).to eq(
           "fields" => {
-            "helpText" => "Tell us which service you need.",
-            "extendedOptions" => [{ "value" => "Catering" }, { "value" => "Cleaning" }],
+            "help_text" => "Tell us which service you need.",
+            "extended_options" => [{ "value" => "Catering" }, { "value" => "Cleaning" }],
             "slug" => "/which-service",
             "title" => "Which service do you need?",
             "type" => "radios",
-            "alwaysShowTheUser" => true,
+            "always_show_the_user" => true,
           },
           "sys" => {
-            "contentType" => {
+            "content_type" => {
               "sys" => {
                 "id" => "question",
-                "linkType" => "ContentType",
+                "link_type" => "ContentType",
                 "type" => "Link",
               },
             },
-            "createdAt" => "2020-09-07T10:56:40.585Z",
+            "created_at" => "2020-09-07T10:56:40.585Z",
             "environment" => {
               "sys" => {
                 "id" => "master",
-                "linkType" => "Environment",
+                "link_type" => "Environment",
                 "type" => "Link",
               },
             },
@@ -58,47 +55,39 @@ RSpec.describe CreateStep do
             "space" => {
               "sys" => {
                 "id" => "jspwts36h1os",
-                "linkType" => "Space",
+                "link_type" => "Space",
                 "type" => "Link",
               },
             },
             "type" => "Entry",
-            "updatedAt" => "2020-09-14T22:16:54.633Z",
+            "updated_at" => "2020-09-14T22:16:54.633Z",
           },
         )
       end
     end
 
     context "when the question is of type 'short_text'" do
-      it "sets help_text and options to nil" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/short-text-question.json",
-        )
+      let(:fixture) { "short-text-question" }
 
-        step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
+      it "sets help_text and options to nil" do
+        step = described_class.new(task: task, contentful_step: contentful_step, order: 0).call
 
         expect(step.options).to be_nil
       end
 
       it "replaces spaces with underscores" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/short-text-question.json",
-        )
-
-        step = described_class.new(task: task, contentful_step: fake_entry, order: 0).call
+        step = described_class.new(task: task, contentful_step: contentful_step, order: 0).call
 
         expect(step.contentful_type).to eq "short_text"
       end
     end
 
     context "when the new entry has a 'body' field" do
-      it "updates the step with the body" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/statement-step.json",
-        )
+      let(:fixture) { "statement-step" }
 
+      it "updates the step with the body" do
         step, _answer = described_class.new(
-          task: task, contentful_step: fake_entry, order: 0,
+          task: task, contentful_step: contentful_step, order: 0,
         ).call
 
         expect(step.body).to eq "#### Heading 4"
@@ -106,13 +95,11 @@ RSpec.describe CreateStep do
     end
 
     context "when the new entry has a 'primaryCallToAction' field" do
-      it "updates the step with the body" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/primary-button.json",
-        )
+      let(:fixture) { "primary-button" }
 
+      it "updates the step with the body" do
         step, _answer = described_class.new(
-          task: task, contentful_step: fake_entry, order: 0,
+          task: task, contentful_step: contentful_step, order: 0,
         ).call
 
         expect(step.primary_call_to_action_text).to eq "Go onwards!"
@@ -120,13 +107,11 @@ RSpec.describe CreateStep do
     end
 
     context "when no 'primaryCallToAction' is provided" do
-      it "default copy is used for the button" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/no-primary-button.json",
-        )
+      let(:fixture) { "no-primary-button" }
 
+      it "default copy is used for the button" do
         step, _answer = described_class.new(
-          task: task, contentful_step: fake_entry, order: 0,
+          task: task, contentful_step: contentful_step, order: 0,
         ).call
 
         expect(step.primary_call_to_action_text).to eq "Continue"
@@ -134,13 +119,11 @@ RSpec.describe CreateStep do
     end
 
     context "when no 'skipCallToAction' is provided" do
-      it "default copy is used for the button" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/skippable-checkboxes-question.json",
-        )
+      let(:fixture) { "skippable-checkboxes-question" }
 
+      it "default copy is used for the button" do
         step, _answer = described_class.new(
-          task: task, contentful_step: fake_entry, order: 0,
+          task: task, contentful_step: contentful_step, order: 0,
         ).call
 
         expect(step.skip_call_to_action_text).to eq "None of the above"
@@ -148,13 +131,11 @@ RSpec.describe CreateStep do
     end
 
     context "when no 'alwaysShowTheUser' is provided" do
-      it "default hidden to true" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/no-hidden-field.json",
-        )
+      let(:fixture) { "no-hidden-field" }
 
+      it "default hidden to true" do
         step, _answer = described_class.new(
-          task: task, contentful_step: fake_entry, order: 0,
+          task: task, contentful_step: contentful_step, order: 0,
         ).call
 
         expect(step.hidden).to be false
@@ -162,13 +143,11 @@ RSpec.describe CreateStep do
     end
 
     context "when 'showAdditionalQuestion' is provided" do
-      it "stores the rule as JSON" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/show-one-additional-question.json",
-        )
+      let(:fixture) { "show-one-additional-question" }
 
+      it "stores the rule as JSON" do
         step, _answer = described_class.new(
-          task: task, contentful_step: fake_entry, order: 0,
+          task: task, contentful_step: contentful_step, order: 0,
         ).call
 
         expect(step.additional_step_rules).to eql([
@@ -181,20 +160,14 @@ RSpec.describe CreateStep do
     end
 
     context "when the new entry has an unexpected content model" do
-      it "raises an error" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-type.json",
-        )
+      let(:fixture) { "unexpected-contentful-type" }
 
-        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
+      it "raises an error" do
+        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
 
       it "raises a rollbar event" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-type.json",
-        )
-
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Contentful type was found",
                 contentful_url: ENV["CONTENTFUL_URL"],
@@ -206,26 +179,20 @@ RSpec.describe CreateStep do
                 allowed_content_models: "question, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
-        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
+        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulModel)
       end
     end
 
     context "when the new step has an unexpected step type" do
-      it "raises an error" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json",
-        )
+      let(:fixture) { "unexpected-contentful-question-type" }
 
-        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
+      it "raises an error" do
+        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
 
       it "raises a rollbar event" do
-        fake_entry = fake_contentful_step(
-          contentful_fixture_filename: "steps/unexpected-contentful-question-type.json",
-        )
-
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Contentful type was found",
                 contentful_url: ENV["CONTENTFUL_URL"],
@@ -237,7 +204,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: "question, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
-        expect { described_class.new(task: task, contentful_step: fake_entry, order: 0).call }
+        expect { described_class.new(task: task, contentful_step: contentful_step, order: 0).call }
           .to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end
