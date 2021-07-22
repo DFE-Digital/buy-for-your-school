@@ -2,7 +2,6 @@
 
 class JourneysController < ApplicationController
   before_action :check_user_belongs_to_journey?, only: %w[show destroy]
-
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
       render "errors/specification_template_invalid",
