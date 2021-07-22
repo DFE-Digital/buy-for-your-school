@@ -16,11 +16,12 @@ module ContentfulHelpers
     contentful_connector = stub_contentful_connector
 
     contentful_array = instance_double(Contentful::Array)
-    # TODO: work with multiple category fixtures
-    contentful_category = stub_contentful_category(fixture_filename: category_fixtures.first, contentful_connector: contentful_connector)
+    contentful_categories = category_fixtures.map { |fixture| stub_contentful_category(fixture_filename: fixture, contentful_connector: contentful_connector) }
 
-    allow(contentful_array).to receive(:each).and_yield(contentful_category)
-    allow(contentful_array).to receive(:none?).and_return(false)
+    iterator = allow(contentful_array).to receive(:each)
+    contentful_categories.each { |category| iterator.and_yield(category) }
+
+    allow(contentful_array).to receive(:none?).and_return(category_fixtures.empty?)
     allow(contentful_connector).to receive(:by_type).with("category").and_return(contentful_array)
   end
 
