@@ -1,4 +1,4 @@
-require "rails_helper"
+# TODO: invert this so context is only used twice
 
 RSpec.describe ApplicationHelper, type: :helper do
   describe "#custom_banner_tag_class" do
