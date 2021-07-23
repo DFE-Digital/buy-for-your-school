@@ -94,7 +94,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "statement-step" }
 
       it "updates the step with the body" do
-        step, _answer = service.call
+        step = service.call
 
         expect(step.body).to eq "#### Heading 4"
       end
@@ -104,7 +104,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "primary-button" }
 
       it "updates the step with the body" do
-        step, _answer = service.call
+        step = service.call
 
         expect(step.primary_call_to_action_text).to eq "Go onwards!"
       end
@@ -114,7 +114,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "no-primary-button" }
 
       it "default copy is used for the button" do
-        step, _answer = service.call
+        step = service.call
 
         expect(step.primary_call_to_action_text).to eq "Continue"
       end
@@ -124,7 +124,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "skippable-checkboxes-question" }
 
       it "default copy is used for the button" do
-        step, _answer = service.call
+        step = service.call
 
         expect(step.skip_call_to_action_text).to eq "None of the above"
       end
@@ -134,7 +134,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "no-hidden-field" }
 
       it "default hidden to true" do
-        step, _answer = service.call
+        step = service.call
 
         expect(step.hidden).to be false
       end
@@ -144,7 +144,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "show-one-additional-question" }
 
       it "stores the rule as JSON" do
-        step, _answer = service.call
+        step = service.call
 
         expect(step.additional_step_rules).to eql([
           {
@@ -198,6 +198,20 @@ RSpec.describe CreateStep do
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
         expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
+      end
+    end
+
+    context "when the step has validation criteria" do
+      let(:fixture) { "single-date-in-past-question" }
+
+      it "creates a step with the criteria" do
+        step = service.call
+
+        expect(step.criteria).to eq({
+          "message" => "Are you a time traveller!",
+          "lower" => "1947-10-13 12:34",
+          "upper" => "2000-01-01 00:01)",
+        })
       end
     end
   end
