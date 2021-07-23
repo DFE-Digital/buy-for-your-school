@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add extensible tally of counted steps to the task
 - add state to `Journey` (initial, stale, archive or remove)
 - drop `Journey.last_worked_on` in favour of `updated_at`
+- allow user to (soft) delete a specification
 
 
 ## Diary Studies using the live environment
