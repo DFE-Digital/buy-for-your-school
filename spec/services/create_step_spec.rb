@@ -34,26 +34,26 @@ RSpec.describe CreateStep do
         expect(step.order).to eq 0
         expect(step.raw).to eq(
           "fields" => {
-            "help_text" => "Tell us which service you need.",
-            "extended_options" => [{ "value" => "Catering" }, { "value" => "Cleaning" }],
+            "helpText" => "Tell us which service you need.",
+            "extendedOptions" => [{ "value" => "Catering" }, { "value" => "Cleaning" }],
             "slug" => "/which-service",
             "title" => "Which service do you need?",
             "type" => "radios",
-            "always_show_the_user" => true,
+            "alwaysShowTheUser" => true,
           },
           "sys" => {
-            "content_type" => {
+            "contentType" => {
               "sys" => {
                 "id" => "question",
-                "link_type" => "ContentType",
+                "linkType" => "ContentType",
                 "type" => "Link",
               },
             },
-            "created_at" => "2020-09-07T10:56:40.585Z",
+            "createdAt" => "2020-09-07T10:56:40.585Z",
             "environment" => {
               "sys" => {
                 "id" => "master",
-                "link_type" => "Environment",
+                "linkType" => "Environment",
                 "type" => "Link",
               },
             },
@@ -63,12 +63,12 @@ RSpec.describe CreateStep do
             "space" => {
               "sys" => {
                 "id" => "jspwts36h1os",
-                "link_type" => "Space",
+                "linkType" => "Space",
                 "type" => "Link",
               },
             },
             "type" => "Entry",
-            "updated_at" => "2020-09-14T22:16:54.633Z",
+            "updatedAt" => "2020-09-14T22:16:54.633Z",
           },
         )
       end

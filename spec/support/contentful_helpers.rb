@@ -182,18 +182,17 @@ module ContentfulHelpers
   def fake_contentful_step(contentful_fixture_filename:)
     raw_response = File.read(Rails.root.join("spec/fixtures/contentful/004-#{contentful_fixture_filename}"))
     hash_response = JSON.parse(raw_response)
-    hash_response.deep_transform_keys!(&:underscore)
-    hash_response.deep_symbolize_keys!
+    transformed_response = hash_response.deep_transform_keys(&:underscore).deep_symbolize_keys
 
     double(
       Contentful::Entry,
-      id: hash_response.dig(:sys, :id),
-      title: hash_response.dig(:fields, :title),
-      type: hash_response.dig(:fields, :title),
-      next: double(id: hash_response.dig(:fields, :next, :sys, :id)),
+      id: transformed_response.dig(:sys, :id),
+      title: transformed_response.dig(:fields, :title),
+      type: transformed_response.dig(:fields, :title),
+      next: double(id: transformed_response.dig(:fields, :next, :sys, :id)),
       raw: hash_response,
-      content_type: double(id: hash_response.dig(:sys, :content_type, :sys, :id)),
-      fields: hash_response[:fields],
+      content_type: double(id: transformed_response.dig(:sys, :content_type, :sys, :id)),
+      fields: transformed_response[:fields],
     )
   end
 end
