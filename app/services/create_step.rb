@@ -8,6 +8,7 @@ class CreateStep
 
   # Steps are either Questions or Statements
   #
+  # @return [Array<String>]
   ALLOWED_CONTENTFUL_MODELS = %w[
     question
     statement
@@ -15,6 +16,7 @@ class CreateStep
 
   # Contentful Question Model defined types
   #
+  # @return [Array<String>]
   ALLOWED_CONTENTFUL_QUESTION_TYPES = %w[
     long_text
     short_text
@@ -27,6 +29,7 @@ class CreateStep
 
   # Contentful Statement Model defined types
   #
+  # @return [Array<String>]
   ALLOWED_CONTENTFUL_STATEMENT_TYPES = %w[
     markdown
   ].freeze
@@ -43,21 +46,18 @@ class CreateStep
     @order = order
   end
 
-  # @raise [UnexpectedContentfulModel]
-  # @raise [UnexpectedContentfulStepType]
+  # @raise [UnexpectedContentfulModel, UnexpectedContentfulStepType]
   #
   # @return [Step]
   def call
     if unexpected_contentful_model?
       send_rollbar_warning
-      # TODO: pass unexpected model to the exception so it is logged
-      raise UnexpectedContentfulModel
+      raise UnexpectedContentfulModel, content_model
     end
 
     if unexpected_step_type?
       send_rollbar_warning
-      # TODO: pass unexpected step type to the exception so it is logged
-      raise UnexpectedContentfulStepType
+      raise UnexpectedContentfulStepType, step_type
     end
 
     create_step
@@ -75,6 +75,7 @@ private
       contentful_model: content_model,
       contentful_type: step_type,
       options: options,
+      criteria: criteria,
       primary_call_to_action_text: primary_call_to_action_text,
       skip_call_to_action_text: skip_call_to_action_text,
       hidden: hidden?,
@@ -120,36 +121,52 @@ private
     @contentful_step.fields[:title]
   end
 
+  # Used by questions
+  #
   # @return [Nil, String]
   def help_text
     @contentful_step.fields[:help_text]
   end
 
-  # Applies to statements.
+  # Used by statements
   #
   # @return [Nil, String]
   def body
     @contentful_step.fields[:body]
   end
 
+  # Used by radio and checkbox questions
+  #
   # @return [Nil, String]
   def options
     @contentful_step.fields[:extended_options]
   end
 
+  # Custom question validation
+  #
+  # @example
+  #   criteria => { lower => "", upper => "", message => "" }
+  #
+  # @return [Nil, Hash<String>]
+  def criteria
+    @contentful_step.fields[:criteria]
+  end
+
   # @return [String]
   def step_type
-    # TODO: Make step types camel-case in Contentful
+    # TODO: Make all step types snake_case in Contentful
     @contentful_step.fields[:type]&.tr(" ", "_")
   end
 
   # @see https://design-system.service.gov.uk/components/button/
+  #
   # @return [Nil, String]
   def primary_call_to_action_text
     @contentful_step.fields[:primary_call_to_action]
   end
 
   # @see https://design-system.service.gov.uk/components/button/
+  #
   # @return [Nil, String]
   def skip_call_to_action_text
     @contentful_step.fields[:skip_call_to_action]
@@ -199,7 +216,7 @@ private
   #     }
   #   }
   #
-  # @return [String]
+  # @return [String] JSON
   def raw
     @contentful_step.raw
   end

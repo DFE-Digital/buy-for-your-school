@@ -8,8 +8,11 @@ class CurrencyAnswer < ApplicationRecord
             presence: true,
             numericality: {
               greater_than_or_equal_to: 0,
+              # Use locale for this validation message
               message: "does not accept £ signs or other non numerical characters",
             }
+
+  validates_with RangeValidator
 
   # Ensure no commas are present in the currency value
   #

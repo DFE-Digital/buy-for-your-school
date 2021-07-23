@@ -1,4 +1,5 @@
-# SingleDateAnswer is used to capture a single date answer to a {Step}.
+# Persist {Step} response for questions of type 'single_date'
+#
 class SingleDateAnswer < ApplicationRecord
   include TaskCounters
 
@@ -8,4 +9,6 @@ class SingleDateAnswer < ApplicationRecord
             presence: {
               message: I18n.t("activerecord.errors.models.single_date_answer.attributes.response"),
             }
+
+  validates_with RangeValidator
 end

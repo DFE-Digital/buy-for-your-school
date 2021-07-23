@@ -2,6 +2,8 @@
 # Mock Contentful data loaded from JSON fixtures
 #
 module ContentfulHelpers
+  # TODO: replace "contentful_fixture_filename"/"fixture_filename" with the more succinct "fixture" param
+  #
   def stub_contentful_entry(
     entry_id: "radio-question",
     fixture_filename: "radio-question-example.json",
@@ -172,9 +174,9 @@ module ContentfulHelpers
     task = double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      title: hash_response.dig("fields", "title"),
-      raw: hash_response,
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
+      raw: hash_response,
+      title: hash_response.dig("fields", "title"),
     )
 
     steps = hash_response.dig("fields", "steps").map { |step_hash| double(id: step_hash.dig("sys", "id")) }
@@ -190,11 +192,11 @@ module ContentfulHelpers
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      title: hash_response.dig("fields", "title"),
-      type: hash_response.dig("fields", "type"),
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
       raw: hash_response,
       fields: hash_response["fields"].dup.transform_keys!(&:underscore).symbolize_keys!,
+      title: hash_response.dig("fields", "title"),
+      type: hash_response.dig("fields", "type"),
     )
   end
 end
