@@ -30,18 +30,6 @@
   </div>
 </div>
 
-<div class="govuk-grid-row govuk-!-margin-top-6">
-  <div class="govuk-grid-column-full">
-    <%# TODO pass in descriptive title ticket #124 %>
-    <p class="govuk-body"><%= I18n.t("journey.specification.delete.confirmed", title: "XXX") %></p>
-    <p class="govuk-body">
-      <%= I18n.t("journey.specification.delete.support.message",
-                 link: link_to(I18n.t("journey.specification.delete.support.link"),
-                               "mailto:#{ENV["SUPPORT_EMAIL"]}", class: "govuk-link")).html_safe %>
-    </p>
-  </div>
-</div>
-
 <div class="govuk-button-group">
   <%= link_to I18n.t("journey.specification.delete.button.dashboard"), dashboard_path, class: "govuk-link govuk-button" %>
 </div>

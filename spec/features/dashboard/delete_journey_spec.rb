@@ -52,11 +52,11 @@ RSpec.feature "Delete a journey" do
         click_link("Delete")
       end
 
-      expect(page.title).to have_text "Delete specification"
+      expect(page.title).to have_text "Are you sure you want to delete this specification?"
 
       click_link("Delete specification")
 
-      expect(page.title).to have_text "Delete specification confirmed"
+      expect(page.title).to have_text "This specification has been deleted"
       specification.reload
 
       expect(specification.state).to eq "remove"
