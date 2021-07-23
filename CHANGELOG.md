@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add category `title` column to the dashboard
 - add `journey_maps#index` to allow content designers to switch category
 - add `categories#index` to enable users to create a specification from a chosen category
+- rename `journey_maps` to `design` to allow more intuitive URLs
 - WIP: data migration
 
 **Dashboard functionality**
