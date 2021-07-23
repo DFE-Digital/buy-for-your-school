@@ -24,10 +24,11 @@ RSpec.feature "Content Designers can view" do
 
           # design.edit_step_link_text
           expect(page).to have_link "Edit step in Contentful",
-                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/radio-question"
+                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/radio-question",
+                                    class: "govuk-link"
 
           # design.preview_step_link_text
-          expect(page).to have_link "Preview step in service", href: "/preview/entries/radio-question"
+          expect(page).to have_link "Preview step in service", href: "/preview/entries/radio-question", class: "govuk-link"
         end
 
         within(list_items[1]) do
@@ -38,10 +39,11 @@ RSpec.feature "Content Designers can view" do
 
           # design.edit_step_link_text
           expect(page).to have_link "Edit step in Contentful",
-                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/short-text-question"
+                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/short-text-question",
+                                    class: "govuk-link"
 
           # design.preview_step_link_text
-          expect(page).to have_link "Preview step in service", href: "/preview/entries/short-text-question"
+          expect(page).to have_link "Preview step in service", href: "/preview/entries/short-text-question", class: "govuk-link"
         end
 
         within(list_items[2]) do
@@ -52,10 +54,11 @@ RSpec.feature "Content Designers can view" do
 
           # design.edit_step_link_text
           expect(page).to have_link "Edit step in Contentful",
-                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/long-text-question"
+                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/long-text-question",
+                                    class: "govuk-link"
 
           # design.preview_step_link_text
-          expect(page).to have_link "Preview step in service", href: "/preview/entries/long-text-question"
+          expect(page).to have_link "Preview step in service", href: "/preview/entries/long-text-question", class: "govuk-link"
         end
       end
     end

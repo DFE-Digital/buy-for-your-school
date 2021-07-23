@@ -37,15 +37,8 @@ RSpec.feature "Content Designers can see" do
       within("ul.govuk-list.govuk-list--bullet") do
         list_items = find_all("li")
 
-        within(list_items[0]) do
-          expect(find("a.govuk-link")).to have_text "Catering"
-          expect(find("a.govuk-link")[:href]).to eq "/design/catering"
-        end
-
-        within(list_items[1]) do
-          expect(find("a.govuk-link")).to have_text "Multi-function devices"
-          expect(find("a.govuk-link")[:href]).to eq "/design/mfd"
-        end
+        expect(list_items[0]).to have_link "Catering", href: "/design/catering", class: "govuk-link"
+        expect(list_items[1]).to have_link "Multi-function devices", href: "/design/mfd", class: "govuk-link"
       end
     end
   end
