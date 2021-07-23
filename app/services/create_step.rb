@@ -85,7 +85,7 @@ private
     )
   end
 
-  # @return [String]
+  # @return [String] 1QdzZOVfL8x1d9Q9FA0u66
   def content_entry_id
     @contentful_step.id
   end
@@ -160,9 +160,7 @@ private
   #
   # @return [Boolean]
   def hidden?
-    return false if @contentful_step.fields[:always_show_the_user].nil?
-
-    !@contentful_step.fields[:always_show_the_user]
+    !@contentful_step.fields.fetch(:always_show_the_user, true)
   end
 
   # @return [Nil, Array<Hash>]
@@ -170,6 +168,37 @@ private
     @contentful_step.fields[:show_additional_question]
   end
 
+  # @example
+  #   {
+  #     "sys": {
+  #       "id": "checkboxes-question",
+  #       "contentType": {
+  #         "sys": {
+  #           "type": "Link",
+  #           "linkType": "ContentType",
+  #           "id": "question"
+  #         }
+  #       }
+  #     },
+  #     "fields": {
+  #       "type": "checkboxes",
+  #       "title": "Everyday services that are required and need to be considered",
+  #       "extendedOptions": [
+  #         { "value": "Breakfast" },
+  #         { "value": "Morning break" },
+  #         { "value": "Lunch" },
+  #         { "value": "Dinner" }
+  #       ],
+  #       "alwaysShowTheUser": true,
+  #       "showAdditionalQuestion": [
+  #         {
+  #           "required_answer": "Lunch",
+  #           "question_identifiers": ["lunch-additional-question"]
+  #         }
+  #       ]
+  #     }
+  #   }
+  #
   # @return [String]
   def raw
     @contentful_step.raw

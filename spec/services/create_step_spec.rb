@@ -159,8 +159,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "unexpected-contentful-type" }
 
       it "raises an error" do
-        expect { service.call }
-          .to raise_error(CreateStep::UnexpectedContentfulModel)
+        expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulModel)
       end
 
       it "raises a rollbar event" do
@@ -175,8 +174,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: "question, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
-        expect { service.call }
-          .to raise_error(CreateStep::UnexpectedContentfulModel)
+        expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulModel)
       end
     end
 
@@ -184,8 +182,7 @@ RSpec.describe CreateStep do
       let(:fixture) { "unexpected-contentful-question-type" }
 
       it "raises an error" do
-        expect { service.call }
-          .to raise_error(CreateStep::UnexpectedContentfulStepType)
+        expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
 
       it "raises a rollbar event" do
@@ -200,8 +197,7 @@ RSpec.describe CreateStep do
                 allowed_content_models: "question, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
-        expect { service.call }
-          .to raise_error(CreateStep::UnexpectedContentfulStepType)
+        expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end
   end

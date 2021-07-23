@@ -190,7 +190,7 @@ module ContentfulHelpers
       type: hash_response.dig("fields", "type"),
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
       raw: hash_response,
-      fields: hash_response["fields"].dup.deep_transform_keys!(&:underscore).deep_symbolize_keys!,
+      fields: hash_response["fields"].dup.transform_keys!(&:underscore).symbolize_keys!,
     )
   end
 end
