@@ -187,17 +187,10 @@ module ContentfulHelpers
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
       title: hash_response.dig("fields", "title"),
-      help_text: hash_response.dig("fields", "helpText"),
-      body: hash_response.dig("fields", "body"),
-      extended_options: hash_response.dig("fields", "extendedOptions"),
       type: hash_response.dig("fields", "type"),
-      next: double(id: hash_response.dig("fields", "next", "sys", "id")),
-      primary_call_to_action: hash_response.dig("fields", "primaryCallToAction"),
-      skip_call_to_action: hash_response.dig("fields", "skipCallToAction"),
-      always_show_the_user: hash_response.dig("fields", "alwaysShowTheUser"),
-      show_additional_question: hash_response.dig("fields", "showAdditionalQuestion"),
-      raw: hash_response,
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
+      raw: hash_response,
+      fields: hash_response["fields"].dup.transform_keys!(&:underscore).symbolize_keys!,
     )
   end
 end

@@ -1,4 +1,5 @@
 # Convert a {Contentful::Entry} into a {Step}
+# Steps may have different fields available depending on their type.
 #
 class CreateStep
   class UnexpectedContentfulModel < StandardError; end
@@ -32,18 +33,19 @@ class CreateStep
 
   ALLOWED_STEP_TYPES = ALLOWED_CONTENTFUL_QUESTION_TYPES + ALLOWED_CONTENTFUL_STATEMENT_TYPES
 
-  attr_accessor :task, :contentful_entry, :order
-
   # @param task [Task] persisted task
-  # @param contentful_entry [Contentful::Entry] Contentful Client object
+  # @param contentful_step [Contentful::Entry] Contentful Client object
   # @param order [Integer] position within the task
   #
-  def initialize(task:, contentful_entry:, order:)
-    self.task = task
-    self.contentful_entry = contentful_entry
-    self.order = order
+  def initialize(task:, contentful_step:, order:)
+    @task = task
+    @contentful_step = contentful_step
+    @order = order
   end
 
+  # @raise [UnexpectedContentfulModel]
+  # @raise [UnexpectedContentfulStepType]
+  #
   # @return [Step]
   def call
     if unexpected_contentful_model?
@@ -58,6 +60,13 @@ class CreateStep
       raise UnexpectedContentfulStepType
     end
 
+    create_step
+  end
+
+private
+
+  # @return [Step]
+  def create_step
     Step.create!(
       title: title,
       help_text: help_text,
@@ -71,21 +80,19 @@ class CreateStep
       hidden: hidden?,
       additional_step_rules: additional_step_rules,
       raw: raw,
-      task: task,
-      order: order,
+      task: @task,
+      order: @order,
     )
   end
 
-private
-
-  # @return [String]
+  # @return [String] 1QdzZOVfL8x1d9Q9FA0u66
   def content_entry_id
-    contentful_entry.id
+    @contentful_step.id
   end
 
   # @return [String] question, statement
   def content_model
-    contentful_entry.content_type.id
+    @contentful_step.content_type.id
   end
 
   # @return [Boolean]
@@ -110,69 +117,91 @@ private
 
   # @return [String]
   def title
-    contentful_entry.title
+    @contentful_step.fields[:title]
   end
 
   # @return [Nil, String]
   def help_text
-    return nil unless contentful_entry.respond_to?(:help_text)
-
-    contentful_entry.help_text
+    @contentful_step.fields[:help_text]
   end
 
+  # Applies to statements.
+  #
   # @return [Nil, String]
   def body
-    return nil unless contentful_entry.respond_to?(:body)
-
-    contentful_entry.body
+    @contentful_step.fields[:body]
   end
 
   # @return [Nil, String]
   def options
-    return nil unless contentful_entry.respond_to?(:extended_options)
-
-    contentful_entry.extended_options
+    @contentful_step.fields[:extended_options]
   end
 
   # @return [String]
   def step_type
-    contentful_entry.type.tr(" ", "_")
+    # TODO: Make step types camel-case in Contentful
+    @contentful_step.fields[:type]&.tr(" ", "_")
   end
 
   # @see https://design-system.service.gov.uk/components/button/
   # @return [Nil, String]
   def primary_call_to_action_text
-    return nil unless contentful_entry.respond_to?(:primary_call_to_action)
-
-    contentful_entry.primary_call_to_action
+    @contentful_step.fields[:primary_call_to_action]
   end
 
   # @see https://design-system.service.gov.uk/components/button/
   # @return [Nil, String]
   def skip_call_to_action_text
-    return nil unless contentful_entry.respond_to?(:skip_call_to_action)
-
-    contentful_entry.skip_call_to_action
+    @contentful_step.fields[:skip_call_to_action]
   end
 
+  # Determines if this step should be hidden in the task list.
+  # Applies to steps dependent on answers of other steps.
+  #
   # @return [Boolean]
   def hidden?
-    return false unless contentful_entry.respond_to?(:always_show_the_user)
-    return false if contentful_entry.always_show_the_user.nil?
-
-    !contentful_entry.always_show_the_user
+    !@contentful_step.fields.fetch(:always_show_the_user, true)
   end
 
   # @return [Nil, Array<Hash>]
   def additional_step_rules
-    return nil unless contentful_entry.respond_to?(:show_additional_question)
-
-    contentful_entry.show_additional_question
+    @contentful_step.fields[:show_additional_question]
   end
 
+  # @example
+  #   {
+  #     "sys": {
+  #       "id": "checkboxes-question",
+  #       "contentType": {
+  #         "sys": {
+  #           "type": "Link",
+  #           "linkType": "ContentType",
+  #           "id": "question"
+  #         }
+  #       }
+  #     },
+  #     "fields": {
+  #       "type": "checkboxes",
+  #       "title": "Everyday services that are required and need to be considered",
+  #       "extendedOptions": [
+  #         { "value": "Breakfast" },
+  #         { "value": "Morning break" },
+  #         { "value": "Lunch" },
+  #         { "value": "Dinner" }
+  #       ],
+  #       "alwaysShowTheUser": true,
+  #       "showAdditionalQuestion": [
+  #         {
+  #           "required_answer": "Lunch",
+  #           "question_identifiers": ["lunch-additional-question"]
+  #         }
+  #       ]
+  #     }
+  #   }
+  #
   # @return [String]
   def raw
-    contentful_entry.raw
+    @contentful_step.raw
   end
 
   def send_rollbar_warning

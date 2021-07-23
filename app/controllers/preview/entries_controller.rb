@@ -6,7 +6,7 @@ class Preview::EntriesController < ApplicationController
     section = Section.create(title: "Preview Section", journey: @journey)
     task = Task.create(title: "Preview Task", section: section)
     contentful_entry = GetEntry.new(entry_id: params[:id]).call
-    @step = CreateStep.new(task: task, contentful_entry: contentful_entry, order: 0).call
+    @step = CreateStep.new(task: task, contentful_step: contentful_entry, order: 0).call
 
     redirect_to journey_step_path(@journey, @step)
   end
