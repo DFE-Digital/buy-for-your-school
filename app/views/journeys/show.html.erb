@@ -7,8 +7,8 @@
 
 <ol class="app-task-list sections">
   <% @sections.each do |section| %>
-    <h2 class="app-task-list__section"><%= section.title %></h2>
     <li>
+      <h2 class="app-task-list__section"><%= section.title %></h2>
       <ul class="app-task-list__items">
         <% section.tasks.each do |task| %>
           <% if task.one_step? %>
@@ -17,7 +17,6 @@
               <li class="app-task-list__item step__item" id="<%= task.step.id %>">
 
                 <% if task.step.answered? %>
-                  <%# Accessibility - screen readers are not reading the status out %>
                   <span class="app-task-list__task-name">
                     <%= link_to task.title, edit_journey_step_path(@journey, task.step), class: "govuk-link", 'aria-describedby': task.step.status_id %>
                   </span>
