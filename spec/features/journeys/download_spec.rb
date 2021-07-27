@@ -21,7 +21,7 @@ RSpec.feature "Users can see their catering specification" do
       # journey.specification.header
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
 
-      # journey.specification.button
+      # journey.specification.download.button
       expect(find("a.govuk-button")).to have_text "Download (.docx)"
       expect(find("a.govuk-button")[:role]).to eq "button"
 
