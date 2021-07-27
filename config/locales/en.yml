@@ -13,19 +13,19 @@ en:
       change_answer: "Change"
       update: "Update"
   banner:
+    design: "%{env} Environment"
     beta:
-      tag: "beta"
+      tag: beta
       message:
           This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
     footer:
       message:
         For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
-    preview:
-      tag: "preview"
-      message: "This environment is only for previewing Contentful changes before publishing."
+
   planning:
     start_page:
       page_title: "Catering services"
+
   specifying:
     start_page:
       page_title: Create a specification to procure %{category} for your school
@@ -59,6 +59,7 @@ en:
       pause_and_resume_body: You can pause and resume your specification at any time.
     errors:
       contentful_entry_not_found: "An unexpected error occurred. The starting step has been revoked by the content team."
+
   journey:
     specification:
       header: "Your specification"
@@ -81,7 +82,8 @@ en:
           delete: "Delete specification"
           cancel: "Cancel"
           dashboard: "Continue to dashboard"
-  specification:
+
+  # /dashboard
   dashboard:
     header: "Specifications dashboard"
     create:
@@ -95,29 +97,34 @@ en:
     existing:
       header: "Existing specifications"
       body: "Continue with a draft specification, and review completed specifications."
+
   # /categories
   categories:
     header: "Choose the type of specification you want to build"
     support_info: "We currently only support catering and multifunctional devices."
     not_found: "No categories found"
+
   # /journeys#show
   task_list:
     status:
       not_started: Not started
       in_progress: In progress
       completed: Completed
+
   # /tasks#show
   task:
     button:
       back: Return to task list
       continue: Continue answering these questions
       next: Continue to the next task
+
+  # /design
   design:
     page_title: "Template Designer"
     category_selection_header: "Choose a category"
-    edit_step_link_text: "Edit step in Contentful"
-    preview_step_link_text: "Preview step in service"
+    # preview_step_link_text: "Preview step in service"
     spec_template_tag_title: "Specification tag"
+
   errors:
     go_home: "Back to the service"
     internal_server_error:

@@ -18,6 +18,20 @@ RSpec.feature "Categories page" do
     end
   end
 
+  context "when designers have been previewing" do
+    specify "the preview category is not rendered" do
+      stub_contentful_entry(
+        entry_id: "radio-question",
+        fixture_filename: "steps/radio-question.json",
+      )
+
+      user_is_signed_in
+      visit "/preview/entries/radio-question"
+      visit "/categories"
+      expect(find("h1.govuk-heading-l")).to have_text "No categories found"
+    end
+  end
+
   context "when the user is signed in" do
     let(:user) { create(:user) }
     let(:created_at) { Time.zone.local(2021, 2, 15, 12, 0, 0) }

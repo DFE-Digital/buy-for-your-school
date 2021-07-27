@@ -4,14 +4,26 @@
 <ol class="govuk-list govuk-list--number">
   <% @steps.each do |entry| %>
     <li class="govuk-!-margin-bottom-4">
-      <b><%= entry.title %></b><br>
-      <i><%= entry.type %></i><br>
+      <b>
+      <%# TODO: decorate contentful entries %>
+      <%= link_to entry.title, "https://app.contentful.com/spaces/#{entry.space.id}/environments/#{entry.environment.id}/entries/#{entry.id}", target: :blank, class: "govuk-link" %>
+      </b>
+
+      <br />
+
       <small>
-        <%= link_to I18n.t("design.edit_step_link_text"), "https://app.contentful.com/spaces/#{ENV["CONTENTFUL_SPACE"]}/environments/#{ENV["CONTENTFUL_ENVIRONMENT"]}/entries/#{entry.id}", target: :blank, class: "govuk-link" %>
-        &middot;
-        <%= link_to I18n.t("design.preview_step_link_text"), preview_entry_path(entry.id), target: :blank, class: "govuk-link" %><br>
+        <i><%= entry.slug %></i>
+        <br />
+        Type: <code><%= entry.type %></code>
+        <br />
         <%# TODO: why do step entries use "answer_" as a prefix? %>
-          <%= I18n.t("design.spec_template_tag_title") %>: <code>{{ answer_<%= entry.id %> }}</code>
+        <%= I18n.t("design.spec_template_tag_title") %>: <code id="liquid_tag">{{ answer_<%= entry.id %> }}</code>
+        <br />
+        Revision: <i><%= entry.revision %></i>
+        <br />
+        Updated at: <i><%= entry.updated_at.strftime("%e %B %Y - %I:%M:%S %P") %></i>
+        <br />
+
       </small>
     </li>
   <% end %>

@@ -216,7 +216,7 @@ private
   #     }
   #   }
   #
-  # @return [String] JSON
+  # @return [Hash] JSON
   def raw
     @contentful_step.raw
   end
@@ -224,9 +224,9 @@ private
   def send_rollbar_warning
     Rollbar.warning(
       "An unexpected Contentful type was found",
-      contentful_url: ENV["CONTENTFUL_URL"],
-      contentful_space_id: ENV["CONTENTFUL_SPACE"],
-      contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+      # contentful_url: ENV["CONTENTFUL_URL"],
+      contentful_space_id: @contentful_step.space.id,
+      contentful_environment: @contentful_step.environment.id,
       contentful_entry_id: content_entry_id,
       content_model: content_model,
       step_type: step_type,

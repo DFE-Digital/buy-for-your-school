@@ -3,6 +3,7 @@ RSpec.feature "Content Designers can view" do
 
   before do
     user_is_signed_in
+    # TODO: move JSON file extension for fixtures into the helper method
     stub_contentful_category(fixture_filename: "#{fixture}.json")
     visit "/design/catering"
   end
@@ -17,48 +18,35 @@ RSpec.feature "Content Designers can view" do
         list_items = find_all("li")
 
         within(list_items[0]) do
-          expect(find("b")).to have_text "Which service do you need?"
+          expect(find("code#liquid_tag")).to have_text "{{ answer_radio-question }}"
 
-          # step_id internal tag
-          expect(find("code")).to have_text "{{ answer_radio-question }}"
-
-          # design.edit_step_link_text
-          expect(page).to have_link "Edit step in Contentful",
-                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/radio-question",
+          expect(page).to have_link "Which service do you need?",
+                                    href: "https://app.contentful.com/spaces/jspwts36h1os/environments/master/entries/radio-question",
                                     class: "govuk-link"
-
-          # design.preview_step_link_text
-          expect(page).to have_link "Preview step in service", href: "/preview/entries/radio-question", class: "govuk-link"
         end
 
         within(list_items[1]) do
-          expect(find("b")).to have_text "What email address did you use?"
+          expect(find("code#liquid_tag")).to have_text "{{ answer_short-text-question }}"
 
-          # step_id internal tag
-          expect(find("code")).to have_text "{{ answer_short-text-question }}"
-
-          # design.edit_step_link_text
-          expect(page).to have_link "Edit step in Contentful",
-                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/short-text-question",
+          expect(page).to have_link "What email address did you use?",
+                                    href: "https://app.contentful.com/spaces/rwl7tyzv9sys/environments/master/entries/short-text-question",
                                     class: "govuk-link"
-
-          # design.preview_step_link_text
-          expect(page).to have_link "Preview step in service", href: "/preview/entries/short-text-question", class: "govuk-link"
         end
 
         within(list_items[2]) do
-          expect(find("b")).to have_text "Describe what you need"
+          expect(find("code#liquid_tag")).to have_text "{{ answer_long-text-question }}"
 
-          # step_id internal tag
-          expect(find("code")).to have_text "{{ answer_long-text-question }}"
-
-          # design.edit_step_link_text
-          expect(page).to have_link "Edit step in Contentful",
-                                    href: "https://app.contentful.com/spaces/test/environments/master/entries/long-text-question",
+          expect(page).to have_link "Describe what you need",
+                                    href: "https://app.contentful.com/spaces/rwl7tyzv9sys/environments/develop/entries/long-text-question",
                                     class: "govuk-link"
+        end
 
-          # design.preview_step_link_text
-          expect(page).to have_link "Preview step in service", href: "/preview/entries/long-text-question", class: "govuk-link"
+        within(list_items[3]) do
+          expect(find("code#liquid_tag")).to have_text "{{ answer_checkboxes-question }}"
+
+          expect(page).to have_link "Everyday services that are required and need to be considered",
+                                    href: "https://app.contentful.com/spaces/rwl7tyzv9sys/environments/develop/entries/checkboxes-question",
+                                    class: "govuk-link"
         end
       end
     end

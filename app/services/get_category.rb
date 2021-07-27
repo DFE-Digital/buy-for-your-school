@@ -1,3 +1,4 @@
+# TODO: stop monkey-patching Contentful::Entry and start by moving this into the correct namespace
 class Contentful::Entry
   attr_accessor :combined_specification_template
 end
@@ -7,20 +8,20 @@ end
 class GetCategory
   class InvalidLiquidSyntax < StandardError; end
 
-  # @return [String]
-  attr_accessor :category_entry_id
-
   # @param category_entry_id [String] Contentful Entry ID
-  def initialize(category_entry_id:)
-    self.category_entry_id = category_entry_id
+  # @param client [Content::Client]
+  #
+  def initialize(category_entry_id:, client: Content::Client.new)
+    @category_entry_id = category_entry_id
+    @client = client
   end
 
   # @return [Contentful::Entry]
   def call
     category = begin
-      GetEntry.new(entry_id: category_entry_id).call
+      GetEntry.new(entry_id: @category_entry_id, client: @client).call
     rescue GetEntry::EntryNotFound
-      send_rollbar_error(message: "A Contentful category entry was not found", entry_id: category_entry_id)
+      send_rollbar_error(message: "A Contentful category entry was not found")
       raise
     end
 
@@ -31,7 +32,7 @@ class GetCategory
     begin
       validate_liquid(template: category.combined_specification_template)
     rescue Liquid::SyntaxError => e
-      send_rollbar_error(message: "A user couldn't start a journey because of an invalid Specification", entry_id: category_entry_id)
+      send_rollbar_error(message: "A user couldn't start a journey because of an invalid Specification")
       raise InvalidLiquidSyntax.new(message: e.message)
     end
 
@@ -40,13 +41,13 @@ class GetCategory
 
 private
 
-  def send_rollbar_error(message:, entry_id:)
+  def send_rollbar_error(message:)
     Rollbar.error(
       message,
-      contentful_url: ENV["CONTENTFUL_URL"],
-      contentful_space_id: ENV["CONTENTFUL_SPACE"],
-      contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
-      contentful_entry_id: entry_id,
+      contentful_space_id: @client.space,
+      contentful_environment: @client.environment,
+      contentful_url: @client.api_url,
+      contentful_entry_id: @category_entry_id,
     )
   end
 
