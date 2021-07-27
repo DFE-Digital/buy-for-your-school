@@ -4,7 +4,7 @@
 class Task < ApplicationRecord
   self.implicit_order_column = "order"
 
-  #default_scope { order(:order) }
+  default_scope { order(:order) }
 
   belongs_to :section
 
