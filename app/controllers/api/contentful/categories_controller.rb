@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::Contentful::CategoriesController < Api::Contentful::BaseController
-
   def changed
     contentful_category = GetCategory.new(category_entry_id: category_params[:id]).call
 

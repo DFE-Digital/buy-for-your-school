@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::Contentful::EntriesController < Api::Contentful::BaseController
-
   def changed
     Rollbar.info("Accepted request to cache bust Contentful Entry", cache_key: cache_key)
 
