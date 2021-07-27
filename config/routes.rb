@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get "planning" => "pages#show", "id" => "planning_start_page"
   post "/api/contentful/entry_updated" => "api/contentful/entries#changed"
+  post "/api/contentful/category" => "api/contentful/categories#changed"
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create"
