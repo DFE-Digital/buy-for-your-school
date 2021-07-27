@@ -9,9 +9,9 @@
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
 
-      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button" %>
+      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button", role: "button" %>
     <% else %>
-      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button" %>
+      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button", role: "button" %>
 
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
