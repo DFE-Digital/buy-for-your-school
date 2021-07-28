@@ -1,4 +1,4 @@
-RSpec.describe Content::Connector do
+RSpec.describe Content::Connector, ".instance" do
   subject(:connector) do
     described_class.instance(space_id, delivery_token, preview_token)
   end
@@ -20,7 +20,7 @@ RSpec.describe Content::Connector do
   end
 
   describe "#client" do
-    it "instantiates clients for both delivery and preview endpoints" do
+    it "selects either the 'delivery' or 'preview' client" do
       delivery_client = instance_double(Contentful::Client)
       allow(Contentful::Client).to receive(:new)
         .with(application_name: "DfE: Buy For Your School",
@@ -45,6 +45,14 @@ RSpec.describe Content::Connector do
 
       expect(connector.client(:delivery)).to eq delivery_client
       expect(connector.client(:preview)).to eq preview_client
+    end
+
+    context "when neither 'preview' or 'delivery' are chosen" do
+      it "raises an error" do
+        expect {
+          connector.client(:unknown)
+        }.to raise_error Content::Connector::UnexpectedClient, "must be either 'preview' or 'delivery'"
+      end
     end
   end
 end

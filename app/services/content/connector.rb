@@ -2,27 +2,21 @@ require "contentful"
 
 # Instantiate Contentful::Client for delivery and preview
 #
-#
 class Content::Connector
-  # Gets or creates a Contentful Service Wrapper
-  #
+  class UnexpectedClient < StandardError; end
+
   # @param space_id [String]
   # @param delivery_token [String]
   # @param preview_token [String]
-  # @param host [String]
   #
   # @return [Content::Connector]
-  def self.instance(space_id, delivery_token, preview_token, host = nil)
-    @instance ||= nil
-
-    # We create new client instances only if credentials changed or client wasn't instantiated before
+  def self.instance(space_id, delivery_token, preview_token)
     if @instance.nil? ||
         @instance.space_id != space_id ||
         @instance.delivery_token != delivery_token ||
-        @instance.preview_token != preview_token ||
-        @instance.host != host
+        @instance.preview_token != preview_token
 
-      @instance = new(space_id, delivery_token, preview_token, host)
+      @instance = new(space_id, delivery_token, preview_token)
     end
 
     @instance
@@ -37,13 +31,11 @@ class Content::Connector
 
   # @param space_id [String]
   # @param access_token [String] Delivery or Preview API access token
-  # @param preview [Boolean] wether or not the client uses the Preview API
-  # @param host [String]
+  # @param preview [Boolean] whether the client uses the Preview API
   #
   # @return [::Contentful::Client]
-  def self.create_client(space_id:, access_token:, host:, preview: false)
-    host ||= "contentful"
-    api_url = preview ? "preview.#{host}.com" : "cdn.#{host}.com"
+  def self.create_client(space_id:, access_token:, preview: false)
+    api_url = preview ? "preview.contentful.com" : "cdn.contentful.com"
 
     options = {
       api_url: api_url,
@@ -58,17 +50,15 @@ class Content::Connector
     ::Contentful::Client.new(options)
   end
 
-  # Returns the corresponding client (Delivery or Preview)
-  #
-  # @param api_id [Symbol, String]
+  # @param api [Symbol, String]
   #
   # @return [::Contentful::Client]
-  def client(api_id)
-    case api_id.to_sym
+  def client(api)
+    case api.to_sym
     when :preview then @preview_client
     when :delivery then @delivery_client
     else
-      raise StandardError, "Unknown endpoint, must be either :preview or :delivery"
+      raise UnexpectedClient, "must be either 'preview' or 'delivery'"
     end
   end
 
@@ -78,29 +68,24 @@ class Content::Connector
   attr_reader :delivery_token
   # @return [String]
   attr_reader :preview_token
-  # @return [String]
-  attr_reader :host
 
 private
 
-  def initialize(space_id, delivery_token, preview_token, host)
+  def initialize(space_id, delivery_token, preview_token)
     @space_id = space_id
     @delivery_token = delivery_token
     @preview_token = preview_token
-    @host = host
 
     @delivery_client = self.class.create_client(
       space_id: space_id,
       access_token: delivery_token,
       preview: false,
-      host: host,
     )
 
     @preview_client = self.class.create_client(
       space_id: space_id,
       access_token: preview_token,
       preview: true,
-      host: host,
     )
   end
 end

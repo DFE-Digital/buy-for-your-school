@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
   alias_method :bypass_callback, :create
 
   def failure
+    # TODO: DSI failure needs a user-friendly resolution
     Rollbar.error("Sign in failed unexpectedly")
   end
 
