@@ -45,6 +45,7 @@ RSpec.feature "Create a new journey" do
       # duplicates dashboard.create.header
       it "dashboard.create.button" do
         expect(find("a.govuk-button")).to have_text "Create a new specification"
+        expect(find("a.govuk-button")[:role]).to eq "button"
       end
     end
   end
