@@ -36,6 +36,6 @@ class Preview::EntriesController < ApplicationController
       order: 0,
     ).call
 
-    redirect_to journey_step_path(journey, step)
+    redirect_to journey_step_path(journey, step, preview: true)
   end
 end

@@ -19,4 +19,9 @@ RSpec.feature "Content Designers can preview a journey step" do
     expect(labels[0]).to have_text "Catering"
     expect(labels[1]).to have_text "Cleaning"
   end
+
+  scenario "a banner reminding that the step is preview is rendered" do
+    expect(find("h2.govuk-notification-banner__title")).to have_text "Preview"
+    expect(find("h3.govuk-notification-banner__heading")).to have_text "This is a preview"
+  end
 end

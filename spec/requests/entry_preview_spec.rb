@@ -27,7 +27,7 @@ RSpec.describe "Entry previews", type: :request do
 
   it "redirects to the step page" do
     expect(response).to have_http_status :found
-    expect(response).to redirect_to "/journeys/#{journey.id}/steps/#{step.id}"
+    expect(response).to redirect_to "/journeys/#{journey.id}/steps/#{step.id}?preview=true"
   end
 
   context "when multiple previews are made" do
