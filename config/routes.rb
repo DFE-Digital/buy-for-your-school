@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: "pages#show", id: "specifying_start_page"
 
   get "planning" => "pages#show", "id" => "planning_start_page"
+  post "/api/contentful/auth" => "api/contentful/base#auth"
   post "/api/contentful/entry_updated" => "api/contentful/entries#changed"
   post "/api/contentful/category" => "api/contentful/categories#changed"
 

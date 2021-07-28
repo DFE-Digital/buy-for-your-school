@@ -4,6 +4,10 @@ class Api::Contentful::BaseController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
+  def auth
+    render json: { status: "OK" }, status: :ok
+  end
+
 private
 
   def authenticate_api_user!
