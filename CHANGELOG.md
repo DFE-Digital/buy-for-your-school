@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - a memoised client for both Contentful delivery and preview is available for any environment
 - `Content::Connector` instantiates both clients
 - `Content::Client` is used internally as an interface to the Contentful ruby gem
+- `APP_ENV_{ENV}_CONTENTFUL_ACCESS_TOKEN` is replaced by `APP_ENV_{ENV}_CONTENTFUL_DELIVERY_TOKEN` and `APP_ENV_{ENV}_CONTENTFUL_PREVIEW_TOKEN`
 
 ## Diary Studies using the live environment
 
