@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "Webhook upserts category", type: :request do
   around do |example|
     ClimateControl.modify(
@@ -7,6 +5,16 @@ RSpec.describe "Webhook upserts category", type: :request do
       ) do
       example.run
     end
+  end
+
+  let!(:fake_contentful_webook_payload) do
+    {
+      entityId: "6zeSz4F4YtD66gT5SFpnSB",
+      spaceId: "rwl7tyzv9sys",
+      parameters: {
+        text: "Entity version: 62",
+      },
+    }
   end
 
   it "creates a new category" do
