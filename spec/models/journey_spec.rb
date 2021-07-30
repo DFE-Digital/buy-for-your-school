@@ -98,4 +98,163 @@ RSpec.describe Journey, type: :model do
       end
     end
   end
+
+  describe "#next_incomplete_task" do
+    let(:category) { create(:category, :catering) }
+    let(:journey) { create(:journey, category: category) }
+    let(:section_a) { create(:section, title: "Section A", journey: journey, order: 0) }
+    let(:section_b) { create(:section, title: "Section B", journey: journey, order: 1) }
+    let(:section_c) { create(:section, title: "Section C", journey: journey, order: 2) }
+    let(:tasks) { build_tasks(3) }
+
+    before do
+      tasks.values.each(&:save!)
+    end
+
+    context "when starting sequentially from the top down" do
+      describe "Task A-0 -> Task A-1 -> Task A-2 -> Task B-0" do
+        before do
+          tasks[:a0].steps.each { |step| create(:number_answer, step: step) }
+        end
+
+        it "A-0 -> A-1" do
+          expect(journey.next_incomplete_task(tasks[:a0])).to eq tasks[:a1]
+        end
+
+        it "A-1 -> A-2" do
+          tasks[:a1].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:a1])).to eq tasks[:a2]
+        end
+
+        it "A-2 -> B-0" do
+          tasks[:a1].steps.each { |step| create(:number_answer, step: step) }
+          tasks[:a2].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:a2])).to eq tasks[:b0]
+        end
+      end
+    end
+
+    context "when starting from a middle task" do
+      describe "Task A-1 -> Task A-2 -> Task A-0" do
+        before do
+          tasks[:a1].steps.each { |step| create(:number_answer, step: step) }
+        end
+
+        it "A-1 -> A-2" do
+          expect(journey.next_incomplete_task(tasks[:a1])).to eq tasks[:a2]
+        end
+
+        it "A-2 -> A-0" do
+          tasks[:a2].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:a2])).to eq tasks[:a0]
+        end
+      end
+    end
+
+    context "when starting from a middle section" do
+      describe "Task B-1 -> Task B-2 -> Task B-0 -> Task C-0" do
+        before do
+          tasks[:b1].steps.each { |step| create(:number_answer, step: step) }
+        end
+
+        it "B-1 -> B-2" do
+          expect(journey.next_incomplete_task(tasks[:b1])).to eq tasks[:b2]
+        end
+
+        it "B-2 -> B-0" do
+          tasks[:b2].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:b2])).to eq tasks[:b0]
+        end
+
+        it "B-0 -> C-0" do
+          tasks[:b2].steps.each { |step| create(:number_answer, step: step) }
+          tasks[:b0].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:b0])).to eq tasks[:c0]
+        end
+      end
+    end
+
+    context "when starting from the last section" do
+      describe "Task C-0 -> Task C-1 -> Task C-2 -> Task A-0" do
+        before do
+          tasks[:c0].steps.each { |step| create(:number_answer, step: step) }
+        end
+
+        it "C-0 -> C-1" do
+          expect(journey.next_incomplete_task(tasks[:c0])).to eq tasks[:c1]
+        end
+
+        it "C-1 -> C-2" do
+          tasks[:c1].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:c1])).to eq tasks[:c2]
+        end
+
+        it "C-2 -> A-0" do
+          tasks[:c1].steps.each { |step| create(:number_answer, step: step) }
+          tasks[:c2].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:c2])).to eq tasks[:a0]
+        end
+      end
+    end
+
+    context "when a step is hidden, top down" do
+      describe "Task A-0 -> skip hidden Task A-1 -> Task A-2 -> Task B-0" do
+        before do
+          tasks[:a1].steps.each(&:delete)
+          create(:step, :number, hidden: true, task: tasks[:a1])
+
+          tasks[:a0].steps.each { |step| create(:number_answer, step: step) }
+        end
+
+        it "A-0 -> A-2" do
+          expect(journey.next_incomplete_task(tasks[:a0])).to eq tasks[:a2]
+        end
+
+        it "A-2 -> B-0" do
+          tasks[:a2].steps.each { |step| create(:number_answer, step: step) }
+          expect(journey.next_incomplete_task(tasks[:a2])).to eq tasks[:b0]
+        end
+      end
+    end
+
+    context "when a step is hidden and then revealed, top down" do
+      describe "Task A-0 -> skip hidden Task A-1 -> Task A-2 -> reveal Task A-1 -> Task B-0" do
+        before do
+          tasks[:a1].steps.each { |step| step.update!(hidden: true) }
+          tasks[:a0].steps.each { |step| create(:number_answer, step: step) }
+        end
+
+        it "A-0 -> A-2" do
+          expect(journey.next_incomplete_task(tasks[:a0])).to eq tasks[:a2]
+        end
+
+        it "A-2 -> A-1" do
+          tasks[:a2].steps.each { |step| create(:number_answer, step: step) }
+          tasks[:a1].steps.each { |step| step.update!(hidden: false) }
+
+          expect(journey.next_incomplete_task(tasks[:a2])).to eq tasks[:a1]
+        end
+
+        it "A-1 -> B-0" do
+          tasks[:a2].steps.each { |step| create(:number_answer, step: step) }
+          tasks[:a1].steps.each do |step|
+            step.update!(hidden: false)
+            create(:number_answer, step: step)
+          end
+
+          expect(journey.next_incomplete_task(tasks[:a1])).to eq tasks[:b0]
+        end
+      end
+    end
+
+    def build_tasks(num)
+      hash = {}
+      num.times do |index|
+        hash["a#{index}".to_sym] = build(:task, :with_steps, section: section_a, title: "Task A-#{index}", order: index)
+        hash["b#{index}".to_sym] = build(:task, :with_steps, section: section_b, title: "Task B-#{index}", order: index)
+        hash["c#{index}".to_sym] = build(:task, :with_steps, section: section_c, title: "Task C-#{index}", order: index)
+      end
+      hash
+    end
+  end
 end

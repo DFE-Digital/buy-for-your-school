@@ -41,4 +41,31 @@ class Journey < ApplicationRecord
 
     update!(attributes)
   end
+
+  # Prioritise the current section and order everything else in ascending order
+  # with presedence for higher values
+  #
+  # @return [Task, nil]
+  def next_incomplete_task(current_task)
+    # NB: simplify/railsify this?
+    order_by = %(
+      CASE
+        WHEN tasks.section_id = '#{current_task.section_id}' THEN
+          CASE WHEN tasks.order > #{current_task.order} THEN
+            1
+          ELSE
+            2
+          END
+        ELSE
+          CASE WHEN sections.order > '#{current_task.section.order}' THEN
+            3
+          ELSE
+            4
+          END
+      END
+      , sections.order ASC, tasks.order ASC
+    )
+
+    tasks.includes([:section]).reorder(Arel.sql(order_by)).reject(&:all_steps_completed?).first
+  end
 end
