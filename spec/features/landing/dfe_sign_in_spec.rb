@@ -48,18 +48,26 @@ RSpec.feature "DfE Sign-in" do
   end
 
   context "when authentication fails" do
-    it "renders errors" do
+    it "redirects to the homepage and issues a flash message" do
       OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
-      expect(Rollbar).to receive(:error).with("Sign in failed unexpectedly").and_call_original
+
+      expect(Rollbar).to receive(:error).with(
+        "Sign in failed unexpectedly",
+        dfe_sign_in_uid: anything,
+      ).and_call_original
 
       visit "/"
       click_start
 
-      # errors.sign_in.unexpected_failure.page_title
-      expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
+      expect(page).to have_current_path "/"
+      expect(page.driver.request.session.keys).to be_empty
+      expect(find("h3.govuk-notification-banner__heading")).to have_text "Sign in failed unexpectedly, please try again"
 
+      # If the session can not be cleared
+      # errors.sign_in.unexpected_failure.page_title
+      # expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
       # errors.sign_in.unexpected_failure.page_body
-      expect(find("p.govuk-body")).to have_text "The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly."
+      # expect(find("p.govuk-body")).to have_text "The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly."
     end
   end
 end
