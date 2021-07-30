@@ -32,6 +32,8 @@ class DesignController < ApplicationController
     # TODO: wrap steps in presenter and relocate the link_to Contentful url there
     @steps = tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
 
+    @category_title = contentful_category.title
+
     flash[:notice] = "#{contentful_category.environment.id.capitalize} Environment"
   end
 end
