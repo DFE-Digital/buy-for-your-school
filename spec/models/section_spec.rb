@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Section, type: :model do
   it { is_expected.to belong_to(:journey) }
 
@@ -19,6 +17,22 @@ RSpec.describe Section, type: :model do
       expect(result.first).to eq(oldest_section)
       expect(result.second).to eq(middle_aged_section)
       expect(result.third).to eq(youngest_section)
+    end
+  end
+
+  describe "#incomplete?" do
+    it "returns true if all steps in the section are not complete" do
+      task = create(:task)
+      question = create(:step, :radio, task: task)
+      statement = create(:step, :statement, task: task)
+      section = create(:section, tasks: [task])
+
+      expect(section.incomplete?).to be true
+
+      create(:radio_answer, step: question)
+      statement.acknowledge!
+
+      expect(section.incomplete?).to be false
     end
   end
 end
