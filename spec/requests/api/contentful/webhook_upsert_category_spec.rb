@@ -1,16 +1,9 @@
 RSpec.describe "Webhook upserts category", type: :request do
-  around do |example|
-    ClimateControl.modify(
-      CONTENTFUL_WEBHOOK_API_KEY: "an API key",
-      ) do
-      example.run
-    end
-  end
-
 
   let!(:contentful_category_stub) { stub_contentful_category(fixture_filename: "category-with-dynamic-liquid-template.json") }
 
   before do
+    controller.stub!(authenticate_api_user!: true)
     allow(contentful_category).to receive(:new).and_return(contentful_category_stub)
   end
 
