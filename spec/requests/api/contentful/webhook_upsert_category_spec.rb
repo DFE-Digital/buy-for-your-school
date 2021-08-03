@@ -1,12 +1,11 @@
 RSpec.describe "Webhook upserts category", type: :request do
-
   before do
     has_valid_api_token
     stub_contentful_category(fixture_filename: "category-with-dynamic-liquid-template.json")
   end
 
   it "creates a new category" do
-    fake_contentful_webhook_payload = {
+    fake_webhook_payload = {
       sys: {
         id: "contentful-category-entry",
       },
@@ -15,7 +14,7 @@ RSpec.describe "Webhook upserts category", type: :request do
     expect(Category.count).to be_zero
 
     post "/api/contentful/category",
-         params: fake_contentful_webhook_payload,
+         params: fake_webhook_payload,
          as: :json
 
     expect(response).to have_http_status(:ok)
