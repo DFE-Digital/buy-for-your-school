@@ -11,4 +11,8 @@ module SignInHelpers
   def user_is_signed_in(user: build(:user))
     allow_any_instance_of(FindOrCreateUserFromSession).to receive(:call).and_return(user)
   end
+
+  def has_valid_api_token
+    allow_any_instance_of(Api::Contentful::BaseController).to receive(:authenticate_api_user!).and_return(true)
+  end
 end
