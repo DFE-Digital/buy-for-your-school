@@ -7,57 +7,59 @@ module ContentfulHelpers
   def stub_contentful_entry(
     entry_id: "radio-question",
     fixture_filename: "radio-question-example.json",
-    contentful_connector: stub_contentful_connector
+    client: stub_client
   )
     contentful_response = fake_contentful_step(contentful_fixture_filename: fixture_filename)
 
-    allow(contentful_connector).to receive(:by_id).with(entry_id).and_return(contentful_response)
+    allow(client).to receive(:by_id).with(entry_id).and_return(contentful_response)
   end
 
   def stub_multiple_contentful_categories(category_fixtures:)
-    contentful_connector = stub_contentful_connector
+    client = stub_client
 
     contentful_array = instance_double(Contentful::Array)
-    contentful_categories = category_fixtures.map { |fixture| stub_contentful_category(fixture_filename: fixture, contentful_connector: contentful_connector) }
+    contentful_categories = category_fixtures.map do |fixture|
+      stub_contentful_category(fixture_filename: fixture, client: client)
+    end
 
     iterator = allow(contentful_array).to receive(:each)
     contentful_categories.each { |category| iterator.and_yield(category) }
 
     allow(contentful_array).to receive(:none?).and_return(category_fixtures.empty?)
-    allow(contentful_connector).to receive(:by_type).with("category").and_return(contentful_array)
+    allow(client).to receive(:by_type).with(:category).and_return(contentful_array)
   end
 
   def stub_contentful_category(
     fixture_filename:,
     stub_sections: true,
     stub_tasks: true,
-    contentful_connector: stub_contentful_connector
+    client: stub_client
   )
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
-    allow(contentful_connector).to receive(:by_id).with(category.id).and_return(category)
-    allow(contentful_connector).to receive(:by_slug).with("category", category.slug).and_return(category)
+    allow(client).to receive(:by_id).with(category.id).and_return(category)
+    allow(client).to receive(:by_slug).with(:category, category.slug).and_return(category)
 
     if stub_sections
-      sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
+      sections = stub_contentful_sections(category: category, client: client)
 
       if stub_tasks
-        stub_contentful_tasks(sections: sections, contentful_connector: contentful_connector)
+        stub_contentful_tasks(sections: sections, client: client)
       end
     end
 
     category
   end
 
-  def stub_contentful_sections(category:, contentful_connector: stub_contentful_connector)
+  def stub_contentful_sections(category:, client: stub_client)
     fake_sections = category.sections.map do |section|
       fake_section =
         fake_contentful_section(
           contentful_fixture_filename: "sections/#{section.id}.json",
-          contentful_connector: contentful_connector,
+          client: client,
         )
 
-      allow(contentful_connector).to receive(:by_id).with(fake_section.id).and_return(fake_section)
+      allow(client).to receive(:by_id).with(fake_section.id).and_return(fake_section)
 
       fake_section
     end
@@ -66,27 +68,27 @@ module ContentfulHelpers
     fake_sections
   end
 
-  def stub_contentful_tasks(sections:, contentful_connector: stub_contentful_connector)
+  def stub_contentful_tasks(sections:, client: stub_client)
     sections.each do |section|
       fake_tasks = section.tasks.map do |task|
         fake_task = fake_contentful_task(contentful_fixture_filename: "tasks/#{task.id}.json")
 
-        allow(contentful_connector).to receive(:by_id).with(fake_task.id).and_return(fake_task)
+        allow(client).to receive(:by_id).with(fake_task.id).and_return(fake_task)
 
         fake_task
       end
       allow(section).to receive(:tasks).and_return(fake_tasks)
 
-      stub_contentful_steps(tasks: fake_tasks, contentful_connector: contentful_connector)
+      stub_contentful_steps(tasks: fake_tasks, client: client)
     end
   end
 
-  def stub_contentful_steps(tasks:, contentful_connector: stub_contentful_connector)
+  def stub_contentful_steps(tasks:, client: stub_client)
     tasks.each do |task|
       fake_steps = task.steps.map do |step|
         fake_step = fake_contentful_step(contentful_fixture_filename: "steps/#{step.id}.json")
 
-        allow(contentful_connector).to receive(:by_id).with(fake_step.id).and_return(fake_step)
+        allow(client).to receive(:by_id).with(fake_step.id).and_return(fake_step)
 
         fake_step
       end
@@ -95,16 +97,29 @@ module ContentfulHelpers
     end
   end
 
-  def stub_contentful_connector
-    contentful_connector = instance_double(ContentfulConnector)
-    allow(ContentfulConnector).to receive(:new).and_return(contentful_connector)
-    contentful_connector
+  # Mock our internal client interface
+  #
+  def stub_client
+    client = instance_double(Content::Client)
+    allow(Content::Client).to receive(:new).and_return(client)
+    allow(client).to receive(:environment).and_return("contentful environment")
+    allow(client).to receive(:space).and_return("contentful space")
+    allow(client).to receive(:api_url).and_return("contentful api_url")
+    client
   end
 
   def stub_contentful_client
     contentful_client = instance_double(Contentful::Client)
     allow(Contentful::Client).to receive(:new)
-      .with(api_url: anything, space: anything, environment: anything, access_token: anything)
+      .with(
+        access_token: anything,
+        api_url: anything,
+        application_name: anything,
+        application_version: anything,
+        environment: anything,
+        raise_errors: anything,
+        space: anything,
+      )
       .and_return(contentful_client)
     contentful_client
   end
@@ -141,7 +156,7 @@ module ContentfulHelpers
     category_double
   end
 
-  def fake_contentful_section(contentful_fixture_filename:, contentful_connector: stub_contentful_connector)
+  def fake_contentful_section(contentful_fixture_filename:, client: stub_client)
     raw_response = File.read(Rails.root.join("spec/fixtures/contentful/002-#{contentful_fixture_filename}"))
     hash_response = JSON.parse(raw_response)
 
@@ -158,12 +173,12 @@ module ContentfulHelpers
     fake_tasks = section.tasks.map do |task|
       fake_task = fake_contentful_task(contentful_fixture_filename: "tasks/#{task.id}.json")
 
-      allow(contentful_connector).to receive(:by_id).with(fake_task.id).and_return(fake_task)
+      allow(client).to receive(:by_id).with(fake_task.id).and_return(fake_task)
 
       fake_task
     end
     allow(section).to receive(:tasks).and_return(fake_tasks)
-    stub_contentful_steps(tasks: fake_tasks, contentful_connector: contentful_connector)
+    stub_contentful_steps(tasks: fake_tasks, client: client)
     section
   end
 
@@ -189,14 +204,19 @@ module ContentfulHelpers
     raw_response = File.read(Rails.root.join("spec/fixtures/contentful/004-#{contentful_fixture_filename}"))
     hash_response = JSON.parse(raw_response)
 
+    fields = hash_response["fields"].dup.transform_keys!(&:underscore).symbolize_keys!
+
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
+      revision: hash_response.dig("sys", "revision"),
+      updated_at: Date.parse(hash_response.dig("sys", "updatedAt")),
+      space: double(id: hash_response.dig("sys", "space", "sys", "id")),
+      environment: double(id: hash_response.dig("sys", "environment", "sys", "id")),
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
       raw: hash_response,
-      fields: hash_response["fields"].dup.transform_keys!(&:underscore).symbolize_keys!,
-      title: hash_response.dig("fields", "title"),
-      type: hash_response.dig("fields", "type"),
+      fields: fields,
+      **fields,
     )
   end
 end

@@ -1,4 +1,4 @@
-# Create {Journey} using entries returned by {ContentfulConnector}
+# Create {Journey} using entries returned by {Content::Client}
 #
 # @see JourneysController#create
 # @see CreateSection#call
