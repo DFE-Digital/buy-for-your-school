@@ -21,19 +21,37 @@ class DesignController < ApplicationController
   end
 
   def index
-    @categories = ContentfulConnector.new.by_type("category")
+    flash[:notice] = env_banner
+
+    @categories = client.by_type(:category)
   end
 
   # TODO: introduce service function JourneyMapper#call that receives a category_id and returns steps
   def show
-    contentful_category = ContentfulConnector.new.by_slug("category", params[:id])
-    sections = GetSectionsFromCategory.new(category: contentful_category).call
-    tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
+    flash[:notice] = env_banner
+
+    @category = client.by_slug(:category, params[:id])
+
+    contentful_sections = GetSectionsFromCategory.new(category: @category).call
+
+    contentful_tasks = contentful_sections.flat_map do |contentful_section|
+      GetTasksFromSection.new(section: contentful_section).call
+    end
+
+    @steps = contentful_tasks.flat_map do |contentful_task|
+      GetStepsFromTask.new(task: contentful_task).call
+    end
+
     # TODO: wrap steps in presenter and relocate the link_to Contentful url there
-    @steps = tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
+  end
 
-    @category_title = contentful_category.title
+private
 
-    flash[:notice] = "#{contentful_category.environment.id.capitalize} Environment"
+  def client
+    Content::Client.new
+  end
+
+  def env_banner
+    I18n.t("banner.design", env: client.environment.capitalize)
   end
 end

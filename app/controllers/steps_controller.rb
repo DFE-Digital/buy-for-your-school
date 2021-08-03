@@ -21,6 +21,8 @@ class StepsController < ApplicationController
         journey_task_path(@journey, parent_task, back_link: true)
       end
 
+    flash[:preview] = "This is a preview" if params.key?(:preview)
+
     RecordAction.new(
       action: "begin_step",
       journey_id: @journey.id,

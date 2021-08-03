@@ -17,6 +17,9 @@ brew "libpq"
 # Additional tools
 # ----------------------
 
+# Install `gh` Github CLI (optional)
+# brew "gh"
+
 # Install `adr` for handling Architecture Decision Records (optional)
 # brew "adr-tools"
 

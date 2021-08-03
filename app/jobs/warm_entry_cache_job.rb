@@ -14,7 +14,7 @@ class WarmEntryCacheJob < ApplicationJob
   def perform
     backup_old_cache
 
-    categories = ContentfulConnector.new.by_type("category")
+    categories = Content::Client.new.by_type(:category)
 
     categories.each do |contentful_category|
       # TODO: these build steps are repeated may times, can we consolidate?
