@@ -99,16 +99,51 @@ RSpec.describe Journey, type: :model do
     end
   end
 
+  # - journey                                          | type | hidden | completed |
+  #   - section_1                                      |      |        |           |
+  #     - task_1                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #     - task_2                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #     - task_3                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #   - section_2                                      |      |        |           |
+  #     - task_1                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #     - task_2                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #     - task_3                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #   - section_3                                      |      |        |           |
+  #     - task_1                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #     - task_2                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #     - task_3                                       |      |        |           |
+  #        - step_1                                    |      |        |           |
+  #        - step_2                                    |      |        |           |
+  #
+  #
+  #
   describe "#next_incomplete_task" do
-    let(:category) { create(:category, :catering) }
-    let(:journey) { create(:journey, category: category) }
-    let(:section_a) { create(:section, title: "Section A", journey: journey, order: 0) }
-    let(:section_b) { create(:section, title: "Section B", journey: journey, order: 1) }
-    let(:section_c) { create(:section, title: "Section C", journey: journey, order: 2) }
-    let(:tasks) { build_tasks(3) }
+    # let(:category) { create(:category, :catering) }
+    let(:journey) { create(:journey, :with_sections, section_count: 3, tasks_per_section: 3, steps_per_task: 2) }
+    # let(:section_a) { create(:section, title: "Section A", journey: journey, order: 0) }
+    # let(:section_b) { create(:section, title: "Section B", journey: journey, order: 1) }
+    # let(:section_c) { create(:section, title: "Section C", journey: journey, order: 2) }
+    # let(:tasks) { build_tasks(3) }
 
     before do
-      tasks.values.each(&:save!)
+      journey.save!
+      # tasks.values.each(&:save!)
     end
 
     context "when starting sequentially from the top down" do

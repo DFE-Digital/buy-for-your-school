@@ -4,8 +4,6 @@
 class Task < ApplicationRecord
   self.implicit_order_column = "order"
 
-  default_scope { order(:order) }
-
   belongs_to :section
 
   has_many :steps, dependent: :destroy
@@ -13,6 +11,8 @@ class Task < ApplicationRecord
   validates :title, :contentful_id, presence: true
 
   before_save :tally_steps
+
+  scope :ordered, -> { order("sections.order ASC, tasks.order ASC") }
 
   attr_accessor
 

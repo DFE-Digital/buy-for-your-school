@@ -47,7 +47,21 @@ class Journey < ApplicationRecord
   #
   # @return [Task, nil]
   def next_incomplete_task(current_task)
-    # NB: simplify/railsify this?
+    # current_section = current_task.section
+    # all_tasks = tasks.ordered.reject(&:all_steps_completed?)
+
+    # all_tasks.each do |task|
+    #   # binding.pry
+    #   if task.section.id == current_section.id
+    #     return task
+    #     # if task.order > current_task.order
+    #     #   return task
+    #     # end
+    #   elsif task.section.order > current_section.order
+    #     return task
+    #   end
+    # end
+
     order_by = %(
       CASE
         WHEN tasks.section_id = '#{current_task.section_id}' THEN
