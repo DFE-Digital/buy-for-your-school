@@ -14,18 +14,9 @@ class Task < ApplicationRecord
 
   before_save :tally_steps
 
-  attr_accessor
-
   NOT_STARTED = 0
   IN_PROGRESS = 1
   COMPLETED = 2
-
-  # @param key [Symbol, String] step_tally key
-  #
-  # @return [Integer]
-  def tally_for(key)
-    step_tally.fetch(key.to_s, 0)
-  end
 
   # Use tally to infer state
   #
@@ -35,6 +26,13 @@ class Task < ApplicationRecord
     return IN_PROGRESS if tally_for(:completed).positive?
 
     NOT_STARTED
+  end
+
+  # @param key [Symbol, String] step_tally key
+  #
+  # @return [Integer]
+  def tally_for(key)
+    step_tally.fetch(key.to_s, 0)
   end
 
   # Use tally to infer state
@@ -77,7 +75,7 @@ class Task < ApplicationRecord
     visible_questions_with_answers + visible_statements_acknowledged
   end
 
-  # @return [String, Nil] `nil` if all steps are complete.
+  # @return [String, Nil]
   def next_incomplete_step_id
     return nil if all_steps_completed?
 
@@ -88,8 +86,6 @@ class Task < ApplicationRecord
     remaining_ids.first
   end
 
-  # Returns all visible steps with eagerly-loaded answers.
-  #
   # @return [Step::ActiveRecord_AssociationRelation]
   def eager_loaded_visible_steps
     steps.visible.includes(
@@ -107,12 +103,13 @@ class Task < ApplicationRecord
 
 private
 
-  # Returns a hash containing tallies of the steps on this task.
+  # Calculates tallies of the steps on this task
   #
-  # Includes total, visible, hidden, and answered step tallies.
-  #
-  # @return [Hash<Symbol, Integer>]
+  # @return [Nil, Hash<Symbol, Integer>]
   def tally_steps
+    # TODO: set preview titles as constants
+    return if title == "Designer Preview Task"
+
     visible_steps = steps.visible
 
     self.step_tally = {

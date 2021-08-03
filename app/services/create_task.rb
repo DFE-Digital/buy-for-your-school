@@ -15,12 +15,11 @@ class CreateTask
     @order = order
   end
 
-  # This relies on the passed-in `contentful_task` to construct the object.
   # @see CreateJourney#call
   #
   # @raise [UnexpectedContentfulModel]
-  # @return [Task]
   #
+  # @return [Task]
   def call
     task = Task.new(
       section: section,
