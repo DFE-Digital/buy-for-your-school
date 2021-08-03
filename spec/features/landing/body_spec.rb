@@ -42,7 +42,7 @@ RSpec.feature "Users can see a start page for specifying their purchase" do
       # generic.button.start
       expect(page).to have_button "Start", class: "govuk-button"
 
-      click_on "Start"
+      click_start
     end
 
     # FIXME: DfE Sign In should appear here

@@ -1,0 +1,49 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "rwl7tyzv9sys"
+      }
+    },
+    "id": "single-date-in-past-question",
+    "type": "Entry",
+    "createdAt": "2020-12-08T10:43:19.102Z",
+    "updatedAt": "2020-12-08T10:43:19.102Z",
+    "environment": {
+      "sys": {
+        "id": "develop",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 1,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "question"
+      }
+    },
+    "locale": "en-US"
+  },
+  "fields": {
+    "slug": "/past-date",
+    "type": "single date",
+    "title": "When were you born?",
+    "helpText": "must be in the past",
+    "criteria": {
+      "message": "Are you a time traveller!",
+      "lower": "1947-10-13 12:34",
+      "upper": "2000-01-01 00:01)"
+    },
+    "next": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Entry",
+        "id": "contentful-checkboxes-question"
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ RSpec.describe CurrencyAnswer, type: :model do
       expect(answer.response).to eq(1000.01)
     end
 
-    it "returns a number" do
+    it "returns a float" do
       answer = build(:currency_answer, response: "1000.01")
       expect(answer.response).to eq(1000.01)
     end

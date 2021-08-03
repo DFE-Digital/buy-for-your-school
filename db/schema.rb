@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_160257) do
+ActiveRecord::Schema.define(version: 2021_07_21_115748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_160257) do
     t.string "skip_call_to_action_text"
     t.uuid "task_id"
     t.integer "order"
+    t.jsonb "criteria"
     t.index ["order"], name: "index_steps_on_order"
     t.index ["task_id"], name: "index_steps_on_task_id"
   end

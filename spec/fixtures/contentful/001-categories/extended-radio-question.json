@@ -40,6 +40,7 @@
             }
           }
         ],
-        "specificationTemplate": "<article id='specification'><h1>{{answer_extended-radio-question}}</h1><ul>{% for extended_answer in extended_answer_extended-radio-question %}<li>{{ extended_answer['response'] }}</li><li>{{ extended_answer['further_information'] }}</li>{% endfor %}</ul></article>"
+        "specificationTemplate": "<article id='specification'><h1>{{answer_extended-radio-question}}</h1><ul>{% for extended_answer in extended_answer_extended-radio-question %}<li>{{ extended_answer['response'] }}</li><li>{{ extended_answer['further_information'] }}</li>{% endfor %}</ul></article>",
+        "slug": "catering"
     }
 }

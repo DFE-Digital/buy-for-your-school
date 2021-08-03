@@ -6,7 +6,7 @@
 # @example
 #   {{ answer_<%= entry.id %> }}
 #
-class JourneyMapsController < ApplicationController
+class DesignController < ApplicationController
   unless Rails.env.development?
     rescue_from GetStepsFromTask::RepeatEntryDetected do |exception|
       render "errors/repeat_step_in_the_contentful_journey",
@@ -20,18 +20,19 @@ class JourneyMapsController < ApplicationController
     end
   end
 
-  # TODO: add missing feature spec ASAP
   def index
     @categories = ContentfulConnector.new.by_type("category")
   end
 
   # TODO: introduce service function JourneyMapper#call that receives a category_id and returns steps
   def show
-    contentful_category = GetCategory.new(category_entry_id: params[:id]).call
+    contentful_category = ContentfulConnector.new.by_slug("category", params[:id])
     sections = GetSectionsFromCategory.new(category: contentful_category).call
     tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
     # TODO: wrap steps in presenter and relocate the link_to Contentful url there
     @steps = tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
+
+    @category_title = contentful_category.title
 
     flash[:notice] = "#{contentful_category.environment.id.capitalize} Environment"
   end

@@ -17,9 +17,10 @@ The format is based on [Keep a Changelog 1.0.0].
 - add additional developer tools to optional `Brewfile`
 - remove unused `GetAllContentfulEntries` service object
 
-**Non-question steps**
+**Steps**
 - implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
 - remove `staticContent` entity and add `Statement` entity in Contentful (currently only in develop)
+- add custom answer validation logic which can be controlled in Contentful
 
 **Multiple Categories**
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
@@ -27,6 +28,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add category `title` column to the dashboard
 - add `journey_maps#index` to allow content designers to switch category
 - add `categories#index` to enable users to create a specification from a chosen category
+- rename `journey_maps` to `design` to allow more intuitive URLs
 - WIP: data migration
 
 **Dashboard functionality**
@@ -34,10 +36,9 @@ The format is based on [Keep a Changelog 1.0.0].
 - add extensible tally of counted steps to the task
 - add state to `Journey` (initial, stale, archive or remove)
 - drop `Journey.last_worked_on` in favour of `updated_at`
-
+- allow user to (soft) delete a specification
 
 ## Diary Studies using the live environment
-
 
 ## [release-015] - 2021-06-17
 

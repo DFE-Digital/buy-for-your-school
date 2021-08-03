@@ -65,8 +65,23 @@ en:
       warning: "You have not completed all the tasks. There may be information missing from your specification."
       button: "View your specification"
       download:
+        button: "Download (.docx)"
         warning:
+          #/ TODO Not keen on HTML inside local yml files, refactor.
           incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
+      delete:
+        header:
+          confirm: "Are you sure you want to delete this specification?"
+          confirmed: "This specification has been deleted"
+        warning: "Specifications are deleted permanently and cannot be retrieved."
+        confirmed: "Specification %{title} was successfully deleted."
+        download:
+          message: "You can %{link} before you delete it."
+          link: "download this specification"
+        button:
+          delete: "Delete specification"
+          cancel: "Cancel"
+          dashboard: "Continue to dashboard"
   specification:
   dashboard:
     header: "Specifications dashboard"
@@ -75,7 +90,9 @@ en:
       body: "Create a new specification for a catering procurement."
       button: "Create a new specification"
     edit:
-      button: "Review and edit"
+      button: "Edit"
+    delete:
+      button: "Delete"
     existing:
       header: "Existing specifications"
       body: "Continue with a draft specification, and review completed specifications."
@@ -96,8 +113,7 @@ en:
       back: Return to task list
       continue: Continue answering these questions
       next: Continue to the next task
-  journey_map:
-    page_title: "Template Designer"
+  design:
     category_selection_header: "Choose a category"
     edit_step_link_text: "Edit step in Contentful"
     preview_step_link_text: "Preview step in service"

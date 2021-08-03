@@ -2,6 +2,8 @@
 # Mock Contentful data loaded from JSON fixtures
 #
 module ContentfulHelpers
+  # TODO: replace "contentful_fixture_filename"/"fixture_filename" with the more succinct "fixture" param
+  #
   def stub_contentful_entry(
     entry_id: "radio-question",
     fixture_filename: "radio-question-example.json",
@@ -16,10 +18,12 @@ module ContentfulHelpers
     contentful_connector = stub_contentful_connector
 
     contentful_array = instance_double(Contentful::Array)
-    # TODO: work with multiple category fixtures
-    contentful_category = stub_contentful_category(fixture_filename: category_fixtures.first, contentful_connector: contentful_connector)
+    contentful_categories = category_fixtures.map { |fixture| stub_contentful_category(fixture_filename: fixture, contentful_connector: contentful_connector) }
 
-    allow(contentful_array).to receive(:each).and_yield(contentful_category)
+    iterator = allow(contentful_array).to receive(:each)
+    contentful_categories.each { |category| iterator.and_yield(category) }
+
+    allow(contentful_array).to receive(:none?).and_return(category_fixtures.empty?)
     allow(contentful_connector).to receive(:by_type).with("category").and_return(contentful_array)
   end
 
@@ -32,6 +36,7 @@ module ContentfulHelpers
     category = fake_contentful_category(contentful_fixture_filename: fixture_filename)
 
     allow(contentful_connector).to receive(:by_id).with(category.id).and_return(category)
+    allow(contentful_connector).to receive(:by_slug).with("category", category.slug).and_return(category)
 
     if stub_sections
       sections = stub_contentful_sections(category: category, contentful_connector: contentful_connector)
@@ -127,6 +132,7 @@ module ContentfulHelpers
       specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),
       combined_specification_template: combined_specification_template,
       environment: double(id: "test"),
+      slug: hash_response.dig("fields", "slug"),
     )
 
     allow(category_double).to receive(:combined_specification_template=)
@@ -168,9 +174,9 @@ module ContentfulHelpers
     task = double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      title: hash_response.dig("fields", "title"),
-      raw: hash_response,
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
+      raw: hash_response,
+      title: hash_response.dig("fields", "title"),
     )
 
     steps = hash_response.dig("fields", "steps").map { |step_hash| double(id: step_hash.dig("sys", "id")) }
@@ -186,18 +192,11 @@ module ContentfulHelpers
     double(
       Contentful::Entry,
       id: hash_response.dig("sys", "id"),
-      title: hash_response.dig("fields", "title"),
-      help_text: hash_response.dig("fields", "helpText"),
-      body: hash_response.dig("fields", "body"),
-      extended_options: hash_response.dig("fields", "extendedOptions"),
-      type: hash_response.dig("fields", "type"),
-      next: double(id: hash_response.dig("fields", "next", "sys", "id")),
-      primary_call_to_action: hash_response.dig("fields", "primaryCallToAction"),
-      skip_call_to_action: hash_response.dig("fields", "skipCallToAction"),
-      always_show_the_user: hash_response.dig("fields", "alwaysShowTheUser"),
-      show_additional_question: hash_response.dig("fields", "showAdditionalQuestion"),
-      raw: hash_response,
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
+      raw: hash_response,
+      fields: hash_response["fields"].dup.transform_keys!(&:underscore).symbolize_keys!,
+      title: hash_response.dig("fields", "title"),
+      type: hash_response.dig("fields", "type"),
     )
   end
 end

@@ -77,6 +77,10 @@ The project uses [Pry](https://github.com/pry/pry) with [Byebug](https://github.
 - Start a console locally `$ bundle exec rails console`
 - Convenience script for containerised equivalent `$ script/console`
 
+## Annotations
+
+`rails notes` are used to provide WIP information for developers.
+
 ## Testing
 
 - Run test suite `$ bundle exec rspec` or `bundle exec rake spec`

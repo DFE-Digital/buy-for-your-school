@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
-  before_action :check_user_belongs_to_journey?, only: %w[show]
-
+  before_action :check_user_belongs_to_journey?, only: %w[show destroy]
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
       render "errors/specification_template_invalid",
@@ -64,5 +63,17 @@ class JourneysController < ApplicationController
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
     ).call
+  end
+
+  # Mark journey as remove
+  #
+  # @see Journey#state
+  def destroy
+    if params[:confirm] == "true"
+      render :confirm_delete
+    else
+      @current_journey.remove!
+      render :delete
+    end
   end
 end

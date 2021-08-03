@@ -17,7 +17,13 @@ class SessionsController < ApplicationController
   alias_method :bypass_callback, :create
 
   def failure
-    Rollbar.error("Sign in failed unexpectedly")
+    Rollbar.error("Sign in failed unexpectedly", dfe_sign_in_uid: session[:dfe_sign_in_uid])
+
+    # NB: users would need to hit signout link to proceed otherwise
+    if session.destroy
+      flash[:notice] = "Sign in failed unexpectedly, please try again"
+      redirect_to root_path
+    end
   end
 
   # Ends the current user session.

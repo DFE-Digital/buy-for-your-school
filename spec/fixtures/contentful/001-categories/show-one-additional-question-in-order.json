@@ -40,6 +40,7 @@
         }
       }
     ],
-    "specificationTemplate": "<article id='specification'><h1>{{answer_hidden-field}}</h1></article>"
+    "specificationTemplate": "<article id='specification'><h1>{{answer_hidden-field}}</h1></article>",
+    "slug": "catering"
   }
 }

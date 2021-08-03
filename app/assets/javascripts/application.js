@@ -10,4 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// TODO implement webpack
+// TODO implement turbolinks
+//= require rails-ujs
 //= require govuk-frontend/govuk/all.js
