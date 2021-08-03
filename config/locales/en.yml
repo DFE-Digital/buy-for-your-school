@@ -66,6 +66,7 @@ en:
       warning: "You have not completed all the tasks. There may be information missing from your specification."
       button: "View your specification"
       download:
+        button: "Download (.docx)"
         warning:
           #/ TODO Not keen on HTML inside local yml files, refactor.
           incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
@@ -120,7 +121,6 @@ en:
 
   # /design
   design:
-    page_title: "Template Designer"
     category_selection_header: "Choose a category"
     # preview_step_link_text: "Preview step in service"
     spec_template_tag_title: "Specification tag"

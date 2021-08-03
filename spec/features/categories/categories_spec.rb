@@ -32,37 +32,43 @@ RSpec.feature "Categories page" do
     end
   end
 
-  context "when the user is signed in" do
+  describe "as an authenticated user" do
     let(:user) { create(:user) }
     let(:created_at) { Time.zone.local(2021, 2, 15, 12, 0, 0) }
 
     before do
+      stub_multiple_contentful_categories(category_fixtures: ["mfd-radio-question.json"])
       user_is_signed_in(user: user)
-      visit "/categories"
     end
 
-    it "is full page width" do
-      expect(page).to have_css "div.govuk-grid-column-full"
-    end
+    context "when there are no categories" do
+      # TODO: category_id is getting used for the form but should be replaced by the slug
+      it "auto-populates from Contentful" do
+        visit "/categories"
 
-    it "categories.header" do
-      expect(page.title).to have_text "Choose the type of specification you want to build"
-    end
+        expect(Category.count).to eq 1
 
-    context "and there are no categories" do
-      it "has a heading stating that there are no categories" do
-        expect(find("h1.govuk-heading-l")).to have_text "No categories found"
+        within "div.govuk-form-group" do
+          find(:radio_button, "Multi-function devices") # from mfd-radio-question.json
+        end
       end
     end
 
-    context "and there are two categories" do
+    context "when there is a category" do
       before do
         create(:category, :mfd)
-        create(:category, :catering)
         visit "/categories"
       end
 
-      it "categories.header" do
+      it "is full page width" do
+        expect(page).to have_css "div.govuk-grid-column-full"
+      end
+
+      it "title categories.header" do
+        expect(page.title).to have_text "Choose the type of specification you want to build"
+      end
+
+      it "legend categories.header" do
         within "div.govuk-form-group" do
           expect(find("legend.govuk-fieldset__legend.govuk-fieldset__legend--l")).to have_text "Choose the type of specification you want to build"
         end
@@ -74,10 +80,24 @@ RSpec.feature "Categories page" do
         end
       end
 
+      it "has a Continue button" do
+        expect(find("input.govuk-button").value).to eq "Continue"
+      end
+    end
+
+    context "when there are multiple categories" do
+      before do
+        create(:category, :mfd)
+        create(:category, :catering)
+        create(:category, title: "New category of spend")
+        visit "/categories"
+      end
+
       it "lists the available categories alphabetically" do
         within "div.govuk-form-group" do
           find(:radio_button, "Catering")
           find(:radio_button, "Multi-functional devices")
+          find(:radio_button, "New category of spend")
         end
       end
 
@@ -86,10 +106,6 @@ RSpec.feature "Categories page" do
           expect(find(:radio_button, "Catering")).to be_checked
           expect(find(:radio_button, "Multi-functional devices")).not_to be_checked
         end
-      end
-
-      it "has a Continue button" do
-        expect(find("input.govuk-button").value).to eq "Continue"
       end
     end
   end

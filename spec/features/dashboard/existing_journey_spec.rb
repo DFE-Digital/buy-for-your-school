@@ -30,6 +30,7 @@ RSpec.feature "View existing journeys" do
       # duplicates dashboard.create.header
       it "dashboard.create.button" do
         expect(find("a.govuk-button")).to have_text "Create a new specification"
+        expect(find("a.govuk-button")[:role]).to eq "button"
       end
 
       it "shows tabular data in three columns" do

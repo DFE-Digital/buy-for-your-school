@@ -10,9 +10,8 @@ RSpec.feature "Content Designers can view" do
 
   context "when it is valid" do
     specify "all the steps in a category" do
-      # design.page_title
-      expect(page.title).to have_text "Template Designer"
-      expect(find("h1.govuk-heading-xl")).to have_text "Template Designer"
+      expect(page.title).to have_text "Catering"
+      expect(find("h1.govuk-heading-xl")).to have_text "Catering"
 
       within("ol.govuk-list.govuk-list--number") do
         list_items = find_all("li")

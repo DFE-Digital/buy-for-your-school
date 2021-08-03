@@ -30,9 +30,9 @@ class DesignController < ApplicationController
   def show
     flash[:notice] = env_banner
 
-    contentful_category = client.by_slug(:category, params[:id])
+    @category = client.by_slug(:category, params[:id])
 
-    contentful_sections = GetSectionsFromCategory.new(category: contentful_category).call
+    contentful_sections = GetSectionsFromCategory.new(category: @category).call
 
     contentful_tasks = contentful_sections.flat_map do |contentful_section|
       GetTasksFromSection.new(section: contentful_section).call
