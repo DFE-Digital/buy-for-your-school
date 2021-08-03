@@ -5,7 +5,7 @@ class AssociateExistingJourneys < ActiveRecord::Migration[6.1]
     journeys_total = Journey.count
     journeys_updated = Journey.where(category_id: nil).count
 
-    catering_entry = ContentfulConnector.new.by_slug("category", "catering")
+    catering_entry = Content::Client.new.by_slug(:category, "catering")
     contentful_category = GetCategory.new(category_entry_id: catering_entry.id).call
 
     Category.create!(

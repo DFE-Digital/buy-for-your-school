@@ -1,25 +1,25 @@
 # Fetch and cache Contentful tasks for the section
 #
 class GetTasksFromSection
-  # @return [Contentful::Entry]
-  attr_accessor :section
-
   # @param section [Contentful::Entry]
-  def initialize(section:)
-    self.section = section
+  # @param client [Content::Client]
+  #
+  def initialize(section:, client: Content::Client.new)
+    @section = section
+    @client = client
   end
 
   # @return [Array<Contentful::Entry>]
   def call
-    return [] unless section.respond_to?(:tasks)
+    return [] unless @section.respond_to?(:tasks)
 
     task_ids = []
-    section.tasks.each do |task|
+    @section.tasks.each do |task|
       task_ids << task.id
     end
 
     task_ids.map do |entry_id|
-      GetEntry.new(entry_id: entry_id).call
+      GetEntry.new(entry_id: entry_id, client: @client).call
     end
   end
 end

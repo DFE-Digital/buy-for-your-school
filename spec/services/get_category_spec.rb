@@ -1,5 +1,4 @@
-require "rails_helper"
-
+# TODO: tidy spec with service.call style
 RSpec.describe GetCategory do
   describe "#call" do
     it "returns a Contentful::Entry for the category_entry_id" do
@@ -11,16 +10,13 @@ RSpec.describe GetCategory do
 
     context "when the category entry cannot be found" do
       it "sends a message to rollbar" do
-        contentful_connector = instance_double(ContentfulConnector)
-
-        allow(ContentfulConnector).to receive(:new).and_return(contentful_connector)
-        allow(contentful_connector).to receive(:by_id).with(anything).and_return(nil)
+        allow(stub_client).to receive(:by_id).with(anything).and_return(nil)
 
         expect(Rollbar).to receive(:error)
           .with("A Contentful category entry was not found",
-                contentful_url: ENV["CONTENTFUL_URL"],
-                contentful_space_id: ENV["CONTENTFUL_SPACE"],
-                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_url: "contentful api_url",
+                contentful_space_id: "contentful space",
+                contentful_environment: "contentful environment",
                 contentful_entry_id: "a-category-id-that-does-not-exist")
           .and_call_original
 
@@ -44,9 +40,9 @@ RSpec.describe GetCategory do
 
         expect(Rollbar).to receive(:error)
           .with("A user couldn't start a journey because of an invalid Specification",
-                contentful_url: ENV["CONTENTFUL_URL"],
-                contentful_space_id: ENV["CONTENTFUL_SPACE"],
-                contentful_environment: ENV["CONTENTFUL_ENVIRONMENT"],
+                contentful_url: "contentful api_url",
+                contentful_space_id: "contentful space",
+                contentful_environment: "contentful environment",
                 contentful_entry_id: "contentful-category-entry").and_call_original
 
         expect {
@@ -83,7 +79,7 @@ RSpec.describe GetCategory do
           error_mode: :strict,
         )
 
-        _result = described_class.new(category_entry_id: "contentful-category-entry").call
+        described_class.new(category_entry_id: "contentful-category-entry").call
       end
     end
   end

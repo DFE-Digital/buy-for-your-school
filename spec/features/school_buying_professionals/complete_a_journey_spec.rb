@@ -456,7 +456,7 @@ RSpec.feature "Anyone can start a journey" do
 
   context "when the starting entry id doesn't exist" do
     scenario "a Contentful entry_id does not exist" do
-      allow(stub_contentful_connector).to receive(:by_id).with("contentful-category-entry").and_return(nil)
+      allow(stub_client).to receive(:by_id).with("contentful-category-entry").and_return(nil)
 
       category = create(:category, contentful_id: "contentful-category-entry")
 

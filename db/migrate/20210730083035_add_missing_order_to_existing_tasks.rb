@@ -9,7 +9,7 @@ class AddMissingOrderToExistingTasks < ActiveRecord::Migration[6.1]
     section_contentful_ids = tasks_unordered.map(&:section).map(&:contentful_id).uniq
 
     section_contentful_ids.map do |section_id|
-      contentful_section = ContentfulConnector.new.by_id(section_id)
+      contentful_section = Content::Client.new.by_id(section_id)
       section = Section.where(contentful_id: section_id).first
 
       section.tasks.map do |task|

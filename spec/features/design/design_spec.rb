@@ -19,8 +19,10 @@ RSpec.feature "Content Designers can see" do
     let(:mfd_fixture) { "mfd-radio-question" }
 
     before do
+      # TODO: move JSON file extension for fixtures into the helper method
       stub_multiple_contentful_categories(category_fixtures: [
-        "#{catering_fixture}.json", "#{mfd_fixture}.json"
+        "#{catering_fixture}.json",
+        "#{mfd_fixture}.json",
       ])
       visit "/design"
     end

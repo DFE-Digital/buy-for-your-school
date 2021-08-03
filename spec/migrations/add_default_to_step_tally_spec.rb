@@ -11,12 +11,12 @@ RSpec.describe AddDefaultToStepTally do
       section = create(:section, contentful_id: "checkboxes-question")
 
       # 1 of 3 steps hidden
-      task_1 = create(:task, section: section)
+      task_1 = create(:task, section: section, title: "Task 1")
       task_1_steps = create_list(:step, 3, :radio, task: task_1)
       task_1_steps.first.update!(hidden: true)
 
       # 1 of 5 steps answered
-      task_2 = create(:task, section: section)
+      task_2 = create(:task, section: section, title: "Task 2")
       task_2_steps = create_list(:step, 5, :currency, task: task_2)
       create(:currency_answer, step: task_2_steps.first)
 
@@ -30,9 +30,11 @@ RSpec.describe AddDefaultToStepTally do
 
       expect { up }.to change { Task.where(step_tally: nil).count }.from(2).to(0)
 
-      tasks = Task.all
-      expect(tasks[0].step_tally).to include("total" => 3, "hidden" => 1)
-      expect(tasks[1].step_tally).to include("total" => 5, "answered" => 1)
+      task_1 = Task.find_by_title("Task 1")
+      task_2 = Task.find_by_title("Task 2")
+
+      expect(task_1.step_tally).to include("total" => 3, "hidden" => 1)
+      expect(task_2.step_tally).to include("total" => 5, "answered" => 1)
     end
   end
 end
