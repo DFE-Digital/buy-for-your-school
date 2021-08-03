@@ -4,4 +4,4 @@
 <div class="static-content">
   <%= simple_format(@step_presenter.body, wrapper_tag: "p", class: "govuk-body") %>
 </div>
-<%= link_to @step_presenter.primary_call_to_action_text, journey_path(@journey), class: "govuk-button" %>
+<%= link_to @step_presenter.primary_call_to_action_text, journey_path(@journey), class: "govuk-button", role: "button" %>

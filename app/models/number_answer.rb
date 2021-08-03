@@ -9,4 +9,6 @@ class NumberAnswer < ApplicationRecord
             numericality: {
               only_integer: true,
             }
+
+  validates_with RangeValidator
 end

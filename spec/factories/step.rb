@@ -10,6 +10,7 @@ FactoryBot.define do
     skip_call_to_action_text { nil }
     options { nil }
     body { nil }
+    criteria { nil }
 
     association :task, factory: :task
 

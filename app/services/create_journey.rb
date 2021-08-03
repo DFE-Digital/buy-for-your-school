@@ -51,7 +51,7 @@ class CreateJourney
         contentful_steps.each_with_index do |entry, step_index|
           # Step
           CreateStep.new(
-            contentful_entry: entry,
+            contentful_step: entry,
             task: task,
             order: step_index,
           ).call

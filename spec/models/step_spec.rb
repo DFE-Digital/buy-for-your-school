@@ -162,4 +162,22 @@ RSpec.describe Step, type: :model do
       expect(step.options).to eql([{ "value" => "foo", "other_config" => false }])
     end
   end
+
+  describe "#criteria" do
+    it "returns a hash of validation criteria" do
+      step = build(:step,
+                   :single_date,
+                   criteria: {
+                     "message": "Are you a time traveller!",
+                     "lower": "1947-10-13 12:34",
+                     "upper": "2000-01-01 00:01)",
+                   })
+
+      expect(step.criteria).to eql({
+        "message" => "Are you a time traveller!",
+        "upper" => "2000-01-01 00:01)",
+        "lower" => "1947-10-13 12:34",
+      })
+    end
+  end
 end
