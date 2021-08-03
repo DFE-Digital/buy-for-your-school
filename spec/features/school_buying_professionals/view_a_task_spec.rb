@@ -32,7 +32,7 @@ RSpec.feature "Users can view a task" do
       expect(begin_task_logged_event.journey_id).to eq(journey.id)
       expect(begin_task_logged_event.user_id).to eq(user.id)
       expect(begin_task_logged_event.contentful_category_id).to eq("contentful-category-entry")
-      expect(begin_task_logged_event.contentful_section_id).to eq("tasks-section")
+      expect(begin_task_logged_event.contentful_section_id).to eq("multiple-tasks-section")
       expect(begin_task_logged_event.contentful_task_id).to eq(task.contentful_id)
       expect(begin_task_logged_event.data["task_status"]).to eq(Task::NOT_STARTED)
       expect(begin_task_logged_event.data["task_step_tally"]).to eq({
@@ -81,7 +81,7 @@ RSpec.feature "Users can view a task" do
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(user.id)
         expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
-        expect(last_logged_event.contentful_section_id).to eq("tasks-section")
+        expect(last_logged_event.contentful_section_id).to eq("multiple-tasks-section")
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
         expect(last_logged_event.data["task_status"]).to eq(Task::IN_PROGRESS)
         expect(last_logged_event.data["task_step_tally"]).to eq({
@@ -125,7 +125,7 @@ RSpec.feature "Users can view a task" do
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(user.id)
         expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
-        expect(last_logged_event.contentful_section_id).to eq("tasks-section")
+        expect(last_logged_event.contentful_section_id).to eq("multiple-tasks-section")
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
         expect(last_logged_event.data["task_status"]).to eq(Task::COMPLETED)
         expect(last_logged_event.data["task_step_tally"]).to eq({
