@@ -41,4 +41,38 @@ class Journey < ApplicationRecord
 
     update!(attributes)
   end
+
+  # Next incomplete section in order, or first from beginning
+  #
+  # @param current_section [Section]
+  #
+  # @return [Section, Nil]
+  def next_incomplete_section(current_section = nil)
+    next_in_order = sections.detect do |section|
+      section.incomplete? && (section.order > current_section.order)
+    end
+    next_in_order || sections.detect(&:incomplete?)
+  end
+
+  # Advance through tasks and sections in order and loop at the end
+  #
+  # @param task [Task]
+  #
+  # @return [Task, Nil]
+  def next_incomplete_task(task)
+    return nil if all_tasks_completed?
+
+    # current task
+    if task.incomplete?
+      task # same task
+
+    # current section
+    elsif task.section.incomplete?
+      task.section.next_incomplete_task(task) # next task
+
+    # next section
+    elsif (next_section = next_incomplete_section(task.section))
+      next_section.next_incomplete_task # first task
+    end
+  end
 end

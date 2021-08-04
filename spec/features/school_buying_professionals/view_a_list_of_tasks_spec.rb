@@ -196,12 +196,21 @@ RSpec.feature "Users can view the task list" do
     end
   end
 
+  # TODO: This feature spec is insufficient and should use "with an incomplete journey" context
   context "when a task with multiple steps has been completed" do
     scenario "user can see a link to continue to the next task" do
+      # category - section-with-multiple-tasks
+      #   section - multiple-tasks-section
+      #     tasks
+      #       1. checkboxes-task             "Task with a single step"
+      #       2. checkboxes-and-radio-task   "Task with multiple steps"
+      #       3. every-question-type-task    "Task containing every type of step"
+      #
       start_journey_from_category(category: "section-with-multiple-tasks.json")
 
+      # task 1 step 2
       within ".app-task-list" do
-        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+        click_on "Task with multiple steps"
       end
 
       choose "Catering"
@@ -216,11 +225,11 @@ RSpec.feature "Users can view the task list" do
       check "Breakfast"
       click_on "Continue"
 
-      click_on "Continue to the next task" # > every-question-type-task.json 1st question
+      click_on "Continue to the next task"
 
+      # task 1 step 3 long-text-question
       expect(page).to have_content "Briefly describe what you are looking to procure"
-
-      click_on "Back" # > every-question-type-task.json
+      click_on "Back"
       expect(page).to have_content "Task containing every type of step"
     end
   end

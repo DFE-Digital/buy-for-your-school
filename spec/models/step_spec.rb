@@ -97,7 +97,7 @@ RSpec.describe Step, type: :model do
     context "when a question of type 'checkboxes' is answered" do
       it "returns the CheckboxAnswers object" do
         answer = create(:checkbox_answers)
-        question = create(:step, :checkbox_answers, checkbox_answers: answer)
+        question = create(:step, :checkbox, checkbox_answers: answer)
         expect(question.answer).to be_kind_of CheckboxAnswers
       end
     end
