@@ -8,7 +8,7 @@ class TasksController < ApplicationController
     @journey = current_journey
 
     @current_task = task
-    @next_task = next_incomplete_task
+    @next_task = current_journey.next_incomplete_task(task)
 
     @steps = task.eager_loaded_visible_steps.map do |step|
       StepPresenter.new(step)
@@ -38,11 +38,6 @@ private
   # @return [String]
   def task_id
     params[:id]
-  end
-
-  # @return [Task, nil]
-  def next_incomplete_task
-    current_journey.tasks.order(:section_id, :order).reject(&:all_steps_completed?).last
   end
 
   # Log 'begin_task'

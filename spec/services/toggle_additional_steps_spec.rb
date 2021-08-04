@@ -319,7 +319,7 @@ RSpec.describe ToggleAdditionalSteps do
       context "when the answer response is an array" do
         it "checks for a match against all answers" do
           step = create(:step,
-                        :checkbox_answers,
+                        :checkbox,
                         task: task,
                         additional_step_rules: [{ "required_answer" => "Red", "question_identifiers" => %w[123] }])
           create(:checkbox_answers, step: step, response: %w[Blue Red])

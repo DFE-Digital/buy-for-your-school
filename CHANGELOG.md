@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
 - remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
 - add custom answer validation logic which can be controlled in Contentful
+- fix progression to the next incomplete task
 
 **Multiple Categories**
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
