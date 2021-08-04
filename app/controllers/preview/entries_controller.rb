@@ -1,14 +1,41 @@
-# rubocop:disable Rails/SaveBang
 class Preview::EntriesController < ApplicationController
   def show
-    category = Category.create(title: "Preview", contentful_id: 0, liquid_template: "<p>N/A</p>")
-    @journey = Journey.create(category: category, user: current_user)
-    section = Section.create(title: "Preview Section", journey: @journey)
-    task = Task.create(title: "Preview Task", section: section)
-    contentful_entry = GetEntry.new(entry_id: params[:id]).call
-    @step = CreateStep.new(task: task, contentful_step: contentful_entry, order: 0).call
+    client = Content::Client.new(:preview)
 
-    redirect_to journey_step_path(@journey, @step)
+    contentful_step = GetEntry.new(entry_id: params[:id], client: client).call
+
+    category = Category.find_or_create_by!(title: "Designer Preview Category") do |c|
+      c.contentful_id = 0
+      c.description = "Used to demo a step before publishing"
+      c.liquid_template = "<p>N/A</p>"
+    end
+
+    # flagged for deletion
+    journey = Journey.find_or_create_by!(category: category) do |j|
+      j.user = current_user
+      j.state = 3
+    end
+
+    section = Section.find_or_create_by!(title: "Designer Preview Section") do |s|
+      s.contentful_id = 0
+      s.order = 0
+      s.journey = journey
+    end
+
+    task = Task.find_or_create_by!(title: "Designer Preview Task") do |t|
+      t.contentful_id = 0
+      t.order = 0
+      t.section = section
+      # TODO: add migration for step_tally to default to an empty Hash
+      t.step_tally = {}
+    end
+
+    step = CreateStep.new(
+      task: task,
+      contentful_step: contentful_step,
+      order: 0,
+    ).call
+
+    redirect_to journey_step_path(journey, step, preview: true)
   end
 end
-# rubocop:enable Rails/SaveBang

@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 **Steps**
 - implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
-- remove `staticContent` entity and add `Statement` entity in Contentful (currently only in develop)
+- remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
 - add custom answer validation logic which can be controlled in Contentful
 - fix progression to the next incomplete task
 
@@ -38,6 +38,13 @@ The format is based on [Keep a Changelog 1.0.0].
 - add state to `Journey` (initial, stale, archive or remove)
 - drop `Journey.last_worked_on` in favour of `updated_at`
 - allow user to (soft) delete a specification
+
+**Preview functionality**
+- previously this depended upon a dedicated environment which used the main branch thereby preventing preview functionality in staging
+- a memoised client for both Contentful delivery and preview is available for any environment
+- `Content::Connector` instantiates both clients
+- `Content::Client` is used internally as an interface to the Contentful ruby gem
+- `APP_ENV_{ENV}_CONTENTFUL_ACCESS_TOKEN` is replaced by `APP_ENV_{ENV}_CONTENTFUL_DELIVERY_TOKEN` and `APP_ENV_{ENV}_CONTENTFUL_PREVIEW_TOKEN`
 
 ## Diary Studies using the live environment
 

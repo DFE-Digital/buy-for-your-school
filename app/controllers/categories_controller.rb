@@ -1,15 +1,20 @@
 class CategoriesController < ApplicationController
   def index
     populate_categories if Category.none?
-    @categories = Category.all.order(:title)
+    @categories = Category.where.not(contentful_id: 0).order(:title)
   end
 
 private
 
+  # CMS: initialise Content::Client in the base controller
+  def client
+    Content::Client.new
+  end
+
   # On an initial run the `categories` table will be empty
   #
   def populate_categories
-    ContentfulConnector.new.by_type("category").each do |entry|
+    client.by_type(:category).each do |entry|
       contentful_category = GetCategory.new(category_entry_id: entry.id).call
 
       # TODO: create category service
