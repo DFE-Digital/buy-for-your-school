@@ -62,7 +62,7 @@ FactoryBot.define do
       contentful_type { "single_date" }
     end
 
-    trait :checkbox_answers do
+    trait :checkbox do
       options { [{ "value" => "Brown" }, { "value" => "Gold" }] }
       contentful_model { "question" }
       contentful_type { "checkboxes" }

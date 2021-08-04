@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# A Task belongs to a {Section} and has of many {Step}s.
+# A Task belongs to a {Section} and has many {Step}s
 class Task < ApplicationRecord
   self.implicit_order_column = "order"
 
@@ -40,6 +40,11 @@ class Task < ApplicationRecord
   # @return [Boolean]
   def has_single_visible_step?
     tally_for(:visible) == 1
+  end
+
+  # @return [Boolean]
+  def incomplete?
+    !all_steps_completed?
   end
 
   # Use tally to infer state - visible steps vs. completed
