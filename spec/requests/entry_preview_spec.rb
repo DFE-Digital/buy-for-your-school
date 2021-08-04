@@ -1,3 +1,4 @@
+# TODO: this should be merged with features/design/preview_step_spec
 RSpec.describe "Entry previews", type: :request do
   let(:user) { create(:user) }
   let(:journey) { user.journeys.first }
