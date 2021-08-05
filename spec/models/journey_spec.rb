@@ -1,99 +1,25 @@
 RSpec.describe Journey, type: :model do
-  it { is_expected.to have_many(:sections) }
+  subject(:journey) { build(:journey, category: category) }
 
-  it "captures the category" do
-    category = build(:category, :catering)
-    journey = build(:journey, category: category)
-    expect(journey.category.title).to eql("Catering")
-  end
+  let(:category) { build(:category) }
 
-  describe "#all_tasks_completed?" do
-    context "when all steps have been completed" do
-      it "returns true" do
-        journey = create(:journey)
-        section = create(:section, journey: journey)
-        task = create(:task, section: section)
+  it { is_expected.to belong_to :user }
+  it { is_expected.to belong_to :category }
 
-        step1 = create(:step, :radio, task: task)
-        create(:radio_answer, step: step1)
+  it { is_expected.to have_many :sections }
+  it { is_expected.to have_many :tasks }
+  it { is_expected.to have_many :steps }
 
-        step2 = create(:step, :radio, task: task)
-        create(:radio_answer, step: step2)
-
-        expect(journey.all_tasks_completed?).to be true
-      end
-    end
-
-    context "when no steps have been completed" do
-      it "returns false " do
-        journey = create(:journey)
-        section = create(:section, journey: journey)
-        task = create(:task, section: section)
-
-        create_list(:step, 2, :radio, task: task)
-
-        expect(journey.all_tasks_completed?).to be false
-      end
-    end
-
-    context "when only some steps have been completed" do
-      it "returns false" do
-        journey = create(:journey)
-        section = create(:section, journey: journey)
-        task = create(:task, section: section)
-
-        step = create(:step, :radio, task: task)
-        create(:radio_answer, step: step)
-
-        create(:step, :radio, task: task)
-        # Omit answer for step 2
-
-        expect(journey.all_tasks_completed?).to be false
-      end
-    end
-
-    context "when there are uncompleted hidden steps" do
-      it "ignores them and returns true" do
-        journey = create(:journey)
-        section = create(:section, journey: journey)
-        task = create(:task, section: section)
-
-        step = create(:step, :radio, task: task)
-        create(:radio_answer, step: step)
-
-        create(:step, :radio, task: task, hidden: true)
-        # Omit answer for step 2
-
-        expect(journey.all_tasks_completed?).to be true
-      end
+  describe "#started" do
+    it "defaults to false" do
+      expect(journey.started).to be false
     end
   end
 
   describe "#start!" do
-    it "set started to true" do
-      category = build(:category, :catering)
-      journey = build(:journey, category: category)
+    it "sets started to true" do
       journey.start!
-      expect(journey.reload.started).to eq(true)
-    end
-
-    it "sets the updated_at to now" do
-      travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
-      category = build(:category, :catering)
-      journey = build(:journey, category: category)
-
-      journey.start!
-
-      expect(journey.updated_at).to eq(Time.zone.now)
-    end
-
-    context "when started is already true" do
-      it "does not update the record" do
-        category = build(:category, :catering)
-        journey = build(:journey, category: category, started: true)
-        expect(journey).not_to receive(:update).with(started: true)
-        journey.start!
-      end
+      expect(journey.started).to be true
     end
   end
 end

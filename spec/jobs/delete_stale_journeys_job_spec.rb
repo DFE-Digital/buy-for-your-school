@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe DeleteStaleJourneysJob, type: :job do
   include ActiveJob::TestHelper
 
@@ -7,30 +5,31 @@ RSpec.describe DeleteStaleJourneysJob, type: :job do
     ActiveJob::Base.queue_adapter = :test
   end
 
+  around do |example|
+    # NB: remove this when deletion of stale journeys is approved
+    ClimateControl.modify(DELETE_STALE_JOURNEYS: "true") do
+      example.run
+    end
+  end
+
   describe ".perform_later" do
     it "enqueues a job asynchronously on the default queue" do
-      expect {
-        described_class.perform_later
-      }.to have_enqueued_job.on_queue("default")
+      expect { described_class.perform_later }.to have_enqueued_job.on_queue("default")
     end
 
-    it "destroys all unstarted journeys" do
-      more_than_one_month_ago = (1.month + 1.day).ago
-      less_than_one_month_ago = (1.month - 1.day).ago
+    it "destroys all stale journeys after a grace period" do
+      before_grace_period = create(:journey, state: :stale, started: false, updated_at: 29.days.ago)
+      after_grace_period = create(:journey, state: :stale, started: false, updated_at: 31.days.ago)
 
-      legacy_journey = create(:journey, started: true)
-      unstarted_journey = create(:journey, started: false, updated_at: more_than_one_month_ago)
-      becoming_stale_journey = create(:journey, started: false, updated_at: less_than_one_month_ago)
-      active_journey = create(:journey, started: true, updated_at: more_than_one_month_ago)
+      expect(Rollbar).to receive(:info).with("Deleted 1 stale journeys.")
 
       described_class.perform_later
       perform_enqueued_jobs
 
       remaining_journeys = Journey.all
-      expect(remaining_journeys).to include(legacy_journey)
-      expect(remaining_journeys).to include(active_journey)
-      expect(remaining_journeys).to include(becoming_stale_journey)
-      expect(remaining_journeys).not_to include(unstarted_journey)
+
+      expect(remaining_journeys).to include before_grace_period
+      expect(remaining_journeys).not_to include after_grace_period
     end
   end
 end

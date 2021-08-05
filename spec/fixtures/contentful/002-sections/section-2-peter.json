@@ -1,0 +1,57 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "space_id"
+      }
+    },
+    "id": "section-2-peter",
+    "type": "Entry",
+    "createdAt": "2021-04-12T10:41:36.073Z",
+    "updatedAt": "2021-04-12T10:42:51.119Z",
+    "environment": {
+      "sys": {
+        "id": "test",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 1,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "section"
+      }
+    },
+    "locale": "en-GB"
+  },
+  "fields": {
+    "title": "Section 2",
+    "tasks": [
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "every-question-type-task"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "every-question-type-task"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "every-question-type-task"
+        }
+      }
+    ]
+  }
+}

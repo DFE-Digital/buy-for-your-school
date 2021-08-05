@@ -6,23 +6,21 @@
 # @see CreateStep#call
 #
 class CreateJourney
-  attr_accessor :category, :user
-
-  # @param user [User] current user
-  # @param category [Category] chosen category
+  # @param user [User]
+  # @param category [Category]
   #
   def initialize(user:, category:)
-    self.user = user
-    self.category = category
+    @user = user
+    @category = category
   end
 
   # @return [Journey]
   def call
-    journey = Journey.new(category: category, user: user)
+    journey = Journey.new(category: @category, user: @user)
     journey.save!
 
     # Contentful::Entry[category]
-    contentful_category = GetCategory.new(category_entry_id: category.contentful_id).call
+    contentful_category = GetCategory.new(category_entry_id: @category.contentful_id).call
     # Contentful::Entry[section]
     contentful_sections = GetSectionsFromCategory.new(category: contentful_category).call
 
