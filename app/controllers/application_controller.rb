@@ -15,12 +15,7 @@ protected
 
   helper_method :current_user
   def current_user
-    @current_user ||= begin
-      user = FindOrCreateUserFromSession.new(session_hash: session.to_hash).call
-      return user if user.present?
-
-      false
-    end
+    @current_user ||= FindOrCreateUserFromSession.new(session_hash: session.to_hash).call
   end
 
   def authenticate_user!

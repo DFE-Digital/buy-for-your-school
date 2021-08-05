@@ -2,8 +2,6 @@
 #
 # @see SessionsController
 class UserSession
-  include Rails.application.routes.url_helpers
-
   attr_accessor :session
 
   def initialize(session:)
@@ -34,14 +32,21 @@ class UserSession
 
   # @return [String]
   def sign_out_url
-    return root_path unless should_be_signed_out_of_dsi?
+    return "/" unless should_be_signed_out_of_dsi?
 
     query = {
-      post_logout_redirect_uri: auth_dfe_signout_url,
+      post_logout_redirect_uri: post_logout_redirect_uri,
       id_token_hint: session[:dfe_sign_in_sign_out_token],
     }
 
     "#{ENV.fetch('DFE_SIGN_IN_ISSUER')}/session/end?#{query.to_query}"
+  end
+
+  # "http://localhost:3000/auth/dfe/signout"
+  #
+  # @return [String]
+  def post_logout_redirect_uri
+    Rails.application.routes.url_helpers.sign_out_url
   end
 
   # Sign out concurrent logins
