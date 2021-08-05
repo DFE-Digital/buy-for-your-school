@@ -112,9 +112,6 @@ private
   #
   # @return [Nil, Hash<Symbol, Integer>]
   def tally_steps
-    # TODO: set preview titles as constants
-    return if title == "Designer Preview Task"
-
     visible_steps = steps.visible
 
     self.step_tally = {
