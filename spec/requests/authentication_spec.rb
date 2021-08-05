@@ -69,13 +69,13 @@ RSpec.describe "Authentication", type: :request do
   end
 
   describe "Sign out" do
-    it "asks UserSession to repudiate the user's session data" do
+    it "asks UserSession to delete the user's session data" do
       user_exists_in_dfe_sign_in
-      expect_any_instance_of(UserSession).to receive(:repudiate!)
+      expect_any_instance_of(UserSession).to receive(:delete!)
 
       delete "/auth/dfe/signout"
 
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to "http://localhost:3000/"
     end
 
     context "when there is no sign out token (they are already signed out from the applications point of view)" do
@@ -85,7 +85,7 @@ RSpec.describe "Authentication", type: :request do
 
         delete "/auth/dfe/signout"
 
-        expect(response).to redirect_to "/"
+        expect(response).to redirect_to "http://localhost:3000/"
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe "Authentication", type: :request do
 
         delete "/auth/dfe/signout"
 
-        expect(response).to redirect_to("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=&post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fdfe%2Fsignout")
+        expect(response).to redirect_to("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=&post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F")
       end
     end
   end
@@ -128,9 +128,7 @@ RSpec.describe "Authentication", type: :request do
 
         mock_redis = MockRedis.new
         allow(RedisSessions).to receive(:redis).and_return(mock_redis)
-        allow(mock_redis).to receive(:del)
-          .with("session:2::1098345703928457320948572304")
-          .and_return(0)
+        allow(mock_redis).to receive(:del).with("session:2::1098345703928457320948572304").and_return(0)
 
         get "/auth/dfe/callback"
 

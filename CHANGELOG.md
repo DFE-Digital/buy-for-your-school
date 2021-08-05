@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - use `pry` in the Rails console
 - add additional developer tools to optional `Brewfile`
 - remove unused `GetAllContentfulEntries` service object
+- change route to destroy a session to be DELETE
 
 **Steps**
 - implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
