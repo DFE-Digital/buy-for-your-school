@@ -22,12 +22,13 @@ class SessionsController < ApplicationController
     end
   end
 
+  # Redirect to root possibly via DFE_SIGN_IN_ISSUER
+  #
   # @see UserSession
   def destroy
-    sign_out_url_copy = user_session.sign_out_url.dup
-    user_session.repudiate!
-
-    redirect_to sign_out_url_copy
+    target = user_session.sign_out_url.dup
+    user_session.delete!
+    redirect_to target
   end
 
 private
