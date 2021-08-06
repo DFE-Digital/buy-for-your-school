@@ -1,22 +1,25 @@
 RSpec.feature "Users can view a list of sections" do
   let(:user) { create(:user) }
+  let(:category) { create(:category) }
+  let(:journey) { create(:journey, user: user, category: category) }
 
-  before { user_is_signed_in(user: user) }
+  before do
+    create(:section, journey: journey, title: "Section A")
+    create(:section, journey: journey, title: "Section B")
+
+    user_is_signed_in(user: user)
+    visit "/journeys/#{journey.id}"
+  end
 
   it "the user can see multiple sections" do
-    # TODO: replace fixture with factory
-    start_journey_from_category(category: "multiple-sections.json")
-
     within(".app-task-list") do
-      expect(page).to have_content("Section A")
-      expect(page).to have_content("Section B")
+      expect(page).to have_content "Section A"
+      expect(page).to have_content "Section B"
     end
   end
 
   context "when sections are saved in a different order than in Contentful" do
     it "the user continues to be shown the order defined by Contentful" do
-      start_journey_from_category(category: "multiple-sections.json")
-
       # Manually modify the created_at to simlate slow database inserts/selects
       first_section = Section.find_by(title: "Section A")
       first_section.update!(created_at: Time.zone.now - 2.hours)

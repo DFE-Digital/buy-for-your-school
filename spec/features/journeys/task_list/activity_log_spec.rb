@@ -1,26 +1,22 @@
-RSpec.feature "Users can view a task" do
+RSpec.feature "User activity is recorded" do
   let(:user) { create(:user) }
+  let(:fixture) { "section-with-multiple-tasks.json" }
 
-  before { user_is_signed_in(user: user) }
+  before do
+    user_is_signed_in(user: user)
+    # TODO: replace fixture with factory
+    start_journey_from_category(category: fixture)
+  end
 
   context "when there is a task with multiple steps" do
-    it "the Task title takes you to the first step" do
-      # TODO: replace fixture with factory
-      start_journey_from_category(category: "section-with-multiple-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
-      end
-
-      expect(page).to have_content "Which service do you need?"
-    end
-
     it "records an action in the event log that a task has begun" do
-      start_journey_from_category(category: "section-with-multiple-tasks.json")
+      expect(page).to have_current_path %r{/journeys/.*}
 
       within(".app-task-list") do
-        click_on "Task with multiple steps"
+        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
+
+      expect(page).to have_current_path %r{/journeys/.*/steps/.*}
 
       journey = Journey.first
       task = Task.find_by(title: "Task with multiple steps")
@@ -48,31 +44,18 @@ RSpec.feature "Users can view a task" do
     end
 
     context "when a task has at least one answered step" do
-      it "takes the user to the task page" do
-        start_journey_from_category(category: "section-with-multiple-tasks.json")
-
-        task = Task.find_by(title: "Task with multiple steps")
-        step = task.steps.first
-        create(:radio_answer, step: step)
-
-        within(".app-task-list") do
-          click_on "Task with multiple steps"
-        end
-
-        expect(page).to have_content("Task with multiple steps")
-        expect(page).to have_content("Which service do you need?")
-      end
-
       it "records an action in the event log that an in-progress task has been revisited" do
-        start_journey_from_category(category: "section-with-multiple-tasks.json")
-
         task = Task.find_by(title: "Task with multiple steps")
         step = task.steps.first
         create(:radio_answer, step: step)
 
+        expect(page).to have_current_path %r{/journeys/.*}
+
         within(".app-task-list") do
-          click_on "Task with multiple steps"
+          click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
         end
+
+        expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
 
         journey = Journey.first
 
@@ -99,11 +82,12 @@ RSpec.feature "Users can view a task" do
 
     context "when all questions in a task have been answered" do
       it "records an action in the event log that a completed task has been revisited" do
-        start_journey_from_category(category: "section-with-multiple-tasks.json")
-
+        expect(page).to have_current_path %r{/journeys/.*}
         within(".app-task-list") do
-          click_on "Task with multiple steps"
+          click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
         end
+
+        expect(page).to have_current_path %r{/journeys/.*/steps/.*}
 
         choose "Catering"
         click_continue
@@ -114,7 +98,7 @@ RSpec.feature "Users can view a task" do
         fill_in "answer[response]", with: "This is my long answer"
         click_continue
 
-        check("Breakfast")
+        check "Breakfast"
         click_continue
 
         task = Task.find_by(title: "Task with multiple steps")
@@ -138,81 +122,6 @@ RSpec.feature "Users can view a task" do
           "statements" => 0,
           "acknowledged" => 0,
         })
-      end
-    end
-
-    it "shows a list of the task steps" do
-      start_journey_from_category(category: "section-with-multiple-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
-      end
-
-      # Unstarted tasks take the user straight to the first step so we have to go back
-      click_on(I18n.t("generic.button.back"))
-
-      expect(page).to have_content "Which service do you need?"
-      expect(page).to have_content "Everyday services that are required and need to be considered" # TODO: #675 refactor multiple
-    end
-
-    it "does not show hidden steps" do
-      start_journey_from_category(category: "section-with-visible-and-hidden-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with visible and hidden steps"
-      end
-
-      expect(page).not_to have_content "You should NOT be able to see this question?"
-      expect(page).to have_content "Which service do you need?"
-    end
-
-    it "has a back link on the step page that takes you to the check your answers page" do
-      start_journey_from_category(category: "section-with-multiple-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
-      end
-
-      click_on(I18n.t("generic.button.back"))
-
-      expect(page).to have_content "Task with multiple steps"
-    end
-
-    it "allows the user to click on a step to supply an answer, and be taken to the next step" do
-      start_journey_from_category(category: "section-with-multiple-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
-      end
-
-      choose "Catering"
-      click_continue
-
-      expect(page).to have_content "What email address did you use?"
-    end
-
-    it "allows the user to click on a step to supply the last answer in a task, and be taken to the check your answers page" do
-      start_journey_from_category(category: "section-with-multiple-tasks.json")
-
-      within(".app-task-list") do
-        click_on "Task with multiple steps"
-      end
-
-      choose "Catering"
-      click_continue
-
-      fill_in "answer[response]", with: "This is my short answer"
-      click_continue
-
-      fill_in "answer[response]", with: "This is my long answer"
-      click_continue
-
-      check("Breakfast")
-      click_continue
-
-      expect(page).to have_content "Task with multiple steps"
-      within(".govuk-summary-list") do
-        expect(page).to have_content("Catering")
       end
     end
   end
