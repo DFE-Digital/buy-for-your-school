@@ -50,20 +50,26 @@ RSpec.describe CreateJourney do
       expect(journey.sections[2].order).to be 2
     end
 
-    it "creates associated tasks in order" do
+    it "creates all associated tasks" do
       expect(journey.tasks.count).to be 9
-
+      # spec/fixtures/contentful/002-tasks/every-question-type-task.json
       expect(journey.tasks[0].contentful_id).to eql "every-question-type-task"
+    end
+
+    it "creates associated tasks in order" do
       expect(journey.tasks[0].order).to be 0
-
-      expect(journey.tasks[1].contentful_id).to eql "every-question-type-task"
       expect(journey.tasks[1].order).to be 0
-
-      expect(journey.tasks[2].contentful_id).to eql "every-question-type-task"
       expect(journey.tasks[2].order).to be 0
-
-      expect(journey.tasks[3].contentful_id).to eql "every-question-type-task"
       expect(journey.tasks[3].order).to be 1
+      expect(journey.tasks[4].order).to be 1
+      expect(journey.tasks[5].order).to be 1
+
+      expect(journey.sections[0].tasks[0].order).to be 0
+      expect(journey.sections[0].tasks[1].order).to be 1
+      expect(journey.sections[0].tasks[2].order).to be 2
+      expect(journey.sections[1].tasks[0].order).to be 0
+      expect(journey.sections[1].tasks[1].order).to be 1
+      expect(journey.sections[1].tasks[2].order).to be 2
     end
 
     # 3 sections * 3 tasks * 7 steps = 63

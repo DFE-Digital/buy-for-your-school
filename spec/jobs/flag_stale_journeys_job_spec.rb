@@ -18,10 +18,10 @@ RSpec.describe FlagStaleJourneysJob, type: :job do
     end
 
     it "flags journeys as stale after a grace period" do
-      before_grace_period = create(:journey, updated_at: 29.days.ago)
-      after_grace_period = create(:journey, updated_at: 31.days.ago)
+      before_grace_period = create(:journey, state: :initial, started: false, updated_at: 29.days.ago)
+      after_grace_period = create(:journey, state: :initial, started: false, updated_at: 31.days.ago)
 
-      # expect(Rollbar).to receive(:info).with("Flagged 1 journeys as stale.")
+      expect(Rollbar).to receive(:info).with("Flagged 1 journeys as stale.")
 
       described_class.perform_later
       perform_enqueued_jobs

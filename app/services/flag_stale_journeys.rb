@@ -2,11 +2,14 @@
 #
 # DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR=
 class FlagStaleJourneys
+  # Flip journey state and explicitly touch updated_at
+  #
   # @return [Array<Journey>]
   #
   def call
-    flagged = journeys
-    journeys.update_all(state: :stale)
+    flagged = journeys.to_a # NB: to_a is required
+    # NB: update_all returns the number of rows
+    journeys.update_all(state: :stale, updated_at: Time.zone.now)
     flagged
   end
 

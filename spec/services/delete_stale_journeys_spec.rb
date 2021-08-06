@@ -12,16 +12,26 @@ RSpec.describe DeleteStaleJourneys do
       end
     end
 
+    context "when a journey not flagged as stale has passed the grace period" do
+      context "and has not been started" do
+        it "is not destroyed" do
+          create(:journey, state: :initial, updated_at: 31.days.ago)
+
+          expect(Journey.count).to be 1
+          service.call
+          expect(Journey.count).to be 1
+        end
+      end
+    end
+
     context "when a journey flagged as stale has passed the grace period" do
-      # NB: the started boolean was never realised - this test ensures existing data is not lost
       context "and has been started" do
         it "is not destroyed" do
           create(:journey, state: :stale, started: true, updated_at: 31.days.ago)
-          create(:journey, state: :initial, started: true, updated_at: 31.days.ago)
 
-          expect(Journey.count).to be 2
+          expect(Journey.count).to be 1
           service.call
-          expect(Journey.count).to be 2
+          expect(Journey.count).to be 1
         end
       end
 

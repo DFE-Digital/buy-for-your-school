@@ -6,6 +6,7 @@ class FlagStaleJourneysJob < ApplicationJob
 
     journeys = FlagStaleJourneys.new.call
 
+    # TODO: add journey/user params to the Rollbar payload
     Rollbar.info("Flagged #{journeys.size} journeys as stale.")
   end
 end
