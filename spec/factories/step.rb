@@ -19,7 +19,7 @@ FactoryBot.define do
       title { "has additional steps" }
       help_text { "answer yes for more steps" }
       order { 0 }
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "radios" }
       options { [{ "value" => "yes" }, { "value" => "no" }] }
       additional_step_rules do
@@ -43,38 +43,38 @@ FactoryBot.define do
 
     trait :radio do
       options { [{ "value" => "Red" }, { "value" => "Green" }, { "value" => "Blue" }] }
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "radios" }
     end
 
     trait :short_text do
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "short_text" }
     end
 
     trait :long_text do
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "long_text" }
     end
 
     trait :single_date do
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "single_date" }
     end
 
     trait :checkbox do
       options { [{ "value" => "Brown" }, { "value" => "Gold" }] }
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "checkboxes" }
     end
 
     trait :number do
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "number" }
     end
 
     trait :currency do
-      contentful_model { "question" }
+      contentful_model { "question_types" }
       contentful_type { "currency" }
     end
   end

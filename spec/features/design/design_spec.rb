@@ -16,7 +16,7 @@ RSpec.feature "Content Designers can see" do
 
   context "when there are categories" do
     let(:catering_fixture) { "journey-with-multiple-entries" }
-    let(:mfd_fixture) { "mfd-radio-question" }
+    let(:mfd_fixture) { "mfd-radio-question_types" }
 
     before do
       # TODO: move JSON file extension for fixtures into the helper method

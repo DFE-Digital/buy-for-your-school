@@ -5,7 +5,7 @@
 #     + Each task has 3 steps with a mix of types
 #
 #       * A step is a statement when step and task position match
-#       * A step is a question when step and task position do not match
+#       * A step is a question_types when step and task position do not match
 #
 RSpec.shared_context "with an incomplete journey" do
   #

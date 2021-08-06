@@ -26,7 +26,7 @@ RSpec.describe Step, type: :model do
   end
 
   describe "#that_are_questions" do
-    it "only returns steps that have the question contentful_model" do
+    it "only returns steps that have the question_types contentful_model" do
       question = create(:step, :radio)
       statement = create(:step, :statement)
 
@@ -46,7 +46,7 @@ RSpec.describe Step, type: :model do
   end
 
   describe "#answer" do
-    context "when a question of type 'number' is answered" do
+    context "when a question_types of type 'number' is answered" do
       it "returns the NumberAnswer object" do
         answer = create(:number_answer)
         question = create(:step, :number, number_answer: answer)
@@ -54,7 +54,7 @@ RSpec.describe Step, type: :model do
       end
     end
 
-    context "when a question of type 'currency' is answered" do
+    context "when a question_types of type 'currency' is answered" do
       it "returns the CurrencyAnswer object" do
         answer = create(:currency_answer)
         question = create(:step, :currency, currency_answer: answer)
@@ -62,7 +62,7 @@ RSpec.describe Step, type: :model do
       end
     end
 
-    context "when a question of type 'radios' is answered" do
+    context "when a question_types of type 'radios' is answered" do
       it "returns the RadioAnswer object" do
         answer = create(:radio_answer)
         question = create(:step, :radio, radio_answer: answer)
@@ -70,7 +70,7 @@ RSpec.describe Step, type: :model do
       end
     end
 
-    context "when a question of type 'short_text' is answered" do
+    context "when a question_types of type 'short_text' is answered" do
       it "returns the ShortTextAnswer object" do
         answer = create(:short_text_answer)
         question = create(:step, :short_text, short_text_answer: answer)
@@ -78,7 +78,7 @@ RSpec.describe Step, type: :model do
       end
     end
 
-    context "when a question of type 'long_text' is answered" do
+    context "when a question_types of type 'long_text' is answered" do
       it "returns the LongTextAnswer object" do
         answer = create(:long_text_answer)
         question = create(:step, :long_text, long_text_answer: answer)
@@ -86,7 +86,7 @@ RSpec.describe Step, type: :model do
       end
     end
 
-    context "when a question of type 'single_date' is answered" do
+    context "when a question_types of type 'single_date' is answered" do
       it "returns the SingleDateAnswer object" do
         answer = create(:single_date_answer)
         question = create(:step, :single_date, single_date_answer: answer)
@@ -94,7 +94,7 @@ RSpec.describe Step, type: :model do
       end
     end
 
-    context "when a question of type 'checkboxes' is answered" do
+    context "when a question_types of type 'checkboxes' is answered" do
       it "returns the CheckboxAnswers object" do
         answer = create(:checkbox_answers)
         question = create(:step, :checkbox, checkbox_answers: answer)

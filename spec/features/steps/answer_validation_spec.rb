@@ -1,4 +1,4 @@
-RSpec.feature "Validation criteria is question specific" do
+RSpec.feature "Validation criteria is question_types specific" do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
   let(:journey) { create(:journey, category: category, user: user) }

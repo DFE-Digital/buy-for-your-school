@@ -16,7 +16,7 @@ RSpec.describe CreateTask do
       end
     end
 
-    # TODO: test coverage for raised exceptions in service objects
+    # TODO: test coverage for raised exceptions_spec.rb in service objects
     # context "when the task is invalid" do
     #   it "raises UnexpectedContentfulModel" do
     #     expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }

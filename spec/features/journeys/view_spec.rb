@@ -21,7 +21,7 @@ RSpec.feature "Users can see their catering specification" do
   end
 
   scenario "navigates back to the task list" do
-    start_journey_from_category(category: "extended-radio-question.json")
+    start_journey_from_category(category: "extended-radio-question_types.json")
 
     click_view
 
@@ -30,7 +30,7 @@ RSpec.feature "Users can see their catering specification" do
   end
 
   scenario "renders radio responses that have futher information" do
-    start_journey_from_category(category: "extended-radio-question.json")
+    start_journey_from_category(category: "extended-radio-question_types.json")
     click_first_link_in_section_list
 
     choose "Catering"
@@ -47,7 +47,7 @@ RSpec.feature "Users can see their catering specification" do
   end
 
   scenario "renders checkbox responses that have further information" do
-    start_journey_from_category(category: "extended-checkboxes-question.json")
+    start_journey_from_category(category: "extended-checkboxes-question_types.json")
     click_first_link_in_section_list
 
     check "Yes"
@@ -69,18 +69,18 @@ RSpec.feature "Users can see their catering specification" do
   end
 
   scenario "questions that are skipped can be identified" do
-    start_journey_from_category(category: "skippable-checkboxes-question.json")
+    start_journey_from_category(category: "skippable-checkboxes-question_types.json")
     click_first_link_in_section_list
 
     click_on "None of the above"
     click_view
 
-    expect(page).to have_content("Skipped question detected")
+    expect(page).to have_content("Skipped question_types detected")
   end
 
   context "when the spec is incomplete" do
     it "warns the user that the contents are in a partially completed state" do
-      start_journey_from_category(category: "extended-radio-question.json")
+      start_journey_from_category(category: "extended-radio-question_types.json")
 
       # Don't answer any questions to create a in progress spec
 

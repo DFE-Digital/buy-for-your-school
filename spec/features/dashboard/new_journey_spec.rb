@@ -9,7 +9,7 @@ RSpec.feature "Create a new journey" do
 
     scenario "they can start a new journey" do
       # TODO: refactor stubbing here
-      persist_category(stub_contentful_category(fixture_filename: "radio-question.json"))
+      persist_category(stub_contentful_category(fixture_filename: "radio-question_types.json"))
 
       click_create
       click_continue

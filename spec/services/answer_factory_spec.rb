@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe AnswerFactory do
   describe "#call" do
-    context "when the step is for an unknown question type" do
-      it "raises an unexpected question type error" do
-        step = create(:step, options: nil, contentful_model: "question", contentful_type: "telepathy")
+    context "when the step is for an unknown question_types type" do
+      it "raises an unexpected question_types type error" do
+        step = create(:step, options: nil, contentful_model: "question_types", contentful_type: "telepathy")
         expect {
           described_class.new(step: step).call
         }.to raise_error(AnswerFactory::UnexpectedQuestionType)

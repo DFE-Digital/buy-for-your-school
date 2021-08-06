@@ -18,15 +18,15 @@ RSpec.describe CreateStep do
     end
 
     context "when the new step is of type step" do
-      let(:fixture) { "radio-question" }
+      let(:fixture) { "radio-question_types" }
 
       it "creates a local copy of the new step" do
         step = service.call
 
         expect(step.title).to eq "Which service do you need?"
         expect(step.help_text).to eq "Tell us which service you need."
-        expect(step.contentful_id).to eq "radio-question"
-        expect(step.contentful_model).to eq "question"
+        expect(step.contentful_id).to eq "radio-question_types"
+        expect(step.contentful_model).to eq "question_types"
         expect(step.contentful_type).to eq "radios"
         expect(step.options).to eq([{ "value" => "Catering" }, { "value" => "Cleaning" }])
         expect(step.hidden).to be false
@@ -44,7 +44,7 @@ RSpec.describe CreateStep do
           "sys" => {
             "contentType" => {
               "sys" => {
-                "id" => "question",
+                "id" => "question_types",
                 "linkType" => "ContentType",
                 "type" => "Link",
               },
@@ -57,7 +57,7 @@ RSpec.describe CreateStep do
                 "type" => "Link",
               },
             },
-            "id" => "radio-question",
+            "id" => "radio-question_types",
             "locale" => "en-US",
             "revision" => 7,
             "space" => {
@@ -74,8 +74,8 @@ RSpec.describe CreateStep do
       end
     end
 
-    context "when the question is of type 'short_text'" do
-      let(:fixture) { "short-text-question" }
+    context "when the question_types is of type 'short_text'" do
+      let(:fixture) { "short-text-question_types" }
 
       it "sets help_text and options to nil" do
         step = service.call
@@ -121,7 +121,7 @@ RSpec.describe CreateStep do
     end
 
     context "when no 'skipCallToAction' is provided" do
-      let(:fixture) { "skippable-checkboxes-question" }
+      let(:fixture) { "skippable-checkboxes-question_types" }
 
       it "default copy is used for the button" do
         step = service.call
@@ -141,7 +141,7 @@ RSpec.describe CreateStep do
     end
 
     context "when 'showAdditionalQuestion' is provided" do
-      let(:fixture) { "show-one-additional-question" }
+      let(:fixture) { "show-one-additional-question_types" }
 
       it "stores the rule as JSON" do
         step = service.call
@@ -149,7 +149,7 @@ RSpec.describe CreateStep do
         expect(step.additional_step_rules).to eql([
           {
             "required_answer" => "School expert",
-            "question_identifiers" => %w[hidden-field-that-shows-an-additional-question],
+            "question_identifiers" => %w[hidden-field-that-shows-an-additional-question_types],
           },
         ])
       end
@@ -171,7 +171,7 @@ RSpec.describe CreateStep do
                 contentful_entry_id: "unexpected-contentful-type",
                 content_model: "telepathy",
                 step_type: "radios",
-                allowed_content_models: "question, statement",
+                allowed_content_models: "question_types, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
         expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulModel)
@@ -179,7 +179,7 @@ RSpec.describe CreateStep do
     end
 
     context "when the new step has an unexpected step type" do
-      let(:fixture) { "unexpected-contentful-question-type" }
+      let(:fixture) { "unexpected-contentful-question_types-type" }
 
       it "raises an error" do
         expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
@@ -191,10 +191,10 @@ RSpec.describe CreateStep do
                 # contentful_url: ENV["CONTENTFUL_URL"],
                 contentful_space_id: "jspwts36h1os",
                 contentful_environment: "master",
-                contentful_entry_id: "unexpected-contentful-question-type",
-                content_model: "question",
+                contentful_entry_id: "unexpected-contentful-question_types-type",
+                content_model: "question_types",
                 step_type: "telepathy",
-                allowed_content_models: "question, statement",
+                allowed_content_models: "question_types, statement",
                 allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
           .and_call_original
         expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
@@ -202,7 +202,7 @@ RSpec.describe CreateStep do
     end
 
     context "when the step has validation criteria" do
-      let(:fixture) { "single-date-in-past-question" }
+      let(:fixture) { "single-date-in-past-question_types" }
 
       it "creates a step with the criteria" do
         step = service.call

@@ -17,7 +17,7 @@ RSpec.feature "Toggling additional steps" do
         create(:step, :short_text,
                contentful_id: "456",
                order: 2,
-               title: "question?",
+               title: "question_types?",
                hidden: true,
                task: step.task)
 
@@ -26,10 +26,10 @@ RSpec.feature "Toggling additional steps" do
       end
 
       it "changes the state badge" do
-        # enter task and be taken to additional step question
+        # enter task and be taken to additional step question_types
         click_on "Task title"
 
-        # answer question revealing additional steps
+        # answer question_types revealing additional steps
         choose "yes"
         click_continue
 
@@ -40,12 +40,12 @@ RSpec.feature "Toggling additional steps" do
         # acknowledge the statement
         click_continue
 
-        # FIXME: continue to newly revealed question step
-        # expect(find("label.govuk-label--l")).to have_text "question?"
+        # FIXME: continue to newly revealed question_types step
+        # expect(find("label.govuk-label--l")).to have_text "question_types?"
 
         # list of steps
         expect(page).to have_text "statement!"
-        expect(page).to have_text "question?"
+        expect(page).to have_text "question_types?"
 
         # go back
         click_on "Return to task list"
@@ -70,38 +70,38 @@ RSpec.feature "Toggling additional steps" do
   end
 end
 
-# context "when Contentful entry includes a 'show additional question' rule" do
-#     scenario "an additional question is shown" do
-#       start_journey_from_category(category: "show-one-additional-question.json")
+# context "when Contentful entry includes a 'show additional question_types' rule" do
+#     scenario "an additional question_types is shown" do
+#       start_journey_from_category(category: "show-one-additional-question_types.json")
 #       click_first_link_in_section_list
 
 #       choose "School expert"
 #       click_continue
 
-#       # This question should be made visible after the previous step
-#       click_on "Hidden field with additional question task"
+#       # This question_types should be made visible after the previous step
+#       click_on "Hidden field with additional question_types task"
 #       choose "Red"
 #       click_continue
 
-#       # This question should be made visible after the previous step
+#       # This question_types should be made visible after the previous step
 #       click_on "Hidden field task"
 #       choose "School expert"
 #       click_continue
 
-#       # Edit the first question to remove the chain of hidden questions
-#       click_on "One additional question task"
+#       # Edit the first question_types to remove the chain of hidden questions
+#       click_on "One additional question_types task"
 #       choose "None"
 #       click_update
 
-#       expect(page).not_to have_content "Hidden field with additional question task"
+#       expect(page).not_to have_content "Hidden field with additional question_types task"
 #       expect(page).not_to have_content "Hidden field task"
 
-#       # Edit the first question to add back the full chain of hidden questions
-#       click_on "One additional question task"
+#       # Edit the first question_types to add back the full chain of hidden questions
+#       click_on "One additional question_types task"
 #       choose "School expert"
 #       click_update
 
-#       expect(page).to have_content "Hidden field with additional question task"
+#       expect(page).to have_content "Hidden field with additional question_types task"
 #       expect(page).to have_content "Hidden field task"
 #     end
 #   end

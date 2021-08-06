@@ -10,7 +10,7 @@ RSpec.feature "Users can edit their answers" do
     journey.update!(user: user)
   end
 
-  context "when the question is short_text" do
+  context "when the question_types is short_text" do
     let(:answer) { create(:short_text_answer, response: "answer") }
 
     scenario "The edited answer is saved" do
@@ -23,7 +23,7 @@ RSpec.feature "Users can edit their answers" do
     end
   end
 
-  context "when the question is single_date" do
+  context "when the question_types is single_date" do
     let(:answer) { create(:single_date_answer, response: 1.year.ago) }
 
     scenario "The edited answer is saved" do
@@ -40,7 +40,7 @@ RSpec.feature "Users can edit their answers" do
     end
   end
 
-  context "when the question is checkbox_answers" do
+  context "when the question_types is checkbox_answers" do
     let(:answer) { create(:checkbox_answers, response: ["Breakfast", "Lunch", ""]) }
 
     scenario "The edited answer is saved" do

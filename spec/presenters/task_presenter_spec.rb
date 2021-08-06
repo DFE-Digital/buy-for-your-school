@@ -94,7 +94,7 @@ RSpec.describe TaskPresenter do
       end
     end
 
-    context "when a question remains unanswered" do
+    context "when a question_types remains unanswered" do
       it "returns false" do
         task = create(:task, :with_steps)
         presenter = described_class.new(task)
@@ -105,7 +105,7 @@ RSpec.describe TaskPresenter do
 
   describe "#status_id" do
     it "returns the uuid appended by status" do
-      step = create(:step, :currency, contentful_model: "question")
+      step = create(:step, :currency, contentful_model: "question_types")
       presenter = described_class.new(step)
       expect(presenter.status_id).to match(/[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}-status/)
     end

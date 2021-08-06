@@ -1,12 +1,12 @@
 RSpec.feature "Content Designers can preview a journey step" do
   before do
     stub_contentful_entry(
-      entry_id: "radio-question",
-      fixture_filename: "steps/radio-question.json",
+      entry_id: "radio-question_types",
+      fixture_filename: "steps/radio-question_types.json",
     )
 
     user_is_signed_in
-    visit "/preview/entries/radio-question"
+    visit "/preview/entries/radio-question_types"
   end
 
   scenario "the appropriate step is displayed" do

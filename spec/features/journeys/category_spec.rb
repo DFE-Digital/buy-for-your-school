@@ -17,7 +17,7 @@ RSpec.feature "A journey page has" do
   end
 
   context "when the category is 'catering'" do
-    let(:fixture) { "radio-question" }
+    let(:fixture) { "radio-question_types" }
 
     specify "page title" do
       expect(page.title).to have_text "Catering"
@@ -30,7 +30,7 @@ RSpec.feature "A journey page has" do
   end
 
   context "when the category is 'MFDs'" do
-    let(:fixture) { "mfd-radio-question" }
+    let(:fixture) { "mfd-radio-question_types" }
 
     specify "page title" do
       expect(page.title).to have_text "Multi-function devices"

@@ -15,7 +15,7 @@ RSpec.describe "Contentful Caching", type: :request do
     # TODO: revise this spec and understand the todos below
     it "checks the Redis cache instead of making an external request" do
       # TODO: In reality we do not cache categories, but should
-      raw_category_response = File.read(Rails.root.join("spec/fixtures/contentful/001-categories/radio-question.json"))
+      raw_category_response = File.read(Rails.root.join("spec/fixtures/contentful/001-categories/radio-question_types.json"))
       RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:contentful-category-entry", JSON.dump(raw_category_response))
 
       # TODO: In reality we do not cache sections, but should
@@ -25,13 +25,13 @@ RSpec.describe "Contentful Caching", type: :request do
       raw_step_response = File.read(Rails.root.join("spec/fixtures/contentful/003-tasks/radio-task.json"))
       RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-task", JSON.dump(raw_step_response))
 
-      raw_step_response = File.read(Rails.root.join("spec/fixtures/contentful/004-steps/radio-question.json"))
-      RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question", JSON.dump(raw_step_response))
+      raw_step_response = File.read(Rails.root.join("spec/fixtures/contentful/004-steps/radio-question_types.json"))
+      RedisCache.redis.set("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question_types", JSON.dump(raw_step_response))
 
       expect_any_instance_of(Contentful::Client).not_to receive(:entry)
 
       contentful_category = stub_contentful_category(
-        fixture_filename: "radio-question.json",
+        fixture_filename: "radio-question_types.json",
       )
       category = persist_category(contentful_category)
 
@@ -39,37 +39,37 @@ RSpec.describe "Contentful Caching", type: :request do
 
       expect(response).to have_http_status(:found)
 
-      RedisCache.redis.del("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question")
+      RedisCache.redis.del("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question_types")
     end
 
     it "stores the external contentful response in the cache" do
       contentful_category = stub_contentful_category(
-        fixture_filename: "radio-question.json",
+        fixture_filename: "radio-question_types.json",
       )
       category = persist_category(contentful_category)
 
       post journeys_path, params: { category_id: category.id }
 
-      expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question"))
-        .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\"")
+      expect(RedisCache.redis.get("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question_types"))
+        .to eq("\"{\\\"sys\\\":{\\\"space\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Space\\\",\\\"id\\\":\\\"jspwts36h1os\\\"}},\\\"id\\\":\\\"radio-question_types\\\",\\\"type\\\":\\\"Entry\\\",\\\"createdAt\\\":\\\"2020-09-07T10:56:40.585Z\\\",\\\"updatedAt\\\":\\\"2020-09-14T22:16:54.633Z\\\",\\\"environment\\\":{\\\"sys\\\":{\\\"id\\\":\\\"master\\\",\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"Environment\\\"}},\\\"revision\\\":7,\\\"contentType\\\":{\\\"sys\\\":{\\\"type\\\":\\\"Link\\\",\\\"linkType\\\":\\\"ContentType\\\",\\\"id\\\":\\\"question_types\\\"}},\\\"locale\\\":\\\"en-US\\\"},\\\"fields\\\":{\\\"slug\\\":\\\"/which-service\\\",\\\"title\\\":\\\"Which service do you need?\\\",\\\"helpText\\\":\\\"Tell us which service you need.\\\",\\\"type\\\":\\\"radios\\\",\\\"extendedOptions\\\":[{\\\"value\\\":\\\"Catering\\\"},{\\\"value\\\":\\\"Cleaning\\\"}],\\\"alwaysShowTheUser\\\":true}}\"")
 
-      RedisCache.redis.del("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question")
+      RedisCache.redis.del("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question_types")
     end
 
     it "sets a TTL to 72 hours by default" do
       contentful_category = stub_contentful_category(
-        fixture_filename: "radio-question.json",
+        fixture_filename: "radio-question_types.json",
       )
       category = persist_category(contentful_category)
 
       freeze_time do
         post journeys_path, params: { category_id: category.id }
 
-        expect(RedisCache.redis.ttl("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question"))
+        expect(RedisCache.redis.ttl("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question_types"))
           .to eq(60 * 60 * 72)
       end
 
-      RedisCache.redis.del("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question")
+      RedisCache.redis.del("#{Cache::ENTRY_CACHE_KEY_PREFIX}:radio-question_types")
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe "Contentful Caching", type: :request do
 
     it "does not interact with the redis cache" do
       contentful_category = stub_contentful_category(
-        fixture_filename: "radio-question.json",
+        fixture_filename: "radio-question_types.json",
       )
       category = persist_category(contentful_category)
 
