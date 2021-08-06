@@ -1,68 +1,90 @@
-require "rails_helper"
-
+# CMS: CreateJourney deserves to be tested with a complex real-world scenario fixture
+# TODO: expand on category-peter.json to mirror the complexity in shared context factories
 RSpec.describe CreateJourney do
+  subject(:service) { described_class.new(category: category, user: user) }
+
+  let(:category) do
+    build(:category,
+          title: "Complex Category",
+          contentful_id: "category-peter") # contentful_id must match the stubbed fixture
+  end
+
+  let(:journey) { Journey.last }
   let(:user) { build(:user) }
-  let(:category) { build(:category, contentful_id: "contentful-category-entry") }
 
   before do
-    stub_contentful_category(fixture_filename: "#{fixture}.json")
+    # spec/fixtures/contentful/001-categories/category-peter.json
+    stub_contentful_category(fixture_filename: "category-peter.json")
+
+    service.call
   end
 
   describe "#call" do
-    let(:fixture) { "category-with-no-steps" }
-
     it "creates a new journey" do
-      expect {
-        described_class.new(category: category, user: user).call
-      }.to change(Journey, :count).by(1)
-
-      last_journey = Journey.last
-      expect(last_journey.category.title).to eql "category title"
-      expect(last_journey.category.contentful_id).to eql "contentful-category-entry"
+      expect { service.call }.to change(Journey, :count).by 1
+      expect(Journey.count).to be 2
     end
 
-    it "associates the new journey with the given user" do
-      described_class.new(category: category, user: user).call
-      expect(Journey.last.user).to eq user
+    it "associates the journey with a category" do
+      expect(journey.category.contentful_id).to eql "category-peter"
+      expect(journey.category.title).to eql "Complex Category"
     end
 
-    it "sets started to true (until questions have been answered)" do
-      described_class.new(category: category, user: user).call
-      expect(Journey.last.started).to be true
+    it "associates the journey with a user" do
+      expect(journey.user).to eq user
     end
 
-    it "sets updated_at to now" do
-      travel_to Time.zone.local(2004, 11, 24, 1, 4, 44)
-      described_class.new(category: category, user: user).call
-      expect(Journey.last.updated_at).to eq Time.zone.now
+    it "creates associated sections in order" do
+      expect(journey.sections.count).to be 3
+
+      # spec/fixtures/contentful/002-sections/section-1-peter.json
+      expect(journey.sections[0].contentful_id).to eql "section-1-peter"
+      expect(journey.sections[0].order).to be 0
+
+      # spec/fixtures/contentful/002-sections/section-2-peter.json
+      expect(journey.sections[1].contentful_id).to eql "section-2-peter"
+      expect(journey.sections[1].order).to be 1
+
+      # spec/fixtures/contentful/002-sections/section-3-peter.json
+      expect(journey.sections[2].contentful_id).to eql "section-3-peter"
+      expect(journey.sections[2].order).to be 2
     end
 
-    # TODO: move liquid template specs to the Category
-    describe "WIP multiple categories" do
-      let(:fixture) { "category-with-liquid-template" }
-
-      it "stores a copy of the Liquid template" do
-        described_class.new(category: category, user: user).call
-
-        # From fixtures
-        # .to eql("<article id='specification'><h1>Liquid {{templating}}</h1></article>")
-        expect(Journey.last.category.liquid_template)
-          .to eql("Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}") # from factory
-      end
-
-      # TODO: test when a journey cannot be saved
-      # context "when the journey cannot be saved" do
-      #   it "raises an error" do
-      #     stub_contentful_category(
-      #       fixture_filename: "category-with-no-title.json",
-      #       stub_sections: true,
-      #     )
-      #     # Force a validation error by not providing an invalid category ID
-      #     expect {
-      #       described_class.new(category: category, user: user).call
-      #     }.to raise_error(ActiveRecord::RecordInvalid)
-      #   end
-      # end
+    it "creates all associated tasks" do
+      expect(journey.tasks.count).to be 9
+      # spec/fixtures/contentful/002-tasks/every-question-type-task.json
+      expect(journey.tasks[0].contentful_id).to eql "every-question-type-task"
     end
+
+    it "creates associated tasks in order" do
+      expect(journey.tasks[0].order).to be 0
+      expect(journey.tasks[1].order).to be 0
+      expect(journey.tasks[2].order).to be 0
+      expect(journey.tasks[3].order).to be 1
+      expect(journey.tasks[4].order).to be 1
+      expect(journey.tasks[5].order).to be 1
+
+      expect(journey.sections[0].tasks[0].order).to be 0
+      expect(journey.sections[0].tasks[1].order).to be 1
+      expect(journey.sections[0].tasks[2].order).to be 2
+      expect(journey.sections[1].tasks[0].order).to be 0
+      expect(journey.sections[1].tasks[1].order).to be 1
+      expect(journey.sections[1].tasks[2].order).to be 2
+    end
+
+    # 3 sections * 3 tasks * 7 steps = 63
+    it "creates associated steps in order" do
+      expect(journey.steps.count).to be 63
+    end
+
+    # TODO: this test is applicable to the yet to be created CreateCategory service object
+    # context "when the category cannot be saved" do
+    #   # Force a validation error by not providing an invalid category ID
+    #   let(:fixture) { "category-with-no-title" }
+
+    #   it "raises an error" do
+    #     expect { service.call }.to raise_error ActiveRecord::RecordInvalid
+    #   end
+    # end
   end
 end

@@ -17,9 +17,15 @@ The format is based on [Keep a Changelog 1.0.0].
 - add additional developer tools to optional `Brewfile`
 - remove unused `GetAllContentfulEntries` service object
 - change route to destroy a session to be DELETE
+- separate out concern for stale journeys and their removal `FlagStaleJourneysJob`,
+  currently no-op until approved
+- clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
+  no-op until approved
+
 
 **Steps**
-- implement __interrupt pattern__ which introduces a step that is not semantically a question but a statement
+- implement __interrupt pattern__ which introduces a step that is not semantically
+  a question but a statement
 - remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
 - add custom answer validation logic which can be controlled in Contentful
 - fix progression to the next incomplete task
@@ -41,11 +47,13 @@ The format is based on [Keep a Changelog 1.0.0].
 - allow user to (soft) delete a specification
 
 **Preview functionality**
-- previously this depended upon a dedicated environment which used the main branch thereby preventing preview functionality in staging
+- previously this depended upon a dedicated environment which used the main branch
+  thereby preventing preview functionality in staging
 - a memoised client for both Contentful delivery and preview is available for any environment
 - `Content::Connector` instantiates both clients
 - `Content::Client` is used internally as an interface to the Contentful ruby gem
-- `APP_ENV_{ENV}_CONTENTFUL_ACCESS_TOKEN` is replaced by `APP_ENV_{ENV}_CONTENTFUL_DELIVERY_TOKEN` and `APP_ENV_{ENV}_CONTENTFUL_PREVIEW_TOKEN`
+- `APP_ENV_{ENV}_CONTENTFUL_ACCESS_TOKEN` is replaced by
+  `APP_ENV_{ENV}_CONTENTFUL_DELIVERY_TOKEN` and `APP_ENV_{ENV}_CONTENTFUL_PREVIEW_TOKEN`
 
 ## Diary Studies using the live environment
 

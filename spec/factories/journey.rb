@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :journey do
-    started { true } # TODO: default journey factory to started=false
+    started { false }
     state { :initial }
 
     association :user, factory: :user
