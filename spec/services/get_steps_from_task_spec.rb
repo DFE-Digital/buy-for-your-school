@@ -16,7 +16,7 @@ RSpec.describe GetStepsFromTask do
     it "returns the list of entry objects referenced by the step list" do
       result = service.call
       expect(result).to be_kind_of Array
-      expect(result.first.id).to eq "checkboxes-question_types"
+      expect(result.first.id).to eq "checkboxes-question"
     end
 
     context "when the same entry is found twice" do
@@ -28,10 +28,10 @@ RSpec.describe GetStepsFromTask do
                 contentful_url: "contentful api_url",
                 contentful_space_id: "contentful space",
                 contentful_environment: "contentful environment",
-                contentful_entry_id: "radio-question_types")
+                contentful_entry_id: "radio-question")
           .and_call_original
 
-        expect { service.call }.to raise_error GetStepsFromTask::RepeatEntryDetected, "radio-question_types"
+        expect { service.call }.to raise_error GetStepsFromTask::RepeatEntryDetected, "radio-question"
       end
     end
   end

@@ -5,8 +5,8 @@ module ContentfulHelpers
   # TODO: replace "contentful_fixture_filename"/"fixture_filename" with the more succinct "fixture" param
   #
   def stub_contentful_entry(
-    entry_id: "radio-question_types",
-    fixture_filename: "radio-question_types-example.json",
+    entry_id: "radio-question",
+    fixture_filename: "radio-question-example.json",
     client: stub_client
   )
     contentful_response = fake_contentful_step(contentful_fixture_filename: fixture_filename)

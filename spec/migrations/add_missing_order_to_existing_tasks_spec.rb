@@ -15,7 +15,7 @@ RSpec.describe AddMissingOrderToExistingTasks do
 
       # NB: task contentful_ids need to match the stubbed section fixtures tasks array
       create(:task, title: "second", order: nil, section: section, contentful_id: "checkboxes-and-radio-task")
-      create(:task, title: "third", order: nil, section: section, contentful_id: "every-question_types-type-task")
+      create(:task, title: "third", order: nil, section: section, contentful_id: "every-question-type-task")
       create(:task, title: "first", order: nil, section: section, contentful_id: "checkboxes-task")
     end
 

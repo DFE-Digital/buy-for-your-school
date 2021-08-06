@@ -117,7 +117,7 @@ RSpec.feature "Users can view the task list" do
   end
 
   scenario "user can navigate back to the list of journeys from a task list" do
-    start_journey_from_category(category: "extended-radio-question_types.json")
+    start_journey_from_category(category: "extended-radio-question.json")
 
     click_on(I18n.t("generic.button.back"))
 
@@ -125,7 +125,7 @@ RSpec.feature "Users can view the task list" do
   end
 
   scenario "user can navigate back to the dashboard from a step" do
-    start_journey_from_category(category: "extended-radio-question_types.json")
+    start_journey_from_category(category: "extended-radio-question.json")
 
     click_on(I18n.t("generic.button.back"))
 
@@ -147,7 +147,7 @@ RSpec.feature "Users can view the task list" do
   end
 
   context "when a task has more than one step" do
-    scenario "user can navigate back to the task view from a question_types" do
+    scenario "user can navigate back to the task view from a question" do
       start_journey_from_category(category: "section-with-multiple-tasks.json")
 
       within(".app-task-list") do
@@ -204,7 +204,7 @@ RSpec.feature "Users can view the task list" do
       #     tasks
       #       1. checkboxes-task             "Task with a single step"
       #       2. checkboxes-and-radio-task   "Task with multiple steps"
-      #       3. every-question_types-type-task    "Task containing every type of step"
+      #       3. every-question-type-task    "Task containing every type of step"
       #
       start_journey_from_category(category: "section-with-multiple-tasks.json")
 
@@ -227,7 +227,7 @@ RSpec.feature "Users can view the task list" do
 
       click_on "Continue to the next task"
 
-      # task 1 step 3 long-text-question_types
+      # task 1 step 3 long-text-question
       expect(page).to have_content "Briefly describe what you are looking to procure"
       click_on "Back"
       expect(page).to have_content "Task containing every type of step"
@@ -325,7 +325,7 @@ RSpec.feature "Users can view the task list" do
 
     context "when that step becomes visible" do
       it "appears in the order defined in Contentful rather than at the end" do
-        start_journey_from_category(category: "show-one-additional-question_types-in-order.json")
+        start_journey_from_category(category: "show-one-additional-question-in-order.json")
 
         # Simulate the bug by changing the created_at to a time that incorrectly
         # puts the hidden record at the bottom of the list
@@ -333,7 +333,7 @@ RSpec.feature "Users can view the task list" do
         Step.find_by(title: "What email address did you use?").update!(created_at: 2.days.ago)
         Step.find_by(title: "What colour is the sky?").update!(created_at: 1.day.ago)
 
-        click_on("One additional question_types task")
+        click_on("One additional question task")
         click_on(I18n.t("generic.button.back"))
 
         steps = find_all(".govuk-summary-list__row")
@@ -343,12 +343,12 @@ RSpec.feature "Users can view the task list" do
           expect(steps[1]).to have_content("What email address did you use?")
         end
 
-        # Answer the first question_types to unlock "What colour is the sky?"
+        # Answer the first question to unlock "What colour is the sky?"
         first(".govuk-summary-list__row").click_on(I18n.t("generic.button.change_answer"))
         choose("School expert")
         click_on("Continue")
 
-        # We get taken to the next question_types so we go back to the task page
+        # We get taken to the next question so we go back to the task page
         click_on(I18n.t("generic.button.back"))
 
         # Check that "What colour is in the sky added to the correct place in the list"

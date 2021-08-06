@@ -3,7 +3,7 @@ RSpec.feature "DfE Sign-in" do
   let(:dsi_uid) { user.dfe_sign_in_uid }
 
   before do
-    contentful_category = stub_contentful_category(fixture_filename: "radio-question_types.json")
+    contentful_category = stub_contentful_category(fixture_filename: "radio-question.json")
     category = persist_category(contentful_category)
     user_exists_in_dfe_sign_in(dsi_uid: dsi_uid)
 

@@ -35,7 +35,7 @@ RSpec.feature "Users can see their catering specification" do
 
   context "when the journey has not yet been completed" do
     scenario "includes an incomple warning" do
-      # Omit answering a question_types to simulate an incomplete spec
+      # Omit answering a question to simulate an incomplete spec
       click_view
 
       warning_html = I18n.t("journey.specification.download.warning.incomplete")

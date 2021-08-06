@@ -10,7 +10,7 @@ RSpec.describe StepPresenter do
       end
     end
 
-    describe "#question_types?" do
+    describe "#question?" do
       it "returns false" do
         step = build(:step, :statement)
         presenter = described_class.new(step)
@@ -19,7 +19,7 @@ RSpec.describe StepPresenter do
     end
   end
 
-  context "when the contentful model is 'question_types'" do
+  context "when the contentful model is 'question'" do
     describe "#statement?" do
       it "returns false" do
         step = build(:step, :radio)
@@ -28,7 +28,7 @@ RSpec.describe StepPresenter do
       end
     end
 
-    describe "#question_types?" do
+    describe "#question?" do
       it "returns true" do
         step = build(:step, :radio)
         presenter = described_class.new(step)

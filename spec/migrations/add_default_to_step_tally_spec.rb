@@ -8,7 +8,7 @@ RSpec.describe AddDefaultToStepTally do
 
   context "when there are broken tasks" do
     before do
-      section = create(:section, contentful_id: "checkboxes-question_types")
+      section = create(:section, contentful_id: "checkboxes-question")
 
       # 1 of 3 steps hidden
       task_1 = create(:task, section: section, title: "Task 1")

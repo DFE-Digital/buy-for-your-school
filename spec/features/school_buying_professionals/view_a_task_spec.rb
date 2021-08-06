@@ -162,7 +162,7 @@ RSpec.feature "Users can view a task" do
         click_on "Task with visible and hidden steps"
       end
 
-      expect(page).not_to have_content "You should NOT be able to see this question_types?"
+      expect(page).not_to have_content "You should NOT be able to see this question?"
       expect(page).to have_content "Which service do you need?"
     end
 

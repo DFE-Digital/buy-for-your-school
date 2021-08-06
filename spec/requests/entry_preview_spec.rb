@@ -7,11 +7,11 @@ RSpec.describe "Entry previews", type: :request do
     user_is_signed_in(user: user)
 
     stub_contentful_entry(
-      entry_id: "short-text-question_types",
-      fixture_filename: "steps/short-text-question_types.json",
+      entry_id: "short-text-question",
+      fixture_filename: "steps/short-text-question.json",
     )
 
-    get "/preview/entries/short-text-question_types"
+    get "/preview/entries/short-text-question"
   end
 
   it "builds a disposable associations for the step" do
@@ -33,11 +33,11 @@ RSpec.describe "Entry previews", type: :request do
   context "when multiple previews are made" do
     before do
       stub_contentful_entry(
-        entry_id: "currency-question_types",
-        fixture_filename: "steps/currency-question_types.json",
+        entry_id: "currency-question",
+        fixture_filename: "steps/currency-question.json",
       )
 
-      get "/preview/entries/currency-question_types"
+      get "/preview/entries/currency-question"
     end
 
     it "reuses the journey for all previewed steps" do

@@ -169,7 +169,7 @@ RSpec.describe Task, type: :model do
       expect(task.all_questions_answered?).to be(false)
     end
 
-    context "when there is a hidden question_types without an answer" do
+    context "when there is a hidden question without an answer" do
       it "ignores it and returns true" do
         create(:step, :radio, task: task, hidden: true)
 

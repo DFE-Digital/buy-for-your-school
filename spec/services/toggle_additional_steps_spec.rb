@@ -144,7 +144,7 @@ RSpec.describe ToggleAdditionalSteps do
         end
       end
 
-      context "when a branching question_types has multiple branches itself" do
+      context "when a branching question has multiple branches itself" do
         it "hides itself and all connected branches" do
           step = create(:step,
                         :radio,
@@ -189,7 +189,7 @@ RSpec.describe ToggleAdditionalSteps do
         end
       end
 
-      context "when a branching question_types is shown based on more than on matching answer" do
+      context "when a branching question is shown based on more than on matching answer" do
         it "continues to show the next step (rather than hiding it again when it doesn't match the second rule)" do
           step = create(:step,
                         :radio,

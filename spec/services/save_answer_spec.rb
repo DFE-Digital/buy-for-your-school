@@ -22,7 +22,7 @@ RSpec.describe SaveAnswer do
       described_class.new(answer: answer).call(params: {})
     end
 
-    context "when the step is a checkbox question_types" do
+    context "when the step is a checkbox question" do
       it "updates the answer with the checkbox_params" do
         answer = create(:checkbox_answers)
         params = ActionController::Parameters.new(response: %w[A B]).permit!
@@ -34,7 +34,7 @@ RSpec.describe SaveAnswer do
       end
     end
 
-    context "when the step is a date question_types" do
+    context "when the step is a date question" do
       it "updates the answer with the date_params" do
         answer = build(:single_date_answer, response: nil)
         date = Date.new(2000, 1, 29)

@@ -21,12 +21,12 @@ RSpec.feature "Categories page" do
   context "when designers have been previewing" do
     specify "the preview category is not rendered" do
       stub_contentful_entry(
-        entry_id: "radio-question_types",
-        fixture_filename: "steps/radio-question_types.json",
+        entry_id: "radio-question",
+        fixture_filename: "steps/radio-question.json",
       )
 
       user_is_signed_in
-      visit "/preview/entries/radio-question_types"
+      visit "/preview/entries/radio-question"
       visit "/categories"
       expect(find("h1.govuk-heading-l")).to have_text "No categories found"
     end
@@ -37,7 +37,7 @@ RSpec.feature "Categories page" do
     let(:created_at) { Time.zone.local(2021, 2, 15, 12, 0, 0) }
 
     before do
-      stub_multiple_contentful_categories(category_fixtures: ["mfd-radio-question_types.json"])
+      stub_multiple_contentful_categories(category_fixtures: ["mfd-radio-question.json"])
       user_is_signed_in(user: user)
     end
 
@@ -49,7 +49,7 @@ RSpec.feature "Categories page" do
         expect(Category.count).to eq 1
 
         within "div.govuk-form-group" do
-          find(:radio_button, "Multi-function devices") # from mfd-radio-question_types.json
+          find(:radio_button, "Multi-function devices") # from mfd-radio-question.json
         end
       end
     end
