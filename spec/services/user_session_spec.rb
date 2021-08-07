@@ -1,5 +1,9 @@
-RSpec.describe UserSession, type: :model do
-  subject(:user_session) { described_class.new(session: session) }
+RSpec.describe UserSession do
+  subject(:user_session) do
+    described_class.new(session: session, redirect_url: redirect_url)
+  end
+
+  let(:redirect_url) { "https://ghbs-self-serve.app:123/session/end" }
 
   let(:session) { instance_double(ActionDispatch::Request::Session) }
 
@@ -37,12 +41,6 @@ RSpec.describe UserSession, type: :model do
     end
   end
 
-  describe "#redirect_url" do
-    it "returns the application root uri" do
-      expect(user_session.redirect_url).to eql "http://localhost:3000/"
-    end
-  end
-
   describe "#sign_out_url" do
     around do |example|
       ClimateControl.modify(DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443") do
@@ -52,13 +50,13 @@ RSpec.describe UserSession, type: :model do
 
     it "returns a URL that can be sent to DfE Sign-in to sign the user out of their service" do
       allow(session).to receive(:[]).with(:dfe_sign_in_sign_out_token).and_return("a-long-token")
-      expect(user_session.sign_out_url).to eq("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=a-long-token&post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F")
+      expect(user_session.sign_out_url).to eq("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=a-long-token&post_logout_redirect_uri=https%3A%2F%2Fghbs-self-serve.app%3A123%2Fsession%2Fend")
     end
 
     context "when the user has no sign out token" do
-      it "redirects the user to the root uri" do
+      it "returns nil" do
         allow(session).to receive(:[]).with(:dfe_sign_in_sign_out_token).and_return(nil)
-        expect(user_session.sign_out_url).to eql "http://localhost:3000/"
+        expect(user_session.sign_out_url).to be_nil
       end
     end
   end

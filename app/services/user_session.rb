@@ -3,9 +3,11 @@
 # @see SessionsController
 class UserSession
   # @param session [ActionDispatch::Request::Session]
+  # @param redirect_url [String] sessions#destroy
   #
-  def initialize(session:)
+  def initialize(session:, redirect_url:)
     @session = session
+    @redirect_url = redirect_url
   end
 
   # Stores user sign-in information in the session.
@@ -33,23 +35,18 @@ class UserSession
     @session[:dfe_sign_in_sign_out_token].present?
   end
 
-  # Redirect to the homepage after ending the issued session
+  # URL to end OpenID Connect issuer session
   #
-  # @return [String]
+  # @return [String, nil]
   def sign_out_url
-    return redirect_url unless should_be_signed_out_of_dsi?
+    return unless should_be_signed_out_of_dsi?
 
     query = {
       id_token_hint: @session[:dfe_sign_in_sign_out_token],
-      post_logout_redirect_uri: redirect_url,
+      post_logout_redirect_uri: @redirect_url,
     }
 
     "#{ENV.fetch('DFE_SIGN_IN_ISSUER')}/session/end?#{query.to_query}"
-  end
-
-  # @return [String]
-  def redirect_url
-    Rails.application.routes.url_helpers.root_url
   end
 
   # Sign out concurrent logins

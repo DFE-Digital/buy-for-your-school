@@ -69,23 +69,23 @@ RSpec.describe "Authentication", type: :request do
   end
 
   describe "Sign out" do
-    it "asks UserSession to delete the user's session data" do
+    it "tells UserSession to delete session data" do
       user_exists_in_dfe_sign_in
       expect_any_instance_of(UserSession).to receive(:delete!)
 
       delete "/auth/dfe/signout"
 
-      expect(response).to redirect_to "http://localhost:3000/"
+      expect(response).to redirect_to "/"
     end
 
-    context "when there is no sign out token (they are already signed out from the applications point of view)" do
+    context "when there is no sign out token" do
       it "redirects the user to the root path" do
         user_exists_in_dfe_sign_in
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(false)
 
         delete "/auth/dfe/signout"
 
-        expect(response).to redirect_to "http://localhost:3000/"
+        expect(response).to redirect_to "/"
       end
     end
 
@@ -96,13 +96,13 @@ RSpec.describe "Authentication", type: :request do
         end
       end
 
-      it "redirects to DSI with the users token" do
+      it "redirects to the issuer with token and return redirect params" do
         user_exists_in_dfe_sign_in
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(true)
 
         delete "/auth/dfe/signout"
 
-        expect(response).to redirect_to("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=&post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F")
+        expect(response).to redirect_to "https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=&post_logout_redirect_uri=http%3A%2F%2Fwww.example.com%2Fauth%2Fdfe%2Fsignout"
       end
     end
   end

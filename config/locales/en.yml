@@ -21,7 +21,9 @@ en:
     footer:
       message:
         For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
-
+    session:
+      failure: Sign in failed unexpectedly, please try again.
+      destroy: You have been signed out.
   planning:
     start_page:
       page_title: "Catering services"

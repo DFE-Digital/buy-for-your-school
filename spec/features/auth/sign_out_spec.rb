@@ -18,7 +18,9 @@ RSpec.feature "Sign out" do
     expect(page.driver.request.session.keys).to be_empty
     expect(page).to have_current_path "/"
 
-    # FIXME: why is the signout link still visible?
+    expect(find("h3.govuk-notification-banner__heading")).to have_text "You have been signed out."
+
+    # FIXME: why is the signout link still visible in this spec?
     # within("header") do
     #   expect(page).not_to have_link "Sign out", href: "/auth/dfe/signout", class: "govuk-header__link"
     # end

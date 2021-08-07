@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
 
     # DSI: users would need to signout manually to proceed otherwise
     if session.destroy
-      redirect_to root_path, notice: "Sign in failed unexpectedly, please try again"
+      redirect_to root_path, notice: I18n.t("banner.session.failure")
     end
   end
 
@@ -26,15 +26,20 @@ class SessionsController < ApplicationController
   #
   # @see UserSession
   def destroy
-    target = user_session.sign_out_url.dup
+    issuer_url = user_session.sign_out_url.dup
     user_session.delete!
-    redirect_to target
+
+    if issuer_url
+      redirect_to issuer_url
+    else
+      redirect_to root_path, notice: I18n.t("banner.session.destroy")
+    end
   end
 
 private
 
   def user_session
-    UserSession.new(session: session)
+    UserSession.new(session: session, redirect_url: issuer_redirect_url)
   end
 
   def auth_hash
