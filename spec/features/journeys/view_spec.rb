@@ -1,4 +1,4 @@
-RSpec.feature "Users can see their catering specification" do
+RSpec.feature "Users can see their specification" do
   before { user_is_signed_in }
 
   scenario "HTML" do
