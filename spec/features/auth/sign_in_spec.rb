@@ -63,7 +63,7 @@ RSpec.feature "DfE Sign-in" do
       expect(page.driver.request.session.keys).to be_empty
       expect(find("h3.govuk-notification-banner__heading")).to have_text "Sign in failed unexpectedly, please try again."
 
-      # If the session can not be cleared
+      # If the session cannot be cleared
       # errors.sign_in.unexpected_failure.page_title
       # expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
       # errors.sign_in.unexpected_failure.page_body
