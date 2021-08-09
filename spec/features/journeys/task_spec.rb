@@ -32,7 +32,6 @@ RSpec.feature "Tasks" do
     scenario "the user is taken straight to the next question" do
       click_first_link_in_section_list
 
-      # TODO: replace
       journey = Journey.last
       task = journey.sections.first.tasks.first
 
@@ -61,17 +60,17 @@ RSpec.feature "Tasks" do
       click_continue
 
       expect(find("h1.govuk-heading-xl")).to have_text "Task with multiple steps"
-
-      # TODO: regex to match UUID
-      expect(page).to have_current_path(journey_task_url(journey, task))
+      # /journeys/302e58f4-01b3-469a-906e-db6991184699/tasks/46005bbe-1aa2-49bf-b0df-0f027522f50d
+      expect(page).to have_current_path "/journeys/#{journey.id}/tasks/#{task.id}"
     end
   end
 
   context "when a task that has no answers is opened" do
     scenario "takes the user straight to the first question" do
       click_first_link_in_section_list
-      # TODO: regex to match UUID
-      expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+
+      # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
       expect(page).not_to have_content("Task with multiple steps")
       expect(find("label.govuk-radios__label", match: :first)).to have_text "Catering"
     end

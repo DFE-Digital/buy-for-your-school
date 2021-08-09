@@ -21,6 +21,8 @@ RSpec.feature "Steps" do
 
         click_first_link_in_section_list
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
         expect(find_field("answer-response-field").value).to eql("email@example.com")
       end
     end
@@ -31,12 +33,14 @@ RSpec.feature "Steps" do
       scenario "user can answer using free text with multiple lines" do
         click_first_link_in_section_list
 
-        fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\nThey must be able to supply us for 3 years minumum."
+        fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\nThey must be able to supply us for 3 years minimum."
         click_continue
 
         click_first_link_in_section_list
 
-        expect(find_field("answer-response-field").value).to eql("We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum.")
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
+        expect(find_field("answer-response-field").value).to eql("We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minimum.")
       end
     end
 
@@ -44,6 +48,8 @@ RSpec.feature "Steps" do
       let(:fixture) { "statement.json" }
 
       scenario "the statement is not displayed in the task list" do
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(page).not_to have_content("statement-step.json title")
       end
 
@@ -54,6 +60,8 @@ RSpec.feature "Steps" do
 
         visit journey_step_path(journey, step)
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(find("h1.govuk-heading-xl")).to have_text "statement-step.json title"
         within("div.govuk-body") do
           expect(page.html).to include("<h4>Heading 4</h4>")
@@ -75,6 +83,8 @@ RSpec.feature "Steps" do
 
         click_first_link_in_section_list
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
         expect(find_field("answer-response-field").value).to eql("190")
       end
 
@@ -84,6 +94,8 @@ RSpec.feature "Steps" do
         fill_in "answer[response]", with: "foo"
         click_continue
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/answers
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/answers}
         expect(page).to have_content("is not a number")
       end
 
@@ -93,6 +105,8 @@ RSpec.feature "Steps" do
         fill_in "answer[response]", with: "435.65"
         click_continue
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/answers
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/answers}
         expect(page).to have_content("must be an integer")
       end
     end
@@ -108,6 +122,8 @@ RSpec.feature "Steps" do
 
         click_first_link_in_section_list
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
         expect(find_field("answer-response-field").value).to eql("1000.01")
       end
 
@@ -117,6 +133,8 @@ RSpec.feature "Steps" do
         fill_in "answer[response]", with: "one hundred pounds"
         click_continue
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/answers
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/answers}
         expect(page).to have_content("does not accept £ signs or other non numerical characters")
       end
     end
@@ -135,6 +153,8 @@ RSpec.feature "Steps" do
 
         click_first_link_in_section_list
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
         expect(find_field("answer_response_3i").value).to eql("12")
         expect(find_field("answer_response_2i").value).to eql("8")
         expect(find_field("answer_response_1i").value).to eql("2020")
@@ -148,6 +168,9 @@ RSpec.feature "Steps" do
         fill_in "answer[response(1i)]", with: "0"
 
         click_continue
+
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/answers
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/answers}
         expect(page).to have_content("Provide a real date for this answer")
       end
     end
@@ -165,7 +188,8 @@ RSpec.feature "Steps" do
 
         click_first_link_in_section_list
 
-        expect(page).to have_current_path %r{/journeys/.*/steps/.*/edit}
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
         expect(page).to have_checked_field("answer-response-breakfast-field")
         expect(page).to have_checked_field("answer-response-lunch-field")
       end
@@ -173,7 +197,8 @@ RSpec.feature "Steps" do
       scenario "options follow the capitalisation given" do
         click_first_link_in_section_list
 
-        expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(find("div.govuk-checkboxes")).to have_text "Morning break"
       end
 
@@ -202,7 +227,8 @@ RSpec.feature "Steps" do
 
             click_first_link_in_section_list
 
-            expect(page).to have_current_path %r{/journeys/.*/steps/.*/edit}
+            # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+            expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
 
             expect(page).to have_checked_field("Yes")
             expect(find_field("answer-yes-further-information-field").value)
@@ -222,7 +248,9 @@ RSpec.feature "Steps" do
           scenario "a single text field is displayed" do
             click_first_link_in_section_list
             check "Yes"
-            expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+
+            # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+            expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
             expect(page).to have_selector("input#answer-yes-further-information-field")
           end
         end
@@ -235,7 +263,9 @@ RSpec.feature "Steps" do
         scenario "a long text area is displayed" do
           click_first_link_in_section_list
           check "Yes"
-          expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           expect(page).to have_selector("textarea#answer-yes-further-information-field")
         end
       end
@@ -244,7 +274,8 @@ RSpec.feature "Steps" do
         scenario "no extra text field is displayed" do
           click_first_link_in_section_list
 
-          expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           expect(page).not_to have_selector("textarea#answer-yes-further-information-field")
           expect(page).not_to have_selector("input#answer-yes-further-information-field")
         end
@@ -270,6 +301,8 @@ RSpec.feature "Steps" do
 
           click_first_link_in_section_list
 
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
           expect(page).to have_checked_field("Catering")
           expect(find_field("answer-catering-further-information-field").value)
             .to eql("The school needs the kitchen cleaned once a day")
@@ -280,6 +313,9 @@ RSpec.feature "Steps" do
         scenario "a single text field is displayed" do
           click_first_link_in_section_list
           choose "Catering"
+
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           expect(page).to have_selector("input#answer-catering-further-information-field")
         end
       end
@@ -290,6 +326,9 @@ RSpec.feature "Steps" do
         scenario "a long text area is displayed" do
           click_first_link_in_section_list
           choose "Catering"
+
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           expect(page).to have_selector("textarea#answer-catering-further-information-field")
         end
       end
@@ -300,6 +339,8 @@ RSpec.feature "Steps" do
         scenario "no extra text field is displayed" do
           click_first_link_in_section_list
 
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           expect(page).not_to have_selector("textarea#answer-catering-further-information-field")
           expect(page).not_to have_selector("input#answer-catering-further-information-field")
         end
@@ -316,6 +357,8 @@ RSpec.feature "Steps" do
             expect(page).to have_content("or")
           end
 
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           # Check that the "Or" separator appears in the correct position
           expect(page.body.index("Catering") > page.body.index("or")).to eq(true)
           expect(page.body.index("or") < page.body.index("Cleaning")).to eq(true)
@@ -335,6 +378,9 @@ RSpec.feature "Steps" do
         click_continue
 
         # This question should be made visible after the previous step
+
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(page).not_to have_content("What colour is the sky?")
         click_on("Hidden field with additional question task")
         choose("Red")
@@ -370,6 +416,8 @@ RSpec.feature "Steps" do
 
         click_first_link_in_section_list
 
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
         expect(page).not_to have_checked_field("Lunch")
         expect(CheckboxAnswers.last.skipped).to be true
       end
@@ -388,8 +436,10 @@ RSpec.feature "Steps" do
 
           check("Lunch")
           check("Dinner")
-          click_on(I18n.t("generic.button.update"))
+          click_on("Update")
 
+          # /journeys/302e58f4-01b3-469a-906e-db6991184699
+          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
           expect(CheckboxAnswers.last.skipped).to be false
         end
       end
@@ -401,6 +451,7 @@ RSpec.feature "Steps" do
       let(:fixture) { "unexpected-contentful-type.json" }
 
       scenario "returns an error message" do
+        expect(page).to have_current_path "/journeys"
         expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
         expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
       end
@@ -410,6 +461,7 @@ RSpec.feature "Steps" do
       let(:fixture) { "unexpected-contentful-question-type.json" }
 
       scenario "returns an error message" do
+        expect(page).to have_current_path "/journeys"
         expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
         expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
       end
@@ -423,6 +475,7 @@ RSpec.feature "Steps" do
 
         user_signs_in_and_starts_the_journey(category.id)
 
+        expect(page).to have_current_path "/journeys"
         expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
         expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
       end
@@ -436,6 +489,9 @@ RSpec.feature "Steps" do
     context "when a new journey is begun" do
       scenario "records that action in the event log" do
         first_logged_event = ActivityLogItem.first
+
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(first_logged_event.action).to eq("begin_journey")
         expect(first_logged_event.journey_id).to eq(Journey.last.id)
         expect(first_logged_event.user_id).to eq(User.last.id)
@@ -450,6 +506,9 @@ RSpec.feature "Steps" do
         step = Step.last
 
         last_logged_event = ActivityLogItem.last
+
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(last_logged_event.action).to eq("begin_step")
         expect(last_logged_event.journey_id).to eq(Journey.last.id)
         expect(last_logged_event.user_id).to eq(User.last.id)
@@ -470,6 +529,10 @@ RSpec.feature "Steps" do
         visit edit_journey_step_path(journey, step)
 
         last_logged_event = ActivityLogItem.last
+
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
+
         expect(last_logged_event.action).to eq("view_step")
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(User.last.id)
@@ -493,6 +556,9 @@ RSpec.feature "Steps" do
         click_continue
 
         save_answer_logged_event = ActivityLogItem.where(action: "save_answer").first
+
+        # /journeys/302e58f4-01b3-469a-906e-db6991184699
+        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(save_answer_logged_event.journey_id).to eq(journey.id)
         expect(save_answer_logged_event.user_id).to eq(User.last.id)
         expect(save_answer_logged_event.contentful_category_id).to eq("contentful-category-entry")
