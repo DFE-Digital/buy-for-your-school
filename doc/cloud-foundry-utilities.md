@@ -29,11 +29,16 @@ You must already have Cloud Foundry installed, user account setup and be able to
      end
    end
     ```
-3. Access rails console and paste your script (as above, modified)
+   
+3. Enter app directory
    ```
-   cd /srv/app/ then PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails console
+   cd /srv/app/
    ```
-4. The CSV file will be available from the public directory, it's recommended that you delete the file after your have downloaded it.
+4. Access rails console and paste your script (as per example provided in step 2, modified)
+   ```
+   PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails console
+   ```
+5. The CSV file will be available from the public directory, it's recommended that you delete the file after your have downloaded it.
    ```
    rm example_data.csv
    ```
