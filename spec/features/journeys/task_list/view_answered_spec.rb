@@ -14,10 +14,12 @@ RSpec.feature "Users can view the task list" do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
 
+      # /journeys/13848f65-ff88-46a3-8d35-59403a1cdbf2/steps/00966342-5d84-417d-bb78-dfe7383a196f
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
       click_back
 
       # list of steps
+      # /journeys/13848f65-ff88-46a3-8d35-59403a1cdbf2/tasks/8ee45edf-6808-4398-8498-ca8c4ab80e15
       expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       click_on "Continue answering these questions" # task.button.continue
 
@@ -27,6 +29,7 @@ RSpec.feature "Users can view the task list" do
       click_back
 
       # list of steps
+      # /journeys/13848f65-ff88-46a3-8d35-59403a1cdbf2/tasks/8ee45edf-6808-4398-8498-ca8c4ab80e15
       expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       click_on "Continue answering these questions" # task.button.continue
 
@@ -50,6 +53,7 @@ RSpec.feature "Users can view the task list" do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
 
+      # /journeys/4742c871-ba8e-421e-8c6b-234494162410/steps/173f9eaf-e4ac-4826-8f2d-9b122517ee38
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
 
       choose "Catering"
@@ -65,6 +69,7 @@ RSpec.feature "Users can view the task list" do
       click_continue
 
       # list of steps
+      # /journeys/4742c871-ba8e-421e-8c6b-234494162410/tasks/557082fd-62ec-49d5-b863-4335d3fc6c41
       expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       click_on "Continue to the next task" # task.button.next
 
@@ -72,6 +77,7 @@ RSpec.feature "Users can view the task list" do
       expect(page).to have_content "Briefly describe what you are looking to procure"
       click_back
       # list of steps
+      # /journeys/4742c871-ba8e-421e-8c6b-234494162410/tasks/d0048fc2-04b8-4fe4-97fc-7b1e6880b83b
       expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       expect(page).to have_content "Task containing every type of step"
     end
@@ -98,9 +104,11 @@ RSpec.feature "Users can view the task list" do
         click_on "Task with a single step" # > checkboxes_task.json
       end
 
+      # /journeys/3b5753b5-5e4c-41a7-822b-76a2e47ffdd6/steps/e56a179e-d8df-4ed7-8852-acee85db415a
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
       click_back
       # journey page
+      # /journeys/3b5753b5-5e4c-41a7-822b-76a2e47ffdd6
       expect(page).to have_current_path %r{/journeys/.*}
       expect(page).to have_content "Section with a single task"
     end
@@ -110,11 +118,13 @@ RSpec.feature "Users can view the task list" do
         click_on "Task with a single step" # > checkboxes_task.json
       end
 
+      # /journeys/a0e6a4fc-a140-4280-a8a6-b23f0ce81b86/steps/db474ce5-d137-49ff-93c5-0e636d9a58df
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
       check "Lunch"
       click_continue
 
       # journey page
+      # /journeys/a0e6a4fc-a140-4280-a8a6-b23f0ce81b86
       expect(page).to have_current_path %r{/journeys/.*}
       expect(page).to have_content "Section with a single task"
       within(".app-task-list") do
