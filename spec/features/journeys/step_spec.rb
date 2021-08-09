@@ -9,7 +9,7 @@ RSpec.feature "Steps" do
   end
 
   describe "step types" do
-    # TODO refactor these into shared examples - 'it behaves like XXX'
+    # TODO: refactor these into shared examples - 'it behaves like XXX'
     context "when the step is of type short_text" do
       let(:fixture) { "short-text-question.json" }
 
@@ -55,7 +55,7 @@ RSpec.feature "Steps" do
         visit journey_step_path(journey, step)
 
         expect(find("h1.govuk-heading-xl")).to have_text "statement-step.json title"
-        within('div.govuk-body') do
+        within("div.govuk-body") do
           expect(page.html).to include("<h4>Heading 4</h4>")
         end
         expect(page).to have_button("Acknowledge!")
@@ -156,7 +156,6 @@ RSpec.feature "Steps" do
       let(:fixture) { "checkboxes-question.json" }
 
       scenario "user can select multiple answers" do
-
         click_first_link_in_section_list
 
         check "Breakfast"
@@ -227,7 +226,6 @@ RSpec.feature "Steps" do
             expect(page).to have_selector("input#answer-yes-further-information-field")
           end
         end
-
       end
 
       context "when extended question is of type long" do
@@ -323,7 +321,6 @@ RSpec.feature "Steps" do
           expect(page.body.index("or") < page.body.index("Cleaning")).to eq(true)
         end
       end
-
     end
   end
 
@@ -396,7 +393,6 @@ RSpec.feature "Steps" do
           expect(CheckboxAnswers.last.skipped).to be false
         end
       end
-
     end
   end
 
@@ -431,18 +427,14 @@ RSpec.feature "Steps" do
         expect(page).to have_content("The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")
       end
     end
-
-
-
   end
 
   describe "activity logging" do
-    # TODO could this be joined with log download spec into an log_activity_spec?
+    # TODO: could this be joined with log download spec into an log_activity_spec?
     let(:fixture) { "radio-question.json" }
 
     context "when a new journey is begun" do
       scenario "records that action in the event log" do
-
         first_logged_event = ActivityLogItem.first
         expect(first_logged_event.action).to eq("begin_journey")
         expect(first_logged_event.journey_id).to eq(Journey.last.id)
@@ -470,7 +462,6 @@ RSpec.feature "Steps" do
 
     context "when a user views a previously answered step" do
       scenario "an action is recorded" do
-
         journey = Journey.last
         task = Task.find_by(title: "Radio task")
         step = task.steps.first

@@ -13,18 +13,17 @@ RSpec.feature "Tasks" do
 
     scenario "the user is returned to the same place in the task list " do
       click_first_link_in_section_list
-
-      # TODO replace
+      # TODO: replace
       journey = Journey.last
 
       fill_in "answer[response]", with: "This is my long answer"
 
       click_continue
 
-      # TODO replace
+      # TODO: replace
       answer = LongTextAnswer.last
 
-      # TODO pattern for anchors
+      # TODO: pattern for anchors
       expect(page).to have_current_path(journey_url(journey, anchor: answer.step.id))
     end
   end
@@ -33,7 +32,7 @@ RSpec.feature "Tasks" do
     scenario "the user is taken straight to the next question" do
       click_first_link_in_section_list
 
-      # TODO replace
+      # TODO: replace
       journey = Journey.last
       task = journey.sections.first.tasks.first
 
@@ -63,7 +62,7 @@ RSpec.feature "Tasks" do
 
       expect(find("h1.govuk-heading-xl")).to have_text "Task with multiple steps"
 
-      # TODO regex to match UUID
+      # TODO: regex to match UUID
       expect(page).to have_current_path(journey_task_url(journey, task))
     end
   end
@@ -71,15 +70,10 @@ RSpec.feature "Tasks" do
   context "when a task that has no answers is opened" do
     scenario "takes the user straight to the first question" do
       click_first_link_in_section_list
-
-      # TODO regex to match UUID
+      # TODO: regex to match UUID
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
       expect(page).not_to have_content("Task with multiple steps")
       expect(find("label.govuk-radios__label", match: :first)).to have_text "Catering"
     end
   end
-
-
-
-
 end

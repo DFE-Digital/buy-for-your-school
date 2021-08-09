@@ -30,6 +30,4 @@ RSpec.feature "Journey" do
       expect(page).to have_content("The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.")
     end
   end
-
-
 end

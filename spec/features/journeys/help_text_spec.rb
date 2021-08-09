@@ -10,7 +10,6 @@ RSpec.feature "Help Text" do
 
   context "when the help text contains Markdown" do
     scenario "paragraph breaks are parsed as expected" do
-
       click_first_link_in_section_list
 
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
@@ -22,7 +21,7 @@ RSpec.feature "Help Text" do
       click_first_link_in_section_list
 
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
-      within('div.govuk-hint') do
+      within("div.govuk-hint") do
         expect(page.html).to include("<strong>Bold text</strong> test")
       end
     end
@@ -31,7 +30,7 @@ RSpec.feature "Help Text" do
       click_first_link_in_section_list
 
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
-      within('div.govuk-hint') do
+      within("div.govuk-hint") do
         expect(page.html).to include("<li>List item one</li>")
         expect(page.html).to include("<li>List item two</li>")
         expect(page.html).to include("<li>List item three</li>")
