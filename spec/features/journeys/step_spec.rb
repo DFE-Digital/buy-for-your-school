@@ -354,7 +354,7 @@ RSpec.feature "Steps" do
         click_first_link_in_section_list
 
         click_continue
-        expect(page).to have_content("can't be blank")
+        expect(find("span.govuk-error-message")).to have_text "can't be blank"
 
         check("Lunch")
         check("Dinner")
@@ -401,8 +401,8 @@ RSpec.feature "Steps" do
       let(:fixture) { "unexpected-contentful-type.json" }
 
       scenario "returns an error message" do
-        expect(page).to have_content("An unexpected error occurred")
-        expect(page).to have_content("The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")
+        expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
+        expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
       end
     end
 
@@ -410,8 +410,8 @@ RSpec.feature "Steps" do
       let(:fixture) { "unexpected-contentful-question-type.json" }
 
       scenario "returns an error message" do
-        expect(page).to have_content("An unexpected error occurred")
-        expect(page).to have_content("The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")
+        expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
+        expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
       end
     end
 
@@ -423,8 +423,8 @@ RSpec.feature "Steps" do
 
         user_signs_in_and_starts_the_journey(category.id)
 
-        expect(page).to have_content("An unexpected error occurred")
-        expect(page).to have_content("The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")
+        expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
+        expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
       end
     end
   end
