@@ -18,6 +18,7 @@ RSpec.feature "Users can view the task list" do
       click_back
 
       # list of steps
+      expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       click_on "Continue answering these questions" # task.button.continue
 
       expect(page).to have_content "Which service do you need?"
@@ -26,6 +27,7 @@ RSpec.feature "Users can view the task list" do
       click_back
 
       # list of steps
+      expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       click_on "Continue answering these questions" # task.button.continue
 
       expect(page).to have_content "What email address did you use?"
@@ -63,12 +65,14 @@ RSpec.feature "Users can view the task list" do
       click_continue
 
       # list of steps
+      expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       click_on "Continue to the next task" # task.button.next
 
       # task 1 step 3 long-text-question
       expect(page).to have_content "Briefly describe what you are looking to procure"
       click_back
       # list of steps
+      expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
       expect(page).to have_content "Task containing every type of step"
     end
   end
@@ -97,6 +101,7 @@ RSpec.feature "Users can view the task list" do
       expect(page).to have_current_path %r{/journeys/.*/steps/.*}
       click_back
       # journey page
+      expect(page).to have_current_path %r{/journeys/.*}
       expect(page).to have_content "Section with a single task"
     end
 
@@ -110,6 +115,7 @@ RSpec.feature "Users can view the task list" do
       click_continue
 
       # journey page
+      expect(page).to have_current_path %r{/journeys/.*}
       expect(page).to have_content "Section with a single task"
       within(".app-task-list") do
         expect(page).to have_content "Completed" # task_list.status.completed

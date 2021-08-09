@@ -10,8 +10,9 @@ RSpec.feature "Users can view the task list" do
 
   it "tasks are grouped by their section" do
     within(".app-task-list") do
-      expect(page).to have_content "Section A" # > radio-section.json
-      expect(page).to have_content "Section B" # > long-text-section.json
+      section_headings = find_all("h2.app-task-list__section")
+      expect(section_headings[0]).to have_text "Section A" # > radio-section.json
+      expect(section_headings[1]).to have_text "Section B" # > long-text-section.json
     end
 
     task_lists = find_all(".app-task-list__items")

@@ -35,6 +35,7 @@ RSpec.feature "Users can view the task list" do
         click_on "One additional question task" # > show-one-additional-question-in-order-task.json
         expect(page).to have_current_path %r{/journeys/.*/steps/.*}
         click_back
+        expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
         # list of steps
         steps = find_all(".govuk-summary-list__row")
         within(".govuk-summary-list") do
@@ -49,7 +50,9 @@ RSpec.feature "Users can view the task list" do
         click_continue
 
         # We get taken to the next question so we go back to the task page
+        expect(page).to have_current_path %r{/journeys/.*/steps/.*}
         click_back
+        expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
 
         # Check that "What colour is in the sky added to the correct place in the list"
         steps = find_all(".govuk-summary-list__row")

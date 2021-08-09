@@ -1,4 +1,4 @@
-RSpec.feature "User activity is recorded" do
+RSpec.feature "User task actions are recorded" do
   let(:user) { create(:user) }
   let(:fixture) { "section-with-multiple-tasks.json" }
 
@@ -27,10 +27,10 @@ RSpec.feature "User activity is recorded" do
       begin_task_logged_event = ActivityLogItem.where(action: "begin_task").first
       expect(begin_task_logged_event.journey_id).to eq(journey.id)
       expect(begin_task_logged_event.user_id).to eq(user.id)
-      expect(begin_task_logged_event.contentful_category_id).to eq("contentful-category-entry")
-      expect(begin_task_logged_event.contentful_section_id).to eq("multiple-tasks-section")
+      expect(begin_task_logged_event.contentful_category_id).to eq "contentful-category-entry"
+      expect(begin_task_logged_event.contentful_section_id).to eq "multiple-tasks-section"
       expect(begin_task_logged_event.contentful_task_id).to eq(task.contentful_id)
-      expect(begin_task_logged_event.data["task_status"]).to eq(Task::NOT_STARTED)
+      expect(begin_task_logged_event.data["task_status"]).to eq 0 # Task::NOT_STARTED
       expect(begin_task_logged_event.data["task_step_tally"]).to eq({
         "total" => 4,
         "hidden" => 0,
@@ -60,13 +60,13 @@ RSpec.feature "User activity is recorded" do
         journey = Journey.first
 
         last_logged_event = ActivityLogItem.last
-        expect(last_logged_event.action).to eq("view_task")
+        expect(last_logged_event.action).to eq "view_task"
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(user.id)
-        expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
-        expect(last_logged_event.contentful_section_id).to eq("multiple-tasks-section")
+        expect(last_logged_event.contentful_category_id).to eq "contentful-category-entry"
+        expect(last_logged_event.contentful_section_id).to eq "multiple-tasks-section"
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
-        expect(last_logged_event.data["task_status"]).to eq(Task::IN_PROGRESS)
+        expect(last_logged_event.data["task_status"]).to eq 1 # Task::IN_PROGRESS
         expect(last_logged_event.data["task_step_tally"]).to eq({
           "total" => 4,
           "hidden" => 0,
@@ -105,13 +105,13 @@ RSpec.feature "User activity is recorded" do
         journey = Journey.first
 
         last_logged_event = ActivityLogItem.last
-        expect(last_logged_event.action).to eq("view_task")
+        expect(last_logged_event.action).to eq "view_task"
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(user.id)
-        expect(last_logged_event.contentful_category_id).to eq("contentful-category-entry")
-        expect(last_logged_event.contentful_section_id).to eq("multiple-tasks-section")
+        expect(last_logged_event.contentful_category_id).to eq "contentful-category-entry"
+        expect(last_logged_event.contentful_section_id).to eq "multiple-tasks-section"
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
-        expect(last_logged_event.data["task_status"]).to eq(Task::COMPLETED)
+        expect(last_logged_event.data["task_status"]).to eq 2 # Task::COMPLETED
         expect(last_logged_event.data["task_step_tally"]).to eq({
           "total" => 4,
           "hidden" => 0,
