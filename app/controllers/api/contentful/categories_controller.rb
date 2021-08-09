@@ -12,7 +12,7 @@ class Api::Contentful::CategoriesController < Api::Contentful::BaseController
 
     if category
       render json: { status: "OK" }, status: :ok
-      Rollbar.info("Processed published webhook event for Contentful Category", category: contentful_category.title)
+      Rollbar.info("Processed published webhook event for Contentful Category", category: category.title)
     end
   end
 
