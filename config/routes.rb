@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   post "/api/contentful/category" => "api/contentful/categories#changed"
 
   # DfE Sign In
-  get "/auth/dfe/callback", to: "sessions#create"
-  get "/auth/dfe/signout", to: "sessions#destroy"
+  get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
+  get "/auth/dfe/signout", to: "sessions#destroy", as: :issuer_redirect
+  delete "/auth/dfe/signout", to: "sessions#destroy", as: :sign_out
   get "/auth/failure", to: "sessions#failure"
   post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 

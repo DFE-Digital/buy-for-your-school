@@ -22,6 +22,20 @@ class Journey < ApplicationRecord
   # remove (user-defined)   - delete (permanent/soft)
   enum state: { initial: 0, stale: 1, archive: 2, remove: 3 }
 
+  # TODO: test scopes
+
+  # default for new journeys
+  scope :not_started, -> { where(started: false) }
+
+  # when a step is completed a journey is considered started
+  scope :started, -> { where(started: true) }
+
+  # updated_at is after date
+  scope :edited_since, ->(date) { where("updated_at > ?", date) }
+
+  # updated_at is before date
+  scope :unedited_since, ->(date) { where("updated_at < ?", date) }
+
   # Determine whether spec is a draft
   #
   # @see SpecificationsController#show
@@ -31,15 +45,13 @@ class Journey < ApplicationRecord
     tasks.all?(&:all_steps_completed?)
   end
 
-  # Mark as started once a step has been completed.
+  # Mark as started and revert state
+  #
   # @see SaveAnswer
   #
   # @return [Boolean]
   def start!
-    attributes = {}
-    attributes[:started] = true unless started == true
-
-    update!(attributes)
+    update!(started: true, state: :initial)
   end
 
   # Next incomplete section in order, or first from beginning

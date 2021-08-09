@@ -1,0 +1,60 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "space_id"
+      }
+    },
+    "id": "category-peter",
+    "type": "Entry",
+    "createdAt": "2021-01-20T12:19:10.220Z",
+    "updatedAt": "2021-01-20T15:06:12.067Z",
+    "environment": {
+      "sys": {
+        "id": "test",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 1,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "category"
+      }
+    },
+    "locale": "en-GB"
+  },
+  "fields": {
+    "title": "Category Title",
+    "slug": "Category Slug",
+    "description": "Category Description",
+    "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>",
+    "sections": [
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "section-1-peter"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "section-2-peter"
+        }
+      },
+      {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "section-3-peter"
+        }
+      }
+    ]
+  }
+}

@@ -9,9 +9,9 @@ class FindOrCreateUserFromSession
     self.session_hash = session_hash.with_indifferent_access
   end
 
-  # @return [User]
+  # @return [User, False]
   def call
-    return nil unless session_hash.key?(:dfe_sign_in_uid)
+    return false unless session_hash.key?(:dfe_sign_in_uid)
 
     User.find_or_create_by!(dfe_sign_in_uid: session_hash[:dfe_sign_in_uid])
   end

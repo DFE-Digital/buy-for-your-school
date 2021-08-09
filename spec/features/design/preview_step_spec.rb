@@ -5,9 +5,12 @@ RSpec.feature "Content Designers can preview a journey step" do
       fixture_filename: "steps/radio-question.json",
     )
 
-    user_is_signed_in
+    user_is_signed_in(user: designer_1)
+
     visit "/preview/entries/radio-question"
   end
+
+  let(:designer_1) { create(:user) }
 
   scenario "the appropriate step is displayed" do
     expect(page).to have_current_path %r{/journeys/.*/steps/.*}
@@ -23,5 +26,30 @@ RSpec.feature "Content Designers can preview a journey step" do
   scenario "a banner reminding that the step is preview is rendered" do
     expect(find("h2.govuk-notification-banner__title")).to have_text "Preview"
     expect(find("h3.govuk-notification-banner__heading")).to have_text "This is a preview"
+  end
+
+  it "does not render the preview journey in the designer's dashboard" do
+    visit "/dashboard"
+
+    expect(find("h1.govuk-heading-xl")).to have_text "Specifications dashboard"
+    expect(page).not_to have_content "Date started"
+    expect(page).not_to have_content "Designer Preview Category"
+  end
+
+  context "when another designer previews a step" do
+    let(:designer_2) { create(:user) }
+
+    before do
+      user_is_signed_in(user: designer_2)
+
+      visit "/preview/entries/radio-question"
+    end
+
+    it "creates a new preview journey for that user" do
+      expect(find("legend.govuk-fieldset__legend--l")).to have_text "Which service do you need?"
+      expect(find("h2.govuk-notification-banner__title")).to have_text "Preview"
+      expect(designer_1.journeys.count).to be 1
+      expect(designer_2.journeys.count).to be 1
+    end
   end
 end
