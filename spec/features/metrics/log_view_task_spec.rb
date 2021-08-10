@@ -11,14 +11,14 @@ RSpec.feature "User task actions are recorded" do
   context "when there is a task with multiple steps" do
     it "records an action in the event log that a task has begun" do
       # /journeys/b68300eb-fbeb-4ac5-beb8-4f88eb1f86cd
-      expect(page).to have_current_path %r{/journeys/.*}
+      expect(page).to have_a_journey_path
 
       within(".app-task-list") do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
 
       # /journeys/40e87654-0ce7-466a-96a2-b406025c83d9/steps/36e7b670-1af5-4340-9311-fc23ae1a6cfd
-      expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+      expect(page).to have_a_step_path
 
       journey = Journey.first
       task = Task.find_by(title: "Task with multiple steps")
@@ -52,14 +52,14 @@ RSpec.feature "User task actions are recorded" do
         create(:radio_answer, step: step)
 
         # /journeys/3303d91e-e09a-4956-90d5-2628564ae901
-        expect(page).to have_current_path %r{/journeys/.*}
+        expect(page).to have_a_journey_path
 
         within(".app-task-list") do
           click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
         end
 
         # /journeys/3303d91e-e09a-4956-90d5-2628564ae901/tasks/4f8e2f76-cad2-4b43-be6d-18eca22a9756
-        expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
+        expect(page).to have_a_task_path
 
         journey = Journey.first
 
@@ -87,13 +87,13 @@ RSpec.feature "User task actions are recorded" do
     context "when all questions in a task have been answered" do
       it "records an action in the event log that a completed task has been revisited" do
         # /journeys/db0d0480-4598-4ddb-b003-571138f5cf98
-        expect(page).to have_current_path %r{/journeys/.*}
+        expect(page).to have_a_journey_path
         within(".app-task-list") do
           click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
         end
 
         # /journeys/db0d0480-4598-4ddb-b003-571138f5cf98/steps/e25ab926-cec4-4c42-b6bf-2821ece220d4
-        expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+        expect(page).to have_a_step_path
 
         choose "Catering"
         click_continue

@@ -34,10 +34,10 @@ RSpec.feature "Users can view the task list" do
 
         click_on "One additional question task" # > show-one-additional-question-in-order-task.json
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/steps/df8f0382-e652-4f25-bf7d-58a433882c03
-        expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+        expect(page).to have_a_step_path
         click_back
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/tasks/a73ff7b4-483b-4cda-9063-424da9ea0593
-        expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
+        expect(page).to have_a_task_path
         # list of steps
         steps = find_all(".govuk-summary-list__row")
         within(".govuk-summary-list") do
@@ -53,10 +53,10 @@ RSpec.feature "Users can view the task list" do
 
         # We get taken to the next question so we go back to the task page
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/steps/7923954a-1265-4bf8-8427-8f4dee4161c0
-        expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+        expect(page).to have_a_step_path
         click_back
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/tasks/a73ff7b4-483b-4cda-9063-424da9ea0593
-        expect(page).to have_current_path %r{/journeys/.*/tasks/.*}
+        expect(page).to have_a_task_path
 
         # Check that "What colour is in the sky added to the correct place in the list"
         steps = find_all(".govuk-summary-list__row")
