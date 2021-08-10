@@ -11,7 +11,7 @@ RSpec.feature "markdown" do
   context "when the step is of type markdown" do
     scenario "the statement is not displayed in the task list" do
       # /journeys/302e58f4-01b3-469a-906e-db6991184699
-      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+      expect(page).to have_a_journey_path
       expect(page).not_to have_content("statement-step.json title")
     end
 
@@ -23,7 +23,7 @@ RSpec.feature "markdown" do
       visit journey_step_path(journey, step)
 
       # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+      expect(page).to have_a_step_path
       expect(find("h1.govuk-heading-xl")).to have_text "statement-step.json title"
       within("div.govuk-body") do
         expect(page.html).to include("<h4>Heading 4</h4>")

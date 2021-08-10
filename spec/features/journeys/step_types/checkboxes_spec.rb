@@ -19,14 +19,14 @@ RSpec.feature "checkboxes" do
       click_first_link_in_section_list
 
       # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
-      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
+      expect(page).to have_an_edit_step_path
       expect(page).to have_checked_field("answer-response-breakfast-field")
       expect(page).to have_checked_field("answer-response-lunch-field")
     end
 
     scenario "options follow the capitalisation given" do
       # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+      expect(page).to have_a_step_path
       expect(find("div.govuk-checkboxes")).to have_text "Morning break"
     end
 
@@ -54,7 +54,7 @@ RSpec.feature "checkboxes" do
           click_first_link_in_section_list
 
           # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
-          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
+          expect(page).to have_an_edit_step_path
 
           expect(page).to have_checked_field("Yes")
           expect(find_field("answer-yes-further-information-field").value)
@@ -75,7 +75,7 @@ RSpec.feature "checkboxes" do
           check "Yes"
 
           # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-          expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+          expect(page).to have_a_step_path
           expect(page).to have_selector("input#answer-yes-further-information-field")
         end
       end
@@ -89,7 +89,7 @@ RSpec.feature "checkboxes" do
         check "Yes"
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+        expect(page).to have_a_step_path
         expect(page).to have_selector("textarea#answer-yes-further-information-field")
       end
     end
@@ -97,7 +97,7 @@ RSpec.feature "checkboxes" do
     context "when there is no extended question" do
       scenario "no extra text field is displayed" do
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+        expect(page).to have_a_step_path
         expect(page).not_to have_selector("textarea#answer-yes-further-information-field")
         expect(page).not_to have_selector("input#answer-yes-further-information-field")
       end

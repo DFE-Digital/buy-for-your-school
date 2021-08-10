@@ -17,7 +17,7 @@ RSpec.feature "currency" do
       click_first_link_in_section_list
 
       # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
-      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
+      expect(page).to have_an_edit_step_path
       expect(find_field("answer-response-field").value).to eql("1000.01")
     end
 
@@ -26,7 +26,7 @@ RSpec.feature "currency" do
       click_continue
 
       # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/answers
-      expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/answers}
+      expect(page).to have_an_answer_path
       expect(page).to have_content("does not accept £ signs or other non numerical characters")
     end
   end

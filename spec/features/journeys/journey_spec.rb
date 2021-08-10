@@ -10,7 +10,7 @@ RSpec.feature "Journey" do
 
   scenario "Start page includes a call to action" do
     # /journeys/302e58f4-01b3-469a-906e-db6991184699
-    expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+    expect(page).to have_a_journey_path
 
     expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
     expect(find("span.app-task-list__task-name")).to have_text "Radio task"
@@ -24,7 +24,7 @@ RSpec.feature "Journey" do
     click_continue
 
     # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/answers
-    expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/answers}
+    expect(page).to have_an_answer_path
     expect(find("span.govuk-error-message")).to have_text "can't be blank"
   end
 

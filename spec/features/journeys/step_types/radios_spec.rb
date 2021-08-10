@@ -25,7 +25,7 @@ RSpec.feature "radios" do
         click_first_link_in_section_list
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d/edit
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/edit}
+        expect(page).to have_an_edit_step_path
         expect(page).to have_checked_field("Catering")
         expect(find_field("answer-catering-further-information-field").value)
           .to eql("The school needs the kitchen cleaned once a day")
@@ -37,7 +37,7 @@ RSpec.feature "radios" do
         choose "Catering"
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+        expect(page).to have_a_step_path
         expect(page).to have_selector("input#answer-catering-further-information-field")
       end
     end
@@ -49,7 +49,7 @@ RSpec.feature "radios" do
         choose "Catering"
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+        expect(page).to have_a_step_path
         expect(page).to have_selector("textarea#answer-catering-further-information-field")
       end
     end
@@ -59,7 +59,7 @@ RSpec.feature "radios" do
 
       scenario "no extra text field is displayed" do
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+        expect(page).to have_a_step_path
         expect(page).not_to have_selector("textarea#answer-catering-further-information-field")
         expect(page).not_to have_selector("input#answer-catering-further-information-field")
       end
@@ -75,7 +75,7 @@ RSpec.feature "radios" do
         end
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
-        expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
+        expect(page).to have_a_step_path
         # Check that the "Or" separator appears in the correct position
         expect(page.body.index("Catering") > page.body.index("or")).to eq(true)
         expect(page.body.index("or") < page.body.index("Cleaning")).to eq(true)
