@@ -6,12 +6,11 @@ RSpec.feature "single date" do
     user_is_signed_in(user: user)
     # TODO: setup with factory
     start_journey_from_category(category: fixture)
+    click_first_link_in_section_list
   end
 
   context "when the step is of type single date" do
     scenario "user can answer using a date input" do
-      click_first_link_in_section_list
-
       fill_in "answer[response(3i)]", with: "12"
       fill_in "answer[response(2i)]", with: "8"
       fill_in "answer[response(1i)]", with: "2020"
@@ -28,8 +27,6 @@ RSpec.feature "single date" do
     end
 
     scenario "date validations" do
-      click_first_link_in_section_list
-
       fill_in "answer[response(3i)]", with: "2"
       fill_in "answer[response(2i)]", with: "0"
       fill_in "answer[response(1i)]", with: "0"

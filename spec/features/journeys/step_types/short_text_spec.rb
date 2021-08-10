@@ -6,12 +6,11 @@ RSpec.feature "short text" do
     user_is_signed_in(user: user)
     # TODO: setup with factory
     start_journey_from_category(category: fixture)
+    click_first_link_in_section_list
   end
 
   context "when the step is of type short_text" do
     scenario "user can answer using free text" do
-      click_first_link_in_section_list
-
       fill_in "answer[response]", with: "email@example.com"
       click_continue
 

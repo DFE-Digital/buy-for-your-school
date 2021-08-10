@@ -6,13 +6,12 @@ RSpec.feature "radios" do
     user_is_signed_in(user: user)
     # TODO: setup with factory
     start_journey_from_category(category: fixture)
+    click_first_link_in_section_list
   end
 
   context "when the step is of type radios" do
     context "when extra configuration is passed to collect further info" do
       scenario "asks the user for further information" do
-        click_first_link_in_section_list
-
         choose "Catering"
         expect(page).not_to have_content("No_further_information") # It should not create a label when one isn't specified
         within("span.govuk-visually-hidden") do
@@ -35,7 +34,6 @@ RSpec.feature "radios" do
 
     context "when extended question is of type single" do
       scenario "a single text field is displayed" do
-        click_first_link_in_section_list
         choose "Catering"
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
@@ -48,7 +46,6 @@ RSpec.feature "radios" do
       let(:fixture) { "extended-long-answer-radio-question.json" }
 
       scenario "a long text area is displayed" do
-        click_first_link_in_section_list
         choose "Catering"
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
@@ -61,8 +58,6 @@ RSpec.feature "radios" do
       let(:fixture) { "radio-question.json" }
 
       scenario "no extra text field is displayed" do
-        click_first_link_in_section_list
-
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
         expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(page).not_to have_selector("textarea#answer-catering-further-information-field")
@@ -74,8 +69,6 @@ RSpec.feature "radios" do
       let(:fixture) { "radio-question-with-separator.json" }
 
       scenario "shows an or separator" do
-        click_first_link_in_section_list
-
         expect(page).to have_selector("div.govuk-radios__divider")
         within("div.govuk-radios__divider") do
           expect(page).to have_content("or")

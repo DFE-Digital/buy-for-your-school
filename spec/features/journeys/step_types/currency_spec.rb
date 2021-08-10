@@ -6,12 +6,11 @@ RSpec.feature "currency" do
     user_is_signed_in(user: user)
     # TODO: setup with factory
     start_journey_from_category(category: fixture)
+    click_first_link_in_section_list
   end
 
   context "when the step is of type currency" do
     scenario "user can answer using a currency number input" do
-      click_first_link_in_section_list
-
       fill_in "answer[response]", with: "1,000.01"
       click_continue
 
@@ -23,8 +22,6 @@ RSpec.feature "currency" do
     end
 
     scenario "throws error when non numerical values are entered" do
-      click_first_link_in_section_list
-
       fill_in "answer[response]", with: "one hundred pounds"
       click_continue
 

@@ -6,12 +6,11 @@ RSpec.feature "number" do
     user_is_signed_in(user: user)
     # TODO: setup with factory
     start_journey_from_category(category: fixture)
+    click_first_link_in_section_list
   end
 
   context "when the step is of type number" do
     scenario "user can answer using a number input" do
-      click_first_link_in_section_list
-
       fill_in "answer[response]", with: "190"
       click_continue
 
@@ -23,8 +22,6 @@ RSpec.feature "number" do
     end
 
     scenario "users receive an error when not entering a number" do
-      click_first_link_in_section_list
-
       fill_in "answer[response]", with: "foo"
       click_continue
 
@@ -34,8 +31,6 @@ RSpec.feature "number" do
     end
 
     scenario "users receive an error when entering a decimal number" do
-      click_first_link_in_section_list
-
       fill_in "answer[response]", with: "435.65"
       click_continue
 

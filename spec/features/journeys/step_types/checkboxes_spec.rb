@@ -6,12 +6,11 @@ RSpec.feature "checkboxes" do
     user_is_signed_in(user: user)
     # TODO: setup with factory
     start_journey_from_category(category: fixture)
+    click_first_link_in_section_list
   end
 
   context "when the step is of type checkboxes" do
     scenario "user can select multiple answers" do
-      click_first_link_in_section_list
-
       check "Breakfast"
       check "Lunch"
 
@@ -26,8 +25,6 @@ RSpec.feature "checkboxes" do
     end
 
     scenario "options follow the capitalisation given" do
-      click_first_link_in_section_list
-
       # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
       expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
       expect(find("div.govuk-checkboxes")).to have_text "Morning break"
@@ -38,8 +35,6 @@ RSpec.feature "checkboxes" do
 
       context "when extra configuration is passed to collect further info" do
         scenario "asks the user for further information" do
-          click_first_link_in_section_list
-
           check "Yes"
           fill_in "answer[yes_further_information]", with: "The first piece of further information"
 
@@ -77,7 +72,6 @@ RSpec.feature "checkboxes" do
 
       context "when extended question is of type single" do
         scenario "a single text field is displayed" do
-          click_first_link_in_section_list
           check "Yes"
 
           # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
@@ -92,7 +86,6 @@ RSpec.feature "checkboxes" do
       let(:fixture) { "extended-long-answer-checkboxes-question.json" }
 
       scenario "a long text area is displayed" do
-        click_first_link_in_section_list
         check "Yes"
 
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
@@ -103,8 +96,6 @@ RSpec.feature "checkboxes" do
 
     context "when there is no extended question" do
       scenario "no extra text field is displayed" do
-        click_first_link_in_section_list
-
         # /journeys/302e58f4-01b3-469a-906e-db6991184699/steps/46005bbe-1aa2-49bf-b0df-0f027522f50d
         expect(page).to have_current_path %r{/journeys/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})/steps/([\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12})}
         expect(page).not_to have_selector("textarea#answer-yes-further-information-field")
