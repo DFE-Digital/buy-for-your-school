@@ -1,3 +1,4 @@
+# TODO: Use new custom path matchers after each page change (example given below)
 RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
 
@@ -13,12 +14,23 @@ RSpec.feature "Users can view the task list" do
       click_on "Back"
     end
 
+    specify do
+      expect(page).to have_a_task_path
+    end
+
+    specify do
+      expect(page).not_to have_a_step_path
+    end
+
     # RadioAnswerPresenter#response
     specify do
       click_link "radios"
+      expect(page).to have_a_step_path
       choose "Cleaning"
       click_on "Continue"
+      expect(page).to have_a_step_path
       click_on "Back"
+      expect(page).to have_a_task_path
       expect(page).to have_content "Cleaning"
     end
 

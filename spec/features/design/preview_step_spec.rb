@@ -12,9 +12,11 @@ RSpec.feature "Content Designers can preview a journey step" do
 
   let(:designer_1) { create(:user) }
 
-  scenario "the appropriate step is displayed" do
-    expect(page).to have_current_path %r{/journeys/.*/steps/.*}
+  it "redirects to the step" do
+    expect(page).to have_a_step_path
+  end
 
+  it "displays the appropriate step" do
     expect(find("legend.govuk-fieldset__legend--l")).to have_text "Which service do you need?"
     expect(find(".govuk-hint p")).to have_text "Tell us which service you need."
 
@@ -23,7 +25,7 @@ RSpec.feature "Content Designers can preview a journey step" do
     expect(labels[1]).to have_text "Cleaning"
   end
 
-  scenario "a banner reminding that the step is preview is rendered" do
+  it "renders a banner stating the step is a preview" do
     expect(find("h2.govuk-notification-banner__title")).to have_text "Preview"
     expect(find("h3.govuk-notification-banner__heading")).to have_text "This is a preview"
   end
