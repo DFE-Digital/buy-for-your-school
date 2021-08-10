@@ -10,7 +10,10 @@ class Api::Contentful::CategoriesController < Api::Contentful::BaseController
       cat.liquid_template = contentful_category.combined_specification_template
     end
 
-    render json: { status: "OK" }, status: :ok if category
+    if category
+      render json: { status: "OK" }, status: :ok
+      Rollbar.info("Processed published webhook event for Contentful Category", category: category.title)
+    end
   end
 
 private
