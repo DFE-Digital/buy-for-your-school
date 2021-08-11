@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- Added full_name, email_address, phone_number, contact_preferences to User.
+
 **House keeping**
 - bump Ruby to version `3.0.1`
 - document code using Yard

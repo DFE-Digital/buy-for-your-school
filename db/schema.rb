@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_05_130832) do
+ActiveRecord::Schema.define(version: 2021_08_11_120013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -169,6 +169,10 @@ ActiveRecord::Schema.define(version: 2021_08_05_130832) do
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "full_name"
+    t.string "email_address"
+    t.string "phone_number"
+    t.jsonb "contact_preferences", default: {}
   end
 
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
