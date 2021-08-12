@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_11_120013) do
+ActiveRecord::Schema.define(version: 2021_08_11_123204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -149,6 +149,16 @@ ActiveRecord::Schema.define(version: 2021_08_11_120013) do
     t.jsonb "criteria"
     t.index ["order"], name: "index_steps_on_order"
     t.index ["task_id"], name: "index_steps_on_task_id"
+  end
+
+  create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "specification_ids", default: {}
+    t.jsonb "category_ids", default: {}
+    t.string "message"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

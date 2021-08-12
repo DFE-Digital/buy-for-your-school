@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- Added Support Request model.
 - Added full_name, email_address, phone_number, contact_preferences to User.
 
 **House keeping**
