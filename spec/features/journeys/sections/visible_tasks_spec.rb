@@ -11,28 +11,28 @@ RSpec.feature "Expected tasks are visible" do
   context "when a task has one step" do
     context "and it is a question" do
       before do
-        single_question_task = create(:task, title: "Single question task", section: section)
-        create(:step, :number, task: single_question_task)
+        task = create(:task, title: "Task with single question", section: section)
+        create(:step, :number, task: task)
         visit "/journeys/#{journey.id}"
       end
 
       it "is visible" do
         within "ul.app-task-list__items" do
-          expect(find("a.govuk-link")).to have_text "Single question task"
+          expect(find("a.govuk-link")).to have_text "Task with single question"
         end
       end
     end
 
     context "and it is a statement" do
       before do
-        single_statement_task = create(:task, title: "Single statement task", section: section)
-        create(:step, :statement, task: single_statement_task)
+        task = create(:task, title: "Task with single statement", section: section)
+        create(:step, :statement, task: task)
         visit "/journeys/#{journey.id}"
       end
 
       it "is visible" do
         within "ul.app-task-list__items" do
-          expect(find("a.govuk-link")).to have_text "Single statement task"
+          expect(find("a.govuk-link")).to have_text "Task with single statement"
         end
       end
     end
@@ -41,45 +41,45 @@ RSpec.feature "Expected tasks are visible" do
   context "when a task has multiple steps" do
     context "and all are questions" do
       before do
-        all_question_task = create(:task, title: "All question task", section: section)
-        create(:step, :number, task: all_question_task)
-        create(:step, :number, task: all_question_task)
+        task = create(:task, title: "Task with only questions", section: section)
+        create(:step, :number, task: task)
+        create(:step, :number, task: task)
         visit "/journeys/#{journey.id}"
       end
 
       it "is visible" do
         within "ul.app-task-list__items" do
-          expect(find("a.govuk-link")).to have_text "All question task"
+          expect(find("a.govuk-link")).to have_text "Task with only questions"
         end
       end
     end
 
     context "and all are statements" do
       before do
-        all_statement_task = create(:task, title: "All statement task", section: section)
-        create(:step, :statement, task: all_statement_task)
-        create(:step, :statement, task: all_statement_task)
+        task = create(:task, title: "Task with only statements", section: section)
+        create(:step, :statement, task: task)
+        create(:step, :statement, task: task)
         visit "/journeys/#{journey.id}"
       end
 
       it "is visible" do
         within "ul.app-task-list__items" do
-          expect(find("a.govuk-link")).to have_text "All statement task"
+          expect(find("a.govuk-link")).to have_text "Task with only statements"
         end
       end
     end
 
     context "and there are questions and statements" do
       before do
-        mixed_task = create(:task, title: "Mixed task", section: section)
-        create(:step, :number, task: mixed_task)
-        create(:step, :statement, task: mixed_task)
+        task = create(:task, title: "Task with questions and statements", section: section)
+        create(:step, :number, task: task)
+        create(:step, :statement, task: task)
         visit "/journeys/#{journey.id}"
       end
 
       it "is visible" do
         within "ul.app-task-list__items" do
-          expect(find("a.govuk-link")).to have_text "Mixed task"
+          expect(find("a.govuk-link")).to have_text "Task with questions and statements"
         end
       end
     end

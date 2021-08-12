@@ -13,7 +13,7 @@
         <% section.tasks.each do |task| %>
           <% if task.one_step? %>
             <li class="app-task-list__item step__item" id="<%= task.step.id %>">
-              <% if task.step.answered? || task.step.acknowledged? %>
+              <% if task.step.completed? %>
                 <span class="app-task-list__task-name">
                   <%= link_to task.title, edit_journey_step_path(@journey, task.step), class: "govuk-link", 'aria-describedby': task.step.status_id %>
                 </span>
