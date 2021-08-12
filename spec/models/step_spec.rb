@@ -152,6 +152,34 @@ RSpec.describe Step, type: :model do
     end
   end
 
+  describe "#completed?" do
+    context "when the step is a question" do
+      it "returns true if there is an answer" do
+        answer = create(:single_date_answer)
+        question = create(:step, :single_date, single_date_answer: answer)
+        expect(question.completed?).to be true
+      end
+
+      it "returns false if there is NOT an answer" do
+        question = create(:step, :single_date)
+        expect(question.completed?).to be false
+      end
+    end
+
+    context "when the step is a statement" do
+      let(:statement) { create(:step, :statement) }
+
+      it "returns true if the statement has been acknowledged" do
+        statement.acknowledge!
+        expect(statement.completed?).to be true
+      end
+
+      it "returns false if the statement has NOT been acknowledged" do
+        expect(statement.completed?).to be false
+      end
+    end
+  end
+
   describe "#options" do
     # TODO: WHAT IS THE NEW FORMAT?? This will need updating when options are set on the step with the new format
     it "returns a hash of options" do
