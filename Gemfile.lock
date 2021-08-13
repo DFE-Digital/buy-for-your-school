@@ -199,7 +199,7 @@ GEM
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
     minitest (5.14.4)
-    mock_redis (0.28.0)
+    mock_redis (0.29.0)
       ruby2_keywords
     msgpack (1.4.2)
     multi_json (1.15.0)
@@ -362,7 +362,7 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.11.0)
-    ruby2_keywords (0.0.4)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
