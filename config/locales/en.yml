@@ -1,4 +1,7 @@
 en:
+  #
+  # Common ---------------------------------------------------------------------
+  #
   app:
     name: Get help buying for schools
   date:
@@ -24,6 +27,41 @@ en:
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
+  errors:
+    go_home: Back to the service
+    internal_server_error:
+      page_title: Internal server error
+      page_body: Sorry, there is a problem with the service. Please try again later.
+    not_found:
+      page_title: Page not found
+      page_body: Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.
+    unacceptable:
+      page_title: Unacceptable request
+      page_body: There was a problem with your request.
+    contentful_entry_not_found:
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
+    unexpected_contentful_model:
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
+    unexpected_contentful_step_type:
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
+    repeat_step_in_the_contentful_journey:
+      page_title: An unexpected error occurred
+      page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
+    specification_template_invalid:
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
+    sign_in:
+      unexpected_failure:
+        page_title: An unexpected error occurred
+        page_body: The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly.
+
+
+  #
+  # Self-Serve -----------------------------------------------------------------
+  #
   planning:
     start_page:
       page_title: Catering services
@@ -130,33 +168,9 @@ en:
     category_selection_header: Choose a category
     spec_template_tag_title: Specification tag
 
-  errors:
-    go_home: Back to the service
-    internal_server_error:
-      page_title: Internal server error
-      page_body: Sorry, there is a problem with the service. Please try again later.
-    not_found:
-      page_title: Page not found
-      page_body: Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.
-    unacceptable:
-      page_title: Unacceptable request
-      page_body: There was a problem with your request.
-    contentful_entry_not_found:
-      page_title: An unexpected error occurred
-      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
-    unexpected_contentful_model:
-      page_title: An unexpected error occurred
-      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
-    unexpected_contentful_step_type:
-      page_title: An unexpected error occurred
-      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
-    repeat_step_in_the_contentful_journey:
-      page_title: An unexpected error occurred
-      page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
-    specification_template_invalid:
-      page_title: An unexpected error occurred
-      page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
-    sign_in:
-      unexpected_failure:
-        page_title: An unexpected error occurred
-        page_body: The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly.
+  #
+  # Supported ------------------------------------------------------------------
+  #
+  support:
+    header: Supported Buying Admin
+

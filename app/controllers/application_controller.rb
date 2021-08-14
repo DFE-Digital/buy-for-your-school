@@ -30,6 +30,12 @@ protected
     @current_journey ||= Journey.find(journey_id)
   end
 
+  # `Before Action` on:
+  #   - steps_controller
+  #   - answers_contorller
+  #   - journeys_controller
+  #   - specifications_controller
+  #
   def check_user_belongs_to_journey?
     return true if current_journey.user == current_user
 

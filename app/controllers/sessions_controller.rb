@@ -9,7 +9,12 @@ class SessionsController < ApplicationController
     user_session.persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
     user_session.invalidate_other_user_sessions(omniauth_hash: auth_hash)
 
-    redirect_to dashboard_path
+    # TODO: redirect post login based on user role
+    # if current_user.buyer?
+      redirect_to dashboard_path
+    # elsif current_user.agent?
+    #   redirect_to support_admin_path
+    # end
   end
   alias_method :bypass_callback, :create
 
