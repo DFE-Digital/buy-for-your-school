@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
     # TODO: redirect post login based on user role
     # if current_user.buyer?
-      redirect_to dashboard_path
+    redirect_to dashboard_path
     # elsif current_user.agent?
     #   redirect_to support_admin_path
     # end

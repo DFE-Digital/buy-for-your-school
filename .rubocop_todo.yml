@@ -6,30 +6,25 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 11
+# Offense count: 12
 RSpec/AnyInstance:
   Exclude:
-    - 'spec/jobs/warm_entry_cache_job_spec.rb'
-    - 'spec/requests/authentication_spec.rb'
-    - 'spec/requests/contentful_caching_spec.rb'
-    - 'spec/services/get_answers_for_steps_spec.rb'
-    - 'spec/services/save_answer_spec.rb'
+    - 'spec/jobs/self-serve/warm_entry_cache_job_spec.rb'
+    - 'spec/requests/self-serve/authentication_spec.rb'
+    - 'spec/requests/self-serve/contentful_caching_spec.rb'
+    - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
+    - 'spec/services/self-serve/save_answer_spec.rb'
     - 'spec/support/sign_in_helpers.rb'
-
-# Offense count: 1
-RSpec/EmptyExampleGroup:
-  Exclude:
-    - 'spec/models/activity_log_item_spec.rb'
 
 # Offense count: 18
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
   Exclude:
-    - 'spec/services/content/client_spec.rb'
-    - 'spec/services/create_section_spec.rb'
-    - 'spec/services/create_task_spec.rb'
-    - 'spec/services/get_answers_for_steps_spec.rb'
-    - 'spec/services/get_entry_spec.rb'
+    - 'spec/services/self-serve/content/client_spec.rb'
+    - 'spec/services/self-serve/create_section_spec.rb'
+    - 'spec/services/self-serve/create_task_spec.rb'
+    - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
+    - 'spec/services/self-serve/get_entry_spec.rb'
     - 'spec/support/contentful_helpers.rb'
 
 # Offense count: 1

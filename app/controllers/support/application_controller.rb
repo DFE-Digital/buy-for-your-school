@@ -2,7 +2,6 @@
 # :nocov:
 module Support
   class ApplicationController < ::ApplicationController
-
   end
 end
 # :nocov:
