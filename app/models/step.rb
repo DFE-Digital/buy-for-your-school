@@ -73,6 +73,7 @@ class Step < ApplicationRecord
     super || I18n.t("generic.button.next")
   end
 
+  # TODO: rename this
   # @return [Boolean]
   def skippable?
     skip_call_to_action_text.present?

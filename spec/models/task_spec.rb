@@ -253,4 +253,37 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe "#all_unanswered_questions_skipped?" do
+    let(:task) { create(:task) }
+
+    it "returns true when all unanswered questions have been skipped" do
+      number_step = create(:step, :number, task: task)
+      radio_step = create(:step, :radio, task: task)
+
+      expect(task.all_unanswered_questions_skipped?).to be false
+
+      task.skipped_ids << number_step.id << radio_step.id
+      task.save!
+
+      expect(task.all_unanswered_questions_skipped?).to be true
+    end
+  end
+
+  describe "#next_skipped_id" do
+    let(:task) { create(:task) }
+
+    it "returns the next ID in the array relative to the current one" do
+      task.skipped_ids << 1 << 2 << 3
+
+      expect(task.next_skipped_id(1)).to be 2
+      expect(task.next_skipped_id(2)).to be 3
+      expect(task.next_skipped_id(3)).to be 1
+    end
+
+    it "returns nil if there is only one skipped question" do
+      task.skipped_ids << 1
+      expect(task.next_skipped_id(1)).to be nil
+    end
+  end
 end

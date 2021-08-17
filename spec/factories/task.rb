@@ -4,6 +4,9 @@ FactoryBot.define do
     contentful_id { "5m26U35YLau4cOaJq6FXZA" }
     order { 0 }
     association :section
+    if ENV["RAILS_MIGRATION_PROD"] == "true"
+      skipped_ids { [] }
+    end
 
     trait :with_steps do
       transient do

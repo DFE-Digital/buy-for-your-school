@@ -68,6 +68,13 @@ class Task < ApplicationRecord
     tally_for(:statements) == tally_for(:acknowledged)
   end
 
+  # Use tally to infer state - visible unanswered questions vs. skipped
+  #
+  # @return [Boolean]
+  def all_unanswered_questions_skipped?
+    (tally_for(:questions) - tally_for(:answered)) == tally_for(:skipped)
+  end
+
   def visible_questions_with_answers
     eager_loaded_visible_steps.that_are_questions.select(&:answered?)
   end
@@ -87,7 +94,8 @@ class Task < ApplicationRecord
     step_ids = eager_loaded_visible_steps.pluck(:id)
     answered_question_ids = visible_questions_with_answers.pluck(:id)
 
-    remaining_ids = step_ids - answered_question_ids - statement_ids.to_a
+    remaining_ids = step_ids - answered_question_ids - statement_ids - skipped_ids.to_a
+    remaining_ids.concat(skipped_ids)
     remaining_ids.first
   end
 
@@ -104,6 +112,14 @@ class Task < ApplicationRecord
         single_date_answer
       ],
     ).ordered
+  end
+
+  # @param [String] current_id
+  #
+  # @return [Nil, String]
+  def next_skipped_id(current_id)
+    index = skipped_ids.index(current_id)
+    skipped_ids.rotate(index)[1]
   end
 
 private
@@ -123,6 +139,7 @@ private
       acknowledged: statement_ids.count,                    # visible completed statement steps
       questions: visible_steps.that_are_questions.count,    # visible question steps
       answered: visible_questions_with_answers.count,       # visible completed question steps
+      skipped: skipped_ids.count,                           # visible skipped question steps
     }
   end
 end

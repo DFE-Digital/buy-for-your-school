@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_05_130832) do
+ActiveRecord::Schema.define(version: 2021_08_16_152509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -160,8 +160,10 @@ ActiveRecord::Schema.define(version: 2021_08_05_130832) do
     t.integer "order"
     t.jsonb "step_tally", default: "{}"
     t.text "statement_ids", default: [], null: false, array: true
+    t.text "skipped_ids", default: [], null: false, array: true
     t.index ["order"], name: "index_tasks_on_order"
     t.index ["section_id"], name: "index_tasks_on_section_id"
+    t.index ["skipped_ids"], name: "index_tasks_on_skipped_ids"
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
