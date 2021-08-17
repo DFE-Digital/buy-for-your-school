@@ -127,6 +127,50 @@ en:
     # preview_step_link_text: "Preview step in service"
     spec_template_tag_title: "Specification tag"
 
+  #/ support
+  support:
+    requests:
+      start:
+        h1_heading: "Request help and support with your specification"
+        h2_heading: "Before you start"
+        p_intro_1: "Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification."
+        p_intro_2: "DfE's supported buying team will respond to you within 5 working days."
+        you_can_list_title: "You can:"
+        you_can_list:
+          - <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools-writing-a-spec" class="govuk-link">read about writing a specification</a>
+          - find out more about <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools" class="govuk-link">planning for what you're buying</a>
+          - read <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
+          - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
+      sections:
+        send_your_request: "Send your request"
+        about_your_school:
+          heading: "About your school"
+          name_label: "What is the name of your school?"
+          name_hint: "Enter the name or unique reference number (URN) of your school."
+          postcode_label: "What is your school's postcode?"
+          postcode_hint: "This will help us identify your school."
+        about_you:
+          heading: "About you"
+          full_name_label: "What is your name?"
+          email_address_label: "What is your email address?"
+          email_address_hint: "Your email address will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes."
+          phone_number_label: "What is your phone number?"
+          phone_number_hint: "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes."
+        about_your_request:
+          heading: "About your request for support"
+          specification_ids_label: "Which of your specifications are related to this request?"
+          specification_ids_hint: "A copy of the specifications you choose will be sent to us with this request in its current state. We will not receive any new changes you make. Select all that apply."
+          category_ids_label: "What are you buying?"
+          message_label: "How can we help?"
+          message_hint: "Briefly describe your problem in a few sentences."
+        about_your_contact_consent:
+          heading: "About your consent to be contacted in the future"
+          contact_preferences_label: "Can we contact you in the future?"
+          contact_preferences_hint: "Select all that apply."
+      buttons:
+        start: "Start"
+        continue: "Continue"
+
   errors:
     go_home: "Back to the service"
     internal_server_error:
