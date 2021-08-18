@@ -51,6 +51,11 @@ class Step < ApplicationRecord
     task.statement_ids.include?(id)
   end
 
+  # @return [Boolean]
+  def completed?
+    answered? || acknowledged?
+  end
+
   # Record step UUID confirming statement as read
   #
   # @return [Boolean]
