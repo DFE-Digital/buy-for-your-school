@@ -41,7 +41,7 @@ class AnswersController < ApplicationController
     ).call
 
     if result.success?
-      parent_task.save! if parent_task.skipped_ids.delete(@step.id)
+      @step.unskip! if @step.skipped?
 
       if parent_task.has_single_visible_step?
         redirect_to journey_path(@journey, anchor: @step.id)

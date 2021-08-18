@@ -64,6 +64,26 @@ class Step < ApplicationRecord
     task.save!
   end
 
+  # Record step as skipped
+  #
+  # @return [Boolean]
+  def skip!
+    task.skipped_ids << id unless skipped?
+    task.save!
+  end
+
+  # Remove step from skipped list
+  #
+  # @return [Nil, Boolean]
+  def unskip!
+    task.save! if task.skipped_ids.delete(id)
+  end
+
+  # @return [Boolean]
+  def skipped?
+    task.skipped_ids.include?(id)
+  end
+
   # Button text to advance through steps
   #
   # @see https://design-system.service.gov.uk/components/button/

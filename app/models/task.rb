@@ -131,15 +131,16 @@ private
     visible_steps = steps.visible
 
     self.step_tally = {
-      visible: visible_steps.count,                         # visible steps
-      hidden: steps.hidden.count,                           # hidden steps
-      total: steps.count,                                   # all steps
-      completed: completed_steps.count,                     # visible completed steps
-      statements: visible_steps.that_are_statements.count,  # visible statement steps
-      acknowledged: statement_ids.count,                    # visible completed statement steps
-      questions: visible_steps.that_are_questions.count,    # visible question steps
-      answered: visible_questions_with_answers.count,       # visible completed question steps
-      skipped: skipped_ids.count,                           # visible skipped question steps
+      visible: visible_steps.count,                                 # visible steps
+      hidden: steps.hidden.count,                                   # hidden steps
+      total: steps.count,                                           # all steps
+      completed: completed_steps.count,                             # visible completed steps
+      statements: visible_steps.that_are_statements.count,          # visible statement steps
+      acknowledged: statement_ids.count,                            # visible completed statement steps
+      questions: visible_steps.that_are_questions.count,            # visible question steps
+      answered: visible_questions_with_answers.count,               # visible completed question steps
+      # TODO: check to be removed
+      skipped: (skipped_ids.count if respond_to?(:skipped_ids)),    # visible skipped question steps
     }
   end
 end

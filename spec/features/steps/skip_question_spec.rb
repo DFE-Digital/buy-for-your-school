@@ -68,7 +68,7 @@ RSpec.feature "Skipping questions" do
         end
 
         it "adds skipped step ID to task's skipped_ids" do
-          expect(task.reload.skipped_ids.include?(number_step.id)).to be true
+          expect(number_step.reload.skipped?).to be true
         end
       end
     end
@@ -94,8 +94,9 @@ RSpec.feature "Skipping questions" do
 
     context "when all steps are skipped" do
       before do
-        task.skipped_ids << number_step.id << checkbox_step.id << radio_step.id
-        task.save!
+        number_step.skip!
+        checkbox_step.skip!
+        radio_step.skip!
         click_on "Task"
       end
 
@@ -113,10 +114,10 @@ RSpec.feature "Skipping questions" do
 
       context "when a skipped step is answered" do
         it "the skipped step ID is removed from task skipped_ids" do
-          expect(task.skipped_ids.include?(number_step.id)).to be true
+          expect(number_step.skipped?).to be true
           fill_in "answer[response]", with: "1"
           click_continue
-          expect(task.reload.skipped_ids.include?(number_step.id)).to be false
+          expect(number_step.reload.skipped?).to be false
         end
       end
     end

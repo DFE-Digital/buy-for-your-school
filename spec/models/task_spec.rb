@@ -274,16 +274,16 @@ RSpec.describe Task, type: :model do
     let(:task) { create(:task) }
 
     it "returns the next ID in the array relative to the current one" do
-      task.skipped_ids << 1 << 2 << 3
+      task.skipped_ids << "1" << "2" << "3"
 
-      expect(task.next_skipped_id(1)).to be 2
-      expect(task.next_skipped_id(2)).to be 3
-      expect(task.next_skipped_id(3)).to be 1
+      expect(task.next_skipped_id("1")).to eq "2"
+      expect(task.next_skipped_id("2")).to eq "3"
+      expect(task.next_skipped_id("3")).to eq "1"
     end
 
     it "returns nil if there is only one skipped question" do
-      task.skipped_ids << 1
-      expect(task.next_skipped_id(1)).to be nil
+      task.skipped_ids << "1"
+      expect(task.next_skipped_id("1")).to be nil
     end
   end
 end

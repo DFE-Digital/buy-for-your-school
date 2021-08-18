@@ -8,7 +8,6 @@ RSpec.describe AddDefaultToStepTally do
 
   context "when there are broken tasks" do
     before do
-      ENV["RAILS_MIGRATION_PROD"] = "true"
       section = create(:section, contentful_id: "checkboxes-question")
 
       # 1 of 3 steps hidden

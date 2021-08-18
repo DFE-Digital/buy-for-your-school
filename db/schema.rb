@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(version: 2021_08_16_152509) do
     t.text "skipped_ids", default: [], null: false, array: true
     t.index ["order"], name: "index_tasks_on_order"
     t.index ["section_id"], name: "index_tasks_on_section_id"
-    t.index ["skipped_ids"], name: "index_tasks_on_skipped_ids"
+    t.index ["skipped_ids"], name: "index_tasks_on_skipped_ids", using: :gin
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
