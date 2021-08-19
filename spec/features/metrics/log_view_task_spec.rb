@@ -40,6 +40,7 @@ RSpec.feature "User task actions are recorded" do
         "answered" => 0,
         "completed" => 0,
         "questions" => 4,
+        "skipped" => 0,
         "statements" => 0,
         "acknowledged" => 0,
       })
@@ -78,6 +79,7 @@ RSpec.feature "User task actions are recorded" do
           "answered" => 1,
           "completed" => 1,
           "questions" => 4,
+          "skipped" => 0,
           "statements" => 0,
           "acknowledged" => 0,
         })
@@ -125,6 +127,7 @@ RSpec.feature "User task actions are recorded" do
           "answered" => 4,
           "completed" => 4,
           "questions" => 4,
+          "skipped" => 0,
           "statements" => 0,
           "acknowledged" => 0,
         })
