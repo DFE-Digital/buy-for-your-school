@@ -152,6 +152,34 @@ RSpec.describe Step, type: :model do
     end
   end
 
+  describe "#completed?" do
+    context "when the step is a question" do
+      it "returns true if there is an answer" do
+        answer = create(:single_date_answer)
+        question = create(:step, :single_date, single_date_answer: answer)
+        expect(question.completed?).to be true
+      end
+
+      it "returns false if there is NOT an answer" do
+        question = create(:step, :single_date)
+        expect(question.completed?).to be false
+      end
+    end
+
+    context "when the step is a statement" do
+      let(:statement) { create(:step, :statement) }
+
+      it "returns true if the statement has been acknowledged" do
+        statement.acknowledge!
+        expect(statement.completed?).to be true
+      end
+
+      it "returns false if the statement has NOT been acknowledged" do
+        expect(statement.completed?).to be false
+      end
+    end
+  end
+
   describe "#options" do
     # TODO: WHAT IS THE NEW FORMAT?? This will need updating when options are set on the step with the new format
     it "returns a hash of options" do
@@ -178,6 +206,64 @@ RSpec.describe Step, type: :model do
         "upper" => "2000-01-01 00:01)",
         "lower" => "1947-10-13 12:34",
       })
+    end
+  end
+
+  describe "#skip!" do
+    let(:task) { create(:task) }
+    let(:step) { create(:step, :number, task: task) }
+
+    it "records skipped step if not present" do
+      expect(task.skipped_ids.size).to eq 0
+      step.skip!
+      expect(task.skipped_ids.size).to eq 1
+      expect(task.skipped_ids.first).to eq step.id
+    end
+
+    it "has no effect if step is already present" do
+      step.skip!
+      expect(task.skipped_ids.size).to eq 1
+      step.skip!
+      expect(task.skipped_ids.size).to eq 1
+    end
+  end
+
+  describe "#unskip!" do
+    let(:task) { create(:task) }
+    let(:step) { create(:step, :number, task: task) }
+
+    it "removes existing ID if present" do
+      step.skip!
+      expect(task.skipped_ids.size).to eq 1
+      step.unskip!
+      expect(task.skipped_ids.size).to eq 0
+    end
+
+    it "has no effect if step is not present" do
+      expect(task.skipped_ids.size).to eq 0
+      step.unskip!
+      expect(task.skipped_ids.size).to eq 0
+    end
+  end
+
+  describe "#skipped?" do
+    let(:task) { create(:task) }
+    let(:step) { create(:step, :number, task: task) }
+
+    it "returns true if step is skipped" do
+      step.skip!
+      expect(step.skipped?).to be true
+    end
+
+    it "returns false if step is not skipped" do
+      expect(step.skipped?).to be false
+    end
+
+    it "returns false if step is unskipped" do
+      step.skip!
+      expect(step.skipped?).to be true
+      step.unskip!
+      expect(step.skipped?).to be false
     end
   end
 end

@@ -120,6 +120,11 @@ en:
       continue: Continue answering these questions
       next: Continue to the next task
 
+  # /steps
+  step:
+    button:
+      skip: "Skip for now"
+
   # /design
   design:
     category_selection_header: Choose a category

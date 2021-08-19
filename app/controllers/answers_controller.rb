@@ -41,6 +41,8 @@ class AnswersController < ApplicationController
     ).call
 
     if result.success?
+      @step.unskip! if @step.skipped?
+
       if parent_task.has_single_visible_step?
         redirect_to journey_path(@journey, anchor: @step.id)
       elsif parent_task.all_steps_completed?
@@ -175,6 +177,8 @@ private
     { response: format_date(date_hash) }
   end
 
+  # Specific to checkboxes
+  #
   # @return [Boolean]
   def skip_answer?
     params.fetch("skip", false)

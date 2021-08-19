@@ -51,12 +51,37 @@ class Step < ApplicationRecord
     task.statement_ids.include?(id)
   end
 
+  # @return [Boolean]
+  def completed?
+    answered? || acknowledged?
+  end
+
   # Record step UUID confirming statement as read
   #
   # @return [Boolean]
   def acknowledge!
     task.statement_ids << id
     task.save!
+  end
+
+  # Record step as skipped
+  #
+  # @return [Boolean]
+  def skip!
+    task.skipped_ids << id unless skipped?
+    task.save!
+  end
+
+  # Remove step from skipped list
+  #
+  # @return [Nil, Boolean]
+  def unskip!
+    task.save! if task.skipped_ids.delete(id)
+  end
+
+  # @return [Boolean]
+  def skipped?
+    task.skipped_ids.include?(id)
   end
 
   # Button text to advance through steps
@@ -68,6 +93,7 @@ class Step < ApplicationRecord
     super || I18n.t("generic.button.next")
   end
 
+  # TODO: rename this
   # @return [Boolean]
   def skippable?
     skip_call_to_action_text.present?

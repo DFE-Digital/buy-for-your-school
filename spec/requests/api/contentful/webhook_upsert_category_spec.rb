@@ -12,6 +12,9 @@ RSpec.describe "Webhook upserts category", type: :request do
     }
 
     expect(Category.count).to be_zero
+    expect(Rollbar).to receive(:info)
+                         .with("Processed published webhook event for Contentful Category", category: "Catering")
+                         .and_call_original
 
     post "/api/contentful/category",
          params: fake_webhook_payload,

@@ -70,6 +70,34 @@ class StepsController < ApplicationController
     render "steps/#{@step.contentful_type}", locals: { layout: "steps/edit_form_wrapper" }
   end
 
+  def update
+    journey = current_journey
+    @step = Step.find(params[:id])
+
+    @step.skip!
+
+    # allow the user to skip a step and come back to it later
+    # depending on the state of the task, the user will be taken to the
+    # next incomplete step or back to the task view
+    if parent_task.has_single_visible_step?
+      # return to the journey page if we only have one step
+      redirect_to journey_path(journey, anchor: @step.id)
+    elsif parent_task.all_unanswered_questions_skipped?
+      # all the unanswered questions have been skipped
+      # cycle through the skipped questions
+      # or return to the task page if there is only one skipped quesiton left
+      next_step_id = parent_task.next_skipped_id(@step.id)
+      if next_step_id.nil?
+        redirect_to journey_task_path(journey, parent_task)
+      else
+        redirect_to journey_step_path(journey, next_step_id)
+      end
+    else
+      # continue to the next incomplete step
+      redirect_to journey_step_path(journey, parent_task.next_incomplete_step_id)
+    end
+  end
+
 private
 
   def parent_task
