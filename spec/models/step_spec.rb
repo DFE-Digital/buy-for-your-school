@@ -213,14 +213,14 @@ RSpec.describe Step, type: :model do
     let(:task) { create(:task) }
     let(:step) { create(:step, :number, task: task) }
 
-    it "adds provided ID to skipped_ids if it is not there already" do
+    it "records skipped step if not present" do
       expect(task.skipped_ids.size).to eq 0
       step.skip!
       expect(task.skipped_ids.size).to eq 1
       expect(task.skipped_ids.first).to eq step.id
     end
 
-    it "has no effect if the provided step is already there" do
+    it "has no effect if step is already present" do
       step.skip!
       expect(task.skipped_ids.size).to eq 1
       step.skip!
@@ -232,14 +232,14 @@ RSpec.describe Step, type: :model do
     let(:task) { create(:task) }
     let(:step) { create(:step, :number, task: task) }
 
-    it "removes existing ID from skipped_ids if it is there" do
+    it "removes existing ID if present" do
       step.skip!
       expect(task.skipped_ids.size).to eq 1
       step.unskip!
       expect(task.skipped_ids.size).to eq 0
     end
 
-    it "has no effect if the provided step is not already there" do
+    it "has no effect if step is not present" do
       expect(task.skipped_ids.size).to eq 0
       step.unskip!
       expect(task.skipped_ids.size).to eq 0
@@ -252,18 +252,18 @@ RSpec.describe Step, type: :model do
 
     it "returns true if step is skipped" do
       step.skip!
-      expect(step.skipped?).to eq true
+      expect(step.skipped?).to be true
     end
 
     it "returns false if step is not skipped" do
-      expect(step.skipped?).to eq false
+      expect(step.skipped?).to be false
     end
 
     it "returns false if step is unskipped" do
       step.skip!
-      expect(step.skipped?).to eq true
+      expect(step.skipped?).to be true
       step.unskip!
-      expect(step.skipped?).to eq false
+      expect(step.skipped?).to be false
     end
   end
 end
