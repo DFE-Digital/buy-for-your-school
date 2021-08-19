@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index]
   resources :journeys, only: %i[show create destroy] do
     resource :specification, only: [:show]
-    resources :steps, only: %i[new show edit] do
+    resources :steps, only: %i[new show edit update] do
       resources :answers, only: %i[create update]
     end
     resources :tasks, only: [:show]
