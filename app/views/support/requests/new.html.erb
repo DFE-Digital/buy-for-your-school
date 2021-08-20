@@ -1,53 +1,51 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    <%= form_with model: current_user, url: support_requests_path, method: :post do |form| %>
 
-    <%= form_with(model: @support_request, local: true) do |form| %>
+      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_you.heading") %></span>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <%= form.label :full_name, I18n.t("support.requests.sections.about_you.full_name_label"), class:"govuk-label govuk-label--l" %>
+        </h1>
+        <%= form.text_field :full_name, class: "govuk-input" %>
+        <%= form.text_field :id, class: "govuk-input" %>
+      </div>
 
-      <%= form.fields_for :user do |user_form| %>
-        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_you.heading") %></span>
-        <div class="govuk-form-group">
-          <h1 class="govuk-label-wrapper">
-            <%= user_form.label :full_name, I18n.t("support.requests.sections.about_you.full_name_label"), class:"govuk-label govuk-label--l" %>
-          </h1>
-          <%= user_form.text_field :full_name, class: "govuk-input" %>
+      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_you.heading") %></span>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <%= form.label :email_address, I18n.t("support.requests.sections.about_you.email_address_label"), class:"govuk-label govuk-label--l" %>
+        </h1>
+        <div id="email-address-hint" class="govuk-hint">
+          <%= I18n.t("support.requests.sections.about_you.email_address_hint") %>
         </div>
+        <%= form.email_field :email_address, class: "govuk-input" %>
+      </div>
 
-        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_you.heading") %></span>
-        <div class="govuk-form-group">
-          <h1 class="govuk-label-wrapper">
-            <%= user_form.label :email_address, I18n.t("support.requests.sections.about_you.email_address_label"), class:"govuk-label govuk-label--l" %>
-          </h1>
-          <div id="email-address-hint" class="govuk-hint">
-            <%= I18n.t("support.requests.sections.about_you.email_address_hint") %>
-          </div>
-          <%= user_form.email_field :email_address, class: "govuk-input" %>
+      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_you.heading") %></span>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <%= form.label :phone_number, I18n.t("support.requests.sections.about_you.phone_number_label"), class:"govuk-label govuk-label--l" %>
+        </h1>
+        <div id="phone-number-hint" class="govuk-hint">
+          <%= I18n.t("support.requests.sections.about_you.phone_number_hint") %>
         </div>
+        <%= form.text_field :phone_number, class: "govuk-input" %>
+      </div>
 
-        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_you.heading") %></span>
-        <div class="govuk-form-group">
-          <h1 class="govuk-label-wrapper">
-            <%= user_form.label :phone_number, I18n.t("support.requests.sections.about_you.phone_number_label"), class:"govuk-label govuk-label--l" %>
-          </h1>
-          <div id="phone-number-hint" class="govuk-hint">
-            <%= I18n.t("support.requests.sections.about_you.phone_number_hint") %>
-          </div>
-          <%= user_form.text_field :phone_number, class: "govuk-input" %>
+      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_contact_consent.heading") %></span>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <%= form.label :contact_preferences, I18n.t("support.requests.sections.about_your_contact_consent.contact_preferences_label"), class:"govuk-label govuk-label--l" %>
+        </h1>
+        <div id="contact-preferences-hint" class="govuk-hint">
+          <%= I18n.t("support.requests.sections.about_your_contact_consent.contact_preferences_hint") %>
         </div>
-
-        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_contact_consent.heading") %></span>
-        <div class="govuk-form-group">
-          <h1 class="govuk-label-wrapper">
-            <%= user_form.label :contact_preferences, I18n.t("support.requests.sections.about_your_contact_consent.contact_preferences_label"), class:"govuk-label govuk-label--l" %>
-          </h1>
-          <div id="contact-preferences-hint" class="govuk-hint">
-            <%= I18n.t("support.requests.sections.about_your_contact_consent.contact_preferences_hint") %>
-          </div>
         - render checkboxes for contact prefs
-        </div>
-      <% end %>
+      </div>
 
-      <%= form.fields_for :school do |school_form| %>
+      <%= form.fields_for :schools do |school_form| %>
 
         <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_school.heading") %></span>
         <div class="govuk-form-group">
@@ -73,39 +71,42 @@
 
       <% end %>
 
-      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
-      <div class="govuk-form-group">
-        <h1 class="govuk-label-wrapper">
-          <%= form.label :specification_ids, I18n.t("support.requests.sections.about_your_request.specification_ids_label"), class:"govuk-label govuk-label--l" %>
-        </h1>
-        <div id="specification-ids-hint" class="govuk-hint">
-          <%=I18n.t("support.requests.sections.about_your_request.specification_ids_hint") %>
-        </div>
-        Render Specs
-      </div>
+      <%= form.fields_for :support_requests do |support_form| %>
 
-      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
-      <div class="govuk-form-group">
-        <h1 class="govuk-label-wrapper">
-          <%= form.label :category_ids, I18n.t("support.requests.sections.about_your_request.category_ids_label"), class:"govuk-label govuk-label--l" %>
-        </h1>
-        - Render radios for each category
-      </div>
-
-      <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
-      <div class="govuk-form-group">
-        <h1 class="govuk-label-wrapper">
-          <%= form.label :message, I18n.t("support.requests.sections.about_your_request.message_label"), class:"govuk-label govuk-label--l" %>
-        </h1>
-        <div id="message-hint" class="govuk-hint">
-          <%= I18n.t("support.requests.sections.about_your_request.message_hint") %>
+        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper">
+            <%= support_form.label :specification_ids, I18n.t("support.requests.sections.about_your_request.specification_ids_label"), class:"govuk-label govuk-label--l" %>
+          </h1>
+          <div id="specification-ids-hint" class="govuk-hint">
+            <%=I18n.t("support.requests.sections.about_your_request.specification_ids_hint") %>
+          </div>
+          Render Specs
         </div>
-        <%= form.text_area :message, class: "govuk-textarea", rows: 5 %>
-      </div>
+
+        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper">
+            <%= support_form.label :category_ids, I18n.t("support.requests.sections.about_your_request.category_ids_label"), class:"govuk-label govuk-label--l" %>
+          </h1>
+          - Render radios for each category
+        </div>
+
+        <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper">
+            <%= support_form.label :message, I18n.t("support.requests.sections.about_your_request.message_label"), class:"govuk-label govuk-label--l" %>
+          </h1>
+          <div id="message-hint" class="govuk-hint">
+            <%= I18n.t("support.requests.sections.about_your_request.message_hint") %>
+          </div>
+          <%= support_form.text_area :message, class: "govuk-textarea", rows: 5 %>
+        </div>
+
+      <% end %>
+
 
       <%= form.submit I18n.t("support.requests.buttons.continue"), class: "govuk-button", role: "button" %>
-
     <% end %>
-
   </div>
 </div>

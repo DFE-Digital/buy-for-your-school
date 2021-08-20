@@ -1,0 +1,44 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= I18n.t("users.heading") %></h2>
+    <dl class="govuk-summary-list">
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("user.full_name") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.full_name %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("user.phone_number") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.phone_number %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("user.email_address") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.email_address %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
+        </dd>
+      </div>
+
+    </dl>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<%= form_with model: current_user do |form| %>
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <%= form.label :full_name, I18n.t("generic.label.what_is", label: I18n.t("user.full_name")).humanize, class:"govuk-label govuk-label--l" %>
+    </h1>
+    <%= form.text_field :full_name, class: "govuk-input" %>
+  </div>
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <%= form.label :phone_number, I18n.t("generic.label.what_is", label: I18n.t("user.phone_number")).humanize, class:"govuk-label govuk-label--l" %>
+    </h1>
+    <%= form.text_field :phone_number, class: "govuk-input" %>
+  </div>
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <%= form.label :email_address, I18n.t("generic.label.what_is", label: I18n.t("user.email_address")).humanize, class:"govuk-label govuk-label--l" %>
+    </h1>
+    <%= form.email_field :email_address, class: "govuk-input" %>
+  </div>
+
+  <%= form.submit I18n.t("generic.button.update"), class: "govuk-button", role: "button" %>
+
+<% end %>

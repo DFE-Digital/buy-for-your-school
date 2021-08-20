@@ -12,6 +12,8 @@ en:
       next: "Continue"
       change_answer: "Change"
       update: "Update"
+    label:
+      what_is: "What is %{label}?"
   banner:
     design: "%{env} Environment"
     beta:
@@ -126,6 +128,14 @@ en:
     category_selection_header: "Choose a category"
     # preview_step_link_text: "Preview step in service"
     spec_template_tag_title: "Specification tag"
+
+ # /users
+  users:
+    heading: "About you"
+  user:
+    full_name: "Your name"
+    phone_number: "Your phone number"
+    email_address: "Your email address"
 
   #/ support
   support:

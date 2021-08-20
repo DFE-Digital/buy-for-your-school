@@ -171,8 +171,8 @@ ActiveRecord::Schema.define(version: 2021_08_16_133303) do
     t.jsonb "specification_ids", default: {}
     t.jsonb "category_ids", default: {}
     t.string "message"
-    t.uuid "school_id", null: false
-    t.uuid "user_id", null: false
+    t.uuid "school_id"
+    t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_id"], name: "index_support_requests_on_school_id"

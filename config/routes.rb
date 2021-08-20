@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     resources :requests, only: %i[index show new edit create update]
   end
 
+  resources :users
+
   get "dashboard", to: "dashboard#show"
 
   # Errors

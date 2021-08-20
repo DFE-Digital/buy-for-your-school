@@ -3,14 +3,12 @@
 module Support
   class RequestsController < ApplicationController
     def new
-      @support_request = SupportRequest.new(user: current_user)
-      @support_request.build_school
+      @current_user.support_requests.build
+      @current_user.schools.build
     end
 
     def create
-      @support_request = SupportRequest.new(support_request_params)
-      @support_request.user.dfe_sign_in_uid = current_user.dfe_sign_in_uid
-      if @support_request.save
+      if @current_user.update(support_request_params)
         redirect_to @support_request, notice: "Support request was successfully created."
       else
         render :new
@@ -28,10 +26,10 @@ module Support
     end
 
     def support_request_params
-      params.require(:support_request).permit(
-        :specification_ids, :category_ids, :message,
-        user_attributes: %i[full_name email_address phone_number contact_preferences],
-        school_attributes: %i[name postcode]
+      params.require(:user).permit(
+        :id, :full_name, :email_address, :phone_number, :contact_preferences,
+        schools_attributes: %i[name postcode],
+        support_requests_attributes: %i[specification_ids category_ids message]
       )
     end
   end
