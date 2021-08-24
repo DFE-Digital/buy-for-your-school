@@ -161,7 +161,7 @@ en:
   # /steps
   step:
     button:
-      skip: "Skip for now"
+      skip: Skip for now
 
   # /design
   design:
