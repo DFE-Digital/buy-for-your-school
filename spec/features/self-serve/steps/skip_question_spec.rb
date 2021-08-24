@@ -92,6 +92,20 @@ RSpec.feature "Skipping questions" do
       end
     end
 
+    context "when some steps are answered" do
+      before do
+        create(:number_answer, step: number_step)
+        click_on "Task"
+        click_on "Continue answering these questions"
+      end
+
+      it "returns to the task page on last step" do
+        click_on "Skip for now"
+        click_on "Skip for now"
+        expect(page).to have_a_task_path
+      end
+    end
+
     context "when all steps are skipped" do
       before do
         number_step.skip!
