@@ -6,12 +6,12 @@ en:
       default: "%-d %b %Y"
   generic:
     button:
-      back: "Back"
-      start: "Start"
-      sign_out: "Sign out"
-      next: "Continue"
-      change_answer: "Change"
-      update: "Update"
+      back: Back
+      start: Start
+      sign_out: Sign out
+      next: Continue
+      change_answer: Change
+      update: Update
   banner:
     design: "%{env} Environment"
     beta:
@@ -26,7 +26,7 @@ en:
       destroy: You have been signed out.
   planning:
     start_page:
-      page_title: "Catering services"
+      page_title: Catering services
 
   specifying:
     start_page:
@@ -60,52 +60,51 @@ en:
         - the catering spaces and equipment available to a supplier in your school
       pause_and_resume_body: You can pause and resume your specification at any time.
     errors:
-      contentful_entry_not_found: "An unexpected error occurred. The starting step has been revoked by the content team."
+      contentful_entry_not_found: An unexpected error occurred. The starting step has been revoked by the content team.
 
   journey:
     specification:
-      header: "Your specification"
-      warning: "You have not completed all the tasks. There may be information missing from your specification."
-      button: "View your specification"
+      header: Your specification
+      warning: You have not completed all the tasks. There may be information missing from your specification.
+      button: View your specification
       download:
-        button: "Download (.docx)"
+        button: Download (.docx)
         warning:
-          #/ TODO Not keen on HTML inside local yml files, refactor.
           incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
       delete:
         header:
-          confirm: "Are you sure you want to delete this specification?"
+          confirm: Are you sure you want to delete this specification?
           confirmed: "This specification has been deleted"
-        warning: "Specifications are deleted permanently and cannot be retrieved."
+        warning: Specifications are deleted permanently and cannot be retrieved.
         confirmed: "Specification %{title} was successfully deleted."
         download:
           message: "You can %{link} before you delete it."
-          link: "download this specification"
+          link: download this specification
         button:
-          delete: "Delete specification"
-          cancel: "Cancel"
-          dashboard: "Continue to dashboard"
+          delete: Delete specification
+          cancel: Cancel
+          dashboard: Continue to dashboard
 
   # /dashboard
   dashboard:
-    header: "Specifications dashboard"
+    header: Specifications dashboard
     create:
-      header: "Create a new specification"
-      body: "Create a new specification for a catering procurement."
-      button: "Create a new specification"
+      header: Create a new specification
+      body: Create a new specification for a catering procurement.
+      button: Create a new specification
     edit:
-      button: "Edit"
+      button: Edit
     delete:
-      button: "Delete"
+      button: Delete
     existing:
-      header: "Existing specifications"
-      body: "Continue with a draft specification, and review completed specifications."
+      header: Existing specifications
+      body: Continue with a draft specification, and review completed specifications.
 
   # /categories
   categories:
-    header: "Choose the type of specification you want to build"
-    support_info: "We currently only support catering and multifunctional devices."
-    not_found: "No categories found"
+    header: Choose the type of specification you want to build
+    support_info: We currently only support catering and multifunctional devices.
+    not_found: No categories found
 
   # /journeys#show
   task_list:
@@ -128,37 +127,36 @@ en:
 
   # /design
   design:
-    category_selection_header: "Choose a category"
-    # preview_step_link_text: "Preview step in service"
-    spec_template_tag_title: "Specification tag"
+    category_selection_header: Choose a category
+    spec_template_tag_title: Specification tag
 
   errors:
-    go_home: "Back to the service"
+    go_home: Back to the service
     internal_server_error:
-      page_title: "Internal server error"
-      page_body: "Sorry, there is a problem with the service. Please try again later."
+      page_title: Internal server error
+      page_body: Sorry, there is a problem with the service. Please try again later.
     not_found:
-      page_title: "Page not found"
-      page_body: "Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address."
+      page_title: Page not found
+      page_body: Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.
     unacceptable:
-      page_title: "Unacceptable request"
-      page_body: "There was a problem with your request."
+      page_title: Unacceptable request
+      page_body: There was a problem with your request.
     contentful_entry_not_found:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
     unexpected_contentful_model:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
     unexpected_contentful_step_type:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
     repeat_step_in_the_contentful_journey:
-      page_title: "An unexpected error occurred"
+      page_title: An unexpected error occurred
       page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
     specification_template_invalid:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."
+      page_title: An unexpected error occurred
+      page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
     sign_in:
       unexpected_failure:
-        page_title: "An unexpected error occurred"
-        page_body: "The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly."
+        page_title: An unexpected error occurred
+        page_body: The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly.
