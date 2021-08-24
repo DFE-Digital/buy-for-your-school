@@ -1,13 +1,11 @@
 RSpec.feature "Sign out" do
-  # let(:user) { create(:user) }
-  # let(:dsi_uid) { user.dfe_sign_in_uid }
-
-  it "destroys the session and returns you to the home page" do
+  before do
     user_is_signed_in
-    # user_exists_in_dfe_sign_in(dsi_uid: dsi_uid)
 
     visit "/dashboard"
+  end
 
+  it "destroys the session and returns you to the home page" do
     within("header") do
       expect(page).to have_link "Sign out", href: "/auth/dfe/signout", class: "govuk-header__link"
     end
