@@ -9,6 +9,20 @@ The format is based on [Keep a Changelog 1.0.0].
 - Added Support Request model.
 - Added full_name, email_address, phone_number, contact_preferences to User.
 
+**Rich Data**
+- Integrate fully with DSI to gather names, email and organisation at authentication
+- Add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
+- Make a post authentication API call to DSI for roles and organisations information
+- Register localhost with DSI for callbacks in development
+- Document DSI changes including creation of SSL self-certs required in development
+- Integrate with GIAS by downloading and manipulating data in CSV format
+- Include capacity to export GIAS data as `YAML` or `JSON` for later use
+- Validate and coerce data using `dry-schema` and `dry-transformer`
+- Introduce a `Guest` entity using `dry-struct` to assist with RBAC
+- Replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
+- Add strict typing into new functional service objects using `dry-types`
+- Add `foreman` as an optional convenience in development
+
 **House keeping**
 - bump Ruby to version `3.0.1`
 - document code using Yard
@@ -25,13 +39,13 @@ The format is based on [Keep a Changelog 1.0.0].
 - clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
   no-op until approved
 
-
 **Steps**
 - implement __interrupt pattern__ which introduces a step that is not semantically
   a question but a statement
 - remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
 - add custom answer validation logic which can be controlled in Contentful
 - fix progression to the next incomplete task
+- add `skipped_ids` to `Task` to allow users to skip questions
 
 **Multiple Categories**
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`

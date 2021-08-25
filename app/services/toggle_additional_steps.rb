@@ -37,15 +37,15 @@ private
     @journey_steps ||= journey.steps
   end
 
-  # @param :expected [String]
-  # @param :response [String, Array<String>]
+  # @param expected [String]
+  # @param response [String, Array<String>]
   #
   # @return [Boolean]
   def matching_answer?(expected:, response:)
     Array(response).any? { |res| res.casecmp(expected).zero? }
   end
 
-  # @param :step [Step]
+  # @param step [Step]
   #
   # @return [Step::ActiveRecord_AssociationRelation]
   def additional_steps_to_show(step:)
@@ -69,7 +69,7 @@ private
     journey_steps.where(contentful_id: non_matching_next_step_ids.compact)
   end
 
-  # @param :next_steps [Step::ActiveRecord_AssociationRelation]
+  # @param next_steps [Step::ActiveRecord_AssociationRelation]
   #
   # @return [False, Array<Step>]
   def recursively_hide_additional_steps!(next_steps:)
@@ -90,8 +90,8 @@ private
     end
   end
 
-  # @param :current_step [Step]
-  # @param :next_steps [Step::ActiveRecord_AssociationRelation]
+  # @param current_step [Step]
+  # @param next_steps [Step::ActiveRecord_AssociationRelation]
   #
   # @return [False, Array<Step>]
   def recursively_show_additional_steps!(current_step:, next_steps:)

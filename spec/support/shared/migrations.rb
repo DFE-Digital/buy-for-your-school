@@ -24,9 +24,11 @@ RSpec.shared_context "with data migrations" do
 
   before do
     ActiveRecord::Migration.suppress_messages { down }
+    ActiveRecord::Base.connection.clear_cache!
   end
 
   after do
     ActiveRecord::Migration.suppress_messages { up }
+    ActiveRecord::Base.connection.clear_cache!
   end
 end

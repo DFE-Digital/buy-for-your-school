@@ -6,14 +6,18 @@ ruby "3.0.1"
 
 gem "bootsnap", ">= 1.1.0", require: false
 gem "climate_control"
-# Remove coffee-rails, only used for google analytics
-gem "coffee-rails", "~> 5.0"
+gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.16"
+gem "dry-schema"
+gem "dry-struct"
+gem "dry-transformer"
 gem "govuk_design_system_formbuilder", "~> 2.7"
 gem "high_voltage"
-gem "htmltoword"
+gem "htmltoword" # TODO: replace htmltoword with pandoc-ruby
+gem "httpclient"
 gem "jbuilder", "~> 2.11"
 gem "jquery-rails"
+gem "jwt"
 gem "liquid"
 gem "mini_racer"
 gem "omniauth"
@@ -34,31 +38,6 @@ gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 
-group :development do
-  gem "listen", ">= 3.0.5", "< 3.7"
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
-  gem "web-console", ">= 3.3.0"
-end
-
-group :test do
-  gem "capybara", ">= 2.15"
-  gem "mock_redis"
-  gem "selenium-webdriver"
-  gem "shoulda-matchers"
-  gem "simplecov"
-  gem "webmock"
-end
-
-group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem "rails-erd"
-  gem "rails_layout"
-  gem "spring-commands-rspec"
-  gem "yard-junk"
-end
-
 group :development, :test do
   gem "brakeman"
   gem "bullet"
@@ -73,7 +52,27 @@ group :development, :test do
   gem "rubocop-performance", require: false
 end
 
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "foreman"
+  gem "listen", ">= 3.0.5", "< 3.8"
+  gem "rails-erd"
+  gem "rails_layout"
+  gem "spring"
+  gem "spring-commands-rspec"
+  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "web-console", ">= 3.3.0"
+  gem "yard-junk"
+end
+
 group :test do
+  gem "capybara", ">= 2.15"
   gem "database_cleaner"
   gem "launchy"
+  gem "mock_redis"
+  gem "selenium-webdriver"
+  gem "shoulda-matchers"
+  gem "simplecov"
+  gem "webmock"
 end

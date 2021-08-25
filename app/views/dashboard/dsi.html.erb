@@ -1,0 +1,50 @@
+<%# This page is purely to assist in active development and peer review. Remove once complete %>
+
+<h3>JWT</h3>
+<%= @token %>
+
+<hr />
+
+<h3>Your Profile</h3>
+
+<dl>
+  <dt>DSI UUID</dt>
+  <dd><%= @user.dfe_sign_in_uid %></dd>
+
+  <dt>First name</dt>
+  <dd><%= @user.first_name %></dd>
+
+  <dt>Last name</dt>
+  <dd><%= @user.last_name %></dd>
+
+  <dt>Full name</dt>
+  <dd><%= @user.full_name %></dd>
+
+  <dt>Email</dt>
+  <dd><%= @user.email %></dd>
+
+  <dt>Roles</dt>
+  <dd><code><%= @user.roles %></code></dd>
+
+  <dt>Orgs</dt>
+  <dd><code><%= @user.orgs %></code></dd>
+</dl>
+
+<hr />
+
+<h3>Service Managers</h3>
+
+<% @users.each do |user| %>
+
+  <%= user.uid %>
+  <%= user.first_name %>
+  <%= user.last_name %>
+  <%= user.email %>
+  <%= user.role_name %>
+  <%= user.role_id %>
+  <%= user.organisation_name %>
+  <%= user.organisation_ukprn %>
+  <%= user.organisation_crn %>
+
+  <hr />
+<% end %>

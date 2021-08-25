@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_11_123204) do
+ActiveRecord::Schema.define(version: 2021_08_17_122620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -174,8 +174,10 @@ ActiveRecord::Schema.define(version: 2021_08_11_123204) do
     t.integer "order"
     t.jsonb "step_tally", default: "{}"
     t.text "statement_ids", default: [], null: false, array: true
+    t.text "skipped_ids", default: [], null: false, array: true
     t.index ["order"], name: "index_tasks_on_order"
     t.index ["section_id"], name: "index_tasks_on_section_id"
+    t.index ["skipped_ids"], name: "index_tasks_on_skipped_ids", using: :gin
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
@@ -183,12 +185,6 @@ ActiveRecord::Schema.define(version: 2021_08_11_123204) do
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "full_name"
-    t.string "email"
-    t.string "phone_number"
-    t.jsonb "contact_preferences", default: {}
   end
 
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade

@@ -14,22 +14,37 @@ class ApplicationController < ActionController::Base
 protected
 
   helper_method :current_user
+
+  # @return [User, Guest]
+  #
   def current_user
-    @current_user ||= FindOrCreateUserFromSession.new(session_hash: session.to_hash).call
+    @current_user ||= CurrentUser.new.call(uid: session[:dfe_sign_in_uid])
   end
 
+  # before_action - Ensure session is ended
+  #
+  # @return [nil]
+  #
   def authenticate_user!
-    return if current_user
+    return unless current_user.guest?
 
     session.delete(:dfe_sign_in_uid)
-    redirect_to root_path, notice: "You've been signed out."
+    redirect_to root_path, notice: I18n.t("banner.session.visitor")
   end
 
+  # @return [Journey]
+  #
   def current_journey
     journey_id = params[:journey_id].presence || params[:id]
     @current_journey ||= Journey.find(journey_id)
   end
 
+  # `Before Action` on:
+  #   - steps_controller
+  #   - answers_contorller
+  #   - journeys_controller
+  #   - specifications_controller
+  #
   def check_user_belongs_to_journey?
     return true if current_journey.user == current_user
 
