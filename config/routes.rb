@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
   post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
 
+  # DSI: dev only (remove later)
+  get "dsi", to: "dashboard#dsi"
+
   # Errors
   get "/404", to: "errors#not_found"
   get "/422", to: "errors#unacceptable"

@@ -27,6 +27,8 @@ RSpec.describe "Authentication", type: :request do
 
     # sign_in_path
     it "DfE Sign-in can redirect users back to the service with the callback endpoint" do
+      allow_any_instance_of(::Dsi::Client).to receive(:roles)
+      allow_any_instance_of(::Dsi::Client).to receive(:orgs)
       get "/auth/dfe/callback"
       expect(response).to have_http_status(:found)
     end
@@ -69,22 +71,20 @@ RSpec.describe "Authentication", type: :request do
   end
 
   describe "Sign out" do
-    it "tells UserSession to delete session data" do
+    before do
       user_exists_in_dfe_sign_in
+    end
+
+    it "tells UserSession to delete session data" do
       expect_any_instance_of(UserSession).to receive(:delete!)
-
       delete "/auth/dfe/signout"
-
       expect(response).to redirect_to "/"
     end
 
     context "when there is no sign out token" do
       it "redirects the user to the root path" do
-        user_exists_in_dfe_sign_in
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(false)
-
         delete "/auth/dfe/signout"
-
         expect(response).to redirect_to "/"
       end
     end
@@ -97,11 +97,8 @@ RSpec.describe "Authentication", type: :request do
       end
 
       it "redirects to the issuer with token and return redirect params" do
-        user_exists_in_dfe_sign_in
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(true)
-
         delete "/auth/dfe/signout"
-
         expect(response).to redirect_to "https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=&post_logout_redirect_uri=http%3A%2F%2Fwww.example.com%2Fauth%2Fdfe%2Fsignout"
       end
     end
@@ -109,10 +106,7 @@ RSpec.describe "Authentication", type: :request do
 
   describe "Concurrent sign ins" do
     context "when a DSI user is already signed in" do
-      after do
-        RedisSessions.redis.flushdb
-        RedisSessionLookup.redis.flushdb
-      end
+      let!(:user) { create(:user, dfe_sign_in_uid: "123") }
 
       before do
         # Simulate what session_store does with a new session
@@ -121,11 +115,16 @@ RSpec.describe "Authentication", type: :request do
 
         # Simulate how we create a session lookup store
         RedisSessionLookup.redis.set("user_dsi_id:123", "2::1098345703928457320948572304")
+
+        user_exists_in_dfe_sign_in(user: user)
+      end
+
+      after do
+        RedisSessions.redis.flushdb
+        RedisSessionLookup.redis.flushdb
       end
 
       it "destroys the previous users session so they have to authenticate again" do
-        user_exists_in_dfe_sign_in(dsi_uid: "123")
-
         mock_redis = MockRedis.new
         allow(RedisSessions).to receive(:redis).and_return(mock_redis)
         allow(mock_redis).to receive(:del).with("session:2::1098345703928457320948572304").and_return(0)

@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+**Rich Data**
+- Integrate fully with DSI to gather names, email and organisation at authentication
+- Add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
+- Make a post authentication API call to DSI for roles and organisations information
+- Register localhost with DSI for callbacks in development
+- Document DSI changes including creation of SSL self-certs required in development
+- Integrate with GIAS by downloading and manipulating data in CSV format
+- Include capacity to export GIAS data as `YAML` or `JSON` for later use
+- Validate and coerce data using `dry-schema` and `dry-transformer`
+- Introduce a `Guest` entity using `dry-struct` to assist with RBAC
+- Replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
+- Add strict typing into new functional service objects using `dry-types`
+- Add `foreman` as an optional convenience in development
+
 **House keeping**
 - bump Ruby to version `3.0.1`
 - document code using Yard
@@ -21,7 +35,6 @@ The format is based on [Keep a Changelog 1.0.0].
   currently no-op until approved
 - clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
   no-op until approved
-
 
 **Steps**
 - implement __interrupt pattern__ which introduces a step that is not semantically

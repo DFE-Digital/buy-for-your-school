@@ -14,7 +14,7 @@ RSpec.feature "Categories page" do
 
     it "renders a banner notice" do
       expect(find("h2.govuk-notification-banner__title")).to have_text "Notice"
-      expect(find("h3.govuk-notification-banner__heading")).to have_text "You've been signed out."
+      expect(find("h3.govuk-notification-banner__heading")).to have_text "You must sign in."
     end
   end
 
