@@ -8,7 +8,7 @@ FactoryBot.define do
     #   # association { create(:journey) }
     # end
 
-    # trait :with_category_ids do
+    # trait :with_category_id do
     #   # association { create(:create) }
     # end
   end

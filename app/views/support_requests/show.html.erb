@@ -6,14 +6,25 @@
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Your school
+          Your school name
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @support_request.school_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-school-name">
-            Change<span class="govuk-visually-hidden"> name</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Your school urn
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @support_request.school_urn %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
         </dd>
       </div>
     </dl>
@@ -26,11 +37,10 @@
           Your name
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @current_user.full_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-name">
-            Change<span class="govuk-visually-hidden"> name</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -38,12 +48,11 @@
           Your phone number
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @current_user.phone_number %>
         </dd>
 
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-phone-number">
-            Change<span class="govuk-visually-hidden"> date of birth</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -51,11 +60,10 @@
           Your email address
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @current_user.email %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-email-address">
-            Change<span class="govuk-visually-hidden"> contact information</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
         </dd>
       </div>
     </dl>
@@ -65,14 +73,13 @@
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Support request
+          <%= I18n.t("support.requests.sections.about_your_request.category_ids_label") %>
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @support_request.category&.title %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-name">
-            Change<span class="govuk-visually-hidden"> name</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -80,11 +87,10 @@
           Description of problem
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @support_request.message %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-problem-description">
-            Change<span class="govuk-visually-hidden"> date of birth</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -92,11 +98,12 @@
           Attached specifications
         </dt>
         <dd class="govuk-summary-list__value">
+          <%= @support_request.journey&.created_at&.strftime("%e %B %Y") %>
+          <br>
+          <%= @support_request.journey&.category&.title %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="attach-your-specification">
-            Change<span class="govuk-visually-hidden"> contact information</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
         </dd>
       </div>
     </dl>
@@ -112,9 +119,7 @@
           TODO
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-name">
-            Change<span class="govuk-visually-hidden"> name</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -125,9 +130,7 @@
           TODO
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="enter-problem-description">
-            Change<span class="govuk-visually-hidden"> date of birth</span>
-          </a>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
         </dd>
       </div>
     </dl>

@@ -1,12 +1,16 @@
 class CreateSupportRequests < ActiveRecord::Migration[6.1]
   def change
     create_table :support_requests, id: :uuid do |t|
-      t.jsonb :specification_ids, default: {}
-      t.jsonb :category_ids, default: {}
+      t.string :user_id
+      t.uuid :journey_id
+      t.uuid :category_id
       t.string :message
-      t.uuid :school_id, null: false, index: true
-      t.uuid :user_id, null: false, index: true
+      t.string :school_name
+      t.string :school_urn
       t.timestamps
+      t.index :user_id
+      t.index :journey_id
+      t.index :category_id
     end
   end
 end

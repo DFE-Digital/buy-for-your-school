@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_16_133303) do
+ActiveRecord::Schema.define(version: 2021_08_11_123204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -102,22 +102,6 @@ ActiveRecord::Schema.define(version: 2021_08_16_133303) do
     t.index ["step_id"], name: "index_radio_answers_on_step_id"
   end
 
-  create_table "school_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "school_id", null: false
-    t.uuid "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["school_id"], name: "index_school_users_on_school_id"
-    t.index ["user_id"], name: "index_school_users_on_user_id"
-  end
-
-  create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "postcode"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "journey_id"
     t.string "title", null: false
@@ -168,14 +152,16 @@ ActiveRecord::Schema.define(version: 2021_08_16_133303) do
   end
 
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.jsonb "specification_ids", default: {}
-    t.jsonb "category_ids", default: {}
+    t.string "user_id"
+    t.uuid "journey_id"
+    t.uuid "category_id"
     t.string "message"
-    t.uuid "school_id"
-    t.uuid "user_id"
+    t.string "school_name"
+    t.string "school_urn"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["school_id"], name: "index_support_requests_on_school_id"
+    t.index ["category_id"], name: "index_support_requests_on_category_id"
+    t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
@@ -197,8 +183,10 @@ ActiveRecord::Schema.define(version: 2021_08_16_133303) do
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
     t.string "full_name"
-    t.string "email_address"
+    t.string "email"
     t.string "phone_number"
     t.jsonb "contact_preferences", default: {}
   end

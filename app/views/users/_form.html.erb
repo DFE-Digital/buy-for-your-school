@@ -1,5 +1,6 @@
 <%= form_with model: current_user do |form| %>
 
+  <span class="govuk-caption-l"><%= I18n.t("users.heading") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <%= form.label :full_name, I18n.t("generic.label.what_is", label: I18n.t("user.full_name")).humanize, class:"govuk-label govuk-label--l" %>
@@ -7,19 +8,34 @@
     <%= form.text_field :full_name, class: "govuk-input" %>
   </div>
 
+  <span class="govuk-caption-l"><%= I18n.t("users.heading") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <%= form.label :phone_number, I18n.t("generic.label.what_is", label: I18n.t("user.phone_number")).humanize, class:"govuk-label govuk-label--l" %>
     </h1>
+    <div id="phone-number-hint" class="govuk-hint">
+      <%= I18n.t("user.phone_number_hint") %>
+    </div>
     <%= form.text_field :phone_number, class: "govuk-input" %>
   </div>
 
+  <span class="govuk-caption-l"><%= I18n.t("users.heading") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
-      <%= form.label :email_address, I18n.t("generic.label.what_is", label: I18n.t("user.email_address")).humanize, class:"govuk-label govuk-label--l" %>
+      <%= form.label :email, I18n.t("generic.label.what_is", label: I18n.t("user.email")).humanize, class:"govuk-label govuk-label--l" %>
     </h1>
-    <%= form.email_field :email_address, class: "govuk-input" %>
+    <%= form.email_field :email, class: "govuk-input" %>
   </div>
+
+  <span class="govuk-caption-l"><%= I18n.t("users.consent_heading") %></span>
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <%= form.label :contact_preferences, I18n.t("user.contact_preferences"), class:"govuk-label govuk-label--l" %>
+    </h1>
+    <%= form.text_field :contact_preferences, class: "govuk-input" %>
+  </div>
+
+
 
   <%= form.submit I18n.t("generic.button.update"), class: "govuk-button", role: "button" %>
 
