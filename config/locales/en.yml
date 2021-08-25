@@ -27,6 +27,7 @@ en:
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
+      visitor: You must sign in.
   errors:
     go_home: Back to the service
     internal_server_error:

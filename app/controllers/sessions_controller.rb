@@ -4,10 +4,14 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
   protect_from_forgery except: :bypass_callback
 
+  # @see CreateUser
   # @see UserSession
   def create
-    user_session.persist_successful_dfe_sign_in_claim!(omniauth_hash: auth_hash)
-    user_session.invalidate_other_user_sessions(omniauth_hash: auth_hash)
+    user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
+    user_session.invalidate_other_user_sessions(auth: auth_hash)
+
+    # TODO: add functionality to update dsi account record
+    CreateUser.new(auth: auth_hash).call
 
     # TODO: redirect post login based on user role
     # if current_user.buyer?
@@ -19,6 +23,7 @@ class SessionsController < ApplicationController
   alias_method :bypass_callback, :create
 
   def failure
+    # DSI: report the DSI user uid in the session if it exists
     Rollbar.error("Sign in failed unexpectedly", dfe_sign_in_uid: session[:dfe_sign_in_uid])
 
     # DSI: users would need to signout manually to proceed otherwise
@@ -47,6 +52,8 @@ private
     UserSession.new(session: session, redirect_url: issuer_redirect_url)
   end
 
+  # @return [OmniAuth::AuthHash]
+  #
   def auth_hash
     request.env["omniauth.auth"]
   end
