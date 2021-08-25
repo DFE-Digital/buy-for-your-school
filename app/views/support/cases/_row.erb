@@ -1,0 +1,25 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">
+    <%= link_to kase.organisation_name, support_case_path(kase.id), class: "govuk-link--no-visited-state" %>
+  </td>
+
+  <td class="govuk-table__cell"><%= kase.category.name %></td>
+
+  <td class="govuk-table__cell">
+    <strong class="govuk-tag govuk-tag--green">
+      <%= kase.state %>
+    </strong>
+  </td>
+
+  <% if extra_fields.include?(:assigned_to) %>
+    <td class="govuk-table__cell"><%= kase.case_worker_account.name %></td>
+  <% end %>
+
+  <% if extra_fields.include?(:last_updated) %>
+    <td class="govuk-table__cell"><%= kase.interactions.last.created_at %></td>
+  <% end %>
+
+  <% if extra_fields.include?(:date_received) %>
+    <td class="govuk-table__cell"><%= kase.interactions.first.created_at %></td>
+  <% end %>
+</tr>

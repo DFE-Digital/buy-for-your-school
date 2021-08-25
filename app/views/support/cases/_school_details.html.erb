@@ -1,0 +1,30 @@
+<div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
+  <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= t "support.cases.contact_name" %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= contact.name %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= t "support.cases.contact_phone" %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= contact.phone_number %>
+      </dd>
+    </div>
+    
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= t "support.cases.contact_email" %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= contact.email_address %>
+      </dd>
+    </div>
+  </dl>
+</div>

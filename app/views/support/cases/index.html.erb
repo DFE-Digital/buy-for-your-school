@@ -1,0 +1,133 @@
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#my-cases">
+        <%= t "support.cases.my_cases" %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#new-cases">
+        <%= t "support.cases.new_cases" %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#all-cases">
+        <%= t "support.cases.all_cases" %>
+      </a>
+    </li>
+  </ul>
+
+  <div class="govuk-tabs__panel" id="my-cases">
+    <h2 class="govuk-heading-l"><%= t "support.cases.my_cases" %></h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <% if @cases.none? %>
+          <h1 class="govuk-heading-l">
+            <%= t "support.cases.not_found" %>
+          </h1>
+        <% else %>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.organisation" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.category" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.status" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.index.last_updated" %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <% @cases.each do |kase| %>
+                <%= render "row", kase: kase, extra_fields: %i[last_updated] %>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="new-cases">
+    <h2 class="govuk-heading-l"><%= t "support.cases.new_cases" %></h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <% if @cases.none? %>
+          <h1 class="govuk-heading-l">
+            <%= t "support.cases.not_found" %>
+          </h1>
+        <% else %>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.organisation" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.category" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.status" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.index.date_received" %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <% @cases.each do |kase| %>
+                <%= render "row", kase: kase, extra_fields: %i[date_received] %>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="all-cases">
+    <h2 class="govuk-heading-l"><%= t "support.cases.all_cases" %></h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <% if @cases.none? %>
+          <h1 class="govuk-heading-l">
+            <%= t "support.cases.not_found" %>
+          </h1>
+        <% else %>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.organisation" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.category" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.status" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.index.assigned_to" %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= t "support.cases.index.last_updated" %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <% @cases.each do |kase| %>
+                <%= render "row", kase: kase, extra_fields: %i[assigned_to last_updated] %>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

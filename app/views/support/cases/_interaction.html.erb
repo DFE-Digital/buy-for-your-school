@@ -1,0 +1,28 @@
+<dl class="govuk-summary-list govuk-!-margin-bottom-5">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= t "support.cases.category" %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= interaction.case.call.category.name %>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= t "support.cases.problem_description" %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= interaction.note %>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= t "support.cases.attached_specification" %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= interaction.case.call.case_document.file_name %>
+    </dd>
+  </div>
+</dl>

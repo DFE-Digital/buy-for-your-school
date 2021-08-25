@@ -1,7 +1,7 @@
 # TODO: remove :nocov: and start testing
 # :nocov:
 module Support
-  class AgentPresenter < SimpleDelegator
+  class AgentPresenter < BaseDelegator
     def full_name
       "Example ProcOps Agent"
     end

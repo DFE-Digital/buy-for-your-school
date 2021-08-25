@@ -1,0 +1,69 @@
+<%= link_to t("support.cases.show.back"), support_cases_path, class: "govuk-back-link" %>
+
+<h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+  <%= @case.organisation_name %>
+</h1>
+<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
+  <%= @case.state %>
+</strong>
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#school-details">
+        <%= t "support.cases.school_details" %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#request-details">
+        <%= t "support.cases.request_details" %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#case-history">
+        <%= t "support.cases.case_history" %>
+      </a>
+    </li>
+  </ul>
+
+  <%= render 'school_details', contact: @case.cm_contact %>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="request-details" role="tabpanel" aria-labelledby="tab_request-details">
+    <p class="govuk-body">
+      <%= t("support.cases.show.requested_at", time: @case.interactions.first.created_at) %>
+    </p>
+    <%= render "interaction", interaction: @case.interactions.first %>
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      <% @case.interactions.each do |interaction| %>
+        <div class="govuk-accordion__section ">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                <%= interaction.type %>
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
+              <%= interaction.created_at %>
+            </div>
+          </div>
+          <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <%= render "interaction", interaction: interaction %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<h3 class="govuk-heading-m"><%= t "support.cases.actions" %></h3>
+
+<ul class="govuk-list">
+  <li>
+    <a class="govuk-link govuk-link--no-visited-state" href="#">
+      <%= t "support.cases.show.assign_to"  %>
+    </a>
+  </li>
+</ul>

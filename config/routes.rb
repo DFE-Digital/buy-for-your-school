@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     end
     resources :tasks, only: [:show]
   end
-
+ 
   namespace :preview do
     resources :entries, only: [:show]
   end
@@ -56,5 +56,7 @@ Rails.application.routes.draw do
   #
   namespace :support do
     get "admin", to: "admin#show"
+
+    resources :cases, only: %i[index show update]
   end
 end
