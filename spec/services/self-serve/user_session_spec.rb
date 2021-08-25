@@ -65,7 +65,8 @@ RSpec.describe UserSession do
     it "stores the DfE Sign-in UID in the session" do
       expect(session).to receive(:[]=).with(:dfe_sign_in_uid, "123")
       expect(session).to receive(:[]=).with(:dfe_sign_in_sign_out_token, "456")
-      user_session.persist_successful_dfe_sign_in_claim!(omniauth_hash: omniauth_hash)
+
+      user_session.persist_successful_dfe_sign_in_claim!(auth: omniauth_hash)
     end
   end
 
@@ -86,7 +87,7 @@ RSpec.describe UserSession do
         allow(RedisSessions).to receive(:redis).and_return(fake_session_redis)
         expect(fake_session_redis).not_to receive(:del)
 
-        user_session.invalidate_other_user_sessions(omniauth_hash: omniauth_hash)
+        user_session.invalidate_other_user_sessions(auth: omniauth_hash)
       end
 
       it "adds a new session lookup" do
@@ -94,7 +95,7 @@ RSpec.describe UserSession do
         allow(RedisSessionLookup).to receive(:redis).and_return(fake_session_lookup_redis)
         expect(fake_session_lookup_redis).to receive(:set).with("user_dsi_id:123", "2::5347845262539")
 
-        user_session.invalidate_other_user_sessions(omniauth_hash: omniauth_hash)
+        user_session.invalidate_other_user_sessions(auth: omniauth_hash)
       end
     end
 
@@ -108,7 +109,7 @@ RSpec.describe UserSession do
         allow(RedisSessions).to receive(:redis).and_return(fake_session_redis)
         expect(fake_session_redis).to receive(:del).with("session:2::5347845262539")
 
-        user_session.invalidate_other_user_sessions(omniauth_hash: omniauth_hash)
+        user_session.invalidate_other_user_sessions(auth: omniauth_hash)
       end
     end
   end

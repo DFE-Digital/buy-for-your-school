@@ -8,6 +8,7 @@ RSpec.describe AddMissingOrderToExistingTasks do
 
   context "when there are broken tasks" do
     before do
+      ENV["POST_MIGRATION_CHANGES"] = "true"
       stub_contentful_category(fixture_filename: "section-with-multiple-tasks.json")
 
       # NB: section contentful_id needs to match the stubbed category fixture
