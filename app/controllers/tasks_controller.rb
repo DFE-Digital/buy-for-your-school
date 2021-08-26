@@ -44,7 +44,7 @@ private
   #
   def redirect_to_first_step_if_task_has_no_answers
     return unless task.tally_for(:completed).zero?
-    return if params.fetch(:back_link, nil).present? || params.fetch(:last_step, nil).present?
+    return unless params[:back_link].nil? && params[:last_step].nil?
 
     @journey = current_journey
 
