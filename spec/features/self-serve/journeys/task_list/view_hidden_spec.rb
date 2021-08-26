@@ -16,6 +16,7 @@ RSpec.feature "Users can view the task list" do
     end
 
     it "shows the section title" do
+      Category.destroy_all
       start_journey_from_category(category: "section-with-single-hidden-task.json")
       within(".app-task-list") do
         expect(page).to have_content "Section with a hidden task" # > hidden_task_section.json

@@ -49,12 +49,12 @@ module JourneyHelpers
     visit journey_path(journey.id)
   end
 
-  def user_signs_in_and_starts_the_journey(category_id)
+  def user_signs_in_and_starts_the_journey(category_slug)
     user_exists_in_dfe_sign_in # sign_in_helpers
     visit "/"
     click_start
     click_create
-    find("#category-id-#{category_id}-field").click
+    find("#category-slug-#{category_slug}-field").click
     click_continue
   end
 
@@ -64,7 +64,7 @@ module JourneyHelpers
 
     category = persist_category(contentful_category)
 
-    user_signs_in_and_starts_the_journey(category.id)
+    user_signs_in_and_starts_the_journey(category.slug)
   end
 
   def persist_category(contentful_category)
@@ -72,6 +72,7 @@ module JourneyHelpers
            title: contentful_category.title,
            description: contentful_category.description,
            liquid_template: contentful_category.combined_specification_template,
-           contentful_id: contentful_category.id)
+           contentful_id: contentful_category.id,
+           slug: contentful_category.slug)
   end
 end
