@@ -59,12 +59,12 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
     Bullet.raise = true # raise an error if n+1 query occurs
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :radio_answer
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :short_text_answer
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :long_text_answer
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :single_date_answer
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :checkbox_answers
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
-    Bullet.add_whitelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :radio_answer
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :short_text_answer
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :long_text_answer
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :single_date_answer
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :checkbox_answers
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
   end
 end
