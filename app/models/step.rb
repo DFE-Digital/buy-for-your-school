@@ -84,6 +84,16 @@ class Step < ApplicationRecord
     task.skipped_ids.include?(id)
   end
 
+  # @return [Boolean]
+  def last?
+    task.steps.visible.last == self
+  end
+
+  # @return [Boolean]
+  def last_skipped?
+    task.skipped_ids.last == id
+  end
+
   # Button text to advance through steps
   #
   # @see https://design-system.service.gov.uk/components/button/
