@@ -115,14 +115,14 @@ RSpec.feature "Skipping questions" do
       end
 
       context "when skipped again" do
-        it "keep cycling through skipped steps" do
+        it "goes back to the task page" do
           expect(page).to have_text "Number step"
           click_on "Skip for now"
           expect(page).to have_text "Checkbox step"
           click_on "Skip for now"
           expect(page).to have_text "Radio step"
           click_on "Skip for now"
-          expect(page).to have_text "Number step"
+          expect(page).to have_a_task_path
         end
       end
 
