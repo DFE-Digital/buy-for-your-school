@@ -8,7 +8,7 @@ RSpec.describe AddSlugsToExistingCategories do
 
   context "when there are broken categories" do
     before do
-      category = create(:category, contentful_id: "contentful-category-entry", slug: nil)
+      create(:category, contentful_id: "contentful-category-entry", slug: nil)
       stub_contentful_category(fixture_filename: "mfd-radio-question.json")
     end
 
