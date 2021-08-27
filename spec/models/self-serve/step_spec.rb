@@ -266,4 +266,37 @@ RSpec.describe Step, type: :model do
       expect(step.skipped?).to be false
     end
   end
+
+  describe "#last?" do
+    let(:task) { create(:task) }
+    let!(:step_1) { create(:step, :number, task: task, order: 1) }
+    let!(:step_2) { create(:step, :number, task: task, order: 2) }
+
+    it "returns true if a given step is the last one" do
+      expect(step_2.last?).to be true
+    end
+
+    it "returns false if a given step is not the last one" do
+      expect(step_1.last?).to be false
+    end
+  end
+
+  describe "#last_skipped?" do
+    let(:task) { create(:task) }
+    let(:step_1) { create(:step, :number, task: task) }
+    let(:step_2) { create(:step, :number, task: task) }
+
+    before do
+      step_1.skip!
+      step_2.skip!
+    end
+
+    it "returns true if a given step is the last skipped one" do
+      expect(step_2.last_skipped?).to be true
+    end
+
+    it "returns false if a given step is not the last skipped one" do
+      expect(step_1.last_skipped?).to be false
+    end
+  end
 end

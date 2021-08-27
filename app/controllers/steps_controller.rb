@@ -75,7 +75,7 @@ class StepsController < ApplicationController
     @step = Step.find(params[:id])
 
     # go back to the task page if this is the last skipped step
-    return redirect_to journey_task_path(journey, parent_task) if @step.id == parent_task.skipped_ids.last
+    return redirect_to journey_task_path(journey, parent_task, last_step: true) if @step.last_skipped?
 
     @step.skip!
 
@@ -85,9 +85,9 @@ class StepsController < ApplicationController
     if parent_task.has_single_visible_step?
       # return to the journey page if we only have one step
       redirect_to journey_path(journey, anchor: @step.id)
-    elsif parent_task.steps.last == @step
-      # return to the task page if we're on the last step
-      redirect_to journey_task_path(journey, parent_task)
+    elsif @step.last?
+      # return to the task page if we're on the last visible step
+      redirect_to journey_task_path(journey, parent_task, last_step: true)
     elsif parent_task.all_unanswered_questions_skipped?
       next_step_id = parent_task.next_skipped_id(@step.id)
       if next_step_id
@@ -95,7 +95,7 @@ class StepsController < ApplicationController
         redirect_to(journey_step_path(journey, next_step_id))
       else
         # back to the task page if we only have one skipped step
-        redirect_to(journey_task_path(journey, parent_task))
+        redirect_to(journey_task_path(journey, parent_task, last_step: true))
       end
     else
       # continue to the next incomplete step
