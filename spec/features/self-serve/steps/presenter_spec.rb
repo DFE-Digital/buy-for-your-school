@@ -75,7 +75,6 @@ RSpec.feature "User answers are rendered correctly based on type" do
     fill_in "answer[response(2i)]", with: "6"
     fill_in "answer[response(1i)]", with: "2021"
     click_on "Continue"
-    click_on "Back"
     expect(page).to have_content "1 Jun 2021"
   end
 
