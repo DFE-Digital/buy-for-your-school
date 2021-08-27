@@ -54,7 +54,7 @@ module JourneyHelpers
     visit "/"
     click_start
     click_create
-    find("#category-slug-#{category_slug}-field").click
+    find("#category-#{category_slug}-field").click
     click_continue
   end
 

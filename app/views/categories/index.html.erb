@@ -12,7 +12,7 @@
               <%= I18n.t("categories.support_info") %>
             </div>
             <% @categories.each_with_index do |category, index| %>
-              <%= f.govuk_radio_button :category_slug, category.slug, label: { text: category.title }, hint: { text: category.description }, checked: index.zero? %>
+              <%= f.govuk_radio_button :category, category.slug, label: { text: category.title }, hint: { text: category.description }, checked: index.zero? %>
             <% end %>
         <% end %>
         <%= f.submit I18n.t("generic.button.next"), class: "govuk-button" %>
