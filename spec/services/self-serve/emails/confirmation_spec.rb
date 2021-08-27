@@ -1,40 +1,28 @@
-RSpec.describe SendConfirmationEmail do
-  subject(:service) { described_class.new(recipient: recipient) }
+RSpec.describe Emails::Confirmation do
+  subject(:service) do
+    described_class.new(recipient: recipient, template: "auto-reply")
+  end
 
   let(:recipient) do
     create(:user,
            email: "peter.hamilton@gov.uk",
            first_name: "Peter",
-           last_name: "Hamilton",
-           full_name: "Mr. Peter Hamilton")
+           last_name: "Hamilton")
   end
 
   let(:template_collection) do
     {
       "templates" => [
-        # letter
-        {
-          "id" => "f163deaf-2d3f-4ec6-98fc-f23fa511518f",
-          "name" => "My template name",
-          "type" => "letter",
-          "created_at" => "2016-11-29T11:12:30.12354Z",
-          "updated_at" => "2016-11-29T11:12:40.12354Z",
-          "created_by" => "jane.doe@gmail.com",
-          "body" => "Contents of template ((place_holder))",
-          "subject" => "Subject of the letter",
-          "version" => "2",
-          "letter_contact_block" => "The return address",
-        },
-        # email
+        # "auto-reply" template
         {
           "id" => "da6f6c37-8d34-49d3-b9cf-b45fb74cedff",
-          "name" => "Default",
+          "name" => "auto-reply",
           "type" => "email",
           "from_email" => "ghbs@notifications.service.gov.uk",
           "created_at" => "2021-08-26T09:00:00.12345Z",
           "updated_at" => "2021-08-26T09:00:00.12345Z",
           "created_by" => "example@gov.uk",
-          "body" => "Hello ((first_name)) ((last name)), \r\n\r\nDownload your document at: ((link_to_file))",
+          "body" => "Hello ((first_name)) ((last name)), \r\n\r\nYour reference number is: ((ref number))",
           "subject" => "Test",
           "version" => "4",
         },
@@ -89,7 +77,7 @@ RSpec.describe SendConfirmationEmail do
       expect(service.template_params).to eql({
         first_name: "Peter",
         last_name: "Hamilton",
-        full_name: "Mr. Peter Hamilton",
+        ref_number: "",
       })
     end
   end

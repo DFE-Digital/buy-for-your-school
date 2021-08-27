@@ -44,12 +44,15 @@ module Notify
     #
     #   - [ArgumentError] attachment file size exceeding 2MB
     #   - [Notifications::Client::AuthError] API auth failure
+    #   - [Notifications::Client::BadRequestError] missing variable or service permission
     #
     # @return [Notifications::Client::ResponseNotification, String] email or error message
     #
     def call
       send_message
-    rescue ::ArgumentError, ::Notifications::Client::AuthError => e
+    rescue ::ArgumentError,
+           ::Notifications::Client::AuthError,
+           ::Notifications::Client::BadRequestError => e
       e.message
     end
 

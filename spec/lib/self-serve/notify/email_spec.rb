@@ -9,8 +9,6 @@ RSpec.describe Notify::Email do
     )
   end
 
-  let(:email) { service.call }
-
   let(:template_collection) do
     {
       "templates" => [
@@ -100,7 +98,7 @@ RSpec.describe Notify::Email do
     end
 
     it "returns a response notification" do
-      expect(email).to be_a Notifications::Client::ResponseNotification
+      expect(service.call).to be_a Notifications::Client::ResponseNotification
     end
   end
 
@@ -125,7 +123,7 @@ RSpec.describe Notify::Email do
     end
 
     it "returns a response notification" do
-      expect(email).to be_a Notifications::Client::ResponseNotification
+      expect(service.call).to be_a Notifications::Client::ResponseNotification
     end
   end
 end
