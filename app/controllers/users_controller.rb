@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :set_user, only: %i[edit update]
+
   def index
     render :show
   end
@@ -10,16 +12,20 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    if @current_user.update(user_params)
-      redirect_to @current_user, notice: "User updated."
+    if @user.update(user_params) && @user == @current_user
+      redirect_to @current_user, notice: I18n.t("user.updated_flash")
     else
       render :edit
     end
   end
 
-  private
+private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
-    params.require(:user).permit(:id, :full_name, :email, :phone_number, :contact_preferences)
+    params.require(:user).permit(:id, :full_name, :email, :phone_number)
   end
 end

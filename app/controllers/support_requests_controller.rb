@@ -35,7 +35,7 @@ private
 
   def support_request_params
     params.require(:support_request).permit(
-      :journey_id, :category_id, :message, :school_name, :school_urn
+      :journey_id, :category_id, :message
     ).merge(user: current_user)
   end
 end

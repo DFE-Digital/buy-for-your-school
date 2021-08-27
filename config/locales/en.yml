@@ -9,12 +9,14 @@ en:
       default: "%-d %b %Y"
   generic:
     button:
-      back: "Back"
-      start: "Start"
-      sign_out: "Sign out"
-      next: "Continue"
-      change_answer: "Change"
-      update: "Update"
+      back: Back
+      start: Start
+      sign_out: Sign out
+      next: Continue
+      change_answer: Change
+      update: Update
+      yes_continue: Yes, contiune
+      exit_without_save: Exit without saving
     label:
       what_is: "What is %{label}?"
   banner:
@@ -179,14 +181,19 @@ en:
  # /users
   users:
     heading: About you
-    consent_heading: Consent
+    correct_information_heading: Is this your contact information?
+    correct_information_instructions: "These are the details we have for you, if they are not correct or up to date you will need to either:"
+    correct_information_list:
+      - log back in with the correct account
+      - amend your DSI account details
+
   user:
     full_name: Your name
     phone_number: Your phone number
     phone_number_hint: Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes.
     email: Your email address
     email_address_hint: Your email address will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes.
-    contact_preferences: Can we contact you in the future?
+    updated_flash: User updated
 
   #/ support
   support:
@@ -203,13 +210,10 @@ en:
           - read <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
           - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
       sections:
+        titles:
+          share_a_specification: Share a specification
+          about_your_specification: About your specification
         send_your_request: Send your request
-        about_your_school:
-          heading: About your school
-          name_label: What is the name of your school?
-          name_hint: Enter the name of your school.
-          urn_label: What is your school's URN?
-          urn_hint: This will help us identify your school.
         about_you:
           heading: About you
         about_your_request:
@@ -219,12 +223,13 @@ en:
           category_ids_label: What are you buying?
           message_label: How can we help?
           message_hint: Briefly describe your problem in a few sentences.
-        about_your_contact_consent:
-          heading: About your consent to be contacted in the future
-          contact_preferences_label: Can we contact you in the future?
-          contact_preferences_hint: Select all that apply.
+      confirm:
+        timescale: Once you send this request, we will review it and get in touch within 5 working days.
       buttons:
         start: Start
+        no_spec_attached: My request is not related to a specification I've created
+        send: Send request
+
 
   errors:
     go_home: "Back to the service"

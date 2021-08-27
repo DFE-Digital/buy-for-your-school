@@ -1,5 +1,4 @@
 <%= form_with model: current_user do |form| %>
-
   <span class="govuk-caption-l"><%= I18n.t("users.heading") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
@@ -27,16 +26,5 @@
     <%= form.email_field :email, class: "govuk-input" %>
   </div>
 
-  <span class="govuk-caption-l"><%= I18n.t("users.consent_heading") %></span>
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <%= form.label :contact_preferences, I18n.t("user.contact_preferences"), class:"govuk-label govuk-label--l" %>
-    </h1>
-    <%= form.text_field :contact_preferences, class: "govuk-input" %>
-  </div>
-
-
-
   <%= form.submit I18n.t("generic.button.update"), class: "govuk-button", role: "button" %>
-
 <% end %>

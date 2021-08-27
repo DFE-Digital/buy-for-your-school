@@ -1,6 +1,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m"><%= I18n.t("users.heading") %></h2>
+    <span class="govuk-caption-l"><%= I18n.t("users.heading") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("users.correct_information_heading") %></h1>
+    <p class="govuk-body"><%= I18n.t("users.correct_information_instructions") %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% I18n.t("users.correct_information_list").each do |list_item| %>
+        <li><%= list_item.html_safe %></li>
+      <% end %>
+    </ul>
     <dl class="govuk-summary-list">
 
       <div class="govuk-summary-list__row">
@@ -9,9 +16,6 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <%= @current_user.full_name %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
         </dd>
       </div>
 
@@ -22,9 +26,6 @@
         <dd class="govuk-summary-list__value">
           <%= @current_user.phone_number %>
         </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
-        </dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -34,11 +35,18 @@
         <dd class="govuk-summary-list__value">
           <%= @current_user.email %>
         </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
-        </dd>
       </div>
 
     </dl>
+
+    <%= link_to I18n.t("generic.button.yes_continue"), new_user_support_request_path(current_user),
+                class: "govuk-button", role: "button" %>
+    <p class="govuk-body">
+      <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path %>
+    </p>
+
+    <p class="govuk-body">
+      <%= link_to "Edit User - skip DSI", edit_user_path(current_user) %>
+    </p>
   </div>
 </div>

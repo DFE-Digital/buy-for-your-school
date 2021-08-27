@@ -1,34 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= I18n.t("support.requests.sections.send_your_request") %></h1>
-    <h2 class="govuk-heading-m"><%= I18n.t("support.requests.sections.about_your_school.heading") %></h2>
-
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Your school name
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @support_request.school_name %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Your school urn
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @support_request.school_urn %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
-        </dd>
-      </div>
-    </dl>
-
     <h2 class="govuk-heading-m"><%= I18n.t("support.requests.sections.about_you.heading") %></h2>
 
     <dl class="govuk-summary-list">
@@ -108,32 +80,12 @@
       </div>
     </dl>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support.requests.sections.about_your_contact_consent.heading") %></h2>
+    <p class="govuk-body">
+      <%= I18n.t("support.requests.confirm.timescale") %>
+    </p>
 
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Department of Education research
-        </dt>
-        <dd class="govuk-summary-list__value">
-          TODO
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Department of Education research
-        </dt>
-        <dd class="govuk-summary-list__value">
-          TODO
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_path(current_user), class: "govuk-link" %>
-        </dd>
-      </div>
-    </dl>
+    <%= link_to I18n.t("support.requests.buttons.send"), new_user_support_request_path(current_user),
+                class: "govuk-button", role: "button" %>
 
   </div>
 </div>

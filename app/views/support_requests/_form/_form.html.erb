@@ -1,28 +1,7 @@
 <%= form_with model: support_request, url: url do |form| %>
 
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_school.heading") %></span>
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <%= form.label :school_name, I18n.t("support.requests.sections.about_your_school.name_label"), class: "govuk-label govuk-label--l" %>
-    </h1>
-    <div id="school-name-hint" class="govuk-hint">
-      <%= I18n.t("support.requests.sections.about_your_school.name_hint") %>
-    </div>
-    <%= form.text_field :school_name, class: "govuk-input" %>
-  </div>
 
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_school.heading") %></span>
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <%= form.label :school_urn, I18n.t("support.requests.sections.about_your_school.urn_label"), class: "govuk-label govuk-label--l" %>
-    </h1>
-    <div id="school-urn-hint" class="govuk-hint">
-      <%= I18n.t("support.requests.sections.about_your_school.urn_hint") %>
-    </div>
-    <%= form.text_field :school_urn, class: "govuk-input" %>
-  </div>
-
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
+  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.share_a_specification") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <%= form.label :specification_ids, I18n.t("support.requests.sections.about_your_request.specification_ids_label"), class: "govuk-label govuk-label--l" %>
@@ -35,7 +14,12 @@
     <% end %>
   </div>
 
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
+  <p class="govuk-body">
+    <%= link_to I18n.t("support.requests.buttons.no_spec_attached"), root_path, class: "govuk-link" %>
+  </p>
+
+
+  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.about_your_specification") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <%= form.label :category_id, I18n.t("support.requests.sections.about_your_request.category_ids_label"), class: "govuk-label govuk-label--l" %>
@@ -45,7 +29,7 @@
     <% end %>
   </div>
 
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.about_your_request.heading") %></span>
+  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.about_your_specification") %></span>
   <div class="govuk-form-group">
     <h1 class="govuk-label-wrapper">
       <%= form.label :message, I18n.t("support.requests.sections.about_your_request.message_label"), class: "govuk-label govuk-label--l" %>
@@ -58,3 +42,7 @@
 
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
+
+<p class="govuk-body">
+  <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path %>
+</p>
