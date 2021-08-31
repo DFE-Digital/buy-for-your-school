@@ -4,7 +4,7 @@ class SupportRequestForm
   include ActiveModel::Model
   attr_accessor :support_request
 
-  delegate SupportRequest.attribute_names.map { |attr| [attr, "#{attr}="] }.flatten, to: :user
+  delegate SupportRequest.attribute_names.map { |attr| [attr, "#{attr}="] }.flatten, to: :support_request
 
   def initialize(support_request_attributes)
     @support_request = SupportRequest.new(support_request_attributes)

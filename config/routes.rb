@@ -53,7 +53,12 @@ Rails.application.routes.draw do
 
 
   resources :users do
-    resources :support_requests, path: "support-requests", only: %i[index show new edit create update]
+    resources :support_requests, path: "support-requests", only: %i[index show new edit create update] do
+      get :step1
+      get :step2
+      get :step3
+      post :validate_step
+    end
   end
 
   get "dashboard", to: "dashboard#show"
