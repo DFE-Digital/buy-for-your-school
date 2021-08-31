@@ -1,5 +1,3 @@
-# TODO: remove :nocov: and start testing
-# :nocov:
 module Support
   class CasePresenter < BasePresenter
     def state
@@ -7,4 +5,3 @@ module Support
     end
   end
 end
-# :nocov:

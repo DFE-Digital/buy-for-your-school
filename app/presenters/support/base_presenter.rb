@@ -1,5 +1,3 @@
-# TODO: remove :nocov: and start testing
-# :nocov:
 module Support
   class BasePresenter < SimpleDelegator
     def created_at
@@ -23,4 +21,3 @@ module Support
     end
   end
 end
-# :nocov:

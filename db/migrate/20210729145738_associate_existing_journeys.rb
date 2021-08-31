@@ -1,5 +1,5 @@
 class AssociateExistingJourneys < ActiveRecord::Migration[6.1]
-  def ups
+  def up
     return if Journey.where(category_id: nil).none? && Category.one?
 
     journeys_total = Journey.count

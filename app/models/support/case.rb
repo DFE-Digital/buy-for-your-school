@@ -32,7 +32,7 @@ module Support
         interactions: Interaction.all.map { |i| InteractionPresenter.new(i) },
         case_worker_account: CaseWorkerAccountPresenter.new(CaseWorkerAccount.find_by(id: 1)), 
         case_document: CaseDocumentPresenter.new(CaseDocument.find_by(id: 1)),
-        cm_contact: CMContactPresenter.new(CMContact.find_by(id: 1)),
+        cm_contact: ContactPresenter.new(Contact.find_by(id: 1)),
 
         created_at: 3.minutes.ago,
         updated_at: 2.minutes.ago

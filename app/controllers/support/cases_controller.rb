@@ -7,15 +7,9 @@ module Support
     end
 
     def show
-      c = Support::Case.find_by(id: sanitised_id)
+      c = Support::Case.find_by(id: params[:id])
 
       @case = CasePresenter.new(c)
-    end
-
-    private
-    
-    def sanitised_id
-      params[:id].to_s.delete('^0-9')
     end
   end
 end

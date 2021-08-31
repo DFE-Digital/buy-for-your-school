@@ -1,7 +1,7 @@
 # TODO: replace this with an ActiveRecord model
 # :nocov:
 module Support
-  class CMContact
+  class Contact
     def self.all
       [find_by]
     end
