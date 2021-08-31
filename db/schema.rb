@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 2021_09_09_090047) do
     t.string "description"
     t.string "contentful_id", null: false
     t.jsonb "liquid_template", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
     t.string "slug"
   end
