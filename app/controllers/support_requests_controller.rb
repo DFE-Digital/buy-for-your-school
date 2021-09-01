@@ -38,4 +38,20 @@ private
       :journey_id, :category_id, :message
     ).merge(user: current_user)
   end
+
+  def load_support_request_wizard
+    @support_request_wizard = support_wizard_for_step(action_name)
+  end
+
+  def support_wizard_for_step(step)
+    raise InvalidStep unless step.in?(SupportRequestForm::STEPS)
+
+    "SupportRequestForm::#{step.camelize}".constantize.new(session[:user_attributes])
+  end
+
+  def support_wizard_next_step(step)
+    SupportRequestForm::STEPS[SupportRequestForm::STEPS.index(step) + 1]
+  end
+
+  class InvalidStep < StandardError; end
 end
