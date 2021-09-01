@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     end
     resources :tasks, only: [:show]
   end
- 
+
   namespace :preview do
     resources :entries, only: [:show]
   end

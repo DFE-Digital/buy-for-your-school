@@ -5,6 +5,11 @@ module Support
       super.upcase
     end
 
+    # @return [String]
+    def agent_name
+      case_worker_account.name
+    end
+
     # @return [Array<InteractionPresenter>]
     def interactions
       @interactions ||= super.map { |i| Support::InteractionPresenter.new(i) }

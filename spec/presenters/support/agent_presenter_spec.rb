@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Support::AgentPresenter do
   let(:presenter) { described_class.new(double) }
 

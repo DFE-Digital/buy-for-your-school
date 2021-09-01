@@ -4,11 +4,11 @@ RSpec.feature "Supported Cases View" do
   context "when on the index page" do
     before { visit "/support/cases" }
 
-    it "tabs are visible" do
+    it "has 3 visibile tabs" do
       expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
     end
 
-    it "shows #my-cases tab as default" do
+    it "defaults to the 'My Cases' tab" do
       expect(find(".govuk-tabs__list-item--selected")).to have_text "My cases"
     end
 
@@ -24,11 +24,11 @@ RSpec.feature "Supported Cases View" do
   context "when on the show page" do
     before { visit "/support/cases/1" }
 
-    it "displays all tabs" do
-      expect(all(".govuk-tabs__list-item").count).to eq(3)
+    it "has 3 visible tabs" do
+      expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
     end
 
-    it "shows School details tab" do
+    it "defaults to the 'School details' tab" do
       expect(find(".govuk-tabs__list-item--selected")).to have_text "School details"
     end
 

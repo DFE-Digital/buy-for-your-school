@@ -1,10 +1,9 @@
-require "rails_helper"
-
 RSpec.describe Support::CasePresenter do
   let(:kase) do
-    OpenStruct(
+    OpenStruct.new(
       state: "foo",
       interactions: [double],
+      case_worker_account: OpenStruct.new(name: "bar"),
       category: double,
       contact: double,
     )
@@ -18,21 +17,27 @@ RSpec.describe Support::CasePresenter do
     end
   end
 
+  describe "#agent_name" do
+    it "returns the name of the agent that's assigned to the case" do
+      expect(presenter.agent_name).to eq("bar")
+    end
+  end
+
   describe "#interactions" do
     it "returns an array of decorated interactions" do
-      expect(presenter.interactions.first.class).to eq(Support::InteractionPresenter)
+      expect(presenter.interactions.first).to be_a(Support::InteractionPresenter)
     end
   end
 
   describe "#contact" do
     it "returns a decorated contact" do
-      expect(presenter.contact.class).to eq(Support::ContactPresenter)
+      expect(presenter.contact).to be_a(Support::ContactPresenter)
     end
   end
 
   describe "#category" do
     it "returns a decorated category" do
-      expect(presenter.category.class).to eq(Support::CategoryPresenter)
+      expect(presenter.category).to be_a(Support::CategoryPresenter)
     end
   end
 end

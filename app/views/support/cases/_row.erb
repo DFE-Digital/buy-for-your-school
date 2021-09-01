@@ -12,7 +12,7 @@
   </td>
 
   <% if extra_fields.include?(:assigned_to) %>
-    <td class="govuk-table__cell"><%= kase.case_worker_account.name %></td>
+    <td class="govuk-table__cell"><%= kase.agent_name %></td>
   <% end %>
 
   <% if extra_fields.include?(:last_updated) %>
