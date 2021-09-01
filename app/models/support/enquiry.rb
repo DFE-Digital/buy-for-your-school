@@ -3,6 +3,5 @@ module Support
     include Support::Documentable
 
     belongs_to :case, class_name: "Support::Case", optional: true
-
   end
 end

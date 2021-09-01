@@ -1,5 +1,5 @@
 module Support
   def self.table_name_prefix
-    'support_'
+    "support_"
   end
 end

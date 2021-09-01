@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :support_case, class: 'Support::Case' do
+  factory :support_case, class: "Support::Case" do
     ref { "MyString" }
     category_id { "" }
     sub_category_string { "MyString" }
