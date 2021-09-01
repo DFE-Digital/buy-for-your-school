@@ -20,10 +20,9 @@ private
       # TODO: create category service
       Category.find_or_create_by!(contentful_id: contentful_category.id) do |category|
         category.title = contentful_category.title
-        # TODO: data migration to persist the slug
-        # category.slug = contentful_category.slug
         category.description = contentful_category.description
         category.liquid_template = contentful_category.combined_specification_template
+        category.slug = contentful_category.slug
       end
     end
   end
