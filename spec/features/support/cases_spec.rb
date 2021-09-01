@@ -1,28 +1,43 @@
 RSpec.feature "Supported Cases View" do
-  before do
-    user_is_signed_in
-    visit "/support/cases"
-  end
+  before { user_is_signed_in }
 
-  it "shows tabs" do
-    expect(all(".govuk-tabs__list-item").count).to eq(3)
-  end
+  context "when on the index page" do
+    before { visit "/support/cases" }
 
-  it "shows visible tabs" do
-    all(".govuk-tabs__list-item").each do |tab|
-      expect(tab).to be_visible
+    it "tabs are visible" do
+      expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
+    end
+
+    it "shows #my-cases tab as default" do
+      expect(find(".govuk-tabs__list-item--selected")).to have_text "My cases"
+    end
+
+    it "shows cases" do
+      expect(find("#my-cases .govuk-table")).to be_visible
+    end
+
+    it "shows correct columns" do
+      expect(find("#my-cases .govuk-table__head")).to have_text "Organisation Category Status Last updated"
     end
   end
 
-  it "shows #my-cases tab as default" do
-    expect(find(".govuk-tabs__list-item--selected")).to have_text "My cases"
-  end
+  context "when on the show page" do
+    before { visit "/support/cases/1" }
 
-  it "shows cases" do
-    expect(find("#my-cases .govuk-table")).to be_visible
-  end
+    it "displays all tabs" do
+      expect(all(".govuk-tabs__list-item").count).to eq(3)
+    end
 
-  it "shows correct columns" do
-    expect(find("#my-cases .govuk-table__head")).to have_text "Organisation Category Status Last updated"
+    it "shows School details tab" do
+      expect(find(".govuk-tabs__list-item--selected")).to have_text "School details"
+    end
+
+    it "shows School details section" do
+      expect(find("#school-details .govuk-summary-list")).to be_visible
+    end
+
+    it "School details section contain contact name" do
+      expect(find("#school-details .govuk-summary-list")).to have_text "Contact name"
+    end
   end
 end

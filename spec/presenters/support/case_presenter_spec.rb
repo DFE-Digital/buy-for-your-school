@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe Support::CasePresenter do
   let(:kase) do
-    double(
-      state: 'foo',
+    OpenStruct(
+      state: "foo",
       interactions: [double],
       category: double,
-      contact: double
+      contact: double,
     )
   end
 
@@ -14,7 +14,7 @@ RSpec.describe Support::CasePresenter do
 
   describe "#state" do
     it "returns an upcase state" do
-      expect(presenter.state).to eq('FOO')
+      expect(presenter.state).to eq("FOO")
     end
   end
 
@@ -25,14 +25,14 @@ RSpec.describe Support::CasePresenter do
   end
 
   describe "#contact" do
-    it "returns an array of decorated interactions" do
-      expect(presenter.interactions.first.class).to eq(Support::InteractionPresenter)
+    it "returns a decorated contact" do
+      expect(presenter.contact.class).to eq(Support::ContactPresenter)
     end
   end
 
   describe "#category" do
-    it "returns an array of decorated interactions" do
-      expect(presenter.interactions.first.class).to eq(Support::InteractionPresenter)
+    it "returns a decorated category" do
+      expect(presenter.category.class).to eq(Support::CategoryPresenter)
     end
   end
 end

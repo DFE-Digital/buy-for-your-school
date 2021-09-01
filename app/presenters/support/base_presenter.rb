@@ -10,7 +10,7 @@ module Support
       format_date(super)
     end
 
-    private
+  private
 
     # @return [String]
     def format_name(name)

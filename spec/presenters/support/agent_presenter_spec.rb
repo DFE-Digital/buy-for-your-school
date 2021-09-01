@@ -5,7 +5,7 @@ RSpec.describe Support::AgentPresenter do
 
   describe "#full_name" do
     it "returns correctly formatted full name" do
-      expect(presenter.full_name).to eq('Example ProcOps Agent')
+      expect(presenter.full_name).to eq("Example ProcOps Agent")
     end
   end
 end
