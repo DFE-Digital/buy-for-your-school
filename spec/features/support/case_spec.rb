@@ -18,11 +18,11 @@ RSpec.feature "Supported Case View" do
     expect(find(".govuk-tabs__list-item--selected")).to have_text "School details"
   end
 
-  it "shows School details" do
+  it "shows School details section" do
     expect(find("#school-details .govuk-summary-list")).to be_visible
   end
 
-  it "shows correct content" do
+  it "School details section contain contact name" do
     expect(find("#school-details .govuk-summary-list")).to have_text "Contact name"
   end
 end

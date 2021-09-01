@@ -14,7 +14,7 @@ RSpec.feature "Supported Cases View" do
     end
   end
 
-  it "shows My cases tab" do
+  it "shows #my-cases tab as default" do
     expect(find(".govuk-tabs__list-item--selected")).to have_text "My cases"
   end
 
