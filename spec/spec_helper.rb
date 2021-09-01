@@ -23,6 +23,8 @@ SimpleCov.start "rails"
 require "webmock/rspec"
 WebMock.disable_net_connect!(allow_localhost: true)
 
+# NOTE: This is necessary for sign_in helpers to work correctly when feature
+# NOTE: are run in isolation, hence needing Dsi::Client class loaded in.
 require_relative "../lib/dsi/client.rb"
 
 RSpec.configure do |config|
