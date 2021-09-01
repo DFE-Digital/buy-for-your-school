@@ -21,4 +21,20 @@ RSpec.describe AddSlugsToExistingCategories do
       expect(Category.first.slug).to eq "mfd"
     end
   end
+
+  context "when the Contentful category does not exist" do
+    before do
+      create(:category, contentful_id: "contentful-category-entry", slug: nil)
+      allow(stub_client).to receive(:by_id).with("contentful-category-entry").and_return(nil)
+    end
+
+    it "makes no changes" do
+      expect(Category.count).to eq 1
+      expect(Category.first.slug).to eq nil
+
+      expect { up }.not_to change { Category.where(slug: nil).count }.from(1)
+
+      expect(Category.first.slug).to be_nil
+    end
+  end
 end
