@@ -2,6 +2,8 @@ RSpec.describe Category, type: :model do
   it { is_expected.to have_many(:journeys) }
 
   describe "validations" do
+    subject { described_class.new(title: "Category", contentful_id: "id", liquid_template: "temp") }
+
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:description) }
     it { is_expected.to validate_presence_of(:contentful_id) }
