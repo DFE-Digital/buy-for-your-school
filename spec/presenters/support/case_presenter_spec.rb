@@ -9,7 +9,7 @@ RSpec.describe Support::CasePresenter do
     )
   end
 
-  let(:presenter) { described_class.new(kase) }
+  subject(:presenter) { described_class.new(kase) }
 
   describe "#state" do
     it "returns an upcase state" do

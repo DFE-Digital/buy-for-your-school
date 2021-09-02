@@ -1,5 +1,5 @@
 RSpec.describe Support::AgentPresenter do
-  let(:presenter) { described_class.new(double) }
+  subject(:presenter) { described_class.new(double) }
 
   describe "#full_name" do
     it "returns correctly formatted full name" do

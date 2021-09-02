@@ -1,5 +1,7 @@
 RSpec.describe Support::ContactPresenter do
-  let(:presenter) { described_class.new(OpenStruct.new(first_name: "foo", last_name: "bar")) }
+  let(:contact) { OpenStruct.new(first_name: "foo", last_name: "bar") }
+
+  subject(:presenter) { described_class.new(contact) }
 
   describe "#full_name" do
     it "returns the correctly formatted full name" do

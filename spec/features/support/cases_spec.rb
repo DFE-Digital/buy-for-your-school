@@ -14,6 +14,9 @@ RSpec.feature "Supported Cases View" do
 
     it "shows cases" do
       expect(find("#my-cases .govuk-table")).to be_visible
+
+      # TODO: Change ".all.count" with ".count"
+      expect(all("#my-cases .govuk-table__row").count).to eq(Support::Case.all.count + 1)
     end
 
     it "shows correct columns" do
