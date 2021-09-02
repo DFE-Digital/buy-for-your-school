@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require "pry"
-
 class Api::Contentful::CategoriesController < Api::Contentful::BaseController
   def changed
-    # binding.pry
     contentful_category = GetCategory.new(category_entry_id: category_params[:id]).call
 
     category = Category.upsert({
