@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :category do
     title { "category title" }
     description { "category description" }
-    # contentful_id { "12345678" }
     sequence(:contentful_id) { |n| n }
     liquid_template { "Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}" }
     # Tests covering data migration in production use factories
