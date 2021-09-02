@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2021_09_09_090047) do
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
     t.string "slug"
+    t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
   create_table "checkbox_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
