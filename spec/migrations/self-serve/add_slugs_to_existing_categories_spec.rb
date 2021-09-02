@@ -22,6 +22,7 @@ RSpec.describe AddSlugsToExistingCategories do
     end
   end
 
+  # simulate Rollbar error #64
   context "when the Contentful category does not exist" do
     before do
       create(:category, contentful_id: "contentful-category-entry", slug: nil)
@@ -35,6 +36,24 @@ RSpec.describe AddSlugsToExistingCategories do
       expect { up }.not_to change { Category.where(slug: nil).count }.from(1)
 
       expect(Category.first.slug).to be_nil
+    end
+  end
+
+  # simulate Rollbar error #65
+  context "when there is invalid existing data" do
+    before do
+      # simulate an existing invalid record
+      build(:category, description: nil, contentful_id: "contentful-category-entry", slug: nil).save!(validate: false)
+      stub_contentful_category(fixture_filename: "mfd-radio-question.json")
+    end
+
+    it "bypasses validation and populates the slug" do
+      expect(Category.count).to eq 1
+      expect(Category.first.slug).to eq nil
+
+      expect { up }.to change { Category.where(slug: nil).count }.from(1).to(0)
+
+      expect(Category.first.slug).to eq "mfd"
     end
   end
 end
