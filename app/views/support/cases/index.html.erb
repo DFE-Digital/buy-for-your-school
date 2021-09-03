@@ -45,7 +45,7 @@
             </thead>
             <tbody class="govuk-table__body">
               <% @cases.each do |kase| %>
-                <%= render "row", kase: kase, extra_fields: %i[last_updated] %>
+                <%= render "row", kase: kase, tab: :my_cases %>
               <% end %>
             </tbody>
           </table>
@@ -82,7 +82,7 @@
             </thead>
             <tbody class="govuk-table__body">
               <% @cases.each do |kase| %>
-                <%= render "row", kase: kase, extra_fields: %i[date_received] %>
+                <%= render "row", kase: kase, tab: :new_cases %>
               <% end %>
             </tbody>
           </table>
@@ -122,7 +122,7 @@
             </thead>
             <tbody class="govuk-table__body">
               <% @cases.each do |kase| %>
-                <%= render "row", kase: kase, extra_fields: %i[assigned_to last_updated] %>
+                <%= render "row", kase: kase, tab: :all_cases %>
               <% end %>
             </tbody>
           </table>

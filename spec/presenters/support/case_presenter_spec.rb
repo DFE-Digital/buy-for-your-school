@@ -1,15 +1,15 @@
 RSpec.describe Support::CasePresenter do
+  subject(:presenter) { described_class.new(kase) }
+
   let(:kase) do
     OpenStruct.new(
       state: "foo",
-      interactions: [double],
+      interactions: [OpenStruct.new(created_at: Time.zone.local(2000, 1, 30, 12))],
       case_worker_account: OpenStruct.new(name: "bar"),
       category: double,
       contact: double,
     )
   end
-
-  subject(:presenter) { described_class.new(kase) }
 
   describe "#state" do
     it "returns an upcase state" do
@@ -20,6 +20,18 @@ RSpec.describe Support::CasePresenter do
   describe "#agent_name" do
     it "returns the name of the agent that's assigned to the case" do
       expect(presenter.agent_name).to eq("bar")
+    end
+  end
+
+  describe "#received_at" do
+    it "returns the formatted date on which the case was received" do
+      expect(presenter.received_at).to eq("30 January 2000")
+    end
+  end
+
+  describe "#last_updated_at" do
+    it "returns the formatted date on which the case was last updated" do
+      expect(presenter.last_updated_at).to eq("30 January 2000")
     end
   end
 

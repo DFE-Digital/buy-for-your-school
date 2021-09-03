@@ -19,7 +19,7 @@ RSpec.feature "Supported Cases View" do
       expect(all("#my-cases .govuk-table__row").count).to eq(Support::Case.all.count + 1)
     end
 
-    it "shows correct columns" do
+    it "renders a table with columns for org id, category name, case status and updated timestamp" do
       expect(find("#my-cases .govuk-table__head")).to have_text "Organisation Category Status Last updated"
     end
   end

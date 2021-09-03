@@ -1,9 +1,10 @@
 RSpec.describe Support::BasePresenter do
-  let(:created_at) { Time.zone.local(2000, 1, 30, 12) }
-  let(:updated_at) { Time.zone.local(2000, 3, 30, 12) }
+  subject(:presenter) { described_class.new(model) }
+
   let(:model) { OpenStruct.new(created_at: created_at, updated_at: updated_at) }
 
-  subject(:presenter)  { described_class.new(model) }
+  let(:created_at) { Time.zone.local(2000, 1, 30, 12) }
+  let(:updated_at) { Time.zone.local(2000, 3, 30, 12) }
 
   describe "#created_at" do
     it "returns a better formatted timestamp" do

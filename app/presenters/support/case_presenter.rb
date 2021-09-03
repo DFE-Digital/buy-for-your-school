@@ -10,6 +10,16 @@ module Support
       case_worker_account.name
     end
 
+    # @return [String]
+    def received_at
+      interactions.first.created_at
+    end
+
+    # @return [String]
+    def last_updated_at
+      interactions.last.created_at
+    end
+
     # @return [Array<InteractionPresenter>]
     def interactions
       @interactions ||= super.map { |i| Support::InteractionPresenter.new(i) }
