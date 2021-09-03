@@ -15,8 +15,15 @@ RSpec.describe "Webhook upserts category", type: :request do
   it "creates a new category" do
     expect(Category.count).to be_zero
     expect(Rollbar).to receive(:info)
-                         .with("Processed published webhook event for Contentful Category", category: "Catering")
-                         .and_call_original
+                        .with(
+                          "Processed published webhook event for Contentful Category",
+                          category_title: "Catering",
+                          category_description: "Catering description",
+                          category_contentful_id: "contentful-category-entry",
+                          category_slug: "catering",
+                          category_liquid_template: /<article id='specification'>/,
+                        )
+                        .and_call_original
 
     post "/api/contentful/category",
          params: fake_webhook_payload,
@@ -32,8 +39,15 @@ RSpec.describe "Webhook upserts category", type: :request do
     expect(Category.count).to eq 1
 
     expect(Rollbar).to receive(:info)
-                         .with("Processed published webhook event for Contentful Category", category: "Catering")
-                         .and_call_original
+                        .with(
+                          "Processed published webhook event for Contentful Category",
+                          category_title: "Catering",
+                          category_description: "Catering description",
+                          category_contentful_id: "contentful-category-entry",
+                          category_slug: "catering",
+                          category_liquid_template: /<article id='specification'>/,
+                        )
+                        .and_call_original
 
     post "/api/contentful/category",
          params: fake_webhook_payload,
