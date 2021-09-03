@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require "pry"
-
 class Api::Contentful::CategoriesController < Api::Contentful::BaseController
   def changed
-    # binding.pry
     contentful_category = GetCategory.new(category_entry_id: category_params[:id]).call
 
     category = Category.upsert({
@@ -17,7 +14,7 @@ class Api::Contentful::CategoriesController < Api::Contentful::BaseController
     unique_by: :contentful_id,
     returning: %w[title description contentful_id slug liquid_template])
 
-    unless category.empty?
+    if category.first
       render json: { status: "OK" }, status: :ok
       Rollbar.info(
         "Processed published webhook event for Contentful Category",
