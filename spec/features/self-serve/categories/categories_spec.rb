@@ -42,7 +42,6 @@ RSpec.feature "Categories page" do
     end
 
     context "when there are no categories" do
-      # TODO: category_id is getting used for the form but should be replaced by the slug
       it "auto-populates from Contentful" do
         visit "/categories"
 
