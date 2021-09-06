@@ -26,11 +26,11 @@ class SupportFormWizard
   end
 
   class Step2 < Step1
-    validates :kind, presence: true
+    validates :category_id, presence: true
   end
 
   class Step3 < Step2
-    #validates :xxx
+    validates :message, presence: true
 
     def save
       return false unless valid?
