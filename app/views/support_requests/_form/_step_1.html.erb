@@ -1,0 +1,16 @@
+<span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.share_a_specification") %></span>
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <%= form.label :specification_ids, I18n.t("support.requests.sections.about_your_request.specification_ids_label"), class: "govuk-label govuk-label--l" %>
+  </h1>
+  <div id="specification-ids-hint" class="govuk-hint">
+    <%= I18n.t("support.requests.sections.about_your_request.specification_ids_hint") %>
+  </div>
+  <% current_user.journeys.all.each do |journey| %>
+    <%= form.govuk_radio_button :journey_id, journey.id, label: { text: journey.created_at.strftime("%e %B %Y") }, hint: { text: journey.category.title } %>
+  <% end %>
+</div>
+
+<p class="govuk-body">
+  <%= link_to I18n.t("support.requests.buttons.no_spec_attached"), root_path, class: "govuk-link" %>
+</p>

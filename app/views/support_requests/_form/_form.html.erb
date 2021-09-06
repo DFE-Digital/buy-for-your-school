@@ -1,44 +1,10 @@
-<%= form_with model: support_request, url: url do |form| %>
+<%= form_with model: @support_form_wizard, as: :support_form_wizard, url: url do |form| %>
 
+  <%= render "support_requests/_form/step_1", form: form %>
+  <%= render "support_requests/_form/step_2", form: form if @support_form_wizard.step > 1 %>
+  <%= render "support_requests/_form/step_3", form: form if @support_form_wizard.step > 2 %>
 
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.share_a_specification") %></span>
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <%= form.label :specification_ids, I18n.t("support.requests.sections.about_your_request.specification_ids_label"), class: "govuk-label govuk-label--l" %>
-    </h1>
-    <div id="specification-ids-hint" class="govuk-hint">
-      <%= I18n.t("support.requests.sections.about_your_request.specification_ids_hint") %>
-    </div>
-    <% current_user.journeys.all.each do |journey| %>
-      <%= form.govuk_radio_button :journey_id, journey.id, label: { text: journey.created_at.strftime("%e %B %Y") }, hint: { text: journey.category.title } %>
-    <% end %>
-  </div>
-
-  <p class="govuk-body">
-    <%= link_to I18n.t("support.requests.buttons.no_spec_attached"), root_path, class: "govuk-link" %>
-  </p>
-
-
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.about_your_specification") %></span>
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <%= form.label :category_id, I18n.t("support.requests.sections.about_your_request.category_ids_label"), class: "govuk-label govuk-label--l" %>
-    </h1>
-    <% Category.all.each do |category| %>
-      <%= form.govuk_radio_button :category_id, category.id, label: { text: category.title }, hint: { text: category.description } %>
-    <% end %>
-  </div>
-
-  <span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.about_your_specification") %></span>
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <%= form.label :message, I18n.t("support.requests.sections.about_your_request.message_label"), class: "govuk-label govuk-label--l" %>
-    </h1>
-    <div id="message-hint" class="govuk-hint">
-      <%= I18n.t("support.requests.sections.about_your_request.message_hint") %>
-    </div>
-    <%= form.text_area :message, class: "govuk-textarea", rows: 5 %>
-  </div>
+  <%= form.hidden_field :step, value: form.object.step %>
 
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>

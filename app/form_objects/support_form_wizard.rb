@@ -4,6 +4,7 @@ class SupportFormWizard
   def initialize(attrs = {})
     attr_accessors
     super(attrs)
+    @step = 1
   end
 
   def save
@@ -49,7 +50,7 @@ class SupportFormWizard
 private
 
   def permitted_attributes
-    %i[journey_id category_id message step]
+    %i[journey_id category_id message step user]
   end
 
   def attributes_hash
@@ -63,7 +64,6 @@ private
   def params_cleaned_up
     params = attributes_hash
     params.delete(:step)
-    params.merge(user: current_user)
     params
   end
 end

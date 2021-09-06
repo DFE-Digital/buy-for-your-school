@@ -1,0 +1,10 @@
+<span class="govuk-caption-l"><%= I18n.t("support.requests.sections.titles.about_your_specification") %></span>
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <%= form.label :message, I18n.t("support.requests.sections.about_your_request.message_label"), class: "govuk-label govuk-label--l" %>
+  </h1>
+  <div id="message-hint" class="govuk-hint">
+    <%= I18n.t("support.requests.sections.about_your_request.message_hint") %>
+  </div>
+  <%= form.text_area :message, class: "govuk-textarea", rows: 5 %>
+</div>
