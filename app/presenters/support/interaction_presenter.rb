@@ -1,5 +1,3 @@
-# TODO: remove :nocov: and start testing
-# :nocov:
 module Support
   class InteractionPresenter < BasePresenter
     # @return [String]
@@ -8,4 +6,3 @@ module Support
     end
   end
 end
-# :nocov:

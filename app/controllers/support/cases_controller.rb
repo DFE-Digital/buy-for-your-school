@@ -71,8 +71,6 @@ module Support
 end
 # :nocov:
 
-# TODO: remove :nocov: and start testing
-# :nocov:
 module Support
   class CasesController < ApplicationController
     def index
@@ -86,4 +84,3 @@ module Support
     end
   end
 end
-# :nocov:
