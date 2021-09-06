@@ -10,7 +10,7 @@ class SupportRequestsController < ApplicationController
   def create
     @support_form_wizard = "SupportFormWizard::Step#{support_form_wizard_params[:step]}"
                              .constantize.new(support_form_wizard_params)
-    
+
     if @support_form_wizard.save
       if @support_form_wizard.last_step?
         redirect_to user_support_request_path(current_user, @support_form_wizard.support_request),

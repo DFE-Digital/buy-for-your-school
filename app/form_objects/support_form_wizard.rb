@@ -22,7 +22,7 @@ class SupportFormWizard
   end
 
   class Step1 < SupportFormWizard
-    #validates :xxx
+    # validates :xxx
   end
 
   class Step2 < Step1
