@@ -1,10 +1,11 @@
 class SupportFormWizard
   include ActiveModel::Model
 
+  attr_accessor :step
+
   def initialize(attrs = {})
     attr_accessors
     super(attrs)
-    @step = 1
   end
 
   def save
@@ -22,7 +23,7 @@ class SupportFormWizard
   end
 
   class Step1 < SupportFormWizard
-    # validates :xxx
+    validates :journey_id, presence: true
   end
 
   class Step2 < Step1
@@ -62,7 +63,7 @@ private
   end
 
   def params_cleaned_up
-    params = attributes_hash
+    params = attributes_hash.reject { |_, v| v.blank? }
     params.delete(:step)
     params
   end

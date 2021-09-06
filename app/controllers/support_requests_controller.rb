@@ -4,7 +4,7 @@ class SupportRequestsController < ApplicationController
   before_action :set_support_request, only: %i[show edit update]
 
   def new
-    @support_form_wizard = SupportFormWizard.new
+    @support_form_wizard = SupportFormWizard.new(step: 1)
   end
 
   def create
