@@ -10,13 +10,14 @@ class AddMissingOrderToExistingTasks < ActiveRecord::Migration[6.1]
 
     section_contentful_ids.map do |section_id|
       contentful_section = Content::Client.new.by_id(section_id)
-      section = Section.where(contentful_id: section_id).first
 
-      section.tasks.map do |task|
-        contentful_section.tasks.each_with_index do |contentful_task, task_index|
-          next unless task.contentful_id == contentful_task.id
+      Section.where(contentful_id: section_id).map do |section|
+        section.tasks.map do |task|
+          contentful_section.tasks.each_with_index do |contentful_task, task_index|
+            next unless task.contentful_id == contentful_task.id
 
-          task.update!(order: task_index)
+            task.update!(order: task_index)
+          end
         end
       end
 
