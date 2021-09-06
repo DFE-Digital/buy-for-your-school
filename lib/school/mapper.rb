@@ -10,7 +10,7 @@ module School
 
     define! do
       map_array do
-        rename_keys "UKPRN" => :ukprn,
+        rename_keys "UKPRN" => :ukprn, # UK Provider Reference Number
                     "URN" => :urn, # educational establishments (schools)
                     "UPRN" => :uprn,
                     "CHNumber" => :crn # companies house
