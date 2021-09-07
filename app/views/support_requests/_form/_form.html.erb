@@ -1,11 +1,8 @@
 <%= form_for @support_form_wizard, as: :support_form_wizard, url: url do |form| %>
 
-  <%= render "support_requests/_form/step_1", form: form if @support_form_wizard.step == 1 %>
-  <%= render "support_requests/_form/step_2", form: form if @support_form_wizard.step == 2 %>
-  <%= render "support_requests/_form/step_3", form: form if @support_form_wizard.step == 3 %>
-
-
-
+  <%= render "support_requests/_form/step_1", form: form %>
+  <%= render "support_requests/_form/step_2", form: form if @support_form_wizard.step > 1 %>
+  <%= render "support_requests/_form/step_3", form: form if @support_form_wizard.step > 2 %>
 
   <%= form.hidden_field :step, value: form.object.step %>
 
@@ -15,6 +12,7 @@
     <%= "Step: #{form.object.step}" %>
   </h2>
 <% end %>
+
 
 <p class="govuk-body">
   <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path %>

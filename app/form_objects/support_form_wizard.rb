@@ -32,6 +32,7 @@ class SupportFormWizard
 
   class Step3 < Step2
     validates :message, presence: true
+    validates :user, presence: true
 
     def save
       return false unless valid?
