@@ -16,14 +16,7 @@ class Api::Contentful::CategoriesController < Api::Contentful::BaseController
 
     if category.first
       render json: { status: "OK" }, status: :ok
-      Rollbar.info(
-        "Processed published webhook event for Contentful Category",
-        category_title: category.first["title"],
-        category_description: category.first["description"],
-        category_contentful_id: category.first["contentful_id"],
-        category_slug: category.first["slug"],
-        category_liquid_template: category.first["liquid_template"],
-      )
+      Rollbar.info("Processed published webhook event for Contentful Category", **category.first)
     end
   end
 
