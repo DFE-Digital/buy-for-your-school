@@ -8,3 +8,6 @@
   </div>
   <%= form.text_area :message, class: "govuk-textarea", rows: 5 %>
 </div>
+
+<%= form.hidden_field :journey_id, value: form.object.journey_id %>
+<%= form.hidden_field :category_id, value: form.object.category_id %>

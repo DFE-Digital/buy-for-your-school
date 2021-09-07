@@ -7,3 +7,5 @@
     <%= form.govuk_radio_button :category_id, category.id, label: { text: category.title }, hint: { text: category.description } %>
   <% end %>
 </div>
+
+<%= form.hidden_field :journey_id, value: form.object.journey_id %>
