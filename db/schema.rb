@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "journeys_count"
+    t.string "slug"
   end
 
   create_table "checkbox_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
