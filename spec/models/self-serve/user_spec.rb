@@ -7,6 +7,4 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_many(:journeys) }
 
   it { is_expected.to have_many(:support_requests) }
-
-  it { is_expected.to have_and_belong_to_many(:schools) }
 end
