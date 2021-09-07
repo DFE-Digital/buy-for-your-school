@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :support_category, class: "Support::Category" do
-    name { "MyString" }
+    name { "support category title" }
   end
 end

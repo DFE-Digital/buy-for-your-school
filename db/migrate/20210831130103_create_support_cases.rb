@@ -7,7 +7,7 @@ class CreateSupportCases < ActiveRecord::Migration[6.1]
       t.string :request_text
       t.integer :support_level
       t.integer :status
-      t.integer :state
+      t.integer :state, default: 0
       t.timestamps
 
       t.index :ref
