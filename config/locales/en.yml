@@ -196,69 +196,35 @@ en:
     updated_flash: User updated
 
   #/ support
-  support:
-    requests:
-      start:
-        h1_heading: Request help and support with your specification
-        h2_heading: Before you start
-        p_intro_1: Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
-        p_intro_2: DfE's supported buying team will respond to you within 5 working days.
-        you_can_list_title: "You can:"
-        you_can_list:
-          - <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools-writing-a-spec" class="govuk-link">read about writing a specification</a>
-          - find out more about <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools" class="govuk-link">planning for what you're buying</a>
-          - read <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
-          - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
-      sections:
-        titles:
-          share_a_specification: Share a specification
-          about_your_specification: About your specification
-        send_your_request: Send your request
-        about_you:
-          heading: About you
-        about_your_request:
-          heading: About your request for support
-          specification_ids_label: Which of your specifications are related to this request?
-          specification_ids_hint: A copy of the specifications you choose will be sent to us with this request in its current state. We will not receive any new changes you make. Select all that apply.
-          category_ids_label: What are you buying?
-          message_label: How can we help?
-          message_hint: Briefly describe your problem in a few sentences.
-      confirm:
-        timescale: Once you send this request, we will review it and get in touch within 5 working days.
-      buttons:
-        start: Start
-        no_spec_attached: My request is not related to a specification I've created
-        send: Send request
-
-
-  errors:
-    go_home: "Back to the service"
-    internal_server_error:
-      page_title: "Internal server error"
-      page_body: "Sorry, there is a problem with the service. Please try again later."
-    not_found:
-      page_title: "Page not found"
-      page_body: "Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address."
-    unacceptable:
-      page_title: "Unacceptable request"
-      page_body: "There was a problem with your request."
-    contentful_entry_not_found:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
-    unexpected_contentful_model:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
-    unexpected_contentful_step_type:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
-    repeat_step_in_the_contentful_journey:
-      page_title: "An unexpected error occurred"
-      page_body: "One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}"
-    specification_template_invalid:
-      page_title: "An unexpected error occurred"
-      page_body: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."
-    sign_in:
-      unexpected_failure:
-        page_title: "An unexpected error occurred"
-        page_body: "The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly."
-
+  support_requests:
+    start:
+      h1_heading: Request help and support with your specification
+      h2_heading: Before you start
+      p_intro_1: Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
+      p_intro_2: DfE's supported buying team will respond to you within 5 working days.
+      you_can_list_title: "You can:"
+      you_can_list:
+        - <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools-writing-a-spec" class="govuk-link">read about writing a specification</a>
+        - find out more about <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools" class="govuk-link">planning for what you're buying</a>
+        - read <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
+        - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
+    sections:
+      titles:
+        share_a_specification: Share a specification
+        about_your_specification: About your specification
+      send_your_request: Send your request
+      about_you:
+        heading: About you
+      about_your_request:
+        heading: About your request for support
+        specification_ids_label: Which of your specifications are related to this request?
+        specification_ids_hint: A copy of the specifications you choose will be sent to us with this request in its current state. We will not receive any new changes you make. Select all that apply.
+        category_ids_label: What are you buying?
+        message_label: How can we help?
+        message_hint: Briefly describe your problem in a few sentences.
+    confirm:
+      timescale: Once you send this request, we will review it and get in touch within 5 working days.
+    buttons:
+      start: Start
+      no_spec_attached: My request is not related to a specification I've created
+      send: Send request
