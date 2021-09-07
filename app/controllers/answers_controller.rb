@@ -45,7 +45,7 @@ class AnswersController < ApplicationController
 
       if parent_task.has_single_visible_step?
         redirect_to journey_path(@journey, anchor: @step.id)
-      elsif parent_task.all_steps_completed?
+      elsif parent_task.all_steps_completed? || @step.last?
         redirect_to journey_task_path(@journey, parent_task)
       else
         redirect_to journey_step_path(@journey, parent_task.next_incomplete_step_id)

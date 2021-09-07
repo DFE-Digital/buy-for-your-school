@@ -22,5 +22,6 @@ RSpec.describe "Webhook upserts category", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(Category.first.title).to eql "Catering"
+    expect(Category.first.slug).to eql "catering"
   end
 end

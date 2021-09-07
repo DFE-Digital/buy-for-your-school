@@ -8,6 +8,7 @@ class Api::Contentful::CategoriesController < Api::Contentful::BaseController
       cat.title = contentful_category.title
       cat.description = contentful_category.description
       cat.liquid_template = contentful_category.combined_specification_template
+      cat.slug = contentful_category.slug
     end
 
     if category
