@@ -5,6 +5,10 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
 
+    <div class="govuk-inset-text">
+      <%= link_to "Request free help and support with your specification", user_support_requests_path(current_user) %>
+    </div>
+
     <% if @journeys.none? %>
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>

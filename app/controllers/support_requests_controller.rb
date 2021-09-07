@@ -14,7 +14,7 @@ class SupportRequestsController < ApplicationController
     if @support_form_wizard.save
       if @support_form_wizard.last_step?
         redirect_to user_support_request_path(current_user, @support_form_wizard.support_request),
-                    notice: "Support request created"
+                    notice: I18n.t("support_request.created_flash")
       else
         render :new
       end
@@ -23,11 +23,21 @@ class SupportRequestsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @support_form_wizard = "SupportFormWizard::Step#{params[:step]}"
+                             .constantize.new(journey_id: @support_request.journey_id,
+                                              category_id: @support_request.category_id,
+                                              message: @support_request.message,
+                                              step: params[:step].to_i)
+  end
 
   def update
-    if @support_request.update(support_form_wizard_params)
-      redirect_to user_support_request_path(current_user, @support_request), notice: "Support request updated"
+    @support_form_wizard = "SupportFormWizard::Step#{support_form_wizard_params[:step]}"
+                             .constantize.new(support_form_wizard_params)
+
+    if @support_form_wizard.update
+      redirect_to user_support_request_path(current_user, @support_form_wizard.support_request),
+                  notice: I18n.t("support_request.updated_flash")
     else
       render :edit
     end

@@ -43,7 +43,7 @@
     <h2 class="govuk-heading-m"><%= I18n.t("support_requests.sections.about_your_request.heading") %></h2>
 
     <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
+      <div id="support-request-category" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support_requests.sections.about_your_request.category_ids_label") %>
         </dt>
@@ -51,10 +51,10 @@
           <%= @support_request.category&.title %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request, step: 2), class: "govuk-link" %>
         </dd>
       </div>
-      <div class="govuk-summary-list__row">
+      <div id="support-request-message" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Description of problem
         </dt>
@@ -62,10 +62,10 @@
           <%= @support_request.message %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request, step: 3), class: "govuk-link" %>
         </dd>
       </div>
-      <div class="govuk-summary-list__row">
+      <div id="support-request-journey" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Attached specifications
         </dt>
@@ -75,7 +75,7 @@
           <%= @support_request.journey&.category&.title %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request), class: "govuk-link" %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request, step: 1), class: "govuk-link" %>
         </dd>
       </div>
     </dl>

@@ -15,7 +15,7 @@ en:
       next: Continue
       change_answer: Change
       update: Update
-      yes_continue: Yes, contiune
+      yes_continue: Yes, continue
       exit_without_save: Exit without saving
     label:
       what_is: "What is %{label}?"
@@ -225,6 +225,9 @@ en:
     confirm:
       timescale: Once you send this request, we will review it and get in touch within 5 working days.
     buttons:
-      start: Start
       no_spec_attached: My request is not related to a specification I've created
       send: Send request
+
+  support_request:
+    created_flash: Support request created
+    updated_flash: Support request updated
