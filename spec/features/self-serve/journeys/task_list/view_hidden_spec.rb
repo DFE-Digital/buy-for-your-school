@@ -16,6 +16,12 @@ RSpec.feature "Users can view the task list" do
     end
 
     it "shows the section title" do
+      # TODO: remove this when the fixtures are replaced by factories
+      # this is to remove the category created in the context so there is no ambiguity
+      # between that and the category created below when Capybara tries to select a category
+      # in user_signs_in_and_starts_the_journey (both categories will have the same slug)
+      Category.destroy_all
+
       start_journey_from_category(category: "section-with-single-hidden-task.json")
       within(".app-task-list") do
         expect(page).to have_content "Section with a hidden task" # > hidden_task_section.json

@@ -25,9 +25,9 @@ RSpec.feature "Content errors" do
     it "renders an error page" do
       allow(stub_client).to receive(:by_id).with("contentful-category-entry").and_return(nil)
 
-      category = create(:category, contentful_id: "contentful-category-entry")
+      create(:category, contentful_id: "contentful-category-entry", slug: "cleaning")
 
-      user_signs_in_and_starts_the_journey(category.id)
+      user_signs_in_and_starts_the_journey("cleaning")
 
       # errors.contentful_entry_not_found.page_title
       expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
