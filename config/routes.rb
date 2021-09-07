@@ -55,12 +55,6 @@ Rails.application.routes.draw do
     resources :support_requests, path: "support-requests", only: %i[index show new edit create update]
   end
 
-  get "dashboard", to: "dashboard#show"
-
-  # Errors
-  get "/404", to: "errors#not_found"
-  get "/422", to: "errors#unacceptable"
-  get "/500", to: "errors#internal_server_error"
   #
   # Supported ------------------------------------------------------------------
   #

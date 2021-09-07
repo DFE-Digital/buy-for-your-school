@@ -8,7 +8,7 @@ Whilst building forms in Rails is a simple task until you want more complex setu
 
 ##Multi Step (Wizard) Example
 
-`app/form_objects/support_form_wizard`
+`app/forms/support_form_wizard`
 
 This form could become more complex and consists of multiple steps / splitting the form (note - this could be achieved with frontend JS).
 
