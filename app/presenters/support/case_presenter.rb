@@ -7,7 +7,7 @@ module Support
 
     # @return [String]
     def agent_name
-      case_worker_account.name
+      case_worker_account.full_name
     end
 
     # @return [String]
@@ -33,6 +33,10 @@ module Support
     # @return [CategoryPresenter]
     def category
       Support::CategoryPresenter.new(super)
+    end
+
+    def case_worker_account
+      Support::AgentPresenter.new(super)
     end
   end
 end

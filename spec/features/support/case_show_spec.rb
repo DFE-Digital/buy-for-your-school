@@ -13,10 +13,14 @@ RSpec.feature "Case Management Dashboard - show" do
   end
 
   it "shows School details section" do
-    expect(find("#school-details .govuk-summary-list")).to be_visible
+    within "#school-details" do
+      expect(find(".govuk-summary-list")).to be_visible
+    end
   end
 
   it "School details section contain contact name" do
-    expect(find("#school-details .govuk-summary-list")).to have_text "Contact name"
+    within "#school-details" do
+      expect(find(".govuk-summary-list")).to have_text "Contact name"
+    end
   end
 end

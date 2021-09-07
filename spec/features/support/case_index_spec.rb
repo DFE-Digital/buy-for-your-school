@@ -5,7 +5,7 @@ RSpec.feature "Case Management Dashboard - index" do
   end
 
   it "renders 3 tabs" do
-    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
+    expect(all("li.govuk-tabs__list-item", visible: true).count).to eq(3)
   end
 
   it "defaults to the 'My Cases' tab" do
@@ -20,14 +20,15 @@ RSpec.feature "Case Management Dashboard - index" do
   end
 
   it "renders a table with columns for org id, category name, case status and updated timestamp" do
-    expect(find("#my-cases .govuk-table__head")).to have_text "Organisation Category Status Last updated"
-  end
+    within "#my-cases" do
+      expect(find(".govuk-table__head")).to have_text "Organisation Category Status Last updated"
 
-  context "when clicking on the 'New cases' tab" do
-    before { click_link "New cases" }
+      table_headers = all(".govuk-table__header")
 
-    it "only renders the 'New Cases' tab" do
-      expect(find("#new-cases .govuk-heading-l", visible: true)).to have_text "New cases"
+      expect(table_headers[0]).to have_text "Organisation"
+      expect(table_headers[1]).to have_text "Category"
+      expect(table_headers[2]).to have_text "Status"
+      expect(table_headers[3]).to have_text "Last updated"
     end
   end
 end

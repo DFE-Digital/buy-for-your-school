@@ -19,7 +19,7 @@ RSpec.describe Support::CasePresenter do
 
   describe "#agent_name" do
     it "returns the name of the agent that's assigned to the case" do
-      expect(presenter.agent_name).to eq("bar")
+      expect(presenter.agent_name).to eq("Example ProcOps Agent")
     end
   end
 
