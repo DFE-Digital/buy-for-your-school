@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe CheckboxAnswers, type: :model do
   it "belongs to a step" do
     association = described_class.reflect_on_association(:step)

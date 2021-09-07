@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe SingleDateAnswer, type: :model do
   let(:answer) { build(:single_date_answer, response: date) }
 
