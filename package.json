@@ -2,7 +2,7 @@
   "name": "sct-buy-for-your-school",
   "private": true,
   "dependencies": {
-    "govuk-frontend": "^3.13.0",
+    "govuk-frontend": "^3.13.1",
     "@rails/ujs": "^6.0.0"
   }
 }
