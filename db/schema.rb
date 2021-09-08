@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_25_142733) do
+ActiveRecord::Schema.define(version: 2021_09_01_071420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -152,6 +152,70 @@ ActiveRecord::Schema.define(version: 2021_08_25_142733) do
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
+  create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "ref"
+    t.uuid "category_id"
+    t.string "sub_category_string"
+    t.string "request_text"
+    t.integer "support_level"
+    t.integer "status"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_support_cases_on_category_id"
+    t.index ["ref"], name: "index_support_cases_on_ref"
+    t.index ["state"], name: "index_support_cases_on_state"
+    t.index ["status"], name: "index_support_cases_on_status"
+    t.index ["support_level"], name: "index_support_cases_on_support_level"
+  end
+
+  create_table "support_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "file_type"
+    t.string "document_body"
+    t.string "documentable_type", null: false
+    t.uuid "documentable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["documentable_id"], name: "index_support_documents_on_documentable_id"
+    t.index ["documentable_type"], name: "index_support_documents_on_documentable_type"
+  end
+
+  create_table "support_enquiries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_request_id"
+    t.uuid "case_id"
+    t.string "name"
+    t.string "email"
+    t.string "telephone"
+    t.string "school_urn"
+    t.string "school_name"
+    t.string "category"
+    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["case_id"], name: "index_support_enquiries_on_case_id"
+    t.index ["support_request_id"], name: "index_support_enquiries_on_support_request_id"
+  end
+
+  create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "user_id"
+    t.uuid "journey_id"
+    t.uuid "category_id"
+    t.string "message"
+    t.string "school_name"
+    t.string "school_urn"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_support_requests_on_category_id"
+    t.index ["journey_id"], name: "index_support_requests_on_journey_id"
+    t.index ["user_id"], name: "index_support_requests_on_user_id"
+  end
+
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "section_id"
     t.string "title", null: false
@@ -178,6 +242,7 @@ ActiveRecord::Schema.define(version: 2021_08_25_142733) do
     t.string "full_name"
     t.jsonb "orgs"
     t.jsonb "roles"
+    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"
