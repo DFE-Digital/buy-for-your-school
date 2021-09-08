@@ -1,0 +1,175 @@
+# Grouped categories of spend supported by Get Help buying for Schools service
+#
+#
+#
+---
+
+- title: ICT
+  description: Information and Communications Technology
+  slug: ict
+  sub_categories:
+    - title: Peripherals
+      description: computer peripherals
+      slug: peripherals
+    - title: Laptops
+      description: Mobile computing
+      slug: laptops
+    - title: Broadband service
+      description:
+      slug: broadband_service
+    - title: Switches & Routers
+      description: networking hardware
+      slug: switches_routers
+    - title: Cyber services
+      description:
+      slug: cyber_services
+    - title: Cloud SaaS
+      description:
+      slug: cloud_saas         
+    - title: AV Displays
+      description: TVs, projectors
+      slug: displays
+    - title: Hosting & Storage
+      description:
+      slug: hosting_and_storage
+    - title: MIS
+      description:
+      slug: mis
+    - title: VLEs
+      description: Virtual Learning Environments
+      slug: vle
+    - title: Curriculum Content
+      description:
+      slug: curriculum_content
+    - title: Server Configuration & Support
+      description:
+      slug: servers
+    - title: Broadband Infrastructure
+      description:
+      slug: broadband_infrastructure
+    - title: Safeguarding & Content
+      description:
+      slug: safeguarding
+    - title: OS Software
+      description:
+      slug: software
+    - title: Websites
+      description:
+      slug: websites
+    - title: Telecoms & Broadband
+      description:
+      slug: broadband
+
+
+- title: FM
+  description: Facilities Management
+  slug: facilities
+  sub_categories:
+    - title: Water, drains & sewerage
+      description:
+      slug: sewerage
+    - title: Fire Safety (Goods & Systems)
+      description:
+      slug:
+    - title: Security
+      description:
+      slug:
+    - title: Building maintenance & BMS
+      description:
+      slug:
+    - title: Mechanical & Electrical Systems
+      description:
+      slug:
+    - title: Statutory testing
+    - title: Roof Maintenance
+    - title: Cleaning Services
+    - title: Cleaning Products
+    - title: Waste management
+    - title: Grounds Maintenance
+    - title: Removal & relocation
+    - title: IPC (PPE & Uniform)
+    - title: MUGAs (Multi Use Games Area)
+    - title: Transport
+
+
+- title: Energy
+  description:
+  slug: energy
+  sub_categories:
+    - title: Electricity
+    - title: Gas
+    - title: Other fuels
+
+
+- title: Utilities
+  description:
+  slug: utilities
+  sub_categories:
+    - title: Water
+
+
+- title: Catering
+  description:
+  slug: catering
+  sub_categories:
+    - title: Equipment
+    - title: Catering Services
+
+
+- title: Furniture
+  description:
+  slug: furniture
+  sub_categories:
+    - title: Furniture
+
+
+- title: Books
+  description:
+  slug: books
+  sub_categories:
+    - title: Books
+
+
+- title: Business
+  description:
+  slug: business
+  sub_categories:
+    - title: Services MFD
+
+
+- title: Financial
+  description:
+  slug: financial
+  sub_categories:
+    - title: Audit
+    - title: Insurance
+    - title: Leasing
+    - title: Spend Analysis
+
+
+- title: Professional
+  description:
+  slug: professional
+  sub_categories:
+    - title: Legal Services
+    - title: Professional services Bloom
+    - title: Recruitment screening
+    - title: Supply Teachers & Agency workers
+    - title: Payroll
+    - title: HR
+
+
+- title: Office supplies
+  description:
+  slug: office_supplies
+  sub_categories:
+    - title: Stationery supply & office supplies
+
+
+- title: Capital
+  description:
+  slug: capital
+  sub_categories:
+    - title: Boilers and plumbing services
+    - title: Solar
+

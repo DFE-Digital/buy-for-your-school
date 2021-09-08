@@ -3,7 +3,7 @@ RSpec.describe Support::Case, type: :model do
 
   it "belongs to a category" do
     expect(support_case.category).not_to be_nil
-    expect(support_case.category.name).to eql "support category title"
+    expect(support_case.category.title).to eql "support category title"
   end
 
   context "with documents" do
