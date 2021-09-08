@@ -1,4 +1,8 @@
 RSpec.feature "Create a new support request" do
+  before do
+    travel_to Time.zone.local(2021, 9, 1, 0o1, 0o4, 44)
+  end
+
   let(:journey) { create(:journey) }
 
   context "when the user is signed in" do
@@ -33,7 +37,7 @@ RSpec.feature "Create a new support request" do
 
         expect(find("label.govuk-label--l")).to have_text "Which of your specifications are related to this request?"
 
-        choose "7 September 2021"
+        choose "1 September 2021"
         click_continue
 
         expect(find("label.govuk-label--l")).to have_text "What are you buying?"
