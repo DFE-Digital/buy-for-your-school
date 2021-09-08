@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+### Supported Unreleased
+
+- Added initial models for supported case management functions.
+
+### Specify Unreleased
+
 **Rich Data**
 - Integrate fully with DSI to gather names, email and organisation at authentication
 - Add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
