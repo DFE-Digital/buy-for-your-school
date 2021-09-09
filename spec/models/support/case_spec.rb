@@ -3,7 +3,7 @@ RSpec.describe Support::Case, type: :model do
 
   it "belongs to a category" do
     expect(support_case.category).not_to be_nil
-    expect(support_case.category.title).to eql "support category title"
+    expect(support_case.category.title).to match /support category title \d/
   end
 
   context "with documents" do
@@ -19,20 +19,20 @@ RSpec.describe Support::Case, type: :model do
   it { is_expected.to define_enum_for(:state).with_values(%i[initial open resolved pending closed pipeline no_response]) }
 
   describe "#generate_ref" do
-    context "with no existing cases" do
-      it "has generated initial ref" do
+    context "when no cases exist" do
+      it "generates a reference starting at 1" do
         expect(support_case.ref).to eql "000001"
       end
     end
 
-    context "with existing cases" do
+    context "when cases already exist" do
       before do
-        FactoryBot.create_list(:support_case, 10)
+        create_list(:support_case, 10)
       end
 
       let!(:new_case) { create(:support_case) }
 
-      it "has generated correct ref" do
+      it "generates an incrementing reference" do
         expect(new_case.ref).to eql "000011"
       end
     end
