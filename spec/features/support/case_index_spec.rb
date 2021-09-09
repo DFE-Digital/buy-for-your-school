@@ -1,5 +1,7 @@
 RSpec.feature "Case Management Dashboard - index" do
   before do
+    create(:support_case)
+
     user_is_signed_in
     visit "/support/cases"
   end

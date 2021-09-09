@@ -10,6 +10,10 @@ module Support
       case_worker_account.full_name
     end
 
+    def organisation_name
+      "St.Mary"
+    end
+
     # @return [String]
     def received_at
       interactions.first.created_at
