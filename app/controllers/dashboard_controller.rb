@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  breadcrumb "Dashboard", :dashboard_path
+
   def show
     journeys = Journey.not_remove.includes(:category).where(user_id: current_user.id)
     @journeys = journeys.map { |j| JourneyPresenter.new(j) }

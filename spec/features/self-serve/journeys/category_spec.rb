@@ -14,6 +14,9 @@ RSpec.feature "A journey page has" do
     find("label", text: category.title).click
     # begin
     click_continue
+
+    assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
+                 ["Dashboard", "Create Specification"]
   end
 
   context "when the category is 'catering'" do

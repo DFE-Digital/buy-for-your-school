@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SpecificationsController < ApplicationController
+  breadcrumb "Dashboard", :dashboard_path
+
   before_action :check_user_belongs_to_journey?
 
   # Render HTML and DOCX formats
@@ -9,6 +11,8 @@ class SpecificationsController < ApplicationController
   #
   # @see SpecificationRenderer
   def show
+    breadcrumb "Create Specification", journey_path(current_journey), match: :exact
+    breadcrumb "View Specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
 
     specification_renderer = SpecificationRenderer.new(

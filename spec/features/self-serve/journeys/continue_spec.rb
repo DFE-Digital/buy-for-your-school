@@ -14,6 +14,9 @@ RSpec.feature "Journey continue button behaviour" do
 
       click_continue
 
+      assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
+                   ["Dashboard", "Create Specification"]
+
       answer = LongTextAnswer.last
 
       expect(page).to have_current_path(journey_url(journey, anchor: answer.step.id))

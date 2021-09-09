@@ -19,6 +19,11 @@ RSpec.feature "View existing journeys" do
         visit "/dashboard"
       end
 
+      it "dashboard.breadcrumbs" do
+        assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
+                     ["Dashboard"]
+      end
+
       it "dashboard.existing.header" do
         expect(find("h2.govuk-heading-m")).to have_text "Existing specifications"
       end
