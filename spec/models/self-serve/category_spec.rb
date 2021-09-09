@@ -8,7 +8,6 @@ RSpec.describe Category, type: :model do
     it { is_expected.to validate_presence_of(:description) }
     it { is_expected.to validate_presence_of(:contentful_id) }
     it { is_expected.to validate_presence_of(:liquid_template) }
-    it { is_expected.to validate_presence_of(:slug) }
     it { is_expected.to validate_uniqueness_of(:contentful_id) }
   end
 end
