@@ -175,3 +175,30 @@ en:
   support:
     header: Supported Buying Admin
 
+    cases:
+      not_found: No cases found
+      actions: Actions
+      my_cases: My cases
+      new_cases: New cases
+      all_cases: All cases
+      organisation: Organisation
+      status: Status
+      category: Category
+      school_details: School details
+      request_details: Request details
+      case_history: Case history
+      contact_name: Contact name
+      contact_phone: Contact phone
+      contact_email: Contact email
+      problem_description: Description of problem
+      attached_specification: Attached specification
+      
+      index:
+        last_updated: Last updated
+        date_received: Date received
+        assigned_to: Assigned to
+
+      show:
+        requested_at: Request sent on %{time}
+        assign_to: Assign to case worker
+        back: Back to case list

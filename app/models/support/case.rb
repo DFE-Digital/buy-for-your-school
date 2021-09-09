@@ -30,5 +30,35 @@ module Support
     # pipeline
     # no_response
     enum state: { initial: 0, open: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
+
+    # TODO: Replace with ActiveRecord association
+    def interactions
+      time = Time.zone.local(2020, 1, 30, 12)
+      [
+        OpenStruct.new(
+          id: 1,
+          author: "Example Author",
+          type: "Phone",
+          note: "Example ticket note",
+          created_at: time,
+          updated_at: time,
+        ),
+      ]
+    end
+
+    # TODO: Replace with ActiveRecord association
+    def case_worker_account
+      OpenStruct.new(full_name: "Example Agent")
+    end
+
+    # TODO: Replace with ActiveRecord association
+    def contact
+      OpenStruct.new(
+        first_name: "Example First",
+        last_name: "Name",
+        phone_number: "+44 777888999",
+        email_address: "example@email.com",
+      )
+    end
   end
 end
