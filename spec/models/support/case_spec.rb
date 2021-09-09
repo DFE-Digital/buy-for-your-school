@@ -35,7 +35,6 @@ RSpec.describe Support::Case, type: :model do
       it "has generated correct ref" do
         expect(new_case.ref).to eql "000011"
       end
-
     end
   end
 end
