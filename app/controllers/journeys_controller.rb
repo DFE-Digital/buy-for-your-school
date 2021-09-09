@@ -52,7 +52,7 @@ class JourneysController < ApplicationController
   #
   # @see SectionPresenter
   def show
-    @journey = JourneyPresenter.new(current_journey)
+    @journey = current_journey
 
     RecordAction.new(
       action: "view_journey",
