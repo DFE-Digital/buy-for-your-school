@@ -11,18 +11,18 @@ RSpec.describe Support::Category, type: :model do
   end
 
   describe "validations" do
-    context "with name" do
+    context "with title" do
       it "is valid" do
         expect(support_category).to be_valid
       end
     end
 
-    context "without name" do
-      let(:support_category) { build(:support_category, name: nil) }
+    context "without title" do
+      let(:support_category) { build(:support_category, title: nil) }
 
-      it "is not valid" do
+      it "is invalid" do
         expect(support_category).not_to be_valid
-        expect(support_category.errors.full_messages).to include "Name can't be blank"
+        expect(support_category.errors.full_messages).to include "Title can't be blank"
       end
     end
   end
