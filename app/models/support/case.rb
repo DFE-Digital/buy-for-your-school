@@ -30,6 +30,15 @@ module Support
     #   no_response
     enum state: { initial: 0, open: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
 
+    before_validation :generate_ref
+    validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
+
+    # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
+    # @return [String]
+    def generate_ref
+      self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
+    end
+
     # TODO: Replace with ActiveRecord association
     def interactions
       time = Time.zone.local(2020, 1, 30, 12)
