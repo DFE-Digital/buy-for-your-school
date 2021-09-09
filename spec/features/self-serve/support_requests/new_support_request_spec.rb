@@ -35,6 +35,11 @@ RSpec.feature "Create a new support request" do
         click_on "Start"
         click_on "Yes, continue"
 
+        expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
+
+        fill_in "support_form_wizard[phone_number]", with: "0151 000 0000"
+        click_continue
+
         expect(find("label.govuk-label--l")).to have_text "Which of your specifications are related to this request?"
 
         choose "1 September 2021"

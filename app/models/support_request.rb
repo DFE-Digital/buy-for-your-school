@@ -10,4 +10,5 @@ class SupportRequest < ApplicationRecord
 
   # Validations can be removed here and just used in form object
   validates :message, presence: true
+  validates :phone_number, presence: true
 end

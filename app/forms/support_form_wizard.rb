@@ -23,14 +23,18 @@ class SupportFormWizard
   end
 
   class Step1 < SupportFormWizard
-    validates :journey_id, presence: true
+    validates :phone_number, presence: true
   end
 
   class Step2 < Step1
-    validates :category_id, presence: true
+    validates :journey_id, presence: true
   end
 
   class Step3 < Step2
+    validates :category_id, presence: true
+  end
+
+  class Step4 < Step3
     validates :message, presence: true
     validates :user, presence: true
 
@@ -52,7 +56,7 @@ class SupportFormWizard
 private
 
   def permitted_attributes
-    %i[journey_id category_id message step user]
+    %i[phone_number journey_id category_id message step user]
   end
 
   def attributes_hash

@@ -27,16 +27,14 @@ class SupportRequestsController < ApplicationController
     @support_form_wizard = "SupportFormWizard::Step#{params[:step]}"
                              .constantize.new(journey_id: @support_request.journey_id,
                                               category_id: @support_request.category_id,
+                                              phone_number: @support_request.phone_number,
                                               message: @support_request.message,
                                               step: params[:step].to_i)
   end
 
   def update
-    @support_form_wizard = "SupportFormWizard::Step#{support_form_wizard_params[:step]}"
-                             .constantize.new(support_form_wizard_params)
-
-    if @support_form_wizard.update
-      redirect_to user_support_request_path(current_user, @support_form_wizard.support_request),
+    if @support_request.update(params_cleaned_up)
+      redirect_to user_support_request_path(current_user, @support_request),
                   notice: I18n.t("support_request.updated_flash")
     else
       render :edit
@@ -53,7 +51,13 @@ private
 
   def support_form_wizard_params
     params.require(:support_form_wizard).permit(
-      :journey_id, :category_id, :message, :step
+      :phone_number, :journey_id, :category_id, :message, :step
     ).merge(user: current_user)
+  end
+
+  def params_cleaned_up
+    params = support_form_wizard_params
+    params.delete(:step)
+    params
   end
 end

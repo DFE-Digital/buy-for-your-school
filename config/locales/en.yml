@@ -210,11 +210,14 @@ en:
         - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
     sections:
       titles:
+        about_you: About you
         share_a_specification: Share a specification
         about_your_specification: About your specification
       send_your_request: Send your request
       about_you:
         heading: About you
+        phone_number: What is your phone number?
+        hint: Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes.
       about_your_request:
         heading: About your request for support
         specification_ids_label: Which of your specifications are related to this request?

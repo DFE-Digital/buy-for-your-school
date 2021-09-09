@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_01_071420) do
+ActiveRecord::Schema.define(version: 2021_09_09_113848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
-    t.index ["ref"], name: "index_support_cases_on_ref"
+    t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
     t.index ["status"], name: "index_support_cases_on_status"
     t.index ["support_level"], name: "index_support_cases_on_support_level"
@@ -211,6 +211,7 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.string "school_urn"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "phone_number"
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"
@@ -242,7 +243,6 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.string "full_name"
     t.jsonb "orgs"
     t.jsonb "roles"
-    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"

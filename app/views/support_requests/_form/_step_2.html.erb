@@ -1,11 +1,18 @@
-<span class="govuk-caption-l"><%= I18n.t("support_requests.sections.titles.about_your_specification") %></span>
+<span class="govuk-caption-l"><%= I18n.t("support_requests.sections.titles.share_a_specification") %></span>
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
-    <%= form.label :category_id, I18n.t("support_requests.sections.about_your_request.category_ids_label"), class: "govuk-label govuk-label--l" %>
+    <%= form.label :specification_ids, I18n.t("support_requests.sections.about_your_request.specification_ids_label"), class: "govuk-label govuk-label--l" %>
   </h1>
-  <% Category.all.each do |category| %>
-    <%= form.govuk_radio_button :category_id, category.id, label: { text: category.title }, hint: { text: category.description } %>
+  <div id="specification-ids-hint" class="govuk-hint">
+    <%= I18n.t("support_requests.sections.about_your_request.specification_ids_hint") %>
+  </div>
+  <% current_user.journeys.all.each do |journey| %>
+    <%= form.govuk_radio_button :journey_id, journey.id, label: { text: journey.created_at.strftime("%e %B %Y") }, hint: { text: journey.category.title } %>
   <% end %>
 </div>
 
-<%= form.hidden_field :journey_id, value: form.object.journey_id %>
+<p class="govuk-body">
+  <%= link_to I18n.t("support_requests.buttons.no_spec_attached"), root_path, class: "govuk-link" %>
+</p>
+
+<%= form.hidden_field :phone_number, value: form.object.phone_number %>
