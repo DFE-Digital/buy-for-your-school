@@ -87,4 +87,9 @@ class Journey < ApplicationRecord
       next_section.next_incomplete_task # first task
     end
   end
+
+  # @return [Section]
+  def sections_with_tasks
+    sections.includes(:tasks)
+  end
 end

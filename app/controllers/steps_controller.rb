@@ -12,10 +12,10 @@ class StepsController < ApplicationController
     @answer = AnswerFactory.new(step: step).call
     # TODO: extract @back_url to a shared private method
     @back_url =
-      if !parent_task || parent_task.has_single_visible_step?
+      if !step.task || step.task.has_single_visible_step?
         journey_path(@journey, anchor: step.id, back_link: true)
       else
-        journey_task_path(@journey, parent_task, back_link: true)
+        journey_task_path(@journey, step.task, back_link: true)
       end
 
     flash[:preview] = "This is a preview" if params.key?(:preview)
@@ -44,10 +44,10 @@ class StepsController < ApplicationController
     @answer = step.answer
     # TODO: extract @back_url to a shared private method
     @back_url =
-      if !parent_task || parent_task.has_single_visible_step?
+      if !step.task || step.task.has_single_visible_step?
         journey_path(@journey, anchor: step.id, back_link: true)
       else
-        journey_task_path(@journey, parent_task, back_link: true)
+        journey_task_path(@journey, step.task, back_link: true)
       end
 
     RecordAction.new(
@@ -67,31 +67,31 @@ class StepsController < ApplicationController
     journey = current_journey
 
     # go back to the task page if this is the last skipped step
-    return redirect_to journey_task_path(journey, parent_task, last_step: true) if step.last_skipped?
+    return redirect_to journey_task_path(journey, step.task, last_step: true) if step.last_skipped?
 
     step.skip!
 
     # allow the user to skip a step and come back to it later
     # depending on the state of the task, the user will be taken to the
     # next incomplete step or back to the task view
-    if parent_task.has_single_visible_step?
+    if step.task.has_single_visible_step?
       # return to the journey page if we only have one step
       redirect_to journey_path(journey, anchor: step.id)
     elsif step.last?
       # return to the task page if we're on the last visible step
-      redirect_to journey_task_path(journey, parent_task, last_step: true)
-    elsif parent_task.all_unanswered_questions_skipped?
-      next_step_id = parent_task.next_skipped_id(step.id)
+      redirect_to journey_task_path(journey, step.task, last_step: true)
+    elsif step.task.all_unanswered_questions_skipped?
+      next_step_id = step.task.next_skipped_id(step.id)
       if next_step_id
         # go to the next skipped step if all steps have been skipped
         redirect_to(journey_step_path(journey, next_step_id))
       else
         # back to the task page if we only have one skipped step
-        redirect_to(journey_task_path(journey, parent_task, last_step: true))
+        redirect_to(journey_task_path(journey, step.task, last_step: true))
       end
     else
       # continue to the next incomplete step
-      redirect_to journey_step_path(journey, parent_task.next_incomplete_step_id)
+      redirect_to journey_step_path(journey, step.task.next_incomplete_step_id)
     end
   end
 
@@ -99,9 +99,5 @@ private
 
   def step
     @step ||= StepPresenter.new(Step.find(params[:id]))
-  end
-
-  def parent_task
-    step.task
   end
 end
