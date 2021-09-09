@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(version: 2021_09_09_090047) do
     t.string "request_text"
     t.integer "support_level"
     t.integer "status"
-    t.integer "state"
+    t.integer "state", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
@@ -170,9 +170,13 @@ ActiveRecord::Schema.define(version: 2021_09_09_090047) do
   end
 
   create_table "support_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "title", null: false
+    t.string "slug"
+    t.string "description"
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["title"], name: "index_support_categories_on_title", unique: true
   end
 
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -202,18 +206,15 @@ ActiveRecord::Schema.define(version: 2021_09_09_090047) do
     t.index ["support_request_id"], name: "index_support_enquiries_on_support_request_id"
   end
 
-  create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id"
-    t.uuid "journey_id"
-    t.uuid "category_id"
-    t.string "message"
-    t.string "school_name"
-    t.string "school_urn"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_support_requests_on_category_id"
-    t.index ["journey_id"], name: "index_support_requests_on_journey_id"
-    t.index ["user_id"], name: "index_support_requests_on_user_id"
+  create_table "support_sub_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "category_id", null: false
+    t.string "title", null: false
+    t.string "description"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["slug"], name: "index_support_sub_categories_on_slug", unique: true
+    t.index ["title"], name: "index_support_sub_categories_on_title", unique: true
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -242,7 +243,6 @@ ActiveRecord::Schema.define(version: 2021_09_09_090047) do
     t.string "full_name"
     t.jsonb "orgs"
     t.jsonb "roles"
-    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"

@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
-# The support category that a support case belongs to
-# Support::Category has_many Support::Cases
 module Support
+  #
+  # Types of procurement or "categories of spend"
+  #
   class Category < ApplicationRecord
     has_many :cases, class_name: "Support::Case"
+    has_many :sub_categories, class_name: "Support::SubCategory"
 
-    validates :name, presence: true
+    # TODO: validate all fields in code and at DB layer
+    validates :title, presence: true
+    # validates :description, presence: true
+    # validates :slug, presence: true
   end
 end
