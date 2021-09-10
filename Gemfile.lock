@@ -167,7 +167,7 @@ GEM
       railties (>= 5.0.0)
     faker (2.19.0)
       i18n (>= 1.6, < 2)
-    ffi (1.15.4)
+    ffi (1.15.3)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -216,7 +216,7 @@ GEM
     jwt (2.2.3)
     launchy (2.5.0)
       addressable (~> 2.7)
-    libv8-node (15.14.0.1-x86_64-darwin-20)
+    libv8-node (15.14.0.1)
     liquid (5.0.1)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -231,6 +231,7 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.1)
+    mini_portile2 (2.6.1)
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
     minitest (5.14.4)
@@ -239,7 +240,8 @@ GEM
     msgpack (1.4.2)
     multi_json (1.15.0)
     nio4r (2.5.8)
-    nokogiri (1.12.4-x86_64-darwin)
+    nokogiri (1.12.4)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
@@ -490,7 +492,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  x86_64-darwin-20
+  ruby
 
 DEPENDENCIES
   better_errors

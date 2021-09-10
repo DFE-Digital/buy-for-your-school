@@ -14,8 +14,8 @@ RSpec.feature "Create a new journey" do
       click_create
       click_continue
 
-      assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
-                   ["Dashboard", "Create Specification"]
+      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
+        ["Dashboard", "Create Specification"]
 
       within "ul.app-task-list__items" do
         expect(find("a.govuk-link")).to have_text "Radio task"

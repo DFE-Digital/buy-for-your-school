@@ -14,13 +14,15 @@ RSpec.feature "A journey page has" do
     find("label", text: category.title).click
     # begin
     click_continue
-
-    assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
-                 ["Dashboard", "Create Specification"]
   end
 
   context "when the category is 'catering'" do
     let(:fixture) { "radio-question" }
+
+    specify "breadcrumbs" do
+      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
+        ["Dashboard", "Create Specification"]
+    end
 
     specify do
       expect(page).to have_a_journey_path
@@ -38,6 +40,11 @@ RSpec.feature "A journey page has" do
 
   context "when the category is 'MFDs'" do
     let(:fixture) { "mfd-radio-question" }
+
+    specify "breadcrumbs" do
+      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
+        ["Dashboard", "Create Specification"]
+    end
 
     specify do
       expect(page).to have_a_journey_path

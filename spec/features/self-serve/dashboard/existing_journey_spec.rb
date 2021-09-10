@@ -20,8 +20,8 @@ RSpec.feature "View existing journeys" do
       end
 
       it "dashboard.breadcrumbs" do
-        assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
-                     ["Dashboard"]
+        expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
+          %w[Dashboard]
       end
 
       it "dashboard.existing.header" do

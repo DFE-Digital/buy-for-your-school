@@ -19,8 +19,8 @@ RSpec.feature "Users can see their catering specification" do
       click_continue
       click_view
 
-      assert_equal page.all("li.govuk-breadcrumbs__list-item").collect(&:text),
-                   ["Dashboard", "Create Specification", "View Specification"]
+      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
+        ["Dashboard", "Create Specification", "View Specification"]
 
       # journey.specification.header
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
