@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :support_case, class: "Support::Case" do
-    ref { "000001" }
+    ref { "" }
     request_text { "This is an example request for support - please help!" }
     state { 0 }
     support_level { 0 }

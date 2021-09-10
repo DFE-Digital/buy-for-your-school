@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ### Supported Unreleased
 
 - Added initial models for supported case management functions.
+- Added unique 6 digit ref for cases starting with 000001.
 
 ### Specify Unreleased
 - Added Support Request model.
