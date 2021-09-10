@@ -12,6 +12,6 @@ RSpec.feature "Viewing a journey" do
     expect(logged_event.action).to eq "view_journey"
     expect(logged_event.journey_id).to eq journey.id
     expect(logged_event.user_id).to eq user.id
-    expect(logged_event.contentful_category_id).to eq "12345678"
+    expect(logged_event.contentful_category_id).to eq journey.category.contentful_id
   end
 end

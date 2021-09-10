@@ -7,6 +7,7 @@ class Preview::EntriesController < ApplicationController
       contentful_id: 0,
       description: "Used to demo a step before publishing",
       liquid_template: "<p>N/A</p>",
+      slug: "preview",
     )
 
     journey = Journey.find_or_create_by!(

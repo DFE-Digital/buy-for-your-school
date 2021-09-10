@@ -39,13 +39,14 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
 
   create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
-    t.string "description"
+    t.string "description", null: false
     t.string "contentful_id", null: false
     t.jsonb "liquid_template", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
+    t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
   create_table "checkbox_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
