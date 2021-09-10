@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add `categories#index` to enable users to create a specification from a chosen category
 - rename `journey_maps` to `design` to allow more intuitive URLs
 - WIP: data migration
+- update Contentful webhook handling to pick up updates to `Category` when they are published
 
 **Dashboard functionality**
 - add explicit ordering to the task model to allow continuing to the next unanswered task
