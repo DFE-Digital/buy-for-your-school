@@ -171,10 +171,10 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
 
   create_table "support_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
     t.string "description"
-    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title"], name: "index_support_categories_on_title", unique: true
   end
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"
+  end
 
   create_table "support_sub_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "category_id", null: false
