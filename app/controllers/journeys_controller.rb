@@ -53,9 +53,6 @@ class JourneysController < ApplicationController
   # @see SectionPresenter
   def show
     @journey = current_journey
-    @sections = @journey.sections.includes(:tasks).map do |section|
-      SectionPresenter.new(section)
-    end
 
     RecordAction.new(
       action: "view_journey",

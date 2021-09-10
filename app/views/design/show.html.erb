@@ -8,8 +8,7 @@
   <% @steps.each do |entry| %>
     <li class="govuk-!-margin-bottom-4">
       <b>
-      <%# TODO: decorate contentful entries %>
-      <%= link_to entry.title, "https://app.contentful.com/spaces/#{entry.space.id}/environments/#{entry.environment.id}/entries/#{entry.id}", target: :blank, class: "govuk-link" %>
+      <%= link_to entry.title, entry.contentful_url, target: :blank, class: "govuk-link" %>
       </b>
 
       <br />
@@ -24,7 +23,7 @@
         <br />
         Revision: <i><%= entry.revision %></i>
         <br />
-        Updated at: <i><%= entry.updated_at.strftime("%e %B %Y - %I:%M:%S %P") %></i>
+        Updated at: <i><%= entry.updated_at %></i>
         <br />
 
       </small>

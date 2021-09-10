@@ -36,7 +36,7 @@ protected
   #
   def current_journey
     journey_id = params[:journey_id].presence || params[:id]
-    @current_journey ||= Journey.find(journey_id)
+    @current_journey ||= JourneyPresenter.new(Journey.find(journey_id))
   end
 
   # `Before Action` on:

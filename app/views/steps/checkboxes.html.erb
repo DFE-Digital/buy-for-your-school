@@ -1,8 +1,8 @@
 <%= render layout: layout do |f| %>
-  <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step_presenter.title, size: "l" } do %>
+  <%= f.govuk_check_boxes_fieldset :response, legend: { text: @step.title, size: "l" } do %>
     <% if @step.help_text.present? %>
       <span class="govuk-hint">
-        <%= @step_presenter.help_text_html %>
+        <%= @step.help_text_html %>
       </span>
     <% end %>
 
@@ -30,10 +30,10 @@
     <% end %>
   <% end %>
 
-  <% if @step_presenter.skippable? %>
+  <% if @step.skippable? %>
     <div class="govuk-radios__divider">or</div>
     <div class="govuk-form-group">
-      <%= f.button @step_presenter.skip_call_to_action_text, type: "submit", name: "skip", value: "true", class: "govuk-button govuk-button--secondary" %>
+      <%= f.button @step.skip_call_to_action_text, type: "submit", name: "skip", value: "true", class: "govuk-button govuk-button--secondary" %>
     </div>
   <% end %>
 <% end %>
