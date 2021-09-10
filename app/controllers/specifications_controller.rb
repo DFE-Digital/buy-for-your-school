@@ -10,12 +10,10 @@ class SpecificationsController < ApplicationController
   # @see SpecificationRenderer
   def show
     @journey = current_journey
-    @visible_steps = @journey.steps.visible
-    @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
     specification_renderer = SpecificationRenderer.new(
       template: @journey.category.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call,
+      answers: GetAnswersForSteps.new(visible_steps: @journey.steps).call,
     )
 
     RecordAction.new(

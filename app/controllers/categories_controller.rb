@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
   def index
     populate_categories if Category.none?
-    @categories = Category.where.not(contentful_id: 0).order(:title)
+    categories = Category.where.not(contentful_id: 0).order(:title)
+    @categories = categories.map { |c| CategoryPresenter.new(c) }
   end
 
 private

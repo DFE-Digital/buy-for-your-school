@@ -17,13 +17,11 @@ class AnswersController < ApplicationController
   # @see SaveAnswer
   def create
     @journey = current_journey
-    @step = Step.find(step_id)
-    @step_presenter = StepPresenter.new(@step)
 
-    @answer = AnswerFactory.new(step: @step).call
-    @answer.step = @step
+    @answer = AnswerFactory.new(step: step).call
+    @answer.step = step.__getobj__
 
-    result = SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
+    result = SaveAnswer.new(answer: step.answer).call(params: prepared_params(step: step))
     @answer = result.object
 
     # TODO: refactor to a private #record_answer method that accepts the action string
@@ -32,26 +30,26 @@ class AnswersController < ApplicationController
       journey_id: @journey.id,
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
-      contentful_section_id: @step.task.section.contentful_id,
-      contentful_task_id: @step.task.contentful_id,
-      contentful_step_id: @step.contentful_id,
+      contentful_section_id: step.task.section.contentful_id,
+      contentful_task_id: step.task.contentful_id,
+      contentful_step_id: step.contentful_id,
       data: {
         success: result.success?,
       },
     ).call
 
     if result.success?
-      @step.unskip! if @step.skipped?
+      step.unskip! if step.skipped?
 
       if parent_task.has_single_visible_step?
-        redirect_to journey_path(@journey, anchor: @step.id)
-      elsif parent_task.all_steps_completed? || @step.last?
+        redirect_to journey_path(@journey, anchor: step.id)
+      elsif parent_task.all_steps_completed? || step.last?
         redirect_to journey_task_path(@journey, parent_task)
       else
         redirect_to journey_step_path(@journey, parent_task.next_incomplete_step_id)
       end
     else
-      render "steps/#{@step.contentful_type}", locals: { layout: "steps/new_form_wrapper" }
+      render "steps/#{step.contentful_type}", locals: { layout: "steps/new_form_wrapper" }
     end
   end
 
@@ -60,18 +58,15 @@ class AnswersController < ApplicationController
   # @see SaveAnswer
   def update
     @journey = current_journey
-    # TODO: refactor decorated Step to shared private method
-    @step = Step.find(step_id)
-    @step_presenter = StepPresenter.new(@step)
 
     result =
-      if @step_presenter.question?
+      if step.question?
         # Save the question answer
-        SaveAnswer.new(answer: @step.answer).call(params: prepared_params(step: @step))
-      elsif @step_presenter.statement?
+        SaveAnswer.new(answer: step.answer).call(params: prepared_params(step: step))
+      elsif step.statement?
         # Acknowledge the statement
-        @step.task.statement_ids << @step.id unless @step.task.statement_ids.include?(@step.id)
-        Result.new(@step.task.save!)
+        step.task.statement_ids << step.id unless step.task.statement_ids.include?(step.id)
+        Result.new(step.task.save!)
       end
 
     @answer = result.object
@@ -82,9 +77,9 @@ class AnswersController < ApplicationController
       journey_id: @journey.id,
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
-      contentful_section_id: @step.task.section.contentful_id,
-      contentful_task_id: @step.task.contentful_id,
-      contentful_step_id: @step.contentful_id,
+      contentful_section_id: step.task.section.contentful_id,
+      contentful_task_id: step.task.contentful_id,
+      contentful_step_id: step.contentful_id,
       data: {
         success: result.success?,
       },
@@ -92,20 +87,24 @@ class AnswersController < ApplicationController
 
     if result.success?
       if parent_task.has_single_visible_step?
-        redirect_to journey_path(@journey, anchor: @step.id)
+        redirect_to journey_path(@journey, anchor: step.id)
       else
         redirect_to journey_task_path(@journey, parent_task)
       end
     else
-      render "steps/#{@step.contentful_type}", locals: { layout: "steps/edit_form_wrapper" }
+      render "steps/#{step.contentful_type}", locals: { layout: "steps/edit_form_wrapper" }
     end
   end
 
 private
 
+  def step
+    @step ||= StepPresenter.new(Step.find(step_id))
+  end
+
   # @return [Task]
   def parent_task
-    @step.task
+    step.task
   end
 
   # @return [String]
@@ -147,9 +146,9 @@ private
     answer_params = params.require(:answer)
 
     # [{"value"=>"Catering"}, {"value"=>"Cleaning"}]
-    if @step.options
+    if step.options
       # %i[catering_further_information cleaning_further_information]
-      allowed_further_information_keys = @step.options.map do |option|
+      allowed_further_information_keys = step.options.map do |option|
         key = machine_readable_option(string: option["value"])
         "#{key}_further_information".to_sym
       end
@@ -161,7 +160,7 @@ private
     all_params = answer_params.permit(:response, response: [])
     all_params[:further_information] = further_information
 
-    if @step.contentful_type == "checkboxes"
+    if step.contentful_type == "checkboxes"
       all_params[:skipped] = false
     end
 
