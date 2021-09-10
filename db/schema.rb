@@ -172,8 +172,8 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
 
   create_table "support_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "slug"
     t.string "description"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
