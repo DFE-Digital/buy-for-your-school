@@ -1,0 +1,12 @@
+<span class="govuk-caption-l"><%= I18n.t("support_requests.sections.titles.about_your_specification") %></span>
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <%= form.label :category_id, I18n.t("support_requests.sections.about_your_request.category_ids_label"), class: "govuk-label govuk-label--l" %>
+  </h1>
+  <% Category.all.each do |category| %>
+    <%= form.govuk_radio_button :category_id, category.id, label: { text: category.title }, hint: { text: category.description } %>
+  <% end %>
+</div>
+
+<%= form.hidden_field :phone_number, value: form.object.phone_number %>
+<%= form.hidden_field :journey_id, value: form.object.journey_id %>

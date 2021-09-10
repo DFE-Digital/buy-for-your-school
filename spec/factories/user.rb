@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user do
+    id { SecureRandom.uuid }
     dfe_sign_in_uid { SecureRandom.uuid }
 
     # Tests covering data migration in production use factories
