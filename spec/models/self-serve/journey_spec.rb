@@ -22,4 +22,15 @@ RSpec.describe Journey, type: :model do
       expect(journey.started).to be true
     end
   end
+
+  describe "#sections_with_tasks" do
+    it "returns associated sections with tasks" do
+      journey.save!
+      create(:section, :with_tasks, tasks_count: 2, journey: journey)
+      expect(journey.sections_with_tasks.count).to eq 1
+      expect(journey.sections_with_tasks.first.tasks.count).to eq 2
+      expect(journey.sections_with_tasks.first.tasks[0]).not_to be nil
+      expect(journey.sections_with_tasks.first.tasks[1]).not_to be nil
+    end
+  end
 end

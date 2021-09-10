@@ -1,0 +1,2 @@
+class CategoryPresenter < SimpleDelegator
+end
