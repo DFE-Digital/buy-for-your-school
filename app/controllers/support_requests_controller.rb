@@ -24,12 +24,12 @@ class SupportRequestsController < ApplicationController
   end
 
   def edit
-    @support_form_wizard = "SupportFormWizard::Step#{params[:step]}"
+    @support_form_wizard = "SupportFormWizard::Step#{safe_step}"
                              .constantize.new(journey_id: @support_request.journey_id,
                                               category_id: @support_request.category_id,
                                               phone_number: @support_request.phone_number,
                                               message: @support_request.message,
-                                              step: params[:step].to_i)
+                                              step: safe_step)
   end
 
   def update
@@ -44,6 +44,10 @@ class SupportRequestsController < ApplicationController
   def show; end
 
 private
+
+  def safe_step
+    SupportFormWizard::STEPS.fetch(params[:step].to_i) - 1
+  end
 
   def set_support_request
     @support_request = SupportRequest.find(params[:id])

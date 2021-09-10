@@ -1,6 +1,8 @@
 class SupportFormWizard
   include ActiveModel::Model
 
+  STEPS = [1, 2, 3, 4].freeze
+
   attr_accessor :step
 
   def initialize(attrs = {})
