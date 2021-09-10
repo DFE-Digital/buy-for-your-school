@@ -51,6 +51,10 @@ Rails.application.routes.draw do
     resources :entries, only: [:show]
   end
 
+  resources :users do
+    resources :support_requests, path: "support-requests", only: %i[index show new edit create update]
+  end
+
   #
   # Supported ------------------------------------------------------------------
   #

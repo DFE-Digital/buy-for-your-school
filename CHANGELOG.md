@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - Added unique 6 digit ref for cases starting with 000001.
 
 ### Specify Unreleased
+- Added Support Request model.
+- Added full_name, email_address, phone_number, contact_preferences to User.
 
 **Rich Data**
 - Integrate fully with DSI to gather names, email and organisation at authentication
