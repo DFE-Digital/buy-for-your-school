@@ -1,0 +1,15 @@
+<%= link_to t("support.cases.back"), support_case_path(@case), class: "govuk-back-link" %>
+
+<%= form_with model: @case do |form| %>
+  <%= form.govuk_radio_buttons_fieldset("") do %>
+    <legend class="govuk-fieldset__legend govuk-label--l">
+      <h1 class="govuk-fieldset__heading">
+        <%= I18n.t("support.cases.assign_to_agent") %>
+      </h1>
+    </legend>
+    <% @agents.each do |agent| %>
+      <%= form.govuk_radio_button :agent, agent.id, label: { text: agent.name } %>
+    <% end %>
+  <% end %>
+  <%= form.submit I18n.t("support.cases.assign"), class: "govuk-button" %>
+<% end %>

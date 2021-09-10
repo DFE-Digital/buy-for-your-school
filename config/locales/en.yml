@@ -192,6 +192,8 @@ en:
       contact_email: Contact email
       problem_description: Description of problem
       attached_specification: Attached specification
+      assign_to_agent: Assign to caseworker
+      assign: Assign
       
       index:
         last_updated: Last updated
