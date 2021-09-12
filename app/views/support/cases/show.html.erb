@@ -62,8 +62,6 @@
 
 <ul class="govuk-list">
   <li>
-    <a class="govuk-link govuk-link--no-visited-state" href="/support/cases/<%= @case.id %>/edit">
-      <%= I18n.t("support.cases.show.assign_to") %>
-    </a>
+    <%= link_to I18n.t("support.cases.show.assign_to"), edit_support_case_path(@case), class: "govuk-link" %>
   </li>
 </ul>
