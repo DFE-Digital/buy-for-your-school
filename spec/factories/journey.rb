@@ -16,9 +16,15 @@ FactoryBot.define do
       end
     end
 
-     trait :additional_steps do
-       association :section { create(:section, :with_tasks, tasks_count: 5) }
-       association(:section, count: 4)
-     end
+    trait :with_steps do
+      transient do
+        sections_count { 1 }
+        with_steps { false }
+      end
+
+      sections do
+        Array.new(sections_count) { association(:section, :with_steps) }
+      end
+    end
   end
 end
