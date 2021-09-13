@@ -12,4 +12,6 @@
   </div>
 <% end %>
 <%= link_to I18n.t("journey.specification.download.button"), journey_specification_path(@journey, format: :docx), class: "govuk-button", role: "button" %>
-<%= @specification_html.html_safe %>
+<article class="specification">
+  <%= @journey.specification %>
+</article>

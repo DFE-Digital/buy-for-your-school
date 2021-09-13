@@ -39,6 +39,7 @@ gem "sidekiq-cron", "~> 1.2"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
+gem "yard-junk"
 
 group :development, :test do
   gem "brakeman"
@@ -65,7 +66,6 @@ group :development do
   gem "spring-commands-rspec"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
-  gem "yard-junk"
 end
 
 group :test do
