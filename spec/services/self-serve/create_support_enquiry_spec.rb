@@ -28,5 +28,4 @@ RSpec.describe CreateSupportEnquiry do
       end
     end
   end
-
 end

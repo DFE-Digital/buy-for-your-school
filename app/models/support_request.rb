@@ -12,7 +12,7 @@ class SupportRequest < ApplicationRecord
   validates :message, presence: true
   validates :phone_number, presence: true
 
-  # after_create :create_support_enquiry
+# after_create :create_support_enquiry
 
 private
 
