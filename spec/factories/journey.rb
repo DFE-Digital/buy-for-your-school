@@ -16,9 +16,9 @@ FactoryBot.define do
       end
     end
 
-    # trait :additional_steps do
-    #   # association { create(:section, :with_tasks, tasks_count: 5) }
-    #   association(:section, count: 4)
-    # end
+     trait :additional_steps do
+       association :section { create(:section, :with_tasks, tasks_count: 5) }
+       association(:section, count: 4)
+     end
   end
 end
