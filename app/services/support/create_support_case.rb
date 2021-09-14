@@ -1,6 +1,6 @@
 module Support
   #
-  # Service to create
+  # Service to create SupportCases from SupportEnquiry
   #
   class CreateSupportCase
     # @param [support_enquiry][SupportEnquiry] SupportEnquiry Object
@@ -12,12 +12,19 @@ module Support
     # @return [Support::Case]
     def call
       support_case = @support_enquiry.build_case
+      attach_documents
       support_case.save!
       support_case
     end
 
   private
 
-    def attach_documents; end
+    # Change the association of the documents from SupportEnquiry to SupportCase (polymorphic)
+    # @return [Array][Support::Documents]
+    def attach_documents
+      @support_enquiry.documents.each do |doc|
+        doc.documentable = @support_enquiry.case
+      end
+    end
   end
 end

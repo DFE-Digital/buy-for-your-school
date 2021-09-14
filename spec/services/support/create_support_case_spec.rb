@@ -13,14 +13,12 @@ RSpec.describe Support::CreateSupportCase do
         expect(result.state).to eq "initial"
       end
 
-
-
       context "with documents" do
-        let(:document) { create(:support_document, documentable: support_enquiry) }
+        let(:support_enquiry) { create(:support_enquiry, :with_documents, document_count: 4) }
 
-        #xit "creates a support case with documents" do
-          #xxx
-        # end
+        it "creates a support case with documents" do
+          expect(result.documents.count).to eq 4
+        end
       end
     end
   end

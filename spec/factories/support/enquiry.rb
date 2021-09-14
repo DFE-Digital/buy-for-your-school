@@ -6,5 +6,16 @@ FactoryBot.define do
     telephone { "0151 000 0000" }
     category { "Catering Support" }
     message { "This is an example request for support - please help!" }
+
+    trait :with_documents do
+      transient do
+        document_count { 1 }
+      end
+
+      after(:create) do |enquiry, evaluator|
+        create_list(:support_document, evaluator.document_count, documentable: enquiry)
+        enquiry.reload
+      end
+    end
   end
 end

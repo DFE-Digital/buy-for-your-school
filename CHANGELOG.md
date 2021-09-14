@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - Added initial models for supported case management functions.
 - Added unique 6 digit ref for cases starting with 000001.
+- Added service to create SupportCases from SupportEnquiries.
 
 ### Specify Unreleased
 - Added Support Request model.
