@@ -8,7 +8,7 @@ module Support
     include Support::Documentable
 
     has_one :enquiry, class_name: "Support::Enquiry"
-    belongs_to :category, class_name: "Support::Category"
+    belongs_to :category, class_name: "Support::Category", optional: true
 
     # Support level
     #
@@ -30,6 +30,10 @@ module Support
     #   no_response
     enum state: { initial: 0, open: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
 
+    # do we need the request text attr as all cases should have an enquiry as entry point
+    delegate :message, to: :enquiry
+
+
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
 
@@ -38,6 +42,8 @@ module Support
     def generate_ref
       self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
     end
+
+
 
     # TODO: Replace with ActiveRecord association
     def interactions
