@@ -54,7 +54,7 @@ class JourneysController < ApplicationController
   #
   # @see SectionPresenter
   def show
-    breadcrumb "Create Specification", journey_path(current_journey), match: :exact
+    breadcrumb "Create specification", journey_path(current_journey), match: :exact
 
     @journey = current_journey
 

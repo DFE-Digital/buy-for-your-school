@@ -21,7 +21,7 @@ RSpec.feature "A journey page has" do
 
     specify "breadcrumbs" do
       expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
-        ["Dashboard", "Create Specification"]
+        ["Dashboard", "Create specification"]
     end
 
     specify do
@@ -43,7 +43,7 @@ RSpec.feature "A journey page has" do
 
     specify "breadcrumbs" do
       expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
-        ["Dashboard", "Create Specification"]
+        ["Dashboard", "Create specification"]
     end
 
     specify do
