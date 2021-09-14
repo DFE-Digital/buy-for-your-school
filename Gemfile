@@ -48,6 +48,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"
+  gem 'pandoc-ruby'
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails"
