@@ -1,9 +1,35 @@
-# Service to create a support enquiry after_commit of a Support Request
+# Service to submit a support enquiry after_commit of a Support Request
 # This should be refactored to an API call if/when specify and support become independent applications.
 # It makes sense for this service to live within specify as it is the event of a SupportEnquiry being
 # created that triggers the creation of a Support::Enquiry
+#
+# Example API to Support
+#
+# @resource new
+# @url /api/v1/support-enquiries/new[ .format
+#
+# @action POST
+# @status_codes possible API status codes
+#   #  404 - Not Found
+#   #  401 - Unauthorized
+#   #  422 - Unprocessable Entity
+#   #  200 - OK
+#
+# @example_request
+#   ```json
+#   {
+#     "support_enquiry": [{
+#       "support_request_id":1,
+#       "name":"Joe Bloggs",
+#       "email":"example@exmaple.com",
+#       "telephone": "0151 000 0000"
+#       "message": "example message",
+#       "documents" : [ { "file_type": "html_markup", "document_body": "<h1>example html markup</h1>"}]
+#     }]
+#   }
+#   ```
 
-class CreateSupportEnquiry
+class SubmitSupportEnquiry
   # @param [support_request][SupportRequest] SupportRequest Object
 
   def initialize(support_request)

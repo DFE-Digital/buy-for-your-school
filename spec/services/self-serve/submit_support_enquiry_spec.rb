@@ -1,4 +1,4 @@
-RSpec.describe CreateSupportEnquiry do
+RSpec.describe SubmitSupportEnquiry do
   subject(:service) { described_class.new(support_request) }
 
   let(:result) { service.call }
@@ -7,7 +7,7 @@ RSpec.describe CreateSupportEnquiry do
     context "when a support request is given" do
       let(:support_request) { create(:support_request, :with_specification) }
 
-      it "creates a new support enquiry record" do
+      it "submits a new support enquiry record" do
         expect(result).to eq Support::Enquiry.find_by(telephone: "0151 000 0000")
       end
 
@@ -19,7 +19,7 @@ RSpec.describe CreateSupportEnquiry do
     context "when no support request is given " do
       let(:support_request) { create(:support_request) }
 
-      it "creates a new support enquiry record" do
+      it "submits a new support enquiry record" do
         expect(result).to eq Support::Enquiry.find_by(telephone: "0151 000 0000")
       end
 
