@@ -29,6 +29,7 @@ class CreateSupportEnquiry
 
 private
 
+  # Creates document attachment to attach to a Support::Enquiry.
   # @return [Support::Document]
   def build_document(support_request)
     return if support_request.journey.blank?
@@ -37,6 +38,7 @@ private
     Support::Document.new(file_type: "HTML attachment", document_body: markup)
   end
 
+  # Returns HTML string of the specification to pass along to supported.
   # @return [String]
   def get_specification_markup(support_request)
     specification_renderer = SpecificationRenderer.new(
