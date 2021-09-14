@@ -25,6 +25,7 @@ gem "notifications-ruby-client"
 gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
+gem "pandoc-ruby"
 gem "pg"
 gem "puma", "~> 5.4"
 gem "rails", "~> 6.1.4"
@@ -39,7 +40,6 @@ gem "sidekiq-cron", "~> 1.2"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
-gem "yard-junk"
 
 group :development, :test do
   gem "brakeman"
@@ -48,7 +48,6 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"
-  gem 'pandoc-ruby'
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails"
@@ -67,6 +66,7 @@ group :development do
   gem "spring-commands-rspec"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
+  gem "yard-junk"
 end
 
 group :test do
