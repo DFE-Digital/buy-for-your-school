@@ -1,5 +1,7 @@
 # Service to create a support enquiry after_commit of a Support Request
 # This should be refactored to an API call if/when specify and support become independent applications.
+# It makes sense for this service to live within specify as it is the event of a SupportEnquiry being
+# created that triggers the creation of a Support::Enquiry
 
 class CreateSupportEnquiry
   # @param [support_request][SupportRequest] SupportRequest Object
@@ -17,7 +19,7 @@ class CreateSupportEnquiry
       telephone: @support_request.phone_number,
       message: @support_request.message,
     )
-    unless build_document(@support_request).nil?
+    if build_document(@support_request).present?
       enquiry.documents << build_document(@support_request)
     end
 
