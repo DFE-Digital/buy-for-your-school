@@ -6,9 +6,14 @@ RSpec.describe AddSlugsToExistingCategories do
   let(:previous_version) { 20_210_825_142_114 }
   let(:current_version) { 20_210_825_142_733 }
 
+  let(:category) { build(:category, slug: nil, contentful_id: "contentful-category-entry") }
+
+  before do
+    category.save!(validate: false)
+  end
+
   context "when there are broken categories" do
     before do
-      create(:category, contentful_id: "contentful-category-entry", slug: nil)
       stub_contentful_category(fixture_filename: "mfd-radio-question.json")
     end
 
@@ -24,7 +29,6 @@ RSpec.describe AddSlugsToExistingCategories do
 
   context "when the Contentful category does not exist" do
     before do
-      create(:category, contentful_id: "contentful-category-entry", slug: nil)
       allow(stub_client).to receive(:by_id).with("contentful-category-entry").and_return(nil)
     end
 

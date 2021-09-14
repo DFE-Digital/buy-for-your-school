@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
+  breadcrumb "Dashboard", :dashboard_path
+
   before_action :check_user_belongs_to_journey?, only: %w[show destroy]
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
@@ -52,6 +54,8 @@ class JourneysController < ApplicationController
   #
   # @see SectionPresenter
   def show
+    breadcrumb "Create Specification", journey_path(current_journey), match: :exact
+
     @journey = current_journey
 
     RecordAction.new(

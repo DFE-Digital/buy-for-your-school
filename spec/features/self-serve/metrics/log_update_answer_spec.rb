@@ -26,7 +26,7 @@ RSpec.feature "Answering a question" do
     expect(logged_event.action).to eq "update_answer"
     expect(logged_event.journey_id).to eq journey.id
     expect(logged_event.user_id).to eq user.id
-    expect(logged_event.contentful_category_id).to eq "12345678"
+    expect(logged_event.contentful_category_id).to eq journey.category.contentful_id
     expect(logged_event.contentful_section_id).to eq answer.step.task.section.contentful_id
     expect(logged_event.contentful_task_id).to eq answer.step.task.contentful_id
     expect(logged_event.contentful_step_id).to eq answer.step.contentful_id

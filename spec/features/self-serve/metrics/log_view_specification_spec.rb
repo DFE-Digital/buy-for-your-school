@@ -14,7 +14,7 @@ RSpec.feature "Viewing a specification" do
       expect(logged_event.action).to eq "view_specification"
       expect(logged_event.journey_id).to eq journey.id
       expect(logged_event.user_id).to eq user.id
-      expect(logged_event.contentful_category_id).to eq "12345678"
+      expect(logged_event.contentful_category_id).to eq journey.category.contentful_id
       expect(logged_event.data["format"]).to eq "html"
     end
 
@@ -24,7 +24,7 @@ RSpec.feature "Viewing a specification" do
       expect(logged_event.action).to eq "view_specification"
       expect(logged_event.journey_id).to eq journey.id
       expect(logged_event.user_id).to eq user.id
-      expect(logged_event.contentful_category_id).to eq "12345678"
+      expect(logged_event.contentful_category_id).to eq journey.category.contentful_id
       expect(logged_event.data["format"]).to eq "docx"
     end
   end
