@@ -8,7 +8,7 @@
       </h1>
     </legend>
     <% @agents.each do |agent| %>
-      <%= form.govuk_radio_button :agent, agent.id, label: { text: agent.name } %>
+      <%= form.govuk_radio_button :agent, agent.id, label: { text: agent.full_name } %>
     <% end %>
   <% end %>
   <%= form.submit I18n.t("support.cases.assign"), class: "govuk-button" %>

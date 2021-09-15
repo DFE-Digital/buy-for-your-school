@@ -1,17 +1,7 @@
-# TODO: remove :nocov: and start testing
-# :nocov:
 module Support
   class Agent < ApplicationRecord
-    has_one :profile
+    # has_one :profile
 
-    def self.all
-      [
-        OpenStruct.new(
-          id: 1,
-          name: "John Kendle",
-        ),
-      ]
-    end
+    has_many :cases, class_name: "Support::Case"
   end
 end
-# :nocov:

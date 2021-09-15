@@ -3,14 +3,13 @@ module Support
     before_action :find_case_by_id, only: %i[show edit update]
 
     def index
-      @cases = Support::Case.all.map { |c| CasePresenter.new(c) }
+      @cases = Case.all.map { |c| CasePresenter.new(c) }
     end
 
-    def show
-    end
+    def show; end
 
     def edit
-      @agents = Support::Agent.all.map { |a| AgentPresenter.new(a) }
+      @agents = Agent.all.map { |a| AgentPresenter.new(a) }
     end
 
     def update
@@ -22,8 +21,10 @@ module Support
 
   private
 
+    # rubocop:disable Naming/MemoizedInstanceVariableName
     def find_case_by_id
-      @case ||= CasePresenter.new(Support::Case.find_by(id: params[:id]))
+      @case ||= CasePresenter.new(Case.find_by(id: params[:id]))
     end
+    # rubocop:enable Naming/MemoizedInstanceVariableName
   end
 end

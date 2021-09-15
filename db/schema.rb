@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_01_071420) do
+ActiveRecord::Schema.define(version: 2021_09_13_154900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -152,6 +152,13 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
+  create_table "support_agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ref"
     t.uuid "category_id"
@@ -162,6 +169,8 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.integer "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "agent_id"
+    t.index ["agent_id"], name: "index_support_cases_on_agent_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["ref"], name: "index_support_cases_on_ref"
     t.index ["state"], name: "index_support_cases_on_state"
@@ -202,20 +211,6 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.index ["support_request_id"], name: "index_support_enquiries_on_support_request_id"
   end
 
-  create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id"
-    t.uuid "journey_id"
-    t.uuid "category_id"
-    t.string "message"
-    t.string "school_name"
-    t.string "school_urn"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_support_requests_on_category_id"
-    t.index ["journey_id"], name: "index_support_requests_on_journey_id"
-    t.index ["user_id"], name: "index_support_requests_on_user_id"
-  end
-
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "section_id"
     t.string "title", null: false
@@ -242,7 +237,6 @@ ActiveRecord::Schema.define(version: 2021_09_01_071420) do
     t.string "full_name"
     t.jsonb "orgs"
     t.jsonb "roles"
-    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"

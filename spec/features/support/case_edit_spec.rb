@@ -1,6 +1,10 @@
 RSpec.feature "Case Management Dashboard - edit" do
   before do
     support_case = create(:support_case)
+    agent = create(:support_agent)
+
+    agent.cases << support_case
+    agent.save!
 
     user_is_signed_in
     visit "/support/cases/#{support_case.id}/edit"
@@ -12,7 +16,7 @@ RSpec.feature "Case Management Dashboard - edit" do
 
   it "lists agents by name" do
     expect(all("div.govuk-radios__item", visible: true).count).to eq(1)
-    expect(find("div.govuk-radios__item")).to have_text "John Kendle"
+    expect(find("div.govuk-radios__item")).to have_text "John Lennon"
   end
 
   it "displays the submit button" do

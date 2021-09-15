@@ -10,6 +10,7 @@ module Support
 
     has_one :enquiry, class_name: "Support::Enquiry"
     belongs_to :category, class_name: "Support::Category"
+    belongs_to :agent, class_name: "Support::Agent", optional: true
 
     # User-defined support levels
     #
@@ -44,11 +45,6 @@ module Support
           updated_at: time,
         ),
       ]
-    end
-
-    # TODO: Replace with ActiveRecord association
-    def case_worker_account
-      OpenStruct.new(full_name: "Example Agent")
     end
 
     # TODO: Replace with ActiveRecord association

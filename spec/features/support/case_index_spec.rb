@@ -16,9 +16,7 @@ RSpec.feature "Case Management Dashboard - index" do
 
   it "lists cases" do
     expect(find("#my-cases .govuk-table")).to be_visible
-
-    # TODO: Change ".all.count" with ".count"
-    expect(all("#my-cases .govuk-table__row").count).to eq(Support::Case.all.count + 1)
+    expect(all("#my-cases .govuk-table__row").count).to eq(2)
   end
 
   it "has a table with columns for org id, category name, case status and updated timestamp" do
