@@ -14,8 +14,7 @@ RSpec.feature "Journey continue button behaviour" do
 
       click_continue
 
-      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
-        ["Dashboard", "Create Specification"]
+      expect(page).to have_breadcrumbs ["Dashboard", "Create specification"]
 
       answer = LongTextAnswer.last
 
