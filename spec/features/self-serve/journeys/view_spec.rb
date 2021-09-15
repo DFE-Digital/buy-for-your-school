@@ -9,9 +9,7 @@ RSpec.feature "Users can see their specification" do
     click_continue
     click_view
 
-    # TODO: Create custom spec matcher for breadcrumbs
-    expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
-      ["Dashboard", "Create Specification", "View Specification"]
+    expect(page).to have_breadcrumbs ["Dashboard", "Create specification", "View specification"]
 
     # TODO: remove I18n.t from specs
     expect(page).to have_content(I18n.t("journey.specification.header"))
