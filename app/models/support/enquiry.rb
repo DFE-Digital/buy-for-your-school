@@ -7,7 +7,7 @@ module Support
   # or direct from the hubs via phone calls or emails.
   #
   class Enquiry < ApplicationRecord
-    include Support::Documentable
+    include Documentable
 
     belongs_to :case, class_name: "Support::Case", optional: true
     accepts_nested_attributes_for :case

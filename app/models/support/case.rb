@@ -5,7 +5,7 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include Support::Documentable
+    include Documentable
 
     has_one :enquiry, class_name: "Support::Enquiry"
     belongs_to :category, class_name: "Support::Category", optional: true

@@ -3,7 +3,7 @@ module Support
   # Service to open Case from Enquiry
   #
   class CreateCase
-    # @param [enquiry][SupportEnquiry] SupportEnquiry Object
+    # @param enquiry [Enquiry] incoming request for support
 
     def initialize(enquiry)
       @enquiry = enquiry
@@ -20,7 +20,7 @@ module Support
   private
 
     # Change the association of the documents from SupportEnquiry to SupportCase (polymorphic)
-    # @return [Array][Support::Documents]
+    # @return [Array<Documents>]
     def attach_documents
       @enquiry.documents.each do |doc|
         doc.documentable = @enquiry.case
