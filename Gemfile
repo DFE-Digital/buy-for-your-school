@@ -13,7 +13,6 @@ gem "dry-struct"
 gem "dry-transformer"
 gem "govuk_design_system_formbuilder", "~> 2.7"
 gem "high_voltage"
-gem "htmltoword" # TODO: replace htmltoword with pandoc-ruby
 gem "httpclient"
 gem "jbuilder", "~> 2.11"
 gem "jquery-rails"

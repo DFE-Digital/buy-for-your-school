@@ -15,10 +15,12 @@ class SpecificationsController < ApplicationController
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
 
-    specification_renderer = SpecificationRenderer.new(
+    specification = SpecificationRenderer.new(
       template: @journey.category.liquid_template,
       answers: GetAnswersForSteps.new(visible_steps: @journey.steps).call,
-    )
+    ).markdown
+
+    document_formatter = DocumentFormatter.new(markdown: specification)
 
     RecordAction.new(
       action: "view_specification",
@@ -31,15 +33,13 @@ class SpecificationsController < ApplicationController
       },
     ).call
 
-    @specification_html = specification_renderer.to_html
-
     respond_to do |format|
       format.html
       format.docx do
         file_name = @journey.all_tasks_completed? ? "specification.docx" : "specification-incomplete.docx"
-        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_tasks_completed?)
+        document = document_formatter.call(journey_complete: @journey.all_tasks_completed?)
 
-        render docx: file_name, content: document_html
+        send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
     end
   end

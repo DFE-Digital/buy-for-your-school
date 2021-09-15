@@ -185,10 +185,6 @@ GEM
     hashdiff (1.0.1)
     hashie (4.1.0)
     high_voltage (3.1.2)
-    htmltoword (1.1.1)
-      actionpack
-      nokogiri
-      rubyzip (>= 1.0)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -516,7 +512,6 @@ DEPENDENCIES
   foreman
   govuk_design_system_formbuilder (~> 2.7)
   high_voltage
-  htmltoword
   httpclient
   jbuilder (~> 2.11)
   jquery-rails

@@ -1,23 +1,42 @@
-# Parse Liquid templates and render HTML
+require "dry-initializer"
+require "types"
+
+# Parse Liquid templates and render Markdown
 #
 class SpecificationRenderer
-  # @param template [String]
-  # @param answers [Hash] `answer_extended-checkboxes-question`
+  extend Dry::Initializer
+
+  option :template, Types::String
+  option :answers, Types::Hash
+
+  # Fill in answers and render specification in Markdown
   #
-  def initialize(template:, answers:)
-    @template = Liquid::Template.parse(template, error_mode: :strict)
-    @answers = answers
+  # @return [String]
+  def markdown
+    remove_html_comments(liquid_template)
   end
 
-  def to_html
-    @template.render(@answers).html_safe
+  # Fill in answers and render specification in HTML
+  #
+  # @return [String]
+  def html
+    md = remove_html_comments(liquid_template.html_safe)
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(md).html_safe
   end
 
-  def to_document_html(journey_complete:)
-    document_html = @template.render(@answers)
-    unless journey_complete
-      document_html.prepend(I18n.t("journey.specification.download.warning.incomplete"))
-    end
-    document_html
+private
+
+  # Remove HTML comments (<!-- -->)
+  #
+  # These will occassionally not be ignored by the parser and must be removed here
+  #
+  # @param [String]
+  def remove_html_comments(content)
+    content.gsub(/\s*<!--.*?-->/, "")
+  end
+
+  # @return [Liquid::Template]
+  def liquid_template
+    Liquid::Template.parse(template, error_mode: :strict).render(answers)
   end
 end
