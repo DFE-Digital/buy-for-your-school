@@ -20,8 +20,7 @@ RSpec.feature "A journey page has" do
     let(:fixture) { "radio-question" }
 
     specify "breadcrumbs" do
-      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
-        ["Dashboard", "Create Specification"]
+      expect(page).to have_breadcrumbs ["Dashboard", "Create specification"]
     end
 
     specify do
@@ -42,8 +41,7 @@ RSpec.feature "A journey page has" do
     let(:fixture) { "mfd-radio-question" }
 
     specify "breadcrumbs" do
-      expect(page.all("li.govuk-breadcrumbs__list-item").collect(&:text)).to eq \
-        ["Dashboard", "Create Specification"]
+      expect(page).to have_breadcrumbs ["Dashboard", "Create specification"]
     end
 
     specify do

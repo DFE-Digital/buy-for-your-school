@@ -66,3 +66,9 @@ RSpec::Matchers.define :have_an_edit_step_path do
     page.current_path.match? %r{^/journeys/#{UUID_REGEXP}/steps/#{UUID_REGEXP}/edit/?(?!.+)}
   end
 end
+
+RSpec::Matchers.define :have_breadcrumbs do |input|
+  match do |page|
+    page.all("li.govuk-breadcrumbs__list-item").collect(&:text) == input
+  end
+end
