@@ -19,7 +19,6 @@ class DocumentFormatter
       markdown.prepend(I18n.t("journey.specification.download.warning.incomplete"))
     end
 
-    converter = PandocRuby.new(markdown, from: :markdown, to: format)
-    converter.convert
+    PandocRuby.convert(markdown, from: :markdown, to: format)
   end
 end

@@ -325,7 +325,6 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redcarpet (3.5.1)
     redis (4.4.0)
     redis-actionpack (5.2.0)
       actionpack (>= 5, < 7)
@@ -534,7 +533,6 @@ DEPENDENCIES
   rails (~> 6.1.4)
   rails-erd
   rails_layout
-  redcarpet (~> 3.5)
   redis (~> 4.4)
   redis-namespace
   redis-rails

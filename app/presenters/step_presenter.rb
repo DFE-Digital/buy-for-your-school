@@ -1,3 +1,5 @@
+require "pandoc-ruby"
+
 class StepPresenter < SimpleDelegator
   # Enable statement step to render in preview when it has no persisted Task
   #
@@ -55,6 +57,6 @@ private
   #
   # @return [String]
   def render_markdown(text)
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(text).html_safe
+    PandocRuby.convert(text, from: :markdown, to: :html).html_safe
   end
 end

@@ -1,5 +1,6 @@
 require "dry-initializer"
 require "types"
+require "pandoc-ruby"
 
 # Parse Liquid templates and render Markdown
 #
@@ -13,30 +14,13 @@ class SpecificationRenderer
   #
   # @return [String]
   def markdown
-    remove_html_comments(liquid_template)
+    Liquid::Template.parse(template, error_mode: :strict).render(answers)
   end
 
-  # Fill in answers and render specification in HTML
+  # Render the Markdown specification in HTML
   #
   # @return [String]
   def html
-    md = remove_html_comments(liquid_template.html_safe)
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(md).html_safe
-  end
-
-private
-
-  # Remove HTML comments (<!-- -->)
-  #
-  # These will occassionally not be ignored by the parser and must be removed here
-  #
-  # @param [String]
-  def remove_html_comments(content)
-    content.gsub(/\s*<!--.*?-->/, "")
-  end
-
-  # @return [Liquid::Template]
-  def liquid_template
-    Liquid::Template.parse(template, error_mode: :strict).render(answers)
+    PandocRuby.convert(markdown.html_safe, from: :markdown, to: :html).html_safe
   end
 end
