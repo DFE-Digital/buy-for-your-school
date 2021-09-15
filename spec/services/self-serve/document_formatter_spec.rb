@@ -7,10 +7,10 @@ RSpec.describe DocumentFormatter do
 
         expect(PandocRuby)
         .to receive(:convert)
-        .with(md, {:from => :markdown, :to => :docx})
+        .with(md, { from: :markdown, to: :docx })
         .and_call_original
 
-        formatter.call(journey_complete: true)
+        formatter.call(draft: false)
       end
     end
 
@@ -22,10 +22,10 @@ RSpec.describe DocumentFormatter do
 
         expect(PandocRuby)
         .to receive(:convert)
-        .with(modified_md, {:from => :markdown, :to => :docx})
+        .with(modified_md, { from: :markdown, to: :docx })
         .and_call_original
 
-        formatter.call(journey_complete: false)
+        formatter.call(draft: true)
       end
     end
   end

@@ -37,7 +37,7 @@ class SpecificationsController < ApplicationController
       format.html
       format.docx do
         file_name = @journey.all_tasks_completed? ? "specification.docx" : "specification-incomplete.docx"
-        document = document_formatter.call(journey_complete: @journey.all_tasks_completed?)
+        document = document_formatter.call(draft: !@journey.all_tasks_completed?)
 
         send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end

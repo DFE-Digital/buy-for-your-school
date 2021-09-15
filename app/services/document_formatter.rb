@@ -7,17 +7,17 @@ require "pandoc-ruby"
 class DocumentFormatter
   extend Dry::Initializer
 
+  Formats = Types::Symbol.enum(:docx)
+
   option :markdown, Types::String
-  option :format, Types::Symbol, default: proc { :docx }
+  option :format, Formats, default: proc { :docx }
 
   # Return the formatted document
   #
-  # @param [Boolean]
+  # @param draft [Boolean]
   #
-  def call(journey_complete:)
-    unless journey_complete
-      markdown.prepend(I18n.t("journey.specification.download.warning.incomplete"))
-    end
+  def call(draft: true)
+    markdown.prepend(I18n.t("journey.specification.download.warning.incomplete")) if draft
 
     PandocRuby.convert(markdown, from: :markdown, to: format)
   end
