@@ -13,8 +13,9 @@ module Support
     end
 
     def update
-      # TODO: Actually assign worker to a case
-      @case.update!(state: "open")
+      @case.agent = Agent.find_by(id: params.dig(:support_case, :agent))
+      @case.state = "open"
+      @case.save!
 
       redirect_to support_cases_path
     end
