@@ -16,7 +16,7 @@ RSpec.describe SubmitSupportEnquiry do
       end
     end
 
-    context "when no support request is given " do
+    context "when no support request is given" do
       let(:support_request) { create(:support_request) }
 
       it "submits a new support enquiry record" do
