@@ -11,4 +11,12 @@ class SupportRequest < ApplicationRecord
   # Validations can be removed here and just used in form object
   validates :message, presence: true
   validates :phone_number, presence: true
+
+  after_create :submit_support_request
+
+private
+
+  def submit_support_request
+    SubmitSupportRequest.new(self).call
+  end
 end
