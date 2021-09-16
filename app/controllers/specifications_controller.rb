@@ -15,12 +15,13 @@ class SpecificationsController < ApplicationController
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
 
-    specification = SpecificationRenderer.new(
+    template = LiquidParser.new(
       template: @journey.category.liquid_template,
       answers: GetAnswersForSteps.new(visible_steps: @journey.steps).call,
-    ).markdown
+      draft_msg: I18n.t("journey.specification.warning"),
+    ).render(draft: !@journey.all_tasks_completed?)
 
-    document_formatter = DocumentFormatter.new(markdown: specification)
+    document = DocumentFormatter.new(content: template).call
 
     RecordAction.new(
       action: "view_specification",
@@ -33,14 +34,29 @@ class SpecificationsController < ApplicationController
       },
     ).call
 
+    file_name = @journey.all_tasks_completed? ? "specification.#{file_ext}" : "specification-incomplete.#{file_ext}"
+
     respond_to do |format|
       format.html
       format.docx do
-        file_name = @journey.all_tasks_completed? ? "specification.docx" : "specification-incomplete.docx"
-        document = document_formatter.call(draft: !@journey.all_tasks_completed?)
-
+        document = DocumentFormatter.new(content: template).call
         send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
+      # format.pdf do
+      #   document = DocumentFormatter.new(content: template, to: :pdf).call
+      #   send_data document, filename: file_name, type: "application/pdf"
+      # end
+      # format.odt do
+      #   document = DocumentFormatter.new(content: template, to: :odt).call
+      #   send_data document, filename: file_name, type: "application/vnd.oasis.opendocument.text"
+      # end
     end
+  end
+
+private
+
+  # @return [String]
+  def file_ext
+    params[:format]
   end
 end

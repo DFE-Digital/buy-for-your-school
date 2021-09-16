@@ -20,9 +20,11 @@ class JourneyPresenter < SimpleDelegator
   #
   # @return [String]
   def specification
-    SpecificationRenderer.new(
+    template = LiquidParser.new(
       template: category.liquid_template,
       answers: GetAnswersForSteps.new(visible_steps: steps).call,
-    ).html
+    ).render(draft: false)
+
+    DocumentFormatter.new(content: template, to: :html).call.html_safe
   end
 end

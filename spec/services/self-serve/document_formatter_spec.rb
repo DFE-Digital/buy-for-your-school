@@ -1,32 +1,27 @@
 RSpec.describe DocumentFormatter do
   describe "#call" do
-    context "when the journey is complete" do
-      it "converts Markdown into DOCX" do
-        md = "# Title"
-        formatter = described_class.new(markdown: md)
+    it "converts Markdown into DOCX" do
+      md = "# Title"
+      formatter = described_class.new(content: md)
 
-        expect(PandocRuby)
-        .to receive(:convert)
-        .with(md, { from: :markdown, to: :docx })
-        .and_call_original
+      expect(PandocRuby)
+      .to receive(:convert)
+      .with(md, { from: :markdown, to: :docx })
+      .and_call_original
 
-        formatter.call(draft: false)
-      end
+      formatter.call
     end
 
-    context "when the journey is incomplete" do
-      it "converts Markdown into DOCX with added warning" do
-        md = "# Title"
-        modified_md = "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article># Title"
-        formatter = described_class.new(markdown: md)
+    it "converts Markdown into HTML" do
+      md = "# Title"
+      formatter = described_class.new(content: md, to: :html)
 
-        expect(PandocRuby)
-        .to receive(:convert)
-        .with(modified_md, { from: :markdown, to: :docx })
-        .and_call_original
+      expect(PandocRuby)
+      .to receive(:convert)
+      .with(md, { from: :markdown, to: :html })
+      .and_call_original
 
-        formatter.call(draft: true)
-      end
+      formatter.call
     end
   end
 end

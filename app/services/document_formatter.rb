@@ -2,23 +2,22 @@ require "dry-initializer"
 require "types"
 require "pandoc-ruby"
 
-# Convert Markdown into a document format
+# Document converter
 #
 class DocumentFormatter
   extend Dry::Initializer
 
-  Formats = Types::Symbol.enum(:docx)
+  ReaderFormats = Types::Symbol.enum(:markdown)
+  WriterFormats = Types::Symbol.enum(:docx, :pdf, :odt, :html)
 
-  option :markdown, Types::String
-  option :format, Formats, default: proc { :docx }
+  option :content, Types::String
+  option :from, ReaderFormats, default: proc { :markdown }
+  option :to, WriterFormats, default: proc { :docx }
 
-  # Return the formatted document
+  # Return the converted document
   #
-  # @param draft [Boolean]
-  #
-  def call(draft: true)
-    markdown.prepend(I18n.t("journey.specification.download.warning.incomplete")) if draft
-
-    PandocRuby.convert(markdown, from: :markdown, to: format)
+  # @return [String]
+  def call
+    PandocRuby.convert(content, from: from, to: to)
   end
 end

@@ -108,12 +108,10 @@ en:
   journey:
     specification:
       header: Your specification
-      warning: You have not completed all the tasks. There may be information missing from your specification.
+      warning: You have not completed all the tasks in Create a specification. There may be information missing from your specification.
       button: View your specification
       download:
         button: Download (.docx)
-        warning:
-          incomplete: "<article id='warning'><p></b>You have not completed all the tasks in Create a specification. There may be information missing from your specification.</b></p></article>"
       delete:
         header:
           confirm: Are you sure you want to delete this specification?
