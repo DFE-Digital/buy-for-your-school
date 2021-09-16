@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 module Support
+  #
+  # A public servant who picks up and handles "support cases"
+  #
   class Agent < ApplicationRecord
     # has_one :profile
 
