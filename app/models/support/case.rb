@@ -9,6 +9,7 @@ module Support
 
     has_one :enquiry, class_name: "Support::Enquiry"
     belongs_to :category, class_name: "Support::Category"
+    belongs_to :agent, class_name: "Support::Agent", optional: true
 
     # Support level
     #
@@ -55,11 +56,8 @@ module Support
     end
 
     # TODO: Replace with ActiveRecord association
-    def case_worker_account
-      OpenStruct.new(full_name: "Example Agent")
-    end
-
-    # TODO: Replace with ActiveRecord association
+    # This is going to be renamed to "Buyer" and represents the
+    # School (SBP) that case workers interact with via cases.
     def contact
       OpenStruct.new(
         first_name: "Example First",

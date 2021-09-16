@@ -3,9 +3,9 @@ RSpec.describe Support::CasePresenter do
 
   let(:kase) do
     OpenStruct.new(
-      state: "foo",
+      state: "open",
       interactions: [OpenStruct.new(created_at: Time.zone.local(2000, 1, 30, 12))],
-      case_worker_account: OpenStruct.new(name: "bar"),
+      agent: OpenStruct.new(first_name: "Ronald", last_name: "McDonald"),
       category: double,
       contact: double,
     )
@@ -13,13 +13,13 @@ RSpec.describe Support::CasePresenter do
 
   describe "#state" do
     it "returns an upcase state" do
-      expect(presenter.state).to eq("FOO")
+      expect(presenter.state).to eq("OPEN")
     end
   end
 
   describe "#agent_name" do
     it "returns the name of the agent that's assigned to the case" do
-      expect(presenter.agent_name).to eq("Example ProcOps Agent")
+      expect(presenter.agent_name).to eq("Ronald McDonald")
     end
   end
 

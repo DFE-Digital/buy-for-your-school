@@ -6,7 +6,7 @@ RSpec.feature "Case Management Dashboard - index" do
     visit "/support/cases"
   end
 
-  it "renders 3 tabs" do
+  it "displays 3 tabs" do
     expect(all("li.govuk-tabs__list-item", visible: true).count).to eq(3)
   end
 
@@ -14,14 +14,12 @@ RSpec.feature "Case Management Dashboard - index" do
     expect(find("#my-cases .govuk-heading-l", visible: true)).to have_text "My cases"
   end
 
-  it "renders cases" do
+  it "lists cases" do
     expect(find("#my-cases .govuk-table")).to be_visible
-
-    # TODO: Change ".all.count" with ".count"
-    expect(all("#my-cases .govuk-table__row").count).to eq(Support::Case.all.count + 1)
+    expect(all("#my-cases .govuk-table__row").count).to eq(2)
   end
 
-  it "renders a table with columns for org id, category name, case status and updated timestamp" do
+  it "has a table with columns for org id, category name, case status and updated timestamp" do
     within "#my-cases" do
       expect(find(".govuk-table__head")).to have_text "Organisation Category Status Last updated"
 
