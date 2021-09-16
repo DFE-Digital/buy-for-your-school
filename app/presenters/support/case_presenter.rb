@@ -7,7 +7,9 @@ module Support
 
     # @return [String]
     def agent_name
-      case_worker_account.full_name
+      return agent.full_name if agent.present?
+
+      ""
     end
 
     def organisation_name
@@ -29,6 +31,11 @@ module Support
       @interactions ||= super.map { |i| Support::InteractionPresenter.new(i) }
     end
 
+    # @return [AgentPresenter]
+    def agent
+      Support::AgentPresenter.new(super)
+    end
+
     # @return [ContactPresenter]
     def contact
       Support::ContactPresenter.new(super)
@@ -37,10 +44,6 @@ module Support
     # @return [CategoryPresenter]
     def category
       Support::CategoryPresenter.new(super)
-    end
-
-    def case_worker_account
-      Support::AgentPresenter.new(super)
     end
   end
 end

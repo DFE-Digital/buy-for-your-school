@@ -1,7 +1,9 @@
 RSpec.feature "Case Management Dashboard - show" do
   before do
+    support_case = create(:support_case)
+
     user_is_signed_in
-    visit "/support/cases/#{create(:support_case).id}"
+    visit "/support/cases/#{support_case.id}"
   end
 
   it "has 3 visible tabs" do
