@@ -13,11 +13,6 @@ module Support
   private
 
     # @return [String]
-    def format_name(name)
-      name.capitalize
-    end
-
-    # @return [String]
     def format_date(date)
       date.strftime("%e %B %Y")
     end

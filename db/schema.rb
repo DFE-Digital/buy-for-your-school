@@ -169,8 +169,7 @@ ActiveRecord::Schema.define(version: 2021_09_13_154900) do
     t.integer "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "agent_id"
-    t.index ["agent_id"], name: "index_support_cases_on_agent_id"
+    t.uuid "agent_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["ref"], name: "index_support_cases_on_ref"
     t.index ["state"], name: "index_support_cases_on_state"

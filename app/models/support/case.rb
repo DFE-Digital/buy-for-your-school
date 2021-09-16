@@ -48,6 +48,8 @@ module Support
     end
 
     # TODO: Replace with ActiveRecord association
+    # This is going to be renamed to "Buyer" and represents the
+    # School (SBP) that case workers interact with via cases.
     def contact
       OpenStruct.new(
         first_name: "Example First",
