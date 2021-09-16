@@ -11,8 +11,13 @@ RSpec.describe AddMissingOrderToExistingTasks do
       ENV["POST_MIGRATION_CHANGES"] = "true"
       stub_contentful_category(fixture_filename: "section-with-multiple-tasks.json")
 
+      # build and persist a category with no slug and no validation
+      # as this column is not expected to exist yet
+      category = build(:category, slug: nil)
+      category.save!(validate: false)
+      journey = create(:journey, category: category)
       # NB: section contentful_id needs to match the stubbed category fixture
-      section = create(:section, contentful_id: "multiple-tasks-section")
+      section = create(:section, contentful_id: "multiple-tasks-section", journey: journey)
 
       # NB: task contentful_ids need to match the stubbed section fixtures tasks array
       create(:task, title: "second", order: nil, section: section, contentful_id: "checkboxes-and-radio-task")

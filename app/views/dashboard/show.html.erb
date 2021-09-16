@@ -5,6 +5,10 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
 
+    <div class="govuk-inset-text">
+      <%= link_to "Request free help and support with your specification", user_support_requests_path(current_user) %>
+    </div>
+
     <% if @journeys.none? %>
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
@@ -27,8 +31,7 @@
         <tbody class="govuk-table__body">
           <% @journeys.each do |journey| %>
             <tr class="govuk-table__row">
-              <%# TODO: create a top-level journey presenter for created_at %>
-              <td class="govuk-table__cell"><%= journey.created_at.strftime("%e %B %Y") %></td>
+              <td class="govuk-table__cell"><%= journey.created_at %></td>
               <td class="govuk-table__cell"><%= journey.category.title %></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= link_to I18n.t("dashboard.edit.button"), journey_path(journey), class: "govuk-link" %>

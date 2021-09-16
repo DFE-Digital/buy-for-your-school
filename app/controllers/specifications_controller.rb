@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SpecificationsController < ApplicationController
+  breadcrumb "Dashboard", :dashboard_path
+
   before_action :check_user_belongs_to_journey?
 
   # Render HTML and DOCX formats
@@ -9,13 +11,13 @@ class SpecificationsController < ApplicationController
   #
   # @see SpecificationRenderer
   def show
+    breadcrumb "Create specification", journey_path(current_journey), match: :exact
+    breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
-    @visible_steps = @journey.steps.visible
-    @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
 
     specification_renderer = SpecificationRenderer.new(
       template: @journey.category.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call,
+      answers: GetAnswersForSteps.new(visible_steps: @journey.steps).call,
     )
 
     RecordAction.new(

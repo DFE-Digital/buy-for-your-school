@@ -1,6 +1,6 @@
 <%= render layout: layout do |f| %>
   <%= f.govuk_date_field :response,
-    legend: { text: @step_presenter.title, size: "l" },
-    hint: -> { @step_presenter.help_text_html }
+    legend: { text: @step.title, size: "l" },
+    hint: -> { @step.help_text_html }
   %>
 <% end %>

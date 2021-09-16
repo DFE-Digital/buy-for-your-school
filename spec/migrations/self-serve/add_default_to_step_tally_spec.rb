@@ -9,7 +9,12 @@ RSpec.describe AddDefaultToStepTally do
   context "when there are broken tasks" do
     before do
       ENV["POST_MIGRATION_CHANGES"] = "true"
-      section = create(:section, contentful_id: "checkboxes-question")
+      # build and persist a category with no slug and no validation
+      # as this column is not expected to exist yet
+      category = build(:category, slug: nil)
+      category.save!(validate: false)
+      journey = create(:journey, category: category)
+      section = create(:section, contentful_id: "checkboxes-question", journey: journey)
 
       # 1 of 3 steps hidden
       task_1 = create(:task, section: section, title: "Task 1")

@@ -9,6 +9,8 @@ RSpec.feature "Users can see their specification" do
     click_continue
     click_view
 
+    expect(page).to have_breadcrumbs ["Dashboard", "Create specification", "View specification"]
+
     # TODO: remove I18n.t from specs
     expect(page).to have_content(I18n.t("journey.specification.header"))
 

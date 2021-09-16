@@ -9,8 +9,11 @@ The format is based on [Keep a Changelog 1.0.0].
 ### Supported Unreleased
 
 - Added initial models for supported case management functions.
+- Added unique 6 digit ref for cases starting with 000001.
 
 ### Specify Unreleased
+- Added Support Request model.
+- Added full_name, email_address, phone_number, contact_preferences to User.
 
 **Rich Data**
 - Integrate fully with DSI to gather names, email and organisation at authentication
@@ -58,6 +61,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add `categories#index` to enable users to create a specification from a chosen category
 - rename `journey_maps` to `design` to allow more intuitive URLs
 - WIP: data migration
+- update Contentful webhook handling to pick up updates to `Category` when they are published
 
 **Dashboard functionality**
 - add explicit ordering to the task model to allow continuing to the next unanswered task

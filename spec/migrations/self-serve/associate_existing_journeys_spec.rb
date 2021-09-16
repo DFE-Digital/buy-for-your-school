@@ -8,7 +8,11 @@ RSpec.describe AssociateExistingJourneys do
 
   context "when there are broken journeys and no category" do
     before do
-      create_list(:journey, 10)
+      # build and persist a category with no slug and no validation
+      # as this column is not expected to exist yet
+      category = build(:category, slug: nil)
+      category.save!(validate: false)
+      create_list(:journey, 10, category: category)
       Category.delete_all
       Journey.update_all(category_id: nil)
       stub_contentful_category(fixture_filename: "journey-with-multiple-entries.json")
