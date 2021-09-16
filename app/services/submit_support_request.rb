@@ -29,7 +29,7 @@
 #   }
 #   ```
 
-class SubmitSupportEnquiry
+class SubmitSupportRequest
   # @param support_request [SupportRequest]
 
   def initialize(support_request)
