@@ -5,7 +5,7 @@ RSpec.describe Support::CasePresenter do
     OpenStruct.new(
       state: "open",
       interactions: [OpenStruct.new(created_at: Time.zone.local(2000, 1, 30, 12))],
-      agent: OpenStruct.new(first_name: "Donald", last_name: "McDonald"),
+      agent: OpenStruct.new(first_name: "Ronald", last_name: "McDonald"),
       category: double,
       contact: double,
     )
@@ -19,7 +19,7 @@ RSpec.describe Support::CasePresenter do
 
   describe "#agent_name" do
     it "returns the name of the agent that's assigned to the case" do
-      expect(presenter.agent_name).to eq("Donald McDonald")
+      expect(presenter.agent_name).to eq("Ronald McDonald")
     end
   end
 
