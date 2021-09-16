@@ -15,7 +15,7 @@
 #   #  422 - Unprocessable Entity
 #   #  200 - OK
 #
-# example_request
+# @example
 #   ```json
 #   {
 #     "support_enquiry": [{
