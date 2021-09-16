@@ -16,7 +16,7 @@ module Support
     def update
       UpdateCase.new(current_case, agent).call
 
-      redirect_to support_cases_path
+      redirect_to support_case_path(anchor: "case-history")
     end
 
   private
