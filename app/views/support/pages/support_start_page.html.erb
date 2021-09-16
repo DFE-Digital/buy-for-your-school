@@ -1,0 +1,22 @@
+<%= content_for :title, I18n.t("specifying.start_page.page_title", category: "something") %>
+
+<h1 class="govuk-heading-xl">
+  <%#= I18n.t("specifying.start_page.page_title", category: "something") %>
+  Support Start Page
+</h1>
+
+<p class="govuk-body">BLAH BLAH</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>BLAH</li>
+</ul>
+
+<% # TODO: add support for bypass - requires some customisation of omniauth developer provider
+   #       to allow multiple developer providers sitting in different namespaces: %>
+
+<% if PagesController.dsi? %>
+  <%= button_to "TODO: #{I18n.t("generic.button.start")} (bypass DSI)", "#", class: "govuk-button", disabled: true %>
+<% else %>
+  <%= button_to I18n.t("generic.button.start"), "/auth/dfe_support", class: "govuk-button" %>
+<% end %>
+
+

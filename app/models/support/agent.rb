@@ -2,7 +2,10 @@
 # :nocov:
 module Support
   class Agent < ApplicationRecord
-    has_one :profile
+
+    def guest?
+      false
+    end
   end
 end
 # :nocov:

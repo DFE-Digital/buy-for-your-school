@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_113848) do
+ActiveRecord::Schema.define(version: 2021_09_16_142746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -79,6 +79,20 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
     t.index ["user_id"], name: "index_journeys_on_user_id"
   end
 
+  create_table "local_authorities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "local_authority_districts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.text "response", null: false
@@ -95,6 +109,14 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
     t.index ["step_id"], name: "index_number_answers_on_step_id"
   end
 
+  create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id"
+    t.text "role", default: [], null: false, array: true
+    t.text "text", default: [], null: false, array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.string "response", null: false
@@ -102,6 +124,24 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "further_information"
     t.index ["step_id"], name: "index_radio_answers_on_step_id"
+  end
+
+  create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "local_authority_id"
+    t.uuid "local_authority_district_id"
+    t.string "urn"
+    t.string "name"
+    t.string "street"
+    t.string "locality"
+    t.string "town"
+    t.string "county"
+    t.string "postcode"
+    t.string "phone_number"
+    t.integer "establishment_number"
+    t.integer "school_type"
+    t.integer "school_type_group"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -151,6 +191,18 @@ ActiveRecord::Schema.define(version: 2021_09_09_113848) do
     t.jsonb "criteria"
     t.index ["order"], name: "index_steps_on_order"
     t.index ["task_id"], name: "index_steps_on_task_id"
+  end
+
+  create_table "support_agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "dfe_support_sign_in_uid", null: false
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "full_name"
+    t.jsonb "orgs"
+    t.jsonb "roles"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
