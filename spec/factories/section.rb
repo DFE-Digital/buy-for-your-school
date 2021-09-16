@@ -14,5 +14,15 @@ FactoryBot.define do
         Array.new(tasks_count) { association(:task) }
       end
     end
+
+    trait :with_steps do
+      transient do
+        tasks_count { 1 }
+      end
+
+      tasks do
+        Array.new(tasks_count) { association(:task, :with_steps) }
+      end
+    end
   end
 end

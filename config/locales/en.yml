@@ -261,5 +261,9 @@ en:
 
       show:
         requested_at: Request sent on %{time}
-        assign_to: Assign to case worker
+        assign: Assign to case worker
         back: Back to case list
+
+      edit:
+        assign_to_agent: Assign to caseworker
+        assign: Assign
