@@ -5,10 +5,10 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include Support::Documentable
+    include Documentable
 
     has_one :enquiry, class_name: "Support::Enquiry"
-    belongs_to :category, class_name: "Support::Category"
+    belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
 
     # Support level
@@ -30,6 +30,9 @@ module Support
     #   pipeline
     #   no_response
     enum state: { initial: 0, open: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
+
+    # do we still need the request text attr as all cases should have an enquiry as entry point
+    delegate :message, to: :enquiry
 
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
