@@ -5,17 +5,17 @@
 #
 # Example API to Support
 #
-# @resource new
-# @url /api/v1/support-enquiries/new[ .format
+# resource new
+# url /api/v1/support-enquiries/new[ .format
 #
-# @action POST
-# @status_codes possible API status codes
+# action POST
+# status_codes possible API status codes
 #   #  404 - Not Found
 #   #  401 - Unauthorized
 #   #  422 - Unprocessable Entity
 #   #  200 - OK
 #
-# @example_request
+# example_request
 #   ```json
 #   {
 #     "support_enquiry": [{
@@ -30,7 +30,7 @@
 #   ```
 
 class SubmitSupportEnquiry
-  # @param [support_request][SupportRequest] SupportRequest Object
+  # @param support_request [SupportRequest]
 
   def initialize(support_request)
     @support_request = support_request
