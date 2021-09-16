@@ -22,4 +22,12 @@ RSpec.feature "Case Management Dashboard - edit" do
   it "displays the submit button" do
     expect(find_button("Assign")).to be_present
   end
+
+  context "when assigning agent to case" do
+    before { find_button("Assign").click }
+
+    it "is redirected to the case in question" do
+      expect(page).to have_a_support_case_path
+    end
+  end
 end
