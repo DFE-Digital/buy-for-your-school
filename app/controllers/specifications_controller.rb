@@ -9,7 +9,7 @@ class SpecificationsController < ApplicationController
   #
   # Log 'view_specification'
   #
-  # @see SpecicifationRenderer
+  # @see SpecificationRenderer
   def show
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
