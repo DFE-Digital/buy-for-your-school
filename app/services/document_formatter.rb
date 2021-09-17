@@ -11,8 +11,8 @@ class DocumentFormatter
   WriterFormats = Types::Symbol.enum(:docx, :pdf, :odt, :html)
 
   option :content, Types::String
-  option :from, ReaderFormats, default: proc { :markdown }
-  option :to, WriterFormats, default: proc { :docx }
+  option :from, ReaderFormats
+  option :to, WriterFormats
 
   # Return the converted document
   #

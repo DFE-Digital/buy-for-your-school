@@ -28,7 +28,9 @@ RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y nodejs
-RUN apt-get install -y pandoc
+RUN wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb \
+  && apt install ./pandoc-2.14.2-1-amd64.deb && rm pandoc-2.14.2-1-amd64.deb
+RUN apt-get install -y texlive
 
 # Install Javascript dependencies
 COPY package-lock.json $DEPS_HOME/package-lock.json

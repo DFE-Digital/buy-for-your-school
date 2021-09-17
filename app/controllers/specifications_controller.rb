@@ -9,20 +9,11 @@ class SpecificationsController < ApplicationController
   #
   # Log 'view_specification'
   #
-  # @see LiquidParser
-  # @see DocumentFormatter
+  # @see SpecicifationRenderer
   def show
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
-
-    template = LiquidParser.new(
-      template: @journey.category.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: @journey.steps).call,
-      draft_msg: I18n.t("journey.specification.warning"),
-    ).render(draft: !@journey.all_tasks_completed?)
-
-    document = DocumentFormatter.new(content: template).call
 
     RecordAction.new(
       action: "view_specification",
@@ -40,7 +31,7 @@ class SpecificationsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        document = DocumentFormatter.new(content: template).call
+        document = SpecificationRenderer.new(journey: @journey).call(draft: !@journey.all_tasks_completed?)
         send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
       # format.pdf do
