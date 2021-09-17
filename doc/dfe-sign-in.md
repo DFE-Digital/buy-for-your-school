@@ -2,7 +2,7 @@
 
 ___DfE Sign-In___ `DSI` is the ___Single Sign-On___ `SSO` provider for this service.
 
-There are testing, pre-production and production environments for DSI that each require registration.
+There are [testing][test-register], [pre-production][pre-prod-register] and [production][prod-register] environments for DSI that each require registration.
 
 ## Registration
 
