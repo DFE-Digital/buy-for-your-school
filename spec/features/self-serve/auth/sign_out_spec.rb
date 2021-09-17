@@ -13,6 +13,9 @@ RSpec.feature "Sign out" do
     # generic.button.sign_out
     click_on "Sign out"
 
+    # or mimic failure
+    # visit "/auth/failure"
+
     expect(page.driver.request.session.keys).to be_empty
     expect(page).to have_current_path "/"
 

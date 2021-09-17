@@ -17,6 +17,38 @@ RSpec.feature "DfE Sign-in" do
       click_continue
     end
 
+    context "but their DSI details have changed" do
+      let!(:user) { create(:user) }
+
+      let(:updated_user) do
+        build(:user,
+              dfe_sign_in_uid: user.dfe_sign_in_uid,
+              email: user.email,
+              first_name: "first_name changed in DSI",
+              last_name: "last_name changed in DSI")
+      end
+
+      before do
+        # force signout
+        visit "/auth/failure"
+        # change DSI details
+        user_exists_in_dfe_sign_in(user: updated_user)
+        # DfE sign in
+        click_start
+        # check new details
+        # FIXME: assert changes are visible on /profile
+        # visit "/users"
+        user.reload
+      end
+
+      it "updates the user's names" do
+        expect(user.first_name).to eq "first_name changed in DSI"
+        expect(user.last_name).to eq "last_name changed in DSI"
+
+        # expect(find("dd.govuk-summary-list__value")[0]).to have_text "first_name changed in DSI last_name changed in DSI"
+      end
+    end
+
     context "and the user already exists" do
       let!(:user) { create(:user) }
 

@@ -4,34 +4,49 @@ require "dry-initializer"
 require "dsi/client"
 require "types"
 
+# Persist new users and update their name when DSI details are edited
 # Combine auth identity, roles and organisation data from DSI OIDC and API
 #
-# TODO: rename CreateUser to CreateProfile
 class CreateUser
   extend Dry::Initializer
 
   option :auth, Types::Hash
   option :client, default: proc { ::Dsi::Client.new }
 
-  # @return [User] TODO: separate concerns of User and Profile
-  #
+  # @return [User, false]
   def call
     return false unless user_id
 
-    User.find_or_create_by!(dfe_sign_in_uid: user_id) do |user|
-      user.email      = email
-      user.full_name  = full_name
-      user.first_name = first_name
-      user.last_name  = last_name
-      # DSI: newly added organisations will be missing for existing users
-      user.orgs = orgs
-      # DSI: newly added roles will not be added unless we refresh
-      user.roles = roles
-      # Rails.logger.info "Created account for #{email}"
+    if current_user
+      current_user.update!(first_name: first_name, last_name: last_name)
+      Rollbar.info "Updated account for #{email}"
+      current_user
+    else
+      new_user = create_user!
+      Rollbar.info "Created account for #{email}"
+      new_user
     end
   end
 
 private
+
+  # @return [User, nil]
+  def current_user
+    User.find_by(dfe_sign_in_uid: user_id)
+  end
+
+  # @return [User]
+  def create_user!
+    User.create!(
+      dfe_sign_in_uid: user_id,
+      email: email,
+      full_name: full_name,
+      first_name: first_name,
+      last_name: last_name,
+      orgs: orgs,
+      roles: roles,
+    )
+  end
 
   # @return [String]
   def full_name
