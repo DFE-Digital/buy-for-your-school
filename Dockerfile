@@ -30,7 +30,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y nodejs
 RUN wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb \
   && apt install ./pandoc-2.14.2-1-amd64.deb && rm pandoc-2.14.2-1-amd64.deb
-RUN apt-get install -y texlive
+RUN apt-get install -y texlive texlive-generic-extra
 
 # Install Javascript dependencies
 COPY package-lock.json $DEPS_HOME/package-lock.json
