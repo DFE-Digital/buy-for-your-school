@@ -3,8 +3,8 @@ class CategoriesController < ApplicationController
     @back_url = dashboard_path
 
     populate_categories if Category.none?
-    categories = Category.where.not(contentful_id: 0).order(:title)
-    @categories = categories.map { |c| CategoryPresenter.new(c) }
+
+    @categories = Category.all.map { |c| CategoryPresenter.new(c) }
   end
 
 private

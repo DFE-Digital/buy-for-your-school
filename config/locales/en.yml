@@ -16,8 +16,8 @@ en:
       change_answer: Change
       update: Update
       yes_continue: Yes, continue
-      exit_without_save: Exit without saving
       save: Save
+      cancel: Cancel
     label:
       what_is: "What is %{label}?"
   banner:
@@ -160,63 +160,60 @@ en:
     category_selection_header: Choose a category
     spec_template_tag_title: Specification tag
 
- # /users
-  users:
-    heading: About you
-    correct_information_heading: Is this your contact information?
-    correct_information_instructions: "These are the details we have for you, if they are not correct or up to date you will need to either:"
-    correct_information_list:
-      - log back in with the correct account
-      - amend your DSI account details
+ # /profile
+  profile:
+    caption: About you
+    heading: Is this your contact information?
+    body: "These are the details we have for you, if they are not correct or up to date you will need to either:"
+    edit_dfe_sign_in: update your DfE Sign In account details
+    label:
+      full_name: Your name
+      email: Your email address
 
-
-  user:
-    full_name: Your name
-    phone_number: Your phone number
-    phone_number_hint: Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes.
-    email: Your email address
-    email_address_hint: Your email address will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes.
-    updated_flash: User updated
-
-  #/ support
+  # /support-requests
   support_requests:
-    start:
-      h1_heading: Request help and support with your specification
-      h2_heading: Before you start
-      p_intro_1: Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
-      p_intro_2: DfE's supported buying team will respond to you within 5 working days.
-      you_can_list_title: "You can:"
-      you_can_list:
-        - <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools-writing-a-spec" class="govuk-link">read about writing a specification</a>
-        - find out more about <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools" class="govuk-link">planning for what you're buying</a>
-        - read <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
-        - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
-    sections:
-      titles:
-        about_you: About you
-        share_a_specification: Share a specification
-        about_your_specification: About your specification
-      send_your_request: Send your request
-      about_you:
-        heading: About you
-        phone_number: What is your phone number?
-        hint: Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes.
-      about_your_request:
-        heading: About your request for support
-        specification_ids_label: Which of your specifications are related to this request?
-        specification_ids_hint: A copy of the specifications you choose will be sent to us with this request in its current state. We will not receive any new changes you make. Select all that apply.
-        category_ids_label: What are you buying?
-        message_label: How can we help?
-        message_hint: Briefly describe your problem in a few sentences.
-    confirm:
-      timescale: Once you send this request, we will review it and get in touch within 5 working days.
-    buttons:
-      no_spec_attached: My request is not related to a specification I've created
+    flash:
+      created: Support request created
+      updated: Support request updated
+    # requests#index
+    heading: Request help and support with your specification
+    subheading: Before you start
+    intro:
+      - Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
+      - DfE's supported buying team will respond to you within 5 working days.
+    # requests#show
+    response_time: Once you send this request, we will review it and get in touch within 5 working days.
+    section:
+      submit_request: Send your request
+      about_you: About you
+      request_summary: About your request for support
+    # form fields
+    title:
+      phone_number: About you
+      specification: Share a specification
+      category: About your specification
+      message: About your specification
+    label:
+      phone_number: What is your phone number?
+      specification: Which of your specifications are related to this request?
+      category: What are you buying?
+      message: How can we help?
+    hint:
+      phone_number: |-
+        Your phone number will be used by DfE's supported buying team to contact you about your request for help.
+        It will not be used for marketing or any other purposes.
+      specification: |-
+        A copy of the specifications you choose will be sent to us with this request in its current state.
+        We will not receive any new changes you make.
+        Select all that apply.
+      message: Briefly describe your problem in a few sentences.
+    button:
       send: Send request
 
-  support_request:
-    created_flash: Support request created
-    updated_flash: Support request updated
+
+
+
+
   #
   # Supported ------------------------------------------------------------------
   #
@@ -262,17 +259,18 @@ en:
       edit:
         assign_to_agent: Assign to caseworker
         assign: Assign
+        assign_to: Assign to case worker
+        back: Back to case list
 
     interactions:
-
-        new:
-          contact_with_school: Contact with school
-          add_case_note: Add case note
-          type_of_contact: Type of contact
-          phone_call: Phone call
-          email_from_school: Email from school
-          email_to_school: Email to school
-          contact_details: Contact details
-          contact_details_hint: Add details of the phone call or copy and paste the email here
-          created_flash: "%{type} added to case"
+      new:
+        contact_with_school: Contact with school
+        add_case_note: Add case note
+        type_of_contact: Type of contact
+        phone_call: Phone call
+        email_from_school: Email from school
+        email_to_school: Email to school
+        contact_details: Contact details
+        contact_details_hint: Add details of the phone call or copy and paste the email here
+        created_flash: "%{type} added to case"
 

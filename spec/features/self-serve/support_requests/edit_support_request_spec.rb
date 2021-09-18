@@ -1,6 +1,14 @@
-RSpec.feature "Edit a support request" do
-  let(:category) { create(:category) }
-  let(:journey) { create(:journey, category: category) }
+RSpec.feature "Edit an unsubmitted support request" do
+
+  # include_context "with an incomplete journey"
+
+  let(:category) do
+    create(:category, title: "Utilities")
+  end
+
+  let(:journey) do
+    create(:journey, category: category)
+  end
 
   let(:support_request) do
     create(:support_request,
@@ -11,18 +19,20 @@ RSpec.feature "Edit a support request" do
            message: "test")
   end
 
-  context "when the user is signed in" do
-    before do
-      user_is_signed_in(user: journey.user)
-      visit "/users/#{journey.user.id}/support-requests/#{support_request.id}"
-    end
+  before do
+    user_is_signed_in(user: journey.user)
+    visit "/support-requests/#{support_request.id}"
+  end
 
-    specify { expect(page).to have_current_path "/users/#{journey.user.id}/support-requests/#{support_request.id}" }
+  specify { expect(page).to have_current_path "/support-requests/#{support_request.id}" }
 
-    it "allows the request to be changed" do
+
+  describe "step 1" do
+    it "updates the phone number" do
       click_link "edit-phone-number"
 
-      expect(page).to have_current_path "/users/#{journey.user.id}/support-requests/#{support_request.id}/edit?step=1"
+      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=1"
+
       expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
 
       fill_in "support_form[phone_number]", with: "000 000 0000"
@@ -30,6 +40,25 @@ RSpec.feature "Edit a support request" do
 
       expect(find("div#flash_notice")).to have_text "Support request updated"
       expect(support_request.reload.phone_number).to eq "000 000 0000"
+    end
+  end
+
+  describe "step 2" do
+    it "updates the specification" do
+      click_link "edit-specification"
+
+      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=2"
+
+      expect(find("label.govuk-label--l")).to have_text "Which of your specifications are related to this request?"
+# binding.pry
+
+      # fill_in "support_form[phone_number]", with: "000 000 0000"
+      # click_continue
+
+      # expect(find("div#flash_notice")).to have_text "Support request updated"
+      # expect(support_request.reload.journey_id).to eq "000 000 0000"
+
+      expect(page).to have_link "My request is not related to an existing specification", href: "/"
     end
   end
 end
