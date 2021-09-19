@@ -1,52 +1,37 @@
 # frozen_string_literal: true
 
 class SupportRequestsController < ApplicationController
-
-  # class ErrorSummaryUpperCasePresenter
-  #   def initialize(error_messages)
-  #     @error_messages = error_messages
-  #   end
-
-  #   def formatted_error_messages
-  #     @error_messages.map { |attribute, messages| [attribute, messages.first.upcase] }
-  #   end
-  # end
-
-
   before_action :support_request, only: %i[show edit update]
 
-  # start the process
-  def index
-  end
+  # start the support process
+  def index; end
 
   # check your answers before submission
-  def show
-  end
+  def show; end
 
   # first question
   def new
     @support_form = SupportForm.new(step: params.fetch(:step, 1))
   end
 
+  def edit
+    @support_form = SupportForm.new(step: params[:step], **support_request.attributes.symbolize_keys)
+  end
+
   # questions 2 onwards until complete
   def create
-
-    # validation
-    validation = SupportFormSchema.new.call(**form_params)
-
-    # form
-    @support_form = SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
+    @support_form = form
 
     if validation.success? && validation.to_h[:message_body]
 
-      support_request = SupportRequest.create(user: current_user, **validation.to_h)
-
+      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
       redirect_to support_request_path(support_request)
 
     elsif validation.success?
 
-
-      if (@support_form.step == 2 && @support_form.journey?)
+      if @support_form.step == 1 && current_user.journeys.none?
+        @support_form.skip!
+      elsif @support_form.step == 2 && @support_form.has_journey?
         @support_form.skip!
       else
         @support_form.advance!
@@ -58,59 +43,52 @@ class SupportRequestsController < ApplicationController
     end
   end
 
-
-  def edit
-    @support_form = SupportForm.new(step: params[:step], **support_request.attributes.symbolize_keys)
-  end
-
-
+  # all questions
   def update
-
-
-    validation = SupportFormSchema.new.call(**form_params)
-
-    @support_form = SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
-
+    @support_form = form
 
     if validation.success?
 
-      if (@support_form.step == 2 && @support_form.journey?)
-
+      if @support_form.step == 2 && @support_form.has_journey?
         @support_form.forget_category!
+      elsif @support_form.step == 3 && @support_form.has_category?
+        @support_form.forget_journey!
+      end
 
-        support_request.update(**support_request.attributes.symbolize_keys, **@support_form.to_h)
-        redirect_to support_request_path(support_request)
-
-      elsif (@support_form.step == 2 && !@support_form.journey?)
-
+      if @support_form.step == 2 && !@support_form.has_journey?
         @support_form.advance!
         render :edit
-
-      elsif (@support_form.step == 3 && !@support_form.category_id.nil?)
-        @support_form.forget_journey!
-
-        support_request.update(**support_request.attributes.symbolize_keys, **@support_form.to_h)
-        redirect_to support_request_path(support_request)
-
       else
+        support_request.update!(**support_request.attributes.symbolize_keys, **@support_form.to_h)
 
-        support_request.update(**support_request.attributes.symbolize_keys, **@support_form.to_h)
-        redirect_to support_request_path(support_request)
-
+        redirect_to support_request_path(support_request), notice: I18n.t("support_requests.flash.updated")
       end
 
     else
-
       render :edit
     end
   end
 
 private
 
+  # @return [UserPresenter] adds form view logic
+  def current_user
+    @current_user = UserPresenter.new(super)
+  end
+
   # @return [SupportRequest] restricted to the current user
-  #
   def support_request
     @support_request = SupportRequest.where(user_id: current_user.id, id: params[:id]).first
+  end
+
+  # @return [SupportForm] form object populated with validation messages
+  def form
+    SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
+  end
+
+  # @return [SupportFormSchema] validated form input
+  def validation
+    SupportFormSchema.new.call(**form_params)
   end
 
   def form_params

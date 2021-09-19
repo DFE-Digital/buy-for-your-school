@@ -2,7 +2,6 @@
 # "School Business Professional (SBP)" authenticated via "DfE Sign In"
 #
 class User < ApplicationRecord
-
   has_many :journeys
   has_many :support_requests, class_name: "SupportRequest"
 
@@ -11,5 +10,4 @@ class User < ApplicationRecord
   def guest?
     false
   end
-
 end

@@ -1,153 +1,97 @@
 RSpec.describe SupportForm, type: :model do
-  let(:journey) { create(:journey) }
-  let(:category) { create(:category) }
-  let(:user) { create(:user) }
+  subject(:form) { described_class.new }
 
-  let(:phone_number) { "0151 000 0000" }
-  let(:message) { "My support message" }
+  it "#step" do
+    expect(form.step).to be 1
+  end
 
-  context "with step 1" do
-    subject(:current_step) do
-      SupportForm::Step1.new(
-        step: 1,
-        phone_number: phone_number,
-      )
-    end
+  it "#messages" do
+    expect(form.messages).to be_a Hash
+    expect(form.messages).to be_empty
+    expect(form.errors.messages).to be_a Hash
+    expect(form.errors.messages).to be_empty
+  end
 
-    it { is_expected.not_to be_last_step }
+  it "#errors" do
+    expect(form.errors).to be_a SupportForm::ErrorSummary
+    expect(form.errors.any?).to be false
+  end
 
-    context "with a phone number" do
-      it { is_expected.to be_valid }
+  # respond to
+  it "form params" do
+    expect(form.phone_number).to be_nil
+    expect(form.journey_id).to be_nil
+    expect(form.category_id).to be_nil
+    expect(form.message_body).to be_nil
+  end
 
-      it "increments the step counter" do
-        expect(current_step.save).to eq 2
+  describe "#to_h" do
+    context "when populated" do
+      subject(:form) do
+        described_class.new(phone_number: "01234567890", message_body: "hello world")
+      end
+
+      it "has values" do
+        expect(form.to_h).to eql({
+          phone_number: "01234567890",
+          message_body: "hello world",
+        })
       end
     end
 
-    context "without a phone number" do
-      let(:phone_number) { nil }
-
-      it { is_expected.not_to be_valid }
-
-      it "does not save" do
-        expect(current_step.save).to be false
-      end
-    end
-
-    describe "#next_step" do
-      it "increments the step counter" do
-        expect(current_step.next_step).to eq 2
+    context "when unpopulated" do
+      it "is empty" do
+        expect(form.to_h).to be_empty
       end
     end
   end
 
-  context "with step 2" do
-    subject(:current_step) do
-      SupportForm::Step2.new(
-        step: 2,
-        phone_number: phone_number,
-        journey_id: journey&.id,
-      )
-    end
-
-    it { is_expected.not_to be_last_step }
-
-    context "with a journey" do
-      it { is_expected.to be_valid }
-
-      it "increments the step counter" do
-        expect(current_step.save).to eq 3
-      end
-    end
-
-    context "without a journey" do
-      let(:journey) { nil }
-
-      it { is_expected.not_to be_valid }
-
-      it "does not save" do
-        expect(current_step.save).to be false
-      end
-    end
-
-    describe "#next_step" do
-      it "increments the step counter" do
-        expect(current_step.next_step).to eq 3
-      end
-    end
+  it "#advance!" do
+    form = described_class.new(step: 99)
+    form.advance!
+    expect(form.step).to be 100
   end
 
-  context "with step 3" do
-    subject(:current_step) do
-      SupportForm::Step3.new(
-        step: 3,
-        phone_number: phone_number,
-        journey_id: journey.id,
-        category_id: category&.id,
-      )
-    end
-
-    it { is_expected.not_to be_last_step }
-
-    context "with a category" do
-      it { is_expected.to be_valid }
-
-      it "increments the step counter" do
-        expect(current_step.save).to eq 4
-      end
-    end
-
-    context "without a category" do
-      let(:category) { nil }
-
-      it { is_expected.not_to be_valid }
-
-      it "does not save" do
-        expect(current_step.save).to eq false
-      end
-    end
-
-    describe "#next_step" do
-      it "increments the step counter" do
-        expect(current_step.next_step).to eq 4
-      end
-    end
+  it "#skip!" do
+    form = described_class.new(step: 99)
+    form.skip!
+    expect(form.step).to be 101
   end
 
-  context "with step 4 (last)" do
-    subject(:current_step) do
-      SupportForm::Step4.new(
-        step: 4,
-        phone_number: phone_number,
-        journey_id: journey.id,
-        category_id: category.id,
-        message: message,
-        user: user,
-      )
-    end
+  it "#back" do
+    form = described_class.new(step: 99)
+    expect(form.back).to be 98
+    expect(form.step).to be 99
+  end
 
-    it { is_expected.to be_last_step }
+  it "#has_journey?" do
+    form = described_class.new(journey_id: "foo")
+    expect(form).to have_journey
 
-    context "with a user and message" do
-      it { is_expected.to be_valid }
-    end
+    form = described_class.new(journey_id: "none")
+    expect(form).not_to have_journey
 
-    context "without a user" do
-      let(:user) { nil }
+    form = described_class.new
+    expect(form).not_to have_journey
+  end
 
-      it { is_expected.not_to be_valid }
-    end
+  it "#has_category?" do
+    form = described_class.new(category_id: "foo")
+    expect(form).to have_category
 
-    context "without a message" do
-      let(:message) { nil }
+    form = described_class.new
+    expect(form).not_to have_category
+  end
 
-      it { is_expected.not_to be_valid }
-    end
+  it "#forget_category!" do
+    form = described_class.new(category_id: "foo")
+    form.forget_category!
+    expect(form).not_to have_category
+  end
 
-    describe "#next_step" do
-      it do
-        expect(current_step.next_step).to eq 5
-      end
-    end
+  it "#forget_journey!" do
+    form = described_class.new(journey_id: "foo")
+    form.forget_journey!
+    expect(form).not_to have_journey
   end
 end

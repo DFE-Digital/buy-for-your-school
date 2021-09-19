@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
 
     populate_categories if Category.none?
 
-    @categories = Category.all.map { |c| CategoryPresenter.new(c) }
+    @categories = Category.published.map { |c| CategoryPresenter.new(c) }
   end
 
 private

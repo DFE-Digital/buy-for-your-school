@@ -7,12 +7,4 @@ class SupportRequest < ApplicationRecord
   belongs_to :user
   belongs_to :category, optional: true
   belongs_to :journey, optional: true
-
-  after_create :submit_support_request
-
-private
-
-  def submit_support_request
-    SubmitSupportRequest.new(self).call
-  end
 end

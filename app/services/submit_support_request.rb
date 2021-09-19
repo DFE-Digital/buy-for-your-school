@@ -1,21 +1,15 @@
-# Service to submit a support enquiry after_commit of a Support Request
-# This should be refactored to an API call if/when specify and support become independent applications.
-# It makes sense for this service to live within specify as it is the event of a SupportEnquiry being
-# created that triggers the creation of a Support::Enquiry
+# frozen_string_literal: true
+
+require "dry-initializer"
+require "types"
+
 #
-# Example API to Support
+# This will become an API call once Supported is standalone
 #
-# resource new
-# url /api/v1/support-enquiries/new[ .format
+# /api/v1/support-enquiries/new
 #
-# action POST
-# status_codes possible API status codes
-#   #  404 - Not Found
-#   #  401 - Unauthorized
-#   #  422 - Unprocessable Entity
-#   #  200 - OK
+# @example Draft API call
 #
-# @example
 #   ```json
 #   {
 #     "support_enquiry": [{
@@ -24,49 +18,61 @@
 #       "email":"example@exmaple.com",
 #       "telephone": "0151 000 0000"
 #       "message": "example message",
-#       "documents" : [ { "file_type": "html_markup", "document_body": "<h1>example html markup</h1>"}]
+#       "documents" : [{
+#          "file_type": "html_markup",
+#          "document_body": "<h1>example html markup</h1>"
+#        }]
 #     }]
 #   }
 #   ```
-
+#
+# Submit a request for support to the Supported case management team
 class SubmitSupportRequest
-  # @param support_request [SupportRequest]
+  extend Dry::Initializer
 
-  def initialize(support_request)
-    @support_request = support_request
-  end
+  option :request
+  option :template, Types::String, default: proc { "Auto-reply" }
 
-  # @return [Support::Enquiry]
+  # TODO: Replace with outbound API call
+  #
+  # @return [nil, Notifications::Client::ResponseNotification]
   def call
-    enquiry = Support::Enquiry.new(
-      support_request_id: @support_request.id,
-      name: @support_request.user&.full_name,
-      email: @support_request.user&.email,
-      telephone: @support_request.phone_number,
-      message: @support_request.message,
-    )
-    if build_document(@support_request).present?
-      enquiry.documents << build_document(@support_request)
-    end
+    return false unless enquiry
 
-    enquiry.save!
-    enquiry
+    Emails::Confirmation.new(recipient: request.user, template: template).call
   end
 
 private
 
-  # Creates document attachment to attach to a Support::Enquiry.
-  # @return [Support::Document]
-  def build_document(support_request)
-    return if support_request.journey.blank?
-
-    markup = get_specification_markup(support_request)
-    Support::Document.new(file_type: "HTML attachment", document_body: markup)
+  # @return [String] snapshot of specification HTML
+  def document_body
+    SpecificationRenderer.new(journey: request.journey, to: :html).call
   end
 
-  # Returns HTML string of the specification to pass along to supported.
-  # @return [String]
-  def get_specification_markup(support_request)
-    @specification_html = SpecificationRenderer.new(journey: support_request.journey, to: :html).call(draft: false).html_safe
+  # @return [String] category of spend
+  def category
+    request.journey ? request.journey.category.slug : request.category.slug
+  end
+
+  # API (draft) ----------------------------------------------------------------
+
+  # @return [Support::Enquiry] TODO: Move into inbound API
+  def enquiry
+    enquiry = Support::Enquiry.new(
+      support_request_id: request.id,
+      name: request.user.full_name,
+      email: request.user.email,
+      telephone: request.phone_number,
+      message: request.message_body,
+      category: category,
+    )
+
+    enquiry.documents << document if request.journey
+    enquiry.save!
+  end
+
+  # @return [Support::Document] TODO: Move into inbound API
+  def document
+    Support::Document.new(file_type: "HTML attachment", document_body: document_body)
   end
 end

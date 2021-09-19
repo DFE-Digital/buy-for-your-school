@@ -1,9 +1,9 @@
 require "types"
 require "dry-initializer"
 
+# @abstract Form Object for multi-step questionnaires
 #
 # @author Peter Hamilton
-#
 #
 class SupportForm
   extend Dry::Initializer
@@ -19,11 +19,8 @@ class SupportForm
     #
     param :messages, Types::Hash, default: proc { {} }
 
-    def any?
-      messages.any?
-    end
+    delegate :any?, to: :messages
   end
-
 
   # internal counter defaults to 1, coerces strings
   option :step, Types::Params::Integer, default: proc { 1 }
@@ -36,7 +33,6 @@ class SupportForm
   option :journey_id, optional: true   # 2 (option for 'none')
   option :category_id, optional: true  # 3 (skipped if 2)
   option :message_body, optional: true # 4 (last)
-
 
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
   #
@@ -67,8 +63,15 @@ class SupportForm
   # @see SupportRequestsController#create
   #
   # @return [Boolean] journey UUID is present
-  def journey?
-    !journey_id.blank? && journey_id != "none"
+  def has_journey?
+    journey_id.present? && journey_id != "none"
+  end
+
+  # @see SupportRequestsController#update
+  #
+  # @return [Boolean] category UUID is present
+  def has_category?
+    !category_id.nil?
   end
 
   # @return [nil]

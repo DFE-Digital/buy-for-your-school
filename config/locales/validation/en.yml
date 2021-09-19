@@ -11,9 +11,10 @@ en:
       rules:
         phone_number:
           missing: is missing
-          format?: must start with a zero and only contain digits
+          # format?: must start with a zero and only contain digits
+          format?: must have a minimum of 10 numbers and no spaces, starting with a zero
+          # min_size?: "must have at least %{num} digits"
           max_size?: "can not have more than %{num} digits"
-          min_size?: "must have at least %{num} digits"
 
         message_body:
           missing: You must tell us how we can help

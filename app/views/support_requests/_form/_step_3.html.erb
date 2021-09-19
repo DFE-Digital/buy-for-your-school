@@ -1,17 +1,12 @@
 <%= form.hidden_field :phone_number, value: form.object.phone_number %>
 <%= form.hidden_field :journey_id, value: form.object.journey_id %>
-<%= form.hidden_field :category_id, value: nil %>
 
-<span class="govuk-caption-l">
-  <%= I18n.t("support_requests.title.category") %>
-</span>
+<%= form.govuk_collection_radio_buttons :category_id,
+    Category.published,
+    :id,
+    :title,
+    :description,
+    legend: { text: I18n.t("support_requests.label.category"), size: "l" },
+    caption: { text: I18n.t("support_requests.caption.category"), size: "l" }
+%>
 
-<div class="govuk-form-group">
-  <%= form.govuk_collection_radio_buttons :category_id,
-      Category.all,
-      :id,
-      :title,
-      :description,
-      legend: { text: I18n.t("support_requests.label.category") }
-  %>
-</div>

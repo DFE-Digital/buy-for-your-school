@@ -1,25 +1,20 @@
 <%= form.hidden_field :phone_number, value: form.object.phone_number %>
 
-<span class="govuk-caption-l"><%= I18n.t("support_requests.title.specification") %></span>
-<div class="govuk-form-group">
-  <h1 class="govuk-label-wrapper">
-    <%= form.label :specification_ids, I18n.t("support_requests.label.specification"), class: "govuk-label govuk-label--l" %>
-  </h1>
-  <div id="specification-ids-hint" class="govuk-hint">
-    <%= I18n.t("support_requests.hint.specification") %>
-  </div>
+<%= form.govuk_collection_radio_buttons :journey_id,
+    current_user.active_journeys,
+    :id,
+    :created_at,
+    :description,
+    caption: { text: I18n.t("support_requests.caption.specification"), size: "l" },
+    legend: { text: I18n.t("support_requests.label.specification"), size: "l" },
+    hint: { text: I18n.t("support_requests.hint.specification") }
+%>
 
-  <%= form.govuk_radio_button :journey_id, "none",
-      label: { text: "My request is not related to an existing specification" },
-      checked: true
-    %>
+<%= form.govuk_radio_divider %>
 
-  <%# FIXME: wrap current_user in a decorator and connect decorated journeys %>
-  <% current_user.journeys.initial.each do |journey| %>
-    <%# TODO: reference spec by user-defined journey title %>
-    <%= form.govuk_radio_button :journey_id, journey.id,
-      label: { text: journey.created_at.strftime("%e %B %Y") },
-      hint: { text: journey.category.title }
-    %>
-  <% end %>
-</div>
+<%= form.govuk_radio_button :journey_id, "none",
+    label: { text: "My request is not related to an existing specification" },
+    checked: true
+  %>
+
+<br />

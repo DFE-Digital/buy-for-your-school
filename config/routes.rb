@@ -40,9 +40,9 @@ Rails.application.routes.draw do
 
   resources :design, only: %i[index show]
   resources :categories, only: %i[index]
-  resources :support_requests, except: %i[destroy], path: "support-requests"
 
-  post "support-requests/submit", to: "notify#create", as: :submit_request
+  resources :support_requests, except: %i[destroy], path: "support-requests"
+  post "/submit", to: "api/support/requests#create", as: :submit_request
 
   resources :journeys, only: %i[show create destroy] do
     resource :specification, only: [:show]

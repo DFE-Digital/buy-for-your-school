@@ -13,5 +13,7 @@ class ProfileController < ApplicationController
       test: "https://test-profile.signin.education.gov.uk/edit-details",
       development: "https://test-profile.signin.education.gov.uk/edit-details",
     }.fetch(Rails.env.to_sym)
+
+    @current_user = UserPresenter.new(current_user)
   end
 end

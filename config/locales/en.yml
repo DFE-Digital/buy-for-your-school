@@ -188,24 +188,24 @@ en:
       about_you: About you
       request_summary: About your request for support
     # form fields
-    title:
+    caption:
       phone_number: About you
       specification: Share a specification
-      category: About your specification
-      message: About your specification
+      category: About your procurement
+      message: About your procurement
     label:
       phone_number: What is your phone number?
-      specification: Which of your specifications are related to this request?
+      specification: Which specification is this related to?
       category: What are you buying?
       message: How can we help?
     hint:
       phone_number: |-
         Your phone number will be used by DfE's supported buying team to contact you about your request for help.
         It will not be used for marketing or any other purposes.
+        You do not need to provide a phone number.
       specification: |-
-        A copy of the specifications you choose will be sent to us with this request in its current state.
+        A copy of the specification you choose will be sent to us with this request in its current state.
         We will not receive any new changes you make.
-        Select all that apply.
       message: Briefly describe your problem in a few sentences.
     button:
       send: Send request

@@ -5,10 +5,11 @@
   <%# link_to I18n.t("generic.button.back"), new_support_request_path(step: @support_form.back), class: "govuk-back-link" %>
 <% end %>
 
-<%= debug @support_request&.attributes %>
-
-<%= debug @support_form.step %>
-<%= debug @support_form.to_h %>
+<% if Rails.env.development? %>
+  <%= debug @support_request&.attributes %>
+  <%= debug @support_form.step %>
+  <%= debug @support_form.to_h %>
+<% end %>
 
 <%= form_with model: @support_form, scope: :support_form, url: path, method: verb  do |form| %>
   <%# form.govuk_error_summary(presenter: presenter_class) %>

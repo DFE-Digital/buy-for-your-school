@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_17_120405) do
+ActiveRecord::Schema.define(version: 2021_09_22_175530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_09_17_120405) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -180,10 +180,10 @@ ActiveRecord::Schema.define(version: 2021_09_17_120405) do
 
   create_table "support_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
-    t.string "slug"
-    t.string "description"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "slug"
+    t.string "description"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title"], name: "index_support_categories_on_title", unique: true
   end
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(version: 2021_09_17_120405) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "phone_number"
+    t.boolean "submitted", default: false, null: false
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"

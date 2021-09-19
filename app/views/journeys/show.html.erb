@@ -5,6 +5,10 @@
 </h1>
 <p class="govuk-body"><%= I18n.t("journeys_body") %></p>
 
+<div class="govuk-inset-text">
+  <%= link_to "Request free help and support with your specification", profile_path %>
+</div>
+
 <ol class="app-task-list sections">
   <% @journey.sections.each do |section| %>
     <li>
