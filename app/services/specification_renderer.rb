@@ -20,7 +20,7 @@ class SpecificationRenderer
     template = LiquidParser.new(
       template: journey&.category&.liquid_template,
       answers: GetAnswersForSteps.new(visible_steps: journey&.steps).call,
-    ).render
+    ).call
 
     template.prepend("#{draft_msg}\n\n") if is_draft
 

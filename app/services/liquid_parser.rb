@@ -22,7 +22,7 @@ class LiquidParser
   #   - The cost of the service: 50
   #
   # @return [String]
-  def render
+  def call
     Liquid::Template.parse(template, error_mode: :strict).render(answers)
   end
 end

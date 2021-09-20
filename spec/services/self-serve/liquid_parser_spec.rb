@@ -1,5 +1,5 @@
 RSpec.describe LiquidParser do
-  describe "#render" do
+  describe "#call" do
     it "fills in given answers" do
       parser = described_class.new(
         template: 'Markdown paragraph rendering a variable: "{{ variable_name }}"',
