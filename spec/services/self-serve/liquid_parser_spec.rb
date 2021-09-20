@@ -8,7 +8,7 @@ RSpec.describe LiquidParser do
         },
       )
 
-      expect(parser.render).to eq "Markdown paragraph rendering a variable: \"variable value\""
+      expect(parser.call).to eq "Markdown paragraph rendering a variable: \"variable value\""
     end
   end
 end
