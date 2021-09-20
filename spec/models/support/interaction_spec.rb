@@ -6,7 +6,7 @@ RSpec.describe Support::Interaction, type: :model do
     expect(interaction.agent.first_name).to eq "John"
   end
 
-  it "belongs to an case" do
+  it "belongs to a case" do
     expect(interaction.case).not_to be_nil
     expect(interaction.case.request_text).to eq "This is an example request for support - please help!"
   end
