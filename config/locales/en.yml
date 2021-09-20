@@ -108,7 +108,7 @@ en:
   journey:
     specification:
       header: Your specification
-      warning: You have not completed all the tasks in Create a specification. There may be information missing from your specification.
+      draft: You have not completed all the tasks. Your specification is incomplete.
       button: View your specification
       download:
         button: Download (.docx)

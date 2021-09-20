@@ -7,10 +7,10 @@ require "pandoc-ruby"
 class DocumentFormatter
   extend Dry::Initializer
 
-  ReaderFormats = Types::Symbol.enum(:markdown)
-  WriterFormats = Types::Symbol.enum(:docx, :pdf, :odt, :html)
+  ReaderFormats = Types::Strict::Symbol.enum(:markdown)
+  WriterFormats = Types::Strict::Symbol.enum(:docx, :pdf, :odt, :html)
 
-  option :content, Types::String
+  option :content, Types::Strict::String
   option :from, ReaderFormats
   option :to, WriterFormats
 
@@ -18,6 +18,6 @@ class DocumentFormatter
   #
   # @return [String]
   def call
-    PandocRuby.convert(content, from: from, to: to)
+    PandocRuby.convert(content, from: from, to: to).to_s
   end
 end

@@ -31,15 +31,15 @@ class SpecificationsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        document = SpecificationRenderer.new(journey: @journey).call(draft: !@journey.all_tasks_completed?)
+        document = SpecificationRenderer.new(journey: @journey).call
         send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
       # format.pdf do
-      #   document = DocumentFormatter.new(content: template, to: :pdf).call
+      #   document = SpecificationRenderer.new(journey: @journey, to: :pdf).call
       #   send_data document, filename: file_name, type: "application/pdf"
       # end
       # format.odt do
-      #   document = DocumentFormatter.new(content: template, to: :odt).call
+      #   document = SpecificationRenderer.new(journey: @journey, to: :odt).call
       #   send_data document, filename: file_name, type: "application/vnd.oasis.opendocument.text"
       # end
     end
