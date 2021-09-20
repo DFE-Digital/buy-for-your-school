@@ -18,12 +18,30 @@ class SpecificationRenderer
     is_draft = draft.nil? ? !journey.all_tasks_completed? : draft
 
     template = LiquidParser.new(
-      template: journey&.category&.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: journey&.steps).call,
+      template: journey.category.liquid_template,
+      answers: answers,
     ).call
 
     template.prepend("#{draft_msg}\n\n") if is_draft
 
+    document_formatter(template)
+  end
+
+private
+
+  # Return the answers in this journey
+  #
+  # @return [Hash]
+  def answers
+    GetAnswersForSteps.new(visible_steps: journey.steps).call
+  end
+
+  # Convert the template
+  #
+  # @param [String] template
+  #
+  # @return [String]
+  def document_formatter(template)
     DocumentFormatter.new(content: template, from: from, to: to).call
   end
 end
