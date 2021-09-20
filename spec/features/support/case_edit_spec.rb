@@ -29,11 +29,11 @@ RSpec.feature "Case Management Dashboard - edit" do
       find_button("Assign").click
     end
 
-    it "is redirected to the case in question" do
+    it "redirects to the case in question" do
       expect(page).to have_a_support_case_path
     end
 
-    context "when returning to the main page" do
+    context "when on the case management dashboard" do
       before { visit "/support/cases#all-cases" }
 
       specify "the case in question was in fact assigned to the agent" do
