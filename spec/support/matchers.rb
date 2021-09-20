@@ -67,6 +67,19 @@ RSpec::Matchers.define :have_an_edit_step_path do
   end
 end
 
+# allowed:
+#   /support/cases/<UUID>
+#   /support/cases/<UUID>/
+#
+# disallowed:
+#   /support/cases/<UUID>/x
+#
+RSpec::Matchers.define :have_a_support_case_path do
+  match do |page|
+    page.current_path.match? %r{^/support/cases/#{UUID_REGEXP}/?(?!.+)}
+  end
+end
+
 RSpec::Matchers.define :have_breadcrumbs do |input|
   match do |page|
     page.all("li.govuk-breadcrumbs__list-item").collect(&:text) == input
