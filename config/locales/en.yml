@@ -262,6 +262,8 @@ en:
       show:
         requested_at: Request sent on %{time}
         assign: Assign to case worker
+        add_note: Add a case note
+        add_interaction: Log contact with school
         back: Back to case list
 
       edit:
