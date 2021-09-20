@@ -11,7 +11,7 @@ RSpec.describe SpecificationRenderer do
         .with(template: "Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}", answers: {})
         .and_return(liquid_parser_instance)
 
-      allow(liquid_parser_instance).to receive(:render)
+      allow(liquid_parser_instance).to receive(:call)
         .and_return("Your answer was 4")
     end
 
