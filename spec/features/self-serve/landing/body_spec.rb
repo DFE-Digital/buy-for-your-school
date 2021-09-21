@@ -12,11 +12,7 @@ RSpec.feature "Users can see a start page" do
   end
 
   it "has a heading" do
-    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure something for your school"
-  end
-
-  it "links to catering procurements" do
-    expect(page).to have_link("procuring a new catering service", href: "https://buy-for-your-school-prototypes.herokuapp.com/beta/phase-5/catering")
+    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure for your school"
   end
 
   # Who this service is for
