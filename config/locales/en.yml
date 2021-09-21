@@ -73,41 +73,40 @@ en:
 
   specifying:
     start_page:
-      page_title: Create a specification to procure %{category} for your school
-      overview_body:
-        - Use this service to create a specification for a new catering service for a single school in England.
-      who_for_title: Who this service is for
-      who_for_can_use_body: "You can use this service if you:"
+      page_title: Create a specification to procure for your school
+      overview_purpose: "Use this service to create a specification for a single school in England for either:"
+      overview_supported_category_list:
+        - a catering service, or
+        - multi-functional devices
+      overview_download: You will be able to download the specification that you create and share it with suppliers when you invite them to bid.
+      who_for_title: Who it's for
+      who_for_can_use_body: "This is for those procuring for one school, either:"
       who_for_can_use_list:
-        - are responsible for <a href="https://buy-for-your-school-prototypes.herokuapp.com/beta/phase-5/catering" class="govuk-link">procuring a new catering service for a school</a>
-        - are procuring for one school – either a local authority maintained school or an academy in a single or multi-academy trust
-        - intend to run your own procurement process or choose a supplier from a framework – read more about the different procurement routes you can take
-      who_for_cannot_use_body: "You currently cannot use this service to create a specification for any of the following:"
+        - a local authority maintained school, or
+        - one academy within a single or multi-academy trust
+      who_for_cannot_use_body: "You currently cannot use this service to create a specification for:"
       who_for_cannot_use_list:
-        - any other service outside of catering
-        - goods, supplies or equipment only
-        - multiple schools at the same time
-      how_service_works_title: How this service works
-      how_service_works_document_body: "Use this service to create a document that:"
+        - goods or services, other than catering or multi-functional devices
+        - multiple schools at the same time (this is something we want to add in the future)
+        - multiple contracts at the same time
+      how_service_works_title: How it works
+      how_service_works_document_body: "Answer questions to create a document that:"
       how_service_works_document_list:
         - describes the service your school is looking for
-        - collates all the information that any suppliers interested in your contract need to know
-        - includes all the standard regulations and requirements that school catering suppliers must comply with – we’ll add these automatically for you, you do not need to know what these are
-      how_service_works_themes_body: "We’ll guide you through a series of questions about your school and your requirements, including specific questions around the following themes:"
-      how_service_works_themes_list:
-        - any mission statement, food policy or goals your school has that are relevant to the new service
-        - any objectives you may have relating to social value
-        - any requirements you may have relating to management of the contract, operational overheads and staff
-        - the dates, types, times and customer numbers of existing catering services
-        - any requirements for the food served, as well as ordering and payment systems
-        - the catering spaces and equipment available to a supplier in your school
-      pause_and_resume_body: You can pause and resume your specification at any time.
+        - collates all the information that suppliers interested in your contract need to know
+      how_service_works_regulations: Standard regulations and requirements that suppliers must comply with will be added automatically – you do not need to know what these are.
+      how_service_works_guide: The service will guide you through what information to provide.
+      how_service_works_secure: Information you input is saved securely.
+      how_long_it_takes_title: How long it takes
+      how_long_it_takes_body: The time it takes to complete a specification varies depending on what you want to include. You can pause and resume your specification at any time.
+
     errors:
       contentful_entry_not_found: An unexpected error occurred. The starting step has been revoked by the content team.
 
   journey:
     specification:
       header: Your specification
+      body: Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed.
       draft: You have not completed all the tasks. Your specification is incomplete.
       button: View your specification
       download:
@@ -131,7 +130,7 @@ en:
     header: Specifications dashboard
     create:
       header: Create a new specification
-      body: Create a new specification for a catering procurement.
+      body: Create a new specification for a procurement.
       button: Create a new specification
     edit:
       button: Edit
@@ -143,11 +142,12 @@ en:
 
   # /categories
   categories:
-    header: Choose the type of specification you want to build
-    support_info: We currently only support catering and multifunctional devices.
+    header: What are you buying?
     not_found: No categories found
 
   # /journeys#show
+  journeys_title: Create a specification to procure %{category} for your school
+  journeys_body: Answer all questions in each section to build a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time.
   task_list:
     status:
       not_started: Not started

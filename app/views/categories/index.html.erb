@@ -8,9 +8,6 @@
     <% else %>
       <%= form_with url: journeys_path do |f| %>
         <%= f.govuk_radio_buttons_fieldset(:category_slug, legend: { size: "l", text: I18n.t("categories.header") }) do %>
-            <div class="govuk-hint">
-              <%= I18n.t("categories.support_info") %>
-            </div>
             <% @categories.each_with_index do |category, index| %>
               <%= f.govuk_radio_button :category, category.slug, label: { text: category.title }, hint: { text: category.description }, checked: index.zero? %>
             <% end %>

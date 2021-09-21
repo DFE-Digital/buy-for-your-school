@@ -22,4 +22,9 @@ class JourneyPresenter < SimpleDelegator
   def specification
     SpecificationRenderer.new(journey: self, to: :html).call(draft: false).html_safe
   end
+
+  # @return [CategoryPresenter]
+  def category
+    CategoryPresenter.new(super)
+  end
 end
