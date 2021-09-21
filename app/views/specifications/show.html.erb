@@ -7,9 +7,11 @@
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
     <strong class="govuk-warning-text__text">
       <span class="govuk-warning-text__assistive">Warning</span>
-      <%= I18n.t("journey.specification.warning") %>
+      <%= I18n.t("journey.specification.draft") %>
     </strong>
   </div>
 <% end %>
 <%= link_to I18n.t("journey.specification.download.button"), journey_specification_path(@journey, format: :docx), class: "govuk-button", role: "button" %>
-<%= @specification_html.html_safe %>
+<article class="specification">
+  <%= @journey.specification %>
+</article>

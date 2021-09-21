@@ -185,10 +185,6 @@ GEM
     hashdiff (1.0.1)
     hashie (4.1.0)
     high_voltage (3.1.2)
-    htmltoword (1.1.1)
-      actionpack
-      nokogiri
-      rubyzip (>= 1.0)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -265,6 +261,7 @@ GEM
       validate_email
       validate_url
       webfinger (>= 1.0.1)
+    pandoc-ruby (2.1.4)
     parallel (1.20.1)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -328,7 +325,6 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redcarpet (3.5.1)
     redis (4.4.0)
     redis-actionpack (5.2.0)
       actionpack (>= 5, < 7)
@@ -515,7 +511,6 @@ DEPENDENCIES
   foreman
   govuk_design_system_formbuilder (~> 2.7)
   high_voltage
-  htmltoword
   httpclient
   jbuilder (~> 2.11)
   jquery-rails
@@ -530,6 +525,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  pandoc-ruby
   pg
   pry-byebug
   pry-rails
@@ -537,7 +533,6 @@ DEPENDENCIES
   rails (~> 6.1.4)
   rails-erd
   rails_layout
-  redcarpet (~> 3.5)
   redis (~> 4.4)
   redis-namespace
   redis-rails

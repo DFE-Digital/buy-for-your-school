@@ -11,7 +11,7 @@ RSpec.feature "Statements" do
     visit journey_step_path(journey, step)
 
     expect(page).to have_content "statement-step.json title"
-    expect(source).to include "<h4>Heading 4</h4>"
+    expect(source).to include "<h4 id=\"heading-4\">Heading 4</h4>"
     expect(page).to have_button "Acknowledge!"
 
     click_on "Acknowledge!"

@@ -15,4 +15,11 @@ class JourneyPresenter < SimpleDelegator
   def created_at
     super.strftime("%e %B %Y")
   end
+
+  # Return the specification in HTML
+  #
+  # @return [String]
+  def specification
+    SpecificationRenderer.new(journey: self, to: :html).call(draft: false).html_safe
+  end
 end

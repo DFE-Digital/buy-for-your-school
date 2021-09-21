@@ -9,12 +9,6 @@ RSpec.feature "Users can see their catering specification" do
     scenario "HTML" do
       click_first_link_in_section_list
 
-      common_specification_html = "<article id='specification'><h1>Liquid </h1></article>"
-      expect(Htmltoword::Document)
-        .to receive(:create)
-        .with(common_specification_html, nil, false)
-        .and_call_original
-
       choose "Catering"
       click_continue
       click_view
@@ -42,12 +36,7 @@ RSpec.feature "Users can see their catering specification" do
       click_view
 
       warning_html = I18n.t("journey.specification.download.warning.incomplete")
-      common_specification_html = "<article id='specification'><h1>Liquid </h1></article>"
       expect(page).not_to have_content(Nokogiri::HTML(warning_html).text)
-      expect(Htmltoword::Document)
-        .to receive(:create)
-        .with(common_specification_html.prepend(warning_html), nil, false)
-        .and_call_original
 
       click_on "Download (.docx)"
 

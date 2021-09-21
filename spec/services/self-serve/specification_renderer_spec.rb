@@ -1,44 +1,41 @@
-require "rails_helper"
-
 RSpec.describe SpecificationRenderer do
-  describe "#to_html" do
-    it "renders a HTML representation of a template given specific answers" do
-      renderer = described_class.new(
-        template: '<p>HTML paragraph rendering a variable: "{{ variable_name }}"</p>',
-        answers: {
-          "variable_name" => "variable value",
-        },
-      )
-      expect(renderer.to_html).to eql('<p>HTML paragraph rendering a variable: "variable value"</p>')
-    end
-  end
+  subject(:renderer) { described_class.new(journey: journey, draft_msg: "Draft message") }
 
-  describe "#to_document_html" do
-    context "when the journey is complete" do
-      it "renders HTML for use in rendering a docx file" do
-        renderer = described_class.new(
-          template: '<p>HTML paragraph rendering a variable: "{{ variable_name }}"</p>',
-          answers: {
-            "variable_name" => "variable value",
-          },
-        )
-        expect(renderer.to_document_html(journey_complete: true))
-          .to eql('<p>HTML paragraph rendering a variable: "variable value"</p>')
+  let(:journey) { build(:journey) }
+  let(:liquid_parser_instance) { instance_double(LiquidParser) }
+  let(:document_formatter_instance) { instance_double(DocumentFormatter) }
+
+  describe "#call" do
+    before do
+      allow(LiquidParser).to receive(:new)
+        .with(template: "Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}", answers: {})
+        .and_return(liquid_parser_instance)
+
+      allow(liquid_parser_instance).to receive(:call)
+        .and_return("Your answer was 4")
+    end
+
+    context "when the specification is a draft" do
+      it "adds a draft warning" do
+        allow(DocumentFormatter).to receive(:new)
+          .with(content: "Draft message\n\nYour answer was 4", from: :markdown, to: :docx)
+          .and_return(document_formatter_instance)
+
+        allow(document_formatter_instance).to receive(:call)
+
+        renderer.call(draft: true)
       end
     end
 
-    context "when the journey is NOT complete" do
-      it "renders HTML with an extra warning for use in rendering a docx file" do
-        renderer = described_class.new(
-          template: '<p>HTML paragraph rendering a variable: "{{ variable_name }}"</p>',
-          answers: {
-            "variable_name" => "variable value",
-          },
-        )
-        warning_html = I18n.t("journey.specification.download.warning.incomplete")
-        common_html = '<p>HTML paragraph rendering a variable: "variable value"</p>'
-        expect(renderer.to_document_html(journey_complete: false))
-          .to eql(warning_html + common_html)
+    context "when the specification is not a draft" do
+      it "does not modify the specification" do
+        allow(DocumentFormatter).to receive(:new)
+          .with(content: "Your answer was 4", from: :markdown, to: :docx)
+          .and_return(document_formatter_instance)
+
+        allow(document_formatter_instance).to receive(:call)
+
+        renderer.call(draft: false)
       end
     end
   end
