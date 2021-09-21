@@ -1,12 +1,9 @@
-RSpec.feature "Case Management Dashboard - show" do
-  let(:state) { "initial" }
-  let(:support_case) { create(:support_case, state: state) }
-  let(:base_url) { "/support/cases/#{support_case.id}" }
+RSpec.feature "Case summary" do
+  include_context "with an agent"
 
-  before do
-    user_is_signed_in
-    visit base_url
-  end
+  before { visit "/support/cases/#{support_case.id}" }
+
+  let(:support_case) { create(:support_case) }
 
   it "has 3 visible tabs" do
     expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
@@ -16,24 +13,18 @@ RSpec.feature "Case Management Dashboard - show" do
     expect(find(".govuk-tabs__list-item--selected")).to have_text "School details"
   end
 
-  describe "School details" do
-    before { visit "#{base_url}#school-details" }
+  describe "School details tab" do
+    before { visit "/support/cases/#{support_case.id}#school-details" }
 
-    it "shows School details section" do
-      within "#school-details" do
-        expect(find(".govuk-summary-list")).to be_visible
-      end
-    end
-
-    it "School details section contain contact name" do
+    it "primary contact name" do
       within "#school-details" do
         expect(find(".govuk-summary-list")).to have_text "Contact name"
       end
     end
   end
 
-  describe "Request details" do
-    before { visit "#{base_url}#request-details" }
+  describe "Request details tab" do
+    before { visit "/support/cases/#{support_case.id}#request-details" }
 
     # TODO: add request details in next PR
     xit "lists request details" do
@@ -45,44 +36,42 @@ RSpec.feature "Case Management Dashboard - show" do
     end
   end
 
-  describe "Case history" do
-    before { visit "#{base_url}#case-history" }
+  describe "Case history tab" do
+    before { visit "/support/cases/#{support_case.id}#case-history" }
 
-    context "when currently assigned to a case owner" do
-      before do
-        agent = create(:support_agent)
-
-        support_case.agent = agent
-        support_case.save!
-
-        # Refresh current page
-        visit "#{base_url}#case-history"
-      end
+    context "when assigned to an agent" do
+      let(:support_case) { create(:support_case, agent: agent) }
 
       it "shows a link to change case owner" do
         within "#case-history" do
-          expect(find("p.govuk-body")).to have_text "Case owner: John Lennon"
+          expect(find("p.govuk-body")).to have_text "Case owner: Procurement Specialist"
         end
       end
     end
 
-    it "does not show a link to change case owner" do
-      within "#case-history" do
-        expect(page).not_to have_selector("p.govuk-body")
+    context "when not assigned to an agent" do
+      it "does not show a link to change case owner" do
+        within "#case-history" do
+          expect(page).not_to have_selector("p.govuk-body")
+        end
       end
     end
   end
 
-  it "shows the assign link" do
-    expect(find("a.assign-owner")).to have_text "Assign to case worker"
-  end
+  context "when the case is created" do
+    it "shows the assign link" do
+      expect(find("a.assign-owner")).to have_text "Assign to case worker"
+      # TODO: asset links using the most appropriate matcher
+      # expect(page).to have_link "Assign to case worker", href: "", class: "assign-owner"
+    end
 
-  it "shows the resolve link" do
-    expect(find("a.resolve")).to have_text "Resolve case"
+    it "shows the resolve link" do
+      expect(find("a.resolve")).to have_text "Resolve case"
+    end
   end
 
   context "when the case is open" do
-    let(:state) { "open" }
+    let(:support_case) { create(:support_case, state: "open") }
 
     it "shows the change owner link" do
       expect(find("a.change-owner")).to have_text "Change case owner"
@@ -102,7 +91,7 @@ RSpec.feature "Case Management Dashboard - show" do
   end
 
   context "when the case is resolved" do
-    let(:state) { "resolved" }
+    let(:support_case) { create(:support_case, state: "resolved") }
 
     it "shows the reopen case link" do
       expect(find("a.reopen")).to have_text "Reopen case"

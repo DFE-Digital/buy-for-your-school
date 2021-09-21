@@ -1,20 +1,24 @@
 RSpec.describe Support::Interaction, type: :model do
   subject(:interaction) { create(:support_interaction) }
 
+  it { is_expected.to belong_to :case }
+
   it "belongs to an agent" do
-    expect(interaction.agent).not_to be_nil
-    expect(interaction.agent.first_name).to eq "John"
+    expect(interaction.agent.first_name).to eq "first_name"
   end
 
   it "belongs to an case" do
-    expect(interaction.case).not_to be_nil
     expect(interaction.case.request_text).to eq "This is an example request for support - please help!"
   end
 
-  it { is_expected.to define_enum_for(:event_type).with_values(%i[note phone_call email_from_school email_to_school]) }
+  it "can be a note, email (inbound/outbound) or phone call" do
+    expect(interaction).to define_enum_for(:event_type).with_values(%i[
+      note phone_call email_from_school email_to_school
+    ])
+  end
 
   describe "validations" do
-    it "is not valid if there is no body" do
+    it "is invalid without a body" do
       interaction = build(:support_interaction, body: nil)
       expect(interaction).not_to be_valid
     end

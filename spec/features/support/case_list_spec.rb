@@ -1,8 +1,8 @@
-RSpec.feature "Case Management Dashboard - index" do
+RSpec.feature "Case management dashboard" do
+  include_context "with an agent"
+
   before do
     create(:support_case)
-
-    user_is_signed_in
     visit "/support/cases"
   end
 
