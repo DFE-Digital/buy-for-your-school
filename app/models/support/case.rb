@@ -10,6 +10,7 @@ module Support
     has_one :enquiry, class_name: "Support::Enquiry"
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
+    has_many :interactions, class_name: "Support::Interaction"
 
     # Support level
     #
@@ -41,21 +42,6 @@ module Support
     # @return [String]
     def generate_ref
       self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
-    end
-
-    # TODO: Replace with ActiveRecord association
-    def interactions
-      time = Time.zone.local(2020, 1, 30, 12)
-      [
-        OpenStruct.new(
-          id: 1,
-          author: "Example Author",
-          type: "Phone",
-          note: "Example ticket note",
-          created_at: time,
-          updated_at: time,
-        ),
-      ]
     end
 
     # TODO: Replace with ActiveRecord association

@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   namespace :support do
     get "admin", to: "admin#show"
 
-    resources :cases, only: %i[index show edit update]
+    resources :cases, only: %i[index show edit update] do
+      resources :interactions, only: %i[new create]
+    end
   end
 end
