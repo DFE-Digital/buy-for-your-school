@@ -10,7 +10,7 @@ en:
   generic:
     button:
       back: Back
-      start: Start
+      start: Start now
       sign_out: Sign out
       next: Continue
       change_answer: Change
@@ -74,31 +74,19 @@ en:
   specifying:
     start_page:
       page_title: Create a specification to procure for your school
-      overview_purpose: "Use this service to create a specification for a single school in England for either:"
+      overview_purpose: "Use this service to create a specification for either:"
       overview_supported_category_list:
         - a catering service, or
         - multi-functional devices
       overview_download: You will be able to download the specification that you create and share it with suppliers when you invite them to bid.
-      who_for_title: Who it's for
-      who_for_can_use_body: "This is for those procuring for one school, either:"
-      who_for_can_use_list:
-        - a local authority maintained school, or
-        - one academy within a single or multi-academy trust
-      who_for_cannot_use_body: "You currently cannot use this service to create a specification for:"
-      who_for_cannot_use_list:
-        - goods or services, other than catering or multi-functional devices
-        - multiple schools at the same time (this is something we want to add in the future)
-        - multiple contracts at the same time
-      how_service_works_title: How it works
-      how_service_works_document_body: "Answer questions to create a document that:"
-      how_service_works_document_list:
-        - describes the service your school is looking for
-        - collates all the information that suppliers interested in your contract need to know
-      how_service_works_regulations: Standard regulations and requirements that suppliers must comply with will be added automatically – you do not need to know what these are.
-      how_service_works_guide: The service will guide you through what information to provide.
-      how_service_works_secure: Information you input is saved securely.
-      how_long_it_takes_title: How long it takes
-      how_long_it_takes_body: The time it takes to complete a specification varies depending on what you want to include. You can pause and resume your specification at any time.
+      who_can_use_body: "You can use this service if you:"
+      who_can_use_list:
+        - are procuring for a single school in England - either a local authority maintained school or an academy in a single or multi-academy trust
+        - are procuring a single contract
+      before_you_start_title: Before you start
+      before_you_start_body:
+        - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.
+        - You can save your specification and come back to it later if you want.
 
     errors:
       contentful_entry_not_found: An unexpected error occurred. The starting step has been revoked by the content team.

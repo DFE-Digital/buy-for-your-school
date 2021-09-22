@@ -7,7 +7,7 @@ RSpec.feature "Users can see a start page" do
     within "main.govuk-main-wrapper" do
       expect(find("form.button_to")["action"]).to eql "/auth/dfe"
       # generic.button.start
-      expect(page).to have_button "Start", class: "govuk-button"
+      expect(page).to have_button "Start now", class: "govuk-button govuk-!-margin-top-2 govuk-!-margin-bottom-8 govuk-button--start"
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.feature "Users can see a start page" do
   # How this service works
   scenario do
     # specifying.start_page.overview_purpose
-    expect(all("p.govuk-body")[0]).to have_text "Use this service to create a specification for a single school in England for either:"
+    expect(all("p.govuk-body")[0]).to have_text "Use this service to create a specification for either:"
     within(all("ul.govuk-list.govuk-list--bullet")[0]) do
       # specifying.start_page.overview_supported_category_list[0]
       expect(all("li")[0]).to have_text "a catering service, or"
@@ -30,49 +30,20 @@ RSpec.feature "Users can see a start page" do
     # specifying.start_page.overview_download
     expect(all("p.govuk-body")[1]).to have_text "You will be able to download the specification that you create and share it with suppliers when you invite them to bid."
 
-    # specifying.start_page.who_for_title
-    expect(all("h2.govuk-heading-l")[0]).to have_text "Who it's for"
-    # specifying.start_page.who_for_can_use_body
-    expect(all("p.govuk-body")[2]).to have_text "This is for those procuring for one school, either:"
+    # specifying.start_page.who_can_use_body
+    expect(all("p.govuk-body")[2]).to have_text "You can use this service if you:"
     within(all("ul.govuk-list.govuk-list--bullet")[1]) do
-      # specifying.start_page.who_for_can_use_list[0]
-      expect(all("li")[0]).to have_text "a local authority maintained school, or"
-      # specifying.start_page.who_for_can_use_list[1]
-      expect(all("li")[1]).to have_text "one academy within a single or multi-academy trust"
+      # specifying.start_page.who_can_use_list[0]
+      expect(all("li")[0]).to have_text "are procuring for a single school in England - either a local authority maintained school or an academy in a single or multi-academy trust"
+      # specifying.start_page.who_can_use_list[1]
+      expect(all("li")[1]).to have_text "are procuring a single contract"
     end
 
-    # specifying.start_page.who_for_cannot_use_body
-    expect(all("p.govuk-body")[3]).to have_text "You currently cannot use this service to create a specification for:"
-    within(all("ul.govuk-list.govuk-list--bullet")[2]) do
-      # specifying.start_page.who_for_cannot_use_list[0]
-      expect(all("li")[0]).to have_text "goods or services, other than catering or multi-functional devices"
-      # specifying.start_page.who_for_cannot_use_list[1]
-      expect(all("li")[1]).to have_text "multiple schools at the same time (this is something we want to add in the future)"
-      # specifying.start_page.who_for_cannot_use_list[2]
-      expect(all("li")[2]).to have_text "multiple contracts at the same time"
-    end
-
-    # specifying.start_page.how_service_works_title
-    expect(all("h2.govuk-heading-l")[1]).to have_text "How it works"
-    # specifying.start_page.how_service_works_document_body
-    expect(all("p.govuk-body")[4]).to have_text "Answer questions to create a document that:"
-    within(all("ul.govuk-list.govuk-list--bullet")[3]) do
-      # specifying.start_page.how_service_works_document_list[0]
-      expect(all("li")[0]).to have_text "describes the service your school is looking for"
-      # specifying.start_page.how_service_works_document_list[1]
-      expect(all("li")[1]).to have_text "collates all the information that suppliers interested in your contract need to know"
-    end
-
-    # specifying.start_page.how_service_works_regulations
-    expect(all("p.govuk-body")[5]).to have_text "Standard regulations and requirements that suppliers must comply with will be added automatically – you do not need to know what these are."
-    # specifying.start_page.how_service_works_guide
-    expect(all("p.govuk-body")[6]).to have_text "The service will guide you through what information to provide."
-    # specifying.start_page.how_service_works_secure
-    expect(all("p.govuk-body")[7]).to have_text "Information you input is saved securely."
-
-    # specifying.start_page.how_long_it_takes_title
-    expect(all("h2.govuk-heading-l")[2]).to have_text "How long it takes"
-    # specifying.start_page.how_long_it_takes_body
-    expect(all("p.govuk-body")[8]).to have_text "The time it takes to complete a specification varies depending on what you want to include. You can pause and resume your specification at any time."
+    # specifying.start_page.before_you_start_title
+    expect(all("h2.govuk-heading-m")[0]).to have_text "Before you start"
+    # specifying.start_page.before_you_start_body[0]
+    expect(all("p.govuk-body")[3]).to have_text "The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically."
+    # specifying.start_page.before_you_start_body[1]
+    expect(all("p.govuk-body")[4]).to have_text "You can save your specification and come back to it later if you want."
   end
 end
