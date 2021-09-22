@@ -12,4 +12,6 @@
       <% end %>
     </ol>
   </div>
+<% elsif @back_url.present? %>
+  <%= link_to I18n.t("generic.button.back"), @back_url, class: "govuk-back-link" %>
 <% end %>

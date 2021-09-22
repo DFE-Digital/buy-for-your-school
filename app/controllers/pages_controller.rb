@@ -7,4 +7,8 @@ class PagesController < ApplicationController
   def self.dsi?
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
+
+  def planning_start_page
+    @back_url = root_path
+  end
 end

@@ -21,6 +21,8 @@ class DesignController < ApplicationController
   end
 
   def index
+    @back_url = root_path
+
     flash[:notice] = env_banner
 
     @categories = ContentfulEntryPresenter.new(*client.by_type(:category))

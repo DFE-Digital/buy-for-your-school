@@ -11,6 +11,7 @@ class SpecificationsController < ApplicationController
   #
   # @see SpecificationRenderer
   def show
+
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
