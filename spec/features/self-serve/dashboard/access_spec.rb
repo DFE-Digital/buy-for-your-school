@@ -9,11 +9,11 @@ RSpec.feature "Dashboard access" do
     end
 
     it "has no breadcrumbs component" do
-      expect(page).not_to have_css('.govuk-breadcrumbs')
+      expect(page).not_to have_css(".govuk-breadcrumbs")
     end
 
     it "has a back link button" do
-      expect(page).not_to have_css('.govuk-back-link')
+      expect(page).not_to have_css(".govuk-back-link")
     end
 
     it "specifying.start_page.page_title" do
