@@ -41,7 +41,7 @@ RSpec.feature "Create a new journey" do
       end
 
       it "dashboard.create.body" do
-        expect(find("p.govuk-body")).to have_text "Create a new specification for a catering procurement."
+        expect(find("p.govuk-body")).to have_text "Create a new specification for a procurement."
       end
 
       # duplicates dashboard.create.header
