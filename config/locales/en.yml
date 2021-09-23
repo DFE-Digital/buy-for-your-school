@@ -247,6 +247,12 @@ en:
 
       show:
         requested_at: Request sent on %{time}
+        change_owner: Change case owner
+        add_note: Add a case note
+        send_email: Send email
+        log_contact: Log contact with school
+        resolve: Resolve case
+        reopen: Reopen case
         assign: Assign to case worker
         back: Back to case list
 
