@@ -17,6 +17,8 @@ RSpec.feature "Users can see their catering specification" do
 
       # journey.specification.header
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
+      # journey.specification.body
+      expect(find("p.govuk-body")).to have_text "Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed."
 
       # journey.specification.download.button
       expect(find("a.govuk-button")).to have_text "Download (.docx)"

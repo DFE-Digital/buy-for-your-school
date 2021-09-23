@@ -4,7 +4,7 @@
 module JourneyHelpers
   # generic.button.start
   def click_start
-    click_button "Start"
+    click_button "Start now"
   end
 
   # generic.button.next
