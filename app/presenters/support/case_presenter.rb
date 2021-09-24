@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "interaction_presenter"
 require_relative "contact_presenter"
+require_relative "category_presenter"
 
 module Support
   class CasePresenter < BasePresenter

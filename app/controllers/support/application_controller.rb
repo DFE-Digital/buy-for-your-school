@@ -15,7 +15,7 @@ module Support
 
     # @return [nil]
     def authenticate_agent!
-      return if current_agent && AGENT_UUIDS.include?(session[:dfe_sign_in_uid])
+      return if current_agent
 
       redirect_to support_root_path, notice: "You are not a recognised case worker"
     end

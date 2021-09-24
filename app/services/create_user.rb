@@ -18,7 +18,7 @@ class CreateUser
     return false unless user_id
 
     if current_user
-      current_user.update!(first_name: first_name, last_name: last_name)
+      current_user.update!(first_name: first_name, last_name: last_name, orgs: orgs)
       Rollbar.info "Updated account for #{email}"
       current_user
     else

@@ -1,27 +1,5 @@
 RSpec.feature "Case worker authentication" do
-  let(:uuid) { "101" }
-
-  let(:user) do
-    build(:user,
-          dfe_sign_in_uid: uuid,
-          email: "ops@education.gov.uk",
-          first_name: "Procurement",
-          last_name: "Specialist")
-  end
-
-  #
-  # Provided a case worker authenticates via the front page
-  # and has a whitelisted uuid/email
-  # when they go to the supported buying application
-  # and click the "Agent Login" button
-  # they will be permitted to enter
-  #
-  before do
-    user_exists_in_dfe_sign_in(user: user)
-    visit "/"
-    click_start
-    visit "/support"
-  end
+  include_context "with an agent"
 
   it "has a title" do
     expect(page).to have_title "Supported Buying Case Management"
@@ -40,13 +18,14 @@ RSpec.feature "Case worker authentication" do
   end
 
   context "when the agent is not whitelisted" do
-    let(:uuid) { "103" }
+    let(:org_name) { "Not in the ProcOps team" }
 
     it "fails to gain access" do
       click_button "Agent Login"
 
       expect(page).not_to have_current_path "/support/cases"
       expect(page).to have_current_path "/support"
+      expect(find("h3.govuk-notification-banner__heading")).to have_text "Invalid Caseworker"
     end
   end
 end

@@ -3,7 +3,8 @@ RSpec.feature "Case management dashboard" do
 
   before do
     create(:support_case)
-    visit "/support/cases"
+    click_button "Agent Login"
+    # visit "/support/cases"
   end
 
   it "displays 3 tabs" do

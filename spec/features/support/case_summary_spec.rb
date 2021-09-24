@@ -1,7 +1,10 @@
 RSpec.feature "Case summary" do
   include_context "with an agent"
 
-  before { visit "/support/cases/#{support_case.id}" }
+  before do
+    click_button "Agent Login"
+    visit "/support/cases/#{support_case.id}"
+  end
 
   let(:support_case) { create(:support_case) }
 

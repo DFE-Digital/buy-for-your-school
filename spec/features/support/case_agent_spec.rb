@@ -2,6 +2,7 @@ RSpec.feature "Case worker assignment" do
   include_context "with an agent"
 
   before do
+    click_button "Agent Login"
     visit "/support/cases/#{support_case.id}/edit"
   end
 
