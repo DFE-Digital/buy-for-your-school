@@ -16,6 +16,7 @@ RSpec.feature "Case management dashboard" do
   end
 
   it "lists cases" do
+    binding.pry
     expect(find("#my-cases .govuk-table")).to be_visible
     expect(all("#my-cases .govuk-table__row").count).to eq(2)
   end
