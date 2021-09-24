@@ -31,10 +31,6 @@ RSpec.feature "Create a new journey" do
       expect(find("h1.govuk-heading-xl")).to have_text "Specifications dashboard"
     end
 
-    it "generic.button.back" do
-      expect(find("a.govuk-back-link")).to have_text "Back"
-    end
-
     context "when the user has no specifications" do
       it "dashboard.create.header" do
         expect(find("h2.govuk-heading-m")).to have_text "Create a new specification"

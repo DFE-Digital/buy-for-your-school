@@ -22,6 +22,12 @@ module JourneyHelpers
     click_on "Back"
   end
 
+  def click_breadcrumb(breadcrumb)
+    within(".govuk-breadcrumbs") do
+      click_on breadcrumb
+    end
+  end
+
   # dashboard.create.button
   def click_create
     click_on "Create a new specification"
