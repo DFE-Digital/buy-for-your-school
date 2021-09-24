@@ -27,7 +27,7 @@ RSpec.feature "Users can see their specification" do
 
     click_view
 
-    click_on(I18n.t("generic.button.back"))
+    click_breadcrumb "Create specification"
     expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
   end
 

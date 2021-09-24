@@ -1,6 +1,5 @@
 <%= content_for :title, @journey.category.title %>
 
-<%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link" %>
 <h1 class="govuk-heading-xl">
   <%= I18n.t("journeys_title", category: @journey.category.title_downcase) %>
 </h1>
