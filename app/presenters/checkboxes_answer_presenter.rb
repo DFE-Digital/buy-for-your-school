@@ -1,4 +1,4 @@
-class CheckboxesAnswerPresenter < SimpleDelegator
+class CheckboxesAnswerPresenter < BasePresenter
   include AnswerHelper
 
   # @return [String, nil]

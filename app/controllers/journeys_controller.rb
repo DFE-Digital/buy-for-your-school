@@ -37,7 +37,7 @@ class JourneysController < ApplicationController
     category = Category.find_by(slug: params[:category])
     journey = CreateJourney.new(
       category: category,
-      user: current_user,
+      user: current_user.__getobj__,
     ).call
 
     RecordAction.new(

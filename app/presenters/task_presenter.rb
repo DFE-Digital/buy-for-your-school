@@ -1,4 +1,4 @@
-class TaskPresenter < SimpleDelegator
+class TaskPresenter < BasePresenter
   # @see views/journeys/show
   #
   # @return [StepPresenter]

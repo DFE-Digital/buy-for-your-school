@@ -1,4 +1,4 @@
-class RadioAnswerPresenter < SimpleDelegator
+class RadioAnswerPresenter < BasePresenter
   include AnswerHelper
 
   # @return [Hash<Symbol>]

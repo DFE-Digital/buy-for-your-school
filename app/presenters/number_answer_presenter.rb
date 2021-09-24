@@ -1,4 +1,4 @@
-class NumberAnswerPresenter < SimpleDelegator
+class NumberAnswerPresenter < BasePresenter
   # @return [String]
   def response
     super.to_s

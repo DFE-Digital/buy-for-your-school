@@ -1,4 +1,4 @@
-class ShortTextAnswerPresenter < SimpleDelegator
+class ShortTextAnswerPresenter < BasePresenter
   # @return [Hash]
   def to_param
     {

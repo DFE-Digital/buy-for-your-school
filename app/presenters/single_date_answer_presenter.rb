@@ -1,4 +1,4 @@
-class SingleDateAnswerPresenter < SimpleDelegator
+class SingleDateAnswerPresenter < BasePresenter
   # @return [String]
   def response
     I18n.l(super)

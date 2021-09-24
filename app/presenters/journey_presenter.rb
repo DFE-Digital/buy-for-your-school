@@ -1,4 +1,4 @@
-class JourneyPresenter < SimpleDelegator
+class JourneyPresenter < BasePresenter
   # @return [Array<SectionPresenter>]
   def sections
     @sections ||= sections_with_tasks.map do |section|

@@ -1,4 +1,4 @@
-class CurrencyAnswerPresenter < SimpleDelegator
+class CurrencyAnswerPresenter < BasePresenter
   include ActionView::Helpers::NumberHelper
 
   # @return [String]
