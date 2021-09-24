@@ -17,7 +17,7 @@ RSpec.feature "Dashboard access" do
     end
 
     it "specifying.start_page.page_title" do
-      expect(page.title).to have_text "Create a specification to procure something for your school"
+      expect(page.title).to have_text "Create a specification to procure for your school"
     end
 
     it "renders a banner notice" do

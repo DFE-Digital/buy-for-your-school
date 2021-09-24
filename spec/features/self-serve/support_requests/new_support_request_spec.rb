@@ -18,7 +18,7 @@ RSpec.feature "Create a new support request" do
     end
 
     it "generic.button.start" do
-      expect(find("a.govuk-button")).to have_text "Start"
+      expect(find("a.govuk-button")).to have_text "Start now"
       expect(find("a.govuk-button")[:role]).to eq "button"
     end
 

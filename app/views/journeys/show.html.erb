@@ -1,8 +1,9 @@
-<%= content_for :title, @journey.category.title.capitalize %>
+<%= content_for :title, @journey.category.title %>
 
 <h1 class="govuk-heading-xl">
-  <%= I18n.t("specifying.start_page.page_title", category: @journey.category.title.downcase) %>
+  <%= I18n.t("journeys_title", category: @journey.category.title_downcase) %>
 </h1>
+<p class="govuk-body"><%= I18n.t("journeys_body") %></p>
 
 <ol class="app-task-list sections">
   <% @journey.sections.each do |section| %>
