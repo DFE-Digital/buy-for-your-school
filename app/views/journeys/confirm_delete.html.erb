@@ -17,7 +17,7 @@
     <p class="govuk-body govuk-!-font-weight-bold">Category</p>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body"><%= @current_journey.category.title %></p>
+    <p class="govuk-body"><%= @journey.category.title %></p>
   </div>
 </div>
 
@@ -26,7 +26,7 @@
     <p class="govuk-body govuk-!-font-weight-bold">Date started</p>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body"><%= @current_journey.created_at %></p>
+    <p class="govuk-body"><%= @journey.created_at %></p>
   </div>
 </div>
 
@@ -36,13 +36,13 @@
     <p class="govuk-body">
       <%= I18n.t("journey.specification.delete.download.message",
                  link: link_to(I18n.t("journey.specification.delete.download.link"),
-                               journey_specification_path(@current_journey, format: :docx), class: "govuk-link")).html_safe %>
+                               journey_specification_path(@journey, format: :docx), class: "govuk-link")).html_safe %>
     </p>
   </div>
 </div>
 
 <div class="govuk-button-group">
-  <%= link_to I18n.t("journey.specification.delete.button.delete"), journey_path(@current_journey), method: :delete,  class: "govuk-button govuk-button--warning " %>
+  <%= link_to I18n.t("journey.specification.delete.button.delete"), journey_path(@journey), method: :delete,  class: "govuk-button govuk-button--warning " %>
   <%= link_to I18n.t("journey.specification.delete.button.cancel"), dashboard_path, class: "govuk-link" %>
 </div>
 

@@ -32,7 +32,7 @@ class DesignController < ApplicationController
   def show
     flash[:notice] = env_banner
 
-    @category = client.by_slug(:category, params[:id])
+    @category = ContentfulEntryPresenter.new(client.by_slug(:category, params[:id]))
 
     contentful_sections = GetSectionsFromCategory.new(category: @category).call
 

@@ -1,4 +1,4 @@
-<%= content_for :title, @current_task.title %>
+<%= content_for :title, @task.title %>
 
 <h1 class="govuk-heading-xl"><%= @task.title %></h1>
 
@@ -16,8 +16,8 @@
 </dl>
 
 
-<% if @current_task.next_incomplete_step_id %>
-  <%= link_to I18n.t("task.button.continue"), journey_step_path(@journey, @current_task.next_incomplete_step_id), class: "govuk-button", role: "button" %>
+<% if @task.next_incomplete_step_id %>
+  <%= link_to I18n.t("task.button.continue"), journey_step_path(@journey, @task.next_incomplete_step_id), class: "govuk-button", role: "button" %>
 <% elsif @next_task&.next_incomplete_step_id %>
   <%= link_to I18n.t("task.button.next"), journey_step_path(@journey, @next_task.next_incomplete_step_id), class: "govuk-button", role: "button" %>
 <% end %>

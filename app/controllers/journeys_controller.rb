@@ -37,7 +37,7 @@ class JourneysController < ApplicationController
     category = Category.find_by(slug: params[:category])
     journey = CreateJourney.new(
       category: category,
-      user: current_user.__getobj__,
+      user: current_user,
     ).call
 
     RecordAction.new(
@@ -56,7 +56,7 @@ class JourneysController < ApplicationController
   def show
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
 
-    @journey = current_journey
+    @journey = JourneyPresenter.new(current_journey)
 
     RecordAction.new(
       action: "view_journey",
@@ -70,10 +70,12 @@ class JourneysController < ApplicationController
   #
   # @see Journey#state
   def destroy
+    @journey = JourneyPresenter.new(current_journey)
+
     if params[:confirm] == "true"
       render :confirm_delete
     else
-      @current_journey.remove!
+      current_journey.remove!
       render :delete
     end
   end

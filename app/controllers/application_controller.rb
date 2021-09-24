@@ -15,10 +15,10 @@ protected
 
   helper_method :current_user
 
-  # @return [UserPresenter]
+  # @return [User, Guest]
   #
   def current_user
-    @current_user ||= UserPresenter.new(get_current_user)
+    CurrentUser.new.call(uid: session[:dfe_sign_in_uid])
   end
 
   # before_action - Ensure session is ended
@@ -32,11 +32,11 @@ protected
     redirect_to root_path, notice: I18n.t("banner.session.visitor")
   end
 
-  # @return [JourneyPresenter]
+  # @return [Journey]
   #
   def current_journey
     journey_id = params[:journey_id].presence || params[:id]
-    @current_journey ||= JourneyPresenter.new(Journey.find(journey_id))
+    Journey.find(journey_id)
   end
 
   # `Before Action` on:
@@ -46,16 +46,8 @@ protected
   #   - specifications_controller
   #
   def check_user_belongs_to_journey?
-    return true if current_journey.user == get_current_user
+    return true if current_journey.user == current_user
 
     render "errors/not_found", status: :not_found
-  end
-
-private
-
-  # @return [User, Guest]
-  #
-  def get_current_user
-    CurrentUser.new.call(uid: session[:dfe_sign_in_uid])
   end
 end

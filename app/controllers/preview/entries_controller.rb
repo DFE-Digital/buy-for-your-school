@@ -12,7 +12,7 @@ class Preview::EntriesController < ApplicationController
 
     journey = Journey.find_or_create_by!(
       category: category,
-      user: current_user.__getobj__,
+      user: current_user,
       state: 3, # flagged for deletion
     )
 

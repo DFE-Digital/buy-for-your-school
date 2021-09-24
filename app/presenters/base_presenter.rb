@@ -1,18 +1,18 @@
 class BasePresenter < SimpleDelegator
   # @return [String]
   def created_at
-    format_date(super)
+    super.strftime(date_format)
   end
 
   # @return [String]
   def updated_at
-    format_date(super)
+    super.strftime(date_format)
   end
 
 private
 
   # @return [String]
-  def format_date(date)
-    date.strftime("%e %B %Y")
+  def date_format
+    "%e %B %Y"
   end
 end

@@ -5,10 +5,10 @@ class TasksController < ApplicationController
   #
   # @see StepPresenter
   def show
-    @journey = current_journey
+    @journey = JourneyPresenter.new(current_journey)
     @back_url = journey_path(@journey)
 
-    @current_task = task
+    @task = TaskPresenter.new(task)
     @next_task = current_journey.next_incomplete_task(task)
 
     @steps = task.eager_loaded_visible_steps.map do |step|
@@ -33,7 +33,7 @@ private
 
   # @return [Task]
   def task
-    @task ||= Task.find(task_id)
+    Task.find(task_id)
   end
 
   # @return [String]
