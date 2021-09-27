@@ -69,7 +69,7 @@ RSpec.describe StepPresenter do
     it "returns the body converted from markdown" do
       step = create(:step, :statement)
       presenter = described_class.new(step)
-      expect(presenter.body_html).to include("<h2>Heading 2</h2>\n")
+      expect(presenter.body_html).to include("<h2 id=\"heading-2\">Heading 2</h2>\n")
     end
   end
 end

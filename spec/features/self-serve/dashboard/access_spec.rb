@@ -8,8 +8,16 @@ RSpec.feature "Dashboard access" do
       expect(page).to have_current_path "/"
     end
 
+    it "has no breadcrumbs component" do
+      expect(page).not_to have_css(".govuk-breadcrumbs")
+    end
+
+    it "has a back link button" do
+      expect(page).not_to have_css(".govuk-back-link")
+    end
+
     it "specifying.start_page.page_title" do
-      expect(page.title).to have_text "Create a specification to procure something for your school"
+      expect(page.title).to have_text "Create a specification to procure for your school"
     end
 
     it "renders a banner notice" do

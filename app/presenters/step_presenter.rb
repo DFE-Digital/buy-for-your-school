@@ -20,14 +20,14 @@ class StepPresenter < SimpleDelegator
   def body_html
     return unless contentful_type == "markdown"
 
-    render_markdown(body)
+    convert_markdown(body)
   end
 
   # @return [String]
   def help_text_html
     return if help_text.blank?
 
-    render_markdown(help_text)
+    convert_markdown(help_text)
   end
 
   # @return [String]
@@ -54,7 +54,7 @@ private
   # @param text [String]
   #
   # @return [String]
-  def render_markdown(text)
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(text).html_safe
+  def convert_markdown(text)
+    DocumentFormatter.new(content: text, from: :markdown, to: :html).call.html_safe
   end
 end

@@ -67,11 +67,6 @@ private
   # Returns HTML string of the specification to pass along to supported.
   # @return [String]
   def get_specification_markup(support_request)
-    specification_renderer = SpecificationRenderer.new(
-      template: support_request.journey&.category&.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: support_request.journey&.steps).call,
-    )
-
-    @specification_html = specification_renderer.to_html
+    @specification_html = SpecificationRenderer.new(journey: support_request.journey, to: :html).call(draft: false).html_safe
   end
 end

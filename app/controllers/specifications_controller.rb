@@ -15,11 +15,6 @@ class SpecificationsController < ApplicationController
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
 
-    specification_renderer = SpecificationRenderer.new(
-      template: @journey.category.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: @journey.steps).call,
-    )
-
     RecordAction.new(
       action: "view_specification",
       journey_id: @journey.id,
@@ -31,16 +26,29 @@ class SpecificationsController < ApplicationController
       },
     ).call
 
-    @specification_html = specification_renderer.to_html
+    file_name = @journey.all_tasks_completed? ? "specification.#{file_ext}" : "specification-incomplete.#{file_ext}"
 
     respond_to do |format|
       format.html
       format.docx do
-        file_name = @journey.all_tasks_completed? ? "specification.docx" : "specification-incomplete.docx"
-        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_tasks_completed?)
-
-        render docx: file_name, content: document_html
+        document = SpecificationRenderer.new(journey: @journey).call
+        send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
+      # format.pdf do
+      #   document = SpecificationRenderer.new(journey: @journey, to: :pdf).call
+      #   send_data document, filename: file_name, type: "application/pdf"
+      # end
+      # format.odt do
+      #   document = SpecificationRenderer.new(journey: @journey, to: :odt).call
+      #   send_data document, filename: file_name, type: "application/vnd.oasis.opendocument.text"
+      # end
     end
+  end
+
+private
+
+  # @return [String]
+  def file_ext
+    params[:format]
   end
 end

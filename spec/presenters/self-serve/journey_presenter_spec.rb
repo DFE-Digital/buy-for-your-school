@@ -24,4 +24,12 @@ RSpec.describe JourneyPresenter do
       expect(presenter.created_at).to eq " 8 September 2021"
     end
   end
+
+  describe "#category" do
+    it "returns a decorated category" do
+      journey = build(:journey)
+      presenter = described_class.new(journey)
+      expect(presenter.category).to be_kind_of(CategoryPresenter)
+    end
+  end
 end

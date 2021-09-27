@@ -27,7 +27,7 @@ RSpec.feature "Users can see their specification" do
 
     click_view
 
-    click_on(I18n.t("generic.button.back"))
+    click_breadcrumb "Create specification"
     expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
   end
 
@@ -87,7 +87,7 @@ RSpec.feature "Users can see their specification" do
       # Don't answer any questions to create a in progress spec
 
       click_view
-      expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
+      expect(page).to have_content("You have not completed all the tasks. Your specification is incomplete.")
     end
   end
 

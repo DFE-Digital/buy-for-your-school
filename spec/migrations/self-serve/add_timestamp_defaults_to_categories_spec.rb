@@ -33,13 +33,15 @@ private
 
   def upsert
     contentful_category = stub_contentful_category(fixture_filename: "radio-question.json")
-    Category.upsert({
-      title: contentful_category.title,
-      description: contentful_category.description,
-      liquid_template: contentful_category.combined_specification_template,
-      contentful_id: contentful_category.id,
-      slug: contentful_category.slug,
-    },
-    unique_by: :contentful_id)
+    Category.upsert(
+      {
+        title: contentful_category.title,
+        description: contentful_category.description,
+        liquid_template: contentful_category.combined_specification_template,
+        contentful_id: contentful_category.id,
+        slug: contentful_category.slug,
+      },
+      unique_by: :contentful_id,
+    )
   end
 end

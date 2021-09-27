@@ -25,6 +25,7 @@ module ContentfulHelpers
     iterator = allow(contentful_array).to receive(:each)
     contentful_categories.each { |category| iterator.and_yield(category) }
 
+    allow(contentful_array).to receive(:map) { |&block| contentful_categories.each { |category| block.call(category) } }
     allow(contentful_array).to receive(:none?).and_return(category_fixtures.empty?)
     allow(client).to receive(:by_type).with(:category).and_return(contentful_array)
   end

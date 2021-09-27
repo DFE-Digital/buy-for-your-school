@@ -9,7 +9,7 @@ RSpec.feature "Categories page" do
     end
 
     it "specifying.start_page.page_title" do
-      expect(page.title).to have_text "Create a specification to procure something for your school"
+      expect(page.title).to have_text "Create a specification to procure for your school"
     end
 
     it "renders a banner notice" do
@@ -64,18 +64,12 @@ RSpec.feature "Categories page" do
       end
 
       it "title categories.header" do
-        expect(page.title).to have_text "Choose the type of specification you want to build"
+        expect(page.title).to have_text "What are you buying?"
       end
 
       it "legend categories.header" do
         within "div.govuk-form-group" do
-          expect(find("legend.govuk-fieldset__legend.govuk-fieldset__legend--l")).to have_text "Choose the type of specification you want to build"
-        end
-      end
-
-      it "categories.support_info" do
-        within "div.govuk-form-group" do
-          expect(find("div.govuk-hint")).to have_text "We currently only support catering and multifunctional devices."
+          expect(find("legend.govuk-fieldset__legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
         end
       end
 

@@ -35,6 +35,11 @@ RSpec.feature "A journey page has" do
     specify "heading" do
       expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
     end
+
+    specify do
+      # journeys_body
+      expect(find("p.govuk-body")).to have_text "Answer all questions in each section to build a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
+    end
   end
 
   context "when the category is 'MFDs'" do
@@ -55,6 +60,11 @@ RSpec.feature "A journey page has" do
     # specifying.start_page.page_title
     specify "heading" do
       expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure multi-function devices for your school"
+    end
+
+    specify do
+      # journeys_body
+      expect(find("p.govuk-body")).to have_text "Answer all questions in each section to build a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
     end
   end
 end
