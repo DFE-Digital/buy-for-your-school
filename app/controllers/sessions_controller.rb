@@ -7,12 +7,17 @@ class SessionsController < ApplicationController
   # @see CreateUser
   # @see UserSession
   def create
-    user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
-    user_session.invalidate_other_user_sessions(auth: auth_hash)
+    user = CreateUser.new(auth: auth_hash).call
 
-    CreateUser.new(auth: auth_hash).call
+    if user
+      user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
+      user_session.invalidate_other_user_sessions(auth: auth_hash)
 
-    redirect_to dashboard_path
+      redirect_to dashboard_path
+    else
+      # TODO: replace with alternative pages
+      redirect_to root_path, notice: "Access Denied"
+    end
   end
   alias_method :bypass_callback, :create
 

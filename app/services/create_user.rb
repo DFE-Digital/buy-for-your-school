@@ -26,7 +26,7 @@ class CreateUser
       update_user!
       Rollbar.info "Updated account for #{email}"
     else
-      create_user!
+      create_user! if supported_establishment?
       Rollbar.info "Created account for #{email}"
     end
 
@@ -34,6 +34,19 @@ class CreateUser
   end
 
 private
+
+  # @return [Boolean]
+  def supported_establishment?
+    # check current organisation
+    ORG_TYPE_IDS.include?(current_org_type_id)
+    # check all organisations
+    # orgs.any? { |org| ORG_TYPE_IDS.include?(org["type"]["id"]) }
+  end
+
+  # @return [String]
+  def current_org_type_id
+    orgs.select { |org| org["id"].eql?(org_id) }["type"]["id"]
+  end
 
   # @return [User, nil]
   def current_user

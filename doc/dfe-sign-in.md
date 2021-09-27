@@ -6,9 +6,60 @@ There are [testing][test-register], [pre-production][pre-prod-register] and [pro
 
 ## Registration
 
-- A user with approver privileges for at least one school needs to invite you.
-- [This school][phantom-school] has been used for staging access.
+- A person with "approver" privileges for at least one school needs to invite you.
+- [This school][test-school] has been used in the `test` DSI environment.
 - Contact DfE [#digital-tools-support][digi-tools] and [#dfe_sign-in][dfe_sign-in] Slack channels for further assistance.
+
+## Access
+
+The DSI API returns a user's affiliated organisations with their type name and number.
+Will restrict access to users from certain types of establishment.
+
+**Accept**
+
+    1   Community School
+    2   Voluntary Aided School
+    3   Voluntary Controlled School
+    5   Foundation School
+    6   City Technology College
+    7   Community Special School
+    12  Foundation Special School
+    14  Pupil Referral Unit
+    28  Academy Sponsor Led
+    33  Academy Special Sponsor Led
+    34  Academy Converter
+    35  Free Schools
+    36  Free Schools Special
+    38  Free Schools - Alternative Provision
+    40  University Technical College
+    41  Studio Schools
+    42  Academy Alternative Provision Converter
+    43  Academy Alternative Provision Sponsor Led
+    44  Academy Special Converter
+
+**Reject**
+
+    8   Non-Maintained Special School
+    10  Other Independent Special School
+    11  Other Independent School
+    15  LA Nursery School
+    18  Further Education
+    24  Secure Units
+    25  Offshore Schools
+    26  Service Children's Education
+    27  Miscellaneous
+    29  Higher Education Institution
+    30  Welsh Establishment
+    31  Sixth Form Centres
+    32  Special Post 16 Institution
+    37  British Overseas Schools
+    39  Free Schools - 16-19
+    45  Academy 16-19 Converter
+    46  Academy 16-19 Sponsor Led
+    47  Children's Centre
+    48  Children's Centre Linked Site
+    56  Institution funded by other government department
+
 
 ## Environments
 
@@ -60,4 +111,9 @@ Once imported change the trust level to `Always Trust`.
 [test-api]: https://test-api.signin.education.gov.uk
 [digi-tools]: https://ukgovernmentdfe.slack.com/archives/CMS9V0JQL
 [dfe_sign-in]: https://ukgovernmentdfe.slack.com/archives/C5S500XB6
-[phantom-school]: https://test-services.signin.education.gov.uk/approvals/50F4A834-9314-4A66-969E-C86D03821C26/users
+[test-school]: https://test-services.signin.education.gov.uk/approvals/50F4A834-9314-4A66-969E-C86D03821C26/users
+
+
+
+
+

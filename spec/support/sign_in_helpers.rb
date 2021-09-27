@@ -1,9 +1,13 @@
 module SignInHelpers
   # TODO: rename `user_exists_in_dfe_sign_in` to `mock_dsi_callback`
   def user_exists_in_dfe_sign_in(user: build(:user))
+
     # stub CreateUser call to DSI API for roles and orgs
-    allow_any_instance_of(::Dsi::Client).to receive(:roles)
-    allow_any_instance_of(::Dsi::Client).to receive(:orgs)
+    dsi_client = instance_double(::Dsi::Client)
+    allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+
+    allow(dsi_client).to receive(:roles).and_return(user.roles)
+    allow(dsi_client).to receive(:orgs).and_return(user.orgs)
 
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: :dfe,
@@ -29,8 +33,11 @@ module SignInHelpers
 
   def user_is_signed_in(user: build(:user))
     # stub CreateUser call to DSI API for roles and orgs
-    allow_any_instance_of(::Dsi::Client).to receive(:roles)
-    allow_any_instance_of(::Dsi::Client).to receive(:orgs)
+    dsi_client = instance_double(::Dsi::Client)
+    allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+
+    allow(dsi_client).to receive(:roles).and_return(user.roles)
+    allow(dsi_client).to receive(:orgs).and_return(user.orgs)
 
     allow_any_instance_of(::CurrentUser).to receive(:call).with(anything).and_return(user)
   end

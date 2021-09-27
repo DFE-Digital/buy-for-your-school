@@ -10,8 +10,21 @@ FactoryBot.define do
       first_name  { "first_name"  }
       last_name   { "last_name"   }
 
-      orgs        { [] }
+      orgs        {
+        [{
+          "name" => "Supported School Name",
+          "type" => {
+            "id" => ORG_TYPE_IDS.sample.to_s, # random valid ids
+          }
+        }]
+      }
+
       roles       { [] }
+
+      trait :unsupported do
+        orgs { [] }
+      end
+
     end
   end
 end
