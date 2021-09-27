@@ -1,7 +1,8 @@
 RSpec.describe Support::UpdateCase do
-  subject(:service) { described_class.new(current_case, agent) }
+  subject(:service) { described_class.new(current_case, agent, params) }
 
   let(:current_case) { create(:support_case, state: state) }
+  let(:params) {{ agent: agent.id }}
   let(:agent)  { create(:support_agent) }
   let(:result) { service.call }
 

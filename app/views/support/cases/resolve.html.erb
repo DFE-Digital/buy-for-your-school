@@ -1,0 +1,16 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_with model: @current_case do |form| %>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="close-case-details">
+            <%= I18n.t("support.cases.resolve.title") %>
+          </label>
+        </h1>
+        <%= form.text_area "resolve_message", class: "govuk-textarea", rows: "5" %>
+        <%= form.hidden_field :state %>
+      </div>
+      <%= form.submit I18n.t("support.cases.resolve.submit"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

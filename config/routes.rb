@@ -62,6 +62,8 @@ Rails.application.routes.draw do
     get "admin", to: "admin#show"
 
     resources :cases, only: %i[index show edit update] do
+      get "resolve", on: :member
+
       resources :interactions, only: %i[new create]
     end
   end

@@ -263,6 +263,10 @@ en:
         assign_to_agent: Assign to caseworker
         assign: Assign
 
+      resolve:
+        title: Resolve case
+        submit: Save and close case
+
     interactions:
 
         new:

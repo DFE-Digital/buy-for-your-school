@@ -1,7 +1,6 @@
 module Support
   class CasesController < ApplicationController
-    before_action :current_case, only: %i[show edit update]
-    before_action :agent, only: %i[update]
+    before_action :current_case, only: %i[show edit update resolve]
 
     def index
       @cases = Case.all.map { |c| CasePresenter.new(c) }
@@ -14,10 +13,12 @@ module Support
     end
 
     def update
-      UpdateCase.new(current_case, agent).call
+      UpdateCase.new(current_case, current_user, update_params).call
 
       redirect_to support_case_path(anchor: "case-history")
     end
+
+    def resolve; end
 
   private
 
@@ -25,8 +26,12 @@ module Support
       @current_case ||= CasePresenter.new(Case.find_by(id: params[:id]))
     end
 
-    def agent
-      @agent ||= Agent.find_by(id: params.dig(:support_case, :agent))
+    def update_params
+      @update_params ||= params.require(:support_case).permit(
+        :agent,
+        :resolve_message,
+        :state,
+      )
     end
   end
 end
