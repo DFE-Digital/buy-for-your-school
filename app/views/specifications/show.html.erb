@@ -1,7 +1,7 @@
 <%= content_for :title, @journey.category.title.capitalize %>
-<%= link_to I18n.t("generic.button.back"), journey_path(@journey), class: "govuk-back-link" %>
 
 <h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.header") %></h1>
+<p class="govuk-body"><%= I18n.t("journey.specification.body") %></p>
 <% unless @journey.all_tasks_completed? %>
   <div class="govuk-warning-text">
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>

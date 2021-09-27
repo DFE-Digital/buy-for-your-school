@@ -4,7 +4,7 @@
 module JourneyHelpers
   # generic.button.start
   def click_start
-    click_button "Start"
+    click_button "Start now"
   end
 
   # generic.button.next
@@ -20,6 +20,12 @@ module JourneyHelpers
   # generic.button.back
   def click_back
     click_on "Back"
+  end
+
+  def click_breadcrumb(breadcrumb)
+    within(".govuk-breadcrumbs") do
+      click_on breadcrumb
+    end
   end
 
   # dashboard.create.button

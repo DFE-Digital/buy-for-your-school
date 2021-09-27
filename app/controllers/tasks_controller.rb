@@ -6,6 +6,7 @@ class TasksController < ApplicationController
   # @see StepPresenter
   def show
     @journey = current_journey
+    @back_url = journey_path(@journey)
 
     @current_task = task
     @next_task = current_journey.next_incomplete_task(task)

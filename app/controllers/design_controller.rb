@@ -21,9 +21,11 @@ class DesignController < ApplicationController
   end
 
   def index
+    @back_url = root_path
+
     flash[:notice] = env_banner
 
-    @categories = ContentfulEntryPresenter.new(*client.by_type(:category))
+    @categories = client.by_type(:category).map { |e| ContentfulEntryPresenter.new(e) }
   end
 
   # TODO: introduce service function JourneyMapper#call that receives a category_id and returns steps

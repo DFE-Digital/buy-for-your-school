@@ -27,7 +27,7 @@ RSpec.feature "Users can view the task list" do
   end
 
   it "user can navigate back to the dashboard from a journey" do
-    click_back
+    click_breadcrumb "Dashboard"
     expect(page).to have_content "Specifications dashboard" # dashboard.header
   end
 
