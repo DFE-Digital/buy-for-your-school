@@ -231,9 +231,7 @@ ActiveRecord::Schema.define(version: 2021_09_17_120405) do
     t.string "user_id"
     t.uuid "journey_id"
     t.uuid "category_id"
-    t.string "message"
-    t.string "school_name"
-    t.string "school_urn"
+    t.string "message_body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "phone_number"

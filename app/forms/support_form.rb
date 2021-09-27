@@ -1,168 +1,90 @@
+require "types"
+require "dry-initializer"
+
 #
-# Chain of cummulatively validated steps to complete a "Support Request"
-# using ActiveModel validations
+# @author Peter Hamilton
 #
-# @see SupportRequest
 #
 class SupportForm
+  extend Dry::Initializer
 
-  # def self.build(step = 0, params = {})
-  #   "SupportForm::Step#{step}".constantize.new(step: step.to_i, **params)
-  # end
-
-  include ActiveModel::Model
-
-  attr_accessor :step
-
-  # form params
-  attr_accessor :phone_number # step 1
-  attr_accessor :journey_id   # step 2
-  attr_accessor :category_id  # step 3
-  attr_accessor :message      # step 4
-
-  def position
-    # return @step.to_i unless @step.nil?
-    # 1
-    self.class.name.match(/(\d)/)[0].to_i
-  end
-
-
-  # def next_step
-  #   position + 1
-  # end
-
-  # @param phone_number
-  # @param journey_id
-  # @param category_id
-  # @param message
-  # @param user
-  # @param step [Integer] defaults to 1
+  # @see https://design-system.service.gov.uk/components/error-summary/
   #
-  def initialize(*)
-    attr_accessors
-    super
-  end
+  class ErrorSummary
+    extend Dry::Initializer
 
-
-
-  # @return [Array<Symbol>] strong params
-  #
-  def attributes
-    %i[phone_number journey_id category_id message step]
-  end
-
-
-  # def proceed
-  #   next_step! unless last_step?
-  # end
-
-  # Validate then proceed or save
-  #
-  # @return [Boolean, Integer]
-  #
-  # def save
-  #   if last_step?
-  #     valid? ? support_request.save! : false
-  #   else
-  #     valid? ? next_step! : false
-  #     # valid? ? next_step : false
-  #   end
-  # end
-
-  # @return [Integer] increment the step counter
-  #
-  def increment!
-    @step = @step.to_i + 1
-    # @position = @position.to_i + 1
-  end
-
-  # # @return [Integer] decrement the step counter
-  # #
-  # def previous_step!
-  #   @step = @step.to_i - 1
-  # end
-
-  # @return [false]
-  #
-  def last_step?
-    false
-  end
-
-  # @return [SupportRequest]
-  #
-  def support_request
-    @support_request ||= SupportRequest.new(params.except(:step))
-  end
-
-
-# private
-
-  # def attr_accessors
-  #   attributes.each { |attr| class_eval { attr_accessor attr } }
-  # end
-
-  # @return [Hash] retrieve the values for all the attributes
-  #
-  # @example
-  #   { phone_number: "1234567890", step: 3 }
-  #
-  def params
-    attributes.index_with { |attr| send(attr) }.reject { |_, v| v.blank? }
-  end
-
-  #
-  # Confirm user's telephone number - not available from DSI
-  #
-  class Step1 < SupportForm
-    validates :phone_number,
-      presence: true,
-      numericality: true,
-      length: {
-        minimum: 10,
-        maximum: 11
-      }
-
-  end
-
-  #
-  # Select the specification document
-  #
-  class Step2 < Step1
-    validates :journey_id, presence: true
-
-
-    def checked?(category)
-      support_request.has_journey? && category.has_journey?(journey_id)
-    end
-  end
-
-  #
-  # Confirm the "category of spend"
-  # "What are you buying?"
-  #
-  class Step3 < Step2
-    validates :category_id, presence: true
-
-    # def checked?(category)
-    #   support_request.has_journey? && category.has_journey?(journey_id)
-    # end
-  end
-
-  #
-  # "How can we help?"
-  #
-  class Step4 < Step3
-    validates :message,
-      presence: true,
-      length: {
-        minimum: 20
-      }
-
-    # @return [true]
+    # @example
     #
-    def last_step?
-      true
+    #   { phone_number: ["size cannot be less than 10"] }
+    #
+    param :messages, Types::Hash, default: proc { {} }
+
+    def any?
+      messages.any?
     end
   end
 
+
+  # internal counter defaults to 1, coerces strings
+  option :step, Types::Params::Integer, default: proc { 1 }
+
+  # field validation error messages
+  option :messages, Types::Hash, default: proc { {} }
+
+  # @see [SupportRequest] attributes
+  option :phone_number, optional: true # 1
+  option :journey_id, optional: true   # 2 (option for 'none')
+  option :category_id, optional: true  # 3 (skipped if 2)
+  option :message_body, optional: true # 4 (last)
+
+
+  # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
+  #
+  # @return [ErrorSummary]
+  def errors
+    ErrorSummary.new(messages)
+  end
+
+  # Proceed to next question
+  #
+  # @return [Integer] next step position
+  def advance!
+    @step += 1
+  end
+
+  # Miss a question
+  #
+  # @return [Integer] next step position
+  def skip!
+    @step += 2
+  end
+
+  # @return [Integer] previous step position
+  def back
+    @step - 1
+  end
+
+  # @see SupportRequestsController#create
+  #
+  # @return [Boolean] journey UUID is present
+  def journey?
+    !journey_id.blank? && journey_id != "none"
+  end
+
+  # @return [nil]
+  def forget_category!
+    instance_variable_set :@category_id, nil
+  end
+
+  # @return [nil]
+  def forget_journey!
+    instance_variable_set :@journey_id, nil
+  end
+
+  # @see SupportRequestsController#update
+  #
+  # @return [Hash] form parms as support request attributes
+  def to_h
+    self.class.dry_initializer.attributes(self).except(:step, :messages)
+  end
 end

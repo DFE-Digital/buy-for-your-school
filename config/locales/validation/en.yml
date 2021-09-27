@@ -1,0 +1,22 @@
+# config/validation/en.yml
+en:
+  forms:
+
+    rules:
+      phone_number: Your phone number
+      message_body: "" # Omitted
+      category_id: The type of procurement
+
+    errors:
+      rules:
+        phone_number:
+          missing: is missing
+          format?: must start with a zero and only contain digits
+          max_size?: "can not have more than %{num} digits"
+          min_size?: "must have at least %{num} digits"
+
+        message_body:
+          missing: You must tell us how we can help
+
+        category_id:
+          no_spec: is required if you do not select an existing specification
