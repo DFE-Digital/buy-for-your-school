@@ -24,6 +24,13 @@ class AnswersController < ApplicationController
     result = SaveAnswer.new(answer: step.answer).call(params: prepared_params(step: step))
     @answer = result.object
 
+    @back_url =
+      if !step.task || step.task.has_single_visible_step?
+        journey_path(@journey, anchor: step.id, back_link: true)
+      else
+        journey_task_path(@journey, step.task, back_link: true)
+      end
+
     # TODO: refactor to a private #record_answer method that accepts the action string
     RecordAction.new(
       action: "save_answer",
