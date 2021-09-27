@@ -190,7 +190,7 @@ en:
         - <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools-writing-a-spec" class="govuk-link">read about writing a specification</a>
         - find out more about <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-procedures-for-schools" class="govuk-link">planning for what you're buying</a>
         - read <a href="https://buy-for-your-school-staging.herokuapp.com/beta/phase-5/gov/buying-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
-        - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
+        - use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
     sections:
       titles:
         about_you: About you

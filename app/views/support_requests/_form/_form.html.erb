@@ -1,14 +1,11 @@
-<%= form_for @support_form_wizard, as: :support_form_wizard, url: url, method: method do |form| %>
+<%= form_for @support_form, as: :support_form, url: url, method: method  do |form| %>
 
-  <%= render "support_requests/_form/step_1", form: form if @support_form_wizard.step == 1 %>
-  <%= render "support_requests/_form/step_2", form: form if @support_form_wizard.step == 2 %>
-  <%= render "support_requests/_form/step_3", form: form if @support_form_wizard.step == 3 %>
-  <%= render "support_requests/_form/step_4", form: form if @support_form_wizard.step == 4 %>
+  <%= render "support_requests/_form/step_#{@support_form.step}", form: form %>
 
-  <%= form.hidden_field :step, value: form.object.step %>
+  <%= form.hidden_field :step, value: @support_form.step %>
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
 
 <p class="govuk-body">
-  <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path %>
+  <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path, class: "govuk-link" %>
 </p>

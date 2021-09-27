@@ -1,13 +1,14 @@
 RSpec.feature "Edit a support request" do
   let(:category) { create(:category) }
   let(:journey) { create(:journey, category: category) }
+
   let(:support_request) do
     create(:support_request,
-           phone_number: "0151 000 0000",
+           user: journey.user,
            journey: journey,
            category: category,
-           message: "test",
-           user: journey.user)
+           phone_number: "0151 000 0000",
+           message: "test")
   end
 
   context "when the user is signed in" do
@@ -19,12 +20,12 @@ RSpec.feature "Edit a support request" do
     specify { expect(page).to have_current_path "/users/#{journey.user.id}/support-requests/#{support_request.id}" }
 
     it "allows the request to be changed" do
-      click_link("edit-phone-number")
+      click_link "edit-phone-number"
 
       expect(page).to have_current_path "/users/#{journey.user.id}/support-requests/#{support_request.id}/edit?step=1"
       expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
 
-      fill_in "support_form_wizard[phone_number]", with: "000 000 0000"
+      fill_in "support_form[phone_number]", with: "000 000 0000"
       click_continue
 
       expect(find("div#flash_notice")).to have_text "Support request updated"

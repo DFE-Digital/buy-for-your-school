@@ -9,7 +9,8 @@
           Your name
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @current_user.full_name %>
+          <%# TODO: move to user presenter or DB table %>
+          <%= @current_user.full_name || "#{@current_user.first_name} #{@current_user.last_name}" %>
         </dd>
         <dd class="govuk-summary-list__actions">
         </dd>
