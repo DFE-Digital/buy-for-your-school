@@ -18,12 +18,12 @@ module Support
 
     # @return [String]
     def received_at
-      interactions.first.created_at
+      enquiry.created_at
     end
 
     # @return [String]
     def last_updated_at
-      interactions.last.created_at
+      interactions&.last&.created_at || enquiry.created_at
     end
 
     # @return [Array<InteractionPresenter>]
