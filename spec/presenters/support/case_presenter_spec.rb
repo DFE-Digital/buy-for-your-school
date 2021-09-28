@@ -8,6 +8,7 @@ RSpec.describe Support::CasePresenter do
       agent: OpenStruct.new(first_name: "Ronald", last_name: "McDonald"),
       category: double,
       contact: double,
+      enquiry: OpenStruct.new(created_at: Time.zone.local(2000, 1, 30, 12)),
     )
   end
 
