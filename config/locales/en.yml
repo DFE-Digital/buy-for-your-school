@@ -249,6 +249,8 @@ en:
         requested_at: Request sent on %{time}
         assign: Assign to case worker
         back: Back to case list
+        case_owner: Case owner
+        change_case_owner: change
 
       edit:
         assign_to_agent: Assign to caseworker
