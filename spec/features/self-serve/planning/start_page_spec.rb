@@ -1,9 +1,6 @@
 RSpec.feature "Users can see a start page for planning their purchase" do
-  # TODO: reinstate spec once new content is finalised
-  xscenario "Start page content is shown on the root path" do
-    visit root_path
-
-    click_on("procuring a new catering service for a school")
+  scenario "Start page content is shown on the root path" do
+    visit "/planning"
 
     expect(page).to have_content("Catering services")
     expect(page).to have_content("How to procure a catering contract for your school.")
@@ -40,18 +37,6 @@ RSpec.feature "Users can see a start page for planning their purchase" do
     expect(page).to have_content("Where to get help")
     expect(page).to have_content("See where to get help with buying for schools if you need it.")
     expect(page).to have_link("get help with buying for schools", href: "https://www.gov.uk/guidance/buying-for-schools/get-help-with-buying-for-schools")
-  end
-
-  xscenario "can navigate back to the home page" do
-    visit root_path
-
-    click_on("procuring a new catering service for a school")
-
-    expect(page).to have_content(I18n.t("planning.start_page.page_title"))
-
-    click_on(I18n.t("generic.button.back"))
-
-    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure something for your school"
   end
 
   scenario "the start page has the right content headers" do
