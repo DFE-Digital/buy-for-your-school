@@ -6,7 +6,7 @@ RSpec.describe DocumentFormatter do
 
       expect(PandocRuby)
       .to receive(:convert)
-      .with(md, { from: :markdown, to: :docx })
+      .with(md, "--strip-comments", { from: :markdown, to: :docx })
       .and_call_original
 
       formatter.call
@@ -18,7 +18,7 @@ RSpec.describe DocumentFormatter do
 
       expect(PandocRuby)
       .to receive(:convert)
-      .with(md, { from: :markdown, to: :html })
+      .with(md, "--strip-comments", { from: :markdown, to: :html })
       .and_call_original
 
       html = formatter.call
@@ -31,7 +31,7 @@ RSpec.describe DocumentFormatter do
 
       expect(PandocRuby)
       .to receive(:convert)
-      .with(md, { from: :markdown, to: :pdf })
+      .with(md, "--strip-comments", { from: :markdown, to: :pdf })
       .and_call_original
 
       formatter.call
