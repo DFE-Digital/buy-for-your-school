@@ -8,7 +8,7 @@ module Support
 
     SAFE_INTERACTIONS = %w[note contact].freeze
 
-    belongs_to :agent, class_name: "Support::Agent", optional: true
+    belongs_to :agent, class_name: "Support::Agent"
     belongs_to :case, class_name: "Support::Case"
 
     # Event Type
@@ -20,5 +20,7 @@ module Support
     enum event_type: { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3 }
 
     validates :body, presence: true
+
+    default_scope { order(created_at: :desc) }
   end
 end

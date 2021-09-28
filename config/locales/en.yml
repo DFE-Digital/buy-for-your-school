@@ -261,6 +261,14 @@ en:
         assign: Assign
         assign_to: Assign to case worker
 
+    enquiries:
+        show:
+          header: Request for support
+          category: Category
+          description: Description of problem
+          specification: Attached specification
+
+
     interactions:
       new:
         contact_with_school: Contact with school
