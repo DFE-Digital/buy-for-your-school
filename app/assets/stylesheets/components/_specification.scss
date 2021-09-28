@@ -16,6 +16,11 @@
     @extend .govuk-list--number;
   }
 
+  ul {
+    @extend .govuk-list;
+    @extend .govuk-list--bullet;
+  }
+
   table {
     @extend .govuk-table !optional;
   }
