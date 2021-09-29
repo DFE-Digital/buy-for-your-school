@@ -11,8 +11,9 @@ RSpec.feature "Users can see their specification" do
 
     expect(page).to have_breadcrumbs ["Dashboard", "Create specification", "View specification"]
 
-    # TODO: remove I18n.t from specs
-    expect(page).to have_content(I18n.t("journey.specification.header"))
+    # journey.specification.header
+    expect(page).to have_text "Your specification"
+    expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
 
     within("article#specification") do
       expect(page).to have_content("Menus and ordering")
@@ -40,7 +41,9 @@ RSpec.feature "Users can see their specification" do
     click_continue
     click_view
 
-    expect(page).to have_content(I18n.t("journey.specification.header"))
+     # journey.specification.header
+     expect(page).to have_text "Your specification"
+     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
 
     within("article#specification") do
       expect(page).to have_content("Catering")
@@ -60,7 +63,9 @@ RSpec.feature "Users can see their specification" do
     click_continue
     click_view
 
-    expect(page).to have_content(I18n.t("journey.specification.header"))
+     # journey.specification.header
+     expect(page).to have_text "Your specification"
+     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
 
     within("article#specification") do
       expect(page).to have_content("yes")
@@ -100,7 +105,9 @@ RSpec.feature "Users can see their specification" do
       click_continue
       click_view
 
-      expect(page).to have_content(I18n.t("journey.specification.header"))
+      # journey.specification.header
+      expect(page).to have_text "Your specification"
+      expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
       expect(page).to have_content("Part 1")
       expect(page).to have_content("Part 2")
     end

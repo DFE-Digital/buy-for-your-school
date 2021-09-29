@@ -37,7 +37,8 @@ RSpec.feature "Users can see their catering specification" do
       # Omit answering a question to simulate an incomplete spec
       click_view
 
-      warning_html = I18n.t("journey.specification.download.warning.incomplete")
+      # journey.specification.draft
+      warning_html = "You have not completed all the tasks. Your specification is incomplete."
       expect(page).not_to have_content(Nokogiri::HTML(warning_html).text)
 
       click_on "Download (.docx)"
