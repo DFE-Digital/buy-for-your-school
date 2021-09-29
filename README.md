@@ -23,13 +23,12 @@ We use ADRs to document architectural decisions managed with [adr-tools](https:/
 
 ## Access
 
-| Environment    | URL                                                            |
-| :------------- | :------------------------------------------------------------: |
-|  Development   | http://localhost:3000                                          |
-|  Research      | https://buy-for-your-school-research.london.cloudapps.digital  |
-|  Preview       | https://buy-for-your-school-preview.london.cloudapps.digital   |
-|  Staging       | https://staging-get-help-buying-for-schools.education.gov.uk   |
-|  Production    | https://get-help-buying-for-schools.education.gov.uk           |
+| Environment |                              URL                              |
+| :---------- | :-----------------------------------------------------------: |
+| Development |                     http://localhost:3000                     |
+| Research    | https://buy-for-your-school-research.london.cloudapps.digital |
+| Staging     | https://staging-get-help-buying-for-schools.education.gov.uk  |
+| Production  |     https://get-help-buying-for-schools.education.gov.uk      |
 
 ## Source
 

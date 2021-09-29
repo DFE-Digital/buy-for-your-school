@@ -11,7 +11,6 @@ Environment variables are used to tell the infrastructure which log stream URL t
 ```
 PROD_TF_VAR_SYSLOG_DRAIN_URL=
 STAGING_TF_VAR_SYSLOG_DRAIN_URL=
-PREVIEW_TF_VAR_SYSLOG_DRAIN_URL=
 RESEARCH_TF_VAR_SYSLOG_DRAIN_URL=
 ```
 
@@ -28,22 +27,26 @@ Remember to deploy the application again to propagate environment variable chang
 If Logit isn't working you can ask GPaaS to view the logs for individual apps using the Cloud Foundry CLI.
 
 Log in:
+
 ```
 $ cf login -a api.london.cloud.service.gov.uk -u REDACTED@digital.education.gov.uk
 ```
 
 Select the intended space:
+
 ```
 $ cf spaces
 $ cf target -s sct-staging
 ```
 
 Find the app name for the process you want to see logs for:
+
 ```
 $ cf apps
 ```
 
 Ask for the logs:
+
 ```
 $ cf logs buy-for-your-school-research
 ```
