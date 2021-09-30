@@ -38,8 +38,7 @@ RSpec.feature "Users can see their catering specification" do
       click_view
 
       # journey.specification.draft
-      warning_html = "You have not completed all the tasks. Your specification is incomplete."
-      expect(page).not_to have_content(Nokogiri::HTML(warning_html).text)
+      expect(find("strong.govuk-warning-text__text")).to have_text "You have not completed all the tasks. Your specification is incomplete."
 
       click_on "Download (.docx)"
 
