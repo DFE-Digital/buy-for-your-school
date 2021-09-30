@@ -231,7 +231,7 @@ en:
       status: Status
       category: Category
       school_details: School details
-      request_details: Request details
+      case_details: Case details
       case_history: Case history
       contact_name: Contact name
       contact_phone: Contact phone

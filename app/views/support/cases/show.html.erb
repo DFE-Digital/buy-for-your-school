@@ -13,8 +13,8 @@
       </a>
     </li>
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#request-details">
-        <%= I18n.t("support.cases.request_details") %>
+      <a class="govuk-tabs__tab" href="#case-details">
+        <%= I18n.t("support.cases.case_details") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
@@ -26,7 +26,7 @@
 
   <%= render 'school_details', contact: @current_case.contact %>
 
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="request-details" role="tabpanel" aria-labelledby="tab_request-details">
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details" role="tabpanel" aria-labelledby="tab_case-details">
     <p class="govuk-body">
       requested at
     </p>
@@ -40,6 +40,8 @@
     </div>
   </div>
 
+
+</div>
 
 </div>
 
