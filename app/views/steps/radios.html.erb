@@ -1,12 +1,13 @@
 <%= render layout: layout do |f| %>
   <%= f.hidden_field :response, value: nil %>
-  <%= f.govuk_radio_buttons_fieldset(:response, legend: { size: "l", text: @step_presenter.title }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:response, legend: { size: "l", text: @step.title }) do %>
     <% if @step.help_text.present? %>
       <div class="govuk-hint">
-        <%= @step_presenter.help_text_html %>
+        <%= @step.help_text_html %>
       </div>
     <% end %>
 
+    <%# NOTE: Add validation that radios/checkboxes have `options` - alert content designers to this in the journey_map %>
     <% @step.options.each do |option| %>
       <% machine_value = machine_readable_option(string: option["value"]) %>
 
@@ -24,7 +25,7 @@
           <% end %>
         <% end %>
       <% else %>
-        <!-- We have to include this if there is no block given, selecting an option causes a page jump as a conditional element is toggled by the form builder -->
+        <%# NOTE: We have to include this if there is no block given, selecting an option causes a page jump as a conditional element is toggled by the form builder %>
         <%= f.govuk_radio_button :response, option["value"], label: { text: option["value"] }, hint: { text: option["help_text"] } %>
       <% end %>
     <% end %>

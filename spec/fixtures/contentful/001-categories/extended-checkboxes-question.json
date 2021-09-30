@@ -30,6 +30,7 @@
     },
     "fields": {
         "title": "Catering",
+        "description": "Catering description",
         "sections": [
           {
             "sys": {
@@ -39,6 +40,7 @@
             }
           }
         ],
-        "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1><ul>{% for checkbox_answer in answer_extended-checkboxes-question['selected_answers'] %}<li>{{ checkbox_answer['human_value'] }}</li><li>{{ checkbox_answer.further_information }}</li>{% endfor %}</ul></article>"
+        "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1><ul>{% for checkbox_answer in answer_extended-checkboxes-question['selected_answers'] %}<li>{{ checkbox_answer['human_value'] }}</li><li>{{ checkbox_answer.further_information }}</li>{% endfor %}</ul></article>",
+        "slug": "catering"
     }
 }

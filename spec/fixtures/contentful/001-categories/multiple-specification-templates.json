@@ -33,6 +33,7 @@
     },
     "fields": {
         "title": "Catering",
+        "description": "Catering description",
         "sections": [
             {
                 "sys": {
@@ -43,6 +44,7 @@
             }
         ],
         "specificationTemplate": "<article id='specification'>\n  <section>\n   <p>Part 1</p>\n  </section>\n</article>",
-        "specificationTemplatePart2": "<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>"
+        "specificationTemplatePart2": "<article id='specification'>\n  <section>\n    <p>Part 2</p>\n  </section>\n</article>",
+        "slug": "catering"
     }
 }

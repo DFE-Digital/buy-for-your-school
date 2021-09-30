@@ -1,12 +1,8 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:2.6.6 as base
+FROM ruby:3.0.1 as base
 MAINTAINER dxw <rails@dxw.com>
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
-RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
@@ -28,8 +24,13 @@ FROM base AS dependencies
 RUN mkdir -p ${DEPS_HOME}
 WORKDIR $DEPS_HOME
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y nodejs
+RUN wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb \
+  && apt install ./pandoc-2.14.2-1-amd64.deb && rm pandoc-2.14.2-1-amd64.deb
+RUN apt-get install -y texlive texlive-generic-extra
 
 # Install Javascript dependencies
 COPY package-lock.json $DEPS_HOME/package-lock.json
@@ -40,7 +41,6 @@ RUN npm install
 COPY Gemfile $DEPS_HOME/Gemfile
 COPY Gemfile.lock $DEPS_HOME/Gemfile.lock
 RUN gem update --system
-RUN gem install bundler -v 2.2.16
 
 ENV BUNDLE_GEM_GROUPS=$RAILS_ENV
 RUN bundle config set frozen "true"
@@ -86,15 +86,16 @@ RUN cp -R $DEPS_HOME/node_modules/govuk-frontend/govuk/assets $APP_HOME/app/asse
 RUN RAILS_ENV=production \
     SECRET_KEY_BASE="key" \
     APPLICATION_URL= \
-    CONTENTFUL_URL= \
     CONTENTFUL_SPACE= \
     CONTENTFUL_ENVIRONMENT= \
-    CONTENTFUL_ACCESS_TOKEN= \
-    CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID= \
-    CONTENTFUL_PREVIEW_APP= \
+    CONTENTFUL_DELIVERY_TOKEN= \
+    CONTENTFUL_PREVIEW_TOKEN= \
     CONTENTFUL_ENTRY_CACHING= \
     SUPPORT_EMAIL= \
     REDIS_URL= \
+    CC_TEST_REPORTER_ID= \
+    GITHUB_REF= \
+    GITHUB_SHA= \
     bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
@@ -111,6 +112,12 @@ CMD ["bundle", "exec", "rails", "server"]
 FROM web as test
 
 RUN apt-get install -qq -y shellcheck wait-for-it
+
+RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/bin/cc-test-reporter
+RUN chmod +x /usr/bin/cc-test-reporter
+
+COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
+COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml
 
 COPY package.json ${APP_HOME}/package.json
 COPY package-lock.json ${APP_HOME}/package-lock.json

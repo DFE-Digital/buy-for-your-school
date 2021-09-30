@@ -1,0 +1,38 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "rwl7tyzv9sys"
+      }
+    },
+    "id": "statement-step",
+    "type": "Entry",
+    "createdAt": "2020-12-02T10:48:35.748Z",
+    "updatedAt": "2020-12-02T10:48:35.748Z",
+    "environment": {
+      "sys": {
+        "id": "develop",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 1,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "statement"
+      }
+    },
+    "locale": "en-US"
+  },
+  "fields": {
+    "slug": "/004/steps/statement-step.json",
+    "title": "statement-step.json title",
+    "body": "#### Heading 4",
+    "type": "markdown",
+    "primaryCallToAction": "Acknowledge!"
+  }
+}

@@ -1,15 +1,30 @@
 FactoryBot.define do
   factory :journey do
-    category { "catering" }
-    contentful_id { "12345678" }
-    liquid_template { "Your answer was {{ answer_47EI2X2T5EDTpJX9WjRR9p }}" }
-    started { true }
-    last_worked_on { Time.zone.now }
+    started { false }
+    state { :initial }
 
     association :user, factory: :user
+    association :category, factory: :category
 
-    trait :catering do
-      category { "catering" }
+    trait :with_sections do
+      transient do
+        sections_count { 1 }
+      end
+
+      sections do
+        Array.new(sections_count) { association(:section) }
+      end
+    end
+
+    trait :with_steps do
+      transient do
+        sections_count { 1 }
+        with_steps { false }
+      end
+
+      sections do
+        Array.new(sections_count) { association(:section, :with_steps) }
+      end
     end
   end
 end

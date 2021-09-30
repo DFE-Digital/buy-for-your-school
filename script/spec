@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# script/spec: Run commands against the test environment within Docker.
+
+set -e
+
+COMMAND_INPUT=$1
+
+if [ -n "$COMMAND_INPUT" ]; then
+  docker-compose -f docker-compose.test.yml run --rm test bundle exec rspec "$COMMAND_INPUT"
+else
+  docker-compose -f docker-compose.test.yml run --rm test bundle exec rake
+fi

@@ -20,9 +20,6 @@
     },
     "CONTENTFUL_ENVIRONMENT": {
       "value": "master"
-    },
-    "CONTENTFUL_PREVIEW_APP": {
-      "value": "false"
     }
   }
 }

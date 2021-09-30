@@ -1,10 +1,14 @@
 class SaveAnswer
   attr_accessor :answer, :step
+
   def initialize(answer:)
     self.answer = answer
     self.step = answer.step
   end
 
+  # Ensure journey is flagged as having been started
+  #
+  #
   def call(params:)
     result = Result.new(false, answer)
 
@@ -12,8 +16,8 @@ class SaveAnswer
     answer.assign_attributes(safe_params)
 
     if answer.valid?
-      answer.save
-      answer.step.journey.freshen!
+      answer.save!
+      answer.step.journey.start!
       ToggleAdditionalSteps.new(step: answer.step).call
       result.success = true
     end

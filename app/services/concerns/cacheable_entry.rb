@@ -1,18 +1,20 @@
+# A concern to allow the caching of Contentful entries.
 module CacheableEntry
   extend ActiveSupport::Concern
 
   def find_and_build_entry_from_cache(cache:, key:)
     Contentful::ResourceBuilder.new(
-      load_from_cache(cache: cache, key: key)
+      load_from_cache(cache: cache, key: key),
     ).run
   end
 
   def store_in_cache(cache:, key:, entry:)
     return unless entry.present? && entry.respond_to?(:raw)
+
     cache.set(key: key, value: JSON.dump(entry.raw.to_json))
   end
 
-  private
+private
 
   def load_from_cache(cache:, key:)
     # rubocop:disable Security/JSONLoad

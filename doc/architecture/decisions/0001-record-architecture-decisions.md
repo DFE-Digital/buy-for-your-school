@@ -1,10 +1,10 @@
-# 1. Record architecture decisions
+# 1. Record Architecture Decisions
 
 Date: 2019-06-28
 
 ## Status
 
-Accepted
+![Accepted](https://img.shields.io/badge/adr-accepted-green)
 
 ## Context
 

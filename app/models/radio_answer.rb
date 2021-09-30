@@ -1,5 +1,7 @@
-class RadioAnswer < ActiveRecord::Base
-  self.implicit_order_column = "created_at"
+# RadioAnswer is used to capture a radio button answer to a {Step}.
+class RadioAnswer < ApplicationRecord
+  include TaskCounters
+
   belongs_to :step
 
   validates :response, presence: true

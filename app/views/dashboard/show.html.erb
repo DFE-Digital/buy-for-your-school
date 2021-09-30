@@ -1,45 +1,47 @@
 <%= content_for :title, I18n.t("dashboard.header") %>
-<%= link_to I18n.t("generic.button.back"), root_path, class: "govuk-back-link" %>
 
 <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
 
-  <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
-  </div>
+    <div class="govuk-inset-text">
+      <%= link_to "Request free help and support with your specification", user_support_requests_path(current_user) %>
+    </div>
 
-  <% if @current_user.journeys.any? %>
-    <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
-        <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
+    <% if @journeys.none? %>
+      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
+      <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
+
+      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button", role: "button" %>
+    <% else %>
+      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button", role: "button" %>
+
+      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
+      <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
 
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Date started</th>
+            <th scope="col" class="govuk-table__header">Category</th>
             <th scope="col" class="govuk-table__header govuk-table__cell--numeric"> </th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <% @current_user.journeys.each do |journey| %>
+          <% @journeys.each do |journey| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= journey.created_at.strftime("%e %B %Y") %></td>
-              <td class="govuk-table__cell govuk-table__cell--numeric"><a href="<%= journey_path(journey) %>" class="govuk-link">Review and edit</a></td>
+              <td class="govuk-table__cell"><%= journey.created_at %></td>
+              <td class="govuk-table__cell"><%= journey.category.title %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                <%= link_to I18n.t("dashboard.edit.button"), journey_path(journey), class: "govuk-link" %>
+                -
+                <%= link_to I18n.t("dashboard.delete.button"), journey_path(journey, confirm: true), method: :delete, class: "govuk-link" %>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    </div>
-    <div class="govuk-grid-column-one-third">
-      <%= button_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button", method: :get %>
-    </div>
-  <% else %>
-    <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
-      <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
+    <% end %>
 
-      <%= button_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button", method: :get %>
-    </div>
-  <% end %>
-
-
+  </div>
 </div>

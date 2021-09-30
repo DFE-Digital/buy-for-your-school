@@ -1,5 +1,7 @@
-class LongTextAnswer < ActiveRecord::Base
-  self.implicit_order_column = "created_at"
+# LongTextAnswer is used to capture a long text answer to a {Step}.
+class LongTextAnswer < ApplicationRecord
+  include TaskCounters
+
   belongs_to :step
 
   validates :response, presence: true

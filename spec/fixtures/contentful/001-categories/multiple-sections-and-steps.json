@@ -30,6 +30,7 @@
     },
     "fields": {
         "title": "Catering",
+        "description": "Catering description",
         "sections": [
           {
             "sys": {
@@ -46,6 +47,7 @@
             }
           }
         ],
-        "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>"
+        "specificationTemplate": "<article id='specification'><h1>Liquid {{templating}}</h1></article>",
+        "slug": "catering"
     }
 }

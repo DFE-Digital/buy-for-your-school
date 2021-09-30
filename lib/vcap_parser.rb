@@ -16,12 +16,13 @@ class VcapParser
     end
 
     load_redis_config(
-      vcap_json.fetch("redis", []).first
+      vcap_json.fetch("redis", []).first,
     )
   end
 
   def self.load_redis_config(redis_config)
     return unless redis_config
+
     # Generate a REDIS_URL from the redis service uri
     ENV["REDIS_URL"] = redis_config.fetch("credentials").fetch("uri")
   end

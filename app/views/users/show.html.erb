@@ -1,0 +1,41 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= I18n.t("users.heading") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("users.correct_information_heading") %></h1>
+    <p class="govuk-body"><%= I18n.t("users.correct_information_instructions") %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% I18n.t("users.correct_information_list").each do |list_item| %>
+        <li><%= list_item.html_safe %></li>
+      <% end %>
+    </ul>
+    <dl class="govuk-summary-list">
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("user.full_name") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.full_name %>
+        </dd>
+      </div>
+
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("user.email") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.email %>
+        </dd>
+      </div>
+
+    </dl>
+
+    <%= link_to I18n.t("generic.button.yes_continue"), new_user_support_request_path(current_user),
+                class: "govuk-button", role: "button" %>
+    <p class="govuk-body">
+      <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path %>
+    </p>
+
+  </div>
+</div>

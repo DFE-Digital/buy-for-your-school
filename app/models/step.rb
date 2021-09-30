@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# A Step belongs to a {Task} and may have one of
+# {RadioAnswer}, {ShortTextAnswer}, {LongTextAnswer}, {SingleDateAnswer}, {CheckboxAnswers}, {NumberAnswer}, {CurrencyAnswer}.
 class Step < ApplicationRecord
   self.implicit_order_column = "order"
 
@@ -12,8 +16,18 @@ class Step < ApplicationRecord
   has_one :currency_answer
 
   scope :that_are_questions, -> { where(contentful_model: "question") }
+  scope :that_are_statements, -> { where(contentful_model: "statement") }
+
+  scope :visible, -> { where(hidden: false) }
+  scope :hidden, -> { where(hidden: true) }
+
   scope :ordered, -> { order(:order) }
 
+  after_save :update_task_counters
+
+  # Returns the answer to this step.
+  #
+  # @return [Mixed]
   def answer
     @answer ||=
       case contentful_type
@@ -27,20 +41,85 @@ class Step < ApplicationRecord
       end
   end
 
+  # @return [Boolean]
   def answered?
     !answer.nil?
   end
 
-  def primary_call_to_action_text
-    return I18n.t("generic.button.next") unless super.present?
-    super
+  # @return [Boolean]
+  def acknowledged?
+    task.statement_ids.include?(id)
   end
 
+  # @return [Boolean]
+  def completed?
+    answered? || acknowledged?
+  end
+
+  # Record step UUID confirming statement as read
+  #
+  # @return [Boolean]
+  def acknowledge!
+    task.statement_ids << id
+    task.save!
+  end
+
+  # Record step as skipped
+  #
+  # @return [Boolean]
+  def skip!
+    task.skipped_ids << id unless skipped?
+    task.save!
+  end
+
+  # Remove step from skipped list
+  #
+  # @return [Nil, Boolean]
+  def unskip!
+    task.save! if task.skipped_ids.delete(id)
+  end
+
+  # @return [Boolean]
+  def skipped?
+    task.skipped_ids.include?(id)
+  end
+
+  # @return [Boolean]
+  def last?
+    task.steps.visible.last == self
+  end
+
+  # @return [Boolean]
+  def last_skipped?
+    task.skipped_ids.last == id
+  end
+
+  # Button text to advance through steps
+  #
+  # @see https://design-system.service.gov.uk/components/button/
+  #
+  # @return [String]
+  def primary_call_to_action_text
+    super || I18n.t("generic.button.next")
+  end
+
+  # TODO: rename this
+  # @return [Boolean]
   def skippable?
     skip_call_to_action_text.present?
   end
 
+  # @return [Journey]
   def journey
     task.section.journey
+  end
+
+  # Trigger Task#tally_steps callback to refresh `Task.step_tally`
+  #
+  # @see {TaskCounters} concern
+  #
+  # @return [Boolean]
+  def update_task_counters
+    task.save
   end
 end

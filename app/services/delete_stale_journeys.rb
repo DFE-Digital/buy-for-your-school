@@ -1,14 +1,24 @@
+# Purge a {Journey} that has not been started or edited for X days
+#
 class DeleteStaleJourneys
+  # @return [Array<Journey>]
+  #
   def call
-    qualifying_journeys = Journey.where(started: false)
-      .where("last_worked_on < ?", date_a_journey_can_be_inactive_until)
-    qualifying_journeys.destroy_all
+    journeys.destroy_all
   end
 
-  private def date_a_journey_can_be_inactive_until
-    return 1.month.ago unless ENV["DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR"].present?
+private
 
-    day_count = ENV["DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR"].to_i
-    day_count.days.ago
+  # Journeys that were marked as stale and still untouched after 30 days
+  #
+  def journeys
+    Journey.stale.not_started.unedited_since(grace_period)
+  end
+
+  # Defaults to 30 days
+  #
+  # @return [Date]
+  def grace_period
+    30.days.ago
   end
 end

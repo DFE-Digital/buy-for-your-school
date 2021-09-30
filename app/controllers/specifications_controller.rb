@@ -1,39 +1,54 @@
 # frozen_string_literal: true
 
 class SpecificationsController < ApplicationController
+  breadcrumb "Dashboard", :dashboard_path
+
   before_action :check_user_belongs_to_journey?
 
+  # Render HTML and DOCX formats
+  #
+  # Log 'view_specification'
+  #
+  # @see SpecificationRenderer
   def show
+    breadcrumb "Create specification", journey_path(current_journey), match: :exact
+    breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
     @journey = current_journey
-    @visible_steps = @journey.visible_steps
-    @step_presenters = @visible_steps.map { |step| StepPresenter.new(step) }
-
-    specification_renderer = SpecificationRenderer.new(
-      template: @journey.liquid_template,
-      answers: GetAnswersForSteps.new(visible_steps: @visible_steps).call
-    )
 
     RecordAction.new(
       action: "view_specification",
       journey_id: @journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.contentful_id,
+      contentful_category_id: @journey.category.contentful_id,
       data: {
         format: request.format.symbol,
-        all_steps_completed: @journey.all_steps_completed?
-      }
+        all_tasks_completed: @journey.all_tasks_completed?,
+      },
     ).call
 
-    @specification_html = specification_renderer.to_html
+    file_name = @journey.all_tasks_completed? ? "specification.#{file_ext}" : "specification-incomplete.#{file_ext}"
 
     respond_to do |format|
       format.html
       format.docx do
-        file_name = @journey.all_steps_completed? ? "specification.docx" : "specification-incomplete.docx"
-        document_html = specification_renderer.to_document_html(journey_complete: @journey.all_steps_completed?)
-
-        render docx: file_name, content: document_html
+        document = SpecificationRenderer.new(journey: @journey).call
+        send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
+      # format.pdf do
+      #   document = SpecificationRenderer.new(journey: @journey, to: :pdf).call
+      #   send_data document, filename: file_name, type: "application/pdf"
+      # end
+      # format.odt do
+      #   document = SpecificationRenderer.new(journey: @journey, to: :odt).call
+      #   send_data document, filename: file_name, type: "application/vnd.oasis.opendocument.text"
+      # end
     end
+  end
+
+private
+
+  # @return [String]
+  def file_ext
+    params[:format]
   end
 end

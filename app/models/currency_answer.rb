@@ -1,9 +1,24 @@
-class CurrencyAnswer < ActiveRecord::Base
-  self.implicit_order_column = "created_at"
+# CurrencyAnswer is used to capture a currency answer to a {Step}.
+class CurrencyAnswer < ApplicationRecord
+  include TaskCounters
+
   belongs_to :step
 
-  validates :response, presence: true, numericality: {greater_than_or_equal_to: 0, message: "does not accept £ signs or other non numerical characters"}
+  validates :response,
+            presence: true,
+            numericality: {
+              greater_than_or_equal_to: 0,
+              # Use locale for this validation message
+              message: "does not accept £ signs or other non numerical characters",
+            }
 
+  validates_with RangeValidator
+
+  # Ensure no commas are present in the currency value
+  #
+  # @param [Float, String] value
+  #
+  # @return [Float]
   def response=(value)
     if value.is_a?(String)
       super(value.delete(","))

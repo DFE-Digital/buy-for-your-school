@@ -22,7 +22,7 @@
     <%= stylesheet_link_tag "application", media: 'all', "data-turbolinks-track" => "reload" %>
     <%= csrf_meta_tags %>
 
-    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+    <meta property="og:image" content="<%=image_path("govuk-opengraph-image.png")%>">
 
     <%= csp_meta_tag %>
   </head>
@@ -62,7 +62,7 @@
     <div class="govuk-width-container ">
       <div class="govuk-phase-banner">
         <p class="govuk-phase-banner__content">
-          <strong class="govuk-tag govuk-phase-banner__content__tag <%= custom_banner_tag_class %>">
+          <strong class="govuk-tag govuk-phase-banner__content__tag">
             <%= banner_tag %>
           </strong>
           <span class="govuk-phase-banner__text">
@@ -70,6 +70,7 @@
           </span>
         </p>
       </div>
+      <%= render partial: "layouts/breadcrumbs" %>
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <%= render partial: "layouts/messages" %>
         <%= yield %>

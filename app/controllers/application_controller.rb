@@ -8,35 +8,46 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def health_check
-    render json: {rails: "OK"}, status: :ok
+    render json: { rails: "OK" }, status: :ok
   end
 
-  protected
+protected
 
   helper_method :current_user
-  def current_user
-    @current_user ||= begin
-      user = FindOrCreateUserFromSession.new(session_hash: session.to_hash).call
-      return user if user.present?
 
-      false
-    end
+  # @return [User, Guest]
+  #
+  def current_user
+    @current_user ||= CurrentUser.new.call(uid: session[:dfe_sign_in_uid])
   end
 
+  # before_action - Ensure session is ended
+  #
+  # @return [nil]
+  #
   def authenticate_user!
-    return if current_user
+    return unless current_user.guest?
 
     session.delete(:dfe_sign_in_uid)
-    redirect_to root_path, notice: "You've been signed out."
+    redirect_to root_path, notice: I18n.t("banner.session.visitor")
   end
 
+  # @return [Journey]
+  #
   def current_journey
-    journey_id = params[:journey_id].present? ? params[:journey_id] : params[:id]
-    @current_journey ||= Journey.find(journey_id)
+    journey_id = params[:journey_id].presence || params[:id]
+    @current_journey ||= JourneyPresenter.new(Journey.find(journey_id))
   end
 
+  # `Before Action` on:
+  #   - steps_controller
+  #   - answers_contorller
+  #   - journeys_controller
+  #   - specifications_controller
+  #
   def check_user_belongs_to_journey?
     return true if current_journey.user == current_user
-    render "errors/not_found", status: 404
+
+    render "errors/not_found", status: :not_found
   end
 end

@@ -1,0 +1,17 @@
+<% if breadcrumb_trail.any? %>
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <% breadcrumb_trail.each_with_index do |crumb, index| %>
+        <li class="govuk-breadcrumbs__list-item <%= crumb.current? ? "current" : "" %>">
+          <% if crumb.current? && index > 0 %>
+            <%= crumb.name %>
+          <% else %>
+            <%= link_to crumb.name, crumb.url, { class: 'govuk-breadcrumbs__link' }.merge(crumb.current? ? { "aria-current" => "page" } : {}) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+<% elsif @back_url.present? %>
+  <%= link_to I18n.t("generic.button.back"), @back_url, class: "govuk-back-link" %>
+<% end %>

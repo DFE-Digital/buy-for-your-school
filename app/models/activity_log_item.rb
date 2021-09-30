@@ -1,4 +1,8 @@
+# Capture user activity metrics
+#
+# @see RecordAction
 class ActivityLogItem < ApplicationRecord
-  self.implicit_order_column = "created_at"
   self.table_name = "activity_log"
+
+  validates :user_id, :journey_id, :action, presence: true
 end

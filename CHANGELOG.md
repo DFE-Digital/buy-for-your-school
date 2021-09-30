@@ -6,6 +6,82 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+### Supported Unreleased
+
+- Added initial models for supported case management functions.
+- Added unique 6 digit ref for cases starting with 000001.
+- Added service to create SupportCases from SupportEnquiries.
+
+### Specify Unreleased
+- Added Support Request model.
+- Added full_name, email_address, phone_number, contact_preferences to User.
+
+**Rich Data**
+- Integrate fully with DSI to gather names, email and organisation at authentication
+- Add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
+- Make a post authentication API call to DSI for roles and organisations information
+- Register localhost with DSI for callbacks in development
+- Document DSI changes including creation of SSL self-certs required in development
+- Integrate with GIAS by downloading and manipulating data in CSV format
+- Include capacity to export GIAS data as `YAML` or `JSON` for later use
+- Validate and coerce data using `dry-schema` and `dry-transformer`
+- Introduce a `Guest` entity using `dry-struct` to assist with RBAC
+- Replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
+- Add strict typing into new functional service objects using `dry-types`
+- Add `foreman` as an optional convenience in development
+
+**House keeping**
+- bump Ruby to version `3.0.1`
+- document code using Yard
+- use CodeClimate in CI pipeline to highlight areas of improvement
+- change from `standardrb` to `rubocop-govuk` and convert lint style
+- generate PDF format Entity Relationship Diagram with upon DB migrations
+- add status badges to `README`
+- use `pry` in the Rails console
+- add additional developer tools to optional `Brewfile`
+- remove unused `GetAllContentfulEntries` service object
+- change route to destroy a session to be DELETE
+- separate out concern for stale journeys and their removal `FlagStaleJourneysJob`,
+  currently no-op until approved
+- clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
+  no-op until approved
+
+**Steps**
+- implement __interrupt pattern__ which introduces a step that is not semantically
+  a question but a statement
+- remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
+- add custom answer validation logic which can be controlled in Contentful
+- fix progression to the next incomplete task
+- add `skipped_ids` to `Task` to allow users to skip questions
+
+**Multiple Categories**
+- remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
+- introduce `Category` model to mirror Contentful category entity
+- add category `title` column to the dashboard
+- add `journey_maps#index` to allow content designers to switch category
+- add `categories#index` to enable users to create a specification from a chosen category
+- rename `journey_maps` to `design` to allow more intuitive URLs
+- WIP: data migration
+- update Contentful webhook handling to pick up updates to `Category` when they are published
+
+**Dashboard functionality**
+- add explicit ordering to the task model to allow continuing to the next unanswered task
+- add extensible tally of counted steps to the task
+- add state to `Journey` (initial, stale, archive or remove)
+- drop `Journey.last_worked_on` in favour of `updated_at`
+- allow user to (soft) delete a specification
+
+**Preview functionality**
+- previously this depended upon a dedicated environment which used the main branch
+  thereby preventing preview functionality in staging
+- a memoised client for both Contentful delivery and preview is available for any environment
+- `Content::Connector` instantiates both clients
+- `Content::Client` is used internally as an interface to the Contentful ruby gem
+- `APP_ENV_{ENV}_CONTENTFUL_ACCESS_TOKEN` is replaced by
+  `APP_ENV_{ENV}_CONTENTFUL_DELIVERY_TOKEN` and `APP_ENV_{ENV}_CONTENTFUL_PREVIEW_TOKEN`
+
+## Diary Studies using the live environment
+
 ## [release-015] - 2021-06-17
 
 - always show task title even if it contains a single step

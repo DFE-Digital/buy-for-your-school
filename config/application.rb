@@ -8,18 +8,16 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require "./lib/dfe_sign_in"
-
 module BuyForYourSchool
   class Application < Rails::Application
     config.generators do |g|
       g.test_framework :rspec,
-        fixtures: true,
-        view_specs: false,
-        helper_specs: false,
-        routing_specs: false,
-        controller_specs: false,
-        request_specs: false
+                       fixtures: true,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       controller_specs: false,
+                       request_specs: false
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
 
@@ -43,7 +41,7 @@ module BuyForYourSchool
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
     config.i18n.default_locale = :en
     config.i18n.enforce_available_locales = false
   end

@@ -11,6 +11,9 @@ if [ -n "$DEBUG" ]; then
   set -x
 fi
 
+DATE=$(date +'%s')
+echo "==> Current date is '$DATE'"
+
 echo "==> Updating..."
 script/update
 
@@ -20,16 +23,17 @@ if [ -n "$TEST_FILE" ]; then
   echo "==> Running the tests matching '$TEST_FILE'..."
   bundle exec rspec --pattern "$TEST_FILE"
 else
-  if [ -n "$AUTOMATICALLY_FIX_LINTING" ]; then
-    echo "==> Linting Ruby in fix mode..."
-    bundle exec standardrb --fix
-  else
-    echo "==> Linting Ruby..."
-    bundle exec standardrb
-  fi
+  echo "==> Linting Ruby..."
+  bundle exec rake rubocop
+
+  #echo "==> CC Test Reporter Before Build..."
+  #GIT_COMMITTED_AT=$DATE cc-test-reporter before-build
 
   echo "==> Running the tests..."
   bundle exec rspec
+
+  #echo "==> CC Test Reporter After Build... "
+  #GIT_COMMITTED_AT=$DATE cc-test-reporter after-build --debug -t simplecov
 
   echo "==> Running Brakeman"
   bundle exec brakeman -o /dev/stdout

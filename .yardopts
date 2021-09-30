@@ -1,0 +1,10 @@
+--title "Get Help Self-Serve Buying"
+--output-dir documentation
+--plugin junk
+--protected
+--private
+-
+CHANGELOG.md
+LICENCE
+doc/*.md
+doc/architecture/decisions/*.md

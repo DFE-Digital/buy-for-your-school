@@ -1,0 +1,32 @@
+<%= content_for :title, @category.title %>
+
+<h1 class="govuk-heading-xl">
+  <%= @category.title %>
+</h1>
+
+<ol class="govuk-list govuk-list--number">
+  <% @steps.each do |entry| %>
+    <li class="govuk-!-margin-bottom-4">
+      <b>
+      <%= link_to entry.title, entry.contentful_url, target: :blank, class: "govuk-link" %>
+      </b>
+
+      <br />
+
+      <small>
+        <i><%= entry.slug %></i>
+        <br />
+        Type: <code><%= entry.type %></code>
+        <br />
+        <%# TODO: why do step entries use "answer_" as a prefix? %>
+        <%= I18n.t("design.spec_template_tag_title") %>: <code id="liquid_tag">{{ answer_<%= entry.id %> }}</code>
+        <br />
+        Revision: <i><%= entry.revision %></i>
+        <br />
+        Updated at: <i><%= entry.updated_at %></i>
+        <br />
+
+      </small>
+    </li>
+  <% end %>
+</ol>

@@ -1,10 +1,18 @@
+# Fetch and cache Contentful sections for the category
+#
 class GetSectionsFromCategory
-  attr_accessor :category
-  def initialize(category:)
-    self.category = category
+  # @param category [Contentful::Entry]
+  # @param client [Content::Client]
+  #
+  def initialize(category:, client: Content::Client.new)
+    @category = category
+    @client = client
   end
 
+  # @return [Array<Contentful::Entry>]
   def call
-    category.sections.map { |section| GetEntry.new(entry_id: section.id).call }
+    @category.sections.map do |section|
+      GetEntry.new(entry_id: section.id, client: @client).call
+    end
   end
 end

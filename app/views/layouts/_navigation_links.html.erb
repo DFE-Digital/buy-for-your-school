@@ -1,8 +1,8 @@
 <nav class="navbar-component">
   <ul id="navigation" class="govuk-header__navigation navbar-component__navigation", aria-label="Top level navigation">
-    <% if current_user.present? %>
+    <% unless current_user.guest? %>
       <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-        <%= link_to I18n.t("generic.button.sign_out"), auth_dfe_signout_path, method: :delete, class: "govuk-header__link" %>
+        <%= link_to I18n.t("generic.button.sign_out"), sign_out_path, method: :delete, class: "govuk-header__link" %>
       </li>
     <% end %>
   </ul>

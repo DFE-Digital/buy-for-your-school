@@ -14,28 +14,33 @@ class WarmEntryCacheJob < ApplicationJob
   def perform
     backup_old_cache
 
-    category = GetCategory.new(category_entry_id: ENV["CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID"]).call
-    sections = GetSectionsFromCategory.new(category: category).call
-    tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
+    categories = Content::Client.new.by_type(:category)
 
-    begin
-      tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
-    rescue GetStepsFromTask::RepeatEntryDetected
-      restore_old_cache
-      Rollbar.error("Cache warming task failed. The old cached data was extended by 24 hours.")
+    categories.each do |contentful_category|
+      # TODO: these build steps are repeated may times, can we consolidate?
+      category = GetCategory.new(category_entry_id: contentful_category.id).call
+      sections = GetSectionsFromCategory.new(category: category).call
+      tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
 
-      return
+      begin
+        tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
+      rescue GetStepsFromTask::RepeatEntryDetected
+        restore_old_cache
+        Rollbar.error("Cache warming task failed. The old cached data was extended by 24 hours.")
+
+        return false
+      end
     end
 
     Rollbar.info("Cache warming task complete.")
   end
 
-  private
+private
 
   def cache
     @cache ||= Cache.new(
       enabled: ENV.fetch("CONTENTFUL_ENTRY_CACHING"),
-      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72)
+      ttl: ENV.fetch("CONTENTFUL_ENTRY_CACHING_TTL", 60 * 60 * 72),
     )
   end
 
@@ -43,7 +48,7 @@ class WarmEntryCacheJob < ApplicationJob
     move_cached_items(
       keys: RedisCache.redis.keys("#{Cache::ENTRY_CACHE_KEY_PREFIX}:*"),
       old_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
-      new_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:"
+      new_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
     )
   end
 
@@ -51,12 +56,12 @@ class WarmEntryCacheJob < ApplicationJob
     move_cached_items(
       keys: RedisCache.redis.keys("backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:*"),
       old_key_prefix: "backup:#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
-      new_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:"
+      new_key_prefix: "#{Cache::ENTRY_CACHE_KEY_PREFIX}:",
     )
   end
 
   def move_cached_items(keys:, old_key_prefix:, new_key_prefix:)
-    keys.map { |key|
+    keys.map do |key|
       entry_id = key.sub(old_key_prefix, "")
       new_cache_key = "#{new_key_prefix}#{entry_id}"
 
@@ -64,6 +69,6 @@ class WarmEntryCacheJob < ApplicationJob
 
       cache.set(key: new_cache_key, value: value)
       Cache.delete(key: key)
-    }
+    end
   end
 end

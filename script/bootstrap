@@ -20,7 +20,7 @@ if [ -z "$DOCKER" ]; then
     fi
   fi
 
-  if [ -f .ruby-version ]; then
+  if [ -f .ruby-version ] && [ "$(which rbenv)" ]; then
     eval "$(rbenv init -)"
 
     if [ -z "$(rbenv version-name 2>/dev/null)" ]; then
@@ -30,7 +30,7 @@ if [ -z "$DOCKER" ]; then
     fi
   fi
 
-  if [ -f .node-version ]; then
+  if [ -f .node-version ] && [ "$(which nodenv)" ]; then
     eval "$(nodenv init -)"
 
     if [ -z "$(nodenv version-name 2>/dev/null)" ]; then
@@ -45,7 +45,7 @@ if ! command -v bundle >/dev/null 2>&1; then
   echo "==> Installing Bundler..."
   gem install bundler
 
-  if [ -z "$DOCKER" ]; then
+  if [ -z "$DOCKER" ] && [ "$(which rbenv)" ]; then
     rbenv rehash
   fi
 fi

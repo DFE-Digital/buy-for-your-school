@@ -1,32 +1,47 @@
 class Preview::EntriesController < ApplicationController
-  before_action :check_app_is_running_in_preview_env
-
   def show
-    @journey = Journey.create(
-      category: "Preview",
-      contentful_id: 0,
-      user: current_user,
-      liquid_template: "<p>N/A</p>"
-    )
-    section = Section.create(title: "Preview Section", journey: @journey)
-    task = Task.create(title: "Preview Task", section: section)
+    contentful_step = GetEntry.new(entry_id: params[:id], client: client).call
 
-    contentful_entry = GetEntry.new(entry_id: entry_id).call
-    @step = CreateStep.new(
-      task: task, contentful_entry: contentful_entry, order: 0
+    category = Category.find_or_create_by!(
+      title: "Designer Preview Category",
+      contentful_id: 0,
+      description: "Used to demo a step before publishing",
+      liquid_template: "<p>N/A</p>",
+      slug: "preview",
+    )
+
+    journey = Journey.find_or_create_by!(
+      category: category,
+      user: current_user,
+      state: 3, # flagged for deletion
+    )
+
+    section = Section.find_or_create_by!(
+      title: "Designer Preview Section",
+      contentful_id: 0,
+      order: 0,
+      journey: journey,
+    )
+
+    task = Task.find_or_create_by!(
+      title: "Designer Preview Task",
+      contentful_id: 0,
+      order: 0,
+      section: section,
+    )
+
+    step = CreateStep.new(
+      task: task,
+      contentful_step: contentful_step,
+      order: 0,
     ).call
 
-    redirect_to journey_step_path(@journey, @step)
+    redirect_to journey_step_path(journey, step, preview: true)
   end
 
-  private
+private
 
-  def entry_id
-    params[:id]
-  end
-
-  def check_app_is_running_in_preview_env
-    return if ENV["CONTENTFUL_PREVIEW_APP"].eql?("true")
-    render "errors/not_found", status: 404
+  def client
+    Content::Client.new(:preview)
   end
 end

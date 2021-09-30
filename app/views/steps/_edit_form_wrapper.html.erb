@@ -1,6 +1,6 @@
-<%= content_for :title, @step_presenter.title %>
-<%= link_to I18n.t("generic.button.back"), @back_url, class: "govuk-back-link" %>
+<%= content_for :title, @step.title %>
 
+<%# TODO: A heading may be required here to satisfy accessibility assessment %>
 <%= form_for @answer, as: :answer, method: "put", url: journey_step_answer_path(@journey, @step, @answer) do |f| %>
   <%= yield f %>
   <%= f.submit I18n.t("generic.button.update"), class: "govuk-button" %>
