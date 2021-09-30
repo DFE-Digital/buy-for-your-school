@@ -1,4 +1,3 @@
-
 RSpec.describe ApplicationHelper, type: :helper do
   describe "#banner_tag" do
     it "returns the beta tag by default" do
