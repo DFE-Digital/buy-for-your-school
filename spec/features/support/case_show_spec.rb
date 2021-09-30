@@ -3,7 +3,6 @@ RSpec.feature "Case Management Dashboard - show" do
   let(:support_case) { create(:support_case, state: state) }
   let(:base_url) { "/support/cases/#{support_case.id}" }
 
-
   before do
     user_is_signed_in
     visit base_url
@@ -36,7 +35,8 @@ RSpec.feature "Case Management Dashboard - show" do
   describe "Request details" do
     before { visit "#{base_url}#request-details" }
 
-    it "lists request details" do
+    #TODO: add request details in next PR
+    xit "lists request details" do
       within "#request-details" do
         expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
         expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"
@@ -69,13 +69,6 @@ RSpec.feature "Case Management Dashboard - show" do
     it "does not show a link to change case owner" do
       within "#case-history" do
         expect(page).not_to have_selector("p.govuk-body")
-      end
-    end
-
-    it "shows accordion" do
-      within "#case-history" do
-        expect(find(".govuk-accordion"))
-          .to have_text "Phone"
       end
     end
   end
