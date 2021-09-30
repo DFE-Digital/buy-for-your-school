@@ -76,14 +76,14 @@ jobs:
         env:
           TF_VAR_environment: 'research'
         run: script/deploy-terraform
-      - name: Notify
-        uses: 8398a7/action-slack@v3
-        if: failure()
-        with:
-          fields: workflow,job,commit,repo,ref,author,took
-          status: ${{ job.status }}
-        # env:
-        #   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify
+      #   uses: 8398a7/action-slack@v3
+      #   if: failure()
+      #   with:
+      #     fields: workflow,job,commit,repo,ref,author,took
+      #     status: ${{ job.status }}
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy_preview:
     needs: build
@@ -100,14 +100,14 @@ jobs:
         env:
           TF_VAR_environment: 'preview'
         run: script/deploy-terraform
-      - name: Notify
-        uses: 8398a7/action-slack@v3
-        if: failure()
-        with:
-          fields: workflow,job,commit,repo,ref,author,took
-          status: ${{ job.status }}
-        # env:
-        #   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify
+      #   uses: 8398a7/action-slack@v3
+      #   if: failure()
+      #   with:
+      #     fields: workflow,job,commit,repo,ref,author,took
+      #     status: ${{ job.status }}
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy_production:
     needs: build
