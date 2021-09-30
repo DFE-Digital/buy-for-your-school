@@ -47,7 +47,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     fill_in "answer[response]", with: "\r\n\r\nfoo\r\n\r\n"
     click_on "Continue"
     click_on "Back"
-    expect(page.html).to include "<p></p>\n\n<p>foo</p>"
+    expect(page).to have_text "\r\r \r\r foo\r\r \r\r"
   end
 
   # CurrencyAnswerPresenter#response
