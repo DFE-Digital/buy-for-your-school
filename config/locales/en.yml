@@ -17,6 +17,7 @@ en:
       update: Update
       yes_continue: Yes, continue
       exit_without_save: Exit without saving
+      save: Save
     label:
       what_is: "What is %{label}?"
   banner:
@@ -247,7 +248,13 @@ en:
 
       show:
         requested_at: Request sent on %{time}
+        change_owner: Change case owner
+        send_email: Send email
+        resolve: Resolve case
+        reopen: Reopen case
         assign: Assign to case worker
+        add_note: Add a case note
+        add_interaction: Log contact with school
         back: Back to case list
         case_owner: Case owner
         change_case_owner: change
@@ -255,3 +262,17 @@ en:
       edit:
         assign_to_agent: Assign to caseworker
         assign: Assign
+
+    interactions:
+
+        new:
+          contact_with_school: Contact with school
+          add_case_note: Add case note
+          type_of_contact: Type of contact
+          phone_call: Phone call
+          email_from_school: Email from school
+          email_to_school: Email to school
+          contact_details: Contact details
+          contact_details_hint: Add details of the phone call or copy and paste the email here
+          created_flash: "%{type} added to case"
+
