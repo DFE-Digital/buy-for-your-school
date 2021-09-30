@@ -35,7 +35,7 @@ RSpec.feature "Case Management Dashboard - show" do
   describe "Request details" do
     before { visit "#{base_url}#request-details" }
 
-    #TODO: add request details in next PR
+    # TODO: add request details in next PR
     xit "lists request details" do
       within "#request-details" do
         expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
