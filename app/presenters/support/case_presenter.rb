@@ -27,7 +27,7 @@ module Support
 
     # @return [String]
     def last_updated_at
-      interactions&.last&.created_at || enquiry.created_at
+      interactions.present? ? interactions&.last&.created_at : enquiry.created_at
     end
 
     # @return [Array<InteractionPresenter>]

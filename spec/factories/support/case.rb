@@ -7,6 +7,7 @@ FactoryBot.define do
 
     association :enquiry, factory: :support_enquiry
     association :category, factory: :support_category
+    association :agent, factory: :support_agent
     sub_category_string { "category subtitle" }
 
     trait :with_documents do

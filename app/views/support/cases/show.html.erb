@@ -35,6 +35,13 @@
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">
+      <% if @current_case.agent.present? %>
+      <p class="govuk-body">
+        <%= I18n.t("support.cases.show.case_owner", owner: @current_case.agent_name ) %>
+        <%= link_to I18n.t("support.cases.show.change_case_owner"), edit_support_case_path(@current_case) %>
+      </p>
+    <% end %>
+      
       <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions %>
       <%= render "support/cases/case_history/enquiry", enquiry: @current_case.enquiry %>
     </div>

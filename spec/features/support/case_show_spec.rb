@@ -21,9 +21,15 @@ RSpec.feature "Case Management Dashboard - show" do
     end
   end
 
-  it "School details section contain contact name" do
-    within "#school-details" do
-      expect(find(".govuk-summary-list")).to have_text "Contact name"
+  describe "Request details" do
+    before { visit "#{base_url}#case-details" }
+
+    it "lists request details" do
+      within "#case-details" do
+        expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
+        expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"
+        expect(all(".govuk-summary-list__row")[2]).to have_text "Attached specification"
+      end
     end
   end
 
