@@ -1,7 +1,6 @@
 require "dry-initializer"
 require "types"
 require "pandoc-ruby"
-require "pry"
 
 # Document converter
 #
@@ -19,7 +18,6 @@ class DocumentFormatter
   #
   # @return [String]
   def call
-    # binding.pry
     PandocRuby.convert(content, "--strip-comments", from: from, to: to).to_s
   end
 end

@@ -15,6 +15,10 @@ RSpec.feature "Users can see a start page" do
     expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure for your school"
   end
 
+  it "has the right content headers" do
+    expect(page).to have_xpath("//meta[@name=\"robots\" and contains(@content, \"noindex,nofollow\")]", visible: :hidden)
+  end
+
   # Who this service is for
   # How this service works
   scenario do
