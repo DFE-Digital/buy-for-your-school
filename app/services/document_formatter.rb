@@ -14,7 +14,8 @@ class DocumentFormatter
   option :from, ReaderFormats
   option :to, WriterFormats
 
-  # Return the converted document
+  # Return the converted document.
+  # HTML comments are stripped out.
   #
   # @return [String]
   def call
