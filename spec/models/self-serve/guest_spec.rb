@@ -7,9 +7,9 @@ RSpec.describe Guest do
     end
   end
 
-  describe "#admin?" do
+  describe "#agent?" do
     specify do
-      expect(guest.admin?).to be false
+      expect(guest.agent?).to be false
     end
   end
 end

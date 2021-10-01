@@ -58,9 +58,10 @@ Rails.application.routes.draw do
   #
   # Supported ------------------------------------------------------------------
   #
-  namespace :support do
-    get "admin", to: "admin#show"
+  get "support", to: "support/pages#start_page", as: :support_root
 
+  namespace :support do
+    resources :agents, only: %i[create]
     resources :cases, only: %i[index show edit update] do
       resources :interactions, only: %i[new create]
     end
