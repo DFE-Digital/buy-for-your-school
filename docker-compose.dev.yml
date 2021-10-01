@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   web:
     build:
@@ -37,11 +36,10 @@ services:
       - dev
 
   redis:
-    image: redis
+    extends:
+      file: docker-compose.base.yml
     ports:
       - 6379:6379
-    volumes:
-      - redis-data:/data
     networks:
       - dev
 

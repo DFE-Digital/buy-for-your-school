@@ -1,0 +1,44 @@
+services:
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/srv/app
+    tty: true
+    stdin_open: true
+
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - dev
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - dev
+
+  sidekiq:
+    image: buy_for_your_school:dev
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/srv/app
+    networks:
+      - dev
+
+networks:
+  dev:
+volumes:
+  db-data:
+  redis-data:
