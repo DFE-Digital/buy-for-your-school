@@ -1,3 +1,8 @@
+/**
+* Specification templates have no classes of their own so we're overriding the default styling to
+* keep the look consistent.
+**/
+
 #specification, .specification {
   h2 {
     @extend .govuk-heading-m;
@@ -14,6 +19,11 @@
   ol {
     @extend .govuk-list;
     @extend .govuk-list--number;
+  }
+
+  ul {
+    @extend .govuk-list;
+    @extend .govuk-list--bullet;
   }
 
   table {

@@ -136,7 +136,7 @@ en:
 
   # /journeys#show
   journeys_title: Create a specification to procure %{category} for your school
-  journeys_body: Answer all questions in each section to build a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time.
+  journeys_body: Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time.
   task_list:
     status:
       not_started: Not started
