@@ -5,7 +5,7 @@
     <h1 class="govuk-heading-xl"><%= I18n.t("dashboard.header") %></h1>
 
     <div class="govuk-inset-text">
-      <%= link_to "Request free help and support with your specification", user_support_requests_path(current_user) %>
+      <%= link_to "Request free help and support with your specification", profile_path %>
     </div>
 
     <% if @journeys.none? %>

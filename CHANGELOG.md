@@ -8,27 +8,32 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ### Supported Unreleased
 
-- Added initial models for supported case management functions.
-- Added unique 6 digit ref for cases starting with 000001.
-- Added service to create SupportCases from SupportEnquiries.
+- add initial models for supported case management functions
+- add unique 6 digit ref for cases starting with 000001
+- add service to create SupportCases from SupportEnquiries
 
 ### Specify Unreleased
-- Added Support Request model.
-- Added full_name, email_address, phone_number, contact_preferences to User.
+
+**Support Requests**
+- add form to request support
+- use `dry-validation` for complex form validations
+- provide a better more accessible user experience using the form error summary
+- send a confirmation email upon submission
 
 **Rich Data**
-- Integrate fully with DSI to gather names, email and organisation at authentication
-- Add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
-- Make a post authentication API call to DSI for roles and organisations information
-- Register localhost with DSI for callbacks in development
-- Document DSI changes including creation of SSL self-certs required in development
-- Integrate with GIAS by downloading and manipulating data in CSV format
-- Include capacity to export GIAS data as `YAML` or `JSON` for later use
-- Validate and coerce data using `dry-schema` and `dry-transformer`
-- Introduce a `Guest` entity using `dry-struct` to assist with RBAC
-- Replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
-- Add strict typing into new functional service objects using `dry-types`
-- Add `foreman` as an optional convenience in development
+- integrate fully with DSI to gather names, email and organisation at authentication
+- add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
+- make a post authentication API call to DSI for roles and organisations information
+- register localhost with DSI for callbacks in development
+- document DSI changes including creation of SSL self-certs required in development
+- integrate with GIAS by downloading and manipulating data in CSV format
+- include capacity to export GIAS data as `YAML` or `JSON` for later use
+- validate and coerce data using `dry-schema` and `dry-transformer`
+- introduce a `Guest` entity using `dry-struct` to assist with RBAC
+- replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
+- add strict typing into new functional service objects using `dry-types`
+- add `foreman` as an optional convenience in development
+- store identifying information for a `User`
 
 **House keeping**
 - bump Ruby to version `3.0.1`

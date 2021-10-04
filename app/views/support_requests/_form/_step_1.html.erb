@@ -1,8 +1,6 @@
-<span class="govuk-caption-l"><%= I18n.t("support_requests.sections.titles.about_you") %></span>
-<div class="govuk-form-group">
-  <%= form.govuk_text_field :phone_number,
-                            label: { text: I18n.t("support_requests.sections.about_you.phone_number"), size: "l" },
-                            hint:  { text: I18n.t("support_requests.sections.about_you.hint") }%>
-
-
-</div>
+<%= form.govuk_text_field :phone_number,
+                          autofocus: true,
+                          caption: { text: I18n.t("support_requests.caption.phone_number"), size: "l" },
+                          label: { text: I18n.t("support_requests.label.phone_number"), size: "l" },
+                          hint:  { text: I18n.t("support_requests.hint.phone_number") }
+                        %>

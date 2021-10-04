@@ -2,18 +2,15 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-xl">
-      <%= I18n.t("support_requests.start.h1_heading") %>
+      <%= I18n.t("support_requests.heading") %>
     </h1>
 
-    <p class="govuk-body">
-      <%= I18n.t("support_requests.start.p_intro_1") %>
-    </p>
+    <% I18n.t("support_requests.intro").each do |paragraph| %>
+      <p class="govuk-body"><%= paragraph %></p>
+    <% end %>
 
-    <p class="govuk-body">
-      <%= I18n.t("support_requests.start.p_intro_2") %>
-    </p>
 
-    <a href="<%= users_path %>" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
+    <a href="<%= profile_path %>" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
       <%= I18n.t("generic.button.start") %>
       <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" focusable="false">
         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
@@ -21,15 +18,24 @@
     </a>
 
     <h2 class="govuk-heading-m">
-      <%= I18n.t("support_requests.start.h2_heading") %>
+      <%= I18n.t("support_requests.subheading") %>
     </h2>
 
     <p class="govuk-body">You can:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <% I18n.t("support_requests.start.you_can_list").each do |list_item| %>
-        <li><%= list_item.html_safe %></li>
-      <% end %>
+      <li>
+        <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/writing-a-specification" class="govuk-link">read about writing a specification</a>
+      </li>
+      <li>
+        find out more about <a href="https://www.gov.uk/guidance/buying-for-schools" class="govuk-link">planning for what you're buying</a>
+      </li>
+      <li>
+        read <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools" class="govuk-link">information on finding the right way to buy</a> for your school
+      </li>
+      <li>
+        use our <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">find a framework service</a> to see if you can buy what you need using a DfE recommended framework
+      </li>
     </ul>
 
   </div>

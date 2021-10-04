@@ -1,14 +1,31 @@
-<%= form_for @support_form_wizard, as: :support_form_wizard, url: url, method: method do |form| %>
+<% if @support_request&.persisted? %>
+  <%# link_to I18n.t("generic.button.back"), support_request_path(@support_request), class: "govuk-back-link" %>
+  <%= link_to I18n.t("generic.button.back"), :back, class: "govuk-back-link" %>
+<% else %>
+  <%# link_to I18n.t("generic.button.back"), new_support_request_path(step: @support_form.back), class: "govuk-back-link" %>
+<% end %>
 
-  <%= render "support_requests/_form/step_1", form: form if @support_form_wizard.step == 1 %>
-  <%= render "support_requests/_form/step_2", form: form if @support_form_wizard.step == 2 %>
-  <%= render "support_requests/_form/step_3", form: form if @support_form_wizard.step == 3 %>
-  <%= render "support_requests/_form/step_4", form: form if @support_form_wizard.step == 4 %>
+<% if Rails.env.development? %>
+  <%= debug @support_request&.attributes %>
+  <%= debug @support_form.step %>
+  <%= debug @support_form.to_h %>
+<% end %>
 
-  <%= form.hidden_field :step, value: form.object.step %>
+<%= form_with model: @support_form, scope: :support_form, url: path, method: verb  do |form| %>
+  <%# form.govuk_error_summary(presenter: presenter_class) %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :step, value: @support_form.step %>
+  <%= render "support_requests/_form/step_#{@support_form.step}", form: form %>
+
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
 
 <p class="govuk-body">
-  <%= link_to I18n.t("generic.button.exit_without_save"), dashboard_path %>
+  <% if @support_request&.persisted? %>
+    <%= link_to I18n.t("generic.button.cancel"), support_request_path(@support_request), class: "govuk-link" %>
+  <% else %>
+    <%= link_to I18n.t("generic.button.cancel"), dashboard_path, class: "govuk-link" %>
+  <% end %>
 </p>
+

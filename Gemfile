@@ -8,9 +8,9 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "climate_control"
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.16"
-gem "dry-schema"
 gem "dry-struct"
 gem "dry-transformer"
+gem "dry-validation"
 gem "govuk_design_system_formbuilder", "~> 2.7"
 gem "high_voltage"
 gem "httpclient"
