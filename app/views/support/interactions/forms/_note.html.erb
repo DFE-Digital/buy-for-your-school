@@ -1,6 +1,6 @@
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
-    <%= form.label :body, I18n.t("support.interactions.new.add_case_note"), class: "govuk-label govuk-label--l" %>
+    <%= form.label :body, I18n.t("support.interactions.headers.add_case_note"), class: "govuk-label govuk-label--l" %>
   </h1>
   <%= form.text_area :body, class: "govuk-textarea", rows: 5 %>
   <%= form.hidden_field :event_type, value: "note" %>

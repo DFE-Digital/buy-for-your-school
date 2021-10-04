@@ -2,7 +2,7 @@
   <div class="govuk-accordion__section-header">
     <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-case-history-enquiry-heading">
-          <%= I18n.t("support.enquiries.show.header") %>
+          <%= I18n.t("support.interactions.types.request_for_support") %>
         </span>
     </h2>
     <div class="govuk-accordion__section-summary govuk-body" id="accordion-case-history-enquiry-received-at">
@@ -13,7 +13,7 @@
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.enquiries.show.category") %>
+          <%= I18n.t("support.cases.labels.category") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= enquiry.category.title %>
@@ -21,18 +21,21 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.enquiries.show.description") %>
+          <%= I18n.t("support.cases.labels.problem_description") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= enquiry.message %>
+          I've completed a specification, but I'm not sure what to do with it now. How do I contact suppliers?
         </dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.enquiries.show.specification") %>
+          <%= I18n.t("support.cases.labels.attached_specification") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <% "TODO: Render link to view documents" %>
+          <a href="#">
+            specification-1.pdf
+          </a>
         </dd>
       </div>
     </dl>

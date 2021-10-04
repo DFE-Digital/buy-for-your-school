@@ -16,7 +16,7 @@ module Support
       @interaction = Interaction.new(interaction_params)
       if @interaction.save
         redirect_to support_case_path(@interaction.case),
-                    notice: I18n.t("support.interactions.new.created_flash", type: @interaction.event_type).humanize
+                    notice: I18n.t("support.interactions.messages.created_flash", type: @interaction.event_type).humanize
       else
         render :new, locals: { option: safe_interaction }
       end

@@ -2,7 +2,7 @@
   <div class="govuk-accordion__section-header">
     <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-case-history-enquiry-heading">
-          <%= I18n.t("support.interactions.new.#{interaction.event_type}") %>
+          <%= I18n.t("support.interactions.types.#{interaction.event_type}") %>
         </span>
     </h2>
     <div class="govuk-accordion__section-summary govuk-body" id="accordion-case-history-enquiry-received-at">
@@ -13,7 +13,7 @@
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.interactions.show.created_by") %>
+          <%= I18n.t("support.interactions.labels.created_by") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= interaction.agent.full_name %>
@@ -21,7 +21,7 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.interactions.show.body") %>
+          <%= I18n.t("support.interactions.labels.body") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= interaction.body %>

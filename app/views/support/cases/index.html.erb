@@ -2,44 +2,44 @@
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
       <a class="govuk-tabs__tab" href="#my-cases">
-        <%= I18n.t("support.cases.my_cases") %>
+        <%= I18n.t("support.cases.lists.my_cases") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#new-cases">
-        <%= I18n.t("support.cases.new_cases") %>
+        <%= I18n.t("support.cases.lists.new_cases") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#all-cases">
-        <%= I18n.t("support.cases.all_cases") %>
+        <%= I18n.t("support.cases.lists.all_cases") %>
       </a>
     </li>
   </ul>
 
   <div class="govuk-tabs__panel" id="my-cases">
-    <h2 class="govuk-heading-l"><%= I18n.t("support.cases.my_cases") %></h2>
+    <h2 class="govuk-heading-l"><%= I18n.t("support.cases.lists.my_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <% if @cases.none? %>
           <h1 class="govuk-heading-l">
-            <%= I18n.t("support.cases.not_found") %>
+            <%= I18n.t("support.cases.lists.not_found") %>
           </h1>
         <% else %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.organisation") %>
+                  <%= I18n.t("support.cases.labels.organisation") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.category") %>
+                  <%= I18n.t("support.cases.labels.category") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.status") %>
+                  <%= I18n.t("support.cases.labels.status") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.index.last_updated") %>
+                  <%= I18n.t("support.cases.labels.last_updated") %>
                 </th>
               </tr>
             </thead>
@@ -55,28 +55,28 @@
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="new-cases">
-    <h2 class="govuk-heading-l"><%= I18n.t("support.cases.new_cases") %></h2>
+    <h2 class="govuk-heading-l"><%= I18n.t("support.cases.lists.new_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <% if @cases.none? %>
           <h1 class="govuk-heading-l">
-            <%= I18n.t("support.cases.not_found") %>
+            <%= I18n.t("support.cases.lists.not_found") %>
           </h1>
         <% else %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.organisation") %>
+                  <%= I18n.t("support.cases.labels.organisation") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.category") %>
+                  <%= I18n.t("support.cases.labels.category") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.status") %>
+                  <%= I18n.t("support.cases.labels.status") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.index.date_received") %>
+                  <%= I18n.t("support.cases.labels.date_received") %>
                 </th>
               </tr>
             </thead>
@@ -92,31 +92,31 @@
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="all-cases">
-    <h2 class="govuk-heading-l"><%= I18n.t("support.cases.all_cases") %></h2>
+    <h2 class="govuk-heading-l"><%= I18n.t("support.cases.lists.all_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <% if @cases.none? %>
           <h1 class="govuk-heading-l">
-            <%= I18n.t("support.cases.not_found") %>
+            <%= I18n.t("support.cases.lists.not_found") %>
           </h1>
         <% else %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.organisation") %>
+                  <%= I18n.t("support.cases.labels.organisation") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.category") %>
+                  <%= I18n.t("support.cases.labels.category") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.status") %>
+                  <%= I18n.t("support.cases.labels.status") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.index.assigned_to") %>
+                  <%= I18n.t("support.cases.labels.assigned_to") %>
                 </th>
                 <th class="govuk-table__header" scope="col">
-                  <%= I18n.t("support.cases.index.last_updated") %>
+                  <%= I18n.t("support.cases.labels.last_updated") %>
                 </th>
               </tr>
             </thead>

@@ -1,29 +1,34 @@
-<div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
+<div class="govuk-tabs__panel" id="case-details" role="tabpanel" aria-labelledby="tab_case-details">
+  <p class="govuk-body">
+    <%= I18n.t("support.cases.labels.requested_at", time: current_case.received_at) %>
+  </p>
   <dl class="govuk-summary-list govuk-!-margin-bottom-5">
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.labels.contact_name") %>
+        <%= I18n.t("support.cases.labels.category") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.full_name %>
+        <%= current_case.category.title %>
       </dd>
     </div>
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.labels.contact_name") %>
+        <%= I18n.t("support.cases.labels.problem_description") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.phone_number %>
+        <%= current_case.request_text %>
       </dd>
     </div>
-    
+
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.labels.contact_name") %>
+        <%= I18n.t("support.cases.labels.attached_specification") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.email_address %>
+        <a href="#">
+          specification-1.pdf
+        </a>
       </dd>
     </div>
   </dl>

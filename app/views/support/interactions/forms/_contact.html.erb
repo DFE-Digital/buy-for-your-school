@@ -1,8 +1,8 @@
-<h1 class="govuk-heading-l"><%= I18n.t("support.interactions.new.contact_with_school") %></h1>
+<h1 class="govuk-heading-l"><%= I18n.t("support.interactions.headers.contact_with_school") %></h1>
 
 <%= form.govuk_radio_buttons_fieldset("") do %>
   <legend class="govuk-fieldset__legend govuk-label--m">
-    <%= I18n.t("support.interactions.new.type_of_contact") %>
+    <%= I18n.t("support.interactions.headers.type_of_contact") %>
   </legend>
 
   <% Support::Interaction.event_types.keys.each do |event_type| %>
@@ -13,10 +13,10 @@
 
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
-    <%= form.label :body, I18n.t("support.interactions.new.contact_details"), class: "govuk-label govuk-label--m" %>
+    <%= form.label :body, I18n.t("support.interactions.labels.contact_details"), class: "govuk-label govuk-label--m" %>
   </h1>
   <div id="contact-details-hint" class="govuk-hint">
-    <%= I18n.t("support.interactions.new.contact_details_hint") %>
+    <%= I18n.t("support.interactions.labels.contact_details_hint") %>
   </div>
   <%= form.text_area :body, class: "govuk-textarea", rows: 5 %>
 </div>
