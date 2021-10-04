@@ -28,17 +28,22 @@ Rails.application.routes.draw do
 
   get "planning" => "pages#show", "id" => "planning_start_page"
   get "dashboard", to: "dashboard#show"
+  get "profile", to: "profile#show"
 
   # Contentful
   post "/api/contentful/auth" => "api/contentful/base#auth"
   post "/api/contentful/entry_updated" => "api/contentful/entries#changed"
   post "/api/contentful/category" => "api/contentful/categories#changed"
 
-  # 681 - guard against use of back button after form validation errors
+  # NB: guard against use of back button after form validation errors
   get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
 
   resources :design, only: %i[index show]
   resources :categories, only: %i[index]
+
+  resources :support_requests, except: %i[destroy], path: "support-requests"
+  post "/submit", to: "api/support/requests#create", as: :submit_request
+
   resources :journeys, only: %i[show create destroy] do
     resource :specification, only: [:show]
     resources :steps, only: %i[new show edit update] do
@@ -51,16 +56,13 @@ Rails.application.routes.draw do
     resources :entries, only: [:show]
   end
 
-  resources :users do
-    resources :support_requests, path: "support-requests", only: %i[index show new edit create update]
-  end
-
   #
   # Supported ------------------------------------------------------------------
   #
-  namespace :support do
-    get "admin", to: "admin#show"
+  get "support", to: "support/pages#start_page", as: :support_root
 
+  namespace :support do
+    resources :agents, only: %i[create]
     resources :cases, only: %i[index show edit update] do
       get "resolve", on: :member
 

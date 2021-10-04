@@ -1,67 +1,99 @@
 # frozen_string_literal: true
 
 class SupportRequestsController < ApplicationController
-  before_action :set_support_request, only: %i[show edit update]
+  before_action :support_request, only: %i[show edit update]
 
+  # start the support process
+  def index; end
+
+  # check your answers before submission
+  def show; end
+
+  # first question
   def new
-    @support_form_wizard = SupportFormWizard.new(step: 1)
+    @support_form = SupportForm.new(step: params.fetch(:step, 1))
   end
 
-  def create
-    @support_form_wizard = "SupportFormWizard::Step#{support_form_wizard_params[:step]}"
-                             .constantize.new(support_form_wizard_params)
+  def edit
+    @support_form = SupportForm.new(step: params[:step], **support_request.attributes.symbolize_keys)
+  end
 
-    if @support_form_wizard.save
-      if @support_form_wizard.last_step?
-        redirect_to user_support_request_path(current_user, @support_form_wizard.support_request),
-                    notice: I18n.t("support_request.created_flash")
+  # questions 2 onwards until complete
+  def create
+    @support_form = form
+
+    if validation.success? && validation.to_h[:message_body]
+
+      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
+      redirect_to support_request_path(support_request)
+
+    elsif validation.success?
+
+      if @support_form.step == 1 && current_user.journeys.none?
+        @support_form.skip!
+      elsif @support_form.step == 2 && @support_form.has_journey?
+        @support_form.skip!
       else
-        render :new
+        @support_form.advance!
       end
+
+      render :new
     else
       render :new
     end
   end
 
-  def edit
-    @support_form_wizard = "SupportFormWizard::Step#{safe_step}"
-                             .constantize.new(journey_id: @support_request.journey_id,
-                                              category_id: @support_request.category_id,
-                                              phone_number: @support_request.phone_number,
-                                              message: @support_request.message,
-                                              step: safe_step)
-  end
-
+  # all questions
   def update
-    if @support_request.update(params_cleaned_up)
-      redirect_to user_support_request_path(current_user, @support_request),
-                  notice: I18n.t("support_request.updated_flash")
+    @support_form = form
+
+    if validation.success?
+
+      if @support_form.step == 2 && @support_form.has_journey?
+        @support_form.forget_category!
+      elsif @support_form.step == 3 && @support_form.has_category?
+        @support_form.forget_journey!
+      end
+
+      if @support_form.step == 2 && !@support_form.has_journey?
+        @support_form.advance!
+        render :edit
+      else
+        support_request.update!(**support_request.attributes.symbolize_keys, **@support_form.to_h)
+
+        redirect_to support_request_path(support_request), notice: I18n.t("support_requests.flash.updated")
+      end
+
     else
       render :edit
     end
   end
 
-  def show; end
-
 private
 
-  def safe_step
-    SupportFormWizard::STEPS.fetch(params[:step].to_i) - 1
+  # @return [UserPresenter] adds form view logic
+  def current_user
+    @current_user = UserPresenter.new(super)
   end
 
-  def set_support_request
-    @support_request = SupportRequest.find(params[:id])
+  # @return [SupportRequest] restricted to the current user
+  def support_request
+    @support_request = SupportRequest.where(user_id: current_user.id, id: params[:id]).first
   end
 
-  def support_form_wizard_params
-    params.require(:support_form_wizard).permit(
-      :phone_number, :journey_id, :category_id, :message, :step
-    ).merge(user: current_user)
+  # @return [SupportForm] form object populated with validation messages
+  def form
+    SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
   end
 
-  def params_cleaned_up
-    params = support_form_wizard_params
-    params.delete(:step)
-    params
+  # @return [SupportFormSchema] validated form input
+  def validation
+    SupportFormSchema.new.call(**form_params)
+  end
+
+  def form_params
+    params.require(:support_form).permit(*%i[
+      step phone_number journey_id category_id message_body
+    ])
   end
 end

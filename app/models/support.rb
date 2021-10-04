@@ -1,6 +1,10 @@
-# @api Support module used for supported case management
+#
+# Temporary namespace to encapsulate the case management application
+#
 module Support
-  # table_name_prefix in the module definition
+  #
+  # Ensure `Supported` data is not conflated with `Specify`
+  #
   def self.table_name_prefix
     "support_"
   end

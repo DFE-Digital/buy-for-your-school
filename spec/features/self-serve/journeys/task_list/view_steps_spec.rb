@@ -1,4 +1,4 @@
-RSpec.feature "Users can view the task list" do
+RSpec.feature "Users can view the task list" do # journeys#show
   let(:user) { create(:user) }
   let(:fixture) { "multiple-sections.json" }
 
@@ -6,6 +6,12 @@ RSpec.feature "Users can view the task list" do
     user_is_signed_in(user: user)
     # TODO: replace fixture with factory
     start_journey_from_category(category: fixture)
+  end
+
+  it { expect(page).to have_a_journey_path }
+
+  it "offers support with requests" do
+    expect(page).to have_link "Request free help and support with your specification", href: "/profile" # , class: "govuk-link"
   end
 
   it "tasks are grouped by their section" do

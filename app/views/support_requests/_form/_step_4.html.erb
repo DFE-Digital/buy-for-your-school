@@ -1,14 +1,12 @@
-<span class="govuk-caption-l"><%= I18n.t("support_requests.sections.titles.about_your_specification") %></span>
-<div class="govuk-form-group">
-  <h1 class="govuk-label-wrapper">
-    <%= form.label :message, I18n.t("support_requests.sections.about_your_request.message_label"), class: "govuk-label govuk-label--l" %>
-  </h1>
-  <div id="message-hint" class="govuk-hint">
-    <%= I18n.t("support_requests.sections.about_your_request.message_hint") %>
-  </div>
-  <%= form.text_area :message, class: "govuk-textarea", rows: 5 %>
-</div>
-
 <%= form.hidden_field :phone_number, value: form.object.phone_number %>
 <%= form.hidden_field :journey_id, value: form.object.journey_id %>
 <%= form.hidden_field :category_id, value: form.object.category_id %>
+
+<%= form.govuk_text_area :message_body,
+      autofocus: true,
+      class: "govuk-textarea",
+      rows: 5,
+      caption: { text: I18n.t("support_requests.caption.message"), size: "l" },
+      label: { text: I18n.t("support_requests.label.message"), size: "l" },
+      hint: { text: I18n.t("support_requests.hint.message") }
+    %>

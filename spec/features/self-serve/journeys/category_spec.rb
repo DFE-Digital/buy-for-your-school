@@ -38,7 +38,7 @@ RSpec.feature "A journey page has" do
 
     specify do
       # journeys_body
-      expect(find("p.govuk-body")).to have_text "Answer all questions in each section to build a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
+      expect(find("p.govuk-body")).to have_text "Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.feature "A journey page has" do
 
     specify do
       # journeys_body
-      expect(find("p.govuk-body")).to have_text "Answer all questions in each section to build a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
+      expect(find("p.govuk-body")).to have_text "Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
     end
   end
 end
