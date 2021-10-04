@@ -38,6 +38,8 @@ module Support
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
 
+    accepts_nested_attributes_for :interactions
+
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
     # @return [String]
     def generate_ref

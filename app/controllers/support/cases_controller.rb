@@ -18,22 +18,34 @@ module Support
 
     def update
       if assigning_to_agent?
-        current_case.agent = agent
-        current_case.state = "open"
-        current_case.save!
-
-        create_interaction("Case assigned: New assignee is #{agent.first_name}")
+        attrs = {
+          agent: agent,
+          state: "open",
+          interactions_attributes: [{
+            body: "Case assigned: New assignee is #{agent.first_name}",
+            event_type: "note",
+            case_id: current_case.id,
+            agent_id: current_user.id,
+          }],
+        }
       end
 
       if resolving?
-        current_case.agent = nil
-        current_case.state = "resolved"
-        current_case.save!
-
-        create_interaction("Case resolved: #{update_params[:resolve_message]}")
+        attrs = {
+          agent: nil,
+          state: "resolved",
+          interactions_attributes: [{
+            body: "Case resolved: #{update_params[:resolve_message]}",
+            event_type: "note",
+            case_id: current_case.id,
+            agent_id: current_user.id,
+          }],
+        }
       end
 
-      redirect_to support_case_path(anchor: "case-history")
+      current_case.update!(attrs)
+
+      redirect_to support_case_path(anchor: "case-history", notice: "Update successful")
     end
 
   private
@@ -60,15 +72,6 @@ module Support
 
     def agent
       @agent ||= Agent.find_by(id: update_params[:agent])
-    end
-
-    def create_interaction(text)
-      Interaction.create!(
-        body: text,
-        event_type: "note",
-        case_id: current_case.id,
-        agent_id: current_user.id,
-      )
     end
   end
 end
