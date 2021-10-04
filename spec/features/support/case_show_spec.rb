@@ -107,12 +107,5 @@ RSpec.feature "Case Management Dashboard - show" do
     it "shows the reopen case link" do
       expect(find("a.reopen")).to have_text "Reopen case"
     end
-
-    it "shows accordion" do
-      within "#case-history" do
-        expect(find(".govuk-accordion"))
-          .to have_text "Phone"
-      end
-    end
   end
 end

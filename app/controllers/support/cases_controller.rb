@@ -13,7 +13,21 @@ module Support
     end
 
     def update
-      UpdateCase.new(current_case, current_user, update_params).call
+      if assigning_to_agent?
+        current_case.agent = agent
+        current_case.state = "open"
+        current_case.save!
+
+        create_interaction("Case assigned: New assignee is #{agent.first_name}")
+      end
+
+      if resolving?
+        current_case.agent = nil
+        current_case.state = "resolved"
+        current_case.save!
+
+        create_interaction("Case resolved: #{update_params[:resolve_message]}")
+      end
 
       redirect_to support_case_path(anchor: "case-history")
     end
@@ -31,6 +45,27 @@ module Support
         :agent,
         :resolve_message,
         :state,
+      )
+    end
+
+    def resolving?
+      update_params[:resolve_message].present? && !current_case.resolved?
+    end
+
+    def assigning_to_agent?
+      update_params[:agent].present?
+    end
+
+    def agent
+      @agent ||= Agent.find_by(id: update_params[:agent])
+    end
+
+    def create_interaction(text)
+      Interaction.create!(
+        body: text,
+        event_type: "note",
+        case_id: current_case.id,
+        agent_id: current_user.id,
       )
     end
   end
