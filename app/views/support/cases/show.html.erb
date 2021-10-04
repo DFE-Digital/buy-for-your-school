@@ -72,7 +72,7 @@
 <ul class="govuk-list">
   <% if @current_case.open? %>
     <li>
-      <%= link_to I18n.t("support.cases.show.change_owner"), edit_support_case_path(@current_case), class: "change-owner" %>
+      <%= link_to I18n.t("support.cases.show.change_owner"), edit_support_case_path(@current_case, option: :assign), class: "change-owner" %>
     </li>
     <li>
       <%= link_to I18n.t("support.cases.show.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link add-note" %>
@@ -85,7 +85,7 @@
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.cases.show.assign"), edit_support_case_path(@current_case), class: "assign-owner" %>
+      <%= link_to I18n.t("support.cases.show.assign"), edit_support_case_path(@current_case, option: :assign), class: "assign-owner" %>
     </li>
   <% end %>
 
@@ -95,7 +95,7 @@
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.cases.show.resolve"), resolve_support_case_path(@current_case), class: "resolve" %>
+      <%= link_to I18n.t("support.cases.show.resolve"), edit_support_case_path(@current_case, option: :resolve), class: "resolve" %>
     </li>
   <% end %>
 </ul>

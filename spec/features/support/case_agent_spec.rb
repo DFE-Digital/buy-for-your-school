@@ -3,7 +3,7 @@ RSpec.feature "Case worker assignment" do
 
   before do
     click_button "Agent Login"
-    visit "/support/cases/#{support_case.id}/edit"
+    visit "/support/cases/#{support_case.id}/edit?option=assign"
   end
 
   let(:support_case) { create(:support_case) }

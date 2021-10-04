@@ -1,6 +1,6 @@
 module Support
   class CasesController < ApplicationController
-    before_action :current_case, only: %i[show edit update resolve]
+    before_action :current_case, only: %i[show edit update]
 
     def index
       @cases = Case.all.map { |c| CasePresenter.new(c) }
@@ -9,7 +9,11 @@ module Support
     def show; end
 
     def edit
-      @agents = Agent.all.map { |a| AgentPresenter.new(a) }
+      if params[:option] == "assign"
+        @agents = Agent.all.map { |a| AgentPresenter.new(a) }
+      end
+
+      render params.fetch(:option, "/errors/not_found")
     end
 
     def update
@@ -31,8 +35,6 @@ module Support
 
       redirect_to support_case_path(anchor: "case-history")
     end
-
-    def resolve; end
 
   private
 
