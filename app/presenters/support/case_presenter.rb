@@ -1,3 +1,9 @@
+# frozen_string_literal: true
+
+require_relative "interaction_presenter"
+require_relative "contact_presenter"
+require_relative "category_presenter"
+
 module Support
   class CasePresenter < BasePresenter
     # @return [String]
@@ -7,9 +13,7 @@ module Support
 
     # @return [String]
     def agent_name
-      return agent.full_name if agent.present?
-
-      ""
+      agent&.full_name || "UNASSIGNED"
     end
 
     def organisation_name
@@ -28,22 +32,22 @@ module Support
 
     # @return [Array<InteractionPresenter>]
     def interactions
-      @interactions ||= super.map { |i| Support::InteractionPresenter.new(i) }
+      @interactions ||= super.map { |i| InteractionPresenter.new(i) }
     end
 
-    # @return [AgentPresenter]
+    # @return [nil, AgentPresenter]
     def agent
-      Support::AgentPresenter.new(super)
+      AgentPresenter.new(super) if super
     end
 
     # @return [ContactPresenter]
     def contact
-      Support::ContactPresenter.new(super)
+      ContactPresenter.new(super)
     end
 
     # @return [CategoryPresenter]
     def category
-      Support::CategoryPresenter.new(super)
+      CategoryPresenter.new(super)
     end
 
     # @return [EnquiryPresenter]

@@ -10,5 +10,6 @@ if defined?(Dotenv)
     "CONTENTFUL_ENTRY_CACHING",
     "SUPPORT_EMAIL",
     "REDIS_URL",
+    "PROC_OPS_TEAM",
   )
 end
