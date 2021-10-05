@@ -45,7 +45,10 @@ module Support
 
       current_case.update!(attrs)
 
-      redirect_to support_case_path(anchor: "case-history", notice: "Update successful")
+      redirect_to support_case_path(
+        anchor: "case-history",
+        notice: I18n.t("support.cases.update.updated_flash"),
+      )
     end
 
   private

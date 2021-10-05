@@ -262,6 +262,9 @@ en:
         assign_to: Assign to case worker
         back: Back to case list
 
+      update:
+        updated_flash: Case was successfully updated
+
       resolve:
         title: Resolve case
         submit: Save and close case
