@@ -5,7 +5,7 @@ class Guest < Dry::Struct
     true
   end
 
-  def admin?
+  def agent?
     false
   end
 end

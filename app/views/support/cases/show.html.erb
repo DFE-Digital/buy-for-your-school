@@ -30,9 +30,9 @@
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="request-details" role="tabpanel" aria-labelledby="tab_request-details">
     <p class="govuk-body">
-      <%= I18n.t("support.cases.show.requested_at", time: @current_case.interactions.first.created_at) %>
+      requested at
     </p>
-    <%= render "interaction", interaction: @current_case.interactions.first %>
+    render interaction
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
@@ -44,23 +44,7 @@
     <% end %>
 
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
-      <% @current_case.interactions.each do |interaction| %>
-        <div class="govuk-accordion__section ">
-          <div class="govuk-accordion__section-header">
-            <h2 class="govuk-accordion__section-heading">
-              <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                <%= interaction.type %>
-              </span>
-            </h2>
-            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
-              <%= interaction.created_at %>
-            </div>
-          </div>
-          <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-            <%= render "interaction", interaction: interaction %>
-          </div>
-        </div>
-      <% end %>
+show interactions
     </div>
   </div>
 </div>
@@ -68,7 +52,32 @@
 <h3 class="govuk-heading-m"><%= I18n.t("support.cases.actions") %></h3>
 
 <ul class="govuk-list">
-  <li>
-    <%= link_to I18n.t("support.cases.show.assign"), edit_support_case_path(@current_case), class: "govuk-link" %>
-  </li>
+  <% if @current_case.open? %>
+    <li>
+      <%= link_to I18n.t("support.cases.show.change_owner"), edit_support_case_path(@current_case), class: "change-owner" %>
+    </li>
+    <li>
+      <%= link_to I18n.t("support.cases.show.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link add-note" %>
+    </li>
+    <li>
+      <%= link_to I18n.t("support.cases.show.send_email"), "#", class: "send-email" %>
+    </li>
+    <li>
+      <%= link_to I18n.t("support.cases.show.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link log-contact" %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to I18n.t("support.cases.show.assign"), edit_support_case_path(@current_case), class: "assign-owner" %>
+    </li>
+  <% end %>
+
+  <% if @current_case.resolved? %>
+    <li>
+      <%= link_to I18n.t("support.cases.show.reopen"), "#", class: "reopen" %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to I18n.t("support.cases.show.resolve"), "#", class: "resolve" %>
+    </li>
+  <% end %>
 </ul>

@@ -43,7 +43,7 @@ RSpec.describe GetAnswersForSteps do
         result = described_class.new(visible_steps: [answer.step]).call
         assertion = {
           "answer_#{answer.step.contentful_id}" => {
-            response: "<p>Red</p>\n\n<p>Blue</p>",
+            response: "Red\r\n\r\n\r\nBlue",
           },
         }
 

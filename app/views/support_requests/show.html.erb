@@ -1,7 +1,17 @@
+<% if Rails.env.development? %>
+  <%= debug @support_request.attributes %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l"><%= I18n.t("support_requests.sections.send_your_request") %></h1>
-    <h2 class="govuk-heading-m"><%= I18n.t("support_requests.sections.about_you.heading") %></h2>
+
+    <% if @support_request.submitted? %>
+      <h1 class="govuk-heading-l">Your request has been submitted</h1>
+    <% else %>
+      <h1 class="govuk-heading-l"><%= I18n.t("support_requests.section.submit_request") %></h1>
+    <% end %>
+
+    <h2 class="govuk-heading-m"><%= I18n.t("support_requests.section.about_you") %></h2>
 
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -33,57 +43,69 @@
         </dd>
 
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request.user, @support_request, step: 1), class: "govuk-link", id: "edit-phone-number" %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 1), class: "govuk-link", id: "edit-phone-number" %>
         </dd>
       </div>
     </dl>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support_requests.sections.about_your_request.heading") %></h2>
+    <h2 class="govuk-heading-m"><%= I18n.t("support_requests.section.request_summary") %></h2>
 
     <dl class="govuk-summary-list">
-      <div id="support-request-category" class="govuk-summary-list__row">
+
+      <div id="support-request-journey" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support_requests.sections.about_your_request.category_ids_label") %>
+          Attached specification
         </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @support_request.category&.title %>
+          <dd class="govuk-summary-list__value">
+          <% if @support_request.journey %>
+            <%= @support_request.journey.created_at.strftime("%e %B %Y") %>
+          <% else %>
+            None
+          <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request.user, @support_request, step: 3), class: "govuk-link", id: "edit-category" %>
+          <% if @current_user.journeys.any? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 2), class: "govuk-link", id: "edit-specification" %>
+          <% end %>
         </dd>
       </div>
+
+      <div id="support-request-category" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support_requests.label.category") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <% if @support_request.journey %>
+            <%= @support_request.journey.category.title %>
+          <% else %>
+            <%= @support_request.category&.title %>
+          <% end %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 3), class: "govuk-link", id: "edit-category" %>
+        </dd>
+      </div>
+
       <div id="support-request-message" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Description of problem
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @support_request.message %>
+          <%= @support_request.message_body %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request.user, @support_request, step: 4), class: "govuk-link", id: "edit-message" %>
-        </dd>
-      </div>
-      <div id="support-request-journey" class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Attached specifications
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @support_request.journey&.created_at&.strftime("%e %B %Y") %>
-          <br>
-          <%= @support_request.journey&.category&.title %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_user_support_request_path(@support_request.user, @support_request, step: 2), class: "govuk-link", id: "edit-journey" %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 4), class: "govuk-link", id: "edit-message" %>
         </dd>
       </div>
     </dl>
 
-    <p class="govuk-body">
-      <%= I18n.t("support_requests.confirm.timescale") %>
-    </p>
+    <% unless @support_request.submitted? %>
+      <p class="govuk-body">
+        <%= I18n.t("support_requests.response_time") %>
+      </p>
 
-    <%= link_to I18n.t("support_requests.buttons.send"), new_user_support_request_path(current_user),
-                class: "govuk-button", role: "button" %>
+      <%= button_to I18n.t("support_requests.button.send"), submit_request_path(id: @support_request), class: "govuk-button", method: :post, data: { disable_with: "Submitted!" } %>
+    <% end %>
 
   </div>
 </div>

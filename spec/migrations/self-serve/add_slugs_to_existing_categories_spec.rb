@@ -6,7 +6,12 @@ RSpec.describe AddSlugsToExistingCategories do
   let(:previous_version) { 20_210_825_142_114 }
   let(:current_version) { 20_210_825_142_733 }
 
-  let(:category) { build(:category, slug: nil, contentful_id: "contentful-category-entry") }
+  let(:category) do
+    build(:category,
+          slug: nil,
+          description: nil,
+          contentful_id: "contentful-category-entry")
+  end
 
   before do
     category.save!(validate: false)
@@ -17,7 +22,7 @@ RSpec.describe AddSlugsToExistingCategories do
       stub_contentful_category(fixture_filename: "mfd-radio-question.json")
     end
 
-    it "populates the slug" do
+    it "populates the slug and description" do
       expect(Category.count).to eq 1
       expect(Category.first.slug).to eq nil
 

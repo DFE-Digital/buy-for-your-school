@@ -14,10 +14,11 @@ class DocumentFormatter
   option :from, ReaderFormats
   option :to, WriterFormats
 
-  # Return the converted document
+  # Return the converted document.
+  # HTML comments are stripped out.
   #
   # @return [String]
   def call
-    PandocRuby.convert(content, from: from, to: to).to_s
+    PandocRuby.convert(content, "--strip-comments", from: from, to: to)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_154900) do
+ActiveRecord::Schema.define(version: 2021_09_22_175530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_09_13_154900) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -158,6 +158,10 @@ ActiveRecord::Schema.define(version: 2021_09_13_154900) do
     t.string "last_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "dsi_uid", default: "", null: false
+    t.string "email", default: "", null: false
+    t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
+    t.index ["email"], name: "index_support_agents_on_email"
   end
 
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -215,16 +219,27 @@ ActiveRecord::Schema.define(version: 2021_09_13_154900) do
     t.index ["support_request_id"], name: "index_support_enquiries_on_support_request_id"
   end
 
+  create_table "support_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "agent_id"
+    t.uuid "case_id"
+    t.integer "event_type"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["agent_id"], name: "index_support_interactions_on_agent_id"
+    t.index ["case_id"], name: "index_support_interactions_on_case_id"
+    t.index ["event_type"], name: "index_support_interactions_on_event_type"
+  end
+
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
     t.uuid "journey_id"
     t.uuid "category_id"
-    t.string "message"
-    t.string "school_name"
-    t.string "school_urn"
+    t.string "message_body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "phone_number"
+    t.boolean "submitted", default: false, null: false
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"

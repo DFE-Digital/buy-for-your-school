@@ -3,6 +3,10 @@
 class Category < ApplicationRecord
   has_many :journeys, dependent: :destroy
 
+  default_scope { order(:title) }
+
+  scope :published, -> { where.not(contentful_id: 0) }
+
   validates :title, :description, :contentful_id, :liquid_template, presence: true
   # TODO: re-enable when no longer clashes with data migrations
   # validates :slug, presence: true
