@@ -1,4 +1,5 @@
 services:
+  webapp:
     ports:
       - 3000:3000
     volumes:
@@ -29,9 +30,6 @@ services:
   sidekiq:
     image: buy_for_your_school:dev
     command: bundle exec sidekiq -C config/sidekiq.yml
-    depends_on:
-      - db
-      - redis
     volumes:
       - .:/srv/app
     networks:

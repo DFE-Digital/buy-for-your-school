@@ -1,10 +1,8 @@
 services:
   test:
     build:
-      context: .
-      target: test
-      args:
-        RAILS_ENV: test
+      extends:
+        file: docker-compose.test.yml
       cache_from:
         - app_test:latest
     image: app_test
@@ -26,15 +24,8 @@ services:
       - test
 
   test-db:
-    image: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST_AUTH_METHOD: trust
-    networks:
-      - test
+    extends:
+      file: docker-compose.test.yml
 
   test-redis:
     extends:
@@ -45,5 +36,5 @@ services:
 networks:
   test:
 volumes:
-  db-data:
-  redis-data:
+  extends:
+    file: docker-compose.base.yml

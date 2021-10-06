@@ -57,5 +57,5 @@ services:
 networks:
   dev:
 volumes:
-  db-data:
-  redis-data:
+  extends:
+    file: docker-compose.base.yml

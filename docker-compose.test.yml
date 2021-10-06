@@ -37,13 +37,14 @@ services:
       - test
 
   test-redis:
-    extends:
-      file: docker-compose.base.yml
+    image: redis
+    volumes:
+      - redis-data:/data
     networks:
       - test
 
 networks:
   test:
 volumes:
-  extends:
-    file: docker-compose.base.yml
+  db-data:
+  redis-data:
