@@ -6,21 +6,21 @@ There are [testing][test-register], [pre-production][pre-prod-register] and [pro
 
 ## Registration
 
-- A user with approver privileges for at least one school needs to invite you.
-- [This school][phantom-school] has been used for staging access.
-- Contact DfE [#digital-tools-support][digi-tools] and [#dfe_sign-in][dfe_sign-in] Slack channels for further assistance.
+Anyone can register for a DSI profile in each environment.
+An *approver* at a supported establishment can invite users to their organisation.
+[This school][test-school] has been used for testing access for local development.
+Contact DfE [#digital-tools-support][digi-tools] and [#dfe_sign-in][dfe_sign-in] Slack channels for further assistance.
 
 ## Environments
 
-This service has numerous environments and each needs to be paired and configured with a unique DfE environment.
+This service has deployment environments and each is paired with a corresponding DSI environment.
 
-|             | Enabled  |       DSI Env        |  DSI service management   |
-| :---------- | :------: | :------------------: | :-----------------------: |
-| Development | optional |     [test][test]     |   [manage][test-manage]   |
-| Test        | optional |     [test][test]     |   [manage][test-manage]   |
-| Staging     |   true   | [pre-prod][pre-prod] | [manage][pre-prod-manage] |
-| Research    |   true   | [pre-prod][pre-prod] | [manage][pre-prod-manage] |
-| Production  |   true   |     [prod][prod]     |   [manage][prod-manage]   |
+|                | Enabled      | DSI Env              | DSI service management     |
+| :------------- | :----------- | :------------------- | :------------------------- |
+| Development    | optional     | [test][test]         | [manage][test-manage]      |
+| Staging        | true         | [pre-prod][pre-prod] | [manage][pre-prod-manage]  |
+| Research       | true         | [pre-prod][pre-prod] | [manage][pre-prod-manage]  |
+| Production     | true         | [prod][prod]         | [manage][prod-manage]      |
 
 DSI DNS Aliases:
 
@@ -32,6 +32,7 @@ DSI DNS Aliases:
 
 In development, setting the environment variable `DFE_SIGN_IN_ENABLED` to false will bypass DSI.
 You can provide _any_ value in the `UID` field to sign in.
+The application has matured and now requires user data provided by DSI therefore bypassing has limited use.
 
 Communicating with DSI in development requires a secure connection.
 
@@ -43,6 +44,14 @@ Firefox will permit the use of this certificate. On OSX, Chrome will require tha
 In **Keychain Access** add it to the **Certificates** in the **System Keychain**.
 Use `File > Import Items` and import `localhost.crt`.
 Once imported change the trust level to `Always Trust`.
+
+## Organisations
+
+The service leverages a user's affiliation to an organisation within DSI to control access.
+The development team should use the `test` DSI environment variables in `.env.development.local`.
+Developers in the test environment can [*approve* or *invite*][test-users] new team members.
+The organisation **"DfE Commercial Procurement Operations"** is required to gain access beyond `/support` in each environment.
+The lead developer or product manager will be approvers and can invite new team members thereby granting access to live environments.
 
 ---
 
@@ -58,6 +67,8 @@ Once imported change the trust level to `Always Trust`.
 [test-register]: https://test-profile.signin.education.gov.uk/register
 [test-manage]: https://test-manage.signin.education.gov.uk/services/FD39DCFC-9B60-46C4-ACDC-699A2468B46F/service-configuration
 [test-api]: https://test-api.signin.education.gov.uk
+[test-users]: https://test-services.signin.education.gov.uk/approvals/users
+[test-school]: https://test-services.signin.education.gov.uk/approvals/50F4A834-9314-4A66-969E-C86D03821C26/users
 [digi-tools]: https://ukgovernmentdfe.slack.com/archives/CMS9V0JQL
 [dfe_sign-in]: https://ukgovernmentdfe.slack.com/archives/C5S500XB6
-[phantom-school]: https://test-services.signin.education.gov.uk/approvals/50F4A834-9314-4A66-969E-C86D03821C26/users
+
