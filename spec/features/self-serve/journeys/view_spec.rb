@@ -42,7 +42,7 @@ RSpec.feature "Users can see their specification" do
     click_view
 
     expect(page).to have_title "Catering"
-    
+
     # journey.specification.header
     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
 
