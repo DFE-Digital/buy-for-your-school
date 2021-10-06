@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :support_agent, class: "Support::Agent" do
+    last_name { "Bloggs" }
     id          { SecureRandom.uuid }
     dsi_uid     { SecureRandom.uuid }
     email       { "test@test" }

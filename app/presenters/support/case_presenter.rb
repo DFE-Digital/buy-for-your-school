@@ -25,7 +25,7 @@ module Support
       "I've completed a specification, but I'm not sure what to do with it now. How do I contact suppliers?"
     end
 
-    # @return [String]
+    # @return [String] 30 January 2000 at 12:00
     def received_at
       enquiry.created_at
     end

@@ -1,5 +1,5 @@
 RSpec.feature "Listing interactions on case history" do
-  let(:support_case) { create(:support_case, state: 1) }
+  let(:support_case) { create(:support_case, state: "open") }
 
   context "when agent is signed in" do
     before do
@@ -7,14 +7,57 @@ RSpec.feature "Listing interactions on case history" do
     end
 
     context "when interaction is a note" do
+      let!(:interaction) { create(:support_interaction, :note, case: support_case) }
+
       before do
-        create(:support_interaction, :note, case: support_case)
         visit "/support/cases/#{support_case.id}"
       end
 
-      it "shows the interactions" do
+      it "shows the case note" do
         within "#case-history" do
-          expect(find("span#accordion-case-history-enquiry-heading")).to have_text "Case note"
+          expect(find("span#case-history-note-#{interaction.id}")).to have_text "Case note"
+        end
+      end
+    end
+
+    context "when interaction is a phone call" do
+      let!(:interaction) { create(:support_interaction, :phone_call, case: support_case) }
+
+      before do
+        visit "/support/cases/#{support_case.id}"
+      end
+
+      it "shows the phone call" do
+        within "#case-history" do
+          expect(find("span#case-history-phone-call-#{interaction.id}")).to have_text "Phone call"
+        end
+      end
+    end
+
+    context "when interaction is an email to the school" do
+      let!(:interaction) { create(:support_interaction, :email_to_school, case: support_case) }
+
+      before do
+        visit "/support/cases/#{support_case.id}"
+      end
+
+      it "shows the email to the school" do
+        within "#case-history" do
+          expect(find("span#case-history-email-to-school-#{interaction.id}")).to have_text "Email to school"
+        end
+      end
+    end
+
+    context "when interaction is an email from the school" do
+      let!(:interaction) { create(:support_interaction, :email_from_school, case: support_case) }
+
+      before do
+        visit "/support/cases/#{support_case.id}"
+      end
+
+      it "shows the email from the school" do
+        within "#case-history" do
+          expect(find("span#case-history-email-from-school-#{interaction.id}")).to have_text "Email from school"
         end
       end
     end

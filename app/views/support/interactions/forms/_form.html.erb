@@ -16,9 +16,7 @@
 <% end %>
 
 <%= form_with model: [@interaction.case, @interaction] do |form| %>
-  <%= render "support/interactions/forms/note", form: form if option == "note" %>
-  <%= render "support/interactions/forms/contact", form: form if option == "contact" %>
-
+  <%= render "support/interactions/forms/#{option}", form: form %>
   <%= hidden_field_tag :option, option %>
   <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
 <% end %>

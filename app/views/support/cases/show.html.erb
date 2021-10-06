@@ -48,7 +48,7 @@
 
 <h3 class="govuk-heading-m"><%= I18n.t("support.cases.headers.actions") %></h3>
 
-<ul class="govuk-list">
+<ul class="govuk-list case-actions">
   <% if @current_case.open? %>
     <li>
       <%= link_to I18n.t("support.cases.labels.change_owner"), edit_support_case_path(@current_case), class: "change-owner" %>
@@ -64,17 +64,17 @@
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.cases.labels.assign"), edit_support_case_path(@current_case), class: "assign-owner" %>
+      <%= link_to I18n.t("support.cases.labels.assign_to_agent"), edit_support_case_path(@current_case), class: "assign-owner" %>
     </li>
   <% end %>
 
   <% if @current_case.resolved? %>
     <li>
-      <%= link_to I18n.t("support.cases.show.reopen"), "#", class: "reopen" %>
+      <%= link_to I18n.t("support.cases.labels.reopen"), "#", class: "reopen" %>
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.cases.labels.reopen"), "#", class: "resolve" %>
+      <%= link_to I18n.t("support.cases.labels.resolve"), "#", class: "resolve" %>
     </li>
   <% end %>
 </ul>

@@ -33,6 +33,41 @@ RSpec.feature "Case Management Dashboard - show" do
     end
   end
 
+  describe "Case history" do
+    before { visit "#{base_url}#case-history" }
+
+    context "when currently assigned to a case owner" do
+      before do
+        agent = create(:support_agent)
+
+        support_case.agent = agent
+        support_case.save!
+
+        # Refresh current page
+        visit "#{base_url}#case-history"
+      end
+
+      it "shows a link to change case owner" do
+        within "#case-history" do
+          expect(find("p.govuk-body")).to have_text "Case owner: Joe Bloggs"
+        end
+      end
+    end
+
+    it "does not show a link to change case owner" do
+      within "ul.case-actions" do
+        expect(page).not_to have_selector("assign-owner")
+      end
+    end
+
+    it "shows accordion with initial request for support" do
+      within "#case-history" do
+        expect(find(".govuk-accordion"))
+          .to have_text "Request for support"
+      end
+    end
+  end
+
   it "shows the assign link" do
     expect(find("a.assign-owner")).to have_text "Assign to case worker"
   end
