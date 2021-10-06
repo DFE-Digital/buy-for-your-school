@@ -17,10 +17,8 @@ services:
     env_file:
       - .env.test
     environment:
-      DATABASE_URL: postgres://postgres:password@test-db:5432/buy-for-your-school-test
-      REDIS_URL: redis://test-redis:6379
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
-      DOCKER: "true"
+      extends:
+        file: docker-compose.test.yml
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GIT_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
