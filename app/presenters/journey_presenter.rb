@@ -11,6 +11,10 @@ class JourneyPresenter < SimpleDelegator
     super.visible.map { |s| StepPresenter.new(s) }
   end
 
+  def description
+    category.title
+  end
+
   # @return [String]
   def created_at
     super.strftime("%e %B %Y")

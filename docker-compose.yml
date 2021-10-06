@@ -10,7 +10,8 @@ services:
         RAILS_ENV: development
     # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'"
-
+    ports:
+      - 3000:3000
     image: buy_for_your_school:dev
     depends_on:
       - db
