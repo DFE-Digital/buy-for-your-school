@@ -24,9 +24,8 @@ module Support
 
   private
 
-    # TODO: merge current_agent to params as agent
     def interaction_params
-      params.require(:interaction).permit(:event_type, :body).merge(agent: Agent.first, case: current_case)
+      params.require(:interaction).permit(:event_type, :body).merge(agent_id: current_agent.id, case: current_case)
     end
 
     def safe_interaction

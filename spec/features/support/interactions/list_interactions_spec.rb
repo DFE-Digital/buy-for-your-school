@@ -1,9 +1,11 @@
 RSpec.feature "Listing interactions on case history" do
+  include_context "with an agent"
+
   let(:support_case) { create(:support_case, state: "open") }
 
   context "when agent is signed in" do
     before do
-      user_is_signed_in
+      click_button "Agent Login"
     end
 
     context "when interaction is a note" do

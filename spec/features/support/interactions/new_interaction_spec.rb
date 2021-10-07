@@ -1,5 +1,7 @@
-RSpec.feature "Interacting with a case" do
+RSpec.feature "Add new interaction to case" do
   include_context "with an agent"
+
+  let(:support_case) { create(:support_case, state: 1) }
 
   let(:support_case) { create(:support_case, state: "open") }
 
@@ -7,7 +9,8 @@ RSpec.feature "Interacting with a case" do
 
   describe "adding a note" do
     before do
-      click_link "Add a case note"
+      click_button "Agent Login"
+      visit "/support/cases/#{support_case.id}"
     end
 
     describe "Back link" do
