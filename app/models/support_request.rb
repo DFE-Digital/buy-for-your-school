@@ -7,4 +7,6 @@ class SupportRequest < ApplicationRecord
   belongs_to :user
   belongs_to :category, optional: true
   belongs_to :journey, optional: true
+
+  scope :pending, -> { where(submitted: false) }
 end
