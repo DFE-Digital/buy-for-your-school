@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SupportRequestsController < ApplicationController
-  breadcrumb "Dashboard", :dashboard_path
-  
   before_action :support_request, only: %i[show edit update]
 
   # start the support process
@@ -10,10 +8,12 @@ class SupportRequestsController < ApplicationController
 
   # check your answers before submission
   def show
+    breadcrumb "Dashboard", :dashboard_path
     breadcrumb "Profile", profile_path, match: :exact
+    breadcrumb "Submit your request", support_request_path(@support_request), match: :exact
   end
 
-  # first question
+  # first question or redirection to unsubmitted request
   def new
     pending_support_requests = current_user.support_requests.pending
 
