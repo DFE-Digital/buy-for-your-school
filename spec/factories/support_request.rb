@@ -8,5 +8,9 @@ FactoryBot.define do
     trait :with_specification do
       association :journey, factory: %i[journey with_steps]
     end
+
+    trait :pending do
+      submitted { false }
+    end
   end
 end

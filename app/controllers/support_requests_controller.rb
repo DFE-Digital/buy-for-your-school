@@ -11,7 +11,13 @@ class SupportRequestsController < ApplicationController
 
   # first question
   def new
+    pending_support_requests = current_user.support_requests.pending
+
+    if pending_support_requests.any?
+      redirect_to support_request_path(pending_support_requests.first)
+    else
     @support_form = SupportForm.new(step: params.fetch(:step, 1))
+    end
   end
 
   def edit
