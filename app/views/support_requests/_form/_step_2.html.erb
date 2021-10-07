@@ -14,7 +14,7 @@
 
 <%= form.govuk_radio_button :journey_id, "none",
     label: { text: "My request is not related to an existing specification" },
-    checked: true
+    checked: form.object.journey_id.nil?
   %>
 
 <br />
