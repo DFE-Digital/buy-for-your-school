@@ -9,3 +9,5 @@ services:
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GIT_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
+    env_file:
+      - .env.test
