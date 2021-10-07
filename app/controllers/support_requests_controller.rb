@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SupportRequestsController < ApplicationController
-  breadcrumb "Dashboard", :dashboard_path
-
   before_action :support_request, only: %i[show edit update]
 
   # start the support process
