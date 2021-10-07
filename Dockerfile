@@ -49,9 +49,9 @@ RUN bundle config set with $BUNDLE_GEM_GROUPS
 RUN bundle install --no-binstubs --retry=10 --jobs=4
 
 # ------------------------------------------------------------------------------
-# Web
+# App
 # ------------------------------------------------------------------------------
-FROM dependencies AS web
+FROM dependencies AS app
 
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
@@ -109,7 +109,7 @@ CMD ["bundle", "exec", "rails", "server"]
 # ------------------------------------------------------------------------------
 # Test
 # ------------------------------------------------------------------------------
-FROM web as test
+#FROM app as test
 
 RUN apt-get install -qq -y shellcheck wait-for-it
 
