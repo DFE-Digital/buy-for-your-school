@@ -22,8 +22,8 @@ RSpec.describe CreateUser do
   before do
     dsi_client = instance_double(::Dsi::Client)
     allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-    allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
-    allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
+    allow(dsi_client).to receive(:roles).and_return([{}])
+    allow(dsi_client).to receive(:orgs).and_return([{}])
   end
 
   describe "#call" do
@@ -45,12 +45,9 @@ RSpec.describe CreateUser do
 
       it "creates a new user record" do
         expect(result).to eq User.find_by(dfe_sign_in_uid: "an-unknown-uuid")
-        # expect(result).to eq User.last
       end
 
       it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("User an-unknown-uuid has no organisation").and_call_original
-        expect(Rollbar).to receive(:info).with("User an-unknown-uuid has no roles").and_call_original
         expect(Rollbar).to receive(:info).with("Created account for unknown@example.com").and_call_original
 
         result
@@ -64,19 +61,37 @@ RSpec.describe CreateUser do
           "info" => {
             "first_name" => "New First",
             "last_name" => "New Last",
+            "email" => email,
           },
         }
       end
 
       it "updates the user record" do
+        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+
         expect(result.first_name).to eq "New First"
         expect(result.last_name).to eq "New Last"
       end
     end
 
     context "when a user has no roles or organisation in the DSI" do
+      before do
+        dsi_client = instance_double(::Dsi::Client)
+        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+        allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
+        allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
+      end
+
       it "raises no error" do
-        expect { result }.not_to raise_error ::Dsi::Client::ApiError
+        expect { result }.not_to raise_error
+      end
+
+      it "reports to Rollbar" do
+        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
+        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no roles").and_call_original
+        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+
+        result
       end
     end
 

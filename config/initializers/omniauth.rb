@@ -24,7 +24,7 @@ options = {
   },
 }
 
-# @see PagesController.dsi?
+# @see PagesController.bypass_dsi?
 if Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :developer,

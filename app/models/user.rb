@@ -1,16 +1,13 @@
-# A User may have many {Journey}s.
-# A User may have many Support Request(s)
+#
+# "School Business Professional (SBP)" authenticated via "DfE Sign In"
+#
 class User < ApplicationRecord
-  # TODO: rename User to Profile but don't change the table name yet
-  # self.table_name = "users"
-
-  # TODO: move journeys association to a new entity with SupportRequests
   has_many :journeys
+  has_many :support_requests, class_name: "SupportRequest"
 
+  # @return [false] distinguish from unauthenticated user
+  #
   def guest?
     false
   end
-
-  has_many :support_requests, class_name: "SupportRequest"
-  accepts_nested_attributes_for :support_requests
 end

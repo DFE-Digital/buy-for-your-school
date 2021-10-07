@@ -32,7 +32,6 @@ A variable will usually be required to be added into each environment through [a
 APP_ENV_PROD_
 APP_ENV_STAGING_
 APP_ENV_RESEARCH_
-APP_ENV_PREVIEW_
 ```
 
 For instance if the app needed to access `ENV["RAILS_ENV"]` in production we would add this as the key:
@@ -40,7 +39,6 @@ For instance if the app needed to access `ENV["RAILS_ENV"]` in production we wou
 ```
 APP_ENV_PROD_RAILS_ENV
 ```
-
 
 **Important!**
 To propagate these new environment variables to the live environments we must finally deploy them manually. [Find the most recent passing deploy](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/deploy.yml) for the environment you want to provision the new variable on, view it and select "re-run jobs".
