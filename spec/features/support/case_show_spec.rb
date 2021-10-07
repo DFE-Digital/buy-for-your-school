@@ -70,12 +70,11 @@ RSpec.feature "Case Management Dashboard - show" do
     end
   end
 
-  it "shows the assign link" do
-    expect(find("a.assign-owner")).to have_text "Assign to case worker"
-  end
-
-  it "shows the resolve link" do
-    expect(find("a.resolve")).to have_text "Resolve case"
+  it "shows assign and resolve links" do
+    within "ul.case-actions" do
+      expect(page).to have_link "Assign to case worker"
+      expect(page).to have_link "Resolve case"
+    end
   end
 
   context "when the case is open" do
