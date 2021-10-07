@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  test:
+  app:
     build:
       cache_from:
         - app_test:latest

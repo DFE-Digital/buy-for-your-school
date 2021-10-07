@@ -6,4 +6,4 @@
 set -e
 
 docker-compose up --detach
-docker attach buy-for-your-school_web_1
+docker attach buy-for-your-school_app_1
