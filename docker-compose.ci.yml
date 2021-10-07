@@ -1,40 +1,11 @@
+version: "3.8"
 services:
   test:
     build:
-      extends:
-        file: docker-compose.test.yml
       cache_from:
         - app_test:latest
     image: app_test
-    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- script/test"
-    ports:
-      - 3000:3000
-    depends_on:
-      - test-db
-      - test-redis
-    env_file:
-      - .env.test
     environment:
-      extends:
-        file: docker-compose.test.yml
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GIT_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
-    networks:
-      - test
-
-  test-db:
-    extends:
-      file: docker-compose.test.yml
-
-  test-redis:
-    extends:
-      file: docker-compose.base.yml
-    networks:
-      - test
-
-networks:
-  test:
-volumes:
-  extends:
-    file: docker-compose.base.yml

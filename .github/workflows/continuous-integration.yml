@@ -27,9 +27,9 @@ jobs:
         run: docker load -i /tmp/docker-save/snapshot.tar || true
         if: steps.cache-docker.outputs.cache-hit == 'true'
       - name: Build
-        run: docker-compose -f docker-compose.ci.yml -p app build
+        run: docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.ci.yml -p app build
       - name: Test
-        run: docker-compose -f docker-compose.ci.yml run --rm test
+        run: docker-compose -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.ci.yml run --rm test
       - name: Prepare Docker cache
         run: mkdir -p /tmp/docker-save && docker save app_test:latest -o
           /tmp/docker-save/snapshot.tar && ls -lh /tmp/docker-save

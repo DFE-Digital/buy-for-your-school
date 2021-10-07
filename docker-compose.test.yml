@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   test:
     build:
@@ -8,9 +9,6 @@ services:
     command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- script/test"
     ports:
       - 3000:3000
-    depends_on:
-      - test-db
-      - test-redis
     env_file:
       - .env.test
     environment:
@@ -25,26 +23,13 @@ services:
     networks:
       - test
 
-  test-db:
-    image: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST_AUTH_METHOD: trust
+  db:
     networks:
       - test
 
-  test-redis:
-    image: redis
-    volumes:
-      - redis-data:/data
+  redis:
     networks:
       - test
 
 networks:
   test:
-volumes:
-  db-data:
-  redis-data:
