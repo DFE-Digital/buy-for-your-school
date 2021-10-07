@@ -1,8 +1,10 @@
 RSpec.feature "Case Management Dashboard - edit" do
+  include_context "with an agent"
+
   before do
     support_case = create(:support_case)
 
-    user_is_signed_in
+    click_button "Agent Login"
     visit "/support/cases/#{support_case.id}/edit"
   end
 
@@ -12,7 +14,7 @@ RSpec.feature "Case Management Dashboard - edit" do
 
   it "lists agents by name" do
     expect(all("div.govuk-radios__item", visible: true).count).to eq(1)
-    expect(find("div.govuk-radios__item")).to have_text "Joe Bloggs"
+    expect(find("div.govuk-radios__item")).to have_text "Procurement Specialist"
   end
 
   it "displays the submit button" do
@@ -21,7 +23,7 @@ RSpec.feature "Case Management Dashboard - edit" do
 
   context "when assigning agent to case" do
     before do
-      find("label.govuk-radios__label", text: "Joe Bloggs").click
+      find("label.govuk-radios__label", text: "Procurement Specialist").click
       find_button("Assign").click
     end
 
@@ -33,7 +35,7 @@ RSpec.feature "Case Management Dashboard - edit" do
       before { visit "/support/cases#all-cases" }
 
       specify "the case in question was in fact assigned to the agent" do
-        expect(find("#all-cases tr.govuk-table__row", text: "St.Mary")).to have_text "Joe Bloggs"
+        expect(find("#all-cases tr.govuk-table__row", text: "St.Mary")).to have_text "Procurement Specialist"
       end
 
       specify "the case in question was opened" do

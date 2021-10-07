@@ -1,10 +1,12 @@
 RSpec.feature "Case Management Dashboard - show" do
+  include_context "with an agent"
+
   let(:state) { "initial" }
   let(:support_case) { create(:support_case, state: state) }
 
   before do
-    user_is_signed_in
-    visit "/support/cases/#{support_case.id}"
+    click_button "Agent Login"
+    visit base_url
   end
 
   it "has 3 visible tabs" do
@@ -49,7 +51,7 @@ RSpec.feature "Case Management Dashboard - show" do
 
       it "shows a link to change case owner" do
         within "#case-history" do
-          expect(find("p.govuk-body")).to have_text "Case owner: Joe Bloggs"
+          expect(find("p.govuk-body")).to have_text "Case owner: first_name last_name"
         end
       end
     end

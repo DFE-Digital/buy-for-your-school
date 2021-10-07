@@ -15,8 +15,8 @@ module Support
   private
 
     # @return [String]
-    def format_date(date)
-      date.strftime("%e %B %Y at %H:%M")
+    def date_format
+      "%e %B %Y at %H:%M"
     end
   end
 end
