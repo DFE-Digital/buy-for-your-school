@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 class SupportRequestsController < ApplicationController
+  breadcrumb "Dashboard", :dashboard_path
+  
   before_action :support_request, only: %i[show edit update]
 
   # start the support process
   def index; end
 
   # check your answers before submission
-  def show; end
+  def show
+    breadcrumb "Profile", profile_path, match: :exact
+  end
 
   # first question
   def new
@@ -16,7 +20,7 @@ class SupportRequestsController < ApplicationController
     if pending_support_requests.any?
       redirect_to support_request_path(pending_support_requests.first)
     else
-    @support_form = SupportForm.new(step: params.fetch(:step, 1))
+      @support_form = SupportForm.new(step: params.fetch(:step, 1))
     end
   end
 
