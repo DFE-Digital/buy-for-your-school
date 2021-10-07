@@ -8,6 +8,7 @@ module Support
 
     def new
       @interaction = current_case.interactions.build
+      @back_url = support_case_path(current_case)
       render :new, locals: { option: safe_interaction }
     end
 
