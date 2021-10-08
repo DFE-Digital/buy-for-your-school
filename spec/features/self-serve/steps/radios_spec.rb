@@ -20,9 +20,10 @@ RSpec.feature "Radio Question" do
 
       click_first_link_in_section_list
       expect(find("form.edit_answer")).to have_checked_field "Catering"
-
-      answer = find_field("answer-catering-further-information-field").value
-      expect(answer).to eql "The school needs the kitchen cleaned once a day"
+  
+      within(all("div.govuk-form-group")[1]) do 
+        expect(find("input.govuk-input")[:value]).to eq "The school needs the kitchen cleaned once a day"
+      end
     end
   end
 
@@ -58,10 +59,8 @@ RSpec.feature "Radio Question" do
     scenario "shows an or separator" do
       start_journey_from_category(category: "radio-question-with-separator.json")
       click_first_link_in_section_list
-
-      within ".govuk-radios__divider" do
-        expect(page).to have_text "or"
-      end
+      
+      expect(find("div.govuk-radios__divider")).to have_text "or"
 
       # TODO: this test needs to be written better
       #

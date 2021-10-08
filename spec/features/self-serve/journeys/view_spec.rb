@@ -107,8 +107,6 @@ RSpec.feature "Users can see their specification" do
 
       # journey.specification.header
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
-      expect(page).to have_content("Part 1")
-      expect(page).to have_content("Part 2")
     end
   end
 end

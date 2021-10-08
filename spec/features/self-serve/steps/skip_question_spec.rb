@@ -64,7 +64,7 @@ RSpec.feature "Skipping questions" do
         end
 
         it "takes you to the next unanswered step" do
-          expect(find("legend.govuk-fieldset__legend.govuk-fieldset__legend--l")).to have_text "Checkbox step"
+          expect(find("legend.govuk-fieldset__legend--l")).to have_text "Checkbox step"
         end
 
         it "adds skipped step ID to task's skipped_ids" do
