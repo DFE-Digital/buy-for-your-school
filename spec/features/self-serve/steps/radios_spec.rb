@@ -9,7 +9,7 @@ RSpec.feature "Radio Question" do
       choose "Catering"
 
       # It should not create a label when one isn't specified
-      expect(page).not_to have_text "No_further_information"
+      expect(page).not_to have_text "No further information"
 
       # Default the hidden label to something understandable for screen readers
       expect(find("span.govuk-visually-hidden")).to have_text "Optional further information"
@@ -19,8 +19,6 @@ RSpec.feature "Radio Question" do
       click_continue
 
       click_first_link_in_section_list
-      pp page.source
-      # expect(page).to have_checked_field "Catering"
       expect(find("form.edit_answer")).to have_checked_field "Catering"
 
       answer = find_field("answer-catering-further-information-field").value

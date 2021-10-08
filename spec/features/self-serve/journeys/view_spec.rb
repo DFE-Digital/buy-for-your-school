@@ -65,7 +65,6 @@ RSpec.feature "Users can see their specification" do
     click_view
 
     # journey.specification.header
-    expect(page).to have_text "Your specification"
     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
 
     within("article#specification") do
@@ -107,7 +106,6 @@ RSpec.feature "Users can see their specification" do
       click_view
 
       # journey.specification.header
-      expect(page).to have_text "Your specification"
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
       expect(page).to have_content("Part 1")
       expect(page).to have_content("Part 2")
