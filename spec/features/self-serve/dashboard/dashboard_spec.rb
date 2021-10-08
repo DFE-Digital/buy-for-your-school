@@ -33,7 +33,7 @@ RSpec.feature "Specification dashboard" do
     end
 
     it "offers support with requests" do
-      expect(page).to have_link "Request free help and support with your specification", href: "/profile" # , class: "govuk-link"
+      expect(page).to have_link "Request free help and support with your specification", href: "/support-requests", class: "govuk-link"
     end
   end
 end
