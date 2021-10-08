@@ -1,6 +1,8 @@
 RSpec.feature "Sign out" do
+  let(:user) { create(:user, first_name: "Generic", last_name: "User", full_name: "Generic User") }
+  
   before do
-    user_is_signed_in
+    user_is_signed_in(user: user)
 
     visit "/dashboard"
   end
@@ -24,6 +26,7 @@ RSpec.feature "Sign out" do
     # FIXME: why is the signout link still visible in this spec?
     # within("header") do
     #   expect(page).not_to have_link "Sign out", href: "/auth/dfe/signout", class: "govuk-header__link"
+    #   expect(page).not_to have_content "Signed in as Generic User"
     # end
   end
 end
