@@ -50,12 +50,13 @@ RSpec.feature "DfE Sign-in" do
     end
 
     context "and the user already exists" do
-      let!(:user) { create(:user) }
+      let!(:user) { create(:user, first_name: "Generic", last_name: "User", full_name: "Generic User") }
 
       # generic.button.sign_out
       it "signs in successfully" do
         within("header") do
           expect(page).to have_link "Sign out", href: "/auth/dfe/signout", class: "govuk-header__link"
+          expect(page).to have_content "Signed in as Generic User"
         end
       end
 
