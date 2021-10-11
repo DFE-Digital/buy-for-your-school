@@ -8,7 +8,7 @@ RSpec.feature "Radio Question" do
 
       choose "Catering"
 
-      # It should not create a label when one isn't specified
+      # It should not create a label when one isn't specified.
       expect(page).not_to have_text "No further information"
 
       # Default the hidden label to something understandable for screen readers
