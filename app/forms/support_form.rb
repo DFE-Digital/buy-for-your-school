@@ -77,15 +77,12 @@ class SupportForm
   #
   # @return [nil]
   def navigate(user_journeys:)
-    move_in_direction = { backwards: :back!, forwards: :advance! }
+    navigator = SupportRequests::Navigation.new(
+      user_journeys: user_journeys,
+      support_form: self,
+    )
 
-    times_to_move = if (step.in?([1, 3]) && user_journeys.none?) || (step.in?([2, 4]) && has_journey?)
-                      2
-                    else
-                      1
-                    end
-
-    times_to_move.times { send move_in_direction[direction.to_sym] }
+    navigator.navigate
 
     @step = 1 if step < 1
     @step = 4 if step > 4
