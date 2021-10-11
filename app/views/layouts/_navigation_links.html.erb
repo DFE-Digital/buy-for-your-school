@@ -2,6 +2,11 @@
   <ul id="navigation" class="govuk-header__navigation navbar-component__navigation", aria-label="Top level navigation">
     <% unless current_user.guest? %>
       <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+        <%# TODO: Use UserDecorator for full_name %>
+        Signed in as <%= current_user.first_name %> <%= current_user.last_name %>
+      </li>
+
+      <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
         <%= link_to I18n.t("generic.button.sign_out"), sign_out_path, method: :delete, class: "govuk-header__link" %>
       </li>
     <% end %>
