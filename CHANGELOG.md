@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog 1.0.0].
 - use `dry-validation` for complex form validations
 - provide a better more accessible user experience using the form error summary
 - send a confirmation email upon submission
+- retrieve existing support request when not submitted
+- before completing steps: clicking back within support request preserves
+form contents
 
 **Rich Data**
 - integrate fully with DSI to gather names, email and organisation at authentication

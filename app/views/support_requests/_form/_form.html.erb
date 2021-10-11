@@ -1,7 +1,17 @@
 <% if @support_request&.persisted? %>
   <%= link_to I18n.t("generic.button.back"), :back, class: "govuk-back-link" %>
+<% elsif @support_form.step == 1 %>
+  <%= link_to I18n.t("generic.button.back"), profile_path, class: "govuk-back-link" %>
 <% else %>
-  <%= link_to I18n.t("generic.button.back"), new_support_request_path(step: @support_form.back), class: "govuk-back-link" %>
+  <%= form_with model: @support_form, scope: :support_form, url: path, method: verb, namespace: :go_back do |form| %>
+    <% @support_form.to_h.each do |field, value| %>
+      <%= form.hidden_field field, value: value %>
+    <% end %>
+
+    <%= form.hidden_field :step, value: @support_form.step %>
+    <%= form.hidden_field :direction, value: :backwards %>
+    <%= button_tag I18n.t("generic.button.back"), class: "button-link govuk-back-link" %>
+  <% end %>
 <% end %>
 
 <% if Rails.env.development? %>
@@ -14,6 +24,7 @@
   <%= form.govuk_error_summary %>
 
   <%= form.hidden_field :step, value: @support_form.step %>
+  <%= form.hidden_field :direction, value: :forwards %>
   <%= render "support_requests/_form/step_#{@support_form.step}", form: form %>
 
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>

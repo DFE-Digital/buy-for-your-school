@@ -64,6 +64,16 @@ RSpec.feature "Create a new support request" do
       expect(find("span.govuk-hint")).to have_text "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes. You do not need to provide a phone number."
     end
 
+    it "remembers the phone number when going back to step 1" do
+      fill_in "support_form[phone_number]", with: "07234567890"
+      click_continue
+      click_back
+
+      phone_value = find_field("support_form[phone_number]").value
+
+      expect(phone_value).to eq("07234567890")
+    end
+
     # step 1 > step 3
     it "does not require a phone number" do
       click_continue
