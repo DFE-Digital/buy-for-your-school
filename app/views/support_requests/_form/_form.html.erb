@@ -4,12 +4,10 @@
   <%= link_to I18n.t("generic.button.back"), profile_path, class: "govuk-back-link" %>
 <% else %>
   <%= form_with model: @support_form, scope: :support_form, url: path, method: verb, namespace: :go_back do |form| %>
-    <% @support_form.to_h.each do |field, value| %>
-      <%= form.hidden_field field, value: value %>
-    <% end %>
-
     <%= form.hidden_field :step, value: @support_form.step %>
     <%= form.hidden_field :direction, value: :backwards %>
+    <%= hidden_fields form_object: form %>
+
     <%= button_tag I18n.t("generic.button.back"), class: "button-link govuk-back-link" %>
   <% end %>
 <% end %>

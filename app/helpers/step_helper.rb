@@ -12,6 +12,22 @@ module StepHelper
     end
   end
 
+  # Renders the given form's model attributes into a hidden fields
+  #
+  # @param [GOVUKDesignSystemFormBuilder::FormBuilder] form_object
+  # @param [Array<Symbol>] except list of fields not to render (optional)
+  #
+  # @return [nil]
+  def hidden_fields(form_object:, except: [])
+    fields = form_object.object.to_h.except(*Array(except))
+
+    capture do
+      fields.each do |field, value|
+        concat form_object.hidden_field field, value: value
+      end
+    end
+  end
+
   # Modifies the form object when displayed to the user.
   #
   # Dynamically adds attributes to the object so that the form object can work with unique further information fields.

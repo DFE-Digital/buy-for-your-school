@@ -1,6 +1,4 @@
-<%= form.hidden_field :phone_number, value: form.object.phone_number %>
-<%= form.hidden_field :journey_id, value: form.object.journey_id %>
-<%= form.hidden_field :category_id, value: form.object.category_id %>
+<%= hidden_fields form_object: form, except: :message_body %>
 
 <%= form.govuk_text_area :message_body,
       autofocus: true,

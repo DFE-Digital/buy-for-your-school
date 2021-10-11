@@ -1,5 +1,4 @@
-<%= form.hidden_field :phone_number, value: form.object.phone_number %>
-<%= form.hidden_field :journey_id, value: form.object.journey_id %>
+<%= hidden_fields form_object: form, except: :category_id %>
 
 <%= form.govuk_collection_radio_buttons :category_id,
     Category.published,
@@ -9,4 +8,3 @@
     legend: { text: I18n.t("support_request.label.category"), size: "l" },
     caption: { text: I18n.t("support_request.caption.category"), size: "l" }
 %>
-
