@@ -40,14 +40,16 @@ RSpec.feature "Step help text is markdown" do
       user_is_signed_in
       start_journey_from_category(category: "nil-help-text-radios.json")
       click_first_link_in_section_list
-      expect(page).to have_text "Which service do you need?"
+      expect(find("legend.govuk-fieldset__legend--l")).to have_text "Which service do you need?"
     end
 
     it "still renders when question is a short text" do
       user_is_signed_in
       start_journey_from_category(category: "nil-help-text-short-text.json")
       click_first_link_in_section_list
-      expect(page).to have_text "What email address did you use?"
+      within("div.govuk-form-group") do
+        expect(find("label.govuk-label.govuk-label--l")).to have_text "What email address did you use?"
+      end
     end
   end
 end
