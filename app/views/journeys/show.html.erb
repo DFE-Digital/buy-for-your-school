@@ -6,7 +6,7 @@
 <p class="govuk-body"><%= I18n.t("journeys_body") %></p>
 
 <div class="govuk-inset-text">
-  <%= link_to "Request free help and support with your specification", profile_path %>
+  <%= link_to I18n.t("support_request.link"), support_requests_path, class: "govuk-link" %>
 </div>
 
 <ol class="app-task-list sections">

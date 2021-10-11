@@ -171,7 +171,8 @@ en:
       email: Your email address
 
   # /support-requests
-  support_requests:
+  support_request:
+    link: Request free help and support with your specification
     flash:
       created: Support request created
       updated: Support request updated

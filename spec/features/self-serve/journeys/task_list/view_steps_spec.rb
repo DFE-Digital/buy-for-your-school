@@ -11,7 +11,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
   it { expect(page).to have_a_journey_path }
 
   it "offers support with requests" do
-    expect(page).to have_link "Request free help and support with your specification", href: "/profile" # , class: "govuk-link"
+    expect(page).to have_link "Request free help and support with your specification", href: "/support-requests", class: "govuk-link"
   end
 
   it "tasks are grouped by their section" do
