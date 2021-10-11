@@ -8,10 +8,10 @@
     <% if @support_request.submitted? %>
       <h1 class="govuk-heading-l">Your request has been submitted</h1>
     <% else %>
-      <h1 class="govuk-heading-l"><%= I18n.t("support_requests.section.submit_request") %></h1>
+      <h1 class="govuk-heading-l"><%= I18n.t("support_request.section.submit_request") %></h1>
     <% end %>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support_requests.section.about_you") %></h2>
+    <h2 class="govuk-heading-m"><%= I18n.t("support_request.section.about_you") %></h2>
 
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -43,12 +43,14 @@
         </dd>
 
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 1), class: "govuk-link", id: "edit-phone-number" %>
+          <% unless @support_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 1), class: "govuk-link", id: "edit-phone-number" %>
+          <% end %>
         </dd>
       </div>
     </dl>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support_requests.section.request_summary") %></h2>
+    <h2 class="govuk-heading-m"><%= I18n.t("support_request.section.request_summary") %></h2>
 
     <dl class="govuk-summary-list">
 
@@ -64,7 +66,7 @@
           <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <% if @current_user.journeys.any? %>
+          <% if @current_user.journeys.any? && !@support_request.submitted? %>
             <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 2), class: "govuk-link", id: "edit-specification" %>
           <% end %>
         </dd>
@@ -72,7 +74,7 @@
 
       <div id="support-request-category" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support_requests.label.category") %>
+          <%= I18n.t("support_request.label.category") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <% if @support_request.journey %>
@@ -82,29 +84,33 @@
           <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 3), class: "govuk-link", id: "edit-category" %>
+          <% unless @support_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 3), class: "govuk-link", id: "edit-category" %>
+          <% end %>
         </dd>
       </div>
 
       <div id="support-request-message" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Description of problem
+          <%= I18n.t("support_request.label.message") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= @support_request.message_body %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 4), class: "govuk-link", id: "edit-message" %>
+          <% unless @support_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 4), class: "govuk-link", id: "edit-message" %>
+          <% end %>
         </dd>
       </div>
     </dl>
 
     <% unless @support_request.submitted? %>
       <p class="govuk-body">
-        <%= I18n.t("support_requests.response_time") %>
+        <%= I18n.t("support_request.response_time") %>
       </p>
 
-      <%= button_to I18n.t("support_requests.button.send"), submit_request_path(id: @support_request), class: "govuk-button", method: :post, data: { disable_with: "Submitted!" } %>
+      <%= button_to I18n.t("support_request.button.send"), submit_request_path(id: @support_request), class: "govuk-button", method: :post, data: { disable_with: "Submitted!" } %>
     <% end %>
 
   </div>
