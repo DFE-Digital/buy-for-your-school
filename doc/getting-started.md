@@ -2,16 +2,19 @@
 
 ## Setup
 
-Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies but it takes longer to run.
+Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies but it takes longer to run. The preferred option is to run code in Docker.
 Without [Docker](https://docs.docker.com/docker-for-mac/install) is faster but has lower parity and you will need to install local dependencies on your machine first.
 
-The preferred option is to run code in Docker.
+## Installing Dependencies
 
 1. Install [Homebrew](https://brew.sh)
-1. Copy and edit `/Brewfile.example` to `/Brewfile` if needed.
+1. Copy `/Brewfile.example` to `/Brewfile` and uncomment any required dependencies
 1. Run `$ brew bundle` to install any missing dependencies
+
+## Environment Variables
+
 1. Obtain environment variable secrets from another member of the development team
-1. Copy and edit `/.env.example` to `/.env.development.local`
+1. Copy `/.env.example` to `/.env.development.local`
 
 ## Development
 
