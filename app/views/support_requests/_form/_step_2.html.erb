@@ -1,4 +1,4 @@
-<%= form.hidden_field :phone_number, value: form.object.phone_number %>
+<%= hidden_fields form_object: form, except: :journey_id %>
 
 <%= form.govuk_collection_radio_buttons :journey_id,
     current_user.active_journeys,
