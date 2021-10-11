@@ -39,13 +39,7 @@ class SupportRequestsController < ApplicationController
 
     elsif validation.success?
 
-      if @support_form.step == 1 && current_user.journeys.none?
-        @support_form.skip!
-      elsif @support_form.step == 2 && @support_form.has_journey?
-        @support_form.skip!
-      else
-        @support_form.advance!
-      end
+      @support_form.navigate(user_journeys: current_user.journeys)
 
       render :new
     else
@@ -93,7 +87,12 @@ private
 
   # @return [SupportForm] form object populated with validation messages
   def form
-    SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
+    SupportForm.new(
+      step: form_params[:step],
+      direction: form_params[:direction],
+      messages: validation.errors(full: true).to_h,
+      **validation.to_h,
+    )
   end
 
   # @return [SupportFormSchema] validated form input
@@ -103,7 +102,7 @@ private
 
   def form_params
     params.require(:support_form).permit(*%i[
-      step phone_number journey_id category_id message_body
+      step phone_number journey_id category_id message_body direction
     ])
   end
 end

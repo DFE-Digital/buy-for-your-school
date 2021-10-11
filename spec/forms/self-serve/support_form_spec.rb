@@ -94,4 +94,118 @@ RSpec.describe SupportForm, type: :model do
     form.forget_journey!
     expect(form).not_to have_journey
   end
+
+  describe "#navigate" do
+    context "when moving backwards through the steps" do
+      context "when step is currently 1 and user has no journeys" do
+        it "remains on step 1 (cannot be 0)" do
+          form = described_class.new(direction: :backwards, step: 1)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(1)
+        end
+      end
+
+      context "when step is currently 2 and user has some journeys" do
+        it "moves back to step 1" do
+          form = described_class.new(direction: :backwards, step: 1, journey_id: "123")
+          form.navigate(user_journeys: [double])
+
+          expect(form.step).to be(1)
+        end
+      end
+
+      context "when step is currently 2 and user has no journeys" do
+        it "moves back to step 1" do
+          form = described_class.new(direction: :backwards, step: 1)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(1)
+        end
+      end
+
+      context "when step is currently 3 and user has some journeys" do
+        it "moves back to step 2" do
+          form = described_class.new(direction: :backwards, step: 3, journey_id: "123")
+          form.navigate(user_journeys: [double])
+
+          expect(form.step).to be(2)
+        end
+      end
+
+      context "when step is currently 3 and user has no journeys" do
+        it "moves back to step 1" do
+          form = described_class.new(direction: :backwards, step: 3)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(1)
+        end
+      end
+
+      context "when step is currently 4 and user has some journeys" do
+        it "moves back to step 2" do
+          form = described_class.new(direction: :backwards, step: 4, journey_id: "123")
+          form.navigate(user_journeys: [double])
+
+          expect(form.step).to be(2)
+        end
+      end
+
+      context "when step is currently 4 and user has no journeys" do
+        it "moves back to step 3" do
+          form = described_class.new(direction: :backwards, step: 4)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(3)
+        end
+      end
+    end
+
+    context "when moving forwards through the steps" do
+      context "when step is currently 1 and user has no journeys" do
+        it "moves to step 3" do
+          form = described_class.new(direction: :forwards, step: 1)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(3)
+        end
+      end
+
+      context "when step is currently 1 and user has journeys" do
+        it "moves to step 2" do
+          form = described_class.new(direction: :forwards, step: 1)
+          form.navigate(user_journeys: [double])
+
+          expect(form.step).to be(2)
+        end
+      end
+
+      context "when step is currently 2 and user has journeys" do
+        it "moves to step 4" do
+          form = described_class.new(direction: :forwards, step: 2, journey_id: "123")
+          form.navigate(user_journeys: [double])
+
+          expect(form.step).to be(4)
+        end
+      end
+
+      context "when step is currently 2 and user has no journeys" do
+        it "moves to step 3" do
+          form = described_class.new(direction: :forwards, step: 2)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(3)
+        end
+      end
+
+      context "when step is currently 3" do
+        it "moves to step 4" do
+          form = described_class.new(direction: :forwards, step: 3)
+          form.navigate(user_journeys: [])
+
+          expect(form.step).to be(4)
+        end
+      end
+    end
+  end
 end

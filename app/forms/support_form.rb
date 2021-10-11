@@ -34,6 +34,9 @@ class SupportForm
   option :category_id, optional: true  # 3 (skipped if 2)
   option :message_body, optional: true # 4 (last)
 
+  # track which direction the user is travelling through the form
+  option :direction, optional: true, default: proc { :forwards }
+
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
   #
   # @return [ErrorSummary]
@@ -58,6 +61,34 @@ class SupportForm
   # @return [Integer] previous step position
   def back
     @step - 1
+  end
+
+  # Proceed to previous question
+  #
+  # @return [Integer] next step position
+  def back!
+    @step -= 1
+  end
+
+  # Determine how many steps to take forwards or backwards
+  # whilst navigating form.
+  #
+  # @see SupportRequestsController#create
+  #
+  # @return [nil]
+  def navigate(user_journeys:)
+    move_in_direction = { backwards: :back!, forwards: :advance! }
+
+    times_to_move = if (step.in?([1, 3]) && user_journeys.none?) || (step.in?([2, 4]) && has_journey?)
+                      2
+                    else
+                      1
+                    end
+
+    times_to_move.times { send move_in_direction[direction.to_sym] }
+
+    @step = 1 if step < 1
+    @step = 4 if step > 4
   end
 
   # @see SupportRequestsController#create
@@ -88,6 +119,6 @@ class SupportForm
   #
   # @return [Hash] form parms as support request attributes
   def to_h
-    self.class.dry_initializer.attributes(self).except(:step, :messages)
+    self.class.dry_initializer.attributes(self).except(:step, :messages, :direction)
   end
 end

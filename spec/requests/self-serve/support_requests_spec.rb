@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Creating a support request", type: :request do
-  context "a previously unsubmitted request exists" do
+  context "when a previously unsubmitted request exists" do
     let(:user) { create(:user) }
     let!(:pending_support_request) { create(:support_request, :pending, user: user) }
 
-    before do 
+    before do
       user_is_signed_in(user: user)
       get new_support_request_path
     end
