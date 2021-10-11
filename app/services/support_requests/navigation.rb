@@ -1,3 +1,8 @@
+# @abstract Logic to enable a user to navigate through steps of a SupportForm
+# forwards and backwards and potentially skip steps in either direction.
+#
+# @author Ryan Kendall
+#
 class SupportRequests::Navigation
   attr_reader :user_journeys, :support_form
 
