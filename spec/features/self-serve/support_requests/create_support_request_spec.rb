@@ -12,8 +12,8 @@ RSpec.feature "Create a new support request" do
     end
 
     it "explains the form to the user" do
-      expect(page).to have_text "Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification."
-      expect(page).to have_text "DfE's supported buying team will respond to you within 5 working days."
+      expect(find("div.govuk-grid-column-two-thirds")).to have_text "Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification."
+      expect(find("div.govuk-grid-column-two-thirds")).to have_text "DfE's supported buying team will respond to you within 5 working days."
     end
 
     it "links to more information" do
@@ -37,6 +37,13 @@ RSpec.feature "Create a new support request" do
     it "generic.button.start" do
       expect(find("a.govuk-button")).to have_text "Start"
       expect(find("a.govuk-button")[:role]).to eq "button"
+    end
+
+    it "confirms your identity on the profile page" do
+      click_on "Start"
+      expect(page).to have_current_path "/profile"
+      click_on "Request support"
+      expect(page).to have_current_path "/support-requests/new"
     end
   end
 
@@ -171,17 +178,16 @@ RSpec.feature "Create a new support request" do
       expect(page).to have_unchecked_field "Broadband"
       expect(page).to have_unchecked_field "Maintenance"
 
-      # FIXME: category validation errors are not appearing
-      # click_continue
+      click_continue
 
-      # expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-      # expect(page).to have_link "The type of procurement is required if you do not select an existing specification", href: "#support-form-category_id-field-error"
-      # expect(find("span.govuk-error-message")).to have_text "The type of procurement is required if you do not select an existing specification"
+      expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+      expect(page).to have_link "The type of procurement is required if you do not select an existing specification", href: "#support-form-category-id-field-error"
+      expect(find("span.govuk-error-message")).to have_text "The type of procurement is required if you do not select an existing specification"
 
-      # choose "Broadband"
-      # click_continue
+      choose "Broadband"
+      click_continue
 
-      # expect(find("span.govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find("span.govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
     end
   end
 

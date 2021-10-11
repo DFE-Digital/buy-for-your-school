@@ -43,8 +43,8 @@ RSpec.feature "Toggling additional steps" do
       # expect(find("label.govuk-label--l")).to have_text "question?"
 
       # list of steps
-      expect(page).to have_text "statement!"
-      expect(page).to have_text "question?"
+      expect(all("dt.govuk-summary-list__key")[1]).to have_text "statement!"
+      expect(all("dt.govuk-summary-list__key")[2]).to have_text "question?"
 
       # go back
       click_on "Return to task list"
