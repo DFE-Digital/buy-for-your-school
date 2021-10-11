@@ -1,7 +1,6 @@
 module SignInHelpers
   # TODO: rename `user_exists_in_dfe_sign_in` to `mock_dsi_callback`
   def user_exists_in_dfe_sign_in(user: build(:user))
-
     # stub CreateUser call to DSI API for roles and orgs
     dsi_client = instance_double(::Dsi::Client)
     allow(Dsi::Client).to receive(:new).and_return(dsi_client)

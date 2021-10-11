@@ -3,11 +3,16 @@
 require "dry-initializer"
 require "dsi/client"
 require "types"
+require "pry"
 
 # Persist new users and update their DSI details
 # Combine auth identity, roles and organisation data from DSI OIDC and API
 #
 class CreateUser
+  class NoOrganisationError < StandardError; end
+
+  class UnsupportedOrganisationError < StandardError; end
+
   extend Dry::Initializer
 
   # OmniAuth response
@@ -20,14 +25,18 @@ class CreateUser
   #
   # @return [User, false]
   def call
+    # binding.pry
     return false unless user_id
 
     if current_user
       update_user!
       Rollbar.info "Updated account for #{email}"
-    else
-      create_user! if supported_establishment?
+    elsif supported_establishment?
+      create_user!
       Rollbar.info "Created account for #{email}"
+    else
+      Rollbar.info "User #{user_id} belongs to an unsupported organisation"
+      raise UnsupportedOrganisationError
     end
 
     current_user
@@ -37,15 +46,19 @@ private
 
   # @return [Boolean]
   def supported_establishment?
-    # check current organisation
-    ORG_TYPE_IDS.include?(current_org_type_id)
-    # check all organisations
-    # orgs.any? { |org| ORG_TYPE_IDS.include?(org["type"]["id"]) }
+    # check current organisation or caseworker
+    ORG_TYPE_IDS.include?(current_org_type_id.to_i) || is_caseworker?
   end
 
   # @return [String]
   def current_org_type_id
-    orgs.select { |org| org["id"].eql?(org_id) }["type"]["id"]
+    orgs.find { |org| org["id"].eql?(org_id) }["type"]["id"]
+  end
+
+  # @return [Boolean]
+  def is_caseworker?
+    caseworkers = ENV["PROC_OPS_TEAM"].split(",")
+    caseworkers.include?("#{first_name} #{last_name}")
   end
 
   # @return [User, nil]
@@ -119,5 +132,6 @@ private
     client.orgs(user_id: user_id)
   rescue ::Dsi::Client::ApiError
     Rollbar.info "User #{user_id} has no organisation"
+    raise NoOrganisationError
   end
 end

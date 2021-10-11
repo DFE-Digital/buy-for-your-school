@@ -2,29 +2,32 @@ FactoryBot.define do
   factory :user do
     id { SecureRandom.uuid }
     dfe_sign_in_uid { SecureRandom.uuid }
+    email       { "test@test"   }
+    full_name   { "full_name"   }
+    first_name  { "first_name"  }
+    last_name   { "last_name"   }
+    orgs do
+      [{
+        "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+        "name" => "Supported School Name",
+        "type" => {
+          "id" => ORG_TYPE_IDS.sample.to_s, # random valid ids
+        },
+      }]
+    end
 
-    # Tests covering data migration in production use factories
-    if ENV["POST_MIGRATION_CHANGES"] == "true"
-      email       { "test@test"   }
-      full_name   { "full_name"   }
-      first_name  { "first_name"  }
-      last_name   { "last_name"   }
+    roles { [] }
 
-      orgs        {
+    trait :unsupported do
+      orgs do
         [{
-          "name" => "Supported School Name",
+          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+          "name" => "Unsupported School Name",
           "type" => {
-            "id" => ORG_TYPE_IDS.sample.to_s, # random valid ids
-          }
+            "id" => "11",
+          },
         }]
-      }
-
-      roles       { [] }
-
-      trait :unsupported do
-        orgs { [] }
       end
-
     end
   end
 end

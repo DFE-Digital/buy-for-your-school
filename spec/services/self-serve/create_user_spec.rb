@@ -74,12 +74,11 @@ RSpec.describe CreateUser do
       end
     end
 
-    context "when a user has no roles or organisation in the DSI" do
+    context "when a user has no roles in the DSI" do
       before do
         dsi_client = instance_double(::Dsi::Client)
         allow(Dsi::Client).to receive(:new).and_return(dsi_client)
         allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
-        allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
       end
 
       it "raises no error" do
@@ -87,7 +86,6 @@ RSpec.describe CreateUser do
       end
 
       it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
         expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no roles").and_call_original
         expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
 
@@ -110,6 +108,25 @@ RSpec.describe CreateUser do
 
       it "raises an error" do
         expect { result }.to raise_error Dry::Types::ConstraintError, /nil violates constraints/
+      end
+    end
+
+    context "when a user has no organisations in the DSI" do
+      before do
+        dsi_client = instance_double(::Dsi::Client)
+        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+        allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
+      end
+
+      it "raises an error" do
+        expect { result }.to raise_error(CreateUser::NoOrganisationError)
+      end
+
+      it "reports to Rollbar" do
+        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
+        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+
+        result
       end
     end
   end

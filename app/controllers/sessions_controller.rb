@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "pry"
 
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
@@ -7,6 +8,7 @@ class SessionsController < ApplicationController
   # @see CreateUser
   # @see UserSession
   def create
+    # binding.pry
     user = CreateUser.new(auth: auth_hash).call
 
     if user
@@ -14,10 +16,11 @@ class SessionsController < ApplicationController
       user_session.invalidate_other_user_sessions(auth: auth_hash)
 
       redirect_to dashboard_path
-    else
-      # TODO: replace with alternative pages
-      redirect_to root_path, notice: "Access Denied"
     end
+  rescue CreateUser::NoOrganisationError
+    render "sessions/no_organisation_error"
+  rescue CreateUser::UnsupportedOrganisationError
+    render "sessions/unsupported_organisation_error"
   end
   alias_method :bypass_callback, :create
 
