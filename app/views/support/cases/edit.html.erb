@@ -4,12 +4,12 @@
   <%= form.govuk_radio_buttons_fieldset("") do %>
     <legend class="govuk-fieldset__legend govuk-label--l">
       <h1 class="govuk-fieldset__heading">
-        <%= I18n.t("support.cases.labels.assign_to_agent") %>
+        <%= I18n.t("support.case.label.assign_to_agent") %>
       </h1>
     </legend>
     <% @agents.each do |agent| %>
       <%= form.govuk_radio_button :agent, agent.id, label: { text: agent.full_name } %>
     <% end %>
   <% end %>
-  <%= form.submit I18n.t("support.cases.labels.assign"), class: "govuk-button" %>
+  <%= form.submit I18n.t("support.case.label.assign"), class: "govuk-button" %>
 <% end %>

@@ -221,13 +221,13 @@ en:
   support:
     header: Supported Buying Admin
 
-    cases:
-      headers:
-        actions: Actions
-        school_details: School details
-        case_details: Case details
+    case:
+      header:
+        action: Actions
+        school_detail: School details
+        case_detail: Case details
         case_history: Case history
-      labels:
+      label:
         change_owner: Change case owner
         add_note: Add a case note
         send_email: Send email
@@ -251,27 +251,27 @@ en:
         change_case_owner: change
         assign_to_agent: Assign to case worker
         assign: Assign
-      lists:
+      list:
         not_found: No cases found
         my_cases: My cases
         new_cases: New cases
         all_cases: All cases
 
-    interactions:
-        headers:
+    interaction:
+        header:
           type_of_contact: Type of contact
           contact_with_school: Contact with school
           add_case_note: Add case note
-        types:
+        type:
           phone_call: Phone call
           email_from_school: Email from school
           email_to_school: Email to school
           note: Case note
           request_for_support: Request for support
-        labels:
-          contact_details: Contact details
-          contact_details_hint: Add details of the phone call or copy and paste the email here
+        label:
+          contact_detail: Contact details
+          contact_detail_hint: Add details of the phone call or copy and paste the email here
           body: Notes
           created_by: Created by
-        messages:
+        message:
           created_flash: "%{type} added to case"

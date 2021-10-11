@@ -1,11 +1,11 @@
 <div class="govuk-tabs__panel" id="case-details" role="tabpanel" aria-labelledby="tab_case-details">
   <p class="govuk-body">
-    <%= I18n.t("support.cases.labels.requested_at", time: current_case.received_at) %>
+    <%= I18n.t("support.case.label.requested_at", time: current_case.received_at) %>
   </p>
   <dl class="govuk-summary-list govuk-!-margin-bottom-5">
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.labels.category") %>
+        <%= I18n.t("support.case.label.category") %>
       </dt>
       <dd class="govuk-summary-list__value">
         <%= current_case.category.title %>
@@ -14,7 +14,7 @@
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.labels.problem_description") %>
+        <%= I18n.t("support.case.label.problem_description") %>
       </dt>
       <dd class="govuk-summary-list__value">
         <%= current_case.request_text %>
@@ -23,7 +23,7 @@
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.labels.attached_specification") %>
+        <%= I18n.t("support.case.label.attached_specification") %>
       </dt>
       <dd class="govuk-summary-list__value">
         <% "TODO: Render link to view documents" %>

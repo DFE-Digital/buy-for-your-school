@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :support_enquiry, class: "Support::Enquiry" do
     support_request_id { SecureRandom.uuid }
-    name { "Joe Bloggs" }
-    email { "joe.bloggs.gov.uk" }
+    name { "School Business Professional" }
+    email { "school-business-professional.gov.uk" }
     telephone { "0151 000 0000" }
     message { "This is an example request for support - please help!" }
 
