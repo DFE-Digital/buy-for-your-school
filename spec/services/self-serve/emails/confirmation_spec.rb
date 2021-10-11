@@ -22,7 +22,7 @@ RSpec.describe Emails::Confirmation do
           "created_at" => "2021-08-26T09:00:00.12345Z",
           "updated_at" => "2021-08-26T09:00:00.12345Z",
           "created_by" => "example@gov.uk",
-          "body" => "Hello ((first_name)) ((last name)), \r\n\r\nYour reference number is: ((ref number))",
+          "body" => "Hello ((first_name)), \r\n\r\nreference: ((reference))",
           "subject" => "Test",
           "version" => "4",
         },
@@ -66,19 +66,9 @@ RSpec.describe Emails::Confirmation do
 
   describe "#call" do
     it "adds extra variables" do
-      expect(Rollbar).to receive(:info).with("Sending email to peter.hamilton@gov.uk")
+      expect(Rollbar).to receive(:info).with("Sending confirmation email")
 
       service.call
-    end
-  end
-
-  describe "#template_params" do
-    it "adds extra variables" do
-      expect(service.template_params).to eql({
-        first_name: "Peter",
-        last_name: "Hamilton",
-        ref_number: "",
-      })
     end
   end
 end
