@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  app:
+    build:
+      target: app
+      args:
+        RAILS_ENV: development
+      # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'"
+    image: buy_for_your_school:dev
+    env_file:
+      - .env.development.local
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
+    networks:
+      - dev
+
+  db:
+    networks:
+      - dev
+
+  redis:
+    networks:
+      - dev
+
+  sidekiq:
+    image: buy_for_your_school:dev
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/srv/app
+    networks:
+      - dev
+
+networks:
+  dev:

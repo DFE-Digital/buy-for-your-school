@@ -5,5 +5,5 @@
 
 set -e
 
-docker-compose up --detach
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
 docker attach buy-for-your-school_app_1
