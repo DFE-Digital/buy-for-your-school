@@ -39,7 +39,7 @@ class SupportRequestsController < ApplicationController
 
     elsif validation.success?
 
-      @support_form.navigate(user_journeys: current_user.journeys)
+      @support_form.navigate
 
       render :new
     else
@@ -60,7 +60,7 @@ class SupportRequestsController < ApplicationController
       end
 
       if @support_form.step == 2 && !@support_form.has_journey?
-        @support_form.advance!
+        @support_form.move_forwards!
         render :edit
       else
         support_request.update!(**support_request.attributes.symbolize_keys, **@support_form.to_h)
@@ -91,6 +91,9 @@ private
       step: form_params[:step],
       direction: form_params[:direction],
       messages: validation.errors(full: true).to_h,
+      navigator: Navigators::SupportRequestFormNavigator.new(
+        user_journeys: current_user.journeys,
+      ),
       **validation.to_h,
     )
   end
