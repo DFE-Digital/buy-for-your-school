@@ -1,6 +1,5 @@
 <%= link_to t("generic.button.back"), support_case_path(@interaction.case), class: "govuk-back-link" %>
 
-
 <%= form_with model: [@interaction.case, @interaction] do |form| %>
 
   <%# form.govuk_error_summary(presenter: presenter_class) %>
@@ -10,4 +9,3 @@
   <%= hidden_field_tag :option, option %>
   <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
 <% end %>
-
