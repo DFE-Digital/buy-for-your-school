@@ -20,6 +20,10 @@ RSpec.feature "Edit an unsubmitted support request" do
              message_body: "")
     end
 
+    it "has breadcrumbs going back to the Dashboard" do
+      expect(page).to have_breadcrumbs ["Dashboard", "Profile", "Submit your request"]
+    end
+
     it "adds a valid phone number" do
       click_link "edit-phone-number"
 

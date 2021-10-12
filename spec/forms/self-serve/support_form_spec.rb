@@ -1,6 +1,10 @@
 RSpec.describe SupportForm, type: :model do
   subject(:form) { described_class.new }
 
+  it "#total_steps" do
+    expect(form.total_steps).to be 4
+  end
+
   it "#step" do
     expect(form.step).to be 1
   end
@@ -42,71 +46,6 @@ RSpec.describe SupportForm, type: :model do
     context "when unpopulated" do
       it "is empty" do
         expect(form.to_h).to be_empty
-      end
-    end
-  end
-
-  describe "#move_forwards!" do
-    context "when no amount of steps given" do
-      it "increments step by 1" do
-        form.move_forwards!
-        expect(form.step).to be(2)
-
-        form.move_forwards!
-        expect(form.step).to be(3)
-      end
-    end
-
-    context "when given a number of steps" do
-      it "increments step by that number" do
-        form.move_forwards!(2)
-        expect(form.step).to be(3)
-      end
-    end
-
-    context "when moving beyond the defined last step" do
-      it "remains on the last step without going past it" do
-        navigator = Navigators::BasicNavigator.new(last_step: 10)
-        the_form = described_class.new(step: 10, navigator: navigator)
-
-        the_form.move_forwards!(1)
-
-        expect(the_form.step).to be(10)
-      end
-    end
-  end
-
-  describe "#move_backwards!" do
-    context "when no amount of steps given" do
-      it "decrements step by 1" do
-        the_form = described_class.new(step: 10)
-
-        the_form.move_backwards!
-        expect(the_form.step).to be(9)
-
-        the_form.move_backwards!
-        expect(the_form.step).to be(8)
-      end
-    end
-
-    context "when given a number of steps" do
-      it "decrements step by that number" do
-        the_form = described_class.new(step: 10)
-
-        the_form.move_backwards!(2)
-
-        expect(the_form.step).to be(8)
-      end
-    end
-
-    context "when moving beyond the defined last step" do
-      it "remains on the first step without going past it" do
-        navigator = Navigators::BasicNavigator.new(first_step: 1, last_step: 10)
-        the_form = described_class.new(step: 1, navigator: navigator)
-
-        the_form.move_backwards!(1)
-
-        expect(the_form.step).to be(1)
       end
     end
   end
