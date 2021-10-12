@@ -91,9 +91,7 @@ private
       step: form_params[:step],
       direction: form_params[:direction],
       messages: validation.errors(full: true).to_h,
-      navigator: Navigators::SupportRequestFormNavigator.new(
-        user_journeys: current_user.journeys,
-      ),
+      user_journeys: current_user.journeys,
       **validation.to_h,
     )
   end

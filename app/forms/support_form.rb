@@ -1,42 +1,45 @@
 require "types"
 require "dry-initializer"
 
-# @abstract Form Object for multi-step questionnaires
+# Form object to handle creation of SupportRequests
 #
 # @author Peter Hamilton
 #
-class SupportForm
-  extend Dry::Initializer
-  include NavigatableForm
-
-  # @see https://design-system.service.gov.uk/components/error-summary/
-  #
-  class ErrorSummary
-    extend Dry::Initializer
-
-    # @example
-    #
-    #   { phone_number: ["size cannot be less than 10"] }
-    #
-    param :messages, Types::Hash, default: proc { {} }
-
-    delegate :any?, to: :messages
-  end
-
-  # field validation error messages
-  option :messages, Types::Hash, default: proc { {} }
-
+class SupportForm < MultiStepForm
   # @see [SupportRequest] attributes
   option :phone_number, optional: true # 1
   option :journey_id, optional: true   # 2 (option for 'none')
   option :category_id, optional: true  # 3 (skipped if 2)
   option :message_body, optional: true # 4 (last)
 
-  # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
+  # used to determine how to navigate
+  option :total_steps, optional: true, default: proc { 4 }
+  option :user_journeys, optional: true, default: proc { [] }
+
+  # Calculate how many steps to progress forwards based on current step.
+  # Users may skip over certain steps based on their setup.
   #
-  # @return [ErrorSummary]
-  def errors
-    ErrorSummary.new(messages)
+  # @return [Integer] number of steps to navigate backwards
+  def steps_to_move_forwards
+    case step
+    when 1 then skip_a_step_if_no_user_journeys
+    when 2 then skip_a_step_if_chosen_journey
+    else
+      1
+    end
+  end
+
+  # Calculate how many steps to progress backwards based on current step.
+  # Users may skip over certain steps based on their setup.
+  #
+  # @return [Integer] number of steps to navigate backwards
+  def steps_to_move_backwards
+    case step
+    when 3 then skip_a_step_if_no_user_journeys
+    when 4 then skip_a_step_if_chosen_journey
+    else
+      1
+    end
   end
 
   # @see SupportRequestsController#create
@@ -50,7 +53,7 @@ class SupportForm
   #
   # @return [Boolean] category UUID is present
   def has_category?
-    !category_id.nil?
+    category_id.present?
   end
 
   # @return [nil]
@@ -63,15 +66,13 @@ class SupportForm
     instance_variable_set :@journey_id, nil
   end
 
-  # @see SupportRequestsController#update
-  #
-  # @return [Hash] form parms as support request attributes
-  def to_h
-    self.class.dry_initializer.attributes(self).except(
-      :messages,
-      :direction,
-      :step,
-      :navigator,
-    )
+private
+
+  def skip_a_step_if_no_user_journeys
+    user_journeys.none? ? 2 : 1
+  end
+
+  def skip_a_step_if_chosen_journey
+    has_journey? ? 2 : 1
   end
 end
