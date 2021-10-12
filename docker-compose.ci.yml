@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app:
     build:
-      target: test
+      target: app
       args:
         RAILS_ENV: test
       cache_from:
