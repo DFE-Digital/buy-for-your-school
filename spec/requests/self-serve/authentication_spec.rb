@@ -27,7 +27,7 @@ RSpec.describe "Authentication", type: :request do
 
     # sign_in_path
     it "DfE Sign-in can redirect users back to the service with the callback endpoint" do
-      allow_any_instance_of(::Dsi::Client).to receive(:roles)
+      # allow_any_instance_of(::Dsi::Client).to receive(:roles)
       allow_any_instance_of(::Dsi::Client).to receive(:orgs)
       get "/auth/dfe/callback"
       expect(response).to have_http_status(:found)

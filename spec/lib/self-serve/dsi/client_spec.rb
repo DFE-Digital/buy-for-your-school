@@ -78,17 +78,17 @@ RSpec.describe Dsi::Client do
     end
   end
 
-  describe "#roles" do
-    let(:response) do
-      { "roles" => [{ "code" => "The code of the role" }] }.to_json
-    end
+  # describe "#roles" do
+  #   let(:response) do
+  #     { "roles" => [{ "code" => "The code of the role" }] }.to_json
+  #   end
 
-    let(:url) { "https://test-api.signin.education.gov.uk/services/service/organisations/foo/users/bar" }
+  #   let(:url) { "https://test-api.signin.education.gov.uk/services/service/organisations/foo/users/bar" }
 
-    it "returns an array of users" do
-      expect(client.roles(user_id: "bar", org_id: "foo")).to eql ["The code of the role"]
-    end
-  end
+  #   it "returns an array of users" do
+  #     expect(client.roles(user_id: "bar", org_id: "foo")).to eql ["The code of the role"]
+  #   end
+  # end
 
   describe "#orgs" do
     let(:response) do

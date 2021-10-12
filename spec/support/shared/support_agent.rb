@@ -27,7 +27,7 @@ RSpec.shared_context "with an agent" do
   before do
     dsi_client = instance_double(::Dsi::Client)
     allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-    allow(dsi_client).to receive(:roles).and_return([])
+    # allow(dsi_client).to receive(:roles).and_return([])
     allow(dsi_client).to receive(:orgs).and_return([{ "name" => org_name }])
 
     user_exists_in_dfe_sign_in(user: user)

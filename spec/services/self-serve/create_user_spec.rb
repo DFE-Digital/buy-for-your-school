@@ -22,7 +22,7 @@ RSpec.describe CreateUser do
   before do
     dsi_client = instance_double(::Dsi::Client)
     allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-    allow(dsi_client).to receive(:roles).and_return([{}])
+    # allow(dsi_client).to receive(:roles).and_return([{}])
     allow(dsi_client).to receive(:orgs).and_return([{}])
   end
 
@@ -78,7 +78,7 @@ RSpec.describe CreateUser do
       before do
         dsi_client = instance_double(::Dsi::Client)
         allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-        allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
+        # allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
         allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
       end
 
@@ -88,7 +88,7 @@ RSpec.describe CreateUser do
 
       it "reports to Rollbar" do
         expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
-        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no roles").and_call_original
+        # expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no roles").and_call_original
         expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
 
         result

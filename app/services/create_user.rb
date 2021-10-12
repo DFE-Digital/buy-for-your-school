@@ -95,11 +95,11 @@ private
   end
 
   # @return [Array] User's associated roles from DSI API
-  def roles
-    client.roles(user_id: user_id, org_id: org_id)
-  rescue ::Dsi::Client::ApiError
-    Rollbar.info "User #{user_id} has no roles"
-  end
+  # def roles
+  #   client.roles(user_id: user_id, org_id: org_id)
+  # rescue ::Dsi::Client::ApiError
+  #   Rollbar.info "User #{user_id} has no roles"
+  # end
 
   # @return [Array] User's affliated organisations from DSI API
   def orgs

@@ -11,7 +11,7 @@ FactoryBot.define do
       last_name   { "last_name"   }
 
       orgs        { [] }
-      roles       { [] }
+      # roles       { [] }
     end
   end
 end
