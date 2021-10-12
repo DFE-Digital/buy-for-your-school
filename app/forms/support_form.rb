@@ -7,6 +7,7 @@ require "dry-initializer"
 #
 class SupportForm
   extend Dry::Initializer
+  include NavigatableForm
 
   # @see https://design-system.service.gov.uk/components/error-summary/
   #
@@ -22,9 +23,6 @@ class SupportForm
     delegate :any?, to: :messages
   end
 
-  # internal counter defaults to 1, coerces strings
-  option :step, Types::Params::Integer, default: proc { 1 }
-
   # field validation error messages
   option :messages, Types::Hash, default: proc { {} }
 
@@ -34,58 +32,11 @@ class SupportForm
   option :category_id, optional: true  # 3 (skipped if 2)
   option :message_body, optional: true # 4 (last)
 
-  # track which direction the user is travelling through the form
-  option :direction, optional: true, default: proc { :forwards }
-
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
   #
   # @return [ErrorSummary]
   def errors
     ErrorSummary.new(messages)
-  end
-
-  # Proceed to next question
-  #
-  # @return [Integer] next step position
-  def advance!
-    @step += 1
-  end
-
-  # Miss a question
-  #
-  # @return [Integer] next step position
-  def skip!
-    @step += 2
-  end
-
-  # @return [Integer] previous step position
-  def back
-    @step - 1
-  end
-
-  # Proceed to previous question
-  #
-  # @return [Integer] next step position
-  def back!
-    @step -= 1
-  end
-
-  # Determine how many steps to take forwards or backwards
-  # whilst navigating form.
-  #
-  # @see SupportRequestsController#create
-  #
-  # @return [nil]
-  def navigate(user_journeys:)
-    navigator = SupportRequests::Navigation.new(
-      user_journeys: user_journeys,
-      support_form: self,
-    )
-
-    navigator.navigate
-
-    @step = 1 if step < 1
-    @step = 4 if step > 4
   end
 
   # @see SupportRequestsController#create
@@ -116,6 +67,11 @@ class SupportForm
   #
   # @return [Hash] form parms as support request attributes
   def to_h
-    self.class.dry_initializer.attributes(self).except(:step, :messages, :direction)
+    self.class.dry_initializer.attributes(self).except(
+      :messages,
+      :direction,
+      :step,
+      :navigator,
+    )
   end
 end
