@@ -50,15 +50,33 @@ class MultiStepForm
     end
   end
 
-  # Proceed directly to next question not exceeding last step
+  # Calculate the next valid step when navigating forwards not exceeding last step
+  #
+  # @param [Integer] number_of_steps number of steps to move forwards (default is 1)
+  #
+  # @return [Integer] next step position
+  def move_forwards(number_of_steps = 1)
+    next_step = step + number_of_steps
+    [next_step, total_steps].min
+  end
+
+  # Proceed directly to next question
   #
   # @param [Integer] number_of_steps number of steps to move forwards (default is 1)
   #
   # @return [Integer] next step position
   def move_forwards!(number_of_steps = 1)
-    @step += number_of_steps
-    @step = [step, total_steps].min
-    step
+    @step = move_forwards(number_of_steps)
+  end
+
+  # Calculate the next valid step when navigating backwards not exceeding last step
+  #
+  # @param [Integer] number_of_steps number of steps to move backwards (default is 1)
+  #
+  # @return [Integer] next step position
+  def move_backwards(number_of_steps = 1)
+    next_step = step - number_of_steps
+    [next_step, 1].max
   end
 
   # Proceed directly to previous question not preceding first step
@@ -67,9 +85,7 @@ class MultiStepForm
   #
   # @return [Integer] next step position
   def move_backwards!(number_of_steps = 1)
-    @step -= number_of_steps
-    @step = [step, 1].max
-    step
+    @step = move_backwards(number_of_steps)
   end
 
   # Calculate how many steps to progress forwards based on current step.
