@@ -2,15 +2,38 @@ version: "3.8"
 services:
   app:
     build:
-      target: app
+      context: .
+      target: test
       args:
         RAILS_ENV: test
       cache_from:
         - app_test:latest
     image: app_test
+    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- script/test"
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env.test
     environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
+      DOCKER: "true"
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GIT_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
-    env_file:
-      - .env.test
+    networks:
+      - test
+
+  db:
+    networks:
+      - test
+
+  redis:
+    networks:
+      - test
+
+networks:
+  test:

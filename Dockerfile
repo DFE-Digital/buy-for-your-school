@@ -109,7 +109,7 @@ CMD ["bundle", "exec", "rails", "server"]
 # ------------------------------------------------------------------------------
 # Test
 # ------------------------------------------------------------------------------
-#FROM app as test
+FROM app as test
 
 RUN apt-get install -qq -y shellcheck wait-for-it
 
