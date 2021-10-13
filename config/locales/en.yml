@@ -65,8 +65,9 @@ en:
         page_body: The service was unable to successfully authenticate you. The team have been notified of this problem and you should be able to retry shortly.
       no_organisation:
         page_title: You are not associated with an organisation
+        link: log into your DfE Sign-In account and select your organisation.
         page_body:
-          - You need to be associated with an organisation before you can use this service. Please log into your DfE Sign-In account and select your organisation.
+          - "You need to be associated with an organisation before you can use this service. Please "
           - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
       unsupported_organisation:
@@ -77,9 +78,10 @@ en:
             - a local authority maintained school, or
             - one academy within a single or multi-academy trust
           paragraphs:
-            - If you need to try a different account you can sign in into the service again.
+            - If you need to try a different account you can
             - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
             - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
+        link: sign in into the service again.
 
 
   #

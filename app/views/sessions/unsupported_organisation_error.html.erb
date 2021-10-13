@@ -2,9 +2,16 @@
 
 <h1 class="govuk-heading-l"><%= I18n.t("errors.sign_in.unsupported_organisation.page_title") %></h1>
 <p class="govuk-body"><%= I18n.t("errors.sign_in.unsupported_organisation.page_body.supported_schools") %></p>
-<% I18n.t("errors.sign_in.unsupported_organisation.page_body.supported_schools_list").each do |item| %>
-  <ul class="govuk-list govuk-list--bullet"><%= item %></p>
-<% end %>
-<% I18n.t("errors.sign_in.unsupported_organisation.page_body.paragraphs").each do |paragraph| %>
-  <p class="govuk-body"><%= paragraph %></p>
+<ul class="govuk-list govuk-list--bullet">
+  <% I18n.t("errors.sign_in.unsupported_organisation.page_body.supported_schools_list").each do |item| %>
+    <li><%= item %></li>
+  <% end %>
+</ul>
+<% I18n.t("errors.sign_in.unsupported_organisation.page_body.paragraphs").each_with_index do |paragraph, index| %>
+  <p class="govuk-body">
+    <%= paragraph %>
+    <% if index.zero? %>
+      <%= link_to I18n.t("errors.sign_in.unsupported_organisation.link"), sign_out_path, method: :delete, class: "govuk-link" %>
+    <% end %>
+  </p>
 <% end %>

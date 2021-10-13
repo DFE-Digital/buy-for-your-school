@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get "/404", to: "errors#not_found"
   get "/422", to: "errors#unacceptable"
   get "/500", to: "errors#internal_server_error"
+  get "/error/no_organisation", to: "sessions#no_organisation_error", as: :no_organisation_error
+  get "/error/unsupported_organisation", to: "sessions#unsupported_organisation_error", as: :unsupported_organisation_error
 
   #
   # Self-Serve -----------------------------------------------------------------

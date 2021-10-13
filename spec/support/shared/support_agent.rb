@@ -5,14 +5,7 @@ RSpec.shared_context "with an agent" do
     end
   end
 
-  let(:org_name) { "DSI Caseworkers" }
-
-  let(:user) do
-    build(:user,
-          email: "ops@education.gov.uk",
-          first_name: "Procurement",
-          last_name: "Specialist")
-  end
+  let(:user) { build(:user, :caseworker) }
 
   let(:agent) do
     Support::Agent.find_by(email: "ops@education.gov.uk")
@@ -25,11 +18,6 @@ RSpec.shared_context "with an agent" do
   # they will be permitted to enter
   #
   before do
-    dsi_client = instance_double(::Dsi::Client)
-    allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-    allow(dsi_client).to receive(:roles).and_return([])
-    allow(dsi_client).to receive(:orgs).and_return([{ "name" => org_name }])
-
     user_exists_in_dfe_sign_in(user: user)
     visit "/"
     click_start

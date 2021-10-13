@@ -1,16 +1,22 @@
 RSpec.feature "User authentication filter" do
   before do
     user_exists_in_dfe_sign_in(user: user)
-    visit "/"
-    click_start
   end
 
   context "when the user is not associated with any organisation" do
     let(:user) { build(:user, orgs: nil) }
 
+    before do
+      dsi_client = instance_double(::Dsi::Client)
+      allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+      allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
+      visit "/"
+      click_start
+    end
+
     it "page title" do
       # errors.sign_in.no_organisation.page_title
-      expect(page.title).to have_text "You are not associated with an organisation"
+      expect(page).to have_title "You are not associated with an organisation"
     end
 
     it "heading" do
@@ -20,7 +26,9 @@ RSpec.feature "User authentication filter" do
 
     it "body" do
       # errors.sign_in.no_organisation.page_body[1]
-      expect(all("p.govuk-body")[0]).to have_text "You need to be associated with an organisation before you can use this service. Please log into your DfE Sign-In account and select your organisation."
+      expect(all("p.govuk-body")[0]).to have_text "You need to be associated with an organisation before you can use this service. Please"
+      # errors.sign_in.no_organisation.link
+      expect(page).to have_link "log into your DfE Sign-In account and select your organisation.", href: "https://services.signin.education.gov.uk/request-organisation/search", class: "govuk-link"
       # errors.sign_in.no_organisation.page_body[2]
       expect(all("p.govuk-body")[1]).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16."
       # errors.sign_in.no_organisation.page_body[3]
@@ -31,9 +39,14 @@ RSpec.feature "User authentication filter" do
   context "when the user is associated with an unsupported organisation" do
     let(:user) { build(:user, :unsupported) }
 
+    before do
+      visit "/"
+      click_start
+    end
+
     it "page title" do
       # errors.sign_in.unsupported_organisation.page_title
-      expect(page.title).to have_text "Your organisation is not supported by this service"
+      expect(page).to have_title "Your organisation is not supported by this service"
     end
 
     it "heading" do
@@ -49,7 +62,9 @@ RSpec.feature "User authentication filter" do
       # errors.sign_in.unsupported_organisation.page_body.supported_schools_list[2]
       expect(all("ul.govuk-list.govuk-list--bullet")[1]).to have_text "one academy within a single or multi-academy trust"
       # errors.sign_in.unsupported_organisation.page_body.paragraphs[1]
-      expect(all("p.govuk-body")[1]).to have_text "If you need to try a different account you can sign in into the service again."
+      expect(all("p.govuk-body")[1]).to have_text "If you need to try a different account you can"
+      # errors.sign_in.unsupported_organisation.link
+      expect(page).to have_link "sign in into the service again.", href: "/auth/dfe/signout", class: "govuk-link"
       # errors.sign_in.unsupported_organisation.page_body.paragraphs[2]
       expect(all("p.govuk-body")[2]).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16."
       # errors.sign_in.unsupported_organisation.page_body.paragraphs[3]
@@ -58,14 +73,16 @@ RSpec.feature "User authentication filter" do
   end
 
   context "when the user is a caseworker" do
-    let(:user) { build(:user, first_name: "Phoebe", last_name: "Buffay") }
+    let(:user) { build(:user, :caseworker) }
 
     before do
-      ENV["PROC_OPS_TEAM"] = "Phoebe Buffay"
+      ENV["PROC_OPS_TEAM"] = "DSI Caseworkers"
+      visit "/"
+      click_start
     end
 
     it "takes them to the dashboard" do
-      expect(page.title).to have_text "Specifications dashboard"
+      expect(page).to have_title "Specifications dashboard"
       expect(page).to have_current_path "/dashboard"
     end
   end

@@ -3,7 +3,6 @@
 require "dry-initializer"
 require "dsi/client"
 require "types"
-require "pry"
 
 # Persist new users and update their DSI details
 # Combine auth identity, roles and organisation data from DSI OIDC and API
@@ -30,10 +29,10 @@ class CreateUser
 
     if current_user
       update_user!
-      Rollbar.info "Updated account for #{email}"
+      Rollbar.info "Updated account for #{user_id}"
     elsif supported_establishment?
       create_user!
-      Rollbar.info "Created account for #{email}"
+      Rollbar.info "Created account for #{user_id}"
     else
       Rollbar.info "User #{user_id} belongs to an unsupported organisation"
       raise UnsupportedOrganisationError
@@ -46,19 +45,18 @@ private
 
   # @return [Boolean]
   def supported_establishment?
-    # check current organisation or caseworker
-    ORG_TYPE_IDS.include?(current_org_type_id.to_i) || is_caseworker?
+    # check all organisations or caseworker
+    orgs.any? { |org| ORG_TYPE_IDS.include?(org.dig("type", "id")&.to_i) } || is_caseworker?
   end
 
-  # @return [String]
+  # @return [String, nil]
   def current_org_type_id
-    orgs.find { |org| org["id"].eql?(org_id) }["type"]["id"]
+    orgs.find { |org| org["id"].eql?(org_id) }.dig("type", "id")
   end
 
   # @return [Boolean]
   def is_caseworker?
-    caseworkers = ENV["PROC_OPS_TEAM"].split(",")
-    caseworkers.include?("#{first_name} #{last_name}")
+    orgs.any? { |org| org["name"] == ENV["PROC_OPS_TEAM"] }
   end
 
   # @return [User, nil]

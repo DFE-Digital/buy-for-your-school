@@ -16,6 +16,13 @@ RSpec.describe CreateUser do
       "info" => {
         "email" => email,
       },
+      "extra" => {
+        "raw_info" => {
+          "organisation" => {
+            "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+          },
+        },
+      },
     }
   end
 
@@ -23,7 +30,12 @@ RSpec.describe CreateUser do
     dsi_client = instance_double(::Dsi::Client)
     allow(Dsi::Client).to receive(:new).and_return(dsi_client)
     allow(dsi_client).to receive(:roles).and_return([{}])
-    allow(dsi_client).to receive(:orgs).and_return([{}])
+    allow(dsi_client).to receive(:orgs).and_return([{
+      "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+      "type" => {
+        "id" => ORG_TYPE_IDS.sample.to_s,
+      },
+    }])
   end
 
   describe "#call" do
@@ -33,7 +45,7 @@ RSpec.describe CreateUser do
       end
 
       it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+        expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
 
         result
       end
@@ -48,7 +60,7 @@ RSpec.describe CreateUser do
       end
 
       it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("Created account for unknown@example.com").and_call_original
+        expect(Rollbar).to receive(:info).with("Created account for an-unknown-uuid").and_call_original
 
         result
       end
@@ -67,7 +79,7 @@ RSpec.describe CreateUser do
       end
 
       it "updates the user record" do
-        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+        expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
 
         expect(result.first_name).to eq "New First"
         expect(result.last_name).to eq "New Last"
@@ -79,15 +91,21 @@ RSpec.describe CreateUser do
         dsi_client = instance_double(::Dsi::Client)
         allow(Dsi::Client).to receive(:new).and_return(dsi_client)
         allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
+        allow(dsi_client).to receive(:orgs).and_return([{
+          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+          "type" => {
+            "id" => ORG_TYPE_IDS.sample.to_s,
+          },
+        }])
       end
 
       it "raises no error" do
-        expect { result }.not_to raise_error
+        expect { result }.not_to raise_error(::Dsi::Client::ApiError)
       end
 
       it "reports to Rollbar" do
         expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no roles").and_call_original
-        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+        expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
 
         result
       end
@@ -119,13 +137,54 @@ RSpec.describe CreateUser do
       end
 
       it "raises an error" do
+        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
+
         expect { result }.to raise_error(CreateUser::NoOrganisationError)
       end
+    end
 
-      it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
-        expect(Rollbar).to receive(:info).with("Updated account for user@example.com").and_call_original
+    context "when a user has no supported organisations and isn't a caseworker in the DSI" do
+      let(:dfe_sign_in_uid) { "an-unknown-uuid" }
 
+      before do
+        dsi_client = instance_double(::Dsi::Client)
+        allow(dsi_client).to receive(:roles).and_return([{}])
+        allow(dsi_client).to receive(:orgs).and_return([{
+          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+          "name" => "Org",
+          "type" => {
+            "id" => "11",
+          },
+        }])
+        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+      end
+
+      it "raises an error" do
+        expect(Rollbar).to receive(:info).with("User an-unknown-uuid belongs to an unsupported organisation").and_call_original
+
+        expect { result }.to raise_error(CreateUser::UnsupportedOrganisationError)
+      end
+    end
+
+    context "when a user is a caseworker" do
+      let(:dfe_sign_in_uid) { "an-unknown-uuid" }
+
+      before do
+        dsi_client = instance_double(::Dsi::Client)
+        allow(dsi_client).to receive(:roles).and_return([{}])
+        allow(dsi_client).to receive(:orgs).and_return([{
+          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+          "name" => "Org",
+          "type" => {
+            "id" => "11",
+          },
+        }])
+        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
+        ENV["PROC_OPS_TEAM"] = "Org"
+      end
+
+      it "creates the user" do
+        expect(Rollbar).to receive(:info).with("Created account for an-unknown-uuid").and_call_original
         result
       end
     end
