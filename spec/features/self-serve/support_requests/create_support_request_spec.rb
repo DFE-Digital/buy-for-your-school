@@ -13,7 +13,7 @@ RSpec.feature "Create a new support request" do
 
     it "explains the form to the user" do
       expect(find("div.govuk-grid-column-two-thirds")).to have_text "Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification."
-      expect(find("div.govuk-grid-column-two-thirds")).to have_text "DfE's supported buying team will respond to you within 5 working days."
+      expect(find("div.govuk-grid-column-two-thirds")).to have_text "DfE's supported buying team will respond to you within 2 working days."
     end
 
     it "links to more information" do
