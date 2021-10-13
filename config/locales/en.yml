@@ -253,7 +253,6 @@ en:
         assign: Assign to case worker
         add_note: Add a case note
         add_interaction: Log contact with school
-        back: Back to case list
         case_owner: Case owner
         change_case_owner: change
 
@@ -261,7 +260,6 @@ en:
         assign_to_agent: Assign to caseworker
         assign: Assign
         assign_to: Assign to case worker
-        back: Back to case list
 
     interactions:
       new:

@@ -10,6 +10,12 @@ RSpec.feature "Interacting with a case" do
       click_link "Add a case note"
     end
 
+    describe "Back link" do
+      it_behaves_like "breadcrumb_back_link" do
+        let(:url) { "/support/cases/#{support_case.id}" }
+      end
+    end
+
     it "shows the add note heading" do
       expect(find("label.govuk-label")).to have_text "Add case note"
     end
@@ -24,6 +30,12 @@ RSpec.feature "Interacting with a case" do
   describe "logging contact with the school" do
     before do
       click_link "Log contact with school"
+    end
+
+    describe "Back link" do
+      it_behaves_like "breadcrumb_back_link" do
+        let(:url) { "/support/cases/#{support_case.id}" }
+      end
     end
 
     it "shows the log contact with school heading" do
