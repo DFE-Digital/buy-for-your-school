@@ -38,7 +38,7 @@ module Notify
     # It must not contain any personal information such as name or postal address.
     #
     # @param reference [String] A unique identifier you can create if necessary
-    option :reference, Types::String, optional: true
+    option :reference, Types::String, default: proc { "generic" }
 
     # @param attachment [String] Attachment by path to file
     option :attachment, Types::String, optional: true
@@ -97,6 +97,7 @@ module Notify
     # @return [Hash<Symbol>] Keys are substituted in the template
     def template_params
       {
+        reference: reference,
         first_name: recipient.first_name,
         last_name: recipient.last_name,
         email: recipient.email,

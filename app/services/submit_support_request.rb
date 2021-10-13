@@ -39,14 +39,17 @@ class SubmitSupportRequest
   def call
     return false unless enquiry
 
+    # TODO: confirmation message body forms the first CM interaction
+    # email = Emails::Confirmation.new().call
+    # message = email.content["body"]
+    #
     Emails::Confirmation.new(
       recipient: request.user,
-      # reference: "WIP", # NB: propose tracking Notify using the case ref
+      reference: "WIP",
       template: template,
       variables: {
-        support_query: request.message_body,
+        message: request.message_body,
         category: category,
-        case_ref: "WIP",
       },
     ).call
   end
