@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ### Specify Unreleased
 
+**ITHC**
+- explicitly set `X-Xss-Protection` header
+- restrict all `robots.txt`
+
 **Support Requests**
 - add form to request support
 - use `dry-validation` for complex form validations

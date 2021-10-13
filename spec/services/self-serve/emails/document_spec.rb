@@ -70,19 +70,9 @@ RSpec.describe Emails::Document do
 
   describe "#call" do
     it "adds extra variables" do
-      expect(Rollbar).to receive(:info).with("Sending email to peter.hamilton@gov.uk")
+      expect(Rollbar).to receive(:info).with("Sending email")
 
       service.call
-    end
-  end
-
-  describe "#template_params" do
-    it "adds extra variables" do
-      expect(service.template_params).to eql({
-        first_name: "Peter",
-        last_name: "Hamilton",
-        full_name: "Mr. Peter Hamilton",
-      })
     end
   end
 end
