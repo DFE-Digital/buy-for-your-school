@@ -14,9 +14,9 @@ require "types"
 #   {
 #     "support_enquiry": [{
 #       "support_request_id":1,
-#       "name":"Joe Bloggs",
-#       "email":"example@exmaple.com",
-#       "telephone": "0151 000 0000"
+#       "name":"Confused SBP",
+#       "email":"sbp@school.gov.uk",
+#       "telephone": "01234567890"
 #       "message": "example message",
 #       "documents" : [{
 #          "file_type": "html_markup",
@@ -39,7 +39,16 @@ class SubmitSupportRequest
   def call
     return false unless enquiry
 
-    Emails::Confirmation.new(recipient: request.user, template: template).call
+    Emails::Confirmation.new(
+      recipient: request.user,
+      # reference: "WIP", # NB: propose tracking Notify using the case ref
+      template: template,
+      variables: {
+        support_query: request.message_body,
+        category: category,
+        case_ref: "WIP",
+      },
+    ).call
   end
 
 private
@@ -65,6 +74,7 @@ private
       telephone: request.phone_number,
       message: request.message_body,
       category: category,
+      # TODO: include unique identifier for school
     )
 
     enquiry.documents << document if request.journey
