@@ -50,4 +50,20 @@ RSpec.feature "Users can see a start page" do
     # specifying.start_page.before_you_start_body[1]
     expect(all("p.govuk-body")[4]).to have_text "You can save your specification and come back to it later if you want."
   end
+
+  context "user signed in" do 
+    before do
+      user_exists_in_dfe_sign_in
+
+      # landing page
+      visit "/"
+      # DfE sign in
+      click_start
+    end 
+
+    it "redirects user to dashboard after clicking Start Now button" do 
+    expect(page).to have_current_path "/dashboard"
+    end 
+  end 
+
 end
