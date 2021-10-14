@@ -21,7 +21,7 @@ class UserPresenter < SimpleDelegator
     valid_supported_orgs.map { |org| SupportedOrganisation.new(**org.symbolize_keys) }
   end
 
-# @return [String]
+  # @return [String]
   def full_name
     super || "#{first_name} #{last_name}"
   end
