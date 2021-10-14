@@ -33,7 +33,7 @@ RSpec.feature "Users can see a start page" do
       click_start
       expect(page).to have_current_path "/dashboard"
     end
-  end 
+  end
 
   it "has a heading" do
     expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure for your school"
@@ -71,4 +71,3 @@ RSpec.feature "Users can see a start page" do
     expect(all("p.govuk-body")[4]).to have_text "You can save your specification and come back to it later if you want."
   end
 end
-
