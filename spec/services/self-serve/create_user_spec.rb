@@ -8,6 +8,7 @@ RSpec.describe CreateUser do
   end
 
   let(:dfe_sign_in_uid) { "03f98d51-5a93-4caa-9ff2-07faff7351d2" }
+
   let(:email) { "user@example.com" }
 
   let(:omniauth_hash) do
@@ -26,47 +27,39 @@ RSpec.describe CreateUser do
     }
   end
 
+  let(:orgs) do
+    [{
+      "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+      "type" => { "id" => ORG_TYPE_IDS.sample.to_s },
+    }]
+  end
+
   before do
     dsi_client = instance_double(::Dsi::Client)
     allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-    allow(dsi_client).to receive(:roles).and_return([{}])
-    allow(dsi_client).to receive(:orgs).and_return([{
-      "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-      "type" => {
-        "id" => ORG_TYPE_IDS.sample.to_s,
-      },
-    }])
+    allow(dsi_client).to receive(:orgs).and_return(orgs)
   end
 
   describe "#call" do
-    context "when a user with that DSI UUID already exists in the database" do
+    context "when a person with that DSI UUID already exists in the database" do
       it "returns the existing user record" do
-        expect(result).to eq user
-      end
-
-      it "reports to Rollbar" do
         expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
-
-        result
+        expect(result).to eq user
       end
     end
 
-    context "when a user with that DSI UUID does not exist in the database" do
-      let(:dfe_sign_in_uid) { "an-unknown-uuid" }
+    context "when a person with that DSI UUID does not exist in the database" do
+      let(:dfe_sign_in_uid) { "unknown-uuid" }
+
       let(:email) { "unknown@example.com" }
 
       it "creates a new user record" do
-        expect(result).to eq User.find_by(dfe_sign_in_uid: "an-unknown-uuid")
-      end
-
-      it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("Created account for an-unknown-uuid").and_call_original
-
-        result
+        expect(Rollbar).to receive(:info).with("Created account for unknown-uuid").and_call_original
+        expect(result).to eq User.find_by(dfe_sign_in_uid: "unknown-uuid")
       end
     end
 
-    context "when the user has updated their details" do
+    context "when they have updated their details" do
       let(:omniauth_hash) do
         {
           "uid" => dfe_sign_in_uid,
@@ -86,38 +79,13 @@ RSpec.describe CreateUser do
       end
     end
 
-    context "when a user has no roles in the DSI" do
-      before do
-        dsi_client = instance_double(::Dsi::Client)
-        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-        allow(dsi_client).to receive(:roles).and_raise(::Dsi::Client::ApiError)
-        allow(dsi_client).to receive(:orgs).and_return([{
-          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-          "type" => {
-            "id" => ORG_TYPE_IDS.sample.to_s,
-          },
-        }])
-      end
-
-      it "raises no error" do
-        expect { result }.not_to raise_error(::Dsi::Client::ApiError)
-      end
-
-      it "reports to Rollbar" do
-        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no roles").and_call_original
-        expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
-
-        result
-      end
-    end
-
     context "when the auth hash is missing the uid" do
       let(:omniauth_hash) do
         { "unexpected-key" => dfe_sign_in_uid }
       end
 
-      it "returns false" do
-        expect(result).to be false
+      it "is tagged :invalid" do
+        expect(result).to be :invalid
       end
     end
 
@@ -129,63 +97,52 @@ RSpec.describe CreateUser do
       end
     end
 
-    context "when a user has no organisations in the DSI" do
-      before do
-        dsi_client = instance_double(::Dsi::Client)
-        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-        allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
+    context "when they are in the ProcOps org" do
+      let(:dfe_sign_in_uid) { "caseworker" }
+
+      let(:orgs) do
+        [{
+          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+          "name" => "DSI Caseworkers",
+        }]
       end
 
-      it "raises an error" do
-        expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 has no organisation").and_call_original
+      around do |example|
+        ClimateControl.modify(PROC_OPS_TEAM: "DSI Caseworkers") do
+          example.run
+        end
+      end
 
-        expect { result }.to raise_error(CreateUser::NoOrganisationError)
+      it "creates a new user record" do
+        expect(Rollbar).to receive(:info).with("Created account for caseworker").and_call_original
+        expect(result).to eq User.find_by(dfe_sign_in_uid: "caseworker")
       end
     end
 
-    context "when a user has no supported organisations and isn't a caseworker in the DSI" do
-      let(:dfe_sign_in_uid) { "an-unknown-uuid" }
+    context "when they are not affiliated to any organisation" do
+      let(:dfe_sign_in_uid) { "no-orgs" }
 
-      before do
-        dsi_client = instance_double(::Dsi::Client)
-        allow(dsi_client).to receive(:roles).and_return([{}])
-        allow(dsi_client).to receive(:orgs).and_return([{
-          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-          "name" => "Org",
-          "type" => {
-            "id" => "11",
-          },
-        }])
-        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-      end
+      let(:orgs) { [] }
 
-      it "raises an error" do
-        expect(Rollbar).to receive(:info).with("User an-unknown-uuid belongs to an unsupported organisation").and_call_original
-
-        expect { result }.to raise_error(CreateUser::UnsupportedOrganisationError)
+      it "is tagged :no_organisation" do
+        expect(Rollbar).to receive(:info).with("User no-orgs is not in a supported organisation").and_call_original
+        expect(result).to be :no_organisation
       end
     end
 
-    context "when a user is a caseworker" do
-      let(:dfe_sign_in_uid) { "an-unknown-uuid" }
+    context "when they are affiliated to an unsupported organisation" do
+      let(:dfe_sign_in_uid) { "unsupported-org" }
 
-      before do
-        dsi_client = instance_double(::Dsi::Client)
-        allow(dsi_client).to receive(:roles).and_return([{}])
-        allow(dsi_client).to receive(:orgs).and_return([{
+      let(:orgs) do
+        [{
           "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-          "name" => "Org",
-          "type" => {
-            "id" => "11",
-          },
-        }])
-        allow(Dsi::Client).to receive(:new).and_return(dsi_client)
-        ENV["PROC_OPS_TEAM"] = "Org"
+          "type" => { "id" => "999" },
+        }]
       end
 
-      it "creates the user" do
-        expect(Rollbar).to receive(:info).with("Created account for an-unknown-uuid").and_call_original
-        result
+      it "is tagged :unsupported" do
+        expect(Rollbar).to receive(:info).with("User unsupported-org is not in a supported organisation").and_call_original
+        expect(result).to be :unsupported
       end
     end
   end

@@ -7,20 +7,24 @@ class SessionsController < ApplicationController
   # @see CreateUser
   # @see UserSession
   def create
-    user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
-    user_session.invalidate_other_user_sessions(auth: auth_hash)
-
     user = CreateUser.new(auth: auth_hash).call
 
-    if user
+    case user
+    when User
+      user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
+      user_session.invalidate_other_user_sessions(auth: auth_hash)
+
+      # TODO: alternative redirect for caseworkers
       redirect_to dashboard_path
+    when :invalid
+      redirect_to root_path, notice: "Access Denied"
+    when :no_organisation
+      # TODO: record activity
+      render "sessions/no_organisation_error"
+    when :unsupported
+      # TODO: record activity
+      render "sessions/unsupported_organisation_error"
     end
-  rescue CreateUser::NoOrganisationError
-    user_session.delete!
-    redirect_to no_organisation_error_path
-  rescue CreateUser::UnsupportedOrganisationError
-    user_session.delete!
-    redirect_to unsupported_organisation_error_path
   end
   alias_method :bypass_callback, :create
 
@@ -48,22 +52,14 @@ class SessionsController < ApplicationController
     end
   end
 
-  def no_organisation_error
-    render "sessions/no_organisation_error"
-  end
-
-  def unsupported_organisation_error
-    render "sessions/unsupported_organisation_error"
-  end
-
 private
 
+  # @return [UserSession]
   def user_session
     UserSession.new(session: session, redirect_url: issuer_redirect_url)
   end
 
   # @return [OmniAuth::AuthHash]
-  #
   def auth_hash
     request.env["omniauth.auth"]
   end

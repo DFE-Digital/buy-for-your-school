@@ -25,14 +25,16 @@ RSpec.feature "User authentication filter" do
     end
 
     it "body" do
-      # errors.sign_in.no_organisation.page_body[1]
-      expect(all("p.govuk-body")[0]).to have_text "You need to be associated with an organisation before you can use this service. Please"
       # errors.sign_in.no_organisation.link
       expect(page).to have_link "log into your DfE Sign-In account and select your organisation.", href: "https://services.signin.education.gov.uk/request-organisation/search", class: "govuk-link"
-      # errors.sign_in.no_organisation.page_body[2]
-      expect(all("p.govuk-body")[1]).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16."
-      # errors.sign_in.no_organisation.page_body[3]
-      expect(all("p.govuk-body")[2]).to have_text "Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service."
+
+      # errors.sign_in.no_organisation.page_body
+      body = <<~BODY
+        You need to be associated with an organisation before you can use this service. Please log into your DfE Sign-In account and select your organisation.
+        This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
+        Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
+      BODY
+      expect(page).to have_text(body)
     end
   end
 
@@ -55,28 +57,37 @@ RSpec.feature "User authentication filter" do
     end
 
     it "body" do
-      # errors.sign_in.unsupported_organisation.page_body.supported_schools
-      expect(all("p.govuk-body")[0]).to have_text "This service is for those procuring for one school, either:"
-      # errors.sign_in.unsupported_organisation.page_body.supported_schools_list[1]
-      expect(all("ul.govuk-list.govuk-list--bullet")[0]).to have_text "a local authority maintained school, or"
-      # errors.sign_in.unsupported_organisation.page_body.supported_schools_list[2]
-      expect(all("ul.govuk-list.govuk-list--bullet")[1]).to have_text "one academy within a single or multi-academy trust"
-      # errors.sign_in.unsupported_organisation.page_body.paragraphs[1]
-      expect(all("p.govuk-body")[1]).to have_text "If you need to try a different account you can"
+      # errors.sign_in.unsupported_organisation.supported_schools
+      expect(page).to have_text "This service is for those procuring for one school, either:"
+
+      # errors.sign_in.unsupported_organisation.supported_schools_list
+      within "ul.govuk-list" do
+        expect(page).to have_text "a local authority maintained school, or one academy within a single or multi-academy trust"
+      end
+
       # errors.sign_in.unsupported_organisation.link
       expect(page).to have_link "sign in into the service again.", href: "/auth/dfe/signout", class: "govuk-link"
-      # errors.sign_in.unsupported_organisation.page_body.paragraphs[2]
-      expect(all("p.govuk-body")[2]).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16."
-      # errors.sign_in.unsupported_organisation.page_body.paragraphs[3]
-      expect(all("p.govuk-body")[3]).to have_text "Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service."
+
+      # errors.sign_in.unsupported_organisation.page_body
+      body = <<~BODY
+        If you need to try a different account you can sign in into the service again.
+        This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
+        Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
+      BODY
+      expect(page).to have_text(body)
     end
   end
 
   context "when the user is a caseworker" do
     let(:user) { build(:user, :caseworker) }
 
+    around do |example|
+      ClimateControl.modify(PROC_OPS_TEAM: "DSI Caseworkers") do
+        example.run
+      end
+    end
+
     before do
-      ENV["PROC_OPS_TEAM"] = "DSI Caseworkers"
       visit "/"
       click_start
     end

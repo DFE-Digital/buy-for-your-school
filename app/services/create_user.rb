@@ -4,14 +4,10 @@ require "dry-initializer"
 require "dsi/client"
 require "types"
 
-# Persist new users and update their DSI details
+# Validate and persist new users and update their DSI details
 # Combine auth identity, roles and organisation data from DSI OIDC and API
 #
 class CreateUser
-  class NoOrganisationError < StandardError; end
-
-  class UnsupportedOrganisationError < StandardError; end
-
   extend Dry::Initializer
 
   # OmniAuth response
@@ -22,40 +18,41 @@ class CreateUser
 
   # Create or Update the User and report to Rollbar
   #
-  # @return [User, false]
+  # @return [User, Symbol]
   def call
-    # binding.pry
-    return false unless user_id
+    return :invalid unless user_id
 
     if current_user
       update_user!
       Rollbar.info "Updated account for #{user_id}"
-    elsif supported_establishment?
+      current_user
+    elsif supported? || internal?
       create_user!
       Rollbar.info "Created account for #{user_id}"
+      current_user
+    elsif orgs.none?
+      Rollbar.info "User #{user_id} is not in a supported organisation"
+      :no_organisation
     else
-      Rollbar.info "User #{user_id} belongs to an unsupported organisation"
-      raise UnsupportedOrganisationError
+      Rollbar.info "User #{user_id} is not in a supported organisation"
+      :unsupported
     end
-
-    current_user
   end
 
 private
 
-  # @return [Boolean]
-  def supported_establishment?
-    # check all organisations or caseworker
-    orgs.any? { |org| ORG_TYPE_IDS.include?(org.dig("type", "id")&.to_i) } || is_caseworker?
+  # @return [Array<Integer>] the current user's org types
+  def establishment_types
+    orgs.map { |org| org.dig("type", "id").to_i }
   end
 
-  # @return [String, nil]
-  def current_org_type_id
-    orgs.find { |org| org["id"].eql?(org_id) }.dig("type", "id")
+  # @return [Boolean] user is affiliated to a "supported establishment"
+  def supported?
+    ORG_TYPE_IDS.any? { |id| establishment_types.include?(id) }
   end
 
-  # @return [Boolean]
-  def is_caseworker?
+  # @return [Boolean] user is a GHBFS or ProcOps team member
+  def internal?
     orgs.any? { |org| org["name"] == ENV["PROC_OPS_TEAM"] }
   end
 
@@ -113,16 +110,19 @@ private
     auth["uid"]
   end
 
+  # DSI: OmniAuth organisation scope disabled
   # @return [String] Organisation chosen at authentication
-  def org_id
-    auth.dig("extra", "raw_info", "organisation", "id")
-  end
+  # def org_id
+  #   auth.dig("extra", "raw_info", "organisation", "id")
+  # end
 
+  # DSI: RBAC not yet implemented
   # @return [Array] User's associated roles from DSI API
   def roles
-    client.roles(user_id: user_id, org_id: org_id)
-  rescue ::Dsi::Client::ApiError
-    Rollbar.info "User #{user_id} has no roles"
+    #   client.roles(user_id: user_id, org_id: org_id)
+    # rescue ::Dsi::Client::ApiError
+    #   Rollbar.info "User #{user_id} has no roles"
+    []
   end
 
   # @return [Array] User's affliated organisations from DSI API
@@ -130,6 +130,6 @@ private
     client.orgs(user_id: user_id)
   rescue ::Dsi::Client::ApiError
     Rollbar.info "User #{user_id} has no organisation"
-    raise NoOrganisationError
+    []
   end
 end

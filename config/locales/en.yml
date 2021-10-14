@@ -72,15 +72,14 @@ en:
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
       unsupported_organisation:
         page_title: Your organisation is not supported by this service
+        supported_schools: "This service is for those procuring for one school, either:"
+        supported_schools_list:
+          - a local authority maintained school, or
+          - one academy within a single or multi-academy trust
         page_body:
-          supported_schools: "This service is for those procuring for one school, either:"
-          supported_schools_list:
-            - a local authority maintained school, or
-            - one academy within a single or multi-academy trust
-          paragraphs:
-            - If you need to try a different account you can
-            - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
-            - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
+          - If you need to try a different account you can
+          - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
+          - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
         link: sign in into the service again.
 
 

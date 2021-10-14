@@ -33,9 +33,7 @@ FactoryBot.define do
         [{
           "id" => "23F20E54-79EA-4146-8E39-18197576F023",
           "name" => "Unsupported School Name",
-          "type" => {
-            "id" => "11",
-          },
+          "type" => { "id" => "11" }, # ID will be rejected
         }]
       end
     end
