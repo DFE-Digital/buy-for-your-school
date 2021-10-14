@@ -14,9 +14,10 @@ class SupportFormSchema < Dry::Validation::Contract
 
   params do
     optional(:phone_number).value(:string)  # step 1
-    optional(:journey_id).value(:string)    # step 2
-    optional(:category_id).value(:string)   # step 3
-    optional(:message_body).value(:string)  # step 4
+    optional(:school_urn).value(:string)    # step 2
+    optional(:journey_id).value(:string)    # step 3
+    optional(:category_id).value(:string)   # step 4
+    optional(:message_body).value(:string)  # step 5
   end
 
   # rule(:phone_number).validate(min_size?: 10, max_size?: 11, format?: /^0\d+$/)
