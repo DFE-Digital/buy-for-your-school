@@ -3,9 +3,10 @@ module Support
   # Service to update an existing Case
   #
   class UpdateCase
-    # @param current_case [Support::Case] existing case to be updated
     attr_reader :current_case, :agent
 
+    # @param current_case [Support::Case] existing case to be updated
+    # @param agent [Support::Agent]
     def initialize(current_case, agent)
       @current_case = current_case
       @agent = agent

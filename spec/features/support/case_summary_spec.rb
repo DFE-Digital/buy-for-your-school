@@ -8,6 +8,12 @@ RSpec.feature "Case summary" do
 
   let(:support_case) { create(:support_case) }
 
+  describe "Back link" do
+    it_behaves_like "breadcrumb_back_link" do
+      let(:url) { "/support/cases" }
+    end
+  end
+
   it "has 3 visible tabs" do
     expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
   end
