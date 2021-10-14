@@ -212,12 +212,15 @@ en:
       specification: Share a specification
       category: About your procurement
       message: About your procurement
+      school: About your school
     label:
       phone_number: What is your phone number?
       specification: Which specification is this related to?
       category: What are you buying?
       message: How can we help?
+      school: Which school are you buying for?
     hint:
+      school: You are linked to more than one school. Select the school that's related to your support request.
       phone_number: |-
         Your phone number will be used by DfE's supported buying team to contact you about your request for help.
         It will not be used for marketing or any other purposes.
