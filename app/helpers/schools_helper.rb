@@ -16,9 +16,9 @@ module SchoolsHelper
   def school_name_for_urn_or_none(urn)
     return "None" if urn == "none" || urn.blank?
 
-    school = supported_schools_collection
-      .find {|school| school.urn == @support_request.school_urn }
+    found_school = supported_schools_collection
+      .find { |school| school.urn == urn }
 
-    school&.name || "None"
+    found_school&.name || "None"
   end
 end
