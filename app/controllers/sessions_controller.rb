@@ -7,13 +7,12 @@ class SessionsController < ApplicationController
   # @see CreateUser
   # @see UserSession
   def create
+    user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
+    user_session.invalidate_other_user_sessions(auth: auth_hash)
     user = CreateUser.new(auth: auth_hash).call
 
     case user
     when User
-      user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
-      user_session.invalidate_other_user_sessions(auth: auth_hash)
-
       # TODO: alternative redirect for caseworkers
       redirect_to dashboard_path
     when :invalid
