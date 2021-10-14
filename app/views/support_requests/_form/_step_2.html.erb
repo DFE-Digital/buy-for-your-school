@@ -13,7 +13,7 @@
 <%= form.govuk_radio_divider %>
 
 <%= form.govuk_radio_button :journey_id, "none",
-    label: { text: "My request is not related to an existing specification" },
+    label: { text: I18n.t("support_request.label.specification_none") },
     checked: form.object.journey_id.nil?
   %>
 

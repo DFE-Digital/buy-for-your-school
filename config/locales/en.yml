@@ -197,6 +197,7 @@ en:
     label:
       phone_number: What is your phone number?
       specification: Which specification is this related to?
+      specification_none: My request is not related to an existing specification
       category: What are you buying?
       message: How can we help?
     hint:
