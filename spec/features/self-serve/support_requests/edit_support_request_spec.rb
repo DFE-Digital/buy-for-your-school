@@ -61,7 +61,7 @@ RSpec.feature "Edit an unsubmitted support request" do
              school_urn: nil)
     end
 
-    context "user has selected a school" do
+    context "when user has selected a school" do
       let(:user) { create(:user, :with_a_supported_school) }
 
       let(:school) { GetSupportedSchoolsForUser.new(user: user).call.first }
@@ -83,7 +83,7 @@ RSpec.feature "Edit an unsubmitted support request" do
       end
     end
 
-    context "user has not selected a school" do
+    context "when user has not selected a school" do
       it "shows None" do
         within "#support-request-school" do
           expect(page).to have_content("None")
@@ -98,7 +98,7 @@ RSpec.feature "Edit an unsubmitted support request" do
     end
 
     describe "editing the school" do
-      context "user has multiple supported schools" do
+      context "when user has multiple supported schools" do
         let(:user) { create(:user, :with_multiple_supported_schools) }
 
         let(:greendale) { GetSupportedSchoolsForUser.new(user: user).call.last }

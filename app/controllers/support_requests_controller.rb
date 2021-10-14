@@ -91,7 +91,7 @@ private
     support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
 
     if support_request.school_urn.blank? && supported_schools.size == 1
-      support_request.update(school_urn: supported_schools.first.urn)
+      support_request.update!(school_urn: supported_schools.first.urn)
     end
 
     redirect_to support_request_path(support_request)

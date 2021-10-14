@@ -264,7 +264,7 @@ RSpec.feature "Create a new support request" do
     it "shows the answers" do
       expect(answers[0]).to have_text "Peter Hamilton"
       expect(answers[1]).to have_text "ghbfs@example.com"
-      expect(answers[2]).to have_text ""      # phone number
+      expect(answers[2]).to have_text "" # phone number
       expect(answers[3]).to have_text "Specialist School for Testing" # school autoselected due to only having one to choose from
       expect(answers[4]).to have_text "None"  # specification
       expect(answers[5]).to have_text "Laptops"

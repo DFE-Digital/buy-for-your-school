@@ -57,13 +57,13 @@ FactoryBot.define do
             "id": SecureRandom.uuid,
             "urn": SecureRandom.uuid,
             "name": "Specialist School for Testing",
-            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" }
+            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" },
           },
           {
             "id": SecureRandom.uuid,
             "urn": SecureRandom.uuid,
             "name": "Greendale Academy for Bright Sparks",
-            "type": { "id" => ORG_TYPE_IDS.last, "name" => "Academy Special Converter" }
+            "type": { "id" => ORG_TYPE_IDS.last, "name" => "Academy Special Converter" },
           },
         ]
       end
@@ -76,7 +76,7 @@ FactoryBot.define do
             "id": SecureRandom.uuid,
             "urn": SecureRandom.uuid,
             "name": "Specialist School for Testing",
-            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" }
+            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" },
           },
         ]
       end
