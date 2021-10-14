@@ -8,6 +8,7 @@ class PagesController < ApplicationController
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
 
+  # TODO: can be removed as not being called anywhere
   def planning_start_page
     @back_url = root_path
   end
