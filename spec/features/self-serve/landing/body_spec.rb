@@ -53,7 +53,7 @@ RSpec.feature "Users can see a start page" do
     end
   end
 
-  context "when user signed in" do
+  context "when user already signed in" do
     before do
       user_exists_in_dfe_sign_in
 
