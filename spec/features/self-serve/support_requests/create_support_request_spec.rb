@@ -180,7 +180,6 @@ RSpec.feature "Create a new support request" do
       expect(find_all("pre.debug_dump")).to be_empty
     end
 
-    # jumps to step 3
     it "requires they choose a category" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
       expect(find("span.govuk-caption-l")).to have_text "About your procurement"

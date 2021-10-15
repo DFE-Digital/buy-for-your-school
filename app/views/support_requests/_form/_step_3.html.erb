@@ -1,4 +1,4 @@
-<%= hidden_fields form_object: form, except: :category_id %>
+<%= render "support_requests/_form/hidden_fields", form: form, except: :category_id %>
 
 <%= form.govuk_collection_radio_buttons :category_id,
     Category.published,

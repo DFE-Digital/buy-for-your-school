@@ -1,4 +1,4 @@
-<%= hidden_fields form_object: form, except: :phone_number %>
+<%= render "support_requests/_form/hidden_fields", form: form, except: :phone_number %>
 
 <%= form.govuk_text_field :phone_number,
                           autofocus: true,

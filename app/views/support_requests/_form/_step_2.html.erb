@@ -1,4 +1,4 @@
-<%= hidden_fields form_object: form, except: :journey_id %>
+<%= render "support_requests/_form/hidden_fields", form: form, except: :journey_id %>
 
 <%= form.govuk_collection_radio_buttons :journey_id,
     current_user.active_journeys,

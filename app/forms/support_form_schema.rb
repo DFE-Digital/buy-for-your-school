@@ -23,12 +23,15 @@ class SupportFormSchema < Dry::Validation::Contract
     optional(:message_body).value(:string)  # step 4
   end
 
-  # rule(:phone_number).validate(min_size?: 10, max_size?: 11, format?: /^0\d+$/)
-  # rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d+$)/)
-  rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+  rule(:phone_number) do
+    if value.present?
+      key(:phone_number).failure(:format?) unless /(^$|^0\d{10,}$)/.match?(value)
+      key(:phone_number).failure(:max_size?, num: 11) unless value.size <= 11
+    end
+  end
 
   rule(:journey_id, :category_id) do
-    key(:category_id).failure(:no_spec) if key?(:category_id) && values[:category_id].blank? && ["none", ""].include?(values[:journey_id])
+    key(:category_id).failure(:no_spec) if key?(:category_id) && values[:category_id].blank? && ["none", "", nil].include?(values[:journey_id])
   end
 
   rule(:message_body) do

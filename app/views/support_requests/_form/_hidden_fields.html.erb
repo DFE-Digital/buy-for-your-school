@@ -1,0 +1,21 @@
+<% except = Array(except ||= []) %>
+<% direction ||= :forwards %>
+
+<%= form.hidden_field :step, value: @support_form.step %>
+<%= form.hidden_field :direction, value: direction %>
+
+<% unless except.include?(:phone_number) || @support_form.phone_number.nil? %>
+  <%= form.hidden_field :phone_number, value: @support_form.phone_number %>
+<% end %>
+
+<% unless except.include?(:journey_id) || @support_form.journey_id.nil? %>
+  <%= form.hidden_field :journey_id, value: @support_form.journey_id %>
+<% end %>
+
+<% unless except.include?(:category_id) || @support_form.category_id.nil? %>
+  <%= form.hidden_field :category_id, value: @support_form.category_id %>
+<% end %>
+
+<% unless except.include?(:message_body) || @support_form.message_body.blank? %>
+  <%= form.hidden_field :message_body, value: @support_form.message_body %>
+<% end %>

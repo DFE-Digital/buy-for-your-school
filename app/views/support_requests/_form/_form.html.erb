@@ -4,10 +4,7 @@
   <%= link_to I18n.t("generic.button.back"), profile_path, class: "govuk-back-link" %>
 <% else %>
   <%= form_with model: @support_form, scope: :support_form, url: path, method: verb, namespace: :go_back do |form| %>
-    <%= form.hidden_field :step, value: @support_form.step %>
-    <%= form.hidden_field :direction, value: :backwards %>
-    <%= hidden_fields form_object: form %>
-
+    <%= render "support_requests/_form/hidden_fields", form: form, direction: :backwards %>
     <%= button_tag I18n.t("generic.button.back"), class: "button-link govuk-back-link" %>
   <% end %>
 <% end %>
@@ -21,8 +18,6 @@
 <%= form_with model: @support_form, scope: :support_form, url: path, method: verb  do |form| %>
   <%= form.govuk_error_summary %>
 
-  <%= form.hidden_field :step, value: @support_form.step %>
-  <%= form.hidden_field :direction, value: :forwards %>
   <%= render "support_requests/_form/step_#{@support_form.step}", form: form %>
 
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>

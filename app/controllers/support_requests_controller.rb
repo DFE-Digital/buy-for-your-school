@@ -32,15 +32,11 @@ class SupportRequestsController < ApplicationController
   def create
     @support_form = form
 
-    if validation.success? && validation.to_h[:message_body]
-
+    if validation.success? && @support_form.step == 4
       support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
       redirect_to support_request_path(support_request)
-
     elsif validation.success?
-
       @support_form.navigate
-
       render :new
     else
       render :new

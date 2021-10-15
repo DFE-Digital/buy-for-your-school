@@ -1,4 +1,4 @@
-<%= hidden_fields form_object: form, except: :message_body %>
+<%= render "support_requests/_form/hidden_fields", form: form, except: :message_body %>
 
 <%= form.govuk_text_area :message_body,
       autofocus: true,
