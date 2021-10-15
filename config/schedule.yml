@@ -1,6 +1,6 @@
 warm_contentful_entry_cache:
-  cron: "0 3 * * *"
-  class: "WarmEntryCacheJob"
+  cron: 0 3 * * *
+  class: WarmEntryCacheJob
   description: This is a content driven service and the content is sourced by
     the Contentful API. As a single point of failure we have a Redis cache to
     provide some resilience to downtime or minor connection issues. As this
@@ -8,16 +8,26 @@ warm_contentful_entry_cache:
     cache.
 
 flag_stale_journeys:
-  cron: "0 2 * * *"
-  class: "FlagStaleJourneysJob"
+  cron: 0 2 * * *
+  class: FlagStaleJourneysJob
   description: Change the state of a Journey to stale when it has not had any
     steps completed and has not been edited for a number of days. A stale Journey
     is one believed to be abandoned and cluttering the database.
 
 delete_stale_journeys:
-  cron: "0 2 * * *"
-  class: "DeleteStaleJourneysJob"
+  cron: 0 2 * * *
+  class: DeleteStaleJourneysJob
   description: Automatically delete a stale Journey and associated child records
     after 30 days. This grace period gives a user the opportunity to prevent the
     deletion.
 
+
+# Supported ---------------
+
+# TODO: adjust job to run immediately after new data is published
+# first of the month @ 02:00
+refresh_schools:
+  cron: 0 2 1 * *
+  class: RefreshSchoolsJob
+  description: Update internal school records using public data from GIAS. This
+    is an expensive operation (10% @ 41k records persisted).

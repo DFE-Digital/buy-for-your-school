@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_175530) do
+ActiveRecord::Schema.define(version: 2021_10_13_112254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -219,6 +219,27 @@ ActiveRecord::Schema.define(version: 2021_09_22_175530) do
     t.index ["support_request_id"], name: "index_support_enquiries_on_support_request_id"
   end
 
+  create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "group_id", null: false
+    t.string "name", null: false
+    t.integer "code", null: false
+    t.integer "organisations_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_support_establishment_types_on_code", unique: true
+    t.index ["name"], name: "index_support_establishment_types_on_name", unique: true
+  end
+
+  create_table "support_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "code", null: false
+    t.integer "establishment_types_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_support_groups_on_code", unique: true
+    t.index ["name"], name: "index_support_groups_on_name", unique: true
+  end
+
   create_table "support_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "agent_id"
     t.uuid "case_id"
@@ -229,6 +250,21 @@ ActiveRecord::Schema.define(version: 2021_09_22_175530) do
     t.index ["agent_id"], name: "index_support_interactions_on_agent_id"
     t.index ["case_id"], name: "index_support_interactions_on_case_id"
     t.index ["event_type"], name: "index_support_interactions_on_event_type"
+  end
+
+  create_table "support_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "establishment_type_id"
+    t.string "urn", null: false
+    t.string "name", null: false
+    t.jsonb "address", null: false
+    t.jsonb "contact", null: false
+    t.integer "phase"
+    t.integer "gender"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
+    t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
 
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

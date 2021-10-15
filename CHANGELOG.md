@@ -64,6 +64,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add custom answer validation logic which can be controlled in Contentful
 - fix progression to the next incomplete task
 - add `skipped_ids` to `Task` to allow users to skip questions
+- add error summary component
 
 **Multiple Categories**
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
