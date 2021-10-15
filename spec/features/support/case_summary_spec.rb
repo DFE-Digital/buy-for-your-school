@@ -3,6 +3,7 @@ RSpec.feature "Case summary" do
 
   before do
     click_button "Agent Login"
+    # TODO: use case ref in the address path
     visit "/support/cases/#{support_case.id}"
   end
 
@@ -72,42 +73,34 @@ RSpec.feature "Case summary" do
   end
 
   context "when the case is created" do
-    it "shows the assign link" do
-      expect(find("a.assign-owner")).to have_text "Assign to case worker"
-      # TODO: asset links using the most appropriate matcher
-      # expect(page).to have_link "Assign to case worker", href: "", class: "assign-owner"
-    end
-
-    it "shows the resolve link" do
-      expect(find("a.resolve")).to have_text "Resolve case"
+    it "has action links" do
+      within "ul.govuk-list" do
+        expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/edit", class: "govuk-link"
+        expect(page).to have_link "Resolve case", href: "#", class: "govuk-link"
+      end
     end
   end
 
   context "when the case is open" do
     let(:support_case) { create(:support_case, state: "open") }
 
-    it "shows the change owner link" do
-      expect(find("a.change-owner")).to have_text "Change case owner"
-    end
-
-    it "shows the add note link" do
-      expect(find("a.add-note")).to have_text "Add a case note"
-    end
-
-    it "shows the send email link" do
-      expect(find("a.send-email")).to have_text "Send email"
-    end
-
-    it "show the log contact link" do
-      expect(find("a.log-contact")).to have_text "Log contact with school"
+    it "has action links" do
+      within "ul.govuk-list" do
+        expect(page).to have_link "Change case owner", href: "/support/cases/#{support_case.id}/edit", class: "govuk-link"
+        expect(page).to have_link "Add a case note", href: "/support/cases/#{support_case.id}/interactions/new?option=note", class: "govuk-link"
+        expect(page).to have_link "Send email", href: "#", class: "govuk-link"
+        expect(page).to have_link "Log contact with school", href: "/support/cases/#{support_case.id}/interactions/new?option=contact", class: "govuk-link"
+      end
     end
   end
 
   context "when the case is resolved" do
     let(:support_case) { create(:support_case, state: "resolved") }
 
-    it "shows the reopen case link" do
-      expect(find("a.reopen")).to have_text "Reopen case"
+    it "has action links" do
+      within "ul.govuk-list" do
+        expect(page).to have_link "Reopen case", href: "#", class: "govuk-link"
+      end
     end
   end
 end

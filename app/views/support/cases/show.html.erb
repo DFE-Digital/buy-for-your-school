@@ -40,7 +40,7 @@
         <%= link_to I18n.t("support.case.label.change_case_owner"), edit_support_case_path(@current_case) %>
       </p>
     <% end %>
-      
+
       <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions %>
       <%= render "support/cases/case_history/enquiry", enquiry: @current_case.enquiry %>
     </div>
@@ -52,30 +52,30 @@
 <ul class="govuk-list case-actions">
   <% if @current_case.open? %>
     <li>
-      <%= link_to I18n.t("support.case.label.change_owner"), edit_support_case_path(@current_case), class: "change-owner" %>
+      <%= link_to I18n.t("support.case.label.change_owner"), edit_support_case_path(@current_case), class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link add-note" %>
+      <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.case.label.send_email"), "#", class: "send-email" %>
+      <%= link_to I18n.t("support.case.label.send_email"), "#", class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link log-contact" %>
+      <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.case.label.assign_to_agent"), edit_support_case_path(@current_case), class: "assign-owner" %>
+      <%= link_to I18n.t("support.case.label.assign_to_agent"), edit_support_case_path(@current_case), class: "govuk-link" %>
     </li>
   <% end %>
 
   <% if @current_case.resolved? %>
     <li>
-      <%= link_to I18n.t("support.case.label.reopen"), "#", class: "reopen" %>
+      <%= link_to I18n.t("support.case.label.reopen"), "#", class: "govuk-link" %>
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.case.label.resolve"), "#", class: "resolve" %>
+      <%= link_to I18n.t("support.case.label.resolve"), "#", class: "govuk-link" %>
     </li>
   <% end %>
 </ul>
