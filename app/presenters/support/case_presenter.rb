@@ -59,10 +59,5 @@ module Support
     def enquiry
       Support::EnquiryPresenter.new(super)
     end
-
-    # @return [EnquiryPresenter]
-    def enquiry
-      Support::EnquiryPresenter.new(super)
-    end
   end
 end

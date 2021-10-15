@@ -5,7 +5,7 @@ RSpec.describe Support::InteractionPresenter do
   let(:event_types) { { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3 } }
 
   describe "#note" do
-    it "returns the note stripped out of trailing new lines" do
+    it "strips new lines" do
       expect(presenter.note).to eq("foo")
     end
   end

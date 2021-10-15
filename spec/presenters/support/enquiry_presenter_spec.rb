@@ -4,7 +4,7 @@ RSpec.describe Support::EnquiryPresenter do
   let(:enquiry) { create(:support_enquiry) }
 
   describe "#category" do
-    it "returns a decorated category" do
+    it "is decorated" do
       expect(presenter.category).to be_a(Support::CategoryPresenter)
     end
   end

@@ -1,5 +1,3 @@
-<%= link_to t("generic.button.back"), support_case_path(@interaction.case), class: "govuk-back-link" %>
-
 <%= form_with model: [@interaction.case, @interaction] do |form| %>
 
   <%# form.govuk_error_summary(presenter: presenter_class) %>
