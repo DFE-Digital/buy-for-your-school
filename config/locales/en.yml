@@ -221,55 +221,57 @@ en:
   support:
     header: Supported Buying Admin
 
-    cases:
-      not_found: No cases found
-      actions: Actions
-      my_cases: My cases
-      new_cases: New cases
-      all_cases: All cases
-      organisation: Organisation
-      status: Status
-      category: Category
-      school_details: School details
-      request_details: Request details
-      case_history: Case history
-      contact_name: Contact name
-      contact_phone: Contact phone
-      contact_email: Contact email
-      problem_description: Description of problem
-      attached_specification: Attached specification
-
-      index:
+    case:
+      header:
+        action: Actions
+        school_detail: School details
+        case_detail: Case details
+        case_history: Case history
+      label:
+        change_owner: Change case owner
+        add_note: Add a case note
+        send_email: Send email
+        add_interaction: Log contact with school
+        resolve: Resolve case
+        reopen: Reopen case
+        organisation: Organisation
+        status: Status
+        category: Category
         last_updated: Last updated
         date_received: Date received
         assigned_to: Assigned to
-
-      show:
-        requested_at: Request sent on %{time}
-        change_owner: Change case owner
-        send_email: Send email
-        resolve: Resolve case
-        reopen: Reopen case
-        assign: Assign to case worker
-        add_note: Add a case note
-        add_interaction: Log contact with school
-        case_owner: Case owner
+        contact_name: Contact name
+        contact_phone: Contact phone
+        contact_email: Contact email
+        problem_description: Description of problem
+        attached_specification: Attached specification
+        requested_at: "Request sent on %{time}"
+        back: Back to case list
+        case_owner: "Case owner: %{owner}"
         change_case_owner: change
-
-      edit:
-        assign_to_agent: Assign to caseworker
+        assign_to_agent: Assign to case worker
         assign: Assign
-        assign_to: Assign to case worker
+      list:
+        not_found: No cases found
+        my_cases: My cases
+        new_cases: New cases
+        all_cases: All cases
 
-    interactions:
-      new:
-        contact_with_school: Contact with school
-        add_case_note: Add case note
-        type_of_contact: Type of contact
-        phone_call: Phone call
-        email_from_school: Email from school
-        email_to_school: Email to school
-        contact_details: Contact details
-        contact_details_hint: Add details of the phone call or copy and paste the email here
-        created_flash: "%{type} added to case"
-
+    interaction:
+        header:
+          type_of_contact: Type of contact
+          contact_with_school: Contact with school
+          add_case_note: Add case note
+        type:
+          phone_call: Phone call
+          email_from_school: Email from school
+          email_to_school: Email to school
+          note: Case note
+          request_for_support: Request for support
+        label:
+          contact_detail: Contact details
+          contact_detail_hint: Add details of the phone call or copy and paste the email here
+          body: Notes
+          created_by: Created by
+        message:
+          created_flash: "%{type} added to case"

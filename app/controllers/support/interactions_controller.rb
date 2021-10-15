@@ -7,7 +7,7 @@ module Support
     def show; end
 
     def new
-      @interaction = current_case.interactions.build
+      @interaction = InteractionPresenter.new(current_case.interactions.build)
       @back_url = support_case_path(current_case)
       render :new, locals: { option: safe_interaction }
     end
@@ -16,7 +16,7 @@ module Support
       @interaction = Interaction.new(interaction_params)
       if @interaction.save
         redirect_to support_case_path(@interaction.case),
-                    notice: I18n.t("support.interactions.new.created_flash", type: @interaction.event_type).humanize
+                    notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize
       else
         render :new, locals: { option: safe_interaction }
       end
@@ -24,9 +24,8 @@ module Support
 
   private
 
-    # TODO: merge current_agent to params as agent
     def interaction_params
-      params.require(:interaction).permit(:event_type, :body).merge(agent: Agent.first, case: current_case)
+      params.require(:interaction).permit(:event_type, :body).merge(agent_id: current_agent.id, case: current_case)
     end
 
     def safe_interaction

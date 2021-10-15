@@ -4,7 +4,7 @@ module Support
     before_action :agent, only: %i[update]
 
     def index
-      @cases = Case.all.map { |c| CasePresenter.new(c) }
+      @cases = Case.includes(%i[agent interactions]).all.map { |c| CasePresenter.new(c) }
     end
 
     def show
