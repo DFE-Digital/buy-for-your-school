@@ -9,7 +9,9 @@ class PagesController < ApplicationController
   end
 
   # TODO: can be removed as not being called anywhere
+  # :nocov:
   def planning_start_page
     @back_url = root_path
   end
+  # :nocov:
 end

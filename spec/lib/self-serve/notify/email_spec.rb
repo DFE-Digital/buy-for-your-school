@@ -122,4 +122,29 @@ RSpec.describe Notify::Email do
       expect(service.call).to be_a Notifications::Client::ResponseNotification
     end
   end
+
+  context "when message invalid" do
+    subject(:service) do
+      described_class.new(recipient: recipient)
+    end
+
+    let(:invalid_email_response) do
+      {
+        "errors" => [{ "error" => "test", "message" => "test" }],
+      }
+    end
+
+    before do
+      stub_request(:post,
+                   "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
+                     body: invalid_email_response.to_json,
+                     status: 400,
+                     headers: { "Content-Type" => "application/json" },
+                   )
+    end
+
+    it "returns an error notification" do
+      expect(service.call).to eq "test: test"
+    end
+  end
 end
