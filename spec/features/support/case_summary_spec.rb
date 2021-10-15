@@ -15,6 +15,10 @@ RSpec.feature "Case summary" do
     end
   end
 
+  it "shows the case reference heading" do
+    expect(find("h3#case-ref")).to have_text "000001"
+  end
+
   it "has 3 visible tabs" do
     expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
   end

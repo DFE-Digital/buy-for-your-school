@@ -234,6 +234,7 @@ en:
         add_interaction: Log contact with school
         resolve: Resolve case
         reopen: Reopen case
+        case: Case
         organisation: Organisation
         status: Status
         category: Category
