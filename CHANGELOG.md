@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add `foreman` as an optional convenience in development
 - store identifying information for a `User`
 - display signed in user's name in header bar
+- grant access to supported organisations and ProcOps users only
 
 **House keeping**
 - bump Ruby to version `3.0.1`
