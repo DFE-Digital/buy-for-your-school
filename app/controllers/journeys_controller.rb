@@ -56,7 +56,7 @@ class JourneysController < ApplicationController
   def show
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
 
-    @journey = JourneyPresenter.new(current_journey)
+    @journey = current_journey
 
     RecordAction.new(
       action: "view_journey",
@@ -70,12 +70,10 @@ class JourneysController < ApplicationController
   #
   # @see Journey#state
   def destroy
-    @journey = JourneyPresenter.new(current_journey)
-
     if params[:confirm] == "true"
       render :confirm_delete
     else
-      current_journey.remove!
+      @current_journey.remove!
       render :delete
     end
   end

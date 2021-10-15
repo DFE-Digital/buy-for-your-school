@@ -19,7 +19,7 @@
           Your name
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @user.full_name %>
+          <%= @current_user.full_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
         </dd>
@@ -29,7 +29,7 @@
           Your email address
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @user.email %>
+          <%= @current_user.email %>
         </dd>
         <dd class="govuk-summary-list__actions">
         </dd>
@@ -60,7 +60,7 @@
         </dt>
           <dd class="govuk-summary-list__value">
           <% if @support_request.journey %>
-            <%= @support_request.journey.created_at.strftime("%e %B %Y") %>
+            <%= @support_request.journey.created_at %>
           <% else %>
             None
           <% end %>

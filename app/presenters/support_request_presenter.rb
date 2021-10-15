@@ -1,6 +1,6 @@
 class SupportRequestPresenter < BasePresenter
-  # return [JourneyPresenter]
+  # return [JourneyPresenter, nil]
   def journey
-    JourneyPresenter.new(super)
+    JourneyPresenter.new(super) if super.present?
   end
 end

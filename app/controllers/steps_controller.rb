@@ -7,8 +7,7 @@ class StepsController < ApplicationController
   #
   # @see StepPresenter
   def show
-    @journey = JourneyPresenter.new(current_journey)
-    @step = StepPresenter.new(step)
+    @journey = current_journey
 
     @answer = AnswerFactory.new(step: step).call
     # TODO: extract @back_url to a shared private method
@@ -40,8 +39,7 @@ class StepsController < ApplicationController
   #
   # @see StepPresenter
   def edit
-    @journey = JourneyPresenter.new(current_journey)
-    @step = StepPresenter.new(step)
+    @journey = current_journey
 
     @answer = step.answer
     # TODO: extract @back_url to a shared private method
@@ -100,6 +98,6 @@ class StepsController < ApplicationController
 private
 
   def step
-    Step.find(params[:id])
+    @step ||= StepPresenter.new(Step.find(params[:id]))
   end
 end

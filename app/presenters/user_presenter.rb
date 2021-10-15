@@ -8,4 +8,8 @@ class UserPresenter < SimpleDelegator
   def full_name
     super || "#{first_name} #{last_name}"
   end
+
+  # @return [Array<String>]
+  def orgs
+  end
 end

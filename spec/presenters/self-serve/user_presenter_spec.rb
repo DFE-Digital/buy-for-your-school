@@ -19,12 +19,12 @@ RSpec.describe UserPresenter do
     end
   end
 
-  describe "#journeys" do
+  describe "#active_journeys" do
     let(:user) { build(:user, journeys: [build(:journey), build(:journey)]) }
 
     it "returns journey presenters" do
-      expect(presenter.journeys).to be_kind_of(Array)
-      expect(presenter.journeys.all? { |j| j.instance_of?(JourneyPresenter) }).to be true
+      expect(presenter.active_journeys).to be_kind_of(Array)
+      expect(presenter.active_journeys.all? { |j| j.instance_of?(JourneyPresenter) }).to be true
     end
   end
 end

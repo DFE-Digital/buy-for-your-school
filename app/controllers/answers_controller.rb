@@ -16,12 +16,13 @@ class AnswersController < ApplicationController
   #
   # @see SaveAnswer
   def create
-    @journey = JourneyPresenter.new(current_journey)
+    @journey = current_journey
 
     @answer = AnswerFactory.new(step: step).call
     @answer.step = step.__getobj__
 
     result = SaveAnswer.new(answer: step.answer).call(params: prepared_params(step: step))
+    @answer = result.object
 
     @back_url =
       if !step.task || step.task.has_single_visible_step?
@@ -63,7 +64,7 @@ class AnswersController < ApplicationController
   #
   # @see SaveAnswer
   def update
-    @journey = JourneyPresenter.new(current_journey)
+    @journey = current_journey
 
     result =
       if step.question?

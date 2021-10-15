@@ -18,7 +18,7 @@ protected
   # @return [User, Guest]
   #
   def current_user
-    CurrentUser.new.call(uid: session[:dfe_sign_in_uid])
+    @current_user ||= CurrentUser.new.call(uid: session[:dfe_sign_in_uid])
   end
 
   # before_action - Ensure session is ended
@@ -36,7 +36,7 @@ protected
   #
   def current_journey
     journey_id = params[:journey_id].presence || params[:id]
-    Journey.find(journey_id)
+    @current_journey ||= JourneyPresenter.new(Journey.find(journey_id))
   end
 
   # `Before Action` on:

@@ -15,11 +15,6 @@ class JourneyPresenter < BasePresenter
     category.title
   end
 
-  # @return [String]
-  def created_at
-    super.strftime("%e %B %Y")
-  end
-
   # Return the specification in HTML
   #
   # @return [String]

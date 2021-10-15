@@ -13,7 +13,7 @@ class SpecificationsController < ApplicationController
   def show
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
-    @journey = JourneyPresenter.new(current_journey)
+    @journey = current_journey
 
     RecordAction.new(
       action: "view_specification",
