@@ -2,6 +2,7 @@
 
 <%# TODO: A heading may be required here to satisfy accessibility assessment %>
 <%= form_for @answer, as: :answer, url: journey_step_answers_path(@journey, @step), method: "post" do |f| %>
+  <%= f.govuk_error_summary %>
   <%= yield f %>
   <div class="govuk-button-group">
     <%= f.submit @step.primary_call_to_action_text, class: "govuk-button" %>

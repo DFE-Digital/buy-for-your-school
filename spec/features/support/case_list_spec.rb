@@ -26,10 +26,11 @@ RSpec.feature "Case management dashboard" do
 
       table_headers = all(".govuk-table__header")
 
-      expect(table_headers[0]).to have_text "Organisation"
-      expect(table_headers[1]).to have_text "Category"
-      expect(table_headers[2]).to have_text "Status"
-      expect(table_headers[3]).to have_text "Last updated"
+      expect(table_headers[0]).to have_text "Case"
+      expect(table_headers[1]).to have_text "Organisation"
+      expect(table_headers[2]).to have_text "Category"
+      expect(table_headers[3]).to have_text "Status"
+      expect(table_headers[4]).to have_text "Last updated"
     end
   end
 end
