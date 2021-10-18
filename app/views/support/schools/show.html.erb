@@ -1,0 +1,17 @@
+<h1><%= @org.urn %></h1>
+<h2><%= @org.name %></h2>
+
+<dl>
+<% @org.contact.each do |key, value| %>
+  <dt><%= key %></dt>
+  <dd><%= value %></dd>
+<% end %>
+</dl>
+
+
+<dl>
+<% @org.address.each do |key, value| %>
+  <dt><%= key %></dt>
+  <dd><%= value %></dd>
+<% end %>
+</dl>

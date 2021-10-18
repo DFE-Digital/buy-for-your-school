@@ -8,6 +8,7 @@ RSpec.describe AssociateExistingJourneys do
 
   context "when there are broken journeys and no category" do
     before do
+      ENV["POST_MIGRATION_CHANGES"] = "true"
       # build and persist a category with no slug and no validation
       # as this column is not expected to exist yet
       category = build(:category, slug: nil)

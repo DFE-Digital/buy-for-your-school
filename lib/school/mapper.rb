@@ -68,7 +68,7 @@ module School
         # Religion
         rename_keys "ReligiousCharacter (name)" => :name,
                     "ReligiousCharacter (code)" => :code
-        nest :gender, %i[name code]
+        nest :religion, %i[name code]
 
         # Age
         rename_keys "StatutoryLowAge" => :lower,

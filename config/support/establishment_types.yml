@@ -1,0 +1,60 @@
+# Grouped establishments supported by Get Help Buying for Schools service
+#
+# GIAS columns
+# - EstablishmentTypeGroup
+#   - TypeOfEstablishment
+#
+---
+- :name: Local Authority maintained Schools
+  :code: 4
+  :establishments:
+  - :code: 1
+    :name: Community school
+  - :code: 5
+    :name: Foundation school
+  - :code: 15
+    :name: Local authority nursery school
+  - :code: 14
+    :name: Pupil referral unit
+  - :code: 2
+    :name: Voluntary aided school
+  - :code: 3
+    :name: Voluntary controlled school
+
+- :name: Special Schools
+  :code: 5
+  :establishments:
+  - :code: 7
+    :name: Community special school
+  - :code: 12
+    :name: Foundation special school
+
+- :name: Academies
+  :code: 10
+  :establishments:
+  - :code: 42
+    :name: Academy alternative provision converter
+  - :code: 43
+    :name: Academy alternative provision sponsor led
+  - :code: 34
+    :name: Academy converter
+  - :code: 44
+    :name: Academy special converter
+  - :code: 33
+    :name: Academy special sponsor led
+  - :code: 28
+    :name: Academy sponsor led
+
+- :name: Free Schools
+  :code: 11
+  :establishments:
+  - :code: 35
+    :name: Free schools
+  - :code: 38
+    :name: Free schools alternative provider
+  - :code: 36
+    :name: Free schools special
+  - :code: 41
+    :name: Studio schools
+
+
