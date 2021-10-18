@@ -4,7 +4,7 @@ module Support
     # TODO: this will be replaced when we map categories when creating enquires
     # @return [String]
     def title
-      "n/a"
+      super
     end
   end
 end

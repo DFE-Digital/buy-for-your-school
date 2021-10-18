@@ -21,4 +21,9 @@ namespace :case_management do
     Support::SeedSchools.new.call # live data from GIAS
     # Support::SeedSchools.new(data: "spec/fixtures/gias/example_schools_data.csv").call
   end
+
+  desc "Populate the research test cases"
+  task seed_research_test_cases: :environment do
+    Support::SeedResearchTestCases.new.call
+  end
 end

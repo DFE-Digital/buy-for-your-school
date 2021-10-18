@@ -22,7 +22,7 @@ module Support
 
     # @return [String]
     def request_text
-      "I've completed a specification, but I'm not sure what to do with it now. How do I contact suppliers?"
+      super.chomp
     end
 
     # @return [String] 30 January 2000 at 12:00

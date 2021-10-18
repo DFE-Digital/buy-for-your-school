@@ -1,8 +1,12 @@
 module Support
   class EnquiryPresenter < BasePresenter
-    # @return [CategoryPresenter]
+    # @return [String]
     def category
-      Support::CategoryPresenter.new(super)
+      super
+    end
+
+    def name
+      super
     end
   end
 end

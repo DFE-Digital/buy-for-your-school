@@ -12,6 +12,8 @@ module Support
     # @return [Support::Case]
     def call
       kase = @enquiry.build_case
+      kase.request_text = @enquiry.message
+      kase.category = find_category
       attach_documents
       kase.save!
       kase
@@ -25,6 +27,10 @@ module Support
       @enquiry.documents.each do |doc|
         doc.documentable = @enquiry.case
       end
+    end
+
+    def find_category
+      Category.find_by!(title: @enquiry.category)
     end
   end
 end
