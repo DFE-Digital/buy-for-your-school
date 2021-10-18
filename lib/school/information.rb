@@ -17,12 +17,20 @@ module School
   class Information
     extend Dry::Initializer
 
-    option :file,       optional: true, type: ::Types.Constructor(File)
-    # @see Exporter
-    option :exporter,   optional: true
+    # @param file [String, File] optional path to CSV data
+    option :file, optional: true, type: ::Types.Constructor(File)
 
-    option :mapper,     default: proc { Mapper.new }
-    option :schema,     default: proc { Schema.new }
+    # @param filter [Hash] select rows by code value
+    #
+    #   { "Header (code)" => [desirable, integer, values] }
+    #
+    option :filter, optional: true, type: ::Types::Strict::Hash
+
+    # @see Exporter
+    option :exporter, optional: true
+
+    option :mapper, default: proc { Mapper.new }
+    option :schema, default: proc { Schema.new }
     option :downloader, default: proc { ::Downloader.new }
 
     # @return [Array<Hash>]
@@ -39,12 +47,19 @@ module School
 
     # @return [Array<Hash>]
     def structured_data
-      mapper.call(tuples)
+      filter ? mapper.call(filtered_data) : mapper.call(tuples)
     end
 
-    # @return [Enumerator] table rows
+    # @return [Enumerator::Lazy] table rows
     def tuples
-      CSV.foreach(data_file.path, headers: true, encoding: "ISO-8859-1:UTF-8")
+      CSV.foreach(data_file.path, headers: true, encoding: "ISO-8859-1:UTF-8").lazy
+    end
+
+    # @return [Array<Hash>] filter criteria matches the row
+    def filtered_data
+      tuples.select do |row|
+        filter.any? { |key, values| values.include?(row[key].to_i) }
+      end
     end
 
     # @return [File] existing or downloaded data

@@ -19,8 +19,8 @@ RSpec.describe Support::Organisation, type: :model do
     expect(create(:support_organisation, phase: 4)).to be_secondary
   end
 
-  it "#open?" do
-    expect(create(:support_organisation, status: 1)).to be_open
+  it "#opened?" do
+    expect(create(:support_organisation, status: 1)).to be_opened
   end
 
   it "#mixed?" do
