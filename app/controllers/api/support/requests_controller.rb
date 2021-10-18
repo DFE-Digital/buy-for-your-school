@@ -5,8 +5,6 @@ class Api::Support::RequestsController < ApplicationController
     return if support_request.submitted?
 
     SubmitSupportRequest.new(request: support_request).call
-
-    support_request.update!(submitted: true)
   end
 
 private

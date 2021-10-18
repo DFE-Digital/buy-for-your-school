@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index]
 
   resources :support_requests, except: %i[destroy], path: "support-requests"
+  resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
   post "/submit", to: "api/support/requests#create", as: :submit_request
 
   resources :journeys, only: %i[show create destroy] do

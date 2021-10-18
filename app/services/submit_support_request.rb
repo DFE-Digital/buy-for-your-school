@@ -52,6 +52,8 @@ class SubmitSupportRequest
         category: category,
       },
     ).call
+
+    request.update!(submitted: true)
   end
 
 private
