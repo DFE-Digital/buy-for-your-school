@@ -39,7 +39,7 @@ RSpec.feature "Case worker assignment" do
       end
 
       it "has been opened" do
-        expect(find("#all-cases tr.govuk-table__row", text: "St.Mary")).to have_text "OPEN"
+        expect(find("#all-cases tr.govuk-table__row", text: "St.Mary")).to have_text "Open"
       end
     end
   end
