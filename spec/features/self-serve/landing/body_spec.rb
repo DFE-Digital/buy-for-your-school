@@ -4,7 +4,7 @@ RSpec.feature "Users can see a start page" do
   end
 
   context "when user is not signed in" do
-    it "has a start button to login" do
+    it "has a start button to login and redirects user to login page after clicking it" do
       within "main.govuk-main-wrapper" do
         expect(find("form.button_to")["action"]).to eql "/auth/dfe"
         # generic.button.start
@@ -21,15 +21,11 @@ RSpec.feature "Users can see a start page" do
       visit "/"
     end
 
-    it "has a start button" do
+    it "has a start button and redirects user to dashboard after clicking it" do
       within "main.govuk-main-wrapper" do
         # generic.button.start
         expect(page).to have_button "Start now", class: "govuk-button govuk-!-margin-top-2 govuk-!-margin-bottom-8 govuk-button--start"
       end
-    end
-
-    it "redirects user to dashboard after clicking Start Now button" do
-      # DfE sign in
       click_start
       expect(page).to have_current_path "/dashboard"
     end
