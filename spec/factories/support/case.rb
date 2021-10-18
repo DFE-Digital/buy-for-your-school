@@ -9,8 +9,6 @@ FactoryBot.define do
     association :category, factory: :support_category
     sub_category_string { "category subtitle" }
 
-    association :agent, factory: :support_agent
-
     trait :with_documents do
       transient do
         document_count { 1 }
