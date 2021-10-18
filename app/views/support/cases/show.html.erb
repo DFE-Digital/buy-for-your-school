@@ -4,78 +4,78 @@
 <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
   <%= @current_case.state %>
 </strong>
+<h3 id="case-ref" class="govuk-heading-m">
+  <%= @current_case.ref %>
+</h3>
+
 
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
       <a class="govuk-tabs__tab" href="#school-details">
-        <%= I18n.t("support.cases.school_details") %>
+        <%= I18n.t("support.case.header.school_detail") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#request-details">
-        <%= I18n.t("support.cases.request_details") %>
+      <a class="govuk-tabs__tab" href="#case-details">
+        <%= I18n.t("support.case.header.case_detail") %>
       </a>
     </li>
     <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#case-history">
-        <%= I18n.t("support.cases.case_history") %>
+        <%= I18n.t("support.case.header.case_history") %>
       </a>
     </li>
   </ul>
 
-  <%= render 'school_details', contact: @current_case.contact %>
+  <%= render "school_details", enquiry: @current_case.enquiry %>
+  <%= render "case_details", current_case: @current_case %>
 
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="request-details" role="tabpanel" aria-labelledby="tab_request-details">
-    <p class="govuk-body">
-      requested at
-    </p>
-    render interaction
-  </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
-    <% if @current_case.agent.present? %>
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">
+      <% if @current_case.agent.present? %>
       <p class="govuk-body">
-        <%= "#{I18n.t("support.cases.show.case_owner")}: #{@current_case.agent_name} " %>
-        <%= link_to I18n.t("support.cases.show.change_case_owner"), edit_support_case_path(@current_case) %>
+        <%= I18n.t("support.case.label.case_owner", owner: @current_case.agent_name ) %>
+        <%= link_to I18n.t("support.case.label.change_case_owner"), edit_support_case_path(@current_case) %>
       </p>
     <% end %>
 
-    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
-show interactions
+      <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions %>
+      <%= render "support/cases/case_history/enquiry", enquiry: @current_case.enquiry %>
     </div>
   </div>
 </div>
 
-<h3 class="govuk-heading-m"><%= I18n.t("support.cases.actions") %></h3>
+<h3 class="govuk-heading-m"><%= I18n.t("support.case.header.action") %></h3>
 
-<ul class="govuk-list">
+<ul class="govuk-list case-actions">
   <% if @current_case.open? %>
     <li>
-      <%= link_to I18n.t("support.cases.show.change_owner"), edit_support_case_path(@current_case), class: "change-owner" %>
+      <%= link_to I18n.t("support.case.label.change_owner"), edit_support_case_path(@current_case), class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.cases.show.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link add-note" %>
+      <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.cases.show.send_email"), "#", class: "send-email" %>
+      <%= link_to I18n.t("support.case.label.send_email"), "#", class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.cases.show.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link log-contact" %>
+      <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.cases.show.assign"), edit_support_case_path(@current_case), class: "assign-owner" %>
+      <%= link_to I18n.t("support.case.label.assign_to_agent"), edit_support_case_path(@current_case), class: "govuk-link" %>
     </li>
   <% end %>
 
   <% if @current_case.resolved? %>
     <li>
-      <%= link_to I18n.t("support.cases.show.reopen"), "#", class: "reopen" %>
+      <%= link_to I18n.t("support.case.label.reopen"), "#", class: "govuk-link" %>
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.cases.show.resolve"), "#", class: "resolve" %>
+      <%= link_to I18n.t("support.case.label.resolve"), "#", class: "govuk-link" %>
     </li>
   <% end %>
 </ul>

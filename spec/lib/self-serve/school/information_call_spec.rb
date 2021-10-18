@@ -1,6 +1,8 @@
 require "school/information"
 
 RSpec.describe School::Information, "#call" do
+  include_context "with gias data"
+
   context "with no file" do
     subject(:service) { described_class.new }
 
@@ -30,7 +32,7 @@ RSpec.describe School::Information, "#call" do
   context "when the file is a File" do
     subject(:service) { described_class.new(file: file) }
 
-    let(:file) { File.open("spec/fixtures/gias/example_schools_data.csv") }
+    let(:file) { File.open(gias_data) }
 
     it "outputs formatted data from the local source" do
       output = service.call.map { |s| s[:school][:name] }
@@ -44,12 +46,10 @@ RSpec.describe School::Information, "#call" do
   end
 
   context "when the file is a String" do
-    subject(:service) { described_class.new(file: file) }
-
-    let(:file) { "spec/fixtures/gias/example_schools_data.csv" }
+    subject(:service) { described_class.new(file: gias_data) }
 
     it "loads the file" do
-      expect(service.file.path).to eql file
+      expect(service.file.path).to eql gias_data
     end
 
     it "outputs formatted data from the local source" do

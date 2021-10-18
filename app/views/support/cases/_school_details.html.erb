@@ -2,28 +2,28 @@
   <dl class="govuk-summary-list govuk-!-margin-bottom-5">
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.contact_name") %>
+        <%= I18n.t("support.case.label.contact_name") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.full_name %>
+        <%= enquiry.name %>
       </dd>
     </div>
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.contact_phone") %>
+        <%= I18n.t("support.case.label.contact_phone") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.phone_number %>
+        <%= enquiry.telephone %>
       </dd>
     </div>
     
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.cases.contact_email") %>
+        <%= I18n.t("support.case.label.contact_email") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.email_address %>
+        <%= enquiry.email %>
       </dd>
     </div>
   </dl>

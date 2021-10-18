@@ -68,7 +68,6 @@ class UserSession
   def invalidate_other_user_sessions(auth:)
     redis_sessions = RedisSessions.redis
     redis_session_lookup = RedisSessionLookup.redis
-    # dfe_sign_in_uid = auth.uid
     dfe_sign_in_uid = auth.fetch("uid")
     session_lookup_key = "user_dsi_id:#{dfe_sign_in_uid}"
 

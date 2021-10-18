@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add `foreman` as an optional convenience in development
 - store identifying information for a `User`
 - display signed in user's name in header bar
+- grant access to supported organisations and ProcOps users only
 
 **House keeping**
 - bump Ruby to version `3.0.1`
@@ -63,6 +64,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add custom answer validation logic which can be controlled in Contentful
 - fix progression to the next incomplete task
 - add `skipped_ids` to `Task` to allow users to skip questions
+- add error summary component
 
 **Multiple Categories**
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
