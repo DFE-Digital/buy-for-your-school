@@ -1,3 +1,4 @@
+# :nocov:
 require "yaml"
 require "dry-initializer"
 require "types"
@@ -35,3 +36,4 @@ module Support
     end
   end
 end
+# :nocov:

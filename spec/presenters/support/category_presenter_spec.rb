@@ -5,7 +5,7 @@ RSpec.describe Support::CategoryPresenter do
 
   describe "#title" do
     it "returns a placeholder for title" do
-      expect(presenter.title).to eq("n/a")
+      expect(presenter.title).to eq("Catering")
     end
   end
 end

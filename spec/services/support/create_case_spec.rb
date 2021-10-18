@@ -1,8 +1,11 @@
 RSpec.describe Support::CreateCase do
   subject(:service) { described_class.new(enquiry) }
 
-  let(:enquiry) { create(:support_enquiry) }
   let(:result) { service.call }
+
+  before do
+    create(:support_category, :catering_support_category)
+  end
 
   describe "#call" do
     context "when an enquiry is given" do

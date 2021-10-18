@@ -5,8 +5,7 @@ FactoryBot.define do
     email { "school-business-professional.gov.uk" }
     telephone { "0151 000 0000" }
     message { "This is an example request for support - please help!" }
-
-    association :category, factory: :support_category
+    category { "Catering" }
 
     trait :with_documents do
       transient do
