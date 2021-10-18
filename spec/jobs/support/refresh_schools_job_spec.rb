@@ -1,6 +1,8 @@
 RSpec.describe Support::RefreshSchoolsJob, type: :job do
   include ActiveJob::TestHelper
 
+  include_context "with gias data"
+
   before do
     ActiveJob::Base.queue_adapter = :test
 
@@ -9,15 +11,12 @@ RSpec.describe Support::RefreshSchoolsJob, type: :job do
 
     travel_to Time.zone.local(2004, 11, 24, 0o1, 0o4, 44)
 
-    # fixture contains 3 schools
-    # the "voluntary aided school" is skipped
-    # the "closed" school is skipped
     stub_request(:get, "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata20041124.csv")
-    .to_return(body: File.open("spec/fixtures/gias/example_schools_data.csv"))
+    .to_return(body: File.open(gias_data))
   end
 
   describe ".perform_later" do
-    it "enqueues a job asynchronously on the default queue" do
+    it "enqueues a job asynchronously on the support queue" do
       expect { described_class.perform_later }.to have_enqueued_job.on_queue("support")
     end
 
@@ -31,7 +30,7 @@ RSpec.describe Support::RefreshSchoolsJob, type: :job do
 
       expect(Support::Organisation.count).to be 1
 
-      expect(Support::Organisation.first).to be_open
+      expect(Support::Organisation.first).to be_opened
       expect(Support::Organisation.first).to be_mixed
       expect(Support::Organisation.first).to be_secondary
     end
