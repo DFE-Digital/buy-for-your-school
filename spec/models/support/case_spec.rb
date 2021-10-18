@@ -7,7 +7,7 @@ RSpec.describe Support::Case, type: :model do
   end
 
   context "with documents" do
-    let!(:document) { create(:support_document, documentable: support_case) }
+    let!(:document) { create(:support_document, case: support_case) }
 
     it "has document returned in collection" do
       expect(support_case.documents).not_to be_empty

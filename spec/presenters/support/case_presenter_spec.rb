@@ -8,11 +8,11 @@ RSpec.describe Support::CasePresenter do
   let(:support_case) do
     OpenStruct.new(
       state: "open",
+      created_at: Time.zone.local(2000, 1, 30, 12),
       interactions: [interaction],
       agent: agent,
       category: double,
       contact: double,
-      enquiry: OpenStruct.new(created_at: Time.zone.local(2000, 1, 30, 12)),
     )
   end
 
@@ -58,12 +58,6 @@ RSpec.describe Support::CasePresenter do
       # FIXME: swap once CategoryPresenter is being used and namespace loads in the suite
       expect(presenter.category).to be_a(CategoryPresenter)
       # expect(presenter.category).to be_a(Support::CategoryPresenter)
-    end
-  end
-
-  describe "#enquiry" do
-    it "returns a decorated enquiry" do
-      expect(presenter.enquiry).to be_a(Support::EnquiryPresenter)
     end
   end
 end

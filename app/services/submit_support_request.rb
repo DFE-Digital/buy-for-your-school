@@ -12,17 +12,15 @@ require "types"
 #
 #   ```json
 #   {
-#     "support_enquiry": [{
 #       "support_request_id":1,
 #       "name":"Confused SBP",
 #       "email":"sbp@school.gov.uk",
-#       "telephone": "01234567890"
+#       "telephone": "01234567890",
 #       "message": "example message",
-#       "documents" : [{
+#       "documents": [{
 #          "file_type": "html_markup",
 #          "document_body": "<h1>example html markup</h1>"
 #        }]
-#     }]
 #   }
 #   ```
 #
@@ -83,6 +81,13 @@ private
     enquiry.documents << document if request.journey
     enquiry.save!
   end
+
+  # @return [Support::Support] TODO: Move into inbound API
+  def kase
+    kase = Support::Interaction.new()
+  end
+
+
 
   # @return [Support::Document] TODO: Move into inbound API
   def document

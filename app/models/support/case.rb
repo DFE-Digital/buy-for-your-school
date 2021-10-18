@@ -5,12 +5,12 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include Documentable
-
-    has_one :enquiry, class_name: "Support::Enquiry"
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     has_many :interactions, class_name: "Support::Interaction"
+
+    has_many :documents, class_name: "Support::Document", dependent: :destroy
+    accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
 
     # Support level
     #

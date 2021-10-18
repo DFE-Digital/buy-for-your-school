@@ -29,7 +29,7 @@ module Support
     #   phone_call
     #   email_from_school
     #   email_to_school
-    enum event_type: { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3 }
+    enum event_type: { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3, support_request: 4 }
 
     validates :body, presence: true
 
