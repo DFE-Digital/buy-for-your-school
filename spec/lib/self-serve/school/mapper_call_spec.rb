@@ -5,6 +5,10 @@ RSpec.describe School::Mapper, "#call" do
 
   let(:entity) { output.first[key] }
 
+  # The public GIAS "edubasealldata" CSV file is a historical cummulative record.
+  # Consequently there are multiple entries for the same EstablishmentName if
+  # that establishment's status, type or laocation have changed over time.
+  #
   let(:output) do
     mapper.call(
       [
@@ -15,7 +19,7 @@ RSpec.describe School::Mapper, "#call" do
           "LA (code)" => "919",                                                 # B:
           "LA (name)" => "Hertfordshire",                                       # C:
           # school
-          "EstablishmentNumber" => "5404",                                      # D:
+          "EstablishmentNumber" => "5404",                                      # D: not unique, geographically disparate
           "EstablishmentName" => "Parmiter's School",                           # E:
           # establishment_type
           "TypeOfEstablishment (code)" => "34",                                 # F:

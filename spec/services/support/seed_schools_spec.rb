@@ -1,10 +1,7 @@
 RSpec.describe Support::SeedSchools do
-  subject(:service) do
-    # fixture contains 3 schools
-    # the "voluntary aided school" is skipped
-    # the "closed" school is skipped
-    described_class.new(data: "spec/fixtures/gias/example_schools_data.csv")
-  end
+  subject(:service) { described_class.new(data: gias_data) }
+
+  include_context "with gias data"
 
   before do
     group = create(:support_group, code: 4, name: "LA maintained school")
