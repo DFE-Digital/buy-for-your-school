@@ -13,7 +13,7 @@ RSpec.describe UserPresenter do
     context "when a full name does not exist" do
       let(:user) { build(:user, full_name: nil, first_name: "Phoebe", last_name: "Buffay") }
 
-      it "returns the first name and last name" do
+      it "concatenates the first and last names" do
         expect(presenter.full_name).to eq "Phoebe Buffay"
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe UserPresenter do
   describe "#active_journeys" do
     let(:user) { build(:user, journeys: [build(:journey), build(:journey)]) }
 
-    it "returns journey presenters" do
+    it "decorates the journeys" do
       expect(presenter.active_journeys).to be_kind_of(Array)
       expect(presenter.active_journeys.all? { |j| j.instance_of?(JourneyPresenter) }).to be true
     end

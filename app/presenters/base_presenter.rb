@@ -11,7 +11,7 @@ class BasePresenter < SimpleDelegator
 
 private
 
-  # @return [String]
+  # @return [String] 30 March 2000
   def date_format
     "%e %B %Y"
   end
