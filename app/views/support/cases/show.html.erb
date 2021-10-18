@@ -2,7 +2,7 @@
   <%= @current_case.organisation_name %>
 </h1>
 <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
-  <%= @current_case.state %>
+  <%= I18n.t("support.case.label.state_#{@current_case.state.downcase}") %>
 </strong>
 <h3 id="case-ref" class="govuk-heading-m">
   <%= @current_case.ref %>

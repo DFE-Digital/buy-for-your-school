@@ -12,6 +12,8 @@ module Support
     belongs_to :agent, class_name: "Support::Agent", optional: true
     has_many :interactions, class_name: "Support::Interaction"
 
+    scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
+
     # Support level
     #
     #   L1       - Advice and guidance only
@@ -41,6 +43,8 @@ module Support
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
     # @return [String]
     def generate_ref
+      return if ref.present?
+
       self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
     end
 

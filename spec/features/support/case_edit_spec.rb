@@ -39,7 +39,7 @@ RSpec.feature "Case Management Dashboard - edit" do
       end
 
       specify "the case in question was opened" do
-        expect(find("#all-cases tr.govuk-table__row", text: "St.Mary")).to have_text "OPEN"
+        expect(find("#all-cases tr.govuk-table__row", text: "St.Mary")).to have_text "Open"
       end
     end
   end

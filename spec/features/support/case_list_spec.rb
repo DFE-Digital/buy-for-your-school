@@ -2,7 +2,8 @@ RSpec.feature "Case management dashboard" do
   include_context "with an agent"
 
   before do
-    create(:support_case)
+    agent = Support::Agent.find_by(email: "ops@education.gov.uk")
+    create(:support_case, agent_id: agent)
     click_button "Agent Login"
     # visit "/support/cases"
   end
