@@ -1,3 +1,5 @@
+<%= link_to t("generic.button.back"), support_case_path(@current_case), class: "govuk-back-link" %>
+
 <%= form_with model: @current_case do |form| %>
   <%= form.govuk_radio_buttons_fieldset("") do %>
     <legend class="govuk-fieldset__legend govuk-label--l">
