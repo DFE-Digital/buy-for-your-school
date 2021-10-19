@@ -20,7 +20,6 @@ RSpec.feature "Add new interaction to case" do
             let(:url) { "/support/cases/#{support_case.id}" }
           end
         end
-      
 
         it "shows the add note heading" do
           expect(find("label.govuk-label")).to have_text "Add case note"
