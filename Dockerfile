@@ -42,6 +42,7 @@ COPY Gemfile $DEPS_HOME/Gemfile
 COPY Gemfile.lock $DEPS_HOME/Gemfile.lock
 RUN gem update --system
 
+# FIXME: dev and test gems are being bundled in production
 ENV BUNDLE_GEM_GROUPS=$RAILS_ENV
 RUN bundle config set frozen "true"
 RUN bundle config set no-cache "true"

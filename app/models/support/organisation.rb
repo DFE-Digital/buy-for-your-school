@@ -32,15 +32,15 @@ module Support
     }
 
     enum gender: {
-      no_gender: 0,
+      ungendered: 0,
       boys: 1,
       girls: 2,
       mixed: 3,
-      no_recorded_gender: 9,
+      no_recorded_gender: 9, # historical records
     }
 
     enum status: {
-      open: 1,
+      opened: 1,
       closed: 2,
       closing: 3,
       opening: 4,
