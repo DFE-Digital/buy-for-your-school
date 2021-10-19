@@ -23,6 +23,11 @@ RSpec.describe Support::Case, type: :model do
       it "generates a reference starting at 1" do
         expect(support_case.ref).to eql "000001"
       end
+
+      it "only generates a reference if none already exists" do
+        support_case.save!
+        expect(support_case.ref).to eql "000001"
+      end
     end
 
     context "when cases already exist" do

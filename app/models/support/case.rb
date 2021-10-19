@@ -44,7 +44,7 @@ module Support
     # @return [String]
     def generate_ref
       return if ref.present?
-      
+
       self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
     end
 
