@@ -9,7 +9,7 @@ RSpec.feature "Case worker assignment" do
   let(:support_case) { create(:support_case) }
 
   it "displays a title" do
-    expect(find("h1.govuk-fieldset__heading")).to have_text "Assign to caseworker"
+    expect(find("h1.govuk-fieldset__heading")).to have_text "Assign to case worker"
   end
 
   it "lists agents by name" do

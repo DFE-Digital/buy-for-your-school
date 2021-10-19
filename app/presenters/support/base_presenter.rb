@@ -16,7 +16,7 @@ module Support
 
     # @return [String]
     def date_format
-      "%e %B %Y"
+      "%e %B %Y at %H:%M"
     end
   end
 end

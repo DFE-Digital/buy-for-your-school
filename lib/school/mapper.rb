@@ -68,7 +68,7 @@ module School
         # Religion
         rename_keys "ReligiousCharacter (name)" => :name,
                     "ReligiousCharacter (code)" => :code
-        nest :gender, %i[name code]
+        nest :religion, %i[name code]
 
         # Age
         rename_keys "StatutoryLowAge" => :lower,
@@ -95,6 +95,8 @@ module School
         nest :head_teacher, %i[role title first_name last_name]
 
         # School
+        # the EstablishmentName may appear multiple times in "edubasealldata"
+        # the EstablishmentNumber will be common to many establishments
         rename_keys "EstablishmentName" => :name,
                     "EstablishmentNumber" => :number,
                     # Population

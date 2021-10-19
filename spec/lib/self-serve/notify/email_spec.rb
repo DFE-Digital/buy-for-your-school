@@ -93,6 +93,10 @@ RSpec.describe Notify::Email do
       expect(service.template).to eql "Default"
     end
 
+    it "assigns a default message reference" do
+      expect(service.reference).to eql "generic"
+    end
+
     it "returns a response notification" do
       expect(service.call).to be_a Notifications::Client::ResponseNotification
     end
