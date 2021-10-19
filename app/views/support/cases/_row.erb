@@ -11,7 +11,7 @@
 
   <td class="govuk-table__cell">
     <strong class="govuk-tag govuk-tag--green">
-      <%= kase.state %>
+      <%= I18n.t("support.case.label.state_#{kase.state.downcase}") %>
     </strong>
   </td>
 

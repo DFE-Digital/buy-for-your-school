@@ -260,6 +260,13 @@ en:
         case: Case
         organisation: Organisation
         status: Status
+        state_initial: New
+        state_open: Open
+        state_resolved: Resolved
+        state_pending: Pending
+        state_closed: Closed
+        state_pipeline: Pipeline
+        state_no_response: No Response
         category: Category
         last_updated: Last updated
         date_received: Date received
