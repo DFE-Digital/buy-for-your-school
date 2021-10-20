@@ -66,7 +66,7 @@ private
   # upon merging of MultiStepForm
   def navigate_through_form(support_form)
     # :reek:FeatureEnvy
-    if support_form.step == 1 && supported_schools.size <= 1
+    if support_form.step == 1 && supported_schools.size == 1
       # :reek:DuplicateMethodCall
       support_form.advance!
     end
@@ -124,6 +124,6 @@ private
   end
 
   def supported_schools
-    @supported_schools ||= GetSupportedSchoolsForUser.new(user: current_user).call
+    @supported_schools ||= current_user.supported_schools
   end
 end

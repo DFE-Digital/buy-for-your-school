@@ -1,7 +1,9 @@
 RSpec.feature "Create a new support request" do
+  let(:user) { create(:user, :with_a_supported_school) }
+
   describe "start page" do
     before do
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests"
     end
 
@@ -49,7 +51,7 @@ RSpec.feature "Create a new support request" do
 
   describe "contact details" do
     before do
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
     end
 
@@ -119,8 +121,10 @@ RSpec.feature "Create a new support request" do
   end
 
   context "when the user belongs to multiple supported schools" do
+    let(:user) { create(:user, :with_multiple_supported_schools) }
+
     before do
-      user_is_signed_in(user: create(:user, :with_multiple_supported_schools))
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
     end
@@ -133,7 +137,7 @@ RSpec.feature "Create a new support request" do
 
   context "when the user belongs to only one supported school" do
     before do
-      user_is_signed_in(user: create(:user, :with_a_supported_school))
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
     end
@@ -144,7 +148,7 @@ RSpec.feature "Create a new support request" do
   end
 
   context "when the user has existing specs" do
-    let(:user) { create(:user, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
+    let(:user) { create(:user, :with_a_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
     let(:category) { create(:category, title: "Laptops") }
     let(:journey) { create(:journey, category: category, user: user) }
 
@@ -186,7 +190,7 @@ RSpec.feature "Create a new support request" do
       create(:category, title: "Maintenance")
       create(:category, title: "Broadband")
 
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
     end
@@ -221,7 +225,7 @@ RSpec.feature "Create a new support request" do
     before do
       create(:category, title: "Maintenance")
 
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
       choose "Maintenance"

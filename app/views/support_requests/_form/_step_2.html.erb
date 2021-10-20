@@ -9,10 +9,8 @@
     hint: { text: I18n.t("support_request.hint.school") }
 %>
 
-<%= form.govuk_radio_divider %>
-
-<%= form.govuk_radio_button :school_urn, "none",
-    label: { text: "Other (You can tell us the school name later)" }
-  %>
+<p class="govuk-body">
+  <%= I18n.t("support_request.suggestion.school") %>
+</p>
 
 <br />

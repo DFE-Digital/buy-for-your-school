@@ -5,7 +5,7 @@ class SupportRequestPresenter < SimpleDelegator
   #
   # @return [String] the name of the school or None
   def selected_school_name_or_none
-    return "None" if school_urn == "none" || school_urn.blank?
+    return "None" if school_urn.blank?
 
     found_school = user.supported_schools.find { |school| school.urn == school_urn }
     found_school&.name || "None"

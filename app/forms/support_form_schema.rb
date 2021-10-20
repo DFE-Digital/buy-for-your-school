@@ -20,9 +20,13 @@ class SupportFormSchema < Dry::Validation::Contract
     optional(:message_body).value(:string)  # step 5
   end
 
-  # rule(:phone_number).validate(min_size?: 10, max_size?: 11, format?: /^0\d+$/)
-  # rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d+$)/)
   rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+
+  rule(:school_urn) do
+    if values[:step] == 2 && value.blank?
+      key(:school_urn).failure(:missing)
+    end
+  end
 
   rule(:journey_id, :category_id) do
     key(:category_id).failure(:no_spec) if key?(:category_id) && values[:category_id].blank? && ["none", ""].include?(values[:journey_id])

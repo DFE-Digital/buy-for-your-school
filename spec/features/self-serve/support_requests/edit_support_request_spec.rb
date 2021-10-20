@@ -18,7 +18,8 @@ RSpec.feature "Edit an unsubmitted support request" do
              journey: journey,
              category: nil,
              phone_number: "invalid phone number",
-             message_body: "")
+             message_body: "",
+             school_urn: "123")
     end
 
     it "adds a valid phone number" do
@@ -64,7 +65,7 @@ RSpec.feature "Edit an unsubmitted support request" do
     context "when user has selected a school" do
       let(:user) { create(:user, :with_a_supported_school) }
 
-      let(:school) { GetSupportedSchoolsForUser.new(user: user).call.first }
+      let(:school) { UserPresenter.new(user).supported_schools.first }
 
       let(:support_request) do
         create(:support_request,
@@ -101,7 +102,7 @@ RSpec.feature "Edit an unsubmitted support request" do
       context "when user has multiple supported schools" do
         let(:user) { create(:user, :with_multiple_supported_schools) }
 
-        let(:greendale) { GetSupportedSchoolsForUser.new(user: user).call.last }
+        let(:greendale) { UserPresenter.new(user).supported_schools.last }
 
         it "allows the user to choose a different school" do
           click_link "edit-school"
@@ -124,7 +125,8 @@ RSpec.feature "Edit an unsubmitted support request" do
                journey: nil,
                category: category,
                phone_number: nil,
-               message_body: nil)
+               message_body: nil,
+               school_urn: "123")
       end
 
       it "updates the specification" do
@@ -160,7 +162,8 @@ RSpec.feature "Edit an unsubmitted support request" do
                journey: nil,
                category: nil,
                phone_number: nil,
-               message_body: nil)
+               message_body: nil,
+               school_urn: "123")
       end
 
       it "requires a category to be chosen" do
@@ -200,7 +203,8 @@ RSpec.feature "Edit an unsubmitted support request" do
              journey: journey,
              category: nil,
              phone_number: nil,
-             message_body: nil)
+             message_body: nil,
+             school_urn: "123")
     end
 
     it "updates the category" do
@@ -233,7 +237,8 @@ RSpec.feature "Edit an unsubmitted support request" do
              journey: journey,
              category: nil,
              phone_number: nil,
-             message_body: nil)
+             message_body: nil,
+             school_urn: "123")
     end
 
     it "adds a message" do
