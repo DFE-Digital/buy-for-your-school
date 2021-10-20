@@ -10,6 +10,10 @@ data "cloudfoundry_domain" "custom" {
   name = local.custom_cloudfoundry_domain
 }
 
+data "cloudfoundry_domain" "live" {
+  name = local.live_cloudfoundry_domain
+}
+
 data "cloudfoundry_service" "redis" {
   name = "redis"
 }

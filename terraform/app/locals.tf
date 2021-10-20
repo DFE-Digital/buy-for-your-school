@@ -2,12 +2,20 @@ locals {
   project_name = var.project_name
   environment  = var.environment
 
-  cloudfoundry_org           = var.cloudfoundry_org
-  cloudfoundry_space         = local.environment == "prod" ? "sct-production" : "sct-${local.environment}"
-  shared_cloudfoundry_domain = var.shared_cloudfoundry_domain
-  custom_cloudfoundry_domain = var.custom_cloudfoundry_domain
+  cloudfoundry_org   = var.cloudfoundry_org
+  cloudfoundry_space = local.environment == "prod" ? "sct-production" : "sct-${local.environment}"
 
+  # *.london.cloudapps.digital
+  shared_cloudfoundry_domain = var.shared_cloudfoundry_domain
+  # *.education.gov.uk
+  custom_cloudfoundry_domain = var.custom_cloudfoundry_domain
+  # *.get-help-buying-for-schools.service.gov.uk
+  live_cloudfoundry_domain = var.live_cloudfoundry_domain
+
+  # *.education.gov.uk
   custom_hostname = local.environment == "prod" ? "get-help-buying-for-schools" : "${local.environment}-get-help-buying-for-schools"
+  # *.get-help-buying-for-schools.service.gov.uk
+  live_hostname = local.environment == "prod" ? "www" : "${local.environment}"
 
   redis_class    = var.redis_class
   redis_timeouts = var.redis_timeouts

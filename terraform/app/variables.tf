@@ -16,14 +16,20 @@ variable "cloudfoundry_org" {
 }
 
 variable "shared_cloudfoundry_domain" {
-  description = "Shared Cloud Foundry domain"
+  description = "Shared Cloud Foundry cloudapps domain"
   default     = "london.cloudapps.digital"
   type        = string
 }
 
 variable "custom_cloudfoundry_domain" {
-  description = "Custom Cloud Foundry domain"
+  description = "Custom Cloud Foundry education.gov domain"
   default     = "education.gov.uk"
+  type        = string
+}
+
+variable "live_cloudfoundry_domain" {
+  description = "Live Cloud Foundry service.gov domain"
+  default     = "get-help-buying-for-schools.service.gov.uk"
   type        = string
 }
 
