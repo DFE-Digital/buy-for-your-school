@@ -4,18 +4,26 @@
 #
 ---
 
-- school_name: School A
-  contact_name: Lucita Burchmore
-  contact_phone: 0172 468 4230
-  contact_email: lucita.burchmore@shcool-a.co.uk
-  category: Catering
-  description: "Hello, I am changing my catering provider and have previously used Catering R Us after being directed to them by the schools buying hub. I am trying to use the Get Help Buying for Schools Service to create a new specification but I’ve never heard of frameworks and can’t see my old provider on the DFE approved list. Why can’t I use my old provider if I’m happy with them, and why should I use a framework to find a new supplier?"
-  attached_specification: "https://docs.google.com/document/d/1JCjgPNq8mxnu4HPZEyWR385pwszbYxrl/edit"
+#- school_name: School A
+#  contact_name: Lucita Burchmore
+#  contact_phone: 0172 468 4230
+#  contact_email: lucita.burchmore@shcool-a.co.uk
+#  category: Catering
+#  description: "Hello, I am changing my catering provider and have previously used Catering R Us after being directed to them by the schools buying hub. I am trying to use the Get Help Buying for Schools Service to create a new specification but I’ve never heard of frameworks and can’t see my old provider on the DFE approved list. Why can’t I use my old provider if I’m happy with them, and why should I use a framework to find a new supplier?"
+#  attached_specification: "https://docs.google.com/document/d/1JCjgPNq8mxnu4HPZEyWR385pwszbYxrl/edit"
+#
+#- school_name: School B
+#  contact_name: Emmie Benedito
+#  contact_phone: 0314 302 4267
+#  contact_email: emmie.benedito@shcool-b.co.uk
+#  category: Business
+#  description: "Hello, I have been managing procurements within my school for a number of years and am now attempting to use the get help buying service to ‘help’ me. I am being asked to complete requirements on social value but have never in all of my professional experience been asked to provide such details to a supplier. Please can you clarify if this is yet another mandatory requirement the department is placing on me so that I can get on with my job?"
+#  attached_specification: "https://docs.google.com/document/d/1J82SrF4HNi6Ia0QtaTJBxEQ_RVz71dHk/edit"
 
-- school_name: School B
-  contact_name: Emmie Benedito
-  contact_phone: 0314 302 4267
-  contact_email: emmie.benedito@shcool-b.co.uk
-  category: Business
-  description: "Hello, I have been managing procurements within my school for a number of years and am now attempting to use the get help buying service to ‘help’ me. I am being asked to complete requirements on social value but have never in all of my professional experience been asked to provide such details to a supplier. Please can you clarify if this is yet another mandatory requirement the department is placing on me so that I can get on with my job?"
+- school_name: Bede Academy
+  contact_name: Paul Simmons
+  contact_phone: 07968217425
+  contact_email: paul.simmons@education.gov.uk
+  category: Catering
+  description: "Please can someone give me some guidance in completing a specification for Catering"
   attached_specification: "https://docs.google.com/document/d/1J82SrF4HNi6Ia0QtaTJBxEQ_RVz71dHk/edit"
