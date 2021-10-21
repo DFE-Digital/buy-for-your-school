@@ -2,6 +2,7 @@ class DashboardController < ApplicationController
   breadcrumb "Dashboard", :dashboard_path
 
   def show
+    @user = UserPresenter.new(current_user)
     journeys = Journey.not_remove.includes(:category).where(user_id: current_user.id)
     @journeys = journeys.map { |j| JourneyPresenter.new(j) }
   end
@@ -11,7 +12,7 @@ class DashboardController < ApplicationController
     require "dsi/client"
     dsi_client = ::Dsi::Client.new
     # Your details
-    @user = current_user
+    @user = UserPresenter.new(current_user)
     # make "BuyForYourSchool" DSI admin users visible
     @users = dsi_client.users
     # For developers, use with Postman
