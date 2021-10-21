@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add initial models for supported case management functions
 - add unique 6 digit ref for cases starting with 000001
 - add service to create SupportCases from SupportEnquiries
+- add ability for agent to resolve a case with notes
 
 ### Specify Unreleased
 
