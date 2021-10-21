@@ -30,14 +30,14 @@ RSpec.describe Support::CasePresenter do
   end
 
   describe "#received_at" do
-    it "is formatted" do
-      expect(presenter.received_at).to eq("30 January 2000")
+    it "returns the formatted date on which the case was received" do
+      expect(presenter.received_at).to eq("30 January 2000 at 12:00")
     end
   end
 
   describe "#last_updated_at" do
-    it "is formatted" do
-      expect(presenter.last_updated_at).to eq("30 January 2000")
+    it "returns the formatted date on which the case was last updated" do
+      expect(presenter.last_updated_at).to eq("30 January 2000 at 12:00")
     end
   end
 
@@ -58,6 +58,12 @@ RSpec.describe Support::CasePresenter do
       # FIXME: swap once CategoryPresenter is being used and namespace loads in the suite
       expect(presenter.category).to be_a(CategoryPresenter)
       # expect(presenter.category).to be_a(Support::CategoryPresenter)
+    end
+  end
+
+  describe "#enquiry" do
+    it "returns a decorated enquiry" do
+      expect(presenter.enquiry).to be_a(Support::EnquiryPresenter)
     end
   end
 end

@@ -18,7 +18,7 @@ RSpec.feature "Case worker authentication" do
   end
 
   context "when the agent is not whitelisted" do
-    let(:org_name) { "Not in the ProcOps team" }
+    let(:user) { build(:user) }
 
     it "fails to gain access" do
       click_button "Agent Login"

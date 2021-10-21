@@ -8,24 +8,21 @@ RSpec.feature "Radio Question" do
 
       choose "Catering"
 
-      # It should not create a label when one isn't specified
-      expect(page).not_to have_text "No_further_information"
+      # It should not create a label when one isn't specified.
+      expect(page).not_to have_text "No further information"
 
-      within "span.govuk-visually-hidden" do
-        # Default the hidden label to something understandable for screen readers
-        expect(page).to have_text "Optional further information"
-      end
+      # Default the hidden label to something understandable for screen readers
+      expect(find("span.govuk-visually-hidden")).to have_text "Optional further information"
 
       fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
 
       click_continue
 
       click_first_link_in_section_list
-
-      expect(page).to have_checked_field "Catering"
-
-      answer = find_field("answer-catering-further-information-field").value
-      expect(answer).to eql "The school needs the kitchen cleaned once a day"
+      expect(find("form.edit_answer")).to have_checked_field "Catering"
+      within(all("div.govuk-form-group")[1]) do
+        expect(find("input.govuk-input")[:value]).to eq "The school needs the kitchen cleaned once a day"
+      end
     end
   end
 
@@ -62,9 +59,7 @@ RSpec.feature "Radio Question" do
       start_journey_from_category(category: "radio-question-with-separator.json")
       click_first_link_in_section_list
 
-      within ".govuk-radios__divider" do
-        expect(page).to have_text "or"
-      end
+      expect(find("div.govuk-radios__divider")).to have_text "or"
 
       # TODO: this test needs to be written better
       #

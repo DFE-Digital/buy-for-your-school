@@ -72,5 +72,6 @@ RSpec.feature "Completed support requests" do
 
     visit "/support-requests/#{support_request.id}"
     expect(page).not_to have_button "Send request"
+    expect(page).not_to have_link "Change"
   end
 end

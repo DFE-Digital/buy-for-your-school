@@ -26,18 +26,21 @@ module Notify
     # @param client [Notifications::Client] API interface
     option :client, default: proc { Notifications::Client.new(ENV["NOTIFY_API_KEY"]) }
 
+    # @see https://www.notifications.service.gov.uk/services/<UUID>/templates
+    #
+    # @param template [String] Template by name
+    option :template, Types::String, default: proc { "Default" }
+
+    # @param variables [Hash] Additional template variables
+    option :variables, Types::Hash, default: proc { {} }
+
     # This reference identifies a single unique notification or a batch of notifications.
     # It must not contain any personal information such as name or postal address.
     #
-    # @param client [String] A unique identifier you can create if necessary
+    # @param reference [String] A unique identifier you can create if necessary
     option :reference, Types::String, default: proc { "generic" }
 
-    # @see https://www.notifications.service.gov.uk/services/<UUID>/templates
-    #
-    # @param client [String] Template by name
-    option :template, Types::String, default: proc { "Default" }
-
-    # @param client [String] Attachment by path to file
+    # @param attachment [String] Attachment by path to file
     option :attachment, Types::String, optional: true
 
     # Send message and rescue from errors
@@ -65,6 +68,7 @@ module Notify
         # `email_reply_to_id` can be omitted if the service only has one email
         # reply-to address, or you want to use the default email address.
         #
+        # default: GHBFS-SchoolsBuying.DEV@education.gov.uk
         email_reply_to_id: "3dc99d12-6b8a-4fc1-975b-a6b0e70de80b",
         email_address: recipient.email,
         template_id: template_id,
@@ -90,12 +94,14 @@ module Notify
     #
     # snake_case underscores can be omitted
     #
-    # @return [Hash] Keys are substituted in the template
-    #
+    # @return [Hash<Symbol>] Keys are substituted in the template
     def template_params
       {
+        reference: reference,
         first_name: recipient.first_name,
         last_name: recipient.last_name,
+        email: recipient.email,
+        **variables,
       }
     end
 

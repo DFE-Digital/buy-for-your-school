@@ -12,7 +12,7 @@ options = {
   discovery: true,
   response_type: :code,
   issuer: dfe_sign_in_issuer_url,
-  scope: %i[openid email profile organisationid],
+  scope: %i[openid email profile],
   client_auth_method: :client_secret_post,
   client_options: {
     port: dfe_sign_in_issuer_uri.port,

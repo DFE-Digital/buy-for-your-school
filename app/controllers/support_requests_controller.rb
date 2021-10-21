@@ -61,7 +61,7 @@ class SupportRequestsController < ApplicationController
       else
         support_request.update!(**support_request.attributes.symbolize_keys, **@support_form.to_h)
 
-        redirect_to support_request_path(support_request), notice: I18n.t("support_requests.flash.updated")
+        redirect_to support_request_path(support_request), notice: I18n.t("support_request.flash.updated")
       end
 
     else

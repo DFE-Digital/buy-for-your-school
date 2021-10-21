@@ -4,13 +4,16 @@ module Support
     before_action :agent, only: %i[update]
 
     def index
-      @cases = Case.all.map { |c| CasePresenter.new(c) }
+      @cases = Case.includes(%i[agent interactions]).all.map { |c| CasePresenter.new(c) }
     end
 
-    def show; end
+    def show
+      @back_url = support_cases_path
+    end
 
     def edit
       @agents = Agent.all.map { |a| AgentPresenter.new(a) }
+      @back_url = support_cases_path(current_case)
     end
 
     def update
