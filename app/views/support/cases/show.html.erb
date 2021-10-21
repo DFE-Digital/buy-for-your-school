@@ -75,7 +75,7 @@
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.case.label.resolve"), "#", class: "govuk-link" %>
+      <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
     </li>
   <% end %>
 </ul>

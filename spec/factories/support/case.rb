@@ -9,6 +9,14 @@ FactoryBot.define do
     association :category, factory: :support_category
     sub_category_string { "category subtitle" }
 
+    trait :open do
+      state { :open }
+    end
+
+    trait :resolved do
+      state { :resolved }
+    end
+
     trait :with_documents do
       transient do
         document_count { 1 }

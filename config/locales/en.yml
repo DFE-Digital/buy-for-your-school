@@ -276,6 +276,14 @@ en:
         new_cases: New cases
         all_cases: All cases
 
+    case_resolution:
+      flash:
+        created: Case resolved successfully
+      notes:
+        label: Resolve case
+        hint: Notes
+      submit: Save and close case
+
     interaction:
         header:
           type_of_contact: Type of contact
