@@ -1,0 +1,11 @@
+# config/validation/en.yml
+en:
+  forms:
+    rules:
+      notes: "" # Omitted
+
+    errors:
+      rules:
+        notes:
+          missing: Please enter some closing notes to resolve the case
+

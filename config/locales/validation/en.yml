@@ -22,14 +22,3 @@ en:
         category_id:
           no_spec: is required if you do not select an existing specification
 
-  # Supported ------------------------------------------------------------------
-
-  supported_forms:
-    rules:
-      notes: "" # Omitted
-
-    errors:
-      rules:
-        notes:
-          missing: Please enter some closing notes to resolve the case
-
