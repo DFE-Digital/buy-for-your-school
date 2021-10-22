@@ -78,7 +78,7 @@ private
 
   # @return [SupportRequest] restricted to the current user
   def support_request
-    @support_request = SupportRequest.where(user_id: current_user.id, id: params[:id]).first
+    @support_request = SupportRequestPresenter.new(SupportRequest.where(user_id: current_user.id, id: params[:id]).first)
   end
 
   # @return [SupportForm] form object populated with validation messages

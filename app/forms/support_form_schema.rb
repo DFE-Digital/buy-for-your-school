@@ -1,7 +1,3 @@
-require "dry/validation"
-
-Dry::Validation.load_extensions(:predicates_as_macros)
-
 #
 # Validate "support request" form details from a "school business professional"
 #

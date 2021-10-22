@@ -91,6 +91,7 @@ RSpec.feature "Answering questions" do
         click_update
 
         expect(find("span.govuk-error-message")).to have_text "can't be blank"
+        within(".govuk-error-summary") { expect(page).to have_text "can't be blank" }
       end
     end
 

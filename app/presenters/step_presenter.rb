@@ -1,4 +1,4 @@
-class StepPresenter < SimpleDelegator
+class StepPresenter < BasePresenter
   # Enable statement step to render in preview when it has no persisted Task
   #
   # @return [Task]

@@ -1,7 +1,7 @@
 require "types"
 require "dry-initializer"
 
-# Form object to handle creation of SupportRequests
+# @abstract Form Object for multi-step questionnaires
 #
 # @author Peter Hamilton
 #

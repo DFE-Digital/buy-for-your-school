@@ -1,0 +1,13 @@
+<%= form_with model: @case_resolution_form, scope: :case_resolution_form, url: support_case_resolution_path(@current_case) do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <div class="govuk-form-group">
+    <%= form.govuk_text_area :notes,
+      rows: 5,
+      label: { text: I18n.t("support.case_resolution.notes.label"), size: "l" },
+      hint: { text: I18n.t("support.case_resolution.notes.hint"), size: "l" }
+    %>
+
+    <%= form.submit I18n.t("support.case_resolution.submit"), class: "govuk-button", role: "button" %>
+  </div>
+<% end %>
