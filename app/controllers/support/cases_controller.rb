@@ -1,7 +1,6 @@
 module Support
   class CasesController < ApplicationController
-    before_action :current_case, only: %i[show edit update]
-    before_action :agent, only: %i[update]
+    before_action :current_case, only: %i[show]
 
     def index
       @cases = Case.includes(%i[agent interactions]).all.map { |c| CasePresenter.new(c) }
@@ -11,25 +10,10 @@ module Support
       @back_url = support_cases_path
     end
 
-    def edit
-      @agents = Agent.all.map { |a| AgentPresenter.new(a) }
-      @back_url = support_cases_path(current_case)
-    end
-
-    def update
-      UpdateCase.new(current_case, agent).call
-
-      redirect_to support_case_path(anchor: "case-history")
-    end
-
   private
 
     def current_case
       @current_case ||= CasePresenter.new(Case.find_by(id: params[:id]))
-    end
-
-    def agent
-      @agent ||= Agent.find_by(id: params.dig(:support_case, :agent))
     end
   end
 end

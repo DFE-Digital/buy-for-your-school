@@ -7,7 +7,7 @@ module Support
     end
 
     def create
-      @case_resolution_form = completed_case_resolution_form
+      @case_resolution_form = CaseResolutionForm.from_validation(validation)
 
       if validation.success? && !current_case.resolved?
         resolve_case
@@ -20,16 +20,11 @@ module Support
 
   private
 
-    def completed_case_resolution_form
-      CaseResolutionForm.new(messages: validation.errors(full: true).to_h, **validation.to_h)
-    end
-
     def resolve_case
       current_case.agent = nil
 
-      current_case.interactions.build(
+      current_case.interactions.note.build(
         body: "Case resolved: #{@case_resolution_form.notes}",
-        event_type: :note,
         agent_id: current_agent.id,
       )
 
