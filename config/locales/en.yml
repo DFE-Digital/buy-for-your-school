@@ -270,7 +270,6 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
-        assign: Assign
       list:
         not_found: No cases found
         my_cases: My cases
@@ -284,6 +283,13 @@ en:
         label: Resolve case
         hint: Notes
       submit: Save and close case
+
+    case_assignment:
+      flash:
+        created: Agent assigned to case successfully
+      agent_id:
+        label: Assign to case worker
+      submit: Assign
 
     interaction:
         header:
