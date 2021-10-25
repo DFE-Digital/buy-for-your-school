@@ -65,6 +65,10 @@ Rails.application.routes.draw do
     resources :agents, only: %i[create]
     resources :cases, only: %i[index show edit update] do
       resources :interactions, only: %i[new create]
+      scope module: :cases do
+        resource :resolution, only: %i[new create]
+        resource :assignment, only: %i[new create]
+      end
     end
     resources :schools, only: %i[show]
   end

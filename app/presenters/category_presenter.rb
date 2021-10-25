@@ -1,4 +1,4 @@
-class CategoryPresenter < SimpleDelegator
+class CategoryPresenter < BasePresenter
   # Downcased title that excludes acronyms
   #
   # @return [String]
