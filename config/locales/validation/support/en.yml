@@ -1,0 +1,17 @@
+# config/validation/en.yml
+en:
+  forms:
+    rules:
+      notes: "" # Omitted
+      agent_id: "" # Omitted
+
+    errors:
+      rules:
+        # Case resolution
+        notes:
+          missing: Please enter some closing notes to resolve the case
+
+        # Case assignment
+        agent_id:
+          missing: Please choose an agent to assign to the case
+
