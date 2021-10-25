@@ -1,0 +1,12 @@
+<%= form_with model: @case_assignment_form, scope: :case_assignment_form, url: support_case_assignment_path(@current_case) do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_collection_radio_buttons :agent_id,
+    @agents,
+    :id,
+    :full_name,
+    legend: { text: I18n.t("support.case_assignment.agent_id.label"), size: "l" }
+  %>
+
+  <%= form.submit I18n.t("support.case_assignment.submit"), class: "govuk-button" %>
+<% end %>
