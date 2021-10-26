@@ -66,6 +66,7 @@ en:
       no_organisation:
         page_title: You are not associated with an organisation
         link: log into your DfE Sign-In account and select your organisation.
+        url: 
         page_body:
           - "You need to be associated with an organisation before you can use this service. Please "
           - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
