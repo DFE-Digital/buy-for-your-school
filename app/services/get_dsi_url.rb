@@ -6,6 +6,9 @@ class GetDsiUrl
   option :domain, default: proc { "services" }, optional: true, reader: :private
   option :path, optional: true, reader: :private
 
+  # Get DSI URL for current environment
+  #
+  # @return [String]
   def call
     "https://#{env_prefix}#{domain}.signin.education.gov.uk/#{path}"
   end
