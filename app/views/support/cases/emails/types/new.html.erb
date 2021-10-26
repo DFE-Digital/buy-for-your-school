@@ -1,0 +1,16 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_email_type.header") %></h1>
+
+<%= form_with model: @case_email_type_form, scope: :case_email_type_form, url: support_case_email_type_path(@current_case) do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-label--m"><%= I18n.t("support.case_email_type.legend") %></legend>
+
+    <div class="govuk-form-group">
+      <%= form.govuk_radio_button :choice, :template, label: { text: I18n.t("support.case_email_type.choices.template") } %>
+      <%= form.govuk_radio_button :choice, :basic, label: { text: I18n.t("support.case_email_type.choices.non_template") } %>
+    </div>
+  </fieldset>
+
+  <%= form.submit I18n.t("support.case_email_type.submit"), class: "govuk-button", role: "button" %>
+<% end %>
