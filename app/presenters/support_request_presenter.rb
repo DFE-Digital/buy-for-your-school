@@ -3,12 +3,10 @@
 class SupportRequestPresenter < SimpleDelegator
   # The name of the school that matches the chosen school URN
   #
-  # @return [String] the name of the school or None
-  def selected_school_name_or_none
-    return "None" if school_urn.blank?
-
+  # @return [String] the name of the school
+  def selected_school
     found_school = user.supported_schools.find { |school| school.urn == school_urn }
-    found_school&.name || "None"
+    found_school.name
   end
 
   # return [JourneyPresenter, nil]

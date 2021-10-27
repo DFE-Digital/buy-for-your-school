@@ -84,14 +84,6 @@ RSpec.feature "Edit an unsubmitted support request" do
       end
     end
 
-    context "when user has not selected a school" do
-      it "shows None" do
-        within "#support-request-school" do
-          expect(page).to have_content("None")
-        end
-      end
-    end
-
     it "allows editing of the school" do
       click_link "edit-school"
 

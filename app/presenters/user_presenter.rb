@@ -1,12 +1,4 @@
 class UserPresenter < SimpleDelegator
-  # represent and hold the data for an organisation
-  class SupportedOrganisation
-    extend Dry::Initializer
-
-    option :name
-    option :urn
-  end
-
   # @return [Array<JourneyPresenter>]
   def active_journeys
     journeys.initial.map { |j| JourneyPresenter.new(j) }
@@ -18,7 +10,7 @@ class UserPresenter < SimpleDelegator
   def supported_schools
     return [] unless valid_supported_orgs.any?
 
-    valid_supported_orgs.map { |org| SupportedOrganisation.new(**org.symbolize_keys) }
+    valid_supported_orgs.map { |org| OpenStruct.new(**org.symbolize_keys) }
   end
 
   # @return [String]
