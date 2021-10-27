@@ -1,20 +1,21 @@
 require "dry-initializer"
 
-# Get DSI URL for current environment
-#
-# @return [String]
+# Generate Dfe Sign In URLs for the active environment:
+# test, pre-production, production
 class GetDsiUrl
   extend Dry::Initializer
 
   option :domain, default: proc { "services" }, reader: :private
   option :path, optional: true, reader: :private
 
+  # @return [String] HTTPS url
   def call
     "https://#{env_prefix}#{domain}.signin.education.gov.uk/#{path}"
   end
 
 private
 
+  # @return [String] ENV prefix
   def env_prefix
     @env_prefix = {
       production: nil,
