@@ -42,7 +42,7 @@
     <% end %>
 
       <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions %>
-      <%= render "support/cases/case_history/enquiry", enquiry: @current_case.enquiry %>
+      <%= render "support/cases/case_history/support_request", support_request: @current_case.support_request unless @current_case.support_request.blank?  %>
     </div>
   </div>
 </div>

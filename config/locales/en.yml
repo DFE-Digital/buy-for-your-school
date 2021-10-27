@@ -338,7 +338,7 @@ en:
           email_from_school: Email from school
           email_to_school: Email to school
           note: Case note
-          request_for_support: Request for support
+          support_request: Request for support
         label:
           contact_detail: Contact details
           contact_detail_hint: Add details of the phone call or copy and paste the email here

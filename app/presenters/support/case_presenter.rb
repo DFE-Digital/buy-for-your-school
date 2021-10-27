@@ -3,6 +3,7 @@
 require_relative "interaction_presenter"
 require_relative "contact_presenter"
 require_relative "category_presenter"
+require_relative "agent_presenter"
 
 module Support
   class CasePresenter < BasePresenter
@@ -22,7 +23,7 @@ module Support
 
     # @return [String]
     def request_text
-      "I've completed a specification, but I'm not sure what to do with it now. How do I contact suppliers?"
+      super.strip.chomp
     end
 
     # @return [String] 30 January 2000 at 12:00
@@ -35,9 +36,16 @@ module Support
       interactions.present? ? interactions&.last&.created_at : created_at
     end
 
+    # return interactions excluding the event_type of support_request
     # @return [Array<InteractionPresenter>]
     def interactions
-      @interactions ||= super.map { |i| InteractionPresenter.new(i) }
+      @interactions ||= super.not_support_request.map { |i| InteractionPresenter.new(i) }
+    end
+
+    # return single interaction of support_request event_type
+    # @return [nil, InteractionPresenter]
+    def support_request
+      InteractionPresenter.new(super)
     end
 
     # @return [nil, AgentPresenter]

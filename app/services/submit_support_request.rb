@@ -35,7 +35,7 @@ class SubmitSupportRequest
   #
   # @return [nil, Notifications::Client::ResponseNotification]
   def call
-    return false unless enquiry
+    return false unless kase
 
     # TODO: confirmation message body forms the first CM interaction
     # email = Emails::Confirmation.new().call
@@ -54,8 +54,10 @@ class SubmitSupportRequest
 
 private
 
-  # @return [String] snapshot of specification HTML
+  # @return [nil, String] snapshot of specification HTML
   def document_body
+    return nil unless request.journey
+
     SpecificationRenderer.new(journey: request.journey, to: :html).call
   end
 
@@ -64,33 +66,30 @@ private
     request.journey ? request.journey.category.slug : request.category.slug
   end
 
+  def user
+    User.find(request.user_id)
+  end
+
   # API (draft) ----------------------------------------------------------------
 
-  # @return [Support::Enquiry] TODO: Move into inbound API
-  def enquiry
-    enquiry = Support::Enquiry.new(
-      support_request_id: request.id,
-      name: request.user.full_name,
-      email: request.user.email,
-      telephone: request.phone_number,
-      message: request.message_body,
-      category: category,
-      # TODO: include unique identifier for school
-    )
-
-    enquiry.documents << document if request.journey
-    enquiry.save!
-  end
-
-  # @return [Support::Support] TODO: Move into inbound API
+  # @return [Support::Case] TODO: Move into inbound API
   def kase
-    kase = Support::Interaction.new()
-  end
+    kase = Support::Case.create!(request_text: request.message_body)
 
+    Support::Interaction.create!({  case: kase,
+                                    event_type: 4,
+                                    additional_data:
+      { "support_request_id": request.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+        "phone_number": request.phone_number,
+        "category": category,
+        "message": request.message_body,
+        "documents": [
+          { "file_type": "html_markup", "document_body": document_body },
+        ] } })
 
-
-  # @return [Support::Document] TODO: Move into inbound API
-  def document
-    Support::Document.new(file_type: "HTML attachment", document_body: document_body)
+    kase
   end
 end

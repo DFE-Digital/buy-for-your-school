@@ -48,6 +48,11 @@ module Support
       self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
     end
 
+    # @return [Array, Support::Interaction]
+    def support_request
+      interactions&.support_request&.first
+    end
+
     # TODO: Replace with ActiveRecord association
     # This is going to be renamed to "Buyer" and represents the
     # School (SBP) that case workers interact with via cases.
