@@ -5,7 +5,15 @@ require "dry-initializer"
 class GetDsiUrl
   extend Dry::Initializer
 
+  # @!attribute domain
+  #   @return [String]
+  #   @default `"services"`
+  #   @api private
   option :domain, default: proc { "services" }, reader: :private
+
+  # @!attribute path
+  #   @return [String]
+  #   @api private
   option :path, optional: true, reader: :private
 
   # @return [String] HTTPS url
