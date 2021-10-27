@@ -16,6 +16,9 @@ RSpec.describe WarmEntryCacheJob, type: :job do
   end
 
   describe ".perform_later" do
+    let(:catering_fixture_multiple_entries) { "journey-with-multiple-entries" }
+    let(:catering_fixture_repeat_entries) { "journey-with-repeat-entries" }
+
     it "enqueues a job asynchronously on the caching queue" do
       expect {
         described_class.perform_later
@@ -24,7 +27,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
     it "iterates over the Contentful categories" do
       stub_multiple_contentful_categories(category_fixtures: [
-        "journey-with-multiple-entries.json",
+        catering_fixture_multiple_entries,
       ])
 
       described_class.perform_later
@@ -42,7 +45,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
     context "when the journey order cannot be built due to an entry being repeated" do
       it "does not add new items to the cache" do
         stub_multiple_contentful_categories(category_fixtures: [
-          "journey-with-repeat-entries.json",
+          catering_fixture_repeat_entries,
         ])
 
         allow_any_instance_of(GetStepsFromTask)
@@ -57,7 +60,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
 
       it "raises an error to the team via Rollbar to indicate an issue" do
         stub_multiple_contentful_categories(category_fixtures: [
-          "journey-with-repeat-entries.json",
+          catering_fixture_repeat_entries,
         ])
 
         allow_any_instance_of(GetStepsFromTask)
@@ -80,7 +83,7 @@ RSpec.describe WarmEntryCacheJob, type: :job do
         RedisCache.redis.expire("contentful:entry:radio-question", default_caching_ttl)
 
         stub_multiple_contentful_categories(category_fixtures: [
-          "journey-with-repeat-entries.json",
+          catering_fixture_repeat_entries,
         ])
 
         allow_any_instance_of(GetStepsFromTask)

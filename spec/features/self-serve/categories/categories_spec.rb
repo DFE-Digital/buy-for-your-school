@@ -35,9 +35,10 @@ RSpec.feature "Categories page" do
   describe "as an authenticated user" do
     let(:user) { create(:user) }
     let(:created_at) { Time.zone.local(2021, 2, 15, 12, 0, 0) }
+    let(:mfd_fixture) { "mfd-radio-question" }
 
     before do
-      stub_multiple_contentful_categories(category_fixtures: ["mfd-radio-question.json"])
+      stub_multiple_contentful_categories(category_fixtures: [mfd_fixture])
       user_is_signed_in(user: user)
     end
 
