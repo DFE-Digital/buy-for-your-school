@@ -26,19 +26,23 @@ RSpec.feature "Users can view the task list" do
     context "when that step becomes visible" do
       before do
         task_1 = create(:task, title: "One additional question task", section: section)
-        create(:step, :radio, title: "What support do you have available?", task: task_1,
-          options: [
-            { "value" => "School expert", 
-              "display_further_information" => true, 
-              "further_information_help_text" => "Explain why this is the case" }, 
-            { "value" => "External expert" }, { "value" => "none" }
-            ], additional_step_rules: [
-              { "required_answer" => "School expert", 
-                "question_identifiers" => %w[1] }
-            ], 
-            contentful_id: 0,
-            order: 0
-          )
+        create(
+          :step,
+          :radio,
+          title: "What support do you have available?",
+          task: task_1,
+          options:
+          [{ "value" => "School expert",
+             "display_further_information" => true,
+             "further_information_help_text" => "Explain why this is the case" },
+           { "value" => "External expert" },
+           { "value" => "none" }],
+          additional_step_rules:
+          [{ "required_answer" => "School expert",
+             "question_identifiers" => %w[1] }],
+          contentful_id: 0,
+          order: 0,
+        )
         create(:step, :radio, title: "What colour is the sky?", task: task_1, hidden: true, contentful_id: 1, order: 1)
         create(:step, :radio, title: "What email address did you use?", task: task_1, contentful_id: 2, order: 2)
 
@@ -87,15 +91,16 @@ RSpec.feature "Users can view the task list" do
         end
       end
     end
-  end 
+  end
 
-  context "when a section has only hidden tasks" do 
-    before do 
+  context "when a section has only hidden tasks" do
+    before do
       task_1 = create(:task, title: "Hidden field task", section: section)
       create(:step, :radio, title: "Hidden field", task: task_1, hidden: true)
-      
+
       visit "/journeys/#{journey.id}"
     end
+
     it "shows the section title" do
       within(".app-task-list") do
         expect(page).to have_content "section a"
@@ -103,7 +108,7 @@ RSpec.feature "Users can view the task list" do
     end
 
     it "shows an empty section" do
-      expect(find("ul.app-task-list__items")).to have_selector('li', count:0)
+      expect(find("ul.app-task-list__items")).to have_selector("li", count: 0)
     end
-  end 
+  end
 end

@@ -4,13 +4,13 @@ RSpec.feature "Users can view the task list" do # journeys#show
   let(:journey) { create(:journey, user: user, category: category) }
   let(:section_a) { create(:section, title: "Section A", journey: journey) }
   let(:section_b) { create(:section, title: "Section B", journey: journey) }
+  let!(:task_radio) { create(:task, title: "Radio task", section: section_a) }
 
-  let!(:task_radio) { create(:task, title: "Radio task", section: section_a)} 
-  let!(:task_long_text) { create(:task, :with_steps, title: "Long text task", section: section_b)} 
-  let!(:step_one) { create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], task: task_radio, order: 0) }
-  let!(:step_two) { create(:step, :short_text, title: "What email address did you use?", task: task_radio, order: 1) }
-  let!(:step_three) { create(:step, :long_text, title: "Describe what you need", task: task_radio, order: 2) }
-  let!(:step_four) { create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [ { "value" => "Breakfast" } ], task: task_radio, order: 3) }
+  create(:task, :with_steps, title: "Long text task", section: section_b)
+  create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_radio, order: 0)
+  create(:step, :short_text, title: "What email address did you use?", task: task_radio, order: 1)
+  create(:step, :long_text, title: "Describe what you need", task: task_radio, order: 2)
+  create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_radio, order: 3)
 
   before do
     user_is_signed_in(user: user)
@@ -62,11 +62,6 @@ RSpec.feature "Users can view the task list" do # journeys#show
   end
 
   context "when a task has multiple steps" do
-    # let(:fixture) { "section-with-multiple-tasks.json" }
-    before do
-      # create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], task: task_radio, order: 0)
-    end
-
     it "shows the section title" do
       within(".app-task-list") do
         expect(page).to have_content "Section A" # > multiple_tasks_section.json
