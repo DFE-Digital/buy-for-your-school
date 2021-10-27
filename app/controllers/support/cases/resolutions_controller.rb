@@ -1,7 +1,5 @@
 module Support
-  class Cases::ResolutionsController < ApplicationController
-    before_action :current_case
-
+  class Cases::ResolutionsController < Cases::ApplicationController
     def new
       @case_resolution_form = CaseResolutionForm.new
     end
@@ -37,10 +35,6 @@ module Support
 
     def case_resolution_form_params
       params.require(:case_resolution_form).permit(:notes)
-    end
-
-    def current_case
-      @current_case ||= Case.find_by(id: params[:case_id])
     end
   end
 end
