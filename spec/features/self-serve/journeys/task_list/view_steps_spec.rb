@@ -4,18 +4,16 @@ RSpec.feature "Users can view the task list" do # journeys#show
   let(:journey) { create(:journey, user: user, category: category) }
   let(:section_a) { create(:section, title: "Section A", journey: journey) }
   let(:section_b) { create(:section, title: "Section B", journey: journey) }
-  let!(:task_radio) { create(:task, title: "Radio task", section: section_a) }
 
-  create(:task, :with_steps, title: "Long text task", section: section_b)
-  create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_radio, order: 0)
-  create(:step, :short_text, title: "What email address did you use?", task: task_radio, order: 1)
-  create(:step, :long_text, title: "Describe what you need", task: task_radio, order: 2)
-  create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_radio, order: 3)
-
+  let!(:task_radio) { create(:task, title: "Radio task", section: section_a)} 
+  let!(:task_long_text) { create(:task, :with_steps, title: "Long text task", section: section_b)} 
+  let!(:step_one) { create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], task: task_radio, order: 0) }
+  let!(:step_two) { create(:step, :short_text, title: "What email address did you use?", task: task_radio, order: 1) }
+  let!(:step_three) { create(:step, :long_text, title: "Describe what you need", task: task_radio, order: 2) }
+  let!(:step_four) { create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [ { "value" => "Breakfast" } ], task: task_radio, order: 3) }
+  
   before do
     user_is_signed_in(user: user)
-    # TODO: replace fixture with factory
-    # start_journey_from_category(category: fixture)
     visit "/journeys/#{journey.id}"
   end
 
@@ -53,7 +51,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
     it "user can navigate back to the task list from a step" do
       within(".app-task-list") do
-        click_on "Radio task" # > checkboxes_task.json
+        click_on "Long text task" # > checkboxes_task.json
       end
 
       click_back
@@ -135,8 +133,8 @@ RSpec.feature "Users can view the task list" do # journeys#show
       click_continue
 
       check "Breakfast"
-      click_continue
-
+      click_continue  # error clicking 'Continue'
+      
       expect(page).to have_content "Radio task"
       within(".govuk-summary-list") do
         expect(page).to have_content "Catering"
