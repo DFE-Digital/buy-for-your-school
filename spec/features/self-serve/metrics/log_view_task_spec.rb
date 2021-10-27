@@ -1,11 +1,18 @@
 RSpec.feature "User task actions are recorded" do
   let(:user) { create(:user) }
-  let(:fixture) { "section-with-multiple-tasks.json" }
+  # let(:fixture) { "section-with-multiple-tasks.json" }
+  let(:category) { create(:category, :catering) }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section) { create(:section, title: "Catering", journey: journey) }
+
+  let!(:task_checkbox) { create(:task, title: "Task with a single step", section: section)} 
+  let!(:task_checkbox_and_radio) { create(:task, title: "Task with multiple steps", section: section)} 
 
   before do
     user_is_signed_in(user: user)
     # TODO: replace fixture with factory
-    start_journey_from_category(category: fixture)
+    # start_journey_from_category(category: fixture)
+    visit "/journeys/#{journey.id}"
   end
 
   context "when there is a task with multiple steps" do
@@ -14,6 +21,7 @@ RSpec.feature "User task actions are recorded" do
       expect(page).to have_a_journey_path
 
       within(".app-task-list") do
+        pp page.source
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
 
