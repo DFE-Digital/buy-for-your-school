@@ -7,7 +7,6 @@ class GetDsiUrl
 
   # @!attribute domain
   #   @return [String]
-  #   @default `"services"`
   #   @api private
   option :domain, default: proc { "services" }, reader: :private
 
