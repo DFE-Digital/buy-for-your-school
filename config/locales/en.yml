@@ -191,6 +191,7 @@ en:
   # /support-requests
   support_request:
     link: Request free help and support with your specification
+    unsupported_school: You are no longer a member of a supported school.
     flash:
       created: Support request created
       updated: Support request updated
@@ -229,8 +230,6 @@ en:
         A copy of the specification you choose will be sent to us with this request in its current state.
         We will not receive any new changes you make.
       message: Briefly describe your problem in a few sentences.
-    suggestion:
-      school: If your school is not listed, then select another school.
     button:
       send: Send request
 

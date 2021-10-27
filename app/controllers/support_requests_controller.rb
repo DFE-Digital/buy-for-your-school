@@ -23,9 +23,34 @@ class SupportRequestsController < ApplicationController
     @support_form = form
 
     if validation.success? && validation.to_h[:message_body]
-      create_and_redirect_to_support_request
+      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
+      redirect_to support_request_path(support_request)
+
     elsif validation.success?
-      navigate_through_form(@support_form)
+
+      if @support_form.step == 1 && current_user.supported_schools.one?
+        # URN can be inferred
+        @support_form = SupportForm.new(school_urn: current_user.school_urn, **@support_form.to_h)
+
+        if current_user.active_journeys.any?
+          # phone (1) -> journey (3)
+          @support_form.advance!(2)
+        else
+          # phone (1) -> category (4)
+          @support_form.advance!(3)
+        end
+
+      # org (2) -> category (4)
+      elsif @support_form.step == 2 && current_user.active_journeys.none?
+        @support_form.advance!(2)
+
+      # journey (3) -> message (5)
+      elsif @support_form.step == 3 && @support_form.has_journey?
+        @support_form.advance!(2)
+
+      else
+        @support_form.advance!
+      end
 
       render :new
     else
@@ -61,42 +86,6 @@ class SupportRequestsController < ApplicationController
 
 private
 
-  # TODO: replace this logic when more suitable mechanism is merged
-  # NOTE: reek ignores added, multiple calls were necessary - this will be refactored
-  # upon merging of MultiStepForm
-  def navigate_through_form(support_form)
-    # :reek:FeatureEnvy
-    if support_form.step == 1 && supported_schools.size == 1
-      # :reek:DuplicateMethodCall
-      support_form.advance!
-    end
-
-    # :reek:FeatureEnvy
-    if support_form.step == 2 && current_user.journeys.none?
-      # :reek:DuplicateMethodCall
-      support_form.advance!
-    end
-
-    # :reek:FeatureEnvy
-    if support_form.step == 3 && support_form.has_journey?
-      # :reek:DuplicateMethodCall
-      support_form.advance!
-    end
-
-    # :reek:DuplicateMethodCall
-    support_form.advance!
-  end
-
-  def create_and_redirect_to_support_request
-    support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
-
-    if support_request.school_urn.blank? && supported_schools.size == 1
-      support_request.update!(school_urn: supported_schools.first.urn)
-    end
-
-    redirect_to support_request_path(support_request)
-  end
-
   # @return [UserPresenter] adds form view logic
   def current_user
     @current_user = UserPresenter.new(super)
@@ -121,9 +110,5 @@ private
     params.require(:support_form).permit(*%i[
       step phone_number journey_id category_id message_body school_urn
     ])
-  end
-
-  def supported_schools
-    @supported_schools ||= current_user.supported_schools
   end
 end
