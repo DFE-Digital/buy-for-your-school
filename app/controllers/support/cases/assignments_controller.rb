@@ -1,6 +1,6 @@
 module Support
-  class Cases::AssignmentsController < ApplicationController
-    before_action :current_case, :load_agents, :set_back_url
+  class Cases::AssignmentsController < Cases::ApplicationController
+    before_action :load_agents, :set_back_url
 
     def new
       @case_assignment_form = CaseAssignmentForm.new
@@ -47,10 +47,6 @@ module Support
 
     def load_agents
       @agents = Agent.all.map { |a| AgentPresenter.new(a) }.sort_by(&:full_name)
-    end
-
-    def current_case
-      @current_case ||= Case.find_by(id: params[:case_id])
     end
   end
 end
