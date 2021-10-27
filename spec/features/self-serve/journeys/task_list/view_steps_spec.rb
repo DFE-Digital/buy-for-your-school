@@ -1,11 +1,22 @@
 RSpec.feature "Users can view the task list" do # journeys#show
   let(:user) { create(:user) }
-  let(:fixture) { "multiple-sections.json" }
+  let(:category) { create(:category, :catering) }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section_a) { create(:section, title: "Section A", journey: journey) }
+  let(:section_b) { create(:section, title: "Section B", journey: journey) }
+
+  let!(:task_radio) { create(:task, title: "Radio task", section: section_a)} 
+  let!(:task_long_text) { create(:task, :with_steps, title: "Long text task", section: section_b)} 
+  let!(:step_one) { create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], task: task_radio, order: 0) }
+  let!(:step_two) { create(:step, :short_text, title: "What email address did you use?", task: task_radio, order: 1) }
+  let!(:step_three) { create(:step, :long_text, title: "Describe what you need", task: task_radio, order: 2) }
+  let!(:step_four) { create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [ { "value" => "Breakfast" } ], task: task_radio, order: 3) }
 
   before do
     user_is_signed_in(user: user)
     # TODO: replace fixture with factory
-    start_journey_from_category(category: fixture)
+    # start_journey_from_category(category: fixture)
+    visit "/journeys/#{journey.id}"
   end
 
   it { expect(page).to have_a_journey_path }
@@ -38,11 +49,11 @@ RSpec.feature "Users can view the task list" do # journeys#show
   end
 
   context "when a task has one step" do
-    let(:fixture) { "section-with-single-task.json" }
+    # let(:fixture) { "section-with-single-task.json" }
 
     it "user can navigate back to the task list from a step" do
       within(".app-task-list") do
-        click_on "Task with a single step" # > checkboxes_task.json
+        click_on "Radio task" # > checkboxes_task.json
       end
 
       click_back
@@ -51,23 +62,26 @@ RSpec.feature "Users can view the task list" do # journeys#show
   end
 
   context "when a task has multiple steps" do
-    let(:fixture) { "section-with-multiple-tasks.json" }
+    # let(:fixture) { "section-with-multiple-tasks.json" }
+    before do
+      # create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], task: task_radio, order: 0)
+    end
 
     it "shows the section title" do
       within(".app-task-list") do
-        expect(page).to have_content "Section with multiple tasks" # > multiple_tasks_section.json
+        expect(page).to have_content "Section A" # > multiple_tasks_section.json
       end
     end
 
     it "shows the task titles within the section" do
       within(".app-task-list") do
-        expect(page).to have_content "Task with multiple steps" # > checkboxes_and_radio_task.json
+        expect(page).to have_content "Radio task" # > checkboxes_and_radio_task.json
       end
     end
 
     it "the Task title takes you to the first step" do
       within(".app-task-list") do
-        click_on "Task with multiple steps" # > checkboxes_and_radio_task.json
+        click_on "Radio task" # > checkboxes_and_radio_task.json
       end
 
       expect(page).to have_content "Which service do you need?"
@@ -76,7 +90,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
     it "user can navigate back to the task list from a list of questions" do
       # straight to first step
       within ".app-task-list" do
-        click_on "Task with multiple steps" # > checkboxes_and_radio_task.json
+        click_on "Radio task" # > checkboxes_and_radio_task.json
       end
 
       # list of steps
@@ -90,7 +104,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
     it "shows a list of the task steps" do
       within(".app-task-list") do
-        click_on "Task with multiple steps" # > checkboxes_and_radio_task.json
+        click_on "Radio task" # > checkboxes_and_radio_task.json
       end
 
       # Unstarted tasks take the user straight to the first step so we have to go back
@@ -102,7 +116,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
     it "allows the user to click on a step to supply an answer, and be taken to the next step" do
       within(".app-task-list") do
-        click_on "Task with multiple steps" # > checkboxes_and_radio_task.json
+        click_on "Radio task" # > checkboxes_and_radio_task.json
       end
 
       choose "Catering"
@@ -113,7 +127,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
     it "allows the user to click on a step to supply the last answer in a task, and be taken to the check your answers page" do
       within(".app-task-list") do
-        click_on "Task with multiple steps" # > checkboxes_and_radio_task.json
+        click_on "Radio task" # > checkboxes_and_radio_task.json
       end
 
       choose "Catering"
@@ -128,7 +142,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
       check "Breakfast"
       click_continue
 
-      expect(page).to have_content "Task with multiple steps"
+      expect(page).to have_content "Radio task"
       within(".govuk-summary-list") do
         expect(page).to have_content "Catering"
       end
@@ -136,15 +150,15 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
     context "when a task has at least one answered step" do
       it "takes the user to the task page" do
-        task = Task.find_by(title: "Task with multiple steps")
+        task = Task.find_by(title: "Radio task")
         step = task.steps.first
         create(:radio_answer, step: step)
 
         within(".app-task-list") do
-          click_on "Task with multiple steps" # > checkboxes_and_radio_task.json
+          click_on "Radio task" # > checkboxes_and_radio_task.json
         end
 
-        expect(page).to have_content "Task with multiple steps"
+        expect(page).to have_content "Radio task"
         expect(page).to have_content "Which service do you need?"
       end
     end
