@@ -19,7 +19,7 @@ module ContentfulHelpers
 
     contentful_array = instance_double(Contentful::Array)
     contentful_categories = category_fixtures.map do |fixture|
-      stub_contentful_category(fixture_filename: fixture, client: client)
+      stub_contentful_category(fixture_filename: fixture.concat(".json"), client: client)
     end
 
     iterator = allow(contentful_array).to receive(:each)
