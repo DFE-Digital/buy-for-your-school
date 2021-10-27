@@ -1,14 +1,14 @@
 require "dry-initializer"
 
+# Get DSI URL for current environment
+#
+# @return [String]
 class GetDsiUrl
   extend Dry::Initializer
 
-  option :domain, default: proc { "services" }, optional: true, reader: :private
+  option :domain, default: proc { "services" }, reader: :private
   option :path, optional: true, reader: :private
 
-  # Get DSI URL for current environment
-  #
-  # @return [String]
   def call
     "https://#{env_prefix}#{domain}.signin.education.gov.uk/#{path}"
   end
