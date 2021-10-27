@@ -88,7 +88,7 @@ private
   end
 
   def create_and_redirect_to_support_request
-    support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
+    support_request = SupportRequest.create!(user_id: current_user.id, **validation_attributes.to_h)
 
     if support_request.school_urn.blank? && supported_schools.size == 1
       support_request.update!(school_urn: supported_schools.first.urn)
@@ -109,12 +109,17 @@ private
 
   # @return [SupportForm] form object populated with validation messages
   def form
-    SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
+    SupportForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation_attributes.to_h)
   end
 
   # @return [SupportFormSchema] validated form input
   def validation
     SupportFormSchema.new.call(**form_params)
+  end
+
+  # @return [Hash] SupportFormSchema attributes
+  def validation_attributes
+    validation.to_h.except(:step)
   end
 
   def form_params

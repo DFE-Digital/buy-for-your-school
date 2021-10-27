@@ -18,6 +18,7 @@ class SupportFormSchema < Dry::Validation::Contract
     optional(:journey_id).value(:string)    # step 3
     optional(:category_id).value(:string)   # step 4
     optional(:message_body).value(:string)  # step 5
+    optional(:step).value(:integer)         # for conditional validation
   end
 
   rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)

@@ -133,6 +133,16 @@ RSpec.feature "Create a new support request" do
       expect(page).to have_unchecked_field "Specialist School for Testing"
       expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
     end
+
+    context "when the user does not select a school" do
+      before do
+        click_continue
+      end
+
+      it "prevents the user from continuing" do
+        expect(page).to have_content "You must select a school"
+      end
+    end
   end
 
   context "when the user belongs to only one supported school" do
@@ -144,6 +154,21 @@ RSpec.feature "Create a new support request" do
 
     it "skips step 2 automatically chosing the first school" do
       expect(page).not_to have_unchecked_field "Specialist School for Testing"
+    end
+  end
+
+  context "when the user belongs to no supported schools" do
+    let(:user) { create(:user) }
+
+    before do
+      user_is_signed_in(user: user)
+      visit "/support-requests/new"
+      click_continue
+      click_continue
+    end
+
+    it "prevents the user from continuing" do
+      expect(page).to have_content "You must select a school"
     end
   end
 
