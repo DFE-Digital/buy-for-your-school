@@ -10,13 +10,15 @@ class PagesController < ApplicationController
   end
 
   def accessibility
+    page = Page.find_by(slug: "accessibility")
+
     @body = DocumentFormatter.new(
-      content: File.read("./accessibility.md"),
+      content: page.body,
       from: :markdown,
       to: :html,
     ).call
 
-    @time_stamp = Date.new(2021, 7, 7).strftime('%d %b %Y')
+    @time_stamp = page.updated_at.strftime("%d %b %Y")
   end
 
   def planning_start_page
