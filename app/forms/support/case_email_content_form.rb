@@ -4,5 +4,6 @@ module Support
     include Concerns::ValidatableForm
 
     option :email_body, Types::Params::String, optional: true
+    option :email_subject, Types::Params::String, optional: true
   end
 end
