@@ -13,4 +13,8 @@ module ApplicationHelper
   def footer_message
     I18n.t("banner.footer.message", support_email: ENV.fetch("SUPPORT_EMAIL"))
   end
+
+  def dsi_url(args = {})
+    GetDsiUrl.new(**args).call
+  end
 end

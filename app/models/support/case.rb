@@ -5,12 +5,14 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include Documentable
-
-    has_one :enquiry, class_name: "Support::Enquiry"
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     has_many :interactions, class_name: "Support::Interaction"
+
+    has_many :documents, class_name: "Support::Document", dependent: :destroy
+    accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
+
+    scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
 
     # Support level
     #
@@ -41,19 +43,14 @@ module Support
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
     # @return [String]
     def generate_ref
+      return if ref.present?
+
       self.ref = (Support::Case.last&.ref || sprintf("%06d", 0)).next
     end
 
-    # TODO: Replace with ActiveRecord association
-    # This is going to be renamed to "Buyer" and represents the
-    # School (SBP) that case workers interact with via cases.
-    def contact
-      OpenStruct.new(
-        first_name: "Example First",
-        last_name: "Name",
-        phone_number: "+44 777888999",
-        email_address: "example@email.com",
-      )
+    # @return [Array, Support::Interaction]
+    def support_request
+      interactions&.support_request&.first
     end
   end
 end

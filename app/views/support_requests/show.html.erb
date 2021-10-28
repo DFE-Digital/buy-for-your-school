@@ -54,20 +54,34 @@
 
     <dl class="govuk-summary-list">
 
-      <div id="support-request-journey" class="govuk-summary-list__row">
+      <div id="support-request-school" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          School
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @support_request.selected_school %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <% unless @support_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 2), class: "govuk-link", id: "edit-school" %>
+          <% end %>
+        </dd>
+      </div>
+
+      <div id="support-request-category" class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Attached specification
         </dt>
           <dd class="govuk-summary-list__value">
           <% if @support_request.journey %>
-            <%= @support_request.journey.created_at.strftime("%e %B %Y") %>
+            <%= @support_request.journey.created_at %>
           <% else %>
             None
           <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if @current_user.journeys.any? && !@support_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 2), class: "govuk-link", id: "edit-specification" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 3), class: "govuk-link", id: "edit-specification" %>
           <% end %>
         </dd>
       </div>
@@ -85,7 +99,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% unless @support_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 3), class: "govuk-link", id: "edit-category" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 4), class: "govuk-link", id: "edit-category" %>
           <% end %>
         </dd>
       </div>
@@ -99,7 +113,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% unless @support_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 4), class: "govuk-link", id: "edit-message" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 5), class: "govuk-link", id: "edit-message" %>
           <% end %>
         </dd>
       </div>

@@ -1,0 +1,11 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_email_content.edit.header.non_template") %></h1>
+
+<%= render "help_with_formatting" %>
+
+<%= form_with model: @case_email_content_form, scope: :case_email_content_form, url: support_case_email_content_path(@current_case, template: @template), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_text_area :email_body, rows: 10, label: { text: I18n.t("support.case_email_content.edit.email_body.label") } %>
+
+  <%= form.submit I18n.t("support.case_email_content.edit.submit"), class: "govuk-button", role: "button" %>
+<% end %>

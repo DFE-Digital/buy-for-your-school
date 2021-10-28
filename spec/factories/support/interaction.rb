@@ -24,5 +24,10 @@ FactoryBot.define do
       event_type { 3 }
       body { "This is an example email to the school." }
     end
+
+    trait :support_request do
+      event_type { 4 }
+      body { "This is an example support request." }
+    end
   end
 end

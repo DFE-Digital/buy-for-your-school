@@ -1,6 +1,7 @@
 RSpec.feature "Edit an unsubmitted support request" do
   let(:category) { create(:category, title: "Utilities") }
-  let(:journey) { create(:journey, category: category) }
+  let(:user) { create(:user) }
+  let(:journey) { create(:journey, category: category, user: user) }
   let(:answers) { find_all("dd.govuk-summary-list__value") }
 
   before do
@@ -17,7 +18,8 @@ RSpec.feature "Edit an unsubmitted support request" do
              journey: journey,
              category: nil,
              phone_number: "invalid phone number",
-             message_body: "")
+             message_body: "",
+             school_urn: "123")
     end
 
     it "adds a valid phone number" do
@@ -49,7 +51,65 @@ RSpec.feature "Edit an unsubmitted support request" do
     end
   end
 
-  describe "step 2: a specification" do
+  describe "step 2: choosing a school" do
+    let(:support_request) do
+      create(:support_request,
+             user: journey.user,
+             journey: journey,
+             category: nil,
+             phone_number: nil,
+             message_body: "",
+             school_urn: nil)
+    end
+
+    context "when user has selected a school" do
+      let(:user) { create(:user, :with_a_supported_school) }
+
+      let(:school) { UserPresenter.new(user).supported_schools.first }
+
+      let(:support_request) do
+        create(:support_request,
+               user: journey.user,
+               journey: journey,
+               category: nil,
+               phone_number: nil,
+               message_body: "",
+               school_urn: school.urn)
+      end
+
+      it "shows the school name" do
+        within "#support-request-school" do
+          expect(page).to have_content(school.name)
+        end
+      end
+    end
+
+    it "allows editing of the school" do
+      click_link "edit-school"
+
+      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=2"
+    end
+
+    describe "editing the school" do
+      context "when user has multiple supported schools" do
+        let(:user) { create(:user, :with_multiple_supported_schools) }
+
+        let(:greendale) { UserPresenter.new(user).supported_schools.last }
+
+        it "allows the user to choose a different school" do
+          click_link "edit-school"
+
+          choose "Greendale Academy for Bright Sparks"
+
+          click_continue
+
+          expect(support_request.reload.school_urn).to eq(greendale.urn)
+        end
+      end
+    end
+  end
+
+  describe "step 3: a specification" do
     context "when choosing one" do
       let(:support_request) do
         create(:support_request,
@@ -57,13 +117,14 @@ RSpec.feature "Edit an unsubmitted support request" do
                journey: nil,
                category: category,
                phone_number: nil,
-               message_body: nil)
+               message_body: nil,
+               school_urn: "123")
       end
 
       it "updates the specification" do
         click_link "edit-specification"
 
-        expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=2"
+        expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=3"
 
         expect(find("legend.govuk-fieldset__legend--l")).to have_text "Which specification is this related to?"
 
@@ -75,14 +136,14 @@ RSpec.feature "Edit an unsubmitted support request" do
 
         # journey attached
         expect(support_request.reload.journey_id).not_to be_nil
-        expect(answers[3]).to have_text "1 September 2021"
+        expect(answers[4]).to have_text "1 September 2021"
 
         # category is forgotten
         expect(support_request.reload.category_id).to be_nil
 
         # inferred from the journey
         expect(support_request.reload.journey.category.title).to eq "Utilities"
-        expect(answers[4]).to have_text "Utilities"
+        expect(answers[5]).to have_text "Utilities"
       end
     end
 
@@ -93,13 +154,14 @@ RSpec.feature "Edit an unsubmitted support request" do
                journey: nil,
                category: nil,
                phone_number: nil,
-               message_body: nil)
+               message_body: nil,
+               school_urn: "123")
       end
 
       it "requires a category to be chosen" do
         click_link "edit-specification"
 
-        expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=2"
+        expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=3"
 
         expect(find("legend.govuk-fieldset__legend--l")).to have_text "Which specification is this related to?"
 
@@ -121,25 +183,26 @@ RSpec.feature "Edit an unsubmitted support request" do
 
         # category added
         expect(support_request.reload.category.title).to eq "Utilities"
-        expect(answers[4]).to have_text "Utilities"
+        expect(answers[5]).to have_text "Utilities"
       end
     end
   end
 
-  describe "step 3: choosing a category" do
+  describe "step 4: choosing a category" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
              journey: journey,
              category: nil,
              phone_number: nil,
-             message_body: nil)
+             message_body: nil,
+             school_urn: "123")
     end
 
     it "updates the category" do
       click_link "edit-category"
 
-      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=3"
+      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=4"
 
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
 
@@ -152,27 +215,28 @@ RSpec.feature "Edit an unsubmitted support request" do
       # category is attached
       expect(support_request.reload.category.title).to eq "Utilities"
       expect(support_request.reload.category_id).not_to be_nil
-      expect(answers[4]).to have_text "Utilities"
+      expect(answers[5]).to have_text "Utilities"
 
       # journey is forgotten
       expect(support_request.reload.journey_id).to be_nil
     end
   end
 
-  describe "step 4: writing a message" do
+  describe "step 5: writing a message" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
              journey: journey,
              category: nil,
              phone_number: nil,
-             message_body: nil)
+             message_body: nil,
+             school_urn: "123")
     end
 
     it "adds a message" do
       click_link "edit-message"
 
-      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=4"
+      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=5"
 
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
 
@@ -183,7 +247,7 @@ RSpec.feature "Edit an unsubmitted support request" do
       expect(page).to have_current_path "/support-requests/#{support_request.id}"
 
       # message is added
-      expect(answers[5]).to have_text "I need help"
+      expect(answers[6]).to have_text "I need help"
       expect(support_request.reload.message_body).to eql "I need help"
     end
   end
