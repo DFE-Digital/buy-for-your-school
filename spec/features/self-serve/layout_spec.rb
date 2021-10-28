@@ -20,9 +20,12 @@ RSpec.feature "Common layout element" do
 
   describe "footer" do
     scenario "provides an email address for the service" do
-      # banner.footer.message
-      expect(find(".govuk-footer__meta-custom")).to have_text "For privacy information for this service, or to request the deletion of any personal data, email email@example.gov.uk"
-      expect(find(".govuk-footer__meta-custom")).to have_link "email@example.gov.uk", href: "mailto:email@example.gov.uk", class: "govuk-footer__link"
+      within(".govuk-footer__meta") do
+        footer_items = find_all("div.govuk-footer__meta-custom")
+        # banner.footer.message
+        expect(footer_items[1]).to have_text "For privacy information for this service, or to request the deletion of any personal data, email email@example.gov.uk"
+        expect(footer_items[1]).to have_link "email@example.gov.uk", href: "mailto:email@example.gov.uk", class: "govuk-footer__link"
+      end
     end
   end
 end
