@@ -1,9 +1,9 @@
 /**
-* Specification templates have no classes of their own so we're overriding the default styling to
+* Specification and other markdown templates have no classes of their own so we're overriding the default styling to
 * keep the look consistent.
 **/
 
-#specification, .specification, #default-override, .default-override {
+#specification, .specification, #md-override, .md-override {
   h1 {
     @extend .govuk-heading-l;
   }
