@@ -7,7 +7,11 @@ class SupportRequestsController < ApplicationController
   def index; end
 
   # check your answers before submission
-  def show; end
+  def show
+    if support_request.submitted?
+      redirect_to support_request_submission_path(support_request)
+    end
+  end
 
   # first question
   def new
