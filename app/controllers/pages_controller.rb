@@ -16,7 +16,7 @@ class PagesController < ApplicationController
       to: :html,
     ).call
 
-    @time_stamp = Date.new(2021,7,7).strftime('%d %b %Y')
+    @time_stamp = Date.new(2021, 7, 7).strftime('%d %b %Y')
   end
 
   def planning_start_page
