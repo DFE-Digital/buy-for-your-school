@@ -3,7 +3,7 @@ class SupportRequestPresenter < SimpleDelegator
   def email
     user&.email
   end
-  
+
   # The name of the school that matches the chosen school URN
   #
   # @return [String] the name of the school
