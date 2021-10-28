@@ -5,17 +5,23 @@ RSpec.feature "User task actions are recorded" do
   let(:journey) { create(:journey, user: user, category: category) }
   let(:section) { create(:section, title: "Catering", journey: journey) }
 
-  let!(:task_checkbox) { create(:task, title: "Task with a single step", section: section)} 
-  let!(:task_checkbox_and_radio) { create(:task, title: "Task with multiple steps", section: section)} 
+  # let!(:task_checkbox) { create(:task, title: "Task with a single step", section: section)} 
 
   before do
     user_is_signed_in(user: user)
     # TODO: replace fixture with factory
     # start_journey_from_category(category: fixture)
-    visit "/journeys/#{journey.id}"
   end
 
   context "when there is a task with multiple steps" do
+    before do
+      task_checkbox_and_radio = create(:task, title: "Task with multiple steps", section: section)
+      create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 0)
+      create(:step, :short_text, title: "What email address did you use?", contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 1)
+      create(:step, :long_text, title: "Describe what you need", contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 2)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [ { "value" => "Breakfast" } ], contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 3)
+      visit "/journeys/#{journey.id}"
+    end
     it "records an action in the event log that a task has begun" do
       # /journeys/b68300eb-fbeb-4ac5-beb8-4f88eb1f86cd
       expect(page).to have_a_journey_path
