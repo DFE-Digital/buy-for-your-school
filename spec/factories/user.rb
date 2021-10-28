@@ -49,5 +49,37 @@ FactoryBot.define do
         }]
       end
     end
+
+    trait :with_multiple_supported_schools do
+      orgs do
+        [
+          {
+            "id": SecureRandom.uuid,
+            "urn": SecureRandom.uuid,
+            "name": "Specialist School for Testing",
+            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" },
+          },
+          {
+            "id": SecureRandom.uuid,
+            "urn": SecureRandom.uuid,
+            "name": "Greendale Academy for Bright Sparks",
+            "type": { "id" => ORG_TYPE_IDS.last, "name" => "Academy Special Converter" },
+          },
+        ]
+      end
+    end
+
+    trait :with_a_supported_school do
+      orgs do
+        [
+          {
+            "id": SecureRandom.uuid,
+            "urn": SecureRandom.uuid,
+            "name": "Specialist School for Testing",
+            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" },
+          },
+        ]
+      end
+    end
   end
 end

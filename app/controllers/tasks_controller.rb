@@ -33,7 +33,7 @@ private
 
   # @return [Task]
   def task
-    @task ||= Task.find(task_id)
+    @task ||= TaskPresenter.new(Task.find(task_id))
   end
 
   # @return [String]

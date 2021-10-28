@@ -1,6 +1,3 @@
-require "types"
-require "dry-initializer"
-
 # @abstract Form Object for multi-step questionnaires
 #
 # @author Peter Hamilton
@@ -30,9 +27,10 @@ class SupportForm
 
   # @see [SupportRequest] attributes
   option :phone_number, optional: true # 1
-  option :journey_id, optional: true   # 2 (option for 'none')
-  option :category_id, optional: true  # 3 (skipped if 2)
-  option :message_body, optional: true # 4 (last)
+  option :school_urn, optional: true   # 2 (skipped if only one supported school)
+  option :journey_id, optional: true   # 3 (option for 'none')
+  option :category_id, optional: true  # 4 (skipped if 3)
+  option :message_body, optional: true # 5 (last)
 
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
   #

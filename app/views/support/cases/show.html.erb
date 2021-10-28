@@ -37,7 +37,7 @@
       <% if @current_case.agent.present? %>
       <p class="govuk-body">
         <%= I18n.t("support.case.label.case_owner", owner: @current_case.agent_name ) %>
-        <%= link_to I18n.t("support.case.label.change_case_owner"), edit_support_case_path(@current_case) %>
+        <%= link_to I18n.t("support.case.label.change_case_owner"), new_support_case_assignment_path(@current_case) %>
       </p>
     <% end %>
 
@@ -52,20 +52,20 @@
 <ul class="govuk-list case-actions">
   <% if @current_case.open? %>
     <li>
-      <%= link_to I18n.t("support.case.label.change_owner"), edit_support_case_path(@current_case), class: "govuk-link" %>
+      <%= link_to I18n.t("support.case.label.change_owner"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
     </li>
     <li>
       <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.case.label.send_email"), "#", class: "govuk-link" %>
+      <%= link_to I18n.t("support.case.label.send_email"), new_support_case_email_type_path(@current_case), class: "govuk-link" %>
     </li>
     <li>
       <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.case.label.assign_to_agent"), edit_support_case_path(@current_case), class: "govuk-link" %>
+      <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
     </li>
   <% end %>
 
@@ -75,7 +75,7 @@
     </li>
   <% else %>
     <li>
-      <%= link_to I18n.t("support.case.label.resolve"), "#", class: "govuk-link" %>
+      <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
     </li>
   <% end %>
 </ul>
