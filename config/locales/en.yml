@@ -20,6 +20,8 @@ en:
       cancel: Cancel
     label:
       what_is: "What is %{label}?"
+  accessibility:
+    page_title: Accessibility
   banner:
     design: "%{env} Environment"
     beta:

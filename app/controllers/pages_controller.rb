@@ -9,6 +9,16 @@ class PagesController < ApplicationController
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
 
+  def accessibility
+    @body = DocumentFormatter.new(
+      content: File.read("./accessibility.md"),
+      from: :markdown,
+      to: :html,
+    ).call
+
+    @time_stamp = Date.new(2021,7,7).strftime('%d %b %Y')
+  end
+
   def planning_start_page
     @back_url = root_path
   end
