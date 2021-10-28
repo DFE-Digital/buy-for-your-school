@@ -4,7 +4,7 @@ describe "Support agent sends a templated email" do
   include_context "with an agent"
   include_context "with notify email templates"
 
-  let(:support_case) { create(:support_case, :open) }
+  let(:support_case) { Support::CasePresenter.new(create(:support_case, :open)) }
 
   before do
     click_button "Agent Login"
@@ -27,8 +27,23 @@ describe "Support agent sends a templated email" do
 
     it "previews the email with variables substituted" do
       within ".email-preview" do
-        expect(page).to have_content("Hi #{support_case.contact.first_name} #{support_case.contact.last_name}, here is information regarding frameworks")
+        expect(page).to have_content("Hi #{support_case.full_name}, here is information regarding frameworks")
       end
+    end
+  end
+
+  describe "sending the email" do
+    before do
+      click_link "What is a framework?"
+      click_button "Confirm and send email"
+    end
+
+    it "saves the email as a case interaction" do
+      interacton = support_case.reload.interactions.last
+
+      expect(interacton.event_type).to eq("email_to_school")
+      expect(interacton.body).to eq("Hi #{support_case.full_name}, here is information regarding frameworks")
+      expect(interacton.agent).to eq(agent)
     end
   end
 end

@@ -13,7 +13,7 @@ module Support
   private
 
     def create_email_interaction(email_body)
-      @current_case.interactions.email_to_school.create!(
+      @current_case.__getobj__.interactions.email_to_school.create!(
         agent_id: current_agent.id,
         body: email_body,
       )
@@ -24,7 +24,7 @@ module Support
     end
 
     def case_email_content_form_params
-      params.require(:case_email_content_form).permit(:email_body)
+      params.require(:case_email_content_form).permit(:email_body, :email_subject)
     end
   end
 end
