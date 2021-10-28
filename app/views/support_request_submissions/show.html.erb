@@ -4,27 +4,27 @@
 
       <div class="govuk-panel govuk-panel--confirmation">
         <h1 class="govuk-panel__title">
-          <%= I18n.t("support_request_submissions.confirmation.header") %>
+          <%= I18n.t("support_request_submissions.header.confirmation") %>
         </h1>
         <div class="govuk-panel__body">
-          <%= I18n.t("support_request_submissions.confirmation.sub_header") %>
+          <%= I18n.t("support_request_submissions.sub_header.confirmation") %>
           <br><strong><%= @support_request.email %></strong>
         </div>
       </div>
 
       <h1 class="govuk-heading-m">
-        <%= I18n.t("support_request_submissions.what_happens_next.header") %>
+        <%= I18n.t("support_request_submissions.header.what_happens_next") %>
       </h1>
       <p class="govuk-body">
-        <%= I18n.t("support_request_submissions.what_happens_next.body", days: 5) %>
+        <%= I18n.t("support_request_submissions.body.what_happens_next", days: 5) %>
       </p>
 
       <h1 class="govuk-heading-m">
-        <%= I18n.t("support_request_submissions.what_you_can_do_next.header") %>
+        <%= I18n.t("support_request_submissions.header.what_you_can_do_next") %>
       </h1>
       <p class="govuk-body">
         <%=
-          I18n.t("support_request_submissions.what_you_can_do_next.body",
+          I18n.t("support_request_submissions.body.what_you_can_do_next",
             continue_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.continue_link"), journey_path(@support_request.journey)),
             start_new_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path)
           ).html_safe
@@ -32,7 +32,7 @@
       </p>
 
       <p class="govuk-body">
-        <%= I18n.t("support_request_submissions.you_can_also.header") %>
+        <%= I18n.t("support_request_submissions.header.you_can_also") %>
       </p>
       <ul class="govuk-list govuk-list--bullet">
         <li>
