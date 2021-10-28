@@ -10,15 +10,7 @@ class PagesController < ApplicationController
   end
 
   def accessibility
-    page = Page.find_by(slug: "accessibility")
-
-    @body = DocumentFormatter.new(
-      content: page.body,
-      from: :markdown,
-      to: :html,
-    ).call
-
-    @time_stamp = page.updated_at.strftime("%d %b %Y")
+    set_page(__method__)
   end
 
   def planning_start_page
@@ -31,5 +23,19 @@ class PagesController < ApplicationController
 
   def show_method
     @start_now_button_method = current_user.guest? ? :post : :get
+  end
+
+private
+
+  def set_page(slug)
+    page = Page.find_by(slug: slug.to_s)
+
+    @body = DocumentFormatter.new(
+      content: page.body,
+      from: :markdown,
+      to: :html,
+    ).call
+
+    @title = page.title
   end
 end
