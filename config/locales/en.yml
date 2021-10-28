@@ -240,7 +240,7 @@ en:
       what_you_can_do_next: What you can do next
       you_can_also: You can also
     sub_header:
-      confirmation: Your request for support has been sent
+      confirmation: "We have sent a confirmation to:"
     body:
       what_happens_next: "The DfE's supported buying team will be in touch within %{days} working days to discuss how we can support you."
       what_you_can_do_next: "%{continue_link} if you can (but we won't receive these new changes), or %{start_new_link} if you haven't done so yet."

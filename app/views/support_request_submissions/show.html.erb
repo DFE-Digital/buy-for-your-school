@@ -23,17 +23,22 @@
         <%= I18n.t("support_request_submissions.header.what_you_can_do_next") %>
       </h1>
       <p class="govuk-body">
-        <%=
-          I18n.t("support_request_submissions.body.what_you_can_do_next",
-            continue_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.continue_link"), journey_path(@support_request.journey)),
-            start_new_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path)
-          ).html_safe
-        %>
+        <% if @support_request.journey %>
+          <%=
+            I18n.t("support_request_submissions.body.what_you_can_do_next",
+              continue_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.continue_link"), journey_path(@support_request.journey)),
+              start_new_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path)
+            ).html_safe
+          %>
+        <% else %>
+          <%= link_to I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path %>
+        <% end %>
       </p>
 
       <p class="govuk-body">
         <%= I18n.t("support_request_submissions.header.you_can_also") %>
       </p>
+
       <ul class="govuk-list govuk-list--bullet">
         <li>
           <%=
