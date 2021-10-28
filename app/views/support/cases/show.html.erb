@@ -2,7 +2,7 @@
   <%= @current_case.organisation_name %>
 </h1>
 <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
-  <%= @current_case.state %>
+  <%= I18n.t("support.case.label.state.state_#{@current_case.state.downcase}") %>
 </strong>
 <h3 id="case-ref" class="govuk-heading-m">
   <%= @current_case.ref %>
@@ -28,7 +28,7 @@
     </li>
   </ul>
 
-  <%= render "school_details", contact: @current_case.contact %>
+  <%= render "school_details", current_case: @current_case %>
   <%= render "case_details", current_case: @current_case %>
 
 
@@ -42,7 +42,7 @@
     <% end %>
 
       <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions %>
-      <%= render "support/cases/case_history/enquiry", enquiry: @current_case.enquiry %>
+      <%= render "support/cases/case_history/support_request", support_request: @current_case.support_request unless @current_case.support_request.blank?  %>
     </div>
   </div>
 </div>

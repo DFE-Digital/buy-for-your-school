@@ -5,7 +5,7 @@
         <%= I18n.t("support.case.label.contact_name") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.full_name %>
+        <%= current_case.full_name %>
       </dd>
     </div>
 
@@ -14,7 +14,7 @@
         <%= I18n.t("support.case.label.contact_phone") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.phone_number %>
+        <%= current_case.phone_number %>
       </dd>
     </div>
 
@@ -23,7 +23,7 @@
         <%= I18n.t("support.case.label.contact_email") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= contact.email_address %>
+        <%= current_case.email %>
       </dd>
     </div>
   </dl>
