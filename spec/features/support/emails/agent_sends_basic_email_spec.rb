@@ -63,7 +63,7 @@ describe "Support agent sends a basic email" do
 
     it "shows the correct subject and to address" do
       within ".email-preview" do
-        expect(page).to have_content(support_case.contact.email_address)
+        expect(page).to have_content(support_case.email)
         expect(page).to have_content("DfE Get help buying for schools: your request for support")
       end
     end
