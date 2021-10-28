@@ -57,5 +57,3 @@ M1 2WD
 If you wish to contact the DfE’s data protection officer, please use the secure online form or write to the address above.
 
 You also have the right to lodge a complaint about data protection with the [Information Commissioner’s Office](https://ico.org.uk/make-a-complaint/) (ICO).
-
-Last updated 25 Oct 2021
