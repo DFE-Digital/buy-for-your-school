@@ -68,6 +68,13 @@ Rails.application.routes.draw do
       scope module: :cases do
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
+        resource :email, only: %i[create] do
+          scope module: :emails do
+            resource :type, only: %i[new create]
+            resources :content, only: %i[edit show update], param: :template
+            resources :templates, only: %i[index], param: :template
+          end
+        end
       end
     end
     resources :schools, only: %i[show]

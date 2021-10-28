@@ -212,12 +212,15 @@ en:
       specification: Share a specification
       category: About your procurement
       message: About your procurement
+      school: About your school
     label:
       phone_number: What is your phone number?
       specification: Which specification is this related to?
       category: What are you buying?
       message: How can we help?
+      school: Which school are you buying for?
     hint:
+      school: You are linked to more than one school. Select the school that's related to your support request.
       phone_number: |-
         Your phone number will be used by DfE's supported buying team to contact you about your request for help.
         It will not be used for marketing or any other purposes.
@@ -226,6 +229,8 @@ en:
         A copy of the specification you choose will be sent to us with this request in its current state.
         We will not receive any new changes you make.
       message: Briefly describe your problem in a few sentences.
+    suggestion:
+      school: If your school is not listed, then select another school.
     button:
       send: Send request
 
@@ -289,6 +294,32 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_email_type:
+      header: Send email
+      legend: Type of email
+      submit: Save
+      choices:
+        template: Template
+        non_template: Non-template
+
+    case_email_content:
+      edit:
+        default_email_body:
+          non_template: Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification.
+        email_body:
+          label: Enter email body
+        header:
+          non_template: Send non-template email
+        submit: Preview email
+      preview:
+        header: Preview email
+        to:
+          label: To
+        subject:
+          label: Subject
+          default_value: "DfE Get help buying for schools: your request for support"
+        submit: Confirm and send email
 
     interaction:
         header:
