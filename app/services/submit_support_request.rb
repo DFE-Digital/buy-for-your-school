@@ -35,7 +35,7 @@ class SubmitSupportRequest
   #
   # @return [nil, Notifications::Client::ResponseNotification]
   def call
-    return false unless kase
+    return false unless send_api_request
 
     # TODO: confirmation message body forms the first CM interaction
     # email = Emails::Confirmation.new().call
@@ -68,6 +68,27 @@ private
 
   def user
     User.find(request.user_id)
+  end
+
+  def send_api_request
+    uri = URI.parse("https://localhost/support/api/create-cases")
+    http = Net::HTTP.new(uri.host, "3000")
+    request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+    request.body = "{}"
+    http.request(request)
+  end
+
+  def request_body
+    { "support_request_id": request.id,
+      "first_name": user.first_name,
+      "last_name": user.last_name,
+      "email": user.email,
+      "phone_number": request.phone_number,
+      "category": category,
+      "message": request.message_body,
+      "documents": [
+        { "file_type": "html_markup", "document_body": document_body },
+      ] }
   end
 
   # API (draft) ----------------------------------------------------------------

@@ -11,6 +11,5 @@ module Support
 
     # @return [Support::Case]
     def call; end
-
   end
 end
