@@ -13,13 +13,15 @@ module Support
 
         @case_email_content_form = CaseEmailContentForm.new(
           email_body: basic_email_body,
-          email_subject: basic_email_subject)
+          email_subject: basic_email_subject,
+        )
       else
         @back_url = support_case_email_templates_path(@current_case)
 
         @case_email_content_form = CaseEmailContentForm.new(
           email_body: selected_template_preview.body,
-          email_subject: selected_template_preview.subject)
+          email_subject: selected_template_preview.subject,
+        )
       end
     end
 
@@ -43,7 +45,7 @@ module Support
       Notifications::Client.new(ENV["NOTIFY_API_KEY"])
         .generate_template_preview(params[:template], personalisation: {
           toName: @current_case.full_name,
-          fromName: current_agent.full_name
+          fromName: current_agent.full_name,
         })
     end
 
