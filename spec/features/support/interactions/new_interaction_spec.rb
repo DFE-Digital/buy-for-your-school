@@ -33,13 +33,13 @@ RSpec.feature "Add new interaction to case" do
       end
 
       # TODO: fix test with correct assertion that note not added
-      # context "when an invalid note" do
-      #   it "doesn't allow an agent to add a note" do
-      #     click_on "Save"
-      #     # expect(find("h3.govuk-notification-banner__heading")).not_to have_text "Note added to case"
-      #     #expect(page).to have_current_path "interactions/new"
-      #   end
-      # end
+      context "when an invalid note" do
+        xit "doesn't allow an agent to add a note" do
+          click_on "Save"
+          expect(find("h3.govuk-notification-banner__heading")).not_to have_text "Note added to case"
+          expect(page).to have_current_path "interactions/new"
+        end
+      end
     end
 
     describe "logging contact with the school" do

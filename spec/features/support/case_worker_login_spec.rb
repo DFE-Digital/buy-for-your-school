@@ -9,7 +9,7 @@ RSpec.feature "Case worker authentication" do
     expect(find("h1.govuk-heading-xl")).to have_text "Supported Buying Case Management"
   end
 
-  context "when the agent is whitelisted" do
+  context "when a current agent" do
     it "authenticates" do
       click_button "Agent Login"
 
@@ -17,14 +17,15 @@ RSpec.feature "Case worker authentication" do
     end
   end
 
-  context "when the agent is not whitelisted" do
+  context "when not a current agent" do
     let(:user) { build(:user) }
 
     it "fails to gain access" do
       click_button "Agent Login"
-
+      pp page.source
       expect(page).not_to have_current_path "/support/cases"
       expect(page).to have_current_path "/support"
+      # expect([:notice]).to match("You are not a recognised case worker")
       expect(find("h3.govuk-notification-banner__heading")).to have_text "Invalid Caseworker"
     end
   end
