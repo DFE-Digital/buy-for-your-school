@@ -7,6 +7,23 @@ module Support
       @case_email_content_form = CaseEmailContentForm.new(email_body: default_email_body)
     end
 
+    def show
+      @back_url = new_support_case_email_type_path(@current_case)
+
+      # email_body = Notifications::Client.new(ENV["NOTIFY_API_KEY"])
+      #   .generate_template_preview(params[:template], personalisation: {
+      #     toName:,
+      #     fromName:,
+      #     reference:,
+      #     category:,
+      #     message:,
+      #     first_name:,
+      #     last_name:
+      #   })
+
+      # @case_email_content_form = CaseEmailContentForm.new(email_body: email_body)
+    end
+
     def update
       @case_email_content_form = CaseEmailContentForm.from_validation(validation)
 

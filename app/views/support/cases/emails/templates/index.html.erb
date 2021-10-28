@@ -1,1 +1,9 @@
-<p class="govuk-body">Template emails not yet implemented</p>
+<h1 class="govuk-heading-l">Send template email</h1>
+
+<% @email_templates.each do |email_template| %>
+  <h3 class="govuk-heading-m">
+    <%= link_to email_template.name, support_case_email_content_path(@current_case, template: email_template.id), class: "govuk-link" %>
+  </h3>
+
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+<% end %>
