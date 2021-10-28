@@ -1,6 +1,12 @@
-# Provide formatted versions of support request fields for views
-#
+# Helpers for a support request to display information on the page
 class SupportRequestPresenter < SimpleDelegator
+  # @return [String] email address of user requesting support
+  def email
+    user&.email
+  end
+
+  # The name of the school that matches the chosen school URN
+  #
   # @return [String] the name of the school
   def school_name
     user.supported_schools.find { |school| school.urn == school_urn }&.name

@@ -232,10 +232,26 @@ en:
       message: Briefly describe your problem in a few sentences.
     button:
       send: Send request
-
-
-
-
+  support_request_submissions:
+    header:
+      confirmation: Your request for support has been sent
+      what_happens_next: What happens next
+      what_you_can_do_next: What you can do next
+      you_can_also: You can also
+    sub_header:
+      confirmation: Your request for support has been sent
+    body:
+      what_happens_next: "The DfE's supported buying team will be in touch within %{days} working days to discuss how we can support you."
+      what_you_can_do_next: "%{continue_link} if you can (but we won't receive these new changes), or %{start_new_link} if you haven't done so yet."
+    what_you_can_do_next:
+      continue_link: Continue with your specification
+      start_new_link: start a new specification
+    you_can_also:
+      step_one: "%{read_procs_link} to learn more about the buying process"
+      step_two: "%{read_guides_link} that you're buying"
+      read_procs_link: read buying procedures and procurement law for schools
+      read_guides_link: read guides about goods and services
+    back_button: Back to Specify dashboard
 
   #
   # Supported ------------------------------------------------------------------
