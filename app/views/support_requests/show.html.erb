@@ -124,7 +124,7 @@
         <%= I18n.t("support_request.response_time") %>
       </p>
 
-      <%= button_to I18n.t("support_request.button.send"), submit_request_path(id: @support_request), class: "govuk-button", method: :post, data: { disable_with: "Submitted!" } %>
+      <%= button_to I18n.t("support_request.button.send"), support_request_submission_path(@support_request), class: "govuk-button", method: :patch, data: { disable_with: "Submitting..." } %>
     <% end %>
 
   </div>

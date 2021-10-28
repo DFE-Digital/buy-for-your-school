@@ -2,31 +2,34 @@
   <div class="govuk-accordion__section-header">
     <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-case-history-enquiry-heading">
-          <%= I18n.t("support.interaction.type.request_for_support") %>
+          <%= I18n.t("support.interaction.type.support_request") %>
         </span>
     </h2>
     <div class="govuk-accordion__section-summary govuk-body" id="accordion-case-history-enquiry-received-at">
-      <%= enquiry.created_at %>
+      <%= support_request.created_at %>
     </div>
   </div>
   <div id="accordion-case-history-enquiry-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-case-history-enquiry-heading">
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.category") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= enquiry.category.title %>
-        </dd>
-      </div>
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.problem_description") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= enquiry.message %>
+          <%= support_request.additional_data['message'] %>
         </dd>
       </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Additional Data
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= support_request.additional_data %>
+        </dd>
+      </div>
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.attached_specification") %>
@@ -38,6 +41,7 @@
           </a>
         </dd>
       </div>
+
     </dl>
   </div>
 </div>
