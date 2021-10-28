@@ -6,6 +6,7 @@ en:
       phone_number: Your phone number
       message_body: "" # Omitted
       category_id: The type of procurement
+      school_urn: "" # Omitted
 
     errors:
       rules:
@@ -22,3 +23,5 @@ en:
         category_id:
           no_spec: is required if you do not select an existing specification
 
+        school_urn:
+          missing: You must select a school

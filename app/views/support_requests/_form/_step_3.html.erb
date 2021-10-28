@@ -1,12 +1,21 @@
 <%= form.hidden_field :phone_number, value: form.object.phone_number %>
-<%= form.hidden_field :journey_id, value: form.object.journey_id %>
+<%= form.hidden_field :school_urn, value: form.object.school_urn %>
 
-<%= form.govuk_collection_radio_buttons :category_id,
-    Category.published,
+<%= form.govuk_collection_radio_buttons :journey_id,
+    current_user.active_journeys,
     :id,
-    :title,
+    :created_at,
     :description,
-    legend: { text: I18n.t("support_request.label.category"), size: "l" },
-    caption: { text: I18n.t("support_request.caption.category"), size: "l" }
+    caption: { text: I18n.t("support_request.caption.specification"), size: "l" },
+    legend: { text: I18n.t("support_request.label.specification"), size: "l" },
+    hint: { text: I18n.t("support_request.hint.specification") }
 %>
 
+<%= form.govuk_radio_divider %>
+
+<%= form.govuk_radio_button :journey_id, "none",
+    label: { text: "My request is not related to an existing specification" },
+    checked: true
+  %>
+
+<br />
