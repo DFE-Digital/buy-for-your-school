@@ -52,17 +52,5 @@ module Support
     def support_request
       interactions&.support_request&.first
     end
-
-    # TODO: Replace with ActiveRecord association
-    # This is going to be renamed to "Buyer" and represents the
-    # School (SBP) that case workers interact with via cases.
-    def contact
-      OpenStruct.new(
-        first_name: "Example First",
-        last_name: "Name",
-        phone_number: "+44 777888999",
-        email_address: "example@email.com",
-      )
-    end
   end
 end

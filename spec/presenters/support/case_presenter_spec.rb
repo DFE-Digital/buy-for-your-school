@@ -39,12 +39,6 @@ RSpec.describe Support::CasePresenter do
     end
   end
 
-  describe "#contact" do
-    it "is decorated" do
-      expect(presenter.contact).to be_a(Support::ContactPresenter)
-    end
-  end
-
   describe "#category" do
     xit "is decorated" do
       # FIXME: swap once CategoryPresenter is being used and namespace loads in the suite

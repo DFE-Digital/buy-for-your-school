@@ -36,6 +36,11 @@ module Support
       interactions.present? ? interactions&.last&.created_at : created_at
     end
 
+    # @return [String]
+    def full_name
+      "#{first_name} #{last_name}"
+    end
+
     # return interactions excluding the event_type of support_request
     # @return [Array<InteractionPresenter>]
     def interactions
@@ -51,11 +56,6 @@ module Support
     # @return [nil, AgentPresenter]
     def agent
       AgentPresenter.new(super) if super
-    end
-
-    # @return [ContactPresenter]
-    def contact
-      ContactPresenter.new(super)
     end
 
     # @return [CategoryPresenter]
