@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "notifications/client"
 require "dry-initializer"
 
 require "types"
