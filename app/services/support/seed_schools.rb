@@ -1,70 +1,48 @@
 require "dry-initializer"
+
 require "school/information"
+require "school/record_keeper"
 
 module Support
   #
-  # Persist filtered school data from latest public GIAS data or a local file
-  #
-  # @example
-  #   SeedSchools.new(data: "spec/fixtures/gias/example_schools_data.csv").call
+  # Construct a pipeline to import data from GIAS
+  # using School::Information and School::RecordKeeper
+  # run via rake task or background job to maintain school records
   #
   class SeedSchools
     extend Dry::Initializer
 
-    # @return [String] CSV data file path
-    option :data, optional: true
+    # Optional path to local file or will download and use latest data from GIAS
+    #
+    # @!attribute [r] data
+    option :data, reader: :private, optional: true
 
-    # @return [Array<Organisation>]
+    # Persistence logic
+    #
+    # @!attribute [r] saver
+    option :saver, reader: :private, default: proc { ::School::RecordKeeper.new }
+
+    # Filter records that do match these criteria
+    #
+    # @!attribute [r] filter
+    #   @return [Hash] "column header" => [integer, values]
+    option :filter, ::Types::Strict::Hash, reader: :private, default: proc {
+      { "TypeOfEstablishment (code)" => EstablishmentType.all.map(&:code) }
+    }
+
+    # ...
+    #
+    # @return [?]
     def call
-      dataset.each { |org| persist(org) unless skip?(org) }
+      ::School::Information.new(filter: filter, file: data, exporter: export_proc).call
+      # TODO: report something useful for the task or job
     end
 
   private
 
-    # ignore closed schools that are not on record
-    # update closed schools if they are on record
-    # i.e. change the status of already persisted schools
-    #
-    # @param org [Hash<Symbol>]
-    def skip?(org)
-      Organisation.find_by(urn: org[:urn]).nil? && org[:establishment_status][:code] == 2
-    end
-
-    # @return [Support::Organisation] create or update by URN
-    #
-    # @param org [Hash<Symbol>]
-    def persist(org)
-      type = EstablishmentType.find_by(code: org[:establishment_type][:code])
-
-      Organisation.find_or_create_by!(urn: org[:urn]) do |record|
-        record.establishment_type_id = type.id             # uuid
-        record.name = org[:school][:name]                  # string
-        record.address = org[:school][:address]            # jsonb
-        record.contact = org[:school][:head_teacher]       # jsonb
-        record.phase = org[:school][:phase][:code]         # integer
-        record.gender = org[:school][:gender][:code]       # integer
-        record.status = org[:establishment_status][:code]  # integer
-      end
-    end
-
-    # @return [Array<Hash>] loaded from CSV file or updated live
-    def dataset
-      data ? local_dataset.call : live_dataset.call
-    end
-
-    # @return [School::Information] filtered from a local file
-    def local_dataset
-      ::School::Information.new(filter: filter, file: data)
-    end
-
-    # @return [School::Information] filtered from a remote file
-    def live_dataset
-      ::School::Information.new(filter: filter)
-    end
-
-    # @return [Hash<String, Array>] criteria to permit
-    def filter
-      { "TypeOfEstablishment (code)" => EstablishmentType.all.map(&:code) }
+    # @return [Proc] Wrap a function to complete the pipeline
+    def export_proc
+      ->(orgs) { saver.call(orgs) }
     end
   end
 end
