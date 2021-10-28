@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # Common ---------------------------------------------------------------------
   #
   get "health_check" => "application#health_check"
+  get "privacy" => "pages#privacy", "id" => "privacy"
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in

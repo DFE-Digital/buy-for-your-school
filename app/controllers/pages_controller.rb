@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
 
+  def privacy
+    set_page(_method_)
+  end
+
   def planning_start_page
     @back_url = root_path
   end
@@ -19,5 +23,19 @@ class PagesController < ApplicationController
 
   def show_method
     @start_now_button_method = current_user.guest? ? :post : :get
+  end
+
+  private
+
+  def set_page(slug)
+    page = Page.find_by(slug: slug.to_s)
+
+    @body = DocumentFormatter.new(
+      content: page.body,
+      from: :markdown,
+      to: :html,
+    ).call
+
+    @title = page.title
   end
 end

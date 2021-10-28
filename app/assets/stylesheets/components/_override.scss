@@ -3,7 +3,13 @@
 * keep the look consistent.
 **/
 
-#specification, .specification {
+.md-override,
+#specification,
+.specification {
+  h1 {
+    @extend .govuk-heading-l;
+  }
+
   h2 {
     @extend .govuk-heading-m;
   }
