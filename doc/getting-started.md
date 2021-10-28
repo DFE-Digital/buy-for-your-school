@@ -2,7 +2,7 @@
 
 ## Setup
 
-1. Running the project with Docker
+## 1. Running the project with Docker
 
 Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies to run the app, as the project is run in an isolated container, but it takes longer to run. The preferred option is to run code in Docker.
 
@@ -41,7 +41,7 @@ The project uses [Pry](https://github.com/pry/pry) with [Byebug](https://github.
 
 `script/test` is the Docker command target chaining dependency updates, migrations, testing, linting and security checks.
 
-2. Running the project locally
+## 2. Running the project locally
 
 Without [Docker](https://docs.docker.com/docker-for-mac/install) is faster but has lower parity and you will need to install local dependencies on your machine first.
 
