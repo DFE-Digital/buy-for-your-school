@@ -47,7 +47,20 @@ module School
 
     # @return [Array<Hash>]
     def structured_data
-      filter ? mapper.call(filtered_data) : mapper.call(tuples)
+      filter ? map_data(filtered_data) : map_data(tuples)
+    end
+
+    # This method can get very memory intensive once past a few thousand records
+    # Slicing the data up and forcing the garbage collector to run
+    # keeps the memory use low (~20MB) and stops the process from failing
+    def map_data(data)
+      processed_data = []
+      data.each_slice(1000) do |slice|
+        processed_data += mapper.call(slice)
+        GC.start
+      end
+
+      processed_data
     end
 
     # @return [Enumerator::Lazy] table rows
