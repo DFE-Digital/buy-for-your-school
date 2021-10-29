@@ -1,25 +1,3 @@
-<!-----
-NEW: Check the "Suppress top comment" option to remove this info from the output.
-
-Conversion time: 0.584 seconds.
-
-
-Using this Markdown file:
-
-1. Paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* Docs to Markdown version 1.0β31
-* Thu Oct 28 2021 02:53:52 GMT-0700 (PDT)
-* Source doc: GHBS Accessibility statement
------>
-
-
-
 # **Accessibility statement**
 
 
@@ -38,7 +16,7 @@ We have taken steps to make this service accessible:
 
 ## **What to do if you cannot access parts of this website**
 
-If you need information on this website in a different format, such as accessible PDF, large print, easy read, audio recording or braille, please email us on schools.digital@education.gov.uk.
+If you need information on this website in a different format, such as accessible PDF, large print, easy read, audio recording or braille, please email us on GetHelpBuyingForSchools@education.gov.uk.
 
 We’ll consider your request and respond to you within 5 working days.
 
@@ -47,7 +25,7 @@ We’ll consider your request and respond to you within 5 working days.
 
 ## **Reporting accessibility problems with this website**
 
-If you have any problems accessing the service or want to give us feedback, please email us on schools.digital@education.gov.uk
+If you have any problems accessing the service or want to give us feedback, please email us on GetHelpBuyingForSchools@education.gov.uk
 
 
 ## **Enforcement procedure**
