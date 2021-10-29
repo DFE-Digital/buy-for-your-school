@@ -5,7 +5,7 @@ task populate_pages: :environment do
   Page.destroy_all
 
   # loop markdown files in static and load them into pages table
-  Dir.glob(Rails.root.join("static/*.md")).each do |file_path|
+  Dir.glob(Rails.root.join("config/static/*.md")).each do |file_path|
     slug = file_path.split("/").last.gsub(".md", "")
 
     Page.create!(

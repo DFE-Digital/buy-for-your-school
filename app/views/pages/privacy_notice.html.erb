@@ -4,14 +4,16 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="md-override">
       <%= @body.html_safe %>
-      <p class="govuk-body-s">Last updated <%= @time_stamp %></p>
     </div>
+    <p class="govuk-body-s">Last updated <%= @time_stamp %></p>
   </div>
   <div class="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m">Related content</h2>
     <ul class="govuk-list govuk-list--none">
-     
       <li>
+        <%= link_to "Terms and conditions", "/terms-and-conditions", class: "govuk-link" %>
+      </li>
+      <li class="govuk-body govuk-!-font-weight-bold">
         <%= link_to "Privacy notice", privacy_path, class: "govuk-link" %>
       </li>
       <li>
