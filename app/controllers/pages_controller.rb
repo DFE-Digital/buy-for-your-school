@@ -17,6 +17,10 @@ class PagesController < ApplicationController
     set_page(__method__)
   end
 
+  def terms_and_conditions
+    set_page(__method__)
+  end
+
   def planning_start_page
     @back_url = root_path
   end
