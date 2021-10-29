@@ -1,57 +1,37 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "11f128de39b52c4f17c8ac43be1a514cd57e37b172f37589d54738782abb2665",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/sessions_controller.rb",
-      "line": 30,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(UserSession.new(:session => (session)).sign_out_url)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "SessionsController",
-        "method": "destroy"
-      },
-      "user_input": "UserSession.new(:session => (session)).sign_out_url",
-      "confidence": "High",
-      "note": ""
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "3863b51add0146069c24410ec1bfc99015d680679d275ce49f27cc22b6dc8f9e",
+      "fingerprint": "d3456c155dedafeca54754530611334bcde4c8cc1091b1acde3bd473184c091f",
       "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/specifications/show.html.erb",
-      "line": 15,
+      "message": "Unescaped parameter value",
+      "file": "app/views/support/cases/documents/show.html.erb",
+      "line": 4,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "SpecificationRenderer.new(:template => Journey.find(journey_id).liquid_template, :answers => GetAnswersForSteps.new(:visible_steps => Journey.find(journey_id).visible_steps.includes([:radio_answer, :short_text_answer, :long_text_answer, :single_date_answer, :checkbox_answers, :number_answer, :currency_answer])).call).to_html",
+      "code": "@current_case.documents.for_rendering.find(params[:id]).document_body",
       "render_path": [
         {
           "type": "controller",
-          "class": "SpecificationsController",
+          "class": "Support::Cases::DocumentsController",
           "method": "show",
-          "line": 25,
-          "file": "app/controllers/specifications_controller.rb",
+          "line": 5,
+          "file": "app/controllers/support/cases/documents_controller.rb",
           "rendered": {
-            "name": "specifications/show",
-            "file": "app/views/specifications/show.html.erb"
+            "name": "support/cases/documents/show",
+            "file": "app/views/support/cases/documents/show.html.erb"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "specifications/show"
+        "template": "support/cases/documents/show"
       },
-      "user_input": "Journey.find(journey_id).liquid_template",
+      "user_input": "params[:id]",
       "confidence": "Weak",
       "note": ""
     }
   ],
-  "updated": "2021-03-22 16:32:31 +0000",
-  "brakeman_version": "5.0.0"
+  "updated": "2021-10-29 12:52:01 +0000",
+  "brakeman_version": "5.1.1"
 }
