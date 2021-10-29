@@ -1,5 +1,5 @@
 RSpec.feature "Create a new support request" do
-  let(:user) { create(:user, :with_a_supported_school) }
+  let(:user) { create(:user, :one_supported_school) }
 
   describe "start page" do
     before do
@@ -120,35 +120,39 @@ RSpec.feature "Create a new support request" do
     end
   end
 
-  context "when the user belongs to multiple supported schools" do
-    let(:user) { create(:user, :with_multiple_supported_schools) }
-
+  describe "school details" do
     before do
       user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
     end
 
-    it "asks them to choose which school" do
-      expect(page).to have_unchecked_field "Specialist School for Testing"
-      expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
-    end
-  end
-
-  context "when the user belongs to only one supported school" do
-    before do
-      user_is_signed_in(user: user)
-      visit "/support-requests/new"
-      click_continue
+    context "when the user belongs to only one supported school" do
+      it "skips step 2 because the school is implicit" do
+        expect(page).not_to have_unchecked_field "Specialist School for Testing"
+        expect(find("span.govuk-caption-l")).to have_text "About your procurement"
+      end
     end
 
-    it "skips step 2 automatically chosing the first school" do
-      expect(page).not_to have_unchecked_field "Specialist School for Testing"
+    context "when the user belongs to multiple supported schools" do
+      let(:user) { create(:user, :many_supported_schools) }
+
+      it "asks them to choose which school" do
+        expect(page).to have_unchecked_field "Specialist School for Testing"
+        expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
+      end
+
+      it "requires a school be selected" do
+        click_continue
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "You must select a school", href: "#support-form-school-urn-field-error"
+        expect(find("span.govuk-error-message")).to have_text "You must select a school"
+      end
     end
   end
 
   context "when the user has existing specs" do
-    let(:user) { create(:user, :with_a_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
+    let(:user) { create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
     let(:category) { create(:category, title: "Laptops") }
     let(:journey) { create(:journey, category: category, user: user) }
 
@@ -243,7 +247,7 @@ RSpec.feature "Create a new support request" do
 
   # show
   describe "a completed support request" do
-    let(:user) { create(:user, :with_a_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
+    let(:user) { create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
 
     let(:answers) { find_all("dd.govuk-summary-list__value") }
 

@@ -10,7 +10,11 @@ class PagesController < ApplicationController
   end
 
   def privacy
-    set_page(_method_)
+    set_page(__method__)
+  end
+  
+  def accessibility
+    set_page(__method__)
   end
 
   def planning_start_page

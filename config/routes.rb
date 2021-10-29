@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   #
   get "health_check" => "application#health_check"
   get "privacy" => "pages#privacy", "id" => "privacy"
+  get "accessibility" => "pages#accessibility", "id" => "accessibility"
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index]
 
   resources :support_requests, except: %i[destroy], path: "support-requests"
+  resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
   post "/submit", to: "api/support/requests#create", as: :submit_request
 
   resources :journeys, only: %i[show create destroy] do

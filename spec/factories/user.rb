@@ -6,16 +6,17 @@ FactoryBot.define do
     email       { "test@test"   }
     first_name  { "first_name"  }
     last_name   { "last_name"   }
+    roles       { [] }
+
     orgs do
       [{
-        "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-        "name" => "Supported School Name",
-        "type" => {
-          "id" => ORG_TYPE_IDS.sample.to_s, # random valid ids
+        "id": "23F20E54-79EA-4146-8E39-18197576F023",
+        "name": "Supported School Name",
+        "type": {
+          "id": ORG_TYPE_IDS.sample.to_s, # random valid ids
         },
       }]
     end
-    roles { [] }
 
     after(:create, :build, :stub) do |user|
       if ENV["POST_MIGRATION_CHANGES"] == "true"
@@ -28,55 +29,50 @@ FactoryBot.define do
       end
     end
 
-    trait :unsupported do
-      orgs do
-        [{
-          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-          "name" => "Unsupported School Name",
-          "type" => { "id" => "11" }, # ID will be rejected
-        }]
-      end
-    end
-
     trait :caseworker do
       email       { "ops@education.gov.uk"   }
       first_name  { "Procurement"            }
       last_name   { "Specialist"             }
       orgs do
         [{
-          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-          "name" => "DSI Caseworkers",
+          "id": "23F20E54-79EA-4146-8E39-18197576F023",
+          "name": "DSI Caseworkers",
         }]
       end
     end
 
-    trait :with_multiple_supported_schools do
+    trait :no_supported_schools do
       orgs do
-        [
-          {
-            "id": SecureRandom.uuid,
-            "urn": SecureRandom.uuid,
-            "name": "Specialist School for Testing",
-            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" },
-          },
-          {
-            "id": SecureRandom.uuid,
-            "urn": SecureRandom.uuid,
-            "name": "Greendale Academy for Bright Sparks",
-            "type": { "id" => ORG_TYPE_IDS.last, "name" => "Academy Special Converter" },
-          },
-        ]
+        [{
+          "id": "23F20E54-79EA-4146-8E39-18197576F023",
+          "name": "Unsupported School Name",
+          "type": { "id": "11", "name": "Other Independent School" },
+        }]
       end
     end
 
-    trait :with_a_supported_school do
+    trait :one_supported_school do
+      orgs do
+        [{
+          "urn": "urn-type-1",
+          "name": "Specialist School for Testing",
+          "type": { "id": ORG_TYPE_IDS.first, "name": "Community School" },
+        }]
+      end
+    end
+
+    trait :many_supported_schools do
       orgs do
         [
           {
-            "id": SecureRandom.uuid,
-            "urn": SecureRandom.uuid,
+            "urn": "urn-type-1",
             "name": "Specialist School for Testing",
-            "type": { "id" => ORG_TYPE_IDS.first, "name" => "Community School" },
+            "type": { "id": ORG_TYPE_IDS.first, "name": "Community School" },
+          },
+          {
+            "urn": "greendale-urn",
+            "name": "Greendale Academy for Bright Sparks",
+            "type": { "id": ORG_TYPE_IDS.last, "name": "Academy Special Converter" },
           },
         ]
       end
