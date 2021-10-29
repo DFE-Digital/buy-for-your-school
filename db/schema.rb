@@ -95,6 +95,14 @@ ActiveRecord::Schema.define(version: 2021_10_29_092618) do
     t.index ["step_id"], name: "index_number_answers_on_step_id"
   end
 
+  create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.string "response", null: false

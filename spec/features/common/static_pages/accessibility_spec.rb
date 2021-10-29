@@ -1,20 +1,17 @@
-RSpec.feature "Common layout element" do
+RSpec.feature "Accessibility" do
   before do
-    visit "/"
+    Page.create!(
+      title: "Accessibility",
+      slug: "accessibility",
+      body: "# **Accessibility statement**",
+    )
+    visit "/accessibility"
   end
 
-  describe "header" do
-    scenario "logo links back to gov.uk" do
-      within ".govuk-header__logo" do
-        expect(page).to have_link href: "https://www.gov.uk", class: "govuk-header__link--homepage"
-      end
-    end
-
-    scenario "service name links back to the landing page" do
-      within(".govuk-header__content") do
-        # app.name
-        expect(page).to have_link "Get help buying for schools", href: "/", class: "govuk-header__link--service-name"
-      end
+  describe "body" do
+    scenario "contains the expected accessibility content" do
+      expect(page).to have_text("Accessibility statement")
+      expect(page).to have_title("Accessibility")
     end
   end
 
