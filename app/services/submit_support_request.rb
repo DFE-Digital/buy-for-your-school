@@ -28,7 +28,7 @@ require "types"
 class SubmitSupportRequest
   extend Dry::Initializer
 
-  option :request # SupportRequestPresenter expected
+  option :request, ::Types.Constructor(SupportRequestPresenter)
   option :template, Types::String, default: proc { "Auto-reply" }
 
   # TODO: Replace with outbound API call

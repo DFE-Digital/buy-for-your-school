@@ -39,10 +39,10 @@ RSpec.describe SubmitSupportRequest do
     let(:chosen_organisation) { user.orgs.first }
 
     let(:support_request) do
-      SupportRequestPresenter.new(create(:support_request, :with_specification,
-                                         user: user,
-                                         phone_number: "01234567890",
-                                         school_urn: chosen_organisation["urn"]))
+      create(:support_request, :with_specification,
+             user: user,
+             phone_number: "01234567890",
+             school_urn: chosen_organisation["urn"])
     end
 
     it "submits the request and creates a case" do
@@ -60,7 +60,7 @@ RSpec.describe SubmitSupportRequest do
     end
 
     context "without a specification" do
-      let(:support_request) { SupportRequestPresenter.new(create(:support_request)) }
+      let(:support_request) { create(:support_request) }
 
       it "has no support document" do
         expect(support_case.documents.count).to eq 0
