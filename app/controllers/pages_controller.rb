@@ -9,7 +9,7 @@ class PagesController < ApplicationController
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
 
-  def privacy
+  def privacy_notice
     set_page(__method__)
   end
 
