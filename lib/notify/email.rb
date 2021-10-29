@@ -68,8 +68,7 @@ module Notify
         # `email_reply_to_id` can be omitted if the service only has one email
         # reply-to address, or you want to use the default email address.
         #
-        # default: GHBFS-SchoolsBuying.DEV@education.gov.uk
-        email_reply_to_id: "3dc99d12-6b8a-4fc1-975b-a6b0e70de80b",
+        # email_reply_to_id: "",
         email_address: recipient.email,
         template_id: template_id,
         reference: reference,

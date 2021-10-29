@@ -2,7 +2,7 @@ RSpec.describe Support::InteractionPresenter do
   subject(:presenter) { described_class.new(interaction) }
 
   let(:interaction) { OpenStruct.new(note: "\n foo \n") }
-  let(:event_types) { { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3 } }
+  let(:event_types) { { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3, support_request: 4 } }
 
   describe "#note" do
     it "strips new lines" do

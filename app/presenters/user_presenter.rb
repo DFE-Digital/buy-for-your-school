@@ -4,35 +4,30 @@ class UserPresenter < SimpleDelegator
     journeys.initial.map { |j| JourneyPresenter.new(j) }
   end
 
-  # Get all organisations supported for selection
-  #
-  # @return [UserPresenter::SupportedOrganisation] supported organisations
-  def supported_schools
-    return [] unless valid_supported_orgs.any?
+  # @return [String, nil] inferred unique school identifier
+  def school_urn
+    supported_schools.first.urn if supported_schools.one?
+  end
 
-    valid_supported_orgs.map { |org| OpenStruct.new(**org.symbolize_keys) }
+  # @return [String, nil] inferred school name
+  # def school_name
+  #   supported_schools.first.name if supported_schools.one?
+  # end
+
+  # Support request form options when a single URN cannot be inferred
+  # @see support_requests/form/step2
+  #
+  # @return [Array<OpenStruct>] the name/urn of a user's supported schools
+  def supported_schools
+    orgs.map { |org|
+      next unless org.dig("type", "id").to_i.in?(ORG_TYPE_IDS)
+
+      OpenStruct.new(name: org["name"], urn: org["urn"])
+    }.compact
   end
 
   # @return [String]
   def full_name
     super || "#{first_name} #{last_name}"
-  end
-
-private
-
-  def organisations
-    Array(orgs)
-  end
-
-  # return only organisations that have a name, urn and the org type id
-  # appears in ORG_TYPE_IDS constant
-  def valid_supported_orgs
-    @valid_supported_orgs ||= organisations.select do |data|
-      type_id = data.dig("type", "id")
-      name = data["name"]
-      urn = data["urn"]
-
-      name.present? && urn.present? && type_id.to_i.in?(ORG_TYPE_IDS)
-    end
   end
 end
