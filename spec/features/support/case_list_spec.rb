@@ -1,23 +1,48 @@
 RSpec.feature "Case management dashboard" do
   include_context "with an agent"
 
+  let(:state) { :initial }
+  let!(:new_case) { create(:support_case, state: state, agent: agent) }
+
   before do
-    create(:support_case)
+    create_list(:support_case, 3)
     click_button "Agent Login"
     # visit "/support/cases"
   end
 
-  it "displays 3 tabs" do
-    expect(all("li.govuk-tabs__list-item", visible: true).count).to eq(3)
+  it "defaults to the 'my cases' tab" do
+    pp page.source
+
+    binding.pry
+    expect(find("#my-cases")).not_to have_css ".govuk-tabs__panel--hidden"
   end
 
-  it "defaults to the 'My Cases' tab" do
-    expect(find("#my-cases .govuk-heading-l", visible: true)).to have_text "My cases"
+  context "when my cases tab" do
+
+    it "shows my cases" do
+      within "#my-cases" do
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
+      end
+    end
+
+    xit "shows correct table headers" do
+    end
   end
 
-  it "lists cases" do
-    expect(find("#my-cases .govuk-table")).to be_visible
-    expect(all("#my-cases .govuk-table__row").count).to eq(2)
+
+
+  it "shows new cases" do
+    within "#new-cases" do
+      expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
+      row = all(".govuk-table__body .govuk-table__row")
+      expect(row[0]).to have_text new_case.ref
+    end
+  end
+
+  it "shows all cases" do
+    within "#all-cases" do
+      expect(all(".govuk-table__body .govuk-table__row").count).to eq(4)
+    end
   end
 
   it "has a table with columns for org id, category name, case status and updated timestamp" do
