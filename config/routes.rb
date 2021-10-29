@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # Common ---------------------------------------------------------------------
   #
   get "health_check" => "application#health_check"
+  get "privacy" => "pages#privacy", "id" => "privacy"
   get "accessibility" => "pages#accessibility", "id" => "accessibility"
 
   # DfE Sign In
