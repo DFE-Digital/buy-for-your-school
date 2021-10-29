@@ -8,6 +8,8 @@ module Support
     end
 
     def show
+      @current_case = CasePresenter.new(@current_case)
+
       if @template == :basic
         @back_url = new_support_case_email_type_path(@current_case)
 

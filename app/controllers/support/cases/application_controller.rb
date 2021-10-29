@@ -5,7 +5,7 @@ module Support
   private
 
     def current_case
-      @current_case ||= CasePresenter.new(Case.find_by(id: params[:case_id]))
+      @current_case ||= Case.find_by(id: params[:case_id])
     end
   end
 end
