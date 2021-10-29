@@ -20,6 +20,8 @@ en:
       cancel: Cancel
     label:
       what_is: "What is %{label}?"
+    link:
+      opens_in_new_tab: (opens in new tab)
   banner:
     design: "%{env} Environment"
     beta:
@@ -292,6 +294,7 @@ en:
         contact_email: Contact email
         problem_description: Description of problem
         attached_specification: Attached specification
+        attached_specification_none: None
         requested_at: "Request sent on %{time}"
         back: Back to case list
         case_owner: "Case owner: %{owner}"
@@ -343,6 +346,10 @@ en:
           label: Subject
           default_value: "DfE Get help buying for schools: your request for support"
         submit: Confirm and send email
+
+    case_documents:
+      show:
+        header: Your specification
 
     interaction:
         header:

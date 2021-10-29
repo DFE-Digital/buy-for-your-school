@@ -26,10 +26,15 @@
         <%= I18n.t("support.case.label.attached_specification") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <% "TODO: Render link to view documents" %>
-        <a href="#">
-          specification-1.pdf
-        </a>
+        <% unless current_case.documents.for_rendering.any? %>
+          <%= I18n.t("support.case.label.attached_specification_none") %>
+        <% end %>
+
+        <% current_case.documents.for_rendering.each.with_index(1) do |document, i| %>
+          <%= link_to "specification-#{i} #{I18n.t("generic.link.opens_in_new_tab")}",
+                support_case_document_path(@current_case, document),
+                class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %>
+        <% end %>
       </dd>
     </div>
   </dl>
