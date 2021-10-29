@@ -11,7 +11,7 @@ module Dsi
     extend Dry::Initializer
 
     option :service,      default: proc { ENV["DFE_SIGN_IN_IDENTIFIER"] }
-    option :api_endpoint, default: proc { ENV["DFE_SIGN_IN_API_ENDPOINT"] }
+    option :api_endpoint, default: proc { GetDsiUrl.new(domain: "api").call }
     option :api_secret,   default: proc { ENV["DFE_SIGN_IN_API_SECRET"] }
 
     # @return [String]

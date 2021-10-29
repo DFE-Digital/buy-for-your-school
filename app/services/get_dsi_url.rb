@@ -15,23 +15,12 @@ class GetDsiUrl
   #   @api private
   option :path, optional: true, reader: :private
 
-  # @!attribute port
-  #   @return [String]
-  #   @api private
-  option :port, optional: true, reader: false, default: proc { nil }
-
   # @return [String] HTTPS url
   def call
-    "https://#{env_prefix}#{domain}.signin.education.gov.uk#{port}/#{path}"
+    "https://#{env_prefix}#{domain}.signin.education.gov.uk/#{path}"
   end
 
 private
-
-  def port
-    return unless @port
-
-    ":#{@port}"
-  end
 
   # @return [String] ENV prefix
   def env_prefix
