@@ -77,6 +77,11 @@ private
     Support::Document.new(file_type: "HTML attachment", document_body: document_body)
   end
 
+  # @return [Support::Category]
+  def map_category
+    Support::Category.find_by(slug: category)
+  end
+
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
     kase = Support::Case.create!(request_text: request.message_body,
@@ -85,7 +90,8 @@ private
                                  email: user.email,
                                  phone_number: request.phone_number,
                                  organisation_urn: request.school_urn,
-                                 organisation_name: request.school_name)
+                                 organisation_name: request.school_name,
+                                 category: map_category)
 
     Support::Interaction.create!({  case: kase,
                                     event_type: 4,
