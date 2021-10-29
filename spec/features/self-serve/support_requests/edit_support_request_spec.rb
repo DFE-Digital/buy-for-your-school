@@ -63,9 +63,7 @@ RSpec.feature "Edit an unsubmitted support request" do
     end
 
     context "when user has selected a school" do
-      let(:user) { create(:user, :with_a_supported_school) }
-
-      let(:school) { UserPresenter.new(user).supported_schools.first }
+      let(:user) { create(:user, :one_supported_school) }
 
       let(:support_request) do
         create(:support_request,
@@ -74,12 +72,12 @@ RSpec.feature "Edit an unsubmitted support request" do
                category: nil,
                phone_number: nil,
                message_body: "",
-               school_urn: school.urn)
+               school_urn: "urn-type-1")
       end
 
       it "shows the school name" do
         within "#support-request-school" do
-          expect(page).to have_content(school.name)
+          expect(page).to have_text "Specialist School for Testing"
         end
       end
     end
@@ -92,9 +90,7 @@ RSpec.feature "Edit an unsubmitted support request" do
 
     describe "editing the school" do
       context "when user has multiple supported schools" do
-        let(:user) { create(:user, :with_multiple_supported_schools) }
-
-        let(:greendale) { UserPresenter.new(user).supported_schools.last }
+        let(:user) { create(:user, :many_supported_schools) }
 
         it "allows the user to choose a different school" do
           click_link "edit-school"
@@ -103,7 +99,7 @@ RSpec.feature "Edit an unsubmitted support request" do
 
           click_continue
 
-          expect(support_request.reload.school_urn).to eq(greendale.urn)
+          expect(support_request.reload.school_urn).to eq "greendale-urn"
         end
       end
     end

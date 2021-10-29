@@ -46,16 +46,18 @@ RSpec.describe SupportForm, type: :model do
     end
   end
 
-  it "#advance!" do
-    form = described_class.new(step: 99)
-    form.advance!
-    expect(form.step).to be 100
-  end
+  describe "#advance!" do
+    it "defaults to one move forward" do
+      form = described_class.new(step: 99)
+      form.advance!
+      expect(form.step).to be 100
+    end
 
-  it "#skip!" do
-    form = described_class.new(step: 99)
-    form.skip!
-    expect(form.step).to be 101
+    it "can skip n steps" do
+      form = described_class.new(step: 99)
+      form.advance!(2)
+      expect(form.step).to be 101
+    end
   end
 
   it "#back" do

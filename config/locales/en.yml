@@ -191,6 +191,7 @@ en:
   # /support-requests
   support_request:
     link: Request free help and support with your specification
+    unsupported_school: You are no longer a member of a supported school.
     flash:
       created: Support request created
       updated: Support request updated
@@ -229,8 +230,6 @@ en:
         A copy of the specification you choose will be sent to us with this request in its current state.
         We will not receive any new changes you make.
       message: Briefly describe your problem in a few sentences.
-    suggestion:
-      school: If your school is not listed, then select another school.
     button:
       send: Send request
   support_request_submissions:
@@ -240,7 +239,7 @@ en:
       what_you_can_do_next: What you can do next
       you_can_also: You can also
     sub_header:
-      confirmation: Your request for support has been sent
+      confirmation: "We have sent a confirmation to:"
     body:
       what_happens_next: "The DfE's supported buying team will be in touch within %{days} working days to discuss how we can support you."
       what_you_can_do_next: "%{continue_link} if you can (but we won't receive these new changes), or %{start_new_link} if you haven't done so yet."

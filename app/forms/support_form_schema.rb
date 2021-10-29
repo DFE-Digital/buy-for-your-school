@@ -23,9 +23,7 @@ class SupportFormSchema < Dry::Validation::Contract
   rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
 
   rule(:school_urn) do
-    if values[:step] == 2 && value.blank?
-      key(:school_urn).failure(:missing)
-    end
+    key(:school_urn).failure(:missing) if key? && value.blank?
   end
 
   rule(:journey_id, :category_id) do
