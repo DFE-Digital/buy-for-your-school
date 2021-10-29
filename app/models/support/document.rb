@@ -6,5 +6,7 @@ module Support
   #
   class Document < ApplicationRecord
     belongs_to :case, class_name: "Support::Case"
+
+    scope :for_rendering, -> { where.not(document_body: nil) }
   end
 end

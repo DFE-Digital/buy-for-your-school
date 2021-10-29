@@ -7,7 +7,7 @@ RSpec.feature "Case summary" do
     visit "/support/cases/#{support_case.id}"
   end
 
-  let(:support_case) { create(:support_case, agent: nil) }
+  let(:support_case) { create(:support_case, :with_documents, agent: nil)) }
 
   describe "Back link" do
     it_behaves_like "breadcrumb_back_link" do
@@ -38,15 +38,21 @@ RSpec.feature "Case summary" do
   end
 
   describe "Request details tab" do
-    before { visit "/support/cases/#{support_case.id}#request-details" }
+    before { visit "/support/cases/#{support_case.id}#case-details" }
 
     # TODO: add request details in next PR
     xit "lists request details" do
-      within "#request-details" do
+      within "#case-details" do
         expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
         expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"
         expect(all(".govuk-summary-list__row")[2]).to have_text "Attached specification"
       end
+    end
+
+    it "lists specifications for viewing" do
+      document = support_case.documents.first
+
+      expect(page).to have_link "specification-1 (opens in new tab)", href: support_case_document_path(support_case, document)
     end
   end
 
