@@ -25,18 +25,7 @@ RSpec.feature "Case worker authentication" do
       pp page.source
       expect(page).not_to have_current_path "/support/cases"
       expect(page).to have_current_path "/support"
-      # expect([:notice]).to match("You are not a recognised case worker")
       expect(find("h3.govuk-notification-banner__heading")).to have_text "Invalid Caseworker"
     end
   end
-
-  # TODO: test needs fixing - Support::Agent method
-  # context "when not a current agent" do
-  #   it "raises a notice and redirects to support root path" do
-  #     Support::Agent.clear()
-  #     click_button "Agent Login"
-  #     expect(page).to have_content "You are not a recognised case worker"
-  #     expect(page).to have_current_path "/support"
-  #   end
-  # end
 end
