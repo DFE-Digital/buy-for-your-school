@@ -3,7 +3,7 @@ module Support
     before_action :current_case, only: %i[show]
 
     def index
-      @cases = Case.includes(%i[agent interactions]).all.map { |c| CasePresenter.new(c) }
+      @cases = Case.includes(%i[agent]).all.map { |c| CasePresenter.new(c) }
     end
 
     def show
