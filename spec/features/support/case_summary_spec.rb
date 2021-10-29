@@ -7,7 +7,7 @@ RSpec.feature "Case summary" do
     visit "/support/cases/#{support_case.id}"
   end
 
-  let(:support_case) { create(:support_case, :with_documents, agent: nil)) }
+  let(:support_case) { create(:support_case, :with_documents, agent: nil) }
 
   describe "Back link" do
     it_behaves_like "breadcrumb_back_link" do
