@@ -5,6 +5,8 @@ FactoryBot.define do
     state { 0 }
     support_level { 0 }
 
+    association :agent, factory: :support_agent
+
     association :category, factory: :support_category
     sub_category_string { "category subtitle" }
 
