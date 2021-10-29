@@ -344,6 +344,22 @@ en:
           default_value: "DfE Get help buying for schools: your request for support"
         submit: Confirm and send email
 
+    case_email_templates:
+      index:
+        header: Send temolate email
+        what_is_a_framework:
+          link_text: What is a framework?
+          subtitle: General advice about a frameworks
+        how_to_approach_suppliers:
+          link_text: How to approach suppliers
+          subtitle: General advice on finding suppliers
+        catering_frameworks:
+          link_text: Catering frameworks
+          subtitle: Link to catering on find a framework
+        social_value:
+          link_text: Social value
+          subtitle: Help on social value section in creating a specification
+
     interaction:
         header:
           type_of_contact: Type of contact
