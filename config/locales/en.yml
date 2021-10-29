@@ -131,6 +131,10 @@ en:
           delete: Delete specification
           cancel: Cancel
           dashboard: Continue to dashboard
+      next_steps:
+        link_text: see what the next steps are.
+        text: "Once you have a completed specification, "
+
 
   # /dashboard
   dashboard:

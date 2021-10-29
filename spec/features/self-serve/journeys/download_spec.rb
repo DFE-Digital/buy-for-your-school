@@ -20,6 +20,10 @@ RSpec.feature "Users can see their catering specification" do
       # journey.specification.body
       expect(find("p.govuk-body")).to have_text "Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed."
 
+      # journey.specification.next_steps
+      expect(find("article.specification p")).to have_text("Once you have a completed specification,")
+      expect(find("article.specification p")).to have_link("see what the next steps are.", href: "/next-steps-catering")
+
       # journey.specification.download.button
       expect(find("a.govuk-button")).to have_text "Download (.docx)"
       expect(find("a.govuk-button")[:role]).to eq "button"
