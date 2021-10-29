@@ -22,9 +22,9 @@ class SupportFormSchema < Dry::Validation::Contract
 
   rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
 
-  #rule(:school_urn) do
-  #  key(:school_urn).failure(:missing) if key? && value.blank?
-  #end
+  rule(:school_urn) do
+    key(:school_urn).failure(:missing) if key? && value.blank?
+  end
 
   rule(:journey_id, :category_id) do
     key(:category_id).failure(:no_spec) if key?(:category_id) && values[:category_id].blank? && ["none", ""].include?(values[:journey_id])
