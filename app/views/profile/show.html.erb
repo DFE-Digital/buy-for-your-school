@@ -19,7 +19,6 @@
         </dd>
       </div>
 
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("profile.label.email") %>
@@ -31,7 +30,13 @@
 
     </dl>
 
-    <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
+    <% if @current_user.supported_schools.any? %>
+      <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
+    <% else %>
+      <p class="govuk-body">
+        <%= I18n.t("support_request.unsupported_school") %>
+      </p>
+    <% end %>
 
     <p class="govuk-body">
       <%= link_to "Return to dashboard", dashboard_path %>
