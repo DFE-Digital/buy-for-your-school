@@ -97,6 +97,7 @@ RUN RAILS_ENV=production \
     CC_TEST_REPORTER_ID= \
     GITHUB_REF= \
     GITHUB_SHA= \
+    DSI_ENV= \
     bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
