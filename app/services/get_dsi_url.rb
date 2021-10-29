@@ -28,7 +28,6 @@ private
       production: nil,
       staging: "pp-",
       test: "test-",
-      development: "test-",
-    }.fetch(Rails.env.to_sym)
+    }.fetch(ENV.fetch("DSI_ENV"))
   end
 end
