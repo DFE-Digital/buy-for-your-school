@@ -1,5 +1,5 @@
 
-# **Next steps**
+# Next steps
 
 Thank you for using this service to create a specification.
 
@@ -11,7 +11,7 @@ Go directly to view and choose from a list of [catering frameworks recommended b
 
 Or [read about frameworks and how to use one](https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools) if you haven't used one before.
 
-## **Other procurement options**
+## Other procurement options
 
 If you're not able to use a framework, read guidance to find out how to continue with your procurement if you want to:
 

@@ -29,10 +29,6 @@ class PagesController < ApplicationController
     set_page(__method__)
   end
 
-  def planning_start_page
-    @back_url = root_path
-  end
-
   def show_route
     @start_now_button_route = current_user.guest? ? "/auth/dfe" : dashboard_path
   end
@@ -53,5 +49,6 @@ private
     ).call
 
     @title = page.title
+    @time_stamp = page.updated_at.strftime("%e %B %Y")
   end
 end
