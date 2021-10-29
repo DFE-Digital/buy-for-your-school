@@ -1,16 +1,20 @@
 RSpec.shared_context "with notify email templates" do
   let(:available_email_templates) do
     [
-      instance_double("Notifications::Client::Template", id: "1", name: "What is a framework?",
+      instance_double("Notifications::Client::Template", id: "f4696e59-8d89-4ac5-84ca-17293b79c337",
+                                                         name: "What is a framework?",
                                                          body: "Hi ((toName)), here is information regarding frameworks",
                                                          subject: "Email subject 1"),
-      instance_double("Notifications::Client::Template", id: "2", name: "How to approach suppliers",
+      instance_double("Notifications::Client::Template", id: "6c76ed8c-030e-4c69-8f25-ea0c66091bc5",
+                                                         name: "How to approach suppliers",
                                                          body: "Hi ((toName)), here is information regarding approaching suppliers",
                                                          subject: "Email subject 2"),
-      instance_double("Notifications::Client::Template", id: "3", name: "Catering frameworks",
+      instance_double("Notifications::Client::Template", id: "12430165-4ae7-47aa-baa3-d0b3c5440a9b",
+                                                         name: "Catering frameworks",
                                                          body: "Hi ((toName)), here is information regarding catering frameworks",
                                                          subject: "Email subject 3"),
-      instance_double("Notifications::Client::Template", id: "4", name: "Social value",
+      instance_double("Notifications::Client::Template", id: "bb4e6925-3491-44b8-8747-bdbb31257403",
+                                                         name: "Social value",
                                                          body: "Hi ((toName)), here is information regarding social value",
                                                          subject: "Email subject 4"),
     ]
