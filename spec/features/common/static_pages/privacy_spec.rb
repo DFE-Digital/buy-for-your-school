@@ -2,7 +2,7 @@ RSpec.feature "Privacy" do
   before do
     Page.create!(
       title: "Privacy",
-      slug: "privacy",
+      slug: "privacy_notice",
       body: "# **Privacy notice**",
     )
     visit "/privacy"
