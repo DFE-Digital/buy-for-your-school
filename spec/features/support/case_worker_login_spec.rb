@@ -22,7 +22,6 @@ RSpec.feature "Case worker authentication" do
 
     it "fails to gain access" do
       click_button "Agent Login"
-      pp page.source
       expect(page).not_to have_current_path "/support/cases"
       expect(page).to have_current_path "/support"
       expect(find("h3.govuk-notification-banner__heading")).to have_text "Invalid Caseworker"
