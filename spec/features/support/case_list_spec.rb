@@ -2,7 +2,6 @@ RSpec.feature "Case management dashboard" do
   include_context "with an agent"
 
   let(:state) { :initial }
-  let!(:new_case) { create(:support_case, state: state, agent: agent) }
 
   before do
     create_list(:support_case, 3)
@@ -10,17 +9,25 @@ RSpec.feature "Case management dashboard" do
     # visit "/support/cases"
   end
 
-  it "defaults to the 'my cases' tab" do
-    pp page.source
+  it "is signed in as correct agent" do
+    within "header.govuk-header" do
+      expect(find("#userInfo")).to have_text "Signed in as Procurement Specialist"
+    end
+  end
 
-    binding.pry
+
+  it "defaults to the 'my cases' tab" do
     expect(find("#my-cases")).not_to have_css ".govuk-tabs__panel--hidden"
   end
 
   context "when my cases tab" do
+    let!(:new_case) { create(:support_case, state: state, agent: agent) }
 
     it "shows my cases" do
       within "#my-cases" do
+        pp page.source
+
+        binding.pry
         expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
       end
     end
