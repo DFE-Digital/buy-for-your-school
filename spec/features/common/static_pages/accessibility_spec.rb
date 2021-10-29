@@ -3,7 +3,7 @@ RSpec.feature "Accessibility" do
     Page.create!(
       title: "Accessibility",
       slug: "accessibility",
-      body: File.read("./static/accessibility.md"),
+      body: Rails.root.join("static/accessibility.md").read,
     )
     visit "/accessibility"
   end
