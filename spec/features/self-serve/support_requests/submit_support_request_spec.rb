@@ -62,16 +62,24 @@ RSpec.feature "Completed support requests" do
     end
   end
 
-  # support_requests.buttons.send
-  it "can be submitted once" do
-    expect(find_button("Send request")).to be_present
+  describe "clicking the submission button" do
+    # support_requests.buttons.send
+    before do
+      click_button "Send request"
+    end
 
-    expect(support_request).not_to be_submitted
-    click_button "Send request"
-    expect(support_request.reload).to be_submitted
+    it "submits the request" do
+      expect(support_request.reload).to be_submitted
+      # support_request_submissions.confirmation.header
+      expect(page).to have_content("Your request for support has been sent")
+    end
 
-    visit "/support-requests/#{support_request.id}"
-    expect(page).not_to have_button "Send request"
-    expect(page).not_to have_link "Change"
+    it "can be submitted only once" do
+      visit "/support-requests/#{support_request.id}"
+      expect(page).not_to have_button "Send request"
+      expect(page).not_to have_link "Change"
+      # support_request_submissions.confirmation.header
+      expect(page).to have_content("Your request for support has been sent")
+    end
   end
 end

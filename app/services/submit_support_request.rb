@@ -12,17 +12,15 @@ require "types"
 #
 #   ```json
 #   {
-#     "support_enquiry": [{
 #       "support_request_id":1,
 #       "name":"Confused SBP",
 #       "email":"sbp@school.gov.uk",
-#       "telephone": "01234567890"
+#       "telephone": "01234567890",
 #       "message": "example message",
-#       "documents" : [{
+#       "documents": [{
 #          "file_type": "html_markup",
 #          "document_body": "<h1>example html markup</h1>"
 #        }]
-#     }]
 #   }
 #   ```
 #
@@ -37,7 +35,7 @@ class SubmitSupportRequest
   #
   # @return [nil, Notifications::Client::ResponseNotification]
   def call
-    return false unless enquiry
+    return false unless open_case
 
     # TODO: confirmation message body forms the first CM interaction
     # email = Emails::Confirmation.new().call
@@ -52,12 +50,16 @@ class SubmitSupportRequest
         category: category,
       },
     ).call
+
+    request.update!(submitted: true)
   end
 
 private
 
-  # @return [String] snapshot of specification HTML
+  # @return [nil, String] snapshot of specification HTML
   def document_body
+    return nil unless request.journey
+
     SpecificationRenderer.new(journey: request.journey, to: :html).call
   end
 
@@ -66,26 +68,60 @@ private
     request.journey ? request.journey.category.slug : request.category.slug
   end
 
-  # API (draft) ----------------------------------------------------------------
-
-  # @return [Support::Enquiry] TODO: Move into inbound API
-  def enquiry
-    enquiry = Support::Enquiry.new(
-      support_request_id: request.id,
-      name: request.user.full_name,
-      email: request.user.email,
-      telephone: request.phone_number,
-      message: request.message_body,
-      category: category,
-      # TODO: include unique identifier for school
-    )
-
-    enquiry.documents << document if request.journey
-    enquiry.save!
+  def user
+    User.find(request.user_id)
   end
 
   # @return [Support::Document] TODO: Move into inbound API
   def document
     Support::Document.new(file_type: "HTML attachment", document_body: document_body)
   end
+
+  # @return [Support::Case] TODO: Move into inbound API
+  def open_case
+    kase = Support::Case.create!(request_text: request.message_body,
+                                 first_name: user.first_name,
+                                 last_name: user.last_name,
+                                 email: user.email,
+                                 phone_number: request.phone_number)
+
+    Support::Interaction.create!({  case: kase,
+                                    event_type: 4,
+                                    additional_data:
+                                      { "support_request_id": request.id,
+                                        "first_name": user.first_name,
+                                        "last_name": user.last_name,
+                                        "email": user.email,
+                                        "phone_number": request.phone_number,
+                                        "category": category,
+                                        "message": request.message_body } })
+
+    kase.documents << document if request.journey
+    kase
+  end
+
+  # API (draft) ----------------------------------------------------------------
+  #
+  #   def send_api_request
+  #     uri = URI.parse("https://localhost/support/api/create-cases")
+  #     http = Net::HTTP.new(uri.host, "3000")
+  #     http.use_ssl = true
+  #     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #     request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+  #     request.body = "{}"
+  #     http.request(request)
+  #   end
+  #
+  #   def request_body
+  #     { "support_request_id": request.id,
+  #       "first_name": user.first_name,
+  #       "last_name": user.last_name,
+  #       "email": user.email,
+  #       "phone_number": request.phone_number,
+  #       "category": category,
+  #       "message": request.message_body,
+  #       "documents": [
+  #         { "file_type": "html_markup", "document_body": document_body },
+  #       ] }
+  #   end
 end
