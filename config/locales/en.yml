@@ -20,8 +20,6 @@ en:
       cancel: Cancel
     label:
       what_is: "What is %{label}?"
-    link:
-      opens_in_new_tab: (opens in new tab)
   banner:
     design: "%{env} Environment"
     beta:
@@ -259,6 +257,10 @@ en:
   # Supported ------------------------------------------------------------------
   #
   support:
+    generic:
+      link:
+        opens_in_new_tab: (opens in new tab)
+
     header: Supported Buying Admin
 
     case:
