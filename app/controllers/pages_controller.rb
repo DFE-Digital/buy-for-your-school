@@ -21,6 +21,14 @@ class PagesController < ApplicationController
     set_page(__method__)
   end
 
+  def next_steps_catering
+    set_page(__method__)
+  end
+
+  def next_steps_mfd
+    set_page(__method__)
+  end
+
   def planning_start_page
     @back_url = root_path
   end

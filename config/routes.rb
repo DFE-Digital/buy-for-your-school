@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get "privacy" => "pages#privacy_notice", "id" => "privacy"
   get "accessibility" => "pages#accessibility", "id" => "accessibility"
   get "terms-and-conditions" => "pages#terms_and_conditions", "id" => "terms_and_conditions"
+  get "next-steps-catering" => "pages#next_steps_catering", "id" => "next_steps_catering"
+  get "next-steps-mfd" => "pages#next_steps_mfd", "id" => "next_steps_mfd"
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
