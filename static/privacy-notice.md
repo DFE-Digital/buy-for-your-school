@@ -27,15 +27,13 @@ We may share your information where the law allows, or where we have a legal obl
 
 ## **How long we hold personal information**
 
-We will only retain your personal information for as long as necessary to fulfil the purposes we collected it for, including for the purposes of satisfying any legal, accounting, or reporting requirements.
-
-We will only keep the personal data for as long as we need it for these purposes, 6 years, after which point it will be securely destroyed. Under the data protection legislation, and in compliance with the relevant conditions, we can lawfully keep personal data processed purely for research purposes indefinitely.
+We will only retain your personal information for as long as necessary to fulfil the purposes we collected it for, including for the purposes of satisfying any legal, accounting, or reporting requirements, after which point it will be securely destroyed. Under the data protection legislation, and in compliance with the relevant conditions, we can lawfully keep personal data processed purely for research purposes indefinitely.
 
 ## **Your data protection rights**
 
 You can find more information about how the DfE handles personal information in [DfE’s personal information charter](https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter).
 
-Under the Data Protection Act 2018, you are entitled to ask if we hold information relating to you and ask for a copy, by making a ‘subject access request’.
+Under the Data Protection Act 2018, you are entitled to ask if we hold information relating to you and ask for a copy, by making a ‘subject access request’. For further information and how to request your data, please use the [contact form](https://form.education.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-f1453496-7d8a-463f-9f33-1da2ac47ed76/AF-Stage-1e64d4cc-25fb-499a-a8d7-74e98203ac00/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen) in the Personal Information Charter.
 
 You can find more information in the ‘how to find out what personal information we hold about you’ section of the [Personal Information Charter](https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter#how-to-find-out-what-personal-information-we-hold-about-you).
 
@@ -54,6 +52,10 @@ Store Street
 Manchester
 M1 2WD
 
-If you wish to contact the DfE’s data protection officer, please use the secure online form or write to the address above.
+If you wish to contact the DfE’s data protection officer, please use the secure online form or write to the address above, stating your questions are in regards to Get Help buying for Schools.
 
 You also have the right to lodge a complaint about data protection with the [Information Commissioner’s Office](https://ico.org.uk/make-a-complaint/) (ICO).
+
+## **Last updated**
+
+We may need to update this privacy notice periodically, so we recommend that you revisit this information from time to time.

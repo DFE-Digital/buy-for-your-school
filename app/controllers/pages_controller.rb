@@ -25,7 +25,7 @@ class PagesController < ApplicationController
     @start_now_button_method = current_user.guest? ? :post : :get
   end
 
-  private
+private
 
   def set_page(slug)
     page = Page.find_by(slug: slug.to_s)
