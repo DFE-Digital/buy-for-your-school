@@ -1,17 +1,17 @@
-RSpec.feature "Privacy" do
+RSpec.feature "Terms and Conditions" do
   before do
     Page.create!(
-      title: "Privacy",
-      slug: "privacy_notice",
-      body: "# **Privacy notice**",
+      title: "Terms and conditions",
+      slug: "terms_and_conditions",
+      body: "# Terms and conditions",
     )
-    visit "/privacy"
+    visit "/terms-and-conditions"
   end
 
   describe "body" do
-    scenario "contains the expected privacy content" do
-      expect(page).to have_text("Privacy notice")
-      expect(page).to have_title("Privacy")
+    scenario "contains the expected terms and conditions content" do
+      expect(page).to have_text("Terms and conditions")
+      expect(page).to have_title("Terms and conditions")
     end
   end
 
@@ -20,7 +20,7 @@ RSpec.feature "Privacy" do
       within("footer") do
         expect(page).to have_text "For privacy information for this service, or to request the deletion of any personal data, email email@example.gov.uk"
         expect(page).to have_link "email@example.gov.uk", href: "mailto:email@example.gov.uk", class: "govuk-footer__link"
-        expect(page).to have_link "Privacy", href: "/privacy", class: "govuk-footer__link"
+        expect(page).to have_link "Accessibility", href: "/accessibility", class: "govuk-footer__link"
       end
     end
   end
