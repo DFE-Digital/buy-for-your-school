@@ -1,5 +1,5 @@
-$govuk-font-url-function: 'font-url';
-$govuk-image-url-function: 'image-url';
+$govuk-font-url-function: "font-url";
+$govuk-image-url-function: "image-url";
 @import "base/frontend";
 @import "components/override";
 @import "components/task-list";
