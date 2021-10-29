@@ -55,4 +55,8 @@
   td {
     @extend .govuk-table__cell !optional;
   }
+
+  a {
+    @extend .govuk-link;
+  }
 }

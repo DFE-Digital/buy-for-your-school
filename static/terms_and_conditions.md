@@ -16,7 +16,7 @@ You agree to use the Service for lawful purposes only. You must also use it in a
 
 We may update the Service at any time. Changes or removal of content may happen without notice.
 
-Access to certain parts of the service, such as the '[Create a specification for your school](https://get-help-buying-for-schools.service.gov.uk/)' tool requires the use of [DfE Sign-In](https://services.signin.education.gov.uk/). DfE Sign-In has its own [Terms and Conditions](https://interactions.signin.education.gov.uk/terms).
+Access to certain parts of the service, such as the '[Create a specification for your school](https://www.get-help-buying-for-schools.service.gov.uk/)' tool requires the use of [DfE Sign-In](https://services.signin.education.gov.uk/). DfE Sign-In has its own [Terms and Conditions](https://interactions.signin.education.gov.uk/terms).
 
 Keep your passwords and access codes secure and confidential and do not share them with others.
 
@@ -94,7 +94,7 @@ You can ask for content to be removed from the Service. We will do this in certa
 
 Contact us to ask for content to be removed. You will need to send us the web address (URL) of the content and explain why you think it should be removed. We will reply to let you know whether it will be removed.
 
-You can still request information under the [Freedom of Information Act](https://www.gov.uk/make-a-freedom-of-information-request) and the Data Protection Act.
+You can still request information under the [Freedom of Information Act](https://www.gov.uk/make-a-freedom-of-information-request) and the [Data Protection Act](https://www.gov.uk/data-protection).
 
 ### Information about you and your visits to the Service website
 
