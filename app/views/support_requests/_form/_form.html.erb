@@ -8,6 +8,7 @@
 <% if Rails.env.development? %>
   <%= debug @support_request&.attributes %>
   <%= debug @support_form.step %>
+  <%= debug @current_user.supported_schools %>
   <%= debug @support_form.to_h %>
 <% end %>
 

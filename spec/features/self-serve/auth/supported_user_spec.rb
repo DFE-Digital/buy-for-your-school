@@ -39,7 +39,7 @@ RSpec.feature "User authentication filter" do
   end
 
   context "when the user is associated with an unsupported organisation" do
-    let(:user) { build(:user, :unsupported) }
+    let(:user) { build(:user, :no_supported_schools) }
 
     before do
       visit "/"

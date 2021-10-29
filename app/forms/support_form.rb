@@ -39,18 +39,13 @@ class SupportForm
     ErrorSummary.new(messages)
   end
 
-  # Proceed to next question
+  # Proceed or skip to next questions
+  #
+  # @param num [Integer] number of steps to advance
   #
   # @return [Integer] next step position
-  def advance!
-    @step += 1
-  end
-
-  # Miss a question
-  #
-  # @return [Integer] next step position
-  def skip!
-    @step += 2
+  def advance!(num = 1)
+    @step += num
   end
 
   # @return [Integer] previous step position
