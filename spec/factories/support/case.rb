@@ -8,6 +8,8 @@ FactoryBot.define do
     first_name { "School" }
     last_name { "Contact" }
 
+    association :agent, factory: :support_agent
+
     association :category, factory: :support_category
     sub_category_string { "category subtitle" }
 
