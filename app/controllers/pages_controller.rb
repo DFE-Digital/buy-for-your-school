@@ -12,7 +12,7 @@ class PagesController < ApplicationController
   def privacy
     set_page(__method__)
   end
-  
+
   def accessibility
     set_page(__method__)
   end
