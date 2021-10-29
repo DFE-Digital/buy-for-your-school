@@ -34,6 +34,11 @@ RSpec.describe GetDsiUrl do
         expect: "https://test-manage.signin.education.gov.uk/foo/bar",
         env: "development",
       },
+      {
+        args: { port: 443 },
+        expect: "https://test-services.signin.education.gov.uk:443/",
+        env: "development",
+      },
     ].each do |params|
       context "with #{params[:args]}" do
         let(:args) { params[:args] }

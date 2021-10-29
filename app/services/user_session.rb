@@ -43,7 +43,7 @@ class UserSession
       post_logout_redirect_uri: @redirect_url,
     }
 
-    "#{ENV.fetch('DFE_SIGN_IN_ISSUER')}/session/end?#{query.to_query}"
+    GetDsiUrl(domain: "oidc", path: "session/end?#{query.to_query}")
   end
 
   # Store user uid in the session

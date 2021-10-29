@@ -89,12 +89,6 @@ RSpec.describe "Authentication", type: :request do
     end
 
     context "when there is a sign out token" do
-      around do |example|
-        ClimateControl.modify(DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443") do
-          example.run
-        end
-      end
-
       it "redirects to the issuer with token and return redirect params" do
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(true)
         delete "/auth/dfe/signout"
