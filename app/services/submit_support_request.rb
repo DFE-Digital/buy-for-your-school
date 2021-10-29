@@ -28,7 +28,7 @@ require "types"
 class SubmitSupportRequest
   extend Dry::Initializer
 
-  option :request
+  option :request, ::Types.Constructor(SupportRequestPresenter)
   option :template, Types::String, default: proc { "Auto-reply" }
 
   # TODO: Replace with outbound API call
@@ -83,7 +83,9 @@ private
                                  first_name: user.first_name,
                                  last_name: user.last_name,
                                  email: user.email,
-                                 phone_number: request.phone_number)
+                                 phone_number: request.phone_number,
+                                 organisation_urn: request.school_urn,
+                                 organisation_name: request.school_name)
 
     Support::Interaction.create!({  case: kase,
                                     event_type: 4,
