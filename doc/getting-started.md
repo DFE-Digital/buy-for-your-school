@@ -6,23 +6,14 @@
 
 Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies to run the app, as the project is run in an isolated container, but it takes longer to run. The preferred option is to run code in Docker.
 
-### Installing Dependencies (Docker)
-
-Docker removes the need for dependencies, although there are a few which are still required for the project for converting markup and graph visualisation
-
-1. Install [Homebrew](https://brew.sh)
-1. Copy `/Brewfile.example` to `/Brewfile` and uncomment pandoc, basictex and graphviz
-1. Run `$ brew bundle` to install
-
 ### Development (Docker)
 
 Running the server:
 
 - Install [Node.js](https://nodejs.org/en/download/) and run `$ npm install`
-- The assets need to be precompiled by running `$ rake assets:precompile`
 - Run the utility script to start a container `$ script/server`
 
-If Docker is running and the pages do not seem to load, try running:
+If there is a favicon.ico error or Docker is running and the pages do not seem to load, try running:
 
 - `$ docker exec -it buy-for-your-school_web_1 bundle exec rails assets:precompile`
 
@@ -66,6 +57,8 @@ Running the server:
 - Run test suite `$ bundle exec rspec` or `bundle exec rake spec`
 - Run lint check `$ bundle exec rubocop` or `bundle exec rake rubocop`
 - Run test suite and lint check `bundle exec rake`
+
+In order to run the test suite locally, if not already, the assets will need to be precompiled (`$ rake assets:precompile`)
 
 ### Debugging (local)
 
