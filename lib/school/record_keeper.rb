@@ -8,28 +8,27 @@ module School
     # @param records [Array<Hash>]
     def call(records)
       # OPTIMIZE: opportunity to wrap in a transaction block
-      records.map do |record|
-        if legacy_record?(record)
-          # puts "School URN: #{record[:urn]} is already closed"
-          next
-        end
+      Support::Organisation.transaction do
+        records.map do |record|
+          next if legacy_record?(record)
 
-        # This data structure is in active development and not all `record` fields
-        # pertain to the "Organisation" model, the structure determined by the
-        # "Mapper" and "Schema" can be tweaked to facilitate this and ultimately
-        # create more complex entities and associations.
-        #
-        # The "Organisation" model is a starting point, but in addition an
-        # "Establishment" model has been proposed.
-        #
-        Support::Organisation.find_or_create_by!(urn: record[:urn]) do |org|
-          org.establishment_type_id = type(record).id        # uuid
-          org.name = record[:school][:name]                  # string
-          org.address = record[:school][:address]            # jsonb
-          org.contact = record[:school][:head_teacher]       # jsonb
-          org.phase = record[:school][:phase][:code]         # integer
-          org.gender = record[:school][:gender][:code]       # integer
-          org.status = record[:establishment_status][:code]  # integer
+          # This data structure is in active development and not all `record` fields
+          # pertain to the "Organisation" model, the structure determined by the
+          # "Mapper" and "Schema" can be tweaked to facilitate this and ultimately
+          # create more complex entities and associations.
+          #
+          # The "Organisation" model is a starting point, but in addition an
+          # "Establishment" model has been proposed.
+          #
+          Support::Organisation.find_or_create_by!(urn: record[:urn]) do |org|
+            org.establishment_type_id = type(record).id        # uuid
+            org.name = record[:school][:name]                  # string
+            org.address = record[:school][:address]            # jsonb
+            org.contact = record[:school][:head_teacher]       # jsonb
+            org.phase = record[:school][:phase][:code]         # integer
+            org.gender = record[:school][:gender][:code]       # integer
+            org.status = record[:establishment_status][:code]  # integer
+          end
         end
       end
     end

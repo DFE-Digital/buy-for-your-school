@@ -58,21 +58,7 @@ module School
         dataset = process(rows)
         output << dataset # if we wish to return the entries (kept to keep specs passing)
         exporter.call dataset
-        # opportunity to collect garbage but a smaller batch_size should suffice
-
-        # Duration:
-        # 9 mins on first run
-        # 4 mins subsequent update runs
-
-        # Old Objects
-        puts GC.stat[:old_objects]
-        # approx 1_378_000 when batch_size == 1k
-        # approx 6_823_000 when batch_size == 10k
-
-        # Minor Garbage collections
-        puts GC.stat[:minor_gc_count]
-        # approx 10 when batch_size == 1k
-        # approx 40 when batch_size == 10k
+        GC.start # Necessary to free up allocated memory to stop the process from crashing out and silently failing
       end
 
       output.flatten
