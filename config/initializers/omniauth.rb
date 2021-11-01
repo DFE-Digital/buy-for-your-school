@@ -1,6 +1,8 @@
+require "dsi/uri"
+
 OmniAuth.config.logger = Rails.logger
 
-dfe_sign_in_issuer_uri = URI(GetDsiUrl.new(subdomain: "oidc").call)
+dfe_sign_in_issuer_uri = Dsi::Uri.new(subdomain: "oidc").call
 dfe_sign_in_identifier = ENV.fetch("DFE_SIGN_IN_IDENTIFIER", "example")
 dfe_sign_in_secret = ENV.fetch("DFE_SIGN_IN_SECRET", "example")
 dfe_sign_in_redirect_uri = ENV.fetch("DFE_SIGN_IN_REDIRECT_URL", "example")

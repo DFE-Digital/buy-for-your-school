@@ -148,7 +148,7 @@ module Dsi
 
     # @return [URI::HTTPS]
     def api_uri(path)
-      URI(GetDsiUrl.new(subdomain: "api", path: path).call)
+      ::Dsi::Uri.new(subdomain: "api", path: path).call
     end
 
     # TODO: benchmark performance for http clients

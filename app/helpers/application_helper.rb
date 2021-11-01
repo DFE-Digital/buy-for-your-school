@@ -11,6 +11,6 @@ module ApplicationHelper
   end
 
   def dsi_url(args = {})
-    GetDsiUrl.new(**args).call
+    ::Dsi::Uri.new(**args).call.to_s
   end
 end
