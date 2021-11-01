@@ -28,6 +28,6 @@ delete_stale_journeys:
 # first of the month @ 02:00
 refresh_schools:
   cron: 0 2 1 * *
-  class: RefreshSchoolsJob
+  class: Support::RefreshSchoolsJob
   description: Update internal school records using public data from GIAS. This
     is an expensive operation (10% @ 41k records persisted).
