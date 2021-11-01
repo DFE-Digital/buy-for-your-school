@@ -126,6 +126,19 @@ ASDF can also be used to manage multiple runtime versions. Example step-by-step 
 1. Obtain environment variable secrets from another member of the development team
 1. Copy `/.env.example` to `/.env.development.local`
 
+## Scripts
+
+Located within the /scripts folder, there are a number of utility scripts for running processes from the terminal.
+
+1. When using Docker:
+
+   - `$ script/server` will allow you to launch the application in a container
+   - `$ script/spec` will run the test suite
+   - `$ script/console` will execute a rails console
+
+2. When running the project locally,
+   - `$ script/test` can be used to run the test suite
+
 ## Annotations
 
 `rails notes` are used to provide WIP information for developers.
