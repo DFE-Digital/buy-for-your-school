@@ -76,6 +76,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix progression to the next incomplete task
 - add `skipped_ids` to `Task` to allow users to skip questions
 - add error summary component
+- customise presence validation message
 
 **Multiple Categories**
 
