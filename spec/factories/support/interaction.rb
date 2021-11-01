@@ -29,5 +29,15 @@ FactoryBot.define do
       event_type { 4 }
       body { "This is an example support request." }
     end
+
+    trait :hub_notes do
+      event_type { 5 }
+      body { "This is an example support request." }
+    end
+
+    trait :progress_notes do
+      event_type { 6 }
+      body { "This is an example support request." }
+    end
   end
 end

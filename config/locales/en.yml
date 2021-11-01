@@ -262,6 +262,8 @@ en:
     generic:
       link:
         opens_in_new_tab: (opens in new tab)
+      form:
+        optional: (optional)
 
     header: Supported Buying Admin
 
