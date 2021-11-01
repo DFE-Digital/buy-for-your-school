@@ -15,11 +15,6 @@ RSpec.describe "Authentication", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "users can access the planning guidance page" do
-      get planning_path
-      expect(response).to have_http_status(:ok)
-    end
-
     it "users can access the new session endpoint" do
       post "/auth/dfe"
       expect(response).to have_http_status(:found)
