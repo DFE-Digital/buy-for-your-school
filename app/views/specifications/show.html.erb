@@ -13,5 +13,9 @@
 <% end %>
 <%= link_to I18n.t("journey.specification.download.button"), journey_specification_path(@journey, format: :docx), class: "govuk-button", role: "button" %>
 <article class="specification">
+  <p>
+    <%= I18n.t("journey.specification.next_steps.text") %>
+    <%= link_to I18n.t("journey.specification.next_steps.link_text"), "/next-steps-#{@journey.category.slug}" %>
+  </p>
   <%= @journey.specification %>
 </article>

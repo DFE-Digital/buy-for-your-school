@@ -26,9 +26,6 @@ en:
       tag: beta
       message:
           This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
-    footer:
-      message:
-        For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -131,6 +128,10 @@ en:
           delete: Delete specification
           cancel: Cancel
           dashboard: Continue to dashboard
+      next_steps:
+        link_text: see what the next steps are.
+        text: "Once you have a completed specification, "
+
 
   # /dashboard
   dashboard:
