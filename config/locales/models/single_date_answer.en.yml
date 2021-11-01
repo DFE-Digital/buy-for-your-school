@@ -1,5 +1,11 @@
 ---
 en:
+  errors:
+    attributes:
+      response:
+        # Default answer for blank steps
+        blank: Please complete this field to continue.
+
   activerecord:
     errors:
       models:
