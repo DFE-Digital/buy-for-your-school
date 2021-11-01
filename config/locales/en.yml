@@ -26,9 +26,6 @@ en:
       tag: beta
       message:
           This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
-    footer:
-      message:
-        For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -131,6 +128,10 @@ en:
           delete: Delete specification
           cancel: Cancel
           dashboard: Continue to dashboard
+      next_steps:
+        link_text: see what the next steps are.
+        text: "Once you have a completed specification, "
+
 
   # /dashboard
   dashboard:
@@ -257,6 +258,10 @@ en:
   # Supported ------------------------------------------------------------------
   #
   support:
+    generic:
+      link:
+        opens_in_new_tab: (opens in new tab)
+
     header: Supported Buying Admin
 
     case:
@@ -292,6 +297,7 @@ en:
         contact_email: Contact email
         problem_description: Description of problem
         attached_specification: Attached specification
+        attached_specification_none: None
         requested_at: "Request sent on %{time}"
         back: Back to case list
         case_owner: "Case owner: %{owner}"
@@ -343,6 +349,26 @@ en:
           label: Subject
           default_value: "DfE Get help buying for schools: your request for support"
         submit: Confirm and send email
+
+    case_email_templates:
+      index:
+        header: Send temolate email
+        what_is_a_framework:
+          link_text: What is a framework?
+          subtitle: General advice about a frameworks
+        how_to_approach_suppliers:
+          link_text: How to approach suppliers
+          subtitle: General advice on finding suppliers
+        catering_frameworks:
+          link_text: Catering frameworks
+          subtitle: Link to catering on find a framework
+        social_value:
+          link_text: Social value
+          subtitle: Help on social value section in creating a specification
+
+    case_documents:
+      show:
+        header: Your specification
 
     interaction:
         header:

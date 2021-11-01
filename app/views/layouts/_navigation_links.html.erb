@@ -1,7 +1,7 @@
 <nav class="navbar-component">
   <ul id="navigation" class="govuk-header__navigation navbar-component__navigation", aria-label="Top level navigation">
     <% unless current_user.guest? %>
-      <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+      <li id="userInfo" class="navbar-component__navigation-item--right govuk-header__navigation-item">
         <%# TODO: Use UserDecorator for full_name %>
         Signed in as <%= current_user.first_name %> <%= current_user.last_name %>
       </li>

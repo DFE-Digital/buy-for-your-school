@@ -9,12 +9,25 @@ class PagesController < ApplicationController
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
 
-  # TODO: can be removed as not being called anywhere
-  # :nocov:
-  def planning_start_page
-    @back_url = root_path
+  def privacy_notice
+    set_page(__method__)
   end
-  # :nocov:
+
+  def accessibility
+    set_page(__method__)
+  end
+
+  def terms_and_conditions
+    set_page(__method__)
+  end
+
+  def next_steps_catering
+    set_page(__method__)
+  end
+
+  def next_steps_mfd
+    set_page(__method__)
+  end
 
   def show_route
     @start_now_button_route = current_user.guest? ? "/auth/dfe" : dashboard_path
@@ -22,5 +35,20 @@ class PagesController < ApplicationController
 
   def show_method
     @start_now_button_method = current_user.guest? ? :post : :get
+  end
+
+private
+
+  def set_page(slug)
+    page = Page.find_by(slug: slug.to_s)
+
+    @body = DocumentFormatter.new(
+      content: page.body,
+      from: :markdown,
+      to: :html,
+    ).call
+
+    @title = page.title
+    @time_stamp = page.updated_at.strftime("%e %B %Y")
   end
 end
