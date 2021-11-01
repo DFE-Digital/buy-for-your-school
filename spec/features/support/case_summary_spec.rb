@@ -7,7 +7,7 @@ RSpec.feature "Case summary" do
     visit "/support/cases/#{support_case.id}"
   end
 
-  let(:support_case) { create(:support_case) }
+  let(:support_case) { create(:support_case, :with_documents, agent: nil) }
 
   describe "Back link" do
     it_behaves_like "breadcrumb_back_link" do
@@ -38,15 +38,21 @@ RSpec.feature "Case summary" do
   end
 
   describe "Request details tab" do
-    before { visit "/support/cases/#{support_case.id}#request-details" }
+    before { visit "/support/cases/#{support_case.id}#case-details" }
 
     # TODO: add request details in next PR
     xit "lists request details" do
-      within "#request-details" do
+      within "#case-details" do
         expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
         expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"
         expect(all(".govuk-summary-list__row")[2]).to have_text "Attached specification"
       end
+    end
+
+    it "lists specifications for viewing" do
+      document = support_case.documents.first
+
+      expect(page).to have_link "specification-1 (opens in new tab)", href: support_case_document_path(support_case, document)
     end
   end
 
@@ -88,7 +94,7 @@ RSpec.feature "Case summary" do
       within "ul.govuk-list" do
         expect(page).to have_link "Change case owner", href: "/support/cases/#{support_case.id}/assignment/new", class: "govuk-link"
         expect(page).to have_link "Add a case note", href: "/support/cases/#{support_case.id}/interactions/new?option=note", class: "govuk-link"
-        expect(page).to have_link "Send email", href: "#", class: "govuk-link"
+        expect(page).to have_link "Send email", href: "/support/cases/#{support_case.id}/email/type/new", class: "govuk-link"
         expect(page).to have_link "Log contact with school", href: "/support/cases/#{support_case.id}/interactions/new?option=contact", class: "govuk-link"
       end
     end

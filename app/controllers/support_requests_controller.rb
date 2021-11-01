@@ -7,7 +7,11 @@ class SupportRequestsController < ApplicationController
   def index; end
 
   # check your answers before submission
-  def show; end
+  def show
+    if support_request.submitted?
+      redirect_to support_request_submission_path(support_request)
+    end
+  end
 
   # first question
   def new
@@ -23,16 +27,31 @@ class SupportRequestsController < ApplicationController
     @support_form = form
 
     if validation.success? && validation.to_h[:message_body]
-
       support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
       redirect_to support_request_path(support_request)
 
     elsif validation.success?
 
-      if @support_form.step == 1 && current_user.journeys.none?
-        @support_form.skip!
-      elsif @support_form.step == 2 && @support_form.has_journey?
-        @support_form.skip!
+      if @support_form.step == 1 && current_user.supported_schools.one?
+        # URN can be inferred
+        @support_form = SupportForm.new(school_urn: current_user.school_urn, **@support_form.to_h)
+
+        if current_user.active_journeys.any?
+          # phone (1) -> journey (3)
+          @support_form.advance!(2)
+        else
+          # phone (1) -> category (4)
+          @support_form.advance!(3)
+        end
+
+      # org (2) -> category (4)
+      elsif @support_form.step == 2 && current_user.active_journeys.none?
+        @support_form.advance!(2)
+
+      # journey (3) -> message (5)
+      elsif @support_form.step == 3 && @support_form.has_journey?
+        @support_form.advance!(2)
+
       else
         @support_form.advance!
       end
@@ -49,13 +68,13 @@ class SupportRequestsController < ApplicationController
 
     if validation.success?
 
-      if @support_form.step == 2 && @support_form.has_journey?
+      if @support_form.step == 3 && @support_form.has_journey?
         @support_form.forget_category!
-      elsif @support_form.step == 3 && @support_form.has_category?
+      elsif @support_form.step == 4 && @support_form.has_category?
         @support_form.forget_journey!
       end
 
-      if @support_form.step == 2 && !@support_form.has_journey?
+      if @support_form.step == 3 && !@support_form.has_journey?
         @support_form.advance!
         render :edit
       else
@@ -93,7 +112,7 @@ private
 
   def form_params
     params.require(:support_form).permit(*%i[
-      step phone_number journey_id category_id message_body
+      step phone_number journey_id category_id message_body school_urn
     ])
   end
 end

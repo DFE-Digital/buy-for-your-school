@@ -27,9 +27,10 @@ class SupportForm
 
   # @see [SupportRequest] attributes
   option :phone_number, optional: true # 1
-  option :journey_id, optional: true   # 2 (option for 'none')
-  option :category_id, optional: true  # 3 (skipped if 2)
-  option :message_body, optional: true # 4 (last)
+  option :school_urn, optional: true   # 2 (skipped if only one supported school)
+  option :journey_id, optional: true   # 3 (option for 'none')
+  option :category_id, optional: true  # 4 (skipped if 3)
+  option :message_body, optional: true # 5 (last)
 
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
   #
@@ -38,18 +39,13 @@ class SupportForm
     ErrorSummary.new(messages)
   end
 
-  # Proceed to next question
+  # Proceed or skip to next questions
+  #
+  # @param num [Integer] number of steps to advance
   #
   # @return [Integer] next step position
-  def advance!
-    @step += 1
-  end
-
-  # Miss a question
-  #
-  # @return [Integer] next step position
-  def skip!
-    @step += 2
+  def advance!(num = 1)
+    @step += num
   end
 
   # @return [Integer] previous step position

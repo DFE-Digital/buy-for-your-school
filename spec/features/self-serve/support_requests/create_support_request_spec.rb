@@ -1,7 +1,9 @@
 RSpec.feature "Create a new support request" do
+  let(:user) { create(:user, :one_supported_school) }
+
   describe "start page" do
     before do
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests"
     end
 
@@ -49,7 +51,7 @@ RSpec.feature "Create a new support request" do
 
   describe "contact details" do
     before do
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
     end
 
@@ -64,14 +66,14 @@ RSpec.feature "Create a new support request" do
       expect(find("span.govuk-hint")).to have_text "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes. You do not need to provide a phone number."
     end
 
-    # step 1 > step 3
+    # step 1 > step 4
     it "does not require a phone number" do
       click_continue
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
     end
 
     context "with valid data" do
-      # step 1 > step 3
+      # step 1 > step 4
       it "validates a phone number (valid)" do
         fill_in "support_form[phone_number]", with: "01234567890"
         click_continue
@@ -118,8 +120,39 @@ RSpec.feature "Create a new support request" do
     end
   end
 
+  describe "school details" do
+    before do
+      user_is_signed_in(user: user)
+      visit "/support-requests/new"
+      click_continue
+    end
+
+    context "when the user belongs to only one supported school" do
+      it "skips step 2 because the school is implicit" do
+        expect(page).not_to have_unchecked_field "Specialist School for Testing"
+        expect(find("span.govuk-caption-l")).to have_text "About your procurement"
+      end
+    end
+
+    context "when the user belongs to multiple supported schools" do
+      let(:user) { create(:user, :many_supported_schools) }
+
+      it "asks them to choose which school" do
+        expect(page).to have_unchecked_field "Specialist School for Testing"
+        expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
+      end
+
+      it "requires a school be selected" do
+        click_continue
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "You must select a school", href: "#support-form-school-urn-field-error"
+        expect(find("span.govuk-error-message")).to have_text "You must select a school"
+      end
+    end
+  end
+
   context "when the user has existing specs" do
-    let(:user) { create(:user, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
+    let(:user) { create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
     let(:category) { create(:category, title: "Laptops") }
     let(:journey) { create(:journey, category: category, user: user) }
 
@@ -132,20 +165,20 @@ RSpec.feature "Create a new support request" do
       click_continue
     end
 
-    # step 2
+    # step 3
     it "asks them to choose which spec" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "Which specification is this related to?"
       expect(find("span.govuk-caption-l")).to have_text "Share a specification"
     end
 
-    # step 2
+    # step 3
     it "defaults to none (last option)" do
       expect(find_all("label.govuk-radios__label")[1]).to have_text "My request is not related to an existing specification"
 
       expect(page).to have_checked_field "support-form-journey-id-none-field"
     end
 
-    # step 4 (last)
+    # step 5 (last)
     it "infers the category from the chosen spec" do
       choose "1 September 2021"
       click_continue
@@ -161,7 +194,7 @@ RSpec.feature "Create a new support request" do
       create(:category, title: "Maintenance")
       create(:category, title: "Broadband")
 
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
     end
@@ -170,7 +203,7 @@ RSpec.feature "Create a new support request" do
       expect(find_all("pre.debug_dump")).to be_empty
     end
 
-    # jumps to step 3
+    # jumps to step 4
     it "requires they choose a category" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
       expect(find("span.govuk-caption-l")).to have_text "About your procurement"
@@ -191,12 +224,12 @@ RSpec.feature "Create a new support request" do
     end
   end
 
-  # step 4
+  # step 5
   describe "a message" do
     before do
       create(:category, title: "Maintenance")
 
-      user_is_signed_in
+      user_is_signed_in(user: user)
       visit "/support-requests/new"
       click_continue
       choose "Maintenance"
@@ -214,7 +247,7 @@ RSpec.feature "Create a new support request" do
 
   # show
   describe "a completed support request" do
-    let(:user) { create(:user, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
+    let(:user) { create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
 
     let(:answers) { find_all("dd.govuk-summary-list__value") }
 
@@ -239,10 +272,11 @@ RSpec.feature "Create a new support request" do
     it "shows the answers" do
       expect(answers[0]).to have_text "Peter Hamilton"
       expect(answers[1]).to have_text "ghbfs@example.com"
-      expect(answers[2]).to have_text ""      # phone number
-      expect(answers[3]).to have_text "None"  # specification
-      expect(answers[4]).to have_text "Laptops"
-      expect(answers[5]).to have_text "I have a problem"
+      expect(answers[2]).to have_text "" # phone number
+      expect(answers[3]).to have_text "Specialist School for Testing" # school autoselected due to only having one to choose from
+      expect(answers[4]).to have_text "None"  # specification
+      expect(answers[5]).to have_text "Laptops"
+      expect(answers[6]).to have_text "I have a problem"
     end
 
     it "is not automatically submitted" do

@@ -4,8 +4,12 @@ FactoryBot.define do
     request_text { "This is an example request for support - please help!" }
     state { 0 }
     support_level { 0 }
+    email { "school@email.co.uk" }
+    first_name { "School" }
+    last_name { "Contact" }
 
-    association :enquiry, factory: :support_enquiry
+    association :agent, factory: :support_agent
+
     association :category, factory: :support_category
     sub_category_string { "category subtitle" }
 
@@ -23,7 +27,7 @@ FactoryBot.define do
       end
 
       after(:create) do |kase, evaluator|
-        create_list(:support_document, evaluator.document_count, documentable: kase)
+        create_list(:support_document, evaluator.document_count, case: kase)
         kase.reload
       end
     end

@@ -6,7 +6,7 @@
 
     <ul class="govuk-list govuk-list--bullet">
       <li>log back in with the correct account</li>
-      <li><%= link_to I18n.t("profile.edit_dfe_sign_in"), @edit_dsi_link, class: "govuk-link" %></li>
+      <li><%= link_to I18n.t("profile.edit_dfe_sign_in"), dsi_url(domain: "profile", path: "edit-details"), class: "govuk-link" %></li>
     </ul>
 
     <dl class="govuk-summary-list">
@@ -19,7 +19,6 @@
         </dd>
       </div>
 
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("profile.label.email") %>
@@ -31,7 +30,13 @@
 
     </dl>
 
-    <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
+    <% if @current_user.supported_schools.any? %>
+      <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
+    <% else %>
+      <p class="govuk-body">
+        <%= I18n.t("support_request.unsupported_school") %>
+      </p>
+    <% end %>
 
     <p class="govuk-body">
       <%= link_to "Return to dashboard", dashboard_path %>

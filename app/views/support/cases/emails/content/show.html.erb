@@ -1,0 +1,26 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_email_content.preview.header") %></h1>
+
+<div class="email-preview govuk-body">
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key"><%= I18n.t("support.case_email_content.preview.to.label") %></dt>
+      <dd class="govuk-summary-list__value"><%= @current_case.email %></dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key"><%= I18n.t("support.case_email_content.preview.subject.label") %></dt>
+      <dd class="govuk-summary-list__value"><%= @case_email_content_form.email_subject %></dd>
+    </div>
+  </dl>
+
+  <div class="email-preview-body">
+    <%= send(@template == :basic ? :markdown_to_html : :simple_format, @case_email_content_form.email_body) %>
+  </div>
+</div>
+
+<%= form_with model: @case_email_content_form, scope: :case_email_content_form, url: support_case_email_path(@current_case), method: :post do |form| %>
+  <%= form.hidden_field :email_body, value: form.object.email_body %>
+  <%= form.hidden_field :email_subject, value: form.object.email_subject %>
+
+  <%= form.submit I18n.t("support.case_email_content.preview.submit"), class: "govuk-button", role: "button" %>
+<% end %>

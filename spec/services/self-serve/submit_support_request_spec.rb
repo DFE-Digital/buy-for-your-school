@@ -3,7 +3,8 @@ RSpec.describe SubmitSupportRequest do
     described_class.new(request: support_request, template: "custom")
   end
 
-  let(:support_enquiry) { Support::Enquiry.last }
+  let(:support_case) { Support::Case.last }
+  let!(:support_category) { create(:support_category, slug: "slug", title: "Slug") }
 
   let(:template_collection) do
     {
@@ -35,20 +36,27 @@ RSpec.describe SubmitSupportRequest do
   end
 
   describe "#call" do
+    let(:user) { create(:user, :one_supported_school) }
+    let(:chosen_organisation) { user.orgs.first }
+
     let(:support_request) do
       create(:support_request, :with_specification,
-             phone_number: "01234567890")
+             user: user,
+             phone_number: "01234567890",
+             school_urn: chosen_organisation["urn"])
     end
 
-    it "submits the request and creates an enquiry" do
-      expect(support_enquiry).to be_persisted
-      expect(support_enquiry.telephone).to eq "01234567890"
-      expect(support_enquiry.category).to eq "slug"
+    it "submits the request and creates a case" do
+      expect(support_case).to be_persisted
+      expect(support_case.phone_number).to eq "01234567890"
+      expect(support_case.organisation_name).to eq chosen_organisation["name"]
+      expect(support_case.organisation_urn).to eq chosen_organisation["urn"]
+      expect(support_case.category).to eq support_category
     end
 
     context "with a specification" do
       it "attaches the specification as a document" do
-        expect(support_enquiry.documents.count).to eq 1
+        expect(support_case.documents.count).to eq 1
       end
     end
 
@@ -56,7 +64,7 @@ RSpec.describe SubmitSupportRequest do
       let(:support_request) { create(:support_request) }
 
       it "has no support document" do
-        expect(support_enquiry.documents.count).to eq 0
+        expect(support_case.documents.count).to eq 0
       end
     end
   end

@@ -1,18 +1,20 @@
 RSpec.describe Support::Document, type: :model do
-  subject { document.documentable }
+  subject(:document) { create(:support_document) }
 
-  let(:documentable) { nil }
-  let(:document) { create(:support_document, documentable: documentable) }
+  it { is_expected.to belong_to :case }
 
-  context "when document belongs to a case" do
-    let!(:documentable) { create(:support_case) }
+  describe ".for_rendering" do
+    before do
+      create(:support_document, document_body: nil)
+      create(:support_document, document_body: nil)
+      create(:support_document, document_body: "Has Content")
+    end
 
-    it { is_expected.to be_kind_of documentable.class }
-  end
+    it "only returns documents with a body" do
+      results = described_class.for_rendering
 
-  context "when document belongs to an enquiry" do
-    let!(:documentable) { create(:support_enquiry) }
-
-    it { is_expected.to be_kind_of documentable.class }
+      expect(results.count).to be(1)
+      expect(results.first.document_body).to eq("Has Content")
+    end
   end
 end

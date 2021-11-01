@@ -26,9 +26,6 @@ en:
       tag: beta
       message:
           This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
-    footer:
-      message:
-        For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -131,6 +128,10 @@ en:
           delete: Delete specification
           cancel: Cancel
           dashboard: Continue to dashboard
+      next_steps:
+        link_text: see what the next steps are.
+        text: "Once you have a completed specification, "
+
 
   # /dashboard
   dashboard:
@@ -191,6 +192,7 @@ en:
   # /support-requests
   support_request:
     link: Request free help and support with your specification
+    unsupported_school: You are no longer a member of a supported school.
     flash:
       created: Support request created
       updated: Support request updated
@@ -212,12 +214,15 @@ en:
       specification: Share a specification
       category: About your procurement
       message: About your procurement
+      school: About your school
     label:
       phone_number: What is your phone number?
       specification: Which specification is this related to?
       category: What are you buying?
       message: How can we help?
+      school: Which school are you buying for?
     hint:
+      school: You are linked to more than one school. Select the school that's related to your support request.
       phone_number: |-
         Your phone number will be used by DfE's supported buying team to contact you about your request for help.
         It will not be used for marketing or any other purposes.
@@ -228,15 +233,35 @@ en:
       message: Briefly describe your problem in a few sentences.
     button:
       send: Send request
-
-
-
-
+  support_request_submissions:
+    header:
+      confirmation: Your request for support has been sent
+      what_happens_next: What happens next
+      what_you_can_do_next: What you can do next
+      you_can_also: You can also
+    sub_header:
+      confirmation: "We have sent a confirmation to:"
+    body:
+      what_happens_next: "The DfE's supported buying team will be in touch within %{days} working days to discuss how we can support you."
+      what_you_can_do_next: "%{continue_link} if you can (but we won't receive these new changes), or %{start_new_link} if you haven't done so yet."
+    what_you_can_do_next:
+      continue_link: Continue with your specification
+      start_new_link: start a new specification
+    you_can_also:
+      step_one: "%{read_procs_link} to learn more about the buying process"
+      step_two: "%{read_guides_link} that you're buying"
+      read_procs_link: read buying procedures and procurement law for schools
+      read_guides_link: read guides about goods and services
+    back_button: Back to Specify dashboard
 
   #
   # Supported ------------------------------------------------------------------
   #
   support:
+    generic:
+      link:
+        opens_in_new_tab: (opens in new tab)
+
     header: Supported Buying Admin
 
     case:
@@ -255,6 +280,14 @@ en:
         case: Case
         organisation: Organisation
         status: Status
+        state:
+          state_initial: New
+          state_open: Open
+          state_resolved: Resolved
+          state_pending: Pending
+          state_closed: Closed
+          state_pipeline: Pipeline
+          state_no_response: No Response
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -264,6 +297,7 @@ en:
         contact_email: Contact email
         problem_description: Description of problem
         attached_specification: Attached specification
+        attached_specification_none: None
         requested_at: "Request sent on %{time}"
         back: Back to case list
         case_owner: "Case owner: %{owner}"
@@ -290,6 +324,52 @@ en:
         label: Assign to case worker
       submit: Assign
 
+    case_email_type:
+      header: Send email
+      legend: Type of email
+      submit: Save
+      choices:
+        template: Template
+        non_template: Non-template
+
+    case_email_content:
+      edit:
+        default_email_body:
+          non_template: Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification.
+        email_body:
+          label: Enter email body
+        header:
+          non_template: Send non-template email
+        submit: Preview email
+      preview:
+        header: Preview email
+        to:
+          label: To
+        subject:
+          label: Subject
+          default_value: "DfE Get help buying for schools: your request for support"
+        submit: Confirm and send email
+
+    case_email_templates:
+      index:
+        header: Send temolate email
+        what_is_a_framework:
+          link_text: What is a framework?
+          subtitle: General advice about a frameworks
+        how_to_approach_suppliers:
+          link_text: How to approach suppliers
+          subtitle: General advice on finding suppliers
+        catering_frameworks:
+          link_text: Catering frameworks
+          subtitle: Link to catering on find a framework
+        social_value:
+          link_text: Social value
+          subtitle: Help on social value section in creating a specification
+
+    case_documents:
+      show:
+        header: Your specification
+
     interaction:
         header:
           type_of_contact: Type of contact
@@ -300,7 +380,7 @@ en:
           email_from_school: Email from school
           email_to_school: Email to school
           note: Case note
-          request_for_support: Request for support
+          support_request: Request for support
         label:
           contact_detail: Contact details
           contact_detail_hint: Add details of the phone call or copy and paste the email here

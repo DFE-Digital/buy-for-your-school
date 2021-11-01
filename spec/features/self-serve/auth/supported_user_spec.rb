@@ -26,7 +26,7 @@ RSpec.feature "User authentication filter" do
 
     it "body" do
       # errors.sign_in.no_organisation.link
-      expect(page).to have_link "log into your DfE Sign-In account and select your organisation.", href: "https://services.signin.education.gov.uk/request-organisation/search", class: "govuk-link"
+      expect(page).to have_link "log into your DfE Sign-In account and select your organisation.", href: "https://test-services.signin.education.gov.uk/request-organisation/search", class: "govuk-link"
 
       # errors.sign_in.no_organisation.page_body
       body = <<~BODY
@@ -39,7 +39,7 @@ RSpec.feature "User authentication filter" do
   end
 
   context "when the user is associated with an unsupported organisation" do
-    let(:user) { build(:user, :unsupported) }
+    let(:user) { build(:user, :no_supported_schools) }
 
     before do
       visit "/"

@@ -1,7 +1,6 @@
-$govuk-font-url-function: 'font-url';
-$govuk-image-url-function: 'image-url';
-
+$govuk-font-url-function: "font-url";
+$govuk-image-url-function: "image-url";
 @import "base/frontend";
-@import "components/specification";
+@import "components/override";
 @import "components/task-list";
-
+@import "components/supported/email-preview";

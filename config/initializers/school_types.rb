@@ -1,4 +1,4 @@
-# Supported establishment typea
+# Supported establishment types
 
 ORG_TYPE_IDS = [
   1,   # Community School

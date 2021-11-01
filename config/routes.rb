@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   # Common ---------------------------------------------------------------------
   #
   get "health_check" => "application#health_check"
+  get "privacy" => "pages#privacy_notice", "id" => "privacy"
+  get "accessibility" => "pages#accessibility", "id" => "accessibility"
+  get "terms-and-conditions" => "pages#terms_and_conditions", "id" => "terms_and_conditions"
+  get "next-steps-catering" => "pages#next_steps_catering", "id" => "next_steps_catering"
+  get "next-steps-mfd" => "pages#next_steps_mfd", "id" => "next_steps_mfd"
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -12,9 +17,6 @@ Rails.application.routes.draw do
   delete "/auth/dfe/signout", to: "sessions#destroy", as: :sign_out
   get "/auth/failure", to: "sessions#failure"
   post "/auth/developer/callback" => "sessions#bypass_callback" if Rails.env.development?
-
-  # DSI: dev only (remove later)
-  get "dsi", to: "dashboard#dsi"
 
   # Errors
   get "/404", to: "errors#not_found"
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index]
 
   resources :support_requests, except: %i[destroy], path: "support-requests"
+  resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
   post "/submit", to: "api/support/requests#create", as: :submit_request
 
   resources :journeys, only: %i[show create destroy] do
@@ -66,8 +69,16 @@ Rails.application.routes.draw do
     resources :cases, only: %i[index show edit update] do
       resources :interactions, only: %i[new create]
       scope module: :cases do
+        resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
+        resource :email, only: %i[create] do
+          scope module: :emails do
+            resource :type, only: %i[new create]
+            resources :content, only: %i[edit show update], param: :template
+            resources :templates, only: %i[index], param: :template
+          end
+        end
       end
     end
     resources :schools, only: %i[show]

@@ -4,6 +4,9 @@ en:
     rules:
       notes: "" # Omitted
       agent_id: "" # Omitted
+      choice: "" # Omitted
+      email_body: "" # Omitted
+      email_subject: "" # Omitted
 
     errors:
       rules:
@@ -14,4 +17,15 @@ en:
         # Case assignment
         agent_id:
           missing: Please choose an agent to assign to the case
+
+        # Case email type
+        choice:
+          missing: Please choose a type of email to send
+
+        # Case email content
+        email_body:
+          missing: Please enter an email body to be sent
+
+        email_subject:
+          missing: Please enter an email subject to be sent
 
