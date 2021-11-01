@@ -43,7 +43,7 @@ class UserSession
       post_logout_redirect_uri: @redirect_url,
     }
 
-    GetDsiUrl(domain: "oidc", path: "session/end?#{query.to_query}")
+    GetDsiUrl.new(subdomain: "oidc", path: "session/end?#{query.to_query}").call
   end
 
   # Store user uid in the session

@@ -11,6 +11,5 @@ if defined?(Dotenv)
     "SUPPORT_EMAIL",
     "REDIS_URL",
     "PROC_OPS_TEAM",
-    "DSI_ENV",
   )
 end
