@@ -27,10 +27,9 @@ module Support
         end
 
         group["sub_categories"].each do |sub_group|
-          SubCategory.find_or_create_by!(title: sub_group["title"]) do |cat|
+          sub_category = category.sub_categories.find_or_create_by!(title: sub_group["title"]) do |cat|
             cat.description = sub_group["description"]
             cat.slug = sub_group["slug"]
-            cat.category_id = category.id
           end
         end
       end

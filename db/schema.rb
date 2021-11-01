@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_092618) do
+ActiveRecord::Schema.define(version: 2021_11_01_105818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_092618) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -175,7 +175,6 @@ ActiveRecord::Schema.define(version: 2021_10_29_092618) do
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ref"
     t.uuid "category_id"
-    t.string "sub_category_string"
     t.string "request_text"
     t.integer "support_level"
     t.integer "status"
@@ -202,8 +201,9 @@ ActiveRecord::Schema.define(version: 2021_10_29_092618) do
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "slug"
     t.string "description"
+    t.uuid "parent_id"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
-    t.index ["title"], name: "index_support_categories_on_title", unique: true
+    t.index ["title"], name: "index_support_categories_on_title"
   end
 
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
