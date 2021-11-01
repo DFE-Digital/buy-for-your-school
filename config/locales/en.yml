@@ -26,9 +26,6 @@ en:
       tag: beta
       message:
           This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
-    footer:
-      message:
-        For privacy information for this service, or to request the deletion of any personal data, email <a href="mailto:%{support_email}" class="govuk-footer__link">%{support_email}</a>
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -131,6 +128,10 @@ en:
           delete: Delete specification
           cancel: Cancel
           dashboard: Continue to dashboard
+      next_steps:
+        link_text: see what the next steps are.
+        text: "Once you have a completed specification, "
+
 
   # /dashboard
   dashboard:
@@ -191,6 +192,7 @@ en:
   # /support-requests
   support_request:
     link: Request free help and support with your specification
+    unsupported_school: You are no longer a member of a supported school.
     flash:
       created: Support request created
       updated: Support request updated
@@ -229,19 +231,37 @@ en:
         A copy of the specification you choose will be sent to us with this request in its current state.
         We will not receive any new changes you make.
       message: Briefly describe your problem in a few sentences.
-    suggestion:
-      school: If your school is not listed, then select another school.
     button:
       send: Send request
-
-
-
-
+  support_request_submissions:
+    header:
+      confirmation: Your request for support has been sent
+      what_happens_next: What happens next
+      what_you_can_do_next: What you can do next
+      you_can_also: You can also
+    sub_header:
+      confirmation: "We have sent a confirmation to:"
+    body:
+      what_happens_next: "The DfE's supported buying team will be in touch within %{days} working days to discuss how we can support you."
+      what_you_can_do_next: "%{continue_link} if you can (but we won't receive these new changes), or %{start_new_link} if you haven't done so yet."
+    what_you_can_do_next:
+      continue_link: Continue with your specification
+      start_new_link: start a new specification
+    you_can_also:
+      step_one: "%{read_procs_link} to learn more about the buying process"
+      step_two: "%{read_guides_link} that you're buying"
+      read_procs_link: read buying procedures and procurement law for schools
+      read_guides_link: read guides about goods and services
+    back_button: Back to Specify dashboard
 
   #
   # Supported ------------------------------------------------------------------
   #
   support:
+    generic:
+      link:
+        opens_in_new_tab: (opens in new tab)
+
     header: Supported Buying Admin
 
     case:
@@ -277,6 +297,7 @@ en:
         contact_email: Contact email
         problem_description: Description of problem
         attached_specification: Attached specification
+        attached_specification_none: None
         requested_at: "Request sent on %{time}"
         back: Back to case list
         case_owner: "Case owner: %{owner}"
@@ -328,6 +349,26 @@ en:
           label: Subject
           default_value: "DfE Get help buying for schools: your request for support"
         submit: Confirm and send email
+
+    case_email_templates:
+      index:
+        header: Send temolate email
+        what_is_a_framework:
+          link_text: What is a framework?
+          subtitle: General advice about a frameworks
+        how_to_approach_suppliers:
+          link_text: How to approach suppliers
+          subtitle: General advice on finding suppliers
+        catering_frameworks:
+          link_text: Catering frameworks
+          subtitle: Link to catering on find a framework
+        social_value:
+          link_text: Social value
+          subtitle: Help on social value section in creating a specification
+
+    case_documents:
+      show:
+        header: Your specification
 
     interaction:
         header:

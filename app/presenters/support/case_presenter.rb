@@ -17,13 +17,9 @@ module Support
       agent&.full_name || "UNASSIGNED"
     end
 
-    def organisation_name
-      "St.Mary"
-    end
-
     # @return [String]
     def request_text
-      super.strip.chomp
+      String(super).strip.chomp
     end
 
     # @return [String] 30 January 2000 at 12:00

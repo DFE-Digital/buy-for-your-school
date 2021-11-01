@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   # Common ---------------------------------------------------------------------
   #
   get "health_check" => "application#health_check"
+  get "privacy" => "pages#privacy_notice", "id" => "privacy"
+  get "accessibility" => "pages#accessibility", "id" => "accessibility"
+  get "terms-and-conditions" => "pages#terms_and_conditions", "id" => "terms_and_conditions"
+  get "next-steps-catering" => "pages#next_steps_catering", "id" => "next_steps_catering"
+  get "next-steps-mfd" => "pages#next_steps_mfd", "id" => "next_steps_mfd"
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -42,6 +47,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index]
 
   resources :support_requests, except: %i[destroy], path: "support-requests"
+  resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
   post "/submit", to: "api/support/requests#create", as: :submit_request
 
   resources :journeys, only: %i[show create destroy] do
@@ -66,6 +72,7 @@ Rails.application.routes.draw do
     resources :cases, only: %i[index show edit update] do
       resources :interactions, only: %i[new create]
       scope module: :cases do
+        resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
         resource :email, only: %i[create] do
