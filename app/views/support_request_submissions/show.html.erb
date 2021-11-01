@@ -26,12 +26,12 @@
         <% if @support_request.journey %>
           <%=
             I18n.t("support_request_submissions.body.what_you_can_do_next",
-              continue_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.continue_link"), journey_path(@support_request.journey)),
-              start_new_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path)
+              continue_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.continue_link"), journey_path(@support_request.journey), class: "govuk-link"),
+              start_new_link: link_to(I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path, class: "govuk-link")
             ).html_safe
           %>
         <% else %>
-          <%= link_to I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path %>
+          <%= link_to I18n.t("support_request_submissions.what_you_can_do_next.start_new_link"), dashboard_path, class: "govuk-link" %>
         <% end %>
       </p>
 
@@ -43,14 +43,14 @@
         <li>
           <%=
             I18n.t("support_request_submissions.you_can_also.step_one",
-              read_procs_link: link_to(I18n.t("support_request_submissions.you_can_also.read_procs_link"), "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools")
+              read_procs_link: link_to(I18n.t("support_request_submissions.you_can_also.read_procs_link"), "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link")
             ).html_safe
           %>
         </li>
         <li>
           <%=
             I18n.t("support_request_submissions.you_can_also.step_two",
-              read_guides_link: link_to(I18n.t("support_request_submissions.you_can_also.read_guides_link"), "https://www.gov.uk/guidance/buying-for-schools")
+              read_guides_link: link_to(I18n.t("support_request_submissions.you_can_also.read_guides_link"), "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link")
             ).html_safe
           %>
         </li>
