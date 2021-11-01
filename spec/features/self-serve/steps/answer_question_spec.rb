@@ -1,7 +1,5 @@
 #
 # Check that questions can be answered with valid input
-#
-# TODO: add missing question types
 RSpec.feature "Answering questions" do
   let(:user) { create(:user) }
   let(:title) { answer.step.task.title }
