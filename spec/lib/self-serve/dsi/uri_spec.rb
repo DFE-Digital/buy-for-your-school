@@ -102,6 +102,17 @@ RSpec.describe Dsi::Uri do
     end
 
     context "when no DSI_ENV has been set" do
+      # rubocop:disable RSpec/BeforeAfterAll, RSpec/InstanceVariable
+      before(:all) do
+        @original_dsi_env = ENV["DSI_ENV"]
+        ENV.delete("DSI_ENV")
+      end
+
+      after(:all) do
+        ENV["DSI_ENV"] = @original_dsi_env
+      end
+      # rubocop:enable RSpec/BeforeAfterAll, RSpec/InstanceVariable
+
       let(:args) { {} }
 
       %w[services api oidc].each do |subdomain|
