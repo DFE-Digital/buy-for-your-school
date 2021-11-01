@@ -5,7 +5,6 @@ FactoryBot.define do
     state { 0 }
     support_level { 0 }
 
-    association :enquiry, factory: :support_enquiry
     association :category, factory: :support_category
     sub_category_string { "category subtitle" }
 
@@ -23,7 +22,7 @@ FactoryBot.define do
       end
 
       after(:create) do |kase, evaluator|
-        create_list(:support_document, evaluator.document_count, documentable: kase)
+        create_list(:support_document, evaluator.document_count, case: kase)
         kase.reload
       end
     end
