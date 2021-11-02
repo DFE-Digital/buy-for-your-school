@@ -146,6 +146,8 @@ module Dsi
     #   get api_uri("users/approvers")
     # end
 
+    # @param path [String]
+    #
     # @return [URI::HTTPS]
     def api_uri(path)
       ::Dsi::Uri.new(subdomain: "api", path: path).call
