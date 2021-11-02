@@ -1,9 +1,9 @@
 RSpec.feature "User task actions are recorded" do
   let(:user) { create(:user) }
   # let(:fixture) { "section-with-multiple-tasks.json" }
-  let(:category) { create(:category, :catering) }
+  let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
   let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "Catering", journey: journey) }
+  let(:section) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
 
   # let!(:task_checkbox) { create(:task, title: "Task with a single step", section: section)} 
 
@@ -16,10 +16,10 @@ RSpec.feature "User task actions are recorded" do
   context "when there is a task with multiple steps" do
     before do
       task_checkbox_and_radio = create(:task, title: "Task with multiple steps", section: section)
-      create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 0)
-      create(:step, :short_text, title: "What email address did you use?", contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 1)
-      create(:step, :long_text, title: "Describe what you need", contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 2)
-      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [ { "value" => "Breakfast" } ], contentful_id: "contentful-category-entry", task: task_checkbox_and_radio, order: 3)
+      create(:step, :radio, title: "Which service do you need?", options: [ { "value" => "Catering" } ], task: task_checkbox_and_radio, order: 0)
+      create(:step, :short_text, title: "What email address did you use?", task: task_checkbox_and_radio, order: 1)
+      create(:step, :long_text, title: "Describe what you need", task: task_checkbox_and_radio, order: 2)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [ { "value" => "Breakfast" } ], task: task_checkbox_and_radio, order: 3)
       visit "/journeys/#{journey.id}"
     end
     it "records an action in the event log that a task has begun" do
@@ -44,7 +44,7 @@ RSpec.feature "User task actions are recorded" do
       expect(begin_task_logged_event.journey_id).to eq(journey.id)
       expect(begin_task_logged_event.user_id).to eq(user.id)
       expect(begin_task_logged_event.contentful_category_id).to eq "contentful-category-entry"
-      expect(begin_task_logged_event.contentful_section_id).to eq "multiple-tasks-section"
+      expect(begin_task_logged_event.contentful_section_id).to eq "contentful-section-entry"
       expect(begin_task_logged_event.contentful_task_id).to eq(task.contentful_id)
       expect(begin_task_logged_event.data["task_status"]).to eq 0 # Task::NOT_STARTED
       expect(begin_task_logged_event.data["task_step_tally"]).to eq({
