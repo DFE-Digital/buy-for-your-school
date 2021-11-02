@@ -24,7 +24,7 @@ module Support
     end
 
     def case_email_content_form_params
-      params.require(:case_email_content_form).permit(:email_body)
+      params.require(:case_email_content_form).permit(:email_body, :email_subject)
     end
   end
 end

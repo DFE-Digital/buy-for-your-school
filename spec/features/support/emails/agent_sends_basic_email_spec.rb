@@ -67,6 +67,23 @@ describe "Support agent sends a basic email" do
         expect(page).to have_content("DfE Get help buying for schools: your request for support")
       end
     end
+
+    describe "navigating directly to the preview" do
+      before { visit support_case_email_content_path(support_case, template: :basic) }
+
+      it "shows the email body" do
+        within ".email-preview-body" do
+          expect(page).to have_content(default_email_body)
+        end
+      end
+
+      it "shows the correct subject and to address" do
+        within ".email-preview" do
+          expect(page).to have_content(support_case.email)
+          expect(page).to have_content("DfE Get help buying for schools: your request for support")
+        end
+      end
+    end
   end
 
   describe "sending the email" do
