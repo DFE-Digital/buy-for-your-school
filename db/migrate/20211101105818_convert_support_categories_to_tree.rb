@@ -3,12 +3,12 @@ class ConvertSupportCategoriesToTree < ActiveRecord::Migration[6.1]
     remove_column :support_cases, :sub_category_string, :string
     add_column :support_categories, :parent_id, :uuid
 
-    ## Move unique constraint up into rails layer so that we can apply it only
-    ## within the scope of its parent.
+    ## Convert unique constraint to compound index
+    ## (A title can be duplicate but must be unqiue within its parent category)
     reversible do |dir|
       dir.up do
         remove_index :support_categories, :title
-        add_index :support_categories, :title
+        add_index :support_categories, %i[title parent_id], unique: true
       end
 
       dir.down do

@@ -3,8 +3,8 @@ RSpec.describe Support::SeedCategories do
     described_class.new
   end
 
-  let(:parent_categories) { Support::Category.where(parent_id: nil) }
-  let(:sub_categories) { Support::Category.where.not(parent_id: nil) }
+  let(:parent_categories) { Support::Category.where(parent_id: nil).order(title: :asc) }
+  let(:sub_categories) { Support::Category.where.not(parent_id: nil).order(title: :asc) }
 
   it "populates the tables" do
     expect(parent_categories.count).to be 0
@@ -16,19 +16,23 @@ RSpec.describe Support::SeedCategories do
     expect(sub_categories.count).to be 54
   end
 
-  it "resets the data" do
-    expect(parent_categories.count).to be 0
-    expect(sub_categories.count).to be 0
+  describe "resetting the data" do
+    context "reset is false" do
+      it "leaves the data intact" do
+        service.call
 
-    service.call
+        first_run_parents = parent_categories.pluck(:id, :parent_id, :title)
+        first_run_sub_categories = sub_categories.pluck(:id, :parent_id, :title)
 
-    expect(parent_categories.count).to be 12
-    expect(sub_categories.count).to be 54
+        service.call
 
-    service.call
+        second_run_parents = parent_categories.pluck(:id, :parent_id, :title)
+        second_run_sub_categories = sub_categories.pluck(:id, :parent_id, :title)
 
-    expect(parent_categories.count).to be 12
-    expect(sub_categories.count).to be 54
+        expect(first_run_parents).to eq(second_run_parents)
+        expect(first_run_sub_categories).to eq(second_run_sub_categories)
+      end
+    end
   end
 
   context "when a category has sub categories" do
@@ -37,14 +41,12 @@ RSpec.describe Support::SeedCategories do
 
       ict = Support::Category.find_by(title: "ICT")
       sub_categories = ict.sub_categories.pluck(:title)
+      websites_category = Support::Category.find_by(title: "Websites")
 
       expect(sub_categories).to include("Peripherals")
       expect(sub_categories).to include("Cyber services")
       expect(sub_categories).to include("Websites")
-
-      websites = Support::Category.find_by(title: "Websites")
-
-      expect(websites.parent.title).to eq("ICT")
+      expect(websites_category.parent.title).to eq("ICT")
     end
   end
 
