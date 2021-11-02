@@ -9,7 +9,7 @@ Consider buying from a framework recommended by DfE. This can be quicker and eas
 
 Go directly to view and choose from a list of <a href="https://find-dfe-approved-framework.service.gov.uk/find/type/on-going/services-categories/facilities/fm-categories/catering" target="_blank">catering frameworks recommended by DfE</a> in the Find a framework tool.
 
-Or <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools" target="_blank">read about frameworks and how to use one</a> if you haven't used one before.
+Or <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy" target="_blank">read about frameworks and how to use one</a> if you haven't used one before.
 
 ## Other procurement options
 
