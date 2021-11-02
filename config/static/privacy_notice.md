@@ -21,6 +21,11 @@ In order for the use of personal data to be lawful, we need to meet one (or more
 
 For the purpose of DfE ‘Create a specification for your School’, the relevant condition that we are meeting is ‘public task’ as specified under Article 6 (1)(e) of the GDPR. The legislation to support this is Section 8 of the Data Protection Act 2018 – exercising official authority as part of public body tasks and Department for Education functions.
 
+In order to use this condition we rely on the following legislation to administer the service:
+
+- section 14 of the Education Act 2002 (financial assistance), and
+- section 10 of the Education Act 1996 (general duty on SoS to promote the education of people in England)
+
 ## Who we share your personal information with
 
 We may share your information where the law allows, or where we have a legal obligation to do so.
