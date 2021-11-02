@@ -18,7 +18,7 @@ We have taken steps to make this service accessible:
 
 If you need information on this website in a different format, such as accessible PDF, large print, easy read, audio recording or braille, please email us on <GetHelpBuyingForSchools@education.gov.uk>.
 
-We’ll consider your request and respond to you within 5 working days.
+We’ll consider your request and respond to you within 2 working days.
 
 [AbilityNet](https://mcmw.abilitynet.org.uk/) also has advice on making your device easier to use if you’re disabled.
 
