@@ -9,10 +9,13 @@ module Dsi
   class Uri
     extend Dry::Initializer
 
-    # @!attribute [r] env
+    # @!attribute env
     #   @return [Symbol] default :production
     #   @api private
-    option :env, Types::Params::Symbol, default: proc { ENV.fetch("DSI_ENV", "production") }, reader: :private
+    option :env,
+           default: proc { ENV.fetch("DSI_ENV", "production") },
+           type: Types::Params::Symbol.enum(*%i[production staging test]),
+           reader: :private
 
     # @!attribute subdomain
     #   @return [String]

@@ -1,145 +1,103 @@
 require "dsi/uri"
 
 RSpec.describe Dsi::Uri do
-  subject(:service) { described_class.new(**args) }
+  subject(:service) { described_class.new }
 
-  # TODO: replace meta-programmed testing to explicit context blocks
+  let(:env) { nil }
+
+  let(:result) { service.call.to_s }
+
+  around do |example|
+    ClimateControl.modify(DSI_ENV: env) { example.run }
+  end
+
   describe "#call" do
-    context "with a DSI_ENV of production" do
-      let(:args) { { env: "production" } }
+    it "returns a URI" do
+      expect(service.call).to be_a URI
+    end
 
-      %w[services api oidc].each do |subdomain|
-        context "and given a subdomain of #{subdomain}" do
-          let(:args) { super().merge(subdomain: subdomain) }
+    it "uses HTTPS protocol" do
+      expect(service.call.scheme).to eql "https"
+    end
 
-          context "with a path of foo" do
-            let(:args) { super().merge(path: "foo") }
+    it "uses standard HTTPS port" do
+      expect(service.call.port).to be 443
+    end
 
-            it { expect(service.call).to eql URI("https://#{subdomain}.signin.education.gov.uk/foo") }
-          end
+    it "defaults to have no path" do
+      expect(service.call.path).to eql "/"
+    end
 
-          context "with no path" do
-            it { expect(service.call).to eql URI("https://#{subdomain}.signin.education.gov.uk/") }
-          end
+    describe "env" do
+      it "raises an error for invalid environments" do
+        expect { described_class.new(env: "foo").call }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      context "when DSI_ENV is 'production'" do
+        let(:env) { "production" }
+
+        it "targets the production environment subdomains" do
+          expect(result).to eql "https://services.signin.education.gov.uk/"
         end
       end
 
-      context "and given no subdomin" do
-        context "with a path of foo" do
-          let(:args) { super().merge(path: "foo") }
+      context "when DSI_ENV is 'test'" do
+        let(:env) { "test" }
 
-          it { expect(service.call).to eql URI("https://services.signin.education.gov.uk/foo") }
+        it "targets the test environment subdomains" do
+          expect(result).to eql "https://test-services.signin.education.gov.uk/"
         end
+      end
 
-        context "with no path" do
-          it { expect(service.call).to eql URI("https://services.signin.education.gov.uk/") }
+      context "when DSI_ENV is 'staging'" do
+        let(:env) { "staging" }
+
+        it "targets the pre-production environment subdomains" do
+          expect(result).to eql "https://pp-services.signin.education.gov.uk/"
         end
       end
     end
 
-    context "with a DSI_ENV of staging" do
-      let(:args) { { env: "staging" } }
-
-      %w[services api oidc].each do |subdomain|
-        context "and given a subdomain of #{subdomain}" do
-          let(:args) { super().merge(subdomain: subdomain) }
-
-          context "with a path of foo" do
-            let(:args) { super().merge(path: "foo") }
-
-            it { expect(service.call).to eql URI("https://pp-#{subdomain}.signin.education.gov.uk/foo") }
-          end
-
-          context "with no path" do
-            it { expect(service.call).to eql URI("https://pp-#{subdomain}.signin.education.gov.uk/") }
-          end
+    context "when DSI_ENV is unset" do
+      context "and no params" do
+        it "defaults to the production environment login page" do
+          expect(result).to eql "https://services.signin.education.gov.uk/"
         end
       end
 
-      context "and given no subdomin" do
-        context "with a path of foo" do
-          let(:args) { super().merge(path: "foo") }
+      context "and subdomain" do
+        subject(:service) { described_class.new(subdomain: subdomain) }
 
-          it { expect(service.call).to eql URI("https://pp-services.signin.education.gov.uk/foo") }
-        end
+        describe "is profile" do
+          let(:subdomain) { "profile" }
 
-        context "with no path" do
-          it { expect(service.call).to eql URI("https://pp-services.signin.education.gov.uk/") }
-        end
-      end
-    end
-
-    context "with a DSI_ENV of test" do
-      let(:args) { { env: "test" } }
-
-      %w[services api oidc].each do |subdomain|
-        context "and given a subdomain of #{subdomain}" do
-          let(:args) { super().merge(subdomain: subdomain) }
-
-          context "with a path of foo" do
-            let(:args) { super().merge(path: "foo") }
-
-            it { expect(service.call).to eql URI("https://test-#{subdomain}.signin.education.gov.uk/foo") }
+          it "targets the production environment user profile endpoint" do
+            expect(result).to eql "https://profile.signin.education.gov.uk/"
           end
+        end
 
-          context "with no path" do
-            it { expect(service.call).to eql URI("https://test-#{subdomain}.signin.education.gov.uk/") }
+        describe "is oidc" do
+          let(:subdomain) { "oidc" }
+
+          it "targets the production environment OpenID Connect authentication endpoint" do
+            expect(result).to eql "https://oidc.signin.education.gov.uk/"
+          end
+        end
+
+        describe "is api" do
+          let(:subdomain) { "api" }
+
+          it "targets the production environment API endpoint" do
+            expect(result).to eql "https://api.signin.education.gov.uk/"
           end
         end
       end
 
-      context "and given no subdomin" do
-        context "with a path of foo" do
-          let(:args) { super().merge(path: "foo") }
+      context "and path" do
+        subject(:service) { described_class.new(path: "path/to/folder") }
 
-          it { expect(service.call).to eql URI("https://test-services.signin.education.gov.uk/foo") }
-        end
-
-        context "with no path" do
-          it { expect(service.call).to eql URI("https://test-services.signin.education.gov.uk/") }
-        end
-      end
-    end
-
-    context "when no DSI_ENV has been set" do
-      # rubocop:disable RSpec/BeforeAfterAll, RSpec/InstanceVariable
-      before(:all) do
-        @original_dsi_env = ENV["DSI_ENV"]
-        ENV.delete("DSI_ENV")
-      end
-
-      after(:all) do
-        ENV["DSI_ENV"] = @original_dsi_env
-      end
-      # rubocop:enable RSpec/BeforeAfterAll, RSpec/InstanceVariable
-
-      let(:args) { {} }
-
-      %w[services api oidc].each do |subdomain|
-        context "and given a subdomain of #{subdomain}" do
-          let(:args) { super().merge(subdomain: subdomain) }
-
-          context "with a path of foo" do
-            let(:args) { super().merge(path: "foo") }
-
-            it { expect(service.call).to eql URI("https://#{subdomain}.signin.education.gov.uk/foo") }
-          end
-
-          context "with no path" do
-            it { expect(service.call).to eql URI("https://#{subdomain}.signin.education.gov.uk/") }
-          end
-        end
-      end
-
-      context "and given no subdomin" do
-        context "with a path of foo" do
-          let(:args) { super().merge(path: "foo") }
-
-          it { expect(service.call).to eql URI("https://services.signin.education.gov.uk/foo") }
-        end
-
-        context "with no path" do
-          it { expect(service.call).to eql URI("https://services.signin.education.gov.uk/") }
+        it "is appended" do
+          expect(result).to eql "https://services.signin.education.gov.uk/path/to/folder"
         end
       end
     end

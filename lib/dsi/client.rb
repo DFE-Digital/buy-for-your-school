@@ -5,7 +5,7 @@ require "dry-initializer"
 
 require "types"
 require "dsi/user"
-# require "dsi/url"
+require "dsi/uri"
 
 module Dsi
   class Client
