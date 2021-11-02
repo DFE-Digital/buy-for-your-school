@@ -58,7 +58,7 @@ RSpec.feature "Completed support requests" do
 
     # support_requests.response_time
     it "confirms the expected response time" do
-      expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 5 working days."
+      expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
     end
   end
 
