@@ -34,12 +34,12 @@ RSpec.feature "Answering questions" do
         fill_in "answer[response]", with: " "
         click_update
 
-        expect(find("span.govuk-error-message")).to have_text "can't be blank"
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
 
         fill_in "answer[response]", with: ""
         click_update
 
-        expect(find("span.govuk-error-message")).to have_text "can't be blank"
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
       end
     end
 
@@ -90,8 +90,8 @@ RSpec.feature "Answering questions" do
         uncheck "Breakfast"
         click_update
 
-        expect(find("span.govuk-error-message")).to have_text "can't be blank"
-        within(".govuk-error-summary") { expect(page).to have_text "can't be blank" }
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+        within(".govuk-error-summary") { expect(page).to have_text "Please complete this field to continue." }
       end
     end
 
