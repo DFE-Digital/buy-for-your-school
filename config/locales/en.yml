@@ -132,9 +132,9 @@ en:
         link_text: see what the next steps are.
         text: "Once you have a completed specification, "
       feedback:
-        title: Giving us feedback
-        text: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
-        button_text: Give feedback (opens in a new tab)
+        heading: Giving us feedback
+        body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
+        button: Give feedback (opens in a new tab)
 
 
   # /dashboard

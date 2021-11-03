@@ -17,22 +17,24 @@ RSpec.feature "Users can see their catering specification" do
 
       # journey.specification.header
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
-      # journey.specification.feedback.title
-      expect(find("h2.govuk-heading-m")).to have_text "Giving us feedback"
-      # journey.specification.feedback.text
-      expect(find("article.specification")).to have_text "Tell us how Get Help Buying for Schools is working for you."
-      # journey.specification.feedback.button
-      expect(find("article.specification")).to have_button "Give feedback (opens in a new tab)"
+
       # journey.specification.body
       expect(find("p.govuk-body")).to have_text "Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed."
 
-      # journey.specification.next_steps
-      expect(find("article.specification")).to have_text("Once you have a completed specification,")
-      expect(find("article.specification")).to have_link("see what the next steps are.", href: "/next-steps-catering")
-
       # journey.specification.download.button
-      expect(find("a.govuk-button")).to have_text "Download (.docx)"
-      expect(find("a.govuk-button")[:role]).to eq "button"
+      expect(find("a.govuk-button:contains('Download (.docx)')")[:role]).to eq "button"
+
+      within "article.specification" do
+        # journey.specification.next_steps
+        expect(page).to have_text("Once you have a completed specification,")
+        expect(page).to have_link("see what the next steps are.", href: "/next-steps-catering")
+        # journey.specification.feedback.heading
+        expect(page).to have_text "Giving us feedback"
+        # journey.specification.feedback.body
+        expect(page).to have_text "Tell us how Get Help Buying for Schools is working for you."
+        # journey.specification.feedback.button
+        expect(page).to have_link("Give feedback (opens in a new tab)", href: "https://dferesearch.fra1.qualtrics.com")
+      end
 
       click_on "Download (.docx)"
 
