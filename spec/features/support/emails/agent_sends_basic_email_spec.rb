@@ -1,5 +1,3 @@
-require "rails_helper"
-
 describe "Support agent sends a basic email" do
   include_context "with an agent"
 
@@ -87,7 +85,32 @@ describe "Support agent sends a basic email" do
   end
 
   describe "sending the email" do
+
+    let(:template_collection) do
+      {
+        "templates" => [
+          {
+            "name" => "ToSchool",
+          },
+        ],
+      }
+    end
+
     before do
+      # fetch template by name
+      stub_request(:get,
+                   "https://api.notifications.service.gov.uk/v2/templates?type=email").to_return(
+                     body: template_collection.to_json,
+                   )
+
+      # send email
+      stub_request(:post,
+                   "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
+                     body: {}.to_json,
+                     status: 201,
+                     headers: { "Content-Type" => "application/json" },
+                   )
+
       choose "Non-template"
       click_button "Save"
       fill_in "Enter email body", with: "New email body"
@@ -96,11 +119,14 @@ describe "Support agent sends a basic email" do
     end
 
     it "saves the email as a case interaction" do
+
+      binding.pry
+
       interacton = support_case.reload.interactions.last
 
-      expect(interacton.event_type).to eq("email_to_school")
-      expect(interacton.body).to eq("New email body")
-      expect(interacton.agent).to eq(agent)
+      expect(interacton.event_type).to eq "email_to_school"
+      expect(interacton.body).to eq "New email body"
+      expect(interacton.agent).to eq agent
     end
   end
 end

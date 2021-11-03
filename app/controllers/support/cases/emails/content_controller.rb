@@ -16,6 +16,7 @@ module Support
         @case_email_content_form = CaseEmailContentForm.new(
           email_body: basic_email_body,
           email_subject: basic_email_subject,
+          email_template: params[:template],
         )
       else
         @back_url = support_case_email_templates_path(@current_case)
@@ -23,6 +24,7 @@ module Support
         @case_email_content_form = CaseEmailContentForm.new(
           email_body: selected_template_preview.body,
           email_subject: selected_template_preview.subject,
+          email_template: params[:template],
         )
       end
     end
@@ -67,11 +69,13 @@ module Support
       CaseEmailContentFormSchema.new.call(**case_email_content_form_params)
     end
 
+    # set default elsewhere?
+    #
     def case_email_content_form_params
       defaults = { email_subject: basic_email_subject }
 
       params.require(:case_email_content_form)
-        .permit(:email_body, :email_subject)
+        .permit(:email_body, :email_subject, :email_template)
         .reverse_merge(defaults)
     end
 

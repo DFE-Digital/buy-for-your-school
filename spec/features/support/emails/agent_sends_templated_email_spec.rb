@@ -1,5 +1,3 @@
-require "rails_helper"
-
 describe "Support agent sends a templated email" do
   include_context "with an agent"
   include_context "with notify email templates"
@@ -27,23 +25,52 @@ describe "Support agent sends a templated email" do
 
     it "previews the email with variables substituted" do
       within ".email-preview" do
-        expect(page).to have_content("Hi #{support_case.full_name}, here is information regarding frameworks")
+        expect(page).to have_content("Hi School Contact, here is information regarding frameworks")
       end
     end
   end
 
   describe "sending the email" do
+
+    let(:template_collection) do
+      {
+        "templates" => [
+          {
+            "name" => "custom",
+          },
+        ],
+      }
+    end
+
     before do
+      # fetch template by name
+      stub_request(:get,
+                   "https://api.notifications.service.gov.uk/v2/templates?type=email").to_return(
+                     body: template_collection.to_json,
+                   )
+
+      # send email
+      stub_request(:post,
+                   "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
+                     body: {}.to_json,
+                     status: 201,
+                     headers: { "Content-Type" => "application/json" },
+                   )
+
       click_link "What is a framework?"
       click_button "Confirm and send email"
     end
 
     it "saves the email as a case interaction" do
+
+      binding.pry
+
+
       interacton = support_case.reload.interactions.last
 
-      expect(interacton.event_type).to eq("email_to_school")
-      expect(interacton.body).to eq("Hi #{support_case.full_name}, here is information regarding frameworks")
-      expect(interacton.agent).to eq(agent)
+      expect(interacton.event_type).to eq "email_to_school"
+      expect(interacton.body).to eq("Hi School Contact, here is information regarding frameworks")
+      expect(interacton.agent).to eq agent
     end
   end
 end

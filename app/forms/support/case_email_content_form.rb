@@ -3,11 +3,16 @@ module Support
     extend Dry::Initializer
     include Concerns::ValidatableForm
 
-    # @!attribute [r] email_body
-    # @return [String]
-    option :email_body, Types::Params::String, optional: true
+    # @!attribute [r] email_template
+    #   @return [String]
+    option :email_template, Types::Params::String, default: proc { "basic" }
+
     # @!attribute [r] email_subject
-    # @return [String]
+    #   @return [String]
     option :email_subject, Types::Params::String, optional: true
+
+    # @!attribute [r] email_body
+    #   @return [String]
+    option :email_body, Types::Params::String, optional: true
   end
 end
