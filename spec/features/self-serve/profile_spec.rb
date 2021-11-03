@@ -1,10 +1,6 @@
 RSpec.feature "An authenticated user" do
   subject(:user) { create(:user, first_name: "Peter", last_name: "Hamilton") }
 
-  around do |example|
-    ClimateControl.modify(DSI_ENV: "test") { example.run }
-  end
-
   before do
     user_is_signed_in(user: user)
     visit "/profile"
