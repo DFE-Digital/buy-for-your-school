@@ -2,7 +2,10 @@
 
 require "jwt"
 require "dry-initializer"
+
+require "types"
 require "dsi/user"
+require "dsi/uri"
 
 module Dsi
   class Client
@@ -10,9 +13,8 @@ module Dsi
 
     extend Dry::Initializer
 
-    option :service,      default: proc { ENV["DFE_SIGN_IN_IDENTIFIER"] }
-    option :api_endpoint, default: proc { ENV["DFE_SIGN_IN_API_ENDPOINT"] }
-    option :api_secret,   default: proc { ENV["DFE_SIGN_IN_API_SECRET"] }
+    option :service,    Types::String, default: proc { ENV["DFE_SIGN_IN_IDENTIFIER"] }
+    option :api_secret, Types::String, default: proc { ENV["DFE_SIGN_IN_API_SECRET"] }
 
     # @return [String]
     #
@@ -43,7 +45,7 @@ module Dsi
     # https://github.com/DFE-Digital/login.dfe.public-api#get-user-access-to-service
     #
     def roles(user_id:, org_id:)
-      uri = api_uri("/services/#{service}/organisations/#{org_id}/users/#{user_id}")
+      uri = api_uri("services/#{service}/organisations/#{org_id}/users/#{user_id}")
       body = get(uri)
       body["roles"].map { |r| r["code"] }
     end
@@ -76,8 +78,7 @@ module Dsi
     # https://github.com/DFE-Digital/login.dfe.public-api#get-organisations-for-user
     #
     def orgs(user_id:)
-      uri = api_uri("/users/#{user_id}/organisations")
-      get(uri)
+      get api_uri("users/#{user_id}/organisations")
     end
 
   private
@@ -121,7 +122,7 @@ module Dsi
     # @return [Array]
     #
     def get_users
-      uri = api_uri("/users")
+      uri = api_uri("users")
       body = get(uri)
       page_number = 2
       users = body["users"]
@@ -142,14 +143,14 @@ module Dsi
     # https://github.com/DFE-Digital/login.dfe.public-api#approvers-for-organisations
     #
     # def get_approvers
-    #   uri = api_uri("/users/approvers")
-    #   get(uri)
+    #   get api_uri("users/approvers")
     # end
 
-    # @return [URI::HTTPS]
+    # @param path [String]
     #
+    # @return [URI::HTTPS]
     def api_uri(path)
-      URI.join(api_endpoint, path)
+      ::Dsi::Uri.new(subdomain: "api", path: path).call
     end
 
     # TODO: benchmark performance for http clients
