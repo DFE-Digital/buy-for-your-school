@@ -12,7 +12,7 @@ Or <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-fo
 
 ## Other compliant procurement options
 
-If you're not able to use a framework, read guidance to find out how to continue with your procurement if you want to:
+If you're not able, or choose not to use a framework, make sure you follow a compliant process to continue with your procurement. Read about how to:
 
 * <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/buying-high-value-things-under-the-eu-procurement-threshold" target ="_blank">buy high-value things **under** the procurement threshold</a> (over £40,000 but less than £189,330)
 
