@@ -1,14 +1,26 @@
 RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
-  let(:fixture) { "section-with-multiple-tasks.json" }
+  let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
+  # let(:fixture) { "section-with-multiple-tasks.json" }
 
   before do
     user_is_signed_in(user: user)
     # TODO: replace fixture with factory
-    start_journey_from_category(category: fixture)
+    # start_journey_from_category(category: fixture)
   end
 
   context "when a task has more than one unanswered step" do
+    before do
+      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section)
+      create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_with_every_type_of_step, order: 3)
+      create(:step, :short_text, title: "What email address did you use?", task: task_with_multiple_steps, order: 1)
+      create(:step, :long_text, title: "Describe what you need", task: task_with_multiple_steps, order: 0)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_multiple_steps, order: 2)
+
+      visit "/journeys/#{journey.id}"
+    end
     it "user can see a link to continue answering questions" do
       within ".app-task-list" do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
