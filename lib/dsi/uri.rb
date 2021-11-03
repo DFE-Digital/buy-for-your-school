@@ -27,11 +27,17 @@ module Dsi
     #   @api private
     option :path, optional: true, reader: :private
 
+    # @!attribute query
+    #   @return [String]
+    #   @api private
+    option :query, optional: true, reader: :private
+
     # @return [URI::HTTPS]
     def call
       URI::HTTPS.build(
         host: "#{prefix}#{subdomain}.signin.education.gov.uk",
         path: path,
+        query: query,
       )
     end
 
