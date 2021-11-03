@@ -17,7 +17,7 @@ RSpec.describe Support::SeedCategories do
   end
 
   describe "resetting the data" do
-    context "reset is false" do
+    context "when reset is false" do
       it "leaves the data intact" do
         service.call
 

@@ -21,7 +21,7 @@ module Support
       Category.destroy_all if reset
 
       YAML.load_file(data).each do |group|
-        category = Category.find_or_create_by!(title: group["title"], parent_id: nil) do |cat|
+        category = Category.top_level.find_or_create_by!(title: group["title"]) do |cat|
           cat.description = group["description"]
           cat.slug = group["slug"]
         end

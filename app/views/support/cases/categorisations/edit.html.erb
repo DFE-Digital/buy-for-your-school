@@ -1,0 +1,21 @@
+<%= form_with model: @case_categorisation_form, scope: :case_categorisation_form, url: support_case_categorisation_path(@current_case), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_radio_buttons_fieldset :category_id, legend: { text: I18n.t("support.case_categorisations.edit.header"), size: "l" } do %>
+    <%= form.hidden_field :category_id, value: nil %>
+
+    <div class="govuk-radios govuk-radios--small">
+      <% @categories.each_with_index do |category, i| %>
+        <div class="govuk-radios__divider">
+          <span class="govuk-body govuk-!-font-weight-bold"><%= category.title %></span>
+        </div>
+
+        <% category.sub_categories.ordered_by_title.each do |sub_category| %>
+          <%= form.govuk_radio_button :category_id, sub_category.id, label: { text: sub_category.title } %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.submit I18n.t("support.case_categorisations.edit.submit"), class: "govuk-button", role: "button" %>
+<% end %>
