@@ -4,6 +4,7 @@ RSpec.describe SubmitSupportRequest do
   end
 
   let(:support_case) { Support::Case.last }
+  let!(:support_category) { create(:support_category, slug: "slug", title: "Slug") }
 
   let(:template_collection) do
     {
@@ -29,9 +30,6 @@ RSpec.describe SubmitSupportRequest do
                    status: 201,
                    headers: { "Content-Type" => "application/json" },
                  )
-
-    # submit
-    service.call
   end
 
   describe "#call" do
@@ -45,26 +43,47 @@ RSpec.describe SubmitSupportRequest do
              school_urn: chosen_organisation["urn"])
     end
 
-    it "submits the request and creates a case" do
-      expect(support_case).to be_persisted
-      expect(support_case.phone_number).to eq "01234567890"
-      expect(support_case.organisation_name).to eq chosen_organisation["name"]
-      expect(support_case.organisation_urn).to eq chosen_organisation["urn"]
-      # expect(support_case.category).to eq "slug"
-    end
+    describe "case creation" do
+      before { service.call }
 
-    context "with a specification" do
-      it "attaches the specification as a document" do
-        expect(support_case.documents.count).to eq 1
+      it "submits the request and creates a case" do
+        expect(support_case).to be_persisted
+        expect(support_case.phone_number).to eq "01234567890"
+        expect(support_case.organisation_name).to eq chosen_organisation["name"]
+        expect(support_case.organisation_urn).to eq chosen_organisation["urn"]
+        expect(support_case.category).to eq support_category
+      end
+
+      context "with a specification" do
+        it "attaches the specification as a document" do
+          expect(support_case.documents.count).to eq 1
+        end
+      end
+
+      context "without a specification" do
+        let(:support_request) { create(:support_request) }
+
+        it "has no support document" do
+          expect(support_case.documents.count).to eq 0
+        end
       end
     end
 
-    context "without a specification" do
-      let(:support_request) { create(:support_request) }
+    it "send a confirmation email" do
+      email = instance_double(::Emails::Confirmation)
+      expect(email).to receive(:call)
 
-      it "has no support document" do
-        expect(support_case.documents.count).to eq 0
-      end
+      allow(Emails::Confirmation).to receive(:new).with(
+        recipient: user,
+        reference: "000001",
+        template: "custom",
+        variables: {
+          message: "Support request message from a School Buying Professional",
+          category: "slug",
+        },
+      ).and_return(email)
+
+      service.call
     end
   end
 end

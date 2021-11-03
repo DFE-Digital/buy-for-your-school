@@ -2,35 +2,94 @@ RSpec.feature "Case management dashboard" do
   include_context "with an agent"
 
   before do
-    create(:support_case)
+    create_list(:support_case, 3)
     click_button "Agent Login"
     # visit "/support/cases"
   end
 
-  it "displays 3 tabs" do
-    expect(all("li.govuk-tabs__list-item", visible: true).count).to eq(3)
+  it "is signed in as correct agent" do
+    within "header.govuk-header" do
+      expect(find("#userInfo")).to have_text "Signed in as Procurement Specialist"
+    end
   end
 
-  it "defaults to the 'My Cases' tab" do
-    expect(find("#my-cases .govuk-heading-l", visible: true)).to have_text "My cases"
+  it "defaults to the 'my cases' tab" do
+    expect(find("#my-cases")).not_to have_css ".govuk-tabs__panel--hidden"
   end
 
-  it "lists cases" do
-    expect(find("#my-cases .govuk-table")).to be_visible
-    expect(all("#my-cases .govuk-table__row").count).to eq(2)
+  context "when my cases tab" do
+    let!(:new_case) { create(:support_case, agent: agent) }
+
+    before do
+      visit "/support/cases"
+    end
+
+    it "shows my cases" do
+      within "#my-cases" do
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
+        row = all(".govuk-table__body .govuk-table__row")
+        expect(row[0]).to have_text new_case.ref
+      end
+    end
+
+    it "shows correct table headers" do
+      within "#my-cases" do
+        table_headers = all(".govuk-table__header")
+        expect(table_headers[0]).to have_text "Case"
+        expect(table_headers[1]).to have_text "Organisation"
+        expect(table_headers[2]).to have_text "Category"
+        expect(table_headers[3]).to have_text "Status"
+        expect(table_headers[4]).to have_text "Last updated"
+      end
+    end
   end
 
-  it "has a table with columns for org id, category name, case status and updated timestamp" do
-    within "#my-cases" do
-      expect(find(".govuk-table__head")).to have_text "Organisation Category Status Last updated"
+  context "when new cases tab" do
+    before do
+      create(:support_case, state: :closed)
+      visit "/support/cases"
+    end
 
-      table_headers = all(".govuk-table__header")
+    it "shows new cases" do
+      within "#new-cases" do
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(3)
+      end
+    end
 
-      expect(table_headers[0]).to have_text "Case"
-      expect(table_headers[1]).to have_text "Organisation"
-      expect(table_headers[2]).to have_text "Category"
-      expect(table_headers[3]).to have_text "Status"
-      expect(table_headers[4]).to have_text "Last updated"
+    it "shows correct table headers" do
+      within "#new-cases" do
+        table_headers = all(".govuk-table__header")
+        expect(table_headers[0]).to have_text "Case"
+        expect(table_headers[1]).to have_text "Organisation"
+        expect(table_headers[2]).to have_text "Category"
+        expect(table_headers[3]).to have_text "Status"
+        expect(table_headers[4]).to have_text "Date received"
+      end
+    end
+  end
+
+  context "when all cases tab" do
+    before do
+      create(:support_case, state: :resolved)
+      visit "/support/cases"
+    end
+
+    it "shows all cases" do
+      within "#all-cases" do
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(4)
+      end
+    end
+
+    it "shows correct table headers" do
+      within "#all-cases" do
+        table_headers = all(".govuk-table__header")
+        expect(table_headers[0]).to have_text "Case"
+        expect(table_headers[1]).to have_text "Organisation"
+        expect(table_headers[2]).to have_text "Category"
+        expect(table_headers[3]).to have_text "Status"
+        expect(table_headers[4]).to have_text "Assigned to"
+        expect(table_headers[5]).to have_text "Last updated"
+      end
     end
   end
 end

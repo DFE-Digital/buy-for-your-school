@@ -13,21 +13,35 @@ The format is based on [Keep a Changelog 1.0.0].
 - add service to create SupportCases from SupportEnquiries
 - add ability for agent to resolve a case with notes
 - add ability for agent to send a non templated email on a case
+- add ability for agent to send templated emails on a case
+- add ability for agent to view specification
+- privacy notice page
 - accessibility page
 
 ### Specify Unreleased
 
+**Infrastructure**
+
+- Contentful env `master` is now aliased to `staging`
+- Contentful env `research` has been removed
+- `production` points to Contentful `master`
+- `staging` points to Contentful `staging`
+- Github actions changed to clone `staging` to `develop` for local development
+
 **ITHC**
+
 - explicitly set `X-Xss-Protection` header
 - restrict all `robots.txt`
 
 **Support Requests**
+
 - add form to request support
 - use `dry-validation` for complex form validations
 - provide a better more accessible user experience using the form error summary
 - send a confirmation email upon submission
 
 **Rich Data**
+
 - integrate fully with DSI to gather names, email and organisation at authentication
 - add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
 - make a post authentication API call to DSI for roles and organisations information
@@ -45,6 +59,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - grant access to supported organisations and ProcOps users only
 
 **House keeping**
+
 - bump Ruby to version `3.0.1`
 - document code using Yard
 - use CodeClimate in CI pipeline to highlight areas of improvement
@@ -61,15 +76,18 @@ The format is based on [Keep a Changelog 1.0.0].
   no-op until approved
 
 **Steps**
-- implement __interrupt pattern__ which introduces a step that is not semantically
+
+- implement **interrupt pattern** which introduces a step that is not semantically
   a question but a statement
 - remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
 - add custom answer validation logic which can be controlled in Contentful
 - fix progression to the next incomplete task
 - add `skipped_ids` to `Task` to allow users to skip questions
 - add error summary component
+- customise presence validation message
 
 **Multiple Categories**
+
 - remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
 - introduce `Category` model to mirror Contentful category entity
 - add category `title` column to the dashboard
@@ -80,6 +98,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - update Contentful webhook handling to pick up updates to `Category` when they are published
 
 **Dashboard functionality**
+
 - add explicit ordering to the task model to allow continuing to the next unanswered task
 - add extensible tally of counted steps to the task
 - add state to `Journey` (initial, stale, archive or remove)
@@ -87,6 +106,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - allow user to (soft) delete a specification
 
 **Preview functionality**
+
 - previously this depended upon a dedicated environment which used the main branch
   thereby preventing preview functionality in staging
 - a memoised client for both Contentful delivery and preview is available for any environment

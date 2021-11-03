@@ -43,7 +43,7 @@ class SubmitSupportRequest
     #
     Emails::Confirmation.new(
       recipient: request.user,
-      reference: "WIP",
+      reference: @kase.ref,
       template: template,
       variables: {
         message: request.message_body,
@@ -77,17 +77,23 @@ private
     Support::Document.new(file_type: "HTML attachment", document_body: document_body)
   end
 
+  # @return [Support::Category]
+  def map_category
+    Support::Category.find_by(slug: category)
+  end
+
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
-    kase = Support::Case.create!(request_text: request.message_body,
-                                 first_name: user.first_name,
-                                 last_name: user.last_name,
-                                 email: user.email,
-                                 phone_number: request.phone_number,
-                                 organisation_urn: request.school_urn,
-                                 organisation_name: request.school_name)
+    @kase = Support::Case.create!(request_text: request.message_body,
+                                  first_name: user.first_name,
+                                  last_name: user.last_name,
+                                  email: user.email,
+                                  phone_number: request.phone_number,
+                                  organisation_urn: request.school_urn,
+                                  organisation_name: request.school_name,
+                                  category: map_category)
 
-    Support::Interaction.create!({  case: kase,
+    Support::Interaction.create!({  case: @kase,
                                     event_type: 4,
                                     additional_data:
                                       { "support_request_id": request.id,
@@ -98,8 +104,8 @@ private
                                         "category": category,
                                         "message": request.message_body } })
 
-    kase.documents << document if request.journey
-    kase
+    @kase.documents << document if request.journey
+    @kase
   end
 
   # API (draft) ----------------------------------------------------------------
