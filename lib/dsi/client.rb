@@ -45,7 +45,7 @@ module Dsi
     # https://github.com/DFE-Digital/login.dfe.public-api#get-user-access-to-service
     #
     def roles(user_id:, org_id:)
-      uri = api_uri("services/#{service}/organisations/#{org_id}/users/#{user_id}")
+      uri = api_uri("/services/#{service}/organisations/#{org_id}/users/#{user_id}")
       body = get(uri)
       body["roles"].map { |r| r["code"] }
     end
@@ -78,7 +78,7 @@ module Dsi
     # https://github.com/DFE-Digital/login.dfe.public-api#get-organisations-for-user
     #
     def orgs(user_id:)
-      get api_uri("users/#{user_id}/organisations")
+      get api_uri("/users/#{user_id}/organisations")
     end
 
   private
@@ -122,7 +122,7 @@ module Dsi
     # @return [Array]
     #
     def get_users
-      uri = api_uri("users")
+      uri = api_uri("/users")
       body = get(uri)
       page_number = 2
       users = body["users"]
@@ -143,7 +143,7 @@ module Dsi
     # https://github.com/DFE-Digital/login.dfe.public-api#approvers-for-organisations
     #
     # def get_approvers
-    #   get api_uri("users/approvers")
+    #   get api_uri("/users/approvers")
     # end
 
     # @param path [String]

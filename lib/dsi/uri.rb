@@ -29,7 +29,10 @@ module Dsi
 
     # @return [URI::HTTPS]
     def call
-      URI("https://#{prefix}#{subdomain}.signin.education.gov.uk/#{path}")
+      URI::HTTPS.build(
+        host: "#{prefix}#{subdomain}.signin.education.gov.uk",
+        path: path,
+      )
     end
 
   private

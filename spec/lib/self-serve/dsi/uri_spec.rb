@@ -94,7 +94,7 @@ RSpec.describe Dsi::Uri do
       end
 
       context "and path" do
-        subject(:service) { described_class.new(path: "path/to/folder") }
+        subject(:service) { described_class.new(path: "/path/to/folder") }
 
         it "is appended" do
           expect(result).to eql "https://services.signin.education.gov.uk/path/to/folder"
