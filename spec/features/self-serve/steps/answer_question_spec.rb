@@ -1,7 +1,5 @@
 #
 # Check that questions can be answered with valid input
-#
-# TODO: add missing question types
 RSpec.feature "Answering questions" do
   let(:user) { create(:user) }
   let(:title) { answer.step.task.title }
@@ -50,6 +48,34 @@ RSpec.feature "Answering questions" do
         click_on title
 
         expect(find_field("answer-response-field").value).to eql "email@example.com"
+      end
+    end
+  end
+
+  context "when the question is a long text" do
+    let(:answer) { create(:long_text_answer, response: "answer") }
+
+    context "and the answer is omitted" do
+      it "renders a validation error" do
+        fill_in "answer[response]", with: " "
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+
+        fill_in "answer[response]", with: ""
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+      end
+    end
+
+    context "and the question is answered" do
+      scenario "the answer is saved" do
+        fill_in "answer[response]", with: "this is a long text answer"
+        click_update
+        click_on title
+
+        expect(find_field("answer-response-field").value).to eql "this is a long text answer"
       end
     end
   end
@@ -103,6 +129,71 @@ RSpec.feature "Answering questions" do
 
         expect(page).not_to have_checked_field "answer-response-breakfast-field"
         expect(page).to have_checked_field "answer-response-lunch-field"
+      end
+    end
+  end
+
+  context "when the question is a number" do
+    let(:answer) { create(:number_answer, response: 100) }
+
+    context "and the answer is omitted" do
+      it "renders a validation error" do
+        fill_in "answer[response]", with: " "
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+
+        fill_in "answer[response]", with: ""
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+      end
+    end
+
+    context "and the question is answered" do
+      scenario "the answer is saved" do
+        fill_in "answer[response]", with: "20"
+        click_update
+        click_on title
+
+        expect(find_field("answer-response-field").value).to eql "20"
+      end
+    end
+  end
+
+  context "when the question is a currency" do
+    let(:answer) { create(:currency_answer, response: 100.01) }
+
+    context "and the answer is omitted" do
+      it "renders a validation error" do
+        fill_in "answer[response]", with: " "
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+
+        fill_in "answer[response]", with: ""
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Please complete this field to continue."
+      end
+    end
+
+    context "and the answer is in the wrong format" do
+      it "renders a validation error" do
+        fill_in "answer[response]", with: "ten"
+        click_update
+
+        expect(find("span.govuk-error-message")).to have_text "Error: does not accept £ signs or other non numerical characters"
+      end
+    end
+
+    context "and the question is answered" do
+      scenario "the answer is saved" do
+        fill_in "answer[response]", with: "500.30"
+        click_update
+        click_on title
+
+        expect(find_field("answer-response-field").value).to eql "500.3"
       end
     end
   end
