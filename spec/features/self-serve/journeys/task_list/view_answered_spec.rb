@@ -109,7 +109,6 @@ RSpec.feature "Users can view the task list" do
   end
 
   context "when a task includes a step that has been answered" do
-    # let(:fixture) { "section-with-single-task.json" }
     let(:section_two) { create(:section, title: "Section with a single task", journey: journey, contentful_id: "contentful-section-entry") }
 
     before do
