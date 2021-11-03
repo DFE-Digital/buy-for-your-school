@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_092618) do
+ActiveRecord::Schema.define(version: 2021_11_01_171222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_092618) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -260,6 +260,12 @@ ActiveRecord::Schema.define(version: 2021_10_29_092618) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ukprn"
+    t.string "telephone_number"
+    t.jsonb "local_authority"
+    t.datetime "open_date"
+    t.string "number"
+    t.string "rsc_region"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end

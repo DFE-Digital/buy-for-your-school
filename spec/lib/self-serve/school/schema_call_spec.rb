@@ -44,6 +44,7 @@ RSpec.describe School::Schema, "#call" do
       uprn: "100005",
       urn: "136899",
       crn: "",
+      rsc_region: "North-West England",
 
       # SCHOOL (establishment)
       school: {
@@ -55,6 +56,7 @@ RSpec.describe School::Schema, "#call" do
         student_number: "101",
         website: "http://www.parmiters.herts.sch.uk",
         telephone_number: "1923671424",
+        open_date: "01-01-1980",
         phase: {
           code: "4",
           name: "Secondary",

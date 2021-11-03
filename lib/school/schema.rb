@@ -13,6 +13,7 @@ module School
       required(:urn).filled(:integer)
       required(:uprn).filled(:integer)
       required(:crn).maybe(:string)
+      required(:rsc_region).maybe(:string)
 
       required(:local_authority).hash do
         required(:code).filled(:integer)
@@ -98,6 +99,7 @@ module School
         required(:student_number).filled(:integer)
         required(:website).filled(:string)
         required(:telephone_number).filled(:string)
+        required(:open_date).maybe(:string)
       end
     end
   end
