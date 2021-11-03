@@ -2,17 +2,22 @@
 
 ## 1. Terms of use
 
-This page and any pages it links to explains the Get Help Buying for Schools (GHBS) service ("the Service") terms of use. By using the Service, you are agreeing to the following Terms and Conditions.
+This page and any other web pages it links to explain the Get Help Buying for Schools (GHBS) service (“the Service”) terms of use. The Service is managed by the Department for Education (DfE).
 
-These Terms and Conditions are aimed at those using our digital services and receiving advice and guidance from our supported buying team.
+By using any part of the Service, you are agreeing to the following terms and conditions.
 
-"You" is used in these Terms and Conditions to mean anyone who may access the Service and the definition includes but is not limited to Schools or Trusts.
+In these terms and conditions:
 
-The GHBS service is managed by the Department for Education (DfE).
+- Using the Service includes the use of any of the digital services on the Service website and receiving advice and guidance from our supported buying team.
+- “You” means anyone who may access the Service and the definition includes but is not limited to Schools or Trusts and/or their members of staff, agents and contractors.
+- “We” and “us” means the DfE.
 
 ### Using the Get Help Buying for Schools (GHBS) service
 
-You agree to use the Service for lawful purposes only. You must also use it in a way that does not infringe the rights of, or restrict or inhibit the use and enjoyment of, this site by anyone else.
+You agree to use the Service:
+
+- For lawful purposes only and subject in all respects to these terms and conditions; and
+- In a way that does not infringe the rights of, or restrict or inhibit the use and enjoyment of, this site by anyone else.
 
 We may update the Service at any time. Changes or removal of content may happen without notice.
 
