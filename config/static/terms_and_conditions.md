@@ -41,7 +41,7 @@ Some content is exempt from the OGL -- check the [list of exemptions](http://www
 
 Departmental logos and crests are also exempt from the OGL, except when they form an integral part of a document or dataset.
 
-If any content isn't subject to Crown copyright protection or published under the OGL, we'll usually credit the author or copyright holder. Such content may be subject to any third-party intellectual property rights which we are or may not be authorised to licence under the OGL. You agree that you will determine and comply with any applicable restrictions before using such content.
+If any content isn't subject to Crown copyright protection or published under the OGL, we'll usually credit the author or copyright holder. Such content may be subject to any third-party intellectual property rights which we are or may not be authorised to license under the OGL. You agree that you will determine and comply with any applicable restrictions before using such content.
 
 For content on the Service website which is published under the OGL, you can reproduce this content under the OGL, following the OGL licence conditions.
 
