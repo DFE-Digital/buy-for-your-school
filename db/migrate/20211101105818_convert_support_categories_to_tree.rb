@@ -12,7 +12,7 @@ class ConvertSupportCategoriesToTree < ActiveRecord::Migration[6.1]
       end
 
       dir.down do
-        remove_index :support_categories, :title
+        remove_index :support_categories, %i[title parent_id]
         add_index :support_categories, :title, unique: true
       end
     end
