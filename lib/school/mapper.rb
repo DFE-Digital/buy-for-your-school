@@ -110,7 +110,7 @@ module School
                     "OfstedLastInsp" => :ofsted_last_inspection,
                     "OfstedRating (name)" => :ofsted_rating,
                     # Open date
-                    "OpenDate" => :open_date
+                    "OpenDate" => :opened_date
 
         nest :school, %i[
           address
@@ -122,7 +122,7 @@ module School
           number
           ofsted_last_inspection
           ofsted_rating
-          open_date
+          opened_date
           phase
           student_capacity
           student_number
