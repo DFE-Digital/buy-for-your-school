@@ -17,5 +17,13 @@
     <%= I18n.t("journey.specification.next_steps.text") %>
     <%= link_to I18n.t("journey.specification.next_steps.link_text"), "/next-steps-#{@journey.category.slug}" %>
   </p>
+  <h2 class="govuk-heading-m">
+    <%= t("journey.specification.feedback.title") %>
+  </h2>
+  <p>
+    <%= t("journey.specification.feedback.text") %>
+  </p>
+  <%= button_to t("journey.specification.feedback.button_text"), ENV.fetch('QUALTRICS_SURVEY_URL'), class: "govuk-button govuk-button--secondary", "data-module" => "govuk-button" %>
+
   <%= @journey.specification %>
 </article>
