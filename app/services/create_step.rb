@@ -224,7 +224,6 @@ private
   def send_rollbar_warning
     Rollbar.warning(
       "An unexpected Contentful type was found",
-      # contentful_url: ENV["CONTENTFUL_URL"],
       contentful_space_id: @contentful_step.space.id,
       contentful_environment: @contentful_step.environment.id,
       contentful_entry_id: content_entry_id,
