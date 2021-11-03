@@ -20,6 +20,14 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ### Specify Unreleased
 
+**Infrastructure**
+
+- Contentful env `master` is now aliased to `staging`
+- Contentful env `research` has been removed
+- `production` points to Contentful `master`
+- `staging` points to Contentful `staging`
+- Github actions changed to clone `staging` to `develop` for local development
+
 **ITHC**
 
 - explicitly set `X-Xss-Protection` header
