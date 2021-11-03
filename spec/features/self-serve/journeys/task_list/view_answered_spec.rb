@@ -2,25 +2,23 @@ RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
   let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
-  # let(:fixture) { "section-with-multiple-tasks.json" }
+  let(:section_one) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
 
   before do
     user_is_signed_in(user: user)
-    # TODO: replace fixture with factory
-    # start_journey_from_category(category: fixture)
   end
 
   context "when a task has more than one unanswered step" do
     before do
-      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section)
-      create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_with_every_type_of_step, order: 3)
+      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section_one)
+      create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_with_multiple_steps, order: 0)
       create(:step, :short_text, title: "What email address did you use?", task: task_with_multiple_steps, order: 1)
-      create(:step, :long_text, title: "Describe what you need", task: task_with_multiple_steps, order: 0)
-      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_multiple_steps, order: 2)
+      create(:step, :long_text, title: "Describe what you need", task: task_with_multiple_steps, order: 2)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_multiple_steps, order: 3)
 
       visit "/journeys/#{journey.id}"
     end
+
     it "user can see a link to continue answering questions" do
       within ".app-task-list" do
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
@@ -43,6 +41,7 @@ RSpec.feature "Users can view the task list" do
       # list of steps
       # /journeys/13848f65-ff88-46a3-8d35-59403a1cdbf2/tasks/8ee45edf-6808-4398-8498-ca8c4ab80e15
       expect(page).to have_a_task_path
+
       click_on "Continue answering these questions" # task.button.continue
 
       expect(page).to have_content "What email address did you use?"
@@ -51,7 +50,20 @@ RSpec.feature "Users can view the task list" do
 
   # TODO: This feature spec is insufficient and should use "with an incomplete journey" context
   context "when a task with multiple steps has been completed" do
-    it "user can see a link to continue to the next task" do
+    before do
+      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section)
+      create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_with_multiple_steps, order: 0)
+      create(:step, :short_text, title: "What email address did you use?", task: task_with_multiple_steps, order: 1)
+      create(:step, :long_text, title: "Describe what you need", task: task_with_multiple_steps, order: 2)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_multiple_steps, order: 3)
+
+      task_with_every_type_of_step = create(:task, title: "Task containing every type of step", section: section)
+      create(:step, :long_text, title: "Describe what you need", task: task_with_every_type_of_step, order: 0)
+
+      visit "/journeys/#{journey.id}"
+    end
+
+    xit "user can see a link to continue to the next task" do
       # category - section-with-multiple-tasks
       #   section - multiple-tasks-section
       #     tasks
@@ -83,6 +95,7 @@ RSpec.feature "Users can view the task list" do
       # list of steps
       # /journeys/4742c871-ba8e-421e-8c6b-234494162410/tasks/557082fd-62ec-49d5-b863-4335d3fc6c41
       expect(page).to have_a_task_path
+      # pp page.source
       click_on "Continue to the next task" # task.button.next
 
       # task 1 step 3 long-text-question
@@ -96,7 +109,15 @@ RSpec.feature "Users can view the task list" do
   end
 
   context "when a task includes a step that has been answered" do
-    let(:fixture) { "section-with-single-task.json" }
+    # let(:fixture) { "section-with-single-task.json" }
+    let(:section_two) { create(:section, title: "Section with a single task", journey: journey, contentful_id: "contentful-section-entry") }
+
+    before do
+      task_with_single_step = create(:task, title: "Task with a single step", section: section_two)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Lunch" }], task: task_with_single_step, order: 0)
+
+      visit "/journeys/#{journey.id}"
+    end
 
     it "shows the section title" do
       within(".app-task-list") do
