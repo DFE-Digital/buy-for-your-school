@@ -8,4 +8,10 @@ RSpec.describe Support::AgentPresenter do
       expect(presenter.full_name).to eq("Ronald McDonald")
     end
   end
+
+  describe "#guest?" do
+    it "returns false" do
+      expect(presenter.guest?).to be false
+    end
+  end
 end

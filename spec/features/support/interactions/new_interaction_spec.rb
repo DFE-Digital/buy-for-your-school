@@ -9,29 +9,40 @@ RSpec.feature "Add new interaction to case" do
       visit "/support/cases/#{support_case.id}"
     end
 
-    context "when interaction is a note" do
+    describe "adding a note" do
       before do
         click_link "Add a case note"
       end
 
-      describe "Back link" do
-        it_behaves_like "breadcrumb_back_link" do
-          let(:url) { "/support/cases/#{support_case.id}" }
+      context "when a valid note" do
+        describe "Back link" do
+          it_behaves_like "breadcrumb_back_link" do
+            let(:url) { "/support/cases/#{support_case.id}" }
+          end
+        end
+
+        it "shows the add note heading" do
+          expect(find("label.govuk-label")).to have_text "Add case note"
+        end
+
+        it "allows an agent to add a note" do
+          fill_in "interaction[body]", with: "this is an example note"
+          click_on "Save"
+          expect(find("h3.govuk-notification-banner__heading")).to have_text "Note added to case"
         end
       end
 
-      it "shows the add note heading" do
-        expect(find("label.govuk-label")).to have_text "Add case note"
-      end
-
-      it "allows an agent to add a note" do
-        fill_in "interaction[body]", with: "this is an example note"
-        click_on "Save"
-        expect(find("h3.govuk-notification-banner__heading")).to have_text "Note added to case"
+      # TODO: fix test with correct assertion that note not added
+      context "when an invalid note" do
+        xit "doesn't allow an agent to add a note" do
+          click_on "Save"
+          expect(find("h3.govuk-notification-banner__heading")).not_to have_text "Note added to case"
+          expect(page).to have_current_path "interactions/new"
+        end
       end
     end
 
-    context "when interaction is logging contact with the school" do
+    describe "logging contact with the school" do
       before do
         click_link "Log contact with school"
       end
