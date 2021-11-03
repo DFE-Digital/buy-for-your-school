@@ -21,7 +21,7 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.my_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <% if @cases.none? %>
+        <% if @my_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody class="govuk-table__body">
-              <% @cases.each do |kase| %>
+              <% @my_cases.each do |kase| %>
                 <%= render "row", kase: kase, tab: :my_cases %>
               <% end %>
             </tbody>
@@ -61,7 +61,7 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.new_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <% if @cases.none? %>
+        <% if @new_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
@@ -87,7 +87,7 @@
               </tr>
             </thead>
             <tbody class="govuk-table__body">
-              <% @cases.each do |kase| %>
+              <% @new_cases.each do |kase| %>
                 <%= render "row", kase: kase, tab: :new_cases %>
               <% end %>
             </tbody>
@@ -139,4 +139,7 @@
       </div>
     </div>
   </div>
+
+
+
 </div>
