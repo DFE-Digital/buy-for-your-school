@@ -7,6 +7,7 @@ FactoryBot.define do
     email { "school@email.co.uk" }
     first_name { "School" }
     last_name { "Contact" }
+    organisation_urn { "12345678" }
 
     association :agent, factory: :support_agent
 
