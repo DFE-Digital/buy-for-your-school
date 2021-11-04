@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # script/destroy-volume: Trash a corrupt development database volume
+# before being able to use this script, run 'chmod +x ./script/destroy-volume' locally in the terminal
 
 set -e
 
-docker exec -it buy_for_your_school_app_1 bash docker volume rm -f buy-for-your-school_db-data
+docker-compose down --remove-orphans
+docker volume rm buy-for-your-school_db-data
