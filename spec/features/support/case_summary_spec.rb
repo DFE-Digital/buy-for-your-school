@@ -56,6 +56,7 @@ RSpec.feature "Case summary" do
     end
   end
 
+  # TODO: tidy up the contents of case history are "interactions"
   describe "Case history tab" do
     before { visit "/support/cases/#{support_case.id}#case-history" }
 
