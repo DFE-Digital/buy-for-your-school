@@ -10,6 +10,9 @@
       <dd class="govuk-summary-list__value">
         <%= current_case.category.title %>
       </dd>
+      <dd class="govuk-summary-list__actions">
+        <%= link_to I18n.t("support.case.link.edit_category"), edit_support_case_categorisation_path(current_case), class: "govuk-link" %>
+      </dd>
     </div>
 
     <div class="govuk-summary-list__row">
@@ -19,6 +22,7 @@
       <dd class="govuk-summary-list__value">
         <%= current_case.request_text %>
       </dd>
+      <dd class="govuk-summary-list__actions"></dd>
     </div>
 
     <div class="govuk-summary-list__row">
@@ -36,6 +40,7 @@
                 class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %>
         <% end %>
       </dd>
+      <dd class="govuk-summary-list__actions"></dd>
     </div>
   </dl>
 </div>
