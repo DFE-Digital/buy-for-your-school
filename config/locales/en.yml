@@ -310,6 +310,15 @@ en:
         my_cases: My cases
         new_cases: New cases
         all_cases: All cases
+      link:
+        edit_category: Change
+
+    case_categorisations:
+      edit:
+        header: Select a category
+        submit: Save and continue
+      flash:
+        updated: Successfully changed case category
 
     case_resolution:
       flash:

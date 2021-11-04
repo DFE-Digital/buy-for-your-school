@@ -12,7 +12,6 @@ FactoryBot.define do
     association :agent, factory: :support_agent
 
     association :category, factory: :support_category
-    sub_category_string { "category subtitle" }
 
     trait :open do
       state { :open }
