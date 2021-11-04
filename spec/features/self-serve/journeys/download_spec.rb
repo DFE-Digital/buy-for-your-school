@@ -29,11 +29,11 @@ RSpec.feature "Users can see their catering specification" do
         expect(page).to have_text("Once you have a completed specification,")
         expect(page).to have_link("see what the next steps are.", href: "/next-steps-catering")
         # journey.specification.feedback.heading
-        expect(page).to have_text "Giving us feedback"
+        expect(find("h2.govuk-heading-m")).to have_text "Giving us feedback"
         # journey.specification.feedback.body
         expect(page).to have_text "Tell us how Get Help Buying for Schools is working for you."
         # journey.specification.feedback.button
-        expect(page).to have_link("Give feedback (opens in a new tab)", href: "https://dferesearch.fra1.qualtrics.com")
+        expect(page).to have_link("Give feedback (opens in a new tab)", href: "https://dferesearch.fra1.qualtrics.com", count: 1)
         # ensure button opens in new tab
         expect(find("a.govuk-button:contains('Give feedback (opens in a new tab)')")[:target]).to eq "_blank"
       end
