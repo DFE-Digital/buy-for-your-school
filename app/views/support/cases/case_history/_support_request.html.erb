@@ -1,32 +1,33 @@
-<div class="govuk-accordion__section">
+<%# NB: support_request is an Interaction class %>
+<div id="<%= support_request.id %>" class="govuk-accordion__section">
+
   <div class="govuk-accordion__section-header">
     <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-case-history-enquiry-heading">
-          <%= I18n.t("support.interaction.type.support_request") %>
-        </span>
+      <span class="govuk-accordion__section-button"
+        id="case-history-support-request">
+
+        <%= I18n.t("support.interaction.type.support_request") %>
+      </span>
     </h2>
-    <div class="govuk-accordion__section-summary govuk-body" id="accordion-case-history-enquiry-received-at">
-      <%= support_request.created_at %>
+    <div class="govuk-accordion__section-summary govuk-body"
+      id="accordion-case-history-support-request-created-at">
+
+      <%# NB: Timestamp of case used in list_interactions_spec  %>
+      <%= support_request.case.created_at %>
     </div>
   </div>
-  <div id="accordion-case-history-enquiry-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-case-history-enquiry-heading">
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
+  <div id="accordion-case-history-support-request"
+    class="govuk-accordion__section-content"
+    aria-labelledby="accordion-case-history-support-request">
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.problem_description") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= support_request.additional_data['message'] %>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Additional Data
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= support_request.additional_data %>
+          <%= support_request.additional_data["message"] %>
         </dd>
       </div>
 
@@ -35,10 +36,28 @@
           <%= I18n.t("support.case.label.attached_specification") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <% "TODO: Render link to view documents" %>
-          <a href="#">
-            specification-1.pdf
-          </a>
+          <% if support_request.case.documents.for_rendering.none? %>
+            <%= I18n.t("support.case.label.attached_specification_none") %>
+          <% end %>
+
+          <% support_request.case.documents.for_rendering.each.with_index(1) do |document, i| %>
+            <%= link_to "specification-#{i} #{I18n.t("support.generic.link.opens_in_new_tab")}",
+                  support_case_document_path(support_request.case, document),
+                  class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %>
+          <% end %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Additional Data
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <ul class="govuk-list govuk-list--bullet">
+            <% support_request.additional_data.each do |key, value| %>
+              <li><pre><%= "#{key}: #{value}" %></pre></li>
+            <% end %>
+          </ul>
         </dd>
       </div>
 

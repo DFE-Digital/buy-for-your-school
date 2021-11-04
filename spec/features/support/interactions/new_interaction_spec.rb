@@ -1,86 +1,120 @@
-RSpec.feature "Add new interaction to case" do
+#
+# Assert how interactions are created and appear in the case history
+#
+
+# New case event
+#   when interaction is a note
+#     shows add note heading
+#     logs note in case history
+#     Back link
+#       behaves like breadcrumb_back_link
+#         has correct url in breadcrumb back link
+#   when interaction is a phone call or email
+#     shows log contact with school heading
+#     when choosing phone call
+#       logs phone call in case history
+#     when choosing email from school
+#       logs email from school in case history
+#     when choosing email to school
+#       logs email to school in case history
+#     Back link
+#       behaves like breadcrumb_back_link
+#         has correct url in breadcrumb back link
+#
+RSpec.feature "New case event" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, state: 1) }
+  let(:support_case) { create(:support_case, state: "open") }
 
-  context "when agent is signed in" do
+  before do
+    click_button "Agent Login"
+    visit "/support/cases/#{support_case.id}"
+  end
+
+  context "when interaction is a note" do
     before do
-      click_button "Agent Login"
-      visit "/support/cases/#{support_case.id}"
+      click_link "Add a case note"
     end
 
-    describe "adding a note" do
-      before do
-        click_link "Add a case note"
-      end
-
-      context "when a valid note" do
-        describe "Back link" do
-          it_behaves_like "breadcrumb_back_link" do
-            let(:url) { "/support/cases/#{support_case.id}" }
-          end
-        end
-
-        it "shows the add note heading" do
-          expect(find("label.govuk-label")).to have_text "Add case note"
-        end
-
-        it "allows an agent to add a note" do
-          fill_in "interaction[body]", with: "this is an example note"
-          click_on "Save"
-          expect(find("h3.govuk-notification-banner__heading")).to have_text "Note added to case"
-        end
-      end
-
-      # TODO: fix test with correct assertion that note not added
-      context "when an invalid note" do
-        xit "doesn't allow an agent to add a note" do
-          click_on "Save"
-          expect(find("h3.govuk-notification-banner__heading")).not_to have_text "Note added to case"
-          expect(page).to have_current_path "interactions/new"
-        end
+    describe "Back link" do
+      it_behaves_like "breadcrumb_back_link" do
+        let(:url) { "/support/cases/#{support_case.id}" }
       end
     end
 
-    describe "logging contact with the school" do
-      before do
-        click_link "Log contact with school"
-      end
+    it "shows add note heading" do
+      expect(find("label.govuk-label")).to have_text "Add case note"
+    end
 
-      describe "Back link" do
-        it_behaves_like "breadcrumb_back_link" do
-          let(:url) { "/support/cases/#{support_case.id}" }
+    it "logs note in case history" do
+      fill_in "interaction[body]", with: "this is an example note"
+
+      click_on "Save"
+      expect(find("h3.govuk-notification-banner__heading")).to have_text "Note added to case"
+
+      visit "/support/cases/#{support_case.id}#case-history"
+      within "#case-history" do
+        expect(find("h2.govuk-accordion__section-heading")).to have_text "Case note"
+      end
+    end
+  end
+
+  context "when interaction is a phone call or email" do
+    before do
+      click_link "Log contact with school"
+    end
+
+    describe "Back link" do
+      it_behaves_like "breadcrumb_back_link" do
+        let(:url) { "/support/cases/#{support_case.id}" }
+      end
+    end
+
+    it "shows log contact with school heading" do
+      expect(find("h1.govuk-heading-l")).to have_text "Contact with school"
+    end
+
+    context "when choosing phone call" do
+      it "logs phone call in case history" do
+        choose "Phone call"
+        fill_in "interaction[body]", with: "this is an example phone call"
+
+        click_on "Save"
+        expect(find("h3.govuk-notification-banner__heading")).to have_text "Phone call added to case"
+
+        visit "/support/cases/#{support_case.id}#case-history"
+        within "#case-history" do
+          expect(find("h2.govuk-accordion__section-heading")).to have_text "Phone call"
         end
       end
+    end
 
-      it "shows the log contact with school heading" do
-        expect(find("h1.govuk-heading-l")).to have_text "Contact with school"
-      end
+    context "when choosing email from school" do
+      it "logs email from school in case history" do
+        choose "Email from school"
+        fill_in "interaction[body]", with: "this is an example email from the school"
 
-      context "when choosing a phone call" do
-        it "allows agent to log phone call" do
-          choose "Phone call"
-          fill_in "interaction[body]", with: "this is an example phone call"
-          click_on "Save"
-          expect(find("h3.govuk-notification-banner__heading")).to have_text "Phone call added to case"
+        click_on "Save"
+        expect(find("h3.govuk-notification-banner__heading")).to have_text "Email from school added to case"
+
+        visit "/support/cases/#{support_case.id}#case-history"
+        within "#case-history" do
+          expect(find("h2.govuk-accordion__section-heading")).to have_text "Email from school"
         end
       end
+    end
 
-      context "when choosing email from school" do
-        it "allows agent to log email from school" do
-          choose "Email from school"
-          fill_in "interaction[body]", with: "this is an example email from the school"
-          click_on "Save"
-          expect(find("h3.govuk-notification-banner__heading")).to have_text "Email from school added to case"
-        end
-      end
+    context "when choosing email to school" do
+      it "logs email to school in case history" do
+        choose "Email to school"
+        fill_in "interaction[body]", with: "this is an example email to the school"
 
-      context "when choosing email to school" do
-        it "allows agent to log email to school" do
-          choose "Email to school"
-          fill_in "interaction[body]", with: "this is an example email to the school"
-          click_on "Save"
-          expect(find("h3.govuk-notification-banner__heading")).to have_text "Email to school added to case"
+        click_on "Save"
+        expect(find("h3.govuk-notification-banner__heading")).to have_text "Email to school added to case"
+
+        visit "/support/cases/#{support_case.id}#case-history"
+        within "#case-history" do
+          expect(find("h2.govuk-accordion__section-heading")).to have_text "Email to school"
         end
       end
     end
