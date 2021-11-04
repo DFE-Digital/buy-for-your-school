@@ -51,19 +51,19 @@ RSpec.feature "Users can view the task list" do
   # TODO: This feature spec is insufficient and should use "with an incomplete journey" context
   context "when a task with multiple steps has been completed" do
     before do
-      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section)
+      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section_one)
       create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_with_multiple_steps, order: 0)
       create(:step, :short_text, title: "What email address did you use?", task: task_with_multiple_steps, order: 1)
       create(:step, :long_text, title: "Describe what you need", task: task_with_multiple_steps, order: 2)
       create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_multiple_steps, order: 3)
 
-      task_with_every_type_of_step = create(:task, title: "Task containing every type of step", section: section)
+      task_with_every_type_of_step = create(:task, title: "Task containing every type of step", section: section_one)
       create(:step, :long_text, title: "Describe what you need", task: task_with_every_type_of_step, order: 0)
 
       visit "/journeys/#{journey.id}"
     end
 
-    xit "user can see a link to continue to the next task" do
+    it "user can see a link to continue to the next task" do
       # category - section-with-multiple-tasks
       #   section - multiple-tasks-section
       #     tasks
@@ -95,7 +95,7 @@ RSpec.feature "Users can view the task list" do
       # list of steps
       # /journeys/4742c871-ba8e-421e-8c6b-234494162410/tasks/557082fd-62ec-49d5-b863-4335d3fc6c41
       expect(page).to have_a_task_path
-      # pp page.source
+      pp page.source
       click_on "Continue to the next task" # task.button.next
 
       # task 1 step 3 long-text-question
