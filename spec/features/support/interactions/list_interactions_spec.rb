@@ -1,65 +1,44 @@
-RSpec.feature "Listing interactions on case history" do
+#
+# Assert complex case history behaviour
+#
+RSpec.feature "Support request case history" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, state: "open") }
+  let(:support_case) do
+    create(:support_case, state: "open", agent: agent)
+  end
 
-  context "when agent is signed in" do
-    before do
-      click_button "Agent Login"
-    end
+  before do
+    travel_to Time.zone.local(2021, 3, 20, 12, 0, 0)
 
-    context "when interaction is a note" do
-      let!(:interaction) { create(:support_interaction, :note, case: support_case) }
+    create(:support_interaction, :support_request, case: support_case, agent: agent)
+    # create(:support_interaction, :note, case: support_case, agent: agent)
+    # create(:support_interaction, :note, case: support_case, agent: agent)
+    # create(:support_interaction, :phone_call, case: support_case, agent: agent)
+    # create(:support_interaction, :email_from_school, case: support_case, agent: agent)
+    # create(:support_interaction, :email_to_school, case: support_case, agent: agent)
 
-      before do
-        visit "/support/cases/#{support_case.id}"
-      end
+    visit "/support/cases/#{support_case.id}#case-history"
+  end
 
-      it "shows the case note" do
-        within "#case-history" do
-          expect(find("span#case-history-note-#{interaction.id}")).to have_text "Case note"
-        end
-      end
-    end
-
-    context "when interaction is a phone call" do
-      let!(:interaction) { create(:support_interaction, :phone_call, case: support_case) }
-
-      before do
-        visit "/support/cases/#{support_case.id}"
-      end
-
-      it "shows the phone call" do
-        within "#case-history" do
-          expect(find("span#case-history-phone-call-#{interaction.id}")).to have_text "Phone call"
-        end
+  describe "first event" do
+    specify "heading" do
+      within "#case-history" do
+        expect(find("h2.govuk-accordion__section-heading")).to have_text "Request for support"
       end
     end
 
-    context "when interaction is an email to the school" do
-      let!(:interaction) { create(:support_interaction, :email_to_school, case: support_case) }
-
-      before do
-        visit "/support/cases/#{support_case.id}"
-      end
-
-      it "shows the email to the school" do
-        within "#case-history" do
-          expect(find("span#case-history-email-to-school-#{interaction.id}")).to have_text "Email to school"
-        end
+    specify "timestamp" do
+      within "#case-history" do
+        expect(find("div.govuk-accordion__section-summary")).to have_text "20 March 2021 at 12:00"
       end
     end
 
-    context "when interaction is an email from the school" do
-      let!(:interaction) { create(:support_interaction, :email_from_school, case: support_case) }
-
-      before do
-        visit "/support/cases/#{support_case.id}"
-      end
-
-      it "shows the email from the school" do
+    context "when no specification is attached" do
+      specify do
         within "#case-history" do
-          expect(find("span#case-history-email-from-school-#{interaction.id}")).to have_text "Email from school"
+          expect(find_all("dt.govuk-summary-list__key")[1]).to have_text "Attached specification"
+          expect(find_all("dd.govuk-summary-list__value")[1]).to have_text "None"
         end
       end
     end
