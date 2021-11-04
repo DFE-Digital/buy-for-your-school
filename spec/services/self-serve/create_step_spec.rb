@@ -165,7 +165,6 @@ RSpec.describe CreateStep do
       it "raises a rollbar event" do
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Contentful type was found",
-                # contentful_url: ENV["CONTENTFUL_URL"],
                 contentful_space_id: "jspwts36h1os",
                 contentful_environment: "master",
                 contentful_entry_id: "unexpected-contentful-type",
@@ -188,7 +187,6 @@ RSpec.describe CreateStep do
       it "raises a rollbar event" do
         expect(Rollbar).to receive(:warning)
           .with("An unexpected Contentful type was found",
-                # contentful_url: ENV["CONTENTFUL_URL"],
                 contentful_space_id: "jspwts36h1os",
                 contentful_environment: "master",
                 contentful_entry_id: "unexpected-contentful-question-type",
