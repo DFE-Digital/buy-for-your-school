@@ -7,7 +7,7 @@
     <div class="govuk-radios govuk-radios--small">
       <% @categories.each_with_index do |category, i| %>
         <div class="govuk-radios__divider">
-          <span class="govuk-body govuk-!-font-weight-bold"><%= category.title %></span>
+          <span class="divider-caption"><%= category.title %></span>
         </div>
 
         <% category.sub_categories.ordered_by_title.each do |sub_category| %>
