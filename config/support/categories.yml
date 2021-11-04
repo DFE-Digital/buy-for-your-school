@@ -135,6 +135,7 @@
   slug: business
   sub_categories:
     - title: Services MFD
+      slug: mfd
 
 
 - title: Financial
