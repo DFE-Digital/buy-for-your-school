@@ -22,7 +22,7 @@ RSpec.feature "Users can see their catering specification" do
       expect(find("p.govuk-body")).to have_text "Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed."
 
       # journey.specification.download.button
-      expect(find("a.govuk-button:contains('Download (.docx)')")[:role]).to eq "button"
+      expect(find("a.govuk-button:contains('Download (.docx)')")[:href]).to include "specification.docx"
 
       within "article.specification" do
         # journey.specification.next_steps
@@ -34,6 +34,8 @@ RSpec.feature "Users can see their catering specification" do
         expect(page).to have_text "Tell us how Get Help Buying for Schools is working for you."
         # journey.specification.feedback.button
         expect(page).to have_link("Give feedback (opens in a new tab)", href: "https://dferesearch.fra1.qualtrics.com")
+        # ensure button opens in new tab
+        expect(find("a.govuk-button:contains('Give feedback (opens in a new tab)')")[:target]).to eq "_blank"
       end
 
       click_on "Download (.docx)"
