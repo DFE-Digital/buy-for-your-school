@@ -41,7 +41,7 @@ class UserSession
     query = {
       id_token_hint: @session[:dfe_sign_in_sign_out_token],
       post_logout_redirect_uri: @redirect_url,
-    }.to_query
+    }
 
     ::Dsi::Uri.new(subdomain: "oidc", path: "/session/end", query: query).call.to_s
   end

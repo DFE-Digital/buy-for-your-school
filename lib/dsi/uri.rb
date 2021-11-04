@@ -30,7 +30,10 @@ module Dsi
     # @!attribute query
     #   @return [String]
     #   @api private
-    option :query, optional: true, reader: :private
+    option :query,
+           proc(&:to_query),
+           optional: true,
+           reader: :private
 
     # @return [URI::HTTPS]
     def call
