@@ -243,7 +243,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.jsonb "additional_data", default: "{}", null: false
+    t.jsonb "additional_data", default: {}, null: false
     t.index ["agent_id"], name: "index_support_interactions_on_agent_id"
     t.index ["case_id"], name: "index_support_interactions_on_case_id"
     t.index ["event_type"], name: "index_support_interactions_on_event_type"
