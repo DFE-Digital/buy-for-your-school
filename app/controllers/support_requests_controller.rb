@@ -15,7 +15,17 @@ class SupportRequestsController < ApplicationController
 
   # first question
   def new
-    @support_form = SupportForm.new(step: params.fetch(:step, 1))
+    if params.fetch(:step, 1) == 1
+      first_step = if current_user.supported_schools.one?
+                     current_user.active_journeys.any? ? 3 : 4
+                   else
+                     2
+                   end
+
+      @support_form = SupportForm.new(school_urn: current_user.school_urn, step: first_step)
+    else
+      @support_form = SupportForm.new(step: params[:step])
+    end
   end
 
   def edit
