@@ -1,0 +1,17 @@
+<%= form_with model: @case_hub_migration_form, scope: :case_hub_migration_form, url: support_cases_path do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <!-- render case fields -->
+
+  <h2 class="govuk-heading-l">
+    <%= I18n.t("support.case_hub_migration.header") %>
+  </h2>
+
+  <p class="govuk-body">
+    <%= I18n.t("support.case_hub_migration.label.form_hint") %>
+  </p>
+
+  <!-- render hub transition fields -->
+
+  <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
+<% end %>

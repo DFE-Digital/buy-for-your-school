@@ -1,3 +1,5 @@
+<%= link_to I18n.t("support.case.label.create"), new_support_case_path, class: "govuk-button", "role" => "button" %>
+
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
@@ -16,6 +18,8 @@
       </a>
     </li>
   </ul>
+
+
 
   <div class="govuk-tabs__panel" id="my-cases">
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.my_cases") %></h2>

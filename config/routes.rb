@@ -66,7 +66,7 @@ Rails.application.routes.draw do
 
   namespace :support do
     resources :agents, only: %i[create]
-    resources :cases, only: %i[index show edit update] do
+    resources :cases, except: :destroy do
       resources :interactions, only: %i[new create]
       scope module: :cases do
         resource :categorisation, only: %i[edit update]

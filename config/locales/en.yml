@@ -274,6 +274,7 @@ en:
         case_detail: Case details
         case_history: Case history
       label:
+        create: Create a new case
         change_owner: Change case owner
         add_note: Add a case note
         send_email: Send email
@@ -322,6 +323,13 @@ en:
       flash:
         updated: Successfully changed case category
 
+    case_hub_migration:
+      header: Hub migration case information
+      label:
+        form_hint: The following fields are only for NW Hub cases that are being migrated.
+      flash:
+        created: Case created/migrated successfully
+
     case_resolution:
       flash:
         created: Case resolved successfully
@@ -365,7 +373,7 @@ en:
 
     case_email_templates:
       index:
-        header: Send temolate email
+        header: Send template email
         what_is_a_framework:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
