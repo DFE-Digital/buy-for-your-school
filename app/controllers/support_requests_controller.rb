@@ -42,20 +42,7 @@ class SupportRequestsController < ApplicationController
 
     elsif validation.success?
 
-      if @support_form.step == 1 && current_user.supported_schools.one?
-        # URN can be inferred
-        @support_form = SupportForm.new(school_urn: current_user.school_urn, **@support_form.to_h)
-
-        if current_user.active_journeys.any?
-          # phone (1) -> journey (3)
-          @support_form.advance!(2)
-        else
-          # phone (1) -> category (4)
-          @support_form.advance!(3)
-        end
-
-      # org (2) -> category (4)
-      elsif @support_form.step == 2 && current_user.active_journeys.none?
+      if @support_form.step == 2 && current_user.active_journeys.none?
         @support_form.advance!(2)
 
       # journey (3) -> message (5)
