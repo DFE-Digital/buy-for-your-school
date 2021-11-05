@@ -48,7 +48,7 @@ module School
     #
     # @param record [Hash]
     #
-    # @return [Support::Organisation]
+    # @return [true, false]
     def legacy_record?(record)
       Support::Organisation.find_by(urn: record[:urn]).nil? && record[:establishment_status][:code] == 2
     end
@@ -63,9 +63,9 @@ module School
     # Some organisations do not have this information on their record and .parse does
     # not like dealing with nil or strings that it can't parse. This method helps
     # to deal with that. The regex is based on the format of the dates used in the file
-    # @param opened_date [String]
+    # @param opened_date [String] DD-MM-YYYYY
     #
-    # @return [Time] or nil
+    # @return [Time, nil]
     def parse_opened_date(opened_date)
       return nil unless /\d{1,2}-\d{1,2}-\d{4}/.match? opened_date
 
