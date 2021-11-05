@@ -5,5 +5,6 @@
 
 set -e
 
+git update-index --chmod=+x ./script/destroy-volume
 docker-compose down --remove-orphans
 docker volume rm buy-for-your-school_db-data
