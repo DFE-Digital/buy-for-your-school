@@ -27,10 +27,13 @@ class CreateUser
     if current_user
       update_user!
       Rollbar.info "Updated account for #{user_id}"
-      current_user
-    elsif supported? || internal?
-      create_user!
-      Rollbar.info "Created account for #{user_id}"
+    end
+
+    if supported? || internal?
+      unless current_user
+        create_user!
+        Rollbar.info "Created account for #{user_id}"
+      end
       current_user
     elsif orgs.none?
       Rollbar.info "User #{user_id} is not in a supported organisation"
