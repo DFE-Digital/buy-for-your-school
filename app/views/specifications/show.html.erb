@@ -17,5 +17,13 @@
     <%= I18n.t("journey.specification.next_steps.text") %>
     <%= link_to I18n.t("journey.specification.next_steps.link_text"), "/next-steps-#{@journey.category.slug}" %>
   </p>
+  <h2 class="govuk-heading-m">
+    <%= I18n.t("journey.specification.feedback.heading") %>
+  </h2>
+  <p>
+    <%= I18n.t("journey.specification.feedback.body") %>
+  </p>
+  <%= link_to I18n.t("journey.specification.feedback.button"), ENV.fetch('QUALTRICS_SURVEY_URL', 'https://dferesearch.fra1.qualtrics.com'), class: "govuk-button govuk-button--secondary", role: "button", target: "_blank", rel: "noopener noreferrer" %>
+
   <%= @journey.specification %>
 </article>
