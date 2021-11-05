@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+def env_key_prefix(env)
+  name = {
+    staging: "STAGING",
+    preview: "PREVIEW",
+    research: "RESEARCH",
+    production: "PROD",
+  }[env]
+
+  "APP_ENV_#{name}_"
+end
+
+secrets = {}
+
+%i[staging preview research production].each do |environment|
+  secrets[environment] = {}
+  secrets[environment][:keys] = `gh secret list -e #{environment}`
+    .split("\n")
+    .map do |e|
+      e.split("\t")
+       .first
+       .gsub(env_key_prefix(environment), "")
+    end
+  secrets[environment][:count] = secrets[environment][:keys].count
+end
+
+
+
+secrets.each do |environment, values|
+  puts "\n# #{environment.capitalize}"
+
+  all = secrets.except(environment).each_value.map { |e| e[:keys] }.flatten.uniq
+  
+  missing = all - values[:keys]
+
+  puts (missing.any? ? "#{env_key_prefix(environment)}#{missing.join("\n#{env_key_prefix(environment)}")}" : "none missing")
+end
+
