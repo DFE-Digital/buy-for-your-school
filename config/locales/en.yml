@@ -314,6 +314,7 @@ en:
         all_cases: All cases
       link:
         edit_category: Change
+        view_school_information: View school information (opens in a new tab)
 
     case_categorisations:
       edit:
