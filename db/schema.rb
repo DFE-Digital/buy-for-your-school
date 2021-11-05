@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -175,7 +175,6 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ref"
     t.uuid "category_id"
-    t.string "sub_category_string"
     t.string "request_text"
     t.integer "support_level"
     t.integer "status"
@@ -202,8 +201,9 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "slug"
     t.string "description"
-    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
-    t.index ["title"], name: "index_support_categories_on_title", unique: true
+    t.uuid "parent_id"
+    t.index ["slug"], name: "index_support_categories_on_slug"
+    t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -283,17 +283,6 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"
-  end
-
-  create_table "support_sub_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "category_id", null: false
-    t.string "title", null: false
-    t.string "description"
-    t.string "slug"
-    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.index ["slug"], name: "index_support_sub_categories_on_slug", unique: true
-    t.index ["title"], name: "index_support_sub_categories_on_title", unique: true
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
