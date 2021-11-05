@@ -3,9 +3,9 @@ require "dsi/uri"
 RSpec.describe Dsi::Uri do
   subject(:service) { described_class.new }
 
-  let(:env) { nil }
-
   let(:result) { service.call.to_s }
+
+  let(:env) { nil } # as if DSI_ENV does not exist
 
   around do |example|
     ClimateControl.modify(DSI_ENV: env) { example.run }
@@ -32,35 +32,22 @@ RSpec.describe Dsi::Uri do
       expect(service.call.query).to be nil
     end
 
-    it "raises URI::InvalidComponentError if path does not begin with '/'" do
-      expect { described_class.new(path: "foo").call }.to raise_error(URI::InvalidComponentError)
-    end
+    describe "strict typing" do
+      it "raises an error if path does not begin with forward slash" do
+        expect { described_class.new(path: "foo") }.to raise_error(Dry::Types::ConstraintError)
+      end
 
-    it "raises ArgumentError if query is not given as a hash" do
-      expect { described_class.new(query: "").call }.to raise_error(ArgumentError)
-    end
+      it "raises an error for invalid environments" do
+        expect { described_class.new(env: "foo") }.to raise_error(Dry::Types::ConstraintError)
+      end
 
-    describe "when DSI_ENV is ''" do
-      let(:env) { "" }
-
-      it "targets the production environment subdomains by default" do
-        expect(result).to eql "https://services.signin.education.gov.uk"
+      it "raises an error if DSI_ENV is present but not set" do
+        expect { described_class.new(env: "") }.to raise_error(Dry::Types::ConstraintError)
+        expect { described_class.new(env: nil) }.to raise_error(Dry::Types::CoercionError)
       end
     end
 
     describe "env" do
-      it "raises an error for invalid environments" do
-        expect { described_class.new(env: "foo").call }.to raise_error(Dry::Types::ConstraintError)
-      end
-
-      context "when DSI_ENV key has not been populated" do
-        let(:env) { "" }
-
-        it "targets the production environment subdomains by default" do
-          expect(result).to eql "https://services.signin.education.gov.uk"
-        end
-      end
-
       context "when DSI_ENV is 'production'" do
         let(:env) { "production" }
 

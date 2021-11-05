@@ -10,29 +10,35 @@ module Dsi
     extend Dry::Initializer
 
     # @!attribute env
-    #   @return [Symbol] default :production
+    #   @return [Symbol] production (default), staging or test
     #   @api private
     option :env,
            default: proc { ENV.fetch("DSI_ENV", "production") },
-           type: Types::Params::Symbol.enum(:"", :production, :staging, :test),
+           type: Types::Params::Symbol.enum(*%i[production staging test]),
            reader: :private
 
     # @!attribute subdomain
     #   @return [String]
     #   @api private
-    option :subdomain, default: proc { "services" }, reader: :private
+    option :subdomain,
+           default: proc { "services" },
+           type: Types::String,
+           reader: :private
 
     # @!attribute path
     #   @return [String]
     #   @api private
-    option :path, optional: true, reader: :private
+    option :path,
+           optional: true,
+           type: Types::String.optional.constrained(format: /^\//),
+           reader: :private
 
     # @!attribute query
     #   @return [String]
     #   @api private
     option :query,
-           proc(&:to_query),
            optional: true,
+           type: Types::String.optional,
            reader: :private
 
     # @return [URI::HTTPS]
@@ -48,14 +54,7 @@ module Dsi
 
     # @return [String] ENV prefix
     def prefix
-      case env
-      when :"", :production
-        nil
-      when :staging
-        "pp-"
-      when :test
-        "test-"
-      end
+      { production: nil, staging: "pp-", test: "test-" }.fetch(env)
     end
   end
 end
