@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_11_04_075345) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
