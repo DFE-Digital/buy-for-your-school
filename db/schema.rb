@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_01_173214) do
+ActiveRecord::Schema.define(version: 2021_11_04_075345) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -44,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_173214) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -187,6 +188,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_173214) do
     t.string "phone_number"
     t.string "organisation_name"
     t.string "organisation_urn"
+    t.integer "source"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
@@ -201,7 +203,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_173214) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug"
+    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
@@ -233,6 +235,19 @@ ActiveRecord::Schema.define(version: 2021_11_01_173214) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_support_groups_on_code", unique: true
     t.index ["name"], name: "index_support_groups_on_name", unique: true
+  end
+
+  create_table "support_hub_transitions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "case_id"
+    t.string "hub_case_ref"
+    t.date "estimated_procurement_completion_date"
+    t.decimal "estimated_savings", precision: 8, scale: 2
+    t.string "school_urn"
+    t.string "buying_category"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["case_id"], name: "index_support_hub_transitions_on_case_id"
+    t.index ["hub_case_ref"], name: "index_support_hub_transitions_on_hub_case_ref"
   end
 
   create_table "support_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
