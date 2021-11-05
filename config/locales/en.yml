@@ -303,8 +303,6 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
-      link:
-        view_school_information: View school information (opens in a new tab)
       list:
         not_found: No cases found
         my_cases: My cases
@@ -312,6 +310,7 @@ en:
         all_cases: All cases
       link:
         edit_category: Change
+        view_school_information: View school information (opens in a new tab)
 
     case_categorisations:
       edit:
