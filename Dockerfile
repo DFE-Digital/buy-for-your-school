@@ -97,6 +97,7 @@ RUN RAILS_ENV=production \
     CC_TEST_REPORTER_ID= \
     GITHUB_REF= \
     GITHUB_SHA= \
+    QUALTRICS_SURVEY_URL= \
     bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
