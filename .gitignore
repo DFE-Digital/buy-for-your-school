@@ -53,6 +53,7 @@ pickle-email-*.html
 .zeus.sock
 /node_modules
 /spec/examples.txt
+.byebug_history
 # emacs
 .#*
 
