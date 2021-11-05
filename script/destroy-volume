@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # script/destroy-volume: Trash a corrupt development database volume
-# before being able to use this script, run 'chmod +x ./script/destroy-volume' locally in the terminal
 
 set -e
 
