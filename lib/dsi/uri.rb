@@ -14,7 +14,7 @@ module Dsi
     #   @api private
     option :env,
            default: proc { ENV.fetch("DSI_ENV", "production") },
-           type: Types::Params::Symbol.enum(*%i[production staging test]),
+           type: Types::Params::Symbol.enum(:"", :production, :staging, :test),
            reader: :private
 
     # @!attribute subdomain
@@ -48,7 +48,14 @@ module Dsi
 
     # @return [String] ENV prefix
     def prefix
-      { production: nil, staging: "pp-", test: "test-" }.fetch(env)
+      case env
+      when :"", :production
+        nil
+      when :staging
+        "pp-"
+      when :test
+        "test-"
+      end
     end
   end
 end

@@ -40,9 +40,25 @@ RSpec.describe Dsi::Uri do
       expect { described_class.new(query: "").call }.to raise_error(ArgumentError)
     end
 
+    describe "when DSI_ENV is ''" do
+      let(:env) { "" }
+
+      it "targets the production environment subdomains by default" do
+        expect(result).to eql "https://services.signin.education.gov.uk"
+      end
+    end
+
     describe "env" do
       it "raises an error for invalid environments" do
         expect { described_class.new(env: "foo").call }.to raise_error(Dry::Types::ConstraintError)
+      end
+
+      context "when DSI_ENV key has not been populated" do
+        let(:env) { "" }
+
+        it "targets the production environment subdomains by default" do
+          expect(result).to eql "https://services.signin.education.gov.uk"
+        end
       end
 
       context "when DSI_ENV is 'production'" do
