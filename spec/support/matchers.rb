@@ -85,3 +85,10 @@ RSpec::Matchers.define :have_breadcrumbs do |input|
     page.all("li.govuk-breadcrumbs__list-item").collect(&:text) == input
   end
 end
+
+RSpec::Matchers.define :have_link_to_open_in_new_tab do |locator, options = {}|
+  match do |page|
+    link = page.find_link(locator, **options)
+    link.present? && link[:target] == "_blank"
+  end
+end
