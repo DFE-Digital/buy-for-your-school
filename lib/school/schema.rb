@@ -1,8 +1,8 @@
 require "app_schema"
 
-# Coerce and validate transformed GIAS data
-#
 module School
+  # Coerce and validate transformed GIAS data
+  #
   class Schema < AppSchema
     define do
       # required(:ukprn).filled(:integer, digits?: 8)
@@ -13,6 +13,7 @@ module School
       required(:urn).filled(:integer)
       required(:uprn).filled(:integer)
       required(:crn).maybe(:string)
+      required(:rsc_region).maybe(:string)
 
       required(:local_authority).hash do
         required(:code).filled(:integer)
@@ -98,6 +99,7 @@ module School
         required(:student_number).filled(:integer)
         required(:website).filled(:string)
         required(:telephone_number).filled(:string)
+        required(:opened_date).maybe(:string)
       end
     end
   end
