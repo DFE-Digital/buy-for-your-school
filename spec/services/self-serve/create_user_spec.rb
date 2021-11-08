@@ -124,6 +124,7 @@ RSpec.describe CreateUser do
         let(:orgs) { [] }
 
         it "is tagged :no_organisation" do
+          expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
           expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 is not in a supported organisation").and_call_original
           expect(result).to be :no_organisation
         end
@@ -138,6 +139,7 @@ RSpec.describe CreateUser do
         end
 
         it "is tagged :unsupported" do
+          expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
           expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 is not in a supported organisation").and_call_original
           expect(result).to be :unsupported
         end
