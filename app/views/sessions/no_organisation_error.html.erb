@@ -5,7 +5,7 @@
   <p class="govuk-body">
     <%= paragraph %>
     <% if index.zero? %>
-      <%= link_to I18n.t("errors.sign_in.no_organisation.link"), dsi_url(path: "request-organisation/search"), class: "govuk-link" %>
+      <%= link_to I18n.t("errors.sign_in.no_organisation.link"), dsi_url(path: "/request-organisation/search"), class: "govuk-link" %>
     <% end %>
   </p>
 <% end %>
