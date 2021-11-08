@@ -128,7 +128,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
       fill_in "answer[response]", with: "This is my long answer"
       click_continue
-      pp page.source
+
       check "Breakfast"
       click_continue # > error clicking 'Continue'
 
