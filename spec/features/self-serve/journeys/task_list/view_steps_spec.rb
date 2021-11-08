@@ -115,7 +115,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
       expect(page).to have_content "What email address did you use?"
     end
 
-    xit "allows the user to click on a step to supply the last answer in a task, and be taken to the check your answers page" do
+    it "allows the user to click on a step to supply the last answer in a task, and be taken to the check your answers page" do
       within(".app-task-list") do
         click_on "Radio task" # > checkboxes_and_radio_task.json
       end
