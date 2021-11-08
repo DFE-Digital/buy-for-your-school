@@ -33,7 +33,7 @@ gem "redis-namespace"
 gem "redis-rails"
 gem "rollbar"
 gem "sass-rails", "~> 6.0"
-gem "sidekiq", "~> 6.2"
+gem "sidekiq", "~> 6.3"
 gem "sidekiq-cron", "~> 1.2"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
