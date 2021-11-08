@@ -43,14 +43,12 @@ RSpec.describe UserSession do
 
   describe "#sign_out_url" do
     around do |example|
-      ClimateControl.modify(DFE_SIGN_IN_ISSUER: "https://test-oidc.signin.education.gov.uk:443") do
-        example.run
-      end
+      ClimateControl.modify(DSI_ENV: "test") { example.run }
     end
 
     it "returns a URL that can be sent to DfE Sign-in to sign the user out of their service" do
       allow(session).to receive(:[]).with(:dfe_sign_in_sign_out_token).and_return("a-long-token")
-      expect(user_session.sign_out_url).to eq("https://test-oidc.signin.education.gov.uk:443/session/end?id_token_hint=a-long-token&post_logout_redirect_uri=https%3A%2F%2Fghbs-self-serve.app%3A123%2Fsession%2Fend")
+      expect(user_session.sign_out_url).to eq("https://test-oidc.signin.education.gov.uk/session/end?id_token_hint=a-long-token&post_logout_redirect_uri=https%3A%2F%2Fghbs-self-serve.app%3A123%2Fsession%2Fend")
     end
 
     context "when the user has no sign out token" do
