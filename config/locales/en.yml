@@ -327,6 +327,11 @@ en:
       header: Hub migration case information
       label:
         form_hint: The following fields are only for NW Hub cases that are being migrated.
+        school_urn: Establishment URN
+        contact_name: Contact name
+        contact_email: Contact email
+        contact_phone: Contact phone number (optional)
+        category: Category
       flash:
         created: Case created/migrated successfully
 

@@ -2,10 +2,32 @@
   <%= form.govuk_error_summary %>
 
   <!-- render case fields -->
+  <%= form.govuk_text_field :school_urn,
+                            autofocus: true,
+                            label: { text: I18n.t("support.case_hub_migration.label.school_urn") }
+  %>
+
+  <%= form.govuk_text_field :contact_name,
+                            label: { text: I18n.t("support.case_hub_migration.label.contact_name") }
+  %>
+
+  <%= form.govuk_email_field :contact_email,
+                            label: { text: I18n.t("support.case_hub_migration.label.contact_email") }
+  %>
+
+  <%= form.govuk_phone_field :contact_phone_number,
+                             label: { text: I18n.t("support.case_hub_migration.label.contact_phone") }
+  %>
+
+  <%= form.govuk_phone_field :category,
+                             label: { text: I18n.t("support.case_hub_migration.label.category") }
+  %>
 
   <h2 class="govuk-heading-l">
     <%= I18n.t("support.case_hub_migration.header") %>
   </h2>
+
+
 
   <p class="govuk-body">
     <%= I18n.t("support.case_hub_migration.label.form_hint") %>
