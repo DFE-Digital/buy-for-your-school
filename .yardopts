@@ -3,6 +3,7 @@
 --plugin junk
 --protected
 --private
+--markup markdown
 -
 CHANGELOG.md
 LICENCE
