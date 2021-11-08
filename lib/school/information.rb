@@ -58,7 +58,6 @@ module School
         dataset = process(rows)
         output << dataset # if we wish to return the entries (kept to keep specs passing)
         exporter.call dataset
-        GC.start # Necessary to free up allocated memory to stop the process from crashing out and silently failing
       end
 
       output.flatten
