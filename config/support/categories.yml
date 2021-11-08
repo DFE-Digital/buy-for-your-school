@@ -130,11 +130,11 @@
     - title: Books
 
 
-- title: Business
+- title: Business Services
   description:
   slug: business
   sub_categories:
-    - title: Services MFD
+    - title: MFD
       slug: mfd
 
 
