@@ -13,7 +13,8 @@ module School
         rename_keys "UKPRN" => :ukprn, # UK Provider Reference Number
                     "URN" => :urn, # educational establishments (schools)
                     "UPRN" => :uprn,
-                    "CHNumber" => :crn # companies house
+                    "CHNumber" => :crn, # companies house
+                    "RSCRegion (name)" => :rsc_region # RSC region
 
         # Local Authority
         rename_keys "LA (name)" => :name,
@@ -107,7 +108,9 @@ module School
                     "SchoolWebsite" => :website,
                     # Ofsted
                     "OfstedLastInsp" => :ofsted_last_inspection,
-                    "OfstedRating (name)" => :ofsted_rating
+                    "OfstedRating (name)" => :ofsted_rating,
+                    # Open date
+                    "OpenDate" => :opened_date
 
         nest :school, %i[
           address
@@ -119,6 +122,7 @@ module School
           number
           ofsted_last_inspection
           ofsted_rating
+          opened_date
           phase
           student_capacity
           student_number

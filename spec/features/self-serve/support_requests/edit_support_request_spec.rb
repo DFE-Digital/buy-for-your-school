@@ -11,7 +11,7 @@ RSpec.feature "Edit an unsubmitted support request" do
     visit "/support-requests/#{support_request.id}"
   end
 
-  describe "step 1: adding a phone number" do
+  xdescribe "step 1: adding a phone number" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
@@ -132,14 +132,14 @@ RSpec.feature "Edit an unsubmitted support request" do
 
         # journey attached
         expect(support_request.reload.journey_id).not_to be_nil
-        expect(answers[4]).to have_text "1 September 2021"
+        expect(answers[3]).to have_text "1 September 2021"
 
         # category is forgotten
         expect(support_request.reload.category_id).to be_nil
 
         # inferred from the journey
         expect(support_request.reload.journey.category.title).to eq "Utilities"
-        expect(answers[5]).to have_text "Utilities"
+        expect(answers[4]).to have_text "Utilities"
       end
     end
 
@@ -179,7 +179,7 @@ RSpec.feature "Edit an unsubmitted support request" do
 
         # category added
         expect(support_request.reload.category.title).to eq "Utilities"
-        expect(answers[5]).to have_text "Utilities"
+        expect(answers[4]).to have_text "Utilities"
       end
     end
   end
@@ -211,7 +211,7 @@ RSpec.feature "Edit an unsubmitted support request" do
       # category is attached
       expect(support_request.reload.category.title).to eq "Utilities"
       expect(support_request.reload.category_id).not_to be_nil
-      expect(answers[5]).to have_text "Utilities"
+      expect(answers[4]).to have_text "Utilities"
 
       # journey is forgotten
       expect(support_request.reload.journey_id).to be_nil
@@ -243,7 +243,7 @@ RSpec.feature "Edit an unsubmitted support request" do
       expect(page).to have_current_path "/support-requests/#{support_request.id}"
 
       # message is added
-      expect(answers[6]).to have_text "I need help"
+      expect(answers[5]).to have_text "I need help"
       expect(support_request.reload.message_body).to eql "I need help"
     end
   end

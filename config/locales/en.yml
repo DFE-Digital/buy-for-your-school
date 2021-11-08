@@ -131,6 +131,10 @@ en:
       next_steps:
         link_text: see what the next steps are.
         text: "Once you have a completed specification, "
+      feedback:
+        heading: Giving us feedback
+        body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
+        button: Give feedback (opens in a new tab)
 
 
   # /dashboard
@@ -310,6 +314,7 @@ en:
         all_cases: All cases
       link:
         edit_category: Change
+        view_school_information: View school information (opens in a new tab)
 
     case_categorisations:
       edit:

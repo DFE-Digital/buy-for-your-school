@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add ability for agent to view specification
 - privacy notice page
 - accessibility page
+- add link to school details in GIAS from case view
 - add ability to re-categorise a case
 
 ### Specify Unreleased
@@ -86,6 +87,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add `skipped_ids` to `Task` to allow users to skip questions
 - add error summary component
 - customise presence validation message
+- provide qualtrics feedback (saved in QUALTRICS_SURVEY_URL env)
 
 **Multiple Categories**
 
