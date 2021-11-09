@@ -23,7 +23,6 @@ RSpec.feature "User task actions are recorded" do
       expect(page).to have_a_journey_path
 
       within(".app-task-list") do
-        pp page.source
         click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
       end
 

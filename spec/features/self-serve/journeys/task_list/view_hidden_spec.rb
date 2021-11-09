@@ -74,7 +74,7 @@ RSpec.feature "Users can view the task list" do
         first(".govuk-summary-list__row").click_on "Change" # generic.button.change_answer
         choose "School expert"
         click_continue
-        pp page.source
+
         # We get taken to the next question so we go back to the task page
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/steps/7923954a-1265-4bf8-8427-8f4dee4161c0
         expect(page).to have_a_step_path

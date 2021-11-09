@@ -29,7 +29,6 @@ RSpec.feature "Back link works after failed form validations" do
 
       # would raise routing error without routes guard clause
       click_back
-      pp page.source
 
       expect(page).to have_content "Describe what you need"
     end
