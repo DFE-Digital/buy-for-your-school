@@ -6,6 +6,8 @@ en:
       agent_id: "" # Omitted
       choice: "" # Omitted
       email_body: "" # Omitted
+      email_subject: "" # Omitted
+      category_id: "" # Omitted
 
     errors:
       rules:
@@ -24,4 +26,11 @@ en:
         # Case email content
         email_body:
           missing: Please enter an email body to be sent
+
+        email_subject:
+          missing: Please enter an email subject to be sent
+
+        # Case category assignment
+        category_id:
+          missing: Please select a category to assign to the case
 

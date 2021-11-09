@@ -24,8 +24,7 @@ en:
     design: "%{env} Environment"
     beta:
       tag: beta
-      message:
-          This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
+      message: This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -79,7 +78,6 @@ en:
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
         link: sign in into the service again.
 
-
   #
   # Self-Serve -----------------------------------------------------------------
   #
@@ -131,7 +129,10 @@ en:
       next_steps:
         link_text: see what the next steps are.
         text: "Once you have a completed specification, "
-
+      feedback:
+        heading: Giving us feedback
+        body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
+        button: Give feedback (opens in a new tab)
 
   # /dashboard
   dashboard:
@@ -179,7 +180,7 @@ en:
     category_selection_header: Choose a category
     spec_template_tag_title: Specification tag
 
- # /profile
+  # /profile
   profile:
     caption: About you
     heading: Is this your contact information?
@@ -203,7 +204,7 @@ en:
       - Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
       - DfE's supported buying team will respond to you within 2 working days.
     # requests#show
-    response_time: Once you send this request, we will review it and get in touch within 5 working days.
+    response_time: Once you send this request, we will review it and get in touch within 2 working days.
     section:
       submit_request: Send your request
       about_you: About you
@@ -252,7 +253,7 @@ en:
       step_two: "%{read_guides_link} that you're buying"
       read_procs_link: read buying procedures and procurement law for schools
       read_guides_link: read guides about goods and services
-    back_button: Back to Specify dashboard
+    back_button: Back to your dashboard
 
   #
   # Supported ------------------------------------------------------------------
@@ -308,6 +309,16 @@ en:
         my_cases: My cases
         new_cases: New cases
         all_cases: All cases
+      link:
+        edit_category: Change
+        view_school_information: View school information (opens in a new tab)
+
+    case_categorisations:
+      edit:
+        header: Select a category
+        submit: Save and continue
+      flash:
+        updated: Successfully changed case category
 
     case_resolution:
       flash:
@@ -350,25 +361,41 @@ en:
           default_value: "DfE Get help buying for schools: your request for support"
         submit: Confirm and send email
 
+    case_email_templates:
+      index:
+        header: Send temolate email
+        what_is_a_framework:
+          link_text: What is a framework?
+          subtitle: General advice about a frameworks
+        how_to_approach_suppliers:
+          link_text: How to approach suppliers
+          subtitle: General advice on finding suppliers
+        catering_frameworks:
+          link_text: Catering frameworks
+          subtitle: Link to catering on find a framework
+        social_value:
+          link_text: Social value
+          subtitle: Help on social value section in creating a specification
+
     case_documents:
       show:
         header: Your specification
 
     interaction:
-        header:
-          type_of_contact: Type of contact
-          contact_with_school: Contact with school
-          add_case_note: Add case note
-        type:
-          phone_call: Phone call
-          email_from_school: Email from school
-          email_to_school: Email to school
-          note: Case note
-          support_request: Request for support
-        label:
-          contact_detail: Contact details
-          contact_detail_hint: Add details of the phone call or copy and paste the email here
-          body: Notes
-          created_by: Created by
-        message:
-          created_flash: "%{type} added to case"
+      header:
+        type_of_contact: Type of contact
+        contact_with_school: Contact with school
+        add_case_note: Add case note
+      type:
+        phone_call: Phone call
+        email_from_school: Email from school
+        email_to_school: Email to school
+        note: Case note
+        support_request: Request for support
+      label:
+        contact_detail: Contact details
+        contact_detail_hint: Add details of the phone call or copy and paste the email here
+        body: Notes
+        created_by: Created by
+      message:
+        created_flash: "%{type} added to case"

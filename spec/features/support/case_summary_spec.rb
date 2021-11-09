@@ -40,8 +40,7 @@ RSpec.feature "Case summary" do
   describe "Request details tab" do
     before { visit "/support/cases/#{support_case.id}#case-details" }
 
-    # TODO: add request details in next PR
-    xit "lists request details" do
+    it "lists request details" do
       within "#case-details" do
         expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
         expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"

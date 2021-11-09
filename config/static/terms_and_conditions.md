@@ -2,17 +2,22 @@
 
 ## 1. Terms of use
 
-This page and any pages it links to explains the Get Help Buying for Schools (GHBS) service ("the Service") terms of use. By using the Service, you are agreeing to the following Terms and Conditions.
+This page and any other web pages it links to explain the Get Help Buying for Schools (GHBS) service (“the Service”) terms of use. The Service is managed by the Department for Education (DfE).
 
-These Terms and Conditions are aimed at those using our digital services and receiving advice and guidance from our supported buying team.
+By using any part of the Service, you are agreeing to the following terms and conditions.
 
-"You" is used in these Terms and Conditions to mean anyone who may access the Service and the definition includes but is not limited to Schools or Trusts.
+In these terms and conditions:
 
-The GHBS service is managed by the Department for Education (DfE).
+- Using the Service includes the use of any of the digital services on the Service website and receiving advice and guidance from our supported buying team.
+- “You” means anyone who may access the Service and the definition includes but is not limited to Schools or Trusts and/or their members of staff, agents and contractors.
+- “We” and “us” means the DfE.
 
 ### Using the Get Help Buying for Schools (GHBS) service
 
-You agree to use the Service for lawful purposes only. You must also use it in a way that does not infringe the rights of, or restrict or inhibit the use and enjoyment of, this site by anyone else.
+You agree to use the Service:
+
+- For lawful purposes only and subject in all respects to these terms and conditions; and
+- In a way that does not infringe the rights of, or restrict or inhibit the use and enjoyment of, this site by anyone else.
 
 We may update the Service at any time. Changes or removal of content may happen without notice.
 
@@ -36,7 +41,7 @@ Some content is exempt from the OGL -- check the [list of exemptions](http://www
 
 Departmental logos and crests are also exempt from the OGL, except when they form an integral part of a document or dataset.
 
-If any content isn't subject to Crown copyright protection or published under the OGL, we'll usually credit the author or copyright holder. Such content may be subject to any third-party intellectual property rights which we are or may not be authorised to licence under the OGL. You agree that you will determine and comply with any applicable restrictions before using such content.
+If any content isn't subject to Crown copyright protection or published under the OGL, we'll usually credit the author or copyright holder. Such content may be subject to any third-party intellectual property rights which we are or may not be authorised to license under the OGL. You agree that you will determine and comply with any applicable restrictions before using such content.
 
 For content on the Service website which is published under the OGL, you can reproduce this content under the OGL, following the OGL licence conditions.
 
@@ -64,9 +69,9 @@ We are not liable for any loss or damage that may arise from using the Service o
 - any direct, indirect or consequential losses
 - any loss or damage caused by civil wrongs ('tort', including negligence), breach of contract or otherwise
 
-This applies if the loss or damage was foreseeable, arose in the normal course of things or you advised us that it might happen.
+This exclusion applies even if the loss or damage was foreseeable, arose in the normal course of things or you advised us that it might happen.
 
-This includes but is not limited to the loss of your:
+This exclusion includes but is not limited to the loss of your:
 
 - income or revenue
 - salary, benefits or other payments
@@ -79,12 +84,13 @@ This includes but is not limited to the loss of your:
 - tangible property
 - intangible property, including loss, corruption or damage to data or any computer system
 - wasted management or office time
+- any pure financial losses not specifically listed above
 
 We may still be liable for:
 
 - death or personal injury arising from our negligence
 - fraudulent misrepresentation
-- any other liability which cannot be excluded or limited under applicable law
+- any other liability which cannot be excluded or limited under applicable law to the extent required by law
 
 This disclaimer is subject to and does not affect the terms of any specific agreement between us.
 
@@ -102,7 +108,7 @@ We collect information about you in accordance with our [Privacy Notice](privacy
 
 ### Virus protection
 
-We make every effort to check and test the Service website for viruses at every stage of production. You must make sure the way you use the Service website does not expose you to the risk of viruses, malicious computer code or other forms of interference which can damage your computer system.
+We make every effort to check and test the Service website for viruses at every stage of production. You must make sure the way you use the Service website does not expose you or any third party within your reasonable control to the risk of viruses, malicious computer code or other forms of interference which can damage your computer system.
 
 We are not responsible for any loss, disruption or damage to your data or computer system that might happen when you use the Service website.
 
@@ -118,13 +124,15 @@ We will report any attacks or attempts to gain unauthorised access to the Servic
 
 ### Governing law
 
-These Terms and Conditions are governed by and construed in accordance with the laws of England and Wales.
+These Terms and Conditions are governed by and must be construed in accordance with the laws of England and Wales.
 
 Any dispute or claim between you and the DfE arising from, or connected with, these Terms and Conditions, will be first resolved by appropriate officers within DfE and your senior representatives. If such dispute is not resolved, the dispute will be subject to the exclusive jurisdiction of the courts of England and Wales.
 
 ### General
 
-There may be legal notices elsewhere on the Service website that relate to how you use the site.
+You may use the GOV.UK website to gain access to the Service website or, in the course of using the Service, to access content on a GOV.UK website. In either case, where these terms and conditions differ from similar terms and conditions applicable under the GOV.UK website these terms and conditions prevail.
+
+There may be legal notices elsewhere on the Service website that relate to how you use relevant parts of the Service website.
 
 We are not liable if we fail to comply with these Terms and Conditions because of circumstances beyond our reasonable control.
 
@@ -136,7 +144,7 @@ If any of these Terms and Conditions are held to be invalid, unenforceable or il
 
 Please check these Terms and Conditions regularly. We can update them at any time without notice.
 
-You will agree to any changes if you continue to use the Service website after the Terms and Conditions have been updated.
+You will agree to any changes if you continue to use the Service after the Terms and Conditions have been updated.
 
 ## 2. Privacy policy
 

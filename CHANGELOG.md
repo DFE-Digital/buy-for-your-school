@@ -13,11 +13,22 @@ The format is based on [Keep a Changelog 1.0.0].
 - add service to create SupportCases from SupportEnquiries
 - add ability for agent to resolve a case with notes
 - add ability for agent to send a non templated email on a case
+- add ability for agent to send templated emails on a case
 - add ability for agent to view specification
 - privacy notice page
 - accessibility page
+- add link to school details in GIAS from case view
+- add ability to re-categorise a case
 
 ### Specify Unreleased
+
+**Infrastructure**
+
+- Contentful env `master` is now aliased to `staging`
+- Contentful env `research` has been removed
+- `production` points to Contentful `master`
+- `staging` points to Contentful `staging`
+- Github actions changed to clone `staging` to `develop` for local development
 
 **ITHC**
 
@@ -75,6 +86,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - fix progression to the next incomplete task
 - add `skipped_ids` to `Task` to allow users to skip questions
 - add error summary component
+- customise presence validation message
+- provide qualtrics feedback (saved in QUALTRICS_SURVEY_URL env)
 
 **Multiple Categories**
 

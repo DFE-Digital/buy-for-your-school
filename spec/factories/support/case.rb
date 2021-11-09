@@ -4,11 +4,14 @@ FactoryBot.define do
     request_text { "This is an example request for support - please help!" }
     state { 0 }
     support_level { 0 }
+    email { "school@email.co.uk" }
+    first_name { "School" }
+    last_name { "Contact" }
+    organisation_urn { "12345678" }
 
     association :agent, factory: :support_agent
 
     association :category, factory: :support_category
-    sub_category_string { "category subtitle" }
 
     trait :open do
       state { :open }

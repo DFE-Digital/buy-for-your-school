@@ -22,10 +22,14 @@ class PagesController < ApplicationController
   end
 
   def next_steps_catering
+    breadcrumb "Dashboard", :dashboard_path
+    breadcrumb "Next steps", next_steps_catering_path, match: :exact
     set_page(__method__)
   end
 
   def next_steps_mfd
+    breadcrumb "Dashboard", :dashboard_path
+    breadcrumb "Next steps", next_steps_mfd_path, match: :exact
     set_page(__method__)
   end
 
