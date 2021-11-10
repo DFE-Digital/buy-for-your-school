@@ -20,7 +20,9 @@ Capybara.configure do |config|
   config.default_driver = :rack_test
   config.javascript_driver = JS_DRIVER
   config.server = :puma, { Silent: true }
-  config.always_include_port = true
+
+  Capybara.app_host = "http://www.example.com:3000"
+  Capybara.asset_host = "http://www.example.com"
 
   config.server_host = if RUBY_PLATFORM.match?(/linux/)
                          `/sbin/ip route|awk '/scope/ { print $9 }'`.chomp
@@ -48,6 +50,6 @@ RSpec.configure do |config|
     # reset to defaults
     Capybara.ignore_hidden_elements = true
     Capybara.use_default_driver
-    Capybara.app_host = nil
+    Capybara.app_host = "http://www.example.com:3000"
   end
 end
