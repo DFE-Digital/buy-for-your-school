@@ -1,18 +1,18 @@
 JS_DRIVER = :chrome_headless
 
 Capybara.register_driver :chrome_headless do |app|
-  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
-    "goog:chromeOptions" => {
-      args: %w[no-sandbox headless disable-gpu window-size=1400,1400],
-    },
-  )
+  chrome_options = Selenium::WebDriver::Chrome::Options.new
+  chrome_options.add_argument("no-sandbox")
+  chrome_options.add_argument("headless")
+  chrome_options.add_argument("disable-gpu")
+  chrome_options.add_argument("window-size=1400,1400")
 
   if ENV["SELENIUM_HUB_URL"]
     # use remote chrome (docker default)
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV["SELENIUM_HUB_URL"], desired_capabilities: chrome_capabilities)
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV["SELENIUM_HUB_URL"], capabilities: [chrome_options])
   else
     # use chromedriver (local setup - ensure your chrome, chromedriver and selenium-webdriver gem versions all match)
-    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: chrome_capabilities)
+    Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [chrome_options])
   end
 end
 
