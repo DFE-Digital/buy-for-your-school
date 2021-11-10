@@ -7,7 +7,13 @@ class Downloader
   class DownloadError < StandardError; end
   extend Dry::Initializer
 
+  # @!attribute encoding
+  # @!visibility private
+  # @return [String] (defaults to UTF-8)
   option :encoding,  reader: false, default: proc { "UTF-8" }
+  # @!attribute redirects
+  # @!visibility private
+  # @return [Integer] (defaults to 5)
   option :redirects, reader: false, default: proc { 5 }, type: Types::Integer
 
   # @param url [String]

@@ -13,7 +13,11 @@ module Dsi
 
     extend Dry::Initializer
 
+    # @!attribute [r] service
+    # @return [String]
     option :service,    Types::String, default: proc { ENV["DFE_SIGN_IN_IDENTIFIER"] }
+    # @!attribute [r] api_secret
+    # @return [String]
     option :api_secret, Types::String, default: proc { ENV["DFE_SIGN_IN_API_SECRET"] }
 
     # @return [String]

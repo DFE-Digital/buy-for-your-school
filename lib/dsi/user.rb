@@ -40,6 +40,8 @@ module Dsi
   class User
     extend Dry::Initializer
 
+    # @!attribute [r] user
+    # @return [Hash]
     option :user, Types::Hash
 
     def uid

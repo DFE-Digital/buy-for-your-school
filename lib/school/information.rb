@@ -42,12 +42,15 @@ module School
     option :batch_size, default: proc { 1_000 }, type: ::Types::Strict::Integer
 
     # @!attribute mapper
+    #   @return [Mapper]
     option :mapper, default: proc { Mapper.new }
 
     # @!attribute schema
+    #   @return [Schema]
     option :schema, default: proc { Schema.new }
 
     # @!attribute downloader
+    #   @return [Downloader]
     option :downloader, default: proc { ::Downloader.new }
 
     # @return [Array<Hash>]

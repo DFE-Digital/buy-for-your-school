@@ -19,27 +19,34 @@ module Notify
   class Email
     extend Dry::Initializer
 
-    # @param recipient [Mixed] Person with name(s) and email address
+    # @!attribute [r] recipient
+    # @return [Mixed] Person with name(s) and email address
     option :recipient
 
-    # @param client [Notifications::Client] API interface
+    # @!attribute [r] client
+    # @return [Notifications::Client] API interface
     option :client, default: proc { Notifications::Client.new(ENV["NOTIFY_API_KEY"]) }
 
-    # @see https://www.notifications.service.gov.uk/services/<UUID>/templates
+    # @!attribute [r] template
     #
-    # @param template [String] Template by name
+    # @see https://www.notifications.service.gov.uk/services/&ltUUID&gt/templates
+    #
+    # @return [String] Template by name
     option :template, Types::String, default: proc { "Default" }
 
-    # @param variables [Hash] Additional template variables
+    # @!attribute [r] variables
+    # @return [Hash] Additional template variables
     option :variables, Types::Hash, default: proc { {} }
 
     # This reference identifies a single unique notification or a batch of notifications.
     # It must not contain any personal information such as name or postal address.
     #
-    # @param reference [String] A unique identifier you can create if necessary
+    # @!attribute [r] reference
+    # @return [String] A unique identifier you can create if necessary
     option :reference, Types::String, default: proc { "generic" }
 
-    # @param attachment [String] Attachment by path to file
+    # @!attribute [r] attachment
+    # @return [String] Attachment by path to file
     option :attachment, Types::String, optional: true
 
     # Send message and rescue from errors

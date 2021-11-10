@@ -12,7 +12,11 @@ module Support
   class SeedCategories
     extend Dry::Initializer
 
+    # @!attribute [r] data
+    # @return [String] (defaults to ./config/support/categories.yml)
     option :data, Types::String, default: proc { "./config/support/categories.yml" }
+    # @!attribute [r] reset
+    # @return [Boolean] (defaults to false)
     option :reset, Types::Bool, default: proc { false }
 
     # @return [Array<Hash>]
