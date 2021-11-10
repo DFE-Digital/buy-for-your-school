@@ -8,7 +8,7 @@ allow_list = if ENV["SELENIUM_HUB_URL"]
 
                [
                  "#{hub_uri.scheme}://#{hub_uri.host}:#{hub_uri.port}",
-                 Capybara.app_host,
+                 IPSocket.getaddress(Socket.gethostname),
                ]
              else
                []

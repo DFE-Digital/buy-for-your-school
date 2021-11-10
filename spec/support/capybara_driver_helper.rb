@@ -22,9 +22,11 @@ Capybara.configure do |config|
   config.server = :puma, { Silent: true }
   config.always_include_port = true
 
-  config.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
-  config.server_host = IPSocket.getaddress(Socket.gethostname)
-  config.server_port = 3000
+  if RUBY_PLATFORM.match(/linux/)
+    config.server_host = `/sbin/ip route|awk '/scope/ { print $9 }'`.chomp
+  else
+    config.server_host = '127.0.0.1'
+  end
 end
 
 RSpec.configure do |config|
@@ -34,6 +36,11 @@ RSpec.configure do |config|
       # e.g. radio buttons
       Capybara.ignore_hidden_elements = false
       Capybara.current_driver = JS_DRIVER
+
+      if ENV["SELENIUM_HUB_URL"]
+        server = Capybara.current_session.server
+        Capybara.app_host = "http://#{server.host}:#{server.port}"
+      end
     end
   end
 
@@ -41,5 +48,6 @@ RSpec.configure do |config|
     # reset to defaults
     Capybara.ignore_hidden_elements = true
     Capybara.use_default_driver
+    Capybara.app_host = nil
   end
 end
