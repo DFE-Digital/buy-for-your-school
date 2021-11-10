@@ -47,7 +47,7 @@ services:
       - test
 
   test-chrome:
-    image: selenium/standalone-chrome:4.0.0-20211102 # this version should match that of the selenium-webdriver gem (see Gemfile)
+    image: selenium/standalone-chrome:95.0-chromedriver-95.0
     volumes:
       - /dev/shm:/dev/shm
     networks:
