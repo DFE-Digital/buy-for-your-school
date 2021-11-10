@@ -22,11 +22,11 @@ Capybara.configure do |config|
   config.server = :puma, { Silent: true }
   config.always_include_port = true
 
-  if RUBY_PLATFORM.match(/linux/)
-    config.server_host = `/sbin/ip route|awk '/scope/ { print $9 }'`.chomp
-  else
-    config.server_host = '127.0.0.1'
-  end
+  config.server_host = if RUBY_PLATFORM.match?(/linux/)
+                         `/sbin/ip route|awk '/scope/ { print $9 }'`.chomp
+                       else
+                         "127.0.0.1"
+                       end
 end
 
 RSpec.configure do |config|
