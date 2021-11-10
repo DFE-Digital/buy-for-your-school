@@ -12,6 +12,7 @@ services:
     depends_on:
       - test-db
       - test-redis
+      - test-chrome
     env_file:
       - .env.test
     environment:
@@ -19,6 +20,7 @@ services:
       REDIS_URL: redis://test-redis:6379
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
       DOCKER: 'true'
+      SELENIUM_HUB_URL: http://test-chrome:4444/wd/hub
     volumes:
       - .:/srv/app
     tty: true
@@ -41,6 +43,13 @@ services:
     image: redis
     volumes:
       - redis-data:/data
+    networks:
+      - test
+
+  test-chrome:
+    image: selenium/standalone-chrome:4.0.0-20211102 # this version should match that of the selenium-webdriver gem (see Gemfile)
+    volumes:
+      - /dev/shm:/dev/shm
     networks:
       - test
 
