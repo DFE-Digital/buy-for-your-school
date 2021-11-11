@@ -42,14 +42,9 @@ COPY Gemfile $DEPS_HOME/Gemfile
 COPY Gemfile.lock $DEPS_HOME/Gemfile.lock
 RUN gem update --system
 
-ENV BUNDLE_GEM_GROUPS=$RAILS_ENV
 RUN bundle config set frozen "true"
 RUN bundle config set no-cache "true"
-RUN if [ "$BUNDLE_GEM_GROUPS" = "production" ]; then \
-    bundle config set without "development test"; \
-  else \
-    bundle config set with $BUNDLE_GEM_GROUPS; \
-  fi
+RUN bundle config set without "development test"
 RUN bundle install --no-binstubs --retry=10 --jobs=4
 
 # ------------------------------------------------------------------------------
@@ -111,10 +106,23 @@ EXPOSE 3000
 
 CMD ["bundle", "exec", "rails", "server"]
 
+RUN bundle config unset without
+
+# ------------------------------------------------------------------------------
+# Dev
+# ------------------------------------------------------------------------------
+FROM web as dev
+
+RUN bundle config set with "development"
+RUN bundle install --no-binstubs --retry=10 --jobs=4
+
 # ------------------------------------------------------------------------------
 # Test
 # ------------------------------------------------------------------------------
 FROM web as test
+
+RUN bundle config set with "test"
+RUN bundle install --no-binstubs --retry=10 --jobs=4
 
 RUN apt-get install -qq -y shellcheck wait-for-it
 
