@@ -50,7 +50,7 @@ RUN bundle install --no-binstubs --retry=10 --jobs=4
 # ------------------------------------------------------------------------------
 # Web
 # ------------------------------------------------------------------------------
-FROM dependencies AS web
+FROM dependencies AS app
 
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
@@ -111,7 +111,7 @@ RUN bundle config unset without
 # ------------------------------------------------------------------------------
 # Dev
 # ------------------------------------------------------------------------------
-FROM web as dev
+FROM app as dev
 
 RUN bundle config set with "development"
 RUN bundle install --no-binstubs --retry=10 --jobs=4
@@ -119,7 +119,7 @@ RUN bundle install --no-binstubs --retry=10 --jobs=4
 # ------------------------------------------------------------------------------
 # Test
 # ------------------------------------------------------------------------------
-FROM web as test
+FROM app as test
 
 RUN bundle config set with "test"
 RUN bundle install --no-binstubs --retry=10 --jobs=4
