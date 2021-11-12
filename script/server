@@ -6,4 +6,11 @@
 set -e
 
 docker-compose up --detach
-docker attach buy-for-your-school_web_1
+
+check_container_name_format_command='docker ps --filter "name=buy-for-your-school_web_1" --format "{{.ID}}"'
+
+if [[ $(eval $check_container_name_format_command) ]]; then
+  docker attach buy-for-your-school_web_1
+else
+  docker attach buy-for-your-school-web-1
+fi

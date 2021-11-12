@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+### Shared Unreleased
+
+- added helper component to enable autocomplete functionality on fields
+
 ### Supported Unreleased
 
 - add initial models for supported case management functions
