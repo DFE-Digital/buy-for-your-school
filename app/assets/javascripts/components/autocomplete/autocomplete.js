@@ -6,57 +6,30 @@
   Autocomplete
   ============
 
-  This component provides a way to declaritively set up an autocomplete box in a simple way.
-  It is build upon https://github.com/alphagov/accessible-autocomplete
-
-  Component data attributes
-  -------------------------
-
-  This component will start working on its own if you define the following data attributes:
-
-  - data-component:
-    set to "autocomplete" to activate autocomplete component
-
-  - data-autocomplete-element-id:
-    the id of the resulting input field (useful for labels)
-
-  - data-autocomplete-element-name:
-    the name of the resulting form input element
-
-  - data-autocomplete-template-suggestion:
-    a string specifying the format you wish for the autocomplete choices
-    to appear like. It makes use of {{variables}}.
-
-    Given an API response of
-    [{id: "1", name: "Joe Bloggs"}, {id: "2", "Jane Bloggs"}]
-
-    And the template
-    Id: {{id}} - <strong>{{name}}</strong>
-
-    When the user types in the autocomplete box
-    Then they will see the following choices
-    Id: 1 - <strong>Joe Bloggs</strong>
-    Id: 2 - <strong>Jane Bloggs</strong>
-
-  - data-autocomplete-template-input:
-    the value from the API response when chosen by the user will be the
-    input value for this field
-
-  - data-autocomplete-query-url:
-    the URL of the endpoint you wish to get the autocomplete results from.
-    It makes use of {{QUERY}} variable.
-
-    Given a query url of http://example.org/cats?q={{QUERY}}
-    When the user types "test" in the auto complete box
-    Then the API will receive a GET request on http://example.org/cats?q=test
-
-    It is worth utilising the rails helpers to build a url
-    cats_url(format: :json, q: "{{QUERY}}")
+  See docs/components/autocomplete.md for full documentation.
   */
 
   const initializeAutocomplete = () => {
     // Set up an individual autocomplete field
     const initializeElement = element => {
+      // Set up the required markup to make the autocomplete element function
+      // and fit in with govuk style standards
+      const setupFormGroupAndLabel = () => {
+        const formGroup = document.createElement('div');
+        formGroup.classList.add('govuk-form-group');
+
+        const formLabel = document.createElement('label');
+        formLabel.classList.add('govuk-label');
+        formLabel.setAttribute('for', element.dataset.autocompleteElementId);
+        formLabel.textContent = element.dataset.autocompleteLabelText;
+
+        const currentElementParent = element.parentNode;
+        currentElementParent.replaceChild(formGroup, element);
+
+        formGroup.appendChild(formLabel);
+        formGroup.appendChild(element);
+      }
+
       // Query an endpoint to return autocomplete choices
       const doQueryLookup = (query, populateResults) => {
         // Interpolate the user entered query into the provided query url
@@ -76,7 +49,7 @@
           output = output.replace(new RegExp(`{{${key}}}`, 'g'), value);
         });
 
-        return output;
+        return `<span class="govuk-body">${output}</span>`;
       }
 
       // Construct the autocomplete initialization settings
@@ -91,6 +64,8 @@
         },
         source: _.throttle(doQueryLookup)
       }
+
+      setupFormGroupAndLabel();
 
       // Initialize the autocomplete dependency
       accessibleAutocomplete(settings);
