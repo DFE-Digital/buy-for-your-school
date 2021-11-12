@@ -19,6 +19,7 @@ module Support
     option :data, reader: :private, optional: true
 
     # Persistence logic
+    # (defaults to School::RecordKeeper)
     #
     # @!attribute [r] saver
     # @!visibility private
@@ -28,7 +29,7 @@ module Support
     #
     # @!attribute [r] filter
     # @!visibility private
-    #   @return [Hash] "column header" => [integer, values]
+    # @return [Hash] "column header" => [integer, values]
     option :filter, ::Types::Strict::Hash, reader: :private, default: proc {
       { "TypeOfEstablishment (code)" => EstablishmentType.all.map(&:code) }
     }

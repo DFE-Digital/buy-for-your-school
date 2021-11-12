@@ -24,14 +24,14 @@ module Notify
     option :recipient
 
     # @!attribute [r] client
-    # @return [Notifications::Client] API interface
+    # @return [Notifications::Client] API interface (defaults to new instance)
     option :client, default: proc { Notifications::Client.new(ENV["NOTIFY_API_KEY"]) }
 
     # @!attribute [r] template
     #
     # @see https://www.notifications.service.gov.uk/services/&ltUUID&gt/templates
     #
-    # @return [String] Template by name
+    # @return [String] Template by name (defaults to "Default")
     option :template, Types::String, default: proc { "Default" }
 
     # @!attribute [r] variables
@@ -42,7 +42,7 @@ module Notify
     # It must not contain any personal information such as name or postal address.
     #
     # @!attribute [r] reference
-    # @return [String] A unique identifier you can create if necessary
+    # @return [String] A unique identifier you can create if necessary (defaults to "generic")
     option :reference, Types::String, default: proc { "generic" }
 
     # @!attribute [r] attachment
