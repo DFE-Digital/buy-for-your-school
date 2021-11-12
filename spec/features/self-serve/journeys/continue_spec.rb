@@ -1,14 +1,24 @@
 # TODO: replace with factories and check HTML/classes
 RSpec.feature "Journey continue button behaviour" do
-  before { user_is_signed_in }
+  let(:user) { create(:user) }
+  let(:category) { create(:category, :catering) }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section_b) { create(:section, title: "Section B", journey: journey) }
 
-  # TODO: why is this something we need?
+  before do
+    user_is_signed_in(user: user)
+  end
+
   context "when a task has a single step and the user answers it" do
-    scenario "the user is returned to the same place in the task list " do
-      start_journey_from_category(category: "long-text-question.json")
-      click_first_link_in_section_list
+    before do
+      task = create(:task, title: "Long text task", section: section_b)
+      create(:step, :long_text, title: "Describe what you need", task: task, order: 0)
+      visit "/journeys/#{journey.id}"
+    end
 
-      journey = Journey.last
+    scenario "the user is returned to the same place in the task list " do
+      # start_journey_from_category(category: "long-text-question.json")
+      click_first_link_in_section_list
 
       fill_in "answer[response]", with: "This is my long answer"
 
@@ -23,11 +33,21 @@ RSpec.feature "Journey continue button behaviour" do
   end
 
   context "when a task has many steps" do
+    let(:section_a) { create(:section, title: "Section A", journey: journey) }
+
+    before do
+      task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section_a)
+      create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_with_multiple_steps, order: 0)
+      create(:step, :short_text, title: "What email address did you use?", task: task_with_multiple_steps, order: 1)
+      create(:step, :long_text, title: "Describe what you need", task: task_with_multiple_steps, order: 2)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_multiple_steps, order: 3)
+      visit "/journeys/#{journey.id}"
+    end
+
     scenario "the user is taken straight to the next step" do
-      start_journey_from_category(category: "task-with-multiple-steps.json")
+      # start_journey_from_category(category: "task-with-multiple-steps.json")
       click_first_link_in_section_list
 
-      journey = Journey.last
       task = journey.sections.first.tasks.first
 
       choose "Catering"
@@ -45,11 +65,9 @@ RSpec.feature "Journey continue button behaviour" do
       expect(page).to have_content "Task with multiple steps"
       expect(page).to have_current_path journey_task_url(journey, task)
     end
-  end
 
-  context "when a task has not been started" do
-    it "takes the user straight to the first step" do
-      start_journey_from_category(category: "task-with-multiple-steps.json")
+    scenario "when a task has not been started, it takes the user straight to the first step" do
+      # start_journey_from_category(category: "task-with-multiple-steps.json")
 
       click_first_link_in_section_list
 
