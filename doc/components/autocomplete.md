@@ -4,10 +4,9 @@ A glue layer to make using [alphagov/accessible-autocomplete](https://github.com
 
 ## Typical usage
 
-Using specified data attributes on a html tag will activate the autocomplete.
-Please note use of `noscript` as a fallback mechanism for those with javascript disabled.
+Using specified data attributes on a html tag will activate the autocomplete. A fallback field can be specified to cater for users without javascript capability.
 
-#### Using the component partial (recommended):
+#### Using the component partial:
 
 ```erb
 <%= render "components/autocomplete",
@@ -21,38 +20,18 @@ Please note use of `noscript` as a fallback mechanism for those with javascript 
 <% end %>
 ```
 
-#### Or plain HTML:
+## Partial attribute documentation
 
-```erb
-<div
-  id="my-autocomplete-container"
-  data-component="autocomplete"
-  data-autocomplete-label-text="Establishment URN"
-  data-autocomplete-element-id="my-autocomplete"
-  data-autocomplete-element-name="case_form[school_urn]"
-  data-autocomplete-template-suggestion='URN: {{urn}}, <strong>{{name}}</strong>, {{postcode}}'
-  data-autocomplete-template-input="urn"
-  data-autocomplete-query-url="<%= support_schools_path(format: :json, q: "{{QUERY}}") %>">
-</div>
-
-<noscript>
-  <%= f.govuk_text_field :school_urn, label: { text: "Establishment URN" } %>
-</noscript>
-```
-
-## Data attribute documentation
-
-|partial-attribute|data-attribute|Description|Example configuration|
-|--|--|--|--|
-| n/a | `data-component` | set to "autocomplete" to activate autocomplete component | "autocomplete" only |
-| `container_id` | n/a | the id of the element that will become the autocomplete field | "any-id-here" |
-| `label_text` | `data-autocomplete-label-text` | The text to be used in the resulting field label | "Establishment URN" |
-| `element_id` | `data-autocomplete-element-id` | The id attribute of the resulting input field | "my-autocomplete" |
-| `element_name` | `data-autocomplete-element-name` | The name attribute of the resulting input field | "case_form[school_urn]" |
-| `template_suggestion` | `data-autocomplete-template-suggestion` | a string specifying the format you wish for the autocomplete choices to appear |  like. It makes use of {{variables}}. See [below](#template-suggestion-syntax) | "The URN is {{urn}}" |
-| `value_field` | `data-autocomplete-template-input` | the value from the API response when chosen by the user will be the input value for |  this field | "urn" |
-| `query_url` | `data-autocomplete-query-url` | the URL of the endpoint you wish to get the autocomplete results from. It makes use of {{QUERY}} variable. See [below](#query-url-syntax) | "http://example.org/cats?query={{QUERY}}" |
-| Partial Block | n/a | A block given to the partial to define the fallback non-js input field to be used | |
+|Attribute|Description|Example configuration|
+|--|--|--|
+| `container_id` | the id of the element that will become the autocomplete field | "any-id-here" |
+| `label_text` | The text to be used in the resulting field label | "Establishment URN" |
+| `element_id` | The id attribute of the resulting input field | "my-autocomplete" |
+| `element_name` | The name attribute of the resulting input field | "case_form[school_urn]" |
+| `template_suggestion` | a string specifying the format you wish for the autocomplete choices to appear |  like. It makes use of {{variables}}. See [below](#template-suggestion-syntax) | "The URN is {{urn}}" |
+| `value_field` | the value from the API response when chosen by the user will be the input value for |  this field | "urn" |
+| `query_url` | the URL of the endpoint you wish to get the autocomplete results from. It makes use of {{QUERY}} variable. See [below](#query-url-syntax) | "http://example.org/cats?query={{QUERY}}" |
+| Partial Block | A block given to the partial to define the fallback non-js input field to be used | |
 
 
 ### Template suggestion syntax
