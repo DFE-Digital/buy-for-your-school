@@ -27,7 +27,7 @@ jobs:
         run: docker load -i /tmp/docker-save/snapshot.tar || true
         if: steps.cache-docker.outputs.cache-hit == 'true'
       - name: Build
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p app build
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml --project-name ghbs build
       - name: Test
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm app
       - name: Prepare Docker cache
