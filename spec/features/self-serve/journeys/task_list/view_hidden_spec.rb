@@ -4,6 +4,9 @@ RSpec.feature "Users can view the task list" do
   let(:journey) { create(:journey, user: user, category: category) }
   let(:section) { create(:section, title: "section a", journey: journey) }
 
+  let(:options) { [{ "value" => "School expert", "display_further_information" => true, "further_information_help_text" => "Explain why this is the case" }, { "value" => "External expert" }, { "value" => "none" }] }
+  let(:additional_step_rules) { [{ "required_answer" => "School expert", "question_identifiers" => %w[1] }] }
+
   before do
     user_is_signed_in(user: user)
   end
@@ -31,15 +34,8 @@ RSpec.feature "Users can view the task list" do
           :radio,
           title: "What support do you have available?",
           task: task_1,
-          options:
-          [{ "value" => "School expert",
-             "display_further_information" => true,
-             "further_information_help_text" => "Explain why this is the case" },
-           { "value" => "External expert" },
-           { "value" => "none" }],
-          additional_step_rules:
-          [{ "required_answer" => "School expert",
-             "question_identifiers" => %w[1] }],
+          options: options,
+          additional_step_rules: additional_step_rules,
           contentful_id: 0,
           order: 0,
         )
@@ -56,7 +52,7 @@ RSpec.feature "Users can view the task list" do
         Step.find_by(title: "What email address did you use?").update!(created_at: 2.days.ago)
         Step.find_by(title: "What colour is the sky?").update!(created_at: 1.day.ago)
 
-        click_on "One additional question task" # > show-one-additional-question-in-order-task.json
+        click_on "One additional question task"
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/steps/df8f0382-e652-4f25-bf7d-58a433882c03
         expect(page).to have_a_step_path
         click_back

@@ -23,7 +23,7 @@ RSpec.feature "User task actions are recorded" do
       expect(page).to have_a_journey_path
 
       within(".app-task-list") do
-        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+        click_on "Task with multiple steps"
       end
 
       # /journeys/40e87654-0ce7-466a-96a2-b406025c83d9/steps/36e7b670-1af5-4340-9311-fc23ae1a6cfd
@@ -65,7 +65,7 @@ RSpec.feature "User task actions are recorded" do
         expect(page).to have_a_journey_path
 
         within(".app-task-list") do
-          click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+          click_on "Task with multiple steps"
         end
 
         # /journeys/3303d91e-e09a-4956-90d5-2628564ae901/tasks/4f8e2f76-cad2-4b43-be6d-18eca22a9756
@@ -100,7 +100,7 @@ RSpec.feature "User task actions are recorded" do
         # /journeys/db0d0480-4598-4ddb-b003-571138f5cf98
         expect(page).to have_a_journey_path
         within(".app-task-list") do
-          click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+          click_on "Task with multiple steps"
         end
 
         # /journeys/db0d0480-4598-4ddb-b003-571138f5cf98/steps/e25ab926-cec4-4c42-b6bf-2821ece220d4

@@ -37,7 +37,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # RadioAnswerPresenter#response
-    specify do
+    specify "radio box label selected is presented as the answer" do
       click_link "radios"
       expect(page).to have_a_step_path
       choose "Cleaning"
@@ -51,7 +51,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # ShortTextAnswerPresenter#response
-    specify do
+    specify "short text response is presented as the answer" do
       click_link "short_text"
       expect(page).to have_a_step_path
       fill_in "answer[response]", with: "hello_world@example.com"
@@ -65,7 +65,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # LongTextAnswerPresenter#response
-    specify do
+    specify "long text response is presented as the answer" do
       click_link "long_text"
       expect(page).to have_a_step_path
       fill_in "answer[response]", with: "\r\n\r\nfoo\r\n\r\n"
@@ -79,7 +79,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # CurrencyAnswerPresenter#response
-    specify do
+    specify "currency response is formatted and presented as the answer" do
       click_link "currency"
       expect(page).to have_a_step_path
       fill_in "answer[response]", with: "2,999.99001"
@@ -93,7 +93,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # NumberAnswerPresenter#response
-    specify do
+    specify "number response is formatted and presented as the answer" do
       click_link "number"
       expect(page).to have_a_step_path
       fill_in "answer[response]", with: "123"
@@ -107,7 +107,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # SingleDateAnswerPresenter#response
-    specify do
+    specify "single date response is formatted and presented as the answer" do
       click_link "single_date"
       expect(page).to have_a_step_path
       fill_in "answer[response(3i)]", with: "1"
@@ -121,7 +121,7 @@ RSpec.feature "User answers are rendered correctly based on type" do
     end
 
     # CheckboxesAnswerPresenter#concatenated_response
-    specify do
+    specify "checkbox response is formatted and presented as the answer" do
       click_link "checkboxes"
       expect(page).to have_a_step_path
       check "Lunch"
