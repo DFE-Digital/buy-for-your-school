@@ -13,5 +13,14 @@ module Support
     option :estimated_savings, optional: true
     option :hub_notes, optional: true
     option :progress_notes, optional: true
+
+    def case_type
+      "NW Hub Case"
+    end
+
+    # @return [Hash] form parms
+    def to_h
+      self.class.dry_initializer.attributes(self)
+    end
   end
 end

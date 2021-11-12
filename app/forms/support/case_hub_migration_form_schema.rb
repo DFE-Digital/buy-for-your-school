@@ -18,7 +18,9 @@ module Support
       optional(:progress_notes).value(:string)
     end
 
-    rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+    rule(:contact_phone_number) do
+      key(:contact_phone_number).failure(:missing) if value.blank?
+    end
 
     rule(:school_urn) do
       key(:school_urn).failure(:missing) if value.blank?

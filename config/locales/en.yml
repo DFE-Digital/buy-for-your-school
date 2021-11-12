@@ -264,6 +264,8 @@ en:
         opens_in_new_tab: (opens in new tab)
       form:
         optional: (optional)
+      currency:
+        unit_symbol: £
 
     header: Supported Buying Admin
 
@@ -330,10 +332,33 @@ en:
         school_urn: Establishment URN
         contact_name: Contact name
         contact_email: Contact email
-        contact_phone: Contact phone number (optional)
+        contact_phone: Contact phone number %{optional}
         category: Category
+        case_type: Type of case
+        hub_case_ref: Identification number %{optional}
+        hub_case_ref_hint: We will use the existing Hub identification number to link the existing case data to a new case number
+        estimated_procurement_completion_date: Procurement estimated completion date %{optional}
+        estimated_procurement_completion_date_hint: Enter the procurement estimated completion date supplied from the Hub
+        estimated_savings: Estimated total savings %{optional}
+        estimated_savings_hint: Enter the estimated savings supplied from the Hub
+        hub_notes: Hub notes / comments %{optional}
+        hub_notes_hint: Enter a summary of the query from the Hub case
+        progress_notes: Progress notes from CRM %{optional}
+        progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
+      submit: Save and continue
       flash:
         created: Case created/migrated successfully
+      edit:
+        header: Check your answers before creating a new case
+        section:
+          establishment: Establishment details
+          contact: Contact details
+          case: Case details
+          migration: Hub migration case information
+        label:
+          confirm: Check all the details before submitting as it is not currently possible to edit case details once they are created.
+        submit: Create case
+
 
     case_resolution:
       flash:
