@@ -1,4 +1,4 @@
-unless Rails.env.production?
+if Rails.env.development?
   require "yard"
 
   YARD::Rake::YardocTask.new do |t|

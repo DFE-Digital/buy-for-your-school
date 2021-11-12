@@ -31,6 +31,6 @@ jobs:
       - name: Test
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm app
       - name: Prepare Docker cache
-        run: mkdir -p /tmp/docker-save && docker save app_test:latest -o
+        run: mkdir -p /tmp/docker-save && docker save ghbs_app:latest -o
           /tmp/docker-save/snapshot.tar && ls -lh /tmp/docker-save
         if: always() && steps.cache-docker.outputs.cache-hit != 'true'

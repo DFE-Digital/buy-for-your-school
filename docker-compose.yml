@@ -4,36 +4,37 @@ services:
     build:
       context: .
       target: app
-    ports:
-      - 3000:3000
-    depends_on:
-      - db
-      - redis
+    image: ghbs:prod
+    # command: bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'
     environment:
+      SECRET_KEY_BASE: secret
+      RAILS_ENV: production
       REDIS_URL: redis://redis:6379
     volumes:
       - .:/srv/app
+    depends_on:
+      - db
+      - redis
     tty: true
     stdin_open: true
+    networks:
+      - ghbs
 
   db:
+    container_name: ghbs_db
     image: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_HOST_AUTH_METHOD: trust
+    networks:
+      - ghbs
 
   redis:
+    container_name: ghbs_cache
     image: redis
-    ports:
-      - 6379:6379
-    volumes:
-      - redis-data:/data
+    networks:
+      - ghbs
 
-volumes:
-  db-data:
-  redis-data:
+networks:
+  ghbs:

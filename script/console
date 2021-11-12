@@ -1,7 +1,8 @@
 #!/bin/sh
-
-# script/server: Start an interactive console 
+#
+# Docker development environment Rails console
+#
 
 set -e
 
-docker-compose run --rm web bundle exec rails console
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm app bundle exec rails console

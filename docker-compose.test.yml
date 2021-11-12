@@ -1,28 +1,36 @@
 version: "3.8"
 services:
   app:
+    container_name: ghbs_test
     build:
       target: test
-      args:
-        RAILS_ENV: test
+    image: ghbs:test
     command: bash -c "wait-for-it redis:6379 --strict --timeout=60 -- script/test"
-    env_file:
-      - .env.test
     environment:
+      RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DOCKER: "true"
-      SELENIUM_HUB_URL: http://test-chrome:4444/wd/hub
-    networks:
-      - test
+      SELENIUM_HUB_URL: http://chrome:4444/wd/hub
+    depends_on:
+      - chrome
 
   db:
-    networks:
-      - test
+    volumes:
+      - db-test:/var/lib/postgresql/data
 
   redis:
-    networks:
-      - test
+    volumes:
+      - redis-test:/data
 
-networks:
-  test:
+  chrome:
+    container_name: ghbs_chrome
+    image: selenium/standalone-chrome:95.0-chromedriver-95.0
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - ghbs
+
+volumes:
+  db-test:
+  redis-test:
