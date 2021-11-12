@@ -4,8 +4,6 @@ FactoryBot.define do
     sequence(:code) { |n| n }
 
     association :group,
-                factory: :support_group,
-                name: "foo",
-                code: 1
+                factory: :support_group
   end
 end
