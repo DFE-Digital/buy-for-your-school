@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require "thor"
+require "byebug"
+
+class Climate < Thor
+
+  desc "parity", "Lists Keys that are missing for each environment"
+  def parity
+    gh_check
+    puts "# Missing keys:\n"
+    all_keys.each do |environment, keys|
+      puts "\n## #{environment.capitalize}"
+
+      missing = all_keys.fetch_values(*GIT_ENVS - [environment]).flatten.uniq - keys
+
+      if missing.any?
+        puts "#{env_key_prefix(environment)}#{missing.join("\n#{env_key_prefix(environment)}")}"
+      else
+        puts "none missing"
+      end
+    end
+  end
+
+  desc "exists", "Given a ENV key, will check which environments have it defined"
+  def exists(key=nil)
+    gh_check
+    return puts "Provide an ENV key" unless key
+
+    GIT_ENVS.each do |environment|
+      if all_keys[environment].include?(key)
+        puts "#{environment.capitalize} has #{env_key_prefix(environment)}#{key}"
+      else
+        puts "#{environment.capitalize}: not present"
+      end
+    end
+  end
+
+private
+
+  GIT_ENVS = %i[staging preview research production]
+
+  def all_keys
+    @all_keys ||= GIT_ENVS.inject({}) do |all_keys, environment|
+      all_keys[environment] = `gh secret list -e #{environment}`
+        .split("\n")
+        .map do |e|
+          e.split("\t")
+           .first
+           .gsub(env_key_prefix(environment), "")
+        end
+      all_keys
+    end
+  end
+
+  def env_key_prefix(env)
+    name = {
+      staging: "STAGING",
+      preview: "PREVIEW",
+      research: "RESEARCH",
+      production: "PROD",
+    }[env]
+
+    "APP_ENV_#{name}_"
+  end
+
+  def gh_check
+    gh_exists = `type gh >/dev/null 2>&1 || printf "false"`
+
+    if gh_exists == "false"
+      puts "github CLI is required to use Climate"
+      puts "'brew install gh' authenticate, then try again."
+      exit
+    end
+  end
+end
+
+Climate.start(ARGV)
