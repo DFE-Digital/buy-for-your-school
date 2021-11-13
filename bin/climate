@@ -3,7 +3,6 @@
 # frozen_string_literal: true
 
 require "thor"
-require "byebug"
 
 class Climate < Thor
 
