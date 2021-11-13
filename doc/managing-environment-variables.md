@@ -62,3 +62,10 @@ Though the GitHub secret API could be used, the easiest way to get application v
 ```
 $irb> ENV["RAILS_ENV"]
 ```
+
+## Checking parity with `Climate`
+
+Given there are multiple remote enviroments (staging, preview, research and production at time of writing), it's possible for some variables to be missing in some of them.
+
+1. To see a list of ENVs that are missing accross all four, use `bin/climate parity`
+2. To check the presence of an individual ENV, use `bin/climate exists VAR_NAME`
