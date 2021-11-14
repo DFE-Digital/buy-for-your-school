@@ -26,7 +26,9 @@ RSpec.feature "User authentication filter" do
 
     it "body" do
       # errors.sign_in.no_organisation.link
-      expect(page).to have_link "log into your DfE Sign-In account and select your organisation.", href: "https://test-services.signin.education.gov.uk/request-organisation/search", class: "govuk-link"
+      expect(page).to have_link "log into your DfE Sign-In account and select your organisation.",
+                                href: "https://test-services.signin.education.gov.uk/request-organisation/search",
+                                class: "govuk-link"
 
       # errors.sign_in.no_organisation.page_body
       body = <<~BODY

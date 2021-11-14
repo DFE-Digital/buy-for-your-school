@@ -1,6 +1,13 @@
 RSpec.describe Support::Organisation, type: :model do
   it { is_expected.to belong_to(:establishment_type) }
 
+  describe "#postcode" do
+    it "returns the value stored in address" do
+      organisation = described_class.new(address: { postcode: "S1 2JF" })
+      expect(organisation.postcode).to eq("S1 2JF")
+    end
+  end
+
   describe "#urn" do
     it "is unique" do
       group = create(:support_group, code: 4, name: "LA maintained school")

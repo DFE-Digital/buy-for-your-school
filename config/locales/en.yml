@@ -24,8 +24,7 @@ en:
     design: "%{env} Environment"
     beta:
       tag: beta
-      message:
-          This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
+      message: This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -78,7 +77,6 @@ en:
           - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
         link: sign in into the service again.
-
 
   #
   # Self-Serve -----------------------------------------------------------------
@@ -136,7 +134,6 @@ en:
         body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
         button: Give feedback (opens in a new tab)
 
-
   # /dashboard
   dashboard:
     header: Specifications dashboard
@@ -183,7 +180,7 @@ en:
     category_selection_header: Choose a category
     spec_template_tag_title: Specification tag
 
- # /profile
+  # /profile
   profile:
     caption: About you
     heading: Is this your contact information?
@@ -256,7 +253,7 @@ en:
       step_two: "%{read_guides_link} that you're buying"
       read_procs_link: read buying procedures and procurement law for schools
       read_guides_link: read guides about goods and services
-    back_button: Back to Specify dashboard
+    back_button: Back to your dashboard
 
   #
   # Supported ------------------------------------------------------------------
@@ -385,20 +382,20 @@ en:
         header: Your specification
 
     interaction:
-        header:
-          type_of_contact: Type of contact
-          contact_with_school: Contact with school
-          add_case_note: Add case note
-        type:
-          phone_call: Phone call
-          email_from_school: Email from school
-          email_to_school: Email to school
-          note: Case note
-          support_request: Request for support
-        label:
-          contact_detail: Contact details
-          contact_detail_hint: Add details of the phone call or copy and paste the email here
-          body: Notes
-          created_by: Created by
-        message:
-          created_flash: "%{type} added to case"
+      header:
+        type_of_contact: Type of contact
+        contact_with_school: Contact with school
+        add_case_note: Add case note
+      type:
+        phone_call: Phone call
+        email_from_school: Email from school
+        email_to_school: Email to school
+        note: Case note
+        support_request: Request for support
+      label:
+        contact_detail: Contact details
+        contact_detail_hint: Add details of the phone call or copy and paste the email here
+        body: Notes
+        created_by: Created by
+      message:
+        created_flash: "%{type} added to case"

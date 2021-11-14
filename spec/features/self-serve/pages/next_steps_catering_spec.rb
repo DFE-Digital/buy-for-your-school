@@ -14,5 +14,9 @@ RSpec.feature "NextStepsCatering" do
       expect(page).to have_title "Next steps catering"
       expect(page).to have_text "Next steps"
     end
+
+    it "shows the breadcrumbs" do
+      expect(page).to have_breadcrumbs ["Dashboard", "Next steps"]
+    end
   end
 end
