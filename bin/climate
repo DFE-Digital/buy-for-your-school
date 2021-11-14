@@ -7,18 +7,18 @@ require "thor"
 class Climate < Thor
   desc "parity", "Lists Keys that are missing for each environment"
   def parity
-    say "# Missing keys:\n"
     all_keys.each do |environment, keys|
-      say "\n## #{environment.capitalize}"
+      say "## Keys missing in #{environment.upcase}" , :magenta
+      say "## #{GIT_ENV_URLS[environment]}", :magenta
 
       missing = all_keys.fetch_values(*GIT_ENVS - [environment]).flatten.uniq - keys
 
       if missing.any?
-        say GIT_ENV_URLS[environment]
         say "#{env_key_prefix(environment)}#{missing.join("\n#{env_key_prefix(environment)}")}"
       else
         say "none missing"
       end
+      say
     end
   end
 
@@ -32,6 +32,13 @@ class Climate < Thor
       else
         say "#{environment.capitalize}: not present"
       end
+    end
+  end
+
+  desc "envs", "Lists environments with a link to edit"
+  def envs
+    GIT_ENV_URLS.each do |name, url|
+      say "#{name}: #{url}"
     end
   end
 
