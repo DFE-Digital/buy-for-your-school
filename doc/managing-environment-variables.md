@@ -63,9 +63,70 @@ Though the GitHub secret API could be used, the easiest way to get application v
 $irb> ENV["RAILS_ENV"]
 ```
 
-## Checking parity with `Climate`
+## Checking parity with `bin/climate`
 
 Given there are multiple remote enviroments (staging, preview, research and production at time of writing), it's possible for some variables to be missing in some of them.
 
-1. To see a list of ENVs that are missing accross all four, use `bin/climate parity`
-2. To check the presence of an individual ENV, use `bin/climate exists VAR_NAME`
+`bin/climate` provides a few helpful methods for checking things like this:
+
+### `bin/climate` output
+
+```console
+$ bin/climate
+Commands:
+  climate envs            # Lists environments with a link to edit
+  climate exists          # Given a ENV key, will check which environments have it defined
+  climate help [COMMAND]  # Describe available commands or one specific command
+  climate parity          # Lists Keys that are missing for each environment
+```
+
+### `bin/climate envs` output
+
+```console
+$ bin/climate envs
+staging: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534224/edit
+preview: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534180/edit
+research: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530720/edit
+production: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530368/edit
+```
+
+### `bin/climate parity` output
+
+```console
+$ bin/climate parity
+# Missing keys:
+
+## Staging
+https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534224/edit
+APP_ENV_STAGING_DFE_SIGN_IN_API_ENDPOINT
+APP_ENV_STAGING_DFE_SIGN_IN_API_SECRET
+APP_ENV_STAGING_GOOGLE_ANALYTICS
+
+## Preview
+https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534180/edit
+APP_ENV_PREVIEW_CONTENTFUL_ENTRY_CACHING_TTL
+APP_ENV_PREVIEW_CONTENTFUL_URL
+APP_ENV_PREVIEW_DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR
+APP_ENV_PREVIEW_GOOGLE_ANALYTICS
+
+## Research
+https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530720/edit
+APP_ENV_RESEARCH_DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR
+APP_ENV_RESEARCH_DOMAIN
+APP_ENV_RESEARCH_RACK_ENV
+APP_ENV_RESEARCH_GOOGLE_ANALYTICS
+
+## Production
+https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530368/edit
+APP_ENV_PROD_DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR
+```
+
+### `bin/climate exists` output
+
+```console
+$ bin/climate exists CONTENTFUL_SPACE
+Staging: not present
+Preview: not present
+Research: not present
+Production has APP_ENV_PROD_GOOGLE_ANALYTICS
+```
