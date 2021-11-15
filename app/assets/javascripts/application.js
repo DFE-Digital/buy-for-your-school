@@ -12,5 +12,8 @@
 //
 // TODO implement webpack
 // TODO implement turbolinks
+
 //= require rails-ujs
+//= require lodash/lodash.min
 //= require govuk-frontend/govuk/all.js
+//= require components/autocomplete/autocomplete
