@@ -9,12 +9,12 @@ services:
     environment:
       SECRET_KEY_BASE: secret
       RAILS_ENV: production
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: redis://cache:6379
     volumes:
       - .:/srv/app
     depends_on:
       - db
-      - redis
+      - cache
     tty: true
     stdin_open: true
     networks:
@@ -30,7 +30,7 @@ services:
     networks:
       - ghbs
 
-  redis:
+  cache:
     container_name: ghbs_cache
     image: redis
     networks:

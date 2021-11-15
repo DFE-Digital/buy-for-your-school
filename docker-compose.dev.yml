@@ -8,7 +8,6 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'"
     environment:
       RAILS_ENV: development
-      # RAILS_ENV: production
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
     ports:
       - 3000:3000
@@ -19,10 +18,9 @@ services:
     command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
       RAILS_ENV: development
-      REDIS_URL: redis://redis:6379
     depends_on:
       - db
-      - redis
+      - cache
     volumes:
       - .:/srv/app
 
@@ -32,13 +30,13 @@ services:
     ports:
       - 5432:5432
 
-  redis:
+  cache:
     volumes:
-      - redis-data:/data
+      - cache-data:/data
     ports:
       - 6379:6379
 
 
 volumes:
   db-data:
-  redis-data:
+  cache-data:
