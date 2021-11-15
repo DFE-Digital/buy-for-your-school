@@ -269,7 +269,7 @@ GEM
       validate_email
       validate_url
       webfinger (>= 1.0.1)
-    pandoc-ruby (2.1.4)
+    pandoc-ruby (2.1.5)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
