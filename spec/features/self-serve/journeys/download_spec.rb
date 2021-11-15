@@ -1,8 +1,15 @@
-# TODO: replace with shared context journey factories
 RSpec.feature "Users can see their catering specification" do
+  let(:user) { create(:user) }
+  let(:category) { create(:category, :catering) }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section) { create(:section, title: "Section A", journey: journey) }
+
   before do
-    user_is_signed_in
-    start_journey_from_category(category: "category-with-liquid-template.json")
+    user_is_signed_in(user: user)
+    task_radio = create(:task, title: "Radio task", section: section)
+    create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_radio, order: 0)
+
+    visit "/journeys/#{journey.id}"
   end
 
   context "when the journey has been completed" do
