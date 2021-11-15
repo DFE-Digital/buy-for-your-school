@@ -6,7 +6,7 @@ services:
       cache_from:
         - ghbs_app:latest
     image: ghbs_app
-    command: bash -c "wait-for-it redis:6379 --strict --timeout=60 -- script/test"
+    command: bash -c "wait-for-it cache:6379 --strict --timeout=60 -- script/test"
     environment:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test

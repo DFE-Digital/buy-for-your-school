@@ -5,7 +5,7 @@ services:
     build:
       target: test
     image: ghbs:test
-    command: bash -c "wait-for-it redis:6379 --strict --timeout=60 -- script/test"
+    command: bash -c "wait-for-it cache:6379 --strict --timeout=60 -- script/test"
     environment:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
