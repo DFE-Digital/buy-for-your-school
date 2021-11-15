@@ -4,8 +4,8 @@ services:
     build:
       target: test
       cache_from:
-        - app_test:latest
-    image: app_test
+        - ghbs_app:latest
+    image: ghbs_app
     command: bash -c "wait-for-it redis:6379 --strict --timeout=60 -- script/test"
     environment:
       RAILS_ENV: test
