@@ -90,12 +90,6 @@ describe "Support agent sends a basic email" do
   end
 
   describe "sending the email" do
-    let(:template_collection) do
-      {
-        "templates" => [{ "name" => "basic", "id" => "ac679471-8bb9-4364-a534-e87f585c46f3" }],
-      }
-    end
-
     let(:email) do
       {
         email_address: "school@email.co.uk",
@@ -106,7 +100,6 @@ describe "Support agent sends a basic email" do
           first_name: "School",
           last_name: "Contact",
           email: "school@email.co.uk",
-          to_name: "School Contact",
           text: "New email body",
           from_name: "Procurement Specialist",
         },
@@ -114,9 +107,6 @@ describe "Support agent sends a basic email" do
     end
 
     before do
-      stub_request(:get, "https://api.notifications.service.gov.uk/v2/templates?type=email")
-      .to_return(body: template_collection.to_json)
-
       stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
       .with(body: email.to_json)
       .to_return(body: {}.to_json, status: 200, headers: {})

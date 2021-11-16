@@ -11,28 +11,7 @@ module Support
           body: @case_email_content_form.email_body,
         )
 
-        # convert static UUIDs from the template into names
-        # support/cases/emails/templates/index
-        #
-        template_name = {
-          "What is a framework?": "f4696e59-8d89-4ac5-84ca-17293b79c337",
-          "approaching suppliers": "6c76ed8c-030e-4c69-8f25-ea0c66091bc5",
-          "list of suppliers": "12430165-4ae7-47aa-baa3-d0b3c5440a9b",
-          "social value": "bb4e6925-3491-44b8-8747-bdbb31257403",
-          "basic": "ac679471-8bb9-4364-a534-e87f585c46f3",
-        }.invert.fetch(params[:email_template], "basic")
-
-        # send email
-        Support::Emails::ToSchool.new(
-          recipient: @current_case,
-          template: template_name,
-          reference: @current_case.ref,
-          variables: {
-            to_name: "#{@current_case.first_name} #{@current_case.last_name}",
-            text: @case_email_content_form.email_body,
-            from_name: current_agent.full_name,
-          },
-        ).call
+        send_email_to_school
 
         redirect_to support_case_path(@current_case, anchor: "case-history")
       end
@@ -46,6 +25,18 @@ module Support
 
     def case_email_content_form_params
       params.require(:case_email_content_form).permit(:email_body, :email_subject, :email_template)
+    end
+
+    def send_email_to_school
+      Support::Emails::ToSchool.new(
+        recipient: @current_case,
+        template: params.fetch(:email_template, "ac679471-8bb9-4364-a534-e87f585c46f3"),
+        reference: @current_case.ref,
+        variables: {
+          text: @case_email_content_form.email_body,
+          from_name: current_agent.full_name,
+        },
+      ).call
     end
   end
 end

@@ -55,7 +55,6 @@ describe "Support agent sends a templated email" do
           first_name: "School",
           last_name: "Contact",
           email: "school@email.co.uk",
-          to_name: "School Contact",
           text: "Hi School Contact, here is information regarding frameworks",
           from_name: "Procurement Specialist",
         },
