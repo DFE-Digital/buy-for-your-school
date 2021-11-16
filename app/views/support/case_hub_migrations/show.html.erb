@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_with url: edit_support_case_hub_migrations_path, scope: :case_hub_migration_form, method: :post do |form| %>
+    <%= form_with url: edit_support_case_hub_migrations_path, scope: :case_hub_migration_form, method: :post, class: "new-case-form" do |form| %>
 
       <% params[:case_hub_migration_form].each do |key, value| %>
         <%= hidden_field_tag "case_hub_migration_form[#{key}]", value %>
@@ -24,10 +24,33 @@
             <%= @case_hub_migration_form.school_urn %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
-        <% "Show school name and postcode once URN lookup enabled" %>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_name") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_hub_migration_form.school_name %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_postcode") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_hub_migration_form.school_postcode %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
       </dl>
 
       <h2 class="govuk-heading-m">
@@ -43,7 +66,7 @@
             <%= @case_hub_migration_form.contact_name %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
 
@@ -55,7 +78,7 @@
             <%= @case_hub_migration_form.contact_email %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
 
@@ -67,7 +90,7 @@
             <%= @case_hub_migration_form.contact_phone_number %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
       </dl>
@@ -95,7 +118,7 @@
             <%= @case_hub_migration_form.buying_category %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
       </dl>
@@ -113,7 +136,7 @@
             <%= @case_hub_migration_form.hub_case_ref %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
 
@@ -125,7 +148,7 @@
             <%= @case_hub_migration_form.estimated_procurement_completion_date %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
 
@@ -137,7 +160,7 @@
             <%= @case_hub_migration_form.estimated_savings %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
 
@@ -149,7 +172,7 @@
             <%= @case_hub_migration_form.hub_notes %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
 
@@ -161,7 +184,7 @@
             <%= @case_hub_migration_form.progress_notes %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= form.button "Change", class: "govuk-link" %>
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
       </dl>
@@ -170,7 +193,8 @@
         <%= I18n.t("support.case_hub_migration.edit.label.confirm") %>
       </p>
 
-    <% end %>
+      <%= form.button I18n.t("support.case_hub_migration.edit.submit"), class: "govuk-button", value: "create" %>
 
+    <% end %>
   </div>
 </div>

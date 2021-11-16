@@ -14,13 +14,26 @@ module Support
     option :hub_notes, optional: true
     option :progress_notes, optional: true
 
+    # @return [String]
     def case_type
-      "NW Hub Case"
+      if hub_case_ref.downcase.start_with?("ce-")
+        "SW Hub Case"
+      else
+        "NW Hub Case"
+      end
+    end
+
+    def school_name
+      "sample school"
+    end
+
+    def school_postcode
+      "CH00 HJU"
     end
 
     # @return [Hash] form parms
     def to_h
-      self.class.dry_initializer.attributes(self)
+      self.class.dry_initializer.attributes(self).except(:messages)
     end
   end
 end

@@ -330,6 +330,8 @@ en:
       label:
         form_hint: The following fields are only for NW Hub cases that are being migrated.
         school_urn: Establishment URN
+        school_name: Establishment name
+        school_postcode: Establishment postcode
         contact_name: Contact name
         contact_email: Contact email
         contact_phone: Contact phone number %{optional}

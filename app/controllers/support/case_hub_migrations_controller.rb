@@ -16,7 +16,12 @@ module Support
 
     def edit
       @case_hub_migration_form = CaseHubMigrationForm.from_validation(validation)
-      render :new
+      if params[:button]== "change"
+        render :new
+      elsif params[:button]=="create"
+        @case_hub_migration_form.persist
+        redirect_to case_path
+      end
     end
 
     def show; end
