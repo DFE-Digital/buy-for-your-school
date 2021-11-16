@@ -10,10 +10,12 @@ require "types"
 class CreateUser
   extend Dry::Initializer
 
-  # OmniAuth response
+  # @!attribute [r] auth
+  # @return [Hash] OmniAuth response
   option :auth, Types::Hash
 
-  # DfE Sign In API
+  # @!attribute [r] client
+  # @return [Dsi::Client] DfE Sign In API (defaults to new instance)
   option :client, default: proc { ::Dsi::Client.new }
 
   # Create or Update the User and report to Rollbar
