@@ -71,6 +71,11 @@ Rails.application.routes.draw do
         resources :case_hub_migrations, only: %i[new create update], path: "case-hub-migrations" do
           post :edit, on: :collection, path: "check-details"
         end
+        namespace :migrations do
+          resource :hub_case, only: %i[new create], path: "hub-case" do
+            resource :preview, only: %i[new create]
+          end
+        end
       end
       resources :interactions, only: %i[new create]
       scope module: :cases do
