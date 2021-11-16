@@ -1,4 +1,3 @@
-# TODO: replace with factories and check HTML/classes
 RSpec.feature "Journey continue button behaviour" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering) }
@@ -17,7 +16,6 @@ RSpec.feature "Journey continue button behaviour" do
     end
 
     scenario "the user is returned to the same place in the task list " do
-      # start_journey_from_category(category: "long-text-question.json")
       click_first_link_in_section_list
 
       fill_in "answer[response]", with: "This is my long answer"
@@ -45,7 +43,6 @@ RSpec.feature "Journey continue button behaviour" do
     end
 
     scenario "the user is taken straight to the next step" do
-      # start_journey_from_category(category: "task-with-multiple-steps.json")
       click_first_link_in_section_list
 
       task = journey.sections.first.tasks.first
@@ -67,8 +64,6 @@ RSpec.feature "Journey continue button behaviour" do
     end
 
     scenario "when a task has not been started, it takes the user straight to the first step" do
-      # start_journey_from_category(category: "task-with-multiple-steps.json")
-
       click_first_link_in_section_list
 
       expect(page).not_to have_content "Task with multiple steps"
