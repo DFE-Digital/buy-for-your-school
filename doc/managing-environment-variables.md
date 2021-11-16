@@ -73,6 +73,7 @@ Given there are multiple remote enviroments (staging, preview, research and prod
 
 ```console
 $ bin/climate
+
 Commands:
   climate envs            # Lists environments with a link to edit
   climate exists          # Given a ENV key, will check which environments have it defined
@@ -84,6 +85,7 @@ Commands:
 
 ```console
 $ bin/climate envs
+
 staging: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534224/edit
 preview: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534180/edit
 research: https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530720/edit
@@ -94,39 +96,36 @@ production: https://github.com/DFE-Digital/buy-for-your-school/settings/environm
 
 ```console
 $ bin/climate parity
-# Missing keys:
 
-## Staging
-https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534224/edit
+## Keys missing in STAGING (https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534224/edit)
 APP_ENV_STAGING_DFE_SIGN_IN_API_ENDPOINT
 APP_ENV_STAGING_DFE_SIGN_IN_API_SECRET
 APP_ENV_STAGING_GOOGLE_ANALYTICS
 
-## Preview
-https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534180/edit
+## Keys missing in PREVIEW (https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534180/edit)
 APP_ENV_PREVIEW_CONTENTFUL_ENTRY_CACHING_TTL
 APP_ENV_PREVIEW_CONTENTFUL_URL
 APP_ENV_PREVIEW_DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR
 APP_ENV_PREVIEW_GOOGLE_ANALYTICS
 
-## Research
-https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530720/edit
+## Keys missing in RESEARCH (https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530720/edit)
 APP_ENV_RESEARCH_DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR
 APP_ENV_RESEARCH_DOMAIN
 APP_ENV_RESEARCH_RACK_ENV
 APP_ENV_RESEARCH_GOOGLE_ANALYTICS
 
-## Production
-https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530368/edit
+## Keys missing in PRODUCTION (https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530368/edit)
 APP_ENV_PROD_DAYS_A_JOURNEY_CAN_BE_INACTIVE_FOR
+
 ```
 
 ### `bin/climate exists` output
 
 ```console
 $ bin/climate exists CONTENTFUL_SPACE
+
 Staging: not present
 Preview: not present
 Research: not present
-Production has APP_ENV_PROD_GOOGLE_ANALYTICS
+Production has CONTENTFUL_SPACE
 ```

@@ -8,15 +8,14 @@ class Climate < Thor
   desc "parity", "Lists Keys that are missing for each environment"
   def parity
     all_keys.each do |environment, keys|
-      say "## Keys missing in #{environment.upcase}" , :magenta
-      say "## #{GIT_ENV_URLS[environment]}", :magenta
+      say "## Keys missing in #{environment.upcase} (#{GIT_ENV_URLS[environment]})" , :magenta
 
       missing = all_keys.fetch_values(*GIT_ENVS - [environment]).flatten.uniq - keys
 
       if missing.any?
         say "#{env_key_prefix(environment)}#{missing.join("\n#{env_key_prefix(environment)}")}"
       else
-        say "none missing"
+        say "none missing."
       end
       say
     end
