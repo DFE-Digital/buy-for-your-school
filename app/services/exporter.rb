@@ -9,7 +9,11 @@ require "types"
 class Exporter
   extend Dry::Initializer
 
+  # @!attribute [r] path
+  # @return [String]
   option :path,   Types::Strict::String
+  # @!attribute [r] format
+  # @return [Symbol] yaml or json
   option :format, Types::Strict::Symbol.enum(:yaml, :json)
 
   def call(data)
