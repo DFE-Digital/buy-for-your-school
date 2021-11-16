@@ -1,7 +1,10 @@
 describe "Support agent sends a basic email" do
   include_context "with an agent"
 
-  let(:default_email_body) { "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification." }
+  let(:default_email_body) do
+    "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification."
+  end
+
   let(:support_case) { create(:support_case, :open) }
 
   before do
@@ -17,7 +20,7 @@ describe "Support agent sends a basic email" do
     end
 
     it "provides the user with a basic email body to customise" do
-      expect(page).to have_field("Enter email body", text: default_email_body)
+      expect(page).to have_field "Enter email body", text: default_email_body
     end
   end
 
@@ -33,7 +36,7 @@ describe "Support agent sends a basic email" do
 
     it "shows the new email body on the preview screen" do
       within ".email-preview-body" do
-        expect(page).to have_content("New email body")
+        expect(page).to have_content "New email body"
       end
     end
 
@@ -41,7 +44,9 @@ describe "Support agent sends a basic email" do
       let(:custom_email_body) { "" }
 
       it "displays an error" do
-        expect(page).to have_content("Please enter an email body to be sent")
+        within ".govuk-form-group--error" do
+          expect(page).to have_content "Please enter an email body to be sent"
+        end
       end
     end
   end
@@ -61,8 +66,8 @@ describe "Support agent sends a basic email" do
 
     it "shows the correct subject and to address" do
       within ".email-preview" do
-        expect(page).to have_content(support_case.email)
-        expect(page).to have_content("DfE Get help buying for schools: your request for support")
+        expect(page).to have_content "DfE Get help buying for schools: your request for support"
+        expect(page).to have_content "school@email.co.uk"
       end
     end
 
@@ -77,50 +82,55 @@ describe "Support agent sends a basic email" do
 
       it "shows the correct subject and to address" do
         within ".email-preview" do
-          expect(page).to have_content(support_case.email)
-          expect(page).to have_content("DfE Get help buying for schools: your request for support")
+          expect(page).to have_content "DfE Get help buying for schools: your request for support"
+          expect(page).to have_content "school@email.co.uk"
         end
       end
     end
   end
 
   describe "sending the email" do
-
     let(:template_collection) do
       {
-        "templates" => [
-          {
-            "name" => "ToSchool",
-          },
-        ],
+        "templates" => [{ "name" => "basic", "id" => "ac679471-8bb9-4364-a534-e87f585c46f3" }],
+      }
+    end
+
+    let(:email) do
+      {
+        email_address: "school@email.co.uk",
+        template_id: "ac679471-8bb9-4364-a534-e87f585c46f3",
+        reference: "000001",
+        personalisation: {
+          reference: "000001",
+          first_name: "School",
+          last_name: "Contact",
+          email: "school@email.co.uk",
+          to_name: "School Contact",
+          text: "New email body",
+          from_name: "Procurement Specialist",
+        },
       }
     end
 
     before do
-      # fetch template by name
-      stub_request(:get,
-                   "https://api.notifications.service.gov.uk/v2/templates?type=email").to_return(
-                     body: template_collection.to_json,
-                   )
+      stub_request(:get, "https://api.notifications.service.gov.uk/v2/templates?type=email")
+      .to_return(body: template_collection.to_json)
 
-      # send email
-      stub_request(:post,
-                   "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
-                     body: {}.to_json,
-                     status: 201,
-                     headers: { "Content-Type" => "application/json" },
-                   )
+      stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+      .with(body: email.to_json)
+      .to_return(body: {}.to_json, status: 200, headers: {})
 
       choose "Non-template"
       click_button "Save"
       fill_in "Enter email body", with: "New email body"
       click_button "Preview email"
-      click_button "Confirm and send email"
     end
 
     it "saves the email as a case interaction" do
+      expect(Rollbar).to receive(:info).with("Sending email to school")
 
-      binding.pry
+      click_button "Confirm and send email"
 
       interacton = support_case.reload.interactions.last
 
