@@ -11,7 +11,8 @@ require "notify/email"
 #
 #
 class Emails::Document < Notify::Email
-  # Override making this a required param
+  # @!attribute [r] attachment
+  # @return [String] Override making this a required param
   option :attachment, Types::String
 
   def call
