@@ -6,9 +6,17 @@ require "types"
 class SpecificationRenderer
   extend Dry::Initializer
 
+  # @!attribute [r] journey
+  # @return [Journey, JourneyPresenter]
   option :journey, Types.Instance(Journey) | Types.Instance(JourneyPresenter)
+  # @!attribute [r] from
+  # @return [Symbol] (defaults to markdown)
   option :from, Types::Strict::Symbol, default: proc { :markdown }
+  # @!attribute [r] to
+  # @return [Symbol] (defaults to docx)
   option :to, Types::Strict::Symbol, default: proc { :docx }
+  # @!attribute [r] draft_msg
+  # @return [String] (defaults to I18n.t("journey.specification.draft"))
   option :draft_msg, Types::Strict::String, default: proc { I18n.t("journey.specification.draft") }
 
   # @param draft (optional) [Boolean] - if true, prepends `draft_msg` to the spec (overrides journey completeness check)
