@@ -10,6 +10,10 @@ class Api::Contentful::BaseController < ApplicationController
 
 private
 
+  def contentful_id
+    params[:sys][:id]
+  end
+
   def authenticate_api_user!
     authenticate_or_request_with_http_token do |token, _options|
       token == ENV["CONTENTFUL_WEBHOOK_API_KEY"]
