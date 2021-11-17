@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require "thor"
+
+class Climate < Thor
+  desc "parity", "Lists Keys that are missing for each environment"
+  def parity
+    all_keys.each do |environment, keys|
+      say "## Keys missing in #{environment.upcase} (#{GIT_ENV_URLS[environment]})" , :magenta
+
+      missing = all_keys.fetch_values(*GIT_ENVS - [environment]).flatten.uniq - keys
+
+      if missing.any?
+        say "#{env_key_prefix(environment)}#{missing.join("\n#{env_key_prefix(environment)}")}"
+      else
+        say "none missing."
+      end
+      say
+    end
+  end
+
+  desc "exists", "Given a ENV key, will check which environments have it defined"
+  def exists(key=nil)
+    return say "Provide an ENV key" unless key
+
+    GIT_ENVS.each do |environment|
+      if all_keys[environment].include?(key)
+        say "#{environment.capitalize} has #{env_key_prefix(environment)}#{key}"
+      else
+        say "#{environment.capitalize}: not present"
+      end
+    end
+  end
+
+  desc "envs", "Lists environments with a link to edit"
+  def envs
+    GIT_ENV_URLS.each do |name, url|
+      say "#{name}: #{url}"
+    end
+  end
+
+private
+
+  GIT_ENV_URLS = {
+    staging: "https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534224/edit",
+    preview: "https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241534180/edit",
+    research: "https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530720/edit",
+    production: "https://github.com/DFE-Digital/buy-for-your-school/settings/environments/241530368/edit"
+  }
+
+  GIT_ENVS = GIT_ENV_URLS.keys
+
+  # fetches all secrets from github
+  def all_keys
+    @all_keys ||= GIT_ENVS.inject({}) do |all_keys, environment|
+      all_keys[environment] = `gh secret list -e #{environment}`
+        .split("\n")
+        .map do |e|
+          e.split("\t")
+           .first
+           .gsub(env_key_prefix(environment), "")
+        end
+      all_keys
+    end
+  end
+
+  def env_key_prefix(env)
+    name = {
+      staging: "STAGING",
+      preview: "PREVIEW",
+      research: "RESEARCH",
+      production: "PROD",
+    }[env]
+
+    "APP_ENV_#{name}_"
+  end
+
+  # ensure gh CLI is installed
+  def gh_check
+    unless `type gh >/dev/null 2>&1 || printf "not present"` == ''
+      say("Warning: Authenticated GitGHub CLI is required to use Climate", :red)
+      say("Install: https://github.com/cli/cli#installation")
+      say("Authenticate: https://cli.github.com/manual/gh_auth_login")
+      exit
+    end
+  end
+end
+
+Climate.new.send(:gh_check)
+Climate.start(ARGV)
