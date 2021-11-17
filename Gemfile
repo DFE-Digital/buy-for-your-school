@@ -34,6 +34,7 @@ gem "rollbar"
 gem "sass-rails", "~> 6.0"
 gem "sidekiq", "~> 6.3"
 gem "sidekiq-cron", "~> 1.2"
+gem "thor"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
