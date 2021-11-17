@@ -15,17 +15,21 @@ module Support
     # Optional path to local file or will download and use latest data from GIAS
     #
     # @!attribute [r] data
+    # @!visibility private
     option :data, reader: :private, optional: true
 
     # Persistence logic
+    # (defaults to School::RecordKeeper)
     #
     # @!attribute [r] saver
+    # @!visibility private
     option :saver, reader: :private, default: proc { ::School::RecordKeeper.new }
 
     # Filter records that do match these criteria
     #
     # @!attribute [r] filter
-    #   @return [Hash] "column header" => [integer, values]
+    # @!visibility private
+    # @return [Hash] "column header" => [integer, values]
     option :filter, ::Types::Strict::Hash, reader: :private, default: proc {
       { "TypeOfEstablishment (code)" => EstablishmentType.all.map(&:code) }
     }
