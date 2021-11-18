@@ -23,8 +23,8 @@ class Content::Page::Build
       returning: %w[title contentful_id slug body sidebar],
     )
 
-    Rollbar.info("Built Contentful page", **page.first) if page.first
+    Rollbar.info("Built Contentful page", **page.first) if page
 
-    page.first
+    Page.find_by(contentful_id: contentful_page.id)
   end
 end
