@@ -46,11 +46,18 @@ module Support
   private
 
     def selected_template_preview
+      notify_client.generate_template_preview(
+        params[:template],
+        personalisation: {
+          first_name: @current_case.first_name,
+          last_name: @current_case.last_name,
+          from_name: current_agent.full_name,
+        },
+      )
+    end
+
+    def notify_client
       Notifications::Client.new(ENV["NOTIFY_API_KEY"])
-        .generate_template_preview(params[:template], personalisation: {
-          toName: @current_case.full_name,
-          fromName: current_agent.full_name,
-        })
     end
 
     def templated_email_body
