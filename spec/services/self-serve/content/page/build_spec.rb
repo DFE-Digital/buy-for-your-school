@@ -5,7 +5,7 @@ RSpec.describe Content::Page::Build do
     OpenStruct.new(
       title: "Test page",
       body: "Test body",
-      contentful_id: "123",
+      id: "123",
       slug: "/test-page",
       sidebar: "Test page link",
     )
@@ -21,8 +21,7 @@ RSpec.describe Content::Page::Build do
     }
   end
 
-  # TODO: waiting for new Page fields to be merged
-  xdescribe "#call" do
+  describe "#call" do
     context "when the page is new" do
       it "persists the page" do
         expect(Page.count).to be_zero
