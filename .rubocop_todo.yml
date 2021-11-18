@@ -28,20 +28,22 @@ RSpec/VerifiedDoubles:
     - 'spec/services/self-serve/get_entry_spec.rb'
     - 'spec/support/contentful_helpers.rb'
 
-# Offense count: 1
+# Offense count: 2
 # Configuration parameters: Database, Include.
 # SupportedDatabases: mysql, postgresql
 # Include: db/migrate/*.rb
 Rails/BulkChangeTable:
   Exclude:
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
+    - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
 
-# Offense count: 1
+# Offense count: 2
 # Configuration parameters: Include.
 # Include: db/migrate/*.rb
 Rails/NotNullColumn:
   Exclude:
     - 'db/migrate/20210107122307_add_liquid_template_to_journey.rb'
+    - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
 
 # Offense count: 3
 # Configuration parameters: Include.
