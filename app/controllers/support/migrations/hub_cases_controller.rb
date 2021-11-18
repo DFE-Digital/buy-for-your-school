@@ -7,8 +7,8 @@ module Support
 
     def create
       @case_hub_migration_form = CaseHubMigrationForm.from_validation(validation)
-      if validation.success?
-        render :show
+      if validation.success? && params[:button] == "create"
+        # persist the kase and redirect
       else
         render :new
       end
