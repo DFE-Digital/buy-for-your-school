@@ -26,17 +26,17 @@ services:
 
   db:
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db_dev:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
   cache:
     volumes:
-      - cache-data:/data
+      - cache_dev:/data
     ports:
       - 6379:6379
 
 
 volumes:
-  db-data:
-  cache-data:
+  db_dev:
+  cache_dev:

@@ -17,11 +17,11 @@ services:
 
   db:
     volumes:
-      - db-test:/var/lib/postgresql/data
+      - db_test:/var/lib/postgresql/data
 
   cache:
     volumes:
-      - cache-test:/data
+      - cache_test:/data
 
   chrome:
     container_name: ghbs_chrome
@@ -32,5 +32,5 @@ services:
       - ghbs
 
 volumes:
-  db-test:
-  cache-test:
+  db_test:
+  cache_test:
