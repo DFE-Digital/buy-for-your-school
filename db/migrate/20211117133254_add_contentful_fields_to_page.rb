@@ -1,5 +1,5 @@
-class AddContefulFieldsToPage < ActiveRecord::Migration[6.1]
-  def change
+class AddContentfulFieldsToPage < ActiveRecord::Migration[6.1]
+  def up
     add_column :pages, :contentful_id, :string, null: false
     add_column :pages, :sidebar, :text
 
@@ -8,5 +8,15 @@ class AddContefulFieldsToPage < ActiveRecord::Migration[6.1]
     change_column :pages, :updated_at, :datetime, null: false, default: -> { "CURRENT_TIMESTAMP" }
 
     add_index :pages, :contentful_id, unique: true
+  end
+
+  def down
+    remove_index :pages, :contentful_id, unique: true
+
+    remove_column :pages, :contentful_id
+    remove_column :pages, :sidebar
+
+    change_column :pages, :created_at, :datetime, null: false
+    change_column :pages, :updated_at, :datetime, null: false
   end
 end
