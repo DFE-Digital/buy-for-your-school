@@ -1,6 +1,5 @@
 module Support
-  class Cases::Migrations::BaseController < ApplicationController
-
+  class Migrations::BaseController < ApplicationController
   private
 
     def validation

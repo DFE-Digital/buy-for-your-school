@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_with url: edit_support_case_hub_migrations_path, scope: :case_hub_migration_form, method: :post, class: "new-case-form" do |form| %>
+    <%= form_with url: support_migrations_hub_case_path, scope: :case_hub_migration_form, method: :post, class: "new-case-form" do |form| %>
 
       <% params[:case_hub_migration_form].each do |key, value| %>
         <%= hidden_field_tag "case_hub_migration_form[#{key}]", value %>

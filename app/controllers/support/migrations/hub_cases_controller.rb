@@ -1,6 +1,5 @@
 module Support
-  class Cases::Migrations::HubCasesController < ::BaseController
-
+  class Migrations::HubCasesController < Support::Migrations::BaseController
     def new
       @case_hub_migration_form = CaseHubMigrationForm.new
       @back_url = support_cases_path
@@ -14,6 +13,5 @@ module Support
         render :new
       end
     end
-
   end
 end
