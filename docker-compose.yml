@@ -1,17 +1,28 @@
+---
 version: "3.8"
 services:
   app:
+    # $ docker compose -p ghbs up app
+    # $ docker exec -it ghbs_prod /bin/bash
+    #
+    container_name: ghbs_prod
     build:
       context: .
       target: app
     image: ghbs:prod
-    # command: bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'
+    command: bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'
     environment:
       SECRET_KEY_BASE: secret
       RAILS_ENV: production
       REDIS_URL: redis://cache:6379
+      # SUPPORT_EMAIL: prod@gov.uk
+      # RAILS_SERVE_STATIC_FILES: "true"
+    # ports:
+    #   - 3000:3000
     volumes:
       - .:/srv/app
+      # - ./localhost.key:/srv/app/localhost.key
+      # - ./localhost.crt:/srv/app/localhost.crt
     depends_on:
       - db
       - cache
