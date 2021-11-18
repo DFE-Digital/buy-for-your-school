@@ -1,16 +1,14 @@
 #!/bin/sh
-
-# script/server: Launch the application and any extra required processes
-#                locally.
+#
+# Docker development environment Rails server
+#
+#
 
 set -e
+echo "NB: run script/build if the image ghbs:dev does not exist locally"
+echo "-----------------------------------------------------------------"
 
-docker-compose up --detach
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-name ghbs up --detach
 
-check_container_name_format_command='docker ps --filter "name=buy-for-your-school_web_1" --format "{{.ID}}"'
+docker attach ghbs_dev
 
-if [[ $(eval $check_container_name_format_command) ]]; then
-  docker attach buy-for-your-school_web_1
-else
-  docker attach buy-for-your-school-web-1
-fi
