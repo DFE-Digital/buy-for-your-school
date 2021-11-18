@@ -9,7 +9,7 @@ RSpec.feature "Privacy" do
     visit "/privacy"
   end
 
-  describe "body" do
+  xdescribe "body" do
     scenario "contains the expected privacy content" do
       expect(page).to have_text("Privacy notice")
       expect(page).to have_title("Privacy")

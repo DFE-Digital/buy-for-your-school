@@ -9,7 +9,7 @@ RSpec.feature "NextStepsCatering" do
     visit "/next-steps-catering"
   end
 
-  describe "body" do
+  xdescribe "body" do
     scenario "contains the expected content regarding next steps" do
       expect(page).to have_title "Next steps catering"
       expect(page).to have_text "Next steps"

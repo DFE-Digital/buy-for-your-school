@@ -9,7 +9,7 @@ RSpec.feature "Accessibility" do
     visit "/accessibility"
   end
 
-  describe "body" do
+  xdescribe "body" do
     scenario "contains the expected accessibility content" do
       expect(page).to have_title "Accessibility"
       expect(page).to have_text "Accessibility statement"
