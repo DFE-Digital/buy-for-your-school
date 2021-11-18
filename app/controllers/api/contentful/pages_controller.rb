@@ -8,7 +8,7 @@ class Api::Contentful::PagesController < Api::Contentful::BaseController
         title: params[:sys][:title],
         body: nil,
         contentful_id: contentful_id,
-        slug: nil,
+        slug: params[:sys][:slug],
       },
       unique_by: :contentful_id
     )

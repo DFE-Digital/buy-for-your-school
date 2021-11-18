@@ -33,8 +33,8 @@ Rails.application.routes.draw do
       post "auth" => "base#auth"
       post "entry_updated" => "entries#changed"
       post "category" => "categories#changed"
-      post "page" => "pages#create"
-      delete "page" => "pages#destroy"
+      post "pages" => "pages#create"
+      delete "pages" => "pages#destroy"
     end
   end
 

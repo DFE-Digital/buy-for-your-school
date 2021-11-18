@@ -3,23 +3,25 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
     {
       sys: {
         id: contentful_id,
-        title: title
+        title: title,
+        slug: slug,
       },
     }
   end
 
   let(:contentful_id) { "1234" }
   let(:title) { "title" }
+  let(:slug) { "slug" }
 
   before do
     has_valid_api_token
   end
 
-  # POST /api/contentful/page
+  # POST /api/contentful/pages
   it "creates a page" do
     expect(Page.count).to be_zero
 
-    post "/api/contentful/page",
+    post "/api/contentful/pages",
          params: params,
          as: :json
 
@@ -28,8 +30,8 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
     expect(Page.first.title).to eql title
   end
 
-  # POST /api/contentful/page
-  context "given an existing page" do
+  # POST /api/contentful/pages
+  context "when given an existing page to update" do
     let!(:page) { create(:page) }
     let(:title) { "new title" }
     let(:contentful_id) { page.contentful_id }
@@ -37,7 +39,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
     it "updates the page" do
       expect(Page.count).to eq 1
 
-      post "/api/contentful/page",
+      post "/api/contentful/pages",
            params: params,
            as: :json
 
@@ -48,15 +50,15 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
     end
   end
 
-  # DELETE /api/contentful/page
-  context "given an existing page" do
+  # DELETE /api/contentful/pages
+  context "when given an existing page to delete" do
     let!(:page) { create(:page) }
     let(:contentful_id) { page.contentful_id }
 
     it "deletes the page" do
       expect(Page.count).to eq 1
 
-      delete "/api/contentful/page",
+      delete "/api/contentful/pages",
              params: params,
              as: :json
 
