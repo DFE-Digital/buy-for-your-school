@@ -34,7 +34,7 @@ RSpec/VerifiedDoubles:
 Rails/BulkChangeTable:
   Exclude:
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
-    - 'db/migrate/20211117133254_add_conteful_fields_to_page.rb'
+    - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
 
 # Offense count: 2
 # Configuration parameters: Include.
