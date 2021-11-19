@@ -1,13 +1,11 @@
-require "dry-initializer"
-
 # Persist Page entries from Contentful
 #
 class Content::Page::Build
   extend Dry::Initializer
 
   # @!attribute [r] contentful_page
-  # @return [Contentful::Entry] Contentful "Page" entity
-  # @api private
+  #   @return [Contentful::Entry] Contentful "Page" entity
+  #   @api private
   option :contentful_page, optional: false, reader: :private
 
   # @return [Page]

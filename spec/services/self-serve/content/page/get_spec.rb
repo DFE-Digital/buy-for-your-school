@@ -8,7 +8,7 @@ RSpec.describe Content::Page::Get do
     it "returns a Contentful::Entry" do
       allow(client).to receive(:by_id).with(page_entry_id).and_return(instance_double(Contentful::Entry))
 
-      expect(service.call).not_to be_nil
+      expect(service.call).not_to eq :not_found
     end
 
     context "when the page entry cannot be found" do
@@ -23,7 +23,7 @@ RSpec.describe Content::Page::Get do
                 contentful_entry_id: "page_entry_id")
           .and_call_original
 
-        expect(service.call).to be_nil
+        expect(service.call).to eq :not_found
       end
     end
   end

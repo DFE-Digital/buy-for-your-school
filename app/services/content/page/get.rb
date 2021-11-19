@@ -1,23 +1,23 @@
-require "dry-initializer"
-require "types"
-
 # Retrieve Page entries from Contentful
 #
 class Content::Page::Get
   extend Dry::Initializer
 
   # @!attribute [r] page_entry_id
-  # @return [String]
+  #   @return [String]
   option :page_entry_id, Types::String
   # @!attribute [r] client
-  # @return [Content::Client]
+  #   @return [Content::Client]
   option :client, default: proc { Content::Client.new }
 
-  # @return [Contentful::Entry, nil]
+  # @return [Contentful::Entry, Symbol]
   def call
     page = client.by_id(page_entry_id)
 
-    send_rollbar_error(message: "A Contentful page entry was not found") if page.nil?
+    if page.nil?
+      send_rollbar_error(message: "A Contentful page entry was not found")
+      return :not_found
+    end
 
     page
   end
