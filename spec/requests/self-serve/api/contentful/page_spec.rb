@@ -58,8 +58,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
     it "deletes the page" do
       expect(Page.count).to eq 1
 
-      delete "/api/contentful/pages",
-             params: params,
+      delete "/api/contentful/pages/#{page.contentful_id}",
              as: :json
 
       expect(response).to have_http_status(:ok)

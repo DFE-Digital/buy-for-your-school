@@ -10,7 +10,7 @@ class Api::Contentful::PagesController < Api::Contentful::BaseController
         contentful_id: contentful_id,
         slug: params[:sys][:slug],
       },
-      unique_by: :contentful_id
+      unique_by: :contentful_id,
     )
 
     if page.first
@@ -20,7 +20,7 @@ class Api::Contentful::PagesController < Api::Contentful::BaseController
   end
 
   def destroy
-    Page.find_by(contentful_id: contentful_id).destroy
+    Page.find_by(contentful_id: contentful_id).destroy!
     render json: { status: "OK" }, status: :ok
   end
 

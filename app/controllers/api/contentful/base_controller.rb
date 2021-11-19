@@ -11,7 +11,7 @@ class Api::Contentful::BaseController < ApplicationController
 private
 
   def contentful_id
-    params[:sys][:id]
+    params[:id] || params[:sys][:id]
   end
 
   def authenticate_api_user!
