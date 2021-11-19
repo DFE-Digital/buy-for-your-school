@@ -13,7 +13,7 @@ class Content::Page::Get
   # @return [Content::Client]
   option :client, default: proc { Content::Client.new }
 
-  # @return [Contentful::Entry]
+  # @return [Contentful::Entry, nil]
   def call
     page = client.by_id(page_entry_id)
 
