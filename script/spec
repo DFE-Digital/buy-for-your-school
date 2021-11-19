@@ -1,13 +1,16 @@
 #!/bin/sh
-
-# script/spec: Run commands against the test environment within Docker.
+#
+# Docker test environment Rspec suite
+#
 
 set -e
+echo "NB: run script/build if the image ghbs:test does not exist locally"
+echo "-----------------------------------------------------------------"
 
 COMMAND_INPUT=$1
 
 if [ -n "$COMMAND_INPUT" ]; then
-  docker-compose -f docker-compose.test.yml run --rm test bundle exec rspec --format=documentation "$COMMAND_INPUT"
+  docker-compose -f docker-compose.yml -f docker-compose.test.yml --project-name ghbs run --rm app bundle exec rspec "$COMMAND_INPUT"
 else
-  docker-compose -f docker-compose.test.yml run --rm test bundle exec rake
+  docker-compose -f docker-compose.yml -f docker-compose.test.yml --project-name ghbs run --rm app bundle exec rake
 fi

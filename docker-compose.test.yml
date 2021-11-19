@@ -1,60 +1,36 @@
-version: '3.8'
+version: "3.8"
 services:
-  test:
+  app:
+    container_name: ghbs_test
     build:
-      context: .
       target: test
-      args:
-        RAILS_ENV: test
-    command: bash -c "wait-for-it test-redis:6379 --strict --timeout=60 -- script/test"
-    ports:
-      - 3000:3000
+    image: ghbs:test
+    command: bash -c "wait-for-it cache:6379 --strict --timeout=60 -- script/test"
+    environment:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
+      DOCKER: "true"
+      SELENIUM_HUB_URL: http://chrome:4444/wd/hub
     depends_on:
-      - test-db
-      - test-redis
-      - test-chrome
-    env_file:
-      - .env.test
-    environment:
-      DATABASE_URL: postgres://postgres:password@test-db:5432/buy-for-your-school-test
-      REDIS_URL: redis://test-redis:6379
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
-      DOCKER: 'true'
-      SELENIUM_HUB_URL: http://test-chrome:4444/wd/hub
-    volumes:
-      - .:/srv/app
-    tty: true
-    stdin_open: true
-    networks:
-      - test
+      - chrome
 
-  test-db:
-    image: postgres
+  db:
     volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST_AUTH_METHOD: trust
-    networks:
-      - test
+      - db_test:/var/lib/postgresql/data
 
-  test-redis:
-    image: redis
+  cache:
     volumes:
-      - redis-data:/data
-    networks:
-      - test
+      - cache_test:/data
 
-  test-chrome:
+  chrome:
+    container_name: ghbs_chrome
     image: selenium/standalone-chrome:95.0-chromedriver-95.0
     volumes:
       - /dev/shm:/dev/shm
     networks:
-      - test
+      - ghbs
 
-networks:
-  test:
 volumes:
-  db-data:
-  redis-data:
+  db_test:
+  cache_test:

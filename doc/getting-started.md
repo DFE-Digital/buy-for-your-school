@@ -6,6 +6,24 @@
 
 Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity, you don't have to install any dependencies to run the app, as the project is run in an isolated container, but it takes longer to run. The preferred option is to run code in Docker.
 
+
+Build and tag the images `$ script/build`
+
+`$ script/server`
+
+    NB: run script/build if the image ghbs:dev does not exist locally
+    -----------------------------------------------------------------
+    [+] Running 8/8
+    ⠿ Network ghbs_default
+    ⠿ Network ghbs_ghbs
+    ⠿ Volume "ghbs_db_dev"
+    ⠿ Volume "ghbs_cache_dev"
+    ⠿ Container ghbs_db
+    ⠿ Container ghbs_cache
+    ⠿ Container ghbs_worker
+    ⠿ Container ghbs_dev
+
+
 ### Development (Docker)
 
 Running the server:
