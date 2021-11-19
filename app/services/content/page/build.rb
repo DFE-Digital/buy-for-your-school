@@ -1,13 +1,14 @@
 require "dry-initializer"
 
-# Persits Page entries from Contentful
+# Persist Page entries from Contentful
 #
 class Content::Page::Build
   extend Dry::Initializer
 
   # @!attribute [r] contentful_page
-  # @return [Contentful::Entry]
-  option :contentful_page
+  # @return [Contentful::Entry] Contentful "Page" entity
+  # @api private
+  option :contentful_page, optional: false, reader: :private
 
   # @return [Page]
   def call
@@ -20,7 +21,7 @@ class Content::Page::Build
         sidebar: contentful_page.sidebar,
       },
       unique_by: :contentful_id,
-      returning: %w[title contentful_id slug body sidebar],
+      returning: %w[title contentful_id slug],
     )
 
     Rollbar.info("Built Contentful page", **page.first) if page

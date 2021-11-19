@@ -14,10 +14,8 @@ RSpec.describe Content::Page::Build do
   let(:rollbar_info) do
     {
       "title" => "Test page",
-      "body" => "Test body",
       "contentful_id" => "123",
       "slug" => "/test-page",
-      "sidebar" => "Test page link",
     }
   end
 
