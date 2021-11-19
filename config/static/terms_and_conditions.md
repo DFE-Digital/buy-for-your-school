@@ -67,7 +67,7 @@ We are not liable for any loss or damage that may arise from using the Service o
 
 - the inability to use the Service and any websites linked to or from it
 - any direct, indirect or consequential losses
-- any loss or damage caused by civil wrongs ('tort', including negligence, duty of care or public law duty), breach of contract or otherwise
+- any loss or damage caused by civil wrongs ('tort', including negligence), breach of contract or otherwise
 
 This exclusion applies even if the loss or damage was foreseeable, arose in the normal course of things or you advised us that it might happen.
 
