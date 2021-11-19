@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   include HighVoltage::StaticPage
+
   before_action :show_route, :show_method, only: %i[show]
 
   skip_before_action :authenticate_user!
@@ -17,18 +18,24 @@ class PagesController < ApplicationController
     @start_now_button_method = current_user.guest? ? :post : :get
   end
 
+  def show
+    @title = page.title
+    @body = formatter(page.body)
+    @sidebar = formatter(page.sidebar)
+    @time_stamp = page.updated_at.strftime("%e %B %Y")
+  end
+
 private
 
-  def set_page(slug)
-    page = Page.find_by(slug: slug.to_s)
-
-    @body = DocumentFormatter.new(
-      content: page.body,
+  def formatter(content)
+    DocumentFormatter.new(
+      content: content,
       from: :markdown,
       to: :html,
     ).call
+  end
 
-    @title = page.title
-    @time_stamp = page.updated_at.strftime("%e %B %Y")
+  def page
+    @page ||= Page.find_by(slug: params[:id])
   end
 end

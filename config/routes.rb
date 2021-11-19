@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   get "/422", to: "errors#unacceptable"
   get "/500", to: "errors#internal_server_error"
 
+  # Dyamic Pages (Page refreshes routes on create commits)
+  Page.pluck(:slug).each do |slug|
+    get slug => "high_voltage/pages#show", id: slug
+  end
+
   #
   # Self-Serve -----------------------------------------------------------------
   #
