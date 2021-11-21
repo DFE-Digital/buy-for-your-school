@@ -28,9 +28,15 @@
                              label: { text: I18n.t("support.case_hub_migration.label.contact_phone", optional: I18n.t("support.generic.form.optional")) }
   %>
 
-  <%= form.govuk_phone_field :buying_category,
-                             label: { text: I18n.t("support.case_hub_migration.label.category") }
-  %>
+  <%= form.govuk_select(:buying_category, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
+    <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
+    <optgroup label="<%= parent_name%>">
+      <% sub_categories.each do |name, value| %>
+      <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
+      <% end %>
+    </optgroup>
+    <% end %>
+  <% end %>
 
   <h2 class="govuk-heading-l">
     <%= I18n.t("support.case_hub_migration.header") %>

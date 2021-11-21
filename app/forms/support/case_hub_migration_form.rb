@@ -31,11 +31,11 @@ module Support
       "CH00 HJU"
     end
 
+
+
     # @return [Hash] form parms
     def to_h
       self.class.dry_initializer.attributes(self).except(:messages)
     end
-
-
   end
 end
