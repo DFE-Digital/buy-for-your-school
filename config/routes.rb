@@ -28,9 +28,14 @@ Rails.application.routes.draw do
   get "profile", to: "profile#show"
 
   # Contentful
-  post "/api/contentful/auth" => "api/contentful/base#auth"
-  post "/api/contentful/entry_updated" => "api/contentful/entries#changed"
-  post "/api/contentful/category" => "api/contentful/categories#changed"
+  namespace :api do
+    namespace :contentful do
+      post "auth" => "base#auth"
+      post "entry_updated" => "entries#changed"
+      post "category" => "categories#changed"
+      resources :pages, only: %i[create destroy]
+    end
+  end
 
   # NB: guard against use of back button after form validation errors
   get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
