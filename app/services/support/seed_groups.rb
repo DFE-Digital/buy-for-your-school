@@ -12,6 +12,8 @@ module Support
   class SeedGroups
     extend Dry::Initializer
 
+    # @!attribute [r] data
+    # @return [String] (defaults to ./config/support/establishment_types.yml)
     option :data, Types::String, default: proc { "./config/support/establishment_types.yml" }
 
     # @return [Array<Hash>]

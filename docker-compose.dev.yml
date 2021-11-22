@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  app:
+    container_name: ghbs_dev
+    image: ghbs:dev
+    build:
+      target: dev
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'"
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
+    ports:
+      - 3000:3000
+
+  worker:
+    container_name: ghbs_worker
+    image: ghbs:dev
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    environment:
+      RAILS_ENV: development
+    depends_on:
+      - db
+      - cache
+    volumes:
+      - .:/srv/app
+
+  db:
+    volumes:
+      - db_dev:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  cache:
+    volumes:
+      - cache_dev:/data
+    ports:
+      - 6379:6379
+
+
+volumes:
+  db_dev:
+  cache_dev:

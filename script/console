@@ -1,7 +1,10 @@
 #!/bin/sh
-
-# script/server: Start an interactive console 
+#
+# Docker development environment Rails console
+#
 
 set -e
+echo "NB: run script/build if the image ghbs:dev does not exist locally"
+echo "-----------------------------------------------------------------"
 
-docker-compose run --rm web bundle exec rails console
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-name ghbs run --rm app bundle exec rails console

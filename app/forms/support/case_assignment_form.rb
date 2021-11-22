@@ -3,6 +3,8 @@ module Support
     extend Dry::Initializer
     include Concerns::ValidatableForm
 
+    # @!attribute [r] agent_id
+    # @return [String]
     option :agent_id, Types::Params::String, optional: true
 
     def new_agent

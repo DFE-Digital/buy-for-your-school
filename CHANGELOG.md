@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+### Shared Unreleased
+
+- added helper component to enable autocomplete functionality on fields
+
 ### Supported Unreleased
 
 - add initial models for supported case management functions
@@ -19,6 +23,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - accessibility page
 - add link to school details in GIAS from case view
 - add ability to re-categorise a case
+- enable sending of emails via Notify
 
 ### Specify Unreleased
 
@@ -29,6 +34,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - `production` points to Contentful `master`
 - `staging` points to Contentful `staging`
 - Github actions changed to clone `staging` to `develop` for local development
+- refactor docker tooling ensuring only production dependencies are deployed
 
 **ITHC**
 

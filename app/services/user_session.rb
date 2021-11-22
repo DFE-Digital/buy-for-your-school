@@ -41,9 +41,9 @@ class UserSession
     query = {
       id_token_hint: @session[:dfe_sign_in_sign_out_token],
       post_logout_redirect_uri: @redirect_url,
-    }
+    }.to_query
 
-    "#{ENV.fetch('DFE_SIGN_IN_ISSUER')}/session/end?#{query.to_query}"
+    ::Dsi::Uri.new(subdomain: "oidc", path: "/session/end", query: query).call.to_s
   end
 
   # Store user uid in the session

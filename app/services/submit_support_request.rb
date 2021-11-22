@@ -28,8 +28,13 @@ require "types"
 class SubmitSupportRequest
   extend Dry::Initializer
 
+  # @!attribute request
+  #   @return [SupportRequestPresenter]
   option :request, ::Types.Constructor(SupportRequestPresenter)
-  option :template, Types::String, default: proc { "Auto-reply" }
+
+  # @!attribute template
+  #   @return [String] Template UUID
+  option :template, Types::String, default: proc { "acb20822-a5eb-43a6-8607-b9c8e25759b4" }
 
   # TODO: Replace with outbound API call
   #

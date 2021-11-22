@@ -3,10 +3,12 @@ module Support
     class ErrorSummary
       extend Dry::Initializer
 
-      # @example
+      # @!attribute [r] messages
       #
+      # @example
       #   { phone_number: ["size cannot be less than 10"] }
       #
+      # @return [Hash]
       param :messages, Types::Hash, default: proc { {} }
 
       delegate :any?, to: :messages
@@ -16,7 +18,8 @@ module Support
       extend ActiveSupport::Concern
 
       included do
-        # field validation error messages
+        # @!attribute [r] messages
+        # @return [Hash] field validation error messages
         option :messages, Types::Hash, default: proc { {} }
       end
 

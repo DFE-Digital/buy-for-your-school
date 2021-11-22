@@ -21,33 +21,36 @@ module School
     extend Dry::Initializer
 
     # @!attribute file
-    #   @return [nil, String, File] optional path to CSV data
+    # @return [nil, String, File] optional path to CSV data
     option :file, optional: true, type: ::Types::Nil | ::Types.Constructor(File)
 
     # @!attribute filter
-    #   @return [Hash] "column header" => [integer, values]
+    # @return [Hash] "column header" => [integer, values]
     option :filter, optional: true, type: ::Types::Strict::Hash
 
     # @see Exporter
     # @see School::RecordKeeper
     #
     # @!attribute exporter
-    #   @return [Proc]
+    # @return [Proc] (defaults to "->(x = nil) { x }")
     option :exporter, default: proc { ->(x = nil) { x } }
 
     # Restricts how much memory is consumed by data manipulation
     #
     # @!attribute batch_size
-    #   @return [Integer] iterate over records in batches
+    # @return [Integer] iterate over records in batches (defaults to 1_000)
     option :batch_size, default: proc { 1_000 }, type: ::Types::Strict::Integer
 
     # @!attribute mapper
+    # @return [Mapper] (defaults to new instance)
     option :mapper, default: proc { Mapper.new }
 
     # @!attribute schema
+    # @return [Schema] (defaults to new instance)
     option :schema, default: proc { Schema.new }
 
     # @!attribute downloader
+    # @return [Downloader] (defaults to new instance)
     option :downloader, default: proc { ::Downloader.new }
 
     # @return [Array<Hash>]
@@ -58,7 +61,6 @@ module School
         dataset = process(rows)
         output << dataset # if we wish to return the entries (kept to keep specs passing)
         exporter.call dataset
-        GC.start # Necessary to free up allocated memory to stop the process from crashing out and silently failing
       end
 
       output.flatten

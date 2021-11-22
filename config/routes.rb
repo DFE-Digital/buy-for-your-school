@@ -82,6 +82,6 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :schools, only: %i[show]
+    resources :schools, only: %i[show index]
   end
 end

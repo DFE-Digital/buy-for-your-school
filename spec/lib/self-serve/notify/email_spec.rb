@@ -9,46 +9,13 @@ RSpec.describe Notify::Email do
     )
   end
 
-  let(:template_collection) do
-    {
-      "templates" => [
-        # letter
-        {
-          "id" => "f163deaf-2d3f-4ec6-98fc-f23fa511518f",
-          "name" => "My template name",
-          "type" => "letter",
-          "created_at" => "2016-11-29T11:12:30.12354Z",
-          "updated_at" => "2016-11-29T11:12:40.12354Z",
-          "created_by" => "jane.doe@gmail.com",
-          "body" => "Contents of template ((place_holder))",
-          "subject" => "Subject of the letter",
-          "version" => "2",
-          "letter_contact_block" => "The return address",
-        },
-        # email
-        {
-          "id" => "da6f6c37-8d34-49d3-b9cf-b45fb74cedff",
-          "name" => "Default",
-          "type" => "email",
-          "from_email" => "ghbs@notifications.service.gov.uk",
-          "created_at" => "2021-08-26T09:00:00.12345Z",
-          "updated_at" => "2021-08-26T09:00:00.12345Z",
-          "created_by" => "example@gov.uk",
-          "body" => "Hello ((first_name)) ((last name)), \r\n\r\nDownload your document at: ((link_to_file))",
-          "subject" => "Test",
-          "version" => "4",
-        },
-      ],
-    }
-  end
-
-  let(:email_response) do
+  let(:response) do
     {
       "id" => "aceed36e-6aee-494c-a09f-88b68904bad6",
       "reference" => nil,
       "content" => {
         "body" => "Hello we got your application",
-        "subject" => "Application recieved",
+        "subject" => "Application received",
         "from_email" => "example@gov.uk",
       },
       "template" => {
@@ -61,24 +28,13 @@ RSpec.describe Notify::Email do
   end
 
   before do
-    # fetch template by name
-    stub_request(:get,
-                 "https://api.notifications.service.gov.uk/v2/templates?type=email").to_return(
-                   body: template_collection.to_json,
-                 )
-
-    # send email
-    stub_request(:post,
-                 "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
-                   body: email_response.to_json,
-                   status: 201,
-                   headers: { "Content-Type" => "application/json" },
-                 )
+    stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+    .to_return(body: response.to_json, status: 201, headers: { "Content-Type" => "application/json" })
   end
 
   describe "default behaviour" do
     subject(:service) do
-      described_class.new(recipient: recipient)
+      described_class.new(recipient: recipient, template: "xxx")
     end
 
     it "connects to the defined service" do
@@ -87,10 +43,6 @@ RSpec.describe Notify::Email do
 
     it "contacts the Notify API endpoint" do
       expect(service.client.base_url).to eql "https://api.notifications.service.gov.uk"
-    end
-
-    it "uses the 'Default' email template" do
-      expect(service.template).to eql "Default"
     end
 
     it "assigns a default message reference" do
@@ -110,7 +62,7 @@ RSpec.describe Notify::Email do
     end
 
     it "the client raises an error" do
-      expect { described_class.new(recipient: recipient) }.to raise_error ArgumentError
+      expect { described_class.new(recipient: recipient, template: "xxx") }.to raise_error ArgumentError
     end
   end
 
@@ -118,6 +70,7 @@ RSpec.describe Notify::Email do
     subject(:service) do
       described_class.new(
         recipient: recipient,
+        template: "xxx",
         attachment: "./spec/fixtures/gias/example_schools_data.csv",
       )
     end
@@ -129,22 +82,16 @@ RSpec.describe Notify::Email do
 
   context "when message invalid" do
     subject(:service) do
-      described_class.new(recipient: recipient)
+      described_class.new(recipient: recipient, template: "xxx")
     end
 
-    let(:invalid_email_response) do
-      {
-        "errors" => [{ "error" => "test", "message" => "test" }],
-      }
+    let(:response) do
+      { "errors" => [{ "error" => "test", "message" => "test" }] }
     end
 
     before do
-      stub_request(:post,
-                   "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
-                     body: invalid_email_response.to_json,
-                     status: 400,
-                     headers: { "Content-Type" => "application/json" },
-                   )
+      stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+      .to_return(body: response.to_json, status: 400, headers: { "Content-Type" => "application/json" })
     end
 
     it "returns an error notification" do

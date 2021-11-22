@@ -45,5 +45,9 @@ module Support
       closing: 3,
       opening: 4,
     }
+
+    def postcode
+      address["postcode"]
+    end
   end
 end

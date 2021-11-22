@@ -6,6 +6,8 @@ require "guest"
 class CurrentUser
   extend Dry::Initializer
 
+  # @!attribute [r] guest
+  # @return [Guest] (defaults to new instance)
   option :guest, default: proc { Guest.new }
 
   # @param uid [String]
