@@ -2,20 +2,12 @@
 
 class Api::Contentful::PagesController < Api::Contentful::BaseController
   def create
-    # TODO: awaiting services/contentful/page/*.rb get/build code
-    page = Page.upsert(
-      {
-        title: params[:sys][:title],
-        body: nil,
-        contentful_id: contentful_id,
-        slug: params[:sys][:slug],
-      },
-      unique_by: :contentful_id,
-    )
-
-    if page.first
+    if page
       render json: { status: "OK" }, status: :ok
-      Rollbar.info("Processed published webhook event for Contentful Page", **page.first)
+      Rollbar.info(
+        "Processed published webhook event for Contentful Page",
+        page.slice(:title, :slug, :contentful_id),
+      )
     end
   end
 
@@ -26,7 +18,11 @@ class Api::Contentful::PagesController < Api::Contentful::BaseController
 
 private
 
-  def page_params
-    params.require(:sys).permit(:id)
+  def page
+    @page ||= ::Content::Page::Build.new(contentful_page: contentful_page).call
+  end
+
+  def contentful_page
+    @contentful_page ||= ::Content::Page::Get.new(page_entry_id: contentful_id).call
   end
 end

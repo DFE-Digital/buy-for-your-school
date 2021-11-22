@@ -1,10 +1,18 @@
 RSpec.describe Api::Contentful::PagesController, type: :request do
+  let(:contentful_page) do
+    OpenStruct.new(
+      title: title,
+      body: "Test body",
+      id: contentful_id,
+      slug: slug,
+      sidebar: "Test page link",
+    )
+  end
+
   let(:params) do
     {
       sys: {
         id: contentful_id,
-        title: title,
-        slug: slug,
       },
     }
   end
@@ -15,6 +23,9 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
 
   before do
     has_valid_api_token
+    allow_any_instance_of(described_class).to(
+      receive(:contentful_page).and_return(contentful_page)
+    )
   end
 
   # POST /api/contentful/pages
