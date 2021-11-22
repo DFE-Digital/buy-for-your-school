@@ -58,7 +58,7 @@ This webhook is triggered when a `Page` entry has been (re)published.
 
 ### Deleted page webhook
 
-This webhook is triggered when a `Page` entry has been deleted.
+This webhook is triggered when a `Page` entry has been deleted or unpublished.
 
 |              |                                     |
 | ------------ | ----------------------------------- |
