@@ -363,7 +363,7 @@ en:
 
     case_email_templates:
       index:
-        header: Send temolate email
+        header: Send template email
         what_is_a_framework:
           link_text: What is a framework?
           subtitle: General advice about a frameworks

@@ -20,33 +20,31 @@ module Notify
     extend Dry::Initializer
 
     # @!attribute [r] recipient
-    # @return [Mixed] Person with name(s) and email address
+    #   @return [Mixed] Person with name(s) and email address
     option :recipient
 
     # @!attribute [r] client
-    # @return [Notifications::Client] API interface (defaults to new instance)
+    #   @return [Notifications::Client] API interface (defaults to new instance)
     option :client, default: proc { Notifications::Client.new(ENV["NOTIFY_API_KEY"]) }
 
-    # @!attribute [r] template
-    #
     # @see https://www.notifications.service.gov.uk/services/&ltUUID&gt/templates
-    #
-    # @return [String] Template by name (defaults to "Default")
-    option :template, Types::String, default: proc { "Default" }
+    # @!attribute [r] template
+    #   @return [String] Template by UUID
+    option :template, Types::String
 
     # @!attribute [r] variables
-    # @return [Hash] Additional template variables
+    #   @return [Hash] Additional template variables
     option :variables, Types::Hash, default: proc { {} }
 
     # This reference identifies a single unique notification or a batch of notifications.
     # It must not contain any personal information such as name or postal address.
     #
     # @!attribute [r] reference
-    # @return [String] A unique identifier you can create if necessary (defaults to "generic")
+    #   @return [String] A unique identifier you can create if necessary (defaults to "generic")
     option :reference, Types::String, default: proc { "generic" }
 
     # @!attribute [r] attachment
-    # @return [String] Attachment by path to file
+    #   @return [String] Attachment by path to file
     option :attachment, Types::String, optional: true
 
     # Send message and rescue from errors
@@ -76,7 +74,7 @@ module Notify
         #
         # email_reply_to_id: "",
         email_address: recipient.email,
-        template_id: template_id,
+        template_id: template,
         reference: reference,
         personalisation: personalisation,
       )
@@ -123,18 +121,6 @@ module Notify
       File.open(attachment, "rb") do |file|
         Notifications.prepare_upload(file, csv)
       end
-    end
-
-    # @return [Array<Notifications::Client::Template>] Available email templates
-    #
-    def templates
-      client.get_all_templates(type: "email").collection
-    end
-
-    # @return [String] UUID of chosen template
-    #
-    def template_id
-      templates.detect { |t| t.name.eql?(template) }.id
     end
   end
 end
