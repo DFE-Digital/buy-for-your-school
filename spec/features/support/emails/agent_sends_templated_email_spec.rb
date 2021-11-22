@@ -48,7 +48,7 @@ describe "Support agent sends a templated email" do
     let(:email) do
       {
         email_address: "school@email.co.uk",
-        template_id: "ac679471-8bb9-4364-a534-e87f585c46f3",
+        template_id: "f4696e59-8d89-4ac5-84ca-17293b79c337",
         reference: "000001",
         personalisation: {
           reference: "000001",
