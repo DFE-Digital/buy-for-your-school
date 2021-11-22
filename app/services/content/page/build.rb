@@ -23,7 +23,8 @@ class Content::Page::Build
     )
 
     Rollbar.info("Built Contentful page", **page.first) if page
-
+    # update rails routes incase of new page slugs or slug changes
+    Rails.application.reload_routes!
     Page.find_by(contentful_id: contentful_page.id)
   end
 end

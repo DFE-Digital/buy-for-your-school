@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Page, type: :model do
   describe "attributes" do
     subject(:page) { create(:page) }

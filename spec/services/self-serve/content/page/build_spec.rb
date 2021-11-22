@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe Content::Page::Build do
   subject(:service) { described_class.new(contentful_page: contentful_page) }
 
@@ -20,6 +22,8 @@ RSpec.describe Content::Page::Build do
   end
 
   describe "#call" do
+    before { Rails.application.reload_routes! }
+
     context "when the page is new" do
       it "persists the page" do
         expect(Page.count).to be_zero
@@ -37,6 +41,12 @@ RSpec.describe Content::Page::Build do
           .with("Built Contentful page", rollbar_info)
           .and_call_original
         expect(service.call).not_to be_nil
+      end
+
+      it "refreshes routes", type: :routing do
+        expect(get: "/test-page").not_to be_routable
+        expect(service.call).not_to be_nil
+        expect(get: "/test-page").to be_routable
       end
     end
 
@@ -59,6 +69,12 @@ RSpec.describe Content::Page::Build do
           .with("Built Contentful page", rollbar_info)
           .and_call_original
         expect(service.call).not_to be_nil
+      end
+
+      it "refreshes routes", type: :routing do
+        expect(get: "/test-page").not_to be_routable
+        expect(service.call).not_to be_nil
+        expect(get: "/test-page").to be_routable
       end
     end
   end

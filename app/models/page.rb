@@ -6,7 +6,7 @@ class Page < ApplicationRecord
 private
 
   def refresh_routes
-    return unless slug_changed?
+    # return unless slug_changed?
 
     Rails.application.reload_routes!
   end
