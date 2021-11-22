@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - `production` points to Contentful `master`
 - `staging` points to Contentful `staging`
 - Github actions changed to clone `staging` to `develop` for local development
+- refactor docker tooling ensuring only production dependencies are deployed
 
 **ITHC**
 

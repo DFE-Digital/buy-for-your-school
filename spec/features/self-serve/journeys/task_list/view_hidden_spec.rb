@@ -1,35 +1,49 @@
 RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
+  let(:category) { create(:category) }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section) { create(:section, title: "section a", journey: journey) }
+
+  let(:options) { [{ "value" => "School expert", "display_further_information" => true, "further_information_help_text" => "Explain why this is the case" }, { "value" => "External expert" }, { "value" => "none" }] }
+  let(:additional_step_rules) { [{ "required_answer" => "School expert", "question_identifiers" => %w[1] }] }
 
   before do
     user_is_signed_in(user: user)
-    # TODO: replace fixture with factory
-    start_journey_from_category(category: fixture)
   end
 
   context "when a task includes an initially HIDDEN step" do
-    let(:fixture) { "hidden-field.json" }
+    before do
+      task_1 = create(:task, title: "Hidden field task", section: section)
+      task_2 = create(:task, title: "Shown field task", section: section)
+      create(:step, :radio, title: "Hidden field", task: task_1, hidden: true)
+      create(:step, :radio, title: "Shown field", task: task_2)
 
-    it "does not appear in the task list" do
-      expect(page).not_to have_content "Hidden field task" # > hidden_field_task.json
-      expect(page).to have_content "Shown field task" # > shown_field_task.json
+      visit "/journeys/#{journey.id}"
     end
 
-    it "shows the section title" do
-      # TODO: remove this when the fixtures are replaced by factories
-      # this is to remove the category created in the context so there is no ambiguity
-      # between that and the category created below when Capybara tries to select a category
-      # in user_signs_in_and_starts_the_journey (both categories will have the same slug)
-      Category.destroy_all
-
-      start_journey_from_category(category: "section-with-single-hidden-task.json")
-      within(".app-task-list") do
-        expect(page).to have_content "Section with a hidden task" # > hidden_task_section.json
-      end
+    it "does not appear in the task list" do
+      expect(page).not_to have_content "Hidden field task"
+      expect(page).to have_content "Shown field task"
     end
 
     context "when that step becomes visible" do
-      let(:fixture) { "show-one-additional-question-in-order.json" }
+      before do
+        task_1 = create(:task, title: "One additional question task", section: section)
+        create(
+          :step,
+          :radio,
+          title: "What support do you have available?",
+          task: task_1,
+          options: options,
+          additional_step_rules: additional_step_rules,
+          contentful_id: 0,
+          order: 0,
+        )
+        create(:step, :radio, title: "What colour is the sky?", task: task_1, hidden: true, contentful_id: 1, order: 1)
+        create(:step, :radio, title: "What email address did you use?", task: task_1, contentful_id: 2, order: 2)
+
+        visit "/journeys/#{journey.id}"
+      end
 
       it "appears in the order defined in Contentful rather than at the end" do
         # Simulate the bug by changing the created_at to a time that incorrectly
@@ -38,7 +52,7 @@ RSpec.feature "Users can view the task list" do
         Step.find_by(title: "What email address did you use?").update!(created_at: 2.days.ago)
         Step.find_by(title: "What colour is the sky?").update!(created_at: 1.day.ago)
 
-        click_on "One additional question task" # > show-one-additional-question-in-order-task.json
+        click_on "One additional question task"
         # /journeys/a8001581-f27c-4ac2-af8c-5dac7f70b22e/steps/df8f0382-e652-4f25-bf7d-58a433882c03
         expect(page).to have_a_step_path
         click_back
@@ -72,6 +86,25 @@ RSpec.feature "Users can view the task list" do
           expect(steps[2]).to have_content "What email address did you use?"
         end
       end
+    end
+  end
+
+  context "when a section has only hidden tasks" do
+    before do
+      task_1 = create(:task, title: "Hidden field task", section: section)
+      create(:step, :radio, title: "Hidden field", task: task_1, hidden: true)
+
+      visit "/journeys/#{journey.id}"
+    end
+
+    it "shows the section title" do
+      within(".app-task-list") do
+        expect(page).to have_content "section a"
+      end
+    end
+
+    it "shows an empty section" do
+      expect(find("ul.app-task-list__items")).to have_selector("li", count: 0)
     end
   end
 end
