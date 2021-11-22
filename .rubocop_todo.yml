@@ -15,7 +15,7 @@ RSpec/AnyInstance:
     - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
     - 'spec/services/self-serve/save_answer_spec.rb'
     - 'spec/support/sign_in_helpers.rb'
-    - 'spec/requests/self-serve/api/contentful/page_spec.rb'
+    - 'spec/requests/self-serve/api/contentful/pages_controller_spec.rb'
 
 # Offense count: 18
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
@@ -44,6 +44,7 @@ Rails/NotNullColumn:
   Exclude:
     - 'db/migrate/20210107122307_add_liquid_template_to_journey.rb'
     - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
+
 
 # Offense count: 3
 # Configuration parameters: Include.
