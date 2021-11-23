@@ -6,7 +6,6 @@ module Support
   # @see Support::ActivityLogItem
 
   class RecordAction
-    class UnexpectedActionType < StandardError; end
     extend Dry::Initializer
 
     ACTION_TYPES = %w[
@@ -24,7 +23,7 @@ module Support
 
     # @!attribute action
     #   @return [String]
-    option :action, Types::String
+    option :action, Types::Strict::String.enum(*ACTION_TYPES)
 
     # @!attribute support_case_id
     #   @return [String]
@@ -35,35 +34,10 @@ module Support
     option :data, Types::Hash, default: proc { {} }
 
     def call
-      if invalid_action?
-        send_rollbar_warning
-        raise UnexpectedActionType
-      end
-
       Support::ActivityLogItem.create!(
         support_case_id: @support_case_id,
         action: @action,
         data: @data,
-      )
-    end
-
-  private
-
-    def valid_action?
-      ACTION_TYPES.include?(@action)
-    end
-
-    def invalid_action?
-      !valid_action?
-    end
-
-    def send_rollbar_warning
-      Rollbar.warning(
-        "An attempt was made to log a support case action with an invalid type",
-        support_case_id: @support_case_id,
-        action: @action,
-        data: @data,
-        allowed_action_types: ACTION_TYPES.join(", "),
       )
     end
   end

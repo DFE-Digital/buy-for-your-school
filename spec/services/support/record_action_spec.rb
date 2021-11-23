@@ -31,25 +31,7 @@ RSpec.describe Support::RecordAction do
             action: "invalid_action",
             support_case_id: support_case.id,
           ).call
-        }.to raise_error Support::RecordAction::UnexpectedActionType
-      end
-
-      it "raises a rollbar event" do
-        expect(Rollbar).to receive(:warning)
-          .with(
-            "An attempt was made to log a support case action with an invalid type",
-            action: "invalid_action",
-            support_case_id: "12345678",
-            data: {},
-            allowed_action_types: "open_case, add_interaction, change_category, change_service_level, change_state, resolve_case, close_case",
-          ).and_call_original
-
-        expect {
-          described_class.new(
-            action: "invalid_action",
-            support_case_id: "12345678",
-          ).call
-        }.to raise_error Support::RecordAction::UnexpectedActionType
+        }.to raise_error Dry::Types::ConstraintError
       end
     end
   end
