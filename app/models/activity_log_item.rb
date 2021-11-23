@@ -15,7 +15,7 @@ class ActivityLogItem < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << column_names
 
-      all.each do |record|
+      find_each do |record|
         csv << record.attributes.values
       end
     end
