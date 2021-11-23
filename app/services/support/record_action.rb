@@ -13,10 +13,14 @@ module Support
       open_case
       add_interaction
       change_category
+      change_service_level
       change_state
       resolve_case
       close_case
     ].freeze
+
+    # TODO: add RecordAction for change_service_level, change_state and close_case when
+    # functionality has been added to the case controllers
 
     # @!attribute action
     #   @return [String]

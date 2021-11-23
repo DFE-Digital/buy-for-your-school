@@ -41,7 +41,7 @@ RSpec.describe Support::RecordAction do
             action: "invalid_action",
             support_case_id: "12345678",
             data: {},
-            allowed_action_types: "open_case, add_interaction, change_category, change_state, resolve_case, close_case",
+            allowed_action_types: "open_case, add_interaction, change_category, change_service_level, change_state, resolve_case, close_case",
           ).and_call_original
 
         expect {
