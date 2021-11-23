@@ -18,10 +18,6 @@ module Support
       close_case
     ].freeze
 
-    # @param action [String]
-    # @param support_case_id [String]
-    # @param data [Hash]
-
     # @!attribute action
     #   @return [String]
     option :action, Types::String
