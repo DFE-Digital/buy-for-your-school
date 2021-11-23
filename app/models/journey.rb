@@ -60,7 +60,7 @@ class Journey < ApplicationRecord
   #
   # @return [Section, Nil]
   def next_incomplete_section(current_section = nil)
-    next_in_order = sections.detect do |section|
+    next_in_order = sections.includes([:tasks]).detect do |section|
       section.incomplete? && (section.order > current_section.order)
     end
     next_in_order || sections.detect(&:incomplete?)

@@ -184,7 +184,7 @@ GEM
       raabro (~> 1.4)
     globalid (0.5.2)
       activesupport (>= 5.0)
-    govuk_design_system_formbuilder (2.7.5)
+    govuk_design_system_formbuilder (2.7.6)
       actionview (>= 6.0)
       activemodel (>= 6.0)
       activesupport (>= 6.0)
@@ -217,8 +217,6 @@ GEM
       aes_key_wrap
       bindata
     jwt (2.3.0)
-    launchy (2.5.0)
-      addressable (~> 2.7)
     libv8-node (15.14.0.1)
     liquid (5.1.0)
     listen (3.7.0)
@@ -471,7 +469,7 @@ GEM
     validate_url (1.0.13)
       activemodel (>= 3.0.0)
       public_suffix
-    web-console (4.1.0)
+    web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
@@ -523,7 +521,6 @@ DEPENDENCIES
   jbuilder (~> 2.11)
   jquery-rails
   jwt
-  launchy
   liquid
   listen (>= 3.0.5, < 3.8)
   loaf

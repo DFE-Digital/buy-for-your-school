@@ -13,6 +13,11 @@ setup_database()
 
 # Bundle any Gemfile changes in development without requiring a long image rebuild
 if [ ! "$RAILS_ENV" == "production" ]; then
+
+  echo "ENTRYPOINT: Compile /public/assets (if required) for development"
+  cp -R /srv/node_modules $APP_HOME
+  RAILS_ENV=production SECRET_KEY_BASE=key bundle exec rake assets:precompile
+
   if bundle check; then echo "ENTRYPOINT: Skipping bundle for development"; else bundle; fi
 fi
 

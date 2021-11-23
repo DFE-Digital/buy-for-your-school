@@ -2,116 +2,100 @@
 # Base
 # ------------------------------------------------------------------------------
 FROM ruby:3.0.1 as base
-MAINTAINER dxw <rails@dxw.com>
 
 RUN apt-get update && apt-get install -qq -y \
-  build-essential \
-  libpq-dev \
-  --fix-missing --no-install-recommends
+    build-essential \
+    libpq-dev \
+    --fix-missing --no-install-recommends
 
-ENV APP_HOME /srv/app
-ENV DEPS_HOME /deps
+RUN wget -q https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb; \
+    apt-get install ./pandoc-2.14.2-1-amd64.deb; \
+    rm pandoc-2.14.2-1-amd64.deb
 
-ARG RAILS_ENV
-ENV RAILS_ENV ${RAILS_ENV:-production}
-ENV NODE_ENV ${RAILS_ENV:-production}
+RUN apt-get install -qq -y \
+    texlive \
+    texlive-generic-extra \
+    lmodern \
+    --fix-missing --no-install-recommends
+
 
 # ------------------------------------------------------------------------------
-# Dependencies
+# Assets
 # ------------------------------------------------------------------------------
-FROM base AS dependencies
+FROM node:alpine as assets
 
-RUN mkdir -p ${DEPS_HOME}
-WORKDIR $DEPS_HOME
+ENV NODE_ENV ${NODE_ENV:-production}
 
-RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
-  && apt-get install -y nodejs
-RUN wget https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb \
-  && apt install ./pandoc-2.14.2-1-amd64.deb && rm pandoc-2.14.2-1-amd64.deb
-RUN apt-get install -y texlive texlive-generic-extra
+RUN mkdir /deps
 
-# Install Javascript dependencies
-COPY package-lock.json $DEPS_HOME/package-lock.json
-COPY package.json $DEPS_HOME/package.json
+WORKDIR /deps
+
+COPY package-lock.json /deps/package-lock.json
+COPY package.json /deps/package.json
+
 RUN npm install
 
-# Install Ruby dependencies
-COPY Gemfile $DEPS_HOME/Gemfile
-COPY Gemfile.lock $DEPS_HOME/Gemfile.lock
-RUN gem update --system
-
-# FIXME: dev and test gems are being bundled in production
-ENV BUNDLE_GEM_GROUPS=$RAILS_ENV
-RUN bundle config set frozen "true"
-RUN bundle config set no-cache "true"
-RUN bundle config set with $BUNDLE_GEM_GROUPS
-RUN bundle install --no-binstubs --retry=10 --jobs=4
-
 # ------------------------------------------------------------------------------
-# Web
+# Production Stage
 # ------------------------------------------------------------------------------
-FROM dependencies AS web
+FROM base AS app
 
-RUN mkdir -p ${APP_HOME}
+ENV APP_HOME /srv/app
+ENV RAILS_ENV ${RAILS_ENV:-production}
+
+RUN mkdir -p ${APP_HOME}/{log,tmp/pids,vendor}
+
 WORKDIR ${APP_HOME}
-
-# Copy app code (sorted by vague frequency of change for caching)
-RUN mkdir -p ${APP_HOME}/log
-RUN mkdir -p ${APP_HOME}/tmp
-
-COPY config.ru ${APP_HOME}/config.ru
-COPY Rakefile ${APP_HOME}/Rakefile
 
 COPY Gemfile $APP_HOME/Gemfile
 COPY Gemfile.lock $APP_HOME/Gemfile.lock
 
+RUN bundle config set frozen true
+RUN bundle config set no-cache true
+RUN bundle config set without development test
+RUN bundle install --no-binstubs --retry=10 --jobs=4
+
+COPY config.ru ${APP_HOME}/config.ru
+COPY Rakefile ${APP_HOME}/Rakefile
 COPY public ${APP_HOME}/public
-COPY vendor ${APP_HOME}/vendor
 COPY bin ${APP_HOME}/bin
+COPY script ${APP_HOME}/script
 COPY lib ${APP_HOME}/lib
 COPY config ${APP_HOME}/config
 COPY db ${APP_HOME}/db
-COPY script ${APP_HOME}/script
 COPY app ${APP_HOME}/app
-# End
 
-# Create tmp/pids
-RUN mkdir -p tmp/pids
+COPY --from=assets /deps/node_modules /srv/node_modules
 
-# This must be ordered before rake assets:precompile
-RUN cp -R $DEPS_HOME/node_modules $APP_HOME/node_modules
-RUN cp -R $DEPS_HOME/node_modules/govuk-frontend/govuk/assets $APP_HOME/app/assets
-
-RUN RAILS_ENV=production \
-    SECRET_KEY_BASE="key" \
-    APPLICATION_URL= \
-    CONTENTFUL_SPACE= \
-    CONTENTFUL_ENVIRONMENT= \
-    CONTENTFUL_DELIVERY_TOKEN= \
-    CONTENTFUL_PREVIEW_TOKEN= \
-    CONTENTFUL_ENTRY_CACHING= \
-    SUPPORT_EMAIL= \
-    REDIS_URL= \
-    CC_TEST_REPORTER_ID= \
-    GITHUB_REF= \
-    GITHUB_SHA= \
-    QUALTRICS_SURVEY_URL= \
-    bundle exec rake assets:precompile
+RUN cp -R /srv/node_modules $APP_HOME/node_modules
+RUN RAILS_ENV=production SECRET_KEY_BASE=key bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 3000
 
 CMD ["bundle", "exec", "rails", "server"]
 
+
 # ------------------------------------------------------------------------------
-# Test
+# Development Stage
 # ------------------------------------------------------------------------------
-FROM web as test
+FROM app as dev
+
+RUN bundle config unset without
+RUN bundle config set without test
+RUN bundle install --no-binstubs --retry=10 --jobs=4
+
+# ------------------------------------------------------------------------------
+# Test Stage
+# ------------------------------------------------------------------------------
+FROM app as test
+
+RUN bundle config unset without
+RUN bundle config set without development
+RUN bundle install --no-binstubs --retry=10 --jobs=4
 
 RUN apt-get install -qq -y shellcheck wait-for-it
 
@@ -120,9 +104,6 @@ RUN chmod +x /usr/bin/cc-test-reporter
 
 COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
 COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml
-
-COPY package.json ${APP_HOME}/package.json
-COPY package-lock.json ${APP_HOME}/package-lock.json
 
 COPY .rspec ${APP_HOME}/.rspec
 COPY spec ${APP_HOME}/spec

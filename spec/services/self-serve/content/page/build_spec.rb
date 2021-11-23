@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Content::Page::Build do
   subject(:service) { described_class.new(contentful_page: contentful_page) }
 
