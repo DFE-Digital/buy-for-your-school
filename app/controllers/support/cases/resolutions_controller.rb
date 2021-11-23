@@ -27,6 +27,14 @@ module Support
       )
 
       current_case.resolved!
+      record_case_resolved
+    end
+
+    def record_case_resolved
+      Support::RecordSupportCaseAction.new(
+        support_case_id: current_case.id,
+        action: 'resolving_case',
+      ).call
     end
 
     def validation

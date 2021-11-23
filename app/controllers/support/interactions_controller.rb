@@ -15,6 +15,8 @@ module Support
     def create
       @interaction = Interaction.new(interaction_params)
       if @interaction.save
+        record_support_case_activity_log_item
+
         redirect_to support_case_path(@interaction.case),
                     notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize
       else
@@ -31,6 +33,16 @@ module Support
     def safe_interaction
       @option = Support::Interaction::SAFE_INTERACTIONS.find { |opt| opt == params[:option].to_s } ||
         redirect_to(support_case_path(current_case))
+    end
+
+    def record_support_case_activity_log_item
+      Support::RecordSupportCaseAction.new(
+        support_case_id: @interaction.case.id,
+        action: 'adding_interaction',
+        data: {
+          event_type: @interaction.event_type
+        }
+      ).call
     end
 
     def current_case

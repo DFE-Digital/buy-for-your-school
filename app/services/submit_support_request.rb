@@ -97,6 +97,8 @@ private
                                   organisation_name: request.school_name,
                                   category: map_category)
 
+    record_case_opening
+
     Support::Interaction.create!({  case: @kase,
                                     event_type: 4,
                                     additional_data:
@@ -110,6 +112,13 @@ private
 
     @kase.documents << document if request.journey
     @kase
+  end
+
+  def record_case_opening
+    Support::RecordSupportCaseAction.new(
+      support_case_id: @kase.id,
+      action: 'opening_case'
+    ).call
   end
 
   # API (draft) ----------------------------------------------------------------

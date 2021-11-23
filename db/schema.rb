@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_110826) do
+ActiveRecord::Schema.define(version: 2021_11_04_114347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -161,6 +161,14 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
+  create_table "support_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "support_case_id"
+    t.string "action"
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "support_agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -202,7 +210,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug"
+    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
