@@ -34,3 +34,10 @@ en:
         category_id:
           missing: Please select a category to assign to the case
 
+        # Case hub migration
+        contact_first_name:
+          missing: Please enter contact first name for the case
+
+        contact_last_name:
+          missing: Please enter contact last name for the case
+

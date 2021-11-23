@@ -4,7 +4,8 @@ module Support
     include Concerns::ValidatableForm
 
     option :school_urn, optional: true
-    option :contact_name, optional: true
+    option :contact_first_name, optional: true
+    option :contact_last_name, optional: true
     option :contact_email, optional: true
     option :contact_phone_number, optional: true
     option :buying_category, optional: true
@@ -14,24 +15,14 @@ module Support
     option :hub_notes, optional: true
     option :progress_notes, optional: true
 
-    # @return [String]
+    # @return [Integer]
     def case_type
       if hub_case_ref.downcase.start_with?("ce-")
-        "SW Hub Case"
+        2
       else
-        "NW Hub Case"
+        1
       end
     end
-
-    def school_name
-      "sample school"
-    end
-
-    def school_postcode
-      "CH00 HJU"
-    end
-
-
 
     # @return [Hash] form parms
     def to_h

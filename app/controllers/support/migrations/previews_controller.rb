@@ -6,7 +6,7 @@ module Support
     end
 
     def create
-      @case_hub_migration_form = CaseHubMigrationForm.from_validation(validation)
+      @case_hub_migration_form = CaseHubMigrationFormPresenter.new(CaseHubMigrationForm.from_validation(validation))
       if validation.success?
         render "support/migrations/previews/new"
       else

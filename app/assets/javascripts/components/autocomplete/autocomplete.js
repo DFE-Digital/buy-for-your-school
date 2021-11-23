@@ -58,6 +58,7 @@
         id: element.dataset.autocompleteElementId,
         name: element.dataset.autocompleteElementName,
         minLength: 3,
+        defaultValue: element.dataset.autocompleteDefaultValue,
         templates: {
           inputValue: i => i ? i[element.dataset.autocompleteTemplateInput] : undefined,
           suggestion: i => formatSuggestion(i, element.dataset.autocompleteTemplateSuggestion)

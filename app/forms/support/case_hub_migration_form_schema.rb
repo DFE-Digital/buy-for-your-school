@@ -7,12 +7,13 @@ module Support
 
     params do
       required(:school_urn).value(:string)
-      required(:contact_name).value(:string)
+      required(:contact_first_name).value(:string)
+      required(:contact_last_name).value(:string)
       required(:contact_email).value(:string)
       optional(:contact_phone_number).value(:string)
       optional(:buying_category).value(:string)
       optional(:hub_case_ref).value(:string)
-      optional(:estimated_procurement_completion_date).value(:string)
+      optional(:estimated_procurement_completion_date).value(:date)
       optional(:estimated_savings).value(:string)
       optional(:hub_notes).value(:string)
       optional(:progress_notes).value(:string)
@@ -26,8 +27,12 @@ module Support
       key(:school_urn).failure(:missing) if value.blank?
     end
 
-    rule(:contact_name) do
-      key(:contact_name).failure(:missing) if value.blank?
+    rule(:contact_first_name) do
+      key(:contact_first_name).failure(:missing) if value.blank?
+    end
+
+    rule(:contact_last_name) do
+      key(:contact_last_name).failure(:missing) if value.blank?
     end
 
     rule(:contact_email) do

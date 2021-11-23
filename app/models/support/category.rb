@@ -18,7 +18,6 @@ module Support
     scope :top_level, -> { where(parent_id: nil) }
     scope :ordered_by_title, -> { order(title: :asc) }
 
-
     def self.grouped_opts
       top_level.each_with_object({}) do |category, parent_hash|
         parent_hash[category.title] =
@@ -27,7 +26,5 @@ module Support
           end
       end
     end
-
-
   end
 end

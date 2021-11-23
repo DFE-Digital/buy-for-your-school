@@ -9,7 +9,8 @@ module Support
     def case_hub_migration_form_params
       params.require(:case_hub_migration_form).permit(
         :school_urn,
-        :contact_name,
+        :contact_first_name,
+        :contact_last_name,
         :contact_email,
         :contact_phone_number,
         :buying_category,

@@ -8,16 +8,21 @@
   <%= render "components/autocomplete",
              container_id: "case-hub-migration-form-school-urn-field",
              label_text: "Establishment URN",
-             element_id: "my-autocomplete",
+             element_id: "school-urn-autocomplete",
              element_name: "case_hub_migration_form[school_urn]",
              template_suggestion: "URN: {{urn}}, <strong>{{name}}</strong>, {{postcode}}",
              value_field: :urn,
+             default_value: "#{@case_hub_migration_form.school_urn}",
              query_url: support_schools_path(format: :json, q: "{{QUERY}}") do %>
     <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
   <% end %>
 
-  <%= form.govuk_text_field :contact_name,
-                            label: { text: I18n.t("support.case_hub_migration.label.contact_name") }
+  <%= form.govuk_text_field :contact_first_name,
+                            label: { text: I18n.t("support.case_hub_migration.label.contact_first_name") }
+  %>
+
+  <%= form.govuk_text_field :contact_last_name,
+                            label: { text: I18n.t("support.case_hub_migration.label.contact_last_name") }
   %>
 
   <%= form.govuk_email_field :contact_email,

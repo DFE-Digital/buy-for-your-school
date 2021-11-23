@@ -16,7 +16,8 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
   # respond to
   it "form params" do
     expect(form.school_urn).to be_nil
-    expect(form.contact_name).to be_nil
+    expect(form.contact_first_name).to be_nil
+    expect(form.contact_last_name).to be_nil
     expect(form.contact_email).to be_nil
     expect(form.contact_phone_number).to be_nil
     expect(form.buying_category).to be_nil
@@ -33,8 +34,8 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
         described_class.new(hub_case_ref: "CE-0001")
       end
 
-      it "is a SW Hub case" do
-        expect(form.case_type).to eql "SW Hub Case"
+      it "is a SW Hub case (2)" do
+        expect(form.case_type).to eql 2
       end
     end
 
@@ -43,8 +44,8 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
         described_class.new(hub_case_ref: "ce-0001")
       end
 
-      it "is a SW Hub case" do
-        expect(form.case_type).to eql "SW Hub Case"
+      it "is a SW Hub case (2)" do
+        expect(form.case_type).to eql 2
       end
     end
 
@@ -53,8 +54,8 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
         described_class.new(hub_case_ref: "11111")
       end
 
-      it "is a NW Hub case" do
-        expect(form.case_type).to eql "NW Hub Case"
+      it "is a NW Hub case (1)" do
+        expect(form.case_type).to eql 1
       end
     end
   end
