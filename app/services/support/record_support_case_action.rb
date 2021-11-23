@@ -1,7 +1,8 @@
-# Track user activity in controller actions
-#
-# @see ActivityLogItem
 module Support
+  # Track support case activity in controller actions
+  #
+  # @see Support::ActivityLogItem
+
   class RecordSupportCaseAction
     class UnexpectedActionType < StandardError; end
 
