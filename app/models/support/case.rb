@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "csv"
+
 module Support
   #
   # A case is opened from a "support enquiry" dealing with a "category of spend"
@@ -39,6 +41,17 @@ module Support
 
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
+
+    # @return [String]
+    def self.to_csv
+      CSV.generate(headers: true) do |csv|
+        csv << column_names
+
+        find_each do |record|
+          csv << record.attributes.values
+        end
+      end
+    end
 
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
     # @return [String]
