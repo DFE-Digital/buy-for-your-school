@@ -6,6 +6,8 @@ require "csv"
 class ActivityLogItem < ApplicationRecord
   self.table_name = "activity_log"
 
+  default_scope { order(:created_at) }
+
   validates :user_id, :journey_id, :action, presence: true
 
   # @return [String]
@@ -13,7 +15,7 @@ class ActivityLogItem < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << column_names
 
-      all.order(:created_at).each do |record|
+      all.each do |record|
         csv << record.attributes.values
       end
     end
