@@ -26,9 +26,8 @@ Rails.application.routes.draw do
   #
   # Self-Serve -----------------------------------------------------------------
   #
-  root to: "pages#show", id: "specifying_start_page"
+  root to: "pages#specifying_start_page"
 
-  get "planning" => "pages#show", "id" => "planning_start_page"
   get "dashboard", to: "dashboard#show"
   get "profile", to: "profile#show"
 
