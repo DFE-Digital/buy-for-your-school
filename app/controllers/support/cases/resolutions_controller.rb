@@ -33,7 +33,7 @@ module Support
     def record_case_resolved
       Support::RecordSupportCaseAction.new(
         support_case_id: current_case.id,
-        action: 'resolving_case',
+        action: "resolving_case",
       ).call
     end
 

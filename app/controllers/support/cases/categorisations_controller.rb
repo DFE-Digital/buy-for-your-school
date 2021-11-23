@@ -12,6 +12,8 @@ module Support
       if validation.success?
         current_case.update!(category_id: @case_categorisation_form.category_id)
 
+        record_case_categorisation_change
+
         redirect_to @back_url, notice: I18n.t("support.case_categorisations.flash.updated")
       else
         render :edit
@@ -30,6 +32,16 @@ module Support
 
     def validation
       CaseCategorisationFormSchema.new.call(**case_categorisation_form_params)
+    end
+
+    def record_case_categorisation_change
+      Support::RecordSupportCaseAction.new(
+        support_case_id: current_case.id,
+        action: "changing_category",
+        data: {
+          category_title: current_case.category.title,
+        },
+      ).call
     end
 
     def case_categorisation_form_params

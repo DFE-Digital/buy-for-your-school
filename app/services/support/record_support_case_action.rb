@@ -3,11 +3,12 @@
 # @see ActivityLogItem
 module Support
   class RecordSupportCaseAction
-  class UnexpectedActionType < StandardError; end
+    class UnexpectedActionType < StandardError; end
 
     ACTION_TYPES = %w[
       opening_case
       adding_interaction
+      changing_category
       changing_state
       resolving_case
       closing_case
@@ -42,7 +43,7 @@ module Support
       )
     end
 
-    private
+  private
 
     def valid_action?
       ACTION_TYPES.include?(@action)

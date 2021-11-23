@@ -38,10 +38,10 @@ module Support
     def record_support_case_activity_log_item
       Support::RecordSupportCaseAction.new(
         support_case_id: @interaction.case.id,
-        action: 'adding_interaction',
+        action: "adding_interaction",
         data: {
-          event_type: @interaction.event_type
-        }
+          event_type: @interaction.event_type,
+        },
       ).call
     end
 

@@ -16,11 +16,11 @@ RSpec.describe Support::RecordSupportCaseAction do
         action = described_class.new(
           action: "adding_interaction",
           support_case_id: support_case.id,
-          data: { event_type: 'phone' }
+          data: { event_type: "phone" },
         ).call
 
         expect(action.support_case_id).to eq support_case.id
-        expect(action.data).to eq({ 'event_type' => 'phone' })
+        expect(action.data).to eq({ "event_type" => "phone" })
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Support::RecordSupportCaseAction do
             action: "invalid_action",
             support_case_id: "12345678",
             data: nil,
-            allowed_action_types: "opening_case, adding_interaction, changing_state, resolving_case, closing_case",
+            allowed_action_types: "opening_case, adding_interaction, changing_category, changing_state, resolving_case, closing_case",
           ).and_call_original
 
         expect {
