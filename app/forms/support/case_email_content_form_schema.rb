@@ -5,6 +5,7 @@ module Support
     params do
       required(:email_body).value(:string)
       required(:email_subject).value(:string)
+      optional(:email_template).value(:string)
     end
 
     rule(:email_body) do

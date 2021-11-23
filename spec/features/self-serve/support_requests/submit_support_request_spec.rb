@@ -9,30 +9,26 @@ RSpec.feature "Completed support requests" do
            category: category)
   end
 
-  let(:template_collection) do
+  let(:email) do
     {
-      "templates" => [
-        {
-          "name" => "Auto-reply", # case-sensitive name of genuine template within Notify
-        },
-      ],
+      email_address: "test@test",
+      template_id: "acb20822-a5eb-43a6-8607-b9c8e25759b4",
+      reference: "000001",
+      personalisation: {
+        reference: "000001",
+        first_name: "first_name",
+        last_name: "last_name",
+        email: "test@test",
+        message: "Support request message from a School Buying Professional",
+        category: "slug",
+      },
     }
   end
 
   before do
-    # fetch template by name
-    stub_request(:get,
-                 "https://api.notifications.service.gov.uk/v2/templates?type=email").to_return(
-                   body: template_collection.to_json,
-                 )
-
-    # send email
-    stub_request(:post,
-                 "https://api.notifications.service.gov.uk/v2/notifications/email").to_return(
-                   body: {}.to_json,
-                   status: 201,
-                   headers: { "Content-Type" => "application/json" },
-                 )
+    stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+    .with(body: email.to_json)
+    .to_return(body: {}.to_json, status: 200, headers: {})
 
     user_is_signed_in(user: journey.user)
     visit "/support-requests/#{support_request.id}"
