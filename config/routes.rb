@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  #
-  # Common ---------------------------------------------------------------------
-  #
-  get "health_check" => "application#health_check"
-
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
   get "/auth/dfe/signout", to: "sessions#destroy", as: :issuer_redirect
@@ -17,11 +12,6 @@ Rails.application.routes.draw do
   get "/404", to: "errors#not_found"
   get "/422", to: "errors#unacceptable"
   get "/500", to: "errors#internal_server_error"
-
-  # Dyamic Pages (Page refreshes routes on create commits)
-  Page.pluck(:slug).each do |slug|
-    get slug => "high_voltage/pages#show", id: slug
-  end
 
   #
   # Self-Serve -----------------------------------------------------------------
@@ -88,4 +78,19 @@ Rails.application.routes.draw do
     end
     resources :schools, only: %i[show index]
   end
+
+  #
+  # Common ---------------------------------------------------------------------
+  #
+  get "health_check" => "application#health_check"
+
+  # Routes any/all Contentful Pages that are mirrored in t.pages
+  # if a Page with :slug cannot be found, `errors/not_found` is rendered
+  #
+  # 1. Keep at the bottom of routes
+  # 2. If Contentful designers need to nest static pages, a second route can be defined to
+  #    simulate "directory" e.g:
+  #    `get ":slug_one/:slug_two", to: "pages#show"`
+  #
+  get ":slug", to: "pages#show"
 end

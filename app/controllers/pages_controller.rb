@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-  include HighVoltage::StaticPage
-
   skip_before_action :authenticate_user!
 
   # TODO: remove this once pages are dynamic
@@ -14,10 +12,14 @@ class PagesController < ApplicationController
   end
 
   def show
-    @title = page.title
-    @body = formatter(page.body)
-    @sidebar = formatter(page.sidebar)
-    @time_stamp = page.updated_at.strftime("%e %B %Y")
+    if page
+      @title = page.title
+      @body = formatter(page.body)
+      @sidebar = formatter(page.sidebar)
+      @time_stamp = page.updated_at.strftime("%e %B %Y")
+    else
+      render "errors/not_found"
+    end
   end
 
 private
@@ -31,6 +33,6 @@ private
   end
 
   def page
-    @page ||= Page.find_by(slug: params[:id])
+    @page ||= Page.find_by(slug: params[:slug])
   end
 end
