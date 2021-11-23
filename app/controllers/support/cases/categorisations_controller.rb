@@ -35,9 +35,9 @@ module Support
     end
 
     def record_case_categorisation_change
-      Support::RecordSupportCaseAction.new(
+      Support::RecordAction.new(
         support_case_id: current_case.id,
-        action: "changing_category",
+        action: "change_category",
         data: {
           category_title: current_case.category.title,
         },

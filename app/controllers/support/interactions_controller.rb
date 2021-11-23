@@ -36,9 +36,9 @@ module Support
     end
 
     def record_support_case_activity_log_item
-      Support::RecordSupportCaseAction.new(
+      Support::RecordAction.new(
         support_case_id: @interaction.case.id,
-        action: "adding_interaction",
+        action: "add_interaction",
         data: {
           event_type: @interaction.event_type,
         },

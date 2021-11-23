@@ -1,35 +1,38 @@
+require "dry-initializer"
+
 module Support
   # Track support case activity in controller actions
   #
   # @see Support::ActivityLogItem
 
-  class RecordSupportCaseAction
+  class RecordAction
     class UnexpectedActionType < StandardError; end
+    extend Dry::Initializer
 
     ACTION_TYPES = %w[
-      opening_case
-      adding_interaction
-      changing_category
-      changing_state
-      resolving_case
-      closing_case
+      open_case
+      add_interaction
+      change_category
+      change_state
+      resolve_case
+      close_case
     ].freeze
 
     # @param action [String]
-    # @param support_case_id [UUID]
+    # @param support_case_id [String]
     # @param data [Hash]
-    #
 
-    def initialize(
-      support_case_id:,
-      action:,
-      data: nil
-    )
+    # @!attribute action
+    #   @return [String]
+    option :action, Types::String
 
-      @support_case_id = support_case_id
-      @action = action
-      @data = data
-    end
+    # @!attribute support_case_id
+    #   @return [String]
+    option :support_case_id, Types::String
+
+    # @!attribute data
+    #   @return [Hash]
+    option :data, Types::Hash, default: proc { {} }
 
     def call
       if invalid_action?
