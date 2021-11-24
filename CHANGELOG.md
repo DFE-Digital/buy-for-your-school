@@ -83,6 +83,7 @@ The format is based on [Keep a Changelog 1.0.0].
   currently no-op until approved
 - clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
   no-op until approved
+- add rake task for CSV data export of activity log items
 
 **Steps**
 
