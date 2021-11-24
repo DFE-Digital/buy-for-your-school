@@ -3,18 +3,6 @@ class PagePresenter < BasePresenter
     format(super).html_safe
   end
 
-  def present_sidebar
-    return unless sidebar
-
-    html = <<~HTML
-      <div class="govuk-grid-column-one-third">
-        #{format(sidebar).html_safe}
-      </div>
-    HTML
-
-    html.html_safe
-  end
-
   def sidebar
     return unless super
 
