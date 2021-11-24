@@ -46,6 +46,19 @@ in place of [IRB](https://guides.rubyonrails.org/command_line.html#bin-rails-con
 
 `$ script/spec` will run the whole test suite, but can accept an optional spec path, which it will output in documentation format.
 
+    NB: run script/build if the image ghbs:test does not exist locally
+    -----------------------------------------------------------------
+    [+] Running 6/6
+     ⠿ Network ghbs_ghbs         Created
+     ⠿ Volume "ghbs_cache_test"  Created
+     ⠿ Volume "ghbs_db_test"     Created
+     ⠿ Container ghbs_db         Created
+     ⠿ Container ghbs_cache      Created
+     ⠿ Container ghbs_chrome     Created
+    [+] Running 3/3
+     ⠿ Container ghbs_cache   Started
+     ⠿ Container ghbs_chrome  Started
+     ⠿ Container ghbs_db      Started
 
 ### CICD
 
