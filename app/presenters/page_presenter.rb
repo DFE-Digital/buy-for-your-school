@@ -17,4 +17,3 @@ class PagePresenter < BasePresenter
     return "govuk-grid-column-two-thirds" if sidebar
   end
 end
-

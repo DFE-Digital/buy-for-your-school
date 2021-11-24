@@ -7,13 +7,13 @@ RSpec.feature "Showing a Contentful page" do
     visit "/dashboard"
   end
 
-  context "visiting a non-existent page slug" do
+  context "when visiting a non-existent page slug" do
     let(:sidebar) { nil }
     let(:body) { nil }
 
     it "shows the not found page" do
       visit "/non-existent-page"
-      expect(find("h2.govuk-heading-xl")).to have_text("Page not found")      
+      expect(find("h2.govuk-heading-xl")).to have_text("Page not found")
     end
   end
 
