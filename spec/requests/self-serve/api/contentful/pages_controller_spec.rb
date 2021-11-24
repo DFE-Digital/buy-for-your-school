@@ -1,12 +1,13 @@
 RSpec.describe Api::Contentful::PagesController, type: :request do
   let(:contentful_page) do
-    OpenStruct.new(
-      title: title,
-      body: "Test body",
-      id: contentful_id,
-      slug: slug,
-      sidebar: "Test page link",
-    )
+    fields = {
+      "title" => title,
+      "body" => "Test body",
+      "id" => contentful_id,
+      "slug" => slug,
+      "sidebar" => "Test page link",
+    }
+    contentful_entry(fields)
   end
 
   let(:params) do

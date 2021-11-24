@@ -6,7 +6,7 @@ class Content::Page::Build
   # @!attribute [r] contentful_page
   #   @return [Contentful::Entry] Contentful "Page" entity
   #   @api private
-  option :contentful_page, reader: :private
+  option :contentful_page, Types.Instance(Contentful::Entry), reader: :private
 
   # @return [Page]
   def call
