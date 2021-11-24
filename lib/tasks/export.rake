@@ -1,4 +1,3 @@
-
 desc "Export ActivityLog items"
 task export: :environment do
   file = Rails.root.join("public/activity_log.csv")
