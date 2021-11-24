@@ -9,6 +9,8 @@ class User < ApplicationRecord
   # from supported establishments
   # scope :supported, ->(ids) { where("(data->'type'->>'id' ? :value)::int", value: ids) }
 
+  scope :supported, -> { where("orgs @> any(array[?]::jsonb[])", ORG_TYPE_IDS.map { |id| %([{"type": {"id": "#{id}"}}]) }) }
+
   # @return [false] distinguish from unauthenticated user
   #
   def guest?
