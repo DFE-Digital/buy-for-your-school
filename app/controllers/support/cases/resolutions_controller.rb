@@ -10,7 +10,7 @@ module Support
       if validation.success? && !current_case.resolved?
         resolve_case
 
-        record_action(support_case_id: current_case.id, action: "resolve_case")
+        record_action(case_id: current_case.id, action: "resolve_case")
 
         redirect_to support_case_path(current_case), notice: I18n.t("support.case_resolution.flash.created")
       else

@@ -1,5 +1,5 @@
 RSpec.describe Support::RecordAction do
-  subject(:service) { described_class.new(action: action, support_case_id: support_case.id, data: data) }
+  subject(:service) { described_class.new(action: action, case_id: support_case.id, data: data) }
 
   let(:support_case) { create(:support_case) }
   let(:data) { {} }

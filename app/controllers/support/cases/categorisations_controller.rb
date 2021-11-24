@@ -12,7 +12,7 @@ module Support
       if validation.success?
         current_case.update!(category_id: @case_categorisation_form.category_id)
 
-        record_action(support_case_id: current_case.id, action: "change_category", data: { category_title: current_case.category.title })
+        record_action(case_id: current_case.id, action: "change_category", data: { category_title: current_case.category.title })
 
         redirect_to @back_url, notice: I18n.t("support.case_categorisations.flash.updated")
       else

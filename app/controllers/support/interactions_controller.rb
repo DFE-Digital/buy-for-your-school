@@ -15,7 +15,7 @@ module Support
     def create
       @interaction = Interaction.new(interaction_params)
       if @interaction.save
-        record_action(support_case_id: @interaction.case.id, action: "add_interaction", data: { event_type: @interaction.event_type })
+        record_action(case_id: @interaction.case.id, action: "add_interaction", data: { event_type: @interaction.event_type })
 
         redirect_to support_case_path(@interaction.case),
                     notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize

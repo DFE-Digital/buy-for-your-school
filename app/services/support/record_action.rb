@@ -26,9 +26,9 @@ module Support
     #   @return [String]
     option :action, Types::Strict::String.enum(*ACTION_TYPES)
 
-    # @!attribute support_case_id
+    # @!attribute case_id
     #   @return [String]
-    option :support_case_id, Types::String
+    option :case_id, Types::String
 
     # @!attribute data
     #   @return [Hash]
@@ -37,7 +37,7 @@ module Support
     # @return [Support::ActivityLogItem]
     def call
       Support::ActivityLogItem.create!(
-        support_case_id: @support_case_id,
+        support_case_id: @case_id,
         action: @action,
         data: @data,
       )
