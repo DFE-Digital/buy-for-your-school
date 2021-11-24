@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!
 
   def show
-    render "errors/not_found" unless page
+    render "errors/not_found" if page.blank?
   end
 
   def specifying_start_page
@@ -21,6 +21,6 @@ private
     return @page if @page
 
     @page = Page.find_by(slug: params[:slug])
-    @page = PagePresenter.new(page)
+    @page = PagePresenter.new(@page)
   end
 end

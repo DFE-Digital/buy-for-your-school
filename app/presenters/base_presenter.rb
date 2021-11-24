@@ -15,4 +15,12 @@ private
   def date_format
     "%e %B %Y"
   end
+
+  def format(content)
+    DocumentFormatter.new(
+      content: content,
+      from: :markdown,
+      to: :html,
+    ).call
+  end
 end

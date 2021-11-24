@@ -92,5 +92,5 @@ Rails.application.routes.draw do
   #    simulate "directory" e.g:
   #    `get ":slug_one/:slug_two", to: "pages#show"`
   #
-  get ":slug", to: "pages#show"
+  get "/:slug", to: "pages#show"
 end

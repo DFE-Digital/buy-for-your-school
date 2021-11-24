@@ -1,19 +1,6 @@
 class PagePresenter < BasePresenter
-  def time_stamp
-    updated_at.strftime("%e %B %Y")
-  end
-
-  def present_body
-    html = <<~HTML
-      <div class="govuk-grid-column-#{body_grid_size}-thirds">
-        <div class="md-override">
-          #{formatter(body).html_safe}
-        </div>
-        <p class="govuk-body-s">Last updated #{time_stamp}</p>
-      </div>
-    HTML
-
-    html.html_safe
+  def body
+    format(super).html_safe
   end
 
   def present_sidebar
@@ -21,28 +8,25 @@ class PagePresenter < BasePresenter
 
     html = <<~HTML
       <div class="govuk-grid-column-one-third">
-        #{formatter(sidebar).html_safe}
+        #{format(sidebar).html_safe}
       </div>
     HTML
 
     html.html_safe
   end
 
-private
+  def sidebar
+    return unless super
 
-  def formatter(content)
-    DocumentFormatter.new(
-      content: content,
-      from: :markdown,
-      to: :html,
-    ).call
+    format(super).html_safe
   end
 
-  def body_grid_size
-    if sidebar.present?
-      "two"
-    else
-      "three"
-    end
+  def container_class
+    return "govuk-grid-row" if sidebar
+  end
+
+  def body_class
+    return "govuk-grid-column-two-thirds" if sidebar
   end
 end
+
