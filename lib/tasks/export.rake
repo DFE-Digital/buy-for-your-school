@@ -8,7 +8,7 @@ end
 
 namespace :support do
   namespace :cases do
-    desc "Export Support ActivityLog items"
+    desc "Export Support Cases"
     task export: :environment do
       file = Rails.root.join("public/support_cases.csv")
       data = Support::Case.to_csv
