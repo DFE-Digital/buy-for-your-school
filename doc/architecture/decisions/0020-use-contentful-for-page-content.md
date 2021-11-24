@@ -1,10 +1,10 @@
-# 20. Use generic final route for static pages
+# 20. Use contentful for page content
 
 Date: 2021-11-24
 
 ## Status
 
-Accepted
+![Accepted](https://img.shields.io/badge/adr-accepted-green)
 
 ## Context
 
