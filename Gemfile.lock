@@ -266,7 +266,7 @@ GEM
       validate_email
       validate_url
       webfinger (>= 1.0.1)
-    pandoc-ruby (2.1.5)
+    pandoc-ruby (2.1.6)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -412,7 +412,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (4.0.3)
+    selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)

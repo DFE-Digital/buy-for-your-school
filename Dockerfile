@@ -42,8 +42,9 @@ FROM base AS app
 
 ENV APP_HOME /srv/app
 ENV RAILS_ENV ${RAILS_ENV:-production}
+ENV PATH $PATH:/usr/local/bundle/bin:/usr/local/bin
 
-RUN mkdir -p ${APP_HOME}/{log,tmp/pids,vendor}
+RUN mkdir -p ${APP_HOME}/tmp/pids ${APP_HOME}/log
 
 WORKDIR ${APP_HOME}
 
