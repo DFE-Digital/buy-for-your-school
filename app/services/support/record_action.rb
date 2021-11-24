@@ -6,7 +6,11 @@ module Support
   # @see Support::ActivityLogItem
 
   class RecordAction
+    class UnexpectedActionType < StandardError; end
     extend Dry::Initializer
+
+    # TODO: add RecordAction for change_service_level, change_state and close_case when
+    # functionality has been added to the case controllers
 
     ACTION_TYPES = %w[
       open_case
@@ -17,9 +21,6 @@ module Support
       resolve_case
       close_case
     ].freeze
-
-    # TODO: add RecordAction for change_service_level, change_state and close_case when
-    # functionality has been added to the case controllers
 
     # @!attribute action
     #   @return [String]
@@ -33,6 +34,7 @@ module Support
     #   @return [Hash]
     option :data, Types::Hash, default: proc { {} }
 
+    # @return [Support::ActivityLogItem]
     def call
       Support::ActivityLogItem.create!(
         support_case_id: @support_case_id,

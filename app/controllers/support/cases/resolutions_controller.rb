@@ -10,6 +10,8 @@ module Support
       if validation.success? && !current_case.resolved?
         resolve_case
 
+        record_action(support_case_id: current_case.id, action: "resolve_case")
+
         redirect_to support_case_path(current_case), notice: I18n.t("support.case_resolution.flash.created")
       else
         render :new
@@ -27,14 +29,6 @@ module Support
       )
 
       current_case.resolved!
-      record_case_resolved
-    end
-
-    def record_case_resolved
-      Support::RecordAction.new(
-        support_case_id: current_case.id,
-        action: "resolve_case",
-      ).call
     end
 
     def validation
