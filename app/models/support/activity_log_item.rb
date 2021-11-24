@@ -1,13 +1,24 @@
+require "csv"
+
 module Support
   # Capture activity metrics for cases
   #
   # @see Support::RecordAction
 
   class ActivityLogItem < ApplicationRecord
-    include Csvable
-
     default_scope { order(:created_at) }
 
     validates :support_case_id, :action, presence: true
+
+    # @return [String]
+    def self.to_csv
+      CSV.generate(headers: true) do |csv|
+        csv << column_names
+
+        find_each do |record|
+          csv << record.attributes.values
+        end
+      end
+    end
   end
 end
