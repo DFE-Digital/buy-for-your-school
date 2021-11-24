@@ -23,7 +23,6 @@ class Content::Page::Build
     )
 
     Rollbar.info("Built Contentful page", **page.first) if page
-
     Page.find_by(contentful_id: contentful_page.id)
   end
 end

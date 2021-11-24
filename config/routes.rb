@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  #
-  # Common ---------------------------------------------------------------------
-  #
-  get "health_check" => "application#health_check"
-
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
   get "/auth/dfe/signout", to: "sessions#destroy", as: :issuer_redirect
@@ -21,9 +16,8 @@ Rails.application.routes.draw do
   #
   # Self-Serve -----------------------------------------------------------------
   #
-  root to: "pages#show", id: "specifying_start_page"
+  root to: "pages#specifying_start_page"
 
-  get "planning" => "pages#show", "id" => "planning_start_page"
   get "dashboard", to: "dashboard#show"
   get "profile", to: "profile#show"
 
@@ -84,4 +78,19 @@ Rails.application.routes.draw do
     end
     resources :schools, only: %i[show index]
   end
+
+  #
+  # Common ---------------------------------------------------------------------
+  #
+  get "health_check" => "application#health_check"
+
+  # Routes any/all Contentful Pages that are mirrored in t.pages
+  # if a Page with :slug cannot be found, `errors/not_found` is rendered
+  #
+  # 1. Keep at the bottom of routes
+  # 2. If Contentful designers need to nest static pages, a second route can be defined to
+  #    simulate "directory" e.g:
+  #    `get ":slug_one/:slug_two", to: "pages#show"`
+  #
+  get ":slug", to: "pages#show"
 end

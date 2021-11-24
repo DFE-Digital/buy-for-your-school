@@ -46,7 +46,6 @@ Rails/NotNullColumn:
     - 'db/migrate/20210107122307_add_liquid_template_to_journey.rb'
     - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
 
-
 # Offense count: 3
 # Configuration parameters: Include.
 # Include: db/migrate/*.rb
