@@ -1,5 +1,5 @@
 --title "Get Help Self-Serve Buying"
---output-dir documentation
+--output-dir ./documentation
 --plugin junk
 --protected
 --private

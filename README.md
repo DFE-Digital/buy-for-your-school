@@ -9,7 +9,7 @@ These tender documents can then be used to start a procurement process saving sc
 
 ## Documentation
 
-Run `$ yardoc --output-dir ./documentation` to generate documentation for the project in `/documentation` and then `$ open ./documentation/index.html` to open in the browser.
+Run `$ yardoc` to generate documentation for the project in `/documentation` and then `$ open ./documentation/index.html` to open in the browser.
 
 ## Changelog
 
