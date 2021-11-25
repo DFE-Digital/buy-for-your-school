@@ -3,6 +3,7 @@ class PagesController < ApplicationController
 
   def show
     render "errors/not_found" if page.blank?
+    @page = PagePresenter.new(page)
   end
 
   def specifying_start_page
@@ -18,9 +19,6 @@ class PagesController < ApplicationController
 private
 
   def page
-    return @page if @page
-
-    @page = Page.find_by(slug: params[:slug])
-    @page = PagePresenter.new(@page)
+    @page ||= Page.find_by(slug: params[:slug])
   end
 end

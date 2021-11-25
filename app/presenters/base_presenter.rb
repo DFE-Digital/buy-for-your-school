@@ -16,6 +16,7 @@ private
     "%e %B %Y"
   end
 
+  # @return [String] html from markdown
   def format(content)
     DocumentFormatter.new(
       content: content,
