@@ -1,4 +1,4 @@
-# Buy for your school
+# Get Help Buying for Schools
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f119cce1678a8a67cca7/maintainability)](https://codeclimate.com/github/DFE-Digital/buy-for-your-school/maintainability)
 ![CI](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/continuous-integration.yml/badge.svg)
