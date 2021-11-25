@@ -1,12 +1,12 @@
 class PagePresenter < BasePresenter
-
   def updated_at
     text = I18n.t("page.updated_at")
     date_format = I18n.t("page.date_format")
     date = __getobj__.updated_at.strftime(date_format)
-    
+
     "#{text} #{date}"
   end
+
   # @return [String]
   def body
     format(super).html_safe
