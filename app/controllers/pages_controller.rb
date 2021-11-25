@@ -21,4 +21,13 @@ private
   def page
     @page ||= Page.find_by(slug: params[:slug])
   end
+
+  def set_breadcrumbs(page)
+    unless page.breadcrumbs.empty?
+      page.breadcrumbs.each do |item|
+        title, path = item.split(",")
+        breadcrumb title, path
+      end
+    end
+  end
 end
