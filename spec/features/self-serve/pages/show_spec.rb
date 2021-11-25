@@ -1,11 +1,9 @@
 require "rails_helper"
 
-RSpec.feature "Showing a Contentful page" do
-  let(:contentful_page) { create(:page, sidebar: sidebar, body: body) }
-
-  before do
-    visit "/dashboard"
-  end
+RSpec.feature "Showing a Page" do
+  # `our_page` so we don't clash with Capybara `page`
+  let(:our_page) { create(:page, sidebar: sidebar, body: body) }
+  let(:updated_at) { "Last updated #{our_page.updated_at.strftime("%e %B %Y")}" }
 
   context "when visiting a non-existent page slug" do
     let(:sidebar) { nil }
@@ -22,9 +20,10 @@ RSpec.feature "Showing a Contentful page" do
     let(:body) { "# hello body" }
 
     it "shows the page with a sidebar" do
-      visit "/#{contentful_page.slug}"
+      visit "/#{our_page.slug}"
       expect(find(".govuk-grid-column-two-thirds h1")).to have_text("hello body")
       expect(find(".govuk-grid-column-one-third h1")).to have_text("hello sidebar")
+      expect(find(".govuk-body-s")).to have_text(updated_at)
     end
   end
 
@@ -33,8 +32,9 @@ RSpec.feature "Showing a Contentful page" do
     let(:body) { "# hello body" }
 
     it "shows the page without a sidebar" do
-      visit "/#{contentful_page.slug}"
+      visit "/#{our_page.slug}"
       expect(find(".md-override h1")).to have_text("hello body")
+      expect(find(".govuk-body-s")).to have_text(updated_at)
       expect(page).not_to have_css(".govuk-grid-column-two-thirds")
       expect(page).not_to have_css(".govuk-grid-column-one-third")
     end
