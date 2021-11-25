@@ -165,6 +165,14 @@ ActiveRecord::Schema.define(version: 2021_11_18_115424) do
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
+  create_table "support_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "support_case_id"
+    t.string "action"
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "support_agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
