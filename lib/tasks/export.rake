@@ -6,10 +6,10 @@ task export: :environment do
   File.open(file, "w+") { |f| f.write(data) }
 end
 
-namespace :export do
-  namespace :support do
+namespace :support do
+  namespace :case_management do
     desc "Export Support Cases"
-    task cases: :environment do
+    task export: :environment do
       file = Rails.root.join("public/support_cases.csv")
       data = Support::Case.to_csv
 
