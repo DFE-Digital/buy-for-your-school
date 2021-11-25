@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add link to school details in GIAS from case view
 - add ability to re-categorise a case
 - enable sending of emails via Notify
+- add activity logging for support cases
 
 ### Specify Unreleased
 
