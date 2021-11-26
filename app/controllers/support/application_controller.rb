@@ -19,5 +19,13 @@ module Support
 
       redirect_to support_root_path, notice: "You are not a recognised case worker"
     end
+
+    def record_action(case_id:, action:, data: {})
+      Support::RecordAction.new(
+        case_id: case_id,
+        action: action,
+        data: data,
+      ).call
+    end
   end
 end
