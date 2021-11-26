@@ -6,7 +6,6 @@ FactoryBot.define do
     description { "support category description" }
 
     trait :with_sub_category do
-
       after(:create) do |parent|
         create(:support_category, parent_id: parent.id)
         parent.reload

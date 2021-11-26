@@ -31,11 +31,10 @@ RSpec.describe Support::Category, type: :model do
     context "with sub categories" do
       let(:parent_category) { create(:support_category, :with_sub_category) }
 
-      xit "returns nested hash" do
-        #  {"support category title 1"=>{"support category title 2"=>"e2da412c-2451-4d18-896e-942db92a31ca"}}
-        expect(parent_category.class.grouped_opts).to include(hash_including("support category title 1" => { "support category title 2" => Support::Category.last.id }))
+      it "returns nested hash" do
+        sub_category = parent_category.sub_categories.first
+        expect(parent_category.class.grouped_opts).to be_categorised(parent: parent_category.title, child: { sub_category.title => sub_category.id })
       end
-
     end
   end
 end

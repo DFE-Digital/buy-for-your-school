@@ -102,4 +102,13 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+  RSpec::Matchers.define :be_categorised do |expected|
+    match do |actual|
+      actual.keys.first == expected[:parent] && actual.values.first == expected[:child]
+    end
+
+    failure_message do |actual|
+      "expected that #{actual} would match { \"#{expected[:parent]}\" => #{expected[:child]} }"
+    end
+  end
 end

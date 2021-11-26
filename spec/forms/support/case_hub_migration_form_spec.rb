@@ -35,7 +35,7 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
 
       it "is a SW Hub case (2)" do
-        expect(form.case_type).to eql 2
+        expect(form.case_type).to be 2
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
 
       it "is a SW Hub case (2)" do
-        expect(form.case_type).to eql 2
+        expect(form.case_type).to be 2
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
 
       it "is a NW Hub case (1)" do
-        expect(form.case_type).to eql 1
+        expect(form.case_type).to be 1
       end
     end
   end
