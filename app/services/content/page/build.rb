@@ -12,11 +12,12 @@ class Content::Page::Build
   def call
     page = Page.upsert(
       {
-        title: contentful_page.title,
-        body: contentful_page.body,
+        title: contentful_page.fields[:title],
+        body: contentful_page.fields[:body],
         contentful_id: contentful_page.id,
-        slug: contentful_page.slug,
-        sidebar: contentful_page.sidebar,
+        slug: contentful_page.fields[:slug],
+        sidebar: contentful_page.fields[:sidebar],
+        breadcrumbs: contentful_page.fields[:breadcrumbs],
       },
       unique_by: :contentful_id,
       returning: %w[title contentful_id slug],

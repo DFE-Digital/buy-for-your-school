@@ -3,6 +3,7 @@ class PagesController < ApplicationController
 
   def show
     render "errors/not_found" if page.blank?
+    set_breadcrumbs(page)
     @page = PagePresenter.new(page)
   end
 
