@@ -74,7 +74,7 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
-    bootsnap (1.9.1)
+    bootsnap (1.9.3)
       msgpack (~> 1.0)
     brakeman (5.1.2)
     builder (3.2.4)
@@ -217,8 +217,6 @@ GEM
       aes_key_wrap
       bindata
     jwt (2.3.0)
-    launchy (2.5.0)
-      addressable (~> 2.7)
     libv8-node (15.14.0.1)
     liquid (5.1.0)
     listen (3.7.0)
@@ -269,7 +267,7 @@ GEM
       validate_email
       validate_url
       webfinger (>= 1.0.1)
-    pandoc-ruby (2.1.5)
+    pandoc-ruby (2.1.6)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -415,7 +413,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (4.0.3)
+    selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
@@ -523,7 +521,6 @@ DEPENDENCIES
   jbuilder (~> 2.11)
   jquery-rails
   jwt
-  launchy
   liquid
   listen (>= 3.0.5, < 3.8)
   loaf

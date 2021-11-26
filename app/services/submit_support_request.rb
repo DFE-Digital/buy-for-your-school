@@ -28,12 +28,13 @@ require "types"
 class SubmitSupportRequest
   extend Dry::Initializer
 
-  # @!attribute [r] request
-  # @return [SupportRequestPresenter]
+  # @!attribute request
+  #   @return [SupportRequestPresenter]
   option :request, ::Types.Constructor(SupportRequestPresenter)
-  # @!attribute [r] template
-  # @return [String] (defaults to Auto-reply)
-  option :template, Types::String, default: proc { "Auto-reply" }
+
+  # @!attribute template
+  #   @return [String] Template UUID
+  option :template, Types::String, default: proc { "acb20822-a5eb-43a6-8607-b9c8e25759b4" }
 
   # TODO: Replace with outbound API call
   #
@@ -97,6 +98,8 @@ private
                                   organisation_name: request.school_name,
                                   category: map_category)
 
+    record_case_opening
+
     Support::Interaction.create!({  case: @kase,
                                     event_type: 4,
                                     additional_data:
@@ -110,6 +113,13 @@ private
 
     @kase.documents << document if request.journey
     @kase
+  end
+
+  def record_case_opening
+    Support::RecordAction.new(
+      case_id: @kase.id,
+      action: "open_case",
+    ).call
   end
 
   # API (draft) ----------------------------------------------------------------

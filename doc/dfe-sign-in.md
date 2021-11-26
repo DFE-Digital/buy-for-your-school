@@ -96,6 +96,10 @@ In **Keychain Access** add it to the **Certificates** in the **System Keychain**
 Use `File > Import Items` and import `localhost.crt`.
 Once imported change the trust level to `Always Trust`.
 
+
+See `Procfile.dev` for starting puma with SSL.
+
+
 ## Organisations
 
 The service leverages a user's affiliation to an organisation within DSI to control access.

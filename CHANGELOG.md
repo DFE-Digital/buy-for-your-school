@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog 1.0.0].
 - accessibility page
 - add link to school details in GIAS from case view
 - add ability to re-categorise a case
+- enable sending of emails via Notify
+- add activity logging for support cases
+- add csv export for case management
 
 ### Specify Unreleased
 
@@ -33,6 +36,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - `production` points to Contentful `master`
 - `staging` points to Contentful `staging`
 - Github actions changed to clone `staging` to `develop` for local development
+- refactor docker tooling ensuring only production dependencies are deployed
 
 **ITHC**
 
@@ -80,6 +84,7 @@ The format is based on [Keep a Changelog 1.0.0].
   currently no-op until approved
 - clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
   no-op until approved
+- add rake task for CSV data export of activity log items
 
 **Steps**
 
