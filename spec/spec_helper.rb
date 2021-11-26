@@ -108,7 +108,7 @@ RSpec.configure do |config|
     end
 
     failure_message do |actual|
-      "expected that #{actual} would have parent #{expected[:parent]} and child #{epected[:child]}"
+      "expected that #{actual} would have parent #{expected[:parent]} and child #{expected[:child]}"
     end
   end
 end
