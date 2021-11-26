@@ -104,11 +104,11 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
   RSpec::Matchers.define :be_categorised do |expected|
     match do |actual|
-      actual.keys.first == expected[:parent] && actual.values.first == expected[:child]
+      actual&.keys&.first == expected[:parent] && actual&.values&.first&.keys&.first == expected[:child]
     end
 
     failure_message do |actual|
-      "expected that #{actual} would match { \"#{expected[:parent]}\" => #{expected[:child]} }"
+      "expected that #{actual} would have parent #{expected[:parent]} and child #{epected[:child]}"
     end
   end
 end

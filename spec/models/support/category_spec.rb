@@ -32,8 +32,7 @@ RSpec.describe Support::Category, type: :model do
       let(:parent_category) { create(:support_category, :with_sub_category) }
 
       it "returns nested hash" do
-        sub_category = parent_category.sub_categories.first
-        expect(parent_category.class.grouped_opts).to be_categorised(parent: parent_category.title, child: { sub_category.title => sub_category.id })
+        expect(parent_category.class.grouped_opts).to be_categorised(parent: parent_category.title, child: parent_category.sub_categories.first.title)
       end
     end
   end
