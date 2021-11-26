@@ -1,14 +1,15 @@
 module Support
   class Migrations::HubCasesController < Support::Migrations::BaseController
     def new
-      @case_hub_migration_form = CaseHubMigrationForm.new
+      @form = CaseHubMigrationForm.new
       @back_url = support_cases_path
     end
 
     def create
-      @case_hub_migration_form = CaseHubMigrationForm.from_validation(validation)
+      @form = CaseHubMigrationForm.from_validation(validation)
       if validation.success? && params[:button] == "create"
-        # persist the kase and redirect
+        kase = @form.create_case
+        redirect_to support_case_path(kase)
       else
         render :new
       end

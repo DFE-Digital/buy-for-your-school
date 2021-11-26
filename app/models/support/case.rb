@@ -7,6 +7,7 @@ module Support
   class Case < ApplicationRecord
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
+    belongs_to :organisation, class_name: "Support::Organisation", optional: true
     has_many :interactions, class_name: "Support::Interaction"
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy

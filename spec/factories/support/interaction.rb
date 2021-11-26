@@ -30,14 +30,14 @@ FactoryBot.define do
       body { "This is an example support request." }
     end
 
-    trait :hub_notes do
+    trait :hub_note do
       event_type { 5 }
-      body { "This is an example support request." }
+      body { "This is an example hub note." }
     end
 
-    trait :progress_notes do
+    trait :hub_progress_note do
       event_type { 6 }
-      body { "This is an example support request." }
+      body { "This is an example hub progress note." }
     end
   end
 end

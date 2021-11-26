@@ -1,4 +1,4 @@
-<%= form_with model: @case_hub_migration_form, scope: :case_hub_migration_form, url: support_migrations_hub_case_preview_path do |form| %>
+<%= form_with model: @form, scope: :case_hub_migration_form, url: support_migrations_hub_case_preview_path do |form| %>
   <%= form.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
@@ -10,30 +10,30 @@
              label_text: "Establishment URN",
              element_id: "school-urn-autocomplete",
              element_name: "case_hub_migration_form[school_urn]",
-             template_suggestion: "URN: {{urn}}, <strong>{{name}}</strong>, {{postcode}}",
+             template_suggestion: "{{urn}} {{name}} {{postcode}}",
              value_field: :urn,
-             default_value: "#{@case_hub_migration_form.school_urn}",
+             default_value: "#{@form.school_urn}",
              query_url: support_schools_path(format: :json, q: "{{QUERY}}") do %>
     <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
   <% end %>
 
-  <%= form.govuk_text_field :contact_first_name,
+  <%= form.govuk_text_field :first_name,
                             label: { text: I18n.t("support.case_hub_migration.label.contact_first_name") }
   %>
 
-  <%= form.govuk_text_field :contact_last_name,
+  <%= form.govuk_text_field :last_name,
                             label: { text: I18n.t("support.case_hub_migration.label.contact_last_name") }
   %>
 
-  <%= form.govuk_email_field :contact_email,
+  <%= form.govuk_email_field :email,
                             label: { text: I18n.t("support.case_hub_migration.label.contact_email") }
   %>
 
-  <%= form.govuk_phone_field :contact_phone_number,
+  <%= form.govuk_phone_field :phone_number,
                              label: { text: I18n.t("support.case_hub_migration.label.contact_phone", optional: I18n.t("support.generic.form.optional")) }
   %>
 
-  <%= form.govuk_select(:buying_category, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
+  <%= form.govuk_select(:category_id, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
     <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
     <optgroup label="<%= parent_name%>">
       <% sub_categories.each do |name, value| %>

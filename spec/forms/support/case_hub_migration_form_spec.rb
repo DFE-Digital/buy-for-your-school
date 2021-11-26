@@ -16,11 +16,11 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
   # respond to
   it "form params" do
     expect(form.school_urn).to be_nil
-    expect(form.contact_first_name).to be_nil
-    expect(form.contact_last_name).to be_nil
-    expect(form.contact_email).to be_nil
-    expect(form.contact_phone_number).to be_nil
-    expect(form.buying_category).to be_nil
+    expect(form.first_name).to be_nil
+    expect(form.last_name).to be_nil
+    expect(form.email).to be_nil
+    expect(form.phone_number).to be_nil
+    expect(form.category_id).to be_nil
     expect(form.hub_case_ref).to be_nil
     expect(form.estimated_procurement_completion_date).to be_nil
     expect(form.estimated_savings).to be_nil
@@ -35,7 +35,7 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
 
       it "is a SW Hub case (2)" do
-        expect(form.case_type).to eql 2
+        expect(form.case_type).to eq "sw_hub"
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
 
       it "is a SW Hub case (2)" do
-        expect(form.case_type).to eql 2
+        expect(form.case_type).to eq "sw_hub"
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
 
       it "is a NW Hub case (1)" do
-        expect(form.case_type).to eql 1
+        expect(form.case_type).to eq "nw_hub"
       end
     end
   end
@@ -63,13 +63,14 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
   describe "#to_h" do
     context "when populated" do
       subject(:form) do
-        described_class.new(school_urn: "000000", hub_case_ref: "11111")
+        described_class.new(school_urn: "000000", hub_case_ref: "11111", source: "nw_hub")
       end
 
       it "has values" do
         expect(form.to_h).to eql({
           school_urn: "000000",
           hub_case_ref: "11111",
+          source: "nw_hub",
         })
       end
     end
