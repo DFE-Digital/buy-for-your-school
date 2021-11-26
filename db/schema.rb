@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_115424) do
+ActiveRecord::Schema.define(version: 2021_11_23_110903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_115424) do
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id", null: false
     t.text "sidebar"
+    t.string "breadcrumbs", default: [], array: true
     t.index ["contentful_id"], name: "index_pages_on_contentful_id", unique: true
     t.index ["slug"], name: "index_pages_on_slug", unique: true
   end

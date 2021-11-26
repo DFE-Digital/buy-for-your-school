@@ -2,13 +2,14 @@ RSpec.describe Content::Page::Build do
   subject(:service) { described_class.new(contentful_page: contentful_page) }
 
   let(:contentful_page) do
-    OpenStruct.new(
-      title: "Test page",
-      body: "Test body",
-      id: "123",
-      slug: "/test-page",
-      sidebar: "Test page link",
-    )
+    fields = {
+      "title" => "Test page",
+      "body" => "Test body",
+      "id" => "123",
+      "slug" => "/test-page",
+      "sidebar" => "Test page link",
+    }
+    contentful_entry(fields)
   end
 
   let(:rollbar_info) do

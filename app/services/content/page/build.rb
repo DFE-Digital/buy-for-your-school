@@ -6,17 +6,18 @@ class Content::Page::Build
   # @!attribute [r] contentful_page
   #   @return [Contentful::Entry] Contentful "Page" entity
   #   @api private
-  option :contentful_page, reader: :private
+  option :contentful_page, Types.Instance(Contentful::Entry), reader: :private
 
   # @return [Page]
   def call
     page = Page.upsert(
       {
-        title: contentful_page.title,
-        body: contentful_page.body,
+        title: contentful_page.fields[:title],
+        body: contentful_page.fields[:body],
         contentful_id: contentful_page.id,
-        slug: contentful_page.slug,
-        sidebar: contentful_page.sidebar,
+        slug: contentful_page.fields[:slug],
+        sidebar: contentful_page.fields[:sidebar],
+        breadcrumbs: contentful_page.fields[:breadcrumbs],
       },
       unique_by: :contentful_id,
       returning: %w[title contentful_id slug],
