@@ -24,11 +24,11 @@ private
   end
 
   def set_breadcrumbs
-    if page.present?
-      page.breadcrumbs&.each do |item|
-        title, path = item.split(",")
-        breadcrumb title, path
-      end
+    return if page.blank?
+
+    page.breadcrumbs&.each do |item|
+      title, path = item.split(",")
+      breadcrumb title, path
     end
   end
 end
