@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Support
   class CaseHubMigrationForm
     extend Dry::Initializer
@@ -30,13 +32,6 @@ module Support
           .except(:messages)
           .merge(source: case_type)
           .compact
-    end
-
-    # @return [Case]
-    def create_case
-      # TODO: guard if case invalid
-      CreateCase.new(to_h).call
-      # TODO: add interactions
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Support
   class Migrations::HubCasesController < Support::Migrations::BaseController
     def new
@@ -8,7 +10,7 @@ module Support
     def create
       @form = CaseHubMigrationForm.from_validation(validation)
       if validation.success? && params[:button] == "create"
-        kase = @form.create_case
+        kase = CreateCase.new(@form.to_h).call
         redirect_to support_case_path(kase)
       else
         render :new

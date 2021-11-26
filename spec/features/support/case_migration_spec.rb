@@ -31,7 +31,7 @@ RSpec.feature "Case summary" do
       click_on "Save and continue"
 
       within "div.govuk-error-summary" do
-        expect(page).to have_text "Please enter contact first name for the case"
+        expect(page).to have_text "First name is missing"
       end
     end
   end

@@ -3,7 +3,11 @@ module Support
   # Validate "create a new case" form details for a Hub migration case
   #
   class CaseHubMigrationFormSchema < Dry::Validation::Contract
-    include Concerns::TranslatableFormSchema
+    import_predicates_as_macros
+
+    config.messages.backend = :i18n
+    config.messages.top_namespace = :case_migration_form
+    config.messages.load_paths << Rails.root.join("config/locales/validation/support/en.yml")
 
     params do
       required(:school_urn).value(:string)
@@ -20,10 +24,7 @@ module Support
       optional(:progress_notes).value(:string)
     end
 
-    # TODO: add phone number validation format
-    rule(:phone_number) do
-      key(:phone_number).failure(:missing) if value.blank?
-    end
+    rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
 
     rule(:school_urn) do
       key(:school_urn).failure(:missing) if value.blank?
