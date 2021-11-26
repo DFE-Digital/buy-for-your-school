@@ -23,6 +23,6 @@ private
   end
 
   def contentful_page
-    @contentful_page ||= ::Content::Page::Get.new(page_entry_id: contentful_id).call
+    @contentful_page ||= ::Content::Page::Get.new(entry_id: contentful_id).call
   end
 end

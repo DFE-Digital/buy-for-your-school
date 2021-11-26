@@ -3,16 +3,16 @@
 class Content::Page::Get
   extend Dry::Initializer
 
-  # @!attribute [r] page_entry_id
+  # @!attribute [r] entry_id
   #   @return [String]
-  option :page_entry_id, Types::String
+  option :entry_id, Types::String
   # @!attribute [r] client
   #   @return [Content::Client]
   option :client, default: proc { Content::Client.new }
 
   # @return [Contentful::Entry, Symbol]
   def call
-    page = client.by_id(page_entry_id)
+    page = client.by_id(entry_id)
 
     if page.nil?
       send_rollbar_error(message: "A Contentful page entry was not found")
@@ -30,7 +30,7 @@ private
       contentful_space_id: client.space,
       contentful_environment: client.environment,
       contentful_url: client.api_url,
-      contentful_entry_id: page_entry_id,
+      contentful_entry_id: entry_id,
     )
   end
 end
