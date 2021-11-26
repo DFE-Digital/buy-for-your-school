@@ -2,9 +2,12 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!
 
   def show
-    render "errors/not_found" if page.blank?
-    set_breadcrumbs(page)
-    @page = PagePresenter.new(page)
+    if page.blank?
+      render "errors/not_found"
+    else
+      set_breadcrumbs(page)
+      @page = PagePresenter.new(page)
+    end
   end
 
   def specifying_start_page
