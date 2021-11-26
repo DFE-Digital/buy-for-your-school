@@ -1,13 +1,10 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :set_breadcrumbs, only: :show
 
   def show
-    if page.blank?
-      render "errors/not_found"
-    else
-      set_breadcrumbs(page)
-      @page = PagePresenter.new(page)
-    end
+    render "errors/not_found" if page.blank?
+    @page = PagePresenter.new(page)
   end
 
   def specifying_start_page
@@ -26,9 +23,9 @@ private
     @page ||= Page.find_by(slug: params[:slug])
   end
 
-  def set_breadcrumbs(page)
-    if page.breadcrumbs.present?
-      page.breadcrumbs.each do |item|
+  def set_breadcrumbs
+    if page.present?
+      page.breadcrumbs&.each do |item|
         title, path = item.split(",")
         breadcrumb title, path
       end
