@@ -1,10 +1,7 @@
 class PagePresenter < BasePresenter
+  # @return [String]
   def updated_at
-    text = I18n.t("page.updated_at")
-    date_format = I18n.t("page.date_format")
-    date = __getobj__.updated_at.strftime(date_format)
-
-    "#{text} #{date}"
+    I18n.t("page.updated_at", date: super)
   end
 
   # @return [String]
@@ -27,5 +24,11 @@ class PagePresenter < BasePresenter
   # @return [String, NilClass]
   def body_class
     return "govuk-grid-column-two-thirds" if sidebar
+  end
+
+private
+
+  def date_format
+    I18n.t("page.date_format")
   end
 end

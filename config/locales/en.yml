@@ -81,7 +81,7 @@ en:
   # Self-Serve -----------------------------------------------------------------
   #
   page:
-    updated_at: Last updated
+    updated_at: Last updated %{date}
     date_format: "%e %B %Y"
 
   planning:

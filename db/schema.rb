@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_115424) do
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.string "slug"
+    t.string "slug", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id", null: false
