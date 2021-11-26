@@ -5,6 +5,6 @@ FactoryBot.define do
     slug { Faker::Internet.slug }
     sidebar { Faker::Markdown.sandwich }
     contentful_id { Faker::Alphanumeric.alphanumeric }
-    breadcrumbs { Array.new(5).map { Faker::Internet.domain_name } }
+    breadcrumbs { [] }
   end
 end

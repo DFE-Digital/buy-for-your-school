@@ -24,7 +24,7 @@ private
   end
 
   def set_breadcrumbs(page)
-    unless page.breadcrumbs.empty?
+    if page.breadcrumbs.present?
       page.breadcrumbs.each do |item|
         title, path = item.split(",")
         breadcrumb title, path
