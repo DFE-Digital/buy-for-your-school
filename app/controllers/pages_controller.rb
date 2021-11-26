@@ -23,12 +23,8 @@ private
     @page ||= Page.find_by(slug: params[:slug])
   end
 
+  # Apply Contentful breadcrumbs in the format "title, path"
   def set_breadcrumbs
-    return if page.blank?
-
-    page.breadcrumbs&.each do |item|
-      title, path = item.split(",")
-      breadcrumb title, path
-    end
+    page&.breadcrumbs&.each { |item| breadcrumb(*item.split(",")) }
   end
 end
