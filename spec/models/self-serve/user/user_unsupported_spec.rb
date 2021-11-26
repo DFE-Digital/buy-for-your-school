@@ -3,7 +3,7 @@ RSpec.describe User, type: :model do
     ClimateControl.modify(PROC_OPS_TEAM: "DfE Commercial Procurement Operations") { example.run }
   end
 
-  describe "supported" do
+  describe "unsupported" do
     before do
       create(:user,
              first_name: "test_unsupported",
@@ -28,8 +28,8 @@ RSpec.describe User, type: :model do
 
     context "when single org" do
       it "only returns unsupported users" do
-        expect(described_class.unsupported.count).to eq(1)
-        expect(described_class.unsupported[0].first_name).to eq("test_unsupported")
+        expect(described_class.unsupported.count).to eq 1
+        expect(described_class.unsupported[0].first_name).to eq "test_unsupported"
       end
     end
 
@@ -56,47 +56,27 @@ RSpec.describe User, type: :model do
       end
 
       it "only returns unsupported users" do
-        expect(described_class.unsupported.count).to eq(1)
-        expect(described_class.unsupported[0].first_name).to eq("test_unsupported")
+        expect(described_class.unsupported.count).to eq 1
+        expect(described_class.unsupported[0].first_name).to eq "test_unsupported"
       end
     end
 
-    context "when single org without type" do
-      context "and is supported" do
-        before do
-          create(:user,
-                 first_name: "test_no_type_supported",
-                 orgs: [
-                   {
-                     "id": "23F20E54-79EA-4146-8E39-18197576F023",
-                     "name": "DfE Commercial Procurement Operations",
-                   },
-                 ])
-        end
-
-        it "does not return the user" do
-          expect(described_class.unsupported.count).to eq(1)
-          expect(described_class.unsupported[0].first_name).to eq("test_unsupported")
-        end
+    context "when org without type" do
+      before do
+        create(:user,
+               first_name: "test_no_type",
+               orgs: [
+                 {
+                   "id": "23F20E54-79EA-4146-8E39-18197576F023",
+                   "name": "School without type",
+                 },
+               ])
       end
 
-      context "and is not supported" do
-        before do
-          create(:user,
-                 first_name: "test_no_type",
-                 orgs: [
-                   {
-                     "id": "23F20E54-79EA-4146-8E39-18197576F023",
-                     "name": "School without type",
-                   },
-                 ])
-        end
-
-        it "returns the user" do
-          expect(described_class.unsupported.count).to eq(2)
-          expect(described_class.unsupported[0].first_name).to eq("test_unsupported")
-          expect(described_class.unsupported[1].first_name).to eq("test_no_type")
-        end
+      it "returns the user" do
+        expect(described_class.unsupported.count).to eq 2
+        expect(described_class.unsupported[0].first_name).to eq "test_unsupported"
+        expect(described_class.unsupported[1].first_name).to eq "test_no_type"
       end
     end
   end
@@ -145,13 +125,13 @@ RSpec.describe User, type: :model do
     end
 
     it "returns true" do
-      expect(unsupported_user_with_type.unsupported?).to be(true)
-      expect(unsupported_user_without_type.unsupported?).to be(true)
+      expect(unsupported_user_with_type.unsupported?).to be true
+      expect(unsupported_user_without_type.unsupported?).to be true
     end
 
     it "returns false" do
-      expect(supported_user_with_type.unsupported?).to be(false)
-      expect(supported_user_without_type.unsupported?).to be(false)
+      expect(supported_user_with_type.unsupported?).to be false
+      expect(supported_user_without_type.unsupported?).to be false
     end
   end
 end

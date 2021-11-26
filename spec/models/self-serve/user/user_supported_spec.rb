@@ -1,8 +1,4 @@
 RSpec.describe User, type: :model do
-  around do |example|
-    ClimateControl.modify(PROC_OPS_TEAM: "DfE Commercial Procurement Operations") { example.run }
-  end
-
   describe "supported" do
     before do
       create(:user,
@@ -28,8 +24,8 @@ RSpec.describe User, type: :model do
 
     context "when single org" do
       it "only returns supported users" do
-        expect(described_class.supported.count).to eq(1)
-        expect(described_class.supported[0].first_name).to eq("test_supported")
+        expect(described_class.supported.count).to eq 1
+        expect(described_class.supported[0].first_name).to eq "test_supported"
       end
     end
 
@@ -56,48 +52,27 @@ RSpec.describe User, type: :model do
       end
 
       it "only returns supported users" do
-        expect(described_class.supported.count).to eq(2)
-        expect(described_class.supported[0].first_name).to eq("test_supported")
-        expect(described_class.supported[1].first_name).to eq("test_mixed")
+        expect(described_class.supported.count).to eq 2
+        expect(described_class.supported[0].first_name).to eq "test_supported"
+        expect(described_class.supported[1].first_name).to eq "test_mixed"
       end
     end
 
     context "when single org without type" do
-      context "and is supported" do
-        before do
-          create(:user,
-                 first_name: "test_no_type_supported",
-                 orgs: [
-                   {
-                     "id": "23F20E54-79EA-4146-8E39-18197576F023",
-                     "name": "DfE Commercial Procurement Operations",
-                   },
-                 ])
-        end
-
-        it "returns the user" do
-          expect(described_class.supported.count).to eq(2)
-          expect(described_class.supported[0].first_name).to eq("test_supported")
-          expect(described_class.supported[1].first_name).to eq("test_no_type_supported")
-        end
+      before do
+        create(:user,
+               first_name: "test_no_type",
+               orgs: [
+                 {
+                   "id": "23F20E54-79EA-4146-8E39-18197576F023",
+                   "name": "School without type",
+                 },
+               ])
       end
 
-      context "and is unsupported" do
-        before do
-          create(:user,
-                 first_name: "test_no_type",
-                 orgs: [
-                   {
-                     "id": "23F20E54-79EA-4146-8E39-18197576F023",
-                     "name": "School without type",
-                   },
-                 ])
-        end
-
-        it "ignores user" do
-          expect(described_class.supported.count).to eq(1)
-          expect(described_class.supported[0].first_name).to eq("test_supported")
-        end
+      it "ignores user" do
+        expect(described_class.supported.count).to eq 1
+        expect(described_class.supported[0].first_name).to eq "test_supported"
       end
     end
   end
