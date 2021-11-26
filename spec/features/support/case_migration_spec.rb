@@ -46,7 +46,6 @@ RSpec.feature "Case summary" do
       expect(find("h1.govuk-heading-l")).to have_text "Check your answers before creating a new case"
     end
 
-
     it "allows you to change answers" do
       complete_valid_form
 
