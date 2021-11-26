@@ -35,9 +35,12 @@ en:
           missing: Please select a category to assign to the case
 
         # Case hub migration
-        contact_first_name:
+        first_name:
           missing: Please enter contact first name for the case
 
-        contact_last_name:
+        last_name:
           missing: Please enter contact last name for the case
+
+        email:
+          missing: Please enter contact email for the case
 

@@ -5,7 +5,7 @@ module Support
     # @param agent_id [uuid] the id of agent creating case
     # @param attrs [Hash] hash of attrs to create case from
     #
-    def initialize(attrs = {}, agent_id = nil)
+      def initialize(attrs = {}, agent_id = nil)
       @agent_id = agent_id
       @attrs = attrs
     end

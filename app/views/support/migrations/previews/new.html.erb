@@ -26,7 +26,7 @@
           <dd class="govuk-summary-list__value">
             <%= @form.school_urn %>
           </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changeSchool" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -65,10 +65,10 @@
           <dt class="govuk-summary-list__key">
             <%= I18n.t("support.case_hub_migration.label.contact_name") %>
           </dt>
-          <dd class="govuk-summary-list__value">
+          <dd id="fullName" class="govuk-summary-list__value">
             <%= @form.full_name %>
           </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changeName" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -80,7 +80,7 @@
           <dd class="govuk-summary-list__value">
             <%= @form.email %>
           </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changeEmail" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -92,7 +92,7 @@
           <dd class="govuk-summary-list__value">
             <%= @form.phone_number %>
           </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changePhoneNumber" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -120,7 +120,7 @@
           <dd class="govuk-summary-list__value">
             <%= @form.category_name %>
           </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changeCategory" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>

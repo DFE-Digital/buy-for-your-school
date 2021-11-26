@@ -7,7 +7,7 @@ FactoryBot.define do
 
     trait :with_sub_category do
       after(:create) do |parent|
-        create(:support_category, parent_id: parent.id)
+        create(:support_category, title: "Catering", parent_id: parent.id)
         parent.reload
       end
     end
