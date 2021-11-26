@@ -33,7 +33,7 @@ module Support
     # @return [Hash] with
     def contact_events
       Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes progress_notes].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration].include?(key)
       end
     end
   end

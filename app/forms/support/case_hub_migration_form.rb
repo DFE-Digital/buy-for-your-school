@@ -4,29 +4,39 @@ module Support
     include Concerns::ValidatableForm
 
     option :school_urn, optional: true
-    option :contact_first_name, optional: true
-    option :contact_last_name, optional: true
-    option :contact_email, optional: true
-    option :contact_phone_number, optional: true
-    option :buying_category, optional: true
+    option :organisation_id, optional: true
+    option :first_name, optional: true
+    option :last_name, optional: true
+    option :email, optional: true
+    option :phone_number, optional: true
+    option :category_id, optional: true
     option :hub_case_ref, optional: true
     option :estimated_procurement_completion_date, optional: true
     option :estimated_savings, optional: true
     option :hub_notes, optional: true
     option :progress_notes, optional: true
 
-    # @return [Integer]
+    # @see Support::Case#source
+    # @return [String]
     def case_type
-      if hub_case_ref.downcase.start_with?("ce-")
-        2
-      else
-        1
-      end
+      return if hub_case_ref.nil?
+
+      hub_case_ref.downcase.start_with?("ce-") ? "sw_hub" : "nw_hub"
     end
 
     # @return [Hash] form parms
     def to_h
-      self.class.dry_initializer.attributes(self).except(:messages)
+      self.class.dry_initializer.attributes(self)
+          .except(:messages)
+          .merge(source: case_type)
+          .compact
+    end
+
+    # @return [Case]
+    def create_case
+      # TODO: guard if case invalid
+      CreateCase.new(to_h).call
+      # TODO: add interactions
     end
   end
 end

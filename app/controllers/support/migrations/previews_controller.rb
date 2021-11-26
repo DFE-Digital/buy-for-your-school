@@ -1,12 +1,12 @@
 module Support
   class Migrations::PreviewsController < Support::Migrations::BaseController
     def new
-      @case_hub_migration_form = CaseHubMigrationForm.new
+      @form = CaseHubMigrationForm.new
       @back_url = support_cases_path
     end
 
     def create
-      @case_hub_migration_form = CaseHubMigrationFormPresenter.new(CaseHubMigrationForm.from_validation(validation))
+      @form = CaseHubMigrationFormPresenter.new(CaseHubMigrationForm.from_validation(validation))
       if validation.success?
         render "support/migrations/previews/new"
       else
