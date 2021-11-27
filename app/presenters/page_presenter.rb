@@ -25,10 +25,4 @@ class PagePresenter < BasePresenter
   def body_class
     return "govuk-grid-column-two-thirds" if sidebar
   end
-
-private
-
-  def date_format
-    I18n.t("page.date_format")
-  end
 end

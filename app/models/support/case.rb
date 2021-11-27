@@ -9,10 +9,14 @@ module Support
   class Case < ApplicationRecord
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
+    belongs_to :organisation, class_name: "Support::Organisation", optional: true
     has_many :interactions, class_name: "Support::Interaction"
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy
     accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
+
+    has_one :hub_transition, class_name: "Support::HubTransition", dependent: :destroy
+    accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
 
@@ -36,8 +40,12 @@ module Support
     #   no_response
     enum state: { initial: 0, open: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
 
-    # do we still need the request text attr as all cases should have an enquiry as entry point
-    delegate :message, to: :enquiry
+    # Source
+    #
+    #   digital - specify cases
+    #   nw_hub - north west hub cases
+    #   sw_hub - south west hub cases
+    enum source: { digital: 0, nw_hub: 1, sw_hub: 2 }
 
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }

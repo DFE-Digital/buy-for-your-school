@@ -11,9 +11,9 @@ class BasePresenter < SimpleDelegator
 
 private
 
-  # @return [String] 30 March 2000
+  # @return [String] 26 November 2021
   def date_format
-    "%e %B %Y"
+    I18n.t("date.formats.presenter")
   end
 
   # @return [String] html from markdown
