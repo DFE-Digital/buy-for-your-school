@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_151744) do
+ActiveRecord::Schema.define(version: 2021_11_29_091202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -194,8 +194,6 @@ ActiveRecord::Schema.define(version: 2021_11_23_151744) do
     t.string "last_name"
     t.string "email"
     t.string "phone_number"
-    t.string "organisation_name"
-    t.string "organisation_urn"
     t.integer "source"
     t.uuid "organisation_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"

@@ -89,13 +89,14 @@ private
 
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
+    org = Support::Organisation.find_by(urn: request.school_urn)
+
     @kase = Support::Case.create!(request_text: request.message_body,
                                   first_name: user.first_name,
                                   last_name: user.last_name,
                                   email: user.email,
                                   phone_number: request.phone_number,
-                                  organisation_urn: request.school_urn,
-                                  organisation_name: request.school_name,
+                                  organisation: org,
                                   category: map_category)
 
     record_case_opening
