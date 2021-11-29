@@ -28,10 +28,10 @@
     </div>
   </dl>
 
-  <% if current_case.organisation_urn.present? %>
+  <% if current_case.organisation.urn.present? %>
     <p class="govuk-body">
       <%= link_to I18n.t("support.case.link.view_school_information"),
-          "https://www.get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{current_case.organisation_urn}",
+          "https://www.get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{current_case.organisation.urn}",
           class: "govuk-link", target: "_blank", rel: "noreferrer noopener"
       %>
     </p>

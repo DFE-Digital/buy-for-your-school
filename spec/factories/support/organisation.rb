@@ -12,5 +12,13 @@ FactoryBot.define do
 
     association :establishment_type,
                 factory: :support_establishment_type
+
+    trait :with_address do
+      address { { "town": "London", "county": "", "street": "St James's Passage", "locality": "Duke's Place", "postcode": "EC3A 5DE" } }
+    end
+
+    trait :fixed_urn do
+      urn { 12345678 }
+    end
   end
 end

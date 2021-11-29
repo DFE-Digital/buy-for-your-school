@@ -4,7 +4,7 @@
   </td>
 
   <td class="govuk-table__cell">
-    <%= link_to kase.organisation_name, support_case_path(kase.id), class: "govuk-link--no-visited-state" %>
+    <%= link_to kase.organisation.name, support_case_path(kase.id), class: "govuk-link--no-visited-state" %>
   </td>
 
   <td class="govuk-table__cell"><%= kase.category.title %></td>
