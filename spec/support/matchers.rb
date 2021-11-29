@@ -92,3 +92,13 @@ RSpec::Matchers.define :have_link_to_open_in_new_tab do |locator, options = {}|
     link.present? && link[:target] == "_blank"
   end
 end
+
+RSpec::Matchers.define :be_categorised do |expected|
+  match do |actual|
+    actual&.keys&.first == expected[:parent] && actual&.values&.first&.keys&.first == expected[:child]
+  end
+
+  failure_message do |actual|
+    "expected that #{actual} would have parent #{expected[:parent]} and child #{expected[:child]}"
+  end
+end

@@ -2,7 +2,13 @@ RSpec.describe Support::CasePresenter do
   subject(:presenter) { described_class.new(support_case) }
 
   let(:agent) { create(:support_agent) }
-  let(:support_case) { create(:support_case, agent: agent, created_at: Time.zone.local(2021, 1, 30, 12, 0, 0)) }
+  let(:organisation) { create(:support_organisation, urn: "000000", name: "Example Org") }
+  let(:support_case) do
+    create(:support_case,
+           agent: agent,
+           organisation: organisation,
+           created_at: Time.zone.local(2021, 1, 30, 12, 0, 0))
+  end
 
   before do
     create(:support_interaction, case: support_case, created_at: Time.zone.local(2021, 1, 31, 12, 0, 0))
@@ -42,6 +48,24 @@ RSpec.describe Support::CasePresenter do
   describe "#category" do
     it "is decorated" do
       expect(presenter.category).to be_a(Support::CategoryPresenter)
+    end
+  end
+
+  describe "#organisation" do
+    it "is decorated" do
+      expect(presenter.organisation).to be_a(Support::OrganisationPresenter)
+    end
+  end
+
+  describe "#org_name" do
+    it "returns org name" do
+      expect(presenter.org_name).to eq "Example Org"
+    end
+  end
+
+  describe "#org_urn" do
+    it "returns org urn" do
+      expect(presenter.org_urn).to eq "000000"
     end
   end
 end
