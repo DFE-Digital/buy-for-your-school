@@ -7,6 +7,7 @@ en:
   date:
     formats:
       default: "%-d %b %Y"
+      presenter: "%e %B %Y"
   generic:
     button:
       back: Back
@@ -77,10 +78,12 @@ en:
           - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
         link: sign in into the service again.
-
   #
   # Self-Serve -----------------------------------------------------------------
   #
+  page:
+    updated_at: Last updated %{date}
+
   planning:
     start_page:
       page_title: Catering services
@@ -336,12 +339,15 @@ en:
         school_urn: Establishment URN
         school_name: Establishment name
         school_postcode: Establishment postcode
-        contact_name: Contact name
-        contact_first_name: Contact first name
-        contact_last_name: Contact last name
-        contact_email: Contact email
-        contact_phone: Contact phone number %{optional}
+        name: Contact name
+        first_name: Contact first name
+        last_name: Contact last name
+        email: Contact email
+        phone_number: Contact phone number %{optional}
         category: Category
+        category_id: Buying category
+        source: Case source
+        organisation_id: Establishment name
         case_type: Type of case
         hub_case_ref: Identification number %{optional}
         hub_case_ref_hint: We will use the existing Hub identification number to link the existing case data to a new case number
@@ -440,6 +446,9 @@ en:
         email_to_school: Email to school
         note: Case note
         support_request: Request for support
+        hub_notes: Hub notes
+        hub_progress_notes: Hub progress notes
+        hub_migration: Hub migration
       label:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here

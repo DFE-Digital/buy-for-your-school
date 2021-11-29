@@ -18,19 +18,19 @@
   <% end %>
 
   <%= form.govuk_text_field :first_name,
-                            label: { text: I18n.t("support.case_hub_migration.label.contact_first_name") }
+                            label: { text: I18n.t("support.case_hub_migration.label.first_name") }
   %>
 
   <%= form.govuk_text_field :last_name,
-                            label: { text: I18n.t("support.case_hub_migration.label.contact_last_name") }
+                            label: { text: I18n.t("support.case_hub_migration.label.last_name") }
   %>
 
   <%= form.govuk_email_field :email,
-                            label: { text: I18n.t("support.case_hub_migration.label.contact_email") }
+                            label: { text: I18n.t("support.case_hub_migration.label.email") }
   %>
 
   <%= form.govuk_phone_field :phone_number,
-                             label: { text: I18n.t("support.case_hub_migration.label.contact_phone", optional: I18n.t("support.generic.form.optional")) }
+                             label: { text: I18n.t("support.case_hub_migration.label.phone_number", optional: I18n.t("support.generic.form.optional")) }
   %>
 
   <%= form.govuk_select(:category_id, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
@@ -56,9 +56,10 @@
                              hint:  { text: I18n.t("support.case_hub_migration.label.hub_case_ref_hint") }
   %>
 
-  <%= form.govuk_date_field :estimated_procurement_completion_date,
-                             legend: { text: I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date", optional: I18n.t("support.generic.form.optional")), size: "s" },
-                             hint:  { text: I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date_hint") }
+  <%= form.govuk_text_field :estimated_procurement_completion_date,
+                            label: { text: I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date", optional: I18n.t("support.generic.form.optional")) },
+                             hint:  { text: I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date_hint") },
+                              placeholder: "DD/MM/YYYY"
   %>
 
   <%= form.govuk_text_field :estimated_savings,
