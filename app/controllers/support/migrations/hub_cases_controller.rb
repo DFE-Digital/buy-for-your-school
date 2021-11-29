@@ -13,6 +13,7 @@ module Support
         kase = CreateCase.new(@form.to_h).call
         create_interaction(kase.id, "hub_notes", form_params["hub_notes"]) if form_params["hub_notes"].present?
         create_interaction(kase.id, "hub_progress_notes", form_params["progress_notes"]) if form_params["progress_notes"].present?
+        create_interaction(kase.id, "hub_migration", "Case Migration Data", @form.to_h)
         redirect_to support_case_path(kase)
       else
         render :new
@@ -21,8 +22,8 @@ module Support
 
   private
 
-    def create_interaction(kase_id, event_type, body)
-      CreateInteraction.new(kase_id, event_type, current_agent.id, { body: body }).call
+    def create_interaction(kase_id, event_type, body, additional_data = nil)
+      CreateInteraction.new(kase_id, event_type, current_agent.id, { body: body, additional_data: additional_data }.compact).call
     end
   end
 end

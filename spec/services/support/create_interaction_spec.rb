@@ -21,7 +21,7 @@ RSpec.describe Support::CreateInteraction do
 
       result = service.new(
         int_params[:case_id],
-        int_params[:event_type].to_s,
+        int_params[:event_type],
         int_params[:agent_id],
         { body: int_params[:body] },
       ).call
@@ -49,7 +49,7 @@ RSpec.describe Support::CreateInteraction do
 
       result = service.new(
         int_params[:case_id],
-        int_params[:event_type].to_s,
+        int_params[:event_type],
         int_params[:agent_id],
         { body: int_params[:body], additional_data: int_params[:additional_data] },
       ).call
