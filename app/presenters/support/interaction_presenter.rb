@@ -3,6 +3,7 @@ require_relative "agent_presenter"
 
 module Support
   class InteractionPresenter < BasePresenter
+
     # @return [String]
     def note
       super.strip.chomp
@@ -23,6 +24,13 @@ module Support
     # @return [CasePresenter]
     def case
       CasePresenter.new(super)
+    end
+
+    # @return [String]
+    def show_body
+      return "<a href=\"/support/cases/#{case_id}/interactions/#{id}\" target=\"_blank\">#{I18n.t('.support.interaction.link_to_email_preview')}</a>" if event_type.match? /\Aemail.*/
+
+      body
     end
 
   private

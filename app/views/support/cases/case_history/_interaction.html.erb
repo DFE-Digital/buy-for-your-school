@@ -33,7 +33,7 @@
           <%= I18n.t("support.interaction.label.body") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= interaction.body %>
+          <%= interaction.show_body.html_safe %>
         </dd>
       </div>
     </dl>
