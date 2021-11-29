@@ -5,10 +5,10 @@ module Support
   private
 
     def validation
-      CaseHubMigrationFormSchema.new.call(**case_hub_migration_form_params)
+      CaseHubMigrationFormSchema.new.call(**form_params)
     end
 
-    def case_hub_migration_form_params
+    def form_params
       params.require(:case_hub_migration_form).permit(
         :school_urn,
         :organisation_id,

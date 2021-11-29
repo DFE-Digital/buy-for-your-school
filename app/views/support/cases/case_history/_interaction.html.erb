@@ -36,6 +36,20 @@
           <%= interaction.show_body.html_safe %>
         </dd>
       </div>
+
+      <% interaction.additional_data.each do |key, value|  %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.#{key}", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= value.humanize %>
+          </dd>
+        </div>
+      <% end %>
+
+
+
     </dl>
   </div>
 </div>
