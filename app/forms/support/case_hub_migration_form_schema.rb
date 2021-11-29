@@ -24,9 +24,11 @@ module Support
       optional(:progress_notes).value(:string)
     end
 
+    # TODO: custom macro for phone number validation
     rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
 
-    rule(:estimated_procurement_completion_date).validate(format?: /(^$|^0\d{2}\/\d{2}\/\d{4}$)/)
+    # TODO: custom macro using chronic
+    rule(:estimated_procurement_completion_date).validate(format?: /(^$|^\d{2}\/\d{2}\/\d{4}$)/)
 
     rule(:school_urn) do
       key(:school_urn).failure(:missing) if value.blank?
