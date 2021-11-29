@@ -440,6 +440,9 @@ en:
         email_to_school: Email to school
         note: Case note
         support_request: Request for support
+        hub_notes: Hub notes
+        hub_progress_notes: Hub progress notes
+        hub_migration: Hub migration
       label:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
