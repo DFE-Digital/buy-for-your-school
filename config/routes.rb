@@ -67,6 +67,13 @@ Rails.application.routes.draw do
   namespace :support do
     resources :agents, only: %i[create]
     resources :cases, only: %i[index show edit update] do
+      collection do
+        namespace :migrations do
+          resource :hub_case, only: %i[new create], path: "hub-case" do
+            resource :preview, only: %i[new create]
+          end
+        end
+      end
       resources :interactions, only: %i[new create]
       scope module: :cases do
         resource :categorisation, only: %i[edit update]

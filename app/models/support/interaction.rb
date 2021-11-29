@@ -30,7 +30,19 @@ module Support
     #   email_from_school
     #   email_to_school
     #   support_request
-    enum event_type: { note: 0, phone_call: 1, email_from_school: 2, email_to_school: 3, support_request: 4 }
+    #   hub notes
+    #   hub progress notes
+    #   hub migration
+    enum event_type: {
+      note: 0,
+      phone_call: 1,
+      email_from_school: 2,
+      email_to_school: 3,
+      support_request: 4,
+      hub_notes: 5,
+      hub_progress_notes: 6,
+      hub_migration: 7,
+    }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? }
 
