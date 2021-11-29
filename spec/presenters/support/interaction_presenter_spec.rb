@@ -29,22 +29,4 @@ RSpec.describe Support::InteractionPresenter do
       ])
     end
   end
-
-  describe "#show_body" do
-    context "with an interaction via email" do
-      let(:interaction) { create(:support_interaction, :email_to_school) }
-
-      it "provides a link to a preview of the email" do
-        expect(presenter.show_body).to eq("<a href=\"/support/cases/#{interaction.case_id}/interactions/#{interaction.id}\" target=\"_blank\">Open email preview in new tab</a>")
-      end
-    end
-
-    context "with a non-email interaction" do
-      let(:interaction) { create(:support_interaction, :phone_call) }
-
-      it "returns the body of the interaction" do
-        expect(presenter.show_body).to eq(interaction.body)
-      end
-    end
-  end
 end
