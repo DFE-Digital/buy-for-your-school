@@ -3,8 +3,6 @@ require_relative "agent_presenter"
 
 module Support
   class InteractionPresenter < BasePresenter
-    include ActionView::Helpers
-    include Rails.application.routes.url_helpers
 
     # @return [String]
     def note
@@ -28,11 +26,9 @@ module Support
       CasePresenter.new(super)
     end
 
-    # @return [String]
-    def show_body
-      return link_to I18n.t(".support.interaction.link_to_email_preview"), support_case_interaction_path(id: id, case_id: case_id), target: "_blank", rel: "noopener" if email?
-
-      body
+    # @return [Boolean]
+    def email?
+      event_type.match? /\Aemail.*/
     end
 
   private
@@ -45,11 +41,6 @@ module Support
       Interaction.event_types.reject do |key, _int|
         %w[note support_request hub_notes hub_progress_notes hub_migration].include?(key)
       end
-    end
-
-    # @return [Boolean]
-    def email?
-      event_type.match? /\Aemail.*/
     end
   end
 end
