@@ -1,4 +1,4 @@
-# 20. Use accessable-autocomplete for autocomplete fields
+# 20. Use accessible-autocomplete for autocomplete fields
 
 Date: 2021-11-29
 
