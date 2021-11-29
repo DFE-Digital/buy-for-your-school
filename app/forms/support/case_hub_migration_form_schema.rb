@@ -44,6 +44,5 @@ module Support
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
     end
-
   end
 end

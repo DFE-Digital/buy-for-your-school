@@ -60,6 +60,14 @@ module Support
       CategoryPresenter.new(super)
     end
 
+    def org_name
+      organisation.name
+    end
+
+    def org_urn
+      organisation.urn
+    end
+
     # @return [OrganisationPresenter]
     def organisation
       OrganisationPresenter.new(super)
