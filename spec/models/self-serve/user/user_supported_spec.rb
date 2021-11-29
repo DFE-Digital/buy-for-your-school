@@ -1,5 +1,5 @@
 RSpec.describe User, type: :model do
-  describe "supported" do
+  describe ".supported" do
     before do
       create(:user,
              first_name: "test_supported",
@@ -22,14 +22,14 @@ RSpec.describe User, type: :model do
              }])
     end
 
-    context "when single org" do
+    context "when there are supported and unsupported users" do
       it "only returns supported users" do
         expect(described_class.supported.count).to eq 1
         expect(described_class.supported[0].first_name).to eq "test_supported"
       end
     end
 
-    context "when multiple orgs" do
+    context "when user belongs to unsupported and supported org" do
       before do
         create(:user,
                first_name: "test_mixed",
@@ -51,14 +51,14 @@ RSpec.describe User, type: :model do
                ])
       end
 
-      it "only returns supported users" do
+      it "returns the user" do
         expect(described_class.supported.count).to eq 2
         expect(described_class.supported[0].first_name).to eq "test_supported"
         expect(described_class.supported[1].first_name).to eq "test_mixed"
       end
     end
 
-    context "when single org without type" do
+    context "when user belongs to org without type" do
       before do
         create(:user,
                first_name: "test_no_type",
@@ -70,7 +70,7 @@ RSpec.describe User, type: :model do
                ])
       end
 
-      it "ignores user" do
+      it "ignores the user" do
         expect(described_class.supported.count).to eq 1
         expect(described_class.supported[0].first_name).to eq "test_supported"
       end

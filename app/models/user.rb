@@ -12,7 +12,7 @@ class User < ApplicationRecord
   scope :unsupported, -> { where.not("orgs @> any(array[?]::jsonb[])", ORG_TYPE_IDS.map { |id| %([{"type": {"id": "#{id}"}}]) }) }
 
   # users belonging to the proc-ops team
-  scope :proc_ops, -> { where("orgs @> ?", %([{"name": "#{ENV['PROC_OPS_TEAM']}"}])) }
+  scope :internal, -> { where("orgs @> ?", %([{"name": "#{ENV['PROC_OPS_TEAM']}"}])) }
 
   # @return [false] distinguish from unauthenticated user
   #
@@ -20,8 +20,8 @@ class User < ApplicationRecord
     false
   end
 
-  # @return [Boolean]
+  # @return [Boolean] user is not an internal team member or in a supported organisation
   def unsupported?
-    User.unsupported.include?(self) && User.proc_ops.exclude?(self)
+    self.class.internal.exclude?(self) && self.class.supported.exclude?(self)
   end
 end
