@@ -18,13 +18,15 @@ module Support
       optional(:phone_number).value(:string)
       optional(:category_id).value(:string)
       optional(:hub_case_ref).value(:string)
-      optional(:estimated_procurement_completion_date).filter(format?: /\d{2}\/\d{2}\/\d{4}/).value(:string)
+      optional(:estimated_procurement_completion_date).value(:string)
       optional(:estimated_savings).value(:string)
       optional(:hub_notes).value(:string)
       optional(:progress_notes).value(:string)
     end
 
     rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+
+    rule(:estimated_procurement_completion_date).validate(format?: /(^$|^0\d{2}\/\d{2}\/\d{4}$)/)
 
     rule(:school_urn) do
       key(:school_urn).failure(:missing) if value.blank?
@@ -42,5 +44,6 @@ module Support
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
     end
+
   end
 end
