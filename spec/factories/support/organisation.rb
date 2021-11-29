@@ -18,7 +18,7 @@ FactoryBot.define do
     end
 
     trait :fixed_urn do
-      urn { 12345678 }
+      urn { "12345678" }
     end
   end
 end
