@@ -2,7 +2,7 @@ describe "Case school details" do
   include_context "with an agent"
 
   let(:support_organisation) { create(:support_organisation, urn: "12345") }
-  let(:support_case) { create(:support_case, :open, organisation: support_organisation) }
+  let(:support_case) { create(:support_case, :opened, organisation: support_organisation) }
 
   before do
     click_button "Agent Login"

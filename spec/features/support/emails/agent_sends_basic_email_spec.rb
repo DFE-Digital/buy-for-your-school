@@ -5,7 +5,7 @@ describe "Support agent sends a basic email" do
     "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification."
   end
 
-  let(:support_case) { create(:support_case, :open) }
+  let(:support_case) { create(:support_case, :opened) }
 
   before do
     click_button "Agent Login"
