@@ -7,6 +7,7 @@ en:
   date:
     formats:
       default: "%-d %b %Y"
+      presenter: "%e %B %Y"
   generic:
     button:
       back: Back
@@ -77,10 +78,12 @@ en:
           - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
         link: sign in into the service again.
-
   #
   # Self-Serve -----------------------------------------------------------------
   #
+  page:
+    updated_at: Last updated %{date}
+
   planning:
     start_page:
       page_title: Catering services

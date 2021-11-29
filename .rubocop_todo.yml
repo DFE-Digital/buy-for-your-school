@@ -16,6 +16,7 @@ RSpec/AnyInstance:
     - 'spec/services/self-serve/save_answer_spec.rb'
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
+    - 'spec/requests/self-serve/api/contentful/pages_controller_spec.rb'
 
 # Offense count: 19
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
@@ -28,20 +29,22 @@ RSpec/VerifiedDoubles:
     - 'spec/services/self-serve/get_entry_spec.rb'
     - 'spec/support/contentful_helpers.rb'
 
-# Offense count: 1
+# Offense count: 2
 # Configuration parameters: Database, Include.
 # SupportedDatabases: mysql, postgresql
 # Include: db/migrate/*.rb
 Rails/BulkChangeTable:
   Exclude:
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
+    - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
 
-# Offense count: 1
+# Offense count: 2
 # Configuration parameters: Include.
 # Include: db/migrate/*.rb
 Rails/NotNullColumn:
   Exclude:
     - 'db/migrate/20210107122307_add_liquid_template_to_journey.rb'
+    - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
 
 # Offense count: 3
 # Configuration parameters: Include.
@@ -51,3 +54,7 @@ Rails/ReversibleMigration:
     - 'db/migrate/20201112123028_remove_answer_table.rb'
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
     - 'db/migrate/20210125171840_remove_next_entry_id.rb'
+
+Style/TrailingCommaInArguments:
+  Exclude:
+    - 'spec/requests/self-serve/api/contentful/page_spec.rb'

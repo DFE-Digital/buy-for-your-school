@@ -1,11 +1,16 @@
 # Get Help Buying for Schools
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/f119cce1678a8a67cca7/maintainability)](https://codeclimate.com/github/DFE-Digital/buy-for-your-school/maintainability)
-![CI](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/continuous-integration.yml/badge.svg)
-![Deploy](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/deploy.yml/badge.svg)
+[![Maintainability][codeclimate-badge]][codeclimate-report]
+![CI][ci-badge]
+![Deploy][deploy-badge]
 
 A service to help school buying professionals create tender documents that comply with the relevant government policy.
 These tender documents can then be used to start a procurement process saving schools time and money.
+
+## Reusable Code
+
+This project uses **[DfE Sign-In][dsi]** for authentication.
+If your department project does the same, the code in `./lib/dsi` could help you.
 
 ## Documentation
 
@@ -14,12 +19,11 @@ Run `$ rake yard` to generate documentation for the project in `/documentation`
 ## Changelog
 
 When making a change, update the [changelog](CHANGELOG.md) using the
-[Keep a Changelog 1.0.0](https://keepachangelog.com/en/1.0.0/) format.
-Pull requests should not be merged before any relevant updates are made.
+[Keep a Changelog 1.0.0][keep-a-changelog] format.
 
 ## Architecture Decision Records
 
-We use ADRs to document architectural decisions managed with [adr-tools](https://github.com/npryce/adr-tools).
+We use ADRs to document architectural decisions managed with [adr-tools][adr].
 
 ## Access
 
@@ -30,7 +34,14 @@ We use ADRs to document architectural decisions managed with [adr-tools](https:/
 | Staging     | https://staging-get-help-buying-for-schools.education.gov.uk  |
 | Production  |     https://get-help-buying-for-schools.education.gov.uk      |
 
-## Source
 
-This repository was bootstrapped from
-[dxw's `rails-template`](https://github.com/dxw/rails-template).
+
+---
+
+[adr]: https://github.com/npryce/adr-tools
+[ci-badge]: https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/continuous-integration.yml/badge.svg
+[codeclimate-badge]: https://api.codeclimate.com/v1/badges/f119cce1678a8a67cca7/maintainability
+[codeclimate-report]: https://codeclimate.com/github/DFE-Digital/buy-for-your-school/maintainability
+[deploy-badge]: https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/deploy.yml/badge.svg
+[dsi]: https://services.signin.education.gov.uk/
+[keep-a-changelog]: https://keepachangelog.com/en/1.0.0/
