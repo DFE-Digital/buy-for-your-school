@@ -63,7 +63,7 @@
       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.contact_name") %>
+            <%= I18n.t("support.case_hub_migration.label.name") %>
           </dt>
           <dd id="fullName" class="govuk-summary-list__value">
             <%= @form.full_name %>
@@ -75,7 +75,7 @@
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.contact_email") %>
+            <%= I18n.t("support.case_hub_migration.label.email") %>
           </dt>
           <dd class="govuk-summary-list__value">
             <%= @form.email %>
@@ -87,7 +87,7 @@
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.contact_phone", optional: nil) %>
+            <%= I18n.t("support.case_hub_migration.label.phone_number", optional: nil) %>
           </dt>
           <dd class="govuk-summary-list__value">
             <%= @form.phone_number %>
