@@ -1,4 +1,4 @@
-# 20. Use acessable-autocomplete for autocomplete fields
+# 20. Use accessable-autocomplete for autocomplete fields
 
 Date: 2021-11-29
 
@@ -15,8 +15,8 @@ It is neccessary to provide autocomplete functionality to make certain fields qu
 We will use [accessible-autocomplete](https://github.com/alphagov/accessible-autocomplete) to provide the autocomplete capability in our pages.
 
 This package has been chosen because accessability has been carefully considered when developing the package.
-Also it is designed to be used with `govuk` form styles so it will be in keeping with other form fields so as
-not to jarr the user.
+Also it is designed to be used with `govuk` form styles so it will be in keeping with other form fields
+and not be jarring to the user.
 
 ## Consequences
 
