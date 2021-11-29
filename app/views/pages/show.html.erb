@@ -1,0 +1,10 @@
+<%= content_for :title, @page.title %>
+
+<div class="<%= @page.container_class%> md-override">
+  <div class="<%= @page.body_class %>">
+    <%= @page.body %>
+    <p class="govuk-body-s"><%= @page.updated_at %></p>
+  </div>
+
+  <%= render 'sidebar' if @page.sidebar %>
+</div>

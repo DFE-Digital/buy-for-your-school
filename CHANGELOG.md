@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ### Shared Unreleased
 
 - added helper component to enable autocomplete functionality on fields
+- pages now served from contentful
 
 ### Supported Unreleased
 
