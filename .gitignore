@@ -129,3 +129,5 @@ documentation
 # local development certs
 localhost.crt
 localhost.key
+
+.env.test.local

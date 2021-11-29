@@ -34,3 +34,41 @@ en:
         category_id:
           missing: Please select a category to assign to the case
 
+        # Case hub migration
+        first_name:
+          missing: Please enter contact first name for the case
+
+        last_name:
+          missing: Please enter contact last name for the case
+
+        email:
+          missing: Please enter contact email for the case
+
+  case_migration_form:
+    rules:
+      school_urn: "" # Omitted
+      first_name: First name
+      last_name: Last name
+      email: Email
+      phone_number: Phone number
+
+    errors:
+      rules:
+        school_urn:
+          missing: You must select a school
+
+        first_name:
+          missing: is missing
+
+        last_name:
+          missing: is missing
+
+        email:
+          missing: is missing
+
+        phone_number:
+          # format?: must start with a zero and only contain digits
+          format?: must have a minimum of 10 numbers and no spaces, starting with a zero
+          # min_size?: "must have at least %{num} digits"
+          max_size?: "can not have more than %{num} digits"
+
