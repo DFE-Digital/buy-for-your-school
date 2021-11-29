@@ -46,7 +46,7 @@ RSpec.describe Support::Case, type: :model do
   describe "#to_csv" do
     it "includes headers" do
       expect(described_class.to_csv).to eql(
-        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,organisation_name,organisation_urn,source,organisation_id\n",
+        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id\n",
       )
     end
   end
