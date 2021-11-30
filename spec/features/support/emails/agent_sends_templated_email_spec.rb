@@ -2,7 +2,7 @@ describe "Support agent sends a templated email" do
   include_context "with an agent"
   include_context "with notify email templates"
 
-  let(:support_case) { create(:support_case, :open) }
+  let(:support_case) { create(:support_case, :opened) }
 
   before do
     click_button "Agent Login"

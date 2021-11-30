@@ -1,7 +1,7 @@
 RSpec.feature "Case worker assignment" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, :open) }
+  let(:support_case) { create(:support_case, :opened) }
 
   before do
     click_button "Agent Login"
@@ -23,8 +23,8 @@ RSpec.feature "Case worker assignment" do
       expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
     end
 
-    it "sets the case status to open" do
-      expect(support_case.reload).to be_open
+    it "sets the case status to opened" do
+      expect(support_case.reload).to be_opened
     end
 
     it "has the chosen agent now assigned to the case" do
