@@ -43,6 +43,11 @@
 
       // Format the autocomplete choice
       const formatSuggestion = (suggestion, template) => {
+        // Allow defaultValue to display
+        if (_.isString(suggestion)) {
+          return suggestion;
+        }
+
           // todo if no suggestion start typing....
         output = template;
 
