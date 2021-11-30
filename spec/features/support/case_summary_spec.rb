@@ -87,7 +87,7 @@ RSpec.feature "Case summary" do
   end
 
   context "when the case is open" do
-    let(:support_case) { create(:support_case, state: "open") }
+    let(:support_case) { create(:support_case, state: "opened") }
 
     it "has action links" do
       within "ul.govuk-list" do

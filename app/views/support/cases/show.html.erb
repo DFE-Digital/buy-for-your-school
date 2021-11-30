@@ -1,5 +1,5 @@
 <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
-  <%= @current_case.organisation_name %>
+  <%= @current_case.org_name %>
 </h1>
 <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
   <%= I18n.t("support.case.label.state.state_#{@current_case.state.downcase}") %>
@@ -55,7 +55,7 @@
 <h3 class="govuk-heading-m"><%= I18n.t("support.case.header.action") %></h3>
 
 <ul class="govuk-list case-actions">
-  <% if @current_case.open? %>
+  <% if @current_case.opened? %>
     <li>
       <%= link_to I18n.t("support.case.label.change_owner"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
     </li>

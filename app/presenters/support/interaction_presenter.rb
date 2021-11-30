@@ -25,6 +25,11 @@ module Support
       CasePresenter.new(super)
     end
 
+    # @return [Boolean]
+    def email?
+      event_type.match? /\Aemail.*/
+    end
+
   private
 
     # @example

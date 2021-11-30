@@ -222,4 +222,32 @@ module ContentfulHelpers
       **fields,
     )
   end
+
+  # Create a Contentful Entry with custom fields
+  #
+  # @param [Hash] fields
+  #
+  # @return [Contentful::Entry]
+  def contentful_entry(fields)
+    Contentful::Entry.new(
+      {
+        "sys" => {
+          "space" => {
+            "sys" => {
+              "id" => "id",
+            },
+          },
+          "id" => "id",
+          "contentType" => {
+            "sys" => {
+              "id" => "id",
+            },
+          },
+          "locale" => "en-US",
+        },
+        "fields" => fields,
+      },
+      {},
+    )
+  end
 end

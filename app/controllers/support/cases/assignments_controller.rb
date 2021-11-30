@@ -28,7 +28,7 @@ module Support
       )
 
       current_case.update!(
-        state: :open,
+        state: :opened,
         agent_id: @case_assignment_form.agent_id,
       )
     end

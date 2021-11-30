@@ -51,6 +51,7 @@ en:
       last_name: Last name
       email: Email
       phone_number: Phone number
+      estimated_procurement_completion_date: Estimated procurement date
 
     errors:
       rules:
@@ -71,4 +72,7 @@ en:
           format?: must have a minimum of 10 numbers and no spaces, starting with a zero
           # min_size?: "must have at least %{num} digits"
           max_size?: "can not have more than %{num} digits"
+
+        estimated_procurement_completion_date:
+          format?: must follow the format of DD/MM/YYYY
 
