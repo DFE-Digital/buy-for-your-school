@@ -17,10 +17,10 @@ jobs:
         run: contentful login --management-token ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
 
       - name: Delete previous develop sandbox environment
-        run: contentful space --space-id ${{ secrets.APP_ENV_PROD_CONTENTFUL_SPACE }} environment delete --environment-id develop
+        run: contentful space --space-id ${{ secrets.CONTENTFUL_SPACE }} environment delete --environment-id develop
 
       - name: Clone latest staging environment to a new develop environment
-        run: contentful space --space-id ${{ secrets.APP_ENV_PROD_CONTENTFUL_SPACE }} environment create --name develop --environment-id develop --source staging
+        run: contentful space --space-id ${{ secrets.CONTENTFUL_SPACE }} environment create --name develop --environment-id develop --source staging
 
       # - name: Cache bust the staging category record to refresh the environment
       #   run: |
