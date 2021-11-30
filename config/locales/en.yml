@@ -291,7 +291,7 @@ en:
         status: Status
         state:
           state_initial: New
-          state_open: Open
+          state_opened: Open
           state_resolved: Resolved
           state_pending: Pending
           state_closed: Closed
@@ -456,3 +456,4 @@ en:
         created_by: Created by
       message:
         created_flash: "%{type} added to case"
+      link_to_email_preview: Open email preview in new tab
