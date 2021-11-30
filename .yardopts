@@ -9,3 +9,5 @@ CHANGELOG.md
 LICENCE
 doc/*.md
 doc/architecture/decisions/*.md
+app/**/*.rb
+lib/**/*.rb
