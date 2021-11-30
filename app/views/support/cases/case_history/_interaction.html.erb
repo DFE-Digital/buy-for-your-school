@@ -33,7 +33,11 @@
           <%= I18n.t("support.interaction.label.body") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= interaction.body %>
+          <% if interaction.email? %>
+            <%= link_to I18n.t("support.interaction.link_to_email_preview"), support_case_interaction_path(interaction), target: "_blank", rel: "noopener" %>
+          <% else %>
+            <%= interaction.body %>
+          <% end %>
         </dd>
       </div>
 

@@ -456,3 +456,4 @@ en:
         created_by: Created by
       message:
         created_flash: "%{type} added to case"
+      link_to_email_preview: Open email preview in new tab
