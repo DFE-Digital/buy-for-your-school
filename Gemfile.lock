@@ -74,7 +74,7 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
-    bootsnap (1.9.1)
+    bootsnap (1.9.3)
       msgpack (~> 1.0)
     brakeman (5.1.2)
     builder (3.2.4)
@@ -191,7 +191,6 @@ GEM
       deep_merge (~> 1.2.1)
     hashdiff (1.0.1)
     hashie (4.1.0)
-    high_voltage (3.1.2)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -516,7 +515,6 @@ DEPENDENCIES
   faker
   foreman
   govuk_design_system_formbuilder (~> 2.7)
-  high_voltage
   httpclient
   jbuilder (~> 2.11)
   jquery-rails

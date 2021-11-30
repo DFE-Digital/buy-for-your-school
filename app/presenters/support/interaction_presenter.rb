@@ -25,6 +25,11 @@ module Support
       CasePresenter.new(super)
     end
 
+    # @return [Boolean]
+    def email?
+      event_type.match? /\Aemail.*/
+    end
+
   private
 
     # @example
@@ -33,7 +38,7 @@ module Support
     # @return [Hash] with
     def contact_events
       Interaction.event_types.reject do |key, _int|
-        %w[note support_request].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration].include?(key)
       end
     end
   end

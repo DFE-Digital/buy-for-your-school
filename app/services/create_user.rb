@@ -24,13 +24,11 @@ class CreateUser
   def call
     return :invalid unless user_id
 
-    if current_user
-      update_user!
-      Rollbar.info "Updated account for #{user_id}"
-      current_user
-    elsif supported? || internal?
-      create_user!
-      Rollbar.info "Created account for #{user_id}"
+    update_user! if current_user
+
+    if supported? || internal?
+      create_user! unless current_user
+
       current_user
     elsif orgs.none?
       Rollbar.info "User #{user_id} is not in a supported organisation"
@@ -72,11 +70,13 @@ private
       orgs: orgs,
       roles: roles,
     )
+    Rollbar.info "Updated account for #{user_id}"
+    current_user
   end
 
   # @return [User]
   def create_user!
-    User.create!(
+    user = User.create!(
       dfe_sign_in_uid: user_id,
       email: email,
       full_name: full_name,
@@ -85,6 +85,8 @@ private
       orgs: orgs,
       roles: roles,
     )
+    Rollbar.info "Created account for #{user_id}"
+    user
   end
 
   # @return [String]

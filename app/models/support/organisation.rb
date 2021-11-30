@@ -17,6 +17,8 @@ module Support
                counter_cache: true,
                class_name: "Support::EstablishmentType"
 
+    has_many :cases, class_name: "Support::Case"
+
     validates :urn, uniqueness: true
     validates :name, presence: true
 

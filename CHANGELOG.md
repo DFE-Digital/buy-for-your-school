@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ### Shared Unreleased
 
 - added helper component to enable autocomplete functionality on fields
+- pages now served from contentful
 
 ### Supported Unreleased
 
@@ -24,6 +25,10 @@ The format is based on [Keep a Changelog 1.0.0].
 - add link to school details in GIAS from case view
 - add ability to re-categorise a case
 - enable sending of emails via Notify
+- add activity logging for support cases
+- add csv export for case management
+- add create case service for case management
+- add create interaction for case management
 
 ### Specify Unreleased
 
@@ -82,6 +87,7 @@ The format is based on [Keep a Changelog 1.0.0].
   currently no-op until approved
 - clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
   no-op until approved
+- add rake task for CSV data export of activity log items
 
 **Steps**
 

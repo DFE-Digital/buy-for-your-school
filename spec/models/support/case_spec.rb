@@ -16,7 +16,7 @@ RSpec.describe Support::Case, type: :model do
   end
 
   it { is_expected.to define_enum_for(:support_level).with_values(%i[L1 L2 L3 L4 L5]) }
-  it { is_expected.to define_enum_for(:state).with_values(%i[initial open resolved pending closed pipeline no_response]) }
+  it { is_expected.to define_enum_for(:state).with_values(%i[initial opened resolved pending closed pipeline no_response]) }
 
   describe "#generate_ref" do
     context "when no cases exist" do
@@ -40,6 +40,14 @@ RSpec.describe Support::Case, type: :model do
       it "generates an incrementing reference" do
         expect(new_case.ref).to eql "000011"
       end
+    end
+  end
+
+  describe "#to_csv" do
+    it "includes headers" do
+      expect(described_class.to_csv).to eql(
+        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id\n",
+      )
     end
   end
 end

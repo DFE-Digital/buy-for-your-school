@@ -7,6 +7,7 @@ en:
   date:
     formats:
       default: "%-d %b %Y"
+      presenter: "%e %B %Y"
   generic:
     button:
       back: Back
@@ -77,10 +78,12 @@ en:
           - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
         link: sign in into the service again.
-
   #
   # Self-Serve -----------------------------------------------------------------
   #
+  page:
+    updated_at: Last updated %{date}
+
   planning:
     start_page:
       page_title: Catering services
@@ -262,6 +265,10 @@ en:
     generic:
       link:
         opens_in_new_tab: (opens in new tab)
+      form:
+        optional: (optional)
+      currency:
+        unit_symbol: £
 
     header: Supported Buying Admin
 
@@ -272,6 +279,7 @@ en:
         case_detail: Case details
         case_history: Case history
       label:
+        create: Create a new case
         change_owner: Change case owner
         add_note: Add a case note
         send_email: Send email
@@ -283,12 +291,16 @@ en:
         status: Status
         state:
           state_initial: New
-          state_open: Open
+          state_opened: Open
           state_resolved: Resolved
           state_pending: Pending
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
+        source:
+          digital: Specify case
+          nw_hub: North west hub case
+          sw_hub: South west hub case
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -319,6 +331,48 @@ en:
         submit: Save and continue
       flash:
         updated: Successfully changed case category
+
+    case_hub_migration:
+      header: Hub migration case information
+      label:
+        form_hint: The following fields are only for NW Hub cases that are being migrated.
+        school_urn: Establishment URN
+        school_name: Establishment name
+        school_postcode: Establishment postcode
+        name: Contact name
+        first_name: Contact first name
+        last_name: Contact last name
+        email: Contact email
+        phone_number: Contact phone number %{optional}
+        category: Category
+        category_id: Buying category
+        source: Case source
+        organisation_id: Establishment name
+        case_type: Type of case
+        hub_case_ref: Identification number %{optional}
+        hub_case_ref_hint: We will use the existing Hub identification number to link the existing case data to a new case number
+        estimated_procurement_completion_date: Procurement estimated completion date %{optional}
+        estimated_procurement_completion_date_hint: Enter the procurement estimated completion date supplied from the Hub
+        estimated_savings: Estimated total savings %{optional}
+        estimated_savings_hint: Enter the estimated savings supplied from the Hub
+        hub_notes: Hub notes / comments %{optional}
+        hub_notes_hint: Enter a summary of the query from the Hub case
+        progress_notes: Progress notes from CRM %{optional}
+        progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
+      submit: Save and continue
+      flash:
+        created: Case created/migrated successfully
+      edit:
+        header: Check your answers before creating a new case
+        section:
+          establishment: Establishment details
+          contact: Contact details
+          case: Case details
+          migration: Hub migration case information
+        label:
+          confirm: Check all the details before submitting as it is not currently possible to edit case details once they are created.
+        submit: Create case
+
 
     case_resolution:
       flash:
@@ -392,6 +446,9 @@ en:
         email_to_school: Email to school
         note: Case note
         support_request: Request for support
+        hub_notes: Hub notes
+        hub_progress_notes: Hub progress notes
+        hub_migration: Hub migration
       label:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
@@ -399,3 +456,4 @@ en:
         created_by: Created by
       message:
         created_flash: "%{type} added to case"
+      link_to_email_preview: Open email preview in new tab

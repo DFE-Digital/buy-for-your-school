@@ -7,11 +7,12 @@ FactoryBot.define do
     email { "school@email.co.uk" }
     first_name { "School" }
     last_name { "Contact" }
-    organisation_urn { "12345678" }
 
     association :agent, factory: :support_agent
 
     association :category, factory: :support_category
+
+    association :organisation, factory: :support_organisation
 
     trait :open do
       state { :open }

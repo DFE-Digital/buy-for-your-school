@@ -119,30 +119,57 @@ RSpec.describe CreateUser do
       end
     end
 
-    context "when they are not affiliated to any organisation" do
-      let(:dfe_sign_in_uid) { "no-orgs" }
+    context "when there's an existing user" do
+      context "and they are not affiliated to any organisation" do
+        let(:orgs) { [] }
 
-      let(:orgs) { [] }
+        it "is tagged :no_organisation" do
+          expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
+          expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 is not in a supported organisation").and_call_original
+          expect(result).to be :no_organisation
+        end
+      end
 
-      it "is tagged :no_organisation" do
-        expect(Rollbar).to receive(:info).with("User no-orgs is not in a supported organisation").and_call_original
-        expect(result).to be :no_organisation
+      context "and they are affiliated to an unsupported organisation" do
+        let(:orgs) do
+          [{
+            "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+            "type" => { "id" => "999" },
+          }]
+        end
+
+        it "is tagged :unsupported" do
+          expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
+          expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 is not in a supported organisation").and_call_original
+          expect(result).to be :unsupported
+        end
       end
     end
 
-    context "when they are affiliated to an unsupported organisation" do
-      let(:dfe_sign_in_uid) { "unsupported-org" }
+    context "when there's a new user" do
+      let(:dfe_sign_in_uid) { "new_user" }
 
-      let(:orgs) do
-        [{
-          "id" => "23F20E54-79EA-4146-8E39-18197576F023",
-          "type" => { "id" => "999" },
-        }]
+      context "and they are not affiliated to any organisation" do
+        let(:orgs) { [] }
+
+        it "is tagged :no_organisation" do
+          expect(Rollbar).to receive(:info).with("User new_user is not in a supported organisation").and_call_original
+          expect(result).to be :no_organisation
+        end
       end
 
-      it "is tagged :unsupported" do
-        expect(Rollbar).to receive(:info).with("User unsupported-org is not in a supported organisation").and_call_original
-        expect(result).to be :unsupported
+      context "and they are affiliated to an unsupported organisation" do
+        let(:orgs) do
+          [{
+            "id" => "23F20E54-79EA-4146-8E39-18197576F023",
+            "type" => { "id" => "999" },
+          }]
+        end
+
+        it "is tagged :unsupported" do
+          expect(Rollbar).to receive(:info).with("User new_user is not in a supported organisation").and_call_original
+          expect(result).to be :unsupported
+        end
       end
     end
   end
