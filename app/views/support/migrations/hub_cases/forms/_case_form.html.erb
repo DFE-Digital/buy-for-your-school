@@ -10,7 +10,7 @@
              label_text: "Establishment URN",
              element_id: "school-urn-autocomplete",
              element_name: "case_hub_migration_form[school_urn]",
-             template_suggestion: "{{urn}} {{name}} {{postcode}}",
+             template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
              value_field: :urn,
              default_value: "#{@form.school_urn}",
              query_url: support_schools_path(format: :json, q: "{{QUERY}}") do %>
