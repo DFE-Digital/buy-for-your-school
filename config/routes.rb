@@ -68,7 +68,7 @@ Rails.application.routes.draw do
           end
         end
       end
-      resources :interactions, only: %i[new create]
+      resources :interactions, only: %i[new create show]
       scope module: :cases do
         resource :categorisation, only: %i[edit update]
         resources :documents, only: %i[show]
