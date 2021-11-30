@@ -291,7 +291,7 @@ en:
         status: Status
         state:
           state_initial: New
-          state_open: Open
+          state_opened: Open
           state_resolved: Resolved
           state_pending: Pending
           state_closed: Closed

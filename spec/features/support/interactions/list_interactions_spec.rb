@@ -5,7 +5,7 @@ RSpec.feature "Support request case history" do
   include_context "with an agent"
 
   let(:support_case) do
-    create(:support_case, state: "open")
+    create(:support_case, state: "opened")
   end
 
   let(:agent) { support_case.agent }

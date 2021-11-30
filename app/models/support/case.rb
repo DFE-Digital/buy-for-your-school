@@ -38,7 +38,7 @@ module Support
     #   closed
     #   pipeline
     #   no_response
-    enum state: { initial: 0, open: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
+    enum state: { initial: 0, opened: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
 
     # Source
     #
