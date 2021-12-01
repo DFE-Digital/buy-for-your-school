@@ -97,7 +97,8 @@ private
                                   email: user.email,
                                   phone_number: request.phone_number,
                                   organisation: org,
-                                  category: map_category)
+                                  category: map_category,
+                                  source: "digital")
 
     record_case_opening
 
