@@ -60,11 +60,17 @@ module Support
       CategoryPresenter.new(super)
     end
 
+    # @return [String]
     def org_name
+      return "n/a" if organisation.blank?
+
       organisation.name
     end
 
+    # @return [String]
     def org_urn
+      return "n/a" if organisation.blank?
+
       organisation.urn
     end
 
