@@ -1,6 +1,6 @@
 class CreateContracts < ActiveRecord::Migration[6.1]
   def change
-    create_table :contracts, id: :uuid do |t|
+    create_table :support_contracts, id: :uuid do |t|
       t.timestamps
 
       t.string :type

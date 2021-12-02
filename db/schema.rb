@@ -59,17 +59,6 @@ ActiveRecord::Schema.define(version: 2021_12_01_171006) do
     t.index ["step_id"], name: "index_checkbox_answers_on_step_id"
   end
 
-  create_table "contracts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "type"
-    t.string "supplier"
-    t.date "started_at"
-    t.date "ended_at"
-    t.interval "duration"
-    t.decimal "spend", precision: 9, scale: 2
-  end
-
   create_table "currency_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.decimal "response", precision: 11, scale: 2, null: false
@@ -234,6 +223,17 @@ ActiveRecord::Schema.define(version: 2021_12_01_171006) do
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
+  create_table "support_contracts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "type"
+    t.string "supplier"
+    t.date "started_at"
+    t.date "ended_at"
+    t.interval "duration"
+    t.decimal "spend", precision: 9, scale: 2
+  end
+
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "file_type"
     t.string "document_body"
@@ -361,6 +361,6 @@ ActiveRecord::Schema.define(version: 2021_12_01_171006) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
-  add_foreign_key "support_cases", "contracts", column: "existing_contract_id"
-  add_foreign_key "support_cases", "contracts", column: "new_contract_id"
+  add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
+  add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
 end
