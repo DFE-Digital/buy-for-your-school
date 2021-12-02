@@ -26,11 +26,21 @@
         <%= I18n.t("support.case.header.case_history") %>
       </a>
     </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#procurement-details">
+        <%= I18n.t("support.case.header.procurement_detail") %>
+      </a>
+    </li>
   </ul>
-
-  <%= render "school_details", current_case: @current_case %>
-  <%= render "case_details", current_case: @current_case %>
-
+  <div class="govuk-tabs__panel" id="school-details">
+    <%= render "school_details", current_case: @current_case %>
+  </div>
+  <div class="govuk-tabs__panel" id="case-details">
+    <%= render "case_details", current_case: @current_case %>
+  </div>
+  <div class="govuk-tabs__panel" id="procurement-details">
+    <%= render "procurement_details", current_case: @current_case %>
+  </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">
