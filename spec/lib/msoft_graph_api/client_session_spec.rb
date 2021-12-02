@@ -1,10 +1,10 @@
 require "spec_helper"
 
 describe MsoftGraphApi::ClientSession do
+  subject(:client_session) { described_class.new(access_token) }
+
   let(:access_token) { "ACCESS_TOKEN" }
   let(:endpoint) { "https://graph.microsoft.com/v1.0/test/endpoint" }
-
-  subject(:client_session) { described_class.new(access_token) }
 
   describe "#graph_api_get" do
     let(:api_response) { '{"value":[{"displayName":"testResponse"}]}' }
@@ -20,7 +20,7 @@ describe MsoftGraphApi::ClientSession do
       client_session.graph_api_get("test/endpoint")
 
       expect(a_request(:get, endpoint)
-        .with(headers: {'Authorization' => "Bearer #{access_token}"}))
+        .with(headers: { "Authorization" => "Bearer #{access_token}" }))
         .to(have_been_made.once)
     end
 
@@ -31,7 +31,7 @@ describe MsoftGraphApi::ClientSession do
       it "raises a GraphRequestFailedError with details of the error included" do
         expect { client_session.graph_api_get("test/endpoint") }.to raise_error(
           MsoftGraphApi::ClientSession::GraphRequestFailedError,
-          "Code: ResourceNotFound, Message: Resource could not be discovered."
+          "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
       end
     end
@@ -52,7 +52,7 @@ describe MsoftGraphApi::ClientSession do
       client_session.graph_api_post("test/endpoint", request_body)
 
       expect(a_request(:post, endpoint)
-        .with(body: request_body, headers: {'Authorization' => "Bearer #{access_token}"}))
+        .with(body: request_body, headers: { "Authorization" => "Bearer #{access_token}" }))
         .to(have_been_made.once)
     end
 
@@ -63,7 +63,7 @@ describe MsoftGraphApi::ClientSession do
       it "raises a GraphRequestFailedError with details of the error included" do
         expect { client_session.graph_api_post("test/endpoint", request_body) }.to raise_error(
           MsoftGraphApi::ClientSession::GraphRequestFailedError,
-          "Code: ResourceNotFound, Message: Resource could not be discovered."
+          "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
       end
     end
@@ -76,7 +76,7 @@ describe MsoftGraphApi::ClientSession do
         client_id: "client_id",
         client_secret: "client_secret",
         scope: "scope",
-        grant_type: "grant_type"
+        grant_type: "grant_type",
       )
     end
 
@@ -89,13 +89,13 @@ describe MsoftGraphApi::ClientSession do
     end
 
     it "makes a request to Azure for an access token" do
-      MsoftGraphApi::ClientSession.new_application_session(client_configuration)
+      described_class.new_application_session(client_configuration)
 
       authentication_payload = {
         client_id: client_configuration.client_id,
         client_secret: client_configuration.client_secret,
         scope: client_configuration.scope,
-        grant_type: client_configuration.grant_type
+        grant_type: client_configuration.grant_type,
       }
 
       expect(a_request(:post, "https://login.microsoftonline.com/tenant/oauth2/v2.0/token")
@@ -104,7 +104,7 @@ describe MsoftGraphApi::ClientSession do
     end
 
     it "returns a new session with the access token set" do
-      session = MsoftGraphApi::ClientSession.new_application_session(client_configuration)
+      session = described_class.new_application_session(client_configuration)
       expect(session.access_token).to eq("ACCESS_TOKEN")
     end
 
@@ -112,8 +112,8 @@ describe MsoftGraphApi::ClientSession do
       let(:api_response_code) { 400 }
 
       it "raises a AuthenticationFailureError with details of the error included" do
-        expect { MsoftGraphApi::ClientSession.new_application_session(client_configuration) }.to raise_error(
-          MsoftGraphApi::ClientSession::AuthenticationFailureError
+        expect { described_class.new_application_session(client_configuration) }.to raise_error(
+          MsoftGraphApi::ClientSession::AuthenticationFailureError,
         )
       end
     end

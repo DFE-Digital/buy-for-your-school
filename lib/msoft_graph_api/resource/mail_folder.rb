@@ -4,13 +4,13 @@ module MsoftGraphApi
     class MailFolder
       extend Dry::Initializer
 
-      option :child_folder_count, Types::Params::Integer, optional: true
-      option :display_name, Types::Params::String, optional: true
-      option :id, Types::Params::String, optional: true
-      option :is_hidden, Types::Params::Bool, optional: true
-      option :parent_folder_id, Types::Params::String, optional: true
-      option :total_item_count, Types::Params::Integer, optional: true
-      option :unread_item_count, Types::Params::Integer, optional: true
+      option :child_folder_count, Types::Integer
+      option :display_name, Types::String
+      option :id, Types::String
+      option :is_hidden, Types::Bool
+      option :parent_folder_id, Types::String
+      option :total_item_count, Types::Integer
+      option :unread_item_count, Types::Integer
 
       def self.from_payload(payload)
         new(
