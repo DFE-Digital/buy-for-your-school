@@ -1,12 +1,25 @@
 RSpec.feature "Completed support requests" do
-  let(:category) { create(:category) }
+  before do
+    create(:support_category, slug: "slug", title: "Slug")
+    create(:support_organisation, urn: "urn-type-1", name: "Specialist School for Testing")
+
+    stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+      .with(body: email.to_json)
+      .to_return(body: {}.to_json, status: 200, headers: {})
+
+    user_is_signed_in(user: journey.user)
+    visit "/support-requests/#{support_request.id}"
+  end
+
+  let(:category) { create(:category, slug: "slug") }
   let(:journey) { create(:journey, category: category) }
 
   let(:support_request) do
     create(:support_request,
            user: journey.user,
            journey: journey,
-           category: category)
+           category: category,
+           school_urn: "urn-type-1")
   end
 
   let(:email) do
@@ -23,15 +36,6 @@ RSpec.feature "Completed support requests" do
         category: "slug",
       },
     }
-  end
-
-  before do
-    stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
-    .with(body: email.to_json)
-    .to_return(body: {}.to_json, status: 200, headers: {})
-
-    user_is_signed_in(user: journey.user)
-    visit "/support-requests/#{support_request.id}"
   end
 
   specify { expect(page).to have_current_path "/support-requests/#{support_request.id}" }
@@ -114,7 +118,7 @@ RSpec.feature "Completed support requests" do
 
     context "when the request is about a category" do
       let(:support_request) do
-        create(:support_request, user: journey.user, category: category)
+        create(:support_request, user: journey.user, category: category, school_urn: "urn-type-1")
       end
 
       it "has no specification link" do
