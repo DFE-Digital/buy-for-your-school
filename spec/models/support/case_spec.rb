@@ -7,8 +7,8 @@ RSpec.describe Support::Case, type: :model do
   end
 
   it "has optional new and existing contracts" do
-    should belong_to(:new_contract).optional
-    should belong_to(:existing_contract).optional
+    expect(support_case).to belong_to(:new_contract).optional
+    expect(support_case).to belong_to(:existing_contract).optional
   end
 
   context "with documents" do

@@ -1,5 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe NewContract, type: :model do
-  it { should have_one(:support_case) }
+  it { is_expected.to have_one(:support_case) }
 end
