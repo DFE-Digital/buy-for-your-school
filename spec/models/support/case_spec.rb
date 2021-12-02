@@ -6,6 +6,11 @@ RSpec.describe Support::Case, type: :model do
     expect(support_case.category.title).to match /support category title \d/
   end
 
+  it "has optional new and existing contracts" do
+    should belong_to(:new_contract).optional
+    should belong_to(:existing_contract).optional
+  end
+
   context "with documents" do
     let!(:document) { create(:support_document, case: support_case) }
 

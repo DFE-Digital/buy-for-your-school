@@ -16,6 +16,10 @@ module Support
     accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
 
     has_one :hub_transition, class_name: "Support::HubTransition", dependent: :destroy
+
+    belongs_to :existing_contract, class_name: "Contract", optional: true
+    belongs_to :new_contract, class_name: "Contract", optional: true
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
