@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_164607) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
+    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
@@ -211,6 +212,8 @@ ActiveRecord::Schema.define(version: 2021_12_02_164607) do
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
+    t.index ["category_id"], name: "index_support_cases_on_category_id"
+    t.index ["procurement_id"], name: "index_support_cases_on_procurement_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
     t.index ["status"], name: "index_support_cases_on_status"
@@ -316,6 +319,19 @@ ActiveRecord::Schema.define(version: 2021_12_02_164607) do
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
 
+  create_table "support_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "required_agreement_type"
+    t.integer "route_to_market"
+    t.integer "reason_for_route_to_market"
+    t.string "framework_name"
+    t.date "started_at"
+    t.date "ended_at"
+    t.integer "stage"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stage"], name: "index_support_procurements_on_stage"
+  end
+
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
     t.uuid "journey_id"
@@ -368,4 +384,5 @@ ActiveRecord::Schema.define(version: 2021_12_02_164607) do
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
+  add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
 end
