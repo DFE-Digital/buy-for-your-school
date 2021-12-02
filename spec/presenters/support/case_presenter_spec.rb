@@ -68,4 +68,20 @@ RSpec.describe Support::CasePresenter do
       expect(presenter.org_urn).to eq "000000"
     end
   end
+
+  context "without an organisation" do
+    let(:organisation) { nil }
+
+    describe "#org_name" do
+      it "returns org name" do
+        expect(presenter.org_name).to eq "n/a"
+      end
+    end
+
+    describe "#org_urn" do
+      it "returns org urn" do
+        expect(presenter.org_urn).to eq "n/a"
+      end
+    end
+  end
 end
