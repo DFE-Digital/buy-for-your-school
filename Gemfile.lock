@@ -220,6 +220,7 @@ GEM
       bindata
     jwt (2.3.0)
     libv8-node (16.10.0.0-x86_64-darwin)
+    libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.1.0)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -248,6 +249,8 @@ GEM
     multi_xml (0.6.0)
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
@@ -501,6 +504,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   better_errors
