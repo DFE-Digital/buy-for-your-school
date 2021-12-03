@@ -33,7 +33,7 @@ RSpec.feature "Showing a Page" do
 
     it "shows the page without a sidebar" do
       visit "/#{our_page.slug}"
-      expect(find(".md-override h1")).to have_text("hello body")
+      expect(find(".md-page h1")).to have_text("hello body")
       expect(find(".govuk-body-s")).to have_text(updated_at)
       expect(page).not_to have_css(".govuk-grid-column-two-thirds")
       expect(page).not_to have_css(".govuk-grid-column-one-third")
