@@ -20,6 +20,7 @@ module Support
         last_name: @attrs[:last_name],
         email: @attrs[:email],
         phone_number: @attrs[:phone_number],
+        request_text: @attrs[:request_text],
       )
     end
   end
