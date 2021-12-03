@@ -79,7 +79,7 @@ module Support
       OrganisationPresenter.new(super)
     end
 
-private
+  private
 
     # @return [String] 20 March 2021 at 12:00
     def date_format
