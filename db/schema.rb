@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_120610) do
+ActiveRecord::Schema.define(version: 2021_12_01_171006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -201,7 +201,11 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.string "phone_number"
     t.integer "source"
     t.uuid "organisation_id"
+    t.uuid "existing_contract_id"
+    t.uuid "new_contract_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
+    t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
+    t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
     t.index ["status"], name: "index_support_cases_on_status"
@@ -217,6 +221,17 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.uuid "parent_id"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
+  end
+
+  create_table "support_contracts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "type"
+    t.string "supplier"
+    t.date "started_at"
+    t.date "ended_at"
+    t.interval "duration"
+    t.decimal "spend", precision: 9, scale: 2
   end
 
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -346,4 +361,6 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
+  add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
 end
