@@ -14,7 +14,7 @@ If your department project does the same, the code in `./lib/dsi` could help you
 
 ## Documentation
 
-Run `$ rake yard` to generate documentation for the project in `/documentation`
+Run `$ yardoc` to generate documentation for the project in `/documentation` and then `$ open ./documentation/index.html` to open in the browser.
 
 ## Changelog
 
