@@ -11,6 +11,10 @@ RSpec.describe Support::Case, type: :model do
     expect(support_case).to belong_to(:existing_contract).optional
   end
 
+  it "belongs to an optional procurement" do
+    expect(support_case).to belong_to(:procurement).optional
+  end
+
   context "with documents" do
     let!(:document) { create(:support_document, case: support_case) }
 
@@ -51,7 +55,7 @@ RSpec.describe Support::Case, type: :model do
   describe "#to_csv" do
     it "includes headers" do
       expect(described_class.to_csv).to eql(
-        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id,existing_contract_id,new_contract_id,savings_status,savings_estimate_method,savings_actual_method,savings_estimate,savings_actual\n",
+        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id,procurement_id,existing_contract_id,new_contract_id,savings_status,savings_estimate_method,savings_actual_method,savings_estimate,savings_actual\n",
       )
     end
   end
