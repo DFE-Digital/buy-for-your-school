@@ -50,8 +50,6 @@ RSpec.describe SubmitSupportRequest do
     describe "case creation" do
       before { service.call }
 
-
-
       it "submits the request and creates a case" do
         expect(support_case).to be_persisted
         expect(support_case.phone_number).to eq "01234567890"
