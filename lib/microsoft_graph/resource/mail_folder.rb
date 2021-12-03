@@ -1,4 +1,4 @@
-module MsoftGraphApi
+module MicrosoftGraph
   module Resource
     # https://docs.microsoft.com/en-us/graph/api/resources/mailfolder?view=graph-rest-1.0
     class MailFolder

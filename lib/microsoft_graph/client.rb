@@ -1,4 +1,4 @@
-module MsoftGraphApi
+module MicrosoftGraph
   # Graph API v1.0
   class Client
     attr_reader :client_session

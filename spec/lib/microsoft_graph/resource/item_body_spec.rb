@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MsoftGraphApi::Resource::ItemBody do
+describe MicrosoftGraph::Resource::ItemBody do
   describe ".from_payload" do
     it "maps response json field names to object fields" do
       payload = {

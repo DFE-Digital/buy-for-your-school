@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MsoftGraphApi::ClientSession do
+describe MicrosoftGraph::ClientSession do
   subject(:client_session) { described_class.new(access_token) }
 
   let(:access_token) { "ACCESS_TOKEN" }
@@ -30,7 +30,7 @@ describe MsoftGraphApi::ClientSession do
 
       it "raises a GraphRequestFailedError with details of the error included" do
         expect { client_session.graph_api_get("test/endpoint") }.to raise_error(
-          MsoftGraphApi::ClientSession::GraphRequestFailedError,
+          MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
       end
@@ -62,7 +62,7 @@ describe MsoftGraphApi::ClientSession do
 
       it "raises a GraphRequestFailedError with details of the error included" do
         expect { client_session.graph_api_post("test/endpoint", request_body) }.to raise_error(
-          MsoftGraphApi::ClientSession::GraphRequestFailedError,
+          MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
       end
@@ -71,7 +71,7 @@ describe MsoftGraphApi::ClientSession do
 
   describe ".new_application_session" do
     let(:client_configuration) do
-      MsoftGraphApi::ClientConfiguration.new(
+      MicrosoftGraph::ClientConfiguration.new(
         tenant: "tenant",
         client_id: "client_id",
         client_secret: "client_secret",
@@ -113,7 +113,7 @@ describe MsoftGraphApi::ClientSession do
 
       it "raises a AuthenticationFailureError with details of the error included" do
         expect { described_class.new_application_session(client_configuration) }.to raise_error(
-          MsoftGraphApi::ClientSession::AuthenticationFailureError,
+          MicrosoftGraph::ClientSession::AuthenticationFailureError,
         )
       end
     end

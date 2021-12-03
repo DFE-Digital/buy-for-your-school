@@ -23,7 +23,7 @@ SimpleCov.start "rails"
 # NOTE: This is necessary for sign_in helpers to work correctly when feature
 # NOTE: are run in isolation, hence needing Dsi::Client class loaded in.
 require_relative "../lib/dsi/client"
-require_relative "../lib/msoft_graph_api/msoft_graph_api"
+require_relative "../lib/microsoft_graph/microsoft_graph"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

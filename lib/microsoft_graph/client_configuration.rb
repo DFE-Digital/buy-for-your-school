@@ -1,4 +1,4 @@
-module MsoftGraphApi
+module MicrosoftGraph
   class ClientConfiguration
     extend Dry::Initializer
 

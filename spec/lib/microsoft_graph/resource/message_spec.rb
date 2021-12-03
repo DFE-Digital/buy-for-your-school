@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MsoftGraphApi::Resource::Message do
+describe MicrosoftGraph::Resource::Message do
   describe ".from_payload" do
     it "maps response json field names to object fields" do
       payload = {
@@ -21,7 +21,7 @@ describe MsoftGraphApi::Resource::Message do
 
       message = described_class.from_payload(payload)
 
-      expect(message.body.as_json).to match(MsoftGraphApi::Resource::ItemBody.from_payload(payload["body"]).as_json)
+      expect(message.body.as_json).to match(MicrosoftGraph::Resource::ItemBody.from_payload(payload["body"]).as_json)
       expect(message.body_preview).to eq("<p>Hello, World</p>")
       expect(message.conversation_id).to eq("CONVID123")
       expect(message.id).to eq("AAMkAGmnprAAA=")
@@ -32,7 +32,7 @@ describe MsoftGraphApi::Resource::Message do
       expect(message.subject).to eq("Important, please read")
       expect(message.to_recipients.map(&:as_json)).to match(
         payload["toRecipients"]
-          .map { |recipient| MsoftGraphApi::Resource::Recipient.from_payload(recipient) }
+          .map { |recipient| MicrosoftGraph::Resource::Recipient.from_payload(recipient) }
           .map(&:as_json),
       )
     end
