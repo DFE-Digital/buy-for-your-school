@@ -336,6 +336,15 @@ en:
           saving_estimate: Saving estimate
           saving_actual: Saving actual
 
+        additional_data:
+          support_request:
+            email: Email address
+            message: Message
+            category: Category
+            last_name: Last name
+            first_name: First name
+            phone_number: Phone number
+            support_request_id: Support request ID
       list:
         not_found: No cases found
         my_cases: My cases
