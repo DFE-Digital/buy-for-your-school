@@ -485,3 +485,22 @@ en:
       message:
         created_flash: "%{type} added to case"
       link_to_email_preview: Open email preview in new tab
+    
+    procurement_details:
+      edit:
+        header: Update procurement details
+        submit: Continue
+        required_agreement_type:
+          header: Required agreement type (optional)
+        route_to_market:
+          header: Route to market (optional)
+        reason_for_route_to_market:
+          header: Reason for route to market (optional)
+        framework_name:
+          header: Framework name (optional)
+        started_at:
+          header: Start date of the procurement (optional)
+        ended_at:
+          header: End date of the procurement (optional)
+        stage:
+          header: Procurement stage (optional)

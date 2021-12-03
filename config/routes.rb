@@ -71,6 +71,7 @@ Rails.application.routes.draw do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
         resource :categorisation, only: %i[edit update]
+        resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
