@@ -201,9 +201,9 @@ ActiveRecord::Schema.define(version: 2021_12_02_164607) do
     t.string "phone_number"
     t.integer "source"
     t.uuid "organisation_id"
+    t.uuid "procurement_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
-    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
@@ -212,7 +212,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_164607) do
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
-    t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["procurement_id"], name: "index_support_cases_on_procurement_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
