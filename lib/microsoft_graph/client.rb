@@ -16,7 +16,7 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder_id)
-      json = client_session.graph_api_get("users/#{user_id}/mailFolders/#{mail_folder_id}")
+      json = client_session.graph_api_get("users/#{user_id}/mailFolders/#{mail_folder_id}/messages")
       raw_messages = json["value"]
       raw_messages.map { |message| Resource::Message.from_payload(message) }
     end

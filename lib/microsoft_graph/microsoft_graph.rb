@@ -1,6 +1,12 @@
 require "dry-initializer"
 require "dry-types"
 require "httparty"
+require "active_support"
+require "active_support/core_ext"
+
+module Types
+  include Dry.Types
+end
 
 require_relative "resource/email_address"
 require_relative "resource/item_body"

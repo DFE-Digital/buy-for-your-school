@@ -53,7 +53,7 @@ module MicrosoftGraph
 
     def handle_api_response(response)
       json = JSON.parse(response.body)
-      valid_response = response.code.to_s.starts_with?("2")
+      valid_response = response.code.to_s[0] == "2"
 
       if valid_response
         json

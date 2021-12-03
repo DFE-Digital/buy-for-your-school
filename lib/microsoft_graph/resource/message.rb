@@ -11,7 +11,7 @@ module MicrosoftGraph
       option :internet_message_id, Types::String
       option :importance, Types::String
       option :is_read, Types::Bool
-      option :sent_date_time, Types.Instance(Time)
+      option :sent_date_time, Types.Instance(DateTime)
       option :subject, Types::String
       option :to_recipients, Types.Array(Types.Instance(Recipient))
 
@@ -23,7 +23,7 @@ module MicrosoftGraph
         internet_message_id = payload["internetMessageId"]
         importance = payload["importance"]
         is_read = payload["isRead"]
-        sent_date_time = Time.zone.parse(payload["sentDateTime"])
+        sent_date_time = DateTime.parse(payload["sentDateTime"])
         subject = payload["subject"]
         to_recipients = payload["toRecipients"].map { |recipient| Recipient.from_payload(recipient) }
 

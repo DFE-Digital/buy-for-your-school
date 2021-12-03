@@ -58,3 +58,7 @@ Rails/ReversibleMigration:
 Style/TrailingCommaInArguments:
   Exclude:
     - 'spec/requests/self-serve/api/contentful/page_spec.rb'
+
+Style/DateTime:
+  Exclude:
+    - 'lib/microsoft_graph/resource/message.rb'
