@@ -317,23 +317,24 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
-        required_agreement_type: Required agreement type
-        route_to_market: Route to market
-        reason_for_route_to_market: Reason for route to market
-        framework_name: Framework name
-        procurement_start_date: Procurement start date
-        procurement_end_date: Procurement end date
-        procurement_stage: Procurement stage
-        end_date: End date
-        contract_duration: Contract duration
-        contract_spend: Contract spend
-        supplier: Supplier
-        start_date: Start date
-        saving_status: Saving status
-        saving_estimate_method: Saving estimate method used
-        saving_actual_method: Saving actual method used
-        saving_estimate: Saving estimate
-        saving_actual: Saving actual
+        procurement_details:
+          required_agreement_type: Required agreement type
+          route_to_market: Route to market
+          reason_for_route_to_market: Reason for route to market
+          framework_name: Framework name
+          procurement_start_date: Procurement start date
+          procurement_end_date: Procurement end date
+          procurement_stage: Procurement stage
+          end_date: End date
+          contract_duration: Contract duration
+          contract_spend: Contract spend
+          supplier: Supplier
+          start_date: Start date
+          saving_status: Saving status
+          saving_estimate_method: Saving estimate method used
+          saving_actual_method: Saving actual method used
+          saving_estimate: Saving estimate
+          saving_actual: Saving actual
 
       list:
         not_found: No cases found

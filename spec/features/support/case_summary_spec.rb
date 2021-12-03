@@ -19,8 +19,8 @@ RSpec.feature "Case summary" do
     expect(find("h3#case-ref")).to have_text "000001"
   end
 
-  it "has 3 visible tabs" do
-    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
+  it "has 4 visible tabs" do
+    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(4)
   end
 
   it "defaults to the 'School details' tab" do
@@ -31,8 +31,10 @@ RSpec.feature "Case summary" do
     before { visit "/support/cases/#{support_case.id}#school-details" }
 
     it "primary contact name" do
+      pp page.source
       within "#school-details" do
         expect(find(".govuk-summary-list")).to have_text "Contact name"
+        pp page.source
       end
     end
   end
