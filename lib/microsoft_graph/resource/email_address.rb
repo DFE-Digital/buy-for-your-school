@@ -13,6 +13,10 @@ module MicrosoftGraph
           name: payload["name"],
         )
       end
+
+      def to_s
+        address
+      end
     end
   end
 end

@@ -7,6 +7,7 @@ module MicrosoftGraph
       option :body, Types.Instance(ItemBody)
       option :body_preview, Types::String
       option :conversation_id, Types::String
+      option :from, Types.Instance(Recipient)
       option :id, Types::String
       option :internet_message_id, Types::String
       option :importance, Types::String
@@ -19,6 +20,7 @@ module MicrosoftGraph
         body = ItemBody.from_payload(payload["body"])
         body_preview = payload["bodyPreview"]
         conversation_id = payload["conversationId"]
+        from = Recipient.from_payload(payload["from"])
         id = payload["id"]
         internet_message_id = payload["internetMessageId"]
         importance = payload["importance"]
@@ -31,6 +33,7 @@ module MicrosoftGraph
           body: body,
           body_preview: body_preview,
           conversation_id: conversation_id,
+          from: from,
           id: id,
           internet_message_id: internet_message_id,
           importance: importance,

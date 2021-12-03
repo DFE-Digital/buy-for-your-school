@@ -7,6 +7,7 @@ describe MicrosoftGraph::Resource::Message do
         "body" => { "content" => "c", "contentType" => "cT" },
         "bodyPreview" => "<p>Hello, World</p>",
         "conversationId" => "CONVID123",
+        "from" => { "emailAddress" => { "address" => "d", "name" => "e" } },
         "id" => "AAMkAGmnprAAA=",
         "internetMessageId" => "<imid_AAMkAGmnprAAA@mail.gmail.com",
         "importance" => "high",
@@ -24,6 +25,7 @@ describe MicrosoftGraph::Resource::Message do
       expect(message.body.as_json).to match(MicrosoftGraph::Resource::ItemBody.from_payload(payload["body"]).as_json)
       expect(message.body_preview).to eq("<p>Hello, World</p>")
       expect(message.conversation_id).to eq("CONVID123")
+      expect(message.from.as_json).to match(MicrosoftGraph::Resource::Recipient.from_payload(payload["from"]).as_json)
       expect(message.id).to eq("AAMkAGmnprAAA=")
       expect(message.internet_message_id).to eq("<imid_AAMkAGmnprAAA@mail.gmail.com")
       expect(message.importance).to eq("high")
