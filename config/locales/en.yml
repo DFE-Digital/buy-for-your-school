@@ -505,6 +505,8 @@ en:
           header: End date of the procurement (optional)
         stage:
           header: Procurement stage (optional)
+      flash:
+        updated: Successfully changed procurement details
       stages:
         need: Need
         market_analysis: Market Analysis
