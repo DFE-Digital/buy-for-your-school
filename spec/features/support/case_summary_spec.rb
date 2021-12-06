@@ -19,8 +19,8 @@ RSpec.feature "Case summary" do
     expect(find("h3#case-ref")).to have_text "000001"
   end
 
-  it "has 3 visible tabs" do
-    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(3)
+  it "has 4 visible tabs" do
+    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(4)
   end
 
   it "defaults to the 'School details' tab" do
@@ -45,6 +45,25 @@ RSpec.feature "Case summary" do
         expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
         expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"
         expect(all(".govuk-summary-list__row")[2]).to have_text "Attached specification"
+      end
+    end
+
+    it "lists specifications for viewing" do
+      document = support_case.documents.first
+
+      expect(page).to have_link "specification-1 (opens in new tab)", href: support_case_document_path(support_case, document)
+    end
+  end
+
+  describe "Procurement details tab" do
+    before { visit "/support/cases/#{support_case.id}#procurement-details" }
+
+    it "lists section headings details" do
+      within "#procurement-details" do
+        expect(all(".govuk-heading-m")[0]).to have_text "Procurement details"
+        expect(all(".govuk-heading-m")[1]).to have_text "Existing contract details"
+        expect(all(".govuk-heading-m")[2]).to have_text "New contract details"
+        expect(all(".govuk-heading-m")[3]).to have_text "Saving details"
       end
     end
 
