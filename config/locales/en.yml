@@ -273,6 +273,7 @@ en:
     header: Supported Buying Admin
 
     case:
+      date_format: "%d %B %Y at %H:%M"
       header:
         action: Actions
         school_detail: School details

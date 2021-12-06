@@ -78,5 +78,12 @@ module Support
     def organisation
       OrganisationPresenter.new(super)
     end
+
+  private
+
+    # @return [String] 20 March 2021 at 12:00
+    def date_format
+      I18n.t("support.case.date_format")
+    end
   end
 end
