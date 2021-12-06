@@ -6,9 +6,8 @@ module Support
       @case_procurement_details_form = CaseProcurementDetailsForm.new(**current_case.procurement.attributes.symbolize_keys)
     end
 
-    def update
-    end
-  
+    def update; end
+
   private
 
     def set_required_agreement_types
