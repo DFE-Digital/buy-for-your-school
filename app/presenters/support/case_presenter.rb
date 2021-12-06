@@ -5,6 +5,7 @@ require_relative "contact_presenter"
 require_relative "category_presenter"
 require_relative "agent_presenter"
 require_relative "organisation_presenter"
+require_relative "procurement_presenter"
 
 module Support
   class CasePresenter < BasePresenter
@@ -77,6 +78,11 @@ module Support
     # @return [OrganisationPresenter]
     def organisation
       OrganisationPresenter.new(super)
+    end
+
+    # @return [ProcurementPresenter]
+    def procurement
+      ProcurementPresenter.new(super)
     end
   end
 end

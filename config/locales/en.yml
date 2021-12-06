@@ -505,3 +505,23 @@ en:
           header: End date of the procurement (optional)
         stage:
           header: Procurement stage (optional)
+      stages:
+        need: Need
+        market_analysis: Market Analysis
+        sourcing_options: Sourcing Options
+        go_to_market: Go to Market
+        evaluation: Evaluation
+        contract_award: Contract Award
+        handover: Handover
+      required_agreement_types:
+        one_off: One-off
+        ongoing: Ongoing
+      routes_to_market:
+        dfe_approved: DfE Approved Deal / Framework
+        bespoke: Bespoke Procurement
+        direct_award: Direct Award
+      reasons_for_route_to_market:
+        school_pref: School Preference
+        dfe_deal: DfE Deal / Framework Selected
+        no_dfe_deal: No DfE Deal / Framework Available
+        better_than_dfe: Better Spec / Terms than DfE Deal
