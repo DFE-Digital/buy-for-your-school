@@ -4,7 +4,7 @@ describe MicrosoftGraph::Client do
   subject(:client) { described_class.new(client_session) }
 
   let(:user_id) { "USER-ID" }
-  let(:client_session) { MicrosoftGraph::ClientSession.new("ACCESS-TOKEN") }
+  let(:client_session) { MicrosoftGraph::ClientSession.new(double) }
 
   describe "#list_mail_folders" do
     context "when two mail folders exist for given user" do

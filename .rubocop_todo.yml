@@ -28,6 +28,7 @@ RSpec/VerifiedDoubles:
     - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
     - 'spec/services/self-serve/get_entry_spec.rb'
     - 'spec/support/contentful_helpers.rb'
+    - 'spec/lib/microsoft_graph/client_session_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: Database, Include.
@@ -62,3 +63,10 @@ Style/TrailingCommaInArguments:
 Style/DateTime:
   Exclude:
     - 'lib/microsoft_graph/resource/message.rb'
+    - 'lib/microsoft_graph/application_authenticator.rb'
+    - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
+
+Rails/TimeZone:
+  Exclude:
+    - 'lib/microsoft_graph/application_authenticator.rb'
+    - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'

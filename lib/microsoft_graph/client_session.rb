@@ -1,33 +1,12 @@
 module MicrosoftGraph
   # Graph API v1.0
   class ClientSession
-    AuthenticationFailureError = Class.new(StandardError)
     GraphRequestFailedError = Class.new(StandardError)
 
-    def self.new_application_session(client_configuration)
-      response = HTTParty.post(
-        "https://login.microsoftonline.com/#{client_configuration.tenant}/oauth2/v2.0/token",
-        body: {
-          client_id: client_configuration.client_id,
-          client_secret: client_configuration.client_secret,
-          scope: client_configuration.scope,
-          grant_type: client_configuration.grant_type,
-        },
-      )
+    attr_reader :authenticator
 
-      json = JSON.parse(response.body)
-
-      if response.code == 200
-        new(json["access_token"])
-      else
-        raise AuthenticationFailureError, json["error"]
-      end
-    end
-
-    attr_reader :access_token
-
-    def initialize(access_token)
-      @access_token = access_token
+    def initialize(authenticator)
+      @authenticator = authenticator
     end
 
     def graph_api_get(path)
@@ -50,6 +29,10 @@ module MicrosoftGraph
     end
 
   private
+
+    def access_token
+      authenticator.get_access_token
+    end
 
     def handle_api_response(response)
       json = JSON.parse(response.body)
