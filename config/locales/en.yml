@@ -499,12 +499,14 @@ en:
           header: Reason for route to market (optional)
         framework_name:
           header: Framework name (optional)
+          select: -- Select framework --
         started_at:
           header: Start date of the procurement (optional)
         ended_at:
           header: End date of the procurement (optional)
         stage:
           header: Procurement stage (optional)
+          select: -- Select stage --
       flash:
         updated: Successfully changed procurement details
       stages:

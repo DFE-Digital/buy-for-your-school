@@ -4,10 +4,9 @@
   <%= form.govuk_error_summary %>
 
   <%= form.govuk_radio_buttons_fieldset :required_agreement_type, legend: { text: I18n.t("support.procurement_details.edit.required_agreement_type.header") } do %>
-    <%= form.hidden_field :required_agreement_type, value: nil %>
 
     <div class="govuk-radios">
-      <% @required_agreement_types.keys.each do |type| %>
+      <% @required_agreement_types.each do |type| %>
         <%= form.govuk_radio_button :required_agreement_type, type, label: { text: I18n.t("support.procurement_details.required_agreement_types.#{type}") } %>
       <% end %>
     </div>
@@ -15,7 +14,7 @@
 
   <%= form.govuk_radio_buttons_fieldset :route_to_market, legend: { text: I18n.t("support.procurement_details.edit.route_to_market.header") } do %>
     <div class="govuk-radios">
-      <% @routes_to_market.keys.each do |route| %>
+      <% @routes_to_market.each do |route| %>
         <%= form.govuk_radio_button :route_to_market, route, label: { text: I18n.t("support.procurement_details.routes_to_market.#{route}") } %>
       <% end %>
     </div>
@@ -23,26 +22,23 @@
 
   <%= form.govuk_radio_buttons_fieldset :reason_for_route_to_market, legend: { text: I18n.t("support.procurement_details.edit.reason_for_route_to_market.header") } do %>
     <div class="govuk-radios">
-      <% @reasons_for_route_to_market.keys.each do |reason| %>
+      <% @reasons_for_route_to_market.each do |reason| %>
         <%= form.govuk_radio_button :reason_for_route_to_market, reason, label: { text: I18n.t("support.procurement_details.reasons_for_route_to_market.#{reason}") } %>
       <% end %>
     </div>
   <% end %>
 
-  <%= form.govuk_select(:framework_name, label: { text: I18n.t("support.procurement_details.edit.framework_name.header"), size: "m" }) do %>
-    <option value="">-- Select framework --</option>
-  <% end %>
+  <%= form.govuk_select :framework_name,
+    options_for_select(@framework_names, form.object.framework_name),
+    label: { text: I18n.t("support.procurement_details.edit.framework_name.header"), size: "m" } %>
 
   <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.procurement_details.edit.started_at.header") } %>
 
   <%= form.govuk_date_field :ended_at, legend: { text: I18n.t("support.procurement_details.edit.ended_at.header") } %>
 
-  <%= form.govuk_select(:stage, label: { text: I18n.t("support.procurement_details.edit.stage.header"), size: "m" }) do %>
-    <option value="">-- Select stage --</option>
-    <% @stages.keys.each do |stage|%>
-      <option data-tags="<%= stage %>" value="<%= stage %>"><%= I18n.t("support.procurement_details.stages.#{stage}") %></option>
-    <% end %>
-  <% end %>
+  <%= form.govuk_select :stage,
+    options_for_select(@stages, form.object.stage),
+    label: { text: I18n.t("support.procurement_details.edit.stage.header"), size: "m" } %>
 
   <%= form.submit I18n.t("support.procurement_details.edit.submit"), class: "govuk-button", role: "button" %>
 <% end %>

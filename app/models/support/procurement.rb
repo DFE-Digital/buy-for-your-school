@@ -2,6 +2,8 @@
 
 module Support
   class Procurement < ApplicationRecord
+    before_save :normalize_blank_values
+
     has_many :cases, class_name: "Support::Case"
 
     # Stage
@@ -35,5 +37,12 @@ module Support
     #   no_dfe_deal     -  No DfE Deal/Framework Available
     #   better_than_dfe - Better Spec/Terms than DfE Deal
     enum reason_for_route_to_market: { school_pref: 0, dfe_deal: 1, no_dfe_deal: 2, better_than_dfe: 3 }
+
+    # Ensure blank strings are stored as nil
+    def normalize_blank_values
+      attributes.each do |column, _value|
+        self[column].present? || self[column] = nil
+      end
+    end
   end
 end
