@@ -29,4 +29,3 @@ describe MicrosoftGraph::Resource::Attachment do
     end
   end
 end
-
