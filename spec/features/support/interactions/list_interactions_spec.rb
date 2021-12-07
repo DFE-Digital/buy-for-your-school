@@ -20,6 +20,7 @@ RSpec.feature "Support request case history" do
     # create(:support_interaction, :email_from_school, case: support_case, agent: agent)
     create(:support_interaction, :email_to_school, case: support_case, agent: agent)
 
+    click_button "Agent Login"
     visit "/support/cases/#{support_case.id}#case-history"
   end
 
