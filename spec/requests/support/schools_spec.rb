@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Schools endpoints" do
-  before { user_is_signed_in }
+  before { agent_is_signed_in }
 
   describe "GET /schools" do
     context "when requesting HTML type" do
