@@ -1,5 +1,3 @@
-require "rails_helper"
-
 describe "Schools endpoints" do
   before { agent_is_signed_in }
 
