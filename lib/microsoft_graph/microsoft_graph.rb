@@ -8,6 +8,7 @@ module Types
   include Dry.Types
 end
 
+require_relative "resource/attachment"
 require_relative "resource/email_address"
 require_relative "resource/item_body"
 require_relative "resource/recipient"
