@@ -4,115 +4,75 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog 1.0.0].
 
-## [Unreleased]
+<!--
 
-### Shared Unreleased
+## [release-xxx] - xxxx-xx-xx
 
-- added helper component to enable autocomplete functionality on fields
-- pages now served from contentful
+- value added [#ref](https://github.com/DFE-Digital/buy-for-your-school/commit/<hash>)
+  or
+- feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
 
-### Supported Unreleased
+-->
 
-- add initial models for supported case management functions
-- add unique 6 digit ref for cases starting with 000001
-- add service to create SupportCases from SupportEnquiries
-- add ability for agent to resolve a case with notes
-- add ability for agent to send a non templated email on a case
-- add ability for agent to send templated emails on a case
-- add ability for agent to view specification
-- privacy notice page
-- accessibility page
-- add link to school details in GIAS from case view
-- add ability to re-categorise a case
-- enable sending of emails via Notify
-- add activity logging for support cases
-- add csv export for case management
-- add create case service for case management
-- add create interaction for case management
+## [release-017] - 2021-12-xx
 
-### Specify Unreleased
+### Housekeeping
 
-**Infrastructure**
+- refactor docker images to ensure only production dependencies are deployed
+- refactor docker-compose to use chained override files
+- remove unused dependencies from the original project template
+- add JS testing capability to the suite and `chromedriver` to docker-compose
+- add RSpec custom matchers for common path matching
+- add RSpec custom matcher for breadcrumbs
+- add RSpec custom matcher for links that open in a new tab
+- add convenience task for CSV data export of activity log items
 
-- Contentful env `master` is now aliased to `staging`
-- Contentful env `research` has been removed
-- `production` points to Contentful `master`
-- `staging` points to Contentful `staging`
-- Github actions changed to clone `staging` to `develop` for local development
-- refactor docker tooling ensuring only production dependencies are deployed
+### Static Page Publishing
 
-**ITHC**
+- convert committed pages to a database stored Page model
+- publish and unpublish page content using Contentful via webhooks
+- bypass the Redis cache for page actions for an immediate response
+- retire `highvoltage` gem for static pages
+- routing to custom pages controlled by content designers
+- add breadcrumbs to custom pages controlled by content designers
+- add optional sidebar to published pages
+- add custom CSS to style body and sidebar content using markdown
 
-- explicitly set `X-Xss-Protection` header
-- restrict all `robots.txt`
+### Content Design
 
-**Support Requests**
+- create a Contentful release strategy
+- Contentful env `master` is now aliased to `staging` and `research` has been removed
+- `production` points to Contentful `master` and `staging` points to Contentful `staging`
+- delete Github action that destroys staging
+- Github actions changed to clone `staging` to `develop` for local development (WIP)
 
-- add form to request support
-- use `dry-validation` for complex form validations
-- provide a better more accessible user experience using the form error summary
-- send a confirmation email upon submission
 
-**Rich Data**
+## [release-016] - 2021-11-10
 
-- integrate fully with DSI to gather names, email and organisation at authentication
-- add env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
-- make a post authentication API call to DSI for roles and organisations information
-- register localhost with DSI for callbacks in development
-- document DSI changes including creation of SSL self-certs required in development
-- integrate with GIAS by downloading and manipulating data in CSV format
-- include capacity to export GIAS data as `YAML` or `JSON` for later use
-- validate and coerce data using `dry-schema` and `dry-transformer`
-- introduce a `Guest` entity using `dry-struct` to assist with RBAC
-- replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
-- add strict typing into new functional service objects using `dry-types`
-- add `foreman` as an optional convenience in development
-- store identifying information for a `User`
-- display signed in user's name in header bar
-- grant access to supported organisations and ProcOps users only
-
-**House keeping**
+### House Keeping
 
 - bump Ruby to version `3.0.1`
-- document code using Yard
-- use CodeClimate in CI pipeline to highlight areas of improvement
+- document code using `yard`
+- use `codeclimate` in CI pipeline to highlight areas of improvement
 - change from `standardrb` to `rubocop-govuk` and convert lint style
 - generate PDF format Entity Relationship Diagram with upon DB migrations
 - add status badges to `README`
 - use `pry` in the Rails console
 - add additional developer tools to optional `Brewfile`
+- validate and coerce data using `dry-schema` and `dry-transformer`
+- add strict typing into new functional service objects using `dry-types`
+- adopt `dry-validation` for complex form validations
+- add `foreman` as an optional convenience in development
 - remove unused `GetAllContentfulEntries` service object
 - change route to destroy a session to be DELETE
 - separate out concern for stale journeys and their removal `FlagStaleJourneysJob`,
   currently no-op until approved
 - clean and fix deletion of stale journeys `DeleteStaleJourneysJob`, currently
   no-op until approved
-- add rake task for CSV data export of activity log items
+- replace `htmltoword` and `redcarpet` with `pandoc` for parsing content in markdown
+  and generating `.doc`, `pdf` and `.odt` files
 
-**Steps**
-
-- implement **interrupt pattern** which introduces a step that is not semantically
-  a question but a statement
-- remove `staticContent` entity and add `Statement` entity in Contentful (staging only)
-- add custom answer validation logic which can be controlled in Contentful
-- fix progression to the next incomplete task
-- add `skipped_ids` to `Task` to allow users to skip questions
-- add error summary component
-- customise presence validation message
-- provide qualtrics feedback (saved in QUALTRICS_SURVEY_URL env)
-
-**Multiple Categories**
-
-- remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
-- introduce `Category` model to mirror Contentful category entity
-- add category `title` column to the dashboard
-- add `journey_maps#index` to allow content designers to switch category
-- add `categories#index` to enable users to create a specification from a chosen category
-- rename `journey_maps` to `design` to allow more intuitive URLs
-- WIP: data migration
-- update Contentful webhook handling to pick up updates to `Category` when they are published
-
-**Dashboard functionality**
+### Dashboard Functionality
 
 - add explicit ordering to the task model to allow continuing to the next unanswered task
 - add extensible tally of counted steps to the task
@@ -120,17 +80,77 @@ The format is based on [Keep a Changelog 1.0.0].
 - drop `Journey.last_worked_on` in favour of `updated_at`
 - allow user to (soft) delete a specification
 
-**Preview functionality**
+### Question Functionality
 
-- previously this depended upon a dedicated environment which used the main branch
-  thereby preventing preview functionality in staging
-- a memoised client for both Contentful delivery and preview is available for any environment
+- implement **interrupt pattern** which introduces a step that is not semantically
+  a question but a statement which must be acknowledged rather than answered
+- remove `staticContent` entity and add `Statement` entity in Contentful
+- add custom answer validation logic using a range for number and date fields which
+  can be controlled in Contentful
+- fix progression to the next incomplete task
+- add `skipped_ids` to `Task` to allow users to skip questions
+
+### Content Design
+
+Previously, unpublished questions could only be accessed via a dedicated environment
+which used the main branch thereby preventing preview functionality in staging.
+
+- a memoised client for both Contentful "delivery" and "preview" content in all environments
 - `Content::Connector` instantiates both clients
 - `Content::Client` is used internally as an interface to the Contentful ruby gem
-- `APP_ENV_{ENV}_CONTENTFUL_ACCESS_TOKEN` is replaced by
-  `APP_ENV_{ENV}_CONTENTFUL_DELIVERY_TOKEN` and `APP_ENV_{ENV}_CONTENTFUL_PREVIEW_TOKEN`
+- `CONTENTFUL_ACCESS_TOKEN` is replaced by `CONTENTFUL_DELIVERY_TOKEN` and `CONTENTFUL_PREVIEW_TOKEN`
+- add `journey_maps#index` to allow content designers to switch category
+- rename `journey_maps` to `design` to allow more intuitive URLs
+
+### Categories
+
+- remove references to `CONTENTFUL_DEFAULT_CATEGORY_ENTRY_ID`
+- introduce `Category` model to mirror Contentful category entity
+- add category `title` column to the dashboard
+- add `categories#index` to enable users to create a specification from a chosen category
+- update Contentful webhook handling to pick up updates to `Category` when they are published
+
+### Authentication and Users
+
+- expand DfE Sign-In scopes to gather names and email
+- use env vars for DSI API `DFE_SIGN_IN_API_SECRET`, `DFE_SIGN_IN_API_ENDPOINT`
+- add DfE Sign-In API to collect user organisations
+- enable secure localhost DfE Sign-In authentication in development using SSL self-certs
+- consolidate DfE Sign-In url generation logic controlled by `DSI_ENV`
+- store identifying information for a `User`
+- introduce a `Guest` entity using `dry-struct` to assist with RBAC
+- replace `FindOrCreateUserfromSession` with `CreateUser` and `CurrentUser` functions
+- display signed in user's name in header bar
+- grant access to supported organisations and ProcOps users only
+
+### ITHC
+
+- explicitly set `X-Xss-Protection` header
+- restrict all paths in `robots.txt`
+
+### Requests for Support
+
+- add multi-step form to request support
+- add dynamic logic and validations to user input
+- provide a better more accessible user experience using the form error summary
+- send a confirmation email upon support request submission
+
+### User Research
+
+- link to external Qualtrics survey via `QUALTRICS_SURVEY_URL` env
+
+### Accessibility
+
+- add error summary component to forms
+- customise presence validation message
+- add breadcrumb navigation using `loaf`
+
+
+---
 
 ## Diary Studies using the live environment
+
+---
 
 ## [release-015] - 2021-06-17
 
@@ -313,7 +333,9 @@ The format is based on [Keep a Changelog 1.0.0].
 - Contentful can redirect users to preview endpoints
 - users can be asked to answer a long text question
 
-[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-015...HEAD
+[unreleased]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-017...HEAD
+[release-017]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-016...release-017
+[release-016]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-015...release-016
 [release-015]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-014...release-015
 [release-014]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-013...release-014
 [release-013]: https://github.com/DFE-Digital/buy-for-your-school/compare/release-012...release-013
