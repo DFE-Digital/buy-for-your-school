@@ -8,14 +8,12 @@ module Support
     end
 
     def update
-      @case_savings_form = CaseSavingsForm.from_validation(validation)
       if validation.success?
-        current_case.update!(@case_savings_form.as_json.except("messages"))
-
-        # record_action(case_id: current_case.id, action: "change_category", data: { category_title: current_case.category.title })
+        current_case.update!(validation.to_h)
 
         redirect_to @back_url, notice: I18n.t("support.case_savings.flash.updated")
       else
+        @case_savings_form = CaseSavingsForm.from_validation(validation)
         render :edit
       end
     end

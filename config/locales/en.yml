@@ -330,11 +330,11 @@ en:
           contract_spend: Contract spend
           supplier: Supplier
           start_date: Start date
-          savings_status: Saving status
-          savings_estimate_method: Saving estimate method used
-          savings_actual_method: Saving actual method used
-          savings_estimate: Saving estimate
-          savings_actual: Saving actual
+          savings_status: Status
+          savings_estimate_method: Estimate method used
+          savings_actual_method: Actual method used
+          savings_estimate: Estimate
+          savings_actual: Actual
 
         additional_data:
           support_request:
@@ -362,6 +362,9 @@ en:
         updated: Successfully changed case category
 
     case_savings:
+      show:
+        header: Savings details
+        link: change
       edit:
         header: Update savings details
         submit: Continue
