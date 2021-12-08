@@ -4,7 +4,7 @@ module Support
   class Procurement < ApplicationRecord
     before_save :normalize_blank_values
 
-    has_many :cases, class_name: "Support::Case"
+    has_many :cases, class_name: "Support::Case", dependent: :nullify
 
     # Stage
     #

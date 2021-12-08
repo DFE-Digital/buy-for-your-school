@@ -80,8 +80,10 @@ module Support
       OrganisationPresenter.new(super)
     end
 
-    # @return [ProcurementPresenter]
+    # @return [ProcurementPresenter, nil]
     def procurement
+      return nil unless super
+
       ProcurementPresenter.new(super)
     end
   end

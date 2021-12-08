@@ -14,6 +14,8 @@ FactoryBot.define do
 
     association :organisation, factory: :support_organisation
 
+    association :procurement, factory: :support_procurement
+
     trait :open do
       state { :open }
     end

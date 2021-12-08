@@ -13,7 +13,7 @@ module Support
     #   @return [Symbol, nil]
     option :reason_for_route_to_market, optional: true
     # @!attribute [r] framework_name
-    #   @return [Symbol, nil]
+    #   @return [String, nil]
     option :framework_name, optional: true
     # @!attribute [r] started_at
     #   @return [Date, nil]
