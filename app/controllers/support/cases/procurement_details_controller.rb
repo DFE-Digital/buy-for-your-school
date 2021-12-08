@@ -12,7 +12,7 @@ module Support
       @case_procurement_details_form = CaseProcurementDetailsForm.from_validation(validation)
 
       if validation.success?
-        current_case.procurement.update!(@case_procurement_details_form.instance_values.except("messages").symbolize_keys)
+        current_case.procurement.update!(@case_procurement_details_form.as_json.except("messages"))
 
         redirect_to @back_url, notice: I18n.t("support.procurement_details.flash.updated")
       else
