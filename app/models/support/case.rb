@@ -54,7 +54,7 @@ module Support
 
     # Savings status
     #
-    #   realised   - Reaslised
+    #   realised   - Realised
     #   potential  - Potential
     #   unrealised - Not realised
     enum savings_status: { realised: 0, potential: 1, unrealised: 2 }

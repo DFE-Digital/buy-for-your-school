@@ -82,22 +82,32 @@ module Support
     end
 
     def savings_status
+      return "-" unless super
+
       I18n.t("support.case_savings.edit.savings_status.states.#{super}")
     end
 
     def savings_estimate_method
+      return "-" unless super
+
       I18n.t("support.case_savings.edit.savings_estimate_method.states.#{super}")
     end
 
     def savings_actual_method
+      return "-" unless super
+
       I18n.t("support.case_savings.edit.savings_actual_method.states.#{super}")
     end
 
     def savings_estimate
+      return "-" unless super
+
       number_to_currency(super, unit: "£", precision: 2)
     end
 
     def savings_actual
+      return "-" unless super
+
       number_to_currency(super, unit: "£", precision: 2)
     end
   end

@@ -371,7 +371,7 @@ en:
         savings_status:
           header: Saving status (optional)
           states:
-            realised: Reaslised
+            realised: Realised
             potential: Potential
             unrealised: Not realised
         savings_estimate_method: 
@@ -384,9 +384,9 @@ en:
         savings_actual_method:
           header: Saving actual method used (optional)
           states:
-            previous_minus_award: "[Previous spend] - [Award Price ]"
-            alternative_minus_award: "[Alternative received price] - [Award Price ]"
-            rrp_minus_award: "[RRP] - [Award Price ]"
+            previous_minus_award: "[Previous spend] - [Award Price]"
+            alternative_minus_award: "[Alternative received price] - [Award Price]"
+            rrp_minus_award: "[RRP] - [Award Price]"
         savings_estimate:
           header: Saving estimate (optioanl)
         savings_actual:
