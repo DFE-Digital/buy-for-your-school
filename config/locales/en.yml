@@ -361,6 +361,10 @@ en:
       flash:
         updated: Successfully changed case category
 
+    case_contracts:
+      flash:
+        updated: Successfully changed case contracts
+
     case_hub_migration:
       header: Hub migration case information
       label:
