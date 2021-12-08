@@ -6,14 +6,14 @@ module Support
 
     helper_method :current_agent
 
-    # @return [AgentPresenter, nil]
+    # @return [Agent, nil]
     def current_agent
-      AgentPresenter.new(Agent.find_by(dsi_uid: session[:dfe_sign_in_uid]))
+      Agent.find_by(dsi_uid: session[:dfe_sign_in_uid])
     end
 
     # @return [nil]
     def authenticate_agent!
-      return if current_agent.respond_to?(:id)
+      return if current_agent
 
       redirect_to support_root_path, notice: "You are not a recognised case worker"
     end
