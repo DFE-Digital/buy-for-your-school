@@ -1,4 +1,4 @@
-RSpec.feature "Case worker assignment" do
+RSpec.feature "Editing procurement savings details" do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, :opened) }

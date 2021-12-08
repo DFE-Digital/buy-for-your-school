@@ -1,7 +1,6 @@
 module Support
   class Cases::SavingsController < Cases::ApplicationController
-    before_action :set_back_url, only: [:edit, :update]
-    before_action :set_enums, only: [:edit]
+    before_action :set_back_url, :set_enums, only: [:edit, :update]
 
     def edit
       @case_savings_form = CaseSavingsForm.new(**current_case.attributes.symbolize_keys)

@@ -6,8 +6,8 @@ module Support
       optional(:savings_status).value(:symbol)
       optional(:savings_estimate_method).value(:symbol)
       optional(:savings_actual_method).value(:symbol)
-      optional(:savings_estimate).value(:decimal)
-      optional(:savings_actual).value(:decimal)
+      optional(:savings_estimate).maybe(:decimal)
+      optional(:savings_actual).maybe(:decimal)
     end
   end
 end
