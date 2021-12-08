@@ -9,7 +9,7 @@ RSpec.feature "Editing procurement savings details" do
     click_link "Procurement details"
   end
 
-  context "when adding values to savings", js: true do
+  context "when adding values to savings" do
     it "shows values as expected" do
       # check fields are blank
       within "[aria-labelledby='pd-savings']" do
