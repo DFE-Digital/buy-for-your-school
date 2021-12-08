@@ -1,6 +1,6 @@
 module Support
   class Cases::SavingsController < Cases::ApplicationController
-    before_action :set_back_url, :set_enums, only: [:edit, :update]
+    before_action :set_back_url, :set_enums, only: %i[edit update]
 
     def edit
       @case_savings_form = CaseSavingsForm.new(**current_case.attributes.symbolize_keys)
@@ -24,14 +24,13 @@ module Support
     end
 
     # Exposes instance variables of selected `Case` enums
-    # 
+    #
     # for example:
     #   @savings_statuses => %w[realised potential unrealised]
     def set_enums
       %w[savings_statuses
          savings_estimate_methods
-         savings_actual_methods
-      ].each do |enum|
+         savings_actual_methods].each do |enum|
         instance_variable_set("@#{enum}", Support::Case.send(enum).keys)
       end
     end
@@ -48,7 +47,7 @@ module Support
           :savings_estimate_method,
           :savings_actual_method,
           :savings_estimate,
-          :savings_actual
+          :savings_actual,
         )
     end
   end
