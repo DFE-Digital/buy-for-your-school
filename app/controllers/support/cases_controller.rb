@@ -12,6 +12,16 @@ module Support
       @back_url = support_cases_path
     end
 
+    def update
+      current_case.update!(procurement: Support::Procurement.new) unless current_case.procurement
+      current_case.update!(existing_contract: Support::ExistingContract.new) unless current_case.existing_contract
+      current_case.update!(new_contract: Support::NewContract.new) unless current_case.new_contract
+
+      respond_to do |format|
+        format.js
+      end
+    end
+
   private
 
     # @return [CasePresenter, nil]
