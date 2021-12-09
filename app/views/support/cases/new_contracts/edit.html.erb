@@ -1,32 +1,10 @@
-<h1 class="govuk-heading-l"><%= I18n.t("support.case_savings.edit.header") %></h1>
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_contracts.new.edit.header") %></h1>
 
-<%= form_with model: @case_savings_form, scope: :case_savings_form, url: support_case_savings_path(@current_case), method: :patch do |f| %>
-  <%= f.govuk_error_summary %>
-  <%= f.govuk_radio_buttons_fieldset :savings_status, legend: { text: I18n.t("support.case_savings.edit.savings_status.header") } do %>
-    <%= f.hidden_field :savings_status, value: nil %>
-
-    <div class="govuk-radios">
-      <% @savings_statuses.each do |state| %>
-        <%= f.govuk_radio_button :savings_status, state, label: { text: I18n.t("support.case_savings.edit.savings_status.states.#{state}") } %>
-      <% end %>
-    </div>
-  <% end %>
- 
-  <%= f.govuk_radio_buttons_fieldset :savings_estimate_method, legend: { text: I18n.t("support.case_savings.edit.savings_estimate_method.header") } do %>
-    <div class="govuk-radios">
-      <% @savings_estimate_methods.each do |state| %>
-        <%= f.govuk_radio_button :savings_estimate_method, state, label: { text: I18n.t("support.case_savings.edit.savings_estimate_method.states.#{state}") } %>
-      <% end %>
-    </div>
-  <% end %>
-  <%= f.govuk_radio_buttons_fieldset :savings_actual_method, legend: { text: I18n.t("support.case_savings.edit.savings_actual_method.header") } do %>
-    <div class="govuk-radios">
-      <% @savings_actual_methods.each do |state| %>
-        <%= f.govuk_radio_button :savings_actual_method, state, label: { text: I18n.t("support.case_savings.edit.savings_actual_method.states.#{state}") } %>
-      <% end %>
-    </div>
-  <% end %>
-  <%= f.govuk_text_field :savings_estimate, width: 'one-quarter', label: { text: I18n.t("support.case_savings.edit.savings_estimate.header") }, prefix_text: '£' %>
-  <%= f.govuk_text_field :savings_actual, width: 'one-quarter', label: { text: I18n.t("support.case_savings.edit.savings_actual.header") }, prefix_text: '£' %>
-  <%= f.submit I18n.t("support.case_savings.edit.submit"), class: "govuk-button", role: "button" %>
+<%= form_with model: @case_contracts_form, scope: :case_contracts_form, url: support_case_new_contract_path(@current_case), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.case_contracts.new.edit.started_at.header") } %>
+  <%= form.govuk_text_field :duration, width: 5, label: { text: I18n.t("support.case_contracts.new.edit.duration.header") } %>
+  <%= form.govuk_text_field :spend, width: 5, label: { text: I18n.t("support.case_contracts.new.edit.spend.header") }, prefix_text: '£' %>
+  <%= form.govuk_text_field :supplier, width: 20, label: { text: I18n.t("support.case_contracts.new.edit.supplier.header") } %>
+  <%= form.submit I18n.t("support.case_contracts.new.edit.submit"), class: "govuk-button", role: "button" %>
 <% end %>

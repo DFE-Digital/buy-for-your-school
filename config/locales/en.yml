@@ -362,6 +362,30 @@ en:
         updated: Successfully changed case category
 
     case_contracts:
+      existing:
+        edit:
+          header: Update existing contract details
+          spend:
+            header: Existing contract spend (optional)
+          ended_at:
+            header: End date of existing contract (optional)
+          duration:
+            header: Duration of existing contract in months (optional)
+          supplier:
+            header: Existing contract supplier (optional)
+          submit: Continue
+      new:
+        edit:
+          header: Update new contract details
+          spend:
+            header: New contract spend (optional)
+          started_at:
+            header: Start date of new contract (optional)
+          duration:
+            header: Duration of new contract in months (optional)
+          supplier:
+            header: New contract supplier (optional)
+          submit: Continue
       flash:
         updated: Successfully changed case contracts
 
