@@ -2,7 +2,7 @@ module Support
   class Cases::ProcurementDetailsController < Cases::ApplicationController
     before_action :set_back_url, :set_required_agreement_types, :set_stages, :set_framework_names, :set_routes_to_market, :set_reasons_for_route_to_market
 
-    include DateHelper
+    include Concerns::HasDateParams
 
     def edit
       @case_procurement_details_form = CaseProcurementDetailsForm.new(**current_case.procurement.attributes.symbolize_keys)
@@ -55,18 +55,9 @@ module Support
 
     def case_procurement_details_form_params
       form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :framework_name, :stage)
-      form_params[:started_at] = date_param(:started_at)
-      form_params[:ended_at] = date_param(:ended_at)
+      form_params[:started_at] = date_param(:case_procurement_details_form, :started_at).to_s
+      form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at).to_s
       form_params
-    end
-
-    # @see DateHelper
-    #
-    # @return [String]
-    def date_param(date_field)
-      date = params.require(:case_procurement_details_form).permit(date_field)
-      date_hash = { day: date["#{date_field}(3i)"], month: date["#{date_field}(2i)"], year: date["#{date_field}(1i)"] }
-      format_date(date_hash).to_s
     end
   end
 end
