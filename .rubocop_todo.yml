@@ -63,6 +63,7 @@ Style/TrailingCommaInArguments:
 Style/DateTime:
   Exclude:
     - 'lib/microsoft_graph/resource/message.rb'
+    - 'lib/microsoft_graph/resource/attachment.rb'
     - 'lib/microsoft_graph/application_authenticator.rb'
     - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
 
