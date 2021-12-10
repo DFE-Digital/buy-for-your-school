@@ -1,8 +1,8 @@
-#edit
-#update
+# edit
+# update
 module Support
   class Cases::NewContractsController < Cases::ApplicationController
-    before_action :set_back_url, only: [:edit, :update]
+    before_action :set_back_url, only: %i[edit update]
 
     def edit
       @case_contracts_form = CaseContractsForm.new(**current_case.new_contract.attributes.symbolize_keys)
@@ -40,6 +40,5 @@ module Support
           :spend,
         )
     end
-
   end
 end

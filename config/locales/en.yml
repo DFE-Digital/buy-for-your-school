@@ -335,6 +335,7 @@ en:
           saving_actual_method: Saving actual method used
           saving_estimate: Saving estimate
           saving_actual: Saving actual
+          change: Change
 
         additional_data:
           support_request:

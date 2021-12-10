@@ -1,8 +1,8 @@
-#edit
-#update
+# edit
+# update
 module Support
   class Cases::ExistingContractsController < Cases::ApplicationController
-    before_action :set_back_url, only: [:edit, :update]
+    before_action :set_back_url, only: %i[edit update]
 
     def edit
       @case_contracts_form = CaseContractsForm.new(**current_case.existing_contract.attributes.symbolize_keys)
@@ -10,6 +10,7 @@ module Support
 
     def update
       @case_contracts_form = CaseContractsForm.from_validation(validation)
+      byebug
       if validation.success?
         current_case.existing_contract.update!(@case_contracts_form.as_json.except("messages"))
 
@@ -40,6 +41,5 @@ module Support
           :spend,
         )
     end
-
   end
 end
