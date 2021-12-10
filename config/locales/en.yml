@@ -319,6 +319,7 @@ en:
         change_case_owner: change
         assign_to_agent: Assign to case worker
         procurement_details:
+          change: change
           required_agreement_type: Required agreement type
           route_to_market: Route to market
           reason_for_route_to_market: Reason for route to market
@@ -486,3 +487,46 @@ en:
       message:
         created_flash: "%{type} added to case"
       link_to_email_preview: Open email preview in new tab
+    
+    procurement_details:
+      edit:
+        header: Update procurement details
+        submit: Continue
+        required_agreement_type:
+          header: Required agreement type (optional)
+        route_to_market:
+          header: Route to market (optional)
+        reason_for_route_to_market:
+          header: Reason for route to market (optional)
+        framework_name:
+          header: Framework name (optional)
+          select: -- Select framework --
+        started_at:
+          header: Start date of the procurement (optional)
+        ended_at:
+          header: End date of the procurement (optional)
+        stage:
+          header: Procurement stage (optional)
+          select: -- Select stage --
+      flash:
+        updated: Successfully changed procurement details
+      stages:
+        need: Need
+        market_analysis: Market Analysis
+        sourcing_options: Sourcing Options
+        go_to_market: Go to Market
+        evaluation: Evaluation
+        contract_award: Contract Award
+        handover: Handover
+      required_agreement_types:
+        one_off: One-off
+        ongoing: Ongoing
+      routes_to_market:
+        dfe_approved: DfE Approved Deal / Framework
+        bespoke: Bespoke Procurement
+        direct_award: Direct Award
+      reasons_for_route_to_market:
+        school_pref: School Preference
+        dfe_deal: DfE Deal / Framework Selected
+        no_dfe_deal: No DfE Deal / Framework Available
+        better_than_dfe: Better Spec / Terms than DfE Deal
