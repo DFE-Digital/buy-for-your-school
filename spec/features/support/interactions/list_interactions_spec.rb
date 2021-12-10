@@ -9,12 +9,12 @@ RSpec.feature "Support request case history" do
   end
 
   let(:agent) { support_case.agent }
-  let!(:email_to_school) { create(:support_interaction, :email_to_school, case: support_case, agent: agent) }
 
   before do
     travel_to Time.zone.local(2021, 3, 20, 12, 0, 0)
 
     create(:support_interaction, :support_request, case: support_case, agent: agent)
+    create(:support_interaction, :email_to_school, case: support_case, agent: agent)
     # create(:support_interaction, :note, case: support_case, agent: agent)
     # create(:support_interaction, :note, case: support_case, agent: agent)
     # create(:support_interaction, :phone_call, case: support_case, agent: agent)
@@ -53,7 +53,7 @@ RSpec.feature "Support request case history" do
         expect(find_all("dd.govuk-summary-list__value")[1]).to have_link_to_open_in_new_tab("Open email preview in new tab")
 
         click_link "Open email preview in new tab"
-        expect(page).to have_current_path "/support/cases/#{support_case.id}/interactions/#{email_to_school.id}"
+        expect(page).to have_current_path "/support/cases/#{support_case.id}/interactions/#{support_case.interactions.email_to_school.first.id}"
       end
     end
   end
