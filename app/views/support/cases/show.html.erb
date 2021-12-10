@@ -41,7 +41,7 @@
       </p>
     <% end %>
 
-      <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions %>
+      <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions, locals: { current_case: @current_case } %>
 
       <%# Only cases from Specify are initiated by a support request %>
       <% if @current_case.support_request.present? %>
