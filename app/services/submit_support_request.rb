@@ -128,7 +128,7 @@ private
   def record_case_opening
     Support::RecordAction.new(
       case_id: @kase.id,
-      action: "open_case",
+      action: "create_case",
     ).call
   end
 

@@ -98,5 +98,20 @@ RSpec.describe SubmitSupportRequest do
 
       service.call
     end
+
+    it "logs the create_case activity" do
+      support_case = create(:support_case)
+      allow(Support::CreateCase).to receive(:new)
+        .and_return(double(call: support_case))
+
+      record_action = instance_double("Support::RecordAction", call: nil)
+      allow(Support::RecordAction).to receive(:new)
+        .with(case_id: support_case.id, action: "create_case")
+        .and_return(record_action)
+
+      service.call
+
+      expect(record_action).to have_received(:call)
+    end
   end
 end
