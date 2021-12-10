@@ -1,5 +1,5 @@
 module Support
-  class CasesController < ApplicationController
+  class CasesController < Cases::ApplicationController
     before_action :current_case, only: %i[show]
 
     def index
@@ -14,6 +14,7 @@ module Support
 
   private
 
+    # @return [CasePresenter, nil]
     def current_case
       @current_case ||= CasePresenter.new(Case.find_by(id: params[:id]))
     end

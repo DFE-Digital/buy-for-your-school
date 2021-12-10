@@ -60,7 +60,7 @@ RSpec.feature "Case summary" do
 
     it "lists section headings details" do
       within "#procurement-details" do
-        expect(find("#procurement-details-procurement")).to have_text "Procurement details"
+        expect(find("#pd-procurement")).to have_text "Procurement details"
         expect(find("#pd-existing-contract")).to have_text "Existing contract details"
         expect(find("#pd-new-contract")).to have_text "New contract details"
         expect(find("#pd-savings")).to have_text "Saving details"

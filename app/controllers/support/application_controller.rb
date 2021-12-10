@@ -8,9 +8,7 @@ module Support
 
     # @return [Agent, nil]
     def current_agent
-      @current_agent ||= AgentPresenter.new(
-        Agent.find_by(dsi_uid: session[:dfe_sign_in_uid]),
-      )
+      Agent.find_by(dsi_uid: session[:dfe_sign_in_uid])
     end
 
     # @return [nil]
