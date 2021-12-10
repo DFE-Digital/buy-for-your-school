@@ -13,6 +13,7 @@ module Support
     # functionality has been added to the case controllers
 
     ACTION_TYPES = %w[
+      create_case
       open_case
       add_interaction
       change_category
@@ -20,6 +21,7 @@ module Support
       change_state
       resolve_case
       close_case
+      case_modified
     ].freeze
 
     # @!attribute action
@@ -36,11 +38,19 @@ module Support
 
     # @return [Support::ActivityLogItem]
     def call
-      Support::ActivityLogItem.create!(
-        support_case_id: @case_id,
-        action: @action,
-        data: @data,
-      )
+      Support::ActivityLogItem.transaction do
+        Support::ActivityLogItem.create!(
+          support_case_id: @case_id,
+          action: "case_modified",
+          data: @data,
+        )
+
+        Support::ActivityLogItem.create!(
+          support_case_id: @case_id,
+          action: @action,
+          data: @data,
+        )
+      end
     end
   end
 end
