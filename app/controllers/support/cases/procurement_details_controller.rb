@@ -10,7 +10,6 @@ module Support
 
     def update
       @case_procurement_details_form = CaseProcurementDetailsForm.from_validation(validation)
-
       if validation.success?
         current_case.procurement.update!(@case_procurement_details_form.as_json.except("messages"))
 

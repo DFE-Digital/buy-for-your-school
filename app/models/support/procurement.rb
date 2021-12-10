@@ -2,13 +2,9 @@
 
 module Support
   class Procurement < ApplicationRecord
-<<<<<<< HEAD
-    has_many :cases, class_name: "Support::Case"
-=======
     before_save :normalize_blank_values
 
     has_many :cases, class_name: "Support::Case", dependent: :nullify
->>>>>>> feature/156-procurement-details
 
     # Stage
     #
