@@ -41,6 +41,13 @@ module SignInHelpers
     allow_any_instance_of(::CurrentUser).to receive(:call).with(anything).and_return(user)
   end
 
+  def agent_is_signed_in
+    user = create(:user, :caseworker)
+    agent = create(:support_agent, dsi_uid: user.dfe_sign_in_uid)
+    user_is_signed_in(user: user)
+    allow_any_instance_of(Support::ApplicationController).to receive(:current_agent).and_return(Support::AgentPresenter.new(agent))
+  end
+
   def has_valid_api_token
     allow_any_instance_of(Api::Contentful::BaseController).to receive(:authenticate_api_user!).and_return(true)
   end

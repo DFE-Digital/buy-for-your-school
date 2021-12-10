@@ -96,12 +96,13 @@ private
   def open_case
     kase_attrs = {
       category_id: map_category.id,
-      organisation_id: map_organisation.id,
+      organisation_id: map_organisation&.id,
       source: "digital",
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
       phone_number: request.phone_number,
+      request_text: request.message_body,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
@@ -116,7 +117,7 @@ private
           "category": category,
           "message": request.message_body },
     }
-    Support::CreateInteraction.new(@kase.id, "support_request", attrs: interaction_attrs).call
+    Support::CreateInteraction.new(@kase.id, "support_request", nil, interaction_attrs).call
 
     record_case_opening
 
