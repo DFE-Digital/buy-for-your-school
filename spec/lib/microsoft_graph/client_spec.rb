@@ -62,4 +62,26 @@ describe MicrosoftGraph::Client do
       expect(client.list_messages_in_folder(user_id, mail_folder_id)).to match_array([message_1, message_2])
     end
   end
+
+  describe "#mark_message_as_read" do
+    let(:mail_folder_id) { "MAIL_FOLDER_1" }
+    let(:message_id) { "MESSAGE_ID" }
+    let(:graph_api_response) do
+      {
+        "receivedDateTime" => Time.zone.now,
+        "sentDateTime" => Time.zone.now,
+        "isRead" => true,
+      }
+    end
+
+    before do
+      allow(client_session).to receive(:graph_api_post)
+        .with("users/#{user_id}/mailFolders/#{mail_folder_id}/messages/#{message_id}", { isRead: true }.to_json)
+        .and_return(graph_api_response)
+    end
+
+    it "returns a response indicating that the message has updated the isRead property to true" do
+      expect(client.mark_message_as_read(user_id, mail_folder_id, message_id)).to eql(graph_api_response)
+    end
+  end
 end

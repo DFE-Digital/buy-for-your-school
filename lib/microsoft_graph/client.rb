@@ -20,5 +20,11 @@ module MicrosoftGraph
       raw_messages = json["value"]
       raw_messages.map { |message| Resource::Message.from_payload(message) }
     end
+
+    # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
+    def mark_message_as_read(user_id, mail_folder_id, message_ms_id)
+      body = { isRead: true }.to_json
+      client_session.graph_api_post("users/#{user_id}/mailFolders/#{mail_folder_id}/messages/#{message_ms_id}", body)
+    end
   end
 end
