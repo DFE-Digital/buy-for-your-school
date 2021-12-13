@@ -1,12 +1,3 @@
-FactoryBot.define do
-  factory :support_new_contract, class: "Support::NewContract" do
-    type { "Support::NewContract" }
-    supplier { "test" }
-    started_at { "2020-10-01" }
-    spend { "300" }
-  end
-end
-
 RSpec.feature "Editing new contract details in procurement tab section" do
   include_context "with an agent"
 
@@ -19,20 +10,19 @@ RSpec.feature "Editing new contract details in procurement tab section" do
     click_link "Procurement details"
   end
 
-  context "when amending new contract details" do
+  context "when amending existing contract details" do
     it "shows values where expected" do
       # check fields are blank
-      within "[aria-labelledby='pd-existing-contract']" do
-        expect(page).not_to have_text("Start date of existing contract (optional)")
-        expect(page).not_to have_text("Duration of existing contract in months (optional)")
-        expect(page).not_to have_text("Existing contract spend (optional)")
-        expect(page).not_to have_text("Existing contract supplier (optional)")
+      within "[aria-labelledby='pd-new-contract']" do
+        expect(page).not_to have_text("Start date of new contract (optional)")
+        expect(page).not_to have_text("Duration of new contract in months (optional)")
+        expect(page).not_to have_text("New contract spend (optional)")
+        expect(page).not_to have_text("New contract supplier (optional)")
       end
     end
 
     it "shows the expected fields on the edit page" do
-      pp page.source
-      find("#pd-new-contract-change a").click
+      find("#pd-new-contract a").click
       within(all("div.govuk-form-group")[5]) do
         expect(find(".govuk-label")).to have_text "New contract spend (optional)"
       end
@@ -42,16 +32,32 @@ RSpec.feature "Editing new contract details in procurement tab section" do
       end
 
       # input contract details
+      fill_in "case_contracts_form[started_at(3i)]", with: "2"
+      fill_in "case_contracts_form[started_at(2i)]", with: "11"
+      fill_in "case_contracts_form[started_at(1i)]", with: "2002"
+
       fill_in "case-contracts-form-spend-field", with: "300"
-      fill_in "case-contracts-form-supplier-field", with: "test name"
+      fill_in "case-contracts-form-supplier-field", with: "test contract"
       # save
       click_on "Continue"
     end
 
     it "persists existing contract details" do
+      find("#pd-new-contract a").click
+      # input contract details
+      fill_in "case_contracts_form[started_at(3i)]", with: "2"
+      fill_in "case_contracts_form[started_at(2i)]", with: "11"
+      fill_in "case_contracts_form[started_at(1i)]", with: "2002"
+
+      fill_in "case-contracts-form-spend-field", with: "300"
+      fill_in "case-contracts-form-supplier-field", with: "test contract"
+      # save
+      click_on "Continue"
+
       new_contract_data = Support::Contract.first
       expect(new_contract_data.spend).to eq 300
-      expect(new_contract_data.supplier).to eq "test name"
+      expect(new_contract_data.supplier).to eq "test contract"
+      expect(new_contract_data.started_at).to eq Date.parse("2002-11-2")
     end
   end
 end
