@@ -1,4 +1,4 @@
-RSpec.feature "Case worker assignment", js: true do
+RSpec.feature "Case worker assignment" do
   include_context "with an agent"
 
   context "when re-assigning an agent to a case" do
