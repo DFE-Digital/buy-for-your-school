@@ -7,7 +7,7 @@ module Support
       optional(:started_at).maybe(:date)
       optional(:ended_at).maybe(:date)
       optional(:spend).maybe(:decimal)
-      optional(:duration).maybe(:string)
+      optional(:duration).maybe(:integer)
     end
   end
 end

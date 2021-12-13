@@ -104,6 +104,9 @@
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.contract_duration") %>
         </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.new_contract&.duration %>
+        </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
