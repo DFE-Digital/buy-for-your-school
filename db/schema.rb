@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_110826) do
+ActiveRecord::Schema.define(version: 2021_11_29_120610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -99,8 +99,13 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "contentful_id"
+    t.text "sidebar"
+    t.string "breadcrumbs", default: [], array: true
+    t.index ["contentful_id"], name: "index_pages_on_contentful_id", unique: true
+    t.index ["slug"], name: "index_pages_on_slug", unique: true
   end
 
   create_table "radio_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -161,6 +166,14 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
+  create_table "support_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "support_case_id"
+    t.string "action"
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "support_agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -186,8 +199,8 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.string "last_name"
     t.string "email"
     t.string "phone_number"
-    t.string "organisation_name"
-    t.string "organisation_urn"
+    t.integer "source"
+    t.uuid "organisation_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
@@ -202,7 +215,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug"
+    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
@@ -234,6 +247,19 @@ ActiveRecord::Schema.define(version: 2021_11_03_110826) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_support_groups_on_code", unique: true
     t.index ["name"], name: "index_support_groups_on_name", unique: true
+  end
+
+  create_table "support_hub_transitions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "case_id"
+    t.string "hub_case_ref"
+    t.date "estimated_procurement_completion_date"
+    t.decimal "estimated_savings", precision: 8, scale: 2
+    t.string "school_urn"
+    t.string "buying_category"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["case_id"], name: "index_support_hub_transitions_on_case_id"
+    t.index ["hub_case_ref"], name: "index_support_hub_transitions_on_hub_case_ref"
   end
 
   create_table "support_interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

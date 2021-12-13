@@ -1,20 +1,29 @@
 RSpec.feature "User task actions are recorded" do
   let(:user) { create(:user) }
-  let(:fixture) { "section-with-multiple-tasks.json" }
+  let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
+  let(:journey) { create(:journey, user: user, category: category) }
+  let(:section) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
 
   before do
     user_is_signed_in(user: user)
-    # TODO: replace fixture with factory
-    start_journey_from_category(category: fixture)
   end
 
   context "when there is a task with multiple steps" do
+    before do
+      task_checkbox_and_radio = create(:task, title: "Task with multiple steps", section: section)
+      create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_checkbox_and_radio, order: 0)
+      create(:step, :short_text, title: "What email address did you use?", task: task_checkbox_and_radio, order: 1)
+      create(:step, :long_text, title: "Describe what you need", task: task_checkbox_and_radio, order: 2)
+      create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_checkbox_and_radio, order: 3)
+      visit "/journeys/#{journey.id}"
+    end
+
     it "records an action in the event log that a task has begun" do
       # /journeys/b68300eb-fbeb-4ac5-beb8-4f88eb1f86cd
       expect(page).to have_a_journey_path
 
       within(".app-task-list") do
-        click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+        click_on "Task with multiple steps"
       end
 
       # /journeys/40e87654-0ce7-466a-96a2-b406025c83d9/steps/36e7b670-1af5-4340-9311-fc23ae1a6cfd
@@ -30,7 +39,7 @@ RSpec.feature "User task actions are recorded" do
       expect(begin_task_logged_event.journey_id).to eq(journey.id)
       expect(begin_task_logged_event.user_id).to eq(user.id)
       expect(begin_task_logged_event.contentful_category_id).to eq "contentful-category-entry"
-      expect(begin_task_logged_event.contentful_section_id).to eq "multiple-tasks-section"
+      expect(begin_task_logged_event.contentful_section_id).to eq "contentful-section-entry"
       expect(begin_task_logged_event.contentful_task_id).to eq(task.contentful_id)
       expect(begin_task_logged_event.data["task_status"]).to eq 0 # Task::NOT_STARTED
       expect(begin_task_logged_event.data["task_step_tally"]).to eq({
@@ -56,7 +65,7 @@ RSpec.feature "User task actions are recorded" do
         expect(page).to have_a_journey_path
 
         within(".app-task-list") do
-          click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+          click_on "Task with multiple steps"
         end
 
         # /journeys/3303d91e-e09a-4956-90d5-2628564ae901/tasks/4f8e2f76-cad2-4b43-be6d-18eca22a9756
@@ -69,7 +78,7 @@ RSpec.feature "User task actions are recorded" do
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(user.id)
         expect(last_logged_event.contentful_category_id).to eq "contentful-category-entry"
-        expect(last_logged_event.contentful_section_id).to eq "multiple-tasks-section"
+        expect(last_logged_event.contentful_section_id).to eq "contentful-section-entry"
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
         expect(last_logged_event.data["task_status"]).to eq 1 # Task::IN_PROGRESS
         expect(last_logged_event.data["task_step_tally"]).to eq({
@@ -91,7 +100,7 @@ RSpec.feature "User task actions are recorded" do
         # /journeys/db0d0480-4598-4ddb-b003-571138f5cf98
         expect(page).to have_a_journey_path
         within(".app-task-list") do
-          click_on "Task with multiple steps" # > checkboxes-and-radio-task.json
+          click_on "Task with multiple steps"
         end
 
         # /journeys/db0d0480-4598-4ddb-b003-571138f5cf98/steps/e25ab926-cec4-4c42-b6bf-2821ece220d4
@@ -117,7 +126,7 @@ RSpec.feature "User task actions are recorded" do
         expect(last_logged_event.journey_id).to eq(journey.id)
         expect(last_logged_event.user_id).to eq(user.id)
         expect(last_logged_event.contentful_category_id).to eq "contentful-category-entry"
-        expect(last_logged_event.contentful_section_id).to eq "multiple-tasks-section"
+        expect(last_logged_event.contentful_section_id).to eq "contentful-section-entry"
         expect(last_logged_event.contentful_task_id).to eq(task.contentful_id)
         expect(last_logged_event.data["task_status"]).to eq 2 # Task::COMPLETED
         expect(last_logged_event.data["task_step_tally"]).to eq({

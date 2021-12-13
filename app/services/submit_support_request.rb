@@ -28,12 +28,17 @@ require "types"
 class SubmitSupportRequest
   extend Dry::Initializer
 
+  # @!attribute request
+  #   @return [SupportRequestPresenter]
   option :request, ::Types.Constructor(SupportRequestPresenter)
-  option :template, Types::String, default: proc { "Auto-reply" }
+
+  # @!attribute template
+  #   @return [String] Template UUID
+  option :template, Types::String, default: proc { "acb20822-a5eb-43a6-8607-b9c8e25759b4" }
 
   # TODO: Replace with outbound API call
   #
-  # @return [nil, Notifications::Client::ResponseNotification]
+  # @return [false, Notifications::Client::ResponseNotification]
   def call
     return false unless open_case
 
@@ -82,30 +87,49 @@ private
     Support::Category.find_by(slug: category)
   end
 
+  # @return [Support::Organisation]
+  def map_organisation
+    Support::Organisation.find_by(urn: request.school_urn)
+  end
+
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
-    @kase = Support::Case.create!(request_text: request.message_body,
-                                  first_name: user.first_name,
-                                  last_name: user.last_name,
-                                  email: user.email,
-                                  phone_number: request.phone_number,
-                                  organisation_urn: request.school_urn,
-                                  organisation_name: request.school_name,
-                                  category: map_category)
+    kase_attrs = {
+      category_id: map_category.id,
+      organisation_id: map_organisation&.id,
+      source: "digital",
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      phone_number: request.phone_number,
+      request_text: request.message_body,
+    }
 
-    Support::Interaction.create!({  case: @kase,
-                                    event_type: 4,
-                                    additional_data:
-                                      { "support_request_id": request.id,
-                                        "first_name": user.first_name,
-                                        "last_name": user.last_name,
-                                        "email": user.email,
-                                        "phone_number": request.phone_number,
-                                        "category": category,
-                                        "message": request.message_body } })
+    @kase = Support::CreateCase.new(kase_attrs).call
+
+    interaction_attrs = {
+      additional_data:
+        { "support_request_id": request.id,
+          "first_name": user.first_name,
+          "last_name": user.last_name,
+          "email": user.email,
+          "phone_number": request.phone_number,
+          "category": category,
+          "message": request.message_body },
+    }
+    Support::CreateInteraction.new(@kase.id, "support_request", nil, interaction_attrs).call
+
+    record_case_opening
 
     @kase.documents << document if request.journey
     @kase
+  end
+
+  def record_case_opening
+    Support::RecordAction.new(
+      case_id: @kase.id,
+      action: "open_case",
+    ).call
   end
 
   # API (draft) ----------------------------------------------------------------

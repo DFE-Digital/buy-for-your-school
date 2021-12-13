@@ -10,8 +10,14 @@ class DocumentFormatter
   ReaderFormats = Types::Strict::Symbol.enum(:markdown)
   WriterFormats = Types::Strict::Symbol.enum(:docx, :pdf, :odt, :html)
 
+  # @!attribute [r] content
+  # @return [String]
   option :content, Types::Strict::String
+  # @!attribute [r] from
+  # @return [Symbol] markdown only
   option :from, ReaderFormats
+  # @!attribute [r] to
+  # @return [Symbol] docx, pdf, odt, or html
   option :to, WriterFormats
 
   # Return the converted document.

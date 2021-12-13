@@ -1,64 +1,51 @@
-version: '3.8'
+---
+version: "3.8"
 services:
-  web:
+  app:
+    # $ docker compose -p ghbs up app
+    # $ docker exec -it ghbs_prod /bin/bash
+    #
+    container_name: ghbs_prod
     build:
       context: .
-      target: web
-      args:
-        RAILS_ENV: development
-    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'"
-    ports:
-      - 3000:3000
-    image: buy_for_your_school:dev
-    depends_on:
-      - db
-      - redis
-    env_file:
-      - .env.development.local
+      target: app
+    image: ghbs:prod
+    command: bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-development
-      REDIS_URL: redis://redis:6379
+      SECRET_KEY_BASE: secret
+      RAILS_ENV: production
+      REDIS_URL: redis://cache:6379
+      # SUPPORT_EMAIL: prod@gov.uk
+      # RAILS_SERVE_STATIC_FILES: "true"
+    # ports:
+    #   - 3000:3000
     volumes:
       - .:/srv/app
+      # - ./localhost.key:/srv/app/localhost.key
+      # - ./localhost.crt:/srv/app/localhost.crt
+    depends_on:
+      - db
+      - cache
     tty: true
     stdin_open: true
     networks:
-      - dev
+      - ghbs
 
   db:
+    container_name: ghbs_db
     image: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - db-data:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
     networks:
-      - dev
+      - ghbs
 
-  redis:
+  cache:
+    container_name: ghbs_cache
     image: redis
-    ports:
-      - 6379:6379
-    volumes:
-      - redis-data:/data
     networks:
-      - dev
-
-  sidekiq:
-    image: buy_for_your_school:dev
-    command: bundle exec sidekiq -C config/sidekiq.yml
-    depends_on:
-      - db
-      - redis
-    volumes:
-      - .:/srv/app
-    networks:
-      - dev
+      - ghbs
 
 networks:
-  dev:
-volumes:
-  db-data:
-  redis-data:
+  ghbs:

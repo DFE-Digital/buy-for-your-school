@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+docker-compose down --remove-orphans
+
+docker volume rm buy-for-your-school_db-data

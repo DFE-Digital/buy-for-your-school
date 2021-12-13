@@ -1,9 +1,14 @@
 #!/bin/sh
-
-# script/server: Launch the application and any extra required processes
-#                locally.
+#
+# Docker development environment Rails server
+#
+#
 
 set -e
+echo "NB: run script/build if the image ghbs:dev does not exist locally"
+echo "-----------------------------------------------------------------"
 
-docker-compose up --detach
-docker attach buy-for-your-school_web_1
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml --project-name ghbs up --detach
+
+docker attach ghbs_dev
+

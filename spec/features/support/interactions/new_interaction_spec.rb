@@ -24,7 +24,7 @@
 RSpec.feature "New case event" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, state: "open") }
+  let(:support_case) { create(:support_case, state: "opened") }
 
   before do
     click_button "Agent Login"

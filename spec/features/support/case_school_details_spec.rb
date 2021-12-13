@@ -1,9 +1,8 @@
-require "rails_helper"
-
 describe "Case school details" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, :open, organisation_urn: "12345") }
+  let(:support_organisation) { create(:support_organisation, urn: "12345") }
+  let(:support_case) { create(:support_case, :opened, organisation: support_organisation) }
 
   before do
     click_button "Agent Login"

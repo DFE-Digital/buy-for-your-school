@@ -1,0 +1,203 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_with url: support_migrations_hub_case_path, scope: :case_hub_migration_form, method: :post, class: "new-case-form" do |form| %>
+
+      <% params[:case_hub_migration_form].each do |key, value| %>
+        <%= hidden_field_tag "case_hub_migration_form[#{key}]", value %>
+      <% end %>
+
+      <%= hidden_field_tag "case_hub_migration_form[organisation_id]", @form.establishment.id %>
+
+
+      <h1 class="govuk-heading-l">
+        <%= I18n.t("support.case_hub_migration.edit.header") %>
+      </h1>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.establishment") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_urn") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.school_urn %>
+          </dd>
+          <dd id="changeSchool" class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_name") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.establishment.name %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_postcode") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.establishment.postcode %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.contact") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.name") %>
+          </dt>
+          <dd id="fullName" class="govuk-summary-list__value">
+            <%= @form.full_name %>
+          </dd>
+          <dd id="changeName" class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.email") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.email %>
+          </dd>
+          <dd id="changeEmail" class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.phone_number", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.phone_number %>
+          </dd>
+          <dd id="changePhoneNumber" class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.case") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.case_type") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= I18n.t("support.case.label.source.#{@form.case_type}") %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.category") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.category_name %>
+          </dd>
+          <dd id="changeCategory" class="govuk-summary-list__list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.migration") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.hub_case_ref", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.hub_case_ref %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.estimated_procurement_completion_date %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.estimated_savings", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.estimated_savings %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.hub_notes", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.hub_notes %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.progress_notes", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.progress_notes %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+
+      <p class="govuk-body">
+        <%= I18n.t("support.case_hub_migration.edit.label.confirm") %>
+      </p>
+
+      <%= form.button I18n.t("support.case_hub_migration.edit.submit"), class: "govuk-button", value: "create" %>
+
+    <% end %>
+  </div>
+</div>

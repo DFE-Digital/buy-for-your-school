@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Resolving a case" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, :open, agent: build(:support_agent)) }
+  let(:support_case) { create(:support_case, :opened, agent: build(:support_agent)) }
 
   before do
     click_button "Agent Login"
@@ -46,7 +46,7 @@ describe "Resolving a case" do
     end
 
     it "remains open" do
-      expect(support_case.reload).to be_open
+      expect(support_case.reload).to be_opened
     end
 
     it "tells the user to provide notes" do

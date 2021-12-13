@@ -17,6 +17,8 @@ module Support
                counter_cache: true,
                class_name: "Support::EstablishmentType"
 
+    has_many :cases, class_name: "Support::Case"
+
     validates :urn, uniqueness: true
     validates :name, presence: true
 
@@ -45,5 +47,9 @@ module Support
       closing: 3,
       opening: 4,
     }
+
+    def postcode
+      address["postcode"]
+    end
   end
 end

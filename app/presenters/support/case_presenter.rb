@@ -4,6 +4,7 @@ require_relative "interaction_presenter"
 require_relative "contact_presenter"
 require_relative "category_presenter"
 require_relative "agent_presenter"
+require_relative "organisation_presenter"
 
 module Support
   class CasePresenter < BasePresenter
@@ -57,6 +58,32 @@ module Support
     # @return [CategoryPresenter]
     def category
       CategoryPresenter.new(super)
+    end
+
+    # @return [String]
+    def org_name
+      return "n/a" if organisation.blank?
+
+      organisation.name
+    end
+
+    # @return [String]
+    def org_urn
+      return "n/a" if organisation.blank?
+
+      organisation.urn
+    end
+
+    # @return [OrganisationPresenter]
+    def organisation
+      OrganisationPresenter.new(super)
+    end
+
+  private
+
+    # @return [String] 20 March 2021 at 12:00
+    def date_format
+      I18n.t("support.case.date_format")
     end
   end
 end

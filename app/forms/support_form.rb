@@ -10,26 +10,44 @@ class SupportForm
   class ErrorSummary
     extend Dry::Initializer
 
-    # @example
+    # @!attribute [r] messages
     #
+    # @example
     #   { phone_number: ["size cannot be less than 10"] }
     #
+    # @return [Hash]
     param :messages, Types::Hash, default: proc { {} }
 
     delegate :any?, to: :messages
   end
 
-  # internal counter defaults to 1, coerces strings
+  # @!attribute [r] step
+  # @return [Integer] internal counter defaults to 1, coerces strings
   option :step, Types::Params::Integer, default: proc { 1 }
 
-  # field validation error messages
+  # @!attribute [r] messages
+  # @return [Hash] field validation error messages
   option :messages, Types::Hash, default: proc { {} }
 
-  # @see [SupportRequest] attributes
+  # @!attribute [r] phone_number
+  # @see SupportRequest SupportRequest attributes
+  # @return [String]
   option :phone_number, optional: true # 1
-  option :school_urn, optional: true   # 2 (skipped if only one supported school)
-  option :journey_id, optional: true   # 3 (option for 'none')
-  option :category_id, optional: true  # 4 (skipped if 3)
+  # @!attribute [r] school_urn
+  # @see SupportRequest SupportRequest attributes
+  # @return [String]
+  option :school_urn, optional: true # 2 (skipped if only one supported school)
+  # @!attribute [r] journey_id
+  # @see SupportRequest SupportRequest attributes
+  # @return [String]
+  option :journey_id, optional: true # 3 (option for 'none')
+  # @!attribute [r] category_id
+  # @see SupportRequest SupportRequest attributes
+  # @return [String]
+  option :category_id, optional: true # 4 (skipped if 3)
+  # @!attribute [r] message_body
+  # @see SupportRequest SupportRequest attributes
+  # @return [String]
   option :message_body, optional: true # 5 (last)
 
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/

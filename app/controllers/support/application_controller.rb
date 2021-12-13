@@ -8,9 +8,7 @@ module Support
 
     # @return [Agent, nil]
     def current_agent
-      @current_agent ||= AgentPresenter.new(
-        Agent.find_by(dsi_uid: session[:dfe_sign_in_uid]),
-      )
+      Agent.find_by(dsi_uid: session[:dfe_sign_in_uid])
     end
 
     # @return [nil]
@@ -18,6 +16,14 @@ module Support
       return if current_agent
 
       redirect_to support_root_path, notice: "You are not a recognised case worker"
+    end
+
+    def record_action(case_id:, action:, data: {})
+      Support::RecordAction.new(
+        case_id: case_id,
+        action: action,
+        data: data,
+      ).call
     end
   end
 end

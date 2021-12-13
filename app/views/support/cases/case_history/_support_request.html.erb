@@ -48,18 +48,16 @@
         </dd>
       </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Additional Data
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <ul class="govuk-list govuk-list--bullet">
-            <% support_request.additional_data.each do |key, value| %>
-              <li><pre><%= "#{key}: #{value}" %></pre></li>
-            <% end %>
-          </ul>
-        </dd>
-      </div>
+      <% support_request.additional_data.each do |key, value|  %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.additional_data.support_request.#{key}", optional: nil) %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= value.humanize %>
+          </dd>
+        </div>
+      <% end %>
 
     </dl>
   </div>
