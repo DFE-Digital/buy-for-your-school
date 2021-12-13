@@ -75,7 +75,7 @@ describe MicrosoftGraph::Client do
     end
 
     before do
-      allow(client_session).to receive(:graph_api_post)
+      allow(client_session).to receive(:graph_api_patch)
         .with("users/#{user_id}/mailFolders/#{mail_folder_id}/messages/#{message_id}", { isRead: true }.to_json)
         .and_return(graph_api_response)
     end
