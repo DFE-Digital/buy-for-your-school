@@ -12,7 +12,7 @@ module Support
       log_potential_first_contact
     end
 
-    private
+  private
 
     def log_potential_first_contact
       if recipient.interactions.email_to_school.count == 1

@@ -1,14 +1,15 @@
 require "rails_helper"
 
 describe Support::Emails::ToSchool do
-  let(:support_case) { create(:support_case) }
   subject(:service) { described_class }
+
+  let(:support_case) { create(:support_case) }
 
   let(:parameters) do
     {
       recipient: support_case,
       template: "any",
-      client: double(send_email: nil)
+      client: double(send_email: nil),
     }
   end
 
@@ -16,7 +17,7 @@ describe Support::Emails::ToSchool do
     context "when recipient case has only one email interaction" do
       before do
         support_case.interactions.email_to_school.create!(
-          body: "test email body"
+          body: "test email body",
         )
       end
 
@@ -36,7 +37,7 @@ describe Support::Emails::ToSchool do
       before do
         2.times do
           support_case.interactions.email_to_school.create!(
-            body: "test email body"
+            body: "test email body",
           )
         end
       end
