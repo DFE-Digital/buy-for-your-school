@@ -110,6 +110,8 @@ module Support
       return "-" unless super
 
       number_to_currency(super, unit: "£", precision: 2)
+    end
+
     # @return [ProcurementPresenter, nil]
     def procurement
       return nil unless super
