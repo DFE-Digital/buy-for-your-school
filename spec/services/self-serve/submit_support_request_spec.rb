@@ -53,10 +53,13 @@ RSpec.describe SubmitSupportRequest do
       it "submits the request and creates a case" do
         expect(support_case).to be_persisted
         expect(support_case.phone_number).to eq "01234567890"
+        expect(support_case.request_text).to eq "Support request message from a School Buying Professional"
         expect(support_case.organisation.name).to eq chosen_organisation["name"]
         expect(support_case.organisation.urn).to eq chosen_organisation["urn"]
         expect(support_case.category).to eq support_category
         expect(support_case.interactions.first.event_type).to eq "support_request"
+        expect(support_case.interactions.first.additional_data).to have_key("category")
+        expect(support_case.interactions.first.additional_data).to have_key("message")
       end
 
       context "with a specification" do
