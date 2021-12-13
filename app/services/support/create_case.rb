@@ -21,6 +21,9 @@ module Support
         email: @attrs[:email],
         phone_number: @attrs[:phone_number],
         request_text: @attrs[:request_text],
+        new_contract: NewContract.create!,
+        existing_contract: ExistingContract.create!,
+        procurement: Procurement.create!,
       )
     end
   end

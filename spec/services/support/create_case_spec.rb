@@ -28,6 +28,9 @@ RSpec.describe Support::CreateCase do
       expect(result.category.title).to eq "Catering"
       expect(result.organisation.name).to eq "Hillside School"
       expect(result.source).to eq "sw_hub"
+      expect(result.new_contract).not_to be_nil
+      expect(result.existing_contract).not_to be_nil
+      expect(result.procurement).not_to be_nil
       expect(Support::Case.count).to be 1
     end
   end
