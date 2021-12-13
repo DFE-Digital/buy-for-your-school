@@ -28,6 +28,16 @@ module MicrosoftGraph
       handle_api_response(response)
     end
 
+    def graph_api_patch(path, body)
+      response = HTTParty.patch(
+        "https://graph.microsoft.com/v1.0/#{path}",
+        headers: { authorization: "Bearer #{access_token}", "Content-Type": "application/json" },
+        body: body,
+      )
+
+      handle_api_response(response)
+    end
+
   private
 
     def access_token
