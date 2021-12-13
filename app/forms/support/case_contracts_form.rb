@@ -15,13 +15,5 @@ module Support
 
       ActiveSupport::Duration.months(duration)
     end
-
-    # @return [Hash] form parms
-    def to_h
-      self.class.dry_initializer.attributes(self)
-          .except(:messages)
-          .merge(duration: months)
-          .compact
-    end
   end
 end

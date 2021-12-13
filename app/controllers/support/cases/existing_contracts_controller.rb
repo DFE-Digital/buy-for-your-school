@@ -31,6 +31,10 @@ module Support
       @back_url = support_case_path(@current_case, anchor: "procurement-details")
     end
 
+    # def spend
+
+    # end
+
     def case_contracts_form_params
       params[:case_contracts_form][:started_at] = date_param(:case_contracts_form, :started_at).to_s
       params[:case_contracts_form][:ended_at] = date_param(:case_contracts_form, :ended_at).to_s

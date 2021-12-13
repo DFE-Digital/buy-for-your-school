@@ -13,7 +13,9 @@ module Support
     def update
       @case_contracts_form = CaseContractsForm.from_validation(validation)
       if validation.success?
-        current_case.new_contract.update!(@case_contracts_form.to_h)
+        # current_case.new_contract.update!(@case_contracts_form.to_h)
+        current_case.new_contract.update!(@case_contracts_form.as_json.except("messages"))
+
 
         redirect_to @back_url, notice: I18n.t("support.case_contract.flash.updated")
       else

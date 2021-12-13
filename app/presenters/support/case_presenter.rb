@@ -6,6 +6,8 @@ require_relative "category_presenter"
 require_relative "agent_presenter"
 require_relative "organisation_presenter"
 require_relative "procurement_presenter"
+require_relative "existing_contract_presenter"
+require_relative "new_contract_presenter"
 
 module Support
   class CasePresenter < BasePresenter
@@ -85,6 +87,18 @@ module Support
       return nil unless super
 
       ProcurementPresenter.new(super)
+    end
+
+    def existing_contract
+      return nil unless super
+
+      ExistingContractPresenter.new(super)
+    end
+
+    def new_contract
+      return nil unless super
+
+      NewContractPresenter.new(super)
     end
 
   private

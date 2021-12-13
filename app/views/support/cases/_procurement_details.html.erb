@@ -72,20 +72,32 @@
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.end_date") %>
         </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.existing_contract&.ended_at %>
+        </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.contract_duration") %>
+        </dt>
+         <dt class="govuk-summary-list__value">
+          <%= @current_case.existing_contract&.duration %>
         </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.contract_spend") %>
         </dt>
+        <dt class="govuk-summary-list__value">£
+          <%= @current_case.existing_contract&.spend %>
+        </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.supplier") %>
+        </dt>
+         <dt class="govuk-summary-list__value">
+          <%= @current_case.existing_contract&.supplier %>
         </dt>
       </div>
     </dl>
@@ -98,6 +110,9 @@
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.start_date") %>
+        </dt>
+         <dt class="govuk-summary-list__value">
+          <%= @current_case.new_contract&.started_at %>
         </dt>
       </div>
       <div class="govuk-summary-list__row">
@@ -112,10 +127,16 @@
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.contract_spend") %>
         </dt>
+         <dt class="govuk-summary-list__value">£
+          <%= @current_case.new_contract&.spend %>
+        </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.supplier") %>
+        </dt>
+         <dt class="govuk-summary-list__value">
+          <%= @current_case.new_contract&.supplier %>
         </dt>
       </div>
     </dl>
