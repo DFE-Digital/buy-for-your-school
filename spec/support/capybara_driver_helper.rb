@@ -39,8 +39,10 @@ RSpec.configure do |config|
       Capybara.ignore_hidden_elements = false
       Capybara.current_driver = JS_DRIVER
 
-      server = Capybara.current_session.server
-      Capybara.app_host = "http://#{server.host}:#{server.port}"
+      if ENV["SELENIUM_HUB_URL"]
+        server = Capybara.current_session.server
+        Capybara.app_host = "http://#{server.host}:#{server.port}"
+      end
     end
   end
 
