@@ -332,11 +332,11 @@ en:
           contract_spend: Contract spend
           supplier: Supplier
           start_date: Start date
-          saving_status: Saving status
-          saving_estimate_method: Saving estimate method used
-          saving_actual_method: Saving actual method used
-          saving_estimate: Saving estimate
-          saving_actual: Saving actual
+          savings_status: Status
+          savings_estimate_method: Estimate method used
+          savings_actual_method: Actual method used
+          savings_estimate: Estimate
+          savings_actual: Actual
 
         additional_data:
           support_request:
@@ -362,6 +362,39 @@ en:
         submit: Save and continue
       flash:
         updated: Successfully changed case category
+
+    case_savings:
+      show:
+        header: Savings details
+        link: change
+      edit:
+        header: Update savings details
+        submit: Continue
+        savings_status:
+          header: Saving status (optional)
+          states:
+            realised: Realised
+            potential: Potential
+            unrealised: Not realised
+        savings_estimate_method: 
+          header: Saving estimate method used (optional)
+          states:
+            previous_minus_cheapest: "[Previous spend] - [Cheapest quote]"
+            rrp_minus_cheapest: "[RRP] - [Cheapest quote]"
+            previous_minus_estimated: "[Previous spend] - [Estimated Contract Value]"
+            rrp_minus_estimated: "[RRP] - [Estimated Contract Value]"
+        savings_actual_method:
+          header: Saving actual method used (optional)
+          states:
+            previous_minus_award: "[Previous spend] - [Award Price]"
+            alternative_minus_award: "[Alternative received price] - [Award Price]"
+            rrp_minus_award: "[RRP] - [Award Price]"
+        savings_estimate:
+          header: Saving estimate (optioanl)
+        savings_actual:
+          header: Saving actual (optional)
+      flash:
+        updated: Successfully changed case savings
 
     case_hub_migration:
       header: Hub migration case information
