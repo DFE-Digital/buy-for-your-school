@@ -15,7 +15,7 @@ module Support
       if validation.success?
         current_case.new_contract.update!(@case_contracts_form.as_json.except("messages"))
 
-        redirect_to @back_url, notice: I18n.t("support.case_contracts.flash.updated")
+        redirect_to @back_url, notice: I18n.t("support.case_contract.flash.updated")
       else
         render :edit
       end

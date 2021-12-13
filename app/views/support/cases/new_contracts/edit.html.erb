@@ -1,10 +1,10 @@
-<h1 class="govuk-heading-l"><%= I18n.t("support.case_contracts.new.edit.header") %></h1>
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_contract.new.edit.header") %></h1>
 
 <%= form_with model: @case_contracts_form, scope: :case_contracts_form, url: support_case_new_contract_path(@current_case), method: :patch do |form| %>
   <%= form.govuk_error_summary %>
-  <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.case_contracts.new.edit.started_at.header") } %>
-  <%= form.govuk_text_field :duration, width: 5, label: { text: I18n.t("support.case_contracts.new.edit.duration.header"), size: 'm' } %>
-  <%= form.govuk_text_field :spend, width: 5, label: { text: I18n.t("support.case_contracts.new.edit.spend.header"), size: 'm' }, prefix_text: '£' %>
-  <%= form.govuk_text_field :supplier, width: 20, label: { text: I18n.t("support.case_contracts.new.edit.supplier.header"), size: 'm' } %>
-  <%= form.submit I18n.t("support.case_contracts.new.edit.submit"), class: "govuk-button", role: "button" %>
+  <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.case_contract.new.edit.started_at.header") } %>
+  <%= form.govuk_text_field :duration, width: 5, label: { text: I18n.t("support.case_contract.new.edit.duration.header"), size: 'm' } %>
+  <%= form.govuk_text_field :spend, width: 5, label: { text: I18n.t("support.case_contract.new.edit.spend.header"), size: 'm' }, prefix_text: '£' %>
+  <%= form.govuk_text_field :supplier, width: 20, label: { text: I18n.t("support.case_contract.new.edit.supplier.header"), size: 'm' } %>
+  <%= form.submit I18n.t("support.case_contract.new.edit.submit"), class: "govuk-button", role: "button" %>
 <% end %>

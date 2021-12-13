@@ -363,7 +363,7 @@ en:
       flash:
         updated: Successfully changed case category
 
-    case_contracts:
+    case_contract:
       existing:
         edit:
           header: Update existing contract details
