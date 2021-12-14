@@ -1,8 +1,8 @@
-<div role="tabpanel" aria-labelledby="pd-procurement">
+<div role="tabpanel" aria-labelledby="procurement-details-procurement">
   <% if @current_case.procurement %>
-    <h2 id="pd-procurement" class="govuk-heading-m"><%= I18n.t("support.case.header.procurement_detail") %> - <%= link_to I18n.t("support.case.label.procurement_details.change"), edit_support_case_procurement_details_path(@current_case), class: "govuk-link"%></h2>
+    <h2 id="procurement-details-procurement" class="govuk-heading-m"><%= I18n.t("support.case.header.procurement_detail") %> - <%= link_to I18n.t("support.case.label.procurement_details.change"), edit_support_case_procurement_details_path(@current_case), class: "govuk-link"%></h2>
   <% else %>
-    <h2 id="pd-procurement" class="govuk-heading-m"><%= I18n.t("support.case.header.procurement_detail") %></h2>
+    <h2 id="procurement-details-procurement" class="govuk-heading-m"><%= I18n.t("support.case.header.procurement_detail") %></h2>
   <% end %>
     <dl class="govuk-summary-list govuk-!-margin-bottom-5">
       <div class="govuk-summary-list__row">
@@ -143,31 +143,46 @@
 </div>
 
 <div role="tabpanel" aria-labelledby="pd-savings">
-  <h2 id="pd-savings" class="govuk-heading-m">Saving details</h2>
+  <h2 id="pd-savings" class="govuk-heading-m"><%= I18n.t("support.case_savings.show.header") %> - <%= link_to I18n.t("support.case_savings.show.link"), edit_support_case_savings_path(@current_case), class: "govuk-link"%></h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-5">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.procurement_details.saving_status") %>
+          <%= I18n.t("support.case.label.procurement_details.savings_status") %>
+        </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.savings_status %>
         </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.procurement_details.saving_estimate_method") %>
+          <%= I18n.t("support.case.label.procurement_details.savings_estimate_method") %>
+        </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.savings_estimate_method %>
         </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.procurement_details.saving_actual_method") %>
+          <%= I18n.t("support.case.label.procurement_details.savings_actual_method") %>
+        </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.savings_actual_method %>
         </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.procurement_details.saving_estimate") %>
+          <%= I18n.t("support.case.label.procurement_details.savings_estimate") %>
+        </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.savings_estimate %>
         </dt>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.procurement_details.saving_actual") %>
+          <%= I18n.t("support.case.label.procurement_details.savings_actual") %>
+        </dt>
+        <dt class="govuk-summary-list__value">
+          <%= @current_case.savings_actual %>
         </dt>
       </div>
     </dl>

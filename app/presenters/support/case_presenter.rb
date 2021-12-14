@@ -11,6 +11,8 @@ require_relative "new_contract_presenter"
 
 module Support
   class CasePresenter < BasePresenter
+    include ActionView::Helpers::NumberHelper
+
     # @return [String]
     def state
       super.upcase
@@ -80,6 +82,36 @@ module Support
     # @return [OrganisationPresenter]
     def organisation
       OrganisationPresenter.new(super)
+    end
+
+    def savings_status
+      return "-" unless super
+
+      I18n.t("support.case_savings.edit.savings_status.states.#{super}")
+    end
+
+    def savings_estimate_method
+      return "-" unless super
+
+      I18n.t("support.case_savings.edit.savings_estimate_method.states.#{super}")
+    end
+
+    def savings_actual_method
+      return "-" unless super
+
+      I18n.t("support.case_savings.edit.savings_actual_method.states.#{super}")
+    end
+
+    def savings_estimate
+      return "-" unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
+    end
+
+    def savings_actual
+      return "-" unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
     end
 
     # @return [ProcurementPresenter, nil]
