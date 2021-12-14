@@ -75,8 +75,7 @@ Rails.application.routes.draw do
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
-        resource :existing_contract, only: %i[edit update]
-        resource :new_contract, only: %i[edit update]
+        resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do
             resource :type, only: %i[new create]

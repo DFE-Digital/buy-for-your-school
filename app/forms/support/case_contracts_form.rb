@@ -9,11 +9,17 @@ module Support
     option :spend, optional: true
     option :duration, optional: true
 
-
     def months
       return unless duration.present?
 
       ActiveSupport::Duration.months(duration)
+    end
+
+    # @return [Hash] form parms
+    def to_h
+      self.class.dry_initializer.attributes(self)
+          .except(:messages)
+          .merge(duration: months)
     end
   end
 end
