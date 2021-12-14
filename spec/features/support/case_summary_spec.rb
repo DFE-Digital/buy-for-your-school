@@ -7,9 +7,7 @@ RSpec.feature "Case summary" do
     visit "/support/cases/#{support_case.id}"
   end
 
-  let(:support_case) { create(:support_case, :opened, :with_documents, agent: nil, existing_contract: existing_contract, new_contract: new_contract) }
-  let(:existing_contract) { create(:support_existing_contract) }
-  let(:new_contract) { create(:support_new_contract) }
+  let(:support_case) { create(:support_case, :with_documents, agent: nil) }
 
   describe "Back link" do
     it_behaves_like "breadcrumb_back_link" do
@@ -80,7 +78,7 @@ RSpec.feature "Case summary" do
     before { visit "/support/cases/#{support_case.id}#case-history" }
 
     context "when assigned to an agent" do
-      let(:support_case) { create(:support_case, agent: agent, existing_contract: existing_contract, new_contract: new_contract) }
+      let(:support_case) { create(:support_case, agent: agent) }
 
       it "shows a link to change case owner" do
         within "#case-history" do
@@ -99,7 +97,7 @@ RSpec.feature "Case summary" do
   end
 
   context "when the case is created" do
-    let(:support_case) { create(:support_case, agent: nil, existing_contract: existing_contract, new_contract: new_contract) }
+    # let(:support_case) { create(:support_case, :opened, :with_documents, agent: agent) }
 
     it "has action links" do
       within "ul.govuk-list" do
@@ -110,7 +108,7 @@ RSpec.feature "Case summary" do
   end
 
   context "when the case is open" do
-    let(:support_case) { create(:support_case, state: "opened", existing_contract: existing_contract, new_contract: new_contract) }
+    let(:support_case) { create(:support_case, state: "opened") }
 
     it "has action links" do
       within "ul.govuk-list" do
@@ -123,7 +121,7 @@ RSpec.feature "Case summary" do
   end
 
   context "when the case is resolved" do
-    let(:support_case) { create(:support_case, state: "resolved", existing_contract: existing_contract, new_contract: new_contract) }
+    let(:support_case) { create(:support_case, state: "resolved") }
 
     it "has action links" do
       within "ul.govuk-list" do

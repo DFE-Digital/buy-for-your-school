@@ -1,5 +1,3 @@
-# edit
-# update
 module Support
   class Cases::ContractsController < Cases::ApplicationController
     before_action :set_back_url, only: %i[edit update]
@@ -7,7 +5,7 @@ module Support
     include Concerns::HasDateParams
 
     def edit
-      @case_contracts_form = CaseContractsForm.new(**current_contract.attributes.symbolize_keys)
+      @case_contracts_form = CaseContractsForm.new(**contract_params)
 
       edit_view
     end
@@ -25,12 +23,16 @@ module Support
 
   private
 
+    def contract_params
+      current_contract.attributes.symbolize_keys
+    end
+
     def edit_view
       case current_contract.type
-        when "Support::ExistingContract"
-          render "support/cases/existing_contracts/edit"
-        when "Support::NewContract"
-          render "support/cases/new_contracts/edit"
+      when "Support::ExistingContract"
+        render "support/cases/existing_contracts/edit"
+      when "Support::NewContract"
+        render "support/cases/new_contracts/edit"
       end
     end
 
@@ -46,9 +48,13 @@ module Support
       Support::Contract.for(params[:id])
     end
 
-    def case_contracts_form_params
+    def modify_date
       params[:case_contracts_form][:started_at] = date_param(:case_contracts_form, :started_at).to_s
       params[:case_contracts_form][:ended_at] = date_param(:case_contracts_form, :ended_at).to_s
+    end
+
+    def case_contracts_form_params
+      modify_date
       params
         .require(:case_contracts_form)
         .permit(
