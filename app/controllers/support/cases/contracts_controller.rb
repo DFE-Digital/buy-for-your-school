@@ -17,15 +17,11 @@ module Support
 
         redirect_to @back_url, notice: I18n.t("support.case_contract.flash.updated")
       else
-        render :edit
+        edit_view
       end
     end
 
   private
-
-    def contract_params
-      current_contract.attributes.symbolize_keys
-    end
 
     def edit_view
       case current_contract.type
@@ -44,8 +40,14 @@ module Support
       @back_url = support_case_path(current_contract.support_case, anchor: "procurement-details")
     end
 
+    def contract_params
+      current_contract.attributes.symbolize_keys.merge(
+        duration_in_months: current_contract.duration_in_months
+      )
+    end
+
     def current_contract
-      Support::Contract.for(params[:id])
+      @current_contract ||= Support::Contract.for(params[:id])
     end
 
     def modify_date
@@ -62,7 +64,7 @@ module Support
           :started_at,
           :ended_at,
           :spend,
-          :duration,
+          :duration_in_months,
         )
     end
   end
