@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Support
-  class NewContractPresenter < BasePresenter
+  class ContractPresenter < BasePresenter
     # @return [String]
     def spend
       super || "-"
@@ -14,11 +14,11 @@ module Support
 
     # @return [String]
     def duration
-      super || "-"
+      super&.inspect || "-"
     end
 
     # @return [String]
-    def started_at
+    def ended_at
       return "-" unless super
 
       super.strftime("%e %B %Y")

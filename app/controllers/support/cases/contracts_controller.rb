@@ -42,7 +42,7 @@ module Support
 
     def contract_params
       current_contract.attributes.symbolize_keys.merge(
-        duration_in_months: current_contract.duration_in_months
+        duration_in_months: current_contract.duration_in_months,
       )
     end
 
