@@ -97,8 +97,6 @@ RSpec.feature "Case summary" do
   end
 
   context "when the case is created" do
-    # let(:support_case) { create(:support_case, :opened, :with_documents, agent: agent) }
-
     it "has action links" do
       within "ul.govuk-list" do
         expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/assignment/new", class: "govuk-link"
