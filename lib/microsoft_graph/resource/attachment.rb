@@ -13,20 +13,6 @@ module MicrosoftGraph
       option :last_modified_date_time, Types.Instance(DateTime)
       option :name, Types::String
       option :size, Types::Integer
-
-      def self.from_payload(payload)
-        new(
-          content_bytes: payload["contentBytes"],
-          content_id: payload["contentId"],
-          content_location: payload["contentLocation"],
-          content_type: payload["contentType"],
-          id: payload["id"],
-          is_in_line: payload["isInLine"],
-          last_modified_date_time: DateTime.parse(payload["lastModifiedDateTime"]),
-          name: payload["name"],
-          size: payload["size"],
-        )
-      end
     end
   end
 end

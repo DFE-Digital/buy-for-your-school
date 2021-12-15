@@ -10,15 +10,13 @@ module MicrosoftGraph
     # https://docs.microsoft.com/en-us/graph/api/user-list-mailfolders?view=graph-rest-1.0
     def list_mail_folders(user_id)
       json = client_session.graph_api_get("users/#{user_id}/mailFolders")
-      raw_mail_folders = json["value"]
-      raw_mail_folders.map { |mail_folder| Resource::MailFolder.from_payload(mail_folder) }
+      Transformer::MailFolder.transform_collection(json["value"], into: Resource::MailFolder)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder_id)
       json = client_session.graph_api_get("users/#{user_id}/mailFolders/#{mail_folder_id}/messages")
-      raw_messages = json["value"]
-      raw_messages.map { |message| Resource::Message.from_payload(message) }
+      Transformer::Message.transform_collection(json["value"], into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http

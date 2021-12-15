@@ -11,18 +11,6 @@ module MicrosoftGraph
       option :parent_folder_id, Types::String
       option :total_item_count, Types::Integer
       option :unread_item_count, Types::Integer
-
-      def self.from_payload(payload)
-        new(
-          child_folder_count: payload["childFolderCount"],
-          display_name: payload["displayName"],
-          id: payload["id"],
-          is_hidden: payload["isHidden"],
-          parent_folder_id: payload["parentFolderId"],
-          total_item_count: payload["totalItemCount"],
-          unread_item_count: payload["unreadItemCount"],
-        )
-      end
     end
   end
 end

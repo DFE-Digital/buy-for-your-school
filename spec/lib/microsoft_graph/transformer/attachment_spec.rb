@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe MicrosoftGraph::Resource::Attachment do
-  describe ".from_payload" do
+describe MicrosoftGraph::Transformer::Attachment do
+  describe "transformation into its resource" do
     it "maps response json field names to object fields" do
       payload = {
         "contentBytes" => "1024",
@@ -15,7 +15,7 @@ describe MicrosoftGraph::Resource::Attachment do
         "size" => 1,
       }
 
-      attachment = described_class.from_payload(payload)
+      attachment = described_class.transform(payload, into: MicrosoftGraph::Resource::Attachment)
 
       expect(attachment.content_bytes).to eq("1024")
       expect(attachment.content_id).to eq("1")

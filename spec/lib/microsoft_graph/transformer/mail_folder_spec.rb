@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe MicrosoftGraph::Resource::MailFolder do
-  describe ".from_payload" do
+describe MicrosoftGraph::Transformer::MailFolder do
+  describe "transformation into its resource" do
     it "maps response json field names to object fields" do
       payload = {
         "childFolderCount" => 1,
@@ -13,7 +13,7 @@ describe MicrosoftGraph::Resource::MailFolder do
         "unreadItemCount" => 10,
       }
 
-      mail_folder = described_class.from_payload(payload)
+      mail_folder = described_class.transform(payload, into: MicrosoftGraph::Resource::MailFolder)
 
       expect(mail_folder.child_folder_count).to eq(1)
       expect(mail_folder.display_name).to eq("value_displayName")

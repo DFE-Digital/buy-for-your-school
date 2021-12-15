@@ -65,9 +65,15 @@ Style/DateTime:
     - 'lib/microsoft_graph/resource/message.rb'
     - 'lib/microsoft_graph/resource/attachment.rb'
     - 'lib/microsoft_graph/application_authenticator.rb'
+    - 'lib/microsoft_graph/transformer/attachment.rb'
+    - 'lib/microsoft_graph/transformer/message.rb'
     - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
 
 Rails/TimeZone:
   Exclude:
     - 'lib/microsoft_graph/application_authenticator.rb'
     - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
+
+Naming/MethodName:
+  Exclude:
+    - 'lib/microsoft_graph/microsoft_graph.rb'

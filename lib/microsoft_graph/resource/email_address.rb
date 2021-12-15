@@ -7,13 +7,6 @@ module MicrosoftGraph
       option :address, Types::String
       option :name, Types::String
 
-      def self.from_payload(payload)
-        new(
-          address: payload["address"],
-          name: payload["name"],
-        )
-      end
-
       def to_s
         address
       end

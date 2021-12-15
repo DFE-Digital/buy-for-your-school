@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe MicrosoftGraph::Resource::Message do
-  describe ".from_payload" do
+describe MicrosoftGraph::Transformer::Message do
+  describe "transformation into its resource" do
     it "maps response json field names to object fields" do
       payload = {
         "body" => { "content" => "c", "contentType" => "cT" },
@@ -20,12 +20,18 @@ describe MicrosoftGraph::Resource::Message do
         ],
       }
 
-      message = described_class.from_payload(payload)
+      message = described_class.transform(payload, into: MicrosoftGraph::Resource::Message)
 
-      expect(message.body.as_json).to match(MicrosoftGraph::Resource::ItemBody.from_payload(payload["body"]).as_json)
+      expect(message.body.as_json).to match(
+        MicrosoftGraph::Transformer::ItemBody.transform(payload["body"],
+                                                        into: MicrosoftGraph::Resource::ItemBody).as_json,
+      )
       expect(message.body_preview).to eq("<p>Hello, World</p>")
       expect(message.conversation_id).to eq("CONVID123")
-      expect(message.from.as_json).to match(MicrosoftGraph::Resource::Recipient.from_payload(payload["from"]).as_json)
+      expect(message.from.as_json).to match(
+        MicrosoftGraph::Transformer::Recipient.transform(payload["from"],
+                                                         into: MicrosoftGraph::Resource::Recipient).as_json,
+      )
       expect(message.id).to eq("AAMkAGmnprAAA=")
       expect(message.internet_message_id).to eq("<imid_AAMkAGmnprAAA@mail.gmail.com")
       expect(message.importance).to eq("high")
@@ -34,7 +40,10 @@ describe MicrosoftGraph::Resource::Message do
       expect(message.subject).to eq("Important, please read")
       expect(message.to_recipients.map(&:as_json)).to match(
         payload["toRecipients"]
-          .map { |recipient| MicrosoftGraph::Resource::Recipient.from_payload(recipient) }
+          .map { |recipient|
+            MicrosoftGraph::Transformer::Recipient.transform(recipient,
+                                                             into: MicrosoftGraph::Resource::Recipient)
+          }
           .map(&:as_json),
       )
     end

@@ -27,8 +27,9 @@ describe MicrosoftGraph::Client do
         mail_folder_1 = instance_double("MicrosoftGraph::Resource::MailFolder")
         mail_folder_2 = instance_double("MicrosoftGraph::Resource::MailFolder")
 
-        allow(MicrosoftGraph::Resource::MailFolder).to receive(:from_payload).with(graph_api_response["value"].last).and_return(mail_folder_2)
-        allow(MicrosoftGraph::Resource::MailFolder).to receive(:from_payload).with(graph_api_response["value"].first).and_return(mail_folder_1)
+        allow(MicrosoftGraph::Transformer::MailFolder).to receive(:transform_collection)
+          .with(graph_api_response["value"], into: MicrosoftGraph::Resource::MailFolder)
+          .and_return([mail_folder_1, mail_folder_2])
 
         expect(client.list_mail_folders(user_id)).to match_array([mail_folder_1, mail_folder_2])
       end
@@ -56,8 +57,9 @@ describe MicrosoftGraph::Client do
       message_1 = instance_double("MicrosoftGraph::Resource::Message")
       message_2 = instance_double("MicrosoftGraph::Resource::Message")
 
-      allow(MicrosoftGraph::Resource::Message).to receive(:from_payload).with(graph_api_response["value"].last).and_return(message_2)
-      allow(MicrosoftGraph::Resource::Message).to receive(:from_payload).with(graph_api_response["value"].first).and_return(message_1)
+      allow(MicrosoftGraph::Transformer::Message).to receive(:transform_collection)
+          .with(graph_api_response["value"], into: MicrosoftGraph::Resource::Message)
+          .and_return([message_1, message_2])
 
       expect(client.list_messages_in_folder(user_id, mail_folder_id)).to match_array([message_1, message_2])
     end

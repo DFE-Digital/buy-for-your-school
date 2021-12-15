@@ -6,13 +6,6 @@ module MicrosoftGraph
 
       option :content, Types::String
       option :content_type, Types::String
-
-      def self.from_payload(payload)
-        new(
-          content: payload["content"],
-          content_type: payload["contentType"],
-        )
-      end
     end
   end
 end

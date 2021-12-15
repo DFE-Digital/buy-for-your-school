@@ -4,13 +4,7 @@ module MicrosoftGraph
     class Recipient
       extend Dry::Initializer
 
-      option :email_address, Types.Instance(EmailAddress)
-
-      def self.from_payload(payload)
-        email_address = EmailAddress.from_payload(payload["emailAddress"])
-
-        new(email_address: email_address)
-      end
+      option :email_address, Types.DryConstructor(EmailAddress)
     end
   end
 end
