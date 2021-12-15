@@ -30,6 +30,7 @@
 
   <%= form.govuk_select :framework_name,
     options_for_select(@framework_names, form.object.framework_name),
+    disabled: true,
     label: { text: I18n.t("support.procurement_details.edit.framework_name.header"), size: "m" } %>
 
   <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.procurement_details.edit.started_at.header") } %>

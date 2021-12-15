@@ -2,13 +2,14 @@
 
 module Support
   class ContractPresenter < BasePresenter
+    include ActionView::Helpers::NumberHelper
+
     # @return [String]
     def spend
       return "-" unless super
 
       number_to_currency(super, unit: "£", precision: 2)
     end
-
 
     # @return [String]
     def supplier
