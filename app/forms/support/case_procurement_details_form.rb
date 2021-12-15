@@ -14,7 +14,7 @@ module Support
     option :reason_for_route_to_market, optional: true
     # @!attribute [r] framework_name
     #   @return [String, nil]
-    option :framework_name, optional: true
+    option :framework_name, optional: true, default: proc { nil }
     # @!attribute [r] started_at
     #   @return [Date, nil]
     option :started_at, optional: true
