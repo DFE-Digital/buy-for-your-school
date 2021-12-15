@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :support_email, class: "Support::Email" do
     subject { "MyString" }
+
     body { "MyText" }
     sender { "" }
     recipients { "" }
