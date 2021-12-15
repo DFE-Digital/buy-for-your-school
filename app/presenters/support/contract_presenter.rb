@@ -35,7 +35,7 @@ module Support
       super.strftime(date_format)
     end
 
-    private
+  private
 
     # @return [String]
     def date_format
