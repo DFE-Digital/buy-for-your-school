@@ -14,21 +14,21 @@ RSpec.feature "Editing existing contract details in procurement tab section" do
     it "shows values where expected" do
       # check fields are blank
       within "[aria-labelledby='pd-existing-contract']" do
-        expect(page).not_to have_text("End date of existing contract (optional)")
-        expect(page).not_to have_text("Duration of existing contract in months (optional)")
-        expect(page).not_to have_text("Existing contract spend (optional)")
-        expect(page).not_to have_text("Existing contract supplier (optional)")
+        expect(page).not_to have_text("End date of existing contract")
+        expect(page).not_to have_text("Duration of existing contract in months")
+        expect(page).not_to have_text("Existing contract spend")
+        expect(page).not_to have_text("Existing contract supplier")
       end
     end
 
     it "shows the expected fields on the edit page" do
       find("#pd-existing-contract a").click
       within(all("div.govuk-form-group")[5]) do
-        expect(find(".govuk-label")).to have_text "Existing contract spend (optional)"
+        expect(find(".govuk-label")).to have_text "Existing contract spend"
       end
 
       within(all("div.govuk-form-group")[6]) do
-        expect(find(".govuk-label")).to have_text "Existing contract supplier (optional)"
+        expect(find(".govuk-label")).to have_text "Existing contract supplier"
       end
 
       # input contract details
