@@ -65,10 +65,16 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
-  it "shows procurement stage dropdown" do
-    within(all("div.govuk-form-group")[12]) do
-      expect(find("label.govuk-label")).to have_text "Procurement stage"
-      expect(page).to have_select "case_procurement_details_form[stage]", options: ["-- Select stage --", "Need", "Market Analysis", "Sourcing Options", "Go to Market", "Evaluation", "Contract Award", "Handover"]
+  it "shows procurement stage options" do
+    within(all("fieldset.govuk-fieldset")[5]) do
+      expect(find("legend.govuk-fieldset__legend")).to have_text "Procurement stage"
+      expect(page).to have_field "Need"
+      expect(page).to have_field "Market Analysis"
+      expect(page).to have_field "Sourcing Options"
+      expect(page).to have_field "Go to Market"
+      expect(page).to have_field "Evaluation"
+      expect(page).to have_field "Contract Award"
+      expect(page).to have_field "Handover"
     end
   end
 
@@ -93,7 +99,7 @@ RSpec.feature "Edit case procurement details" do
       fill_in "case_procurement_details_form[ended_at(2i)]", with: "12"
       fill_in "case_procurement_details_form[ended_at(1i)]", with: "2021"
       # stage
-      select "Need", from: "case_procurement_details_form[stage]"
+      choose "Need"
       click_continue
     end
 

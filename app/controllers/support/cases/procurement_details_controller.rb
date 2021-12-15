@@ -26,9 +26,7 @@ module Support
     end
 
     def set_stages
-      @stages = [[I18n.t("support.procurement_details.edit.stage.select"), nil]]
-      @stages.push(*Support::Procurement.stages.keys.map { |stage| [I18n.t("support.procurement_details.stages.#{stage}"), stage] })
-      @stages
+      @stages = Support::Procurement.stages.keys
     end
 
     def set_framework_names
