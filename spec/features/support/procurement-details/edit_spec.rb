@@ -43,7 +43,7 @@ RSpec.feature "Edit case procurement details" do
   it "shows framework name dropdown" do
     within(all("div.govuk-form-group")[3]) do
       expect(find("label.govuk-label")).to have_text "Framework name"
-      expect(page).to have_select "case_procurement_details_form[framework_name]", options: ["-- Select framework --"]
+      expect(page).to have_select "case_procurement_details_form[framework_name]", options: ["-- Select framework --"], disabled: true
     end
   end
 
