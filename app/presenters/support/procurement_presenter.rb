@@ -39,14 +39,21 @@ module Support
     def started_at
       return "-" unless super
 
-      super.strftime("%e %B %Y")
+      super.strftime(date_format)
     end
 
     # @return [String]
     def ended_at
       return "-" unless super
 
-      super.strftime("%e %B %Y")
+      super.strftime(date_format)
+    end
+
+    private
+
+    # @return [String]
+    def date_format
+      I18n.t("date.formats.presenter")
     end
   end
 end
