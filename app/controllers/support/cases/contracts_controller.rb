@@ -7,7 +7,7 @@ module Support
     def edit
       @case_contracts_form = CaseContractsForm.new(**contract_params)
 
-      edit_view
+      render edit_view
     end
 
     def update
@@ -17,7 +17,7 @@ module Support
 
         redirect_to @back_url, notice: I18n.t("support.case_contract.flash.updated")
       else
-        edit_view
+        render edit_view
       end
     end
 
@@ -26,9 +26,9 @@ module Support
     def edit_view
       case current_contract.type
       when "Support::ExistingContract"
-        render "support/cases/existing_contracts/edit"
+        "support/cases/existing_contracts/edit"
       when "Support::NewContract"
-        render "support/cases/new_contracts/edit"
+        "support/cases/new_contracts/edit"
       end
     end
 
