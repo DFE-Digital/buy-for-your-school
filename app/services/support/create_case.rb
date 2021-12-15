@@ -11,7 +11,7 @@ module Support
 
     # @return Support::Case
     def call
-      Case.create!(
+      kase = Case.create!(
         agent_id: @agent_id,
         category_id: @attrs[:category_id],
         organisation_id: @attrs[:organisation_id],
@@ -22,6 +22,13 @@ module Support
         phone_number: @attrs[:phone_number],
         request_text: @attrs[:request_text],
       )
+
+      Support::RecordAction.new(
+        case_id: kase.id,
+        action: "create_case",
+      ).call
+
+      kase
     end
   end
 end
