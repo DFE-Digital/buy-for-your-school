@@ -4,8 +4,11 @@ module Support
   class ContractPresenter < BasePresenter
     # @return [String]
     def spend
-      super || "-"
+      return "-" unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
     end
+
 
     # @return [String]
     def supplier
