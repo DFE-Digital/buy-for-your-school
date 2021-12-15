@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :support_email, class: "Support::Email" do
-    subject { "MyString" }
+    subject { "Support Case #001" }
 
-    body { "MyText" }
+    body { "<html><head></head><body><h1>My support request</h1><p>Please update my case</p></body></html>" }
     sender { "" }
     recipients { "" }
     conversation_id { "MyString" }
