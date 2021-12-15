@@ -27,6 +27,7 @@ RSpec/VerifiedDoubles:
     - 'spec/services/self-serve/create_task_spec.rb'
     - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
     - 'spec/services/self-serve/get_entry_spec.rb'
+    - 'spec/services/support/emails/to_school_spec.rb'
     - 'spec/support/contentful_helpers.rb'
     - 'spec/lib/microsoft_graph/client_session_spec.rb'
 
