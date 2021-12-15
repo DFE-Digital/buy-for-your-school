@@ -18,6 +18,13 @@ module Support
     end
 
     # @return [String]
+    def started_at
+      return "-" unless super
+
+      super.strftime("%e %B %Y")
+    end
+
+    # @return [String]
     def ended_at
       return "-" unless super
 
