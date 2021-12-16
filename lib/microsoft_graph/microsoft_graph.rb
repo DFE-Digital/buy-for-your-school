@@ -15,6 +15,16 @@ module Types
   end
 end
 
+module MicrosoftGraph
+  def self.client=(client)
+    @client = client
+  end
+
+  def self.client
+    @client
+  end
+end
+
 require_relative "transformer/all"
 require_relative "resource/all"
 require_relative "application_authenticator"
