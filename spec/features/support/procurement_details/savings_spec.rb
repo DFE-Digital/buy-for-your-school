@@ -13,9 +13,9 @@ RSpec.feature "Editing procurement savings details" do
     it "shows values as expected" do
       # check fields are blank
       within "[aria-labelledby='pd-savings']" do
-        expect(page).not_to have_text("Realised")
-        expect(page).not_to have_text("[Previous spend] - [Cheapest quote]")
-        expect(page).not_to have_text("[Previous spend] - [Award Price]")
+        expect(page).not_to have_text "Realised"
+        expect(page).not_to have_text "[Previous spend] - [Cheapest quote]"
+        expect(page).not_to have_text "[Previous spend] - [Award Price]"
       end
       # navigate to edit page for savings details
       find("#pd-savings a").click
@@ -30,11 +30,11 @@ RSpec.feature "Editing procurement savings details" do
       click_on "Continue"
       # check fields are populated
       within "[aria-labelledby='pd-savings']" do
-        expect(page).to have_text("Realised")
-        expect(page).to have_text("[Previous spend] - [Cheapest quote]")
-        expect(page).to have_text("[Previous spend] - [Award Price]")
-        expect(page).to have_text("£1,000.00")
-        expect(page).to have_text("£500.00")
+        expect(page).to have_text "Realised"
+        expect(page).to have_text "[Previous spend] - [Cheapest quote]"
+        expect(page).to have_text "[Previous spend] - [Award Price]"
+        expect(page).to have_text "£1,000.00"
+        expect(page).to have_text "£500.00"
       end
     end
   end

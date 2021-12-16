@@ -1,6 +1,6 @@
 module Support
-  class CaseContractsFormSchema < Dry::Validation::Contract
-    include Concerns::TranslatableFormSchema
+  class CaseContractsFormSchema < Schema
+    config.messages.top_namespace = :case_new_contract_form
 
     params do
       optional(:supplier).maybe(:string)

@@ -1,8 +1,6 @@
 module Support
-  class CaseProcurementDetailsFormSchema < Dry::Validation::Contract
-    config.messages.backend = :i18n
+  class CaseProcurementDetailsFormSchema < Schema
     config.messages.top_namespace = :case_procurement_details_form
-    config.messages.load_paths << Rails.root.join("config/locales/validation/support/en.yml")
 
     params do
       optional(:required_agreement_type).value(:symbol)

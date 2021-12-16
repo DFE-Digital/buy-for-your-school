@@ -14,10 +14,10 @@ RSpec.feature "Editing new contract details in procurement tab section" do
     it "shows values where expected" do
       # check fields are blank
       within "[aria-labelledby='pd-new-contract']" do
-        expect(page).not_to have_text("Start date of new contract")
-        expect(page).not_to have_text("Duration of new contract in months")
-        expect(page).not_to have_text("New contract spend")
-        expect(page).not_to have_text("New contract supplier")
+        expect(page).not_to have_text "Start date of new contract"
+        expect(page).not_to have_text "Duration of new contract in months"
+        expect(page).not_to have_text "New contract spend"
+        expect(page).not_to have_text "New contract supplier"
       end
     end
 

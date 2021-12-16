@@ -32,9 +32,9 @@ module Support
       created_at
     end
 
-    # @return [String]
+    # @return [String] 30 January 2000 at 12:00
     def last_updated_at
-      interactions.present? ? interactions&.last&.created_at : created_at
+      interactions.none? ? created_at : interactions.last.created_at
     end
 
     # @return [String]
@@ -115,21 +115,15 @@ module Support
 
     # @return [ProcurementPresenter, nil]
     def procurement
-      return nil unless super
-
-      ProcurementPresenter.new(super)
+      ProcurementPresenter.new(super) if super
     end
 
     def existing_contract
-      return nil unless super
-
-      ContractPresenter.new(super)
+      ContractPresenter.new(super) if super
     end
 
     def new_contract
-      return nil unless super
-
-      ContractPresenter.new(super)
+      ContractPresenter.new(super) if super
     end
 
   private

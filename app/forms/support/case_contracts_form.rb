@@ -1,22 +1,23 @@
+require "active_support/duration"
+require "support/form"
+require "types"
+
 module Support
-  class CaseContractsForm
-    extend Dry::Initializer
-    include Concerns::ValidatableForm
+  class CaseContractsForm < Form
+    # custom type
+    Duration = Types.Constructor(ActiveSupport::Duration) do |value|
+      value.is_a?(ActiveSupport::Duration) ? value : ActiveSupport::Duration.months(value.to_i)
+    end
 
     option :supplier, optional: true
     option :started_at, optional: true
     option :ended_at, optional: true
     option :spend, optional: true
-    option :duration_in_months, optional: true
+    option :duration, Duration, optional: true
 
-    option :duration, optional: true, default: proc {
-      ActiveSupport::Duration.months(duration_in_months) if duration_in_months
-    }
-
-    # @return [Hash] form parms
-    def to_h
-      self.class.dry_initializer.public_attributes(self)
-          .except(:messages, :duration_in_months)
+    # @return [Integer] duration in months
+    def duration
+      super.inspect.to_i
     end
   end
 end

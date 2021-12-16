@@ -9,7 +9,7 @@ RSpec.describe Support::CaseProcurementDetailsForm, type: :model do
   end
 
   it "#errors" do
-    expect(form.errors).to be_a Support::Concerns::ErrorSummary
+    expect(form.errors).to be_a Support::Form::ErrorSummary
     expect(form.errors.any?).to be false
   end
 

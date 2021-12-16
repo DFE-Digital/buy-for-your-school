@@ -16,30 +16,19 @@ module Support
       super || "-"
     end
 
-    # @return [String]
+    # @return [String] "x seconds", "x days"
     def duration
-      super&.inspect || "-"
+      super ? super.inspect : "-"
     end
 
-    # @return [String]
+    # @return [String] "26 November 2021" or "-"
     def started_at
-      return "-" unless super
-
-      super.strftime(date_format)
+      super ? super.strftime(date_format) : "-"
     end
 
-    # @return [String]
+    # @return [String] "26 November 2021" or "-"
     def ended_at
-      return "-" unless super
-
-      super.strftime(date_format)
-    end
-
-  private
-
-    # @return [String]
-    def date_format
-      I18n.t("date.formats.presenter")
+      super ? super.strftime(date_format) : "-"
     end
   end
 end
