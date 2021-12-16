@@ -47,7 +47,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
   context "when removing values from a new contract" do
     let(:new_contract) { create(:support_new_contract, :populated) }
 
-    it "shows values as expected" do
+    it "when removing values from an existing contract" do
       # check fields are blank
       within "[aria-labelledby='pd-new-contract']" do
         details = all(".govuk-summary-list__value")

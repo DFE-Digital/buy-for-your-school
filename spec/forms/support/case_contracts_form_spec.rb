@@ -9,7 +9,7 @@ RSpec.describe Support::CaseContractsForm, type: :model do
   end
 
   it "#errors" do
-    expect(form.errors).to be_a Support::Concerns::ErrorSummary
+    expect(form.errors).to be_a Support::Form::ErrorSummary
     expect(form.errors.any?).to be false
   end
 
@@ -57,6 +57,36 @@ RSpec.describe Support::CaseContractsForm, type: :model do
       end
 
       it { expect(form.to_h).to eql({ duration: 12.months }) }
+    end
+  end
+
+  describe "#to_h" do
+    subject(:form) { described_class.new(duration: duration) }
+
+    context "when duration is nil" do
+      let(:duration) { nil }
+
+      it "returns nil" do
+        expect(form.to_h[:duration]).to be_nil
+      end
+    end
+
+    context "when duration is a Duration" do
+      let(:duration) { 12.months }
+
+      it "duration returns ActiveSupport::Duration" do
+        expect(form.to_h[:duration]).to eql 12.months
+        expect(form.to_h[:duration]).to be_a ActiveSupport::Duration
+      end
+    end
+
+    context "when duration is an Integer" do
+      let(:duration) { 12 }
+
+      it "duration returns ActiveSupport::Duration" do
+        expect(form.to_h[:duration]).to eql 12.months
+        expect(form.to_h[:duration]).to be_a ActiveSupport::Duration
+      end
     end
   end
 end

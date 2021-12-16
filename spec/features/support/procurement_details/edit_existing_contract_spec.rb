@@ -44,10 +44,16 @@ RSpec.feature "Editing existing contract details in procurement tab section" do
     end
   end
 
-  context "when removing values from a existing contract" do
+  context "when changing values on an existing contract" do
+    xit "fields should be formatted" do
+      # Spend should be displayed as a decimal to two places in the input
+    end
+  end
+
+  context "when removing values from an existing contract" do
     let(:existing_contract) { create(:support_existing_contract, :populated) }
 
-    it "shows values as expected" do
+    it "replaces values with a hyphen to show they are blank" do
       # check fields are blank
       within "[aria-labelledby='pd-existing-contract']" do
         details = all(".govuk-summary-list__value")
