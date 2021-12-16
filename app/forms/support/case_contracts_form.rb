@@ -4,7 +4,7 @@ require "types"
 
 module Support
   class CaseContractsForm < Form
-    # custom type
+    # @return [ActiveSupport::Duration] interval type
     Duration = Types.Constructor(ActiveSupport::Duration) do |value|
       value.is_a?(ActiveSupport::Duration) ? value : ActiveSupport::Duration.months(value.to_i)
     end
@@ -15,9 +15,20 @@ module Support
     option :spend, optional: true
     option :duration, Duration, optional: true
 
-    # @return [Integer] duration in months
+    # @return [Integer] duration in months used in form field
     def duration
       super.inspect.to_i
+    end
+
+    def to_h
+      { **super, duration: as_duration }
+    end
+
+  private
+
+    # @return [ActiveSupport::Duration] when persisted
+    def as_duration
+      instance_variable_get(:@duration)
     end
   end
 end
