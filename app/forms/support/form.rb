@@ -44,7 +44,7 @@ module Support
 
     # @return [Hash] form params
     def to_h
-      self.class.dry_initializer.public_attributes(self).except(:messages)
+      self.class.dry_initializer.attributes(self).except(:messages)
     end
   end
 end
