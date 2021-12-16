@@ -17,7 +17,7 @@ module Support
 
     # @return [Integer] duration in months used in form field
     def duration
-      super.inspect.to_i
+      super.in_months.to_i
     end
 
     def to_h
