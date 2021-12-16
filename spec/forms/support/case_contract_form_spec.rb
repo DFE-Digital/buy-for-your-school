@@ -32,7 +32,7 @@ RSpec.describe Support::CaseContractsForm, type: :model do
         expect(form.duration).to be nil
       end
 
-      it { expect(form.to_h).to eq({duration: nil}) }
+      it { expect(form.to_h).to eq({ duration: nil }) }
     end
 
     context "when duration is a Duration" do
@@ -41,7 +41,7 @@ RSpec.describe Support::CaseContractsForm, type: :model do
       end
 
       it "returns duration as an integer" do
-        expect(form.duration).to eql 12
+        expect(form.duration).to be 12
       end
 
       it { expect(form.to_h).to eql({ duration: 12.months }) }
@@ -53,7 +53,7 @@ RSpec.describe Support::CaseContractsForm, type: :model do
       end
 
       it "returns duration as an integer" do
-        expect(form.duration).to eql 12
+        expect(form.duration).to be 12
       end
 
       it { expect(form.to_h).to eql({ duration: 12.months }) }
