@@ -19,6 +19,10 @@ module Support
         date_hash = { day: date["#{date_field}(3i)"], month: date["#{date_field}(2i)"], year: date["#{date_field}(1i)"] }
         format_date(date_hash)
       end
+
+      def date_params(name)
+        ["#{name}(1i)", "#{name}(2i)", "#{name}(3i)"].map(&:to_sym)
+      end
     end
   end
 end

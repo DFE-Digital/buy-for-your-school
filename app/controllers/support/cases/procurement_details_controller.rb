@@ -1,6 +1,5 @@
 module Support
   class Cases::ProcurementDetailsController < Cases::ApplicationController
-    # TODO: is it wiser to have a single action set multiple instance variables?
     before_action :set_back_url, :set_enums, :set_framework_names
 
     include Concerns::HasDateParams
@@ -12,7 +11,7 @@ module Support
     def update
       @case_procurement_details_form = CaseProcurementDetailsForm.from_validation(validation)
       if validation.success?
-        current_case.procurement.update!(@case_procurement_details_form.as_json.except("messages"))
+        current_case.procurement.update!(@case_procurement_details_form.to_h)
 
         redirect_to @back_url, notice: I18n.t("support.procurement_details.flash.updated")
       else
