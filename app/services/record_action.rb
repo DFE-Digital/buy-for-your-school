@@ -12,6 +12,7 @@ class RecordAction
     begin_step
     view_step
     save_answer
+    acknowledge_statement
     update_answer
     view_specification
   ].freeze
