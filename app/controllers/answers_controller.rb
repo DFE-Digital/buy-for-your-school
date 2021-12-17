@@ -31,7 +31,6 @@ class AnswersController < ApplicationController
         journey_task_path(@journey, step.task, back_link: true)
       end
 
-    # TODO: refactor to a private #record_answer method that accepts the action string
     record_action("save_answer", { success: result.success? })
 
     if result.success?
@@ -68,7 +67,6 @@ class AnswersController < ApplicationController
 
     @answer = result.object
 
-    # TODO: refactor to a private #record_answer method that accepts the action string
     record_action("update_answer", { success: result.success? })
 
     if result.success?
