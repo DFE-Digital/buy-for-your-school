@@ -11,3 +11,9 @@ end
 Sidekiq.configure_client do |config|
   config.redis = { url: "#{ENV['REDIS_URL']}/0" }
 end
+
+# TODO: remove this when incoming email work is to be merged
+if ENV["MS_GRAPH_ENABLED"] != "1"
+  # Ms graph features not enabled, do not run email tasks
+  Sidekiq::Cron::Job.destroy "synchronize_shared_inbox"
+end
