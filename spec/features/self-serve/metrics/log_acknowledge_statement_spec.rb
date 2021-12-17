@@ -6,7 +6,7 @@ RSpec.feature "A step is answered with no user input" do
 
   it "is logged" do
     statement_task = create(:task, title: "Task with a single statement step", section: section)
-    step = create(:step, :statement, title: "statement-step.json title", task: statement_task)
+    create(:step, :statement, title: "statement-step.json title", task: statement_task)
 
     user_is_signed_in(user: user)
     visit "/journeys/#{journey.id}"
