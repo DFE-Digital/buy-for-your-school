@@ -32,18 +32,7 @@ class AnswersController < ApplicationController
       end
 
     # TODO: refactor to a private #record_answer method that accepts the action string
-    RecordAction.new(
-      action: "save_answer",
-      journey_id: @journey.id,
-      user_id: current_user.id,
-      contentful_category_id: @journey.category.contentful_id,
-      contentful_section_id: step.task.section.contentful_id,
-      contentful_task_id: step.task.contentful_id,
-      contentful_step_id: step.contentful_id,
-      data: {
-        success: result.success?,
-      },
-    ).call
+    record_action("save_answer", { success: result.success?, })
 
     if result.success?
       step.unskip! if step.skipped?
@@ -73,33 +62,14 @@ class AnswersController < ApplicationController
       elsif step.statement?
         # Acknowledge the statement
         step.task.statement_ids << step.id unless step.task.statement_ids.include?(step.id)
-        RecordAction.new(
-          action: "acknowledge_statement",
-          journey_id: @journey.id,
-          user_id: current_user.id,
-          contentful_category_id: @journey.category.contentful_id,
-          contentful_section_id: step.task.section.contentful_id,
-          contentful_task_id: step.task.contentful_id,
-          contentful_step_id: step.contentful_id,
-        ).call
+        record_action("acknowledge_statement", nil)
         Result.new(step.task.save!)
       end
 
     @answer = result.object
 
     # TODO: refactor to a private #record_answer method that accepts the action string
-    RecordAction.new(
-      action: "update_answer",
-      journey_id: @journey.id,
-      user_id: current_user.id,
-      contentful_category_id: @journey.category.contentful_id,
-      contentful_section_id: step.task.section.contentful_id,
-      contentful_task_id: step.task.contentful_id,
-      contentful_step_id: step.contentful_id,
-      data: {
-        success: result.success?,
-      },
-    ).call
+    record_action("update_answer", { success: result.success?, })
 
     if result.success?
       if parent_task.has_single_visible_step?
@@ -113,6 +83,21 @@ class AnswersController < ApplicationController
   end
 
 private
+
+  def record_action(action, data)
+    RecordAction.new(
+      action: action,
+      journey_id: @journey.id,
+      user_id: current_user.id,
+      # We safe navigate here because in preview we don't have sections or
+      # tasks. This saves us from having to implement extra logic.
+      contentful_category_id: @journey.category&.contentful_id,
+      contentful_section_id: step.task&.section&.contentful_id,
+      contentful_task_id: step&.task&.contentful_id,
+      contentful_step_id: step.contentful_id,
+      data: data,
+    ).call
+  end
 
   def step
     @step ||= StepPresenter.new(Step.find(step_id))

@@ -15,6 +15,7 @@ class TasksController < ApplicationController
       StepPresenter.new(step)
     end
 
+    # TODO: Refactor to use a private record_action method 
     RecordAction.new(
       action: "view_task",
       journey_id: @journey.id,
@@ -49,6 +50,7 @@ private
 
     @journey = current_journey
 
+    # TODO: Refactor to use a private record_action method
     RecordAction.new(
       action: "begin_task",
       journey_id: @journey.id,
