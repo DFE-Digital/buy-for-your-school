@@ -11,5 +11,11 @@ module Support
       type = find(id).type
       type.constantize.find(id)
     end
+
+    def to_h
+      super.merge(
+        duration: duration&.in_months&.to_i
+      )
+    end
   end
 end

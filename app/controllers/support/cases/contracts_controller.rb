@@ -5,7 +5,7 @@ module Support
     include Concerns::HasDateParams
 
     def edit
-      @case_contracts_form = CaseContractsForm.new(**current_contract.attributes.symbolize_keys)
+      @case_contracts_form = CaseContractsForm.new(**current_contract.to_h)
 
       render "support/cases/#{view_template}/edit"
     end
