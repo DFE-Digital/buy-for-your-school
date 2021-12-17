@@ -119,17 +119,8 @@ private
     }
     Support::CreateInteraction.new(@kase.id, "support_request", nil, interaction_attrs).call
 
-    record_case_opening
-
     @kase.documents << document if request.journey
     @kase
-  end
-
-  def record_case_opening
-    Support::RecordAction.new(
-      case_id: @kase.id,
-      action: "open_case",
-    ).call
   end
 
   # API (draft) ----------------------------------------------------------------

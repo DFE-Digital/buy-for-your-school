@@ -14,7 +14,17 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
-## [release-017] - 2021-12-xx
+
+## [unreleased]
+
+<!--
+- value added [#ref](https://github.com/DFE-Digital/buy-for-your-school/commit/<hash>)
+  or
+- feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
+
+-->
+
+## [release-017] - 2021-12-13
 
 ### Housekeeping
 

@@ -14,11 +14,17 @@ FactoryBot.define do
 
     association :organisation, factory: :support_organisation
 
+<<<<<<< HEAD
     association :procurement, factory: :support_procurement
 
     association :existing_contract, factory: :support_existing_contract
 
     association :new_contract, factory: :support_new_contract
+=======
+    trait :initial do
+      state { :initial }
+    end
+>>>>>>> develop
 
     trait :open do
       state { :open }
