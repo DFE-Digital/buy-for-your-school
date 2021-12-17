@@ -15,6 +15,6 @@ if ENV["MS_GRAPH_ENABLED"] == "1"  # TODO: Remove when feature ready
 
   MicrosoftGraph.client = MicrosoftGraph::Client.new(client_session)
 
-  SHARED_MAILBOX_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_FOLDER_ID")
+  SHARED_MAILBOX_FOLDER_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_FOLDER_ID")
   SHARED_MAILBOX_USER_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_USER_ID")
 end

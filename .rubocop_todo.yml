@@ -30,6 +30,7 @@ RSpec/VerifiedDoubles:
     - 'spec/services/support/emails/to_school_spec.rb'
     - 'spec/support/contentful_helpers.rb'
     - 'spec/lib/microsoft_graph/client_session_spec.rb'
+    - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: Database, Include.
@@ -39,6 +40,7 @@ Rails/BulkChangeTable:
   Exclude:
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
     - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
+    - 'db/migrate/20211217092216_add_extra_outlook_fields_to_support_email.rb'
 
 # Offense count: 2
 # Configuration parameters: Include.
@@ -78,3 +80,7 @@ Rails/TimeZone:
 Naming/MethodName:
   Exclude:
     - 'lib/microsoft_graph/microsoft_graph.rb'
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'

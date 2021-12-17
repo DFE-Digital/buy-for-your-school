@@ -31,3 +31,4 @@ refresh_schools:
   class: Support::RefreshSchoolsJob
   description: Update internal school records using public data from GIAS. This
     is an expensive operation (10% @ 41k records persisted).
+
