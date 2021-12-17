@@ -29,6 +29,7 @@ RSpec/VerifiedDoubles:
     - 'spec/services/self-serve/get_entry_spec.rb'
     - 'spec/services/support/emails/to_school_spec.rb'
     - 'spec/support/contentful_helpers.rb'
+    - 'spec/lib/microsoft_graph/client_session_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: Database, Include.
@@ -59,3 +60,21 @@ Rails/ReversibleMigration:
 Style/TrailingCommaInArguments:
   Exclude:
     - 'spec/requests/self-serve/api/contentful/page_spec.rb'
+
+Style/DateTime:
+  Exclude:
+    - 'lib/microsoft_graph/resource/message.rb'
+    - 'lib/microsoft_graph/resource/attachment.rb'
+    - 'lib/microsoft_graph/application_authenticator.rb'
+    - 'lib/microsoft_graph/transformer/attachment.rb'
+    - 'lib/microsoft_graph/transformer/message.rb'
+    - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
+
+Rails/TimeZone:
+  Exclude:
+    - 'lib/microsoft_graph/application_authenticator.rb'
+    - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
+
+Naming/MethodName:
+  Exclude:
+    - 'lib/microsoft_graph/microsoft_graph.rb'
