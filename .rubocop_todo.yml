@@ -31,6 +31,7 @@ RSpec/VerifiedDoubles:
     - 'spec/support/contentful_helpers.rb'
     - 'spec/lib/microsoft_graph/client_session_spec.rb'
     - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
+    - 'spec/jobs/support/synchronize_shared_inbox_job_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: Database, Include.

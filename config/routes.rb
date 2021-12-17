@@ -86,6 +86,11 @@ Rails.application.routes.draw do
     resources :schools, only: %i[show index]
   end
 
+  if Rails.env.development?
+    require "sidekiq/web"
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
   #
   # Common ---------------------------------------------------------------------
   #
