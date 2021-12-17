@@ -1,1 +1,2 @@
-<%= render @interaction.event_type %>
+<%= render partial: "email_to_school" if @interaction.event_type == "email_to_school" %>
+<%= render partial: "email_from_school" if @interaction.event_type == "email_from_school" %>
