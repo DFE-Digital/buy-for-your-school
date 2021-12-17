@@ -4,7 +4,7 @@
   "dependencies": {
     "@rails/ujs": "^6.0.0",
     "accessible-autocomplete": "^2.0.3",
-    "govuk-frontend": "^3.14.0",
+    "govuk-frontend": "^4.0.0",
     "lodash": "^4.17.21"
   }
 }
