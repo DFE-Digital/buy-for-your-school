@@ -14,9 +14,9 @@ module Support
 
   private
 
-    # @return [String]
+    # @return [String] "26 November 2021"
     def date_format
-      "%e %B %Y at %H:%M"
+      I18n.t("date.formats.presenter")
     end
   end
 end

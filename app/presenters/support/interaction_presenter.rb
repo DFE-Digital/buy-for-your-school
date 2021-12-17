@@ -32,6 +32,11 @@ module Support
 
   private
 
+    # @return [String] 20 March 2021 at 12:00
+    def date_format
+      I18n.t("support.case.date_format")
+    end
+
     # @example
     #  { phone_call: 1, email_from_school: 2, email_to_school: 3 }
     #

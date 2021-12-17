@@ -6,6 +6,7 @@ require_relative "category_presenter"
 require_relative "agent_presenter"
 require_relative "organisation_presenter"
 require_relative "procurement_presenter"
+require_relative "contract_presenter"
 
 module Support
   class CasePresenter < BasePresenter
@@ -31,9 +32,9 @@ module Support
       created_at
     end
 
-    # @return [String]
+    # @return [String] 30 January 2000 at 12:00
     def last_updated_at
-      interactions.present? ? interactions&.last&.created_at : created_at
+      interactions.none? ? created_at : interactions.last.created_at
     end
 
     # @return [String]
@@ -114,9 +115,15 @@ module Support
 
     # @return [ProcurementPresenter, nil]
     def procurement
-      return nil unless super
+      ProcurementPresenter.new(super) if super
+    end
 
-      ProcurementPresenter.new(super)
+    def existing_contract
+      ContractPresenter.new(super) if super
+    end
+
+    def new_contract
+      ContractPresenter.new(super) if super
     end
 
   private

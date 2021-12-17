@@ -1,6 +1,8 @@
 module Support
   class Cases::ProcurementDetailsController < Cases::ApplicationController
-    before_action :set_back_url, :set_required_agreement_types, :set_stages, :set_framework_names, :set_routes_to_market, :set_reasons_for_route_to_market
+    # TODO: is it wiser to have a single action set multiple instance variables?
+    before_action :set_back_url, :set_required_agreement_types, :set_stages,
+                  :set_framework_names, :set_routes_to_market, :set_reasons_for_route_to_market
 
     include Concerns::HasDateParams
 
@@ -10,7 +12,6 @@ module Support
 
     def update
       @case_procurement_details_form = CaseProcurementDetailsForm.from_validation(validation)
-
       if validation.success?
         current_case.procurement.update!(@case_procurement_details_form.as_json.except("messages"))
 
@@ -27,14 +28,11 @@ module Support
     end
 
     def set_stages
-      @stages = [[I18n.t("support.procurement_details.edit.stage.select"), nil]]
-      @stages.push(*Support::Procurement.stages.keys.map { |stage| [I18n.t("support.procurement_details.stages.#{stage}"), stage] })
-      @stages
+      @stages = Support::Procurement.stages.keys
     end
 
     def set_framework_names
       @framework_names = [[I18n.t("support.procurement_details.edit.framework_name.select"), nil]]
-      @framework_names
     end
 
     def set_routes_to_market

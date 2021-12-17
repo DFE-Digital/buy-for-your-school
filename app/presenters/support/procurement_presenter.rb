@@ -35,18 +35,14 @@ module Support
       super || "-"
     end
 
-    # @return [String]
+    # @return [String] "26 November 2021" or "-"
     def started_at
-      return "-" unless super
-
-      super.strftime("%e %B %Y")
+      super ? super.strftime(date_format) : "-"
     end
 
-    # @return [String]
+    # @return [String] "26 November 2021" or "-"
     def ended_at
-      return "-" unless super
-
-      super.strftime("%e %B %Y")
+      super ? super.strftime(date_format) : "-"
     end
   end
 end

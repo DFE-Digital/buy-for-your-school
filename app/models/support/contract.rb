@@ -6,5 +6,10 @@ module Support
   #
   class Contract < ApplicationRecord
     attribute :duration, :interval
+
+    def self.for(id)
+      type = find(id).type
+      type.constantize.find(id)
+    end
   end
 end

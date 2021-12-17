@@ -44,6 +44,7 @@ en:
         email:
           missing: Please enter contact email for the case
 
+
   case_migration_form:
     rules:
       school_urn: "" # Omitted
@@ -75,13 +76,22 @@ en:
 
         estimated_procurement_completion_date:
           format?: must follow the format of DD/MM/YYYY
-  
+
+
   case_procurement_details_form:
     rules:
       started_at: Start date of the procurement
-    
+
     errors:
       rules:
         started_at:
           before_end_date: must come before the end date
 
+  case_new_contract_form:
+    rules:
+      started_at: Start date of the contract
+
+    errors:
+      rules:
+        started_at:
+          before_end_date: must come before the end date

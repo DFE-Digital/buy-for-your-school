@@ -363,6 +363,33 @@ en:
       flash:
         updated: Successfully changed case category
 
+    case_contract:
+      existing:
+        edit:
+          header: Update existing contract details
+          spend:
+            header: Existing contract spend
+          ended_at:
+            header: End date of existing contract
+          duration:
+            header: Duration of existing contract in months
+          supplier:
+            header: Existing contract supplier
+          submit: Continue
+      new:
+        edit:
+          header: Update new contract details
+          spend:
+            header: New contract spend
+          started_at:
+            header: Start date of new contract
+          duration:
+            header: Duration of new contract in months
+          supplier:
+            header: New contract supplier
+          submit: Continue
+      flash:
+        updated: Successfully changed case contracts
     case_savings:
       show:
         header: Savings details
@@ -371,28 +398,28 @@ en:
         header: Update savings details
         submit: Continue
         savings_status:
-          header: Saving status (optional)
+          header: Saving status
           states:
             realised: Realised
             potential: Potential
             unrealised: Not realised
-        savings_estimate_method: 
-          header: Saving estimate method used (optional)
+        savings_estimate_method:
+          header: Saving estimate method used
           states:
             previous_minus_cheapest: "[Previous spend] - [Cheapest quote]"
             rrp_minus_cheapest: "[RRP] - [Cheapest quote]"
             previous_minus_estimated: "[Previous spend] - [Estimated Contract Value]"
             rrp_minus_estimated: "[RRP] - [Estimated Contract Value]"
         savings_actual_method:
-          header: Saving actual method used (optional)
+          header: Saving actual method used
           states:
             previous_minus_award: "[Previous spend] - [Award Price]"
             alternative_minus_award: "[Alternative received price] - [Award Price]"
             rrp_minus_award: "[RRP] - [Award Price]"
         savings_estimate:
-          header: Saving estimate (optioanl)
+          header: Saving estimate
         savings_actual:
-          header: Saving actual (optional)
+          header: Saving actual
       flash:
         updated: Successfully changed case savings
 
@@ -520,26 +547,26 @@ en:
       message:
         created_flash: "%{type} added to case"
       link_to_email_preview: Open email preview in new tab
-    
+
     procurement_details:
       edit:
         header: Update procurement details
         submit: Continue
         required_agreement_type:
-          header: Required agreement type (optional)
+          header: Required agreement type
         route_to_market:
-          header: Route to market (optional)
+          header: Route to market
         reason_for_route_to_market:
-          header: Reason for route to market (optional)
+          header: Reason for route to market
         framework_name:
-          header: Framework name (optional)
+          header: Framework name
           select: -- Select framework --
         started_at:
-          header: Start date of the procurement (optional)
+          header: Start date of the procurement
         ended_at:
-          header: End date of the procurement (optional)
+          header: End date of the procurement
         stage:
-          header: Procurement stage (optional)
+          header: Procurement stage
           select: -- Select stage --
       flash:
         updated: Successfully changed procurement details
