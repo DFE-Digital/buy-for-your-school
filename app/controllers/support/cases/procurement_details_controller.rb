@@ -31,7 +31,7 @@ module Support
          stages
          route_to_markets
          reason_for_route_to_markets].each do |enum|
-        instance_variable_set("@#{enum}", Support::Case.send(enum).keys)
+        instance_variable_set("@#{enum}", Support::Procurement.send(enum).keys)
       end
     end
 
