@@ -22,6 +22,7 @@ module Support
             body: message.body.content,
             received_at: message.received_date_time,
             sent_at: message.sent_date_time,
+            sender: { address: message.from.email_address.address, name: message.from.email_address.name },
             recipients: message.to_recipients.map(&:email_address).map do |email_address|
               { address: email_address.address, name: email_address.name }
             end,
