@@ -9,6 +9,7 @@ describe Support::IncomingEmails::SharedMailbox do
       double(
         id: "ID_123",
         conversation_id: "CID_456",
+        from: double(email_address: double(address: "sender@email.com", name: "Sender")),
         subject: "Synced email #1",
         is_read: true,
         is_draft: false,
@@ -48,6 +49,7 @@ describe Support::IncomingEmails::SharedMailbox do
         expect(support_email.subject).to eq("Synced email #1")
         expect(support_email.outlook_conversation_id).to eq("CID_456")
         expect(support_email.outlook_id).to eq("ID_123")
+        expect(support_email.sender).to eq({ "address" => "sender@email.com", "name" => "Sender" })
         expect(support_email.is_read).to eq(true)
         expect(support_email.is_draft).to eq(false)
         expect(support_email.has_attachments).to eq(false)
@@ -55,7 +57,6 @@ describe Support::IncomingEmails::SharedMailbox do
         expect(support_email.body).to eq("body")
         expect(support_email.received_at).to be_within(1.second).of(email.received_date_time)
         expect(support_email.sent_at).to be_within(1.second).of(email.sent_date_time)
-
         expect(support_email.recipients).to eq([
           { "address" => "receipient1@email.com", "name" => "Recipient 1" },
           { "address" => "receipient2@email.com", "name" => "Recipient 2" },

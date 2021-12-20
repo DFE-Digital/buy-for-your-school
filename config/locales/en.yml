@@ -445,6 +445,25 @@ en:
       show:
         header: Your specification
 
+    emails:
+      header_link: Emails
+      index:
+        header: Emails
+        table:
+          sent_at: Sent at
+          subject: Subject
+          case: Case
+          sender: Sender
+      tabs:
+        new_emails: New Emails
+        my_case_emails: My Case Emails
+      show:
+        header: View Email
+        subject: Subject
+        sender: Sender
+        recipients: Recipients
+        sent_at: Sent at
+
     interaction:
       header:
         type_of_contact: Type of contact
