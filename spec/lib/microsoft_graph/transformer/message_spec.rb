@@ -8,6 +8,7 @@ describe MicrosoftGraph::Transformer::Message do
         "bodyPreview" => "<p>Hello, World</p>",
         "conversationId" => "CONVID123",
         "from" => { "emailAddress" => { "address" => "d", "name" => "e" } },
+        "hasAttachments" => true,
         "id" => "AAMkAGmnprAAA=",
         "internetMessageId" => "<imid_AAMkAGmnprAAA@mail.gmail.com",
         "importance" => "high",
@@ -34,6 +35,7 @@ describe MicrosoftGraph::Transformer::Message do
         MicrosoftGraph::Transformer::Recipient.transform(payload["from"],
                                                          into: MicrosoftGraph::Resource::Recipient).as_json,
       )
+      expect(message.has_attachments).to eq(true)
       expect(message.id).to eq("AAMkAGmnprAAA=")
       expect(message.internet_message_id).to eq("<imid_AAMkAGmnprAAA@mail.gmail.com")
       expect(message.importance).to eq("high")

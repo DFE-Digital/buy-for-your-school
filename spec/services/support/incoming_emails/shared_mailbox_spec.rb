@@ -53,8 +53,8 @@ describe Support::IncomingEmails::SharedMailbox do
         expect(support_email.has_attachments).to eq(false)
         expect(support_email.body_preview).to eq("body preview")
         expect(support_email.body).to eq("body")
-        expect(support_email.received_at).to eq(email.received_date_time)
-        expect(support_email.sent_at).to eq(email.sent_date_time)
+        expect(support_email.received_at).to be_within(1.second).of(email.received_date_time)
+        expect(support_email.sent_at).to be_within(1.second).of(email.sent_date_time)
 
         expect(support_email.recipients).to eq([
           { "address" => "receipient1@email.com", "name" => "Recipient 1" },
