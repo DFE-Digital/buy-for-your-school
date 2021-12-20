@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user
+  helper_method :current_user, :support?
 
   # @return [User, Guest]
   #
@@ -49,5 +49,10 @@ protected
     return true if current_journey.user == current_user
 
     render "errors/not_found", status: :not_found
+  end
+
+  # Is the user currently on the support side?
+  def support?
+    false
   end
 end
