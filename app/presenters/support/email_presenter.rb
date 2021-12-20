@@ -25,8 +25,8 @@ module Support
       sender["name"]
     end
 
-    def sent_at
-      super.strftime(short_date_time)
+    def sent_at_formatted
+      sent_at.strftime(short_date_time)
     end
   end
 end

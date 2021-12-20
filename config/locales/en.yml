@@ -457,6 +457,12 @@ en:
       tabs:
         new_emails: New Emails
         my_case_emails: My Case Emails
+      show:
+        header: View Email
+        subject: Subject
+        sender: Sender
+        recipients: Recipients
+        sent_at: Sent at
 
     interaction:
       header:

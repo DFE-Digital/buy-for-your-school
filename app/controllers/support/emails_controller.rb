@@ -4,5 +4,10 @@ module Support
       @back_url = support_cases_path
       @new_emails = EmailPresenter.wrap_collection Support::Email.display_order.includes([:case])
     end
+
+    def show
+      @back_url = support_emails_path
+      @email = EmailPresenter.new(Support::Email.find(params[:id]))
+    end
   end
 end
