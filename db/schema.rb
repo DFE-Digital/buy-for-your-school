@@ -233,7 +233,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_092216) do
     t.text "body"
     t.jsonb "sender"
     t.jsonb "recipients"
-    t.string "conversation_id"
+    t.string "outlook_conversation_id"
     t.uuid "case_id"
     t.datetime "sent_at"
     t.datetime "received_at"
@@ -241,7 +241,6 @@ ActiveRecord::Schema.define(version: 2021_12_17_092216) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "outlook_id"
-    t.string "outlook_conversation_id"
     t.boolean "is_read", default: false
     t.boolean "is_draft", default: false
     t.boolean "has_attachments", default: false
