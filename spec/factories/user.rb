@@ -77,5 +77,11 @@ FactoryBot.define do
         ]
       end
     end
+
+    trait :analyst do
+      roles do
+        %w[analyst]
+      end
+    end
   end
 end

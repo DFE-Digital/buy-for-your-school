@@ -56,6 +56,9 @@ en:
     specification_template_invalid:
       page_title: An unexpected error occurred
       page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
+    missing_role:
+      page_title: Missing user role
+      page_body: You do not have the required role to access this page.
     sign_in:
       unexpected_failure:
         page_title: An unexpected error occurred
