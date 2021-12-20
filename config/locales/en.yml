@@ -260,6 +260,14 @@ en:
       read_procs_link: read buying procedures and procurement law for schools
       read_guides_link: read guides about goods and services
     back_button: Back to your dashboard
+  
+  # /admin
+  admin:
+    header: User activity data
+    body:
+      no_of_users: Total number of users
+      no_of_specs: Total number of specifications
+      last_registration_date: Last user registration date
 
   #
   # Supported ------------------------------------------------------------------

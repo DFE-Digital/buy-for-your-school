@@ -1,1 +1,24 @@
-<h1 class="govuk-heading-l">Admin</h1>
+<%= content_for :title, I18n.t("admin.header") %>
+
+<h1 class="govuk-heading-l"><%= I18n.t("admin.header") %></h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= I18n.t("admin.body.no_of_users") %></th>
+          <td class="govuk-table__cell"><%= @no_of_users %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= I18n.t("admin.body.no_of_specs") %></th>
+          <td class="govuk-table__cell"><%= @no_of_specs %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= I18n.t("admin.body.last_registration_date") %></th>
+          <td class="govuk-table__cell"><%= @last_registration_date %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
