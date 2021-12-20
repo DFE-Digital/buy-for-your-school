@@ -1,0 +1,17 @@
+<h1 class="govuk-heading-l">
+  <%= I18n.t("support.emails.index.header") %>
+</h1>
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#new-emails">
+        <%= I18n.t("support.emails.tabs.new_emails") %>
+      </a>
+    </li>
+  </ul>
+
+  <div class="govuk-tabs__panel" id="new-emails">
+    <%= render "email_list", emails: @new_emails %>
+  </div>
+</div>
