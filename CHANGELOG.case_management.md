@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [unreleased]
 
 - Microsoft Graph API library
+- Synchronisation of emails from shared inbox into database
 
 ## [release-001] - 2021-12-xx
 

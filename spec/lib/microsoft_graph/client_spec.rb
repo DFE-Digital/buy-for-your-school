@@ -63,6 +63,21 @@ describe MicrosoftGraph::Client do
 
       expect(client.list_messages_in_folder(user_id, mail_folder_id)).to match_array([message_1, message_2])
     end
+
+    context "when query parameter is passed" do
+      it "appends them to the request url" do
+        allow(client_session).to receive(:graph_api_get).and_return(graph_api_response)
+
+        allow(MicrosoftGraph::Transformer::Message).to receive(:transform_collection)
+          .with(anything, into: anything)
+          .and_return(double)
+
+        client.list_messages_in_folder(user_id, mail_folder_id, query: ["$filter=sentDateTime eq X", "$orderBy=receivedDateTime desc"])
+
+        expect(client_session).to have_received(:graph_api_get)
+          .with("users/#{user_id}/mailFolders/#{mail_folder_id}/messages?$filter=sentDateTime eq X&$orderBy=receivedDateTime desc")
+      end
+    end
   end
 
   describe "#mark_message_as_read" do
