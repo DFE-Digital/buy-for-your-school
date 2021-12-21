@@ -8,6 +8,12 @@
     </tr>
   </thead>
   <tbody class="govuk-table__body">
+    <% if emails.count.zero? %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell govuk-!-text-align-centre" colspan="4">No Emails</td>
+      </tr>
+    <% end %>
+
     <% emails.each do |email| %>
       <tr class="govuk-table__row email-row <%= email.is_read ? "read" : "unread" %>">
         <td class="govuk-table__cell email-sent-by">
