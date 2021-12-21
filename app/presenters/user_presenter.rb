@@ -1,4 +1,4 @@
-class UserPresenter < SimpleDelegator
+class UserPresenter < BasePresenter
   # @return [Array<JourneyPresenter>]
   def active_journeys
     journeys.initial.map { |j| JourneyPresenter.new(j) }
