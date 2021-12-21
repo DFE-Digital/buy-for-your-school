@@ -18,11 +18,20 @@ RSpec.feature "Admin page" do
       expect(all("td.govuk-table__cell")[1]).to have_text "0"
       expect(all("th.govuk-table__header")[2]).to have_text "Last user registration date"
       expect(all("td.govuk-table__cell")[2]).to have_text "20 December 2021"
+      expect(page).to have_link "Download (.csv)", class: "govuk-button", href: "/admin.csv"
     end
 
     it "reports access to Rollbar" do
       expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "analyst", path: "/admin")
       visit "/admin"
+    end
+
+    it "provides a CSV download" do
+      expect(Rollbar).to receive(:info).with("User activity data downloaded.")
+      click_on "Download (.csv)"
+      expect(page.response_headers["Content-Type"]).to eq "text/csv"
+      expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
+      expect(page.response_headers["Content-Disposition"]).to match(/filename="user_activity_data.csv"/)
     end
   end
 
