@@ -24,7 +24,6 @@ namespace :case_management do
 
   desc "Populate shared inbox emails"
   task seed_shared_inbox_emails: :environment do
-    shared_mailbox = Support::IncomingEmails::SharedMailbox.new
-    shared_mailbox.synchronize(emails_since: 10.years.ago)
+    IncomingEmails::SharedMailbox.synchronize
   end
 end

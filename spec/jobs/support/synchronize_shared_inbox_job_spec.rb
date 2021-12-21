@@ -5,12 +5,12 @@ describe Support::SynchronizeSharedInboxJob do
 
   describe "#perform" do
     it "synchronizes emails from the last 15 minutes with the shared inbox" do
-      mailbox = double(synchronize: nil)
-      allow(Support::IncomingEmails::SharedMailbox).to receive(:new).and_return(mailbox)
+      allow(Support::IncomingEmails::SharedMailbox).to receive(:synchronize)
 
       job.perform
 
-      expect(mailbox).to have_received(:synchronize).with(emails_since: be_within(1.second).of(15.minutes.ago)).once
+      expect(Support::IncomingEmails::SharedMailbox).to have_received(:synchronize)
+        .with(emails_since: be_within(1.second).of(15.minutes.ago)).once
     end
   end
 end

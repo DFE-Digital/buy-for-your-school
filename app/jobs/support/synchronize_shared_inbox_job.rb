@@ -6,8 +6,7 @@ module Support
     queue_as :support
 
     def perform
-      shared_mailbox = IncomingEmails::SharedMailbox.new
-      shared_mailbox.synchronize(emails_since: 15.minutes.ago)
+      IncomingEmails::SharedMailbox.synchronize(emails_since: 15.minutes.ago)
 
       Rollbar.info "Shared inbox emails have been synchronized"
     end

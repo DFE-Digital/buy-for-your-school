@@ -17,6 +17,7 @@ RSpec/AnyInstance:
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
     - 'spec/requests/self-serve/api/contentful/pages_controller_spec.rb'
+    - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
 
 # Offense count: 19
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
@@ -32,6 +33,7 @@ RSpec/VerifiedDoubles:
     - 'spec/lib/microsoft_graph/client_session_spec.rb'
     - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
     - 'spec/jobs/support/synchronize_shared_inbox_job_spec.rb'
+    - 'spec/models/support/email_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: Database, Include.
