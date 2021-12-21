@@ -268,6 +268,7 @@ en:
       no_of_users: Total number of users
       no_of_specs: Total number of specifications
       last_registration_date: Last user registration date
+    download: Download (.csv)
 
   #
   # Supported ------------------------------------------------------------------
