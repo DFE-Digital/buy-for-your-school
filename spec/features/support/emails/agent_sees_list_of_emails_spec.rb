@@ -23,25 +23,31 @@ describe "Agent sees a list of emails seperate to cases" do
              sent_at: Time.zone.parse("25-12-2020 15:00"),
              case: nil,
              body: "<p>Email 2 body</p>")
-
-      click_link "Emails"
     end
 
     specify "then I can see them listed without going to a case" do
-      within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
-        expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
-        expect(page).to have_css(".email-case-ref", text: "012345")
-        expect(page).to have_css(".email-sent-by", text: "Sender 1")
-      end
+      click_link "Notifications"
 
-      within "tr.email-row", text: "Email subject 2 - Not linked to a case" do
-        expect(page).to have_css(".email-sent-at", text: "25-12-2020 15:00")
-        expect(page).to have_css(".email-sent-by", text: "Sender 2")
+      within "#new-emails" do
+        within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
+          expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
+          expect(page).to have_css(".email-case-ref", text: "012345")
+          expect(page).to have_css(".email-sent-by", text: "Sender 1")
+        end
+
+        within "tr.email-row", text: "Email subject 2 - Not linked to a case" do
+          expect(page).to have_css(".email-sent-at", text: "25-12-2020 15:00")
+          expect(page).to have_css(".email-sent-by", text: "Sender 2")
+        end
       end
     end
 
     specify "then I can click on an email to see its body" do
-      click_link "Email subject 1"
+      click_link "Notifications"
+
+      within "#new-emails" do
+        click_link "Email subject 1"
+      end
 
       within ".email-sent-by" do
         expect(page).to have_content("Sender 1 <sender1@email.com>")
@@ -57,6 +63,27 @@ describe "Agent sees a list of emails seperate to cases" do
 
       within ".email-preview-body" do
         expect(page).to have_content("Email 1 body")
+      end
+    end
+
+    context "when I am assigned to a case" do
+      before { agent.cases << Support::Email.first.case }
+
+      specify "then I can see emails for only cases I am assigned to" do
+        click_link "Notifications"
+        click_link "My Case Emails"
+
+        expect(page).to have_css(".my-case-emails-count", text: 1)
+
+        within "#my-case-emails" do
+          within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
+            expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
+            expect(page).to have_css(".email-case-ref", text: "012345")
+            expect(page).to have_css(".email-sent-by", text: "Sender 1")
+          end
+
+          expect(page).not_to have_content("Email subject 2 - Not linked to a case")
+        end
       end
     end
   end

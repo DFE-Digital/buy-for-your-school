@@ -3,6 +3,7 @@ module Support
     def index
       @back_url = support_cases_path
       @new_emails = EmailPresenter.wrap_collection Support::Email.display_order.includes([:case])
+      @my_case_emails = EmailPresenter.wrap_collection Support::Email.my_cases(current_agent).display_order.includes([:case])
     end
 
     def show

@@ -446,9 +446,9 @@ en:
         header: Your specification
 
     emails:
-      header_link: Emails
+      header_link: Notifications
       index:
-        header: Emails
+        header: Notifications
         table:
           sent_at: Sent at
           subject: Subject

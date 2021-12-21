@@ -4,6 +4,18 @@
 
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#my-case-emails">
+        <%= I18n.t("support.emails.tabs.my_case_emails") %>
+      </a>
+
+      <% if @my_case_emails.any? %>
+        <strong class="govuk-tag govuk-tag--red govuk-!-margin-left-1 my-case-emails-count">
+          <%= @my_case_emails.count %>
+        </strong>
+      <% end %>
+    </li>
+
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
       <a class="govuk-tabs__tab" href="#new-emails">
         <%= I18n.t("support.emails.tabs.new_emails") %>
@@ -13,5 +25,9 @@
 
   <div class="govuk-tabs__panel" id="new-emails">
     <%= render "email_list", emails: @new_emails %>
+  </div>
+
+  <div class="govuk-tabs__panel" id="my-case-emails">
+    <%= render "email_list", emails: @my_case_emails %>
   </div>
 </div>
