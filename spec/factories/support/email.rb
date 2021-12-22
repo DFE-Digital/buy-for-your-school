@@ -11,5 +11,13 @@ FactoryBot.define do
     received_at { "2021-12-15 11:51:12" }
     read_at { "2021-12-15 11:51:12" }
     association :case, factory: :support_case
+
+    trait :inbox do
+      folder { :inbox }
+    end
+
+    trait :sent_items do
+      folder { :sent_items }
+    end
   end
 end

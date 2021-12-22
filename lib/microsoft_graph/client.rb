@@ -14,15 +14,15 @@ module MicrosoftGraph
     end
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
-    def list_messages_in_folder(user_id, mail_folder_id, query: [])
-      json = client_session.graph_api_get("users/#{user_id}/mailFolders/#{mail_folder_id}/messages".concat(format_query(query)))
+    def list_messages_in_folder(user_id, mail_folder, query: [])
+      json = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
       Transformer::Message.transform_collection(json["value"], into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
-    def mark_message_as_read(user_id, mail_folder_id, message_ms_id)
+    def mark_message_as_read(user_id, mail_folder, message_ms_id)
       body = { isRead: true }.to_json
-      client_session.graph_api_patch("users/#{user_id}/mailFolders/#{mail_folder_id}/messages/#{message_ms_id}", body)
+      client_session.graph_api_patch("users/#{user_id}/mailFolders('#{mail_folder}')/messages/#{message_ms_id}", body)
     end
 
   private

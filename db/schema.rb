@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_17_092216) do
+ActiveRecord::Schema.define(version: 2021_12_22_094405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_092216) do
     t.boolean "is_draft", default: false
     t.boolean "has_attachments", default: false
     t.text "body_preview"
+    t.integer "folder"
   end
 
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

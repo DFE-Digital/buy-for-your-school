@@ -5,12 +5,15 @@ module Support
     scope :display_order, -> { order("sent_at DESC") }
     scope :my_cases, ->(agent) { where(case_id: agent.case_ids) }
 
-    def self.from_message(message)
+    enum folder: { inbox: 0, sent_items: 1 }
+
+    def self.from_message(message, folder: :inbox)
       email = find_or_initialize_by(
         outlook_id: message.id,
         outlook_conversation_id: message.conversation_id,
       )
       email.update!(
+        folder: folder,
         subject: message.subject,
         is_read: message.is_read,
         is_draft: message.is_draft,

@@ -29,6 +29,24 @@ describe Support::Email do
         .from(0).to(1)
     end
 
+    context "when a folder is given" do
+      it "sets the folder to the given value" do
+        described_class.from_message(message, folder: :sent_items)
+
+        support_email = described_class.first
+        expect(support_email.folder).to eq("sent_items")
+      end
+    end
+
+    context "when a folder is not given" do
+      it "sets the folder to :inbox" do
+        described_class.from_message(message)
+
+        support_email = described_class.first
+        expect(support_email.folder).to eq("inbox")
+      end
+    end
+
     it "sets all necessary fields on the Support::Email record" do
       described_class.from_message(message)
 

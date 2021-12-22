@@ -9,7 +9,7 @@ describe "Agent sees a list of emails seperate to cases" do
 
   context "when there are emails in the system" do
     before do
-      create(:support_email,
+      create(:support_email, :inbox,
              subject: "Email subject 1 - Linked to case 012345",
              sender: { address: "sender1@email.com", name: "Sender 1" },
              recipients: [{ address: "recipient1@email.com", name: "Recipient 1" }],
@@ -17,15 +17,22 @@ describe "Agent sees a list of emails seperate to cases" do
              case: create(:support_case, ref: "012345"),
              body: "<p>Email 1 body</p>")
 
-      create(:support_email,
+      create(:support_email, :inbox,
              subject: "Email subject 2 - Not linked to a case",
              sender: { address: "sender2@email.com", name: "Sender 2" },
              sent_at: Time.zone.parse("25-12-2020 15:00"),
              case: nil,
              body: "<p>Email 2 body</p>")
+
+      create(:support_email, :sent_items,
+             subject: "RE: Email subject 2",
+             sender: { address: "sender3@email.com", name: "Sender 3" },
+             sent_at: Time.zone.parse("25-12-2020 15:00"),
+             case: nil,
+             body: "<p>Email 3 body, reply to 2</p>")
     end
 
-    specify "then I can see them listed without going to a case" do
+    specify "then I can see emails from the inbox listed without going to a case" do
       click_link "Notifications"
 
       within "#new-emails" do
@@ -40,6 +47,12 @@ describe "Agent sees a list of emails seperate to cases" do
           expect(page).to have_css(".email-sent-by", text: "Sender 2")
         end
       end
+    end
+
+    specify "then I do not see emails from the sent folder" do
+      click_link "Notifications"
+
+      expect(page).not_to have_content("RE: Email subject 2")
     end
 
     specify "then I can click on an email to see its body" do

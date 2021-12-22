@@ -37,7 +37,7 @@ describe MicrosoftGraph::Client do
   end
 
   describe "#list_messages_in_folder" do
-    let(:mail_folder_id) { "MAIL_FOLDER_1" }
+    let(:mail_folder) { "MAIL_FOLDER_1" }
     let(:graph_api_response) do
       {
         "value" => [
@@ -49,7 +49,7 @@ describe MicrosoftGraph::Client do
 
     before do
       allow(client_session).to receive(:graph_api_get)
-        .with("users/#{user_id}/mailFolders/#{mail_folder_id}/messages")
+        .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages")
         .and_return(graph_api_response)
     end
 
@@ -61,7 +61,7 @@ describe MicrosoftGraph::Client do
           .with(graph_api_response["value"], into: MicrosoftGraph::Resource::Message)
           .and_return([message_1, message_2])
 
-      expect(client.list_messages_in_folder(user_id, mail_folder_id)).to match_array([message_1, message_2])
+      expect(client.list_messages_in_folder(user_id, mail_folder)).to match_array([message_1, message_2])
     end
 
     context "when query parameter is passed" do
@@ -72,16 +72,16 @@ describe MicrosoftGraph::Client do
           .with(anything, into: anything)
           .and_return(double)
 
-        client.list_messages_in_folder(user_id, mail_folder_id, query: ["$filter=sentDateTime eq X", "$orderBy=receivedDateTime desc"])
+        client.list_messages_in_folder(user_id, mail_folder, query: ["$filter=sentDateTime eq X", "$orderBy=receivedDateTime desc"])
 
         expect(client_session).to have_received(:graph_api_get)
-          .with("users/#{user_id}/mailFolders/#{mail_folder_id}/messages?$filter=sentDateTime eq X&$orderBy=receivedDateTime desc")
+          .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages?$filter=sentDateTime eq X&$orderBy=receivedDateTime desc")
       end
     end
   end
 
   describe "#mark_message_as_read" do
-    let(:mail_folder_id) { "MAIL_FOLDER_1" }
+    let(:mail_folder) { "MAIL_FOLDER_1" }
     let(:message_id) { "MESSAGE_ID" }
     let(:graph_api_response) do
       {
@@ -93,12 +93,12 @@ describe MicrosoftGraph::Client do
 
     before do
       allow(client_session).to receive(:graph_api_patch)
-        .with("users/#{user_id}/mailFolders/#{mail_folder_id}/messages/#{message_id}", { isRead: true }.to_json)
+        .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages/#{message_id}", { isRead: true }.to_json)
         .and_return(graph_api_response)
     end
 
     it "returns a response indicating that the message has updated the isRead property to true" do
-      expect(client.mark_message_as_read(user_id, mail_folder_id, message_id)).to eql(graph_api_response)
+      expect(client.mark_message_as_read(user_id, mail_folder, message_id)).to eql(graph_api_response)
     end
   end
 end

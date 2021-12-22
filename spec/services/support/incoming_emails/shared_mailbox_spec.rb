@@ -15,25 +15,42 @@ describe Support::IncomingEmails::SharedMailbox do
     it "converts each email into an Support::Email record" do
       allow(Support::Email).to receive(:from_message)
 
-      described_class.synchronize
+      described_class.synchronize(folder: :inbox)
 
-      expect(Support::Email).to have_received(:from_message).with(email_1).once
-      expect(Support::Email).to have_received(:from_message).with(email_2).once
+      expect(Support::Email).to have_received(:from_message).with(email_1, folder: :inbox).once
+      expect(Support::Email).to have_received(:from_message).with(email_2, folder: :inbox).once
+    end
+  end
+
+  describe "#folder" do
+    subject(:mailbox) { described_class.new(graph_client: double, folder: folder) }
+
+    context "when initialized with inbox" do
+      let(:folder) { :inbox }
+
+      it "is SHARED_MAILBOX_FOLDER_ID_INBOX" do
+        expect(mailbox.folder).to eq(SHARED_MAILBOX_FOLDER_ID_INBOX)
+      end
+    end
+
+    context "when initialized with sent" do
+      let(:folder) { :sent_items }
+
+      it "is SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS" do
+        expect(mailbox.folder).to eq(SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS)
+      end
     end
   end
 
   describe "#emails" do
-    subject(:mailbox) { described_class.new(graph_client: graph_client) }
+    subject(:mailbox) { described_class.new(graph_client: graph_client, folder: :inbox) }
 
     let(:graph_client) { double }
     let(:email) { double }
 
     before do
-      stub_const("SHARED_MAILBOX_USER_ID", "1")
-      stub_const("SHARED_MAILBOX_FOLDER_ID", "2")
-
       allow(graph_client).to receive(:list_messages_in_folder)
-        .with(SHARED_MAILBOX_USER_ID, SHARED_MAILBOX_FOLDER_ID, query: anything)
+        .with(SHARED_MAILBOX_USER_ID, SHARED_MAILBOX_FOLDER_ID_INBOX, query: anything)
         .and_return([email])
     end
 
@@ -48,7 +65,7 @@ describe Support::IncomingEmails::SharedMailbox do
         mailbox.emails(since: date)
 
         expect(graph_client).to have_received(:list_messages_in_folder)
-          .with(SHARED_MAILBOX_USER_ID, SHARED_MAILBOX_FOLDER_ID, query: [
+          .with(SHARED_MAILBOX_USER_ID, SHARED_MAILBOX_FOLDER_ID_INBOX, query: [
             "$filter=sentDateTime ge #{date.utc.iso8601}",
             "$orderby=sentDateTime asc",
           ])
