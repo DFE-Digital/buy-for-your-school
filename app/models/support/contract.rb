@@ -14,7 +14,7 @@ module Support
 
     def to_h
       super.merge(
-        duration: duration&.in_months&.to_i
+        duration: duration&.in_months&.to_i,
       )
     end
   end

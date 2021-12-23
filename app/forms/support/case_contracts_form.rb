@@ -11,7 +11,7 @@ module Support
 
     def to_h
       super.merge(
-        duration: as_duration
+        duration: as_duration,
       )
     end
 
@@ -20,7 +20,7 @@ module Support
       sprintf("%.2f", super) if super
     end
 
-    private
+  private
 
     def as_duration
       ActiveSupport::Duration.months(duration) if duration
