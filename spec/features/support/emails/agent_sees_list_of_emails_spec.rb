@@ -7,6 +7,15 @@ describe "Agent sees a list of emails seperate to cases" do
     click_button "Agent Login"
   end
 
+  context "when the :incoming_emails feature flag is disabled" do
+    before { allow(Features).to receive(:enabled?).with(:incoming_emails).and_return(false) }
+
+    it "does not show the Notifications link to access emails" do
+      visit support_root_path
+      expect(page).not_to have_link("Notifications")
+    end
+  end
+
   context "when there are emails in the system" do
     before do
       create(:support_email, :inbox,

@@ -60,7 +60,9 @@ Rails.application.routes.draw do
 
   namespace :support do
     resources :agents, only: %i[create]
-    resources :emails, only: %i[index show]
+    if Features.enabled?(:incoming_emails)
+      resources :emails, only: %i[index show]
+    end
     resources :cases, only: %i[index show edit update] do
       collection do
         namespace :migrations do
