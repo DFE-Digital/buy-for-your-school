@@ -23,7 +23,7 @@ describe FeatureFlags do
       end
 
       context "when configuration key for feature_x is not defined" do
-        let(:configuration) { { feature_x: false } }
+        let(:configuration) { {} }
 
         it "returns false" do
           expect(feature_flags.enabled?(:feature_x)).to be(false)
