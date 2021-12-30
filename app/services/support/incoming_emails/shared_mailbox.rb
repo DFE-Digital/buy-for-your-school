@@ -4,7 +4,7 @@ module Support
       def self.synchronize(folder:, emails_since: nil, graph_client: MicrosoftGraph.client)
         shared_mailbox = SharedMailbox.new(graph_client: graph_client, folder: folder)
         shared_mailbox.emails(since: emails_since).each do |message|
-          Support::Email.from_message(message, folder: folder)
+          Support::Email.import_from_mailbox(message, folder: folder)
         end
       end
 

@@ -13,12 +13,12 @@ describe Support::IncomingEmails::SharedMailbox do
     end
 
     it "converts each email into an Support::Email record" do
-      allow(Support::Email).to receive(:from_message)
+      allow(Support::Email).to receive(:import_from_mailbox)
 
       described_class.synchronize(folder: :inbox)
 
-      expect(Support::Email).to have_received(:from_message).with(email_1, folder: :inbox).once
-      expect(Support::Email).to have_received(:from_message).with(email_2, folder: :inbox).once
+      expect(Support::Email).to have_received(:import_from_mailbox).with(email_1, folder: :inbox).once
+      expect(Support::Email).to have_received(:import_from_mailbox).with(email_2, folder: :inbox).once
     end
   end
 

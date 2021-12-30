@@ -7,12 +7,10 @@ module Support
 
     enum folder: { inbox: 0, sent_items: 1 }
 
-    def self.from_message(message, folder: :inbox)
-      email = find_or_initialize_by(
-        outlook_id: message.id,
+    def self.import_from_mailbox(message, folder: :inbox)
+      email = find_or_initialize_by(outlook_id: message.id)
+      email.assign_attributes(
         outlook_conversation_id: message.conversation_id,
-      )
-      email.update!(
         folder: folder,
         subject: message.subject,
         is_read: message.is_read,
@@ -27,6 +25,12 @@ module Support
           { address: email_address.address, name: email_address.name }
         end,
       )
+
+      if email.case.blank?
+        Support::IncomingEmails::CaseAssignment.detect_and_assign_case(email)
+      end
+
+      email.save!
     end
   end
 end

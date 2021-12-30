@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Support::Email do
-  describe ".from_message" do
+  describe ".import_from_mailbox" do
     let(:message) do
       double(
         id: "ID_123",
@@ -23,7 +23,7 @@ describe Support::Email do
     end
 
     it "converts each email into an Support::Email record" do
-      expect { described_class.from_message(message) }
+      expect { described_class.import_from_mailbox(message) }
         .to  change(described_class, :count).from(0).to(1)
         .and change { described_class.where(outlook_conversation_id: "CID_456", outlook_id: "ID_123").count }
         .from(0).to(1)
@@ -31,7 +31,7 @@ describe Support::Email do
 
     context "when a folder is given" do
       it "sets the folder to the given value" do
-        described_class.from_message(message, folder: :sent_items)
+        described_class.import_from_mailbox(message, folder: :sent_items)
 
         support_email = described_class.first
         expect(support_email.folder).to eq("sent_items")
@@ -40,7 +40,7 @@ describe Support::Email do
 
     context "when a folder is not given" do
       it "sets the folder to :inbox" do
-        described_class.from_message(message)
+        described_class.import_from_mailbox(message)
 
         support_email = described_class.first
         expect(support_email.folder).to eq("inbox")
@@ -48,7 +48,7 @@ describe Support::Email do
     end
 
     it "sets all necessary fields on the Support::Email record" do
-      described_class.from_message(message)
+      described_class.import_from_mailbox(message)
 
       support_email = described_class.first
       expect(support_email.subject).to eq("Synced email #1")
@@ -69,16 +69,42 @@ describe Support::Email do
     end
 
     context "when the message has already been converted" do
-      before { described_class.from_message(message) }
+      before { described_class.import_from_mailbox(message) }
 
       it "keeps the existing record instead of creating a new one" do
-        expect { described_class.from_message(message) }.not_to change {
+        expect { described_class.import_from_mailbox(message) }.not_to change {
           described_class.where(
             outlook_conversation_id: "CID_456",
             outlook_id: "ID_123",
             subject: "Synced email #1",
           ).count
         }.from(1)
+      end
+    end
+
+    describe "assigning a case" do
+      it "detects and assigns a case to the email" do
+        allow(Support::IncomingEmails::CaseAssignment).to receive(:detect_and_assign_case)
+
+        email = build(:support_email, case: nil)
+        allow(described_class).to receive(:find_or_initialize_by).and_return(email)
+
+        described_class.import_from_mailbox(message)
+
+        expect(Support::IncomingEmails::CaseAssignment).to have_received(:detect_and_assign_case).with(email)
+      end
+
+      context "when the email has already been assigned a case" do
+        it "does not try to change it again" do
+          allow(Support::IncomingEmails::CaseAssignment).to receive(:detect_and_assign_case)
+
+          email = build(:support_email)
+          allow(described_class).to receive(:find_or_initialize_by).and_return(email)
+
+          described_class.import_from_mailbox(message)
+
+          expect(Support::IncomingEmails::CaseAssignment).not_to have_received(:detect_and_assign_case).with(email)
+        end
       end
     end
   end
