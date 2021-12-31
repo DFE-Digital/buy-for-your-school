@@ -3,8 +3,8 @@ FactoryBot.define do
     subject { "Support Case #001" }
 
     body { "<html><head></head><body><h1>My support request</h1><p>Please update my case</p></body></html>" }
-    sender { "" }
-    recipients { "" }
+    sender { { address: "sender1@email.com", name: "Sender 1" } }
+    recipients { [{ address: "recipient1@email.com", name: "Recipient 1" }] }
     outlook_conversation_id { "MyString" }
     case_id { "" }
     sent_at { "2021-12-15 11:51:12" }
