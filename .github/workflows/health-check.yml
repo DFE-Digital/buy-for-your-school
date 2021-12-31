@@ -1,0 +1,40 @@
+name: GHBS Health Checks
+
+on:
+  schedule:
+    - cron:  '*/5 * * * *'
+
+jobs:
+  perform-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Production
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: https://get-help-buying-for-schools.education.gov.uk
+          max-attempts: 3
+
+      - name: Staging
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: https://staging-get-help-buying-for-schools.education.gov.uk/
+          max-attempts: 3
+
+      - name: Preview
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: https://preview.get-help-buying-for-schools.service.gov.uk
+          max-attempts: 3
+
+      - name: Slack Workflow Notification
+        if: failure()
+        uses: Gamesight/slack-workflow-status@master
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          channel: '#ghbs_health_checks'
+          name: 'Health Checks'
+
+
+
