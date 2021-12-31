@@ -2,7 +2,7 @@ name: GHBS Health Checks
 
 on:
   schedule:
-    - cron:  '*/15 * * * *'
+    - cron:  '*/5 * * * *'
 
 jobs:
   perform-checks:
@@ -39,7 +39,7 @@ jobs:
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
-          channel: '#rtk-test-channel-dec21'
+          channel: '#ghbs_health_checks'
           name: 'Health Checks'
 
 
