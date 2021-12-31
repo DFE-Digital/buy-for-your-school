@@ -4,11 +4,6 @@ describe Support::SynchronizeSharedInboxJob do
   subject(:job) { described_class.new }
 
   describe "#perform" do
-    before do
-      stub_const("SHARED_MAILBOX_FOLDER_ID_INBOX", "2")
-      stub_const("SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS", "2")
-    end
-
     it "synchronizes emails from the last 15 minutes with the shared mailbox inbox folder" do
       allow(Support::IncomingEmails::SharedMailbox).to receive(:synchronize)
 

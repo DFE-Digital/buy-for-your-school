@@ -28,16 +28,16 @@ describe Support::IncomingEmails::SharedMailbox do
     context "when initialized with inbox" do
       let(:folder) { :inbox }
 
-      it "is SHARED_MAILBOX_FOLDER_ID_INBOX" do
-        expect(mailbox.folder).to eq(SHARED_MAILBOX_FOLDER_ID_INBOX)
+      it "is Inbox" do
+        expect(mailbox.folder).to eq("Inbox")
       end
     end
 
     context "when initialized with sent" do
       let(:folder) { :sent_items }
 
-      it "is SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS" do
-        expect(mailbox.folder).to eq(SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS)
+      it "is SentItems" do
+        expect(mailbox.folder).to eq("SentItems")
       end
     end
   end
@@ -50,7 +50,7 @@ describe Support::IncomingEmails::SharedMailbox do
 
     before do
       allow(graph_client).to receive(:list_messages_in_folder)
-        .with(SHARED_MAILBOX_USER_ID, SHARED_MAILBOX_FOLDER_ID_INBOX, query: anything)
+        .with(SHARED_MAILBOX_USER_ID, "Inbox", query: anything)
         .and_return([email])
     end
 
@@ -65,7 +65,7 @@ describe Support::IncomingEmails::SharedMailbox do
         mailbox.emails(since: date)
 
         expect(graph_client).to have_received(:list_messages_in_folder)
-          .with(SHARED_MAILBOX_USER_ID, SHARED_MAILBOX_FOLDER_ID_INBOX, query: [
+          .with(SHARED_MAILBOX_USER_ID, "Inbox", query: [
             "$filter=sentDateTime ge #{date.utc.iso8601}",
             "$orderby=sentDateTime asc",
           ])

@@ -9,8 +9,8 @@ module Support
       end
 
       FOLDER_MAP = {
-        inbox: SHARED_MAILBOX_FOLDER_ID_INBOX,
-        sent_items: SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS,
+        inbox: "Inbox",
+        sent_items: "SentItems",
       }.freeze
 
       attr_reader :graph_client, :folder

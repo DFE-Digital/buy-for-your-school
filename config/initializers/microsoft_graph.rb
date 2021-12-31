@@ -15,7 +15,5 @@ if Features.enabled?(:incoming_emails)
 
   MicrosoftGraph.client = MicrosoftGraph::Client.new(client_session)
 
-  SHARED_MAILBOX_FOLDER_ID_INBOX = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_FOLDER_INBOX")
-  SHARED_MAILBOX_FOLDER_ID_SENT_ITEMS = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_FOLDER_SENT_ITEMS")
   SHARED_MAILBOX_USER_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_USER_ID")
 end
