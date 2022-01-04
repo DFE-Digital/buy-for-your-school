@@ -15,19 +15,7 @@ class TasksController < ApplicationController
       StepPresenter.new(step)
     end
 
-    # TODO: Refactor to use a private record_action method
-    RecordAction.new(
-      action: "view_task",
-      journey_id: @journey.id,
-      user_id: current_user.id,
-      contentful_category_id: @journey.category.contentful_id,
-      contentful_section_id: task.section.contentful_id,
-      contentful_task_id: task.contentful_id,
-      data: {
-        task_status: task.status,
-        task_step_tally: task.step_tally,
-      },
-    ).call
+    record_action("view_task")
   end
 
 private
@@ -50,9 +38,14 @@ private
 
     @journey = current_journey
 
-    # TODO: Refactor to use a private record_action method
+    record_action("begin_task")
+
+    redirect_to journey_step_path(current_journey, task.next_incomplete_step_id)
+  end
+
+  def record_action(action)
     RecordAction.new(
-      action: "begin_task",
+      action: action,
       journey_id: @journey.id,
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
@@ -63,7 +56,5 @@ private
         task_step_tally: task.step_tally,
       },
     ).call
-
-    redirect_to journey_step_path(current_journey, task.next_incomplete_step_id)
   end
 end
