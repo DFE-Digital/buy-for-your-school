@@ -48,7 +48,7 @@ module Support
     end
 
     def load_agents
-      @agents = Agent.all.map { |a| AgentPresenter.new(a) }.sort_by(&:full_name)
+      @agents = Agent.caseworkers.map { |a| AgentPresenter.new(a) }.sort_by(&:full_name)
     end
   end
 end

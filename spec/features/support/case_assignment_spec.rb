@@ -48,4 +48,20 @@ RSpec.feature "Case worker assignment" do
       expect(support_case.reload.agent).to eq(agent)
     end
   end
+
+  context "when there are internal agents" do
+    let(:support_case) { create(:support_case, :initial) }
+
+    before do
+      create(:support_agent, first_name: "Internal", last_name: "Agent", internal: true)
+      click_button "Agent Login"
+      visit support_case_path(support_case)
+      click_link "Assign to case worker"
+    end
+
+    it "does not show them in the caseworker list" do
+      expect(page).to have_field "Procurement Specialist"
+      expect(page).not_to have_field "Internal Agent"
+    end
+  end
 end
