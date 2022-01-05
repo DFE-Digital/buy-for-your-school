@@ -7,7 +7,7 @@
         <%= hidden_field_tag "case_hub_migration_form[#{key}]", value %>
       <% end %>
 
-      <%= hidden_field_tag "case_hub_migration_form[organisation_id]", @form.establishment.id %>
+      <%= hidden_field_tag "case_hub_migration_form[organisation_id]", @form.establishment&.id %>
 
 
       <h1 class="govuk-heading-l">
