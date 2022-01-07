@@ -1,8 +1,18 @@
 require_relative "case_presenter"
 require_relative "agent_presenter"
+require_relative "email_presenter"
 
 module Support
   class InteractionPresenter < BasePresenter
+    # @return [string]
+    def created_at
+      if outlook_email?
+        email.sent_at.strftime(date_format)
+      else
+        super
+      end
+    end
+
     # @return [String]
     def note
       super.strip.chomp
@@ -28,6 +38,18 @@ module Support
     # @return [Boolean]
     def email?
       event_type.match? /\Aemail.*/
+    end
+
+    def outlook_email?
+      event_type.in?(%w[email_from_school email_to_school]) && additional_data.key?("email_id")
+    end
+
+    def notify_email?
+      event_type == "email_to_school" && !additional_data.key?("email_id")
+    end
+
+    def email
+      EmailPresenter.new(super) if super
     end
 
   private
