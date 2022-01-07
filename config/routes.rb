@@ -60,6 +60,9 @@ Rails.application.routes.draw do
 
   namespace :support do
     resources :agents, only: %i[create]
+    if Features.enabled?(:incoming_emails)
+      resources :emails, only: %i[index show]
+    end
     resources :cases, only: %i[index show edit update] do
       collection do
         namespace :migrations do
@@ -84,6 +87,11 @@ Rails.application.routes.draw do
       end
     end
     resources :schools, only: %i[show index]
+  end
+
+  if Rails.env.development?
+    require "sidekiq/web"
+    mount Sidekiq::Web => "/sidekiq"
   end
 
   #

@@ -34,6 +34,17 @@ RSpec.feature "Case summary" do
         expect(page).to have_text "First name is missing"
       end
     end
+
+    it "validates the school urn" do
+      valid_form_data
+      fill_in "case_hub_migration_form[school_urn]", with: "23452"
+
+      click_on "Save and continue"
+
+      within "div.govuk-error-summary" do
+        expect(page).to have_text "Invalid school URN"
+      end
+    end
   end
 
   context "with valid data" do
