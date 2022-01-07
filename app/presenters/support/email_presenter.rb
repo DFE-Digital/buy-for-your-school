@@ -1,5 +1,5 @@
 module Support
-  class EmailPresenter < BasePresenter
+  class EmailPresenter < ::Support::BasePresenter
     # @return [String]
     def case_reference
       return nil if self.case.nil?

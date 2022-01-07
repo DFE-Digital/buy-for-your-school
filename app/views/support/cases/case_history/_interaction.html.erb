@@ -1,3 +1,6 @@
+<% # skip this interaction if it an email from outlook and feature not enabled. %>
+<% return if interaction.outlook_email? && !Features.enabled?(:incoming_emails) %>
+
 <div id="<%= interaction.id %>" class="govuk-accordion__section">
 
   <div class="govuk-accordion__section-header">
