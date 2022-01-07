@@ -57,6 +57,7 @@ en:
       rules:
         school_urn:
           missing: You must select a school
+          invalid: Invalid school URN
 
         first_name:
           missing: is missing
