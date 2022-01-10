@@ -16,6 +16,12 @@ locals {
   postgres_json_params = jsonencode(var.postgres_json_params)
   postgres_timeouts    = var.postgres_timeouts
 
+  s3_params = {
+    bucket = "ghbs-${local.environment}-bucket"
+    acl    = "private"
+  }
+  s3_json_params = jsonencode(local.s3_params)
+
   app_env_yaml_file = file("${local.environment}_app_env.yml")
   app_env           = yamldecode(local.app_env_yaml_file)
   domain            = "${local.project_name}-${local.environment}.${local.shared_cloudfoundry_domain}"
