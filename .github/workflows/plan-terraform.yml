@@ -1,0 +1,26 @@
+name: Plan terraform
+
+on:
+  push:
+    branches:
+      - create_s3_storage_area
+env:
+  CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  GIT_BRANCH: ${{ github.head_ref }}
+  GIT_COMMIT_SHA: ${{ github.sha }}
+
+jobs:
+  plan_s3_preview:
+    runs-on: ubuntu-latest
+    environment: preview
+    if: github.ref == 'refs/heads/create_s3_storage_area'
+    env:
+      TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+      GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Plan terraform
+        env:
+          TF_VAR_environment: 'preview'
+        run: script/plan-terraform
