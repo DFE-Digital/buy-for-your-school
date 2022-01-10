@@ -18,6 +18,10 @@ data "cloudfoundry_service" "postgres" {
   name = "postgres"
 }
 
+data "cloudfoundry_service" "s3" {
+  name = "s3"
+}
+
 data "cloudfoundry_space" "space" {
   name = local.cloudfoundry_space
   org  = data.cloudfoundry_org.org.id
