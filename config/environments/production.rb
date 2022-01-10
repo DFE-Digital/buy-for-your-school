@@ -122,4 +122,7 @@ Rails.application.configure do
   config.action_dispatch.default_headers = {
     "X-Xss-Protection" => "0",
   }
+
+  # Set active storage location
+  config.active_storage.service = :amazon
 end
