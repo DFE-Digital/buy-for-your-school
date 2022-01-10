@@ -8,10 +8,13 @@ describe MicrosoftGraph::Transformer::Message do
         "bodyPreview" => "<p>Hello, World</p>",
         "conversationId" => "CONVID123",
         "from" => { "emailAddress" => { "address" => "d", "name" => "e" } },
+        "hasAttachments" => true,
         "id" => "AAMkAGmnprAAA=",
         "internetMessageId" => "<imid_AAMkAGmnprAAA@mail.gmail.com",
         "importance" => "high",
+        "isDraft" => false,
         "isRead" => true,
+        "receivedDateTime" => "2022-12-25T10:30:56Z",
         "sentDateTime" => "2021-11-25T10:28:56Z",
         "subject" => "Important, please read",
         "toRecipients" => [
@@ -32,10 +35,13 @@ describe MicrosoftGraph::Transformer::Message do
         MicrosoftGraph::Transformer::Recipient.transform(payload["from"],
                                                          into: MicrosoftGraph::Resource::Recipient).as_json,
       )
+      expect(message.has_attachments).to eq(true)
       expect(message.id).to eq("AAMkAGmnprAAA=")
       expect(message.internet_message_id).to eq("<imid_AAMkAGmnprAAA@mail.gmail.com")
       expect(message.importance).to eq("high")
+      expect(message.is_draft).to eq(false)
       expect(message.is_read).to eq(true)
+      expect(message.received_date_time).to eq(Time.zone.parse(payload["receivedDateTime"]))
       expect(message.sent_date_time).to eq(Time.zone.parse(payload["sentDateTime"]))
       expect(message.subject).to eq("Important, please read")
       expect(message.to_recipients.map(&:as_json)).to match(

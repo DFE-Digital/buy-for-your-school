@@ -47,5 +47,11 @@ module Support
     validates :body, presence: true, unless: proc { |a| a.support_request? }
 
     default_scope { order(created_at: :desc) }
+
+    def email
+      return unless additional_data.key?("email_id")
+
+      Support::Email.find(additional_data["email_id"])
+    end
   end
 end

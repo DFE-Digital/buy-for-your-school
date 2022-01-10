@@ -21,4 +21,10 @@ namespace :case_management do
     Support::SeedSchools.new.call # live data from GIAS
     # Support::SeedSchools.new(data: "spec/fixtures/gias/example_schools_data.csv").call
   end
+
+  desc "Populate shared inbox emails"
+  task seed_shared_inbox_emails: :environment do
+    Support::IncomingEmails::SharedMailbox.synchronize(folder: :inbox)
+    Support::IncomingEmails::SharedMailbox.synchronize(folder: :sent_items)
+  end
 end

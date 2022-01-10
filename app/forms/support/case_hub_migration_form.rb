@@ -21,9 +21,13 @@ module Support
     # @see Support::Case#source
     # @return [String]
     def case_type
-      return if hub_case_ref.nil?
+      return if hub_case_ref.blank?
 
-      hub_case_ref.downcase.start_with?("ce-") ? "sw_hub" : "nw_hub"
+      if north_west_check
+        "nw_hub"
+      elsif south_west_check
+        "sw_hub"
+      end
     end
 
     # @return [Hash] form parms
@@ -32,6 +36,16 @@ module Support
           .except(:messages)
           .merge(source: case_type)
           .compact
+    end
+
+  private
+
+    def north_west_check
+      hub_case_ref.to_i.between?(1000, 99_999)
+    end
+
+    def south_west_check
+      hub_case_ref.downcase.start_with?("ce-")
     end
   end
 end

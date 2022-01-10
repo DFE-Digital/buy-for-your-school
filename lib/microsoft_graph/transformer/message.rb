@@ -12,6 +12,7 @@ module MicrosoftGraph
         transform_json_response
         map_value(:body) { transform_body }
         map_value(:from) { transform_recipient }
+        map_value(:received_date_time) { to_datetime }
         map_value(:sent_date_time) { to_datetime }
         map_value(:to_recipients) do
           map_array { transform_recipient }
