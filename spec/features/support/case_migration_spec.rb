@@ -89,7 +89,6 @@ RSpec.feature "Case summary" do
       end
     end
 
-
     it "allows case to be created" do
       complete_valid_form
 
