@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_10_125945) do
+ActiveRecord::Schema.define(version: 2022_01_10_145203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -255,6 +255,15 @@ ActiveRecord::Schema.define(version: 2022_01_10_125945) do
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "case_id"
     t.index ["case_id"], name: "index_support_documents_on_case_id"
+  end
+
+  create_table "support_email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "email_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "support_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
