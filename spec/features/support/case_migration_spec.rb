@@ -72,6 +72,24 @@ RSpec.feature "Case summary" do
       end
     end
 
+    context "when no identification number provided" do
+      it "doesnt show case type" do
+        complete_valid_form
+        expect(find("dd.case-type")).to have_text ""
+      end
+    end
+
+    context "when south west identification number provided" do
+      it "doesnt show case type" do
+        valid_form_data
+        fill_in "case_hub_migration_form[hub_case_ref]", with: "CE-11111"
+        click_on "Save and continue"
+
+        expect(find("dd.case-type")).to have_text "South west hub case"
+      end
+    end
+
+
     it "allows case to be created" do
       complete_valid_form
 
