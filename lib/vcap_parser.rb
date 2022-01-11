@@ -35,8 +35,8 @@ class VcapParser
     return unless s3_config
 
     # set S3 credentials
-    s3_config.fetch("credentials").each_pair do |key, value|
-      ENV[key.capitalize] = value
+    %w[aws_access_key_id aws_region aws_secret_access_key bucket_name].each do |key|
+      ENV[key.upcase] = s3_config.fetch("credentials")[key]
     end
   end
 end
