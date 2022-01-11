@@ -81,15 +81,17 @@ en:
   case_procurement_details_form:
     rules:
       started_at: Start date of the procurement
+      ended_at: End date of the procurement
 
     errors:
       rules:
         started_at:
           before_end_date: must come before the end date
 
-  case_new_contract_form:
+  case_contracts_form:
     rules:
       started_at: Start date of the contract
+      ended_at: End date of the contract
 
     errors:
       rules:

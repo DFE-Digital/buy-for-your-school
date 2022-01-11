@@ -4,8 +4,8 @@ require "support/form"
 module Support
   class CaseContractsForm < Form
     option :supplier, optional: true
-    option :started_at, optional: true
-    option :ended_at, optional: true
+    option :started_at, CustomDate, optional: true
+    option :ended_at, CustomDate, optional: true
     option :spend, optional: true
     option :duration, optional: true
 

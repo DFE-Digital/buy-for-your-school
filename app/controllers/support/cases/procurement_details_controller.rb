@@ -48,8 +48,8 @@ module Support
 
     def case_procurement_details_form_params
       form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :framework_name, :stage)
-      form_params[:started_at] = date_param(:case_procurement_details_form, :started_at).to_s
-      form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at).to_s
+      form_params[:started_at] = date_param(:case_procurement_details_form, :started_at)
+      form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at)
       form_params
     end
   end

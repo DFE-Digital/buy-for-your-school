@@ -41,15 +41,11 @@ module Support
       @current_contract ||= Support::Contract.for(params[:id])
     end
 
-    def modify_date
-      params[:case_contracts_form][:started_at] = date_param(:case_contracts_form, :started_at).to_s
-      params[:case_contracts_form][:ended_at] = date_param(:case_contracts_form, :ended_at).to_s
-    end
-
     def case_contracts_form_params
-      modify_date
-
-      params.require(:case_contracts_form).permit(:supplier, :started_at, :ended_at, :spend, :duration)
+      form_params = params.require(:case_contracts_form).permit(:supplier, :spend, :duration)
+      form_params[:started_at] = date_param(:case_contracts_form, :started_at)
+      form_params[:ended_at] = date_param(:case_contracts_form, :ended_at)
+      form_params
     end
   end
 end

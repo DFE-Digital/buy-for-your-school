@@ -1,11 +1,13 @@
 module Support
   class CaseContractsFormSchema < Schema
-    config.messages.top_namespace = :case_new_contract_form
+    validate_date_fields %i[started_at ended_at]
+
+    config.messages.top_namespace = :case_contracts_form
 
     params do
       optional(:supplier).maybe(:string)
-      optional(:started_at).maybe(:date)
-      optional(:ended_at).maybe(:date)
+      optional(:started_at).maybe(:hash)
+      optional(:ended_at).maybe(:hash)
       optional(:spend).maybe(:decimal)
       optional(:duration).maybe(:integer)
     end

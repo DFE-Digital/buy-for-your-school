@@ -119,7 +119,7 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
-  context "when dates fail validation" do
+  context "when dates fail validation due to the end date coming before the start date" do
     before do
       # start date
       fill_in "case_procurement_details_form[started_at(3i)]", with: "3"
@@ -142,6 +142,38 @@ RSpec.feature "Edit case procurement details" do
       within("div.govuk-error-summary") do
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(find("div.govuk-error-summary__body")).to have_link "Start date of the procurement must come before the end date", href: "#case-procurement-details-form-started-at-field-error"
+      end
+    end
+  end
+
+  context "when dates fail validation due to non-existent dates" do
+    before do
+      # start date
+      fill_in "case_procurement_details_form[started_at(3i)]", with: "31"
+      fill_in "case_procurement_details_form[started_at(2i)]", with: "4"
+      fill_in "case_procurement_details_form[started_at(1i)]", with: "2020"
+      # end date
+      fill_in "case_procurement_details_form[ended_at(3i)]", with: "2"
+      fill_in "case_procurement_details_form[ended_at(2i)]", with: "21"
+      fill_in "case_procurement_details_form[ended_at(1i)]", with: "2022"
+      click_continue
+    end
+
+    it "shows error message above the field" do
+      within(all("fieldset.govuk-fieldset")[3]) do
+        expect(find("span#case-procurement-details-form-started-at-error")).to have_text "Start date of the procurement is invalid"
+      end
+
+      within(all("fieldset.govuk-fieldset")[4]) do
+        expect(find("span#case-procurement-details-form-ended-at-error")).to have_text "End date of the procurement is invalid"
+      end
+    end
+
+    it "shows error message in error summary" do
+      within("div.govuk-error-summary") do
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(find("div.govuk-error-summary__body")).to have_link "Start date of the procurement is invalid", href: "#case-procurement-details-form-started-at-field-error"
+        expect(find("div.govuk-error-summary__body")).to have_link "End date of the procurement is invalid", href: "#case-procurement-details-form-ended-at-field-error"
       end
     end
   end
