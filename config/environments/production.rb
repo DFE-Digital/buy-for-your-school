@@ -124,5 +124,5 @@ Rails.application.configure do
   }
 
   # Set active storage location
-  config.active_storage.service = :amazon
+  config.active_storage.service = ENV["BUCKET_NAME"].blank? ? :local : :amazon
 end
