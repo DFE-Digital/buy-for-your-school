@@ -20,7 +20,7 @@ class VcapParser
     )
 
     load_s3_config(
-      vcap_json.fetch("aws-s3-bucket", []).first
+      vcap_json.fetch("aws-s3-bucket", []).first,
     )
   end
 
