@@ -18,6 +18,10 @@ class VcapParser
     load_redis_config(
       vcap_json.fetch("redis", []).first,
     )
+
+    load_s3_config(
+      vcap_json.fetch("aws-s3-bucket", []).first
+    )
   end
 
   def self.load_redis_config(redis_config)
@@ -25,5 +29,14 @@ class VcapParser
 
     # Generate a REDIS_URL from the redis service uri
     ENV["REDIS_URL"] = redis_config.fetch("credentials").fetch("uri")
+  end
+
+  def self.load_s3_config(s3_config)
+    return unless s3_config
+
+    # set S3 credentials
+    s3_config.fetch("credentials").each_pair do |key, value|
+      ENV[key.capitalize] = value
+    end
   end
 end
