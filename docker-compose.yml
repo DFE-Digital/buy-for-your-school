@@ -5,6 +5,8 @@ services:
     # $ docker compose -p ghbs up app
     # $ docker exec -it ghbs_prod /bin/bash
     #
+    tmpfs:
+      - /tmp
     container_name: ghbs_prod
     build:
       context: .
