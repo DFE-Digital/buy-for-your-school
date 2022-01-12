@@ -28,6 +28,20 @@ describe "Agent sees emails in case history" do
       end
     end
 
+    context "when the email contains attachments" do
+      before do
+        create(:support_email_attachment, email: email)
+      end
+
+      it "lists each attachment within the interaction" do
+        visit support_case_path(support_case)
+
+        within "#case-history .govuk-accordion__section", text: "Catering requirements" do
+          expect(page).to have_link("attachment.txt")
+        end
+      end
+    end
+
     context "when the incoming_email feature is disabled" do
       before { allow(Features).to receive(:enabled?).with(:incoming_emails).and_return(false) }
 

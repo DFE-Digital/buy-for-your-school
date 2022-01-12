@@ -27,3 +27,5 @@
     <%= link_to I18n.t("support.interaction.link_to_email_preview"), support_email_path(email.id), target: "_blank", rel: "noopener" %>
   </dd>
 </div>
+
+<%= render "support/emails/attachments", email: email %>
