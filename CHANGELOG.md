@@ -24,6 +24,11 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
+## [release-018] - 2022-01-xx
+
+- add role-based access control for data analysts to access `/admin` [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/729)
+- add download link for user activity in CSV format for the `analyst` role [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/730)
+
 ## [release-017] - 2021-12-13
 
 ### Housekeeping

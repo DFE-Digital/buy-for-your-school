@@ -29,6 +29,8 @@
       <dt class="govuk-summary-list__key"><%= I18n.t("support.emails.show.subject") %></dt>
       <dd class="govuk-summary-list__value"><%= @email.subject %></dd>
     </div>
+
+    <%= render "attachments", email: @email %>
   </dl>
 
   <div class="email-preview-body">

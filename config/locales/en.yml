@@ -493,6 +493,7 @@ en:
         sender: Sender
         recipients: Recipients
         sent_at: Sent at
+        attachments: Attachments
 
     interaction:
       header:

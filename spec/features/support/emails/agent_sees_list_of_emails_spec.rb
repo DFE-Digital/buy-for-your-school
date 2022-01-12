@@ -88,6 +88,22 @@ describe "Agent sees a list of emails seperate to cases" do
       end
     end
 
+    context "when the email contains attachments" do
+      let(:email) { Support::Email.first }
+
+      before do
+        create(:support_email_attachment, email: email)
+      end
+
+      it "lists each attachment within the interaction" do
+        visit support_email_path(email)
+
+        within ".email-attachments" do
+          expect(page).to have_link("attachment.txt")
+        end
+      end
+    end
+
     context "when I am assigned to a case" do
       before { agent.cases << Support::Email.first.case }
 
