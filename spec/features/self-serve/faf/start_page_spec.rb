@@ -19,5 +19,4 @@ RSpec.feature "Faf start page" do
       expect(find("h1")).to have_text "Request help and support with your procurement"
     end
   end
-
 end
