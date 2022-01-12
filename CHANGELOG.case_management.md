@@ -6,12 +6,15 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
-- Microsoft Graph API library
-- Synchronisation of emails from shared inbox into database
-- Emails listed within case management outside of cases
-- Emails listed within case history
 
-## [release-001] - 2021-12-xx
+## [release-002] - 2022-01-xx (018)
+
+- Microsoft Graph API library [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/694)
+- Synchronisation of emails from shared inbox into database [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
+- Emails listed within case management outside of cases [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
+- Emails listed within case history [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
+
+## [release-001] - 2021-12-13 (017)
 
 - initial models for case management functions
 - unique 6 digit ref for cases starting with 000001
