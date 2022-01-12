@@ -260,7 +260,7 @@ en:
       read_procs_link: read buying procedures and procurement law for schools
       read_guides_link: read guides about goods and services
     back_button: Back to your dashboard
-  
+
   # /admin
   admin:
     header: User activity data
@@ -475,6 +475,7 @@ en:
         sender: Sender
         recipients: Recipients
         sent_at: Sent at
+        attachments: Attachments
 
     interaction:
       header:
