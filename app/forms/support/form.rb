@@ -9,23 +9,6 @@ module Support
     #   @return [Hash] field validation error messages
     option :messages, Types::Hash, default: proc { {} }
 
-    # Convert a date hash in the format { year: #, month: #, day: # } into a date
-    #
-    # @return [Date, nil]
-    CustomDate = Types.Constructor(Date) do |input|
-      if input.present?
-        if input.is_a?(Date)
-          input
-        else
-          Date.new(input["year"].to_i, input["month"].to_i, input["day"].to_i)
-        end
-      else
-        nil
-      end
-    rescue ArgumentError
-      nil
-    end
-
     #
     # Message object for form error handling
     #

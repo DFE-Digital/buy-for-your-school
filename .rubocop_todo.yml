@@ -61,4 +61,4 @@ Rails/ReversibleMigration:
 # SupportedStyles: empty, nil, both
 Style/EmptyElse:
   Exclude:
-    - 'app/forms/support/form.rb'
+    - 'lib/types.rb'
