@@ -54,6 +54,11 @@ Rails.application.routes.draw do
   end
 
   #
+  # FaF ------------------------------------------------------------------
+  #
+  resources :faf, only: %i[new], path: "procurement-support"
+
+  #
   # Supported ------------------------------------------------------------------
   #
   get "support", to: "support/pages#start_page", as: :support_root
