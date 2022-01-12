@@ -131,3 +131,7 @@ localhost.crt
 localhost.key
 
 .env.test.local
+
+# local activestorage
+
+storage
