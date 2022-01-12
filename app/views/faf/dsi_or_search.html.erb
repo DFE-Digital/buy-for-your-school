@@ -1,0 +1,20 @@
+<%= content_for :title, I18n.t("faf.dsi_or_search.header") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    
+    <span class="govuk-caption-l"> <%= I18n.t("faf.dsi_or_search.subtitle") %> </span>
+    
+    <h1 class="govuk-heading-l"> <%= I18n.t("faf.dsi_or_search.header") %> </h1>
+
+    <%= form_with url: faf_path, method: :create do |f| %>
+      <%= f.govuk_radio_button :dsi, true, label: { text: I18n.t("faf.dsi_or_search.radios.dsi") } %>
+      <%= f.govuk_radio_button :dsi, false, label: { text: I18n.t("faf.dsi_or_search.radios.no_dsi") } %>
+      <br>
+      <%= f.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+    <% end %>
+
+    <%= link_to I18n.t("faf.dsi_or_search.link_text"), "#", class: "govuk-link" %>
+    
+  </div>
+</div>
