@@ -271,6 +271,25 @@ en:
     download: Download (.csv)
 
   #
+  # FaF -----------------------------------------------------------------
+  #
+
+  # /request-help-and-support-with-your-procurement
+  faf:
+    start_page:
+      header: Request help and support with your procurement
+      overview_purpose: You can use this service if you are procuring for schools in England -- either local authority maintained schools, federations or academies in a single or multi-academy trust.
+      you_can_ask_for: You can ask for
+      overview_category_list:
+        - advice and guidance on using frameworks
+        - help with choosing a framework
+        - help with using this service
+        - general advice and guidance about your procurement
+      overview_response: The Get help buying for schools team will respond to you within 2 working days.
+      subheading: Before you start
+      you_can: You can
+
+  #
   # Supported ------------------------------------------------------------------
   #
   support:
@@ -394,7 +413,6 @@ en:
         label:
           confirm: Check all the details before submitting as it is not currently possible to edit case details once they are created.
         submit: Create case
-
 
     case_resolution:
       flash:
