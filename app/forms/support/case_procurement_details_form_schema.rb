@@ -1,6 +1,5 @@
 module Support
   class CaseProcurementDetailsFormSchema < Schema
-    validate_date_fields %i[started_at ended_at]
 
     config.messages.top_namespace = :case_procurement_details_form
 
@@ -14,12 +13,18 @@ module Support
       optional(:ended_at).value(:hash)
     end
 
+    rule :started_at do
+      key.failure("is invalid") unless hash_to_date.call(value)
+    end
+
+    rule :ended_at do
+      key.failure("is invalid") unless hash_to_date.call(value)
+    end
+
     rule(:started_at, :ended_at) do
-      started_at_date = hash_to_date(values[:started_at])
-      ended_at_date = hash_to_date(values[:ended_at])
+      started_at_date = hash_to_date.call(values[:started_at])
+      ended_at_date = hash_to_date.call(values[:ended_at])
       key.failure(:before_end_date) if started_at_date.present? && ended_at_date.present? && started_at_date > ended_at_date
-    rescue ArgumentError
-      nil
     end
   end
 end

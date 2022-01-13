@@ -1,6 +1,5 @@
 module Support
   class CaseContractsFormSchema < Schema
-    validate_date_fields %i[started_at ended_at]
 
     config.messages.top_namespace = :case_contracts_form
 
@@ -10,6 +9,14 @@ module Support
       optional(:ended_at).maybe(:hash)
       optional(:spend).maybe(:decimal)
       optional(:duration).maybe(:integer)
+    end
+
+    rule :started_at do
+      key.failure("is invalid") unless hash_to_date.call(value)
+    end
+
+    rule :ended_at do
+      key.failure("is invalid") unless hash_to_date.call(value)
     end
   end
 end
