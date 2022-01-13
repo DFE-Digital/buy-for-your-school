@@ -1,0 +1,31 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    <%= I18n.t("support.interaction.label.created_by") %>
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= interaction.agent&.full_name %>
+  </dd>
+</div>
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    <%= I18n.t("support.interaction.label.body") %>
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <% if interaction.email? %>
+      <%= link_to I18n.t("support.interaction.link_to_email_preview"), support_case_interaction_path(current_case, interaction), target: "_blank", rel: "noopener" %>
+    <% else %>
+      <%= interaction.body %>
+    <% end %>
+  </dd>
+</div>
+
+<% interaction.additional_data.each do |key, value|  %>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case_hub_migration.label.#{key}", optional: nil) %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= value.humanize %>
+    </dd>
+  </div>
+<% end %>

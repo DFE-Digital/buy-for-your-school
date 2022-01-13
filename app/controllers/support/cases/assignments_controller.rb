@@ -27,6 +27,8 @@ module Support
         agent_id: current_agent.id,
       )
 
+      record_action(case_id: current_case.id, action: "open_case") if current_case.initial?
+
       current_case.update!(
         state: :opened,
         agent_id: @case_assignment_form.agent_id,
@@ -46,7 +48,7 @@ module Support
     end
 
     def load_agents
-      @agents = Agent.all.map { |a| AgentPresenter.new(a) }.sort_by(&:full_name)
+      @agents = Agent.caseworkers.map { |a| AgentPresenter.new(a) }.sort_by(&:full_name)
     end
   end
 end

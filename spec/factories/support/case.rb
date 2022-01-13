@@ -14,6 +14,10 @@ FactoryBot.define do
 
     association :organisation, factory: :support_organisation
 
+    trait :initial do
+      state { :initial }
+    end
+
     trait :open do
       state { :open }
     end

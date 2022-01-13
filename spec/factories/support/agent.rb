@@ -5,5 +5,6 @@ FactoryBot.define do
     email       { "test@test" }
     first_name  { "first_name" }
     last_name   { "last_name" }
+    internal    { false }
   end
 end

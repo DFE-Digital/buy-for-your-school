@@ -47,5 +47,7 @@ module BuyForYourSchool
 
     # Custom exception page handling
     config.exceptions_app = routes
+
+    config.feature_flags = config_for(:feature_flags)
   end
 end

@@ -3,6 +3,37 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
+      "fingerprint": "55a40e18bfdb22296c2883cd469b194cc721fd4762abdc4d8b4a40d338ea5401",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/support/emails/show.html.erb",
+      "line": 37,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "EmailPresenter.new(Support::Email.find(params[:id])).body_with_inline_attachments(self)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Support::EmailsController",
+          "method": "show",
+          "line": 12,
+          "file": "app/controllers/support/emails_controller.rb",
+          "rendered": {
+            "name": "support/emails/show",
+            "file": "app/views/support/emails/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "support/emails/show"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
       "fingerprint": "d3456c155dedafeca54754530611334bcde4c8cc1091b1acde3bd473184c091f",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
@@ -32,6 +63,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-10-29 12:52:01 +0000",
-  "brakeman_version": "5.1.1"
+  "updated": "2022-01-13 09:06:32 +0000",
+  "brakeman_version": "5.2.0"
 }

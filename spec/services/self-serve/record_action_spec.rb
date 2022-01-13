@@ -72,7 +72,7 @@ RSpec.describe RecordAction do
             contentful_task_id: nil,
             contentful_step_id: nil,
             data: nil,
-            allowed_action_types: "begin_journey, view_journey, begin_task, view_task, begin_step, view_step, save_answer, update_answer, view_specification",
+            allowed_action_types: "begin_journey, view_journey, begin_task, view_task, begin_step, view_step, skip_step, save_answer, acknowledge_statement, update_answer, view_specification",
           ).and_call_original
 
         expect {

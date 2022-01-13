@@ -10,12 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_120610) do
+ActiveRecord::Schema.define(version: 2022_01_12_131559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "activity_log", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "journey_id"
@@ -181,6 +209,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "dsi_uid", default: "", null: false
     t.string "email", default: "", null: false
+    t.boolean "internal", default: false, null: false
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
   end
@@ -226,6 +255,37 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "case_id"
     t.index ["case_id"], name: "index_support_documents_on_case_id"
+  end
+
+  create_table "support_email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "email_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_inline", default: false
+    t.string "content_id"
+  end
+
+  create_table "support_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.jsonb "sender"
+    t.jsonb "recipients"
+    t.string "outlook_conversation_id"
+    t.uuid "case_id"
+    t.datetime "sent_at"
+    t.datetime "received_at"
+    t.datetime "read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "outlook_id"
+    t.boolean "is_read", default: false
+    t.boolean "is_draft", default: false
+    t.boolean "has_attachments", default: false
+    t.text "body_preview"
+    t.integer "folder"
   end
 
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -343,6 +403,8 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.index ["last_name"], name: "index_users_on_last_name"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade

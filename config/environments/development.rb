@@ -67,4 +67,7 @@ Rails.application.configure do
 
   # Allow ngrok (web tunnels) - see ngrok.com for more info
   config.hosts.clear
+
+  # Set active storage location
+  config.active_storage.service = :local
 end

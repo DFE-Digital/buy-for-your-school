@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :authenticate_user!, except: :health_check
+  before_action :set_active_storage_host
 
   protect_from_forgery
 
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user
+  helper_method :current_user, :support?
 
   # @return [User, Guest]
   #
@@ -49,5 +50,14 @@ protected
     return true if current_journey.user == current_user
 
     render "errors/not_found", status: :not_found
+  end
+
+  # Is the user currently on the support side?
+  def support?
+    false
+  end
+
+  def set_active_storage_host
+    ActiveStorage::Current.host = request.base_url
   end
 end
