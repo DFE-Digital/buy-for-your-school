@@ -20,7 +20,7 @@ class SupportFormSchema < Dry::Validation::Contract
     optional(:message_body).value(:string)  # step 5
   end
 
-  rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+  rule(:phone_number).validate(format?: /^(?:0|\+?44)(?:\d\s*){9,10}$/)
 
   rule(:school_urn) do
     key(:school_urn).failure(:missing) if key? && value.blank?

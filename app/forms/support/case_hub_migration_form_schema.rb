@@ -25,7 +25,7 @@ module Support
     end
 
     # TODO: custom macro for phone number validation
-    rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+    rule(:phone_number).validate(format?: /^(?:0|\+?44)(?:\d\s*){9,10}$/)
 
     # TODO: custom macro using chronic
     rule(:estimated_procurement_completion_date).validate(format?: /(^$|^\d{2}\/\d{2}\/\d{4}$)/)

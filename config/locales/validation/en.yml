@@ -1,7 +1,6 @@
 # config/validation/en.yml
 en:
   forms:
-
     rules:
       phone_number: Your phone number
       message_body: "" # Omitted
@@ -13,9 +12,7 @@ en:
         phone_number:
           missing: is missing
           # format?: must start with a zero and only contain digits
-          format?: must have a minimum of 10 numbers and no spaces, starting with a zero
-          # min_size?: "must have at least %{num} digits"
-          max_size?: "can not have more than %{num} digits"
+          format?: must have a minimum of 10 and maximum 12 digits with no spaces, starting with a zero or +44
 
         message_body:
           missing: You must tell us how we can help

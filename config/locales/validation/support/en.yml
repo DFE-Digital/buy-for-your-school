@@ -69,11 +69,7 @@ en:
           missing: is missing
 
         phone_number:
-          # format?: must start with a zero and only contain digits
-          format?: must have a minimum of 10 numbers and no spaces, starting with a zero
-          # min_size?: "must have at least %{num} digits"
-          max_size?: "can not have more than %{num} digits"
+          format?: must have a minimum of 10 and maximum 12 digits with no spaces, starting with a zero or +44
 
         estimated_procurement_completion_date:
           format?: must follow the format of DD/MM/YYYY
-
