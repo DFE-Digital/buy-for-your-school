@@ -10,35 +10,45 @@ module MicrosoftGraph
     end
 
     def graph_api_get(path)
-      response = HTTParty.get(
-        "https://graph.microsoft.com/v1.0/#{path}",
-        headers: { authorization: "Bearer #{access_token}" },
-      )
-
-      handle_api_response(response)
+      paginated_request(:get, path)
     end
 
     def graph_api_post(path, body)
-      response = HTTParty.post(
-        "https://graph.microsoft.com/v1.0/#{path}",
-        headers: { authorization: "Bearer #{access_token}" },
-        body: body,
-      )
-
-      handle_api_response(response)
+      paginated_request(:post, path, body)
     end
 
     def graph_api_patch(path, body)
-      response = HTTParty.patch(
-        "https://graph.microsoft.com/v1.0/#{path}",
-        headers: { authorization: "Bearer #{access_token}", "Content-Type": "application/json" },
-        body: body,
-      )
-
-      handle_api_response(response)
+      paginated_request(:patch, path, body)
     end
 
   private
+
+    def paginated_request(http_verb, initial_path, body = {})
+      request_url = "https://graph.microsoft.com/v1.0/#{initial_path}"
+      overral_response = { "value" => [] }
+
+      loop do
+        json = handle_api_response(
+          HTTParty.send(
+            http_verb,
+            request_url,
+            body: body,
+            headers: { authorization: "Bearer #{access_token}" },
+          ),
+        )
+
+        overral_response["value"].concat(json["value"])
+
+        if json.key?("@odata.nextLink")
+          request_url = json["@odata.nextLink"]
+          body = {}
+        else
+          break
+        end
+      end
+
+      overral_response
+    end
 
     def access_token
       authenticator.get_access_token
