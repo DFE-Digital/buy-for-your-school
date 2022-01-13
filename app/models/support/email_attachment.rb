@@ -5,6 +5,8 @@ module Support
 
     before_save :update_file_attributes
 
+    scope :inline, -> { where(is_inline: true) }
+
   private
 
     def update_file_attributes

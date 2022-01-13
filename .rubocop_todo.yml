@@ -46,6 +46,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
     - 'db/migrate/20211117133254_add_contentful_fields_to_page.rb'
     - 'db/migrate/20211217092216_add_extra_outlook_fields_to_support_email.rb'
+    - 'db/migrate/20220112131559_add_is_inline_to_support_email_attachments.rb'
 
 # Offense count: 2
 # Configuration parameters: Include.

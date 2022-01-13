@@ -28,5 +28,15 @@ module Support
     def sent_at_formatted
       sent_at.strftime(short_date_time)
     end
+
+    def body_with_inline_attachments(view_context)
+      inline_attachments = attachments.inline.index_by(&:content_id)
+
+      body.tap do |body_with_attachments|
+        inline_attachments.each do |content_id, attachment|
+          body_with_attachments.gsub!("cid:#{content_id}", view_context.url_for(attachment.file))
+        end
+      end
+    end
   end
 end
