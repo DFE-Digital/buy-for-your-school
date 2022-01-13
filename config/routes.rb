@@ -56,7 +56,11 @@ Rails.application.routes.draw do
   #
   # FaF ------------------------------------------------------------------
   #
-  resources :faf, only: %i[new], path: "procurement-support"
+  resources :faf, only: %i[index], path: "procurement-support", controller: :faf do
+    get :user_query, on: :collection, path: "user-query"
+  end
+    
+
 
   #
   # Supported ------------------------------------------------------------------

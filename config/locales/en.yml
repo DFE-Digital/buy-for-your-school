@@ -288,6 +288,10 @@ en:
       overview_response: The Get help buying for schools team will respond to you within 2 working days.
       subheading: Before you start
       you_can: You can
+    user_query:
+      caption: About your request
+      header: How can we help?
+      sub_caption: Briefly describe your problem in a few sentences.
 
   #
   # Supported ------------------------------------------------------------------

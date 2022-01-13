@@ -1,0 +1,21 @@
+<%#= link_to I18n.t("generic.button.back"), @back_url, class: "govuk-back-link" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= I18n.t("faf.user_query.caption") %></span>
+    <div class="govuk-form-group">
+      <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="more-detail">
+        <%= I18n.t("faf.user_query.header") %></label>
+      </h1>
+      <div id="more-detail-hint" class="govuk-hint">
+        <%= I18n.t("faf.user_query.sub_caption") %>
+      </div>
+      <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+      <%= form_with url: user_query_faf_index_path do |f| %>
+        <%#= f.govuk_error_summary %>
+      
+        <%#= f.govuk_text_area_field :supplier, width: 20, size: 'm' } %>
+        <%= f.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>
