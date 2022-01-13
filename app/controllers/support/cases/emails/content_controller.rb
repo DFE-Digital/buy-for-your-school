@@ -52,6 +52,7 @@ module Support
           first_name: @current_case.first_name,
           last_name: @current_case.last_name,
           from_name: current_agent.full_name,
+          reference: @current_case.ref,
         },
       )
     end
