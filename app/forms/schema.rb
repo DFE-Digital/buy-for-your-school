@@ -1,4 +1,7 @@
-class BaseSchema < Dry::Validation::Contract
+#
+# Base schema
+#
+class Schema < Dry::Validation::Contract
   import_predicates_as_macros
 
   config.messages.backend = :i18n

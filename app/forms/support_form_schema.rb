@@ -5,7 +5,7 @@
 #
 # @author Peter Hamilton
 #
-class SupportFormSchema < BaseSchema
+class SupportFormSchema < Schema
   params do
     optional(:phone_number).value(:string)  # step 1
     optional(:school_urn).value(:string)    # step 2

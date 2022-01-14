@@ -1,7 +1,7 @@
 #
 # Validate "find-a-framework support requests"
 #
-class FafFormSchema < BaseSchema
+class FafFormSchema < Schema
   params do
     optional(:dsi).value(:bool)
   end

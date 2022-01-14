@@ -13,7 +13,7 @@ RSpec.describe SupportForm, type: :model do
   end
 
   it "#errors" do
-    expect(form.errors).to be_a ErrorSummary
+    expect(form.errors).to be_a SupportForm::ErrorSummary
     expect(form.errors.any?).to be false
   end
 

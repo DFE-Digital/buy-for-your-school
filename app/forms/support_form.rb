@@ -2,7 +2,7 @@
 #
 # @author Peter Hamilton
 #
-class SupportForm < BaseForm
+class SupportForm < Form
   # @!attribute [r] step
   # @return [Integer] internal counter defaults to 1, coerces strings
   option :step, Types::Params::Integer, default: proc { 1 }
