@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :support_request do
     message_body { "Support request message from a School Buying Professional" }
-    phone_number { "0151 000 0000" }
+    phone_number { "07756471233" }
     association :user
     association :category
 

@@ -91,8 +91,8 @@ RSpec.feature "Create a new support request" do
         fill_in "support_form[phone_number]", with: "0123"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
       # step 1
@@ -100,8 +100,8 @@ RSpec.feature "Create a new support request" do
         fill_in "support_form[phone_number]", with: "11234567890"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
       # step 1
@@ -109,17 +109,17 @@ RSpec.feature "Create a new support request" do
         fill_in "support_form[phone_number]", with: "0123456789x"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
       # step 1
       it "(max size)" do
-        fill_in "support_form[phone_number]", with: "012345678901"
+        fill_in "support_form[phone_number]", with: "+4412345678901343"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number can not have more than 11 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number can not have more than 11 digits"
+        expect(page).to have_link "Your phone number can not have more than 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number can not have more than 12 digits"
       end
     end
   end
@@ -184,7 +184,6 @@ RSpec.feature "Create a new support request" do
     it "infers the category from the chosen spec" do
       choose "1 September 2021"
       click_continue
-
       expect(find("span.govuk-caption-l")).to have_text "About your procurement"
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
       expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
