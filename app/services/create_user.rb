@@ -68,7 +68,9 @@ private
       first_name: first_name,
       last_name: last_name,
       orgs: orgs,
-      roles: roles,
+      # Commenting this out for now so it can be restored
+      # when we are pulling the roles over from DSI
+      # roles: roles,
     )
     Rollbar.info "Updated account for #{user_id}"
     current_user
@@ -83,7 +85,9 @@ private
       first_name: first_name,
       last_name: last_name,
       orgs: orgs,
-      roles: roles,
+      # Commenting this out for now so it can be restored
+      # when we are pulling the roles over from DSI
+      # roles: roles,
     )
     Rollbar.info "Created account for #{user_id}"
     user

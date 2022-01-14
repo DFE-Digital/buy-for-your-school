@@ -54,12 +54,20 @@ Rails.application.routes.draw do
   end
 
   #
+  # FaF ------------------------------------------------------------------
+  #
+  resources :faf, only: %i[new], path: "procurement-support"
+
+  #
   # Supported ------------------------------------------------------------------
   #
   get "support", to: "support/pages#start_page", as: :support_root
 
   namespace :support do
     resources :agents, only: %i[create]
+    if Features.enabled?(:incoming_emails)
+      resources :emails, only: %i[index show]
+    end
     resources :cases, only: %i[index show edit update] do
       collection do
         namespace :migrations do
@@ -89,10 +97,17 @@ Rails.application.routes.draw do
     resources :schools, only: %i[show index]
   end
 
+  if Rails.env.development?
+    require "sidekiq/web"
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
   #
   # Common ---------------------------------------------------------------------
   #
   get "health_check" => "application#health_check"
+
+  get "admin", to: "admin#show"
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
   # if a Page with :slug cannot be found, `errors/not_found` is rendered

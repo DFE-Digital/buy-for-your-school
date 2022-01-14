@@ -34,6 +34,17 @@ RSpec.feature "Case summary" do
         expect(page).to have_text "First name is missing"
       end
     end
+
+    it "validates the school urn" do
+      valid_form_data
+      fill_in "case_hub_migration_form[school_urn]", with: "23452"
+
+      click_on "Save and continue"
+
+      within "div.govuk-error-summary" do
+        expect(page).to have_text "Invalid school URN"
+      end
+    end
   end
 
   context "with valid data" do
@@ -58,6 +69,23 @@ RSpec.feature "Case summary" do
 
       within "#fullName" do
         expect(page).to have_text "new_first_name last_name"
+      end
+    end
+
+    context "when no identification number provided" do
+      it "doesnt show case type" do
+        complete_valid_form
+        expect(find("dd.case-type")).to have_text ""
+      end
+    end
+
+    context "when south west identification number provided" do
+      it "doesnt show case type" do
+        valid_form_data
+        fill_in "case_hub_migration_form[hub_case_ref]", with: "CE-11111"
+        click_on "Save and continue"
+
+        expect(find("dd.case-type")).to have_text "South west hub case"
       end
     end
 

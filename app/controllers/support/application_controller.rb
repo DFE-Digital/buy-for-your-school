@@ -25,5 +25,9 @@ module Support
         data: data,
       ).call
     end
+
+    def support?
+      true
+    end
   end
 end

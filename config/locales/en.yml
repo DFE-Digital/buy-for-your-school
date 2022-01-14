@@ -56,6 +56,9 @@ en:
     specification_template_invalid:
       page_title: An unexpected error occurred
       page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
+    missing_role:
+      page_title: Missing user role
+      page_body: You do not have the required role to access this page.
     sign_in:
       unexpected_failure:
         page_title: An unexpected error occurred
@@ -257,6 +260,34 @@ en:
       read_procs_link: read buying procedures and procurement law for schools
       read_guides_link: read guides about goods and services
     back_button: Back to your dashboard
+
+  # /admin
+  admin:
+    header: User activity data
+    body:
+      no_of_users: Total number of users
+      no_of_specs: Total number of specifications
+      last_registration_date: Last user registration date
+    download: Download (.csv)
+
+  #
+  # FaF -----------------------------------------------------------------
+  #
+
+  # /request-help-and-support-with-your-procurement
+  faf:
+    start_page:
+      header: Request help and support with your procurement
+      overview_purpose: You can use this service if you are procuring for schools in England -- either local authority maintained schools, federations or academies in a single or multi-academy trust.
+      you_can_ask_for: You can ask for
+      overview_category_list:
+        - advice and guidance on using frameworks
+        - help with choosing a framework
+        - help with using this service
+        - general advice and guidance about your procurement
+      overview_response: The Get help buying for schools team will respond to you within 2 working days.
+      subheading: Before you start
+      you_can: You can
 
   #
   # Supported ------------------------------------------------------------------
@@ -524,6 +555,26 @@ en:
     case_documents:
       show:
         header: Your specification
+
+    emails:
+      header_link: Notifications
+      index:
+        header: Notifications
+        table:
+          sent_at: Sent at
+          subject: Subject
+          case: Case
+          sender: Sender
+      tabs:
+        new_emails: New Emails
+        my_case_emails: My Case Emails
+      show:
+        header: View Email
+        subject: Subject
+        sender: Sender
+        recipients: Recipients
+        sent_at: Sent at
+        attachments: Attachments
 
     interaction:
       header:

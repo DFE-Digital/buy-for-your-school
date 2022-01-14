@@ -7,5 +7,8 @@ module Support
   #
   class Agent < ApplicationRecord
     has_many :cases, class_name: "Support::Case"
+
+    # agents that are not internal team members (genuine caseworkers)
+    scope :caseworkers, -> { where(internal: false) }
   end
 end

@@ -28,6 +28,7 @@ module Support
 
     rule(:school_urn) do
       key(:school_urn).failure(:missing) if value.blank?
+      key(:school_urn).failure(:invalid) if invalid_school_urn?(value)
     end
 
     rule(:first_name) do
@@ -41,6 +42,14 @@ module Support
     # TODO: add email validation format
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
+    end
+
+  private
+
+    def invalid_school_urn?(value)
+      return true if value.blank?
+
+      Support::Organisation.find_by(urn: value).nil?
     end
   end
 end

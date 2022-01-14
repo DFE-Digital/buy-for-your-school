@@ -1,0 +1,39 @@
+<h1 class="govuk-heading-l">
+  <%= I18n.t("support.emails.show.header") %>
+</h1>
+
+<div class="email-preview govuk-body">
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row email-sent-by">
+      <dt class="govuk-summary-list__key"><%= I18n.t("support.emails.show.sender") %></dt>
+      <dd class="govuk-summary-list__value">
+        <%= @email.sent_by_name %> &lt;<%= @email.sent_by_email %>&gt;
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row email-recipients">
+      <dt class="govuk-summary-list__key"><%= I18n.t("support.emails.show.recipients") %></dt>
+      <dd class="govuk-summary-list__value">
+        <% Array(@email.recipients).map do |recipient| %>
+          <%= recipient["name"] %> &lt;<%= recipient["address"]%>&gt;
+        <% end.join("br />").html_safe %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row email-sent-at">
+      <dt class="govuk-summary-list__key"><%= I18n.t("support.emails.show.sent_at") %></dt>
+      <dd class="govuk-summary-list__value"><%= time_ago_in_words @email.sent_at %> ago (<%= @email.sent_at_formatted %>)</dd>
+    </div>
+
+    <div class="govuk-summary-list__row email-subject">
+      <dt class="govuk-summary-list__key"><%= I18n.t("support.emails.show.subject") %></dt>
+      <dd class="govuk-summary-list__value"><%= @email.subject %></dd>
+    </div>
+
+    <%= render "attachments", email: @email %>
+  </dl>
+
+  <div class="email-preview-body">
+    <%= @email.body_with_inline_attachments(self).html_safe %>
+  </div>
+</div>

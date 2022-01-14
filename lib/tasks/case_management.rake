@@ -31,4 +31,10 @@ namespace :case_management do
       c.save!
     end
   end
+
+  desc "Populate shared inbox emails"
+  task seed_shared_inbox_emails: :environment do
+    Support::IncomingEmails::SharedMailbox.synchronize(folder: :inbox)
+    Support::IncomingEmails::SharedMailbox.synchronize(folder: :sent_items)
+  end
 end
