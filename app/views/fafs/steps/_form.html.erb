@@ -1,0 +1,9 @@
+<%= form_with model: @faf_form, scope: :faf_form, url: path, method: verb  do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :step, value: @faf_form.step %>
+  <%= render "fafs/steps/step_#{@faf_form.step}", form: form %>
+
+  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+<% end %>
+

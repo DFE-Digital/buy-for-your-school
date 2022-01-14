@@ -7,11 +7,14 @@ en:
       message_body: "" # Omitted
       category_id: The type of procurement
       school_urn: "" # Omitted
+      dsi: "dsi" # Omitted
 
     errors:
       rules:
+        dsi:
+          missing: Select whether you want to use a DfE Sign-in account
         phone_number:
-          missing: is missing
+          missing: iss missing
           # format?: must start with a zero and only contain digits
           format?: must have a minimum of 10 numbers and no spaces, starting with a zero
           # min_size?: "must have at least %{num} digits"

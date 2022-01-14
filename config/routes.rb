@@ -56,9 +56,7 @@ Rails.application.routes.draw do
   #
   # FaF ------------------------------------------------------------------
   #
-  resource :faf, only: %i[new create], path: "procurement-support", controller: :faf do
-    get :dsi_or_search, on: :collection, path: "dsi-or-search"
-  end
+  resources :fafs, except: %i[delete], path: "procurement-support"
 
   #
   # Supported ------------------------------------------------------------------
