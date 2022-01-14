@@ -1,19 +1,17 @@
 module Support
   class Cases::ProcurementDetailsController < Cases::ApplicationController
-    # TODO: is it wiser to have a single action set multiple instance variables?
-    before_action :set_back_url, :set_required_agreement_types, :set_stages,
-                  :set_framework_names, :set_routes_to_market, :set_reasons_for_route_to_market
+    before_action :set_back_url, :set_enums, :set_framework_names
 
     include Concerns::HasDateParams
 
     def edit
-      @case_procurement_details_form = CaseProcurementDetailsForm.new(**current_case.procurement.attributes.symbolize_keys)
+      @case_procurement_details_form = CaseProcurementDetailsForm.new(**current_case.procurement.to_h)
     end
 
     def update
       @case_procurement_details_form = CaseProcurementDetailsForm.from_validation(validation)
       if validation.success?
-        current_case.procurement.update!(@case_procurement_details_form.as_json.except("messages"))
+        current_case.procurement.update!(@case_procurement_details_form.to_h)
 
         redirect_to @back_url, notice: I18n.t("support.procurement_details.flash.updated")
       else
@@ -23,24 +21,21 @@ module Support
 
   private
 
-    def set_required_agreement_types
-      @required_agreement_types = Support::Procurement.required_agreement_types.keys
-    end
-
-    def set_stages
-      @stages = Support::Procurement.stages.keys
+    # Exposes instance variables of selected `Procurement` enums
+    #
+    # for example:
+    #   @required_agreement_type # => %w[one_off ongoing]
+    def set_enums
+      %w[required_agreement_types
+         stages
+         route_to_markets
+         reason_for_route_to_markets].each do |enum|
+        instance_variable_set("@#{enum}", Support::Procurement.send(enum).keys)
+      end
     end
 
     def set_framework_names
       @framework_names = [[I18n.t("support.procurement_details.edit.framework_name.select"), nil]]
-    end
-
-    def set_routes_to_market
-      @routes_to_market = Support::Procurement.route_to_markets.keys
-    end
-
-    def set_reasons_for_route_to_market
-      @reasons_for_route_to_market = Support::Procurement.reason_for_route_to_markets.keys
     end
 
     def set_back_url
@@ -53,8 +48,8 @@ module Support
 
     def case_procurement_details_form_params
       form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :framework_name, :stage)
-      form_params[:started_at] = date_param(:case_procurement_details_form, :started_at).to_s
-      form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at).to_s
+      form_params[:started_at] = date_param(:case_procurement_details_form, :started_at)
+      form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at)
       form_params
     end
   end

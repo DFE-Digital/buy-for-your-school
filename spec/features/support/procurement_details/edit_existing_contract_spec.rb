@@ -44,12 +44,6 @@ RSpec.feature "Editing existing contract details in procurement tab section" do
     end
   end
 
-  context "when changing values on an existing contract" do
-    xit "fields should be formatted" do
-      # Spend should be displayed as a decimal to two places in the input
-    end
-  end
-
   context "when removing values from an existing contract" do
     let(:existing_contract) { create(:support_existing_contract, :populated) }
 
@@ -81,6 +75,32 @@ RSpec.feature "Editing existing contract details in procurement tab section" do
         expect(details[1]).to have_text "-"
         expect(details[2]).to have_text "-"
         expect(details[3]).to have_text "-"
+      end
+    end
+  end
+
+  context "when dates fail validation due to non-existent dates" do
+    let(:existing_contract) { create(:support_existing_contract) }
+
+    before do
+      find("#pd-existing-contract a").click
+      # input end date
+      fill_in "case_contracts_form[ended_at(3i)]", with: "31"
+      fill_in "case_contracts_form[ended_at(2i)]", with: "2"
+      fill_in "case_contracts_form[ended_at(1i)]", with: "2020"
+      click_continue
+    end
+
+    it "shows error message above the field" do
+      within(all("fieldset.govuk-fieldset")[0]) do
+        expect(find("span#case-contracts-form-ended-at-error")).to have_text "End date of the contract is invalid"
+      end
+    end
+
+    it "shows error message in error summary" do
+      within("div.govuk-error-summary") do
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(find("div.govuk-error-summary__body")).to have_link "End date of the contract is invalid", href: "#case-contracts-form-ended-at-field-error"
       end
     end
   end

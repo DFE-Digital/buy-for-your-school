@@ -8,12 +8,24 @@ module Support
       optional(:reason_for_route_to_market).value(:symbol)
       optional(:framework_name).value(:string)
       optional(:stage).value(:symbol)
-      optional(:started_at).maybe(:date)
-      optional(:ended_at).maybe(:date)
+      optional(:started_at).value(:hash)
+      optional(:ended_at).value(:hash)
+    end
+
+    rule :started_at do
+      # optional
+      key.failure(:invalid) unless value.values.all?(&:blank?) || hash_to_date.call(value)
+    end
+
+    rule :ended_at do
+      # optional
+      key.failure(:invalid) unless value.values.all?(&:blank?) || hash_to_date.call(value)
     end
 
     rule(:started_at, :ended_at) do
-      key.failure(:before_end_date) if values[:started_at].present? && values[:ended_at].present? && values[:started_at] > values[:ended_at]
+      started_at_date = hash_to_date.call(values[:started_at])
+      ended_at_date = hash_to_date.call(values[:ended_at])
+      key.failure(:before_end_date) if started_at_date.present? && ended_at_date.present? && started_at_date > ended_at_date
     end
   end
 end

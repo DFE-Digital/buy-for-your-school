@@ -6,18 +6,13 @@ module Support
     module HasDateParams
       extend ActiveSupport::Concern
 
-      include DateHelper
-
-      # @see DateHelper
-      #
       # @param form_param [Symbol]
       # @param date_field [Symbol]
       #
-      # @return [Date]
+      # @return [Hash]
       def date_param(form_param, date_field)
         date = params.require(form_param).permit(date_field)
-        date_hash = { day: date["#{date_field}(3i)"], month: date["#{date_field}(2i)"], year: date["#{date_field}(1i)"] }
-        format_date(date_hash)
+        { day: date["#{date_field}(3i)"], month: date["#{date_field}(2i)"], year: date["#{date_field}(1i)"] }
       end
     end
   end
