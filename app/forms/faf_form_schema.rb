@@ -9,10 +9,10 @@ class FafFormSchema < Dry::Validation::Contract
   config.messages.load_paths << Rails.root.join("config/locales/validation/en.yml")
 
   params do
-    required(:dsi).value(:bool)  # step 1
+    optional(:dsi).value(:bool)
   end
 
   rule(:dsi) do
-    key(:dsi).failure(:missing) if [true, false].exclude?(value)
+    key.failure(:missing) unless key?
   end
 end

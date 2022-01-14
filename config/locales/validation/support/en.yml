@@ -60,13 +60,13 @@ en:
           invalid: Invalid school URN
 
         first_name:
-          missing: iss missing
+          missing: is missing
 
         last_name:
-          missing: iss missing
+          missing: is missing
 
         email:
-          missing: iss missing
+          missing: is missing
 
         phone_number:
           # format?: must start with a zero and only contain digits

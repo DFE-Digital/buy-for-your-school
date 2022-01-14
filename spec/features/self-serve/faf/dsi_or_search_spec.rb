@@ -9,6 +9,7 @@ RSpec.feature "Faf - dsi or search" do
     end
 
     it "errors if no selection is given" do
+      click_continue
       expect(find(".govuk-error-summary__body")).to have_text "Select whether you want to use a DfE Sign-in account"
     end
   end
@@ -16,7 +17,7 @@ RSpec.feature "Faf - dsi or search" do
   context "when the user is signed in" do
     before do
       user_is_signed_in
-      visit "/procurement-support/dsi-or-search"
+      visit "/procurement-support/new"
     end
 
     it "loads the page" do
@@ -24,6 +25,7 @@ RSpec.feature "Faf - dsi or search" do
     end
 
     it "errors if no selection is given" do
+      click_continue
       expect(find(".govuk-error-summary__body")).to have_text "Select whether you want to use a DfE Sign-in account"
     end
   end
