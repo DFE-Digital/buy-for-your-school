@@ -3,10 +3,6 @@
 # @author Peter Hamilton
 #
 class SupportForm < Form
-  # @!attribute [r] step
-  # @return [Integer] internal counter defaults to 1, coerces strings
-  option :step, Types::Params::Integer, default: proc { 1 }
-
   # @!attribute [r] phone_number
   # @see SupportRequest SupportRequest attributes
   # @return [String]
@@ -27,20 +23,6 @@ class SupportForm < Form
   # @see SupportRequest SupportRequest attributes
   # @return [String]
   option :message_body, optional: true # 5 (last)
-
-  # Proceed or skip to next questions
-  #
-  # @param num [Integer] number of steps to advance
-  #
-  # @return [Integer] next step position
-  def advance!(num = 1)
-    @step += num
-  end
-
-  # @return [Integer] previous step position
-  def back
-    @step - 1
-  end
 
   # @see SupportRequestsController#create
   #
@@ -64,12 +46,5 @@ class SupportForm < Form
   # @return [nil]
   def forget_journey!
     instance_variable_set :@journey_id, nil
-  end
-
-  # @see SupportRequestsController#update
-  #
-  # @return [Hash] form parms as support request attributes
-  def to_h
-    self.class.dry_initializer.attributes(self).except(:step, :messages)
   end
 end
