@@ -1,6 +1,5 @@
 module Support
   class CaseContractsFormSchema < Schema
-
     config.messages.top_namespace = :case_contracts_form
 
     params do
@@ -12,11 +11,13 @@ module Support
     end
 
     rule :started_at do
-      key.failure("is invalid") unless hash_to_date.call(value)
+      # optional, only applicable to new contracts
+      key.failure("is invalid") unless value.values.all?(&:blank?) || hash_to_date.call(value)
     end
 
     rule :ended_at do
-      key.failure("is invalid") unless hash_to_date.call(value)
+      # optional, only applicable to existing contracts
+      key.failure("is invalid") unless value.values.all?(&:blank?) || hash_to_date.call(value)
     end
   end
 end
