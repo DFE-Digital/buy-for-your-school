@@ -3,6 +3,4 @@
 
   <%= form.hidden_field :step, value: @faf_form.step %>
   <%= render "fafs/steps/step_#{@faf_form.step}", form: form %>
-
-  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
