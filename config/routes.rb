@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   #
   # FaF ------------------------------------------------------------------
   #
-  resources :faf, only: %i[new], path: "procurement-support"
+  resources :fafs, except: %i[delete], path: "procurement-support"
 
   #
   # Supported ------------------------------------------------------------------

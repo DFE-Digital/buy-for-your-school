@@ -1,7 +1,7 @@
-RSpec.feature "Faf start page" do
+RSpec.feature "Faf - start page" do
   context "when the user is not signed in" do
     before do
-      visit "/procurement-support/new"
+      visit "/procurement-support"
     end
 
     it "loads the page" do
@@ -12,7 +12,7 @@ RSpec.feature "Faf start page" do
   context "when the user is signed in" do
     before do
       user_is_signed_in
-      visit "/procurement-support/new"
+      visit "/procurement-support"
     end
 
     it "loads the page" do
