@@ -54,7 +54,7 @@ RSpec.feature "Custom question validation" do
         fill_in "answer[response]", with: "123"
         click_continue
 
-        expect(find("span.govuk-error-message")).to have_text "too few/many"
+        expect(find(".govuk-error-message")).to have_text "too few/many"
       end
     end
   end
@@ -88,7 +88,7 @@ RSpec.feature "Custom question validation" do
         fill_in "answer[response]", with: "2001"
         click_continue
 
-        expect(find("span.govuk-error-message")).to have_text "too cheap/expensive"
+        expect(find(".govuk-error-message")).to have_text "too cheap/expensive"
       end
     end
   end
@@ -127,7 +127,7 @@ RSpec.feature "Custom question validation" do
         fill_in "answer[response(1i)]", with: "3001"
         click_continue
 
-        expect(find("span.govuk-error-message")).to have_text "too young/old"
+        expect(find(".govuk-error-message")).to have_text "too young/old"
       end
     end
   end
