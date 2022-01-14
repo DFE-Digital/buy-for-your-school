@@ -16,10 +16,10 @@ module Support
     option :framework_name, default: proc { nil }
     # @!attribute [r] started_at
     #   @return [Date, nil]
-    option :started_at, Types::CustomDate, optional: true
+    option :started_at, Types::DateField, optional: true
     # @!attribute [r] ended_at
     #   @return [Date, nil]
-    option :ended_at, Types::CustomDate, optional: true
+    option :ended_at, Types::DateField, optional: true
     # @!attribute [r] stage
     #   @return [Symbol, nil]
     option :stage, optional: true

@@ -87,6 +87,9 @@ en:
       rules:
         started_at:
           before_end_date: must come before the end date
+          invalid: is invalid
+        ended_at:
+          invalid: is invalid
 
   case_contracts_form:
     rules:
@@ -97,3 +100,6 @@ en:
       rules:
         started_at:
           before_end_date: must come before the end date
+          invalid: is invalid
+        ended_at:
+          invalid: is invalid
