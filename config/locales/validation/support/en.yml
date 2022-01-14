@@ -70,14 +70,13 @@ en:
           missing: is missing
 
         phone_number:
-          # format?: must start with a zero and only contain digits
-          format?: must have a minimum of 10 numbers and no spaces, starting with a zero
-          # min_size?: "must have at least %{num} digits"
-          max_size?: "can not have more than %{num} digits"
+          # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
+          format?: must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
+          # value in schema set to 13 as includes the + in +44
+          max_size?: "can not have more than 12 digits"
 
         estimated_procurement_completion_date:
           format?: must follow the format of DD/MM/YYYY
-
 
   case_procurement_details_form:
     rules:
