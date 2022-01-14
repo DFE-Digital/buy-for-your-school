@@ -93,7 +93,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
 
     it "shows error message above the field" do
       within(all("fieldset.govuk-fieldset")[0]) do
-        expect(find("span#case-contracts-form-started-at-error")).to have_text "Start date of the contract is invalid"
+        expect(find("p#case-contracts-form-started-at-error")).to have_text "Start date of the contract is invalid"
       end
     end
 

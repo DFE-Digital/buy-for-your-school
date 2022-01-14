@@ -134,7 +134,7 @@ RSpec.feature "Edit case procurement details" do
 
     it "shows error message above the field" do
       within(all("fieldset.govuk-fieldset")[3]) do
-        expect(find("span#case-procurement-details-form-started-at-error")).to have_text "Start date of the procurement must come before the end date"
+        expect(find("p#case-procurement-details-form-started-at-error")).to have_text "Start date of the procurement must come before the end date"
       end
     end
 
@@ -161,11 +161,11 @@ RSpec.feature "Edit case procurement details" do
 
     it "shows error message above the field" do
       within(all("fieldset.govuk-fieldset")[3]) do
-        expect(find("span#case-procurement-details-form-started-at-error")).to have_text "Start date of the procurement is invalid"
+        expect(find("p#case-procurement-details-form-started-at-error")).to have_text "Start date of the procurement is invalid"
       end
 
       within(all("fieldset.govuk-fieldset")[4]) do
-        expect(find("span#case-procurement-details-form-ended-at-error")).to have_text "End date of the procurement is invalid"
+        expect(find("p#case-procurement-details-form-ended-at-error")).to have_text "End date of the procurement is invalid"
       end
     end
 
