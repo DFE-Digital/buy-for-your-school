@@ -12,12 +12,12 @@ module Support
 
     rule :started_at do
       # optional, only applicable to new contracts
-      key.failure("is invalid") unless value.values.all?(&:blank?) || hash_to_date.call(value)
+      key.failure(:invalid) unless value.values.all?(&:blank?) || hash_to_date.call(value)
     end
 
     rule :ended_at do
       # optional, only applicable to existing contracts
-      key.failure("is invalid") unless value.values.all?(&:blank?) || hash_to_date.call(value)
+      key.failure(:invalid) unless value.values.all?(&:blank?) || hash_to_date.call(value)
     end
   end
 end
