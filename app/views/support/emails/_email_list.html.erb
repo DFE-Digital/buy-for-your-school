@@ -15,7 +15,7 @@
     <% end %>
 
     <% emails.each do |email| %>
-      <tr class="govuk-table__row email-row <%= email.is_read ? "read" : "unread" %>">
+      <tr class="govuk-table__row email-row">
         <td class="govuk-table__cell email-sent-by">
           <span title="<%= email.sent_by_email %>">
             <%= email.sent_by_name %>
