@@ -36,6 +36,27 @@ describe MicrosoftGraph::ClientSession do
         )
       end
     end
+
+    context "when the response is paginated" do
+      let(:api_response) { '{"value":[{"displayName":"testResponse1"}],"@odata.nextLink":"https://api.endpoint.com?page=2"}' }
+      let(:page_2_response) { '{"value":[{"displayName":"testResponse2"}],"@odata.nextLink":"https://api.endpoint.com?page=3"}' }
+      let(:page_3_response) { '{"value":[{"displayName":"testResponse3"}]}' }
+
+      before do
+        stub_request(:get, "https://api.endpoint.com?page=2").to_return(body: page_2_response, status: 200)
+        stub_request(:get, "https://api.endpoint.com?page=3").to_return(body: page_3_response, status: 200)
+      end
+
+      it "calls each page and returns the combined results" do
+        response = client_session.graph_api_get("test/endpoint")
+
+        expect(response["value"]).to match_array([
+          { "displayName" => "testResponse1" },
+          { "displayName" => "testResponse2" },
+          { "displayName" => "testResponse3" },
+        ])
+      end
+    end
   end
 
   describe "#graph_api_post" do

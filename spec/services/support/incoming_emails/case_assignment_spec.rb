@@ -45,7 +45,7 @@ describe Support::IncomingEmails::CaseAssignment do
     subject(:case_reference) { described_class.new(email: email).case_reference_from_body }
 
     context "when email body has the 6 digit case reference in it" do
-      let(:email) { double(body: "Hello X,\n\nPlease read the following...\n\nCase reference 098765\n\nKind Regards\nJuly Bloggs") }
+      let(:email) { double(body: "Hello X,\n\nPlease read the following...\n\nYour reference number is: 098765\. Please quote this number when you speak to our team.\n\nKind Regards\nJuly Bloggs") }
 
       it "returns the case reference" do
         expect(case_reference).to eq("098765")

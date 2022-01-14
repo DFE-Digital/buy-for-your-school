@@ -24,7 +24,7 @@ module Support
       end
 
       def case_reference_from_body
-        email.body.match(/Case reference ([0-9]{6,6})/).to_a.last
+        email.body.match(/Your reference number is: ([0-9]{6,6})\. Please quote this number/).to_a.last
       end
 
       def case_reference_from_conversation
