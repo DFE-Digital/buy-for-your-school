@@ -14,7 +14,7 @@ class SupportFormSchema < BaseSchema
     optional(:message_body).value(:string)  # step 5
   end
 
-  rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+  rule(:phone_number).validate(max_size?: 13, format?: /^$|^(0|\+?44)[12378]\d{8,9}$/)
 
   rule(:school_urn) do
     key(:school_urn).failure(:missing) if key? && value.blank?
