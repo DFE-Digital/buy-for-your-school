@@ -5,13 +5,7 @@
 #
 # @author Peter Hamilton
 #
-class SupportFormSchema < Dry::Validation::Contract
-  import_predicates_as_macros
-
-  config.messages.backend = :i18n
-  config.messages.top_namespace = :forms
-  config.messages.load_paths << Rails.root.join("config/locales/validation/en.yml")
-
+class SupportFormSchema < Schema
   params do
     optional(:phone_number).value(:string)  # step 1
     optional(:school_urn).value(:string)    # step 2

@@ -3,14 +3,14 @@ module Support
     before_action :set_document
 
     SUPPORTED_TYPES = [
-      "Support::EmailAttachment"
+      "Support::EmailAttachment",
     ].freeze
 
     def show
-      send_data @document.file.download, type: @document.file_type, disposition: 'inline', filename: @document.file_name
+      send_data @document.file.download, type: @document.file_type, disposition: "inline", filename: @document.file_name
     end
 
-    private
+  private
 
     def set_document
       requested_file_type = params[:type]

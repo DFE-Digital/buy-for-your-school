@@ -8,7 +8,7 @@ RSpec.feature "Skippable steps" do
   context "when the question is skippable" do
     it "permits an answer to be omitted" do
       click_continue
-      expect(find("span.govuk-error-message")).to have_content "Please complete this field to continue."
+      expect(find(".govuk-error-message")).to have_content "Please complete this field to continue."
 
       check "Lunch"
       check "Dinner"
