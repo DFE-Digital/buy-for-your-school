@@ -19,6 +19,7 @@ RSpec/AnyInstance:
     - 'spec/requests/self-serve/api/contentful/pages_controller_spec.rb'
     - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
     - 'spec/services/support/incoming_emails/case_assignment_spec.rb'
+    - 'spec/services/support/incoming_emails/email_attachments_spec.rb'
 
 # Offense count: 19
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.

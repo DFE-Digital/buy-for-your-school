@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in

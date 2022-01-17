@@ -3,7 +3,6 @@
 module Support
   module IncomingEmails
     class EmailAttachments
-
       def self.download(email:, graph_client: MicrosoftGraph.client)
         email_attachments = EmailAttachments.new(graph_client: graph_client, email: email)
         email_attachments.for_message.each do |attachment|

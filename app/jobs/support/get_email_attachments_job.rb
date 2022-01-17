@@ -9,7 +9,7 @@ module Support
       IncomingEmails::EmailAttachments.download(email: get_email(email_id))
     end
 
-    private
+  private
 
     def get_email(email_id)
       Support::Email.find(email_id)
