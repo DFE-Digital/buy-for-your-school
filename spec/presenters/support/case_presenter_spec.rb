@@ -3,10 +3,12 @@ RSpec.describe Support::CasePresenter do
 
   let(:agent) { create(:support_agent) }
   let(:organisation) { create(:support_organisation, urn: "000000", name: "Example Org") }
+  let(:procurement) { create(:support_procurement) }
   let(:support_case) do
     create(:support_case,
            agent: agent,
            organisation: organisation,
+           procurement: procurement,
            created_at: Time.zone.local(2021, 1, 30, 12, 0, 0))
   end
 
@@ -81,6 +83,24 @@ RSpec.describe Support::CasePresenter do
     describe "#org_urn" do
       it "returns org urn" do
         expect(presenter.org_urn).to eq "n/a"
+      end
+    end
+  end
+
+  describe "#procurement" do
+    context "when present" do
+      it "is decorated" do
+        expect(presenter.procurement).to be_a Support::ProcurementPresenter
+      end
+    end
+
+    context "when nil" do
+      before do
+        Support::Procurement.destroy(procurement.id)
+      end
+
+      it "is nil" do
+        expect(presenter.reload.procurement).to be_nil
       end
     end
   end

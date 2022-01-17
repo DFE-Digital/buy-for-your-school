@@ -326,6 +326,7 @@ en:
         school_detail: School details
         case_detail: Case details
         case_history: Case history
+        procurement_detail: Procurement details
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -364,6 +365,26 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
+        procurement_details:
+          change: change
+          required_agreement_type: Required agreement type
+          route_to_market: Route to market
+          reason_for_route_to_market: Reason for route to market
+          framework_name: Framework name
+          procurement_start_date: Procurement start date
+          procurement_end_date: Procurement end date
+          procurement_stage: Procurement stage
+          end_date: End date
+          contract_duration: Contract duration
+          contract_spend: Contract spend
+          supplier: Supplier
+          start_date: Start date
+          savings_status: Status
+          savings_estimate_method: Estimate method used
+          savings_actual_method: Actual method used
+          savings_estimate: Estimate
+          savings_actual: Actual
+
         additional_data:
           support_request:
             email: Email address
@@ -388,6 +409,66 @@ en:
         submit: Save and continue
       flash:
         updated: Successfully changed case category
+
+    case_contract:
+      existing:
+        edit:
+          header: Update existing contract details
+          spend:
+            header: Existing contract spend
+          ended_at:
+            header: End date of existing contract
+          duration:
+            header: Duration of existing contract in months
+          supplier:
+            header: Existing contract supplier
+          submit: Continue
+      new:
+        edit:
+          header: Update new contract details
+          spend:
+            header: New contract spend
+          started_at:
+            header: Start date of new contract
+          duration:
+            header: Duration of new contract in months
+          supplier:
+            header: New contract supplier
+          submit: Continue
+      flash:
+        updated: Successfully changed case contracts
+    case_savings:
+      show:
+        header: Savings details
+        link: change
+      edit:
+        header: Update savings details
+        submit: Continue
+        savings_status:
+          header: Saving status
+          states:
+            realised: Realised
+            potential: Potential
+            unrealised: Not realised
+        savings_estimate_method:
+          header: Saving estimate method used
+          states:
+            previous_minus_cheapest: "[Previous spend] - [Cheapest quote]"
+            rrp_minus_cheapest: "[RRP] - [Cheapest quote]"
+            previous_minus_estimated: "[Previous spend] - [Estimated Contract Value]"
+            rrp_minus_estimated: "[RRP] - [Estimated Contract Value]"
+        savings_actual_method:
+          header: Saving actual method used
+          states:
+            previous_minus_award: "[Previous spend] - [Award Price]"
+            alternative_minus_award: "[Alternative received price] - [Award Price]"
+            rrp_minus_award: "[RRP] - [Award Price]"
+        savings_estimate:
+          header: Saving estimate
+        savings_actual:
+          header: Saving actual
+      flash:
+        updated: Successfully changed case savings
 
     case_hub_migration:
       header: Hub migration case information
@@ -533,3 +614,46 @@ en:
       message:
         created_flash: "%{type} added to case"
       link_to_email_preview: Open email preview in new tab
+
+    procurement_details:
+      edit:
+        header: Update procurement details
+        submit: Continue
+        required_agreement_type:
+          header: Required agreement type
+        route_to_market:
+          header: Route to market
+        reason_for_route_to_market:
+          header: Reason for route to market
+        framework_name:
+          header: Framework name
+          select: -- Select framework --
+        started_at:
+          header: Start date of the procurement
+        ended_at:
+          header: End date of the procurement
+        stage:
+          header: Procurement stage
+          select: -- Select stage --
+      flash:
+        updated: Successfully changed procurement details
+      stages:
+        need: Need
+        market_analysis: Market Analysis
+        sourcing_options: Sourcing Options
+        go_to_market: Go to Market
+        evaluation: Evaluation
+        contract_award: Contract Award
+        handover: Handover
+      required_agreement_types:
+        one_off: One-off
+        ongoing: Ongoing
+      routes_to_market:
+        dfe_approved: DfE Approved Deal / Framework
+        bespoke: Bespoke Procurement
+        direct_award: Direct Award
+      reasons_for_route_to_market:
+        school_pref: School Preference
+        dfe_deal: DfE Deal / Framework Selected
+        no_dfe_deal: No DfE Deal / Framework Available
+        better_than_dfe: Better Spec / Terms than DfE Deal

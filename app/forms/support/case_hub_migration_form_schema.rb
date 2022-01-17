@@ -2,12 +2,8 @@ module Support
   #
   # Validate "create a new case" form details for a Hub migration case
   #
-  class CaseHubMigrationFormSchema < Dry::Validation::Contract
-    import_predicates_as_macros
-
-    config.messages.backend = :i18n
+  class CaseHubMigrationFormSchema < Schema
     config.messages.top_namespace = :case_migration_form
-    config.messages.load_paths << Rails.root.join("config/locales/validation/support/en.yml")
 
     params do
       required(:school_urn).value(:string)

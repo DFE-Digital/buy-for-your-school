@@ -22,6 +22,16 @@ namespace :case_management do
     # Support::SeedSchools.new(data: "spec/fixtures/gias/example_schools_data.csv").call
   end
 
+  desc "Backfill case procurement details"
+  task backfill_procurement_details: :environment do
+    Support::Case.where(procurement: nil).each do |c|
+      c.procurement = Support::Procurement.create!
+      c.new_contract = Support::NewContract.create!
+      c.existing_contract = Support::ExistingContract.create!
+      c.save!
+    end
+  end
+
   desc "Populate shared inbox emails"
   task seed_shared_inbox_emails: :environment do
     Support::IncomingEmails::SharedMailbox.synchronize(folder: :inbox)
