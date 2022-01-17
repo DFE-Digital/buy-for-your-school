@@ -1,0 +1,58 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.procurement_details.edit.header") %></h1>
+
+<%= form_with model: @case_procurement_details_form, scope: :case_procurement_details_form, url: support_case_procurement_details_path(@current_case), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_radio_buttons_fieldset :required_agreement_type, legend: { text: I18n.t("support.procurement_details.edit.required_agreement_type.header") } do %>
+
+    <div class="govuk-radios">
+      <% @required_agreement_types.each do |type| %>
+        <%= form.govuk_radio_button :required_agreement_type, type, label: { text: I18n.t("support.procurement_details.required_agreement_types.#{type}") } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.govuk_radio_buttons_fieldset :route_to_market, legend: { text: I18n.t("support.procurement_details.edit.route_to_market.header") } do %>
+    <div class="govuk-radios">
+      <% @route_to_markets.each do |route| %>
+        <%= form.govuk_radio_button :route_to_market, route, label: { text: I18n.t("support.procurement_details.routes_to_market.#{route}") } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.govuk_radio_buttons_fieldset :reason_for_route_to_market, legend: { text: I18n.t("support.procurement_details.edit.reason_for_route_to_market.header") } do %>
+    <div class="govuk-radios">
+      <% @reason_for_route_to_markets.each do |reason| %>
+        <%= form.govuk_radio_button :reason_for_route_to_market, reason, label: { text: I18n.t("support.procurement_details.reasons_for_route_to_market.#{reason}") } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.govuk_select :framework_name,
+    options_for_select(@framework_names, form.object.framework_name),
+    disabled: true,
+    label: { text: I18n.t("support.procurement_details.edit.framework_name.header"), size: "m" } %>
+
+  <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.procurement_details.edit.started_at.header") } %>
+
+  <%= form.govuk_date_field :ended_at, legend: { text: I18n.t("support.procurement_details.edit.ended_at.header") } %>
+
+  <%= form.govuk_radio_buttons_fieldset :stage, legend: { text: I18n.t("support.procurement_details.edit.stage.header") } do %>
+    <div class="govuk-radios">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+          <% @stages.first(4).each do |reason| %>
+            <%= form.govuk_radio_button :stage, reason, label: { text: I18n.t("support.procurement_details.stages.#{reason}") } %>
+          <% end %>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <% @stages.last(3).each do |reason| %>
+            <%= form.govuk_radio_button :stage, reason, label: { text: I18n.t("support.procurement_details.stages.#{reason}") } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= form.submit I18n.t("support.procurement_details.edit.submit"), class: "govuk-button", role: "button" %>
+<% end %>
