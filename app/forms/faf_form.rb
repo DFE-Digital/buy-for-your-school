@@ -16,4 +16,8 @@ class FafForm < Form
   def has_journey?
     journey_id.present? && journey_id != "none"
   end
+
+  def to_h
+    super.except(:dsi)
+  end
 end

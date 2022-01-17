@@ -1,8 +1,11 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :set_back_url, :support_request, only: %i[show edit update]
+  before_action :set_back_url
+  before_action :support_request, only: %i[show edit update]
 
-  def index; end
+  def index; 
+    @source = request.referer
+  end
 
   def show; end
 
@@ -14,8 +17,8 @@ class FafsController < ApplicationController
     @faf_form = form
 
     if validation.success? && validation.to_h[:message_body]
-      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
-      redirect_to support_request_path(support_request)
+      support_request = SupportRequest.create!(user_id: current_user.id, **form.to_h)
+      redirect_to faf_path(support_request)
 
     elsif validation.success?
 
