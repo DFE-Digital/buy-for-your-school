@@ -5,13 +5,7 @@
 #
 # @author Peter Hamilton
 #
-class SupportFormSchema < Dry::Validation::Contract
-  import_predicates_as_macros
-
-  config.messages.backend = :i18n
-  config.messages.top_namespace = :forms
-  config.messages.load_paths << Rails.root.join("config/locales/validation/en.yml")
-
+class SupportFormSchema < Schema
   params do
     optional(:phone_number).value(:string)  # step 1
     optional(:school_urn).value(:string)    # step 2
@@ -20,7 +14,7 @@ class SupportFormSchema < Dry::Validation::Contract
     optional(:message_body).value(:string)  # step 5
   end
 
-  rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+  rule(:phone_number).validate(max_size?: 13, format?: /^$|^(0|\+?44)[12378]\d{8,9}$/)
 
   rule(:school_urn) do
     key(:school_urn).failure(:missing) if key? && value.blank?
