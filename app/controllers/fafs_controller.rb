@@ -1,5 +1,6 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :set_back_url, :support_request, only: %i[show edit update]
 
   def index; end
 
@@ -11,11 +12,41 @@ class FafsController < ApplicationController
 
   def create
     @faf_form = form
-    @faf_form.advance! if validation.success?
-    render :new
+
+    if validation.success? && validation.to_h[:message_body]
+      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
+      redirect_to support_request_path(support_request)
+
+    elsif validation.success?
+
+      if @faf_form.step == 2 && current_user.active_journeys.none?
+        @faf_form.advance!(2)
+
+      # journey (3) -> message (5)
+      elsif @faf_form.step == 3 && @faf_form.has_journey?
+        @faf_form.advance!(2)
+
+      else
+        @faf_form.advance!
+      end
+
+      render :new
+    else
+      render :new
+    end
   end
 
 private
+
+  # @return [UserPresenter] adds form view logic
+  def current_user
+    @current_user = UserPresenter.new(super)
+  end
+
+  # @return [SupportRequest] restricted to the current user
+  def support_request
+    @support_request = SupportRequestPresenter.new(SupportRequest.where(user_id: current_user.id, id: params[:id]).first)
+  end
 
   # @return [FafForm] form object populated with validation messages
   def form
@@ -23,11 +54,15 @@ private
   end
 
   def form_params
-    params.require(:faf_form).permit(:step, :dsi)
+    params.require(:faf_form).permit(:step, :dsi, :message_body)
   end
 
   # @return [FafFormSchema] validated form input
   def validation
     FafFormSchema.new.call(**form_params)
+  end
+
+  def set_back_url
+    @back_url = fafs_path
   end
 end

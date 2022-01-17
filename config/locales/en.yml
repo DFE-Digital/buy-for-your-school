@@ -290,8 +290,8 @@ en:
       you_can: You can
     user_query:
       caption: About your request
-      header: How can we help?
-      sub_caption: Briefly describe your problem in a few sentences.
+      label: How can we help?
+      hint: Briefly describe your problem in a few sentences.
 
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school you're requesting support for?

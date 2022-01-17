@@ -3,4 +3,12 @@
 
   <%= form.hidden_field :step, value: @faf_form.step %>
   <%= render "fafs/steps/step_#{@faf_form.step}", form: form %>
+
+  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
+
+<p class="govuk-body">
+  <% if @faf_form.step == 1 %>
+    <%= link_to I18n.t("faf.dsi_or_search.link.text"), I18n.t("faf.dsi_or_search.link.url"), class: "govuk-link" %>
+  <% end %>
+</p>
