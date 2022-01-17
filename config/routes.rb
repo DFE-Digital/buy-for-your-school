@@ -57,9 +57,6 @@ Rails.application.routes.draw do
   # FaF ------------------------------------------------------------------
   #
   resources :fafs, except: %i[delete], path: "procurement-support"
-  # , controller: :fafs do
-  #   get :user_query, on: :collection, path: "user-query"
-  # end
 
   #
   # Supported ------------------------------------------------------------------
