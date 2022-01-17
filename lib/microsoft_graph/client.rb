@@ -26,9 +26,10 @@ module MicrosoftGraph
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-list-attachments?view=graph-rest-1.0&tabs=http
-    def get_attachment(user_id, message_ms_id)
+    def get_file_attachments(user_id, message_ms_id)
       json = client_session.graph_api_get("users/#{user_id}/messages/#{message_ms_id}/attachments")
-      Transformer::Attachment.transform_collection(json["value"], into: Resource::Attachment)
+      file_attachments = json["value"].select { |item| item["@odata.type"] == "#microsoft.graph.fileAttachment" }
+      Transformer::Attachment.transform_collection(file_attachments, into: Resource::Attachment)
     end
 
   private

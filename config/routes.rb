@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 Rails.application.routes.draw do
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -96,7 +95,7 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     require "sidekiq/web"
-    mount Sidekiq::Web => "/sidekiq"
+    mount Sidekiq::Web, at: "/sidekiq"
   end
 
   #

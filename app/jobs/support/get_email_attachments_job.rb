@@ -5,8 +5,14 @@ module Support
   class GetEmailAttachmentsJob < ApplicationJob
     queue_as :support
 
-    def perform(message_ms_id)
-      IncomingEmails::EmailAttachments.download(message_ms_id: message_ms_id)
+    def perform(email_id)
+      IncomingEmails::EmailAttachments.download(email: get_email(email_id))
+    end
+
+    private
+
+    def get_email(email_id)
+      Support::Email.find(email_id)
     end
   end
 end
