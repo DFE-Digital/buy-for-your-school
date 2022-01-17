@@ -34,7 +34,10 @@ module Support
 
       body.tap do |body_with_attachments|
         inline_attachments.each do |content_id, attachment|
-          body_with_attachments.gsub!("cid:#{content_id}", view_context.url_for(attachment.file))
+          body_with_attachments.gsub!(
+            "cid:#{content_id}",
+            view_context.support_document_download_path(attachment, type: attachment.class)
+          )
         end
       end
     end

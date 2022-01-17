@@ -4,6 +4,10 @@ describe Support::EmailPresenter do
   describe "#body_with_inline_attachments" do
     include Rails.application.routes.url_helpers
 
+    def expected_url(attachment)
+      support_document_download_path(attachment.id, type: "Support::EmailAttachment")
+    end
+
     context "when there is an inline email attachment" do
       subject(:presenter) { described_class.new(email) }
 
@@ -15,7 +19,7 @@ describe Support::EmailPresenter do
         view_context = self # as application route helpers are included
 
         expect(presenter.body_with_inline_attachments(view_context)).to eq(
-          "<img src=\"#{url_for(attachment1.file)}\" /> <img src=\"#{url_for(attachment2.file)}\" />",
+          "<img src=\"#{expected_url(attachment1)}\" /> <img src=\"#{expected_url(attachment2)}\" />",
         )
       end
     end
