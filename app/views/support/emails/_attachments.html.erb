@@ -4,8 +4,8 @@
       <%= I18n.t("support.emails.show.attachments") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <% email.attachments.includes(file_attachment: [:blob]).each do |attachment| %>
-        <%= link_to attachment.file_name, url_for(attachment.file), class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %><br />
+      <% email.attachments.each do |attachment| %>
+        <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %><br />
       <% end %>
     </dd>
   </div>
