@@ -299,6 +299,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_122456) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "is_inline", default: false
     t.string "content_id"
+    t.string "outlook_id"
   end
 
   create_table "support_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

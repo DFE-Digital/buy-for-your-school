@@ -65,6 +65,9 @@ Rails.application.routes.draw do
   get "support", to: "support/pages#start_page", as: :support_root
 
   namespace :support do
+    if Features.enabled?(:incoming_emails)
+      resources :document_downloads, only: %i[show]
+    end
     resources :agents, only: %i[create]
     if Features.enabled?(:incoming_emails)
       resources :emails, only: %i[index show]
@@ -100,7 +103,7 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     require "sidekiq/web"
-    mount Sidekiq::Web => "/sidekiq"
+    mount Sidekiq::Web, at: "/sidekiq"
   end
 
   #

@@ -10,7 +10,7 @@ RSpec.describe Support::SeedGroups do
     service.call
 
     expect(Support::Group.count).to eq 4
-    expect(Support::EstablishmentType.count).to eq 18
+    expect(Support::EstablishmentType.count).to eq 19
   end
 
   it "resets the data" do
@@ -20,11 +20,11 @@ RSpec.describe Support::SeedGroups do
     service.call
 
     expect(Support::Group.count).to eq 4
-    expect(Support::EstablishmentType.count).to eq 18
+    expect(Support::EstablishmentType.count).to eq 19
 
     service.call
 
     expect(Support::Group.count).to eq 4
-    expect(Support::EstablishmentType.count).to eq 18
+    expect(Support::EstablishmentType.count).to eq 19
   end
 end

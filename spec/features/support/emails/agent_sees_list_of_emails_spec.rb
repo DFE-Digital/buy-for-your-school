@@ -95,12 +95,14 @@ describe "Agent sees a list of emails seperate to cases" do
         create(:support_email_attachment, email: email)
       end
 
-      it "lists each attachment within the interaction" do
+      it "allows the user to download the attachment" do
         visit support_email_path(email)
 
         within ".email-attachments" do
-          expect(page).to have_link("attachment.txt")
+          click_link "attachment.txt"
         end
+
+        expect(page).to have_content("This is an attachment for an email")
       end
     end
 
