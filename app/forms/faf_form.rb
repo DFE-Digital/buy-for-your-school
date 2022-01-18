@@ -10,13 +10,6 @@ class FafForm < Form
   # @return [String]
   option :message_body, optional: true # 5 (last)
 
-  # @see SupportRequestsController#create
-  #
-  # @return [Boolean] journey UUID is present
-  def has_journey?
-    journey_id.present? && journey_id != "none"
-  end
-
   def to_h
     super.except(:dsi)
   end
