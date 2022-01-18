@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   get "support", to: "support/pages#start_page", as: :support_root
 
   namespace :support do
+    if Features.enabled?(:incoming_emails)
+      resources :document_downloads, only: %i[show]
+    end
     resources :agents, only: %i[create]
     if Features.enabled?(:incoming_emails)
       resources :emails, only: %i[index show]
@@ -79,9 +82,12 @@ Rails.application.routes.draw do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
         resource :categorisation, only: %i[edit update]
+        resource :savings, only: %i[edit update]
+        resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
+        resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do
             resource :type, only: %i[new create]

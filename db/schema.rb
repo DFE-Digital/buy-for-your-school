@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -230,7 +230,18 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.string "phone_number"
     t.integer "source"
     t.uuid "organisation_id"
+    t.uuid "existing_contract_id"
+    t.uuid "new_contract_id"
+    t.uuid "procurement_id"
+    t.integer "savings_status"
+    t.integer "savings_estimate_method"
+    t.integer "savings_actual_method"
+    t.decimal "savings_estimate", precision: 9, scale: 2
+    t.decimal "savings_actual", precision: 9, scale: 2
     t.index ["category_id"], name: "index_support_cases_on_category_id"
+    t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
+    t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
+    t.index ["procurement_id"], name: "index_support_cases_on_procurement_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
     t.index ["status"], name: "index_support_cases_on_status"
@@ -244,8 +255,19 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["slug"], name: "index_support_categories_on_slug"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
+  end
+
+  create_table "support_contracts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "type"
+    t.string "supplier"
+    t.date "started_at"
+    t.date "ended_at"
+    t.interval "duration"
+    t.decimal "spend", precision: 9, scale: 2
   end
 
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -357,6 +379,19 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
 
+  create_table "support_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "required_agreement_type"
+    t.integer "route_to_market"
+    t.integer "reason_for_route_to_market"
+    t.string "framework_name"
+    t.date "started_at"
+    t.date "ended_at"
+    t.integer "stage"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stage"], name: "index_support_procurements_on_stage"
+  end
+
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
     t.uuid "journey_id"
@@ -409,4 +444,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
+  add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
+  add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
 end

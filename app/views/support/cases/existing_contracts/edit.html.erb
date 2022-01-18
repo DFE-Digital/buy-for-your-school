@@ -1,0 +1,10 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_contract.existing.edit.header") %></h1>
+
+<%= form_with model: @case_contracts_form, scope: :case_contracts_form, url: support_case_contract_path(@current_case, @current_case.existing_contract), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.govuk_date_field :ended_at, legend: { text: I18n.t("support.case_contract.existing.edit.ended_at.header") } %>
+  <%= form.govuk_number_field :duration, width: 5, label: { text: I18n.t("support.case_contract.existing.edit.duration.header"), size: 'm' } %>
+  <%= form.govuk_text_field :spend, width: 5, label: { text: I18n.t("support.case_contract.existing.edit.spend.header"), size: 'm' }, prefix_text: '£' %>
+  <%= form.govuk_text_field :supplier, width: 20, label: { text: I18n.t("support.case_contract.existing.edit.supplier.header"), size: 'm' } %>
+  <%= form.submit I18n.t("support.case_contract.existing.edit.submit"), class: "govuk-button", role: "button" %>
+<% end %>
