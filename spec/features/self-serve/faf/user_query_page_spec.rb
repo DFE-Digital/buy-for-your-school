@@ -3,7 +3,5 @@ RSpec.feature "Faf - how can we help?" do
     before do
       visit "/procurement-support/new"
     end
-    
-
   end
 end

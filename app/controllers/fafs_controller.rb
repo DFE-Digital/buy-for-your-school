@@ -3,7 +3,7 @@ class FafsController < ApplicationController
   before_action :set_back_url
   before_action :support_request, only: %i[show edit update]
 
-  def index; 
+  def index
     @source = request.referer
   end
 
@@ -22,16 +22,7 @@ class FafsController < ApplicationController
 
     elsif validation.success?
 
-      if @faf_form.step == 2 && current_user.active_journeys.none?
-        @faf_form.advance!(2)
-
-      # journey (3) -> message (5)
-      elsif @faf_form.step == 3 && @faf_form.has_journey?
-        @faf_form.advance!(2)
-
-      else
-        @faf_form.advance!
-      end
+      @faf_form.advance!
 
       render :new
     else
