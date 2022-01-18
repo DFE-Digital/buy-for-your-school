@@ -1,7 +1,7 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :set_back_url
-  before_action :support_request, only: %i[show edit update]
+  before_action :support_request, only: %i[show]
 
   def index
     @source = request.referer
@@ -17,7 +17,7 @@ class FafsController < ApplicationController
     @faf_form = form
 
     if validation.success? && validation.to_h[:message_body]
-      #TODO: to be updated to use FrameworkRequest when in place
+      # TODO: to be updated to use FrameworkRequest when in place
       support_request = SupportRequest.create!(user_id: current_user.id, **form.to_h)
       redirect_to faf_path(support_request)
 
