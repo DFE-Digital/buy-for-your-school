@@ -2,7 +2,7 @@ module Support
   #
   # Validate "create a new case" form details for a Hub migration case
   #
-  class CaseHubMigrationFormSchema < Schema
+  class CaseHubMigrationFormSchema < ::Support::Schema
     config.messages.top_namespace = :case_migration_form
 
     params do
