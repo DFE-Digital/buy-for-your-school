@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 2022_01_12_131559) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["slug"], name: "index_support_categories_on_slug"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
