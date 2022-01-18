@@ -1,0 +1,2 @@
+class FrameworkRequest < ApplicationRecord
+end
