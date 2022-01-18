@@ -56,5 +56,6 @@
     :name: Free schools special
   - :code: 41
     :name: Studio schools
-
+  - :code: 40
+    :name: University technical college
 
