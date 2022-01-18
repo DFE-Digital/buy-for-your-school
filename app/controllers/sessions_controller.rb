@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     case user
     when User
       # TODO: alternative redirect for caseworkers
-      redirect_to session[:faf] ? new_faf_path(step: 2) : dashboard_path
+      redirect_to successful_redirect_url
     when :invalid
       redirect_to root_path, notice: "Access Denied"
     when :no_organisation
@@ -61,5 +61,10 @@ private
   # @return [OmniAuth::AuthHash]
   def auth_hash
     request.env["omniauth.auth"]
+  end
+
+  # @return [String]
+  def successful_redirect_url
+    session[:faf] ? new_faf_path(step: 2) : dashboard_path
   end
 end

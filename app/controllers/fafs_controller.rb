@@ -1,5 +1,6 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :set_back_url, only: %i[create new]
 
   def index; end
 
@@ -35,5 +36,9 @@ private
 
   def current_user
     @current_user = UserPresenter.new(super)
+  end
+
+  def set_back_url
+    @back_url = fafs_path
   end
 end
