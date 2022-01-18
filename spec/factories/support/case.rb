@@ -42,5 +42,9 @@ FactoryBot.define do
         kase.reload
       end
     end
+
+    trait :action_required do
+      action_required { true }
+    end
   end
 end
