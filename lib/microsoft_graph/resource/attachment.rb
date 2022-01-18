@@ -5,7 +5,7 @@ module MicrosoftGraph
       extend Dry::Initializer
 
       option :content_bytes, Types::String
-      option :content_id, Types::String
+      option :content_id, Types::String | Types::Nil, optional: true
       option :content_type, Types::String
       option :id, Types::String
       option :is_inline, Types::Bool

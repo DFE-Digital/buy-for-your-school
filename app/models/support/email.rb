@@ -39,6 +39,8 @@ module Support
           }
         end,
       )
+      # perform later
+      GetEmailAttachmentsJob.perform_later(id) if message.has_attachments
     end
 
     def automatically_assign_case

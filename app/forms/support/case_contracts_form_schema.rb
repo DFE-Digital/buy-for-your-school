@@ -1,5 +1,5 @@
 module Support
-  class CaseContractsFormSchema < Schema
+  class CaseContractsFormSchema < ::Support::Schema
     config.messages.top_namespace = :case_contracts_form
 
     params do
