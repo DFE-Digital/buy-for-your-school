@@ -1,7 +1,7 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :faf, only: %i[show edit update]
-  before_action :faf_form, only: %i[create update]
+  before_action :faf, only: %i[show]
+  before_action :faf_form, only: %i[create]
   before_action :faf_presenter, only: %i[show]
 
   def index; end
@@ -20,19 +20,6 @@ class FafsController < ApplicationController
   def create
     @faf_form.advance! if validation.success?
     render :new
-  end
-
-  def edit
-    @faf_form = FafForm.new(step: params[:step], **@faf.to_h)
-  end
-
-  def update
-    if validation.success?
-      @faf.update!(**@faf.to_h, **@faf_form.to_h)
-      redirect_to faf_path(params[:id])
-    else
-      render :edit
-    end
   end
 
 private
