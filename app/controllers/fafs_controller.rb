@@ -6,7 +6,9 @@ class FafsController < ApplicationController
   def show; end
 
   def new
-    @faf_form = FafForm.new(step: 1)
+    step = params[:step] || 1
+    @faf_form = FafForm.new(step: step)
+    session[:faf] = true
   end
 
   def create
@@ -29,5 +31,9 @@ private
   # @return [FafFormSchema] validated form input
   def validation
     FafFormSchema.new.call(**form_params)
+  end
+
+  def current_user
+    @current_user = UserPresenter.new(super)
   end
 end

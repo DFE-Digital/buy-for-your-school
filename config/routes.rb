@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   #
   # FaF ------------------------------------------------------------------
   #
-  resources :fafs, except: %i[delete], path: "procurement-support"
+  resources :fafs, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
 
   #
   # Supported ------------------------------------------------------------------

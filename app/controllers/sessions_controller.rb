@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     case user
     when User
       # TODO: alternative redirect for caseworkers
-      redirect_to dashboard_path
+      redirect_to session[:faf] ? new_faf_path(step: 2) : dashboard_path
     when :invalid
       redirect_to root_path, notice: "Access Denied"
     when :no_organisation
