@@ -33,12 +33,14 @@ describe "Agent sees emails in case history" do
         create(:support_email_attachment, email: email)
       end
 
-      it "lists each attachment within the interaction" do
+      it "allows the user to download the attachment" do
         visit support_case_path(support_case)
 
         within "#case-history .govuk-accordion__section", text: "Catering requirements" do
-          expect(page).to have_link("attachment.txt")
+          click_link "attachment.txt"
         end
+
+        expect(page).to have_content("This is an attachment for an email")
       end
     end
 
