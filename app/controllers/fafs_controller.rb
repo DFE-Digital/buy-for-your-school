@@ -39,7 +39,7 @@ private
   end
 
   def form_params
-    add_school_urn_to_params if params[:step] == 2 && current_user.supported_schools.count == 1
+    add_school_urn_to_params if params[:step] == 2 && current_user.supported_schools.one?
 
     params.require(:faf_form).permit(:step, :dsi, :school_urn, :back)
   end
@@ -62,7 +62,7 @@ private
 
   # @return [FafForm] form object with updated step number if validation successful
   def advance_form
-    if form_params[:step].to_i == 2 && current_user.supported_schools.count == 1
+    if form_params[:step].to_i == 2 && current_user.supported_schools.one?
       @faf_form.advance! 2
     else
       @faf_form.advance!
