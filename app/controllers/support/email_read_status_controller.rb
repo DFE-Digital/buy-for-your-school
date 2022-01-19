@@ -4,6 +4,8 @@ module Support
 
     def update
       @email.update!(is_read: new_status)
+      @email.case.update!(action_required: @email.case.emails.unread.any?) if @email.case.present?
+
       redirect_back fallback_location: support_email_path(@email)
     end
 

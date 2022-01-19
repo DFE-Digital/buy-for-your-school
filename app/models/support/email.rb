@@ -5,6 +5,7 @@ module Support
 
     scope :display_order, -> { order("sent_at DESC") }
     scope :my_cases, ->(agent) { where(case_id: agent.case_ids) }
+    scope :unread, -> { where(is_read: false) }
 
     enum folder: { inbox: 0, sent_items: 1 }
 
