@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     case user
     when User
       # TODO: alternative redirect for caseworkers
-      redirect_to successful_redirect_url
+      redirect_to login_redirect_url
     when :invalid
       redirect_to root_path, notice: "Access Denied"
     when :no_organisation
@@ -41,13 +41,15 @@ class SessionsController < ApplicationController
   #
   # @see UserSession
   def destroy
+    session[:faf] |= params[:faf].present?
     issuer_url = user_session.sign_out_url.dup
     user_session.delete!
 
     if issuer_url
       redirect_to issuer_url
     else
-      redirect_to root_path, notice: I18n.t("banner.session.destroy")
+      redirect_to logout_redirect_url, notice: I18n.t("banner.session.destroy")
+      session.delete(:faf)
     end
   end
 
@@ -63,8 +65,27 @@ private
     request.env["omniauth.auth"]
   end
 
+  # @return [String, nil]
+  def origin
+    request.env["omniauth.origin"]
+  end
+
+  # @return [Boolean]
+  def faf_path?
+    origin&.include?(fafs_path) || session[:faf]
+  end
+
   # @return [String]
-  def successful_redirect_url
-    session[:faf] ? new_faf_path(step: 2) : dashboard_path
+  def login_redirect_url
+    return new_faf_path(step: 2) if faf_path?
+
+    dashboard_path
+  end
+
+  # @return [String]
+  def logout_redirect_url
+    return new_faf_path if faf_path?
+
+    root_path
   end
 end

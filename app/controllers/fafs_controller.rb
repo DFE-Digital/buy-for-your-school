@@ -3,7 +3,6 @@ class FafsController < ApplicationController
   before_action :faf, only: %i[show]
   before_action :faf_form, only: %i[create]
   before_action :faf_presenter, only: %i[show]
-  before_action :set_back_url, only: %i[create new]
 
   def index; end
 
@@ -17,7 +16,6 @@ class FafsController < ApplicationController
   def new
     step = params[:step] || 1
     @faf_form = FafForm.new(step: step)
-    session[:faf] = true
   end
 
   def create
@@ -56,9 +54,5 @@ private
 
   def current_user
     @current_user = UserPresenter.new(super)
-  end
-
-  def set_back_url
-    @back_url = fafs_path
   end
 end
