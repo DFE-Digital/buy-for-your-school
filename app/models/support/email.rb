@@ -13,6 +13,7 @@ module Support
       email.import_from_message(message, folder: folder)
       email.automatically_assign_case
       email.create_interaction
+      email.set_case_action_required
     end
 
     def import_from_message(message, folder: :inbox)
@@ -57,13 +58,14 @@ module Support
         self.case.id,
         inbox? ? "email_from_school" : "email_to_school",
         nil,
-        {
-          body: body,
-          additional_data: { email_id: id },
-        },
+        { body: body, additional_data: { email_id: id } },
       ).call
 
       save!
+    end
+
+    def set_case_action_required
+      self.case.update!(action_required: true) if self.case.present? && new_record?
     end
   end
 end

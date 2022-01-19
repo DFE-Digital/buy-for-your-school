@@ -169,6 +169,30 @@ describe Support::Email do
     end
   end
 
+  describe "#set_case_action_required" do
+    context "when case is attached" do
+      let(:support_case) { create(:support_case) }
+
+      context "when email is newly created" do
+        let(:email) { build(:support_email, case: support_case) }
+
+        it "sets case to action required to inform users an email is to be read" do
+          email.set_case_action_required
+          expect(support_case.reload).to be_action_required
+        end
+      end
+
+      context "when the email is an existing one" do
+        let(:email) { create(:support_email, case: support_case) }
+
+        it "does not set case to action required as this email is already visible" do
+          email.set_case_action_required
+          expect(support_case.reload).not_to be_action_required
+        end
+      end
+    end
+  end
+
   describe ".import_from_mailbox" do
     let(:email) { build(:support_email, case: nil) }
 
@@ -216,6 +240,14 @@ describe Support::Email do
       described_class.import_from_mailbox(message)
 
       expect(email).to have_received(:create_interaction).once
+    end
+
+    it "potentially sets the case to action required" do
+      allow(email).to receive(:set_case_action_required)
+
+      described_class.import_from_mailbox(message)
+
+      expect(email).to have_received(:set_case_action_required).once
     end
   end
 end
