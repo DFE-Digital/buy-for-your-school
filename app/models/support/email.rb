@@ -39,6 +39,7 @@ module Support
           }
         end,
       )
+      IncomingEmails::EmailAttachments.download(email: self) if message.has_attachments
     end
 
     def automatically_assign_case

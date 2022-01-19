@@ -101,4 +101,52 @@ describe MicrosoftGraph::Client do
       expect(client.mark_message_as_read(user_id, mail_folder, message_id)).to eql(graph_api_response)
     end
   end
+
+  describe "#get_file_attachments" do
+    let(:message_id) { "MESSAGE_ID" }
+
+    let(:graph_api_response) do
+      {
+        "value" => [
+          { "@odata.type" => "#microsoft.graph.fileAttachment",
+            "contentType": "contentType-value",
+            "contentLocation": "contentLocation-value",
+            "contentBytes": "contentBytes-value",
+            "contentId": "null",
+            "lastModifiedDateTime": "datetime-value",
+            "id": "id-value",
+            "isInline": false,
+            "name": "example-file-1",
+            "size": 99 },
+          { "@odata.type" => "#microsoft.graph.fileAttachment",
+            "contentType": "contentType-value",
+            "contentLocation": "contentLocation-value",
+            "contentBytes": "contentBytes-value",
+            "contentId": "null",
+            "lastModifiedDateTime": "datetime-value",
+            "id": "id-value",
+            "isInline": false,
+            "name": "example-file-2",
+            "size": 99 },
+        ],
+      }
+    end
+
+    before do
+      allow(client_session).to receive(:graph_api_get)
+                                 .with("users/#{user_id}/messages/#{message_id}/attachments")
+                                 .and_return(graph_api_response)
+    end
+
+    it "returns a MailFolder for each result in the response" do
+      file_1 = instance_double("MicrosoftGraph::Resource::Attachment")
+      file_2 = instance_double("MicrosoftGraph::Resource::Attachment")
+
+      allow(MicrosoftGraph::Transformer::Attachment).to receive(:transform_collection)
+                                                       .with(graph_api_response["value"], into: MicrosoftGraph::Resource::Attachment)
+                                                       .and_return([file_1, file_2])
+
+      expect(client.get_file_attachments(user_id, message_id)).to match_array([file_1, file_2])
+    end
+  end
 end
