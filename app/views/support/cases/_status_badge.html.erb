@@ -1,9 +1,9 @@
 <% if kase.action_required? %>
-  <strong class="govuk-tag govuk-tag--red">
+  <strong class="govuk-tag govuk-tag--red case-status-badge">
     <%= I18n.t("support.case.label.state.state_action_required") %>
   </strong>
 <% else %>
-  <strong class="govuk-tag govuk-tag--green">
+  <strong class="govuk-tag govuk-tag--green case-status-badge">
     <%= I18n.t("support.case.label.state.state_#{kase.state.downcase}") %>
   </strong>
 <% end %>
