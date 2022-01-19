@@ -1,9 +1,9 @@
 <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
   <%= @current_case.org_name %>
 </h1>
-<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
-  <%= I18n.t("support.case.label.state.state_#{@current_case.state.downcase}") %>
-</strong>
+<div class="govuk-!-margin-bottom-7">
+  <%= render "status_badge", kase: @current_case %>
+</div>
 <h3 id="case-ref" class="govuk-heading-m">
   <%= @current_case.ref %>
 </h3>
@@ -32,7 +32,7 @@
       </a>
     </li>
   </ul>
-  <div class="govuk-tabs__panel" id="school-details">
+  <div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
     <%= render "school_details", current_case: @current_case %>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
