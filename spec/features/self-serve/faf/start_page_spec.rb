@@ -10,31 +10,23 @@ RSpec.feature "Faf - start page" do
     end
 
     it "navigates to the about frameworks page" do
-      click_link "about frameworks"
-      expect(find("h1")).to have_text "Buying procedures and procurement law for schools"
-      expect(current_url).to eql "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy"
+      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", class: "govuk-link"
     end
 
-    xit "navigates to the planning for what you're buying page" do
-      click_link "planning for what you're buying"
-      expect(find("h1")).to have_text "Buying for schools"
-      expect(page).to have_current_path "/beta/phase-6/gov/buying-for-schools"
+    it "navigates to the planning for what you're buying page" do
+      expect(page).to have_link "planning for what you're buying", href: "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-for-schools", class: "govuk-link"
     end
 
-    xit "navigates to the finding the right way to buy page" do
-      click_link "finding the right way to buy"
-      expect(find("h1")).to have_text "Buying procedures and procurement law for schools"
-      expect(page).to have_current_path "/beta/phase-6/gov/buying-procedures-for-schools"
+    it "navigates to the finding the right way to buy page" do
+      expect(page).to have_link "finding the right way to buy", href: "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-procedures-for-schools", class: "govuk-link"
     end
 
-    xit "navigates to the create a specification page" do
-      click_link "finding the right way to buy"
-      expect(find("h1")).to have_text "Create a specification to procure for your school"
-      expect(page).to have_current_path "https://get-help-buying-for-schools.education.gov.uk/"
+    it "navigates to the create a specification page" do
+      expect(page).to have_link "create a specification", href: "https://get-help-buying-for-schools.education.gov.uk/", class: "govuk-link"
     end
   end
 
-  xcontext "when the user is signed in" do
+  context "when the user is signed in" do
     before do
       user_is_signed_in
       visit "/procurement-support"
@@ -46,27 +38,19 @@ RSpec.feature "Faf - start page" do
     end
 
     it "navigates to the about frameworks page" do
-      click_link "about frameworks"
-      expect(find("h1")).to have_text ""
-      expect(page).to have_current_path "/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy"
+      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", class: "govuk-link"
     end
 
     it "navigates to the planning for what you're buying page" do
-      click_link "planning for what you're buying"
-      expect(find("h1")).to have_text "Buying for schools"
-      expect(page).to have_current_path "/beta/phase-6/gov/buying-for-schools"
+      expect(page).to have_link "planning for what you're buying", href: "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-for-schools", class: "govuk-link"
     end
 
     it "navigates to the finding the right way to buy page" do
-      click_link "finding the right way to buy"
-      expect(find("h1")).to have_text "Buying procedures and procurement law for schools"
-      expect(page).to have_current_path "/beta/phase-6/gov/buying-procedures-for-schools"
+      expect(page).to have_link "finding the right way to buy", href: "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-procedures-for-schools", class: "govuk-link"
     end
 
     it "navigates to the create a specification page" do
-      click_link "finding the right way to buy"
-      expect(find("h1")).to have_text "Create a specification to procure for your school"
-      expect(page).to have_current_path "https://get-help-buying-for-schools.education.gov.uk/"
+      expect(page).to have_link "create a specification", href: "https://get-help-buying-for-schools.education.gov.uk/", class: "govuk-link"
     end
   end
 end
