@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Support::Email do
   describe "#import_from_message" do
+    let(:has_attachments) { false }
     let(:email) { build(:support_email) }
 
     let(:message) do
@@ -12,11 +13,11 @@ describe Support::Email do
         subject: "Synced email #1",
         is_read: true,
         is_draft: false,
-        has_attachments: false,
         body_preview: "body preview",
         body: double(content: "body", content_type: "html"),
         received_date_time: Time.zone.now,
         sent_date_time: Time.zone.now - 1.hour,
+        has_attachments: has_attachments,
         to_recipients: [
           double(email_address: double(address: "receipient1@email.com", name: "Recipient 1")),
           double(email_address: double(address: "receipient2@email.com", name: "Recipient 2")),
@@ -35,6 +36,30 @@ describe Support::Email do
       it "sets the folder to :inbox" do
         email.import_from_message(message)
         expect(email.folder).to eq("inbox")
+      end
+    end
+
+    context "when message has no attachments" do
+      let(:has_attachments) { false }
+
+      it "calls IncomingEmails::EmailAttachments.download with the email" do
+        allow(Support::IncomingEmails::EmailAttachments).to receive(:download)
+
+        email.import_from_message(message)
+
+        expect(Support::IncomingEmails::EmailAttachments).not_to have_received(:download)
+      end
+    end
+
+    context "when message has attachments" do
+      let(:has_attachments) { true }
+
+      it "calls IncomingEmails::EmailAttachments.download with the email" do
+        allow(Support::IncomingEmails::EmailAttachments).to receive(:download)
+
+        email.import_from_message(message)
+
+        expect(Support::IncomingEmails::EmailAttachments).to have_received(:download).with(email: email)
       end
     end
 
