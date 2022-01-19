@@ -2,5 +2,6 @@
 :concurrency: 5
 :queues:
   - default
+  - support
   - [high_priority, 2]
   - [caching, 1]
