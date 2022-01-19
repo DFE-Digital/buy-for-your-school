@@ -41,7 +41,6 @@ class SessionsController < ApplicationController
   #
   # @see UserSession
   def destroy
-    session[:faf] |= params[:faf].present?
     issuer_url = user_session.sign_out_url.dup
     user_session.delete!
 
@@ -49,7 +48,6 @@ class SessionsController < ApplicationController
       redirect_to issuer_url
     else
       redirect_to logout_redirect_url, notice: I18n.t("banner.session.destroy")
-      session.delete(:faf)
     end
   end
 
@@ -77,14 +75,20 @@ private
 
   # @return [String]
   def login_redirect_url
-    return new_faf_path(step: 2) if faf_path?
+    if faf_path?
+      session[:faf] = true
+      return new_faf_path(step: 2)
+    end
 
     dashboard_path
   end
 
   # @return [String]
   def logout_redirect_url
-    return new_faf_path if faf_path?
+    if faf_path?
+      session.delete(:faf)
+      return new_faf_path
+    end
 
     root_path
   end
