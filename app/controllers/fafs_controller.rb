@@ -39,15 +39,12 @@ private
   end
 
   def form_params
-    add_school_urn_to_params
+    add_school_urn_to_params if params[:step] == 2 && current_user.supported_schools.count == 1
+
     params.require(:faf_form).permit(:step, :dsi, :school_urn, :back)
   end
 
   def add_school_urn_to_params
-    return params unless params[:step] == 2
-
-    return params unless current_user.supported_schools.count == 1
-
     school_urn = current_user.supported_schools.first[:urn].to_s
 
     params[:faf_form].merge!(school_urn: school_urn)
