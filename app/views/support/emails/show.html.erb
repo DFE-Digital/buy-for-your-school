@@ -1,6 +1,18 @@
-<h1 class="govuk-heading-l">
+<h1 class="govuk-heading-l flex-align-center">
   <%= I18n.t("support.emails.show.header") %>
+
+  <% unless @email.is_read? %>
+    <%= render "support/cases/emails/unread_badge" %>
+  <% end %>
 </h1>
+<h2 class="govuk-heading-m">
+  <%= I18n.t("support.emails.show.case_id") %>: <%= @email.case.ref %>
+</h2>
+
+<%= button_to I18n.t("support.emails.button.#{@email.is_read? ? "mark_as_unread" : "mark_as_read"}"),
+      support_email_read_status_path(@email, status: @email.is_read? ? "unread" : "read"),
+      method: :patch,
+      class: "govuk-button govuk-button--secondary" %>
 
 <div class="email-preview govuk-body">
   <dl class="govuk-summary-list">
