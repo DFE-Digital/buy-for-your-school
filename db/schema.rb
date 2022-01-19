@@ -249,7 +249,6 @@ ActiveRecord::Schema.define(version: 2022_01_18_155549) do
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
     t.boolean "action_required", default: false
-    t.uuid "procurement_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
