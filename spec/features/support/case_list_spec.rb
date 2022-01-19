@@ -17,6 +17,19 @@ RSpec.feature "Case management dashboard" do
     expect(find("#my-cases")).not_to have_css ".govuk-tabs__panel--hidden"
   end
 
+  context "when a case has actions required" do
+    before do
+      create(:support_case, :action_required, ref: "009999")
+      visit "/support/cases"
+    end
+
+    it "displays the status 'Action'" do
+      within "#all-cases .case-row", text: "009999" do
+        expect(page).to have_css(".case-status", text: "Action")
+      end
+    end
+  end
+
   context "when my cases tab" do
     let!(:new_case) { create(:support_case, agent: agent) }
 
