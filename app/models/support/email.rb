@@ -21,7 +21,7 @@ module Support
         outlook_conversation_id: message.conversation_id,
         folder: folder,
         subject: message.subject,
-        is_read: message.is_read,
+        outlook_is_read: message.is_read,
         is_draft: message.is_draft,
         has_attachments: message.has_attachments,
         body_preview: message.body_preview,

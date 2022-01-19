@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_122456) do
+ActiveRecord::Schema.define(version: 2022_01_19_145844) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -242,12 +243,13 @@ ActiveRecord::Schema.define(version: 2022_01_18_122456) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
+    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
-    t.uuid "procurement_id"
+    t.boolean "action_required", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -314,11 +316,12 @@ ActiveRecord::Schema.define(version: 2022_01_18_122456) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "outlook_id"
-    t.boolean "is_read", default: false
+    t.boolean "outlook_is_read", default: false
     t.boolean "is_draft", default: false
     t.boolean "has_attachments", default: false
     t.text "body_preview"
     t.integer "folder"
+    t.boolean "is_read", default: false
   end
 
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

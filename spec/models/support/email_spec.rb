@@ -70,7 +70,7 @@ describe Support::Email do
       expect(email.outlook_conversation_id).to eq("CID_456")
       expect(email.outlook_id).to eq("ID_123")
       expect(email.sender).to eq({ "address" => "sender@email.com", "name" => "Sender" })
-      expect(email.is_read).to eq(true)
+      expect(email.outlook_is_read).to eq(true)
       expect(email.is_draft).to eq(false)
       expect(email.has_attachments).to eq(false)
       expect(email.body_preview).to eq("body preview")
