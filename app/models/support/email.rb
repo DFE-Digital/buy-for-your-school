@@ -54,12 +54,13 @@ module Support
     def create_interaction
       return if self.case.blank?
 
-      CreateInteraction.new(
-        self.case.id,
-        inbox? ? "email_from_school" : "email_to_school",
-        nil,
-        { body: body, additional_data: { email_id: id } },
-      ).call
+      case_interactions = self.case.interactions
+        .send("email_#{inbox? ? 'from' : 'to'}_school")
+        .where("additional_data->>'email_id' = ?", id)
+
+      unless case_interactions.any?
+        case_interactions.create!(body: body_preview, additional_data: { email_id: id })
+      end
 
       save!
     end
