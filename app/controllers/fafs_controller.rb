@@ -20,7 +20,7 @@ class FafsController < ApplicationController
   def create
     if form_params[:back] == "true"
       revert_form
-    else
+    elsif validation.success?
       advance_form
     end
 
@@ -39,7 +39,18 @@ private
   end
 
   def form_params
+    add_school_urn_to_params
     params.require(:faf_form).permit(:step, :dsi, :school_urn, :back)
+  end
+
+  def add_school_urn_to_params
+    return params unless params[:step] == 2
+
+    return params unless current_user.supported_schools.count == 1
+
+    school_urn = current_user.supported_schools.first[:urn].to_s
+
+    params[:faf_form].merge!(school_urn: school_urn)
   end
 
   # @return [FafFormSchema] validated form input
@@ -55,10 +66,9 @@ private
   # @return [FafForm] form object with updated step number if validation successful
   def advance_form
     if form_params[:step].to_i == 2 && current_user.supported_schools.count == 1
-      form_params[:school_urn] = current_user.supported_schools.first[:urn]
-      @faf_form.advance! 2 if validation.success?
+      @faf_form.advance! 2
     else
-      @faf_form.advance! if validation.success?
+      @faf_form.advance!
     end
   end
 
