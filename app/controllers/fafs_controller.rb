@@ -23,7 +23,7 @@ class FafsController < ApplicationController
   def create
     if validation.success? && validation.to_h[:message_body]
       # TODO: to be updated to use FrameworkRequest when in place
-      faf = FrameworkRequest.create!(user_id: current_user&.id, **form.to_h)
+      faf = FrameworkRequest.create!(user_id: user_id, **faf_form.to_h)
       redirect_to faf_path(faf)
 
     elsif validation.success?
@@ -38,11 +38,6 @@ class FafsController < ApplicationController
 
 private
 
-  # @return [UserPresenter] adds form view logic
-  # def current_user
-  #   @current_user = UserPresenter.new(super)
-  # end
-
   # @return [FafForm] form object populated with validation messages
   def faf_form
     @faf_form = FafForm.new(
@@ -50,6 +45,13 @@ private
       messages: validation.errors(full: true).to_h,
       **validation.to_h,
     )
+  end
+
+  def user_id
+    return unless params[:dsi].in?(["true", true])
+    return if current_user.guest?
+
+    current_user.id
   end
 
   def form_params

@@ -9,7 +9,7 @@
           <%= I18n.t("faf.check_answers.details.name") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @faf_presenter.full_name %>
+          <%= @faf_presenter.user.full_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-name" %>
@@ -20,7 +20,7 @@
           <%= I18n.t("faf.check_answers.details.email") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @faf_presenter.email %>
+          <%= @faf_presenter.user.email %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-email" %>

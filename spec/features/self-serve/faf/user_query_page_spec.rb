@@ -31,7 +31,7 @@ RSpec.feature "Faf - how can we help?" do
       fill_in "faf_form[message_body]", with: "I have a problem"
       click_continue
 
-      expect(SupportRequest.count).to eq(1)
+      expect(FrameworkRequest.count).to eq(1)
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.feature "Faf - how can we help?" do
       fill_in "faf_form[message_body]", with: "I have a problem"
       click_continue
 
-      expect(SupportRequest.count).to eq(1)
+      expect(FrameworkRequest.count).to eq(1)
     end
   end
 end
