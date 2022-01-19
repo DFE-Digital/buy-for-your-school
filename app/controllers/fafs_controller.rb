@@ -1,9 +1,17 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :faf, only: %i[show]
+  before_action :faf_form, only: %i[create]
+  before_action :faf_presenter, only: %i[show]
 
   def index; end
 
-  def show; end
+  # check answers before submission
+  def show
+    if @faf.submitted?
+      # TODO: redirect to faf_submissions_controller
+    end
+  end
 
   def new
     @faf_form = FafForm.new(step: 1)
@@ -22,8 +30,12 @@ class FafsController < ApplicationController
 private
 
   # @return [FafForm] form object populated with validation messages
-  def form
-    FafForm.new(step: form_params[:step], messages: validation.errors(full: true).to_h, **validation.to_h)
+  def faf_form
+    @faf_form = FafForm.new(
+      step: form_params[:step],
+      messages: validation.errors(full: true).to_h,
+      **validation.to_h,
+    )
   end
 
   def form_params
@@ -44,20 +56,27 @@ private
   def advance_form
     if form_params[:step].to_i == 2 && current_user.supported_schools.count == 1
       form_params[:school_urn] = current_user.supported_schools.first[:urn]
-      @faf_form = form
       @faf_form.advance! 2 if validation.success?
     else
-      @faf_form = form
       @faf_form.advance! if validation.success?
     end
   end
 
+  # @return [FafForm] form object with reverted step number
   def revert_form
-    @faf_form = form
     if form_params[:step].to_i == 4 && current_user.supported_schools.count == 1
       @faf_form.back! 2
     else
       @faf_form.back!
     end
+  end
+
+  def faf_presenter
+    @faf_presenter = FafPresenter.new(@faf)
+  end
+
+  # @return [FrameworkRequest]
+  def faf
+    @faf = FrameworkRequest.find(params[:id])
   end
 end

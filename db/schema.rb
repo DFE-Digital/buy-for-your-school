@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_121023) do
+ActiveRecord::Schema.define(version: 2022_01_18_122456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -93,6 +93,17 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "framework_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "school_urn"
+    t.string "message_body"
+    t.boolean "submitted", default: false
   end
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

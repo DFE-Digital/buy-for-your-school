@@ -4,7 +4,7 @@ RSpec.feature "Faf - user organisation page" do
     visit "/procurement-support/new"
     find("label", text: I18n.t("faf.dsi_or_search.radios.dsi")).click
     click_continue
-    click_continue
+    click_on "Yes, continue"
   end
 
   context "when the user belongs to only one supported school" do
@@ -26,7 +26,7 @@ RSpec.feature "Faf - user organisation page" do
     it "goes back to step 2 when the back link is clicked" do
       find(".govuk-back-link").click
 
-      expect(find("span.govuk-caption-l")).to have_text "step 2"
+      expect(find("span.govuk-caption-l")).to have_text "About you"
     end
 
     it "asks them to choose which school" do
