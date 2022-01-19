@@ -16,8 +16,13 @@ module Support
       Tempfile.create(attachment.name, binmode: true) do |f|
         f.write(Base64.decode64(attachment.content_bytes))
         f.rewind
+
         file.attach(io: f, filename: attachment.name)
-        save!
+
+        update!(
+          is_inline: attachment.is_inline,
+          content_id: attachment.content_id,
+        )
       end
     end
 
