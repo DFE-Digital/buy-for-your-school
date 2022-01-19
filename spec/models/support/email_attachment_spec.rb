@@ -43,7 +43,7 @@ RSpec.describe Support::EmailAttachment, type: :model do
   describe "#import_from_ms_attachment" do
     let(:email_attachment) { build(:support_email_attachment, :without_file) }
     let(:ms_attachment) do
-      double(id: "123", content_bytes: "SGVsbG8sIFdvcmxkCg==", name: "example_file.pdf", content_type: "text/plain")
+      double(id: "123", content_bytes: "SGVsbG8sIFdvcmxkCg==", name: "example_file.pdf", content_type: "text/plain", is_inline: true, content_id: "XYZ")
     end
 
     it "attaches file from temp file" do
@@ -51,6 +51,8 @@ RSpec.describe Support::EmailAttachment, type: :model do
 
       expect(email_attachment.file.download).to eq("Hello, World\n")
       expect(email_attachment.file_name).to eq("example_file.pdf")
+      expect(email_attachment.content_id).to eq("XYZ")
+      expect(email_attachment.is_inline).to be(true)
     end
   end
 end

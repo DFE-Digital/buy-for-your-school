@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_121023) do
+ActiveRecord::Schema.define(version: 2022_01_19_123500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -93,6 +93,19 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "framework_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "school_urn"
+    t.string "message_body"
+    t.boolean "submitted", default: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -255,7 +268,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug"
+    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
@@ -441,6 +454,7 @@ ActiveRecord::Schema.define(version: 2022_01_17_121023) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
