@@ -206,8 +206,8 @@ ActiveRecord::Schema.define(version: 2022_01_18_122456) do
   end
 
   create_table "support_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "support_case_id"
-    t.integer "action"
+    t.string "support_case_id"
+    t.string "action"
     t.jsonb "data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -266,7 +266,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_122456) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["slug"], name: "index_support_categories_on_slug"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
