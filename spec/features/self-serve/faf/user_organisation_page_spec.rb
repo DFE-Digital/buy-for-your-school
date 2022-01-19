@@ -23,6 +23,12 @@ RSpec.feature "Faf - user organisation page" do
       expect(find("legend")).to have_text "Which school are you buying for?"
     end
 
+    it "goes back to step 2 when the back link is clicked" do
+      find(".govuk-back-link").click
+
+      expect(find("span.govuk-caption-l")).to have_text "step 2"
+    end
+
     it "asks them to choose which school" do
       expect(page).to have_unchecked_field "Specialist School for Testing"
       expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
