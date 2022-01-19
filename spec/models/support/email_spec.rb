@@ -110,7 +110,7 @@ describe Support::Email do
 
   describe "#create_interaction" do
     let(:folder) { :inbox }
-    let(:email) { create(:support_email, case: support_case, body: "Body Here", folder: folder) }
+    let(:email) { create(:support_email, case: support_case, body_preview: "Body Here", folder: folder) }
 
     before { allow(Support::CreateInteraction).to receive(:new) }
 
@@ -118,8 +118,7 @@ describe Support::Email do
       let(:support_case) { nil }
 
       it "does create an interaction" do
-        email.create_interaction
-        expect(Support::CreateInteraction).not_to have_received(:new)
+        expect { email.create_interaction }.not_to change { Support::Interaction.count }.from(0)
       end
     end
 
@@ -127,24 +126,38 @@ describe Support::Email do
       let(:create_interaction) { double(call: true) }
       let(:support_case) { create(:support_case) }
 
-      before { allow(Support::CreateInteraction).to receive(:new).and_return(create_interaction) }
-
       context "when folder is inbox" do
         let(:folder) { :inbox }
 
         it "creates an email_from_school interaction" do
           email.create_interaction
 
-          expect(Support::CreateInteraction).to have_received(:new).with(
-            support_case.id,
-            "email_from_school",
-            nil,
-            {
-              body: email.body,
-              additional_data: { email_id: email.id },
-            },
+          interaction = Support::Interaction.find_by(
+            case_id: support_case.id,
+            event_type: "email_from_school",
+            body: "Body Here",
+            additional_data: { email_id: email.id },
           )
-          expect(create_interaction).to have_received(:call).once
+
+          expect(interaction).to be_present
+        end
+
+        context "when an interaction already exists of type email_from_school for the email" do
+          it "does not duplicate it" do
+            create(:support_interaction,
+                   case: support_case,
+                   event_type: "email_from_school",
+                   additional_data: { email_id: email.id },
+                   body: "Hello")
+
+            interactions = Support::Interaction.where(
+              case_id: support_case.id,
+              event_type: "email_from_school",
+              additional_data: { email_id: email.id },
+            )
+
+            expect { email.create_interaction }.not_to change { interactions.count }.from(1)
+          end
         end
       end
 
@@ -154,16 +167,56 @@ describe Support::Email do
         it "creates an email_to_school interaction" do
           email.create_interaction
 
-          expect(Support::CreateInteraction).to have_received(:new).with(
-            support_case.id,
-            "email_to_school",
-            nil,
-            {
-              body: email.body,
-              additional_data: { email_id: email.id },
-            },
+          interaction = Support::Interaction.find_by(
+            case_id: support_case.id,
+            event_type: "email_to_school",
+            body: "Body Here",
+            additional_data: { email_id: email.id },
           )
-          expect(create_interaction).to have_received(:call).once
+
+          expect(interaction).to be_present
+        end
+
+        context "when an interaction already exists of type email_to_school for the email" do
+          it "does not duplicate it" do
+            create(:support_interaction,
+                   case: support_case,
+                   event_type: "email_to_school",
+                   additional_data: { email_id: email.id },
+                   body: "Hello")
+
+            interactions = Support::Interaction.where(
+              case_id: support_case.id,
+              event_type: "email_to_school",
+              additional_data: { email_id: email.id },
+            )
+
+            expect { email.create_interaction }.not_to change { interactions.count }.from(1)
+          end
+        end
+      end
+    end
+  end
+
+  describe "#set_case_action_required" do
+    context "when case is attached" do
+      let(:support_case) { create(:support_case) }
+
+      context "when email is newly created" do
+        let(:email) { build(:support_email, case: support_case) }
+
+        it "sets case to action required to inform users an email is to be read" do
+          email.set_case_action_required
+          expect(support_case.reload).to be_action_required
+        end
+      end
+
+      context "when the email is an existing one" do
+        let(:email) { create(:support_email, case: support_case) }
+
+        it "does not set case to action required as this email is already visible" do
+          email.set_case_action_required
+          expect(support_case.reload).not_to be_action_required
         end
       end
     end
@@ -216,6 +269,14 @@ describe Support::Email do
       described_class.import_from_mailbox(message)
 
       expect(email).to have_received(:create_interaction).once
+    end
+
+    it "potentially sets the case to action required" do
+      allow(email).to receive(:set_case_action_required)
+
+      described_class.import_from_mailbox(message)
+
+      expect(email).to have_received(:set_case_action_required).once
     end
   end
 end
