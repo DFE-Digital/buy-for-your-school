@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_122456) do
+ActiveRecord::Schema.define(version: 2022_01_18_155549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_122456) do
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
+    t.boolean "action_required", default: false
     t.uuid "procurement_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"

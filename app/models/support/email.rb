@@ -13,6 +13,7 @@ module Support
       email.import_from_message(message, folder: folder)
       email.automatically_assign_case
       email.create_interaction
+      email.set_case_action_required
     end
 
     def import_from_message(message, folder: :inbox)
@@ -53,17 +54,19 @@ module Support
     def create_interaction
       return if self.case.blank?
 
-      CreateInteraction.new(
-        self.case.id,
-        inbox? ? "email_from_school" : "email_to_school",
-        nil,
-        {
-          body: body,
-          additional_data: { email_id: id },
-        },
-      ).call
+      case_interactions = self.case.interactions
+        .send("email_#{inbox? ? 'from' : 'to'}_school")
+        .where("additional_data->>'email_id' = ?", id)
+
+      unless case_interactions.any?
+        case_interactions.create!(body: body_preview, additional_data: { email_id: id })
+      end
 
       save!
+    end
+
+    def set_case_action_required
+      self.case.update!(action_required: true) if self.case.present? && new_record?
     end
   end
 end

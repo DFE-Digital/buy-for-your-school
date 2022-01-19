@@ -380,6 +380,7 @@ en:
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
+          state_action_required: Action
         source:
           digital: Specify case
           nw_hub: North west hub case
