@@ -1,9 +1,8 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
-  # before_action :support_request, only: %i[show]
   before_action :faf, only: %i[show]
   before_action :faf_form, only: %i[create]
-  before_action :faf_presenter, only: %i[show]
+  before_action :faf_presenter, only: %i[show create]
 
   def index
     @source = request.referer
@@ -47,6 +46,10 @@ private
     )
   end
 
+  # Only return current user id if user session exists and user has selected
+  # to use DSI for request
+  #
+  # @return [String]
   def user_id
     return unless params[:dsi].in?(["true", true])
     return if current_user.guest?

@@ -26,7 +26,7 @@ class Form
     @step - 1
   end
 
-  # @return [Hash] form parms as  request attributes
+  # @return [Hash] form parms as request attributes
   def to_h
     self.class.dry_initializer.attributes(self).except(:step, :messages)
   end

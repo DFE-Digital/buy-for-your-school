@@ -10,6 +10,7 @@ class FafForm < Form
   # @return [String]
   option :message_body, optional: true # 5 (last)
 
+  # @return [Hash] form parms as request attributes
   def to_h
     super.except(:dsi)
   end
