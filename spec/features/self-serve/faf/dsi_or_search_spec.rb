@@ -19,7 +19,7 @@ RSpec.feature "Faf - dsi or search" do
       end
 
       it "makes form redirect to DfE Sign-in" do
-        expect(find("form")["action"]).to match /\/auth\/dfe/
+        expect(find("form")["action"]).to match(/\/auth\/dfe/)
       end
     end
   end

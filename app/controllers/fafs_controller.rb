@@ -51,8 +51,7 @@ private
   #
   # @return [String]
   def user_id
-    return unless dsi?
-    return if current_user.guest?
+    return if !dsi? || current_user.guest?
 
     current_user.id
   end
