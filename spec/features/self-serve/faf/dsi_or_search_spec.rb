@@ -15,7 +15,7 @@ RSpec.feature "Faf - dsi or search" do
 
     context "when user selects DfE Sign-in", js: true do
       before do
-        choose "Yes, use my DfE Sign-in"
+        find("label[for='faf-form-dsi-true-field']").click
       end
 
       it "makes form redirect to DfE Sign-in" do

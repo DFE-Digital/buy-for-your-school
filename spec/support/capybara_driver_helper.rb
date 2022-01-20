@@ -1,6 +1,6 @@
-JS_DRIVER = :chrome_headless
+JS_DRIVER = (ENV["GUI"] ? :chrome : :headless_chrome)
 
-Capybara.register_driver :chrome_headless do |app|
+Capybara.register_driver :headless_chrome do |app|
   chrome_options = Selenium::WebDriver::Chrome::Options.new
   chrome_options.add_argument("no-sandbox")
   chrome_options.add_argument("headless")
@@ -16,13 +16,17 @@ Capybara.register_driver :chrome_headless do |app|
   end
 end
 
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
 Capybara.configure do |config|
   config.default_driver = :rack_test
   config.javascript_driver = JS_DRIVER
   config.server = :puma, { Silent: true }
 
-  Capybara.app_host = "http://www.example.com:3000"
-  Capybara.asset_host = "http://www.example.com"
+  # Capybara.app_host = "http://www.example.com:3000"
+  # Capybara.asset_host = "http://www.example.com"
 
   config.server_host = if RUBY_PLATFORM.match?(/linux/)
                          `/sbin/ip route|awk '/scope/ { print $9 }'`.chomp
