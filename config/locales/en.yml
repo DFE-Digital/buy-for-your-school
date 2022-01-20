@@ -288,19 +288,10 @@ en:
       overview_response: The Get help buying for schools team will respond to you within 2 working days.
       subheading: Before you start
       you_can: You can
-    contact_info:
-      title: Is this your contact information? - Get help buying for schools - GOV.UK
-      caption: About you
-      heading: Is this your contact information?
-      body:
-        if_incorrect: "If these details are not correct, you can either:"
-        login_correct_account: log in with the correct account, or
-        amend_details: amend your DfE Sign-in account details
-        description_list:
-          name: Name
-          email: Email address
-      button:
-        continue: Yes, continue
+    user_query:
+      caption: About your request
+      label: How can we help?
+      hint: Briefly describe your problem in a few sentences.
 
     contact_info:
       title: Is this your contact information? - Get help buying for schools - GOV.UK

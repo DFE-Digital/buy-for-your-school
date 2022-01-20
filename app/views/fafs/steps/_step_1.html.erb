@@ -8,8 +8,11 @@
 <%= form.govuk_radio_button :dsi, true, label: { text: I18n.t("faf.dsi_or_search.radios.dsi") } %>
 <%= form.govuk_radio_button :dsi, false, label: { text: I18n.t("faf.dsi_or_search.radios.no_dsi") } %>
 <br>
-<%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
-<br>
+
+<p class="govuk-body">
+  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+</p>
+<p class="govuk-body">
 <%= link_to I18n.t("faf.dsi_or_search.link.text"), I18n.t("faf.dsi_or_search.link.url"), class: "govuk-link" %>
 
 <%= javascript_include_tag "faf_step_1" %>
