@@ -40,6 +40,11 @@ describe "Support agent sends a basic email" do
       end
     end
 
+    it "retains the updated email body when clicking back on the preview" do
+      click_link "Back"
+      expect(page).to have_field("Enter email body", with: "New email body")
+    end
+
     context "when leaving the email body blank" do
       let(:custom_email_body) { "" }
 
