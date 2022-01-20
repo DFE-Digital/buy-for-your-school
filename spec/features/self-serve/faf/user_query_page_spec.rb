@@ -1,12 +1,11 @@
 RSpec.feature "Faf - how can we help?" do
   context "when the user is signed in" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :one_supported_school) }
 
     before do
       user_is_signed_in(user: user)
       visit "/procurement-support/new"
-      find("label", text: I18n.t("faf.dsi_or_search.radios.dsi")).click
-      click_continue
+      find("label", text: "Yes, use my DfE Sign-in").click
       click_continue
       click_continue
       click_continue
@@ -35,11 +34,10 @@ RSpec.feature "Faf - how can we help?" do
     end
   end
 
-  context "when the user is not signed in" do
+  xcontext "when the user is not signed in" do
     before do
       visit "/procurement-support/new"
       find("label", text: "No, continue without a DfE Sign-in account").click
-      click_continue
       click_continue
       click_continue
       click_continue

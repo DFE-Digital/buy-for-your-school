@@ -24,13 +24,14 @@ class FafsController < ApplicationController
       revert_form
     elsif validation.success? && validation.to_h[:message_body]
       faf = FrameworkRequest.create!(user_id: user_id, **faf_form.to_h)
-      redirect_to faf_path(faf)
+      return redirect_to faf_path(faf)
+    elsif validation.success? && !dsi? && form_params[:step].to_i == 2
+      @faf_form.advance!(2)
     elsif validation.success?
-      @faf_form.advance!
-      render :new
-    else
-      render :new
+      advance_form
     end
+
+    render :new
   end
 
 private
@@ -49,16 +50,23 @@ private
   #
   # @return [String]
   def user_id
-    return unless params[:dsi].in?(["true", true])
+    return unless dsi?
     return if current_user.guest?
 
     current_user.id
   end
 
-  def form_params
-    add_school_urn_to_params if params[:step] == 2 && current_user.supported_schools.one?
+  def dsi?
+    return @dsi if defined?(@dsi)
 
-    params.require(:faf_form).permit(:step, :dsi, :school_urn, :message_body, :back)
+    @dsi = form_params[:dsi].in?(["true", true])
+  end
+
+  def form_params
+    return @form_params if @form_params
+
+    add_school_urn_to_params if params[:faf_form][:step]&.to_i == 2 && current_user.supported_schools.one?
+    @form_params = params.require(:faf_form).permit(:step, :dsi, :school_urn, :message_body, :back)
   end
 
   def add_school_urn_to_params
