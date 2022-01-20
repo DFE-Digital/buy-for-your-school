@@ -1,11 +1,10 @@
-<%= form.hidden_field :dsi %>
 <span class="govuk-caption-l">
-  step 4
+  Step 4
 </span>
 <h1 class="govuk-heading-l">
   Step 4
 </h1>
-
-<p class="govuk-body">
-  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
-</p>
+<%= form.hidden_field :dsi, value: form.object.dsi %>
+<%= form.hidden_field :school_urn, value: form.object.school_urn %>
+<%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+<br>

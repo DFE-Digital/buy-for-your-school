@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_123500) do
+ActiveRecord::Schema.define(version: 2022_01_19_145844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_123500) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_123500) do
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
+    t.boolean "action_required", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -268,7 +269,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_123500) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["slug"], name: "index_support_categories_on_slug"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
@@ -317,11 +318,12 @@ ActiveRecord::Schema.define(version: 2022_01_19_123500) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "outlook_id"
-    t.boolean "is_read", default: false
+    t.boolean "outlook_is_read", default: false
     t.boolean "is_draft", default: false
     t.boolean "has_attachments", default: false
     t.text "body_preview"
     t.integer "folder"
+    t.boolean "is_read", default: false
   end
 
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

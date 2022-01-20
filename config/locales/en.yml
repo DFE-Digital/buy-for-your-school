@@ -317,6 +317,11 @@ en:
         dsi: Yes, use my DfE Sign-in
         no_dsi: No, continue without a DfE Sign-in account
 
+    user_organisation:
+      header: Which school are you buying for?
+      subtitle: About your school
+      hint: You are linked to more than one school. Select the one that's related to your support request.
+
     check_answers:
       header: Send your request
       sent: Your request has been submitted
@@ -371,6 +376,7 @@ en:
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
+          state_action_required: Action
         source:
           digital: Specify case
           nw_hub: North west hub case
@@ -611,11 +617,15 @@ en:
         my_case_emails: My Case Emails
       show:
         header: View Email
+        case_id: Case ID
         subject: Subject
         sender: Sender
         recipients: Recipients
         sent_at: Sent at
         attachments: Attachments
+      button:
+        mark_as_read: Mark as read
+        mark_as_unread: Mark as unread
 
     interaction:
       header:
@@ -632,6 +642,7 @@ en:
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
       label:
+        email_unread: Unread
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         body: Notes
