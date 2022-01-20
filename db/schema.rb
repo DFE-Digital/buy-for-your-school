@@ -104,6 +104,8 @@ ActiveRecord::Schema.define(version: 2022_01_19_145844) do
     t.string "school_urn"
     t.string "message_body"
     t.boolean "submitted", default: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -454,6 +456,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_145844) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
