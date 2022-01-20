@@ -21,8 +21,6 @@ module Support
   private
 
     def resolve_case
-      current_case.agent = nil
-
       current_case.interactions.note.build(
         body: "Case resolved: #{@case_resolution_form.notes}",
         agent_id: current_agent.id,

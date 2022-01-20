@@ -3,7 +3,8 @@ require "rails_helper"
 describe "Resolving a case" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, :opened, agent: build(:support_agent)) }
+  let(:existing_agent) { create(:support_agent) }
+  let(:support_case) { create(:support_case, :opened, agent: existing_agent) }
 
   before do
     click_button "Agent Login"
@@ -31,8 +32,8 @@ describe "Resolving a case" do
       expect(case_resolved_interaction.agent).to eq(agent)
     end
 
-    it "unassigns the existing agent from the case" do
-      expect(support_case.reload.agent).to be_nil
+    it "leaves the agent assigned to the case" do
+      expect(support_case.reload.agent).to eq(existing_agent)
     end
 
     it "redirects the user back to the case" do
