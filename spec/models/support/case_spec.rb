@@ -3,7 +3,7 @@ RSpec.describe Support::Case, type: :model do
 
   it "belongs to a category" do
     expect(support_case.category).not_to be_nil
-    expect(support_case.category.title).to match /support category title \d/
+    expect(support_case.category.title).to match(/support category title \d/)
   end
 
   it "has optional new and existing contracts" do
