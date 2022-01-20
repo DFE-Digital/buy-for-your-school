@@ -626,11 +626,15 @@ en:
         my_case_emails: My Case Emails
       show:
         header: View Email
+        case_id: Case ID
         subject: Subject
         sender: Sender
         recipients: Recipients
         sent_at: Sent at
         attachments: Attachments
+      button:
+        mark_as_read: Mark as read
+        mark_as_unread: Mark as unread
 
     interaction:
       header:
@@ -647,6 +651,7 @@ en:
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
       label:
+        email_unread: Unread
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         body: Notes

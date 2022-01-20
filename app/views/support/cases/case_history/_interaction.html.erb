@@ -9,6 +9,10 @@
         id="case-history-<%= "#{interaction.event_type.dasherize}-#{interaction.id}" %>">
 
         <%= I18n.t("support.interaction.type.#{interaction.event_type}") %>
+
+        <% if interaction.email_from_school? && interaction.email&.is_read == false %>
+          <%= render "support/cases/emails/unread_badge" %>
+        <% end %>
       </span>
     </h2>
     <div class="govuk-accordion__section-summary govuk-body"
