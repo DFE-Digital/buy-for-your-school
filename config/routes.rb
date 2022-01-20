@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     resources :agents, only: %i[create]
     if Features.enabled?(:incoming_emails)
       resources :emails, only: %i[index show]
+      resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :cases, only: %i[index show edit update] do
       collection do

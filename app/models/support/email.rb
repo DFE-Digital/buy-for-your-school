@@ -5,6 +5,7 @@ module Support
 
     scope :display_order, -> { order("sent_at DESC") }
     scope :my_cases, ->(agent) { where(case_id: agent.case_ids) }
+    scope :unread, -> { where(is_read: false) }
 
     enum folder: { inbox: 0, sent_items: 1 }
 
@@ -22,7 +23,7 @@ module Support
         outlook_conversation_id: message.conversation_id,
         folder: folder,
         subject: message.subject,
-        is_read: message.is_read,
+        outlook_is_read: message.is_read,
         is_draft: message.is_draft,
         has_attachments: message.has_attachments,
         body_preview: message.body_preview,
