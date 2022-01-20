@@ -60,12 +60,6 @@ RSpec.describe SupportForm, type: :model do
     end
   end
 
-  it "#back" do
-    form = described_class.new(step: 99)
-    expect(form.back).to be 98
-    expect(form.step).to be 99
-  end
-
   describe "#back!" do
     it "defaults to one move backward" do
       form = described_class.new(step: 99)
