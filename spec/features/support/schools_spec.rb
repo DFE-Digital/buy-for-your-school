@@ -8,6 +8,6 @@ RSpec.feature "School data" do
   end
 
   it "show smoke test" do
-    expect(page.text).to match /School #\d/
+    expect(page.text).to match(/School #\d/)
   end
 end
