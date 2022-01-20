@@ -1,0 +1,12 @@
+<%= content_for :title, I18n.t("faf.user_organisation.header") %>
+<%= form.hidden_field :dsi %>
+<%= form.govuk_collection_radio_buttons :school_urn,
+  current_user.supported_schools,
+  :urn,
+  :name,
+  caption: { text: I18n.t("faf.user_organisation.subtitle"), size: "l" },
+  legend: { text: I18n.t("faf.user_organisation.header"), size: "l" },
+  hint: { text: I18n.t("faf.user_organisation.hint") }
+%>
+<br>
+<%= form.submit I18n.t("generic.button.next"), class: "govuk-button" %>
