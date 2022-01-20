@@ -58,7 +58,7 @@ private
   def form_params
     add_school_urn_to_params if params[:step] == 2 && current_user.supported_schools.one?
 
-    params.require(:faf_form).permit(:step, :dsi, :school_urn, :message_body :back)
+    params.require(:faf_form).permit(:step, :dsi, :school_urn, :message_body, :back)
   end
 
   def add_school_urn_to_params
