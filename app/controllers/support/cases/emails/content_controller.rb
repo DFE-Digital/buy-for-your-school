@@ -33,7 +33,7 @@ module Support
       @case_email_content_form = CaseEmailContentForm.from_validation(validation)
 
       if validation.success?
-        @back_url = edit_support_case_email_content_path(@current_case)
+        @back_url = edit_support_case_email_content_path(@current_case, case_email_content_form: { email_body: case_email_content_form_params[:email_body] })
 
         render :show
       else
@@ -69,6 +69,8 @@ module Support
     end
 
     def basic_email_body
+      return case_email_content_form_params[:email_body] if params[:case_email_content_form].present?
+
       I18n.t("support.case_email_content.edit.default_email_body.non_template")
     end
 
