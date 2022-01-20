@@ -26,6 +26,15 @@ class Form
     @step - 1
   end
 
+  # Proceed or skip to previous questions
+  #
+  # @param num [Integer] number of steps to revert
+  #
+  # @return [Integer] previous step position
+  def back!(num = 1)
+    @step -= num
+  end
+
   # @return [Hash] form parms as  request attributes
   def to_h
     self.class.dry_initializer.attributes(self).except(:step, :messages)

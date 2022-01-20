@@ -244,6 +244,12 @@ RSpec.feature "Create a new support request" do
       expect(page).to have_link "You must tell us how we can help", href: "#support-form-message-body-field-error"
       expect(find(".govuk-error-message")).to have_text "You must tell us how we can help"
     end
+
+    it "goes back to the previous step when the back link is clicked" do
+      find(".govuk-back-link").click
+
+      expect(find("span.govuk-caption-l")).to have_text "About your procurement"
+    end
   end
 
   # show
