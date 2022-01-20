@@ -37,7 +37,7 @@ module Support
 
     # @return [Boolean]
     def email?
-      event_type.match? /\Aemail.*/
+      event_type.match?(/\Aemail.*/)
     end
 
     def outlook_email?
