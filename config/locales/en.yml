@@ -313,6 +313,11 @@ en:
         dsi: Yes, use my DfE Sign-in
         no_dsi: No, continue without a DfE Sign-in account
 
+    user_organisation:
+      header: Which school are you buying for?
+      subtitle: About your school
+      hint: You are linked to more than one school. Select the one that's related to your support request.
+
     check_answers:
       header: Send your request
       sent: Your request has been submitted
