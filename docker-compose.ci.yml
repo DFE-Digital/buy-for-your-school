@@ -16,6 +16,8 @@ services:
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GIT_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
+    depends_on:
+      - chrome
 
   chrome:
     container_name: ghbs_chrome
