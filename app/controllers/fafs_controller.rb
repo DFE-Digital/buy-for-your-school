@@ -16,7 +16,8 @@ class FafsController < ApplicationController
   end
 
   def new
-    @faf_form = FafForm.new(step: 1)
+    step = params[:step] || 1
+    @faf_form = FafForm.new(step: step)
   end
 
   def create
@@ -50,8 +51,7 @@ private
   #
   # @return [String]
   def user_id
-    return unless dsi?
-    return if current_user.guest?
+    return if !dsi? || current_user.guest?
 
     current_user.id
   end
