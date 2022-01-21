@@ -1,7 +1,10 @@
 RSpec.describe Support::InteractionPresenter do
   subject(:presenter) { described_class.new(interaction) }
 
-  let(:interaction) { OpenStruct.new(note: "\n foo \n") }
+  let(:organisation) { create(:support_organisation, :fixed_name) }
+  let(:additional_data) { nil }
+  let(:interaction) { build(:support_interaction, body: "\n foo \n", additional_data: additional_data) }
+
   let(:event_types) do
     {
       note: 0,
@@ -14,9 +17,9 @@ RSpec.describe Support::InteractionPresenter do
     }
   end
 
-  describe "#note" do
+  describe "#body" do
     it "strips new lines" do
-      expect(presenter.note).to eq("foo")
+      expect(presenter.body).to eq("foo")
     end
   end
 
@@ -27,6 +30,25 @@ RSpec.describe Support::InteractionPresenter do
         have_attributes(id: "email_from_school", label: "Email from school"),
         have_attributes(id: "email_to_school", label: "Email to school"),
       ])
+    end
+  end
+
+  context "with additonal data" do
+    let(:additional_data) do
+      {
+        organisation_id: organisation.id,
+        support_request_id: "000001",
+      }
+    end
+
+    describe "#additional_data" do
+      it "returns a formatted hash with the organsiation name" do
+        expect(presenter.additional_data).to include("organisation_id" => organisation.name)
+      end
+
+      it "returns a formatted hash removing support id" do
+        expect(presenter.additional_data).not_to include("support_request_id" => "000001")
+      end
     end
   end
 end

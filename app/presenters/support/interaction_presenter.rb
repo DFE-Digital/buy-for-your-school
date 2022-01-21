@@ -4,6 +4,20 @@ require_relative "email_presenter"
 
 module Support
   class InteractionPresenter < BasePresenter
+    # @return [Hash]
+    def additional_data
+      super.each_with_object({}) do |(field, value), formatted_hash|
+        next if field.in?(%w[support_request_id])
+
+        case field
+        when "organisation_id"
+          formatted_hash["organisation_id"] = organisation(value).name
+        else
+          formatted_hash[field] = value
+        end
+      end
+    end
+
     # @return [string]
     def created_at
       if outlook_email?
@@ -14,7 +28,7 @@ module Support
     end
 
     # @return [String]
-    def note
+    def body
       super.strip.chomp
     end
 
@@ -64,9 +78,14 @@ module Support
     #
     # @return [Hash] with
     def contact_events
-      Interaction.event_types.reject do |key, _int|
+      Support::Interaction.event_types.reject do |key, _int|
         %w[note support_request hub_notes hub_progress_notes hub_migration].include?(key)
       end
+    end
+
+    # @return [Support::Organisation]
+    def organisation(organisation_id)
+      @organisation ||= Support::Organisation.find(organisation_id)
     end
   end
 end
