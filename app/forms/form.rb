@@ -21,11 +21,6 @@ class Form
     @step += num
   end
 
-  # @return [Integer] previous step position
-  def back
-    @step - 1
-  end
-
   # Proceed or skip to previous questions
   #
   # @param num [Integer] number of steps to revert

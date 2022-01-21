@@ -8,7 +8,7 @@ RSpec.feature "Faf - user organisation page" do
   end
 
   context "when the user belongs to only one supported school" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :one_supported_school) }
 
     it "skips step 3 because the school is implicit" do
       expect(page).not_to have_unchecked_field "Specialist School for Testing"
@@ -26,7 +26,7 @@ RSpec.feature "Faf - user organisation page" do
     it "goes back to step 2 when the back link is clicked" do
       find(".govuk-back-link").click
 
-      expect(find("span.govuk-caption-l")).to have_text "About you"
+      expect(find("h1")).to have_text "Is this your contact information?"
     end
 
     it "asks them to choose which school" do
