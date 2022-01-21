@@ -60,7 +60,7 @@ RSpec.feature "Create a new support request" do
     end
 
     # step 1
-    it "asks for a phone number" do
+    xit "asks for a phone number" do
       expect(find("span.govuk-caption-l")).to have_text "About you"
       expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
       expect(find(".govuk-hint")).to have_text "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes. You do not need to provide a phone number."
@@ -76,7 +76,7 @@ RSpec.feature "Create a new support request" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
     end
 
-    context "with valid data" do
+    xcontext "with valid data" do
       # step 1 > step 4
       it "validates a phone number (valid)" do
         fill_in "support_form[phone_number]", with: "01234567890"
@@ -91,7 +91,7 @@ RSpec.feature "Create a new support request" do
       end
     end
 
-    context "with invalid data it validates a phone number" do
+    xcontext "with invalid data it validates a phone number" do
       # step 1
       it "(min size)" do
         fill_in "support_form[phone_number]", with: "0123"
@@ -101,7 +101,7 @@ RSpec.feature "Create a new support request" do
         expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
-      it "international code" do
+      it "(international code)" do
         fill_in "support_form[phone_number]", with: "+3551234567"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
@@ -109,7 +109,7 @@ RSpec.feature "Create a new support request" do
         expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
-      it "white space in between the phone number" do
+      it "(white space)" do
         fill_in "support_form[phone_number]", with: "0208 590 1465"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
