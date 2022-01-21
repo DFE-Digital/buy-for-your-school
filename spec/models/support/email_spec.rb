@@ -265,7 +265,7 @@ describe Support::Email do
       expect(email).to have_received(:create_interaction).once
     end
 
-    context "email is a newly created record" do
+    context "when email is a newly created record" do
       let(:email) { build(:support_email, case: nil) }
 
       it "potentially sets the case to action required" do
@@ -277,7 +277,7 @@ describe Support::Email do
       end
     end
 
-    context "email has been imported before" do
+    context "when email has been imported before" do
       let(:email) { create(:support_email, case: nil) }
 
       it "does not attempt to modify the case action required" do
