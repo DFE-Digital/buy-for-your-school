@@ -24,7 +24,7 @@ class FafsController < ApplicationController
     if form_params[:back] == "true"
       revert_form
     elsif validation.success? && validation.to_h[:message_body]
-      faf = FrameworkRequest.create!(user_id: user_id, **faf_form.to_h)
+      faf = FrameworkRequest.create!(user_id: user_id, first_name: current_user.first_name, last_name: current_user.last_name, email: current_user.email, **faf_form.to_h)
       return redirect_to faf_path(faf)
     elsif validation.success? && !dsi? && form_params[:step].to_i == 2
       @faf_form.advance!(2)
@@ -33,6 +33,10 @@ class FafsController < ApplicationController
     end
 
     render :new
+  end
+
+  def edit
+    @faf_form = FafForm.new(step: params[:step], **faf_presenter.attributes.symbolize_keys)
   end
 
 private

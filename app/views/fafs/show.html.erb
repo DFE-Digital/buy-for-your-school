@@ -12,7 +12,9 @@
           <%= @faf_presenter.user.full_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-name" %>
+          <% if @faf_presenter.dsi? == false %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-name" %>
+          <% end %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -23,7 +25,9 @@
           <%= @faf_presenter.user.email %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-email" %>
+          <% if @faf_presenter.dsi? == false %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-email" %>
+          <% end %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -54,7 +58,7 @@
       <%= I18n.t("faf.check_answers.response_time") %>
     </p>
 
-    <%= button_to I18n.t("faf.check_answers.button.send"), faf_submission_path(@faf), class: "govuk-button", method: :patch, data: { disable_with: "Submitting..." } %>
+    <%= button_to I18n.t("faf.check_answers.button.send"), fafs_submission_path(@faf), class: "govuk-button", method: :patch, data: { disable_with: "Submitting..." } %>
 
   </div>
 </div>
