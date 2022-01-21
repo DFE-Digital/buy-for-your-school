@@ -10,7 +10,7 @@ class SubmitFrameworkRequest
 
   # @!attribute template
   #   @return [String] Template UUID
-  option :template, Types::String, default: proc { "acb20822-a5eb-43a6-8607-b9c8e25759b4" }
+  option :template, Types::String, default: proc { "621a9fe9-018c-425e-ae6e-709c6718fe8d" }
 
   # TODO: Replace with outbound API call
   #
