@@ -11,10 +11,12 @@ module Support
 
     def self.import_from_mailbox(message, folder: :inbox)
       email = find_or_initialize_by(outlook_id: message.id)
+      is_first_import = email.new_record?
+
       email.import_from_message(message, folder: folder)
       email.automatically_assign_case
       email.create_interaction
-      email.set_case_action_required
+      email.set_case_action_required if is_first_import
     end
 
     def import_from_message(message, folder: :inbox)
@@ -71,7 +73,7 @@ module Support
     end
 
     def set_case_action_required
-      self.case.update!(action_required: true) if self.case.present? && new_record?
+      self.case.update!(action_required: true) if self.case.present?
     end
   end
 end
