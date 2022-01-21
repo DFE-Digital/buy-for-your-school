@@ -10,6 +10,8 @@ module JourneyHelpers
   # generic.button.next
   def click_continue
     click_on "Continue"
+  rescue Capybara::ElementNotFound
+    click_on "Yes, continue"
   end
 
   # generic.button.update
