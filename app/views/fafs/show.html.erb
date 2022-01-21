@@ -38,7 +38,9 @@
           <%= @faf_presenter.school_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-school" %>
+        <% if @faf_presenter.user.supported_schools.one? == false %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 3), class: "govuk-link", id: "edit-school" %>
+        <% end %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -49,7 +51,7 @@
           <%= @faf_presenter.message_body %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 0), class: "govuk-link", id: "edit-message" %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_faf_path(@faf, step: 4), class: "govuk-link", id: "edit-message" %>
         </dd>
       </div>
     </dl>

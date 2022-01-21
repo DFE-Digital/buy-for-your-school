@@ -36,7 +36,19 @@ class FafsController < ApplicationController
   end
 
   def edit
-    @faf_form = FafForm.new(step: params[:step], **faf_presenter.attributes.symbolize_keys)
+    @faf_form = FafForm.new(step: params[:step], dsi: faf_presenter.dsi?, **faf_presenter.attributes.symbolize_keys)
+  end
+
+  def update
+    @faf_form = faf_form
+
+    if validation.success?
+      faf.update!(**@faf.attributes.symbolize_keys, **@faf_form.to_h)
+
+      redirect_to faf_path(@faf), notice: I18n.t("support_request.flash.updated")
+    else
+      render :edit
+    end
   end
 
 private
@@ -108,7 +120,7 @@ private
   end
 
   def faf_presenter
-    @faf_presenter = FafPresenter.new(@faf)
+    @faf_presenter = FafPresenter.new(faf)
   end
 
   # @return [FrameworkRequest]

@@ -31,7 +31,7 @@ RSpec.feature "FaF - check your answers" do
 
         expect(all("dt.govuk-summary-list__key")[2]).to have_text "Your school"
         expect(all("dd.govuk-summary-list__value")[2]).to have_text "School #1"
-        expect(all("dd.govuk-summary-list__actions")[2]).to have_link "Change"
+        expect(all("dd.govuk-summary-list__actions")[2]).not_to have_link "Change"
 
         expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of problem"
         expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
