@@ -1,6 +1,6 @@
-JS_DRIVER = :chrome_headless
+JS_DRIVER = (ENV["GUI"] ? :chrome : :headless_chrome)
 
-Capybara.register_driver :chrome_headless do |app|
+Capybara.register_driver :headless_chrome do |app|
   chrome_options = Selenium::WebDriver::Chrome::Options.new
   chrome_options.add_argument("no-sandbox")
   chrome_options.add_argument("headless")
@@ -14,6 +14,10 @@ Capybara.register_driver :chrome_headless do |app|
     # use chromedriver (local setup - ensure your chrome, chromedriver and selenium-webdriver gem versions all match)
     Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [chrome_options])
   end
+end
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
 Capybara.configure do |config|
