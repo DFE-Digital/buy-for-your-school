@@ -12,7 +12,17 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DOCKER: "true"
-      SELENIUM_HUB_URL: http://test-chrome:4444/wd/hub
+      SELENIUM_HUB_URL: http://chrome:4444/wd/hub
       CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
       GIT_BRANCH: ${GIT_BRANCH}
       GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}
+    depends_on:
+      - chrome
+
+  chrome:
+    container_name: ghbs_chrome
+    image: selenium/standalone-chrome:95.0-chromedriver-95.0
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - ghbs
