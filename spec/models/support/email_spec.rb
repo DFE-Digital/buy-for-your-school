@@ -142,6 +142,12 @@ describe Support::Email do
           expect(interaction).to be_present
         end
 
+        it "sets the interaction created_at to be the sent_date_time of the email so the ordering is correct" do
+          email.sent_at = Date.parse("25/12/2000 12:00")
+          email.create_interaction
+          expect(Support::Interaction.last.created_at).to eq(Date.parse("25/12/2000 12:00"))
+        end
+
         context "when an interaction already exists of type email_from_school for the email" do
           it "does not duplicate it" do
             create(:support_interaction,
