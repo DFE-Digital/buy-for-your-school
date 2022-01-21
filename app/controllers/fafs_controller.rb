@@ -1,6 +1,6 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :faf, only: %i[show]
+  before_action :faf, only: %i[show edit]
   before_action :faf_form, only: %i[create]
   before_action :faf_presenter, only: %i[show create]
 
@@ -11,7 +11,7 @@ class FafsController < ApplicationController
   # check answers before submission
   def show
     if @faf.submitted?
-      # TODO: redirect to faf_submissions_controller
+      redirect_to fafs_submission_path(faf)
     end
   end
 
@@ -120,7 +120,7 @@ private
   end
 
   def faf_presenter
-    @faf_presenter = FafPresenter.new(faf)
+    @faf_presenter = FafPresenter.new(@faf)
   end
 
   # @return [FrameworkRequest]
