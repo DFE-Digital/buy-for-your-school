@@ -17,9 +17,7 @@ module SignInHelpers
         first_name: user.first_name,
         last_name: user.last_name,
       },
-      credentials: {
-        id_token: "a-long-secret-given-by-dsi-to-use-to-sign-the-user-out-of-dsi-as-a-whole",
-      },
+      credentials: {},
       extra: {
         raw_info: {
           organisation: {

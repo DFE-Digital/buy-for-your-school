@@ -54,9 +54,10 @@ Rails.application.routes.draw do
   end
 
   #
-  # FaF ------------------------------------------------------------------
+  # Framework Requests ------------------------------------------------------------------
   #
-  resources :fafs, except: %i[delete], path: "procurement-support"
+  resources :fafs, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
+  resources :faf_submission, only: %i[update show], path: "procurement-support-submissions"
 
   #
   # Supported ------------------------------------------------------------------
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
     resources :agents, only: %i[create]
     if Features.enabled?(:incoming_emails)
       resources :emails, only: %i[index show]
+      resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :cases, only: %i[index show edit update] do
       collection do

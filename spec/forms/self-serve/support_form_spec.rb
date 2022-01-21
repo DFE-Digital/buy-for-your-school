@@ -60,10 +60,18 @@ RSpec.describe SupportForm, type: :model do
     end
   end
 
-  it "#back" do
-    form = described_class.new(step: 99)
-    expect(form.back).to be 98
-    expect(form.step).to be 99
+  describe "#back!" do
+    it "defaults to one move backward" do
+      form = described_class.new(step: 99)
+      form.back!
+      expect(form.step).to be 98
+    end
+
+    it "can skip n steps back" do
+      form = described_class.new(step: 99)
+      form.back!(2)
+      expect(form.step).to be 97
+    end
   end
 
   it "#has_journey?" do

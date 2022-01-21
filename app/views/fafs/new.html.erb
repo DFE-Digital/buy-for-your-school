@@ -1,5 +1,9 @@
+<%= link_to I18n.t("generic.button.back"), fafs_path(@faf, faf_form: @faf_form.to_h.merge(step: @faf_form.step, back: true)), method: :post, class: "govuk-back-link"  unless @faf_form.step == 1 %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= link_to I18n.t("generic.button.back"), sign_out_path, method: :delete, class: "govuk-back-link" if @faf_form.step == 2 %>
+
     <%= render "fafs/steps/form", path: fafs_path, verb: :post %>
   </div>
 </div>

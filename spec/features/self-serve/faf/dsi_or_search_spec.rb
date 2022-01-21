@@ -12,6 +12,16 @@ RSpec.feature "Faf - dsi or search" do
       click_continue
       expect(find(".govuk-error-summary__body")).to have_text "Select whether you want to use a DfE Sign-in account"
     end
+
+    context "when user selects DfE Sign-in", js: true do
+      before do
+        find("label[for='faf-form-dsi-true-field']").click
+      end
+
+      it "makes form redirect to DfE Sign-in" do
+        expect(find("form")["action"]).to match(/\/auth\/dfe/)
+      end
+    end
   end
 
   context "when the user is signed in" do

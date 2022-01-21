@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     case user
     when User
       # TODO: alternative redirect for caseworkers
-      redirect_to dashboard_path
+      redirect_to login_redirect_url
     when :invalid
       redirect_to root_path, notice: "Access Denied"
     when :no_organisation
@@ -47,7 +47,7 @@ class SessionsController < ApplicationController
     if issuer_url
       redirect_to issuer_url
     else
-      redirect_to root_path, notice: I18n.t("banner.session.destroy")
+      redirect_to logout_redirect_url, notice: I18n.t("banner.session.destroy")
     end
   end
 
@@ -61,5 +61,35 @@ private
   # @return [OmniAuth::AuthHash]
   def auth_hash
     request.env["omniauth.auth"]
+  end
+
+  # @return [String, nil]
+  def origin
+    request.env["omniauth.origin"]
+  end
+
+  # @return [Boolean]
+  def faf_path?
+    origin&.include?(fafs_path) || session[:faf]
+  end
+
+  # @return [String]
+  def login_redirect_url
+    if faf_path?
+      session[:faf] = true
+      return new_faf_path(step: 2)
+    end
+
+    dashboard_path
+  end
+
+  # @return [String]
+  def logout_redirect_url
+    if faf_path?
+      session.delete(:faf)
+      return new_faf_path
+    end
+
+    root_path
   end
 end

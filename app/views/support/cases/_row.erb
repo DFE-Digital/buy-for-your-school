@@ -1,4 +1,4 @@
-<tr class="govuk-table__row">
+<tr class="govuk-table__row case-row">
   <td class="govuk-table__cell">
     <%= link_to kase.ref, support_case_path(kase.id), class: "govuk-link--no-visited-state" %>
   </td>
@@ -9,10 +9,8 @@
 
   <td class="govuk-table__cell"><%= kase.category.title %></td>
 
-  <td class="govuk-table__cell">
-    <strong class="govuk-tag govuk-tag--green">
-      <%= I18n.t("support.case.label.state.state_#{kase.state.downcase}") %>
-    </strong>
+  <td class="govuk-table__cell case-status">
+    <%= render "status_badge", kase: kase %>
   </td>
 
   <% case tab %>
