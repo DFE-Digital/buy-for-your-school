@@ -5,9 +5,12 @@
     <%= render "support/cases/emails/unread_badge" %>
   <% end %>
 </h1>
-<h2 class="govuk-heading-m">
-  <%= I18n.t("support.emails.show.case_id") %>: <%= @email.case.ref %>
-</h2>
+
+<% if @email.case.present? %>
+  <h2 class="govuk-heading-m">
+    <%= I18n.t("support.emails.show.case_id") %>: <%= @email.case.ref %>
+  </h2>
+<% end %>
 
 <%= button_to I18n.t("support.emails.button.#{@email.is_read? ? "mark_as_unread" : "mark_as_read"}"),
       support_email_read_status_path(@email, status: @email.is_read? ? "unread" : "read"),

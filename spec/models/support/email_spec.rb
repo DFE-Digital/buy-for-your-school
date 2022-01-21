@@ -110,7 +110,7 @@ describe Support::Email do
 
   describe "#create_interaction" do
     let(:folder) { :inbox }
-    let(:email) { create(:support_email, case: support_case, body_preview: "Body Here", folder: folder) }
+    let(:email) { create(:support_email, case: support_case, body: "Body Here", folder: folder) }
 
     before { allow(Support::CreateInteraction).to receive(:new) }
 
