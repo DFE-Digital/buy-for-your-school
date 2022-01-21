@@ -8,10 +8,12 @@ module Support
     def additional_data
       super.each_with_object({}) do |(field, value), formatted_hash|
         next if field.in?(%w[support_request_id])
-
+#category_id
         case field
         when "organisation_id"
           formatted_hash["organisation_id"] = organisation(value).name
+        when "category_id"
+          formatted_hash["category_id"] = category(value).title
         else
           formatted_hash[field] = value
         end
@@ -86,6 +88,11 @@ module Support
     # @return [Support::Organisation]
     def organisation(organisation_id)
       @organisation ||= Support::Organisation.find(organisation_id)
+    end
+
+    # @return [Support::Category]
+    def category(category_id)
+      @category ||= Support::Category.find(category_id)
     end
   end
 end

@@ -1,7 +1,8 @@
 RSpec.describe Support::InteractionPresenter do
   subject(:presenter) { described_class.new(interaction) }
 
-  let(:organisation) { create(:support_organisation, :fixed_name) }
+  let(:organisation) { create(:support_organisation, :fixed_name, name: "Example Organisation") }
+  let(:category) { create(:support_category, :fixed_title, title: "Example Category") }
   let(:additional_data) { nil }
   let(:interaction) { build(:support_interaction, body: "\n foo \n", additional_data: additional_data) }
 
@@ -37,13 +38,18 @@ RSpec.describe Support::InteractionPresenter do
     let(:additional_data) do
       {
         organisation_id: organisation.id,
+        category_id: category.id,
         support_request_id: "000001",
       }
     end
 
     describe "#additional_data" do
       it "returns a formatted hash with the organsiation name" do
-        expect(presenter.additional_data).to include("organisation_id" => organisation.name)
+        expect(presenter.additional_data).to include("organisation_id" => "Example Organisation")
+      end
+
+      it "returns a formatted hash with the category name" do
+        expect(presenter.additional_data).to include("category_id" => "Example Category")
       end
 
       it "returns a formatted hash removing support id" do
