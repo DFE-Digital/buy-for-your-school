@@ -60,7 +60,7 @@ module Support
         .where("additional_data->>'email_id' = ?", id)
 
       unless case_interactions.any?
-        case_interactions.create!(body: body_preview, additional_data: { email_id: id })
+        case_interactions.create!(body: body, additional_data: { email_id: id })
       end
 
       save!
