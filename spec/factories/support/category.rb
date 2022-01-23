@@ -13,7 +13,7 @@ FactoryBot.define do
     end
 
     trait :fixed_title do
-      title { "Example Category"}
+      title { "Example Category" }
     end
   end
 end

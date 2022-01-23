@@ -4,7 +4,7 @@ FactoryBot.define do
     association :case, factory: :support_case
     event_type { 0 }
     body { "This is an example note." }
-    additional_data {}
+    additional_data { {} }
 
     trait :note do
       event_type { 0 }

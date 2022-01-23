@@ -8,7 +8,7 @@ module Support
     def additional_data
       super.each_with_object({}) do |(field, value), formatted_hash|
         next if field.in?(%w[support_request_id])
-#category_id
+
         case field
         when "organisation_id"
           formatted_hash["organisation_id"] = organisation(value).name
@@ -31,7 +31,7 @@ module Support
 
     # @return [String]
     def body
-      super.strip.chomp
+      super.strip.chomp if super
     end
 
     # @return [Array<OpenStruct>]
@@ -78,21 +78,21 @@ module Support
     # @example
     #  { phone_call: 1, email_from_school: 2, email_to_school: 3 }
     #
-    # @return [Hash] with
+    # @return [Array] with
     def contact_events
-      Support::Interaction.event_types.reject do |key, _int|
+      Interaction.event_types.reject do |key, _int|
         %w[note support_request hub_notes hub_progress_notes hub_migration].include?(key)
       end
     end
 
-    # @return [Support::Organisation]
+    # @return [Support::OrganisationPresenter]
     def organisation(organisation_id)
-      @organisation ||= Support::Organisation.find(organisation_id)
+      @organisation ||= OrganisationPresenter.new(Organisation.find(organisation_id))
     end
 
-    # @return [Support::Category]
+    # @return [Support::CategoryPresenter]
     def category(category_id)
-      @category ||= Support::Category.find(category_id)
+      @category ||= CategoryPresenter.new(Category.find(category_id))
     end
   end
 end
