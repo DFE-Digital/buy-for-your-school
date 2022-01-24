@@ -12,7 +12,7 @@ RSpec.feature "Faf - user organisation page" do
 
     it "skips step 3 because the school is implicit" do
       expect(page).not_to have_unchecked_field "Specialist School for Testing"
-      expect(find("span.govuk-caption-l")).to have_text "How can we help?"
+      expect(find("span.govuk-caption-l")).to have_text "About your request"
     end
   end
 

@@ -4,7 +4,7 @@ RSpec.feature "Faf - confirmation page" do
     let(:email) do
       {
         email_address: "test@test",
-        template_id: "acb20822-a5eb-43a6-8607-b9c8e25759b4",
+        template_id: "621a9fe9-018c-425e-ae6e-709c6718fe8d",
         reference: "000001",
         personalisation: {
           reference: "000001",

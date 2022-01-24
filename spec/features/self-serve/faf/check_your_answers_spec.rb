@@ -3,7 +3,7 @@ RSpec.feature "FaF - check your answers" do
 
   context "when the user is signed in" do
     before do
-      create(:support_organisation, urn: "urn-type-1")
+      create(:support_organisation, urn: "urn-type-1", name: "School #1")
 
       user_is_signed_in(user: user)
       # start DSI journey

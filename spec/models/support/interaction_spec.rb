@@ -13,7 +13,7 @@ RSpec.describe Support::Interaction, type: :model do
 
   it "can be a note, email (inbound/outbound) or phone call" do
     expect(interaction).to define_enum_for(:event_type).with_values(%i[
-      note phone_call email_from_school email_to_school support_request hub_notes hub_progress_notes hub_migration faf_support
+      note phone_call email_from_school email_to_school support_request hub_notes hub_progress_notes hub_migration faf_request
     ])
   end
 
