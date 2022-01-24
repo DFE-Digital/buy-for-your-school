@@ -9,19 +9,22 @@ RSpec.feature "Faf - start page" do
       expect(page).to have_current_path "/procurement-support"
     end
 
-    it "navigates to the about frameworks page" do
-      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", class: "govuk-link"
+    it "navigates to the about frameworks page in an external tab" do
+      url = "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy"
+      expect(page).to have_link_to_open_in_new_tab("about frameworks", href: url)
     end
 
-    it "navigates to the planning for what you're buying page" do
-      expect(page).to have_link "planning for what you're buying", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
+    it "navigates to the planning for what you're buying page in an external tab" do
+      url = "https://www.gov.uk/guidance/buying-for-schools"
+      expect(page).to have_link_to_open_in_new_tab("planning for what you're buying", href: url)
     end
 
-    it "navigates to the finding the right way to buy page" do
-      expect(page).to have_link "finding the right way to buy", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
+    it "navigates to the finding the right way to buy page in an external tab" do
+      url = "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools"
+      expect(page).to have_link_to_open_in_new_tab("finding the right way to buy", href: url)
     end
 
-    it "navigates to the create a specification page" do
+    it "navigates to the create a specification page directly as an internal link" do
       expect(page).to have_link "create a specification", href: "/", class: "govuk-link"
     end
   end
@@ -37,19 +40,22 @@ RSpec.feature "Faf - start page" do
       expect(page).to have_current_path "/procurement-support"
     end
 
-    it "navigates to the about frameworks page" do
-      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", class: "govuk-link"
+    it "navigates to the about frameworks page in an external tab" do
+      url = "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy"
+      expect(page).to have_link_to_open_in_new_tab("about frameworks", href: url)
     end
 
-    it "navigates to the planning for what you're buying page" do
-      expect(page).to have_link "planning for what you're buying", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
+    it "navigates to the planning for what you're buying page in an external tab" do
+      url = "https://www.gov.uk/guidance/buying-for-schools"
+      expect(page).to have_link_to_open_in_new_tab("planning for what you're buying", href: url)
     end
 
-    it "navigates to the finding the right way to buy page" do
-      expect(page).to have_link "finding the right way to buy", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
+    it "navigates to the finding the right way to buy page in an external tab" do
+      url = "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools"
+      expect(page).to have_link_to_open_in_new_tab("finding the right way to buy", href: url)
     end
 
-    it "navigates to the create a specification page" do
+    it "navigates to the create a specification page directly as an internal link" do
       expect(page).to have_link "create a specification", href: "/", class: "govuk-link"
     end
   end
