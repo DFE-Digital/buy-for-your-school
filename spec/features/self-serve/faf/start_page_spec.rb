@@ -10,11 +10,11 @@ RSpec.feature "Faf - start page" do
     end
 
     it "navigates to the about frameworks page" do
-      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
+      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", class: "govuk-link"
     end
 
     it "navigates to the planning for what you're buying page" do
-      expect(page).to have_link "planning for what you're buying", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
+      expect(page).to have_link "planning for what you're buying", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
     end
 
     it "navigates to the finding the right way to buy page" do
@@ -22,7 +22,7 @@ RSpec.feature "Faf - start page" do
     end
 
     it "navigates to the create a specification page" do
-      expect(page).to have_link "create a specification", href: "/dashboard", class: "govuk-link"
+      expect(page).to have_link "create a specification", href: "/", class: "govuk-link"
     end
   end
 
@@ -38,11 +38,11 @@ RSpec.feature "Faf - start page" do
     end
 
     it "navigates to the about frameworks page" do
-      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
+      expect(page).to have_link "about frameworks", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", class: "govuk-link"
     end
 
     it "navigates to the planning for what you're buying page" do
-      expect(page).to have_link "planning for what you're buying", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
+      expect(page).to have_link "planning for what you're buying", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
     end
 
     it "navigates to the finding the right way to buy page" do
@@ -50,7 +50,7 @@ RSpec.feature "Faf - start page" do
     end
 
     it "navigates to the create a specification page" do
-      expect(page).to have_link "create a specification", href: "/dashboard", class: "govuk-link"
+      expect(page).to have_link "create a specification", href: "/", class: "govuk-link"
     end
   end
 end
