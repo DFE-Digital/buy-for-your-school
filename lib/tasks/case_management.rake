@@ -2,7 +2,7 @@ namespace :case_management do
   desc "Seed all data"
   task seed: :environment do
     Support::SeedCategories.new.call
-    Support::SeedGroups.new.call
+    Support::SeedGroupTypes.new.call
     Support::SeedSchools.new.call
   end
 
@@ -12,8 +12,8 @@ namespace :case_management do
   end
 
   desc "Populate supported establishment group types"
-  task seed_groups: :environment do
-    Support::SeedGroups.new.call
+  task seed_group_types: :environment do
+    Support::SeedGroupTypes.new.call
   end
 
   desc "Populate the organisations"

@@ -9,7 +9,7 @@ module Support
   # @example
   #   SeedGroups.new(data: "/path/to/file.yml").call
   #
-  class SeedGroups
+  class SeedGroupTypes
     extend Dry::Initializer
 
     # @!attribute [r] data
@@ -20,10 +20,10 @@ module Support
     #
     def call
       YAML.load_file(data).each do |group_type|
-        group = Group.find_or_create_by!(**group_type.slice(:name, :code))
+        group = GroupType.find_or_create_by!(**group_type.slice(:name, :code))
 
         group_type[:establishments].each do |type|
-          EstablishmentType.find_or_create_by!(group_id: group.id, **type.slice(:name, :code))
+          EstablishmentType.find_or_create_by!(group_type_id: group.id, **type.slice(:name, :code))
         end
       end
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_145844) do
+ActiveRecord::Schema.define(version: 2022_01_21_134010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -327,7 +327,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_145844) do
   end
 
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "group_id", null: false
+    t.uuid "group_type_id", null: false
     t.string "name", null: false
     t.integer "code", null: false
     t.integer "organisations_count", default: 0
@@ -337,14 +337,14 @@ ActiveRecord::Schema.define(version: 2022_01_19_145844) do
     t.index ["name"], name: "index_support_establishment_types_on_name", unique: true
   end
 
-  create_table "support_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "support_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "code", null: false
     t.integer "establishment_types_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["code"], name: "index_support_groups_on_code", unique: true
-    t.index ["name"], name: "index_support_groups_on_name", unique: true
+    t.index ["code"], name: "index_support_group_types_on_code", unique: true
+    t.index ["name"], name: "index_support_group_types_on_name", unique: true
   end
 
   create_table "support_hub_transitions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
