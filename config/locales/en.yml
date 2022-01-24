@@ -578,7 +578,7 @@ en:
         header: Preview email
         to:
           label: To
-        salutation: Dear %{first_name}
+        salutation: Dear %{first_name} %{last_name}
         signature_html: Regards<br>%{agent_name}<br>Procurement Specialist<br>Get help buying for schools
         subject:
           label: Subject
