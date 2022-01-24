@@ -8,7 +8,7 @@ RSpec.feature "FaF - check your answers" do
       user_is_signed_in(user: user)
       # start DSI journey
       visit "/procurement-support/new"
-      # step1
+      # step 1
       choose "Yes, use my DfE Sign-in"
       click_continue
       # step 2
