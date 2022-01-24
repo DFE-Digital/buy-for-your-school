@@ -14,7 +14,13 @@
   </dl>
 
   <div class="email-preview-body">
-    <%= send(@template == :basic ? :markdown_to_html : :simple_format, @case_email_content_form.email_body) %>
+  <% if @template == :basic %>
+    <p><%= I18n.t("support.case_email_content.preview.salutation", first_name: @current_case.first_name, last_name: @current_case.last_name) %>
+    <p><%= markdown_to_html(@case_email_content_form.email_body) %></p>
+    <p><%= markdown_to_html(I18n.t("support.case_email_content.preview.signature_html", agent_name: current_agent.full_name)) %></p>
+  <% else %>
+    <%= simple_format(@case_email_content_form.email_body) %>
+  <% end %>
   </div>
 </div>
 
