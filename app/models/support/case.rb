@@ -51,7 +51,7 @@ module Support
     #   digital - specify cases
     #   nw_hub - north west hub cases
     #   sw_hub - south west hub cases
-    enum source: { digital: 0, nw_hub: 1, sw_hub: 2 }
+    enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3 }
 
     # Savings status
     #
