@@ -17,3 +17,4 @@
 //= require lodash/lodash.min
 //= require govuk-frontend/govuk/all.js
 //= require components/autocomplete/autocomplete
+//= require components/close-tab-link

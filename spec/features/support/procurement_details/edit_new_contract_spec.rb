@@ -42,6 +42,22 @@ RSpec.feature "Editing new contract details in procurement tab section" do
         expect(details[3]).to have_text "ACME"
       end
     end
+
+    it "calculates the end date" do
+      # navigate to edit page for new contract
+      find("#pd-new-contract a").click
+      # input start date
+      fill_in "case_contracts_form[started_at(3i)]", with: "1"
+      fill_in "case_contracts_form[started_at(2i)]", with: "1"
+      fill_in "case_contracts_form[started_at(1i)]", with: "2000"
+      # input contract length (months)
+      fill_in "case-contracts-form-duration-field", with: 12
+      # save
+      click_continue
+
+      contract = Support::NewContract.first
+      expect(contract.ended_at).to eq Date.parse("2001-01-01")
+    end
   end
 
   context "when removing values from a new contract" do
