@@ -32,7 +32,7 @@ RSpec.feature "Faf - how can we help?" do
     end
 
     it "submits a support request message" do
-      fill_in "faf_form[message_body]", with: "I have a problem"
+      fill_in "framework_support_form[message_body]", with: "I have a problem"
       click_continue
 
       expect(FrameworkRequest.count).to eq(1)
@@ -59,13 +59,13 @@ RSpec.feature "Faf - how can we help?" do
       click_continue
 
       expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-      expect(page).to have_link "You must tell us how we can help", href: "#faf-form-message-body-field-error"
+      expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
       expect(find(".govuk-error-message")).to have_text "You must tell us how we can help"
     end
 
     # TODO: to be updated when FrameworkRequest model in place
     xit "submits a support request message" do
-      fill_in "faf_form[message_body]", with: "I have a problem"
+      fill_in "framework_support_form[message_body]", with: "I have a problem"
       click_continue
 
       expect(FrameworkRequest.count).to eq(1)

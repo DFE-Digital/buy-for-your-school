@@ -10,11 +10,19 @@ RSpec.feature "FaF session" do
       click_continue
     end
 
-    it "redirects them to step 2 of FaF form" do
-      expect(page).to have_current_path "/procurement-support/new/2"
+    it "shows their profile" do
+      expect(page).to have_current_path "/profile"
     end
 
-    context "when user is signed out" do
+    # xit "user has one org" do
+    #   # /procurement-support/new?step=5
+    # end
+
+    # xit "user has many orgs" do
+    #   # /procurement-support/new?step=4
+    # end
+
+    context "when user signs out" do
       before do
         click_on "Sign out"
       end

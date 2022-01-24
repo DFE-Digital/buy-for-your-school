@@ -1,0 +1,48 @@
+<!-- school (4)  -->
+
+<%= form.hidden_field :dsi %>
+<%= form.hidden_field :first_name, value: form.object.first_name %>
+<%= form.hidden_field :last_name, value: form.object.last_name %>
+<%= form.hidden_field :email, value: form.object.email %>
+
+<% if !current_user.guest? %>
+  <%= content_for :title, I18n.t("faf.user_organisation.header") %>
+
+  <%= form.govuk_collection_radio_buttons :school_urn,
+    current_user.supported_schools,
+    :urn,
+    :name,
+    caption: { text: I18n.t("support_request.caption.school"), size: "l" },
+    legend: { text: I18n.t("support_request.caption.school"), size: "l" },
+    hint: { text: I18n.t("support_request.caption.school") }
+  %>
+<% else %>
+  <%= content_for :title, "search for your school" %>
+
+  <%# form.govuk_collection_radio_buttons :school_urn,
+    UserPresenter.new(User.first).supported_schools,
+    :urn,
+    :name,
+    caption: { text: "About your school", size: "l" },
+    legend: { text: "Search for your school", size: "l" },
+    hint: { text: "enter the name or postcode etc" }
+  %>
+
+  <%= render "components/autocomplete",
+           container_id: "framework-request-form-school-urn-field",
+           label_text: "Establishment URN",
+           # element_id: "school-urn-autocomplete",
+           element_id: "framework_support_form_school_urn",
+           element_name: "framework_request_form[school_urn]",
+           template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
+           value_field: :school_urn,
+           default_value: "#{@framework_support_form.school_urn}",
+           query_url: support_schools_path(format: :json, q: "{{QUERY}}") do %>
+
+    <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
+  <% end %>
+
+
+<% end %>
+
+<br>
