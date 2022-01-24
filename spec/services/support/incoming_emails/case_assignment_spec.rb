@@ -105,6 +105,18 @@ describe Support::IncomingEmails::CaseAssignment do
       it "returns the case with that reference" do
         expect(case_for_email.ref).to eq("100000")
       end
+
+      context "when there is no case in the system for that ref" do
+        let(:subject_ref) { "ABCDEF" }
+
+        it "creates a new case for the email to be assigned to" do
+          expect(case_for_email.ref).to eq(Support::Case.last.ref)
+          expect(case_for_email.source).to eq("incoming_email")
+          expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.first_name).to eq("Contact")
+          expect(case_for_email.last_name).to eq("Name")
+        end
+      end
     end
 
     context "when a case reference cannot be determined by the subject" do

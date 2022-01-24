@@ -16,11 +16,8 @@ module Support
         case_reference ||= case_reference_from_body
         case_reference ||= case_reference_from_conversation
 
-        if case_reference.present?
-          Support::Case.find_by(ref: case_reference)
-        else
-          new_case_for_email
-        end
+        found_case = Support::Case.find_by(ref: case_reference) if case_reference.present?
+        found_case ||= new_case_for_email
       end
 
       def case_reference_from_subject
