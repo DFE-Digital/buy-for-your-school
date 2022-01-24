@@ -7,7 +7,6 @@ module Support
     end
 
     def show
-      @back_url = support_emails_path
       @email = EmailPresenter.new(Support::Email.find(params[:id]))
     end
   end
