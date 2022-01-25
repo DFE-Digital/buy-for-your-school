@@ -13,7 +13,9 @@ module Support
         when "organisation_id"
           formatted_hash["organisation_id"] = organisation(value).name
         when "category_id"
-          formatted_hash["category_id"] = category(value).title
+          formatted_hash["category_id"] = category(value).title if value.present?
+        when "referer"
+          formatted_hash["referer"] = referer
         else
           formatted_hash[field] = value
         end
@@ -80,8 +82,8 @@ module Support
     #
     # @return [Array] with
     def contact_events
-      Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration].include?(key)
+      Support::Interaction.event_types.reject do |key, _int|
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request].include?(key)
       end
     end
 
