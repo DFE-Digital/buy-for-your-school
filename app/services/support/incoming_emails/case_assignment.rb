@@ -16,7 +16,8 @@ module Support
         case_reference ||= case_reference_from_body
         case_reference ||= case_reference_from_conversation
 
-        Support::Case.find_by(ref: case_reference) if case_reference.present?
+        found_case = Support::Case.find_by(ref: case_reference) if case_reference.present?
+        found_case || new_case_for_email
       end
 
       def case_reference_from_subject
@@ -37,6 +38,13 @@ module Support
         if other_email.present?
           other_email.case.try(:ref)
         end
+      end
+
+      def new_case_for_email
+        Support::CreateCase.new(
+          source: :incoming_email,
+          email: email.sender["address"],
+        ).call
       end
     end
   end
