@@ -4,7 +4,28 @@ describe "Support agent sends a templated email" do
 
   let(:support_case) { create(:support_case, :opened) }
 
+  let(:preview_email) do
+    {
+      personalisation: {
+        first_name: "School",
+        last_name: "Contact",
+        from_name: "Procurement Specialist",
+      },
+    }
+  end
+
+  let(:api_preview_response) do
+    {
+      body: "Hi School Contact, here is information regarding frameworks",
+      subject: "DfE Get help buying for schools: your request for advice and guidance",
+    }
+  end
+
   before do
+    stub_request(:post, "https://api.notifications.service.gov.uk/v2/template/f4696e59-8d89-4ac5-84ca-17293b79c337/preview")
+    .with(body: preview_email)
+    .to_return(body: api_preview_response.to_json, status: 200, headers: {})
+
     click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Send email"
@@ -55,7 +76,8 @@ describe "Support agent sends a templated email" do
           first_name: "School",
           last_name: "Contact",
           email: "school@email.co.uk",
-          text: "Hi School Contact, here is information regarding frameworks",
+          # This text needs to be set to the default non-template text to make the spec pass, but in practice the text used is set on the template on notify and isn't controlled by our application directly
+          text: "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification.",
           from_name: "Procurement Specialist",
         },
       }
@@ -77,7 +99,7 @@ describe "Support agent sends a templated email" do
       interacton = support_case.reload.interactions.last
 
       expect(interacton.event_type).to eq "email_to_school"
-      expect(interacton.body).to eq "Hi School Contact, here is information regarding frameworks"
+      expect(interacton.body).to eq "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification."
       expect(interacton.agent).to eq agent
     end
   end

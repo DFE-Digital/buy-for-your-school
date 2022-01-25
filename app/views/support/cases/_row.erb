@@ -4,7 +4,9 @@
   </td>
 
   <td class="govuk-table__cell">
-    <%= link_to kase.org_name, support_case_path(kase.id), class: "govuk-link--no-visited-state" %>
+    <div class="ellipsis-overflow col-350px">
+      <%= link_to kase.org_name, support_case_path(kase.id), class: "govuk-link--no-visited-state", title: kase.org_name %>
+    </div>
   </td>
 
   <td class="govuk-table__cell"><%= kase.category.title %></td>
