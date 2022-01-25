@@ -15,8 +15,8 @@ RSpec.describe Support::CategoryPresenter do
     let(:category) { nil }
 
     describe "#title" do
-      it "returns a placeholder for title" do
-        expect(presenter.title).to eq("n/a")
+      it "returns Not Yet Known for title" do
+        expect(presenter.title).to eq("Not Yet Known")
       end
     end
   end
