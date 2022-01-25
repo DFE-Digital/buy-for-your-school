@@ -14,7 +14,7 @@ RSpec.feature "Faf - how can we help?" do
     it "loads the page" do
       expect(find("span.govuk-caption-l")).to have_text "About your request"
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
-      expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find(".govuk-hint")).to have_text "Briefly describe what advice or guidance you need in a few sentences."
       expect(find_button("Continue")).to be_present
     end
 
@@ -51,7 +51,7 @@ RSpec.feature "Faf - how can we help?" do
     it "loads the page" do
       expect(find("span.govuk-caption-l")).to have_text "About your request"
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
-      expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find(".govuk-hint")).to have_text "Briefly describe what advice or guidance you need in a few sentences."
       expect(find_button("Continue")).to be_present
     end
 

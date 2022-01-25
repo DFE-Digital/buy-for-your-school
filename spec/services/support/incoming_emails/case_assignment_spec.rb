@@ -113,6 +113,7 @@ describe Support::IncomingEmails::CaseAssignment do
           expect(case_for_email.ref).to eq(Support::Case.last.ref)
           expect(case_for_email.source).to eq("incoming_email")
           expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.action_required).to be(true)
         end
       end
     end
@@ -142,6 +143,7 @@ describe Support::IncomingEmails::CaseAssignment do
           expect(case_for_email.ref).to eq(Support::Case.last.ref)
           expect(case_for_email.source).to eq("incoming_email")
           expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.action_required).to be(true)
         end
       end
     end
