@@ -6,8 +6,6 @@
 
 function changeFormAction(path) {
   const form = document.getElementsByTagName("form")[0];
-
-  console.log(path);
   form.action = path;
 }
 

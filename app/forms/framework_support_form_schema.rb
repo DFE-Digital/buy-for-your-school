@@ -1,3 +1,4 @@
+# :nocov:
 #
 # Validate "find-a-framework support requests"
 #
@@ -38,3 +39,4 @@ class FrameworkSupportFormSchema < Schema
     key.failure(:missing) if key? && value.blank?
   end
 end
+# :nocov:
