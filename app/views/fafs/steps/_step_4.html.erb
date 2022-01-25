@@ -1,10 +1,14 @@
-<span class="govuk-caption-l">
-  Step 4
-</span>
-<h1 class="govuk-heading-l">
-  Step 4
-</h1>
 <%= form.hidden_field :dsi, value: form.object.dsi %>
 <%= form.hidden_field :school_urn, value: form.object.school_urn %>
-<%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
-<br>
+<%= form.govuk_text_area :message_body,
+      autofocus: true,
+      class: "govuk-textarea",
+      rows: 5,
+      caption: { text: I18n.t("faf.user_query.caption"), size: "l" },
+      label: { text: I18n.t("faf.user_query.label"), size: "l" },
+      hint: { text: I18n.t("faf.user_query.hint") }
+    %>
+
+<p class="govuk-body">
+  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+</p>

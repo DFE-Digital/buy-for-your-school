@@ -1,4 +1,11 @@
 RSpec.feature "Faf - dsi or search" do
+  it "has a back link to the start page" do
+    visit "/procurement-support/new"
+    expect(page).to have_link "Back", href: "/procurement-support"
+    click_on "Back"
+    expect(page).to have_current_path "/procurement-support"
+  end
+
   context "when the user is not signed in" do
     before do
       visit "/procurement-support/new"

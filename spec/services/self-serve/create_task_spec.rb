@@ -16,12 +16,14 @@ RSpec.describe CreateTask do
       end
     end
 
-    # TODO: test coverage for raised exceptions in service objects
-    # context "when the task is invalid" do
-    #   it "raises UnexpectedContentfulModel" do
-    #     expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }
-    #       .not_to change(Task, :count).by(1)
-    #   end
-    # end
+    context "when the task is invalid" do
+      before { allow_any_instance_of(Task).to receive(:save!).and_raise(ActiveRecord::RecordInvalid) }
+
+      it "raises UnexpectedContentfulModel" do
+        expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }
+          .to raise_error(CreateTask::UnexpectedContentfulModel)
+          .and change(Task, :count).by(0)
+      end
+    end
   end
 end

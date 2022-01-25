@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Support::IncomingEmails::CaseAssignment do
   describe ".detect_and_assign_case" do
-    let(:email) { create(:support_email) }
+    let(:email) { create(:support_email, sender: { "address" => "contact@email.com" }) }
     let(:support_case) { create(:support_case) }
 
     before { allow_any_instance_of(described_class).to receive(:case_for_email).and_return(support_case) }
@@ -86,7 +86,7 @@ describe Support::IncomingEmails::CaseAssignment do
   describe "#case_for_email" do
     subject(:case_for_email) { case_assignment.case_for_email }
 
-    let(:case_assignment) { described_class.new(email: double) }
+    let(:case_assignment) { described_class.new(email: double(sender: { "address" => "contact@email.com", "name" => "Contact Name" })) }
     let(:subject_ref) { "100000" }
     let(:body_ref) { "200000" }
     let(:conversation_ref) { "300000" }
@@ -105,6 +105,17 @@ describe Support::IncomingEmails::CaseAssignment do
       it "returns the case with that reference" do
         expect(case_for_email.ref).to eq("100000")
       end
+
+      context "when there is no case in the system for that ref" do
+        let(:subject_ref) { "ABCDEF" }
+
+        it "creates a new case for the email to be assigned to" do
+          expect(case_for_email.ref).to eq(Support::Case.last.ref)
+          expect(case_for_email.source).to eq("incoming_email")
+          expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.action_required).to be(true)
+        end
+      end
     end
 
     context "when a case reference cannot be determined by the subject" do
@@ -121,6 +132,18 @@ describe Support::IncomingEmails::CaseAssignment do
 
         it "returns the case with that reference" do
           expect(case_for_email.ref).to eq("300000")
+        end
+      end
+
+      context "when all else fails" do
+        let(:body_ref) { nil }
+        let(:conversation_ref) { nil }
+
+        it "creates a new case for the email to be assigned to" do
+          expect(case_for_email.ref).to eq(Support::Case.last.ref)
+          expect(case_for_email.source).to eq("incoming_email")
+          expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.action_required).to be(true)
         end
       end
     end

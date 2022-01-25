@@ -26,8 +26,27 @@ RSpec.describe Support::CaseHubMigrationFormPresenter do
   end
 
   describe "#category_name" do
-    it "gives category name from the category id" do
-      expect(presenter.category_name).to eq "Catering"
+    context "when category is provided" do
+      it "gives category name from the category id" do
+        expect(presenter.category_name).to eq "Catering"
+      end
+    end
+
+    context "when category is not provided" do
+      let(:form_hash) do
+        {
+          school_urn: "000001",
+          hub_case_ref: "ce-00001",
+          first_name: "first_name",
+          last_name: "last_name",
+          email: "test@example.com",
+          phone_number: "00000000000",
+        }
+      end
+
+      it "gives Not Yet Known label" do
+        expect(presenter.category_name).to eq "Not Yet Known"
+      end
     end
   end
 
