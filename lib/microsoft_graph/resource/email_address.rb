@@ -6,10 +6,6 @@ module MicrosoftGraph
 
       option :address, Types::String
       option :name, Types::String
-
-      def to_s
-        address
-      end
     end
   end
 end
