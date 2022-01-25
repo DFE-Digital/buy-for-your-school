@@ -21,6 +21,7 @@ module Support
         email: @attrs[:email],
         phone_number: @attrs[:phone_number],
         request_text: @attrs[:request_text],
+        action_required: @attrs.fetch(:action_required, false),
         new_contract: NewContract.create!,
         existing_contract: ExistingContract.create!,
         procurement: Procurement.create!,

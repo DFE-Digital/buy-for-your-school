@@ -21,6 +21,7 @@ RSpec/AnyInstance:
     - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
     - 'spec/services/support/incoming_emails/case_assignment_spec.rb'
     - 'spec/services/support/incoming_emails/email_attachments_spec.rb'
+    - 'spec/services/self-serve/create_task_spec.rb'
 
 # Offense count: 20
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
