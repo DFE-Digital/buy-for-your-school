@@ -22,7 +22,7 @@ RSpec.describe CreateTask do
       it "raises UnexpectedContentfulModel" do
         expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }
           .to raise_error(CreateTask::UnexpectedContentfulModel)
-          .and change { Task.count }.by(0)
+          .and change(Task, :count).by(0)
       end
     end
   end
