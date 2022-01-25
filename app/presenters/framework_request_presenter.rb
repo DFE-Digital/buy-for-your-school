@@ -1,4 +1,5 @@
-class FafPresenter < BasePresenter
+# :nocov:
+class FrameworkRequestPresenter < BasePresenter
   # @return [String]
   def school_name
     Support::Organisation.find_by(urn: school_urn)&.name || "n/a"
@@ -23,3 +24,4 @@ class FafPresenter < BasePresenter
     user_id.present?
   end
 end
+# :nocov:

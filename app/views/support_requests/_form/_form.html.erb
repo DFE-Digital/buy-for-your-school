@@ -5,8 +5,6 @@
   <%= link_to I18n.t("generic.button.back"), support_requests_path(@support_request, support_form: @support_form.to_h.merge(step: @support_form.step, back: true)), method: :post, class: "govuk-back-link"  unless @support_form.step <= 2 %>
 <% end %>
 
-
-
 <% if Rails.env.development? %>
   <%= debug @support_request&.attributes %>
   <%= debug @support_form.step %>
