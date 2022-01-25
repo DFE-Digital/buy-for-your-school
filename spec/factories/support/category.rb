@@ -11,5 +11,9 @@ FactoryBot.define do
         parent.reload
       end
     end
+
+    trait :fixed_title do
+      title { "Example Category" }
+    end
   end
 end
