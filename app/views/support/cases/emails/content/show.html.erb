@@ -14,18 +14,12 @@
   </dl>
 
   <div class="email-preview-body">
-  <% if @template == :basic %>
-    <p><%= I18n.t("support.case_email_content.preview.salutation", first_name: @current_case.first_name, last_name: @current_case.last_name) %>
-    <p><%= markdown_to_html(@case_email_content_form.email_body) %></p>
-    <p><%= markdown_to_html(I18n.t("support.case_email_content.preview.signature_html", agent_name: current_agent.full_name)) %></p>
-  <% else %>
     <%= simple_format(@case_email_content_form.email_body) %>
-  <% end %>
   </div>
 </div>
 
 <%= form_with model: @case_email_content_form, scope: :case_email_content_form, url: support_case_email_path(@current_case), method: :post do |form| %>
-  <%= form.hidden_field :email_body, value: form.object.email_body %>
+  <%= form.hidden_field :email_body, value: basic_email_body %>
   <%= form.hidden_field :email_subject, value: form.object.email_subject %>
   <%= form.hidden_field :email_template, value: form.object.email_template %>
 

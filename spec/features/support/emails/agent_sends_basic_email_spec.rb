@@ -7,7 +7,31 @@ describe "Support agent sends a basic email" do
 
   let(:support_case) { create(:support_case, :opened) }
 
+  let(:basic_template_id) { "ac679471-8bb9-4364-a534-e87f585c46f3" }
+
+  let(:preview_email) do
+    {
+      personalisation: {
+        first_name: "School",
+        last_name: "Contact",
+        text: default_email_body,
+        from_name: "Procurement Specialist",
+      },
+    }
+  end
+
+  let(:api_preview_response) do
+    {
+      body: "Dear School Contact\r\n\r\n#{default_email_body}\r\n\r\nRegards\r\nProcurement Specialist\r\nGet help buying for schools",
+      subject: "DfE Get help buying for schools: your request for support",
+    }
+  end
+
   before do
+    stub_request(:post, "https://api.notifications.service.gov.uk/v2/template/#{basic_template_id}/preview")
+    .with(body: preview_email)
+    .to_return(body: api_preview_response.to_json, status: 200, headers: {})
+
     click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Send email"
@@ -26,6 +50,24 @@ describe "Support agent sends a basic email" do
 
   describe "customisating the email body" do
     let(:custom_email_body) { "New email body" }
+
+    let(:preview_email) do
+      {
+        personalisation: {
+          first_name: "School",
+          last_name: "Contact",
+          text: custom_email_body,
+          from_name: "Procurement Specialist",
+        },
+      }
+    end
+
+    let(:api_preview_response) do
+      {
+        body: "Dear School Contact\r\n\r\n#{custom_email_body}\r\n\r\nRegards\r\nProcurement Specialist\r\nGet help buying for schools",
+        subject: "DfE Get help buying for schools: your request for support",
+      }
+    end
 
     before do
       choose "Non-template"
@@ -57,6 +99,24 @@ describe "Support agent sends a basic email" do
   end
 
   describe "previewing the email body" do
+    let(:preview_email) do
+      {
+        personalisation: {
+          first_name: "School",
+          last_name: "Contact",
+          text: default_email_body,
+          from_name: "Procurement Specialist",
+        },
+      }
+    end
+
+    let(:api_preview_response) do
+      {
+        body: "Dear School Contact\r\n\r\n#{default_email_body}\r\n\r\nRegards\r\nProcurement Specialist\r\nGet help buying for schools",
+        subject: "DfE Get help buying for schools: your request for support",
+      }
+    end
+
     before do
       choose "Non-template"
       click_button "Save"
@@ -77,7 +137,7 @@ describe "Support agent sends a basic email" do
     end
 
     describe "navigating directly to the preview" do
-      before { visit support_case_email_content_path(support_case, template: :basic) }
+      before { visit support_case_email_content_path(support_case, template: basic_template_id) }
 
       it "shows the email body" do
         within ".email-preview-body" do
@@ -95,6 +155,24 @@ describe "Support agent sends a basic email" do
   end
 
   describe "sending the email" do
+    let(:preview_email) do
+      {
+        personalisation: {
+          first_name: "School",
+          last_name: "Contact",
+          text: "New email body",
+          from_name: "Procurement Specialist",
+        },
+      }
+    end
+
+    let(:api_preview_response) do
+      {
+        body: "Dear School Contact\r\n\r\nNew email body\r\n\r\nRegards\r\nProcurement Specialist\r\nGet help buying for schools",
+        subject: "DfE Get help buying for schools: your request for support",
+      }
+    end
+
     let(:email) do
       {
         email_address: "school@email.co.uk",
