@@ -17,4 +17,9 @@ class FafPresenter < BasePresenter
       )
     end
   end
+
+  # @return [Boolean]
+  def dsi?
+    user_id.present?
+  end
 end
