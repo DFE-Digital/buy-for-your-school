@@ -135,3 +135,5 @@ localhost.key
 # local activestorage
 
 storage
+
+.vscode/
