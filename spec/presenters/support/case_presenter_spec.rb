@@ -60,6 +60,22 @@ RSpec.describe Support::CasePresenter do
   end
 
   describe "#org_name" do
+    context "when no organisation is set" do
+      before { presenter.organisation = nil }
+
+      it "returns the contact email" do
+        expect(presenter.org_name).to eq "school@email.co.uk"
+      end
+
+      context "when no contact email is set" do
+        before { presenter.email = nil }
+
+        it "returns n/a" do
+          expect(presenter.org_name).to eq "n/a"
+        end
+      end
+    end
+
     it "returns org name" do
       expect(presenter.org_name).to eq "Example Org"
     end
@@ -73,12 +89,6 @@ RSpec.describe Support::CasePresenter do
 
   context "without an organisation" do
     let(:organisation) { nil }
-
-    describe "#org_name" do
-      it "returns org name" do
-        expect(presenter.org_name).to eq "n/a"
-      end
-    end
 
     describe "#org_urn" do
       it "returns org urn" do
