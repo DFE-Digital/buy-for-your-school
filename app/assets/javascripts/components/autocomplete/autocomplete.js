@@ -20,6 +20,9 @@
 
         const formLabel = document.createElement('label');
         formLabel.classList.add('govuk-label');
+        labelClasses = (element.dataset.autocompleteLabelClass || "")
+          .split(" ")
+          .forEach(klass => formLabel.classList.add(klass));
         formLabel.setAttribute('for', element.dataset.autocompleteElementId);
         formLabel.textContent = element.dataset.autocompleteLabelText;
 
@@ -48,7 +51,6 @@
           return suggestion;
         }
 
-          // todo if no suggestion start typing....
         output = template;
 
         Object.entries(suggestion).forEach(([key, value]) => {
