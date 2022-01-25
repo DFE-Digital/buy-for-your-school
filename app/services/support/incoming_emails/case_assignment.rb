@@ -17,7 +17,7 @@ module Support
         case_reference ||= case_reference_from_conversation
 
         found_case = Support::Case.find_by(ref: case_reference) if case_reference.present?
-        found_case ||= new_case_for_email
+        found_case || new_case_for_email
       end
 
       def case_reference_from_subject
