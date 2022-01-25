@@ -142,6 +142,12 @@ describe Support::Email do
           expect(interaction).to be_present
         end
 
+        it "sets the interaction created_at to be the sent_date_time of the email so the ordering is correct" do
+          email.sent_at = Date.parse("25/12/2000 12:00")
+          email.create_interaction
+          expect(Support::Interaction.last.created_at).to eq(Date.parse("25/12/2000 12:00"))
+        end
+
         context "when an interaction already exists of type email_from_school for the email" do
           it "does not duplicate it" do
             create(:support_interaction,
@@ -201,23 +207,11 @@ describe Support::Email do
   describe "#set_case_action_required" do
     context "when case is attached" do
       let(:support_case) { create(:support_case) }
+      let(:email) { build(:support_email, case: support_case) }
 
-      context "when email is newly created" do
-        let(:email) { build(:support_email, case: support_case) }
-
-        it "sets case to action required to inform users an email is to be read" do
-          email.set_case_action_required
-          expect(support_case.reload).to be_action_required
-        end
-      end
-
-      context "when the email is an existing one" do
-        let(:email) { create(:support_email, case: support_case) }
-
-        it "does not set case to action required as this email is already visible" do
-          email.set_case_action_required
-          expect(support_case.reload).not_to be_action_required
-        end
+      it "sets case to action required to inform users an email is to be read" do
+        email.set_case_action_required
+        expect(support_case.reload).to be_action_required
       end
     end
   end
@@ -271,12 +265,28 @@ describe Support::Email do
       expect(email).to have_received(:create_interaction).once
     end
 
-    it "potentially sets the case to action required" do
-      allow(email).to receive(:set_case_action_required)
+    context "when email is a newly created record" do
+      let(:email) { build(:support_email, case: nil) }
 
-      described_class.import_from_mailbox(message)
+      it "potentially sets the case to action required" do
+        allow(email).to receive(:set_case_action_required)
 
-      expect(email).to have_received(:set_case_action_required).once
+        described_class.import_from_mailbox(message)
+
+        expect(email).to have_received(:set_case_action_required).once
+      end
+    end
+
+    context "when email has been imported before" do
+      let(:email) { create(:support_email, case: nil) }
+
+      it "does not attempt to modify the case action required" do
+        allow(email).to receive(:set_case_action_required)
+
+        described_class.import_from_mailbox(message)
+
+        expect(email).not_to have_received(:set_case_action_required)
+      end
     end
   end
 end
