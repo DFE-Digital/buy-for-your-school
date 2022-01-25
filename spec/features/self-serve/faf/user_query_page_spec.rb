@@ -1,5 +1,5 @@
 RSpec.feature "Faf - how can we help?" do
-  context "when the user is signed in" do
+  xcontext "when the user is signed in" do
     let(:user) { create(:user, :one_supported_school) }
 
     before do
