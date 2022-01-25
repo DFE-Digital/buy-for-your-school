@@ -11,11 +11,11 @@ module Support
     def show
       @current_case = CasePresenter.new(@current_case)
 
-      if basic_template?
-        @back_url = new_support_case_email_type_path(@current_case)
-      else
-        @back_url = support_case_email_templates_path(@current_case)
-      end
+      @back_url = if basic_template?
+                    new_support_case_email_type_path(@current_case)
+                  else
+                    support_case_email_templates_path(@current_case)
+                  end
 
       @case_email_content_form = CaseEmailContentForm.new(
         email_body: selected_template_preview.body,
@@ -63,7 +63,7 @@ module Support
     def personalisation
       personalisation_params = { first_name: @current_case.first_name, last_name: @current_case.last_name, from_name: current_agent.full_name }
 
-      personalisation_params.merge!({ text: basic_email_body }) if basic_template?
+      personalisation_params[:text] = basic_email_body if basic_template?
 
       personalisation_params
     end

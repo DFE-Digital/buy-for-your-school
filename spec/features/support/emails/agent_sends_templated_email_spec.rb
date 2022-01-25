@@ -10,7 +10,7 @@ describe "Support agent sends a templated email" do
         first_name: "School",
         last_name: "Contact",
         from_name: "Procurement Specialist",
-      }
+      },
     }
   end
 
