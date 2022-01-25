@@ -23,4 +23,8 @@ RSpec.feature "Faf - contact info" do
 
     expect(page).to have_button "Yes, continue"
   end
+
+  it "has a back link to log out" do
+    expect(page).to have_link "Back", href: "/auth/dfe/signout"
+  end
 end

@@ -1,17 +1,17 @@
 class FafsController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :faf, only: %i[show]
+  before_action :faf, only: %i[show edit]
   before_action :faf_form, only: %i[create]
   before_action :faf_presenter, only: %i[show create]
 
   def index
-    @source = request.referer
+    session[:referer] = request.referer
   end
 
   # check answers before submission
   def show
     if @faf.submitted?
-      # TODO: redirect to faf_submissions_controller
+      redirect_to fafs_submission_path(faf)
     end
   end
 
@@ -24,7 +24,7 @@ class FafsController < ApplicationController
     if form_params[:back] == "true"
       revert_form
     elsif validation.success? && validation.to_h[:message_body]
-      faf = FrameworkRequest.create!(user_id: user_id, **faf_form.to_h)
+      faf = FrameworkRequest.create!(user_id: user_id, first_name: current_user.first_name, last_name: current_user.last_name, email: current_user.email, **faf_form.to_h)
       return redirect_to faf_path(faf)
     elsif validation.success? && !dsi? && form_params[:step].to_i == 2
       @faf_form.advance!(2)
@@ -33,6 +33,22 @@ class FafsController < ApplicationController
     end
 
     render :new
+  end
+
+  def edit
+    @faf_form = FafForm.new(step: params[:step], dsi: faf_presenter.dsi?, **faf_presenter.attributes.symbolize_keys)
+  end
+
+  def update
+    @faf_form = faf_form
+
+    if validation.success?
+      faf.update!(**@faf.attributes.symbolize_keys, **@faf_form.to_h)
+
+      redirect_to faf_path(@faf), notice: I18n.t("support_request.flash.updated")
+    else
+      render :edit
+    end
   end
 
 private
