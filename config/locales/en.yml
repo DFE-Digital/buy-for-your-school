@@ -277,21 +277,22 @@ en:
   # /request-help-and-support-with-your-procurement
   faf:
     start_page:
-      header: Request help and support with your procurement
-      overview_purpose: You can use this service if you are procuring for schools in England -- either local authority maintained schools, federations or academies in a single or multi-academy trust.
+      header: Request advice and guidance for your procurement
+      overview_purpose: Use this service if you're procuring for a single school in England, either
+      overview_type_list:
+        - a local authority maintained school, or
+        - an academy in a single or multi-academy trust
       you_can_ask_for: You can ask for
       overview_category_list:
-        - advice and guidance on using frameworks
-        - help with choosing a framework
-        - help with using this service
-        - general advice and guidance about your procurement
+        - general guidance on buying goods or services for schools
+        - specific advice on buying goods or services for your school using a DfE approved framework
       overview_response: The Get help buying for schools team will respond to you within 2 working days.
       subheading: Before you start
       you_can: You can
     user_query:
       caption: About your request
       label: How can we help?
-      hint: Briefly describe your problem in a few sentences.
+      hint: Briefly describe what advice or guidance you need in a few sentences.
 
     contact_info:
       title: Is this your contact information? - Get help buying for schools - GOV.UK
@@ -333,7 +334,24 @@ en:
         email: Your email address
         school: Your school
         problem: Description of problem
-
+  faf_submissions:
+    header:
+      confirmation: Your request for support has been sent
+      what_happens_next: What happens next
+      what_you_can_do_next: What you can do next
+      you_can_also: You can also
+    sub_header:
+      confirmation: "We have sent a confirmation email to:"
+    body:
+      what_happens_next:
+        - "The Get help buying for schools team will be in touch within %{days} working days."
+        - Please check to make sure you receive the email confirmation within the next 10 minutes. Check your junk folder if you do not see it.
+        - You will need to submit the request again if you do not receive an email from us because this is how we will be contacting you.
+    what_you_can_do_next:
+      read_buying_procedures_link: read buying procedures and procurement law for schools
+      read_buying_procedures: "%{read_buying_procedures_link} to learn more about the buying process"
+      read_guides_link: read guides about goods and services
+      read_guides: "%{read_guides_link} that you're buying"
 
   #
   # Supported ------------------------------------------------------------------
@@ -381,6 +399,7 @@ en:
           digital: Specify case
           nw_hub: North west hub case
           sw_hub: South west hub case
+          faf: Find a Framework
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -442,6 +461,8 @@ en:
         submit: Save and continue
       flash:
         updated: Successfully changed case category
+      label:
+        none: Not Yet Known
 
     case_contract:
       existing:
@@ -586,6 +607,8 @@ en:
         header: Preview email
         to:
           label: To
+        salutation: Dear %{first_name} %{last_name}
+        signature_html: Regards<br>%{agent_name}<br>Procurement Specialist<br>Get help buying for schools
         subject:
           label: Subject
           default_value: "DfE Get help buying for schools: your request for support"
@@ -649,6 +672,7 @@ en:
         hub_notes: Hub notes
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
+        faf_support_request: Find a Framework Support Request
       label:
         email_unread: Unread
         contact_detail: Contact details

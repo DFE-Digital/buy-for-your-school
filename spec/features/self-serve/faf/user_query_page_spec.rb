@@ -14,8 +14,13 @@ RSpec.feature "Faf - how can we help?" do
     it "loads the page" do
       expect(find("span.govuk-caption-l")).to have_text "About your request"
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
-      expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find(".govuk-hint")).to have_text "Briefly describe what advice or guidance you need in a few sentences."
       expect(find_button("Continue")).to be_present
+    end
+
+    it "has a back link to step 3" do
+      click_on "Back"
+      expect(page).to have_current_path "/procurement-support?faf_form%5Bback%5D=true&faf_form%5Bdsi%5D=true&faf_form%5Bmessage_body%5D=&faf_form%5Bschool_urn%5D=urn-type-1&faf_form%5Bstep%5D=4"
     end
 
     it "raises a validation error if no message entered" do
@@ -46,7 +51,7 @@ RSpec.feature "Faf - how can we help?" do
     it "loads the page" do
       expect(find("span.govuk-caption-l")).to have_text "About your request"
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
-      expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find(".govuk-hint")).to have_text "Briefly describe what advice or guidance you need in a few sentences."
       expect(find_button("Continue")).to be_present
     end
 

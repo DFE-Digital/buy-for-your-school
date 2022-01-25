@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   # Framework Requests ------------------------------------------------------------------
   #
   resources :fafs, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
-  resources :faf_submission, only: %i[update show], path: "procurement-support-submissions"
+  resources :fafs_submissions, only: %i[update show], path: "procurement-support-submissions"
 
   #
   # Supported ------------------------------------------------------------------

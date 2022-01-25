@@ -4,7 +4,14 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-xl"><%= I18n.t("faf.start_page.header") %></h1>
 
-      <p class="govuk-body"><%= I18n.t("faf.start_page.overview_purpose") %></p>
+      <p class="govuk-body"><%= I18n.t("faf.start_page.overview_purpose") %>:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <% I18n.t("faf.start_page.overview_type_list").each do |list_item| %>
+          <li><%= list_item %></li>
+        <% end %>
+      </ul>
+
       <p class="govuk-body"><%= I18n.t("faf.start_page.you_can_ask_for") %>:</p>
 
       <ul class="govuk-list govuk-list--bullet">
@@ -29,10 +36,10 @@
       <p class="govuk-body"><%= I18n.t("faf.start_page.you_can") %>:</p>
       
       <ul class="govuk-list govuk-list--bullet">
-          <li>read <%= link_to "about frameworks", "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy" %></li>
-          <li>find out more about <%= link_to "planning for what you're buying", "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-for-schools" %></li>
-          <li>read information on <%= link_to "finding the right way to buy", "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-procedures-for-schools" %> for your school.</li>
-          <li><%= link_to "create a specification", "https://get-help-buying-for-schools.education.gov.uk/" %> if you don't have one yet</li>
+          <li>read <%= link_to "about frameworks", "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", target: "_blank", class: "govuk-link" %></li>
+          <li>find out more about <%= link_to "planning for what you're buying", "https://www.gov.uk/guidance/buying-for-schools", target: "_blank", class: "govuk-link" %></li>
+          <li>read information on <%= link_to "finding the right way to buy", "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", target: "_blank", class: "govuk-link" %> for your school.</li>
+          <li><%= link_to "create a specification", root_path, class: "govuk-link" %> if you don't have one yet</li>
       </ul>
 
   </div>

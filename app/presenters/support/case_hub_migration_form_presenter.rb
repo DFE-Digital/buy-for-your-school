@@ -9,6 +9,8 @@ module Support
 
     # @return [String]
     def category_name
+      return I18n.t("support.case_categorisations.label.none") if category_id.blank?
+
       @category_name ||= Support::Category.find(category_id).title
     end
 

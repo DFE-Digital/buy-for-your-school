@@ -44,6 +44,7 @@ module Support
         Support::CreateCase.new(
           source: :incoming_email,
           email: email.sender["address"],
+          action_required: true,
         ).call
       end
     end
