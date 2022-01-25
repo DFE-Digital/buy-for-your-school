@@ -83,7 +83,7 @@ RSpec.feature "DfE Sign-in" do
     end
   end
 
-  context "when authentication fails" do
+  xcontext "when authentication fails" do
     before do
       OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
     end

@@ -45,7 +45,7 @@ module Support
       faf_support_request: 8,
     }
 
-    validates :body, presence: true, unless: proc { |a| a.support_request? }
+    validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }
 
     default_scope { order(created_at: :desc) }
 
