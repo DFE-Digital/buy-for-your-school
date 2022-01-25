@@ -39,8 +39,8 @@ class SubmitSupportRequest
   # TODO: Replace with outbound API call
   #
   # @return [false, Notifications::Client::ResponseNotification]
-  def call(source = "digital")
-    return false unless open_case(source)
+  def call
+    return false unless open_case
 
     # TODO: confirmation message body forms the first CM interaction
     # email = Emails::Confirmation.new().call
@@ -93,11 +93,11 @@ private
   end
 
   # @return [Support::Case] TODO: Move into inbound API
-  def open_case(source)
+  def open_case
     kase_attrs = {
       category_id: map_category.id,
       organisation_id: map_organisation&.id,
-      source: source,
+      source: "digital",
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,

@@ -8,9 +8,5 @@ FactoryBot.define do
     trait :with_specification do
       association :journey, factory: %i[journey with_steps]
     end
-
-    trait :faf do
-      # FAF Values
-    end
   end
 end
