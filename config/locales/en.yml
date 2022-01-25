@@ -388,6 +388,8 @@ en:
         contact_name: Contact name
         contact_phone: Contact phone
         contact_email: Contact email
+        organisation_name: Organisation name
+        organisation_type: Organisation type
         problem_description: Description of problem
         attached_specification: Attached specification
         attached_specification_none: None
@@ -556,6 +558,12 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_organisation:
+      label: What Organisation do you want to add?
+      flash:
+        updated: Organisation updated successfully
+      submit: Save selected organisation
 
     case_email_type:
       header: Send email

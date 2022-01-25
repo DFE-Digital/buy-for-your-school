@@ -8,6 +8,7 @@ en:
       email_body: "" # Omitted
       email_subject: "" # Omitted
       category_id: "" # Omitted
+      organisation_formatted_name: "" # Omitted
 
     errors:
       rules:
@@ -43,6 +44,10 @@ en:
 
         email:
           missing: Please enter contact email for the case
+
+        # Selecting an organisation
+        organisation_formatted_name:
+          missing: Please select an organisation
 
 
   case_migration_form:
