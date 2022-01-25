@@ -4,7 +4,7 @@
 class FafsSubmissionsController < ApplicationController
   def update
     unless framework_request.submitted?
-      SubmitFrameworkRequest.new(request: framework_request).call
+      SubmitFrameworkRequest.new(request: framework_request, referer: session[:referer]).call
     end
 
     redirect_to fafs_submission_path(framework_request)

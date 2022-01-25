@@ -62,10 +62,10 @@ module Support
     # @example
     #  { phone_call: 1, email_from_school: 2, email_to_school: 3 }
     #
-    # @return [Hash] with
+    # @return [Array] with
     def contact_events
-      Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_request].include?(key)
+      Support::Interaction.event_types.reject do |key, _int|
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request].include?(key)
       end
     end
   end

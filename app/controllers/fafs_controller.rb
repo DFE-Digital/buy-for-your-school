@@ -5,7 +5,7 @@ class FafsController < ApplicationController
   before_action :faf_presenter, only: %i[show create]
 
   def index
-    @source = request.referer
+    session[:referer] = request.referer
   end
 
   # check answers before submission
