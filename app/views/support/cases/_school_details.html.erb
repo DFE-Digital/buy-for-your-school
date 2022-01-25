@@ -6,6 +6,8 @@
     <dd class="govuk-summary-list__value">
       <%= current_case.full_name %>
     </dd>
+    <dd class="govuk-summary-list__actions">
+    </dd>
   </div>
 
   <div class="govuk-summary-list__row">
@@ -15,6 +17,8 @@
     <dd class="govuk-summary-list__value">
       <%= current_case.phone_number %>
     </dd>
+    <dd class="govuk-summary-list__actions">
+    </dd>
   </div>
 
   <div class="govuk-summary-list__row">
@@ -23,6 +27,32 @@
     </dt>
     <dd class="govuk-summary-list__value">
       <%= current_case.email %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.organisation_name") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.organisation.present? ? current_case.org_name : "" %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <%= link_to current_case.organisation.present? ? "Change" : "Add",
+        edit_support_case_organisation_path(current_case), class: "govuk-link" %>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.organisation_type") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.organisation&.establishment_type&.name %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
     </dd>
   </div>
 </dl>
