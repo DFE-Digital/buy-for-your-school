@@ -277,14 +277,15 @@ en:
   # /request-help-and-support-with-your-procurement
   faf:
     start_page:
-      header: Request help and support with your procurement
-      overview_purpose: You can use this service if you are procuring for schools in England -- either local authority maintained schools, federations or academies in a single or multi-academy trust.
+      header: Request advice and guidance for your procurement
+      overview_purpose: Use this service if you're procuring for a single school in England, either
+      overview_type_list:
+        - a local authority maintained school, or
+        - an academy in a single or multi-academy trust
       you_can_ask_for: You can ask for
       overview_category_list:
-        - advice and guidance on using frameworks
-        - help with choosing a framework
-        - help with using this service
-        - general advice and guidance about your procurement
+        - general guidance on buying goods or services for schools
+        - specific advice on buying goods or services for your school using a DfE approved framework
       overview_response: The Get help buying for schools team will respond to you within 2 working days.
       subheading: Before you start
       you_can: You can
@@ -333,7 +334,6 @@ en:
         email: Your email address
         school: Your school
         problem: Description of problem
-
 
   #
   # Supported ------------------------------------------------------------------

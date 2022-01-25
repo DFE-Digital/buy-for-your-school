@@ -5,7 +5,7 @@ RSpec.feature "Faf - start page" do
     end
 
     it "loads the page" do
-      expect(find("h1")).to have_text "Request help and support with your procurement"
+      expect(find("h1")).to have_text "Request advice and guidance for your procurement"
       expect(page).to have_current_path "/procurement-support"
     end
 
@@ -36,7 +36,7 @@ RSpec.feature "Faf - start page" do
     end
 
     it "loads the page" do
-      expect(find("h1")).to have_text "Request help and support with your procurement"
+      expect(find("h1")).to have_text "Request advice and guidance for your procurement"
       expect(page).to have_current_path "/procurement-support"
     end
 
