@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
+- Case worker can update an organisation on a case
 
 ## [release-002] - 2022-01-xx (018)
 

@@ -66,9 +66,13 @@ module Support
 
     # @return [String]
     def org_name
-      return "n/a" if organisation.blank?
-
-      organisation.name
+      if organisation.present?
+        organisation.name
+      elsif email.present?
+        email
+      else
+        "n/a"
+      end
     end
 
     # @return [String]
@@ -80,7 +84,7 @@ module Support
 
     # @return [OrganisationPresenter]
     def organisation
-      OrganisationPresenter.new(super)
+      OrganisationPresenter.new(super) if super
     end
 
     def savings_status

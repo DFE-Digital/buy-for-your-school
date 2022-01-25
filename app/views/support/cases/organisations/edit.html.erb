@@ -1,0 +1,19 @@
+<%= form_with model: @case_organisation_form, scope: :case_organisation_form, url: support_case_organisation_path(@current_case), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= render "components/autocomplete",
+        container_id: "organisation-autocomplete-container",
+        label_text: I18n.t("support.case_organisation.label"),
+        label_class: "govuk-!-font-weight-bold govuk-!-font-size-36 govuk-!-margin-bottom-5",
+        element_id: "organisation-autocomplete",
+        element_name: "case_organisation_form[organisation_formatted_name]",
+        template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
+        value_field: :formatted_name,
+        query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
+
+  <%= form.submit I18n.t("support.case_organisation.submit"), class: "govuk-button" %>
+<% end %>
+
+
+
+
