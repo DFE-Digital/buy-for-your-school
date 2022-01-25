@@ -26,6 +26,7 @@ RSpec.describe Support::Case, type: :model do
 
   it { is_expected.to define_enum_for(:support_level).with_values(%i[L1 L2 L3 L4 L5]) }
   it { is_expected.to define_enum_for(:state).with_values(%i[initial opened resolved pending closed pipeline no_response]) }
+  it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub faf]) }
 
   describe "#generate_ref" do
     context "when no cases exist" do

@@ -34,6 +34,7 @@
   %>
 
   <%= form.govuk_select(:category_id, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
+    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.none") %></option>
     <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
     <optgroup label="<%= parent_name%>">
       <% sub_categories.each do |name, value| %>

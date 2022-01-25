@@ -42,6 +42,7 @@ module Support
       hub_notes: 5,
       hub_progress_notes: 6,
       hub_migration: 7,
+      faf_support_request: 8,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? }
