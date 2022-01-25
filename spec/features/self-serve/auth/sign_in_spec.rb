@@ -88,7 +88,7 @@ RSpec.feature "DfE Sign-in" do
       OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
     end
 
-    it "redirects to the homepage and issues a flash message" do
+    xit "redirects to the homepage and issues a flash message" do
       expect(Rollbar).to receive(:error).with(
         "Sign in failed unexpectedly",
         dfe_sign_in_uid: anything,
