@@ -20,5 +20,9 @@ FactoryBot.define do
     trait :fixed_urn do
       urn { "12345678" }
     end
+
+    trait :fixed_name do
+      name { "Example School" }
+    end
   end
 end
