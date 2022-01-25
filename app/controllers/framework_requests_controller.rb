@@ -1,3 +1,4 @@
+# :nocov:
 class FrameworkRequestsController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :current_user
@@ -166,3 +167,4 @@ private
     end
   end
 end
+# :nocov:
