@@ -3,6 +3,8 @@
 # Validate "find-a-framework support requests"
 #
 class FrameworkSupportFormSchema < Schema
+  config.messages.top_namespace = :framework_request
+
   params do
     optional(:dsi).value(:bool)               # step 1
 
