@@ -71,7 +71,7 @@ module Support
 
       # @return [Array<Hash>] transformed and coerced data
       def process(rows)
-        mapper.call(rows).map {|row| schema.call(row).to_h }
+        mapper.call(rows).map { |row| schema.call(row).to_h }
       end
 
       # @return [Enumerator::Lazy]

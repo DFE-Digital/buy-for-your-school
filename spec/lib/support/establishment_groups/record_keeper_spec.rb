@@ -26,8 +26,8 @@ RSpec.describe Support::EstablishmentGroups::RecordKeeper do
         locality: "Kings Norton",
         town: "Birmingham",
         county: "West Midlands",
-        postcode: "B30 3QG"
-      }
+        postcode: "B30 3QG",
+      },
     }
   end
 

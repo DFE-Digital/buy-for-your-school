@@ -25,13 +25,13 @@ module Support
                       "Group Postcode" => :postcode
           nest :address, %i[street locality town county postcode]
 
-          #nest :establishment_group, %i[
+          # nest :establishment_group, %i[
           #  address
           #  ukprn
           #  name
           #  group_type_code
           #  status
-          #]
+          # ]
         end
       end
     end

@@ -43,7 +43,7 @@ RSpec.describe Support::EstablishmentGroups::Information, "#call" do
         "Multi-Academy trust Schools",
         "Trust Schools",
         "Sponsored School",
-        "Umbrella trust schools"
+        "Umbrella trust schools",
       ]
     end
   end
@@ -58,7 +58,7 @@ RSpec.describe Support::EstablishmentGroups::Information, "#call" do
     it "outputs formatted data from the local source" do
       output = service.call.map { |eg| eg[:ukprn] }
 
-      expect(output).to eql ["1010101", "1010102", "1010103", "1010104", "1010105", "1010106"]
+      expect(output).to eql %w[1010101 1010102 1010103 1010104 1010105 1010106]
     end
   end
 end

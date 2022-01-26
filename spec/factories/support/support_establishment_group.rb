@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :support_establishment_group, class: 'Support::Group' do
+  factory :support_establishment_group, class: "Support::Group" do
     sequence(:name) { |n| "Group ##{n}" }
     ukprn { "1010010" }
     status { [0, 1, 2].sample }

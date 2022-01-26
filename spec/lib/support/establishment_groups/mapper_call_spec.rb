@@ -22,8 +22,8 @@ RSpec.describe Support::EstablishmentGroups::Mapper, "#call" do
         "Group Locality" => "Kings Norton",
         "Group Town" => "Birmingham",
         "Group County" => "West Midlands",
-        "Group Postcode" => "B30 3QG"
-      ]
+        "Group Postcode" => "B30 3QG",
+      ],
     )
   end
 
