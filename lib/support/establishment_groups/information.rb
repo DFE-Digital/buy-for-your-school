@@ -30,7 +30,7 @@ module Support
       option :filter, optional: true, type: ::Types::Strict::Hash
 
       # @see Exporter
-      # @see School::RecordKeeper
+      # @see Support::EstablishmentGroups::RecordKeeper
       #
       # @!attribute exporter
       # @return [Proc] (defaults to "->(x = nil) { x }")

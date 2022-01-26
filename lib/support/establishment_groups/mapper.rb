@@ -24,14 +24,6 @@ module Support
                       "Group County" => :county,
                       "Group Postcode" => :postcode
           nest :address, %i[street locality town county postcode]
-
-          # nest :establishment_group, %i[
-          #  address
-          #  ukprn
-          #  name
-          #  group_type_code
-          #  status
-          # ]
         end
       end
     end

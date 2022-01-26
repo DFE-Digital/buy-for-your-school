@@ -7,7 +7,7 @@ module Support
   # Persist "grouped establishment types" that the service supports from YAML file
   #
   # @example
-  #   SeedGroups.new(data: "/path/to/file.yml").call
+  #   SeedEstablishmentGroupTypes.new(data: "/path/to/file.yml").call
   #
   class SeedEstablishmentGroupTypes
     extend Dry::Initializer

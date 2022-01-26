@@ -3,6 +3,7 @@ module Support
     # Create/Update an array of EstablishmentGroup records
     #
     # @note Changes to EstablishmnetGroups records may impact active cases.
+    # Ceeates ~5k Support:;EstablishmentGroup records
     #
     class RecordKeeper
       def call(records)
