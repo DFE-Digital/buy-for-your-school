@@ -10,8 +10,8 @@ RSpec.describe Support::Organisation, type: :model do
 
   describe "#urn" do
     it "is unique" do
-      group = create(:support_group, code: 4, name: "LA maintained school")
-      type = create(:support_establishment_type, code: 1, name: "Community school", group: group)
+      group_type = create(:support_group_type, code: 4, name: "LA maintained school")
+      type = create(:support_establishment_type, code: 1, name: "Community school", group_type: group_type)
       create(:support_organisation, urn: "unique", establishment_type: type)
 
       # persistence level
