@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   #
   # Self-Serve -----------------------------------------------------------------
   #
-  root to: "pages#specifying_start_page"
+  root to: "home#show"
 
   get "dashboard", to: "dashboard#show"
   get "profile", to: "profile#show"
@@ -37,6 +37,16 @@ Rails.application.routes.draw do
   resources :design, only: %i[index show]
   resources :categories, only: %i[index]
 
+  #
+  # Framework Requests ---------------------------------------------------------
+  #
+  # resources :framework_requests, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
+  resources :framework_requests, except: %i[delete], path: "procurement-support"
+  resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
+
+  #
+  # General Support Requests ---------------------------------------------------
+  #
   resources :support_requests, except: %i[destroy], path: "support-requests"
   resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
   post "/submit", to: "api/support/requests#create", as: :submit_request
@@ -52,12 +62,6 @@ Rails.application.routes.draw do
   namespace :preview do
     resources :entries, only: [:show]
   end
-
-  #
-  # Framework Requests ------------------------------------------------------------------
-  #
-  resources :fafs, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
-  resources :fafs_submissions, only: %i[update show], path: "procurement-support-submissions"
 
   #
   # Supported ------------------------------------------------------------------

@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -qq -y \
     libpq-dev \
     --fix-missing --no-install-recommends
 
+# https://github.com/jgm/pandoc/releases/download/2.17.0.1/pandoc-2.17.0.1-1-arm64.deb
+
 RUN wget -q https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb; \
     apt-get install ./pandoc-2.14.2-1-amd64.deb; \
     rm pandoc-2.14.2-1-amd64.deb

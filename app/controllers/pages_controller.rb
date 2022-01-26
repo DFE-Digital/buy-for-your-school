@@ -7,11 +7,6 @@ class PagesController < ApplicationController
     @page = PagePresenter.new(page)
   end
 
-  def specifying_start_page
-    @start_now_button_route = current_user.guest? ? "/auth/dfe" : dashboard_path
-    @start_now_button_method = current_user.guest? ? :post : :get
-  end
-
   # TODO: remove this once pages are dynamic
   def self.bypass_dsi?
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")

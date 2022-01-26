@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 # Submit an FaF request for support to the Supported case management team
+# :nocov:
 class SubmitFrameworkRequest
   extend Dry::Initializer
 
   # @!attribute request
-  #   @return [FafPresenter]
-  option :request, ::Types.Constructor(FafPresenter)
+  #   @return [FrameworkRequestPresenter]
+  option :request, ::Types.Constructor(FrameworkRequestPresenter)
 
   # @!attribute template
   #   @return [String] Template UUID
@@ -41,7 +42,7 @@ class SubmitFrameworkRequest
 private
 
   def user
-    User.find(request.user_id)
+    @user ||= User.find(request.user_id)
   end
 
   # @return [Support::Organisation]
@@ -54,6 +55,7 @@ private
     kase_attrs = {
       organisation_id: map_organisation&.id,
       source: "faf",
+      # source: "digital",
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
@@ -63,16 +65,18 @@ private
     @kase = Support::CreateCase.new(kase_attrs).call
 
     interaction_attrs = {
-      additional_data:
-        { "support_request_id": request.id,
-          "first_name": user.first_name,
-          "last_name": user.last_name,
-          "email": user.email,
-          "message": request.message_body,
-          "referer": referer },
+      additional_data: {
+        "support_request_id": request.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+        "message": request.message_body,
+        "referer": referer,
+      },
     }
     Support::CreateInteraction.new(@kase.id, "faf_support_request", nil, interaction_attrs).call
 
     @kase
   end
 end
+# :nocov:
