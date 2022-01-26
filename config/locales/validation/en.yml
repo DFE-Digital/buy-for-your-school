@@ -5,8 +5,6 @@ en:
       phone_number: Your phone number
       message_body: "" # Omitted
       category_id: The type of procurement
-      school_urn: "" # Omitted
-      dsi: "" # Omitted
 
     errors:
       rules:
@@ -30,9 +28,11 @@ en:
 
   framework_request:
     rules:
+      dsi: "" # Omitted
       first_name: "" # Omitted
       last_name: "" # Omitted
       email: "" # Omitted
+      school_urn: "" # Omitted
 
     errors:
       rules:
