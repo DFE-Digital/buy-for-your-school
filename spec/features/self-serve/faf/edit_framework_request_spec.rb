@@ -25,7 +25,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
     it "allows the user to enter their email" do
       click_link "edit-email"
 
-      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=2"
+      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
       # expect(find("textarea.govuk-textarea")).to have_text "email@example.com"
 
       fill_in "framework_support_form[email]", with: "john_smith@test.com"
@@ -71,9 +71,10 @@ RSpec.feature "Edit an unsubmitted framework request" do
   end
 
   context "user is already logged in" do
+    let(:framework_request) { create(:framework_request, user: user, school_urn: "urn-type-1") }
+  
     context "when user with one supported school" do
       let(:user) { create(:user, :one_supported_school) }
-      let(:framework_request) { create(:framework_request, user: user, school_urn: "urn-type-1") }
 
       before do
         user_is_signed_in(user: user)
@@ -81,9 +82,9 @@ RSpec.feature "Edit an unsubmitted framework request" do
       end
 
       it "does not allow to change the school" do
-        binding.pry
-        within("dl.govuk-summary-list") do
-          expect(find("dd.govuk-summary-list__actions")[2]).not_to have_link "Change"
+        # binding.pry
+        within(all("div.govuk-summary-list__row")[2]) do
+          expect(find("dd.govuk-summary-list__actions")).not_to have_link "Change"
         end
       end
     end
@@ -94,12 +95,15 @@ RSpec.feature "Edit an unsubmitted framework request" do
       before do
         create(:support_organisation, urn: "urn-type-1", name: "School #1")
         create(:support_organisation, urn: "greendale-urn", name: "Greendale Academy for Bright Sparks")
+        user_is_signed_in(user: user)
+        visit "/procurement-support/#{framework_request.id}"
       end
 
       it "allows the user to change the school" do
         click_link "edit-school"
 
-        expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
+        expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=4"
+        pp page.source
         expect(find("input#faf-form-school-urn-urn-type-1-field")).to be_checked
 
         choose "Greendale Academy for Bright Sparks"

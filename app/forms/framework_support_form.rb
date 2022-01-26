@@ -1,4 +1,3 @@
-# :nocov:
 # @abstract Form Object for multi-step Find-a-Framework support questionnaire
 #
 class FrameworkSupportForm < Form
@@ -53,4 +52,3 @@ class FrameworkSupportForm < Form
     nil
   end
 end
-# :nocov:
