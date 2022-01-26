@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [unreleased]
 
 - add ability to persist procurement, contract and savings data on cases [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/704)
+- add redirect to case management at login for agents [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/803)
 
 <!--
 - value added [#ref](https://github.com/DFE-Digital/buy-for-your-school/commit/<hash>)

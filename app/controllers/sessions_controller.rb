@@ -13,8 +13,7 @@ class SessionsController < ApplicationController
 
     case user
     when User
-      # TODO: alternative redirect for caseworkers
-      redirect_to entry_path
+      redirect_to entry_path(user)
     when :invalid
       redirect_to root_path, notice: "Access Denied"
     when :no_organisation
@@ -76,12 +75,18 @@ private
     session[:faf_referer].present?
   end
 
-  # Logging whilst seeking support will send the user to their profile page
-  # to confirm the details before proceeding
+  # Routing logic for users after authentication
   #
   # @return [String]
-  def entry_path
-    find_framework_entrypoint? ? profile_path : dashboard_path
+  def entry_path(user)
+    if user.internal?
+      # proc ops / internal team members go to case management
+      support_root_path
+    else
+      # - default to the specify dashboard
+      # - support request journeys start from the profile page
+      find_framework_entrypoint? ? profile_path : dashboard_path
+    end
   end
 
   # @return [String]
