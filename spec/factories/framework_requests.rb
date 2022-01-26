@@ -7,6 +7,5 @@ FactoryBot.define do
     message_body { "please help!" }
     submitted { false }
 
-    association :user, factory: :user
   end
 end
