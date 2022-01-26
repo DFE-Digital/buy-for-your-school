@@ -4,6 +4,8 @@ namespace :case_management do
     Support::SeedCategories.new.call
     Support::SeedGroupTypes.new.call
     Support::SeedSchools.new.call
+    Support::SeedEstablishmentGroupTypes.new.call
+    Support::SeedEstablishmentGroups.new.call
   end
 
   desc "Populate the categories and sub_categories tables"
@@ -11,7 +13,7 @@ namespace :case_management do
     Support::SeedCategories.new.call
   end
 
-  desc "Populate supported establishment group types"
+  desc "Populate supported group types for establishments"
   task seed_group_types: :environment do
     Support::SeedGroupTypes.new.call
   end
@@ -20,6 +22,16 @@ namespace :case_management do
   task seed_schools: :environment do
     Support::SeedSchools.new.call # live data from GIAS
     # Support::SeedSchools.new(data: "spec/fixtures/gias/example_schools_data.csv").call
+  end
+
+  desc "Populate supported establishment group types"
+  task seed_establishment_group_types: :environment do
+    Support::SeedEstablishmentGroupTypes.new.call
+  end
+
+  desc "Populate establishment groups"
+  task seed_establishment_groups: :environment do
+    Support::SeedEstablishmentGroups.new.call
   end
 
   desc "Backfill case procurement details"

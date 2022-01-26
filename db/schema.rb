@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_134010) do
+ActiveRecord::Schema.define(version: 2022_01_25_110953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -324,6 +324,30 @@ ActiveRecord::Schema.define(version: 2022_01_21_134010) do
     t.text "body_preview"
     t.integer "folder"
     t.boolean "is_read", default: false
+  end
+
+  create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_support_establishment_group_types_on_code", unique: true
+    t.index ["name"], name: "index_support_establishment_group_types_on_name", unique: true
+  end
+
+  create_table "support_establishment_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "ukprn"
+    t.string "uid"
+    t.integer "status", null: false
+    t.jsonb "address"
+    t.uuid "establishment_group_type_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["establishment_group_type_id"], name: "index_establishment_groups_on_establishment_group_type_id"
+    t.index ["name"], name: "index_support_establishment_groups_on_name"
+    t.index ["uid"], name: "index_support_establishment_groups_on_uid", unique: true
+    t.index ["ukprn"], name: "index_support_establishment_groups_on_ukprn"
   end
 
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

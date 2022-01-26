@@ -1,0 +1,21 @@
+# Group Types supported by Get Help Buying for Schools service
+#
+# GIAS columns
+# - Group Type
+# - Group Type (code)
+#
+---
+- :name: Federation
+  :code: 1
+
+- :name: Trust
+  :code: 2
+
+- :name: Single-academy Trust
+  :code: 10
+
+- :name: Multi-academy Trust
+  :code: 6
+
+- :name: Umbrella trust
+  :code: 7
