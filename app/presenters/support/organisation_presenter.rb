@@ -21,10 +21,5 @@ module Support
     def phase
       super.to_s.humanize
     end
-
-    # @return [String]
-    def establishment_type
-      super.name
-    end
   end
 end
