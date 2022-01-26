@@ -41,9 +41,14 @@ module Support
       end
 
       def new_case_for_email
+        first_name, *last_name = email.sender["name"].split(" ")
+        last_name = Array(last_name).join(" ")
+
         Support::CreateCase.new(
           source: :incoming_email,
           email: email.sender["address"],
+          first_name: first_name,
+          last_name: last_name,
           action_required: true,
         ).call
       end

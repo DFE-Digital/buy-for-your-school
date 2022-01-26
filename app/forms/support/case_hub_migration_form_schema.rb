@@ -31,14 +31,6 @@ module Support
       key(:school_urn).failure(:invalid) if invalid_school_urn?(value)
     end
 
-    rule(:first_name) do
-      key(:first_name).failure(:missing) if value.blank?
-    end
-
-    rule(:last_name) do
-      key(:last_name).failure(:missing) if value.blank?
-    end
-
     # TODO: add email validation format
     rule(:email) do
       key(:email).failure(:missing) if value.blank?

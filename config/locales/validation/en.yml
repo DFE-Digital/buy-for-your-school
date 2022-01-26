@@ -5,8 +5,6 @@ en:
       phone_number: Your phone number
       message_body: "" # Omitted
       category_id: The type of procurement
-      school_urn: "" # Omitted
-      dsi: "" # Omitted
 
     errors:
       rules:
@@ -27,3 +25,20 @@ en:
 
         school_urn:
           missing: You must select a school
+
+  framework_request:
+    rules:
+      dsi: "" # Omitted
+      first_name: "" # Omitted
+      last_name: "" # Omitted
+      email: "" # Omitted
+      school_urn: "" # Omitted
+
+    errors:
+      rules:
+        first_name:
+          missing: Enter your first name
+        last_name:
+          missing: Enter your last name
+        email:
+          missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.

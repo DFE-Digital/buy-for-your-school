@@ -34,10 +34,20 @@ class FrameworkRequestsController < ApplicationController
   def create
     @framework_support_form = form
 
+    # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true"
-      revert_form
 
-      render :new
+      # authenticated user / inferred school / message step -> start page
+      if @framework_support_form.position?(5) && !current_user.guest? && !current_user.school_urn.nil?
+        redirect_to framework_requests_path
+      # authenticated user / many schools / school step -> start page
+      elsif @framework_support_form.position?(4) && !current_user.guest?
+        redirect_to framework_requests_path
+      else
+        @framework_support_form.back!
+        render :new
+      end
+
     elsif validation.success? && validation.to_h[:message_body]
 
       # valid form with last question answered
@@ -45,7 +55,8 @@ class FrameworkRequestsController < ApplicationController
       redirect_to framework_request_path(framework_request)
 
     elsif validation.success?
-      advance_form
+
+      @framework_support_form.advance!
 
       render :new
     else
@@ -59,11 +70,7 @@ class FrameworkRequestsController < ApplicationController
 
     if validation.success?
 
-      # if @support_form.step == 3 && @support_form.has_journey?
-      #   @support_form.forget_category!
-      # elsif @support_form.step == 4 && @support_form.has_category?
-      #   @support_form.forget_journey!
-      # end
+      # CONDITIONAL extra questions as a result of saved changes
 
       # if @support_form.step == 3 && !@support_form.has_journey?
       #   @support_form.advance!
@@ -139,31 +146,6 @@ private
         school_urn: current_user.school_urn,  # (step 4)
         # message (step 5)
       }
-    end
-  end
-
-  # @return [FrameworkSupportForm] form object with updated step number if validation successful
-  def advance_form
-    if @framework_support_form.step == 2 && current_user.school_urn
-      @framework_support_form.advance!(2)
-    else
-      @framework_support_form.advance!
-    end
-  end
-
-  # @return [FrameworkSupportForm] form object with reverted step number
-  def revert_form
-    # binding.pry
-
-    # last step, dsi and inferred school
-    if (@framework_support_form.step == 5) && !current_user.guest? && !current_user.school_urn.nil?
-
-      @framework_support_form.back!(4) # go to step 1
-
-    # if @framework_support_form.step == 4 && current_user.school_urn
-    #   @framework_support_form.back!(2)
-    else
-      @framework_support_form.back!
     end
   end
 end

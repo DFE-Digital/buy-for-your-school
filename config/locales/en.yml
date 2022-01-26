@@ -276,6 +276,8 @@ en:
 
   # /request-help-and-support-with-your-procurement
   faf:
+
+    # step 0
     start_page:
       header: Request advice and guidance for your procurement
       overview_purpose: Use this service if you're procuring for a single school in England, either
@@ -289,6 +291,23 @@ en:
       overview_response: The Get help buying for schools team will respond to you within 2 working days.
       subheading: Before you start
       you_can: You can
+
+    # step 2
+    name:
+      title: What is your name?
+      subtitle: About you
+      first_name:
+        label: First Name
+      last_name:
+        label: Last Name
+
+    # step 3
+    email:
+      title: What is your email address?
+      subtitle: About you
+      label: We will only use this to contact you about your request.
+
+    # step 5
     user_query:
       caption: About your request
       label: How can we help?
@@ -308,6 +327,7 @@ en:
       button:
         continue: Yes, continue
 
+    # step 1
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school you're requesting support for?
       subtitle: About your school
