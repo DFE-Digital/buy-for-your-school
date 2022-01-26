@@ -3,6 +3,8 @@
 # Validate "find-a-framework support requests"
 #
 class FrameworkSupportFormSchema < Schema
+  config.messages.top_namespace = :framework_request
+
   params do
     optional(:dsi).value(:bool)               # step 1
 
@@ -28,7 +30,9 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:email) do
-    key.failure(:missing) if key? && value.blank?
+    if key? && (value.blank? || !URI::MailTo::EMAIL_REGEXP.match?(value))
+      key.failure(:missing)
+    end
   end
 
   rule(:school_urn) do

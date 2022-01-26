@@ -27,3 +27,18 @@ en:
 
         school_urn:
           missing: You must select a school
+
+  framework_request:
+    rules:
+      first_name: "" # Omitted
+      last_name: "" # Omitted
+      email: "" # Omitted
+
+    errors:
+      rules:
+        first_name:
+          missing: Enter your first name
+        last_name:
+          missing: Enter your last name
+        email:
+          missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
