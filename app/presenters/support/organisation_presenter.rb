@@ -6,5 +6,25 @@ module Support
         .reject(&:blank?)
         .to_sentence(last_word_connector: ", ")
     end
+
+    # @return [String]
+    def local_authority
+      super["name"]
+    end
+
+    # @return [String]
+    def contact
+      "#{super['title']} #{super['first_name']} #{super['last_name']}"
+    end
+
+    # @return [String]
+    def phase
+      super.to_s.humanize
+    end
+
+    # @return [String]
+    def establishment_type
+      super.name
+    end
   end
 end
