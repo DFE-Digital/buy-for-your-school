@@ -1,5 +1,12 @@
-<%= form.hidden_field :dsi, value: form.object.dsi %>
+<!-- request message (5) -->
+
+<%= form.hidden_field :dsi %>
+<%= form.hidden_field :first_name, value: form.object.first_name %>
+<%= form.hidden_field :last_name, value: form.object.last_name %>
+<%= form.hidden_field :email, value: form.object.email %>
 <%= form.hidden_field :school_urn, value: form.object.school_urn %>
+
+
 <%= form.govuk_text_area :message_body,
       autofocus: true,
       class: "govuk-textarea",
@@ -8,7 +15,3 @@
       label: { text: I18n.t("faf.user_query.label"), size: "l" },
       hint: { text: I18n.t("faf.user_query.hint") }
     %>
-
-<p class="govuk-body">
-  <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
-</p>

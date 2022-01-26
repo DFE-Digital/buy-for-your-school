@@ -48,10 +48,11 @@ module Support
 
     # Source
     #
-    #   digital - specify cases
-    #   nw_hub - north west hub cases
-    #   sw_hub - south west hub cases
-    #   faf - find a framework
+    #   digital         - specify cases
+    #   nw_hub          - north west hub cases
+    #   sw_hub          - south west hub cases
+    #   incoming_email  -
+    #   faf             - find a framework
     enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4 }
 
     # Savings status

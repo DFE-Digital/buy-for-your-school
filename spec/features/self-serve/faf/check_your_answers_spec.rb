@@ -1,7 +1,7 @@
 RSpec.feature "FaF - check your answers" do
   let(:user) { create(:user, :one_supported_school) }
 
-  context "when the user is signed in" do
+  xcontext "when the user is signed in" do
     before do
       create(:support_organisation, urn: "urn-type-1", name: "School #1")
 

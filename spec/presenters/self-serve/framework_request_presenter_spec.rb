@@ -1,4 +1,4 @@
-RSpec.describe FafPresenter do
+RSpec.describe FrameworkRequestPresenter do
   let(:framework_request) { build(:framework_request) }
 
   describe "#school_name" do

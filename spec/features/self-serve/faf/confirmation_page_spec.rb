@@ -1,5 +1,5 @@
 RSpec.feature "Faf - confirmation page" do
-  context "when the user is signed in" do
+  xcontext "when the user is signed in" do
     let(:user) { create(:user, :one_supported_school) }
     let(:email) do
       {
@@ -36,7 +36,7 @@ RSpec.feature "Faf - confirmation page" do
       click_on "Send request"
     end
 
-    it "shows the confirmation page" do
+    xit "shows the confirmation page" do
       expect(find("h1.govuk-panel__title")).to have_text "Your request for support has been sent"
       expect(find("div.govuk-panel__body")).to have_text "We have sent a confirmation email to: #{user.email}"
 

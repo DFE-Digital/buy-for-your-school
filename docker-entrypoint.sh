@@ -11,14 +11,13 @@ setup_database()
   echo "ENTRYPOINT: Finished database setup."
 }
 
-# Bundle any Gemfile changes in development without requiring a long image rebuild
 if [ ! "$RAILS_ENV" == "production" ]; then
+  # Bundle any Gemfile changes in development without requiring a long image rebuild
+  if bundle check; then echo "ENTRYPOINT: Skipping bundle for development"; else bundle; fi
 
   echo "ENTRYPOINT: Compile /public/assets (if required) for development"
   cp -R /srv/node_modules $APP_HOME
   RAILS_ENV=production SECRET_KEY_BASE=key bundle exec rake assets:precompile
-
-  if bundle check; then echo "ENTRYPOINT: Skipping bundle for development"; else bundle; fi
 fi
 
 if [ -z ${DATABASE_URL+x} ]; then echo "ENTRYPOINT: Skipping database setup"; else setup_database; fi
