@@ -6,8 +6,8 @@ RSpec.describe Support::RefreshSchoolsJob, type: :job do
   before do
     ActiveJob::Base.queue_adapter = :test
 
-    group = create(:support_group, code: 4, name: "LA maintained school")
-    create(:support_establishment_type, code: 1, name: "Community school", group: group)
+    group_type = create(:support_group_type, code: 4, name: "LA maintained school")
+    create(:support_establishment_type, code: 1, name: "Community school", group_type: group_type)
 
     travel_to Time.zone.local(2004, 11, 24, 0o1, 0o4, 44)
 

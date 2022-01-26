@@ -30,7 +30,11 @@
 
     </dl>
 
-    <% if @current_user.supported_schools.any? %>
+
+    <% if @support_journey == :faf %>
+      <%= link_to "Yes, continue", @support_path, class: "govuk-button", role: "button" %>
+
+    <% elsif @current_user.supported_schools.any? %>
       <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
     <% else %>
       <p class="govuk-body">

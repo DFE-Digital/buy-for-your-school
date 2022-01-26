@@ -1,0 +1,64 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l"><%= I18n.t("faf.check_answers.header") %></h1>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.name") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.user.full_name %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%# link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@faf, step: 0), class: "govuk-link", id: "edit-name" %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.email") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.user.email %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%# link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@faf, step: 0), class: "govuk-link", id: "edit-email" %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.school") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.school_name %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <% unless @framework_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 4), class: "govuk-link", id: "edit-school" unless current_user.supported_schools.one? %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.problem") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.message_body %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <% unless @framework_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 5), class: "govuk-link", id: "edit-message" %>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">
+      <%= I18n.t("faf.check_answers.response_time") %>
+    </p>
+
+    <%= button_to I18n.t("faf.check_answers.button.send"), framework_request_submission_path(@framework_request), class: "govuk-button", method: :patch, data: { disable_with: "Submitting..." } %>
+
+  </div>
+</div>

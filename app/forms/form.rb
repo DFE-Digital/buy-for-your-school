@@ -12,6 +12,22 @@ class Form
   # @return [Integer] internal counter defaults to 1, coerces strings
   option :step, Types::Params::Integer, default: proc { 1 }
 
+  # @param num [Integer] number of steps to advance
+  #
+  # @return [Boolean] assert step position
+  def position?(position)
+    @step == position
+  end
+
+  # Jump to specific step
+  #
+  # @param position [Integer] step number
+  #
+  # @return [Integer] step number
+  def go_to!(position)
+    @step = position
+  end
+
   # Proceed or skip to next questions
   #
   # @param num [Integer] number of steps to advance
@@ -30,7 +46,7 @@ class Form
     @step -= num
   end
 
-  # @return [Hash] form parms as  request attributes
+  # @return [Hash] form parms as request attributes
   def to_h
     self.class.dry_initializer.attributes(self).except(:step, :messages)
   end

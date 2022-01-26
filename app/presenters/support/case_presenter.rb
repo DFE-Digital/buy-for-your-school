@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "interaction_presenter"
-require_relative "contact_presenter"
 require_relative "category_presenter"
 require_relative "agent_presenter"
 require_relative "organisation_presenter"

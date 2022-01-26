@@ -14,8 +14,6 @@ module Support
           formatted_hash["organisation_id"] = organisation(value).name
         when "category_id"
           formatted_hash["category_id"] = category(value).title if value.present?
-        when "referer"
-          formatted_hash["referer"] = referer
         else
           formatted_hash[field] = value
         end

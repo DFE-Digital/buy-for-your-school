@@ -33,6 +33,7 @@ module Support
     #   hub notes
     #   hub progress notes
     #   hub migration
+    #   faf_support_request
     enum event_type: {
       note: 0,
       phone_call: 1,

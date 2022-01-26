@@ -36,7 +36,7 @@ module Support
     # @return [Notifications::Client::ResponseNotification, String] email or error message
     def send_email_to_school
       Support::Emails::ToSchool.new(
-        recipient: @current_case,
+        recipient: CaseContactPresenter.new(@current_case),
         template: email_template_uuid,
         reference: @current_case.ref,
         variables: {
