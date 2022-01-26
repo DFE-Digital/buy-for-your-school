@@ -37,10 +37,10 @@ class FrameworkRequestsController < ApplicationController
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true"
 
-      # authenticated user / inferred school / message step
+      # authenticated user / inferred school / message step -> start page
       if @framework_support_form.position?(5) && !current_user.guest? && !current_user.school_urn.nil?
         redirect_to framework_requests_path
-      # authenticated user / many schools / school step
+      # authenticated user / many schools / school step -> start page
       elsif @framework_support_form.position?(4) && !current_user.guest?
         redirect_to framework_requests_path
       else
@@ -56,13 +56,7 @@ class FrameworkRequestsController < ApplicationController
 
     elsif validation.success?
 
-      # unpersisted form / guest / being asked their name / we know their school
-      if @framework_support_form.position?(2) && current_user.school_urn
-        # jump to
-        @framework_support_form.go_to!(2)
-      else
-        @framework_support_form.advance!
-      end
+      @framework_support_form.advance!
 
       render :new
     else
