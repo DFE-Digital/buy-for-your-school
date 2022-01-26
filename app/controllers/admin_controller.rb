@@ -14,6 +14,11 @@ class AdminController < ApplicationController
         csv = ActivityLogItem.to_csv
         send_data csv, filename: "user_activity_data.csv", type: "text/csv"
       end
+      format.json do
+        Rollbar.info("User activity data downloaded.")
+        json = JSON.pretty_generate(ActivityLogItem.all.as_json)
+        send_data json, filename: "user_activity_data.json", type: "application/json"
+      end
     end
   end
 
