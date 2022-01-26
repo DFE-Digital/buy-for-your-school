@@ -1,5 +1,8 @@
 module Support
   class OrganisationsController < ApplicationController
+    skip_before_action :authenticate_user!
+    skip_before_action :authenticate_agent!
+
     def index
       query = <<-SQL
         urn LIKE :q OR
