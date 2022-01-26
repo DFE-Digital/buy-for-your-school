@@ -5,7 +5,7 @@ class FrameworkRequestsController < ApplicationController
   before_action :framework_request, only: %i[edit show update]
 
   def index
-    session[:faf_referer] = request.referer || "none"
+    session[:faf_referer] = request.referer || "direct"
   end
 
   # check answers before submission
