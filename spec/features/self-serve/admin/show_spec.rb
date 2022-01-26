@@ -19,7 +19,6 @@ RSpec.feature "Admin page" do
       expect(all("th.govuk-table__header")[2]).to have_text "Last user registration date"
       expect(all("td.govuk-table__cell")[2]).to have_text "20 December 2021"
       expect(page).to have_link "Download (.csv)", class: "govuk-button", href: "/admin.csv"
-      # new line
       expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin.json"
     end
 
@@ -36,8 +35,7 @@ RSpec.feature "Admin page" do
       expect(page.response_headers["Content-Disposition"]).to match(/filename="user_activity_data.csv"/)
     end
 
-    # new section
-    it "provides a JSON download" do 
+    it "provides a JSON download" do
       expect(Rollbar).to receive(:info).with("User activity data downloaded.")
       click_on "Download (.json)"
       expect(page.response_headers["Content-Type"]).to eq "application/json"
