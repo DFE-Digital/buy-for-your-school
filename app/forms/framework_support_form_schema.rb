@@ -30,10 +30,16 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:email) do
-    key.failure(:missing) if key? && value.blank?
+    if key? && (value.blank? || !URI::MailTo::EMAIL_REGEXP.match?(value))
+      key.failure(:missing)
+    end
   end
 
-  rule(:email).validate(format?: URI::MailTo::EMAIL_REGEXP)
+  # rule(:email) do
+  #   unless !key? || URI::MailTo::EMAIL_REGEXP.match?(value)
+  #     key.failure(:invalid)
+  #   end
+  # end
 
   rule(:school_urn) do
     key.failure(:missing) if key? && value.blank?

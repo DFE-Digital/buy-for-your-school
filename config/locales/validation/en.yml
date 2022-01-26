@@ -41,5 +41,4 @@ en:
         last_name:
           missing: Enter your last name
         email:
-          format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.

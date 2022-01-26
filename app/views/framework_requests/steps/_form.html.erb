@@ -13,12 +13,7 @@
   %>
 <% end %>
 
-<% if Rails.env.development? %>
-  <%= debug @faf&.attributes %>
-  <%= debug @framework_support_form.step %>
-  <%= debug @current_user.supported_schools %>
-  <%= debug @framework_support_form.to_h %>
-<% end %>
+
 
 <%= form_with model: @framework_support_form, scope: :framework_support_form, url: path, method: verb  do |form| %>
   <%= form.govuk_error_summary %>
