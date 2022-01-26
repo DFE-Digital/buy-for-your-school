@@ -4,7 +4,7 @@ module Support
   #
   # Supported school "establishment types" are grouped
   #
-  class Group < ApplicationRecord
+  class GroupType < ApplicationRecord
     has_many :establishment_types, class_name: "Support::EstablishmentType"
     has_many :organisations, through: :establishment_types, class_name: "Support::Organisation"
 

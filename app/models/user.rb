@@ -23,6 +23,13 @@ class User < ApplicationRecord
     false
   end
 
+  # @see [SessionsController]
+  #
+  # @return [Boolean] user is an internal team member (or case worker)
+  def internal?
+    self.class.internal.include?(self)
+  end
+
   # @return [Boolean] user is an analyst
   def analyst?
     self.class.analysts.include?(self)

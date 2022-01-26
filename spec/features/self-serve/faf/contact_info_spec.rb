@@ -29,7 +29,7 @@ RSpec.feature "Framework support request - contact info" do
   # xcontext "when guest" do
   # end
 
-  it "has a back link to log out" do
+  xit "has a back link to log out" do
     expect(page).to have_link "Back", href: "/auth/dfe/signout"
   end
 end

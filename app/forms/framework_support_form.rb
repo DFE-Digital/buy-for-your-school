@@ -1,9 +1,10 @@
+# :nocov:
 # @abstract Form Object for multi-step Find-a-Framework support questionnaire
 #
 class FrameworkSupportForm < Form
   # @!attribute [r] dsi
   # @return [Boolean]
-  option :dsi, Types::Params::Bool, optional: true # 1 (skipped if logged in)
+  option :dsi, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 1 (skipped if logged in)
 
   # @!attribute [r] first name
   # @return [String]
@@ -28,7 +29,7 @@ class FrameworkSupportForm < Form
 
   # @return [Hash] form data to be persisted as request attributes
   def to_h
-    super.except(:dsi)
+    super.except(:dsi).merge(school_urn: extract_school_urn)
   end
 
   # @return [Boolean]
@@ -40,4 +41,15 @@ class FrameworkSupportForm < Form
   def guest?
     !dsi?
   end
+
+private
+
+  # Extract the school URN from the format "urn - name"
+  # "100000 - School #1" -> "100000"
+  #
+  # @return [String, nil]
+  def extract_school_urn
+    school_urn.split(" - ").first if school_urn
+  end
 end
+# :nocov:

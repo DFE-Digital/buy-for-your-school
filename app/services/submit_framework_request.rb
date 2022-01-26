@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Submit an FaF request for support to the Supported case management team
+# :nocov:
 class SubmitFrameworkRequest
   extend Dry::Initializer
 
@@ -78,3 +79,4 @@ private
     @kase
   end
 end
+# :nocov:

@@ -276,6 +276,8 @@ en:
 
   # /request-help-and-support-with-your-procurement
   faf:
+
+    # step 0
     start_page:
       header: Request advice and guidance for your procurement
       overview_purpose: Use this service if you're procuring for a single school in England, either
@@ -289,6 +291,23 @@ en:
       overview_response: The Get help buying for schools team will respond to you within 2 working days.
       subheading: Before you start
       you_can: You can
+
+    # step 2
+    name:
+      title: What is your name?
+      subtitle: About you
+      first_name:
+        label: First Name
+      last_name:
+        label: Last Name
+
+    # step 3
+    email:
+      title: What is your email address?
+      subtitle: About you
+      label: We will only use this to contact you about your request.
+
+    # step 5
     user_query:
       caption: About your request
       label: How can we help?
@@ -308,6 +327,7 @@ en:
       button:
         continue: Yes, continue
 
+    # step 1
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school you're requesting support for?
       subtitle: About your school
@@ -334,24 +354,19 @@ en:
         email: Your email address
         school: Your school
         problem: Description of problem
-  faf_submissions:
-    header:
-      confirmation: Your request for support has been sent
-      what_happens_next: What happens next
-      what_you_can_do_next: What you can do next
-      you_can_also: You can also
-    sub_header:
-      confirmation: "We have sent a confirmation email to:"
-    body:
-      what_happens_next:
-        - "The Get help buying for schools team will be in touch within %{days} working days."
-        - Please check to make sure you receive the email confirmation within the next 10 minutes. Check your junk folder if you do not see it.
-        - You will need to submit the request again if you do not receive an email from us because this is how we will be contacting you.
-    what_you_can_do_next:
-      read_buying_procedures_link: read buying procedures and procurement law for schools
-      read_buying_procedures: "%{read_buying_procedures_link} to learn more about the buying process"
-      read_guides_link: read guides about goods and services
-      read_guides: "%{read_guides_link} that you're buying"
+
+    search_for_a_school:
+      title: Search for your school - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Search for your school
+      hint: Enter the name, postcode or unique reference number (URN) of your school
+      details:
+        summary: Can't find it?
+        body:
+          - "You can only use this service if you are procuring for a single school in England. This should either be a local authority maintained school, or an academy in a single or multi-academy trust."
+          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
+          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+      button: Continue
 
   faf_submissions:
     header:
@@ -626,6 +641,8 @@ en:
         header: Preview email
         to:
           label: To
+        salutation: Dear %{first_name} %{last_name}
+        signature_html: Regards<br>%{agent_name}<br>Procurement Specialist<br>Get help buying for schools
         subject:
           label: Subject
           default_value: "DfE Get help buying for schools: your request for support"

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :nocov:
 class ProfileController < ApplicationController
   # The current user may no longer be a member of a supported school, if:
   #   1. an internal team member or ProcOps caseworker
@@ -21,3 +22,4 @@ class ProfileController < ApplicationController
     end
   end
 end
+# :nocov:

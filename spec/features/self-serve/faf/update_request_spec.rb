@@ -1,5 +1,5 @@
 RSpec.feature "Faf - update request" do
-  context "when on the DSI journey" do
+  xcontext "when on the DSI journey" do
     let(:user) { create(:user, :one_supported_school) }
     let(:framework_request) { create(:framework_request, user: user, school_urn: "urn-type-1") }
 

@@ -1,3 +1,4 @@
+# :nocov:
 class FrameworkRequestPresenter < BasePresenter
   # @return [String]
   def school_name
@@ -23,3 +24,4 @@ class FrameworkRequestPresenter < BasePresenter
     user_id.present?
   end
 end
+# :nocov:

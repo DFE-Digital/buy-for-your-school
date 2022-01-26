@@ -7,7 +7,7 @@ RSpec.feature "Faf - user organisation page" do
     click_on "Yes, continue"
   end
 
-  context "when the user belongs to only one supported school" do
+  xcontext "when the user belongs to only one supported school" do
     let(:user) { create(:user, :one_supported_school) }
 
     it "skips step 3 because the school is implicit" do
@@ -16,7 +16,7 @@ RSpec.feature "Faf - user organisation page" do
     end
   end
 
-  context "when the user belongs to multiple supported schools" do
+  xcontext "when the user belongs to multiple supported schools" do
     let(:user) { create(:user, :many_supported_schools) }
 
     it "loads the page" do
