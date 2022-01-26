@@ -86,7 +86,8 @@ describe Support::IncomingEmails::CaseAssignment do
   describe "#case_for_email" do
     subject(:case_for_email) { case_assignment.case_for_email }
 
-    let(:case_assignment) { described_class.new(email: double(sender: { "address" => "contact@email.com", "name" => "Contact Name" })) }
+    let(:email_sender) { { "address" => "contact@email.com", "name" => "Contact Multi Part Name" } }
+    let(:case_assignment) { described_class.new(email: double(sender: email_sender)) }
     let(:subject_ref) { "100000" }
     let(:body_ref) { "200000" }
     let(:conversation_ref) { "300000" }
@@ -113,6 +114,8 @@ describe Support::IncomingEmails::CaseAssignment do
           expect(case_for_email.ref).to eq(Support::Case.last.ref)
           expect(case_for_email.source).to eq("incoming_email")
           expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.first_name).to eq("Contact")
+          expect(case_for_email.last_name).to eq("Multi Part Name")
           expect(case_for_email.action_required).to be(true)
         end
       end
@@ -143,7 +146,22 @@ describe Support::IncomingEmails::CaseAssignment do
           expect(case_for_email.ref).to eq(Support::Case.last.ref)
           expect(case_for_email.source).to eq("incoming_email")
           expect(case_for_email.email).to eq("contact@email.com")
+          expect(case_for_email.first_name).to eq("Contact")
+          expect(case_for_email.last_name).to eq("Multi Part Name")
           expect(case_for_email.action_required).to be(true)
+        end
+
+        context "when the sender only has one name" do
+          let(:email_sender) { { "address" => "contact@email.com", "name" => "Contact" } }
+
+          it "sets the contact details as XXX" do
+            expect(case_for_email.ref).to eq(Support::Case.last.ref)
+            expect(case_for_email.source).to eq("incoming_email")
+            expect(case_for_email.email).to eq("contact@email.com")
+            expect(case_for_email.first_name).to eq("Contact")
+            expect(case_for_email.last_name).to eq("")
+            expect(case_for_email.action_required).to be(true)
+          end
         end
       end
     end
