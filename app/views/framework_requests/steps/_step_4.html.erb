@@ -22,18 +22,16 @@
   <span class="govuk-caption-l"><%= I18n.t("faf.search_for_a_school.caption") %></span>
   <h1 class="govuk-heading-l"><%= I18n.t("faf.search_for_a_school.heading") %></h1>
 
-  <%= form.govuk_error_summary %>
-
   <%= render "components/autocomplete",
-      container_id: "framework-request-form-school-urn-field",
-      label_text: I18n.t("faf.search_for_a_school.hint"),
-      label_class: "govuk-hint",
-      element_id: "framework-support-form-school-urn-field",
-      element_name: "framework_support_form[school_urn]",
-      template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
-      value_field: :school_urn,
-      default_value: "#{@framework_support_form.school_urn}",
-      query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
+        container_id: "framework-request-form-school-urn-field",
+        label_text: I18n.t("faf.search_for_a_school.hint"),
+        label_class: "govuk-hint",
+        element_id: "framework-support-form-school-urn-field",
+        element_name: "framework_support_form[school_urn]",
+        template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
+        value_field: :formatted_name,
+        default_value: "#{@framework_support_form.school_urn}",
+        query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
 
   <details class="govuk-details" data-module="govuk-details">
     <summary class="govuk-details__summary">
