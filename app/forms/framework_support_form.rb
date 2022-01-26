@@ -29,7 +29,8 @@ class FrameworkSupportForm < Form
 
   # @return [Hash] form data to be persisted as request attributes
   def to_h
-    super.except(:dsi).merge(school_urn: extract_school_urn)
+    instance_variable_set(:@school_urn, school_urn)
+    super.except(:dsi)
   end
 
   # @return [Boolean]
@@ -42,14 +43,14 @@ class FrameworkSupportForm < Form
     !dsi?
   end
 
-private
-
   # Extract the school URN from the format "urn - name"
   # "100000 - School #1" -> "100000"
   #
   # @return [String, nil]
-  def extract_school_urn
-    school_urn.split(" - ").first if school_urn
+  def school_urn
+    instance_variable_get(:@school_urn).split(" - ").first
+  rescue NoMethodError
+    nil
   end
 end
 # :nocov:
