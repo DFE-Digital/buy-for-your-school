@@ -8,8 +8,6 @@ en:
 
     errors:
       rules:
-        dsi:
-          missing: Select whether you want to use a DfE Sign-in account
         phone_number:
           missing: is missing
           # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
@@ -36,6 +34,8 @@ en:
 
     errors:
       rules:
+        dsi:
+          missing: Select whether you want to use a DfE Sign-in account
         first_name:
           missing: Enter your first name
         last_name:
