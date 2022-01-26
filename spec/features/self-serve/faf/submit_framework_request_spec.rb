@@ -21,15 +21,10 @@ RSpec.feature "Completed framework requests" do
       .to_return(body: {}.to_json, status: 200, headers: {})
 
     user_is_signed_in(user: user)
-    # go through the whole DSI journey
+
     visit "/procurement-support/new"
-    # step1
-    choose "Yes, use my DfE Sign-in"
-    click_continue
-    # step 2
-    click_on "Yes, continue"
-    # step 4
-    fill_in "faf_form[message_body]", with: "I have a problem"
+    # skip to step 5
+    fill_in "framework_support_form[message_body]", with: "I have a problem"
     click_continue
     # CYA
     click_on "Send request"

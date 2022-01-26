@@ -1,6 +1,6 @@
 RSpec.feature "Edit an unsubmitted framework request" do
   context "user is a guest" do
-    let(:framework_request) { create(:framework_request, school_urn: "urn-type-1") }
+    let(:framework_request) { create(:framework_request, first_name: "Bob", last_name: "Jones", school_urn: "urn-type-1", email: "email@example.com", message_body: "help!") }
     before do
       visit "/procurement-support/#{framework_request.id}"
     end
@@ -9,7 +9,8 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_link "edit-name"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=2"
-      # expect(find("textarea.govuk-textarea")).to have_text ""
+      expect(find_field("framework-support-form-first-name-field").value).to eql "Bob"
+      expect(find_field("framework-support-form-last-name-field").value).to eql "Jones"
 
       fill_in "framework_support_form[first_name]", with: "John"
       fill_in "framework_support_form[last_name]", with: "Smith"
@@ -26,7 +27,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_link "edit-email"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
-      # expect(find("textarea.govuk-textarea")).to have_text "email@example.com"
+      expect(find_field("framework-support-form-email-field").value).to eql "email@example.com"
 
       fill_in "framework_support_form[email]", with: "john_smith@test.com"
       click_continue
@@ -41,7 +42,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_link "edit-school"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=4"
-      # expect(find("textarea.govuk-textarea")).to have_text ""
+      expect(find_field("framework-support-form-school-urn-field").value).to eql "00001"
 
       fill_in "framework_support_form[school_urn]", with: "100253"
       # TODO: click first option in drop down
@@ -58,7 +59,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_link "edit-message"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=5"
-      # expect(find("textarea.govuk-textarea")).to have_text "please help!"
+      expect(find_field("framework-support-form-message-body-field").value).to eql "help!"
 
       fill_in "framework_support_form[message_body]", with: "I have a problem"
       click_continue
@@ -82,7 +83,6 @@ RSpec.feature "Edit an unsubmitted framework request" do
       end
 
       it "does not allow to change the school" do
-        # binding.pry
         within(all("div.govuk-summary-list__row")[2]) do
           expect(find("dd.govuk-summary-list__actions")).not_to have_link "Change"
         end
@@ -103,8 +103,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
         click_link "edit-school"
 
         expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=4"
-        pp page.source
-        expect(find("input#faf-form-school-urn-urn-type-1-field")).to be_checked
+        expect(find("input#framework-support-form-school-urn-urn-type-1-field")).to be_checked
 
         choose "Greendale Academy for Bright Sparks"
         click_continue
