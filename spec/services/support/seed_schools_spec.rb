@@ -4,8 +4,8 @@ RSpec.describe Support::SeedSchools do
   include_context "with gias data"
 
   before do
-    group = create(:support_group, code: 4, name: "LA maintained school")
-    create(:support_establishment_type, code: 1, name: "Community school", group: group)
+    group_type = create(:support_group_type, code: 4, name: "LA maintained school")
+    create(:support_establishment_type, code: 1, name: "Community school", group_type: group_type)
   end
 
   it "populates supported organisations only" do

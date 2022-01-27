@@ -4,7 +4,7 @@
 class FrameworkSupportForm < Form
   # @!attribute [r] dsi
   # @return [Boolean]
-  option :dsi, Types::Params::Bool, optional: true # 1 (skipped if logged in)
+  option :dsi, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 1 (skipped if logged in)
 
   # @!attribute [r] first name
   # @return [String]
