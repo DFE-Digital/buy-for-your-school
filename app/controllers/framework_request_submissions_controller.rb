@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# :nocov:
 class FrameworkRequestSubmissionsController < ApplicationController
   def update
     unless framework_request.submitted?
@@ -26,4 +25,3 @@ private
     ::FrameworkRequest.find(params[:id])
   end
 end
-# :nocov:

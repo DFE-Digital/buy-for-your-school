@@ -1,3 +1,9 @@
+<% if Rails.env.development? %>
+  <%= debug @framework_request.attributes %>
+<% end %>
+
+<%= link_to I18n.t("generic.button.back"), edit_framework_request_path(@framework_request, step: 5), class: "govuk-back-link" %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
@@ -12,7 +18,9 @@
           <%= @framework_request.user.full_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%# link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@faf, step: 0), class: "govuk-link", id: "edit-name" %>
+          <% if @current_user.guest? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 2), class: "govuk-link", id: "edit-name" %>
+          <% end %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -23,7 +31,9 @@
           <%= @framework_request.user.email %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%# link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@faf, step: 0), class: "govuk-link", id: "edit-email" %>
+          <% if current_user.guest? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-email" %>
+          <% end %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -48,7 +58,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 5), class: "govuk-link", id: "edit-message" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 6), class: "govuk-link", id: "edit-message" %>
           <% end %>
         </dd>
       </div>
