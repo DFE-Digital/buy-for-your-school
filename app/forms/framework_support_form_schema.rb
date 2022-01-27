@@ -16,10 +16,6 @@ class FrameworkSupportFormSchema < Schema
     optional(:message_body).value(:string)    # step 5
   end
 
-  rule(:dsi) do
-    key.failure(:missing) unless key?
-  end
-
   rule(:first_name) do
     key.failure(:missing) if key? && value.blank?
   end

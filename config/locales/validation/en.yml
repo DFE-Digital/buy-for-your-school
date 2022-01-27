@@ -36,6 +36,7 @@ en:
       rules:
         dsi:
           missing: Select whether you want to use a DfE Sign-in account
+          bool?: Select whether you want to use a DfE Sign-in account
         first_name:
           missing: Enter your first name
         last_name:
