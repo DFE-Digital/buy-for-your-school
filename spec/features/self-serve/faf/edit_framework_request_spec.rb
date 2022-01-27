@@ -1,6 +1,7 @@
 RSpec.feature "Edit an unsubmitted framework request" do
-  context "user is a guest" do
+  context "when user is a guest" do
     let(:framework_request) { create(:framework_request, first_name: "Bob", last_name: "Jones", school_urn: "urn-type-1", email: "email@example.com", message_body: "help!") }
+
     before do
       visit "/procurement-support/#{framework_request.id}"
     end
@@ -17,7 +18,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_continue
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}"
-    
+
       within("dl.govuk-summary-list") do
         expect(all("dd.govuk-summary-list__value")[0]).to have_text "John Smith"
       end
@@ -71,9 +72,9 @@ RSpec.feature "Edit an unsubmitted framework request" do
     end
   end
 
-  context "user is already logged in" do
+  context "when user is already logged in" do
     let(:framework_request) { create(:framework_request, user: user, school_urn: "urn-type-1") }
-  
+
     context "when user with one supported school" do
       let(:user) { create(:user, :one_supported_school) }
 

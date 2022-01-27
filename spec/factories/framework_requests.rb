@@ -6,6 +6,5 @@ FactoryBot.define do
     email { "email@example.com" }
     message_body { "please help!" }
     submitted { false }
-
   end
 end
