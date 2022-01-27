@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FrameworkRequestSubmissionsController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def update
     unless framework_request.submitted?
       SubmitFrameworkRequest.new(request: framework_request, referer: session[:faf_referer]).call

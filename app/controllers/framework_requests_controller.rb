@@ -30,13 +30,19 @@ class FrameworkRequestsController < ApplicationController
     )
   end
 
-  # :nocov:
   def create
     @framework_support_form = form
     @organisation = organisation
 
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true"
+
+      # forget validation errors when stepping back
+      @framework_support_form = FrameworkSupportForm.new(
+        step: form_params[:step],
+        dsi: !current_user.guest?,
+        **validation.to_h.reject { |_k, v| v.blank? },
+      )
 
       # authenticated user / inferred school / message step -> start page
       if @framework_support_form.position?(6) && !current_user.guest? && !current_user.school_urn.nil?
@@ -65,7 +71,6 @@ class FrameworkRequestsController < ApplicationController
 
     end
   end
-  # :nocov:
 
   def update
     @framework_support_form = form
@@ -93,9 +98,7 @@ private
   def form
     FrameworkSupportForm.new(
       step: form_params[:step],
-
-      dsi: !current_user.guest?, # ensures a boolean
-
+      dsi: !current_user.guest?,
       messages: validation.errors(full: true).to_h,
       **validation.to_h,
     )

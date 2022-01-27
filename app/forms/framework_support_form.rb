@@ -19,12 +19,12 @@ class FrameworkSupportForm < Form
 
   # @!attribute [r] school_urn
   # @return [String]
-  option :school_urn, optional: true # 4 (skipped if inferred)
+  option :school_urn, optional: true # 4 (skipped if inferred at login)
 
   # @!attribute [r] message_body
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :message_body, optional: true # 5 (last and compulsory)
+  option :message_body, optional: true # 6 (last and compulsory)
 
   # @return [Hash] form data to be persisted as request attributes
   def to_h
