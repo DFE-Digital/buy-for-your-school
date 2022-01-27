@@ -33,7 +33,7 @@ module Support
 
     # @return [String] 30 January 2000 at 12:00
     def last_updated_at
-      interactions.none? ? created_at : interactions.last.created_at
+      updated_at
     end
 
     # @return [String]

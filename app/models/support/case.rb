@@ -24,6 +24,8 @@ module Support
 
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
+    default_scope { order(updated_at: :asc) }
+
     scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
 
     # Support level
