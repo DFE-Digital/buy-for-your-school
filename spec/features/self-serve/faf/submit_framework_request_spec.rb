@@ -41,9 +41,9 @@ RSpec.feature "Completed framework requests" do
 
     expect(all("h1.govuk-heading-m")[1]).to have_text "What you can do next"
     within("ul.govuk-list") do
-      expect(all("li")[0]).to have_link "read buying procedures and procurement law for schools", href: "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-procedures-for-schools", class: "govuk-link"
+      expect(all("li")[0]).to have_link "read buying procedures and procurement law for schools", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
       expect(all("li")[0]).to have_text "to learn more about the buying process"
-      expect(all("li")[1]).to have_link "read guides about goods and services", href: "https://buy-for-your-school-staging.herokuapp.com/beta/phase-6/gov/buying-procedures-for-schools", class: "govuk-link"
+      expect(all("li")[1]).to have_link "read guides about goods and services", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
       expect(all("li")[1]).to have_text "that you're buying"
     end
   end
