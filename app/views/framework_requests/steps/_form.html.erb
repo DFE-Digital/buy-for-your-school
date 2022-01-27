@@ -7,16 +7,19 @@
   <%= link_to I18n.t("generic.button.back"), framework_requests_path, class: "govuk-back-link"  %>
 
 <% else %>
+  <% if @framework_support_form.position?(1) %>
+    <%= link_to I18n.t("generic.button.back"), framework_requests_path, class: "govuk-back-link"  %>
+  <% else %>
+    <%=
+      # TODO: move into method on form
+      # - pass in param that we are stepping backward
+      # - infer dsi value
+      # - remove any unanswered questions so as to not display error messages for previous steps
+      form_data = @framework_support_form.to_h.merge(step: @framework_support_form.step, back: true, dsi: !current_user.guest?).compact
 
-  <%=
-    # - pass in param that we are stepping backward
-    # - infer dsi value
-    # - remove any unanswered questions so as to not display error messages for previous steps
-    form_data = @framework_support_form.to_h.merge(step: @framework_support_form.step, back: true, dsi: !current_user.guest?).compact
-
-    link_to I18n.t("generic.button.back"), framework_requests_path(nil, framework_support_form: form_data), method: :post, class: "govuk-back-link"
-  %>
-
+      link_to I18n.t("generic.button.back"), framework_requests_path(framework_support_form: form_data), method: :post, class: "govuk-back-link"
+    %>
+  <% end %>
 <% end %>
 
 <% if Rails.env.development? %>
