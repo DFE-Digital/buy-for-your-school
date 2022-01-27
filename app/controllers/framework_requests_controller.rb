@@ -41,9 +41,8 @@ class FrameworkRequestsController < ApplicationController
       @framework_support_form = FrameworkSupportForm.new(
         step: form_params[:step],
         dsi: !current_user.guest?,
-        **validation.to_h.reject { |k,v| v.blank? },
+        **validation.to_h.reject { |_k, v| v.blank? },
       )
-
 
       # authenticated user / inferred school / message step -> start page
       if @framework_support_form.position?(6) && !current_user.guest? && !current_user.school_urn.nil?
