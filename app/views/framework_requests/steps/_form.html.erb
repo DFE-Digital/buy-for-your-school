@@ -1,16 +1,22 @@
 <% if @framework_support_request&.persisted? %>
-  <%= link_to I18n.t("generic.button.back"), :back, class: "govuk-back-link" %>
-<% else %>
-  <%=
-    unless @framework_support_form.position?(1)
-      # - pass in param that we are stepping backward
-      # - infer dsi value
-      # - remove any unanswered questions so as to not display error messages for previous steps
-      form_data = @framework_support_form.to_h.merge(step: @framework_support_form.step, back: true, dsi: !current_user.guest?).compact
 
-      link_to I18n.t("generic.button.back"), framework_requests_path(nil, framework_support_form: form_data), method: :post, class: "govuk-back-link"
-    end
+  <%= link_to I18n.t("generic.button.back"), :back, class: "govuk-back-link" %>
+
+<% elsif @framework_support_form.position?(1) %>
+
+  <%= link_to I18n.t("generic.button.back"), framework_requests_path, class: "govuk-back-link"  %>
+
+<% else %>
+
+  <%=
+    # - pass in param that we are stepping backward
+    # - infer dsi value
+    # - remove any unanswered questions so as to not display error messages for previous steps
+    form_data = @framework_support_form.to_h.merge(step: @framework_support_form.step, back: true, dsi: !current_user.guest?).compact
+
+    link_to I18n.t("generic.button.back"), framework_requests_path(nil, framework_support_form: form_data), method: :post, class: "govuk-back-link"
   %>
+
 <% end %>
 
 <% if Rails.env.development? %>
