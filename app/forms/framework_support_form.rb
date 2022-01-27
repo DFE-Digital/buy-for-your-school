@@ -32,6 +32,7 @@ class FrameworkSupportForm < Form
     super.except(:dsi)
   end
 
+  # :nocov:
   # @return [Boolean]
   def dsi?
     instance_variable_get :@dsi
@@ -41,6 +42,7 @@ class FrameworkSupportForm < Form
   def guest?
     !dsi?
   end
+  # :nocov:
 
   # Extract the school URN from the format "urn - name"
   # "100000 - School #1" -> "100000"

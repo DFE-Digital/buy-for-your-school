@@ -30,6 +30,7 @@ class FrameworkRequestsController < ApplicationController
     )
   end
 
+  # :nocov:
   def create
     @framework_support_form = form
     @organisation = organisation
@@ -64,6 +65,7 @@ class FrameworkRequestsController < ApplicationController
 
     end
   end
+  # :nocov:
 
   def update
     @framework_support_form = form

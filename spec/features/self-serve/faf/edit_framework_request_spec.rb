@@ -58,7 +58,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
     it "allows the user to change their message" do
       click_link "edit-message"
 
-      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=5"
+      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=6"
       expect(find_field("framework-support-form-message-body-field").value).to eql "help!"
 
       fill_in "framework_support_form[message_body]", with: "I have a problem"

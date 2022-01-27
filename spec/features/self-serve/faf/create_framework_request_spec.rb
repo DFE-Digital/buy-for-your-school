@@ -1,5 +1,5 @@
 RSpec.feature "Create a new framework request" do
-  context "when user with one supported school" do
+  xcontext "when user with one supported school" do
     let(:user) { create(:user, :one_supported_school, first_name: "Generic", last_name: "User", full_name: "Generic User") }
 
     xcontext "user is already signed in" do
