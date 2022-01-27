@@ -42,3 +42,5 @@ en:
           missing: Enter your last name
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
+        school_urn:
+          missing: Select the school you want help buying for
