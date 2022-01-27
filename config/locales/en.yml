@@ -621,6 +621,17 @@ en:
         updated: Organisation updated successfully
       submit: Save selected organisation
 
+    case_contact_details:
+      header: Update contact details
+      label:
+        first_name: First name
+        last_name: Last name
+        phone: Phone number
+        email: Email address
+      flash:
+        updated: Contact details updated successfully
+      submit: Save changes
+
     case_email_type:
       header: Send email
       legend: Type of email
