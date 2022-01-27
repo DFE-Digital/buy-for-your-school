@@ -32,12 +32,13 @@ class FrameworkRequestsController < ApplicationController
 
   def create
     @framework_support_form = form
+    @organisation = organisation
 
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true"
 
       # authenticated user / inferred school / message step -> start page
-      if @framework_support_form.position?(5) && !current_user.guest? && !current_user.school_urn.nil?
+      if @framework_support_form.position?(6) && !current_user.guest? && !current_user.school_urn.nil?
         redirect_to framework_requests_path
       # authenticated user / many schools / school step -> start page
       elsif @framework_support_form.position?(4) && !current_user.guest?
@@ -128,7 +129,7 @@ private
     if current_user.guest?
       1
     else
-      current_user.school_urn ? 5 : 4
+      current_user.school_urn ? 6 : 4
     end
   end
 
@@ -143,8 +144,14 @@ private
         last_name: current_user.last_name,    # (step 2)
         email: current_user.email,            # (step 3)
         school_urn: current_user.school_urn,  # (step 4)
-        # message (step 5)
+        # message (step 6)
       }
     end
+  end
+
+  # @return [OrganisationPresenter, nil]
+  def organisation
+    urn = form_params[:school_urn]
+    Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn.split(" - ").first)) if urn
   end
 end
