@@ -12,7 +12,7 @@ RSpec.feature "Faf - dsi or search" do
     end
 
     it "loads the page" do
-      expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school you're requesting support for?"
+      expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
     end
 
     it "errors if no selection is given" do
@@ -38,7 +38,7 @@ RSpec.feature "Faf - dsi or search" do
     end
 
     it "loads the page" do
-      expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school you're requesting support for?"
+      expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
     end
 
     it "errors if no selection is given" do

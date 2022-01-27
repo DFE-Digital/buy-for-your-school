@@ -70,7 +70,7 @@ RSpec.feature "Create a new framework request" do
 
         # not h1
         it "loads the page" do
-          expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school you're requesting support for?"
+          expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
         end
 
         # not in code
