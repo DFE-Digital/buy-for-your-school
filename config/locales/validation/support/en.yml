@@ -5,6 +5,7 @@ en:
       notes: "" # Omitted
       agent_id: "" # Omitted
       choice: "" # Omitted
+      email: "" # Omitted
       email_body: "" # Omitted
       email_subject: "" # Omitted
       category_id: "" # Omitted
@@ -44,6 +45,7 @@ en:
 
         email:
           missing: Please enter contact email for the case
+          invalid_format: Please enter a valid contact email for the case
 
         # Selecting an organisation
         organisation_formatted_name:
