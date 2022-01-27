@@ -7,19 +7,19 @@ module Support
         .to_sentence(last_word_connector: ", ")
     end
 
-    # @return [String]
+    # @return [String, nil]
     def local_authority
-      super["name"]
+      super["name"] if super
     end
 
     # @return [String]
     def contact
-      "#{super['title']} #{super['first_name']} #{super['last_name']}"
+      "#{super['title']} #{super['first_name']} #{super['last_name']}" if super
     end
 
-    # @return [String]
+    # @return [String, nil]
     def phase
-      super.to_s.humanize
+      super.to_s.humanize if super
     end
   end
 end
