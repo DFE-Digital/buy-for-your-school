@@ -1,8 +1,13 @@
 RSpec.feature "Create a new framework request" do
-  xcontext "when user with one supported school" do
+  context "when user with one supported school" do
     let(:user) { create(:user, :one_supported_school, first_name: "Generic", last_name: "User", full_name: "Generic User") }
 
-    xcontext "when user is already signed in" do
+    before do
+      stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+      .to_return(body: {}.to_json, status: 200, headers: {})
+    end
+
+    context "when user is already signed in" do
       before do
         user_is_signed_in(user: user)
         visit "/procurement-support"
@@ -13,13 +18,13 @@ RSpec.feature "Create a new framework request" do
       end
 
       it "skips user straight to how can we help page" do
-        click_start
+        find('a', text: "Start now").click
         expect(find("label.govuk-label--l")).to have_text "How can we help?"
         expect(page).to have_current_path "/procurement-support/new"
       end
 
       it "navigates to check answers page from how we can help" do
-        click_start
+        find('a', text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
         expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
@@ -28,6 +33,10 @@ RSpec.feature "Create a new framework request" do
       end
 
       it "navigates to confirmation page upon sending request" do
+        find('a', text: "Start now").click
+        fill_in "framework_support_form[message_body]", with: "I have a problem"
+        click_continue
+        click_button "Send request"
         expect(find("h1.govuk-panel__title")).to have_text "Your request for support has been sent"
       end
     end
@@ -136,11 +145,12 @@ RSpec.feature "Create a new framework request" do
         end
       end
 
-      xdescribe "user query page" do
+      describe "user query page" do
         before do
-          user_is_signed_in(user: user)
           visit "/procurement-support/new"
           find("label", text: "Yes, use my DfE Sign-in").click
+          user_exists_in_dfe_sign_in(user: user)
+          click_on "Sign in"
           click_continue
           click_continue
           click_continue
