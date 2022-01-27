@@ -63,7 +63,7 @@ module Support
     def personalisation
       contact = CaseContactPresenter.new(@current_case)
 
-      personalisation_params = { first_name: contact.first_name, last_name: contact.last_name, from_name: current_agent.full_name }
+      personalisation_params = { first_name: contact.first_name, last_name: contact.last_name, from_name: current_agent.full_name, reference: @current_case.ref }
 
       personalisation_params[:text] = basic_email_body if basic_template?
 

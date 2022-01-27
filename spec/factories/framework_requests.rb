@@ -6,7 +6,5 @@ FactoryBot.define do
     email { "email@example.com" }
     message_body { "please help!" }
     submitted { false }
-
-    association :user, factory: :user
   end
 end

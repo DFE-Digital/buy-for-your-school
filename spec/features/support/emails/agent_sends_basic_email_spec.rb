@@ -16,6 +16,7 @@ describe "Support agent sends a basic email" do
         last_name: "Contact",
         text: default_email_body,
         from_name: "Procurement Specialist",
+        reference: "00001",
       },
     }
   end
@@ -58,6 +59,7 @@ describe "Support agent sends a basic email" do
           last_name: "Contact",
           text: custom_email_body,
           from_name: "Procurement Specialist",
+          reference: "000001",
         },
       }
     end
@@ -106,6 +108,7 @@ describe "Support agent sends a basic email" do
           last_name: "Contact",
           text: default_email_body,
           from_name: "Procurement Specialist",
+          reference: "000001",
         },
       }
     end
@@ -162,6 +165,7 @@ describe "Support agent sends a basic email" do
           last_name: "Contact",
           text: "New email body",
           from_name: "Procurement Specialist",
+          reference: "000001",
         },
       }
     end
