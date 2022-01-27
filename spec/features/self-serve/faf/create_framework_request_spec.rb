@@ -68,12 +68,16 @@ RSpec.feature "Create a new framework request" do
           visit "/procurement-support/new"
         end
 
+        it "has a back link to the start page" do
+          click_on "Back"
+          expect(page).to have_current_path "/procurement-support"
+        end
+
         # not h1
         it "loads the page" do
           expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
         end
 
-        # not in code
         it "errors if no selection is given" do
           click_continue
           expect(find(".govuk-error-summary__body")).to have_text "Select whether you want to use a DfE Sign-in account"
