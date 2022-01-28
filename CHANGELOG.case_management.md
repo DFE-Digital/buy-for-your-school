@@ -4,9 +4,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog 1.0.0].
 
+<!--
+
+## [release-xxx] - xxxx-xx-xx
+
+- value added [#ref](https://github.com/DFE-Digital/buy-for-your-school/commit/<hash>)
+  or
+- feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
+
+-->
+
+
 ## [unreleased]
 
-- Case worker can update an organisation on a case
+-
+
+## [release-003] - 2022-01-31 (019)
+
+**Fixes**
+
+- Add salutation and signature to "non-templated" email preview [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/802)
+- Retain edited email body when going back from preview [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/791)
+- Category and school name not being displayed [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/797)
+- Only display case source if known [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/755)
+- Malformed link to read email [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/708)
+- Error on phone number validation [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/767)
+- Keep agent assigned when resolving a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/788)
+
+**Features**
+
+- Case worker can view email attachments within CM
+- Seed establishment group data from GIAS [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/816)
+- Add attachments to email from MSGraph [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/770)
+- "Find a Framework" support request case creation [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/806)
+- Update support request additional data (interaction) styling [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/691)
+- Add ability to persist procurement, contract and savings data on cases [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/704)
+- CM Incoming emails integration [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
+- Case worker can see a list of emails separately to the cases [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
+- Case worker sees ACTION status when new email arrives for case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/782)
+- CW can acknowledge an email notification so that indicator is cleared [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/787)
+- Allow the Organisation (optional) for a case to be updated [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/801)
+- Auto create (no case ref) a case from an inbound email [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/805)
+- Optional Contact name on create a case screen [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/809)
+
 
 ## [release-002] - 2022-01-xx (018)
 
