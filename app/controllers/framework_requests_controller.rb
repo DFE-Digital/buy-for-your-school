@@ -18,8 +18,7 @@ class FrameworkRequestsController < ApplicationController
     @framework_support_form = FrameworkSupportForm.new(
       step: params[:step],
       dsi: !current_user.guest?, # ensures a boolean
-
-      **framework_request.attributes.symbolize_keys,
+      **framework_request.attributes.symbolize_keys.merge(school_urn: session[:faf_school]),
     )
   end
 
@@ -57,10 +56,13 @@ class FrameworkRequestsController < ApplicationController
 
     elsif validation.success? && validation.to_h[:message_body]
 
+      # capture full "xxxxx - name"
+      session[:faf_school] = @framework_support_form.school_urn
+
       # valid form with last question answered
       framework_request = FrameworkRequest.create!(
         user_id: current_user.id,
-        **@framework_support_form.to_h.merge(school_urn: urn)
+        **@framework_support_form.to_h.merge(school_urn: urn),
       )
 
       redirect_to framework_request_path(framework_request)
@@ -80,13 +82,16 @@ class FrameworkRequestsController < ApplicationController
     @framework_support_form = form
     if validation.success?
 
+      # capture full "xxxxx - name"
+      session[:faf_school] = @framework_support_form.school_urn
+
       # CONDITIONAL extra questions as a result of saved changes
 
       # if @support_form.step == 3 && !@support_form.has_journey?
       #   @support_form.advance!
       #   render :edit
       # else
-      framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h)
+      framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h.merge(school_urn: urn))
       redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
       # end
     else
@@ -167,6 +172,6 @@ private
   #
   # @return [String, nil]
   def urn
-    form_params[:school_urn].split(" - ").first
+    form_params[:school_urn]&.split(" - ")&.first
   end
 end
