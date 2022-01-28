@@ -82,12 +82,8 @@ RSpec.feature "Create a new framework request" do
           expect(page).to have_current_path "/procurement-support"
         end
 
-        # not h1
         it "loads the page" do
-          pp page.source
-          # within("div.govuk-form-group") do
-          expect(find("span.govuk-caption-l")[1]).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
-          # end
+          expect(page).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
         end
 
         it "errors if no selection is given" do
@@ -155,7 +151,7 @@ RSpec.feature "Create a new framework request" do
           user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
           find("label", text: "Yes, use my DfE Sign-in").click
-          click_continue
+          # skips contact info
           click_continue
           click_continue
         end
@@ -174,6 +170,7 @@ RSpec.feature "Create a new framework request" do
         end
 
         it "submits a support request message" do
+          pp page.source
           fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
 
