@@ -32,7 +32,7 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:school_urn) do
-    key.failure(:missing) if key? && value.blank?
+    key.failure(:missing) if key? && Support::Organisation.find_by(urn: value.split(" - ").first).nil?
   end
 
   rule(:message_body) do

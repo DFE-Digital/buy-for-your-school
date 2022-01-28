@@ -1,5 +1,10 @@
 module Support
   class OrganisationPresenter < BasePresenter
+    # @return [String] Combines URN and name
+    def urn_and_name
+      "#{urn} - #{name}"
+    end
+
     # @return [String]
     def formatted_address
       [address["street"], address["locality"], address["postcode"]]
