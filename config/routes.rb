@@ -79,7 +79,6 @@ Rails.application.routes.draw do
     end
     resources :organisations, only: %i[index]
     resources :cases, only: %i[index show edit update new create] do
-
       resources :interactions, only: %i[new create show]
       scope module: :cases do
         collection do

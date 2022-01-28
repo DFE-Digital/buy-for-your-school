@@ -11,7 +11,7 @@ module Support
       end
     end
 
-    private
+  private
 
     def validation
       CreateCaseFormSchema.new.call(**form_params)
@@ -31,7 +31,7 @@ module Support
         :estimated_savings,
         :hub_notes,
         :progress_notes,
-        )
+      )
     end
   end
 end

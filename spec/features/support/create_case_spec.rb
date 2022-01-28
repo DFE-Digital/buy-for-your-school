@@ -71,7 +71,7 @@ RSpec.feature "Create case" do
     context "when south west identification number provided" do
       it "doesnt show case type" do
         valid_form_data
-        fill_in "case_hub_migration_form[hub_case_ref]", with: "CE-11111"
+        fill_in "create_case_form[hub_case_ref]", with: "CE-11111"
         click_on "Save and continue"
 
         expect(find("dd.case-type")).to have_text "South west hub case"

@@ -55,7 +55,7 @@ module Support
         :estimated_savings,
         :hub_notes,
         :progress_notes,
-        )
+      )
     end
 
     def create_interaction(kase_id, event_type, body, additional_data = nil)
