@@ -58,7 +58,11 @@ class FrameworkRequestsController < ApplicationController
     elsif validation.success? && validation.to_h[:message_body]
 
       # valid form with last question answered
-      framework_request = FrameworkRequest.create!(user_id: current_user.id, **@framework_support_form.to_h)
+      framework_request = FrameworkRequest.create!(
+        user_id: current_user.id,
+        **@framework_support_form.to_h.merge(school_urn: urn)
+      )
+
       redirect_to framework_request_path(framework_request)
 
     elsif validation.success?
@@ -154,7 +158,15 @@ private
 
   # @return [OrganisationPresenter, nil]
   def organisation
-    urn = form_params[:school_urn]
-    Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn.split(" - ").first)) if urn
+    Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn)) if urn
+  end
+
+  # Extract the school URN from the format "urn - school name"
+  # @example
+  #   "100000 - School #1" -> "100000"
+  #
+  # @return [String, nil]
+  def urn
+    form_params[:school_urn].split(" - ").first
   end
 end
