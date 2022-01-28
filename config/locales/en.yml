@@ -370,6 +370,10 @@ en:
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
       button: Continue
+
+    which_school:
+      legend: Which school are you buying for?
+      caption: About your school
     
     confirm_school:
       title: Is this the school you're buying for? - Get help buying for schools - GOV.UK
