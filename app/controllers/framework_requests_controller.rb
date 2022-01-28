@@ -172,6 +172,6 @@ private
   #
   # @return [String, nil]
   def urn
-    form_params[:school_urn]&.split(" - ")&.first || @framework_request.school_urn
+    form_params[:school_urn]&.split(" - ")&.first || @framework_request&.school_urn
   end
 end
