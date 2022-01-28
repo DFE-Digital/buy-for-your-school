@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Malformed link to read email [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/708)
 - Error on phone number validation [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/767)
 - Keep agent assigned when resolving a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/788)
+- Calculate dates for procurement contracts [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/790)
 
 **Features**
 
@@ -47,13 +48,13 @@ The format is based on [Keep a Changelog 1.0.0].
 - Auto create (no case ref) a case from an inbound email [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/805)
 - Optional Contact name on create a case screen [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/809)
 
-
 ## [release-002] - 2022-01-xx (018)
 
 - Microsoft Graph API library [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/694)
 - Synchronisation of emails from shared inbox into database [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
 - Emails listed within case management outside of cases [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
 - Emails listed within case history [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/725)
+- Procurement details tab [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/704)
 
 ## [release-001] - 2021-12-13 (017)
 
