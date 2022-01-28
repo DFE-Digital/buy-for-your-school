@@ -84,7 +84,10 @@ RSpec.feature "Create a new framework request" do
 
         # not h1
         it "loads the page" do
-          expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
+          pp page.source
+          # within("div.govuk-form-group") do
+          expect(find("span.govuk-caption-l")[1]).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
+          # end
         end
 
         it "errors if no selection is given" do
