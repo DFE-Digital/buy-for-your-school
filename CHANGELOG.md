@@ -14,18 +14,34 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
-
 ## [unreleased]
 
-- add ability to persist procurement, contract and savings data on cases [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/704)
+-
+
+## [release-019] - 2022-01-31
+
 - add redirect to case management at login for agents [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/803)
 
-<!--
-- value added [#ref](https://github.com/DFE-Digital/buy-for-your-school/commit/<hash>)
-  or
-- feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
+### "Find a Framework" support request feature
 
--->
+- FaF support start page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/760)
+- DSI or guest journey page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/762)
+- DSI entry [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/804)
+- select your school page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/778)
+- search for a school page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/811)
+- confirm your school page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/822)
+- request message page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/777)
+- check your answers page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/781)
+- confirmation page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/798)
+- submit FaF request [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/806)
+- [FIX] namespace validation errors [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/819)
+- [FIX] support request tweaks [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/818)
+- [FIX] feature tests reworking [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/817)
+- [FIX] name and email pages formatting [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/815)
+- [FIX] rename blank referrer [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/812)
+- [FIX] testing branch [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/785)
+- [FIX] QA review changes [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/827)
+- [Fix] updated spec coverage [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/829)
 
 ## [release-018] - 2022-01-xx
 
