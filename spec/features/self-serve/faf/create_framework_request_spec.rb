@@ -8,6 +8,7 @@ RSpec.feature "Create a new framework request" do
     end
 
     context "when user is already signed in" do
+      let(:answers) { find_all("dd.govuk-summary-list__value") }
       before do
         user_is_signed_in(user: user)
         visit "/procurement-support"
@@ -24,13 +25,12 @@ RSpec.feature "Create a new framework request" do
       end
 
       it "navigates to check answers page from how we can help" do
+        # test coverage for this form needs an org factory
         find('a', text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
-        pp page.source
-        expect(find("div.govuk-form-group framework-support-form-message-body-field")).to have_text "I have a problem"
-        expect(FrameworkRequest.count).to eq(1)
-        expect(find("h1.govuk-heading-l")).to have_text "Send your request"
+        # pp page.source
+        expect(answers[3]).to have_text "I have a problem"
       end
 
       it "navigates to confirmation page upon sending request" do
@@ -111,14 +111,14 @@ RSpec.feature "Create a new framework request" do
           click_continue
         end
 
-        it "loads the page" do
-          pp page.source
+        it "displays the correct attributes on the page" do
+          # pp page.source
           expect(find("span.govuk-caption-l")).to have_text "About you"
           expect(find("h1.govuk-heading-l")).to have_text "Is this your contact information?"
           expect(all("p")[1]).to have_text "These are the details we have for you, if they are not correct or up to date you will need to either:"
 
           within("ul.govuk-list") do
-            pp page.source
+            # pp page.source
             expect(all("li")[0]).to have_text "log back in with the correct account"
             expect(all("li")[1]).to have_link "update your DfE Sign In account details", href: "https://test-profile.signin.education.gov.uk/edit-details", class: "govuk-link"
           end
@@ -172,7 +172,7 @@ RSpec.feature "Create a new framework request" do
         end
 
         it "submits a support request message" do
-          pp page.source
+          # pp page.source
           fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
 
