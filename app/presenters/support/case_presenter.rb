@@ -33,6 +33,7 @@ module Support
 
     # @return [String] 30 January 2000 at 12:00
     def last_updated_at
+      # method to compare updated_at for case and updated_at for interaction (if exists) and select most recent
       updated_at
     end
 
