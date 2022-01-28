@@ -10,8 +10,8 @@ function changeFormAction(path) {
 }
 
 window.addEventListener("load", () => {
-  const dsiRadioButton = document.getElementById("framework-support-form-dsi-true-field");
-  const guestRadioButton = document.getElementById("framework-support-form-dsi-false-field");
+  const dsiRadioButton = document.querySelectorAll("input[value=true]")[0];
+  const guestRadioButton = document.querySelectorAll("input[value=false]")[0];
 
   dsiRadioButton.addEventListener("change", () => {
     if (dsiRadioButton.checked) {
