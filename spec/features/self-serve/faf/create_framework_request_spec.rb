@@ -103,13 +103,12 @@ RSpec.feature "Create a new framework request" do
         end
       end
 
-      describe "contact info page" do
+      describe "contact info page", js: true do
         before do
+          user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
           choose "Yes, use my DfE Sign-in"
           click_continue
-          user_exists_in_dfe_sign_in(user: user)
-          click_on "Sign in"
         end
 
         it "loads the page" do
@@ -136,11 +135,10 @@ RSpec.feature "Create a new framework request" do
 
       describe "user organisation page" do
         before do
+          user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
           choose "Yes, use my DfE Sign-in"
           click_continue
-          user_exists_in_dfe_sign_in(user: user)
-          click_on "Sign in"
         end
 
         it "skips step 3 because the school is implicit" do
@@ -151,10 +149,9 @@ RSpec.feature "Create a new framework request" do
 
       describe "user query page" do
         before do
+          user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
           find("label", text: "Yes, use my DfE Sign-in").click
-          user_exists_in_dfe_sign_in(user: user)
-          click_on "Sign in"
           click_continue
           click_continue
           click_continue

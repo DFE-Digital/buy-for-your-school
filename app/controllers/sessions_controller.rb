@@ -79,14 +79,14 @@ private
   #
   # @return [String]
   def entry_path(user)
-    if user.internal?
-      # proc ops / internal team members go to case management
-      support_root_path
-    else
+    # if user.internal?
+    #   # proc ops / internal team members go to case management
+    #   support_root_path
+    # else
       # - default to the specify dashboard
       # - support request journeys start from the profile page
-      find_framework_entrypoint? ? profile_path : dashboard_path
-    end
+    find_framework_entrypoint? ? profile_path : dashboard_path
+    # end
   end
 
   # @return [String]
