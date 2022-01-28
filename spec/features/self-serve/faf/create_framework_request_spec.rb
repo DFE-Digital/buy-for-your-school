@@ -27,7 +27,8 @@ RSpec.feature "Create a new framework request" do
         find('a', text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
-        expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
+        pp page.source
+        expect(find("div.govuk-form-group framework-support-form-message-body-field")).to have_text "I have a problem"
         expect(FrameworkRequest.count).to eq(1)
         expect(find("h1.govuk-heading-l")).to have_text "Send your request"
       end
@@ -101,7 +102,7 @@ RSpec.feature "Create a new framework request" do
           end
         end
       end
-
+      # passing
       describe "contact info page", js: true do
         before do
           user_exists_in_dfe_sign_in(user: user)
@@ -114,21 +115,22 @@ RSpec.feature "Create a new framework request" do
           pp page.source
           expect(find("span.govuk-caption-l")).to have_text "About you"
           expect(find("h1.govuk-heading-l")).to have_text "Is this your contact information?"
-          expect(all("p")[1]).to have_text "If these details are not correct, you can either:"
+          expect(all("p")[1]).to have_text "These are the details we have for you, if they are not correct or up to date you will need to either:"
 
           within("ul.govuk-list") do
-            expect(all("li")[0]).to have_text "log in with the correct account, or"
-            expect(all("li")[1]).to have_link "amend your DfE Sign-in account details", href: "https://test-profile.signin.education.gov.uk/edit-details", class: "govuk-link"
+            pp page.source
+            expect(all("li")[0]).to have_text "log back in with the correct account"
+            expect(all("li")[1]).to have_link "update your DfE Sign In account details", href: "https://test-profile.signin.education.gov.uk/edit-details", class: "govuk-link"
           end
 
           within("dl.govuk-summary-list") do
-            expect(all("dt")[0]).to have_text "Name"
-            expect(all("dd")[0]).to have_text "first_name last_name"
-            expect(all("dt")[1]).to have_text "Email address"
+            expect(all("dt")[0]).to have_text "Your name"
+            expect(all("dd")[0]).to have_text "Generic User"
+            expect(all("dt")[1]).to have_text "Your email address"
             expect(all("dd")[1]).to have_text "test@test"
           end
 
-          expect(page).to have_button "Yes, continue"
+          expect(find("a.govuk-button")).to have_text "Yes, continue"
         end
       end
 
