@@ -118,7 +118,13 @@ Rails.application.routes.draw do
   #
   get "health_check" => "application#health_check"
 
-  get "admin", to: "admin#show"
+  scope "/admin", as: "admin" do
+    get "/", to: "admin#show"
+    scope "/download", as: "download" do
+      get "user_activity", to: "admin#download_user_activity", as: "user_activity"
+      get "users", to: "admin#download_users", as: "users"
+    end
+  end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
   # if a Page with :slug cannot be found, `errors/not_found` is rendered

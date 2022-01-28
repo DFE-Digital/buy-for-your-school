@@ -22,6 +22,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - add redirect to case management at login for agents [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/803)
 
+### Specify
+
+- add users table download in JSON to /admin [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/831)
+
 ### "Find a Framework" support request feature
 
 - FaF support start page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/760)
