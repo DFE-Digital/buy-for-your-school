@@ -74,7 +74,6 @@ class FrameworkRequestsController < ApplicationController
 
   def update
     @framework_support_form = form
-
     if validation.success?
 
       # CONDITIONAL extra questions as a result of saved changes
@@ -84,7 +83,6 @@ class FrameworkRequestsController < ApplicationController
       #   render :edit
       # else
       framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h)
-
       redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
       # end
     else

@@ -30,7 +30,7 @@
         element_name: "framework_support_form[school_urn]",
         template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
         value_field: :formatted_name,
-        default_value: "#{@framework_support_form.school_urn}",
+        default_value: "#{@framework_support_form.school&.urn_and_name}",
         query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
 
   <details class="govuk-details" data-module="govuk-details">

@@ -28,8 +28,8 @@ class FrameworkSupportForm < Form
 
   # @return [Hash] form data to be persisted as request attributes
   def to_h
-    instance_variable_set(:@school_urn, school_urn)
-    super.except(:dsi)
+    instance_variable_set(:@school_urn, school_urn) if school_urn
+    super.except(:dsi, :school)
   end
 
   # :nocov:
@@ -43,6 +43,16 @@ class FrameworkSupportForm < Form
     !dsi?
   end
   # :nocov:
+
+  def school
+    return @school if defined?(@school)
+
+    @school = ::Support::OrganisationPresenter.new(
+      ::Support::Organisation.find_by(urn: school_urn),
+    )
+  end
+
+private
 
   # Extract the school URN from the format "urn - name"
   # "100000 - School #1" -> "100000"
