@@ -78,16 +78,13 @@ Rails.application.routes.draw do
       resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :organisations, only: %i[index]
-    resources :cases, only: %i[index show edit update] do
-      collection do
-        namespace :migrations do
-          resource :hub_case, only: %i[new create], path: "hub-case" do
-            resource :preview, only: %i[new create]
-          end
-        end
-      end
+    resources :cases, only: %i[index show edit update new create] do
+
       resources :interactions, only: %i[new create show]
       scope module: :cases do
+        collection do
+          resource :preview, only: %i[new create], as: :create_case_preview
+        end
         resource :organisation, only: %i[edit update]
         resource :categorisation, only: %i[edit update]
         resource :savings, only: %i[edit update]

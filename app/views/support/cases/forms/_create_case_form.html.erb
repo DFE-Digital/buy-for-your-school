@@ -1,4 +1,4 @@
-<%= form_with model: @form, scope: :case_hub_migration_form, url: support_migrations_hub_case_preview_path do |form| %>
+<%= form_with model: @form, scope: :create_case_form, url: support_create_case_preview_path do |form| %>
   <%= form.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
@@ -6,16 +6,15 @@
   </h1>
 
   <%= render "components/autocomplete",
-             container_id: "case-hub-migration-form-school-urn-field",
-             label_text: "Establishment URN",
-             element_id: "school-urn-autocomplete",
-             element_name: "case_hub_migration_form[school_urn]",
+             container_id: "create-case-form-school-urn",
+             label_text: I18n.t("support.case_hub_migration.label.school_urn"),
+             label_class: "govuk-hint",
+             element_id: "create_case_form[school_urn]",
+             element_name: "create_case_form[school_urn]",
              template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
              value_field: :urn,
              default_value: "#{@form.school_urn}",
-             query_url: support_organisations_path(format: :json, q: "{{QUERY}}") do %>
-    <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
-  <% end %>
+             query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
 
   <%= form.govuk_text_field :first_name,
                             label: { text: I18n.t("support.case_hub_migration.label.first_name") }
