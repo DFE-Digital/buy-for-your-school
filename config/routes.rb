@@ -85,6 +85,7 @@ Rails.application.routes.draw do
           resource :preview, only: %i[new create], as: :create_case_preview
         end
         resource :organisation, only: %i[edit update]
+        resource :contact_details, only: %i[edit update]
         resource :categorisation, only: %i[edit update]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
