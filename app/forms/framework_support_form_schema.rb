@@ -1,6 +1,7 @@
 #
 # Validate "find-a-framework support requests"
 #
+# :nocov:
 class FrameworkSupportFormSchema < Schema
   config.messages.top_namespace = :framework_request
 
@@ -39,3 +40,4 @@ class FrameworkSupportFormSchema < Schema
     key.failure(:missing) if key? && value.blank?
   end
 end
+# :nocov:

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :nocov:
 class FrameworkRequestSubmissionsController < ApplicationController
   skip_before_action :authenticate_user!
 
@@ -28,3 +29,4 @@ private
     ::FrameworkRequest.find(params[:id])
   end
 end
+# :nocov:
