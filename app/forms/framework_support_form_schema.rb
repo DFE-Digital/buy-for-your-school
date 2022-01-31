@@ -1,23 +1,21 @@
 #
 # Validate "find-a-framework support requests"
 #
+# :nocov:
 class FrameworkSupportFormSchema < Schema
   config.messages.top_namespace = :framework_request
 
   params do
-    optional(:dsi).value(:bool)               # step 1
+    optional(:dsi).value(:bool)                 # step 1
 
-    optional(:first_name).value(:string)      # step 2
-    optional(:last_name).value(:string)       # step 2
+    optional(:first_name).value(:string)        # step 2
+    optional(:last_name).value(:string)         # step 2
 
-    optional(:email).value(:string)           # step 3
+    optional(:email).value(:string)             # step 3
 
-    optional(:school_urn).value(:string)      # step 4
-    optional(:message_body).value(:string)    # step 5
-  end
+    optional(:school_urn).value(:string)        # step 4
 
-  rule(:dsi) do
-    key.failure(:missing) unless key?
+    optional(:message_body).value(:string)      # step 6
   end
 
   rule(:first_name) do
@@ -35,10 +33,11 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:school_urn) do
-    key.failure(:missing) if key? && value.blank?
+    key.failure(:missing) if key? && Support::Organisation.find_by(urn: value.split(" - ").first).nil?
   end
 
   rule(:message_body) do
     key.failure(:missing) if key? && value.blank?
   end
 end
+# :nocov:

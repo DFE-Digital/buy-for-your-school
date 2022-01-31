@@ -2,8 +2,8 @@
 <%=
   form.govuk_collection_radio_buttons :dsi,
     [
-      OpenStruct.new(value: "true", label: I18n.t("faf.dsi_or_search.radios.dsi")),
-      OpenStruct.new(value: "false", label: I18n.t("faf.dsi_or_search.radios.no_dsi")),
+      OpenStruct.new(value: true, label: I18n.t("faf.dsi_or_search.radios.dsi")),
+      OpenStruct.new(value: false, label: I18n.t("faf.dsi_or_search.radios.no_dsi")),
     ],
     :value,
     :label,
