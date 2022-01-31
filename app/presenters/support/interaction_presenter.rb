@@ -68,6 +68,10 @@ module Support
       EmailPresenter.new(super) if super
     end
 
+    def no_display?
+      event_type.in?(%w[procurement_updated])
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

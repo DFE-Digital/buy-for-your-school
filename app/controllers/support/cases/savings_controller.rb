@@ -2,6 +2,8 @@ module Support
   class Cases::SavingsController < Cases::ApplicationController
     before_action :set_back_url, :set_enums, only: %i[edit update]
 
+    include Concerns::CreateInteraction
+
     def edit
       @case_savings_form = CaseSavingsForm.new(**current_case.attributes.symbolize_keys)
     end
@@ -9,6 +11,7 @@ module Support
     def update
       if validation.success?
         current_case.update!(validation.to_h)
+        create_interaction(params[:case_id], "procurement_updated")
 
         redirect_to @back_url, notice: I18n.t("support.case_savings.flash.updated")
       else
