@@ -68,12 +68,16 @@ RSpec.feature "Create a new framework request" do
           visit "/procurement-support/new"
         end
 
-        # not h1
-        it "loads the page" do
-          expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school you're requesting support for?"
+        it "has a back link to the start page" do
+          click_on "Back"
+          expect(page).to have_current_path "/procurement-support"
         end
 
-        # not in code
+        # not h1
+        it "loads the page" do
+          expect(find("h1")).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
+        end
+
         it "errors if no selection is given" do
           click_continue
           expect(find(".govuk-error-summary__body")).to have_text "Select whether you want to use a DfE Sign-in account"
@@ -199,7 +203,7 @@ RSpec.feature "Create a new framework request" do
             expect(all("dd.govuk-summary-list__value")[2]).to have_text "School #1"
             expect(all("dd.govuk-summary-list__actions")[2]).not_to have_link "Change"
 
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of problem"
+            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of request"
             expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
             expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
           end

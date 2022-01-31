@@ -41,7 +41,7 @@ class SubmitFrameworkRequest
 private
 
   def user
-    @user ||= User.find(request.user_id)
+    @user ||= FrameworkRequestPresenter.new(request).user
   end
 
   # @return [Support::Organisation]

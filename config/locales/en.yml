@@ -268,7 +268,9 @@ en:
       no_of_users: Total number of users
       no_of_specs: Total number of specifications
       last_registration_date: Last user registration date
-    download: Download (.csv)
+    activity_log_header: Activity log
+    users_header: Users
+    download_csv: Download (.csv)
     download_json: Download (.json)
 
   #
@@ -277,11 +279,10 @@ en:
 
   # /request-help-and-support-with-your-procurement
   faf:
-
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: Use this service if you're procuring for a single school in England, either
+      overview_purpose: You can use this service if you're procuring for a single school in England, either
       overview_type_list:
         - a local authority maintained school, or
         - an academy in a single or multi-academy trust
@@ -330,7 +331,7 @@ en:
 
     # step 1
     dsi_or_search:
-      header: Do you have a DfE Sign-in account linked to the school you're requesting support for?
+      header: Do you have a DfE Sign-in account linked to the school that your request is about?
       subtitle: About your school
       link:
         text: Create a new DfE Sign-in account
@@ -354,7 +355,7 @@ en:
         name: Your name
         email: Your email address
         school: Your school
-        problem: Description of problem
+        problem: Description of request
 
     search_for_a_school:
       title: Search for your school - Get help buying for schools - GOV.UK
@@ -368,7 +369,11 @@ en:
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
       button: Continue
-    
+
+    which_school:
+      legend: Which school are you buying for?
+      caption: About your school
+
     confirm_school:
       title: Is this the school you're buying for? - Get help buying for schools - GOV.UK
       caption: About your school
@@ -605,7 +610,7 @@ en:
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
-        referer: Referer 
+        referer: Referer
       submit: Save and continue
       flash:
         created: Case created/migrated successfully

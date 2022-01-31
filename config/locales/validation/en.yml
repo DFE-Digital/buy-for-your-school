@@ -14,28 +14,28 @@ en:
           format?: must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
           # value in schema set to 13 as includes the + in +44
           max_size?: "can not have more than 12 digits"
-
         message_body:
           missing: You must tell us how we can help
-
         category_id:
           no_spec: is required if you do not select an existing specification
-
         school_urn:
           missing: You must select a school
 
+
+  # Find a Framework support request form
   framework_request:
     rules:
-      dsi: "" # Omitted
-      first_name: "" # Omitted
-      last_name: "" # Omitted
-      email: "" # Omitted
-      school_urn: "" # Omitted
-
+      dsi: ""                 # Omitted
+      first_name: ""          # Omitted
+      last_name: ""           # Omitted
+      email: ""               # Omitted
+      school_urn: ""          # Omitted
+      message_body: ""        # Omitted
     errors:
       rules:
         dsi:
           missing: Select whether you want to use a DfE Sign-in account
+          bool?: Select whether you want to use a DfE Sign-in account
         first_name:
           missing: Enter your first name
         last_name:
@@ -44,3 +44,5 @@ en:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
         school_urn:
           missing: Select the school you want help buying for
+        message_body:
+          missing: You must tell us how we can help
