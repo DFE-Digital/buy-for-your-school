@@ -83,9 +83,9 @@ private
       # proc ops / internal team members go to case management
       support_root_path
     else
-    # - default to the specify dashboard
-    # - support request journeys start from the profile page
-    find_framework_entrypoint? ? profile_path : dashboard_path
+      # - default to the specify dashboard
+      # - support request journeys start from the profile page
+      find_framework_entrypoint? ? profile_path : dashboard_path
     end
   end
 
