@@ -203,7 +203,7 @@ RSpec.feature "Create a new framework request" do
             expect(all("dd.govuk-summary-list__value")[2]).to have_text "School #1"
             expect(all("dd.govuk-summary-list__actions")[2]).not_to have_link "Change"
 
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of problem"
+            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of request"
             expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
             expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
           end
