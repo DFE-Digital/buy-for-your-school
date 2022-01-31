@@ -1,3 +1,4 @@
+# :nocov:
 module Support
   class Cases::OrganisationsController < Cases::ApplicationController
     def edit
@@ -26,3 +27,4 @@ module Support
     end
   end
 end
+# :nocov:

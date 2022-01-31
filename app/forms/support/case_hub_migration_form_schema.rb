@@ -1,3 +1,4 @@
+# :nocov:
 module Support
   #
   # Validate "create a new case" form details for a Hub migration case
@@ -45,3 +46,4 @@ module Support
     end
   end
 end
+# :nocov:

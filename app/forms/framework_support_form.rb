@@ -1,5 +1,6 @@
 # @abstract Form Object for multi-step Find-a-Framework support questionnaire
 #
+# :nocov:
 class FrameworkSupportForm < Form
   # @!attribute [r] dsi
   # @return [Boolean]
@@ -31,7 +32,6 @@ class FrameworkSupportForm < Form
     super.except(:dsi)
   end
 
-  # :nocov:
   # @return [Boolean]
   def dsi?
     instance_variable_get :@dsi
@@ -41,5 +41,5 @@ class FrameworkSupportForm < Form
   def guest?
     !dsi?
   end
-  # :nocov:
 end
+# :nocov:
