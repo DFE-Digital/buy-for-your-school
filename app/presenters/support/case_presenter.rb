@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 require_relative "interaction_presenter"
-require_relative "contact_presenter"
 require_relative "category_presenter"
 require_relative "agent_presenter"
 require_relative "organisation_presenter"
+require_relative "procurement_presenter"
+require_relative "contract_presenter"
 
 module Support
   class CasePresenter < BasePresenter
+    include ActionView::Helpers::NumberHelper
+
     # @return [String]
     def state
       super.upcase
@@ -28,9 +31,9 @@ module Support
       created_at
     end
 
-    # @return [String]
+    # @return [String] 30 January 2000 at 12:00
     def last_updated_at
-      interactions.present? ? interactions&.last&.created_at : created_at
+      interactions.none? ? created_at : interactions.last.created_at
     end
 
     # @return [String]
@@ -62,9 +65,13 @@ module Support
 
     # @return [String]
     def org_name
-      return "n/a" if organisation.blank?
-
-      organisation.name
+      if organisation.present?
+        organisation.name
+      elsif email.present?
+        email
+      else
+        "n/a"
+      end
     end
 
     # @return [String]
@@ -76,7 +83,50 @@ module Support
 
     # @return [OrganisationPresenter]
     def organisation
-      OrganisationPresenter.new(super)
+      OrganisationPresenter.new(super) if super
+    end
+
+    def savings_status
+      return "-" unless super
+
+      I18n.t("support.case_savings.edit.savings_status.states.#{super}")
+    end
+
+    def savings_estimate_method
+      return "-" unless super
+
+      I18n.t("support.case_savings.edit.savings_estimate_method.states.#{super}")
+    end
+
+    def savings_actual_method
+      return "-" unless super
+
+      I18n.t("support.case_savings.edit.savings_actual_method.states.#{super}")
+    end
+
+    def savings_estimate
+      return "-" unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
+    end
+
+    def savings_actual
+      return "-" unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
+    end
+
+    # @return [ProcurementPresenter, nil]
+    def procurement
+      ProcurementPresenter.new(super) if super
+    end
+
+    def existing_contract
+      ContractPresenter.new(super) if super
+    end
+
+    def new_contract
+      ContractPresenter.new(super) if super
     end
 
   private

@@ -49,13 +49,23 @@ RSpec.describe Support::CaseHubMigrationForm, type: :model do
       end
     end
 
-    context "when hub case ref is anything else" do
+    context "when hub case ref lies between 1000 and 99999" do
       subject(:form) do
-        described_class.new(hub_case_ref: "11111")
+        described_class.new(hub_case_ref: "1000")
       end
 
-      it "is a NW Hub case (1)" do
+      it "is a NW Hub case" do
         expect(form.case_type).to eq "nw_hub"
+      end
+    end
+
+    context "when hub case ref is anything else" do
+      subject(:form) do
+        described_class.new(hub_case_ref: "111111")
+      end
+
+      it "is null" do
+        expect(form.case_type).to be_nil
       end
     end
   end

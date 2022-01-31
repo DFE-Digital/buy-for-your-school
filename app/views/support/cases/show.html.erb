@@ -1,9 +1,9 @@
-<h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+<h1 class="govuk-heading-l">
   <%= @current_case.org_name %>
 </h1>
-<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-7 ">
-  <%= I18n.t("support.case.label.state.state_#{@current_case.state.downcase}") %>
-</strong>
+<div class="govuk-!-margin-bottom-7">
+  <%= render "status_badge", kase: @current_case %>
+</div>
 <h3 id="case-ref" class="govuk-heading-m">
   <%= @current_case.ref %>
 </h3>
@@ -26,11 +26,21 @@
         <%= I18n.t("support.case.header.case_history") %>
       </a>
     </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#procurement-details">
+        <%= I18n.t("support.case.header.procurement_detail") %>
+      </a>
+    </li>
   </ul>
-
-  <%= render "school_details", current_case: @current_case %>
-  <%= render "case_details", current_case: @current_case %>
-
+  <div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
+    <%= render "school_details", current_case: @current_case %>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
+    <%= render "case_details", current_case: @current_case %>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="procurement-details">
+    <%= render "procurement_details", current_case: @current_case %>
+  </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">

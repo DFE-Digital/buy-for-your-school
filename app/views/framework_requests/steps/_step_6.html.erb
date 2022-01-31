@@ -1,0 +1,17 @@
+<!-- request message (5) -->
+
+<%= form.hidden_field :dsi %>
+<%= form.hidden_field :first_name, value: form.object.first_name %>
+<%= form.hidden_field :last_name, value: form.object.last_name %>
+<%= form.hidden_field :email, value: form.object.email %>
+<%= form.hidden_field :school_urn, value: form.object.school_urn %>
+
+
+<%= form.govuk_text_area :message_body,
+      autofocus: true,
+      class: "govuk-textarea",
+      rows: 5,
+      caption: { text: I18n.t("faf.user_query.caption"), size: "l" },
+      label: { text: I18n.t("faf.user_query.label"), size: "l" },
+      hint: { text: I18n.t("faf.user_query.hint") }
+    %>

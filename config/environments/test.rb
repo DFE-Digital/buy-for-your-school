@@ -67,4 +67,7 @@ Rails.application.configure do
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
   end
+
+  # Set active storage location
+  config.active_storage.service = :local
 end

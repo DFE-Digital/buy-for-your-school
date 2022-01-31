@@ -1,13 +1,10 @@
+# :nocov:
 module Support
   #
   # Validate "create a new case" form details for a Hub migration case
   #
-  class CaseHubMigrationFormSchema < Dry::Validation::Contract
-    import_predicates_as_macros
-
-    config.messages.backend = :i18n
+  class CaseHubMigrationFormSchema < ::Support::Schema
     config.messages.top_namespace = :case_migration_form
-    config.messages.load_paths << Rails.root.join("config/locales/validation/support/en.yml")
 
     params do
       required(:school_urn).value(:string)
@@ -25,26 +22,28 @@ module Support
     end
 
     # TODO: custom macro for phone number validation
-    rule(:phone_number).validate(max_size?: 11, format?: /(^$|^0\d{10,}$)/)
+    rule(:phone_number).validate(max_size?: 13, format?: /^$|^(0|\+?44)[12378]\d{8,9}$/)
 
     # TODO: custom macro using chronic
     rule(:estimated_procurement_completion_date).validate(format?: /(^$|^\d{2}\/\d{2}\/\d{4}$)/)
 
     rule(:school_urn) do
       key(:school_urn).failure(:missing) if value.blank?
-    end
-
-    rule(:first_name) do
-      key(:first_name).failure(:missing) if value.blank?
-    end
-
-    rule(:last_name) do
-      key(:last_name).failure(:missing) if value.blank?
+      key(:school_urn).failure(:invalid) if invalid_school_urn?(value)
     end
 
     # TODO: add email validation format
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
     end
+
+  private
+
+    def invalid_school_urn?(value)
+      return true if value.blank?
+
+      Support::Organisation.find_by(urn: value).nil?
+    end
   end
 end
+# :nocov:

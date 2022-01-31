@@ -1,0 +1,17 @@
+.email-list {
+  .email-row.unread {
+    .email-sent-by {
+      font-weight: bold;
+    }
+    .email-subject {
+      font-weight: bold;
+    }
+    .email-case-ref {
+      font-weight: bold;
+    }
+  }
+
+  .email-sent-at {
+    width: 121px;
+  }
+}

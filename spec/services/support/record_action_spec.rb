@@ -8,7 +8,13 @@ RSpec.describe Support::RecordAction do
     let(:action) { "open_case" }
 
     it "records the action in the database" do
-      expect { service.call }.to change { Support::ActivityLogItem.count }.by(1)
+      service.call
+      expect(Support::ActivityLogItem.where(action: "open_case", support_case_id: support_case.id).count).to eq(1)
+    end
+
+    it "records a 'case_modified' action for every action called" do
+      service.call
+      expect(Support::ActivityLogItem.where(action: "case_modified", support_case_id: support_case.id).count).to eq(1)
     end
 
     context "when the action has additional parameters specified" do

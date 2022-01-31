@@ -13,8 +13,7 @@ class SessionsController < ApplicationController
 
     case user
     when User
-      # TODO: alternative redirect for caseworkers
-      redirect_to dashboard_path
+      redirect_to entry_path(user)
     when :invalid
       redirect_to root_path, notice: "Access Denied"
     when :no_organisation
@@ -47,7 +46,7 @@ class SessionsController < ApplicationController
     if issuer_url
       redirect_to issuer_url
     else
-      redirect_to root_path, notice: I18n.t("banner.session.destroy")
+      redirect_to exit_path, notice: I18n.t("banner.session.destroy")
     end
   end
 
@@ -61,5 +60,42 @@ private
   # @return [OmniAuth::AuthHash]
   def auth_hash
     request.env["omniauth.auth"]
+  end
+
+  # @return [String, nil] "https://localhost:3000/procurement-support/new"
+  # def origin
+  #   request.env["omniauth.origin"]
+  #   request.env["action_dispatch.request.unsigned_session_cookie"]["omniauth.origin"]
+  #   request.env["rack.session"]["omniauth.origin"]
+  #   request.env["omniauth.params"]
+  # end
+
+  # @return [Boolean]
+  def find_framework_entrypoint?
+    session[:faf_referer].present?
+  end
+
+  # Routing logic for users after authentication
+  #
+  # @return [String]
+  def entry_path(user)
+    if user.internal?
+      # proc ops / internal team members go to case management
+      support_root_path
+    else
+      # - default to the specify dashboard
+      # - support request journeys start from the profile page
+      find_framework_entrypoint? ? profile_path : dashboard_path
+    end
+  end
+
+  # @return [String]
+  def exit_path
+    if find_framework_entrypoint?
+      session.delete(:faf_referer)
+      return framework_requests_path
+    end
+
+    root_path
   end
 end

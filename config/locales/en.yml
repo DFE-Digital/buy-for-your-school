@@ -56,6 +56,9 @@ en:
     specification_template_invalid:
       page_title: An unexpected error occurred
       page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
+    missing_role:
+      page_title: Missing user role
+      page_body: You do not have the required role to access this page.
     sign_in:
       unexpected_failure:
         page_title: An unexpected error occurred
@@ -258,6 +261,156 @@ en:
       read_guides_link: read guides about goods and services
     back_button: Back to your dashboard
 
+  # /admin
+  admin:
+    header: User activity data
+    body:
+      no_of_users: Total number of users
+      no_of_specs: Total number of specifications
+      last_registration_date: Last user registration date
+    activity_log_header: Activity log
+    users_header: Users
+    download_csv: Download (.csv)
+    download_json: Download (.json)
+
+  #
+  # FaF -----------------------------------------------------------------
+  #
+
+  # /request-help-and-support-with-your-procurement
+  faf:
+    # step 0
+    start_page:
+      header: Request advice and guidance for your procurement
+      overview_purpose: You can use this service if you're procuring for a single school in England, either
+      overview_type_list:
+        - a local authority maintained school, or
+        - an academy in a single or multi-academy trust
+      you_can_ask_for: You can ask for
+      overview_category_list:
+        - general guidance on buying goods or services for schools
+        - specific advice on buying goods or services for your school using a DfE approved framework
+      overview_response: The Get help buying for schools team will respond to you within 2 working days.
+      subheading: Before you start
+      you_can: You can
+
+    # step 2
+    name:
+      title: What is your name?
+      subtitle: About you
+      first_name:
+        label: First Name
+      last_name:
+        label: Last Name
+
+    # step 3
+    email:
+      title: What is your email address?
+      subtitle: About you
+      label: We will only use this to contact you about your request.
+
+    # step 5
+    user_query:
+      caption: About your request
+      label: How can we help?
+      hint: Briefly describe what advice or guidance you need in a few sentences.
+
+    contact_info:
+      title: Is this your contact information? - Get help buying for schools - GOV.UK
+      caption: About you
+      heading: Is this your contact information?
+      body:
+        if_incorrect: "If these details are not correct, you can either:"
+        login_correct_account: log in with the correct account, or
+        amend_details: amend your DfE Sign-in account details
+        description_list:
+          name: Name
+          email: Email address
+      button:
+        continue: Yes, continue
+
+    # step 1
+    dsi_or_search:
+      header: Do you have a DfE Sign-in account linked to the school that your request is about?
+      subtitle: About your school
+      link:
+        text: Create a new DfE Sign-in account
+        url: http://profile.signin.education.gov.uk/register
+      radios:
+        dsi: Yes, use my DfE Sign-in
+        no_dsi: No, continue without a DfE Sign-in account
+
+    user_organisation:
+      header: Which school are you buying for?
+      subtitle: About your school
+      hint: You are linked to more than one school. Select the one that's related to your support request.
+
+    check_answers:
+      header: Send your request
+      sent: Your request has been submitted
+      response_time: Once you send this request, we will review it and get in touch within 2 working days.
+      button:
+        send: Send request
+      details:
+        name: Your name
+        email: Your email address
+        school: Your school
+        problem: Description of request
+
+    search_for_a_school:
+      title: Search for your school - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Search for your school
+      hint: Enter the name, postcode or unique reference number (URN) of your school
+      details:
+        summary: Can't find it?
+        body:
+          - "You can only use this service if you are procuring for a single school in England. This should either be a local authority maintained school, or an academy in a single or multi-academy trust."
+          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
+          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+      button: Continue
+
+    which_school:
+      legend: Which school are you buying for?
+      caption: About your school
+
+    confirm_school:
+      title: Is this the school you're buying for? - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Is this the school you're buying for?
+      summary:
+        name_and_address: Name and Address
+        local_authority: Local authority
+        headteacher: Headteacher / Principal
+        phase: Phase of education
+        school_type: School type
+        id: ID
+        urn: URN
+        dfe_number: DfE number
+        ukprn: UKPRN
+      choice:
+        continue: "Yes"
+        go_back: "No, I need to choose another school"
+
+  faf_submissions:
+    header:
+      confirmation: Your request for support has been sent
+      what_happens_next: What happens next
+      what_you_can_do_next: What you can do next
+      you_can_also: You can also
+    sub_header:
+      confirmation: "We have sent a confirmation email to:"
+    body:
+      what_happens_next:
+        - "The Get help buying for schools team will be in touch within %{days} working days."
+        - Please check to make sure you receive the email confirmation within the next 10 minutes. Check your junk folder if you do not see it.
+        - You will need to submit the request again if you do not receive an email from us because this is how we will be contacting you.
+    what_you_can_do_next:
+      read_buying_procedures_link: read buying procedures and procurement law for schools
+      read_buying_procedures: "%{read_buying_procedures_link} to learn more about the buying process"
+      read_guides_link: read guides about goods and services
+      read_guides: "%{read_guides_link} that you're buying"
+
   #
   # Supported ------------------------------------------------------------------
   #
@@ -279,6 +432,7 @@ en:
         school_detail: School details
         case_detail: Case details
         case_history: Case history
+        procurement_detail: Procurement details
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -298,10 +452,12 @@ en:
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
+          state_action_required: Action
         source:
           digital: Specify case
           nw_hub: North west hub case
           sw_hub: South west hub case
+          faf: Find a Framework
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -309,6 +465,8 @@ en:
         contact_name: Contact name
         contact_phone: Contact phone
         contact_email: Contact email
+        organisation_name: Organisation name
+        organisation_type: Organisation type
         problem_description: Description of problem
         attached_specification: Attached specification
         attached_specification_none: None
@@ -317,6 +475,26 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
+        procurement_details:
+          change: change
+          required_agreement_type: Required agreement type
+          route_to_market: Route to market
+          reason_for_route_to_market: Reason for route to market
+          framework_name: Framework name
+          procurement_start_date: Procurement start date
+          procurement_end_date: Procurement end date
+          procurement_stage: Procurement stage
+          end_date: End date
+          contract_duration: Contract duration
+          contract_spend: Contract spend
+          supplier: Supplier
+          start_date: Start date
+          savings_status: Status
+          savings_estimate_method: Estimate method used
+          savings_actual_method: Actual method used
+          savings_estimate: Estimate
+          savings_actual: Actual
+
         additional_data:
           support_request:
             email: Email address
@@ -341,6 +519,68 @@ en:
         submit: Save and continue
       flash:
         updated: Successfully changed case category
+      label:
+        none: Not Yet Known
+
+    case_contract:
+      existing:
+        edit:
+          header: Update existing contract details
+          spend:
+            header: Existing contract spend
+          ended_at:
+            header: End date of existing contract
+          duration:
+            header: Duration of existing contract in months
+          supplier:
+            header: Existing contract supplier
+          submit: Continue
+      new:
+        edit:
+          header: Update new contract details
+          spend:
+            header: New contract spend
+          started_at:
+            header: Start date of new contract
+          duration:
+            header: Duration of new contract in months
+          supplier:
+            header: New contract supplier
+          submit: Continue
+      flash:
+        updated: Successfully changed case contracts
+    case_savings:
+      show:
+        header: Savings details
+        link: change
+      edit:
+        header: Update savings details
+        submit: Continue
+        savings_status:
+          header: Saving status
+          states:
+            realised: Realised
+            potential: Potential
+            unrealised: Not realised
+        savings_estimate_method:
+          header: Saving estimate method used
+          states:
+            previous_minus_cheapest: "[Previous spend] - [Cheapest quote]"
+            rrp_minus_cheapest: "[RRP] - [Cheapest quote]"
+            previous_minus_estimated: "[Previous spend] - [Estimated Contract Value]"
+            rrp_minus_estimated: "[RRP] - [Estimated Contract Value]"
+        savings_actual_method:
+          header: Saving actual method used
+          states:
+            previous_minus_award: "[Previous spend] - [Award Price]"
+            alternative_minus_award: "[Alternative received price] - [Award Price]"
+            rrp_minus_award: "[RRP] - [Award Price]"
+        savings_estimate:
+          header: Saving estimate
+        savings_actual:
+          header: Saving actual
+      flash:
+        updated: Successfully changed case savings
 
     case_hub_migration:
       header: Hub migration case information
@@ -369,6 +609,8 @@ en:
         hub_notes_hint: Enter a summary of the query from the Hub case
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
+        message: Message
+        referer: Referer
       submit: Save and continue
       flash:
         created: Case created/migrated successfully
@@ -382,7 +624,6 @@ en:
         label:
           confirm: Check all the details before submitting as it is not currently possible to edit case details once they are created.
         submit: Create case
-
 
     case_resolution:
       flash:
@@ -398,6 +639,23 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_organisation:
+      label: What Organisation do you want to add?
+      flash:
+        updated: Organisation updated successfully
+      submit: Save selected organisation
+
+    case_contact_details:
+      header: Update contact details
+      label:
+        first_name: First name
+        last_name: Last name
+        phone: Phone number
+        email: Email address
+      flash:
+        updated: Contact details updated successfully
+      submit: Save changes
 
     case_email_type:
       header: Send email
@@ -420,6 +678,8 @@ en:
         header: Preview email
         to:
           label: To
+        salutation: Dear %{first_name} %{last_name}
+        signature_html: Regards<br>%{agent_name}<br>Procurement Specialist<br>Get help buying for schools
         subject:
           label: Subject
           default_value: "DfE Get help buying for schools: your request for support"
@@ -445,6 +705,30 @@ en:
       show:
         header: Your specification
 
+    emails:
+      header_link: Notifications
+      index:
+        header: Notifications
+        table:
+          sent_at: Sent at
+          subject: Subject
+          case: Case
+          sender: Sender
+      tabs:
+        new_emails: New Emails
+        my_case_emails: My Case Emails
+      show:
+        header: View Email
+        case_id: Case ID
+        subject: Subject
+        sender: Sender
+        recipients: Recipients
+        sent_at: Sent at
+        attachments: Attachments
+      button:
+        mark_as_read: Mark as read
+        mark_as_unread: Mark as unread
+
     interaction:
       header:
         type_of_contact: Type of contact
@@ -459,7 +743,9 @@ en:
         hub_notes: Hub notes
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
+        faf_support_request: Find a Framework Support Request
       label:
+        email_unread: Unread
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         body: Notes
@@ -467,3 +753,46 @@ en:
       message:
         created_flash: "%{type} added to case"
       link_to_email_preview: Open email preview in new tab
+
+    procurement_details:
+      edit:
+        header: Update procurement details
+        submit: Continue
+        required_agreement_type:
+          header: Required agreement type
+        route_to_market:
+          header: Route to market
+        reason_for_route_to_market:
+          header: Reason for route to market
+        framework_name:
+          header: Framework name
+          select: -- Select framework --
+        started_at:
+          header: Start date of the procurement
+        ended_at:
+          header: End date of the procurement
+        stage:
+          header: Procurement stage
+          select: -- Select stage --
+      flash:
+        updated: Successfully changed procurement details
+      stages:
+        need: Need
+        market_analysis: Market Analysis
+        sourcing_options: Sourcing Options
+        go_to_market: Go to Market
+        evaluation: Evaluation
+        contract_award: Contract Award
+        handover: Handover
+      required_agreement_types:
+        one_off: One-off
+        ongoing: Ongoing
+      routes_to_market:
+        dfe_approved: DfE Approved Deal / Framework
+        bespoke: Bespoke Procurement
+        direct_award: Direct Award
+      reasons_for_route_to_market:
+        school_pref: School Preference
+        dfe_deal: DfE Deal / Framework Selected
+        no_dfe_deal: No DfE Deal / Framework Available
+        better_than_dfe: Better Spec / Terms than DfE Deal

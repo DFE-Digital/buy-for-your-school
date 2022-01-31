@@ -31,3 +31,13 @@ refresh_schools:
   class: Support::RefreshSchoolsJob
   description: Update internal school records using public data from GIAS. This
     is an expensive operation (10% @ 41k records persisted).
+
+synchronize_shared_inbox:
+  cron: "*/3 * * * *" # every 3 minutes
+  class: Support::SynchronizeSharedInboxJob
+  description: Persist emails from the shared inbox into the database
+
+refresh_schools:
+  cron: 0 4 1 * *
+  class: Support::RefreshEstablishmentGroupsJob
+  description: Update internal EstablishmentGroup records using public data from GIAS.

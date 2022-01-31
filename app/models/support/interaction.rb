@@ -33,6 +33,7 @@ module Support
     #   hub notes
     #   hub progress notes
     #   hub migration
+    #   faf_support_request
     enum event_type: {
       note: 0,
       phone_call: 1,
@@ -42,10 +43,17 @@ module Support
       hub_notes: 5,
       hub_progress_notes: 6,
       hub_migration: 7,
+      faf_support_request: 8,
     }
 
-    validates :body, presence: true, unless: proc { |a| a.support_request? }
+    validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }
 
     default_scope { order(created_at: :desc) }
+
+    def email
+      return unless additional_data.key?("email_id")
+
+      Support::Email.find(additional_data["email_id"])
+    end
   end
 end

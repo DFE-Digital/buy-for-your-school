@@ -28,7 +28,25 @@ RSpec.describe Support::CreateCase do
       expect(result.category.title).to eq "Catering"
       expect(result.organisation.name).to eq "Hillside School"
       expect(result.source).to eq "sw_hub"
+      expect(result.new_contract).not_to be_nil
+      expect(result.existing_contract).not_to be_nil
+      expect(result.procurement).not_to be_nil
       expect(Support::Case.count).to be 1
+    end
+
+    it "logs the create_case activity" do
+      support_case = create(:support_case)
+      allow(Support::Case).to receive(:create!)
+        .and_return(support_case)
+
+      record_action = instance_double("Support::RecordAction", call: nil)
+      allow(Support::RecordAction).to receive(:new)
+        .with(case_id: support_case.id, action: "create_case")
+        .and_return(record_action)
+
+      service.new(case_params).call
+
+      expect(record_action).to have_received(:call)
     end
   end
 end

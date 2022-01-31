@@ -10,12 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_120610) do
+ActiveRecord::Schema.define(version: 2022_01_25_110953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "activity_log", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "journey_id"
@@ -65,6 +93,19 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "framework_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "school_urn"
+    t.string "message_body"
+    t.boolean "submitted", default: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -181,6 +222,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "dsi_uid", default: "", null: false
     t.string "email", default: "", null: false
+    t.boolean "internal", default: false, null: false
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
   end
@@ -201,7 +243,19 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.string "phone_number"
     t.integer "source"
     t.uuid "organisation_id"
+    t.uuid "existing_contract_id"
+    t.uuid "new_contract_id"
+    t.uuid "procurement_id"
+    t.integer "savings_status"
+    t.integer "savings_estimate_method"
+    t.integer "savings_actual_method"
+    t.decimal "savings_estimate", precision: 9, scale: 2
+    t.decimal "savings_actual", precision: 9, scale: 2
+    t.boolean "action_required", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
+    t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
+    t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
+    t.index ["procurement_id"], name: "index_support_cases_on_procurement_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
     t.index ["status"], name: "index_support_cases_on_status"
@@ -219,6 +273,17 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
+  create_table "support_contracts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "type"
+    t.string "supplier"
+    t.date "started_at"
+    t.date "ended_at"
+    t.interval "duration"
+    t.decimal "spend", precision: 9, scale: 2
+  end
+
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "file_type"
     t.string "document_body"
@@ -228,8 +293,65 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.index ["case_id"], name: "index_support_documents_on_case_id"
   end
 
+  create_table "support_email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "email_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_inline", default: false
+    t.string "content_id"
+    t.string "outlook_id"
+  end
+
+  create_table "support_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.jsonb "sender"
+    t.jsonb "recipients"
+    t.string "outlook_conversation_id"
+    t.uuid "case_id"
+    t.datetime "sent_at"
+    t.datetime "received_at"
+    t.datetime "read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "outlook_id"
+    t.boolean "outlook_is_read", default: false
+    t.boolean "is_draft", default: false
+    t.boolean "has_attachments", default: false
+    t.text "body_preview"
+    t.integer "folder"
+    t.boolean "is_read", default: false
+  end
+
+  create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_support_establishment_group_types_on_code", unique: true
+    t.index ["name"], name: "index_support_establishment_group_types_on_name", unique: true
+  end
+
+  create_table "support_establishment_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "ukprn"
+    t.string "uid"
+    t.integer "status", null: false
+    t.jsonb "address"
+    t.uuid "establishment_group_type_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["establishment_group_type_id"], name: "index_establishment_groups_on_establishment_group_type_id"
+    t.index ["name"], name: "index_support_establishment_groups_on_name"
+    t.index ["uid"], name: "index_support_establishment_groups_on_uid", unique: true
+    t.index ["ukprn"], name: "index_support_establishment_groups_on_ukprn"
+  end
+
   create_table "support_establishment_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "group_id", null: false
+    t.uuid "group_type_id", null: false
     t.string "name", null: false
     t.integer "code", null: false
     t.integer "organisations_count", default: 0
@@ -239,14 +361,14 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.index ["name"], name: "index_support_establishment_types_on_name", unique: true
   end
 
-  create_table "support_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "support_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "code", null: false
     t.integer "establishment_types_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["code"], name: "index_support_groups_on_code", unique: true
-    t.index ["name"], name: "index_support_groups_on_name", unique: true
+    t.index ["code"], name: "index_support_group_types_on_code", unique: true
+    t.index ["name"], name: "index_support_group_types_on_name", unique: true
   end
 
   create_table "support_hub_transitions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -296,6 +418,19 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
 
+  create_table "support_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "required_agreement_type"
+    t.integer "route_to_market"
+    t.integer "reason_for_route_to_market"
+    t.string "framework_name"
+    t.date "started_at"
+    t.date "ended_at"
+    t.integer "stage"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stage"], name: "index_support_procurements_on_stage"
+  end
+
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
     t.uuid "journey_id"
@@ -343,7 +478,13 @@ ActiveRecord::Schema.define(version: 2021_11_29_120610) do
     t.index ["last_name"], name: "index_users_on_last_name"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
+  add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
+  add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
 end

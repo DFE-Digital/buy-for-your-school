@@ -14,10 +14,25 @@ class User < ApplicationRecord
   # users belonging to the proc-ops team
   scope :internal, -> { where("orgs @> ?", %([{"name": "#{ENV['PROC_OPS_TEAM']}"}])) }
 
+  # users who have the "analyst" role
+  scope :analysts, -> { where("roles @> ?", %("analyst")) }
+
   # @return [false] distinguish from unauthenticated user
   #
   def guest?
     false
+  end
+
+  # @see [SessionsController]
+  #
+  # @return [Boolean] user is an internal team member (or case worker)
+  def internal?
+    self.class.internal.include?(self)
+  end
+
+  # @return [Boolean] user is an analyst
+  def analyst?
+    self.class.analysts.include?(self)
   end
 
   # @return [Boolean] user is not an internal team member or in a supported organisation

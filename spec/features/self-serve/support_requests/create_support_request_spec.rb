@@ -63,7 +63,7 @@ RSpec.feature "Create a new support request" do
     xit "asks for a phone number" do
       expect(find("span.govuk-caption-l")).to have_text "About you"
       expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
-      expect(find("span.govuk-hint")).to have_text "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes. You do not need to provide a phone number."
+      expect(find(".govuk-hint")).to have_text "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes. You do not need to provide a phone number."
     end
 
     it "starts off at step 4" do
@@ -83,6 +83,12 @@ RSpec.feature "Create a new support request" do
         click_continue
         expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
       end
+
+      it "validates a phone number (valid +44)" do
+        fill_in "support_form[phone_number]", with: "+441234567890"
+        click_continue
+        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
+      end
     end
 
     xcontext "with invalid data it validates a phone number" do
@@ -91,8 +97,24 @@ RSpec.feature "Create a new support request" do
         fill_in "support_form[phone_number]", with: "0123"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero", href: "#support-form-phone-number-field-error"
-        expect(find("span.govuk-error-message")).to have_text "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
+      end
+
+      it "(international code)" do
+        fill_in "support_form[phone_number]", with: "+3551234567"
+        click_continue
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
+      end
+
+      it "(white space)" do
+        fill_in "support_form[phone_number]", with: "0208 590 1465"
+        click_continue
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
       # step 1
@@ -100,8 +122,8 @@ RSpec.feature "Create a new support request" do
         fill_in "support_form[phone_number]", with: "11234567890"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero", href: "#support-form-phone-number-field-error"
-        expect(find("span.govuk-error-message")).to have_text "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
       # step 1
@@ -109,17 +131,17 @@ RSpec.feature "Create a new support request" do
         fill_in "support_form[phone_number]", with: "0123456789x"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero", href: "#support-form-phone-number-field-error"
-        expect(find("span.govuk-error-message")).to have_text "Your phone number must have a minimum of 10 numbers and no spaces, starting with a zero"
+        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
       end
 
       # step 1
       it "(max size)" do
-        fill_in "support_form[phone_number]", with: "012345678901"
+        fill_in "support_form[phone_number]", with: "+4412345678901343"
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number can not have more than 11 digits", href: "#support-form-phone-number-field-error"
-        expect(find("span.govuk-error-message")).to have_text "Your phone number can not have more than 11 digits"
+        expect(page).to have_link "Your phone number can not have more than 12 digits", href: "#support-form-phone-number-field-error"
+        expect(find(".govuk-error-message")).to have_text "Your phone number can not have more than 12 digits"
       end
     end
   end
@@ -149,7 +171,7 @@ RSpec.feature "Create a new support request" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "You must select a school", href: "#support-form-school-urn-field-error"
-        expect(find("span.govuk-error-message")).to have_text "You must select a school"
+        expect(find(".govuk-error-message")).to have_text "You must select a school"
       end
     end
   end
@@ -184,10 +206,9 @@ RSpec.feature "Create a new support request" do
     it "infers the category from the chosen spec" do
       choose "1 September 2021"
       click_continue
-
       expect(find("span.govuk-caption-l")).to have_text "About your procurement"
       expect(find("label.govuk-label--l")).to have_text "How can we help?"
-      expect(find("span.govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
     end
   end
 
@@ -217,12 +238,12 @@ RSpec.feature "Create a new support request" do
 
       expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
       expect(page).to have_link "The type of procurement is required if you do not select an existing specification", href: "#support-form-category-id-field-error"
-      expect(find("span.govuk-error-message")).to have_text "The type of procurement is required if you do not select an existing specification"
+      expect(find(".govuk-error-message")).to have_text "The type of procurement is required if you do not select an existing specification"
 
       choose "Broadband"
       click_continue
 
-      expect(find("span.govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
+      expect(find(".govuk-hint")).to have_text "Briefly describe your problem in a few sentences."
     end
   end
 
@@ -243,7 +264,13 @@ RSpec.feature "Create a new support request" do
 
       expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
       expect(page).to have_link "You must tell us how we can help", href: "#support-form-message-body-field-error"
-      expect(find("span.govuk-error-message")).to have_text "You must tell us how we can help"
+      expect(find(".govuk-error-message")).to have_text "You must tell us how we can help"
+    end
+
+    it "goes back to the previous step when the back link is clicked" do
+      find(".govuk-back-link").click
+
+      expect(find("span.govuk-caption-l")).to have_text "About your procurement"
     end
   end
 

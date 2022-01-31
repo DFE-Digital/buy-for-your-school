@@ -1,39 +1,70 @@
-<div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
-  <dl class="govuk-summary-list govuk-!-margin-bottom-5">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case.label.contact_name") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= current_case.full_name %>
-      </dd>
-    </div>
+<dl class="govuk-summary-list govuk-!-margin-bottom-5">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.contact_name") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.full_name %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <%= link_to "Change", edit_support_case_contact_details_path(current_case), class: "govuk-link" %>
+    </dd>
+  </div>
 
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case.label.contact_phone") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= current_case.phone_number %>
-      </dd>
-    </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.contact_phone") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.phone_number %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <%= link_to "Change", edit_support_case_contact_details_path(current_case), class: "govuk-link" %>
+    </dd>
+  </div>
 
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case.label.contact_email") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= current_case.email %>
-      </dd>
-    </div>
-  </dl>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.contact_email") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.email %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <%= link_to "Change", edit_support_case_contact_details_path(current_case), class: "govuk-link" %>
+    </dd>
+  </div>
 
-  <% if current_case.organisation.present? %>
-    <p class="govuk-body">
-      <%= link_to I18n.t("support.case.link.view_school_information"),
-          "https://www.get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{current_case.org_urn}",
-          class: "govuk-link", target: "_blank", rel: "noreferrer noopener"
-      %>
-    </p>
-  <% end %>
-</div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.organisation_name") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.organisation.present? ? current_case.org_name : "" %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <%= link_to current_case.organisation.present? ? "Change" : "Add",
+        edit_support_case_organisation_path(current_case), class: "govuk-link" %>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.organisation_type") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.organisation&.establishment_type&.name %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+    </dd>
+  </div>
+</dl>
+
+<% if current_case.organisation.present? %>
+  <p class="govuk-body">
+    <%= link_to I18n.t("support.case.link.view_school_information"),
+        "https://www.get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{current_case.org_urn}",
+        class: "govuk-link", target: "_blank", rel: "noreferrer noopener"
+    %>
+  </p>
+<% end %>

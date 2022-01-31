@@ -52,7 +52,7 @@ RSpec.describe "Webhook upserts category", type: :request do
     expect(Category.count).to eq 1
     expect(Category.first.title).to eql "Catering"
     expect(Category.first.description).to eql "Catering description"
-    expect(Category.first.liquid_template).to match /<article id='specification'>/
+    expect(Category.first.liquid_template).to match(/<article id='specification'>/)
     expect(Category.first.contentful_id).to eql "contentful-category-entry"
     expect(Category.first.slug).to eql "catering"
   end

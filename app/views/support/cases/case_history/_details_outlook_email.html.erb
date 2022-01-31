@@ -1,0 +1,31 @@
+<% return unless interaction.email.present? %>
+<% email = interaction.email %>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    <%= I18n.t("support.emails.show.sender") %>
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= email.sent_by_name %>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    <%= I18n.t("support.emails.show.subject") %>
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= email.subject %>
+  </dd>
+</div>
+
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    <%= I18n.t("support.interaction.label.body") %>
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <%= link_to I18n.t("support.interaction.link_to_email_preview"), support_email_path(email.id), target: "_blank", rel: "noopener" %>
+  </dd>
+</div>
+
+<%= render "support/emails/attachments", email: email %>

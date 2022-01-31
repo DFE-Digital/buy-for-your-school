@@ -15,14 +15,15 @@ class SupportRequestsController < ApplicationController
 
   # first question
   def new
-    if params.fetch(:step, 1) == 1
-      first_step = if current_user.supported_schools.one?
-                     current_user.active_journeys.any? ? 3 : 4
-                   else
-                     2
-                   end
+    if new_form?
+      position = if current_user.supported_schools.one?
+                   current_user.active_journeys.any? ? 3 : 4
+                 else
+                   2
+                 end
+      options = { school_urn: current_user.school_urn }
 
-      @support_form = SupportForm.new(school_urn: current_user.school_urn, step: first_step)
+      @support_form = SupportForm.new(step: position, **options)
     else
       @support_form = SupportForm.new(step: params[:step])
     end
@@ -36,26 +37,12 @@ class SupportRequestsController < ApplicationController
   def create
     @support_form = form
 
-    if validation.success? && validation.to_h[:message_body]
-      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
-      redirect_to support_request_path(support_request)
-
-    elsif validation.success?
-
-      if @support_form.step == 2 && current_user.active_journeys.none?
-        @support_form.advance!(2)
-
-      # journey (3) -> message (5)
-      elsif @support_form.step == 3 && @support_form.has_journey?
-        @support_form.advance!(2)
-
-      else
-        @support_form.advance!
-      end
+    if form_params[:back] == "true"
+      revert_form
 
       render :new
     else
-      render :new
+      advance_form
     end
   end
 
@@ -107,9 +94,52 @@ private
     SupportFormSchema.new.call(**form_params)
   end
 
+  def advance_form
+    # valid form with last question answered
+    if validation.success? && validation.to_h[:message_body]
+      support_request = SupportRequest.create!(user_id: current_user.id, **validation.to_h)
+      redirect_to support_request_path(support_request)
+
+    elsif validation.success?
+
+      if @support_form.step == 2 && any_specs?
+        @support_form.advance!(2)
+
+      # journey (3) -> message (5)
+      elsif @support_form.step == 3 && @support_form.has_journey?
+        @support_form.advance!(2)
+      else
+        @support_form.advance!
+      end
+
+      render :new
+    else
+      render :new
+    end
+  end
+
+  def revert_form
+    if @support_form.step == 4 && any_specs?
+      @support_form.back!(2)
+    elsif @support_form.step == 5 && @support_form.has_journey?
+      @support_form.back!(2)
+    else
+      @support_form.back!
+    end
+  end
+
+  def any_specs?
+    current_user.active_journeys.none?
+  end
+
+  # @return [Boolean]
+  def new_form?
+    params.fetch(:step, 1).to_i == 1
+  end
+
   def form_params
     params.require(:support_form).permit(*%i[
-      step phone_number journey_id category_id message_body school_urn
+      step phone_number journey_id category_id message_body school_urn back
     ])
   end
 end

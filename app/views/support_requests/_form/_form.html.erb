@@ -2,7 +2,7 @@
   <%# link_to I18n.t("generic.button.back"), support_request_path(@support_request), class: "govuk-back-link" %>
   <%= link_to I18n.t("generic.button.back"), :back, class: "govuk-back-link" %>
 <% else %>
-  <%# link_to I18n.t("generic.button.back"), new_support_request_path(step: @support_form.back), class: "govuk-back-link" %>
+  <%= link_to I18n.t("generic.button.back"), support_requests_path(@support_request, support_form: @support_form.to_h.merge(step: @support_form.step, back: true)), method: :post, class: "govuk-back-link"  unless @support_form.step <= 2 %>
 <% end %>
 
 <% if Rails.env.development? %>
@@ -29,4 +29,3 @@
     <%= link_to I18n.t("generic.button.cancel"), dashboard_path, class: "govuk-link" %>
   <% end %>
 </p>
-
