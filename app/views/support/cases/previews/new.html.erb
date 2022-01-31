@@ -1,13 +1,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <%= form_with url: support_migrations_hub_case_path, scope: :case_hub_migration_form, method: :post, class: "new-case-form" do |form| %>
+    <%= form_with url: support_cases_path, scope: :create_case_form, method: :post, class: "new-case-form" do |form| %>
 
-      <% params[:case_hub_migration_form].each do |key, value| %>
-        <%= hidden_field_tag "case_hub_migration_form[#{key}]", value %>
+      <% params[:create_case_form].each do |key, value| %>
+        <%= hidden_field_tag "create_case_form[#{key}]", value %>
       <% end %>
 
-      <%= hidden_field_tag "case_hub_migration_form[organisation_id]", @form.establishment&.id %>
+      <%= hidden_field_tag "create_case_form[organisation_id]", @form.establishment&.id %>
 
 
       <h1 class="govuk-heading-l">
