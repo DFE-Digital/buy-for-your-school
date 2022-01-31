@@ -1,9 +1,8 @@
-# :nocov:
 module Support
   #
-  # Validate "create a new case" form details for a Hub migration case
+  # Validate "create a new case" form details
   #
-  class CaseHubMigrationFormSchema < ::Support::Schema
+  class CreateCaseFormSchema < ::Support::Schema
     config.messages.top_namespace = :case_migration_form
 
     params do
@@ -46,4 +45,3 @@ module Support
     end
   end
 end
-# :nocov:

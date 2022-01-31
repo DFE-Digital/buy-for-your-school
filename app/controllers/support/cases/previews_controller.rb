@@ -1,15 +1,24 @@
 # frozen_string_literal: true
 
 module Support
-  class Migrations::BaseController < ApplicationController
+  class Cases::PreviewsController < Support::CasesController
+    def create
+      @form = CreateCaseFormPresenter.new(CreateCaseForm.from_validation(validation))
+      if validation.success?
+        render "support/cases/previews/new"
+      else
+        render "support/cases/new"
+      end
+    end
+
   private
 
     def validation
-      CaseHubMigrationFormSchema.new.call(**form_params)
+      CreateCaseFormSchema.new.call(**form_params)
     end
 
     def form_params
-      params.require(:case_hub_migration_form).permit(
+      params.require(:create_case_form).permit(
         :school_urn,
         :organisation_id,
         :first_name,

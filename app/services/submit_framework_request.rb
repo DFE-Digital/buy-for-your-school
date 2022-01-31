@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Submit an FaF request for support to the Supported case management team
+# :nocov:
 class SubmitFrameworkRequest
   extend Dry::Initializer
 
@@ -41,7 +42,7 @@ class SubmitFrameworkRequest
 private
 
   def user
-    @user ||= User.find(request.user_id)
+    @user ||= FrameworkRequestPresenter.new(request).user
   end
 
   # @return [Support::Organisation]
@@ -78,3 +79,4 @@ private
     @kase
   end
 end
+# :nocov:

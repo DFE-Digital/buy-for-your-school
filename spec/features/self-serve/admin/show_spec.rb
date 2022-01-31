@@ -18,8 +18,11 @@ RSpec.feature "Admin page" do
       expect(all("td.govuk-table__cell")[1]).to have_text "0"
       expect(all("th.govuk-table__header")[2]).to have_text "Last user registration date"
       expect(all("td.govuk-table__cell")[2]).to have_text "20 December 2021"
-      expect(page).to have_link "Download (.csv)", class: "govuk-button", href: "/admin.csv"
-      expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin.json"
+      expect(all("h1.govuk-heading-m")[0]).to have_text "Activity log"
+      expect(page).to have_link "Download (.csv)", class: "govuk-button", href: "/admin/download/user_activity.csv"
+      expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin/download/user_activity.json"
+      expect(all("h1.govuk-heading-m")[1]).to have_text "Users"
+      expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin/download/users.json"
     end
 
     it "reports access to Rollbar" do
@@ -27,7 +30,7 @@ RSpec.feature "Admin page" do
       visit "/admin"
     end
 
-    it "provides a CSV download" do
+    it "provides an activity log CSV download" do
       expect(Rollbar).to receive(:info).with("User activity data downloaded.")
       click_on "Download (.csv)"
       expect(page.response_headers["Content-Type"]).to eq "text/csv"
@@ -35,12 +38,20 @@ RSpec.feature "Admin page" do
       expect(page.response_headers["Content-Disposition"]).to match(/filename="user_activity_data.csv"/)
     end
 
-    it "provides a JSON download" do
+    it "provides an activity log JSON download" do
       expect(Rollbar).to receive(:info).with("User activity data downloaded.")
-      click_on "Download (.json)"
+      click_link "Download (.json)", href: "/admin/download/user_activity.json"
       expect(page.response_headers["Content-Type"]).to eq "application/json"
       expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
       expect(page.response_headers["Content-Disposition"]).to match(/filename="user_activity_data.json"/)
+    end
+
+    it "provides a users JSON download" do
+      expect(Rollbar).to receive(:info).with("User data downloaded.")
+      click_link "Download (.json)", href: "/admin/download/users.json"
+      expect(page.response_headers["Content-Type"]).to eq "application/json"
+      expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
+      expect(page.response_headers["Content-Disposition"]).to match(/filename="user_data.json"/)
     end
   end
 

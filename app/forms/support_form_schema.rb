@@ -17,7 +17,7 @@ class SupportFormSchema < Schema
   rule(:phone_number).validate(max_size?: 13, format?: /^$|^(0|\+?44)[12378]\d{8,9}$/)
 
   rule(:school_urn) do
-    key(:school_urn).failure(:missing) if key? && value.blank?
+    key.failure(:missing) if key? && value.blank?
   end
 
   rule(:journey_id, :category_id) do

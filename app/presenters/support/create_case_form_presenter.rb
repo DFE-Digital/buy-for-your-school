@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Support
-  class CaseHubMigrationFormPresenter < BasePresenter
+  class CreateCaseFormPresenter < BasePresenter
     # @return [String]
     def full_name
       "#{first_name} #{last_name}"

@@ -1,23 +1,32 @@
 # frozen_string_literal: true
 
 class AdminController < ApplicationController
-  before_action :user_analyst, only: :show
+  before_action :user_analyst
   before_action :set_view_fields, only: :show
 
   def show
+    Rollbar.info("User role has been granted access.", role: "analyst", path: request.path)
+  end
+
+  def download_user_activity
     respond_to do |format|
-      format.html do
-        Rollbar.info("User role has been granted access.", role: "analyst", path: request.path)
-      end
+      Rollbar.info("User activity data downloaded.")
+      data = download_data(params[:format], ActivityLogItem)
       format.csv do
-        Rollbar.info("User activity data downloaded.")
-        csv = ActivityLogItem.to_csv
-        send_data csv, filename: "user_activity_data.csv", type: "text/csv"
+        send_data data, filename: "user_activity_data.csv", type: "text/csv"
       end
       format.json do
-        Rollbar.info("User activity data downloaded.")
-        json = JSON.pretty_generate(ActivityLogItem.all.as_json)
-        send_data json, filename: "user_activity_data.json", type: "application/json"
+        send_data data, filename: "user_activity_data.json", type: "application/json"
+      end
+    end
+  end
+
+  def download_users
+    respond_to do |format|
+      Rollbar.info("User data downloaded.")
+      data = download_data(params[:format], User)
+      format.json do
+        send_data data, filename: "user_data.json", type: "application/json"
       end
     end
   end
@@ -32,5 +41,14 @@ private
     @no_of_users = User.count
     @no_of_specs = Journey.count
     @last_registration_date = UserPresenter.new(User.order(created_at: :desc).first).created_at
+  end
+
+  def download_data(format, model)
+    case format
+    when "csv"
+      model.to_csv
+    when "json"
+      JSON.pretty_generate(model.all.as_json)
+    end
   end
 end
