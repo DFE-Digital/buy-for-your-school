@@ -3,7 +3,7 @@ module Support
     before_action :set_back_url, only: %i[edit update]
 
     include Concerns::HasDateParams
-    include Concerns::CreateInteraction
+    include Concerns::HasInteraction
 
     def edit
       @case_contracts_form = CaseContractsForm.new(**current_contract.to_h)
@@ -16,7 +16,7 @@ module Support
 
       if validation.success?
         current_contract.update!(@case_contracts_form.to_h)
-        create_interaction(params[:case_id], "procurement_updated")
+        create_contract_interaction
 
         redirect_to @back_url, notice: I18n.t("support.case_contract.flash.updated")
       else
@@ -48,6 +48,10 @@ module Support
       form_params[:started_at] = date_param(:case_contracts_form, :started_at)
       form_params[:ended_at] = date_param(:case_contracts_form, :ended_at)
       form_params
+    end
+
+    def create_contract_interaction
+      current_contract.type == Support::ExistingContract ? create_interaction(params[:case_id], "existing_contract_updated", "existing contract details updated") : create_interaction(params[:case_id], "new_contract_updated", "new contract details updated")
     end
   end
 end
