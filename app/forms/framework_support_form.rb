@@ -1,5 +1,6 @@
 # @abstract Form Object for multi-step Find-a-Framework support questionnaire
 #
+# :nocov:
 class FrameworkSupportForm < Form
   # @!attribute [r] dsi
   # @return [Boolean]
@@ -41,3 +42,4 @@ class FrameworkSupportForm < Form
     !dsi?
   end
 end
+# :nocov:
