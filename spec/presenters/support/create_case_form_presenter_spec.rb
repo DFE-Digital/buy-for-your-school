@@ -1,4 +1,4 @@
-RSpec.describe Support::CaseHubMigrationFormPresenter do
+RSpec.describe Support::CreateCaseFormPresenter do
   subject(:presenter) { described_class.new(form) }
 
   let(:category) { create(:support_category, title: "Catering") }
@@ -16,8 +16,8 @@ RSpec.describe Support::CaseHubMigrationFormPresenter do
     }
   end
 
-  let(:form_schema) { Support::CaseHubMigrationFormSchema.new.call(**form_hash) }
-  let(:form) { Support::CaseHubMigrationForm.from_validation(form_schema) }
+  let(:form_schema) { Support::CreateCaseFormSchema.new.call(**form_hash) }
+  let(:form) { Support::CreateCaseForm.from_validation(form_schema) }
 
   describe "#full_name" do
     it "joins first and last name" do
