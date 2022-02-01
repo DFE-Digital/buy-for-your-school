@@ -5,13 +5,9 @@ module Support
     include Concerns::HasInteraction
 
     def index
-      # binding.pry
-      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }
-      @cases = @cases.sort_by(&:last_updated_at)
-      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }
-      @new_cases = @new_cases.sort_by(&:last_updated_at)
-      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }
-      @my_cases = @my_cases.sort_by(&:last_updated_at)
+      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at)
+      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at)
+      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at)
     end
 
     def show
