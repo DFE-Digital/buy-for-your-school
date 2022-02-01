@@ -51,7 +51,7 @@ module Support
       procurement_updated: 9,
       existing_contract_updated: 10,
       new_contract_updated: 11,
-      savings_updated: 12
+      savings_updated: 12,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }
