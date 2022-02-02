@@ -31,6 +31,7 @@ module Support
         :estimated_savings,
         :hub_notes,
         :progress_notes,
+        :request_type,
       )
     end
   end

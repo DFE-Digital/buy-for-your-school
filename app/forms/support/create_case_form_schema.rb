@@ -10,6 +10,7 @@ module Support
       required(:first_name).value(:string)
       required(:last_name).value(:string)
       required(:email).value(:string)
+      optional(:request_type).value(:bool)
       optional(:organisation_id).value(:string)
       optional(:phone_number).value(:string)
       optional(:category_id).value(:string)
