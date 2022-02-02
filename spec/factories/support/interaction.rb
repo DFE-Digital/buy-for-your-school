@@ -45,7 +45,7 @@ FactoryBot.define do
       event_type { 7 }
       body { "This is an example hub migration." }
     end
-    
+
     trait :faf_support_request do
       event_type { 8 }
       body { "This is an example framework request." }
@@ -60,12 +60,12 @@ FactoryBot.define do
       event_type { 10 }
       body { "This is an example existing contract update." }
     end
-    
+
     trait :new_contract_updated do
       event_type { 11 }
       body { "This is an example new contract update." }
     end
-    
+
     trait :savings_updated do
       event_type { 12 }
       body { "This is an example savings update." }
