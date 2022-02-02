@@ -3,7 +3,8 @@
 */
 
 function changeCategorySelectState(state) {
-  const categorySelect = document.getElementById("create-case-form-category-id-field");
+  const categorySelect = document.querySelectorAll("select[name='create_case_form[category_id]']")[0];
+
   if (state == "hidden") {
     categorySelect.parentNode.classList.add("govuk-!-display-none")
   } else if (state == "visible") {

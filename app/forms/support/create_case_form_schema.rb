@@ -37,6 +37,10 @@ module Support
       key(:email).failure(:missing) if value.blank?
     end
 
+    rule(:category_id) do
+      key.failure(:missing) if values[:request_type].presence && value.blank?
+    end
+
   private
 
     def invalid_school_urn?(value)

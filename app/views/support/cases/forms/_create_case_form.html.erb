@@ -39,18 +39,20 @@
   <%=
     form.govuk_collection_radio_buttons :request_type,
       [
-        OpenStruct.new(value: true, label: "Yes"),
-        OpenStruct.new(value: false, label: "No"),
+        OpenStruct.new(value: true, label: I18n.t("support.generic.yes")),
+        OpenStruct.new(value: false, label: I18n.t("support.generic.no")),
       ],
       :value,
       :label,
       inline: true,
-      hint: { text: 'Is the request related to a procurement category?' },
-      legend: { text: "Request Type", size: "l" }
+      hint: { text: I18n.t("support.case_hub_migration.request_type.hint") },
+      legend: { text: I18n.t("support.case_hub_migration.request_type.legend"), size: "l" }
   %>
 
-  <%= form.govuk_select(:category_id, form_group: { class: "govuk-inset-text govuk-!-display-none" }, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
-    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.none") %></option>
+  <% category_id_hidden = form.object&.messages[:category_id] ? "" : "govuk-!-display-none"%>
+
+  <%= form.govuk_select(:category_id, form_group: { class: "govuk-inset-text #{category_id_hidden}" }, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
+    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.please_select") %></option>
     <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
       <optgroup label="<%= parent_name%>">
         <% sub_categories.each do |name, value| %>
