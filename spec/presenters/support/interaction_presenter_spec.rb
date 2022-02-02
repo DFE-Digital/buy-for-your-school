@@ -15,6 +15,12 @@ RSpec.describe Support::InteractionPresenter do
       support_request: 4,
       hub_notes: 5,
       progress_notes: 6,
+      hub_migration: 7,
+      faf_support_request: 8,
+      procurement_updated: 9,
+      existing_contract_updated: 10,
+      new_contract_updated: 11,
+      savings_updated: 12,
     }
   end
 
