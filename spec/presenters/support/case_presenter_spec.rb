@@ -10,11 +10,11 @@ RSpec.describe Support::CasePresenter do
            organisation: organisation,
            procurement: procurement,
            created_at: Time.zone.local(2021, 1, 30, 12, 0, 0),
-           updated_at: Time.zone.local(2021, 2, 23, 12, 0, 0))
+           updated_at: Time.zone.local(2021, 1, 30, 12, 0, 0))
   end
 
   before do
-    create(:support_interaction, case: support_case, created_at: Time.zone.local(2021, 1, 31, 12, 0, 0))
+    create(:support_interaction, case: support_case, created_at: Time.zone.local(2021, 1, 31, 12, 0, 0), updated_at: Time.zone.local(2021, 1, 31, 12, 0, 0))
   end
 
   describe "#state" do
