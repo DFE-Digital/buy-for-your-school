@@ -27,7 +27,6 @@ RSpec.feature "Create a new framework request" do
       end
 
       it "navigates to check answers page from how we can help" do
-        # test coverage for this form needs an org factory
         find("a", text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
@@ -103,7 +102,6 @@ RSpec.feature "Create a new framework request" do
           end
         end
       end
-      # passing
 
       describe "contact info page", js: true do
         before do
@@ -114,13 +112,11 @@ RSpec.feature "Create a new framework request" do
         end
 
         it "displays the correct attributes on the page" do
-          # pp page.source
           expect(find("span.govuk-caption-l")).to have_text "About you"
           expect(find("h1.govuk-heading-l")).to have_text "Is this your contact information?"
           expect(all("p")[1]).to have_text "These are the details we have for you, if they are not correct or up to date you will need to either:"
 
           within("ul.govuk-list") do
-            # pp page.source
             expect(all("li")[0]).to have_text "log back in with the correct account"
             expect(all("li")[1]).to have_link "update your DfE Sign In account details", href: "https://test-profile.signin.education.gov.uk/edit-details", class: "govuk-link"
           end
@@ -174,7 +170,6 @@ RSpec.feature "Create a new framework request" do
         end
 
         it "submits a support request message" do
-          # pp page.source
           fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
 
@@ -184,7 +179,6 @@ RSpec.feature "Create a new framework request" do
 
       describe "check answers page" do
         before do
-          # create(:support_organisation, urn: "urn-type-1", name: "School #1")
           user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
           find("label", text: "Yes, use my DfE Sign-in").click
