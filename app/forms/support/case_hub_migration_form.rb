@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :nocov:
 module Support
   class CaseHubMigrationForm
     extend Dry::Initializer
@@ -49,3 +50,4 @@ module Support
     end
   end
 end
+# :nocov:

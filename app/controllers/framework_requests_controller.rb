@@ -1,3 +1,4 @@
+# :nocov:
 class FrameworkRequestsController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :current_user
@@ -175,3 +176,4 @@ private
     form_params[:school_urn]&.split(" - ")&.first || @framework_request&.school_urn
   end
 end
+# :nocov:
