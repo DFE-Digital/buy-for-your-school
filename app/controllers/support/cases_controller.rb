@@ -26,7 +26,6 @@ module Support
         create_interaction(kase.id, "hub_migration", "Case Migration Data", @form.to_h)
         redirect_to support_case_path(kase)
       else
-        byebug
         render :new
       end
     end
