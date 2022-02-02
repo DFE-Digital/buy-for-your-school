@@ -8,12 +8,14 @@ RSpec.feature "View existing journeys" do
         create(:journey,
                user: user,
                category: create(:category, :mfd),
-               created_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
+               created_at: Time.zone.local(2021, 2, 15, 12, 0, 0),
+               updated_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
 
         create(:journey,
                user: user,
                category: create(:category, :catering),
-               created_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
+               created_at: Time.zone.local(2021, 3, 20, 12, 0, 0),
+               updated_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
 
         user_is_signed_in(user: user)
         visit "/dashboard"
