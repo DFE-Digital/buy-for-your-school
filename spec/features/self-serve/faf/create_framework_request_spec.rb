@@ -1,6 +1,7 @@
 RSpec.feature "Create a new framework request" do
   context "when user with one supported school", js: true do
     let(:user) { create(:user, :one_supported_school, first_name: "Generic", last_name: "User", full_name: "Generic User") }
+    let!(:organisation) { create(:support_organisation, urn: "100253", name: "School #1") }
 
     before do
       stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
@@ -29,7 +30,6 @@ RSpec.feature "Create a new framework request" do
         find('a', text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
-        # pp page.source
         expect(answers[3]).to have_text "I have a problem"
       end
 
@@ -140,6 +140,7 @@ RSpec.feature "Create a new framework request" do
           visit "/procurement-support/new"
           choose "Yes, use my DfE Sign-in"
           click_continue
+          click_continue
         end
 
         it "skips step 3 because the school is implicit" do
@@ -153,21 +154,20 @@ RSpec.feature "Create a new framework request" do
           user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
           find("label", text: "Yes, use my DfE Sign-in").click
-          # skips contact info
           click_continue
           click_continue
         end
 
         it "has a back link to step 3" do
           click_on "Back"
-          expect(page).to have_current_path "/procurement-support?faf_form%5Bback%5D=true&faf_form%5Bdsi%5D=true&faf_form%5Bmessage_body%5D=&faf_form%5Bschool_urn%5D=urn-type-1&faf_form%5Bstep%5D=4"
+          expect(page).to have_current_path "/procurement-support"
         end
 
         it "raises a validation error if no message entered" do
           click_continue
 
           expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-          expect(page).to have_link "You must tell us how we can help", href: "#faf-form-message-body-field-error"
+          expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
           expect(find(".govuk-error-message")).to have_text "You must tell us how we can help"
         end
 
@@ -180,20 +180,15 @@ RSpec.feature "Create a new framework request" do
         end
       end
 
-      xdescribe "check answers page" do
+      describe "check answers page" do
         before do
-          create(:support_organisation, urn: "urn-type-1", name: "School #1")
-
-          user_is_signed_in(user: user)
-          # start DSI journey
+          # create(:support_organisation, urn: "urn-type-1", name: "School #1")
+          user_exists_in_dfe_sign_in(user: user)
           visit "/procurement-support/new"
-          # step 1
-          choose "Yes, use my DfE Sign-in"
+          find("label", text: "Yes, use my DfE Sign-in").click
           click_continue
-          # step 2
-          click_on "Yes, continue"
-          # step 4
-          fill_in "faf_form[message_body]", with: "I have a problem"
+          click_continue
+          fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
         end
 
@@ -201,7 +196,7 @@ RSpec.feature "Create a new framework request" do
           expect(find("h1.govuk-heading-l")).to have_text "Send your request"
           within("dl.govuk-summary-list") do
             expect(all("dt.govuk-summary-list__key")[0]).to have_text "Your name"
-            expect(all("dd.govuk-summary-list__value")[0]).to have_text "first_name last_name"
+            expect(all("dd.govuk-summary-list__value")[0]).to have_text "Generic User"
             expect(all("dd.govuk-summary-list__actions")[0]).not_to have_link "Change"
 
             expect(all("dt.govuk-summary-list__key")[1]).to have_text "Your email address"

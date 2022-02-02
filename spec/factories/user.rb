@@ -54,7 +54,7 @@ FactoryBot.define do
     trait :one_supported_school do
       orgs do
         [{
-          "urn": "urn-type-1",
+          "urn": "100253",
           "name": "Specialist School for Testing",
           "type": { "id": ORG_TYPE_IDS.first, "name": "Community School" },
         }]
