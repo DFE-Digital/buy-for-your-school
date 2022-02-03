@@ -282,10 +282,7 @@ en:
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: You can use this service if you're procuring for a single school in England, either
-      overview_type_list:
-        - a local authority maintained school, or
-        - an academy in a single or multi-academy trust
+      overview_purpose: Use this service if you're a state funded school in England.
       you_can_ask_for: You can ask for
       overview_category_list:
         - general guidance on buying goods or services for schools
