@@ -86,7 +86,7 @@ Rails.application.routes.draw do
         end
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
-        resource :categorisation, only: %i[edit update]
+        resource :categorisation, only: %i[edit update destroy]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
