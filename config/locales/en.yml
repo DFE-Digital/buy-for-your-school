@@ -294,7 +294,7 @@ en:
       subheading: Before you start
       you_can: You can
 
-    # step 2
+    # step 2 - no DSI
     name:
       title: What is your name?
       subtitle: About you
@@ -303,7 +303,7 @@ en:
       last_name:
         label: Last Name
 
-    # step 3
+    # step 3 - no DSI
     email:
       title: What is your email address?
       subtitle: About you
@@ -391,6 +391,21 @@ en:
       choice:
         continue: "Yes"
         go_back: "No, I need to choose another school"
+
+    confirm_group_or_trust:
+      title: Is this the group or trust you're buying for? - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Is this the group or trust you're buying for?
+      summary:
+        group_name: Group name
+        address: Address
+        group_type: Group type
+        id: ID
+        uid: UID
+        ch: CH
+        ukprn: UKPRN
+      choice:
+        go_back: "No, I need to choose another group or trust"
 
   faf_submissions:
     header:

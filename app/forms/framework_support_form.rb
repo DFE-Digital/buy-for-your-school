@@ -22,6 +22,8 @@ class FrameworkSupportForm < Form
   # @return [String] URN identifier and name in the format "100000 - School Name"
   option :school_urn, optional: true # 4 (skipped if inferred at login)
 
+  option :uid, optional: true # 5 (when group or trust)
+
   # @!attribute [r] message_body
   # @see SupportRequest SupportRequest attributes
   # @return [String]

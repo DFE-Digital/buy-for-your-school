@@ -33,6 +33,7 @@ class FrameworkRequestsController < ApplicationController
   def create
     @framework_support_form = form
     @organisation = organisation
+    @group_or_trust = group_or_trust
 
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true"
@@ -114,7 +115,7 @@ private
 
   def form_params
     params.require(:framework_support_form).permit(*%i[
-      step back dsi first_name last_name email school_urn message_body
+      step back dsi first_name last_name email school_urn message_body uid
     ])
   end
 
@@ -167,6 +168,10 @@ private
     Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn)) if urn
   end
 
+  def group_or_trust
+    Support::GroupOrTrustPresenter.new(Support::EstablishmentGroup.find_by(uid: uid)) if uid
+  end
+
   # Extract the school URN from the format "urn - school name"
   # @example
   #   "100000 - School #1" -> "100000"
@@ -174,6 +179,10 @@ private
   # @return [String, nil]
   def urn
     form_params[:school_urn]&.split(" - ")&.first || @framework_request&.school_urn
+  end
+
+  def uid
+    form_params[:uid] || @framework_request&.uid
   end
 end
 # :nocov:
