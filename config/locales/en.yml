@@ -522,7 +522,7 @@ en:
       flash:
         updated: Successfully changed case category
       label:
-        none: Not Yet Known
+        none: Not applicable
         please_select: Please select
 
     case_contract:
