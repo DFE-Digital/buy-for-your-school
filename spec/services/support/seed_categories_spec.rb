@@ -12,8 +12,8 @@ RSpec.describe Support::SeedCategories do
 
     service.call
 
-    expect(parent_categories.count).to be 12
-    expect(sub_categories.count).to be 54
+    expect(parent_categories.count).to be 13
+    expect(sub_categories.count).to be 56
   end
 
   describe "resetting the data" do
