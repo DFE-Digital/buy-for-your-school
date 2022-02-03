@@ -178,7 +178,7 @@ RSpec.feature "Create case" do
     end
   end
 
-  context "with request type 'yes' and no procurement category selected" do
+  context "with request type 'yes' and no procurement category selected", js: true do
     it "only raises missing procurement category error" do
       choose "Yes"
       click_on "Save and continue"
