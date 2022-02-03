@@ -24,8 +24,8 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
 
   before do
     has_valid_api_token
-    allow_any_instance_of(described_class).to(
-      receive(:contentful_page).and_return(contentful_page),
+    allow_any_instance_of(::Content::Page::Get).to(
+      receive(:call).and_return(contentful_page),
     )
   end
 

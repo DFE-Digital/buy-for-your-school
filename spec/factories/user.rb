@@ -54,7 +54,7 @@ FactoryBot.define do
     trait :one_supported_school do
       orgs do
         [{
-          "urn": "urn-type-1",
+          "urn": "100253",
           "name": "Specialist School for Testing",
           "type": { "id": ORG_TYPE_IDS.first, "name": "Community School" },
         }]
@@ -65,12 +65,12 @@ FactoryBot.define do
       orgs do
         [
           {
-            "urn": "urn-type-1",
+            "urn": "100253",
             "name": "Specialist School for Testing",
             "type": { "id": ORG_TYPE_IDS.first, "name": "Community School" },
           },
           {
-            "urn": "greendale-urn",
+            "urn": "100254",
             "name": "Greendale Academy for Bright Sparks",
             "type": { "id": ORG_TYPE_IDS.last, "name": "Academy Special Converter" },
           },

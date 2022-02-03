@@ -37,5 +37,12 @@ RSpec.feature "Editing procurement savings details" do
         expect(page).to have_text "£500.00"
       end
     end
+
+    it "shows error message when validation fails" do
+      find("#pd-savings a").click
+      fill_in "case-savings-form-savings-estimate-field", with: "a"
+      click_on "Continue"
+      expect(find("div.govuk-error-summary")).to have_link "savings_estimate must be a decimal", href: "#case-savings-form-savings-estimate-field-error"
+    end
   end
 end
