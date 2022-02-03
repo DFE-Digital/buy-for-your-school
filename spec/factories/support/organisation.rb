@@ -4,7 +4,8 @@ FactoryBot.define do
     urn { SecureRandom.hex[0..6] }
     sequence(:name) { |n| "School ##{n}" }
     address { {} }
-    contact { {} }
+    contact { { "role": "Head Teacher", "title": "Ms", "last_name": "Teacher", "first_name": "Head" } }
+    local_authority { { "code": 202, "name": "Camden" } }
 
     phase  { (0..7).to_a.sample }
     gender { (0..3).to_a.sample }
