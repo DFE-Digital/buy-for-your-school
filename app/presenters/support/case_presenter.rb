@@ -33,7 +33,10 @@ module Support
 
     # @return [String] 30 January 2000 at 12:00
     def last_updated_at
-      interactions.none? ? created_at : interactions.last.created_at
+      # method to compare updated_at for case and updated_at for interaction (if exists) and select most recent
+      # binding.pry
+      interactions.none? ? updated_at : interactions.last.created_at
+      # updated_at
     end
 
     # @return [String]
