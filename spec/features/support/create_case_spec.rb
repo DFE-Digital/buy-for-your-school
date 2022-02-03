@@ -173,7 +173,7 @@ RSpec.feature "Create case" do
 
       within "div.govuk-error-summary" do
         expect(page).to have_text "Select the request type"
-        expect(page).to_not have_text "Please select a procurement category"
+        expect(page).not_to have_text "Please select a procurement category"
       end
     end
   end
@@ -184,7 +184,7 @@ RSpec.feature "Create case" do
       click_on "Save and continue"
 
       within "div.govuk-error-summary" do
-        expect(page).to_not have_text "Select the request type"
+        expect(page).not_to have_text "Select the request type"
         expect(page).to have_text "Please select a procurement category"
       end
     end
@@ -193,11 +193,11 @@ RSpec.feature "Create case" do
   context "with request type 'yes' and procurement category selected", js: true do
     it "raises no errors" do
       choose "Yes"
-      find("#create-case-form-category-id-field").find(:option, 'Catering').select_option
+      find("#create-case-form-category-id-field").find(:option, "Catering").select_option
       click_on "Save and continue"
       within "div.govuk-error-summary" do
-        expect(page).to_not have_text "Select the request type"
-        expect(page).to_not have_text "Please select a procurement category"
+        expect(page).not_to have_text "Select the request type"
+        expect(page).not_to have_text "Please select a procurement category"
       end
     end
   end
