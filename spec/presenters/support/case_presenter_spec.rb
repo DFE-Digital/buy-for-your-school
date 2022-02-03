@@ -9,11 +9,12 @@ RSpec.describe Support::CasePresenter do
            agent: agent,
            organisation: organisation,
            procurement: procurement,
-           created_at: Time.zone.local(2021, 1, 30, 12, 0, 0))
+           created_at: Time.zone.local(2021, 1, 30, 12, 0, 0),
+           updated_at: Time.zone.local(2021, 1, 30, 12, 0, 0))
   end
 
   before do
-    create(:support_interaction, case: support_case, created_at: Time.zone.local(2021, 1, 31, 12, 0, 0))
+    create(:support_interaction, case: support_case, created_at: Time.zone.local(2021, 1, 31, 12, 0, 0), updated_at: Time.zone.local(2021, 1, 31, 12, 0, 0))
   end
 
   describe "#state" do
@@ -36,7 +37,7 @@ RSpec.describe Support::CasePresenter do
   end
 
   describe "#last_updated_at" do
-    it "returns the formatted date on which the case was last updated" do
+    it "returns the formatted date on which the case was last updated - the interaction updated_at given there is an interaction on the case" do
       expect(presenter.last_updated_at).to eq("31 January 2021 at 12:00")
     end
   end

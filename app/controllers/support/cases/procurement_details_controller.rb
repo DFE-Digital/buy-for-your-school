@@ -3,6 +3,7 @@ module Support
     before_action :set_back_url, :set_enums, :set_framework_names
 
     include Concerns::HasDateParams
+    include Concerns::HasInteraction
 
     def edit
       @case_procurement_details_form = CaseProcurementDetailsForm.new(**current_case.procurement.to_h)
@@ -12,6 +13,7 @@ module Support
       @case_procurement_details_form = CaseProcurementDetailsForm.from_validation(validation)
       if validation.success?
         current_case.procurement.update!(@case_procurement_details_form.to_h)
+        create_interaction(params[:case_id], "procurement_updated", "procurement details updated")
 
         redirect_to @back_url, notice: I18n.t("support.procurement_details.flash.updated")
       else
