@@ -33,7 +33,6 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:school_urn) do
-    # test coverage for this form needs an org factory
     key.failure(:missing) if key? && Support::Organisation.find_by(urn: value.split(" - ").first).nil?
   end
 
