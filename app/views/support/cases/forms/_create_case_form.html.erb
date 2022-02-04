@@ -49,7 +49,11 @@
       legend: { text: I18n.t("support.case_hub_migration.request_type.legend"), size: "l" }
   %>
 
-  <% category_id_hidden = form.object&.messages[:category_id] ? "" : "govuk-!-display-none"%>
+  <% 
+    category_id_hidden = unless form.object.category_id && form.object.request_type
+        "govuk-!-display-none"
+    end
+   %>
 
   <%= form.govuk_select(:category_id, form_group: { class: "govuk-inset-text #{category_id_hidden}" }, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
     <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.please_select") %></option>

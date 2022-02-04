@@ -516,8 +516,10 @@ en:
       edit:
         header: Select a category
         submit: Save and continue
+        delete: Remove procurement category
       flash:
         updated: Successfully changed case category
+        deleted: Successfully removed case category
       label:
         none: Not applicable
         please_select: Please select

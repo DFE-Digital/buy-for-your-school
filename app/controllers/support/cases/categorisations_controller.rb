@@ -20,6 +20,11 @@ module Support
       end
     end
 
+    def destroy
+      current_case.update!(category_id: nil)
+      redirect_to @back_url, notice: I18n.t("support.case_categorisations.flash.deleted")
+    end
+
   private
 
     def set_categories
