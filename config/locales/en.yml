@@ -337,6 +337,17 @@ en:
         dsi: Yes, use my DfE Sign-in
         no_dsi: No, continue without a DfE Sign-in account
 
+    school_or_group_or_trust:
+      header: What type of organisation are you buying for?
+      hint: If you're buying together informally as a group, choose a 'single school' to represent the group.
+      radios:
+        single_school:
+          label: A single school
+          hint: A local authority maintained school or an academy in a single or multi-academy trust
+        group_or_trust:
+          label: A group or trust
+          hint: An academy trust or federation
+
     user_organisation:
       header: Which school are you buying for?
       subtitle: About your school

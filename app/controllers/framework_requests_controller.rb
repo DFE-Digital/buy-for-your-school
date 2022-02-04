@@ -45,10 +45,10 @@ class FrameworkRequestsController < ApplicationController
       )
 
       # authenticated user / inferred school / message step -> start page
-      if @framework_support_form.position?(6) && !current_user.guest? && !current_user.school_urn.nil?
+      if @framework_support_form.position?(7) && !current_user.guest? && !current_user.school_urn.nil?
         redirect_to framework_requests_path
       # authenticated user / many schools / school step -> start page
-      elsif @framework_support_form.position?(4) && !current_user.guest?
+      elsif @framework_support_form.position?(5) && !current_user.guest?
         redirect_to framework_requests_path
       else
         @framework_support_form.back!
@@ -114,7 +114,7 @@ private
 
   def form_params
     params.require(:framework_support_form).permit(*%i[
-      step back dsi first_name last_name email school_urn message_body
+      step back dsi first_name last_name email school_urn message_body group
     ])
   end
 
@@ -142,7 +142,7 @@ private
     if current_user.guest?
       1
     else
-      current_user.school_urn ? 6 : 4
+      current_user.school_urn ? 7 : 5
     end
   end
 
