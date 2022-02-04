@@ -36,14 +36,33 @@
                              label: { text: I18n.t("support.case_hub_migration.label.phone_number", optional: I18n.t("support.generic.form.optional")) }
   %>
 
-  <%= form.govuk_select(:category_id, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
-    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.none") %></option>
+  <%=
+    form.govuk_collection_radio_buttons :request_type,
+      [
+        OpenStruct.new(value: true, label: I18n.t("support.generic.yes")),
+        OpenStruct.new(value: false, label: I18n.t("support.generic.no")),
+      ],
+      :value,
+      :label,
+      inline: true,
+      hint: { text: I18n.t("support.case_hub_migration.request_type.hint") },
+      legend: { text: I18n.t("support.case_hub_migration.request_type.legend"), size: "l" }
+  %>
+
+  <% 
+    category_id_hidden = unless form.object.category_id && form.object.request_type
+        "govuk-!-display-none"
+    end
+   %>
+
+  <%= form.govuk_select(:category_id, form_group: { class: "govuk-inset-text #{category_id_hidden}" }, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
+    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.please_select") %></option>
     <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
-    <optgroup label="<%= parent_name%>">
-      <% sub_categories.each do |name, value| %>
-      <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
-      <% end %>
-    </optgroup>
+      <optgroup label="<%= parent_name%>">
+        <% sub_categories.each do |name, value| %>
+          <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
+        <% end %>
+      </optgroup>
     <% end %>
   <% end %>
 
@@ -84,3 +103,5 @@
 
   <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
 <% end %>
+
+<%= javascript_include_tag "supported_create_case" %>

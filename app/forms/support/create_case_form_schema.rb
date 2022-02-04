@@ -10,6 +10,7 @@ module Support
       required(:first_name).value(:string)
       required(:last_name).value(:string)
       required(:email).value(:string)
+      optional(:request_type).value(:bool)
       optional(:organisation_id).value(:string)
       optional(:phone_number).value(:string)
       optional(:category_id).value(:string)
@@ -34,6 +35,10 @@ module Support
     # TODO: add email validation format
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
+    end
+
+    rule(:category_id) do
+      key.failure(:missing) if values[:request_type].presence && value.blank?
     end
 
   private
