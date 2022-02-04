@@ -1,15 +1,15 @@
 <!-- school, group or trust (2) -->
 
-<%= 
-  form.govuk_radio_buttons_fieldset :group,
-    legend: { text: I18n.t("faf.school_or_group_or_trust.header"), size: "l" },
-    hint: { text: I18n.t("faf.school_or_group_or_trust.hint"), size: "l" } do %>
-  <%=
-    form.govuk_radio_button :group, false, label: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.label") }, hint: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.hint") } %>
-
-  <%=
-    form.govuk_radio_button :group, true, label: { text: I18n.t("faf.school_or_group_or_trust.radios.group_or_trust.label") }, hint: { text: I18n.t("faf.school_or_group_or_trust.radios.group_or_trust.hint") } %>
-<% end %>
+<%=
+  form.govuk_collection_radio_buttons :group,
+    [
+      OpenStruct.new(value: true, label: { text: I18n.t("faf.school_or_group_or_trust.radios.group_or_trust.label"), class: "govuk-hint"}, hint: "hint"),
+      OpenStruct.new(value: false, label: I18n.t("faf.school_or_group_or_trust.radios.single_school.label")),
+    ],
+    :value,
+    :label,
+    :hint,
+    legend: { text: I18n.t("faf.school_or_group_or_trust.header"), size: "l" }
+%>
 <br>
 
-<%= javascript_include_tag "faf_dsi_or_guest" %>

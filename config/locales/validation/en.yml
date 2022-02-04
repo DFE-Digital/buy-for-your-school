@@ -21,21 +21,23 @@ en:
         school_urn:
           missing: You must select a school
 
-
   # Find a Framework support request form
   framework_request:
     rules:
-      dsi: ""                 # Omitted
-      first_name: ""          # Omitted
-      last_name: ""           # Omitted
-      email: ""               # Omitted
-      school_urn: ""          # Omitted
-      message_body: ""        # Omitted
+      dsi: "" # Omitted
+      group: "" # Omitted
+      first_name: "" # Omitted
+      last_name: "" # Omitted
+      email: "" # Omitted
+      school_urn: "" # Omitted
+      message_body: "" # Omitted
     errors:
       rules:
         dsi:
           missing: Select whether you want to use a DfE Sign-in account
           bool?: Select whether you want to use a DfE Sign-in account
+        group:
+          missing: Select what type of organisation you're buying for
         first_name:
           missing: Enter your first name
         last_name:
