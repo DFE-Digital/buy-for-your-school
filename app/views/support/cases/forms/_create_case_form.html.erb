@@ -55,7 +55,6 @@
     end
    %>
 
-
   <%= form.govuk_select(:category_id, form_group: { class: "govuk-inset-text #{category_id_hidden}" }, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
     <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.please_select") %></option>
     <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
