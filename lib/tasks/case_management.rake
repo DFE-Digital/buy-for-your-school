@@ -44,6 +44,12 @@ namespace :case_management do
     end
   end
 
+  desc "Backfill case category"
+  task backfill_case_category: :environment do
+    category = Support::Category.find_by(title: "Not yet known")
+    Support::Case.where(category_id: nil).update_all(category_id: category.id)
+  end
+
   desc "Populate shared inbox emails"
   task seed_shared_inbox_emails: :environment do
     Support::IncomingEmails::SharedMailbox.synchronize(folder: :inbox)

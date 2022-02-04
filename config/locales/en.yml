@@ -416,6 +416,8 @@ en:
   #
   support:
     generic:
+      'yes': 'Yes'
+      'no': 'No'
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -520,7 +522,8 @@ en:
       flash:
         updated: Successfully changed case category
       label:
-        none: Not Yet Known
+        none: Not applicable
+        please_select: Please select
 
     case_contract:
       existing:
@@ -611,6 +614,9 @@ en:
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
         referer: Referer
+      request_type:
+        legend: Request type
+        hint: Is the request related to a procurement category?
       submit: Save and continue
       flash:
         created: Case created/migrated successfully
