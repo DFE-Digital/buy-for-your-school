@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 2022_02_07_105609) do
     t.boolean "submitted", default: false
     t.uuid "user_id"
     t.boolean "group"
+    t.string "group_uid"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 

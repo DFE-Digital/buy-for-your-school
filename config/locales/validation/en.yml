@@ -30,6 +30,7 @@ en:
       last_name: "" # Omitted
       email: "" # Omitted
       school_urn: "" # Omitted
+      group_uid: "" # Omitted
       message_body: "" # Omitted
     errors:
       rules:
@@ -47,5 +48,7 @@ en:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
         school_urn:
           missing: Select the school you want help buying for
+        group_uid:
+          missing: Select the group or trust you want help buying for
         message_body:
           missing: You must tell us how we can help

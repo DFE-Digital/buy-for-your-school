@@ -383,7 +383,7 @@ en:
       title: Search for a group or trust - Get help buying for schools - GOV.UK
       caption: About your school
       heading: Search for a group or trust
-      hint: Enter name, Companies House number, Unique group identifier (UID), Group identifier (ID) or UK Provider Reference Number (UKPRN)
+      hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
       details:
         summary: Can't find it?
         body:
