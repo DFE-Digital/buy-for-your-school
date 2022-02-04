@@ -373,9 +373,24 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "You can only use this service if you are procuring for a single school in England. This should either be a local authority maintained school, or an academy in a single or multi-academy trust."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_group_link: Search for an academy trust or federation
+      button: Continue
+    
+    search_for_a_group:
+      title: Search for a group or trust - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Search for a group or trust
+      hint: Enter name, Companies House number, Unique group identifier (UID), Group identifier (ID) or UK Provider Reference Number (UKPRN)
+      details:
+        summary: Can't find it?
+        body:
+          - "This search lists groups and trusts, such as a multi-academy trust or federation. %{search_for_a_school_link} instead."
+          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
+          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_school_link: Search for a single school
       button: Continue
 
     which_school:

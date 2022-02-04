@@ -22,6 +22,8 @@ class FrameworkSupportForm < Form
   # @return [String]
   option :email, optional: true # 4 (skipped if logged in)
 
+  option :group, optional: true
+
   # @!attribute [r] school_urn
   # @return [String] URN identifier and name in the format "100000 - School Name"
   option :school_urn, optional: true # 5 (skipped if inferred at login)
