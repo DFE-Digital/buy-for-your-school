@@ -5,9 +5,9 @@
 <%= form.hidden_field :last_name, value: form.object.last_name %>
 <%= form.hidden_field :email, value: form.object.email %>
 <%= form.hidden_field :school_urn, value: form.object.school_urn %>
-<%# <%= form.hidden_field :uid, value: form.object.school_urn %> %>
+<%= form.hidden_field :uid, value: form.object.uid %>
 
-<% if @organisation.exists? %>
+<% if !@organisation.nil? %>
   <%= content_for :title, I18n.t("faf.confirm_school.title") %>
 
   <span class="govuk-caption-l"><%= I18n.t("faf.confirm_school.caption") %></span>
@@ -114,7 +114,7 @@
 <%= form.govuk_radio_buttons_fieldset nil do %>
   <div class="govuk-radios">
     <%= form.govuk_radio_button :choice, "yes", label: { text: I18n.t("faf.confirm_school.choice.continue") } %>
-    <% if @organisation.exists? %>
+    <% if !@organisation.nil? %>
       <%= form.govuk_radio_button :choice, "no", label: { text: I18n.t("faf.confirm_school.choice.go_back") } %>
       <% else %>
       <%= form.govuk_radio_button :choice, "no", label: { text: I18n.t("faf.confirm_group_or_trust.choice.go_back") } %>

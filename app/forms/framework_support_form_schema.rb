@@ -14,6 +14,7 @@ class FrameworkSupportFormSchema < Schema
     optional(:email).value(:string)             # step 3
 
     optional(:school_urn).value(:string)        # step 4
+    optional(:uid).value(:string)               # step 4
 
     optional(:message_body).value(:string)      # step 6
   end

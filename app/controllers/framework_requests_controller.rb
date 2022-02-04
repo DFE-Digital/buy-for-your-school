@@ -158,6 +158,7 @@ private
         last_name: current_user.last_name,    # (step 2)
         email: current_user.email,            # (step 3)
         school_urn: current_user.school_urn,  # (step 4)
+        uid: current_user.uid
         # message (step 6)
       }
     end
