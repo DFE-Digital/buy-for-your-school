@@ -60,5 +60,9 @@ module Support
     def postcode
       address["postcode"]
     end
+
+    def org_type
+      establishment_type&.name
+    end
   end
 end

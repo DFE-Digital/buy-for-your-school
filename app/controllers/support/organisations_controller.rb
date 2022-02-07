@@ -10,12 +10,17 @@ module Support
         lower(address->>'postcode') LIKE lower(:q)
       SQL
 
+      results = Organisation
+        .includes([:establishment_type])
+        .where(query, q: "%#{params.fetch(:q)}%")
+        .limit(25)
+
       respond_to do |format|
         format.json do
-          render json: Organisation
-            .where(query, q: "%#{params.fetch(:q)}%")
-            .limit(25)
-            .as_json(only: %i[id urn name], methods: %i[postcode formatted_name])
+          render json: results.as_json(
+            only: %i[id urn name ukprn],
+            methods: %i[postcode formatted_name org_type]
+          )
         end
       end
     end

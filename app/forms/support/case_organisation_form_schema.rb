@@ -4,11 +4,11 @@ module Support
     include Concerns::TranslatableFormSchema
 
     params do
-      required(:organisation_formatted_name).value(:string)
+      required(:organisation_id).value(:string)
     end
 
-    rule(:organisation_formatted_name) do
-      key(:organisation_formatted_name).failure(:missing) if value.blank?
+    rule(:organisation_id) do
+      key(:organisation_id).failure(:missing) if value.blank?
     end
   end
 end

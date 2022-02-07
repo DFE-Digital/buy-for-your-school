@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can set a case's organisation" do
+describe "Agent can set a case's organisation", js: true do
   include_context "with an agent"
 
   before do
@@ -15,7 +15,7 @@ describe "Agent can set a case's organisation" do
   context "when the case has no organisation set already" do
     let(:support_case) { create(:support_case, organisation: nil) }
 
-    describe "selecting an organisation", js: true do
+    describe "selecting an organisation" do
       before { update_case_organisation(search_term: "Scho", option_to_select: "School 1") }
 
       it "sets that choice as the organisation for the case" do
@@ -25,9 +25,9 @@ describe "Agent can set a case's organisation" do
   end
 
   context "when the case already has an organisation assigned" do
-    let(:support_case) { create(:support_case, organisation: Support::Organisation.first) }
+    let(:support_case) { create(:support_case, organisation: Support::Organisation.find_by(name: "School 1")) }
 
-    describe "selecting an organisation", js: true do
+    describe "selecting an organisation" do
       before { update_case_organisation(search_term: "Org", option_to_select: "Organisation 1", add_or_change: "Change") }
 
       it "sets that choice as the organisation for the case" do

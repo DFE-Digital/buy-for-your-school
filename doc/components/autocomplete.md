@@ -28,8 +28,10 @@ Using specified data attributes on a html tag will activate the autocomplete. A 
 | `label_text` | The text to be used in the resulting field label | "Establishment URN" |
 | `element_id` | The id attribute of the resulting input field | "my-autocomplete" |
 | `element_name` | The name attribute of the resulting input field | "case_form[school_urn]" |
+| `hidden_element_name` | The name attribute of the hidden input field | "case_form[school_id]" |
 | `template_suggestion` | a string specifying the format you wish for the autocomplete choices to appear |  like. It makes use of {{variables}}. See [below](#template-suggestion-syntax) | "The URN is {{urn}}" |
-| `value_field` | the value from the API response when chosen by the user will be the input value for |  this field | "urn" |
+| `value_field` | the value from the API response when chosen by the user will be the input value for this field |  "name" |
+| `hidden_value_field` | the value from the API response when chosen by the user will be the input value for the hidden field | "id" |
 | `query_url` | the URL of the endpoint you wish to get the autocomplete results from. It makes use of {{QUERY}} variable. See [below](#query-url-syntax) | "http://example.org/cats?query={{QUERY}}" |
 | Partial Block | A block given to the partial to define the fallback non-js input field to be used | |
 
