@@ -38,6 +38,7 @@ en:
           bool?: Select whether you want to use a DfE Sign-in account
         group:
           missing: Select what type of organisation you're buying for
+          bool?: Select what type of organisation you're buying for
         first_name:
           missing: Enter your first name
         last_name:

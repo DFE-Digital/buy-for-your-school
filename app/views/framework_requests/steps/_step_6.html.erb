@@ -1,6 +1,7 @@
 <!-- confirm school (6) -->
 
 <%= form.hidden_field :dsi %>
+<%= form.hidden_field :group, value: form.object.group %>
 <%= form.hidden_field :first_name, value: form.object.first_name %>
 <%= form.hidden_field :last_name, value: form.object.last_name %>
 <%= form.hidden_field :email, value: form.object.email %>
