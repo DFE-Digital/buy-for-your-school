@@ -135,7 +135,7 @@ private
 
   # FaF specific methods -------------------------------------------------------
 
-  # DSI with inferred school to 5, otherwise 4 to select
+  # DSI with inferred school to 7, otherwise 5 to select
   #
   # @return [Integer]
   def initial_position
@@ -153,10 +153,11 @@ private
     else
       {
         dsi: true,                            # (step 1)
-        first_name: current_user.first_name,  # (step 2)
-        last_name: current_user.last_name,    # (step 2)
-        email: current_user.email,            # (step 3)
-        school_urn: current_user.school_urn,  # (step 4)
+        group: false,
+        first_name: current_user.first_name,  # (step 3)
+        last_name: current_user.last_name,    # (step 3)
+        email: current_user.email,            # (step 4)
+        school_urn: current_user.school_urn,  # (step 5)
         # message (step 6)
       }
     end
