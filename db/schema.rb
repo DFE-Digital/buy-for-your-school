@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_110953) do
+ActiveRecord::Schema.define(version: 2022_02_07_141256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -487,4 +487,26 @@ ActiveRecord::Schema.define(version: 2022_01_25_110953) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)));
+  SQL
 end
