@@ -23,7 +23,7 @@ module Support
     end
 
     def case_organisation_form_params
-      params.require(:case_organisation_form).permit(:organisation_id)
+      params.require(:case_organisation_form).permit(:establishment_id)
     end
   end
 end

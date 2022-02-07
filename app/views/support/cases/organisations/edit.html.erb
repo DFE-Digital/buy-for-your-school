@@ -6,12 +6,14 @@
         label_text: I18n.t("support.case_organisation.label"),
         label_class: "govuk-!-font-weight-bold govuk-!-font-size-36 govuk-!-margin-bottom-5",
         element_id: "organisation-autocomplete",
-        element_name: "case_organisation_form[organisation_formatted_name]",
-        hidden_element_name: "case_organisation_form[organisation_id]",
-        template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{org_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
-        hidden_value_field: :id,
+        element_name: "case_organisation_form[establishment_name]",
+        template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
         value_field: :name,
-        query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
+        hidden_fields: {
+          'case_organisation_form[establishment_id]' => :id,
+          'case_organisation_form[establishment_source]' => :source
+        },
+        query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
   <%= form.submit I18n.t("support.case_organisation.submit"), class: "govuk-button" %>
 <% end %>

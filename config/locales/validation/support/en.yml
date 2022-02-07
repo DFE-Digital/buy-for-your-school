@@ -9,7 +9,7 @@ en:
       email_body: "" # Omitted
       email_subject: "" # Omitted
       category_id: "" # Omitted
-      organisation_id: "" # Omitted
+      establishment_id: "" # Omitted
 
     errors:
       rules:
@@ -48,8 +48,8 @@ en:
           invalid_format: Please enter a valid contact email for the case
 
         # Selecting an organisation
-        organisation_id:
-          missing: Please select an organisation
+        establishment_id:
+          missing: Please select an organisation or group
 
 
   case_migration_form:
