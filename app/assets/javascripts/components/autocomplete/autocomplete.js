@@ -25,23 +25,20 @@
         // name attribute for the autcomplete field
         autocompleteElementName: elementName,
 
-        // name attribute for the hidden value field
-        autocompleteHiddenElementName: hiddenElementName,
-
         // The format applied to result suggestions with fields substituted
         autocompleteTemplateSuggestion: suggestionTemplate,
 
         // The key from the result object to use as the autocomplete field value
         autocompleteTemplateInput: valueKey,
 
-        // The key from the result object to use as the hidden field value
-        autocompleteTemplateHiddenInput: hiddenValueKey,
-
         // The URL to query suggestions from {{QUERY}} will be substituted with the autocomplete field value
         autocompleteQueryUrl: queryUrl,
 
         // The default value of the autocomplete field before searching
-        autocompleteDefaultValue: defaultValue
+        autocompleteDefaultValue: defaultValue,
+
+        // key,value map of input name to result value, each will become a hidden field on the form
+        autocompleteHiddenFields: hiddenFieldsRaw
       } = element.dataset;
 
       // Set up the required markup to make the autocomplete element function
@@ -92,15 +89,17 @@
         return `<span class="govuk-body">${output}</span>`;
       }
 
-      // Set the hidden field value on selection of suggestion
-      const setHiddenField = (result) => {
+      // Set the hidden field values on selection of suggestion
+      const setHiddenFields = (result) => {
         if (result === undefined) return;
-        if (hiddenElementName === "") return;
+        if (hiddenFieldsRaw === null) return;
 
-        const hiddenField = document.querySelector(`input[name="${hiddenElementName}"]`);
-        hiddenField.value = result[hiddenValueKey];
+        const hiddenFieldsMap = JSON.parse(hiddenFieldsRaw);
 
-        document.getElementById("debug").textContent = `Setting value of input[name="${hiddenElementName}"] to ${result[hiddenValueKey]}`
+        Object.entries(hiddenFieldsMap).forEach(([fieldName, key]) => {
+          const hiddenField = document.querySelector(`input[name="${fieldName}"]`);
+          hiddenField.value = result[key];
+        });
       }
 
       // Construct the autocomplete initialization settings
@@ -115,7 +114,7 @@
           suggestion: i => formatSuggestion(i, suggestionTemplate)
         },
         source: _.throttle(doQueryLookup),
-        onConfirm: setHiddenField
+        onConfirm: setHiddenFields
       }
 
       setupFormGroupAndLabel();
