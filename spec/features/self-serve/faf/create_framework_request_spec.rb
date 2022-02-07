@@ -30,7 +30,6 @@ RSpec.feature "Create a new framework request" do
         find("a", text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
-        pp page.source
         expect(answers[3]).to have_text "I have a problem"
       end
 
