@@ -21,6 +21,7 @@ module Support
       from_case.interactions.update_all(case_id: to_case.id)
       from_case.emails.update_all(case_id: to_case.id)
       to_case.pending!
+      from_case.closed!
     end
   end
 end
