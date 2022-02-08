@@ -1,11 +1,12 @@
 RSpec.feature "FaF session" do
   let(:user) { create(:user, first_name: "Generic", last_name: "User", full_name: "Generic User") }
 
-  xcontext "when user is signed in", js: true do
+  context "when user is signed in", js: true do
     before do
       user_exists_in_dfe_sign_in(user: user)
 
-      visit "/procurement-support/new"
+      visit "/procurement-support"
+      click_on "Start now"
       choose "Yes, use my DfE Sign-in"
       click_continue
     end
@@ -28,7 +29,7 @@ RSpec.feature "FaF session" do
       end
 
       it "redirects them to step 1 of FaF form" do
-        expect(page).to have_current_path "/procurement-support/new"
+        expect(page).to have_current_path "/procurement-support"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "You have been signed out."
       end
     end

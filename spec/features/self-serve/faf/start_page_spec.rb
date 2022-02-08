@@ -1,5 +1,5 @@
 RSpec.feature "Faf - start page" do
-  xcontext "when the user is not signed in" do
+  context "when the user is not signed in" do
     before do
       visit "/procurement-support"
     end
@@ -29,7 +29,7 @@ RSpec.feature "Faf - start page" do
     end
   end
 
-  xcontext "when the user is signed in" do
+  context "when the user is signed in" do
     before do
       user_is_signed_in
       visit "/procurement-support"

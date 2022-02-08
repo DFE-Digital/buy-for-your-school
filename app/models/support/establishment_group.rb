@@ -1,3 +1,4 @@
+# :nocov:
 class Support::EstablishmentGroup < ApplicationRecord
   belongs_to :establishment_group_type, class_name: "Support::EstablishmentGroupType"
 
@@ -7,3 +8,4 @@ class Support::EstablishmentGroup < ApplicationRecord
     "#{uid} - #{name}"
   end
 end
+# :nocov:
