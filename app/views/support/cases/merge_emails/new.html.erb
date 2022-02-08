@@ -1,0 +1,15 @@
+<%= form_with model: @merge_emails_form, scope: :merge_emails_form, url: support_case_merge_emails_path(@current_case), method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= render "components/autocomplete",
+        container_id: "case-autocomplete-container",
+        label_text: "This is the Label",
+        label_class: "govuk-!-font-weight-bold govuk-!-font-size-36 govuk-!-margin-bottom-5",
+        element_id: "case-autocomplete",
+        element_name: "merge_emails_form[existing_case_id]",
+        template_suggestion: "{{ref}}, <strong>{{organisation_name}}</strong>, {{organisation_urn}}/{{organisation_ukprn}}, {{agent_name}}",
+        value_field: :ref,
+        query_url: support_cases_path(format: :json, q: "{{QUERY}}") %>
+
+  <%= form.submit I18n.t("support.case_organisation.submit"), class: "govuk-button" %>
+<% end %>

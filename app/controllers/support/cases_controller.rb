@@ -1,13 +1,22 @@
 module Support
   class CasesController < Cases::ApplicationController
     before_action :current_case, only: %i[show]
+    skip_before_action :authenticate_agent!, :authenticate_user!
 
     include Concerns::HasInteraction
 
     def index
-      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date)
-      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date)
-      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date)
+      respond_to do |format|
+        format.json do
+          @cases = Case.search(params[:q])
+        end
+
+        format.html do
+          @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date)
+          @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date)
+          @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date)
+        end
+      end
     end
 
     def show
