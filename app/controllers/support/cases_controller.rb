@@ -1,13 +1,14 @@
 module Support
   class CasesController < Cases::ApplicationController
+    require "will_paginate/array"
     before_action :current_case, only: %i[show]
 
     include Concerns::HasInteraction
 
     def index
-      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at)
-      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at)
-      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at)
+      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at).paginate(page: params[:page])
+      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at).paginate(page: params[:page])
+      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at).paginate(page: params[:page])
     end
 
     def show
