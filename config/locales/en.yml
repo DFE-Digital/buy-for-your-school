@@ -415,12 +415,14 @@ en:
     generic:
       'yes': 'Yes'
       'no': 'No'
+      continue: Continue
       link:
         opens_in_new_tab: (opens in new tab)
       form:
         optional: (optional)
       currency:
         unit_symbol: £
+      back: Back
 
     header: Supported Buying Admin
 
@@ -644,6 +646,24 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_merge_emails:
+      search:
+        header: Find an existing case
+        subtitle: This should be the case you want to move the emails to.
+        hint: Enter the case ID, organisation name, URN, UKPRN, or case owner
+      preview:
+        header: You are moving emails
+        from: From
+        to: To
+        reminder: Once the emails have been moved, Case %{case_ref} will be closed.
+        table:
+          - Case
+          - Organisation
+          - Category
+          - Status
+          - Assigned to
+          - Date received
 
     case_organisation:
       label: What Organisation do you want to add?

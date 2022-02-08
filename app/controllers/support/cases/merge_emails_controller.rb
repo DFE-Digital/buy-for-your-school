@@ -4,16 +4,20 @@ module Support
       @merge_emails_form = CaseMergeEmailsForm.new
     end
 
-    def create
-      @merge_emails_form = CaseMergeEmailsForm.from_validation(validation)
-
-      if validation.success? && @merge_emails_form.merge_emails(current_case)
-        @merge_emails_form
-        redirect_to support_case_path(current_case, anchor: "school-details"),
-                    notice: I18n.t("support.case_contact_details.flash.updated")
+    def preview
+      if validation.success?
+        @from_case = CasePresenter.new(current_case)
+        @to_case = CasePresenter.new(Case.find_by(ref: merge_emails_params[:merge_into_case_id]))
+        render :preview
       else
-        render :edit
+        @merge_emails_form = CaseMergeEmailsForm.from_validation(validation)
+        render :new
       end
+    end
+
+    def create
+      MergeCaseEmails.new(params[:from_case_id], params[:to_case_id]).call
+      render :show
     end
 
   private

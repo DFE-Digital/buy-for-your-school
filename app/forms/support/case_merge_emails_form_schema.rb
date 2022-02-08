@@ -7,7 +7,7 @@ module Support
     end
 
     rule(:merge_into_case_id) do
-      key.failure(:missing) if value.blank?
+      key.failure(:missing) unless Case.find_by(ref: value)
     end
   end
 end

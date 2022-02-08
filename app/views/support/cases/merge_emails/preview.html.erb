@@ -1,0 +1,57 @@
+<%= link_to I18n.t("support.generic.back"), new_support_case_merge_emails_path(@current_case), class: "govuk-back-link" %>
+
+<h1 class="govuk-heading-l">
+  <%= I18n.t("support.case_merge_emails.preview.header") %>
+</h1>
+
+<!-- FROM CASE -->
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_merge_emails.preview.from") %></caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <% I18n.t("support.case_merge_emails.preview.table").each do |header| %>
+        <th scope="col" class="govuk-table__header"> <%= header %> </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"> <%= @from_case.ref %> </td>
+      <td class="govuk-table__cell"> <%= @from_case.org_name %> </td>
+      <td class="govuk-table__cell"> <%= @from_case.category&.title %> </td>
+      <td class="govuk-table__cell"> <%= @from_case.state %> </td>
+      <td class="govuk-table__cell"> <%= @from_case.agent&.full_name %> </td>
+      <td class="govuk-table__cell"> <%= @from_case.created_at %> </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- TO CASE -->
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_merge_emails.preview.to") %></caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <% I18n.t("support.case_merge_emails.preview.table").each do |header| %>
+        <th scope="col" class="govuk-table__header"> <%= header %> </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+   <tr class="govuk-table__row">
+      <td class="govuk-table__cell"> <%= @to_case.ref %> </td>
+      <td class="govuk-table__cell"> <%= @to_case.org_name %> </td>
+      <td class="govuk-table__cell"> <%= @to_case.category&.title %> </td>
+      <td class="govuk-table__cell"> <%= @to_case.state %> </td>
+      <td class="govuk-table__cell"> <%= @to_case.agent&.full_name %> </td>
+      <td class="govuk-table__cell"> <%= @to_case.created_at %> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body-m">
+  <%= I18n.t("support.case_merge_emails.preview.reminder", case_ref: @from_case.ref) %>
+</p>
+
+<%= button_to I18n.t("support.generic.continue"), { action: :create, from_case_id: @from_case.id, to_case_id: @to_case.id }, class: "govuk-button" %>
