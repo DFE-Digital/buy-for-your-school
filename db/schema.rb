@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_07_141256) do
+ActiveRecord::Schema.define(version: 2022_02_07_154334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 2022_02_07_141256) do
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
     t.boolean "action_required", default: false
+    t.string "organisation_type"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -495,7 +496,7 @@ ActiveRecord::Schema.define(version: 2022_02_07_141256) do
       organisations.urn,
       organisations.ukprn,
       etypes.name AS establishment_type,
-      'Organisation'::text AS source
+      'Support::Organisation'::text AS source
      FROM (support_organisations organisations
        JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
   UNION ALL
@@ -505,7 +506,7 @@ ActiveRecord::Schema.define(version: 2022_02_07_141256) do
       NULL::character varying AS urn,
       egroups.ukprn,
       egtypes.name AS establishment_type,
-      'EstablishmentGroup'::text AS source
+      'Support::EstablishmentGroup'::text AS source
      FROM (support_establishment_groups egroups
        JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)));
   SQL

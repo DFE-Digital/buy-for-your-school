@@ -4,10 +4,11 @@ module Support
     extend Dry::Initializer
     include Concerns::ValidatableForm
 
-    option :establishment_id, Types::Params::String, optional: true
+    option :organisation_id, Types::Params::String, optional: true
+    option :organisation_type, Types::Params::String, optional: true
 
     def assign_organisation_to_case(kase)
-      kase.update(organisation: Support::Organisation.find(establishment_id))
+      kase.update(organisation_id: organisation_id, organisation_type: organisation_type)
     end
   end
 end

@@ -14,6 +14,10 @@
              template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
              value_field: :urn,
              default_value: "#{@form.school_urn}",
+             hidden_fields: {
+               'create_case_form[organisation_id]' => :id,
+               'create_case_form[organisation_type]' => :source
+             },
              query_url: support_organisations_path(format: :json, q: "{{QUERY}}") do %>
     <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
   <% end %>

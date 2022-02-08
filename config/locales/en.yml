@@ -509,6 +509,7 @@ en:
       link:
         edit_category: Change
         view_school_information: View school information (opens in a new tab)
+        view_group_information: View group information (opens in a new tab)
 
     case_categorisations:
       edit:

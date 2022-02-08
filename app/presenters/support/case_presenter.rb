@@ -6,6 +6,7 @@ require_relative "agent_presenter"
 require_relative "organisation_presenter"
 require_relative "procurement_presenter"
 require_relative "contract_presenter"
+require_relative "establishment_group_presenter"
 
 module Support
   class CasePresenter < BasePresenter
@@ -77,16 +78,37 @@ module Support
       end
     end
 
+    def organisation
+      return unless super
+
+      if organisation_type == "Support::Organisation"
+        OrganisationPresenter.new(super)
+      else
+        EstablishmentGroupPresenter.new(super)
+      end
+    end
+
+    def organisation_name
+      organisation&.name || ""
+    end
+
+    def organisation_type_name
+      organisation&.establishment_type_name || ""
+    end
+
+    def organisation_gias_url
+      organisation&.gias_url || ""
+    end
+
+    def organisation_gias_label
+      organisation&.gias_label
+    end
+
     # @return [String]
     def org_urn
       return "n/a" if organisation.blank?
 
       organisation.urn
-    end
-
-    # @return [OrganisationPresenter]
-    def organisation
-      OrganisationPresenter.new(super) if super
     end
 
     def savings_status

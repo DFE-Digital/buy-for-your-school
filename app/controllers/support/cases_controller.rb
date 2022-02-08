@@ -47,6 +47,7 @@ module Support
       params.require(:create_case_form).permit(
         :school_urn,
         :organisation_id,
+        :organisation_type,
         :first_name,
         :last_name,
         :email,

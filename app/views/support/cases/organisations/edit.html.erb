@@ -6,12 +6,12 @@
         label_text: I18n.t("support.case_organisation.label"),
         label_class: "govuk-!-font-weight-bold govuk-!-font-size-36 govuk-!-margin-bottom-5",
         element_id: "organisation-autocomplete",
-        element_name: "case_organisation_form[establishment_name]",
+        element_name: "case_organisation_form[organisation_name]",
         template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
         value_field: :name,
         hidden_fields: {
-          'case_organisation_form[establishment_id]' => :id,
-          'case_organisation_form[establishment_source]' => :source
+          'case_organisation_form[organisation_id]' => :id,
+          'case_organisation_form[organisation_type]' => :source
         },
         query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 

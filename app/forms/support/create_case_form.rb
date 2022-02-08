@@ -7,6 +7,7 @@ module Support
 
     option :school_urn, optional: true
     option :organisation_id, optional: true
+    option :organisation_type, optional: true
     option :first_name, optional: true
     option :last_name, optional: true
     option :email, optional: true
