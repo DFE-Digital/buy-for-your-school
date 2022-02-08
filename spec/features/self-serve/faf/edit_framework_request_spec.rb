@@ -9,7 +9,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
     it "allows the user to enter their name" do
       click_link "edit-name"
 
-      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=2"
+      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
       expect(find_field("framework-support-form-first-name-field").value).to eql "Bob"
       expect(find_field("framework-support-form-last-name-field").value).to eql "Jones"
 
@@ -27,7 +27,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
     it "allows the user to enter their email" do
       click_link "edit-email"
 
-      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
+      expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=4"
       expect(find_field("framework-support-form-email-field").value).to eql "email@example.com"
 
       fill_in "framework_support_form[email]", with: "john_smith@test.com"

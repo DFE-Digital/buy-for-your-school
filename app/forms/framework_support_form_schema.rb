@@ -8,14 +8,16 @@ class FrameworkSupportFormSchema < Schema
   params do
     optional(:dsi).value(:bool)                 # step 1
 
-    optional(:first_name).value(:string)        # step 2
-    optional(:last_name).value(:string)         # step 2
+    optional(:group).value(:bool)               # step 2
 
-    optional(:email).value(:string)             # step 3
+    optional(:first_name).value(:string)        # step 3
+    optional(:last_name).value(:string)         # step 3
 
-    optional(:school_urn).value(:string)        # step 4
+    optional(:email).value(:string)             # step 4
 
-    optional(:message_body).value(:string)      # step 6
+    optional(:school_urn).value(:string)        # step 5
+
+    optional(:message_body).value(:string)      # step 7
   end
 
   rule(:first_name) do

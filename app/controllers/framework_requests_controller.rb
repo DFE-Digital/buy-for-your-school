@@ -45,10 +45,10 @@ class FrameworkRequestsController < ApplicationController
       )
 
       # authenticated user / inferred school / message step -> start page
-      if @framework_support_form.position?(6) && !current_user.guest? && !current_user.school_urn.nil?
+      if @framework_support_form.position?(7) && !current_user.guest? && !current_user.school_urn.nil?
         redirect_to framework_requests_path
       # authenticated user / many schools / school step -> start page
-      elsif @framework_support_form.position?(4) && !current_user.guest?
+      elsif @framework_support_form.position?(5) && !current_user.guest?
         redirect_to framework_requests_path
       else
         @framework_support_form.back!
@@ -114,7 +114,7 @@ private
 
   def form_params
     params.require(:framework_support_form).permit(*%i[
-      step back dsi first_name last_name email school_urn message_body
+      step back dsi first_name last_name email school_urn message_body group
     ])
   end
 
@@ -135,14 +135,14 @@ private
 
   # FaF specific methods -------------------------------------------------------
 
-  # DSI with inferred school to 5, otherwise 4 to select
+  # DSI with inferred school to 7, otherwise 5 to select
   #
   # @return [Integer]
   def initial_position
     if current_user.guest?
       1
     else
-      current_user.school_urn ? 6 : 4
+      current_user.school_urn ? 7 : 5
     end
   end
 
@@ -153,10 +153,11 @@ private
     else
       {
         dsi: true,                            # (step 1)
-        first_name: current_user.first_name,  # (step 2)
-        last_name: current_user.last_name,    # (step 2)
-        email: current_user.email,            # (step 3)
-        school_urn: current_user.school_urn,  # (step 4)
+        group: false,
+        first_name: current_user.first_name,  # (step 3)
+        last_name: current_user.last_name,    # (step 3)
+        email: current_user.email,            # (step 4)
+        school_urn: current_user.school_urn,  # (step 5)
         # message (step 6)
       }
     end
