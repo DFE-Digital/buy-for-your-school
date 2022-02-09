@@ -160,12 +160,12 @@ private
     else
       {
         dsi: true,                            # (step 1)
-        group: false,
+        group: false,                         # (step 2)
         first_name: current_user.first_name,  # (step 3)
         last_name: current_user.last_name,    # (step 3)
         email: current_user.email,            # (step 4)
         school_urn: current_user.school_urn,  # (step 5)
-        group_uid: current_user.group_uid
+        group_uid: current_user.group_uid     # (step 5)
         # message (step 6)
       }
     end
