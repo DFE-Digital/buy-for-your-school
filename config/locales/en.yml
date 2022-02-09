@@ -282,10 +282,7 @@ en:
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: You can use this service if you're procuring for a single school in England, either
-      overview_type_list:
-        - a local authority maintained school, or
-        - an academy in a single or multi-academy trust
+      overview_purpose: Use this service if you're a state funded school in England.
       you_can_ask_for: You can ask for
       overview_category_list:
         - general guidance on buying goods or services for schools
@@ -340,6 +337,17 @@ en:
         dsi: Yes, use my DfE Sign-in
         no_dsi: No, continue without a DfE Sign-in account
 
+    school_or_group_or_trust:
+      header: What type of organisation are you buying for?
+      hint: If you're buying together informally as a group, choose a 'single school' to represent the group.
+      radios:
+        single_school:
+          label: A single school
+          hint: A local authority maintained school or an academy in a single or multi-academy trust
+        group_or_trust:
+          label: A group or trust
+          hint: An academy trust or federation
+
     user_organisation:
       header: Which school are you buying for?
       subtitle: About your school
@@ -365,9 +373,24 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "You can only use this service if you are procuring for a single school in England. This should either be a local authority maintained school, or an academy in a single or multi-academy trust."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_group_link: Search for an academy trust or federation
+      button: Continue
+
+    search_for_a_group:
+      title: Search for a group or trust - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Search for a group or trust
+      hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
+      details:
+        summary: Can't find it?
+        body:
+          - "This search lists groups and trusts, such as a multi-academy trust or federation. %{search_for_a_school_link} instead."
+          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
+          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_school_link: Search for a single school
       button: Continue
 
     which_school:
@@ -402,7 +425,6 @@ en:
         group_type: Group type
         id: ID
         uid: UID
-        ch: CH
         ukprn: UKPRN
       choice:
         go_back: "No, I need to choose another group or trust"
@@ -431,6 +453,8 @@ en:
   #
   support:
     generic:
+      "yes": "Yes"
+      "no": "No"
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -532,10 +556,13 @@ en:
       edit:
         header: Select a category
         submit: Save and continue
+        delete: Remove procurement category
       flash:
         updated: Successfully changed case category
+        deleted: Successfully removed case category
       label:
-        none: Not Yet Known
+        none: Not applicable
+        please_select: Please select
 
     case_contract:
       existing:
@@ -626,6 +653,9 @@ en:
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
         referer: Referer
+      request_type:
+        legend: Request type
+        hint: Is the request related to a procurement category?
       submit: Save and continue
       flash:
         created: Case created/migrated successfully

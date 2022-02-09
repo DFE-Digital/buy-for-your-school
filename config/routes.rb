@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :organisations, only: %i[index]
+    resources :establishment_groups, only: %i[index]
     resources :cases, only: %i[index show edit update new create] do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
@@ -86,7 +87,7 @@ Rails.application.routes.draw do
         end
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
-        resource :categorisation, only: %i[edit update]
+        resource :categorisation, only: %i[edit update destroy]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]

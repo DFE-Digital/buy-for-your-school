@@ -1,7 +1,7 @@
 module Support
   class OrganisationsController < ApplicationController
     skip_before_action :authenticate_user!
-    skip_before_action :authenticate_agent!
+    skip_before_action :authenticate_agent!, raise: false
 
     def index
       query = <<-SQL
