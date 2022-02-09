@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :support_establishment_group_type, class: "Support::EstablishmentGroupType" do
+    # id { "abc1111" }
+    # name { "Multi-academy Trust" }
     sequence(:name) { |n| "name #{n}" }
     sequence(:code) { |n| n }
   end

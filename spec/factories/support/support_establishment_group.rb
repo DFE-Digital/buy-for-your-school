@@ -4,7 +4,8 @@ FactoryBot.define do
     ukprn { "1010010" }
     status { [0, 1, 2].sample }
     uid { "1234" }
-    address { { "town": "London", "county": "", "street": "St James's Passage", "locality": "Duke's Place", "postcode": "EC3A 5DE" } }
+    establishment_group_type_id { "abc1111" }
+    address { { "town": "London", "county": "", "street": "Boundary House Shr", "locality": "91 Charter House Street", "postcode": "EC1M 6HR" } }
     association :establishment_group_type,
                 factory: :support_establishment_group_type
   end

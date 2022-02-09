@@ -32,8 +32,6 @@ class FrameworkSupportForm < Form
   # @return [String] identifier and name in the format "1000 - Group Name"
   option :group_uid, optional: true # 4 (non-DSI only)
 
-  option :uid, optional: true # 5 (when group or trust)
-
   # @!attribute [r] message_body
   # @see SupportRequest SupportRequest attributes
   # @return [String]

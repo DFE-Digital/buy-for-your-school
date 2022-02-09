@@ -16,8 +16,7 @@ module Support
       return I18n.t("support.case_categorisations.label.none") if uid.blank?
 
       group_type_id = Support::EstablishmentGroup.find_by(uid: uid).establishment_group_type_id
-      @group_type_name = Support::EstablishmentGroupType.where(:id => group_type_id).first.name
+      @group_type_name = Support::EstablishmentGroupType.where(id: group_type_id).first.name
     end
-
   end
 end

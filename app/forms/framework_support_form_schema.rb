@@ -14,7 +14,7 @@ class FrameworkSupportFormSchema < Schema
     optional(:last_name).value(:string)         # step 3
 
     optional(:school_urn).value(:string)        # step 4
-             
+
     optional(:email).value(:string)             # step 4
 
     optional(:school_urn).value(:string)        # step 5
@@ -22,6 +22,8 @@ class FrameworkSupportFormSchema < Schema
     optional(:group_uid).value(:string)         # step 5
 
     optional(:message_body).value(:string)      # step 7
+
+    optional(:choice).value(:bool)        
   end
 
   rule(:first_name) do
