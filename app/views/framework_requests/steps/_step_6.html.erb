@@ -104,7 +104,9 @@
       </dt>
       <dd class="govuk-summary-list__value">
         <%= I18n.t("faf.confirm_group_or_trust.summary.uid") %>: <%= @group_or_trust.uid %><br>
-        <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= @group_or_trust.ukprn %>
+        <% if !@group_or_trust.ukprn.nil? %>
+          <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= @group_or_trust.ukprn %>
+        <% end %>
       </dd>
     </div>
   </dl>
