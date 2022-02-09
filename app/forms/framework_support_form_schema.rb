@@ -23,7 +23,7 @@ class FrameworkSupportFormSchema < Schema
 
     optional(:message_body).value(:string)      # step 7
 
-    optional(:choice).value(:bool)        
+    optional(:choice).value(:bool)
   end
 
   rule(:first_name) do
