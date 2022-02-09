@@ -17,6 +17,8 @@ class FrameworkSupportFormSchema < Schema
 
     optional(:school_urn).value(:string)        # step 5
 
+    optional(:group_uid).value(:string)         # step 5
+
     optional(:message_body).value(:string)      # step 7
   end
 
@@ -35,7 +37,11 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:school_urn) do
-    key.failure(:missing) if key? && Support::Organisation.find_by(urn: value.split(" - ").first).nil?
+    key.failure(:missing) if key? && !values[:group] && Support::Organisation.find_by(urn: value.split(" - ").first).nil?
+  end
+
+  rule(:group_uid) do
+    key.failure(:missing) if key? && values[:group] && Support::EstablishmentGroup.find_by(uid: value.split(" - ").first).nil?
   end
 
   rule(:message_body) do

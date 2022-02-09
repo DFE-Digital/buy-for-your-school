@@ -1,4 +1,3 @@
-# :nocov:
 class FrameworkRequestsController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :current_user
@@ -19,7 +18,11 @@ class FrameworkRequestsController < ApplicationController
     @framework_support_form = FrameworkSupportForm.new(
       step: params[:step],
       dsi: !current_user.guest?, # ensures a boolean
-      **framework_request.attributes.symbolize_keys.merge(school_urn: session[:faf_school]),
+      **framework_request.attributes.symbolize_keys
+        .merge(
+          school_urn: session[:faf_school] || @framework_request.school_urn,
+          group_uid: session[:faf_group] || @framework_request.group_uid,
+        ),
     )
   end
 
@@ -41,6 +44,7 @@ class FrameworkRequestsController < ApplicationController
       @framework_support_form = FrameworkSupportForm.new(
         step: form_params[:step],
         dsi: !current_user.guest?,
+        group: ActiveModel::Type::Boolean.new.cast(form_params[:group]),
         **validation.to_h.reject { |_k, v| v.blank? },
       )
 
@@ -59,11 +63,12 @@ class FrameworkRequestsController < ApplicationController
 
       # capture full "xxxxx - name"
       session[:faf_school] = @framework_support_form.school_urn
+      session[:faf_group] = @framework_support_form.group_uid
 
       # valid form with last question answered
       framework_request = FrameworkRequest.create!(
         user_id: current_user.id,
-        **@framework_support_form.to_h.merge(school_urn: urn),
+        **@framework_support_form.to_h.merge(school_urn: urn, group_uid: group_uid),
       )
 
       redirect_to framework_request_path(framework_request)
@@ -85,6 +90,7 @@ class FrameworkRequestsController < ApplicationController
 
       # capture full "xxxxx - name"
       session[:faf_school] = @framework_support_form.school_urn
+      session[:faf_group] = @framework_support_form.group_uid
 
       # CONDITIONAL extra questions as a result of saved changes
 
@@ -92,7 +98,7 @@ class FrameworkRequestsController < ApplicationController
       #   @support_form.advance!
       #   render :edit
       # else
-      framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h.merge(school_urn: urn))
+      framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h.merge(school_urn: urn, group_uid: group_uid))
       redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
       # end
     else
@@ -114,7 +120,7 @@ private
 
   def form_params
     params.require(:framework_support_form).permit(*%i[
-      step back dsi first_name last_name email school_urn message_body group
+      step back dsi first_name last_name email school_urn group_uid message_body group
     ])
   end
 
@@ -176,5 +182,13 @@ private
   def urn
     form_params[:school_urn]&.split(" - ")&.first || @framework_request&.school_urn
   end
+
+  # Extract the group UID from the format "uid - group name"
+  # @example
+  #   "1000 - Group #1" -> "1000"
+  #
+  # @return [String, nil]
+  def group_uid
+    form_params[:group_uid]&.split(" - ")&.first || @framework_request&.group_uid
+  end
 end
-# :nocov:
