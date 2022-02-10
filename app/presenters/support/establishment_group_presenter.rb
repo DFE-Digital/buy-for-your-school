@@ -1,5 +1,5 @@
 module Support
-  class GroupOrTrustPresenter < BasePresenter
+  class EstablishmentGroupPresenter < BasePresenter
     # @return [String] Combines URN and name
     def uid_and_name
       "#{uid} - #{name}"

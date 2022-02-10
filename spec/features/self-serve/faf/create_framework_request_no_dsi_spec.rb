@@ -1,7 +1,7 @@
 RSpec.feature "Create a new framework request through non-DSI journey" do
   before do
     create(:support_organisation, :with_address, urn: "100253", name: "School #1", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
-    create(:support_establishment_group, name: "Group #1", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
+    create(:support_establishment_group, :with_address, name: "Group #1", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
     visit "/procurement-support/new"
     choose "No, continue without a DfE Sign-in account"
     click_continue

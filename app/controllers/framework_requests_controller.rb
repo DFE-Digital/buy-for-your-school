@@ -177,7 +177,7 @@ private
   end
 
   def group_or_trust
-    Support::GroupOrTrustPresenter.new(Support::EstablishmentGroup.find_by(uid: group_uid)) if group_uid
+    Support::EstablishmentGroupPresenter.new(Support::EstablishmentGroup.find_by(uid: group_uid)) if group_uid
   end
 
   # Extract the school URN from the format "urn - school name"
