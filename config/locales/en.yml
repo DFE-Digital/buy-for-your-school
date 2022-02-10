@@ -291,7 +291,7 @@ en:
       subheading: Before you start
       you_can: You can
 
-    # step 2
+    # step 2 - no DSI
     name:
       title: What is your name?
       subtitle: About you
@@ -300,7 +300,7 @@ en:
       last_name:
         label: Last Name
 
-    # step 3
+    # step 3 - no DSI
     email:
       title: What is your email address?
       subtitle: About you
@@ -378,7 +378,7 @@ en:
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
         search_for_a_group_link: Search for an academy trust or federation
       button: Continue
-    
+
     search_for_a_group:
       title: Search for a group or trust - Get help buying for schools - GOV.UK
       caption: About your school
@@ -415,6 +415,20 @@ en:
         continue: "Yes"
         go_back: "No, I need to choose another school"
 
+    confirm_group_or_trust:
+      title: Is this the group or trust you're buying for? - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Is this the group or trust you're buying for?
+      summary:
+        group_name: Group name
+        address: Address
+        group_type: Group type
+        id: ID
+        uid: UID
+        ukprn: UKPRN
+      choice:
+        go_back: "No, I need to choose another group or trust"
+
   faf_submissions:
     header:
       confirmation: Your request for support has been sent
@@ -439,8 +453,8 @@ en:
   #
   support:
     generic:
-      'yes': 'Yes'
-      'no': 'No'
+      "yes": "Yes"
+      "no": "No"
       link:
         opens_in_new_tab: (opens in new tab)
       form:

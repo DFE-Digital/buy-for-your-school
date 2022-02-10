@@ -36,6 +36,7 @@ class FrameworkRequestsController < ApplicationController
   def create
     @framework_support_form = form
     @organisation = organisation
+    @establishment_group = establishment_group
 
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true"
@@ -159,11 +160,12 @@ private
     else
       {
         dsi: true,                            # (step 1)
-        group: false,
+        group: false,                         # (step 2)
         first_name: current_user.first_name,  # (step 3)
         last_name: current_user.last_name,    # (step 3)
         email: current_user.email,            # (step 4)
         school_urn: current_user.school_urn,  # (step 5)
+        group_uid: nil,                       # (step 5)
         # message (step 6)
       }
     end
@@ -172,6 +174,10 @@ private
   # @return [OrganisationPresenter, nil]
   def organisation
     Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn)) if urn
+  end
+
+  def establishment_group
+    Support::EstablishmentGroupPresenter.new(Support::EstablishmentGroup.find_by(uid: group_uid)) if group_uid
   end
 
   # Extract the school URN from the format "urn - school name"

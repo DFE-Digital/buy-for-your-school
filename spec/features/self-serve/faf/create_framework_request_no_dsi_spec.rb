@@ -1,7 +1,7 @@
 RSpec.feature "Create a new framework request through non-DSI journey" do
   before do
     create(:support_organisation, :with_address, urn: "100253", name: "School #1", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
-    create(:support_establishment_group, name: "Group #1")
+    create(:support_establishment_group, :with_address, name: "Group #1", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
     visit "/procurement-support/new"
     choose "No, continue without a DfE Sign-in account"
     click_continue
@@ -139,7 +139,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has a back link to step 5" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
         expect(page).to have_text "Search for your school"
       end
 
@@ -173,7 +173,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       it "goes back to step 5 if user chooses no" do
         choose "No, I need to choose another school"
         click_continue
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
         expect(page).to have_text "Search for your school"
       end
     end
@@ -188,7 +188,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has a back link to step 6" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=7"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=7"
         expect(page).to have_text "Is this the school you're buying for?"
       end
 
@@ -300,16 +300,36 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       end
     end
 
-    describe "group details page" do
+    describe "group details page - is this the group or trust?" do
       before do
         complete_group_step
       end
 
-      xit "has a back link to step 5" do
+      it "has a back link to step 5" do
         click_on "Back"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=1234+-+Group+%231&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_text "Search for a group or trust"
       end
 
-      xit "has the correct attributes" do
+      it "has the correct attributes" do
+        expect(find("span.govuk-caption-l")).to have_text "About your school"
+        expect(find("h1.govuk-heading-l")).to have_text "Is this the group or trust you're buying for?"
+        within("dl.govuk-summary-list") do
+          expect(all("dt.govuk-summary-list__key")[0]).to have_text "Group name"
+          expect(all("dd.govuk-summary-list__value")[0]).to have_text "Group #1"
+
+          expect(all("dt.govuk-summary-list__key")[1]).to have_text "Address"
+          expect(all("dd.govuk-summary-list__value")[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
+
+          expect(all("dt.govuk-summary-list__key")[2]).to have_text "Group type"
+          expect(all("dd.govuk-summary-list__value")[2]).to have_text "Multi-academy Trust"
+
+          expect(all("dt.govuk-summary-list__key")[3]).to have_text "ID"
+          expect(all("dd.govuk-summary-list__value")[3]).to have_text "UID: 1234 UKPRN: 1010010"
+        end
+        expect(page).to have_unchecked_field "Yes"
+        expect(page).to have_unchecked_field "No, I need to choose another group or trust"
+        expect(page).to have_button "Continue"
       end
     end
   end
