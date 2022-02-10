@@ -1,27 +1,34 @@
 require "dry-initializer"
 
 module Support
+  #
   # Merge a new support cases emails into an existing support case
   #
-  # @see Support::ActivityLogItem
-
   class MergeCaseEmails
+    class CaseNotNewError < StandardError; end
+
     extend Dry::Initializer
 
     # @!attribute from_case
     #   @return [Support::Case]
-    param :from_case, ->(id) { Case.find_by(ref: id) }
+    option :from_case
 
     # @!attribute to_case
     #   @return [Support::Case]
-    param :to_case, ->(id) { Case.find_by(ref: id) }
+    option :to_case, ->(ref) { Case.find_by(ref: ref) }
 
-    # @return [Support::ActivityLogItem]
+    # @return [Support::CasePresenter, Support::CasePresenter]
     def call
-      from_case.interactions.update_all(case_id: to_case.id)
-      from_case.emails.update_all(case_id: to_case.id)
+      from_case.transaction do
+        raise CaseNotNewError unless from_case.initial?
+
+        from_case.interactions&.update_all(case_id: to_case.id)
+        from_case.emails&.update_all(case_id: to_case.id)
+        from_case.closed!
+      end
       to_case.pending!
-      from_case.closed!
+
+      [CasePresenter.new(to_case), CasePresenter.new(from_case)]
     end
   end
 end

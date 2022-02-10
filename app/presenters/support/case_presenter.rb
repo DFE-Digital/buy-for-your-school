@@ -61,7 +61,7 @@ module Support
 
     # @return [CategoryPresenter]
     def category
-      CategoryPresenter.new(super) if super
+      CategoryPresenter.new(super)
     end
 
     # @return [String]

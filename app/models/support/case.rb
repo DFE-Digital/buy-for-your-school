@@ -11,7 +11,7 @@ module Support
     include ::PgSearch::Model
 
     pg_search_scope :search, against: %i[ref], associated_against: {
-       organisation: %i[name urn ukprn],
+       organisation: %i[name urn],
        agent: %i[first_name last_name]
      }
 

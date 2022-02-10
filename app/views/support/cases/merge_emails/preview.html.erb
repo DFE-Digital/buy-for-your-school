@@ -54,4 +54,4 @@
   <%= I18n.t("support.case_merge_emails.preview.reminder", case_ref: @from_case.ref) %>
 </p>
 
-<%= button_to I18n.t("support.generic.continue"), { action: :create, from_case_id: @from_case.id, to_case_id: @to_case.id }, class: "govuk-button" %>
+<%= button_to I18n.t("support.generic.continue"), support_case_merge_emails_path(@from_case), class: "govuk-button", method: :create, params: {merge_into_case_ref: @to_case.ref }, data: { disable_with: "Submitting..." } %>

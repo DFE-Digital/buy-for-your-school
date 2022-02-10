@@ -13,10 +13,10 @@
 
   <%= render "components/autocomplete",
         container_id: "case-autocomplete-container",
-        label_class: "govuk-!-font-weight-bold govuk-!-font-size-36 govuk-!-margin-bottom-5",
+        label_class: "nil",
         label_text: nil,
         element_id: "case-autocomplete",
-        element_name: "merge_emails_form[merge_into_case_id]",
+        element_name: "merge_emails_form[merge_into_case_ref]",
         template_suggestion: "{{ref}}, <strong>{{organisation_name}}</strong>, {{organisation_urn}}/{{organisation_ukprn}}, {{agent_name}}",
         value_field: :ref,
         query_url: support_cases_path(format: :json, q: "{{QUERY}}") %>
