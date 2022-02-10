@@ -46,9 +46,15 @@ private
     orgs.map { |org| org.dig("type", "id").to_i }
   end
 
+  # @return [Array<Integer>] the current user's org categories
+  def establishment_categories
+    orgs.map { |org| org.dig("category", "id").to_i }
+  end
+
   # @return [Boolean] user is affiliated to a "supported establishment"
   def supported?
-    ORG_TYPE_IDS.any? { |id| establishment_types.include?(id) }
+    ORG_TYPE_IDS.any? { |id| establishment_types.include?(id) } ||
+      GROUP_CATEGORY_IDS.any? { |id| establishment_categories.include?(id) }
   end
 
   # @return [Boolean] user is a GHBFS or ProcOps team member
