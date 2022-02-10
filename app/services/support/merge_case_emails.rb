@@ -15,7 +15,7 @@ module Support
 
     # @!attribute to_case
     #   @return [Support::Case]
-    option :to_case, ->(ref) { Case.find_by(ref: ref) }
+    option :to_case
 
     # @return [Support::CasePresenter, Support::CasePresenter]
     def call
@@ -27,8 +27,6 @@ module Support
         from_case.closed!
       end
       to_case.pending!
-
-      [CasePresenter.new(to_case), CasePresenter.new(from_case)]
     end
   end
 end

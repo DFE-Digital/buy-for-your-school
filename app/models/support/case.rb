@@ -11,9 +11,9 @@ module Support
     include ::PgSearch::Model
 
     pg_search_scope :search, against: %i[ref], associated_against: {
-       organisation: %i[name urn],
-       agent: %i[first_name last_name]
-     }
+      organisation: %i[name urn],
+      agent: %i[first_name last_name],
+    }
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true

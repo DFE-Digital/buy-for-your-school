@@ -19,7 +19,7 @@
       </div>
     </div>
     <p class="govuk-body">
-      <%= I18n.t("support.case_merge_emails.show.body.closed", case_ref: @to_case.ref) %>
+      <%= I18n.t("support.case_merge_emails.show.body.closed", case_ref: @from_case.ref) %>
     </p>
 
     <p class="govuk-heading-m">
@@ -30,7 +30,7 @@
         <%= link_to I18n.t("support.case_merge_emails.show.links.this_case", case_ref: @to_case.ref), support_case_path(@to_case), class: "govuk-link"  %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case_merge_emails.show.links.notifications"), "support/emails", class: "govuk-link"  %>
+        <%= link_to I18n.t("support.case_merge_emails.show.links.notifications"), "/support/emails", class: "govuk-link"  %>
       </li>
       <li>
         <%= link_to I18n.t("support.case_merge_emails.show.links.my_cases"), support_cases_path, class: "govuk-link"  %>

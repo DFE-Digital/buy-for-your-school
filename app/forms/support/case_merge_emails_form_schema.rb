@@ -13,7 +13,7 @@ module Support
 
     rule do
       if values[:merge_into_case_ref] == values[:merge_from_case_ref]
-        base.failure('You cannot merge into the same case')
+        base.failure("You cannot merge into the same case")
       end
     end
   end

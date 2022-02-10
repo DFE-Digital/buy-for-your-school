@@ -1,39 +1,79 @@
 module Support
   class Cases::MergeEmailsController < Cases::ApplicationController
+    before_action :from_case
+    before_action :to_case, except: %i[new]
+    before_action :stage, only: %i[create]
+
     def new
+      clear_session
+      @back_url = support_cases_url
+      @stage = :search
       @merge_emails_form = CaseMergeEmailsForm.new
     end
 
-    def preview
-      if validation.success?
-        @from_case = CasePresenter.new(current_case)
-        @to_case = CasePresenter.new(Case.find_by(ref: merge_emails_params[:merge_into_case_ref]))
-        render :preview
-      else
-        @merge_emails_form = CaseMergeEmailsForm.from_validation(validation)
-        render :new
-      end
-    end
-
     def create
-      @to_case, @from_case = MergeCaseEmails.new(
-        from_case: current_case,
-        to_case: params[:merge_into_case_ref]
-      ).call
+      @merge_emails_form = CaseMergeEmailsForm.from_validation(validation)
 
-      render :show
+      case stage
+
+      when :search
+        render :new
+
+      when :preview
+        render :new
+
+      when :merge
+        MergeCaseEmails.new(
+          from_case: from_case.__getobj__,
+          to_case: to_case.__getobj__,
+        ).call
+        redirect_to support_case_merge_emails_path(@from_case)
+      end
     rescue MergeCaseEmails::CaseNotNewError
+      clear_session
       redirect_to support_case_path(@current_case), notice: I18n.t("support.case_merge_emails.flash.case_not_new")
     end
 
+    def show; end
+
   private
 
+    def stage
+      @stage ||= if validation&.success? && merge_emails_params[:confirmation]
+                   :merge
+                 elsif validation&.success?
+                   :preview
+                 else
+                   :search
+                 end
+    end
+
+    def from_case
+      @from_case ||= CasePresenter.new(current_case)
+    end
+
+    def to_case
+      @to_case ||= CasePresenter.new(
+        Case.find_by(ref: to_case_ref),
+      )
+    end
+
+    def to_case_ref
+      return session[:merge_into_case_ref] if session[:merge_into_case_ref].present?
+
+      session[:merge_into_case_ref] = merge_emails_params[:merge_into_case_ref]
+    end
+
+    def clear_session
+      session.delete(:merge_into_case_ref)
+    end
+
     def validation
-      CaseMergeEmailsFormSchema.new.call(**merge_emails_params, merge_from_case_ref: current_case.ref)
+      @validation ||= CaseMergeEmailsFormSchema.new.call(**merge_emails_params, merge_from_case_ref: from_case.ref)
     end
 
     def merge_emails_params
-      params.require(:merge_emails_form).permit(:merge_into_case_ref)
+      params.require(:merge_emails_form).permit(:merge_into_case_ref, :confirmation)
     end
   end
 end
