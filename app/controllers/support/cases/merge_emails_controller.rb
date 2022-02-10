@@ -17,9 +17,11 @@ module Support
       case stage
 
       when :search
+        @back_url = support_cases_url
         render :new
 
       when :preview
+        @back_url = new_support_case_merge_emails_path
         render :new
 
       when :merge

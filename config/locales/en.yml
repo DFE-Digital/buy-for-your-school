@@ -416,13 +416,14 @@ en:
       'yes': 'Yes'
       'no': 'No'
       continue: Continue
+      cancel: Cancel
+      back: Back
       link:
         opens_in_new_tab: (opens in new tab)
       form:
         optional: (optional)
       currency:
         unit_symbol: £
-      back: Back
 
     header: Supported Buying Admin
 

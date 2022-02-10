@@ -12,6 +12,14 @@
   %>
   <%= render "support/cases/merge_emails/#{@stage}", form: form %>
 
-  <%= form.submit I18n.t("support.generic.continue"), class: "govuk-button" %>
-
+  <ul class="govuk-list">
+    <li class="govuk-!-display-inline">
+      <%= form.submit I18n.t("support.generic.continue"), class: "govuk-button" %>    
+    </li>
+    <% if @stage == :preview %>
+      <li class="govuk-!-display-inline-block govuk-!-padding-left-3 govuk-!-padding-top-1">
+        <%= link_to I18n.t("support.generic.cancel"), new_support_case_merge_emails_path, class: "govuk-link"  %>  
+      </li>
+    <% end %>
+  </ul>
 <% end %>
