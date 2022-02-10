@@ -41,20 +41,26 @@ class CreateUser
 
 private
 
+  # @param [String] field
+  #
   # @return [Array<Integer>] the current user's org types
-  def establishment_types
-    orgs.map { |org| org.dig("type", "id").to_i }
-  end
-
-  # @return [Array<Integer>] the current user's org categories
-  def establishment_categories
-    orgs.map { |org| org.dig("category", "id").to_i }
+  def establishment_types(field)
+    orgs.map { |org| org.dig(field, "id").to_i }
   end
 
   # @return [Boolean] user is affiliated to a "supported establishment"
   def supported?
-    ORG_TYPE_IDS.any? { |id| establishment_types.include?(id) } ||
-      GROUP_CATEGORY_IDS.any? { |id| establishment_categories.include?(id) }
+    valid_school? || valid_trust?
+  end
+
+  # @return [Boolean]
+  def valid_school?
+    ORG_TYPE_IDS.any? { |id| establishment_types("type").include?(id) }
+  end
+
+  # @return [Boolean]
+  def valid_trust?
+    GROUP_CATEGORY_IDS.any? { |id| establishment_types("category").include?(id) }
   end
 
   # @return [Boolean] user is a GHBFS or ProcOps team member
