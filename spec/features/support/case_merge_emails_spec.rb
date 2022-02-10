@@ -67,7 +67,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       expect(all("#merge_emails_to td")[5]).to have_text to_case.created_at
 
       expect(find(".govuk-body-m")).to have_text "Once the emails have been moved, Case #{from_case.ref} will be closed."
-      
+
       click_continue
 
       ## SUCCESS (step 3)
