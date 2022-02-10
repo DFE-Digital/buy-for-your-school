@@ -1,5 +1,4 @@
 RSpec.describe Support::EstablishmentGroupPresenter do
-  # subject(:presenter) { described_class.new(build(:support_establishment_group)) }
   subject(:presenter) { described_class.new(establishment_group) }
 
   context "with address defined" do

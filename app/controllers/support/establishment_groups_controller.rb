@@ -1,4 +1,3 @@
-# :nocov:
 module Support
   class EstablishmentGroupsController < ApplicationController
     skip_before_action :authenticate_user!
@@ -23,4 +22,3 @@ module Support
     end
   end
 end
-# :nocov:
