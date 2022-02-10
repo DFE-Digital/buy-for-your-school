@@ -16,7 +16,7 @@ RSpec.describe Support::CategoryPresenter do
 
     describe "#title" do
       it "returns Not Yet Known for title" do
-        expect(presenter.title).to eq("Not Yet Known")
+        expect(presenter.title).to eq("Not applicable")
       end
     end
   end

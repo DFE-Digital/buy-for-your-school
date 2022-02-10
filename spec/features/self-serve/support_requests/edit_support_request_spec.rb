@@ -72,7 +72,7 @@ RSpec.feature "Edit an unsubmitted support request" do
                category: nil,
                phone_number: nil,
                message_body: "",
-               school_urn: "urn-type-1")
+               school_urn: "100253")
       end
 
       it "shows the school name" do
@@ -99,7 +99,7 @@ RSpec.feature "Edit an unsubmitted support request" do
 
           click_continue
 
-          expect(support_request.reload.school_urn).to eq "greendale-urn"
+          expect(support_request.reload.school_urn).to eq "100254"
         end
       end
     end

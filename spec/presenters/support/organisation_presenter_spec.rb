@@ -32,7 +32,7 @@ RSpec.describe Support::OrganisationPresenter do
   end
 
   context "with no local authority defined" do
-    let(:organisation) { create(:support_organisation) }
+    let(:organisation) { create(:support_organisation, local_authority: nil) }
 
     describe "#local_authority" do
       it "returns nil" do
@@ -52,7 +52,7 @@ RSpec.describe Support::OrganisationPresenter do
   end
 
   context "with no contact defined" do
-    let(:organisation) { create(:support_organisation) }
+    let(:organisation) { create(:support_organisation, contact: {}) }
 
     describe "#contact" do
       it "returns blank string" do

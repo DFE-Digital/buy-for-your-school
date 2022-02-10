@@ -282,10 +282,7 @@ en:
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: You can use this service if you're procuring for a single school in England, either
-      overview_type_list:
-        - a local authority maintained school, or
-        - an academy in a single or multi-academy trust
+      overview_purpose: Use this service if you're a state funded school in England.
       you_can_ask_for: You can ask for
       overview_category_list:
         - general guidance on buying goods or services for schools
@@ -416,6 +413,8 @@ en:
   #
   support:
     generic:
+      'yes': 'Yes'
+      'no': 'No'
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -517,10 +516,13 @@ en:
       edit:
         header: Select a category
         submit: Save and continue
+        delete: Remove procurement category
       flash:
         updated: Successfully changed case category
+        deleted: Successfully removed case category
       label:
-        none: Not Yet Known
+        none: Not applicable
+        please_select: Please select
 
     case_contract:
       existing:
@@ -611,6 +613,9 @@ en:
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
         referer: Referer
+      request_type:
+        legend: Request type
+        hint: Is the request related to a procurement category?
       submit: Save and continue
       flash:
         created: Case created/migrated successfully
