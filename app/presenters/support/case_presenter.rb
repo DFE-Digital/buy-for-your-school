@@ -33,7 +33,8 @@ module Support
 
     # @return [String] 30 January 2000 at 12:00
     def last_updated_at
-      interactions.none? ? created_at : interactions.last.created_at
+      # method to compare updated_at for case and updated_at for interaction (if exists) and select most recent
+      interactions.none? ? updated_at : interactions.last.created_at
     end
 
     # @return [String]
@@ -127,6 +128,11 @@ module Support
 
     def new_contract
       ContractPresenter.new(super) if super
+    end
+
+    # @return [Time]
+    def last_updated_at_date
+      Time.zone.parse(last_updated_at)
     end
 
   private

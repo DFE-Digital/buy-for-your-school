@@ -26,7 +26,7 @@ gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 gem "pandoc-ruby"
 gem "pg"
-gem "puma", "~> 5.5"
+gem "puma", "~> 5.6"
 gem "rails", "~> 6.1.4"
 gem "redis", "~> 4.5"
 gem "redis-namespace"
@@ -39,6 +39,7 @@ gem "thor"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
+gem "will_paginate", "~> 3.3.0"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]

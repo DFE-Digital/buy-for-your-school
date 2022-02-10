@@ -1,11 +1,14 @@
 module Support
   class CasesController < Cases::ApplicationController
+    require "will_paginate/array"
     before_action :current_case, only: %i[show]
 
+    include Concerns::HasInteraction
+
     def index
-      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }
-      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }
-      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }
+      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:page])
+      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:page])
+      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:page])
     end
 
     def show
@@ -55,11 +58,8 @@ module Support
         :estimated_savings,
         :hub_notes,
         :progress_notes,
+        :request_type,
       )
-    end
-
-    def create_interaction(kase_id, event_type, body, additional_data = nil)
-      CreateInteraction.new(kase_id, event_type, current_agent.id, { body: body, additional_data: additional_data }.compact).call
     end
   end
 end

@@ -1,0 +1,8 @@
+<div class="govuk-grid-row pagination">
+  <div class="pagination__list">
+    <%= will_paginate records, container: false, params: pagination_params %>
+  </div>
+  <div class="pagination__results">
+    <%= page_entries_info @cases %>
+  </div>
+</div>

@@ -126,4 +126,14 @@ RSpec.feature "Completed support requests" do
       end
     end
   end
+
+  describe "unsubmitted request" do
+    before do
+      visit "/support-request-submissions/#{support_request.id}"
+    end
+
+    it "redirects to support request summary" do
+      expect(page).to have_current_path "/support-requests/#{support_request.id}"
+    end
+  end
 end
