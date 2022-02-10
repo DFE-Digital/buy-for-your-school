@@ -9,7 +9,7 @@ class UserPresenter < BasePresenter
     supported_schools.first.urn if supported_schools.one?
   end
 
-  # TODO - ref for ticket 231
+  # TODO: - ref for ticket 231
   # # @return [String, nil] inferred unique school identifier
   # def group_uid
   #   supported_groups.first.uid if supported_groups.one?
@@ -32,7 +32,7 @@ class UserPresenter < BasePresenter
     }.compact
   end
 
-  # TODO - ref for ticket 231
+  # TODO: - ref for ticket 231
   # def supported_groups
   #   orgs.map { |org|
   #     next unless org.dig("category", "id").to_i.in?(GROUP_CATEGORY_IDS)

@@ -52,13 +52,13 @@ class FrameworkSupportForm < Form
     !dsi?
   end
 
-  # TODO - ref for ticket 231
+  # TODO: - ref for ticket 231
   # # @return [nil]
   # def forget_school_urn!
   #   instance_variable_set :@school_urn, nil
   # end
 
-  # TODO - ref for ticket 231
+  # TODO: - ref for ticket 231
   # # @return [nil]
   # def forget_group_uid!
   #   instance_variable_set :@group_uid, nil
