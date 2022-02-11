@@ -18,20 +18,19 @@ module Support
 
       when :search
         @back_url = support_cases_url
-        render :new
 
       when :preview
         @back_url = new_support_case_merge_emails_path
-        render :new
 
       when :merge
         MergeCaseEmails.new(
           from_case: from_case.__getobj__,
           to_case: to_case.__getobj__,
         ).call
-        redirect_to support_case_merge_emails_path(@from_case)
+        return redirect_to support_case_merge_emails_path(from_case)
       end
 
+      render :new
     rescue MergeCaseEmails::CaseNotNewError
       clear_session
       redirect_to support_case_path(@current_case), notice: I18n.t("support.case_merge_emails.flash.case_not_new")
