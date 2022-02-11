@@ -219,11 +219,13 @@ RSpec.feature "Create a new framework request" do
   end
 
   context "when user with many supported schools", js: true do
-    let(:user) { create(:user, :many_supported_schools, first_name: "Generic", last_name: "User", full_name: "Generic User") }
+    let(:user) { create(:user, :many_supported_schools_and_groups, first_name: "Generic", last_name: "User", full_name: "Generic User") }
 
     before do
       create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
       create(:support_organisation, :with_address, urn: "100254", name: "Greendale Academy for Bright Sparks", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
+      create(:support_establishment_group, :with_address, uid: "2314", name: "Testing Multi Academy Trust", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
+      create(:support_establishment_group, :with_address, uid: "2315", name: "New Academy Trust", establishment_group_type: create(:support_establishment_group_type, name: "Single-academy Trust"))
     end
 
     context "and user is already signed in" do
@@ -239,6 +241,8 @@ RSpec.feature "Create a new framework request" do
           expect(find("legend.govuk-fieldset__legend")).to have_text "Which school are you buying for?"
           expect(page).to have_unchecked_field "Specialist School for Testing"
           expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
         end
       end
 

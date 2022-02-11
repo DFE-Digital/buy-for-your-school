@@ -56,7 +56,7 @@ class FrameworkSupportFormSchema < Schema
 
   rule do
     # validate that either school_urn or group_uid is provided in the dsi journey
-    base.failure(:missing_org) if values[:dsi] && values.key?(:school_urn) && values[:school_urn].blank? && values.key?(:group_uid) && values[:group_uid].blank?
+    base.failure(:missing_org) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
   end
 
   def org_exists?(id, group)

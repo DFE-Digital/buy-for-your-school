@@ -297,7 +297,6 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "validates group field" do
         click_continue
-        pp page.source
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter your Group or Trusts name or UKPRN and select it from the list", href: "#framework-support-form-group-uid-field-error"
       end

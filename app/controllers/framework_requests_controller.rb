@@ -56,11 +56,11 @@ class FrameworkRequestsController < ApplicationController
       if @framework_support_form.position?(7) && !current_user.guest? && current_user.single_org?
         redirect_to framework_requests_path
       # authenticated user / many schools / message step -> choose school step
-      elsif @framework_support_form.position?(7) && !current_user.guest? && current_user.school_urn.nil?
+      elsif @framework_support_form.position?(7) && !current_user.guest? && !current_user.single_org?
         @framework_support_form.back!(4)
         render :new
       # authenticated user / many schools / school step -> start page
-      elsif @framework_support_form.position?(3) && !current_user.guest? && current_user.school_urn.nil?
+      elsif @framework_support_form.position?(3) && !current_user.guest? && !current_user.single_org?
         redirect_to framework_requests_path
       else
         @framework_support_form.back!
@@ -98,7 +98,6 @@ class FrameworkRequestsController < ApplicationController
 
   def update
     @framework_support_form = form
-    # byebug
     if validation.success?
       forget_org
 
@@ -214,10 +213,9 @@ private
   end
 
   def forget_org
-    # byebug
-    if @framework_support_form.position?(5) && @framework_support_form.has_school?
+    if @framework_support_form.position?(3) && @framework_support_form.has_school?
       @framework_support_form.forget_group!
-    elsif @framework_support_form.position?(5) && @framework_support_form.has_group?
+    elsif @framework_support_form.position?(3) && @framework_support_form.has_group?
       @framework_support_form.forget_school!
     end
   end
