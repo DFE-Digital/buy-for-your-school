@@ -34,6 +34,7 @@ en:
       message_body: "" # Omitted
     errors:
       rules:
+        missing_org: Select the school or group you want help buying for
         dsi:
           missing: Select whether you want to use a DfE Sign-in account
           bool?: Select whether you want to use a DfE Sign-in account

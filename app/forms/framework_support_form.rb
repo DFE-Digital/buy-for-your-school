@@ -52,16 +52,38 @@ class FrameworkSupportForm < Form
     !dsi?
   end
 
-  # TODO: - ref for ticket 231
-  # # @return [nil]
-  # def forget_school_urn!
-  #   instance_variable_set :@school_urn, nil
-  # end
+  # @see FrameworkRequestsController#create
+  #
+  # @return [Boolean] school URN is present
+  def has_school?
+    school_urn.present?
+  end
 
-  # TODO: - ref for ticket 231
-  # # @return [nil]
-  # def forget_group_uid!
-  #   instance_variable_set :@group_uid, nil
-  # end
+  # @see FrameworkRequestsController#create
+  #
+  # @return [Boolean] group UID is present
+  def has_group?
+    group_uid.present?
+  end
+
+  # @return [nil]
+  def forget_school!
+    instance_variable_set :@school_urn, nil
+  end
+
+  # @return [nil]
+  def forget_group!
+    instance_variable_set :@group_uid, nil
+  end
+
+  # @return [Boolean]
+  def group!
+    instance_variable_set :@group, true
+  end
+
+  # @return [Boolean]
+  def school!
+    instance_variable_set :@group, false
+  end
 end
 # :nocov:
