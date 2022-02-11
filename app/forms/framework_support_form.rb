@@ -75,15 +75,5 @@ class FrameworkSupportForm < Form
   def forget_group!
     instance_variable_set :@group_uid, nil
   end
-
-  # @return [Boolean]
-  def group!
-    instance_variable_set :@group, true
-  end
-
-  # @return [Boolean]
-  def school!
-    instance_variable_set :@group, false
-  end
 end
 # :nocov:
