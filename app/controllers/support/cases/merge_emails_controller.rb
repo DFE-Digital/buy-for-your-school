@@ -31,6 +31,7 @@ module Support
         ).call
         redirect_to support_case_merge_emails_path(@from_case)
       end
+
     rescue MergeCaseEmails::CaseNotNewError
       clear_session
       redirect_to support_case_path(@current_case), notice: I18n.t("support.case_merge_emails.flash.case_not_new")
@@ -61,9 +62,11 @@ module Support
     end
 
     def to_case_ref
-      return session[:merge_into_case_ref] if session[:merge_into_case_ref].present?
-
-      session[:merge_into_case_ref] = merge_emails_params[:merge_into_case_ref]
+      if params[:merge_emails_form] && merge_emails_params[:merge_into_case_ref].present?
+        session[:merge_into_case_ref] = merge_emails_params[:merge_into_case_ref]
+      else
+        session[:merge_into_case_ref]
+      end
     end
 
     def clear_session
