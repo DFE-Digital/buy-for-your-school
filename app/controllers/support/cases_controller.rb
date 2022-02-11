@@ -2,7 +2,6 @@ module Support
   class CasesController < Cases::ApplicationController
     require "will_paginate/array"
     before_action :current_case, only: %i[show]
-    skip_before_action :authenticate_agent!, :authenticate_user!
 
     include Concerns::HasInteraction
 
