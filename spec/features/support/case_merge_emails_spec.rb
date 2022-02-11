@@ -37,8 +37,8 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
 
     it "errors if the same case is given for merging" do
       fill_in "case-autocomplete", with: from_case.ref
-      find("#case-autocomplete").send_keys :down
-      find("#case-autocomplete").send_keys :enter
+      find("#case-autocomplete").send_keys :escape
+      click_continue
       expect(find(".govuk-error-summary")).to have_text "You must choose a valid case"
     end
 
@@ -57,7 +57,6 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       expect(all("#merge_emails_from td")[3]).to have_text from_case.state
       expect(all("#merge_emails_from td")[4]).to have_text from_case.agent&.full_name
       expect(all("#merge_emails_from td")[5]).to have_text from_case.created_at
-
       # TO table
       expect(all("#merge_emails_to td")[0]).to have_text to_case.ref
       expect(all("#merge_emails_to td")[1]).to have_text to_case.org_name
@@ -78,7 +77,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
         expect(page).to have_text "Assigned to #{to_case.agent_name}"
       end
 
-      expect(find(".govuk-body")).to have_text "Case #{to_case.ref} has been closed."
+      expect(find(".govuk-body")).to have_text "Case #{from_case.ref} has been closed."
       expect(find(".govuk-heading-m")).to have_text "Actions"
       expect(all(".govuk-list.govuk-list--bullet li")[0]).to have_link("Go to Case #{to_case.ref}", href: "/support/cases/#{to_case.id}")
       expect(all(".govuk-list.govuk-list--bullet li")[1]).to have_link("Notifications", href: "/support/emails")
