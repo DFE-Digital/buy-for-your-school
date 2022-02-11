@@ -12,6 +12,10 @@ module Support
         .to_sentence(last_word_connector: ", ")
     end
 
+    def postcode
+      address["postcode"]
+    end
+
     # @return [String, nil]
     def local_authority
       super["name"] if super
@@ -29,6 +33,7 @@ module Support
 
     def establishment_type_name
       return unless establishment_type
+
       establishment_type.name
     end
 

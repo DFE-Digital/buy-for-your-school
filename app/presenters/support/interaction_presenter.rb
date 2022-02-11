@@ -7,11 +7,14 @@ module Support
     # @return [Hash]
     def additional_data
       super.each_with_object({}) do |(field, value), formatted_hash|
-        next if field.in?(%w[support_request_id])
+        next if field.in?(%w[
+          support_request_id
+          organisation_type
+          organisation_urn
+          organisation_id
+        ])
 
         case field
-        when "organisation_id"
-          formatted_hash["organisation_id"] = organisation(value).name
         when "category_id"
           formatted_hash["category_id"] = category(value).title if value.present?
         else

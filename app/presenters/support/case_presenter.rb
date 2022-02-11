@@ -7,10 +7,12 @@ require_relative "organisation_presenter"
 require_relative "procurement_presenter"
 require_relative "contract_presenter"
 require_relative "establishment_group_presenter"
+require_relative "concerns/has_organisation"
 
 module Support
   class CasePresenter < BasePresenter
     include ActionView::Helpers::NumberHelper
+    include Support::Concerns::HasOrganisation
 
     # @return [String]
     def state
@@ -48,7 +50,9 @@ module Support
     # return interactions excluding the event_type of support_request
     # @return [Array<InteractionPresenter>]
     def interactions
-      @interactions ||= super.not_support_request.map { |i| InteractionPresenter.new(i) }
+      @interactions ||= super.not_support_request
+        .order("created_at ASC")
+        .map { |i| InteractionPresenter.new(i) }
     end
 
     # return single interaction of support_request event_type
@@ -67,48 +71,12 @@ module Support
       CategoryPresenter.new(super)
     end
 
-    # @return [String]
-    def org_name
-      if organisation.present?
-        organisation.name
-      elsif email.present?
-        email
-      else
-        "n/a"
-      end
-    end
-
-    def organisation
-      return unless super
-
-      if organisation_type == "Support::Organisation"
-        OrganisationPresenter.new(super)
-      else
-        EstablishmentGroupPresenter.new(super)
-      end
-    end
-
     def organisation_name
-      organisation&.name || ""
+      super || email || "n/a"
     end
 
-    def organisation_type_name
-      organisation&.establishment_type_name || ""
-    end
-
-    def organisation_gias_url
-      organisation&.gias_url || ""
-    end
-
-    def organisation_gias_label
-      organisation&.gias_label
-    end
-
-    # @return [String]
-    def org_urn
-      return "n/a" if organisation.blank?
-
-      organisation.urn
+    def organisation_urn
+      super || "n/a"
     end
 
     def savings_status

@@ -60,6 +60,7 @@ en:
       email: Email
       phone_number: Phone number
       estimated_procurement_completion_date: Estimated procurement date
+      organisation_id: "" # Omitted
 
     errors:
       rules:
@@ -84,6 +85,9 @@ en:
 
         estimated_procurement_completion_date:
           format?: must follow the format of DD/MM/YYYY
+
+        organisation_id:
+          missing: Please select an organisation or group
 
   case_procurement_details_form:
     rules:

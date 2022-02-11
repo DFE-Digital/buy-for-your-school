@@ -40,7 +40,7 @@
       <%= I18n.t("support.case.label.organisation_name") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= current_case.organisation_name %>
+      <%= current_case.organisation_name if current_case.organisation.present? %>
     </dd>
     <dd class="govuk-summary-list__actions">
       <%= link_to current_case.organisation.present? ? "Change" : "Add",

@@ -7,20 +7,19 @@
 
   <%= render "components/autocomplete",
              container_id: "create-case-form-school-urn-field",
-             label_text: I18n.t("support.case_hub_migration.label.school_urn"),
+             label_text: I18n.t("support.case_hub_migration.label.school_name"),
              label_class: "govuk-hint",
              element_id: "school-urn-autocomplete",
-             element_name: "create_case_form[school_urn]",
-             template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
-             value_field: :urn,
-             default_value: "#{@form.school_urn}",
+             element_name: "create_case_form[organisation_name]",
+             template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
+             value_field: :name,
+             default_value: @form.organisation_name,
              hidden_fields: {
-               'create_case_form[organisation_id]' => :id,
-               'create_case_form[organisation_type]' => :source
+               'create_case_form[organisation_id]' => [:id, @form.organisation_id],
+               'create_case_form[organisation_type]' => [:source, @form.organisation_type],
+               'create_case_form[organisation_urn]' => [:urn, @form.organisation_urn],
              },
-             query_url: support_organisations_path(format: :json, q: "{{QUERY}}") do %>
-    <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
-  <% end %>
+             query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
 
 

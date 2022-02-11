@@ -45,7 +45,8 @@ module Support
 
     def form_params
       params.require(:create_case_form).permit(
-        :school_urn,
+        :organisation_urn,
+        :organisation_name,
         :organisation_id,
         :organisation_type,
         :first_name,

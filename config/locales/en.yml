@@ -585,6 +585,7 @@ en:
       label:
         form_hint: The following fields are only for NW Hub cases that are being migrated.
         school_urn: Establishment URN
+        school_ukprn: Establishment UKPRN
         school_name: Establishment name
         school_postcode: Establishment postcode
         name: Contact name
@@ -595,7 +596,8 @@ en:
         category: Category
         category_id: Buying category
         source: Case source
-        organisation_id: Establishment name
+        organisation_name: Establishment name
+        organisation_urn: Establishment urn
         case_type: Type of case
         hub_case_ref: Identification number %{optional}
         hub_case_ref_hint: We will use the existing Hub identification number to link the existing case data to a new case number

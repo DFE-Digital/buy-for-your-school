@@ -12,8 +12,17 @@ module Support
         .to_sentence(last_word_connector: ", ")
     end
 
+    def postcode
+      address["postcode"]
+    end
+
+    def urn
+      # :noop:
+    end
+
     def establishment_type_name
       return unless establishment_group_type
+
       establishment_group_type.name
     end
 
