@@ -32,6 +32,8 @@ en:
       school_urn: "" # Omitted
       group_uid: "" # Omitted
       message_body: "" # Omitted
+      correct_organisation: "" # Omitted
+      correct_group: "" # Omitted
     errors:
       rules:
         dsi:
@@ -52,3 +54,7 @@ en:
           missing: Enter your Group or Trusts name or UKPRN and select it from the list
         message_body:
           missing: You must tell us how we can help
+        correct_group:
+          bool?: Select whether this is the Group or Trust you're buying for
+        correct_organisation:
+          bool?: Select whether this is the organisation you're buying for
