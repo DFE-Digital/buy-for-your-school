@@ -9,6 +9,7 @@ class FrameworkRequestsController < ApplicationController
 
   # check answers before submission
   def show
+    # @establishment_group = establishment_group
     if framework_request.submitted?
       redirect_to framework_request_submission_path(framework_request)
     end
