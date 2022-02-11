@@ -39,7 +39,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       fill_in "case-autocomplete", with: from_case.ref
       find("#case-autocomplete").send_keys :escape
       click_continue
-      expect(find(".govuk-error-summary")).to have_text "You must choose a valid case"
+      expect(find(".govuk-error-summary")).to have_text "You cannot merge into the same case"
     end
 
     it "lets the user merge the new case into another" do
