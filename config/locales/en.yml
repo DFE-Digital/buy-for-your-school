@@ -363,6 +363,8 @@ en:
         name: Your name
         email: Your email address
         school: Your school
+        school_type: School type
+        single: Single
         problem: Description of request
 
     search_for_a_school:

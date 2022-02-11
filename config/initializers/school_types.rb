@@ -21,3 +21,8 @@ ORG_TYPE_IDS = [
   43,  # Academy Alternative Provision Sponsor Led
   44,  # Academy Special Converter
 ].freeze
+
+GROUP_CATEGORY_IDS = [
+  6,   # Multi-academy Trust
+  10,  # Single-academy Trust
+].freeze

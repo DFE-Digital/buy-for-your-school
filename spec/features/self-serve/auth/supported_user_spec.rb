@@ -113,4 +113,20 @@ RSpec.feature "User authentication filter" do
       end
     end
   end
+
+  context "when the user belongs to a group", js: true do
+    let(:user) { build(:user, :one_supported_group) }
+
+    before do
+      visit "/procurement-support"
+      click_on "Start now"
+      choose "Yes, use my DfE Sign-in"
+      click_continue
+    end
+
+    it "takes them to the profile page" do
+      expect(page).to have_text "Is this your contact information?"
+      expect(page).to have_current_path "/profile"
+    end
+  end
 end
