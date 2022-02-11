@@ -78,6 +78,16 @@ FactoryBot.define do
       end
     end
 
+    trait :one_supported_group do
+      orgs do
+        [{
+          "uid": "2314",
+          "name": "Testing Multi Academy Trust",
+          "category": { "id": GROUP_CATEGORY_IDS.first, "name": "Multi-academy Trust" },
+        }]
+      end
+    end
+
     trait :analyst do
       roles do
         %w[analyst]
