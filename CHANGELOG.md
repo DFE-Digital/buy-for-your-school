@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
--
+- add pagination for case managment
 
 ## [release-019] - 2022-01-31
 
