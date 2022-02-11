@@ -112,15 +112,28 @@
   </dl>
 <% end %>
 
-<%= form.govuk_radio_buttons_fieldset nil do %>
-  <div class="govuk-radios">
-    <%= form.govuk_radio_button :choice, "yes", label: { text: I18n.t("faf.confirm_school.choice.continue") } %>
-    <% if @organisation %>
-      <%= form.govuk_radio_button :choice, "no", label: { text: I18n.t("faf.confirm_school.choice.go_back") } %>
-      <% else %>
-      <%= form.govuk_radio_button :choice, "no", label: { text: I18n.t("faf.confirm_group_or_trust.choice.go_back") } %>
-    <% end %>
-  </div>
+<% if @organisation %>
+  <%=
+    form.govuk_collection_radio_buttons :correct_organisation,
+      [
+        OpenStruct.new(value: true, label: I18n.t("faf.confirm_school.choice.continue")),
+        OpenStruct.new(value: false, label: I18n.t("faf.confirm_school.choice.go_back")),
+      ],
+      :value,
+      :label,
+      hide_legend: true 
+  %>
+  <% else %>
+  <%=
+    form.govuk_collection_radio_buttons :correct_group,
+      [
+        OpenStruct.new(value: true, label: I18n.t("faf.confirm_school.choice.continue")),
+        OpenStruct.new(value: false, label: I18n.t("faf.confirm_group_or_trust.choice.go_back")),
+      ],
+      :value,
+      :label,
+      hide_legend: true
+  %>
 <% end %>
 
 <%= javascript_include_tag "faf_confirm_school" %>

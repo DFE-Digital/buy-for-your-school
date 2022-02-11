@@ -23,7 +23,9 @@ class FrameworkSupportFormSchema < Schema
 
     optional(:message_body).value(:string)      # step 7
 
-    optional(:choice).value(:bool)
+    optional(:correct_organisation).value(:bool)  # step 6
+
+    optional(:correct_group).value(:bool)       # step 6
   end
 
   rule(:first_name) do
