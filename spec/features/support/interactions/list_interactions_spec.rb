@@ -1,7 +1,7 @@
 #
 # Assert complex case history behaviour
 #
-RSpec.feature "Support request case history" do
+RSpec.feature "Support request case history", bullet: :skip do
   include_context "with an agent"
 
   let(:support_case) do
@@ -12,9 +12,10 @@ RSpec.feature "Support request case history" do
 
   before do
     travel_to Time.zone.local(2021, 3, 20, 12, 0, 0)
-
     create(:support_interaction, :support_request, case: support_case, agent: agent)
     create(:support_interaction, :email_to_school, case: support_case, agent: agent)
+    travel_back
+
     # create(:support_interaction, :note, case: support_case, agent: agent)
     # create(:support_interaction, :note, case: support_case, agent: agent)
     # create(:support_interaction, :phone_call, case: support_case, agent: agent)
@@ -54,6 +55,19 @@ RSpec.feature "Support request case history" do
 
         click_link "Open email preview in new tab"
         expect(page).to have_current_path "/support/cases/#{support_case.id}/interactions/#{support_case.interactions.email_to_school.first.id}"
+      end
+    end
+  end
+
+  describe "ordering of interactions" do
+    before do
+      create(:support_interaction, :note, body: "test", case: support_case, agent: agent)
+      visit "/support/cases/#{support_case.id}#case-history"
+    end
+
+    specify do
+      within "#case-history" do
+        expect(find_all("h2.govuk-accordion__section-heading")[0]).to have_text "Case note"
       end
     end
   end
