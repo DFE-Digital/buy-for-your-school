@@ -26,7 +26,7 @@ class FrameworkRequestPresenter < BasePresenter
   def group_name
     return I18n.t("support.case_categorisations.label.none") if group_uid.blank?
 
-    group_name = Support::EstablishmentGroup.find_by(uid: group_uid).name
+    Support::EstablishmentGroup.find_by(uid: group_uid).name
   end
 
   def group_type
