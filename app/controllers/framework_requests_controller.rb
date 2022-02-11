@@ -52,8 +52,12 @@ class FrameworkRequestsController < ApplicationController
       # authenticated user / inferred school / message step -> start page
       if @framework_support_form.position?(7) && !current_user.guest? && !current_user.school_urn.nil?
         redirect_to framework_requests_path
+      # authenticated user / many schools / message step -> choose school step
+      elsif @framework_support_form.position?(7) && !current_user.guest? && current_user.school_urn.nil?
+        @framework_support_form.back!(4)
+        render :new
       # authenticated user / many schools / school step -> start page
-      elsif @framework_support_form.position?(5) && !current_user.guest?
+      elsif @framework_support_form.position?(3) && !current_user.guest? && current_user.school_urn.nil?
         redirect_to framework_requests_path
       else
         @framework_support_form.back!
@@ -75,8 +79,12 @@ class FrameworkRequestsController < ApplicationController
       redirect_to framework_request_path(framework_request)
 
     elsif validation.success?
-
-      @framework_support_form.advance!
+      # authenticated user / many schools / school details step -> message step
+      if @framework_support_form.position?(3) && !current_user.guest? && current_user.school_urn.nil?
+        @framework_support_form.advance!(4)
+      else
+        @framework_support_form.advance!
+      end
 
       render :new
     else
@@ -142,14 +150,14 @@ private
 
   # FaF specific methods -------------------------------------------------------
 
-  # DSI with inferred school to 7, otherwise 5 to select
+  # DSI with inferred school to 7, otherwise 3 to select
   #
   # @return [Integer]
   def initial_position
     if current_user.guest?
       1
     else
-      current_user.school_urn ? 7 : 5
+      current_user.school_urn ? 7 : 3
     end
   end
 
@@ -161,12 +169,12 @@ private
       {
         dsi: true,                            # (step 1)
         group: false,                         # (step 2)
-        first_name: current_user.first_name,  # (step 3)
-        last_name: current_user.last_name,    # (step 3)
-        email: current_user.email,            # (step 4)
-        school_urn: current_user.school_urn,  # (step 5)
-        group_uid: nil,                       # (step 5)
-        # message (step 6)
+        first_name: current_user.first_name,  # (step 5)
+        last_name: current_user.last_name,    # (step 5)
+        email: current_user.email,            # (step 6)
+        school_urn: current_user.school_urn,  # (step 3)
+        group_uid: nil,                       # (step 3)
+        # message (step 7)
       }
     end
   end

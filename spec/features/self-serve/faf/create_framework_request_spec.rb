@@ -238,45 +238,9 @@ RSpec.feature "Create a new framework request" do
         end
       end
 
-      describe "school details page" do
-        before do
-          choose "Greendale Academy for Bright Sparks"
-          click_continue
-        end
-
-        it "shows all school details" do
-          expect(find("span.govuk-caption-l")).to have_text "About your school"
-          expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
-          within("dl.govuk-summary-list") do
-            expect(all("dt.govuk-summary-list__key")[0]).to have_text "Name and Address"
-            expect(all("dd.govuk-summary-list__value")[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
-
-            expect(all("dt.govuk-summary-list__key")[1]).to have_text "Local authority"
-            expect(all("dd.govuk-summary-list__value")[1]).to have_text "Camden"
-
-            expect(all("dt.govuk-summary-list__key")[2]).to have_text "Headteacher / Principal"
-            expect(all("dd.govuk-summary-list__value")[2]).to have_text "Ms Head Teacher"
-
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Phase of education"
-            expect(all("dd.govuk-summary-list__value")[3]).to have_text "All through"
-
-            expect(all("dt.govuk-summary-list__key")[4]).to have_text "School type"
-            expect(all("dd.govuk-summary-list__value")[4]).to have_text "Community school"
-
-            expect(all("dt.govuk-summary-list__key")[5]).to have_text "ID"
-            expect(all("dd.govuk-summary-list__value")[5]).to have_text "URN: 100254 DfE number: 334 UKPRN: 4346"
-          end
-          expect(page).to have_unchecked_field "Yes"
-          expect(page).to have_unchecked_field "No, I need to choose another school"
-          expect(page).to have_button "Continue"
-        end
-      end
-
       describe "check answers page" do
         before do
           choose "Greendale Academy for Bright Sparks"
-          click_continue
-          choose "Yes"
           click_continue
           fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
