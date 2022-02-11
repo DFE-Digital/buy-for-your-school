@@ -12,8 +12,8 @@
   data-autocomplete-query-url="<%= query_url %>">
 
   <% if defined?(hidden_fields) %>
-    <% hidden_fields.each do |field_name, _| %>
-      <input type="hidden" name="<%= field_name %>">
+    <% hidden_fields.each do |field_name, key_or_key_and_default| %>
+      <input type="hidden" name="<%= field_name %>" value="<%= Array.wrap(key_or_key_and_default)[1] %>">
     <% end %>
   <% end %>
 </div>

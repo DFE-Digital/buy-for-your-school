@@ -37,7 +37,7 @@
         // The default value of the autocomplete field before searching
         autocompleteDefaultValue: defaultValue,
 
-        // key,value map of input name to result value, each will become a hidden field on the form
+        // key,value map of input name to result value and optional default value, each will become a hidden field on the form
         autocompleteHiddenFields: hiddenFieldsRaw
       } = element.dataset;
 
@@ -96,7 +96,8 @@
 
         const hiddenFieldsMap = JSON.parse(hiddenFieldsRaw);
 
-        Object.entries(hiddenFieldsMap).forEach(([fieldName, key]) => {
+        Object.entries(hiddenFieldsMap).forEach(([fieldName, keyOrKeyAndDefault]) => {
+          const key = Array.isArray(keyOrKeyAndDefault) ? keyOrKeyAndDefault[0] : keyOrKeyAndDefault
           const hiddenField = document.querySelector(`input[name="${fieldName}"]`);
           hiddenField.value = result[key];
         });

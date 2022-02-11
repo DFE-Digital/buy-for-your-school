@@ -34,7 +34,7 @@ Using specified data attributes on a html tag will activate the autocomplete. A 
 | `element_name` | The name attribute of the resulting input field | "case_form[school_urn]" |
 | `template_suggestion` | a string specifying the format you wish for the autocomplete choices to appear |  like. It makes use of {{variables}}. See [below](#template-suggestion-syntax) | "The URN is {{urn}}" |
 | `value_field` | the value from the API response when chosen by the user will be the input value for this field |  "name" |
-| `hidden_fields` | key,value map for auto generating hidden fields. See [below](#hidden-fields) | `{"my_form[org_id]" => :id, "my_form[org_postcode] => :postcode"}` |
+| `hidden_fields` | key,value map for auto generating hidden fields. You can also specify default values using the array syntax. See [below](#hidden-fields) | `{"my_form[org_id]" => :id, "my_form[org_postcode] => :postcode"}`<br>or<br>`{"my_form[org_id]" => [:id, "DEFAULT_ID"], "my_form[org_postcode]" => [:postcode, "DEFAULT_POSTCODE"]}` |
 | `query_url` | the URL of the endpoint you wish to get the autocomplete results from. It makes use of {{QUERY}} variable. See [below](#query-url-syntax) | "http://example.org/cats?query={{QUERY}}" |
 | Partial Block | A block given to the partial to define the fallback non-js input field to be used | |
 
