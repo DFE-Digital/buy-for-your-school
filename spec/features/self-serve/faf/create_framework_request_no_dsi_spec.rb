@@ -32,71 +32,11 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       click_continue
     end
 
-    describe "what is your name page" do
+    describe "search for a school page" do
       it "has a back link to step 2" do
         click_on "Back"
         expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=3"
         expect(page).to have_text "What type of organisation are you buying for?"
-      end
-
-      it "has the correct attributes" do
-        expect(find("span.govuk-caption-l")).to have_text "About you"
-        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
-
-        expect(page).to have_field "First Name"
-        expect(page).to have_field "Last Name"
-
-        expect(page).to have_button "Continue"
-      end
-
-      it "raises a validation error when nothing entered" do
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter your first name", href: "#framework-support-form-first-name-field-error"
-        expect(all(".govuk-error-message")[0]).to have_text "Enter your first name"
-        expect(page).to have_link "Enter your last name", href: "#framework-support-form-last-name-field-error"
-        expect(all(".govuk-error-message")[1]).to have_text "Enter your last name"
-      end
-    end
-
-    describe "what is your email address page" do
-      before do
-        complete_name_step
-      end
-
-      it "has a back link to step 3" do
-        click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bstep%5D=4"
-        expect(page).to have_text "What is your name?"
-      end
-
-      it "has the correct attributes" do
-        expect(find("span.govuk-caption-l")).to have_text "About you"
-        expect(find("label.govuk-label--l")).to have_text "What is your email address?"
-
-        expect(page).to have_field "We will only use this to contact you about your request."
-
-        expect(page).to have_button "Continue"
-      end
-
-      it "validates email field" do
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter an email in the correct format. For example, 'someone@school.sch.uk'.", href: "#framework-support-form-email-field-error"
-        expect(find("#framework-support-form-email-error")).to have_text "Enter an email in the correct format. For example, 'someone@school.sch.uk'."
-      end
-    end
-
-    describe "search for a school page" do
-      before do
-        complete_name_step
-        complete_email_step
-      end
-
-      it "has a back link to step 4" do
-        click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bstep%5D=5"
-        expect(page).to have_text "What is your email address?"
       end
 
       it "has the correct attributes" do
@@ -119,7 +59,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       it "has a link to the group search page" do
         find("span", text: "Can't find it?").click
         click_on "Search for an academy trust or federation"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=true&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for a group or trust"
       end
 
@@ -132,14 +72,12 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
     describe "school details page" do
       before do
-        complete_name_step
-        complete_email_step
         complete_school_step
       end
 
-      it "has a back link to step 5" do
+      it "has a back link to step 3" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for your school"
       end
 
@@ -170,7 +108,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
         expect(page).to have_button "Continue"
       end
 
-      it "goes back to step 5 if user chooses no" do
+      it "goes back to step 3 if user chooses no" do
         choose "No, I need to choose another school"
         click_continue
         expect(page).to have_current_path "/procurement-support"
@@ -178,18 +116,80 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       end
     end
 
-    describe "how can we help page" do
+    describe "what is your name page" do
       before do
-        complete_name_step
-        complete_email_step
         complete_school_step
         complete_school_details_step
       end
 
+      it "has a back link to step 4" do
+        click_on "Back"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bcorrect_organisation%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=5"
+        expect(page).to have_text "Is this the school you're buying for?"
+      end
+
+      it "has the correct attributes" do
+        expect(find("span.govuk-caption-l")).to have_text "About you"
+        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
+
+        expect(page).to have_field "First Name"
+        expect(page).to have_field "Last Name"
+
+        expect(page).to have_button "Continue"
+      end
+
+      it "raises a validation error when nothing entered" do
+        click_continue
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Enter your first name", href: "#framework-support-form-first-name-field-error"
+        expect(all(".govuk-error-message")[0]).to have_text "Enter your first name"
+        expect(page).to have_link "Enter your last name", href: "#framework-support-form-last-name-field-error"
+        expect(all(".govuk-error-message")[1]).to have_text "Enter your last name"
+      end
+    end
+
+    describe "what is your email address page" do
+      before do
+        complete_school_step
+        complete_school_details_step
+        complete_name_step
+      end
+
+      it "has a back link to step 3" do
+        click_on "Back"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_text "What is your name?"
+      end
+
+      it "has the correct attributes" do
+        expect(find("span.govuk-caption-l")).to have_text "About you"
+        expect(find("label.govuk-label--l")).to have_text "What is your email address?"
+
+        expect(page).to have_field "We will only use this to contact you about your request."
+
+        expect(page).to have_button "Continue"
+      end
+
+      it "validates email field" do
+        click_continue
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Enter an email in the correct format. For example, 'someone@school.sch.uk'.", href: "#framework-support-form-email-field-error"
+        expect(find("#framework-support-form-email-error")).to have_text "Enter an email in the correct format. For example, 'someone@school.sch.uk'."
+      end
+    end
+
+    describe "how can we help page" do
+      before do
+        complete_school_step
+        complete_school_details_step
+        complete_name_step
+        complete_email_step
+      end
+
       it "has a back link to step 6" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bcorrect_organisation%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=7"
-        expect(page).to have_text "Is this the school you're buying for?"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=7"
+        expect(page).to have_text "What is your email address?"
       end
 
       it "has the correct attributes" do
@@ -212,10 +212,10 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
     describe "send your request page" do
       before do
-        complete_name_step
-        complete_email_step
         complete_school_step
         complete_school_details_step
+        complete_name_step
+        complete_email_step
         complete_help_message_step
       end
 
@@ -262,15 +262,13 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
     before do
       choose "A group or trust"
       click_continue
-      complete_name_step
-      complete_email_step
     end
 
     describe "search for a group page" do
-      it "has a back link to step 4" do
+      it "has a back link to step 3" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=true&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bstep%5D=5"
-        expect(page).to have_text "What is your email address?"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bstep%5D=3"
+        expect(page).to have_text "What type of organisation are you buying for?"
       end
 
       it "has the correct attributes" do
@@ -293,7 +291,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       it "has a link to the single school search page" do
         find("span", text: "Can't find it?").click
         click_on "Search for a single school"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for your school"
       end
 
@@ -309,9 +307,9 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
         complete_group_step
       end
 
-      it "has a back link to step 5" do
+      it "has a back link to step 3" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=1234+-+Group+%231&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=1234+-+Group+%231&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for a group or trust"
       end
 
