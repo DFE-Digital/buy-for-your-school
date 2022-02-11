@@ -30,7 +30,7 @@ RSpec.feature "Create a new framework request" do
         find("a", text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
-        expect(answers[3]).to have_text "I have a problem"
+        expect(answers[4]).to have_text "I have a problem"
       end
 
       it "navigates to confirmation page upon sending request" do
@@ -203,9 +203,13 @@ RSpec.feature "Create a new framework request" do
             expect(all("dd.govuk-summary-list__value")[2]).to have_text "School #1"
             expect(all("dd.govuk-summary-list__actions")[2]).not_to have_link "Change"
 
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of request"
-            expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
+            expect(all("dt.govuk-summary-list__key")[3]).to have_text "School type"
+            expect(all("dd.govuk-summary-list__value")[3]).to have_text "Single"
             expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
+
+            expect(all("dt.govuk-summary-list__key")[4]).to have_text "Description of request"
+            expect(all("dd.govuk-summary-list__value")[4]).to have_text "I have a problem"
+            expect(all("dd.govuk-summary-list__actions")[4]).to have_link "Change"
           end
           expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
           expect(page).to have_button "Send request"
@@ -297,9 +301,13 @@ RSpec.feature "Create a new framework request" do
             expect(all("dd.govuk-summary-list__value")[2]).to have_text "Greendale Academy for Bright Sparks"
             expect(all("dd.govuk-summary-list__actions")[2]).to have_link "Change"
 
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of request"
-            expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
+            expect(all("dt.govuk-summary-list__key")[3]).to have_text "School type"
+            expect(all("dd.govuk-summary-list__value")[3]).to have_text "Single"
             expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
+
+            expect(all("dt.govuk-summary-list__key")[4]).to have_text "Description of request"
+            expect(all("dd.govuk-summary-list__value")[4]).to have_text "I have a problem"
+            expect(all("dd.govuk-summary-list__actions")[4]).to have_link "Change"
           end
           expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
           expect(page).to have_button "Send request"
