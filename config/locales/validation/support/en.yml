@@ -10,6 +10,7 @@ en:
       email_subject: "" # Omitted
       category_id: "" # Omitted
       organisation_formatted_name: "" # Omitted
+      merge_into_case_ref: "" # Omitted
 
     errors:
       rules:
@@ -50,6 +51,10 @@ en:
         # Selecting an organisation
         organisation_formatted_name:
           missing: Please select an organisation
+
+        # Merge case email
+        merge_into_case_ref:
+          missing: You must choose a valid case
 
 
   case_migration_form:
