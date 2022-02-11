@@ -1,4 +1,4 @@
-RSpec.feature "Case management dashboard" do
+RSpec.feature "Case management dashboard", bullet: :skip do
   include_context "with an agent"
 
   before do
@@ -55,6 +55,27 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[4]).to have_text "Last updated"
       end
     end
+
+    describe "pagination" do
+      before do
+        create_list(:support_case, 40, agent: agent)
+        visit "/support/cases#my-cases"
+      end
+
+      it "shows the pagination info" do
+        within "#my-cases" do
+          expect(all(".govuk-table__body .govuk-table__row").count).to eq(10)
+          expect(page).to have_text "Showing 1 to 10 of 41 results"
+        end
+      end
+
+      it "changes to a different page when a new page is clicked" do
+        within "#my-cases" do
+          find("a", text: "Next").click
+          expect(page).to have_text "Showing 11 to 20 of 41 results"
+        end
+      end
+    end
   end
 
   context "when new cases tab" do
@@ -77,6 +98,27 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[2]).to have_text "Category"
         expect(table_headers[3]).to have_text "Status"
         expect(table_headers[4]).to have_text "Date received"
+      end
+    end
+
+    describe "pagination" do
+      before do
+        create_list(:support_case, 20)
+        visit "/support/cases#new-cases"
+      end
+
+      it "shows the pagination info" do
+        within "#new-cases" do
+          expect(all(".govuk-table__body .govuk-table__row").count).to eq(10)
+          expect(page).to have_text "Showing 1 to 10 of 23 results"
+        end
+      end
+
+      it "changes to a different page when a new page is clicked" do
+        within "#new-cases" do
+          find("a", text: "Next").click
+          expect(page).to have_text "Showing 11 to 20 of 23 results"
+        end
       end
     end
   end
@@ -102,6 +144,27 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[3]).to have_text "Status"
         expect(table_headers[4]).to have_text "Assigned to"
         expect(table_headers[5]).to have_text "Last updated"
+      end
+    end
+
+    describe "pagination" do
+      before do
+        create_list(:support_case, 29)
+        visit "/support/cases#all-cases"
+      end
+
+      it "shows the pagination info" do
+        within "#all-cases" do
+          expect(all(".govuk-table__body .govuk-table__row").count).to eq(10)
+          expect(page).to have_text "Showing 1 to 10 of 33 results"
+        end
+      end
+
+      it "changes to a different page when a new page is clicked" do
+        within "#all-cases" do
+          find("a", text: "Next").click
+          expect(page).to have_text "Showing 11 to 20 of 33 results"
+        end
       end
     end
   end
