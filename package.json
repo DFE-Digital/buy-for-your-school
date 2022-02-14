@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/ujs": "^7.0.1",
-    "accessible-autocomplete": "^2.0.3",
+    "accessible-autocomplete": "^2.0.4",
     "govuk-frontend": "^4.0.0",
     "lodash": "^4.17.21"
   }

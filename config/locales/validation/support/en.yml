@@ -10,6 +10,8 @@ en:
       email_subject: "" # Omitted
       category_id: "" # Omitted
       organisation_id: "" # Omitted
+      organisation_formatted_name: "" # Omitted
+      merge_into_case_ref: "" # Omitted
 
     errors:
       rules:
@@ -51,10 +53,16 @@ en:
         organisation_id:
           missing: Please select an organisation or group
 
+        # Merge case email
+        merge_into_case_ref:
+          missing: You must choose a valid case
+
 
   case_migration_form:
     rules:
       school_urn: "" # Omitted
+      request_type: "" # Omitted
+      category_id: "" # Omitted
       first_name: First name
       last_name: Last name
       email: Email
@@ -64,6 +72,9 @@ en:
 
     errors:
       rules:
+        request_type:
+          bool?: Select the request type
+          missing: Select the request type
         school_urn:
           missing: You must select a school
           invalid: Invalid school URN
@@ -85,6 +96,8 @@ en:
 
         estimated_procurement_completion_date:
           format?: must follow the format of DD/MM/YYYY
+        category_id:
+          missing: Please select a procurement category
 
         organisation_id:
           missing: Please select an organisation or group

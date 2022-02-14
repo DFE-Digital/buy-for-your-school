@@ -85,9 +85,10 @@ Rails.application.routes.draw do
         collection do
           resource :preview, only: %i[new create], as: :create_case_preview
         end
+        resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
-        resource :categorisation, only: %i[edit update]
+        resource :categorisation, only: %i[edit update destroy]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]

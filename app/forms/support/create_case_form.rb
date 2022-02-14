@@ -19,6 +19,7 @@ module Support
     option :estimated_savings, optional: true
     option :hub_notes, optional: true
     option :progress_notes, optional: true
+    option :request_type, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true
 
     # @see Support::Case#source
     # @return [String]
@@ -35,9 +36,14 @@ module Support
     # @return [Hash] form parms
     def to_h
       self.class.dry_initializer.attributes(self)
-          .except(:messages)
+          .except(:messages, :request_type)
           .merge(source: case_type)
           .compact
+    end
+
+    # @return [Boolean]
+    def request_type?
+      instance_variable_get :@request_type
     end
 
   private

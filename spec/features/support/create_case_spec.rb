@@ -43,6 +43,7 @@ RSpec.feature "Create case", js: true do
 
       expect(page).to have_current_path "/support/cases/preview"
       expect(find("h1.govuk-heading-l")).to have_text "Check your answers before creating a new case"
+      expect(find("#changeCategory").sibling("dd")).to have_text "Not applicable"
     end
 
     it "allows you to change answers" do
@@ -57,6 +58,18 @@ RSpec.feature "Create case", js: true do
 
       within "#fullName" do
         expect(page).to have_text "new_first_name last_name"
+      end
+    end
+
+    context "when selecting a group" do
+      let!(:group) { create(:support_establishment_group, name: "Group 1") }
+
+      it "sets the group as the case organisation" do
+        select_organisation "Group 1"
+        valid_form_data_without_organisation
+        click_on "Save and continue"
+        click_on "Create case"
+        expect(Support::Case.last.organisation).to eq(Support::EstablishmentGroup.first)
       end
     end
 
@@ -165,11 +178,47 @@ RSpec.feature "Create case", js: true do
     end
   end
 
+  context "with unchosen request type" do
+    it "only raises missing request type error" do
+      click_on "Save and continue"
+
+      within "div.govuk-error-summary" do
+        expect(page).to have_text "Select the request type"
+        expect(page).not_to have_text "Please select a procurement category"
+      end
+    end
+  end
+
+  context "with request type 'yes' and no procurement category selected", js: true do
+    it "only raises missing procurement category error" do
+      choose "Yes"
+      click_on "Save and continue"
+
+      within "div.govuk-error-summary" do
+        expect(page).not_to have_text "Select the request type"
+        expect(page).to have_text "Please select a procurement category"
+      end
+    end
+  end
+
+  context "with request type 'yes' and procurement category selected", js: true do
+    it "raises no errors" do
+      choose "Yes"
+      find("#create-case-form-category-id-field").find(:option, "Catering").select_option
+      click_on "Save and continue"
+      within "div.govuk-error-summary" do
+        expect(page).not_to have_text "Select the request type"
+        expect(page).not_to have_text "Please select a procurement category"
+      end
+    end
+  end
+
   def valid_form_data_without_organisation
     fill_in "create_case_form[first_name]", with: "first_name"
     fill_in "create_case_form[last_name]", with: "last_name"
     fill_in "create_case_form[email]", with: "test@example.com"
     fill_in "create_case_form[phone_number]", with: "0778974653"
+    choose "No" # request type
   end
 
   def valid_form_data

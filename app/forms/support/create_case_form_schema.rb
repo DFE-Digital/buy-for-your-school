@@ -9,6 +9,7 @@ module Support
       required(:first_name).value(:string)
       required(:last_name).value(:string)
       required(:email).value(:string)
+      optional(:request_type).value(:bool)
       optional(:organisation_id).value(:string)
       optional(:organisation_type).value(:string)
       optional(:organisation_name).value(:string)
@@ -32,10 +33,16 @@ module Support
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
     end
-
+    
     rule(:organisation_id) do
       key(:organisation_id).failure(:missing) if value.blank?
     end
+
+    rule(:category_id) do
+      key.failure(:missing) if values[:request_type].presence && value.blank?
+    end
+
+  private
 
     rule(:organisation_type) do
       key(:organisation_id).failure(:missing) if value.blank?

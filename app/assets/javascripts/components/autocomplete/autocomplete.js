@@ -92,7 +92,7 @@
       // Set the hidden field values on selection of suggestion
       const setHiddenFields = (result) => {
         if (result === undefined) return;
-        if (hiddenFieldsRaw === null) return;
+        if (hiddenFieldsRaw === null || hiddenFieldsRaw === '') return;
 
         const hiddenFieldsMap = JSON.parse(hiddenFieldsRaw);
 

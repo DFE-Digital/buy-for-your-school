@@ -47,7 +47,7 @@ RSpec.describe Support::CreateCaseFormPresenter do
       end
 
       it "gives Not Yet Known label" do
-        expect(presenter.category_name).to eq "Not Yet Known"
+        expect(presenter.category_name).to eq "Not applicable"
       end
     end
   end
