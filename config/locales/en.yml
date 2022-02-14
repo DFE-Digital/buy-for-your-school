@@ -456,8 +456,11 @@ en:
   #
   support:
     generic:
-      "yes": "Yes"
-      "no": "No"
+      'yes': 'Yes'
+      'no': 'No'
+      continue: Continue
+      cancel: Cancel
+      back: Back
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -687,6 +690,39 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_merge_emails:
+      flash:
+        case_not_new: The case being merged is not 'New' and cannot be merged
+      search:
+        header: Find an existing case
+        subtitle: This should be the case you want to move the emails to.
+        hint: Enter the case ID, organisation name, URN, UKPRN, or case owner
+      preview:
+        header: You are moving emails
+        from: From
+        to: To
+        reminder: Once the emails have been moved, Case %{case_ref} will be closed.
+        table:
+          - Case
+          - Organisation
+          - Category
+          - Status
+          - Assigned to
+          - Date received
+      show:
+        header: Success
+        body:
+          moved: "The emails have been moved to:"
+          case_org: "Case %{case_ref} - %{org}"
+          assigned: "Assigned to %{agent}"
+          closed: "Case %{case_ref} has been closed."
+        links:
+          actions: Actions
+          this_case: "Go to Case %{case_ref}"
+          notifications: Notifications
+          my_cases: My Cases
+
 
     case_organisation:
       label: What Organisation do you want to add?
