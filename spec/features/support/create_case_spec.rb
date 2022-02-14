@@ -231,7 +231,7 @@ RSpec.feature "Create case", js: true do
   end
 
   def select_organisation(term)
-    fill_in "Establishment name", with: term
+    fill_in "Organisation name", with: term
     find(".autocomplete__option", text: term)&.click
   end
 end
