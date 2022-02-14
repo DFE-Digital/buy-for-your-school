@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
--
+- Case can be set to an organisation or group, with search box to search both organisations and groups [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/851)
 
 ## [release-003] - 2022-01-31 (019)
 
