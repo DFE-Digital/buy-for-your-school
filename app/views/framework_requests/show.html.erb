@@ -69,7 +69,7 @@
           </dd>
         <% end %>
         <dd class="govuk-summary-list__actions">
-          <% unless @framework_request.submitted? %>
+          <% unless @framework_request.submitted? || !current_user.guest? %>
             <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 2), class: "govuk-link", id: "edit-school-type" %>
           <% end %>
         </dd>
