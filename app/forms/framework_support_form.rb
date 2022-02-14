@@ -1,6 +1,5 @@
 # @abstract Form Object for multi-step Find-a-Framework support questionnaire
 #
-# :nocov:
 class FrameworkSupportForm < Form
   # @!attribute [r] dsi
   # @return [Boolean]
@@ -58,6 +57,19 @@ class FrameworkSupportForm < Form
     !dsi?
   end
 
+  # @return [Boolean]
+  def multiple_schools?
+    instance_variable_get :@group
+  end
+
+  # @return [nil]
+  def forget_org
+    forget_group! if position?(3) && has_school?
+    forget_school! if position?(3) && has_group?
+  end
+
+private
+
   # @see FrameworkRequestsController#create
   #
   # @return [Boolean] school URN is present
@@ -81,19 +93,4 @@ class FrameworkSupportForm < Form
   def forget_group!
     instance_variable_set :@group_uid, nil
   end
-
-  # @return [Boolean]
-  def multiple_schools?
-    instance_variable_get :@group
-  end
-
-  # @return [nil]
-  def forget_org
-    if position?(3) && has_school?
-      forget_group!
-    elsif position?(3) && has_group?
-      forget_school!
-    end
-  end
 end
-# :nocov:
