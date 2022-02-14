@@ -12,9 +12,9 @@ module Support
         end
 
         format.html do
-          @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:page])
-          @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:page])
-          @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:page])
+          @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:cases_page])
+          @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:new_cases_page])
+          @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }.sort_by(&:last_updated_at_date).paginate(page: params[:my_cases_page])
         end
       end
     end
