@@ -36,7 +36,7 @@
 
 <p class="govuk-body">
   <%=
-    if @framework_support_form.step.eql?(1)
+    if @framework_support_form.position?(1)
       link_to I18n.t("faf.dsi_or_search.link.text"), I18n.t("faf.dsi_or_search.link.url"), class: "govuk-link"
     end
   %>

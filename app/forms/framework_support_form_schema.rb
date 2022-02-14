@@ -46,12 +46,12 @@ class FrameworkSupportFormSchema < Schema
 
   rule(:school_urn) do
     # validate individual school_urn field only in the non-dsi journey
-    key.failure(:missing) if key? && !values[:dsi] && !values[:group] && !org_exists?(value.split(" - ").first, false)
+    key.failure(:missing) if key? && !values[:dsi] && !values[:group] && !org_exists?(value, :school)
   end
 
   rule(:group_uid) do
     # validate individual group_uid field only in the non-dsi journey
-    key.failure(:missing) if key? && !values[:dsi] && values[:group] && !org_exists?(value.split(" - ").first, true)
+    key.failure(:missing) if key? && !values[:dsi] && values[:group] && !org_exists?(value, :group)
   end
 
   rule(:message_body) do
@@ -63,12 +63,20 @@ class FrameworkSupportFormSchema < Schema
     key.failure(:missing) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
   end
 
-  # TODO: extract into a service rather than access supported data directly
-  def org_exists?(id, group)
-    if group
-      Support::EstablishmentGroup.find_by(uid: id).present?
-    else
+  # TODO: extract into a look-up service rather than access supported data directly
+  #
+  # @param [String] id - organisation ID in the format "uid - name"
+  # @param [Symbol] type - :school or :group
+  #
+  # @return [Boolean]
+  def org_exists?(id, type)
+    id = id.split(" - ").first
+
+    case type
+    when :school
       Support::Organisation.find_by(urn: id).present?
+    when :group
+      Support::EstablishmentGroup.find_by(uid: id).present?
     end
   end
 end

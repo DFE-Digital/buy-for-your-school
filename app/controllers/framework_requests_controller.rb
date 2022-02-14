@@ -39,7 +39,7 @@ class FrameworkRequestsController < ApplicationController
     @organisation = organisation
     @establishment_group = establishment_group
 
-    forget_org
+    @framework_support_form.forget_org
 
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true" || form_params[:correct_group] == "false" || form_params[:correct_organisation] == "false"
@@ -84,7 +84,7 @@ class FrameworkRequestsController < ApplicationController
     elsif validation.success?
       # authenticated user / many schools / school details step -> message step
       if @framework_support_form.position?(3) && !current_user.guest? && current_user.school_urn.nil?
-        @framework_support_form.advance!(4)
+        @framework_support_form.go_to!(7)
       else
         @framework_support_form.advance!
       end
@@ -99,7 +99,7 @@ class FrameworkRequestsController < ApplicationController
   def update
     @framework_support_form = form
     if validation.success?
-      forget_org
+      @framework_support_form.forget_org
 
       # capture full "xxxxx - name"
       session[:faf_school] = @framework_support_form.school_urn
@@ -176,11 +176,11 @@ private
       {
         dsi: true,                            # (step 1)
         group: false,                         # (step 2)
+        school_urn: current_user.school_urn,  # (step 3)
+        group_uid: current_user.group_uid,    # (step 3)
         first_name: current_user.first_name,  # (step 5)
         last_name: current_user.last_name,    # (step 5)
         email: current_user.email,            # (step 6)
-        school_urn: current_user.school_urn,  # (step 3)
-        group_uid: current_user.group_uid,    # (step 3)
         # message (step 7)
       }
     end
@@ -213,13 +213,5 @@ private
   # @return [String, nil]
   def group_uid
     form_params[:group_uid]&.split(" - ")&.first
-  end
-
-  def forget_org
-    if @framework_support_form.position?(3) && @framework_support_form.has_school?
-      @framework_support_form.forget_group!
-    elsif @framework_support_form.position?(3) && @framework_support_form.has_group?
-      @framework_support_form.forget_school!
-    end
   end
 end

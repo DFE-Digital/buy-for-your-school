@@ -86,5 +86,14 @@ class FrameworkSupportForm < Form
   def multiple_schools?
     instance_variable_get :@group
   end
+
+  # @return [nil]
+  def forget_org
+    if position?(3) && has_school?
+      forget_group!
+    elsif position?(3) && has_group?
+      forget_school!
+    end
+  end
 end
 # :nocov:
