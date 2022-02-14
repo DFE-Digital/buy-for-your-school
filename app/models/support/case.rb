@@ -15,7 +15,7 @@ module Support
       agent: %i[first_name last_name],
     }
 
-    scope :search, -> (q) { Support::CaseSearch.omnisearch(q).joins }
+    scope :search, ->(q) { Support::CaseSearch.omnisearch(q).joins }
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true

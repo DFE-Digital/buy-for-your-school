@@ -33,7 +33,7 @@ module Support
     rule(:email) do
       key(:email).failure(:missing) if value.blank?
     end
-    
+
     rule(:organisation_id) do
       key(:organisation_id).failure(:missing) if value.blank?
     end
@@ -41,8 +41,6 @@ module Support
     rule(:category_id) do
       key.failure(:missing) if values[:request_type].presence && value.blank?
     end
-
-  private
 
     rule(:organisation_type) do
       key(:organisation_id).failure(:missing) if value.blank?

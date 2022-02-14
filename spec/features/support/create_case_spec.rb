@@ -62,14 +62,13 @@ RSpec.feature "Create case", js: true do
     end
 
     context "when selecting a group" do
-      let!(:group) { create(:support_establishment_group, name: "Group 1") }
-
       it "sets the group as the case organisation" do
+        group = create(:support_establishment_group, name: "Group 1")
         select_organisation "Group 1"
         valid_form_data_without_organisation
         click_on "Save and continue"
         click_on "Create case"
-        expect(Support::Case.last.organisation).to eq(Support::EstablishmentGroup.first)
+        expect(Support::Case.last.organisation).to eq(group)
       end
     end
 
