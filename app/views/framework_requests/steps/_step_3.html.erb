@@ -29,8 +29,8 @@ form_data = @framework_support_form.to_h.merge(step: @framework_support_form.ste
   <% end %>
 
   <%= javascript_include_tag "faf_select_school" %>
-<% elsif form.object.group == true %>
-<%= render "framework_requests/steps/search_for_a_group", form: form, form_data: form_data %>
+<% elsif @framework_support_form.multiple_schools? %>
+  <%= render "framework_requests/steps/search_for_a_group", form: form, form_data: form_data %>
 <% else %>
-<%= render "framework_requests/steps/search_for_a_school", form: form, form_data: form_data %>
+  <%= render "framework_requests/steps/search_for_a_school", form: form, form_data: form_data %>
 <% end %>

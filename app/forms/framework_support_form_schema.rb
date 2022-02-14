@@ -24,6 +24,8 @@ class FrameworkSupportFormSchema < Schema
     optional(:message_body).value(:string)      # step 7
 
     optional(:choice).value(:bool)
+
+    optional(:affiliation).value(:string)
   end
 
   rule(:first_name) do
@@ -54,11 +56,12 @@ class FrameworkSupportFormSchema < Schema
     key.failure(:missing) if key? && value.blank?
   end
 
-  rule do
+  rule(:affiliation) do
     # validate that either school_urn or group_uid is provided in the dsi journey
-    base.failure(:missing_org) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
+    key.failure(:missing) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
   end
 
+  # TODO: extract into a service rather than access supported data directly
   def org_exists?(id, group)
     if group
       Support::EstablishmentGroup.find_by(uid: id).present?

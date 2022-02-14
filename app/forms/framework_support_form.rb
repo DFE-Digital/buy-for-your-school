@@ -22,8 +22,6 @@ class FrameworkSupportForm < Form
   # @return [String]
   option :email, optional: true # 4 (skipped if logged in)
 
-  option :group, optional: true
-
   # @!attribute [r] school_urn
   # @return [String] URN identifier and name in the format "100000 - School Name"
   option :school_urn, optional: true # 5 (skipped if inferred at login)
@@ -74,6 +72,11 @@ class FrameworkSupportForm < Form
   # @return [nil]
   def forget_group!
     instance_variable_set :@group_uid, nil
+  end
+
+  # @return [Boolean]
+  def multiple_schools?
+    instance_variable_get :@group
   end
 end
 # :nocov:
