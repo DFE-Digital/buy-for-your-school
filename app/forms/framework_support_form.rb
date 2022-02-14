@@ -22,8 +22,6 @@ class FrameworkSupportForm < Form
   # @return [String]
   option :email, optional: true # 4 (skipped if logged in)
 
-  option :group, optional: true
-
   # @!attribute [r] school_urn
   # @return [String] URN identifier and name in the format "100000 - School Name"
   option :school_urn, optional: true # 5 (skipped if inferred at login)
@@ -60,16 +58,33 @@ class FrameworkSupportForm < Form
     !dsi?
   end
 
-  # TODO: - ref for ticket 231
-  # # @return [nil]
-  # def forget_school_urn!
-  #   instance_variable_set :@school_urn, nil
-  # end
+  # @see FrameworkRequestsController#create
+  #
+  # @return [Boolean] school URN is present
+  def has_school?
+    school_urn.present?
+  end
 
-  # TODO: - ref for ticket 231
-  # # @return [nil]
-  # def forget_group_uid!
-  #   instance_variable_set :@group_uid, nil
-  # end
+  # @see FrameworkRequestsController#create
+  #
+  # @return [Boolean] group UID is present
+  def has_group?
+    group_uid.present?
+  end
+
+  # @return [nil]
+  def forget_school!
+    instance_variable_set :@school_urn, nil
+  end
+
+  # @return [nil]
+  def forget_group!
+    instance_variable_set :@group_uid, nil
+  end
+
+  # @return [Boolean]
+  def multiple_schools?
+    instance_variable_get :@group
+  end
 end
 # :nocov:

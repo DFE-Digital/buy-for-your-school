@@ -1,4 +1,3 @@
-# TODO: - pending specs to be addressed in later FaF ticket
 RSpec.feature "Edit an unsubmitted framework request" do
   before do
     create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
@@ -46,7 +45,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       end
     end
 
-    xit "allows the user to change their selected school", js: true do
+    it "allows the user to change their selected school", js: true do
       click_link "edit-school"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
@@ -62,7 +61,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       end
     end
 
-    xit "allows the user to change their message" do
+    it "allows the user to change their message" do
       click_link "edit-message"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=7"
@@ -104,7 +103,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
         visit "/procurement-support/#{framework_request.id}"
       end
 
-      xit "allows the user to change the school" do
+      it "allows the user to change the school" do
         click_link "edit-school"
 
         expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"

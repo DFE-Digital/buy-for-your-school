@@ -39,6 +39,8 @@ class FrameworkRequestsController < ApplicationController
     @organisation = organisation
     @establishment_group = establishment_group
 
+    forget_org
+
     # DSI users clicking back on the FaF support form skip steps intended for guests
     if form_params[:back] == "true" || form_params[:correct_group] == "false" || form_params[:correct_organisation] == "false"
 
@@ -51,14 +53,14 @@ class FrameworkRequestsController < ApplicationController
       )
 
       # authenticated user / inferred school / message step -> start page
-      if @framework_support_form.position?(7) && !current_user.guest? && !current_user.school_urn.nil?
+      if @framework_support_form.position?(7) && !current_user.guest? && current_user.single_org?
         redirect_to framework_requests_path
       # authenticated user / many schools / message step -> choose school step
-      elsif @framework_support_form.position?(7) && !current_user.guest? && current_user.school_urn.nil?
+      elsif @framework_support_form.position?(7) && !current_user.guest? && !current_user.single_org?
         @framework_support_form.back!(4)
         render :new
       # authenticated user / many schools / school step -> start page
-      elsif @framework_support_form.position?(3) && !current_user.guest? && current_user.school_urn.nil?
+      elsif @framework_support_form.position?(3) && !current_user.guest? && !current_user.single_org?
         redirect_to framework_requests_path
       else
         @framework_support_form.back!
@@ -97,6 +99,7 @@ class FrameworkRequestsController < ApplicationController
   def update
     @framework_support_form = form
     if validation.success?
+      forget_org
 
       # capture full "xxxxx - name"
       session[:faf_school] = @framework_support_form.school_urn
@@ -158,7 +161,7 @@ private
     if current_user.guest?
       1
     else
-      current_user.school_urn ? 7 : 3
+      current_user.school_urn || current_user.group_uid ? 7 : 3
     end
   end
 
@@ -174,17 +177,19 @@ private
         last_name: current_user.last_name,    # (step 5)
         email: current_user.email,            # (step 6)
         school_urn: current_user.school_urn,  # (step 3)
-        group_uid: nil,                       # (step 3)
+        group_uid: current_user.group_uid,    # (step 3)
         # message (step 7)
       }
     end
   end
 
+  # TODO: extract into a service rather than access supported data directly
   # @return [OrganisationPresenter, nil]
   def organisation
     Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn)) if urn
   end
 
+  # TODO: extract into a service rather than access supported data directly
   def establishment_group
     Support::EstablishmentGroupPresenter.new(Support::EstablishmentGroup.find_by(uid: group_uid)) if group_uid
   end
@@ -195,7 +200,7 @@ private
   #
   # @return [String, nil]
   def urn
-    form_params[:school_urn]&.split(" - ")&.first || @framework_request&.school_urn
+    form_params[:school_urn]&.split(" - ")&.first
   end
 
   # Extract the group UID from the format "uid - group name"
@@ -204,6 +209,14 @@ private
   #
   # @return [String, nil]
   def group_uid
-    form_params[:group_uid]&.split(" - ")&.first || @framework_request&.group_uid
+    form_params[:group_uid]&.split(" - ")&.first
+  end
+
+  def forget_org
+    if @framework_support_form.position?(3) && @framework_support_form.has_school?
+      @framework_support_form.forget_group!
+    elsif @framework_support_form.position?(3) && @framework_support_form.has_group?
+      @framework_support_form.forget_school!
+    end
   end
 end

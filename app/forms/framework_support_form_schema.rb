@@ -26,6 +26,8 @@ class FrameworkSupportFormSchema < Schema
     optional(:correct_organisation).value(:bool) # step 6
 
     optional(:correct_group).value(:bool) # step 6
+
+    optional(:affiliation).value(:string)
   end
 
   rule(:first_name) do
@@ -43,15 +45,31 @@ class FrameworkSupportFormSchema < Schema
   end
 
   rule(:school_urn) do
-    key.failure(:missing) if key? && !values[:group] && Support::Organisation.find_by(urn: value.split(" - ").first).nil?
+    # validate individual school_urn field only in the non-dsi journey
+    key.failure(:missing) if key? && !values[:dsi] && !values[:group] && !org_exists?(value.split(" - ").first, false)
   end
 
   rule(:group_uid) do
-    key.failure(:missing) if key? && values[:group] && Support::EstablishmentGroup.find_by(uid: value.split(" - ").first).nil?
+    # validate individual group_uid field only in the non-dsi journey
+    key.failure(:missing) if key? && !values[:dsi] && values[:group] && !org_exists?(value.split(" - ").first, true)
   end
 
   rule(:message_body) do
     key.failure(:missing) if key? && value.blank?
+  end
+
+  rule(:affiliation) do
+    # validate that either school_urn or group_uid is provided in the dsi journey
+    key.failure(:missing) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
+  end
+
+  # TODO: extract into a service rather than access supported data directly
+  def org_exists?(id, group)
+    if group
+      Support::EstablishmentGroup.find_by(uid: id).present?
+    else
+      Support::Organisation.find_by(urn: id).present?
+    end
   end
 end
 # :nocov:

@@ -34,6 +34,7 @@ en:
       message_body: "" # Omitted
       correct_organisation: "" # Omitted
       correct_group: "" # Omitted
+      affiliation: "" # Omitted
     errors:
       rules:
         dsi:
@@ -58,3 +59,5 @@ en:
           bool?: Select whether this is the Group or Trust you're buying for
         correct_organisation:
           bool?: Select whether this is the organisation you're buying for
+        affiliation:
+          missing: Select the school or group you want help buying for

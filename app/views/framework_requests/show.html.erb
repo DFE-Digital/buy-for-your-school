@@ -51,7 +51,7 @@
         <% end %>
         <dd class="govuk-summary-list__actions">
           <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-school" unless current_user.supported_schools.one? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-school" unless current_user.single_org? %>
           <% end %>
         </dd>
       </div>
