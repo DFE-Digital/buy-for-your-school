@@ -1,8 +1,8 @@
 RSpec.describe Support::MergeCaseEmails do
   subject(:merge) { described_class.new(from_case: from_case, to_case: to_case) }
 
-  let(:from_case) { create(:support_case) }
-  let(:to_case) { create(:support_case) }
+  let(:from_case) { create(:support_case, action_required: true) }
+  let(:to_case) { create(:support_case, action_required: false) }
 
   context "when from_case has emails attached" do
     before do
@@ -19,14 +19,16 @@ RSpec.describe Support::MergeCaseEmails do
       expect(to_case.emails.count).to be 2
     end
 
-    it "sets from_case to closed and to_case to pending" do
+    it "updates the from_case and to_case statuses" do
       expect(from_case.closed?).to be false
-      expect(to_case.pending?).to be false
+      expect(from_case.action_required?).to be true
+      expect(to_case.action_required?).to be false
 
       merge.call
 
       expect(from_case.closed?).to be true
-      expect(to_case.pending?).to be true
+      expect(from_case.action_required?).to be false
+      expect(to_case.action_required?).to be true
     end
   end
 
