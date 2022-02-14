@@ -107,13 +107,16 @@ class FrameworkRequestsController < ApplicationController
 
       # CONDITIONAL extra questions as a result of saved changes
 
-      # if @support_form.step == 3 && !@support_form.has_journey?
-      #   @support_form.advance!
-      #   render :edit
-      # else
-      framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h.merge(school_urn: urn, group_uid: group_uid))
-      redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
-      # end
+      # NOTE: Selecting school type change link on CYA (no dsi) permits user to proceed through to selecting school or group selection after step 2
+      if @framework_support_form.position?(2)
+        # NOTE: Goes to school or group lookup (no dsi)
+        @framework_support_form.go_to!(3)
+        render :edit
+      else
+
+        framework_request.update!(**framework_request.attributes.symbolize_keys, **@framework_support_form.to_h.merge(school_urn: urn, group_uid: group_uid))
+        redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
+      end
     else
       render :edit
     end
