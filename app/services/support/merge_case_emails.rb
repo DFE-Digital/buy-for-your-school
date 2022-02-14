@@ -31,9 +31,9 @@ module Support
 
         from_case.interactions&.update_all(case_id: to_case.id)
         from_case.emails&.update_all(case_id: to_case.id)
-        from_case.closed!
+        from_case.update!(action_required: false, state: :closed)
       end
-      to_case.pending!
+      to_case.update!(action_required: true)
     end
   end
 end
