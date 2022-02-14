@@ -60,7 +60,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
         find("span", text: "Can't find it?").click
         click_on "Search for an academy trust or federation"
         expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bstep%5D=4"
-        expect(page).to have_text "Search for a group or trust"
+        expect(page).to have_text "Search for an academy trust or federation"
       end
 
       it "validates school field" do
@@ -260,7 +260,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
   context "when group or trust", js: true do
     before do
-      choose "A group or trust"
+      choose "An academy trust or federation"
       click_continue
     end
 
@@ -273,7 +273,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
-        expect(find("h1.govuk-heading-l")).to have_text "Search for a group or trust"
+        expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
 
         expect(page).to have_field "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)"
 
@@ -310,7 +310,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       it "has a back link to step 3" do
         click_on "Back"
         expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=1234+-+Group+%231&framework_support_form%5Bstep%5D=4"
-        expect(page).to have_text "Search for a group or trust"
+        expect(page).to have_text "Search for an academy trust or federation"
       end
 
       it "displays a validation message if no selection made" do
@@ -320,7 +320,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
-        expect(find("h1.govuk-heading-l")).to have_text "Is this the group or trust you're buying for?"
+        expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
         within("dl.govuk-summary-list") do
           expect(all("dt.govuk-summary-list__key")[0]).to have_text "Group name"
           expect(all("dd.govuk-summary-list__value")[0]).to have_text "Group #1"
