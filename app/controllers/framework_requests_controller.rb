@@ -42,7 +42,7 @@ class FrameworkRequestsController < ApplicationController
     forget_org
 
     # DSI users clicking back on the FaF support form skip steps intended for guests
-    if form_params[:back] == "true"
+    if form_params[:back] == "true" || form_params[:correct_group] == "false" || form_params[:correct_organisation] == "false"
 
       # forget validation errors when stepping back
       @framework_support_form = FrameworkSupportForm.new(
@@ -133,7 +133,7 @@ private
 
   def form_params
     params.require(:framework_support_form).permit(*%i[
-      step back dsi first_name last_name email school_urn group_uid message_body group
+      step back dsi first_name last_name email school_urn group_uid message_body group correct_organisation correct_group
     ])
   end
 

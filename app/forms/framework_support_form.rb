@@ -35,6 +35,14 @@ class FrameworkSupportForm < Form
   # @return [String]
   option :message_body, optional: true # 7 (last and compulsory)
 
+  # @!attribute [r] correct_group
+  # @return [Boolean]
+  option :correct_group, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 6 (skipped if logged in)
+
+  # @!attribute [r] correct_organisation
+  # @return [Boolean]
+  option :correct_organisation, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 6 (skipped if logged in)
+
   # @return [Hash] form data to be persisted as request attributes
   def to_h
     super.except(:dsi)

@@ -111,7 +111,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       it "goes back to step 3 if user chooses no" do
         choose "No, I need to choose another school"
         click_continue
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=4"
+        expect(page).to have_current_path "/procurement-support"
         expect(page).to have_text "Search for your school"
       end
     end
@@ -124,7 +124,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has a back link to step 4" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=5"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bcorrect_organisation%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=5"
         expect(page).to have_text "Is this the school you're buying for?"
       end
 
@@ -311,6 +311,11 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
         click_on "Back"
         expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=1234+-+Group+%231&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for a group or trust"
+      end
+
+      it "displays a validation message if no selection made" do
+        click_continue
+        expect(find(".govuk-error-summary__body")).to have_text "Select whether this is the Group or Trust you're buying for"
       end
 
       it "has the correct attributes" do

@@ -22,9 +22,11 @@ class FrameworkSupportFormSchema < Schema
     optional(:group_uid).value(:string)         # step 5
 
     optional(:message_body).value(:string)      # step 7
+    
+    optional(:correct_organisation).value(:bool) # step 6
 
-    optional(:choice).value(:bool)
-
+    optional(:correct_group).value(:bool) # step 6
+    
     optional(:affiliation).value(:string)
   end
 
