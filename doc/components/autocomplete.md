@@ -38,7 +38,7 @@ Using specified data attributes on a html tag will activate the autocomplete. A 
 
 ```
 Given an API response of
-[{id: "1", name: "Joe Bloggs"}, {id: "2", "Jane Bloggs"}]
+[{id: "1", name: "Joe Bloggs"}, {id: "2", name: "Jane Bloggs"}]
 
 And the template
 Id: {{id}} - <strong>{{name}}</strong>
