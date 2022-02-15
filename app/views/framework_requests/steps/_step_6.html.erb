@@ -1,17 +1,20 @@
-<!-- request message (5) -->
+<!-- email (6) -->
 
-<%= form.hidden_field :dsi %>
+<%= form.hidden_field :dsi, value: form.object.dsi %>
+<%= form.hidden_field :group, value: form.object.group %>
 <%= form.hidden_field :first_name, value: form.object.first_name %>
 <%= form.hidden_field :last_name, value: form.object.last_name %>
-<%= form.hidden_field :email, value: form.object.email %>
 <%= form.hidden_field :school_urn, value: form.object.school_urn %>
+<%= form.hidden_field :group_uid, value: form.object.group_uid %>
 
+<span class="govuk-caption-l">
+  <%= I18n.t("faf.email.subtitle") %>
+</span>
 
-<%= form.govuk_text_area :message_body,
-      autofocus: true,
-      class: "govuk-textarea",
-      rows: 5,
-      caption: { text: I18n.t("faf.user_query.caption"), size: "l" },
-      label: { text: I18n.t("faf.user_query.label"), size: "l" },
-      hint: { text: I18n.t("faf.user_query.hint") }
-    %>
+<h1 class="govuk-label-wrapper">
+  <label class="govuk-label govuk-label--l" for="email-address">
+    <%= I18n.t("faf.email.title") %>
+  </label>
+</h1>
+
+<%= form.govuk_text_field :email, autofocus: true, label: { text: I18n.t("faf.email.label"), class: "govuk-hint" } %>

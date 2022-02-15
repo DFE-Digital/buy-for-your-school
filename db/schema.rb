@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_092232) do
+ActiveRecord::Schema.define(version: 2022_02_07_105609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.string "message_body"
     t.boolean "submitted", default: false
     t.uuid "user_id"
+    t.boolean "group"
+    t.string "group_uid"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
