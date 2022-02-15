@@ -81,7 +81,7 @@ If you want to send more values to the server, you can do so with hidden fields.
 
 ```
 Given an API response of
-[{id: "1", name: "Joe Bloggs", age: 20}, {id: "2", "Jane Bloggs", age: 32}]
+[{id: "1", name: "Joe Bloggs", age: 20}, {id: "2",  name: "Jane Bloggs", age: 32}]
 
 And the element_name is set to user_form[name]
 
