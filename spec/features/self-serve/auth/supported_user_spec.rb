@@ -60,21 +60,21 @@ RSpec.feature "User authentication filter" do
 
     it "body" do
       # errors.sign_in.unsupported_organisation.supported_schools
-      expect(page).to have_text "This service is for those procuring for one school, either:"
+      expect(page).to have_text "This service is for those procuring for a school in England. We can provide support to:"
 
       # errors.sign_in.unsupported_organisation.supported_schools_list
       within "ul.govuk-list" do
-        expect(page).to have_text "a local authority maintained school, or one academy within a single or multi-academy trust"
+        expect(page).to have_text "a local authority maintained school a federation school an academy in a single or multi-academy trust"
       end
 
       # errors.sign_in.unsupported_organisation.link
-      expect(page).to have_link "sign in into the service again.", href: "/auth/dfe/signout", class: "govuk-link"
+      expect(page).to have_link "sign in to the service again.", href: "/auth/dfe/signout", class: "govuk-link"
 
       # errors.sign_in.unsupported_organisation.page_body
       body = <<~BODY
-        If you need to try a different account you can sign in into the service again.
-        This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
-        Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
+        If you want to try a different account you can sign in to the service again.
+        This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+        Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
       BODY
       expect(page).to have_text(body)
     end
@@ -111,6 +111,22 @@ RSpec.feature "User authentication filter" do
       it "takes them to the case management dashboard" do
         expect(page).to have_current_path "/support/cases"
       end
+    end
+  end
+
+  context "when the user belongs to a group", js: true do
+    let(:user) { build(:user, :one_supported_group) }
+
+    before do
+      visit "/procurement-support"
+      click_on "Start now"
+      choose "Yes, use my DfE Sign-in"
+      click_continue
+    end
+
+    it "takes them to the profile page" do
+      expect(page).to have_text "Is this your contact information?"
+      expect(page).to have_current_path "/profile"
     end
   end
 end

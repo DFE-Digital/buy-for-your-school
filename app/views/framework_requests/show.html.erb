@@ -2,7 +2,7 @@
   <%= debug @framework_request.attributes %>
 <% end %>
 
-<%= link_to I18n.t("generic.button.back"), edit_framework_request_path(@framework_request, step: 6), class: "govuk-back-link" %>
+<%= link_to I18n.t("generic.button.back"), edit_framework_request_path(@framework_request, step: 7), class: "govuk-back-link" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -19,7 +19,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if @current_user.guest? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 2), class: "govuk-link", id: "edit-name" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 5), class: "govuk-link", id: "edit-name" %>
           <% end %>
         </dd>
       </div>
@@ -32,7 +32,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if current_user.guest? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-email" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 6), class: "govuk-link", id: "edit-email" %>
           <% end %>
         </dd>
       </div>
@@ -40,12 +40,37 @@
         <dt class="govuk-summary-list__key">
           <%= I18n.t("faf.check_answers.details.school") %>
         </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @framework_request.school_name %>
-        </dd>
+        <% if @framework_request.group_uid.nil? %>
+          <dd class="govuk-summary-list__value">
+            <%= @framework_request.school_name %>
+          </dd>
+          <% else %>
+          <dd class="govuk-summary-list__value">
+            <%= @framework_request.group_name %>
+          </dd>
+        <% end %>
         <dd class="govuk-summary-list__actions">
           <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 4), class: "govuk-link", id: "edit-school" unless current_user.supported_schools.one? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-school" unless current_user.single_org? %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.school_type") %>
+        </dt>
+        <% if @framework_request.group_uid.nil? %>
+          <dd class="govuk-summary-list__value">
+            <%= I18n.t("faf.check_answers.details.single") %>
+          </dd>
+          <% else %>
+           <dd class="govuk-summary-list__value">
+            <%= @framework_request.group_type %>
+          </dd>
+        <% end %>
+        <dd class="govuk-summary-list__actions">
+          <% unless @framework_request.submitted? || !current_user.guest? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 2), class: "govuk-link", id: "edit-school-type" %>
           <% end %>
         </dd>
       </div>
@@ -58,7 +83,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 6), class: "govuk-link", id: "edit-message" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 7), class: "govuk-link", id: "edit-message" %>
           <% end %>
         </dd>
       </div>

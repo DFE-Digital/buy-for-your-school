@@ -72,15 +72,16 @@ en:
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
       unsupported_organisation:
         page_title: Your organisation is not supported by this service
-        supported_schools: "This service is for those procuring for one school, either:"
+        supported_schools: "This service is for those procuring for a school in England. We can provide support to:"
         supported_schools_list:
-          - a local authority maintained school, or
-          - one academy within a single or multi-academy trust
+          - a local authority maintained school
+          - a federation school
+          - an academy in a single or multi-academy trust
         page_body:
-          - If you need to try a different account you can
-          - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
-          - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
-        link: sign in into the service again.
+          - If you want to try a different account you can
+          - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
+        link: sign in to the service again.
   #
   # Self-Serve -----------------------------------------------------------------
   #
@@ -282,7 +283,7 @@ en:
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: Use this service if you're a state funded school in England.
+      overview_purpose: Use this service if you're a state funded school, multi-academy trust or federation in England.
       you_can_ask_for: You can ask for
       overview_category_list:
         - general guidance on buying goods or services for schools
@@ -291,7 +292,7 @@ en:
       subheading: Before you start
       you_can: You can
 
-    # step 2
+    # step 2 - no DSI
     name:
       title: What is your name?
       subtitle: About you
@@ -300,7 +301,7 @@ en:
       last_name:
         label: Last Name
 
-    # step 3
+    # step 3 - no DSI
     email:
       title: What is your email address?
       subtitle: About you
@@ -337,6 +338,16 @@ en:
         dsi: Yes, use my DfE Sign-in
         no_dsi: No, continue without a DfE Sign-in account
 
+    school_or_group_or_trust:
+      header: What type of organisation are you buying for?
+      hint: If you're buying together informally as a group, choose a 'single school' to represent the group.
+      radios:
+        single_school:
+          label: A single school
+          hint: A local authority maintained school or an academy in a single or multi-academy trust
+        group_or_trust:
+          label: An academy trust or federation
+
     user_organisation:
       header: Which school are you buying for?
       subtitle: About your school
@@ -352,6 +363,8 @@ en:
         name: Your name
         email: Your email address
         school: Your school
+        school_type: School type
+        single: Single
         problem: Description of request
 
     search_for_a_school:
@@ -362,9 +375,24 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "You can only use this service if you are procuring for a single school in England. This should either be a local authority maintained school, or an academy in a single or multi-academy trust."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_group_link: Search for an academy trust or federation
+      button: Continue
+
+    search_for_a_group:
+      title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Search for an academy trust or federation
+      hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
+      details:
+        summary: Can't find it?
+        body:
+          - "This search lists groups and trusts, such as a multi-academy trust or federation. %{search_for_a_school_link} instead."
+          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
+          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_school_link: Search for a single school
       button: Continue
 
     which_school:
@@ -388,6 +416,20 @@ en:
       choice:
         continue: "Yes"
         go_back: "No, I need to choose another school"
+
+    confirm_group_or_trust:
+      title: Is this the academy trust or federation you're buying for? - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Is this the academy trust or federation you're buying for?
+      summary:
+        group_name: Group name
+        address: Address
+        group_type: Group type
+        id: ID
+        uid: UID
+        ukprn: UKPRN
+      choice:
+        go_back: "No, I need to choose another group or trust"
 
   faf_submissions:
     header:
