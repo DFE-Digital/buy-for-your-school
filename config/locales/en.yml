@@ -326,7 +326,7 @@ en:
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: Use this service if you're a state funded school in England.
+      overview_purpose: Use this service if you're a state funded school, multi-academy trust or federation in England.
       you_can_ask_for: You can ask for
       overview_category_list:
         - general guidance on buying goods or services for schools
