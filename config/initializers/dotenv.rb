@@ -15,6 +15,5 @@ if defined?(Dotenv)
     "CONTENTFUL_PREVIEW_TOKEN",
     "CONTENTFUL_WEBHOOK_API_KEY",
     "NOTIFY_API_KEY",
-    "NOTIFY_EMAIL_REPLY_TO_ID",
   )
 end
