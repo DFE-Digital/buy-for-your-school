@@ -69,10 +69,7 @@ module Notify
     #
     def send_message
       client.send_email(
-        # `email_reply_to_id` can be omitted if the service only has one email
-        # reply-to address, or you want to use the default email address.
-        #
-        # email_reply_to_id: "",
+        email_reply_to_id: ENV["NOTIFY_EMAIL_REPLY_TO_ID"],
         email_address: recipient.email,
         template_id: template,
         reference: reference,
