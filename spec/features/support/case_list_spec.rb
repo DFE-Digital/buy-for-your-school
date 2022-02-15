@@ -30,6 +30,19 @@ RSpec.feature "Case management dashboard" do
     end
   end
 
+  context "when the case is closed" do
+    before do
+      create(:support_case, :action_required, ref: "010000", state: :closed)
+      visit "/support/cases"
+    end
+
+    it "displays the status 'Closed'" do
+      within "#all-cases .case-row", text: "010000" do
+        expect(page).to have_css(".case-status", text: "Closed")
+      end
+    end
+  end
+
   context "when my cases tab" do
     let!(:new_case) { create(:support_case, agent: agent) }
 
