@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - Add pagination for case managment
 - Ability to merge a NEW email case into an existing case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/853)
 - On Create a case, allow Category to be 'undefined' [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/848)
-- Remove actions for closed cases.
+- Remove actions for closed cases. [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/881)
 
 ### "Find a Framework" support for trusts
 - form steps reordered [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/866)
