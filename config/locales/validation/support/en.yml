@@ -9,6 +9,7 @@ en:
       email_body: "" # Omitted
       email_subject: "" # Omitted
       category_id: "" # Omitted
+      organisation_id: "" # Omitted
       organisation_formatted_name: "" # Omitted
       merge_into_case_ref: "" # Omitted
 
@@ -49,8 +50,8 @@ en:
           invalid_format: Please enter a valid contact email for the case
 
         # Selecting an organisation
-        organisation_formatted_name:
-          missing: Please select an organisation
+        organisation_id:
+          missing: Please select an organisation or group
 
         # Merge case email
         merge_into_case_ref:
@@ -67,6 +68,7 @@ en:
       email: Email
       phone_number: Phone number
       estimated_procurement_completion_date: Estimated procurement date
+      organisation_id: "" # Omitted
 
     errors:
       rules:
@@ -96,6 +98,9 @@ en:
           format?: must follow the format of DD/MM/YYYY
         category_id:
           missing: Please select a procurement category
+
+        organisation_id:
+          missing: Please select an organisation or group
 
   case_procurement_details_form:
     rules:

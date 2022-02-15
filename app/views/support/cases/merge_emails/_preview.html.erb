@@ -19,7 +19,7 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row" id="merge_emails_from">
       <td class="govuk-table__cell"> <%= @from_case.ref %> </td>
-      <td class="govuk-table__cell"> <%= @from_case.org_name %> </td>
+      <td class="govuk-table__cell"> <%= @from_case.organisation_name %> </td>
       <td class="govuk-table__cell"> <%= @from_case.category&.title %> </td>
       <td class="govuk-table__cell"> <%= @from_case.state %> </td>
       <td class="govuk-table__cell"> <%= @from_case.agent&.full_name %> </td>
@@ -42,7 +42,7 @@
   <tbody class="govuk-table__body">
    <tr class="govuk-table__row" id="merge_emails_to">
       <td class="govuk-table__cell"> <%= @to_case.ref %> </td>
-      <td class="govuk-table__cell"> <%= @to_case.org_name %> </td>
+      <td class="govuk-table__cell"> <%= @to_case.organisation_name %> </td>
       <td class="govuk-table__cell"> <%= @to_case.category&.title %> </td>
       <td class="govuk-table__cell"> <%= @to_case.state %> </td>
       <td class="govuk-table__cell"> <%= @to_case.agent&.full_name %> </td>

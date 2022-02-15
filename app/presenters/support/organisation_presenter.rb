@@ -12,6 +12,10 @@ module Support
         .to_sentence(last_word_connector: ", ")
     end
 
+    def postcode
+      address["postcode"]
+    end
+
     # @return [String, nil]
     def local_authority
       super["name"] if super
@@ -25,6 +29,20 @@ module Support
     # @return [String, nil]
     def phase
       super.to_s.humanize if super
+    end
+
+    def establishment_type_name
+      return unless establishment_type
+
+      establishment_type.name
+    end
+
+    def gias_url
+      "https://www.get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{urn}"
+    end
+
+    def gias_label
+      I18n.t("support.case.link.view_school_information")
     end
   end
 end

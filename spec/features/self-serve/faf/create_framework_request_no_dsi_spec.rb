@@ -1,7 +1,7 @@
 RSpec.feature "Create a new framework request through non-DSI journey" do
   before do
     create(:support_organisation, :with_address, urn: "100253", name: "School #1", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
-    create(:support_establishment_group, :with_address, name: "Group #1", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
+    create(:support_establishment_group, :with_address, name: "Group #1", uid: "9876", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
     visit "/procurement-support/new"
     choose "No, continue without a DfE Sign-in account"
     click_continue
@@ -309,7 +309,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has a back link to step 3" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=1234+-+Group+%231&framework_support_form%5Bstep%5D=4"
+        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=9876+-+Group+%231&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
@@ -332,7 +332,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
           expect(all("dd.govuk-summary-list__value")[2]).to have_text "Multi-academy Trust"
 
           expect(all("dt.govuk-summary-list__key")[3]).to have_text "ID"
-          expect(all("dd.govuk-summary-list__value")[3]).to have_text "UID: 1234 UKPRN: 1010010"
+          expect(all("dd.govuk-summary-list__value")[3]).to have_text "UID: 9876 UKPRN: 1010010"
         end
         expect(page).to have_unchecked_field "Yes"
         expect(page).to have_unchecked_field "No, I need to choose another group or trust"

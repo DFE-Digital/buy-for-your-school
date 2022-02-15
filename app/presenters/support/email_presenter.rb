@@ -10,7 +10,7 @@ module Support
     def case_org_name
       return nil if self.case.nil?
 
-      Support::CasePresenter.new(self.case).org_name
+      Support::CasePresenter.new(self.case).organisation_name
     end
 
     def sent_by_email

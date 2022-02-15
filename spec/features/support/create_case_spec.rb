@@ -1,4 +1,4 @@
-RSpec.feature "Create case" do
+RSpec.feature "Create case", js: true do
   include_context "with an agent"
 
   before do
@@ -23,15 +23,14 @@ RSpec.feature "Create case" do
     expect(find("h2.govuk-heading-l")).to have_text "Hub migration case information"
   end
 
-  context "with invalid data" do
+  context "when not selecting an organisation" do
     it "validates the school urn" do
-      valid_form_data
-      fill_in "create_case_form[school_urn]", with: "23452"
+      valid_form_data_without_organisation
 
       click_on "Save and continue"
 
       within "div.govuk-error-summary" do
-        expect(page).to have_text "Invalid school URN"
+        expect(page).to have_text "Please select an organisation"
       end
     end
   end
@@ -59,6 +58,17 @@ RSpec.feature "Create case" do
 
       within "#fullName" do
         expect(page).to have_text "new_first_name last_name"
+      end
+    end
+
+    context "when selecting a group" do
+      it "sets the group as the case organisation" do
+        group = create(:support_establishment_group, name: "Group 1")
+        select_organisation "Group 1"
+        valid_form_data_without_organisation
+        click_on "Save and continue"
+        click_on "Create case"
+        expect(Support::Case.last.organisation).to eq(group)
       end
     end
 
@@ -202,8 +212,7 @@ RSpec.feature "Create case" do
     end
   end
 
-  def valid_form_data
-    fill_in "create_case_form[school_urn]", with: "000001"
+  def valid_form_data_without_organisation
     fill_in "create_case_form[first_name]", with: "first_name"
     fill_in "create_case_form[last_name]", with: "last_name"
     fill_in "create_case_form[email]", with: "test@example.com"
@@ -211,8 +220,19 @@ RSpec.feature "Create case" do
     choose "No" # request type
   end
 
+  def valid_form_data
+    select_organisation "Hillside School"
+    valid_form_data_without_organisation
+  end
+
   def complete_valid_form
     valid_form_data
     click_on "Save and continue"
+  end
+
+  def select_organisation(term)
+    fill_in "Organisation name", with: term
+    sleep 0.5
+    find(".autocomplete__option", text: term)&.click
   end
 end

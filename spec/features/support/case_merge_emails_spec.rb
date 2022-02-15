@@ -52,14 +52,14 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       expect(find("h1")).to have_text "You are moving emails"
       # FROM table
       expect(all("#merge_emails_from td")[0]).to have_text from_case.ref
-      expect(all("#merge_emails_from td")[1]).to have_text from_case.org_name
+      expect(all("#merge_emails_from td")[1]).to have_text from_case.organisation_name
       expect(all("#merge_emails_from td")[2]).to have_text from_case.category&.title
       expect(all("#merge_emails_from td")[3]).to have_text from_case.state
       expect(all("#merge_emails_from td")[4]).to have_text from_case.agent&.full_name
       expect(all("#merge_emails_from td")[5]).to have_text from_case.created_at
       # TO table
       expect(all("#merge_emails_to td")[0]).to have_text to_case.ref
-      expect(all("#merge_emails_to td")[1]).to have_text to_case.org_name
+      expect(all("#merge_emails_to td")[1]).to have_text to_case.organisation_name
       expect(all("#merge_emails_to td")[2]).to have_text to_case.category&.title
       expect(all("#merge_emails_to td")[3]).to have_text to_case.state
       expect(all("#merge_emails_to td")[4]).to have_text to_case.agent&.full_name
@@ -73,7 +73,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       within ".govuk-panel--confirmation" do |_p|
         expect(page).to have_text "Success"
         expect(page).to have_text "The emails have been moved to:"
-        expect(page).to have_text "Case #{to_case.ref} - #{to_case.org_name}"
+        expect(page).to have_text "Case #{to_case.ref} - #{to_case.organisation_name}"
         expect(page).to have_text "Assigned to #{to_case.agent_name}"
       end
 
