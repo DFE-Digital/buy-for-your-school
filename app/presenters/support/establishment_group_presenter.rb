@@ -1,6 +1,7 @@
 module Support
   class EstablishmentGroupPresenter < ::Support::BasePresenter
     # @return [String] Combines URN and name
+    # :nocov:
     def urn_and_name
       "#{urn} - #{name}"
     end
@@ -9,6 +10,7 @@ module Support
     def uid_and_name
       "#{uid} - #{name}"
     end
+    # :nocov:
 
     # @return [String]
     def formatted_address

@@ -24,6 +24,7 @@ class FrameworkRequestPresenter < BasePresenter
     user_id.present?
   end
 
+  # :nocov:
   # TODO: extract into a look-up service rather than access supported data directly
   def group_name
     return I18n.t("support.case_categorisations.label.none") if group_uid.blank?
@@ -38,4 +39,5 @@ class FrameworkRequestPresenter < BasePresenter
     group_type_id = Support::EstablishmentGroup.find_by(uid: group_uid).establishment_group_type_id
     @group_type_name = Support::EstablishmentGroupType.where(id: group_type_id).first.name
   end
+  # :nocov:
 end

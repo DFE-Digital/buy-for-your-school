@@ -48,11 +48,6 @@ module Support
       opening: 4,
     }
 
-    def self.find_by_formatted_name(formatted_name)
-      urn, name = formatted_name.split(" - ")
-      find_by(urn: urn, name: name)
-    end
-
     def formatted_name
       "#{urn} - #{name}"
     end
