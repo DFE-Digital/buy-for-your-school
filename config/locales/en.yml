@@ -746,6 +746,10 @@ en:
       show:
         header: Your specification
 
+    cases:
+      my_cases:
+        header_link: My cases
+
     emails:
       header_link: Notifications
       index:
