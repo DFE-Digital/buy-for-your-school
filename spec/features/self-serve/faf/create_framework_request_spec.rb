@@ -30,7 +30,7 @@ RSpec.feature "Create a new framework request" do
         find("a", text: "Start now").click
         fill_in "framework_support_form[message_body]", with: "I have a problem"
         click_continue
-        expect(answers[3]).to have_text "I have a problem"
+        expect(answers[4]).to have_text "I have a problem"
       end
 
       it "navigates to confirmation page upon sending request" do
@@ -203,9 +203,13 @@ RSpec.feature "Create a new framework request" do
             expect(all("dd.govuk-summary-list__value")[2]).to have_text "School #1"
             expect(all("dd.govuk-summary-list__actions")[2]).not_to have_link "Change"
 
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of request"
-            expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
-            expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
+            expect(all("dt.govuk-summary-list__key")[3]).to have_text "School type"
+            expect(all("dd.govuk-summary-list__value")[3]).to have_text "Single"
+            expect(all("dd.govuk-summary-list__actions")[3]).not_to have_link "Change"
+
+            expect(all("dt.govuk-summary-list__key")[4]).to have_text "Description of request"
+            expect(all("dd.govuk-summary-list__value")[4]).to have_text "I have a problem"
+            expect(all("dd.govuk-summary-list__actions")[4]).to have_link "Change"
           end
           expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
           expect(page).to have_button "Send request"
@@ -215,11 +219,13 @@ RSpec.feature "Create a new framework request" do
   end
 
   context "when user with many supported schools", js: true do
-    let(:user) { create(:user, :many_supported_schools, first_name: "Generic", last_name: "User", full_name: "Generic User") }
+    let(:user) { create(:user, :many_supported_schools_and_groups, first_name: "Generic", last_name: "User", full_name: "Generic User") }
 
     before do
       create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
       create(:support_organisation, :with_address, urn: "100254", name: "Greendale Academy for Bright Sparks", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
+      create(:support_establishment_group, :with_address, uid: "2314", name: "Testing Multi Academy Trust", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
+      create(:support_establishment_group, :with_address, uid: "2315", name: "New Academy Trust", establishment_group_type: create(:support_establishment_group_type, name: "Single-academy Trust"))
     end
 
     context "and user is already signed in" do
@@ -235,48 +241,14 @@ RSpec.feature "Create a new framework request" do
           expect(find("legend.govuk-fieldset__legend")).to have_text "Which school are you buying for?"
           expect(page).to have_unchecked_field "Specialist School for Testing"
           expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
-        end
-      end
-
-      describe "school details page" do
-        before do
-          choose "Greendale Academy for Bright Sparks"
-          click_continue
-        end
-
-        it "shows all school details" do
-          expect(find("span.govuk-caption-l")).to have_text "About your school"
-          expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
-          within("dl.govuk-summary-list") do
-            expect(all("dt.govuk-summary-list__key")[0]).to have_text "Name and Address"
-            expect(all("dd.govuk-summary-list__value")[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
-
-            expect(all("dt.govuk-summary-list__key")[1]).to have_text "Local authority"
-            expect(all("dd.govuk-summary-list__value")[1]).to have_text "Camden"
-
-            expect(all("dt.govuk-summary-list__key")[2]).to have_text "Headteacher / Principal"
-            expect(all("dd.govuk-summary-list__value")[2]).to have_text "Ms Head Teacher"
-
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Phase of education"
-            expect(all("dd.govuk-summary-list__value")[3]).to have_text "All through"
-
-            expect(all("dt.govuk-summary-list__key")[4]).to have_text "School type"
-            expect(all("dd.govuk-summary-list__value")[4]).to have_text "Community school"
-
-            expect(all("dt.govuk-summary-list__key")[5]).to have_text "ID"
-            expect(all("dd.govuk-summary-list__value")[5]).to have_text "URN: 100254 DfE number: 334 UKPRN: 4346"
-          end
-          expect(page).to have_unchecked_field "Yes"
-          expect(page).to have_unchecked_field "No, I need to choose another school"
-          expect(page).to have_button "Continue"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
         end
       end
 
       describe "check answers page" do
         before do
           choose "Greendale Academy for Bright Sparks"
-          click_continue
-          choose "Yes"
           click_continue
           fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
@@ -297,9 +269,13 @@ RSpec.feature "Create a new framework request" do
             expect(all("dd.govuk-summary-list__value")[2]).to have_text "Greendale Academy for Bright Sparks"
             expect(all("dd.govuk-summary-list__actions")[2]).to have_link "Change"
 
-            expect(all("dt.govuk-summary-list__key")[3]).to have_text "Description of request"
-            expect(all("dd.govuk-summary-list__value")[3]).to have_text "I have a problem"
-            expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
+            expect(all("dt.govuk-summary-list__key")[3]).to have_text "School type"
+            expect(all("dd.govuk-summary-list__value")[3]).to have_text "Single"
+            expect(all("dd.govuk-summary-list__actions")[3]).not_to have_link "Change"
+
+            expect(all("dt.govuk-summary-list__key")[4]).to have_text "Description of request"
+            expect(all("dd.govuk-summary-list__value")[4]).to have_text "I have a problem"
+            expect(all("dd.govuk-summary-list__actions")[4]).to have_link "Change"
           end
           expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
           expect(page).to have_button "Send request"

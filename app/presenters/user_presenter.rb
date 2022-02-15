@@ -6,7 +6,17 @@ class UserPresenter < BasePresenter
 
   # @return [String, nil] inferred unique school identifier
   def school_urn
-    supported_schools.first.urn if supported_schools.one?
+    supported_orgs.first.urn if single_org? && !supported_orgs.first.group
+  end
+
+  # @return [Boolean]
+  def single_org?
+    supported_orgs.one?
+  end
+
+  # @return [String, nil] inferred unique group identifier
+  def group_uid
+    supported_orgs.first.uid if single_org? && supported_orgs.first.group
   end
 
   # @return [String, nil] inferred school name
@@ -22,8 +32,27 @@ class UserPresenter < BasePresenter
     orgs.map { |org|
       next unless org.dig("type", "id").to_i.in?(ORG_TYPE_IDS)
 
-      OpenStruct.new(name: org["name"], urn: org["urn"])
+      OpenStruct.new(name: org["name"], urn: org["urn"], group: false)
     }.compact
+  end
+
+  # Support/FaF request form options when a single UID cannot be inferred
+  #
+  # @return [Array<OpenStruct>] the name/uid of a user's supported groups
+  def supported_groups
+    orgs.map { |org|
+      next unless org.dig("category", "id").to_i.in?(GROUP_CATEGORY_IDS)
+
+      OpenStruct.new(name: "#{org['name']} (MAT)", uid: org["uid"], group: true)
+    }.compact
+  end
+
+  # FaF request form options (schools and trusts) when a single UID cannot be inferred
+  #
+  # @return [Array<OpenStruct>] the name/uid of a user's supported organisations
+  def supported_orgs
+    all_orgs = supported_schools + supported_groups
+    all_orgs.sort_by(&:name)
   end
 
   # @return [String]
