@@ -418,6 +418,7 @@ en:
       continue: Continue
       cancel: Cancel
       back: Back
+      search: Search
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -460,6 +461,9 @@ en:
           nw_hub: North west hub case
           sw_hub: South west hub case
           faf: Find a Framework
+        search:
+          heading: Find a case
+          hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
         category: Category
         last_updated: Last updated
         date_received: Date received

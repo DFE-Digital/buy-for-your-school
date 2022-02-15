@@ -6,6 +6,12 @@
         Signed in as <%= current_user.first_name %> <%= current_user.last_name %>
       </li>
 
+      <% if support? %>
+        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+          <%= link_to I18n.t("support.case.label.search.heading"), new_support_case_search_path, class: "govuk-header__link" %>
+        </li>
+      <% end %>
+
       <% if Features.enabled?(:incoming_emails) && support? %>
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.emails.header_link"), support_emails_path, class: "govuk-header__link" %>
