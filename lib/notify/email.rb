@@ -76,7 +76,7 @@ module Notify
       }
 
       if ENV["NOTIFY_EMAIL_REPLY_TO_ID"].present?
-        message_params.merge!(email_reply_to_id: ENV["NOTIFY_EMAIL_REPLY_TO_ID"])
+        message_params[:email_reply_to_id] = ENV["NOTIFY_EMAIL_REPLY_TO_ID"]
       end
 
       client.send_email(message_params)
