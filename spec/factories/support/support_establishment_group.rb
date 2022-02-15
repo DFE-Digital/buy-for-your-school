@@ -8,6 +8,8 @@ FactoryBot.define do
     association :establishment_group_type,
                 factory: :support_establishment_group_type
 
+    address { {} }
+
     trait :with_no_address do
       address { { "town": "", "county": "", "street": "", "locality": "", "postcode": "" } }
     end
