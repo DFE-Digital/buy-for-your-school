@@ -19,6 +19,9 @@ The format is based on [Keep a Changelog 1.0.0].
 - add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
 - add details page to capture user details after giving feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/890)
 
+- Added ability to search cases
+- Ability to merge a NEW email case into an existing case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/853)
+- On Create a case, allow Category to be 'undefined' [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/848)
 ## [release-020] - 2022-02-15
 ### "Find a Framework" support for trusts
 
