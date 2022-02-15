@@ -789,6 +789,7 @@ en:
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
+        procurement_updated: Procurement updated
       label:
         email_unread: Unread
         contact_detail: Contact details
