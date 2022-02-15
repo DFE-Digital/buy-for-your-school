@@ -18,7 +18,7 @@ describe "Case view" do
 
   context "when the case is closed" do
     before do
-      support_case.update(state: :closed)
+      support_case.update!(state: :closed)
       visit support_case_path(support_case)
     end
 
