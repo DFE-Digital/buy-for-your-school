@@ -1,5 +1,5 @@
 <h1 class="govuk-heading-l">
-  <%= @current_case.org_name %>
+  <%= @current_case.organisation_name %>
 </h1>
 <div class="govuk-!-margin-bottom-7">
   <%= render "status_badge", kase: @current_case %>
@@ -62,35 +62,4 @@
   </div>
 </div>
 
-<h3 class="govuk-heading-m"><%= I18n.t("support.case.header.action") %></h3>
-
-<ul class="govuk-list case-actions">
-  <% if @current_case.opened? %>
-    <li>
-      <%= link_to I18n.t("support.case.label.change_owner"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
-    </li>
-    <li>
-      <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
-    </li>
-    <li>
-      <%= link_to I18n.t("support.case.label.send_email"), new_support_case_email_type_path(@current_case), class: "govuk-link" %>
-    </li>
-    <li>
-      <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
-    </li>
-  <% end %>
-
-  <% if @current_case.resolved? %>
-    <li>
-      <%= link_to I18n.t("support.case.label.reopen"), "#", class: "govuk-link" %>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
-    </li>
-  <% end %>
-</ul>
+<%= render "case_actions" unless @current_case.closed?  %>

@@ -15,6 +15,12 @@ RSpec.describe Support::InteractionPresenter do
       support_request: 4,
       hub_notes: 5,
       progress_notes: 6,
+      hub_migration: 7,
+      faf_support_request: 8,
+      procurement_updated: 9,
+      existing_contract_updated: 10,
+      new_contract_updated: 11,
+      savings_updated: 12,
     }
   end
 
@@ -37,7 +43,7 @@ RSpec.describe Support::InteractionPresenter do
   context "with additonal data" do
     let(:additional_data) do
       {
-        organisation_id: organisation.id,
+        organisation_name: organisation.name,
         category_id: category.id,
         support_request_id: "000001",
       }
@@ -45,7 +51,7 @@ RSpec.describe Support::InteractionPresenter do
 
     describe "#additional_data" do
       it "returns a formatted hash with the organsiation name" do
-        expect(presenter.additional_data).to include("organisation_id" => "Example Organisation")
+        expect(presenter.additional_data).to include("organisation_name" => "Example Organisation")
       end
 
       it "returns a formatted hash with the category name" do

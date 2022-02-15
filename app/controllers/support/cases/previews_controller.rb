@@ -19,8 +19,10 @@ module Support
 
     def form_params
       params.require(:create_case_form).permit(
-        :school_urn,
         :organisation_id,
+        :organisation_name,
+        :organisation_type,
+        :organisation_urn,
         :first_name,
         :last_name,
         :email,
@@ -31,6 +33,7 @@ module Support
         :estimated_savings,
         :hub_notes,
         :progress_notes,
+        :request_type,
       )
     end
   end

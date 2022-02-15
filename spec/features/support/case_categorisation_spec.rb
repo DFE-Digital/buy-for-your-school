@@ -55,4 +55,33 @@ describe "Case categorisation" do
       end
     end
   end
+
+  describe "removing category from a case" do
+    context "when case has a category" do
+      before do
+        within ".govuk-summary-list__row", text: "Category" do
+          click_link "Change"
+        end
+      end
+
+      it "lets the user remove the category" do
+        click_button "Remove procurement category"
+        expect(find(".govuk-notification-banner__content")).to have_text "Successfully removed case category"
+        expect(find("#case-details")).to have_text "Not applicable"
+      end
+    end
+
+    context "when case has no category" do
+      before do
+        support_case.update!(category_id: nil)
+        within ".govuk-summary-list__row", text: "Category" do
+          click_link "Change"
+        end
+      end
+
+      it "does not show the delete button" do
+        expect(page).not_to have_button "Remove procurement category"
+      end
+    end
+  end
 end

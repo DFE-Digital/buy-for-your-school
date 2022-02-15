@@ -14,7 +14,6 @@ module Support
       kase = Case.create!(
         agent_id: @agent_id,
         category_id: @attrs[:category_id],
-        organisation_id: @attrs[:organisation_id],
         source: @attrs[:source],
         first_name: @attrs[:first_name],
         last_name: @attrs[:last_name],
@@ -25,6 +24,7 @@ module Support
         new_contract: NewContract.create!,
         existing_contract: ExistingContract.create!,
         procurement: Procurement.create!,
+        **organisation_attributes,
       )
 
       Support::RecordAction.new(
@@ -33,6 +33,16 @@ module Support
       ).call
 
       kase
+    end
+
+  private
+
+    def organisation_attributes
+      if @attrs.key?(:organisation)
+        { organisation: @attrs[:organisation] }
+      else
+        { organisation_type: @attrs[:organisation_type], organisation_id: @attrs[:organisation_id] }
+      end
     end
   end
 end

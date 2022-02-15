@@ -96,7 +96,7 @@ private
   def open_case
     kase_attrs = {
       category_id: map_category.id,
-      organisation_id: map_organisation&.id,
+      organisation: map_organisation,
       source: "digital",
       first_name: user.first_name,
       last_name: user.last_name,

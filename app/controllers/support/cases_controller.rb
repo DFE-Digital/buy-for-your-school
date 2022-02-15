@@ -1,11 +1,22 @@
 module Support
   class CasesController < Cases::ApplicationController
+    require "will_paginate/array"
     before_action :current_case, only: %i[show]
 
+    include Concerns::HasInteraction
+
     def index
-      @cases = Case.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }
-      @new_cases = Case.includes(%i[agent category organisation]).initial.map { |c| CasePresenter.new(c) }
-      @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).map { |c| CasePresenter.new(c) }
+      respond_to do |format|
+        format.json do
+          @cases = CaseSearch.omnisearch(params[:q])
+        end
+
+        format.html do
+          @cases = Case.includes(%i[agent category organisation]).all.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
+          @new_cases = Case.includes(%i[agent category organisation]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
+          @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+        end
+      end
     end
 
     def show
@@ -43,8 +54,10 @@ module Support
 
     def form_params
       params.require(:create_case_form).permit(
-        :school_urn,
+        :organisation_urn,
+        :organisation_name,
         :organisation_id,
+        :organisation_type,
         :first_name,
         :last_name,
         :email,
@@ -55,11 +68,8 @@ module Support
         :estimated_savings,
         :hub_notes,
         :progress_notes,
+        :request_type,
       )
-    end
-
-    def create_interaction(kase_id, event_type, body, additional_data = nil)
-      CreateInteraction.new(kase_id, event_type, current_agent.id, { body: body, additional_data: additional_data }.compact).call
     end
   end
 end

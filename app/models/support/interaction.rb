@@ -34,6 +34,10 @@ module Support
     #   hub progress notes
     #   hub migration
     #   faf_support_request
+    #   procurement_updated
+    #   existing_contract_updated
+    #   new_contract_updated
+    #   savings_updated
     enum event_type: {
       note: 0,
       phone_call: 1,
@@ -44,6 +48,10 @@ module Support
       hub_progress_notes: 6,
       hub_migration: 7,
       faf_support_request: 8,
+      procurement_updated: 9,
+      existing_contract_updated: 10,
+      new_contract_updated: 11,
+      savings_updated: 12,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

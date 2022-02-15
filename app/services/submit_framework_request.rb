@@ -53,7 +53,7 @@ private
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
     kase_attrs = {
-      organisation_id: map_organisation&.id,
+      organisation: map_organisation,
       source: "faf",
       # source: "digital",
       first_name: user.first_name,

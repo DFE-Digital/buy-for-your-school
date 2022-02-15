@@ -7,16 +7,19 @@
 
   <%= render "components/autocomplete",
              container_id: "create-case-form-school-urn-field",
-             label_text: I18n.t("support.case_hub_migration.label.school_urn"),
+             label_text: I18n.t("support.case_hub_migration.label.school_name"),
              label_class: "govuk-hint",
              element_id: "school-urn-autocomplete",
-             element_name: "create_case_form[school_urn]",
-             template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
-             value_field: :urn,
-             default_value: "#{@form.school_urn}",
-             query_url: support_organisations_path(format: :json, q: "{{QUERY}}") do %>
-    <%= form.govuk_text_field :school_urn, autofocus: true, label: { text: "Establishment URN" } %>
-  <% end %>
+             element_name: "create_case_form[organisation_name]",
+             template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
+             value_field: :name,
+             default_value: @form.organisation_name,
+             hidden_fields: {
+               'create_case_form[organisation_id]' => [:id, @form.organisation_id],
+               'create_case_form[organisation_type]' => [:source, @form.organisation_type],
+               'create_case_form[organisation_urn]' => [:urn, @form.organisation_urn],
+             },
+             query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
 
 
@@ -36,14 +39,33 @@
                              label: { text: I18n.t("support.case_hub_migration.label.phone_number", optional: I18n.t("support.generic.form.optional")) }
   %>
 
-  <%= form.govuk_select(:category_id, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
-    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.none") %></option>
+  <%=
+    form.govuk_collection_radio_buttons :request_type,
+      [
+        OpenStruct.new(value: true, label: I18n.t("support.generic.yes")),
+        OpenStruct.new(value: false, label: I18n.t("support.generic.no")),
+      ],
+      :value,
+      :label,
+      inline: true,
+      hint: { text: I18n.t("support.case_hub_migration.request_type.hint") },
+      legend: { text: I18n.t("support.case_hub_migration.request_type.legend"), size: "l" }
+  %>
+
+  <% 
+    category_id_hidden = unless form.object.category_id && form.object.request_type
+        "govuk-!-display-none"
+    end
+   %>
+
+  <%= form.govuk_select(:category_id, form_group: { class: "govuk-inset-text #{category_id_hidden}" }, label: { text: I18n.t("support.case_hub_migration.label.category") }) do %>
+    <option data-tags="<%= I18n.t("support.case_categorisations.label.none") %>" value=""><%= I18n.t("support.case_categorisations.label.please_select") %></option>
     <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
-    <optgroup label="<%= parent_name%>">
-      <% sub_categories.each do |name, value| %>
-      <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
-      <% end %>
-    </optgroup>
+      <optgroup label="<%= parent_name%>">
+        <% sub_categories.each do |name, value| %>
+          <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
+        <% end %>
+      </optgroup>
     <% end %>
   <% end %>
 
@@ -84,3 +106,5 @@
 
   <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
 <% end %>
+
+<%= javascript_include_tag "supported_create_case" %>

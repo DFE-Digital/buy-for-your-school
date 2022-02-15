@@ -1,15 +1,25 @@
 # frozen_string_literal: true
 
 require "csv"
+require "pg_search"
 
 module Support
   #
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
+    include ::PgSearch::Model
+
+    pg_search_scope :search, against: %i[ref], associated_against: {
+      organisation: %i[name urn],
+      agent: %i[first_name last_name],
+    }
+
+    scope :search, ->(q) { Support::CaseSearch.omnisearch(q).joins }
+
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
-    belongs_to :organisation, class_name: "Support::Organisation", optional: true
+    belongs_to :organisation, polymorphic: true, optional: true
     has_many :interactions, class_name: "Support::Interaction"
     has_many :emails, class_name: "Support::Email"
 

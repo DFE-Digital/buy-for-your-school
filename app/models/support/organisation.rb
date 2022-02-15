@@ -17,7 +17,7 @@ module Support
                counter_cache: true,
                class_name: "Support::EstablishmentType"
 
-    has_many :cases, class_name: "Support::Case"
+    has_many :cases, class_name: "Support::Case", as: :organisation
 
     validates :urn, uniqueness: true
     validates :name, presence: true
@@ -48,17 +48,16 @@ module Support
       opening: 4,
     }
 
-    def self.find_by_formatted_name(formatted_name)
-      urn, name = formatted_name.split(" - ")
-      find_by(urn: urn, name: name)
-    end
-
     def formatted_name
       "#{urn} - #{name}"
     end
 
     def postcode
       address["postcode"]
+    end
+
+    def org_type
+      establishment_type&.name
     end
   end
 end

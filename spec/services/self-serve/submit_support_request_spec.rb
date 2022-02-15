@@ -34,7 +34,7 @@ RSpec.describe SubmitSupportRequest do
 
   describe "#call" do
     before do
-      create :support_organisation, urn: "urn-type-1", name: "Specialist School for Testing"
+      create :support_organisation, urn: "100253", name: "Specialist School for Testing"
     end
 
     let(:user) { create(:user, :one_supported_school) }

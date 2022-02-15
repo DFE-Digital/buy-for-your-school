@@ -7,11 +7,14 @@ module Support
     # @return [Hash]
     def additional_data
       super.each_with_object({}) do |(field, value), formatted_hash|
-        next if field.in?(%w[support_request_id])
+        next if field.in?(%w[
+          support_request_id
+          organisation_type
+          organisation_urn
+          organisation_id
+        ])
 
         case field
-        when "organisation_id"
-          formatted_hash["organisation_id"] = organisation(value).name
         when "category_id"
           formatted_hash["category_id"] = category(value).title if value.present?
         else
@@ -68,6 +71,10 @@ module Support
       EmailPresenter.new(super) if super
     end
 
+    def no_display?
+      event_type.in?(%w[procurement_updated])
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
@@ -81,7 +88,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated].include?(key)
       end
     end
 

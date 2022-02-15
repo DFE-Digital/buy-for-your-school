@@ -54,6 +54,7 @@
               <% end %>
             </tbody>
           </table>
+          <%= render "components/pagination", records: @my_cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
         <% end %>
       </div>
     </div>
@@ -94,6 +95,7 @@
               <% end %>
             </tbody>
           </table>
+          <%= render "components/pagination", records: @new_cases, page_param_name: 'new_cases_page', pagination_params: { anchor: "new-cases" } %>
         <% end %>
       </div>
     </div>
@@ -137,6 +139,7 @@
               <% end %>
             </tbody>
           </table>
+          <%= render "components/pagination", records: @cases, page_param_name: 'cases_page', pagination_params: { anchor: "all-cases" } %>
         <% end %>
       </div>
     </div>
