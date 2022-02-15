@@ -232,6 +232,7 @@ RSpec.feature "Create case", js: true do
 
   def select_organisation(term)
     fill_in "Organisation name", with: term
+    sleep 0.5
     find(".autocomplete__option", text: term)&.click
   end
 end

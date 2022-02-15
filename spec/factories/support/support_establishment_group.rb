@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :support_establishment_group, class: "Support::EstablishmentGroup" do
     sequence(:name) { |n| "Group ##{n}" }
     ukprn { "1010010" }
-    status { [0, 1, 2].sample }
-    uid { "1234" }
+    status { 1 }
+    sequence(:uid) { |n| n.to_s }
     establishment_group_type_id { "abc1111" }
     association :establishment_group_type,
                 factory: :support_establishment_group_type
