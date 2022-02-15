@@ -3,7 +3,7 @@ FactoryBot.define do
     sequence(:name) { |n| "Group ##{n}" }
     ukprn { "1010010" }
     status { 1 }
-    sequence(:uid) { |n| n.to_s }
+    sequence(:uid, &:to_s)
     establishment_group_type_id { "abc1111" }
     association :establishment_group_type,
                 factory: :support_establishment_group_type
