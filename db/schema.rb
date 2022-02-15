@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_11_162056) do
+ActiveRecord::Schema.define(version: 2022_02_15_092232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -499,6 +499,7 @@ ActiveRecord::Schema.define(version: 2022_02_11_162056) do
       'Support::Organisation'::text AS source
      FROM (support_organisations organisations
        JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
   UNION ALL
    SELECT egroups.id,
       egroups.name,
@@ -508,7 +509,8 @@ ActiveRecord::Schema.define(version: 2022_02_11_162056) do
       egtypes.name AS establishment_type,
       'Support::EstablishmentGroup'::text AS source
      FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)));
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
   SQL
   create_view "support_case_searches", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
