@@ -283,7 +283,7 @@ en:
     # step 0
     start_page:
       header: Request advice and guidance for your procurement
-      overview_purpose: Use this service if you're a state funded school, multi-academy trust or federation in England.
+      overview_purpose: Use this service if you're a state funded school in England.
       you_can_ask_for: You can ask for
       overview_category_list:
         - general guidance on buying goods or services for schools
@@ -455,8 +455,8 @@ en:
   #
   support:
     generic:
-      'yes': 'Yes'
-      'no': 'No'
+      "yes": "Yes"
+      "no": "No"
       continue: Continue
       cancel: Cancel
       back: Back
@@ -722,7 +722,6 @@ en:
           notifications: Notifications
           my_cases: My Cases
 
-
     case_organisation:
       label: What Organisation do you want to add?
       flash:
@@ -831,6 +830,7 @@ en:
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
+        procurement_updated: Procurement updated
       label:
         email_unread: Unread
         contact_detail: Contact details
