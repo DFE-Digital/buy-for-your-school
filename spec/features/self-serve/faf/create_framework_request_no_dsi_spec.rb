@@ -267,7 +267,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
     describe "search for a group page" do
       it "has a back link to step 3" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bstep%5D=3"
+        expect(page).to have_current_path(/step%5D=3/)
         expect(page).to have_text "What type of organisation are you buying for?"
       end
 
@@ -279,7 +279,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
         within(find("details.govuk-details")) do
           expect(find("span.govuk-details__summary-text")).to have_text "Can't find it?"
-          expect(page).to have_text "This search lists groups and trusts, such as a multi-academy trust or federation. Search for a single school instead."
+          expect(page).to have_text "This search lists academy trusts and federations. Search for a single school instead."
           expect(page).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           expect(page).to have_text "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
           expect(page).to have_link "Search for a single school"
@@ -290,7 +290,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
 
       it "has a link to the single school search page" do
         find("span", text: "Can't find it?").click
-        click_on "Search for a single school"
+        click_on "Search for a single school instead."
         expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for your school"
       end
@@ -298,7 +298,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
       it "validates group field" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter your Group or Trusts name or UKPRN and select it from the list", href: "#framework-support-form-group-uid-field-error"
+        expect(page).to have_link "Enter your academy trust or federation name, or UKPRN and select it from the list", href: "#framework-support-form-group-uid-field-error"
       end
     end
 
@@ -307,9 +307,9 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
         complete_group_step
       end
 
-      it "has a back link to step 3" do
+      it "has a back link to step 4" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bgroup_uid%5D=9876+-+Group+%231&framework_support_form%5Bstep%5D=4"
+        expect(page).to have_current_path(/step%5D=4/)
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
@@ -335,7 +335,7 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
           expect(all("dd.govuk-summary-list__value")[3]).to have_text "UID: 9876 UKPRN: 1010010"
         end
         expect(page).to have_unchecked_field "Yes"
-        expect(page).to have_unchecked_field "No, I need to choose another group or trust"
+        expect(page).to have_unchecked_field "No, I need to choose another academy trust or federation"
         expect(page).to have_button "Continue"
       end
     end
