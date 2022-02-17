@@ -389,10 +389,10 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "This search lists groups and trusts, such as a multi-academy trust or federation. %{search_for_a_school_link} instead."
-          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
-          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-        search_for_a_school_link: Search for a single school
+          - "This search lists academy trusts and federations. %{search_for_a_school_link}"
+          - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
+        search_for_a_school_link: Search for a single school instead.
       button: Continue
 
     which_school:
@@ -415,7 +415,7 @@ en:
         ukprn: UKPRN
       choice:
         continue: "Yes"
-        go_back: "No, I need to choose another school"
+        go_back: No, I need to choose another school
 
     confirm_group_or_trust:
       title: Is this the academy trust or federation you're buying for? - Get help buying for schools - GOV.UK
@@ -429,7 +429,7 @@ en:
         uid: UID
         ukprn: UKPRN
       choice:
-        go_back: "No, I need to choose another group or trust"
+        go_back: No, I need to choose another academy trust or federation
 
   faf_submissions:
     header:

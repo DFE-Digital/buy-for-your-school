@@ -39,6 +39,28 @@ describe Support::IncomingEmails::CaseAssignment do
         expect(case_reference).to be_nil
       end
     end
+
+    describe "subject lines to match" do
+      [
+        "Case 000123 - Enquiry",
+        "FW: Case 000123 - Enquiry",
+        "RE: Case 000123 - Enquiry",
+        "RE: 000123 - Enquiry",
+        "Re: 000123 Enquiry",
+        "Re: Case 000123 Enquiry",
+      ].each do |subject|
+        it { expect(described_class.new(email: double(subject: subject)).case_reference_from_subject).to eq("000123") }
+      end
+    end
+
+    describe "subject lines to ignore" do
+      [
+        "Aldgate 120777",
+        "Another URN 10233435",
+      ].each do |subject|
+        it { expect(described_class.new(email: double(subject: subject)).case_reference_from_subject).to be_nil }
+      end
+    end
   end
 
   describe "#case_reference_from_body" do
@@ -86,8 +108,10 @@ describe Support::IncomingEmails::CaseAssignment do
   describe "#case_for_email" do
     subject(:case_for_email) { case_assignment.case_for_email }
 
+    let(:email_folder) { :inbox }
     let(:email_sender) { { "address" => "contact@email.com", "name" => "Contact Multi Part Name" } }
-    let(:case_assignment) { described_class.new(email: double(sender: email_sender)) }
+    let(:email) { double(sender: email_sender, sent_items?: email_folder == :sent_items) }
+    let(:case_assignment) { described_class.new(email: email) }
     let(:subject_ref) { "100000" }
     let(:body_ref) { "200000" }
     let(:conversation_ref) { "300000" }
@@ -142,25 +166,38 @@ describe Support::IncomingEmails::CaseAssignment do
         let(:body_ref) { nil }
         let(:conversation_ref) { nil }
 
-        it "creates a new case for the email to be assigned to" do
-          expect(case_for_email.ref).to eq(Support::Case.last.ref)
-          expect(case_for_email.source).to eq("incoming_email")
-          expect(case_for_email.email).to eq("contact@email.com")
-          expect(case_for_email.first_name).to eq("Contact")
-          expect(case_for_email.last_name).to eq("Multi Part Name")
-          expect(case_for_email.action_required).to be(true)
+        context "when the email is in the sent_items folder" do
+          let(:email_folder) { :sent_items }
+
+          it "no further cases are created and none assigned to the email" do
+            expect(case_for_email).to be_nil
+            expect(Support::Case.count).to eq(3) # 3 created in the "before" above
+          end
         end
 
-        context "when the sender only has one name" do
-          let(:email_sender) { { "address" => "contact@email.com", "name" => "Contact" } }
+        context "when the email is in the inbox folder" do
+          let(:email_folder) { :inbox }
 
-          it "sets the contact details as XXX" do
+          it "creates a new case for the email to be assigned to" do
             expect(case_for_email.ref).to eq(Support::Case.last.ref)
             expect(case_for_email.source).to eq("incoming_email")
             expect(case_for_email.email).to eq("contact@email.com")
             expect(case_for_email.first_name).to eq("Contact")
-            expect(case_for_email.last_name).to eq("")
+            expect(case_for_email.last_name).to eq("Multi Part Name")
             expect(case_for_email.action_required).to be(true)
+          end
+
+          context "when the sender only has one name" do
+            let(:email_sender) { { "address" => "contact@email.com", "name" => "Contact" } }
+
+            it "sets the contact details as XXX" do
+              expect(case_for_email.ref).to eq(Support::Case.last.ref)
+              expect(case_for_email.source).to eq("incoming_email")
+              expect(case_for_email.email).to eq("contact@email.com")
+              expect(case_for_email.first_name).to eq("Contact")
+              expect(case_for_email.last_name).to eq("")
+              expect(case_for_email.action_required).to be(true)
+            end
           end
         end
       end
