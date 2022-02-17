@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog 1.0.0].
 
+## [unreleased]
+
 <!--
 
 ## [release-xxx] - xxxx-xx-xx
@@ -15,7 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 -->
 
 
-## [unreleased]
+## [release-004] - 2022-02-15 (020)
 
 - Case can be set to an organisation or group, with search box to search both organisations and groups [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/851)
 - Add pagination [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/854)
