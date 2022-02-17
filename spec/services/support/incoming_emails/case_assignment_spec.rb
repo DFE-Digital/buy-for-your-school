@@ -39,6 +39,28 @@ describe Support::IncomingEmails::CaseAssignment do
         expect(case_reference).to be_nil
       end
     end
+
+    describe "subject lines to match" do
+      [
+        "Case 000123 - Enquiry",
+        "FW: Case 000123 - Enquiry",
+        "RE: Case 000123 - Enquiry",
+        "RE: 000123 - Enquiry",
+        "Re: 000123 Enquiry",
+        "Re: Case 000123 Enquiry",
+      ].each do |subject|
+        it { expect(described_class.new(email: double(subject: subject)).case_reference_from_subject).to eq("000123") }
+      end
+    end
+
+    describe "subject lines to ignore" do
+      [
+        "Aldgate 120777",
+        "Another URN 10233435",
+      ].each do |subject|
+        it { expect(described_class.new(email: double(subject: subject)).case_reference_from_subject).to be_nil }
+      end
+    end
   end
 
   describe "#case_reference_from_body" do

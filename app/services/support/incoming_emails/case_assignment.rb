@@ -21,7 +21,7 @@ module Support
       end
 
       def case_reference_from_subject
-        email.subject.match(/^(Re: )?Case ([0-9]{6,6})/).to_a.last
+        email.subject.match(/(?:^| )(0[0-9]{5,5})/).to_a.last
       end
 
       def case_reference_from_body
