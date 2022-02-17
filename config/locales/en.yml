@@ -25,7 +25,8 @@ en:
     design: "%{env} Environment"
     beta:
       tag: beta
-      message: This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
+      message: This is a new service – your %{feedback_link} will help us to improve it.
+      feedback_link: feedback
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -273,6 +274,33 @@ en:
     users_header: Users
     download_csv: Download (.csv)
     download_json: Download (.json)
+  
+  # /feedback
+  feedback:
+    title: Feedback - Get help buying for schools - GOV.UK
+    header: Give feedback on Get help buying for schools
+    survey:
+      title: Satisfaction survey
+      satisfaction_question: Overall, how did you feel about the service you received today?
+      satisfaction_options:
+        very_dissatisfied: Very dissatisfied
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied or dissatisfied
+        satisfied: Satisfied
+        very_satisfied: Very satisfied
+      feedback_text_question: How could we improve this service? (Optional)
+      feedback_text_hint: Do not include personal or financial information, for example your National Insurance or credit card numbers.
+      submit: Submit
+    confirmation:
+      submitted: Feedback submitted
+      message: We will use your feedback to improve this service.
+      get_involved:
+        header: Get involved
+        body: "%{contact_form_link} by opting in to take part in user research."
+        contact_form_link: Help us improve this service
+
+ 
+
 
   #
   # FaF -----------------------------------------------------------------
