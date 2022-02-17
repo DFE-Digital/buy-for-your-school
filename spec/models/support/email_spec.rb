@@ -213,6 +213,15 @@ describe Support::Email do
         email.set_case_action_required
         expect(support_case.reload).to be_action_required
       end
+
+      context "when email folder is sent_items" do
+        let(:email) { build(:support_email, case: support_case, folder: :sent_items) }
+
+        it "does not change the action required status" do
+          email.set_case_action_required
+          expect(support_case.reload).not_to be_action_required
+        end
+      end
     end
   end
 
