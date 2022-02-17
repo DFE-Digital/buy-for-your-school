@@ -52,7 +52,7 @@ en:
         school_urn:
           missing: Select the school you want help buying for
         group_uid:
-          missing: Enter your Group or Trusts name or UKPRN and select it from the list
+          missing: Enter your academy trust or federation name, or UKPRN and select it from the list
         message_body:
           missing: You must tell us how we can help
         correct_group:
