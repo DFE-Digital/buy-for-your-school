@@ -17,11 +17,11 @@ module Support
         case_reference ||= case_reference_from_conversation
 
         found_case = Support::Case.find_by(ref: case_reference) if case_reference.present?
-        found_case || new_case_for_email
+        found_case || (new_case_for_email unless email.sent_items?)
       end
 
       def case_reference_from_subject
-        email.subject.match(/^(Re: )?Case ([0-9]{6,6})/).to_a.last
+        email.subject.match(/(?:^| )(0[0-9]{5,5})/).to_a.last
       end
 
       def case_reference_from_body

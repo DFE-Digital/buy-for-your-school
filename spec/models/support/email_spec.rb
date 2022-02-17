@@ -95,18 +95,6 @@ describe Support::Email do
       expect(Support::IncomingEmails::CaseAssignment).to have_received(:detect_and_assign_case).with(email).once
     end
 
-    context "when the email is in the sent items box" do
-      before { email.folder = :sent_items }
-
-      it "does not attempt to assign a case at all" do
-        allow(Support::IncomingEmails::CaseAssignment).to receive(:detect_and_assign_case)
-
-        email.automatically_assign_case
-
-        expect(Support::IncomingEmails::CaseAssignment).not_to have_received(:detect_and_assign_case)
-      end
-    end
-
     context "when the email has already been assigned a case" do
       before { email.case = create(:support_case) }
 
@@ -219,11 +207,20 @@ describe Support::Email do
   describe "#set_case_action_required" do
     context "when case is attached" do
       let(:support_case) { create(:support_case) }
-      let(:email) { build(:support_email, case: support_case) }
+      let(:email) { build(:support_email, case: support_case, folder: :inbox) }
 
       it "sets case to action required to inform users an email is to be read" do
         email.set_case_action_required
         expect(support_case.reload).to be_action_required
+      end
+
+      context "when email folder is sent_items" do
+        let(:email) { build(:support_email, case: support_case, folder: :sent_items) }
+
+        it "does not change the action required status" do
+          email.set_case_action_required
+          expect(support_case.reload).not_to be_action_required
+        end
       end
     end
   end
