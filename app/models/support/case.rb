@@ -9,11 +9,25 @@ module Support
   #
   class Case < ApplicationRecord
     include ::PgSearch::Model
+    include AASM
 
     pg_search_scope :search, against: %i[ref], associated_against: {
       organisation: %i[name urn],
       agent: %i[first_name last_name],
     }
+
+    aasm do
+      state :initial, initial: true
+      state :opened, :resolved, :pending, :closed, :pipeline, :no_response
+
+      event :resolve do
+        transitions from: :opened, to: :resolved
+      end
+
+      event :reopen do
+        transitions from :resolved, to: :opened
+      end
+    end
 
     scope :search, ->(q) { Support::CaseSearch.omnisearch(q).joins }
 
