@@ -95,18 +95,6 @@ describe Support::Email do
       expect(Support::IncomingEmails::CaseAssignment).to have_received(:detect_and_assign_case).with(email).once
     end
 
-    context "when the email is in the sent items box" do
-      before { email.folder = :sent_items }
-
-      it "does not attempt to assign a case at all" do
-        allow(Support::IncomingEmails::CaseAssignment).to receive(:detect_and_assign_case)
-
-        email.automatically_assign_case
-
-        expect(Support::IncomingEmails::CaseAssignment).not_to have_received(:detect_and_assign_case)
-      end
-    end
-
     context "when the email has already been assigned a case" do
       before { email.case = create(:support_case) }
 

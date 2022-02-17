@@ -47,7 +47,7 @@ module Support
     end
 
     def automatically_assign_case
-      return if case_id.present? || sent_items?
+      return if case_id.present?
 
       Support::IncomingEmails::CaseAssignment.detect_and_assign_case(self)
 
