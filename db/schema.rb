@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_092232) do
+ActiveRecord::Schema.define(version: 2022_02_16_170254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -463,6 +463,15 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.index ["section_id"], name: "index_tasks_on_section_id"
     t.index ["skipped_ids"], name: "index_tasks_on_skipped_ids", using: :gin
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
+  end
+
+  create_table "user_feedback", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "service", null: false
+    t.integer "satisfaction", null: false
+    t.string "feedback_text"
+    t.boolean "logged_in", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

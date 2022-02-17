@@ -61,3 +61,12 @@ en:
           bool?: Select whether this is the organisation you're buying for
         affiliation:
           missing: Select the school or group you want help buying for
+  
+  # Feedback form
+  feedback:
+    rules:
+      satisfaction: "" # Omitted
+    errors:
+      rules:
+        satisfaction:
+          missing: Select how you feel about the service you received

@@ -1,6 +1,8 @@
 # Capture user feedback
 #
 class UserFeedback < ApplicationRecord
+  self.table_name = "user_feedback"
+
   # Service
   #
   #   create_a_specification
