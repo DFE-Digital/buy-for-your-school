@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   resources :design, only: %i[index show]
   resources :categories, only: %i[index]
+  resources :feedback, only: %i[index show]
 
   #
   # Framework Requests ---------------------------------------------------------
