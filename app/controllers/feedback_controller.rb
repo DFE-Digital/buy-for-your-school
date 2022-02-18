@@ -19,7 +19,7 @@ class FeedbackController < ApplicationController
       redirect_to feedback_path(
         UserFeedback.create!(
           logged_in: !current_user.guest?,
-          logged_in_as: current_user&.id,
+          logged_in_as_id: current_user&.id,
           **form.to_h,
         ),
       )
