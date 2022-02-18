@@ -3,7 +3,7 @@
 class UserFeedback < ApplicationRecord
   self.table_name = "user_feedback"
 
-  belongs_to :logged_in_as, class_name: 'User', optional: true
+  belongs_to :logged_in_as, class_name: "User", optional: true
 
   # Service
   #

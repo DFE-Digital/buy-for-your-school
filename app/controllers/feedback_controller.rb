@@ -21,7 +21,7 @@ class FeedbackController < ApplicationController
           logged_in: !current_user.guest?,
           logged_in_as: current_user&.id,
           **form.to_h,
-        )
+        ),
       )
     else
       render :new
@@ -74,9 +74,9 @@ private
 
   def show_view
     @show_view ||= if feedback.full_name.present?
-      :details_submitted
-    else
-      :feedback_submitted
-    end
+                     :details_submitted
+                   else
+                     :feedback_submitted
+                   end
   end
 end

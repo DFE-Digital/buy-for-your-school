@@ -247,12 +247,12 @@ ActiveRecord::Schema.define(version: 2022_02_18_085717) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
+    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
-    t.uuid "procurement_id"
     t.boolean "action_required", default: false
     t.string "organisation_type"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
@@ -472,9 +472,9 @@ ActiveRecord::Schema.define(version: 2022_02_18_085717) do
     t.boolean "logged_in", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "logged_in_as_id"
     t.string "full_name"
     t.string "email"
+    t.uuid "logged_in_as_id"
     t.index ["logged_in_as_id"], name: "index_user_feedback_on_logged_in_as_id"
   end
 

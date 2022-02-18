@@ -22,7 +22,6 @@ class FeedbackFormSchema < Schema
     key.failure(:missing) if key? && value.blank?
   end
 
-
   rule(:email) do
     if key? && (value.blank? || !URI::MailTo::EMAIL_REGEXP.match?(value))
       key.failure(:format?)

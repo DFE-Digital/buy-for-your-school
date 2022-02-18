@@ -1,7 +1,9 @@
 class AddUserDataToUserFeedback < ActiveRecord::Migration[6.1]
   def change
-    add_reference :user_feedback, :logged_in_as, foreign_key: { to_table: :users }, type: :uuid
-    add_column :user_feedback, :full_name, :string
-    add_column :user_feedback, :email, :string
+    change_table :user_feedback, bulk: true do |t|
+      t.string :full_name
+      t.string :email
+      t.belongs_to :logged_in_as, foreign_key: { to_table: :users }, type: :uuid
+    end
   end
 end
