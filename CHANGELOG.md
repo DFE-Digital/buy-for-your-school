@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog 1.0.0].
 
+## [unreleased]
+
 <!--
 
 ## [release-xxx] - xxxx-xx-xx
@@ -14,10 +16,18 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
-## [unreleased]
 
-- Ability to merge a NEW email case into an existing case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/853)
-- On Create a case, allow Category to be 'undefined' [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/848)
+## [release-020] - 2022-02-15
+
+### "Find a Framework" support for trusts
+
+- form steps reordered [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/866)
+- add 'Is this the group or trust?' page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/847)
+- add trusts to DSI journey and update kick-out page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/855)
+- add school type to the CYA page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/864)
+- add group search page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/850)
+- add 'Is it a school or group?' page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/849)
+- make trust members eligible to access the service [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/863)
 
 ## [release-019] - 2022-01-31
 

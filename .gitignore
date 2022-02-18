@@ -137,3 +137,6 @@ localhost.key
 storage
 
 .vscode/
+
+# dont ignore sql views
+!db/views/*.sql

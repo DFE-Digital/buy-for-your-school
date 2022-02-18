@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog 1.0.0].
 
+## [unreleased]
+
 <!--
 
 ## [release-xxx] - xxxx-xx-xx
@@ -15,9 +17,13 @@ The format is based on [Keep a Changelog 1.0.0].
 -->
 
 
-## [unreleased]
+## [release-004] - 2022-02-15 (020)
 
--
+- Case can be set to an organisation or group, with search box to search both organisations and groups [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/851)
+- Add pagination [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/854)
+- Ability to merge a NEW email case into an existing case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/853)
+- On Create a case, allow Category to be 'undefined' [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/848)
+- Remove actions for closed cases. [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/881)
 
 ## [release-003] - 2022-01-31 (019)
 
