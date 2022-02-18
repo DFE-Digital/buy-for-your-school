@@ -4,7 +4,7 @@ class FeedbackFormSchema < Schema
   config.messages.top_namespace = :feedback
 
   params do
-    required(:satisfaction).value(:symbol)
+    optional(:satisfaction).value(:symbol)
     optional(:feedback_text).value(:string)
   end
 

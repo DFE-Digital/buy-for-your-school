@@ -66,6 +66,7 @@ en:
   feedback:
     rules:
       satisfaction: "" # Omitted
+
     errors:
       rules:
         satisfaction:

@@ -8,6 +8,7 @@
     <p class="govuk-body"><%= I18n.t("feedback.confirmation.message") %></p>
 
     <h2 class="govuk-heading-m"><%= I18n.t("feedback.confirmation.get_involved.header") %></h2>
+    <% # TODO: update to link to contact form %>
     <p class="govuk-body"><%= I18n.t("feedback.confirmation.get_involved.body", contact_form_link: link_to(I18n.t("feedback.confirmation.get_involved.contact_form_link"), new_feedback_path, class: "govuk-link")).html_safe %></p>
   </div>
 </div>

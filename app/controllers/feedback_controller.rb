@@ -1,4 +1,5 @@
 class FeedbackController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :set_satisfaction_options
 
   breadcrumb "Dashboard", :dashboard_path
