@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog 1.0.0].
 
+## [unreleased]
+
 <!--
 
 ## [release-xxx] - xxxx-xx-xx
@@ -14,12 +16,12 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
-## [unreleased]
-
 - add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
 - add details page to capture user details after giving feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/890)
 
+## [release-020] - 2022-02-15
 ### "Find a Framework" support for trusts
+
 - form steps reordered [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/866)
 - add 'Is this the group or trust?' page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/847)
 - add trusts to DSI journey and update kick-out page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/855)
@@ -27,6 +29,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - add group search page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/850)
 - add 'Is it a school or group?' page [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/849)
 - make trust members eligible to access the service [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/863)
+
 ## [release-019] - 2022-01-31
 
 - add redirect to case management at login for agents [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/803)

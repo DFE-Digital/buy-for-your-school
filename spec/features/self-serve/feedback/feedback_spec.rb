@@ -4,7 +4,7 @@ RSpec.feature "User feedback page" do
     click_on "feedback"
   end
 
-  describe "navigate to the feedback page from the beta banner feedback link" do
+  describe "navigate to the feedback page" do
     context "when a user selects the feedback link in the page header" do
       it "displays the feedback page" do
         expect(find("h1.govuk-heading-xl")).to have_text "Give feedback on Get help buying for schools"
@@ -24,8 +24,8 @@ RSpec.feature "User feedback page" do
     end
   end
 
-  describe "error message when a satisfaction rating has not been selected" do
-    context "when user has not selected a satisfaction rating" do
+  describe "error message" do
+    context "when a user has not selected a satisfaction rating" do
       before do
         click_on "Submit"
       end
@@ -37,7 +37,7 @@ RSpec.feature "User feedback page" do
   end
 
   describe "feedback data is persisted" do
-    context "when user fills out the form" do
+    context "when a user fills out the form" do
       before do
         choose "Very satisfied"
         fill_in "feedback_form[feedback_text]", with: "test"
@@ -52,7 +52,7 @@ RSpec.feature "User feedback page" do
         expect(feedback.logged_in).to eq false
       end
 
-      it "navigates to feedback confirmation page" do
+      it "navigates to the feedback confirmation page" do
         expect(find("h1.govuk-panel__title")).to have_text "Feedback submitted"
         expect(all("p.govuk-body")[0]).to have_text "We will use your feedback to improve this service."
         expect(find("h2.govuk-heading-m")).to have_text "Get involved"
