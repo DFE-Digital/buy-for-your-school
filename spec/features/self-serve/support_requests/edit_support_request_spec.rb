@@ -1,4 +1,4 @@
-RSpec.feature "Edit an unsubmitted support request" do
+RSpec.feature "Edit an unsubmitted 'Digital Support' request" do
   let(:category) { create(:category, title: "Utilities") }
   let(:user) { create(:user) }
   let(:journey) { create(:journey, category: category, user: user) }

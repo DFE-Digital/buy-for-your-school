@@ -3,6 +3,11 @@
 #
 class Form
   extend Dry::Initializer
+  # extend Dry::Initializer[undefined: false]
+
+  # @!attribute [r] user
+  #   @return [?] form respondent, overriden in subclassed forms
+  option :user, optional: true, reader: :private
 
   # @!attribute [r] messages
   #   @return [Hash] field validation error messages
@@ -46,25 +51,44 @@ class Form
     @step -= num
   end
 
-  # @return [Hash] form parms as request attributes
+  # Override and prune keys that will not be persisted
+  #  super.except(:user, :step, :messages)
+  #
+  # @return [Hash] overridden form params as request attributes
   def to_h
-    self.class.dry_initializer.attributes(self).except(:step, :messages)
+    self.class.dry_initializer.attributes(self)
   end
 
-  # Populate form object with validation messages and form fields from given validation
-  #
-  # @param [Schema] validation
-  #
-  # @return [Form]
-  def self.from_validation(validation)
-    new(messages: validation.errors(full: true).to_h, **validation.to_h)
+  # @return [Hash] form params as request attributes
+  def data
+    to_h.except(:user, :step, :messages).merge(user_id: user.id)
   end
+
+  # FIXME
+  # @return [Hash] form parms as request attributes
+  # def back_data
+  #   data.except(:messages).merge(back: true).compact
+  # end
 
   # @see https://govuk-form-builder.netlify.app/introduction/error-handling/
   #
   # @return [Form::ErrorSummary]
   def errors
     ErrorSummary.new(messages)
+  end
+
+  # Conditional jumps to different steps or incremental move forward
+  #
+  # @return [Integer]
+  def forward
+    # noop
+  end
+
+  # Conditional jumps to different steps or incremental move backward
+  #
+  # @return [Integer]
+  def backward
+    # noop
   end
 
   #

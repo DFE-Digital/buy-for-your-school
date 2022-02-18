@@ -1,7 +1,54 @@
-RSpec.feature "Create a new framework request as a guest" do
+RSpec.feature "'Find a Framework' request as a guest" do
+  def complete_name_step
+    fill_in "framework_support_form[first_name]", with: "Test"
+    fill_in "framework_support_form[last_name]", with: "User"
+    click_continue
+  end
+
+  def complete_email_step
+    fill_in "framework_support_form[email]", with: "test@email.com"
+    click_continue
+  end
+
+  def complete_school_step
+    fill_in "Enter the name, postcode or unique reference number (URN) of your school", with: "School"
+    find(".autocomplete__option", text: "School #1").click
+    click_continue
+  end
+
+  def complete_school_details_step
+    choose "Yes"
+    click_continue
+  end
+
+  def complete_group_step
+    fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "Group"
+    find(".autocomplete__option", text: "Group #1").click
+    click_continue
+  end
+
+  def complete_help_message_step
+    fill_in "framework_support_form[message_body]", with: "I have a problem"
+    click_continue
+  end
+
+  let(:school_type) { create(:support_establishment_type, name: "Community school") }
+  let(:group_type) { create(:support_establishment_group_type, name: "Multi-academy Trust") }
+
   before do
-    create(:support_organisation, :with_address, urn: "100253", name: "School #1", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
-    create(:support_establishment_group, :with_address, name: "Group #1", uid: "9876", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
+    create(:support_organisation, :with_address,
+           urn: "100253",
+           name: "School #1",
+           phase: 7,
+           number: "334",
+           ukprn: "4346",
+           establishment_type: school_type)
+
+    create(:support_establishment_group, :with_address,
+           name: "Group #1",
+           uid: "9876",
+           establishment_group_type: group_type)
+
     visit "/procurement-support/new"
     choose "No, continue without a DfE Sign-in account"
     click_continue
@@ -32,10 +79,9 @@ RSpec.feature "Create a new framework request as a guest" do
       click_continue
     end
 
-    describe "the school search page (step 3)" do
-      it "has a back link to group or school decision page (step 2)" do
+    describe "the school search page" do
+      it "goes back to the 'What type of organisation are you buying for?' page" do
         click_on "Back"
-        # expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=3"
         expect(page).to have_current_path(/step%5D=3/)
         expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "What type of organisation are you buying for?"
@@ -61,7 +107,6 @@ RSpec.feature "Create a new framework request as a guest" do
       it "has a link to the group search page" do
         find("span", text: "Can't find it?").click
         click_on "Search for an academy trust or federation"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=true&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
@@ -72,14 +117,13 @@ RSpec.feature "Create a new framework request as a guest" do
       end
     end
 
-    describe "school details page" do
+    describe "the school details page" do
       before do
         complete_school_step
       end
 
-      it "has a back link to the school search page (step 3)" do
+      it "goes back to the school search page" do
         click_on "Back"
-        # expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=4"
         expect(page).to have_current_path(/step%5D=4/)
         expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "Search for your school"
@@ -112,7 +156,7 @@ RSpec.feature "Create a new framework request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "goes back to step 3 if user chooses no" do
+      it "choosing no goes back to the school search page" do
         choose "No, I need to choose another school"
         click_continue
         expect(page).to have_current_path "/procurement-support"
@@ -120,16 +164,17 @@ RSpec.feature "Create a new framework request as a guest" do
       end
     end
 
-    describe "what is your name page" do
+    describe "the name page" do
       before do
         complete_school_step
         complete_school_details_step
       end
 
-      it "has a back link to step 4" do
+      it "goes back to the school search page" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bcorrect_organisation%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=5"
-        expect(page).to have_text "Is this the school you're buying for?"
+        expect(page).to have_current_path(/step%5D=5/)
+        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_text "Search for your school"
       end
 
       it "has the correct attributes" do
@@ -152,16 +197,17 @@ RSpec.feature "Create a new framework request as a guest" do
       end
     end
 
-    describe "what is your email address page" do
+    describe "the email address page" do
       before do
         complete_school_step
         complete_school_details_step
         complete_name_step
       end
 
-      it "has a back link to step 3" do
+      it "goes back to the name page" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=6"
+        expect(page).to have_current_path(/step%5D=6/)
+        expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "What is your name?"
       end
 
@@ -182,7 +228,7 @@ RSpec.feature "Create a new framework request as a guest" do
       end
     end
 
-    describe "how can we help page" do
+    describe "the message text page" do
       before do
         complete_school_step
         complete_school_details_step
@@ -190,9 +236,10 @@ RSpec.feature "Create a new framework request as a guest" do
         complete_email_step
       end
 
-      it "has a back link to step 6" do
+      it "goes back to the email address page" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bemail%5D=test%40email.com&framework_support_form%5Bfirst_name%5D=Test&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bgroup_uid%5D=&framework_support_form%5Blast_name%5D=User&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=7"
+        expect(page).to have_current_path(/step%5D=7/)
+        expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "What is your email address?"
       end
 
@@ -213,65 +260,19 @@ RSpec.feature "Create a new framework request as a guest" do
         expect(find("#framework-support-form-message-body-error")).to have_text "Error: You must tell us how we can help"
       end
     end
-
-    describe "send your request page" do
-      before do
-        complete_school_step
-        complete_school_details_step
-        complete_name_step
-        complete_email_step
-        complete_help_message_step
-      end
-
-      it "has persisted the request" do
-        expect(FrameworkRequest.count).to eq 1
-      end
-
-      it "has a back link to step 7" do
-        click_on "Back"
-        expect(page).to have_current_path "/procurement-support/#{FrameworkRequest.first.id}/edit?step=7"
-        expect(page).to have_text "How can we help?"
-      end
-
-      it "has the correct attributes" do
-        expect(find("h1.govuk-heading-l")).to have_text "Send your request"
-        within("dl.govuk-summary-list") do
-          expect(all("dt.govuk-summary-list__key")[0]).to have_text "Your name"
-          expect(all("dd.govuk-summary-list__value")[0]).to have_text "Test User"
-          expect(all("dd.govuk-summary-list__actions")[0]).to have_link "Change"
-
-          expect(all("dt.govuk-summary-list__key")[1]).to have_text "Your email address"
-          expect(all("dd.govuk-summary-list__value")[1]).to have_text "test@email.com"
-          expect(all("dd.govuk-summary-list__actions")[1]).to have_link "Change"
-
-          expect(all("dt.govuk-summary-list__key")[2]).to have_text "Your school"
-          expect(all("dd.govuk-summary-list__value")[2]).to have_text "School #1"
-          expect(all("dd.govuk-summary-list__actions")[2]).to have_link "Change"
-
-          expect(all("dt.govuk-summary-list__key")[3]).to have_text "School type"
-          expect(all("dd.govuk-summary-list__value")[3]).to have_text "Single"
-          expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
-
-          expect(all("dt.govuk-summary-list__key")[4]).to have_text "Description of request"
-          expect(all("dd.govuk-summary-list__value")[4]).to have_text "I have a problem"
-          expect(all("dd.govuk-summary-list__actions")[4]).to have_link "Change"
-        end
-        expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
-        expect(page).to have_button "Send request"
-      end
-    end
   end
 
-  context "when group or trust", js: true do
+  context "when choosing a group or trust", js: true do
     before do
       choose "An academy trust or federation"
       click_continue
     end
 
-    describe "search for a group page" do
-      it "has a back link to step 3" do
+    describe "the search for a group page" do
+      it "goes back to choosing school or group" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=3/)
+        expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "What type of organisation are you buying for?"
       end
 
@@ -292,10 +293,10 @@ RSpec.feature "Create a new framework request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "has a link to the single school search page" do
+      it "links to the search for a school page" do
         find("span", text: "Can't find it?").click
+
         click_on "Search for a single school instead."
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=4"
         expect(page).to have_text "Search for your school"
       end
 
@@ -306,14 +307,15 @@ RSpec.feature "Create a new framework request as a guest" do
       end
     end
 
-    describe "group details page - is this the group or trust?" do
+    describe "the group confirmation page" do
       before do
         complete_group_step
       end
 
-      it "has a back link to step 4" do
+      it "goes back to the search for a group page" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=4/)
+        expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
@@ -343,38 +345,5 @@ RSpec.feature "Create a new framework request as a guest" do
         expect(page).to have_button "Continue"
       end
     end
-  end
-
-  def complete_name_step
-    fill_in "framework_support_form[first_name]", with: "Test"
-    fill_in "framework_support_form[last_name]", with: "User"
-    click_continue
-  end
-
-  def complete_email_step
-    fill_in "framework_support_form[email]", with: "test@email.com"
-    click_continue
-  end
-
-  def complete_school_step
-    fill_in "Enter the name, postcode or unique reference number (URN) of your school", with: "Schoo"
-    find(".autocomplete__option", text: "School #1").click
-    click_continue
-  end
-
-  def complete_school_details_step
-    choose "Yes"
-    click_continue
-  end
-
-  def complete_group_step
-    fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "Group"
-    find(".autocomplete__option", text: "Group #1").click
-    click_continue
-  end
-
-  def complete_help_message_step
-    fill_in "framework_support_form[message_body]", with: "I have a problem"
-    click_continue
   end
 end

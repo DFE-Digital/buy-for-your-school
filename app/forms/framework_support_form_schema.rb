@@ -61,7 +61,7 @@ class FrameworkSupportFormSchema < Schema
   rule do
     # validate that an organisation from an authenticated user's approved list is selected
     # either urn for a school or uid for a group
-    base.failure(:affiliation) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
+    base.failure(:affiliation) if values[:dsi].present? && values[:school_urn].blank? && values[:group_uid].blank?
   end
 
   # TODO: extract into a look-up service rather than access supported data directly

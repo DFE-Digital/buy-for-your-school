@@ -9,15 +9,30 @@
 #   5: message_body   (last and compulsory)
 #
 class SupportForm < Form
+  # @!attribute [r] user
+  #   @return [UserPresenter]
+  option :user, ::Types.Constructor(UserPresenter)
+
+  # @!attribute [r] step
+  # @return [Integer]
+  option :step, Types::Params::Integer, default: proc {
+    if user.supported_schools.one?
+      user.active_journeys.any? ? 3 : 4
+    else
+      2
+    end
+  }
+
   # @!attribute [r] phone_number
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :phone_number, optional: true
+  option :phone_number, optional: true # awaiting service readiness review
 
   # @!attribute [r] school_urn
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :school_urn, optional: true
+  # option :school_urn, optional: true
+  option :school_urn, default: proc { user.school_urn }
 
   # @!attribute [r] journey_id
   # @see SupportRequest SupportRequest attributes
@@ -33,6 +48,53 @@ class SupportForm < Form
   # @see SupportRequest SupportRequest attributes
   # @return [String]
   option :message_body, optional: true
+
+  # @return [Boolean]
+  def jump_to_category?
+    position?(3) && !has_journey?
+  end
+
+  # @return [nil]
+  def toggle
+    if position?(3) && has_journey?
+      forget_category!
+    elsif position?(4) && has_category?
+      forget_journey!
+    end
+  end
+
+  # Conditional jumps to different steps or incremental move forward
+  #
+  # @return [Integer]
+  def forward
+    if position?(2) && user.active_journeys.none?
+      go_to!(4)
+    elsif position?(3) && has_journey?
+      go_to!(5)
+    else
+      advance!
+    end
+  end
+
+  # Conditional jumps to different steps or incremental move backward
+  #
+  # @return [Integer]
+  def backward
+    if position?(4) && user.active_journeys.none?
+      go_to!(2)
+    elsif position?(5) && has_journey?
+      go_to!(3)
+    else
+      back!
+    end
+  end
+
+  # @return [Hash] toggle form data to step backward
+  def go_back
+    to_h.merge(back: true)
+  end
+
+private
 
   # @see SupportRequestsController#create
   #

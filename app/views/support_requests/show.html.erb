@@ -5,13 +5,17 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <% if @support_request.submitted? %>
-      <h1 class="govuk-heading-l">Your request has been submitted</h1>
-    <% else %>
-      <h1 class="govuk-heading-l"><%= I18n.t("support_request.section.submit_request") %></h1>
-    <% end %>
+    <h1 class="govuk-heading-l">
+      <% if @support_request.submitted? %>
+        Your request has been submitted
+      <% else %>
+        <%= I18n.t("support_request.section.submit_request") %>
+      <% end %>
+    </h1>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support_request.section.about_you") %></h2>
+    <h2 class="govuk-heading-m">
+      <%= I18n.t("support_request.section.about_you") %>
+    </h2>
 
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -36,7 +40,9 @@
       </div>
     </dl>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support_request.section.request_summary") %></h2>
+    <h2 class="govuk-heading-m">
+      <%= I18n.t("support_request.section.request_summary") %>
+    </h2>
 
     <dl class="govuk-summary-list">
 

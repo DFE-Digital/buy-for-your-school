@@ -2,7 +2,7 @@
 <%= form.hidden_field :school_urn, value: form.object.school_urn %>
 
 <%= form.govuk_collection_radio_buttons :journey_id,
-    current_user.active_journeys,
+    form.object.user.active_journeys,
     :id,
     :created_at,
     :description,

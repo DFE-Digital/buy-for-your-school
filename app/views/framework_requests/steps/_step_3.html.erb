@@ -1,25 +1,18 @@
-<!-- school lookup for guests or selection for users (3)  -->
+<%# school lookup for guests or selection for users (3) %>
 
 <%= form.hidden_field :dsi, value: form.object.dsi  %>
 <%= form.hidden_field :group, value: form.object.group %>
-<% unless current_user.guest?%>
-  <%= form.hidden_field :first_name, value: form.object.first_name %>
-  <%= form.hidden_field :last_name, value: form.object.last_name %>
-  <%= form.hidden_field :email, value: form.object.email %>
-<% end %>
 
-<%
-# form data to redirect to the same step but with the opposite group value
-# add 1 to the step and back = true so we're brought to the same step
-# used in the "Search for a single school/group" link
-form_data = @framework_support_form.to_h.merge(step: @framework_support_form.step + 1, back: true, dsi: !current_user.guest?, group: !@framework_support_form.group).compact
-%>
-
-<% if !current_user.guest? %>
+<% if current_user.guest? %>
+  <%=
+    template = @form.group ? "find_group" : "find_school"
+    render "framework_requests/steps/#{template}", form: form
+  %>
+<% else %>
   <%= content_for :title, I18n.t("faf.user_organisation.header") %>
 
   <%= form.govuk_radio_buttons_fieldset(:org_id, caption: { text: I18n.t("faf.which_school.caption"), size: "l" }, legend: { text: I18n.t("faf.which_school.legend"), size: "l" }) do %>
-      <% current_user.supported_orgs.each do |org| %>
+      <% form.object.user.supported_orgs.each do |org| %>
         <% if org.urn %>
           <%= form.govuk_radio_button :school_urn, org.urn, label: { text: org.name } %>
         <% else %>
@@ -29,8 +22,4 @@ form_data = @framework_support_form.to_h.merge(step: @framework_support_form.ste
   <% end %>
 
   <%= javascript_include_tag "faf_select_school" %>
-<% elsif @framework_support_form.multiple_schools? %>
-  <%= render "framework_requests/steps/search_for_a_group", form: form, form_data: form_data %>
-<% else %>
-  <%= render "framework_requests/steps/search_for_a_school", form: form, form_data: form_data %>
 <% end %>

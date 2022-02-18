@@ -1,4 +1,4 @@
-RSpec.feature "Edit an unsubmitted framework request" do
+RSpec.feature "Edit an unsubmitted 'Find a Framework' request" do
   before do
     create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
     create(:support_organisation, urn: "100254", name: "Greendale Academy for Bright Sparks")
@@ -6,7 +6,9 @@ RSpec.feature "Edit an unsubmitted framework request" do
   end
 
   context "when user is a guest" do
-    let(:framework_request) { create(:framework_request, first_name: "Bob", last_name: "Jones", school_urn: "100253", email: "email@example.com", message_body: "help!") }
+    let(:framework_request) do
+      create(:framework_request, school_urn: "100253", group_uid: nil)
+    end
 
     before do
       visit "/procurement-support/#{framework_request.id}"
@@ -16,8 +18,8 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_link "edit-name"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=5"
-      expect(find_field("framework-support-form-first-name-field").value).to eql "Bob"
-      expect(find_field("framework-support-form-last-name-field").value).to eql "Jones"
+      expect(find_field("framework-support-form-first-name-field").value).to eql "David"
+      expect(find_field("framework-support-form-last-name-field").value).to eql "Georgiou"
 
       fill_in "framework_support_form[first_name]", with: "John"
       fill_in "framework_support_form[last_name]", with: "Smith"
@@ -65,7 +67,7 @@ RSpec.feature "Edit an unsubmitted framework request" do
       click_link "edit-message"
 
       expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=7"
-      expect(find_field("framework-support-form-message-body-field").value).to eql "help!"
+      expect(find_field("framework-support-form-message-body-field").value).to eql "please help!"
 
       fill_in "framework_support_form[message_body]", with: "I have a problem"
       click_continue
@@ -78,7 +80,9 @@ RSpec.feature "Edit an unsubmitted framework request" do
   end
 
   context "when user is already logged in" do
-    let(:framework_request) { create(:framework_request, user: user, school_urn: "100253") }
+    let(:framework_request) do
+      create(:framework_request, user: user, school_urn: "100253", group_uid: nil)
+    end
 
     context "when user with one supported school" do
       let(:user) { create(:user, :one_supported_school) }

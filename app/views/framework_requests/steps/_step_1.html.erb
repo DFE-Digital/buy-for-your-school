@@ -1,4 +1,5 @@
-<!-- dsi or guest (1) -->
+<%# dsi or guest (1) %>
+
 <%=
   form.govuk_collection_radio_buttons :dsi,
     [
@@ -10,6 +11,9 @@
     caption: { text: I18n.t("faf.dsi_or_search.subtitle"), size: "l" },
     legend: { text: I18n.t("faf.dsi_or_search.header"), size: "l" }
 %>
-<br>
+
+<p class="govuk-body">
+  <%= link_to I18n.t("faf.dsi_or_search.link.text"), I18n.t("faf.dsi_or_search.link.url"), class: "govuk-link" %>
+</p>
 
 <%= javascript_include_tag "faf_dsi_or_guest" %>

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # Submit an FaF request for support to the Supported case management team
-# :nocov:
 class SubmitFrameworkRequest
   extend Dry::Initializer
 
@@ -47,6 +46,7 @@ private
 
   # @return [Support::Organisation]
   def map_organisation
+    # FIXME: only schools are being mapped but we need to also do groups
     Support::Organisation.find_by(urn: request.school_urn)
   end
 
@@ -79,4 +79,3 @@ private
     @kase
   end
 end
-# :nocov:

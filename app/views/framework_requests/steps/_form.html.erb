@@ -1,48 +1,33 @@
-<% if @framework_support_request&.persisted? %>
 
-  <%= link_to I18n.t("generic.button.back"), :back, class: "govuk-back-link" %>
-
-<% elsif @framework_support_form.position?(1) %>
-
+<% if @framework_request&.persisted? %>
+  <%= link_to I18n.t("generic.button.back"), framework_request_path(@framework_request), class: "govuk-back-link" %>
+<% elsif @form.position?(1) %>
   <%= link_to I18n.t("generic.button.back"), framework_requests_path, class: "govuk-back-link"  %>
-
 <% else %>
-  <% if @framework_support_form.position?(1) %>
-    <%= link_to I18n.t("generic.button.back"), framework_requests_path, class: "govuk-back-link"  %>
-  <% else %>
-    <%=
-      # TODO: move into method on form
-      # - pass in param that we are stepping backward
-      # - infer dsi value
-      # - remove any unanswered questions so as to not display error messages for previous steps
-      form_data = @framework_support_form.to_h.merge(step: @framework_support_form.step, back: true, dsi: !current_user.guest?).compact
-
-      link_to I18n.t("generic.button.back"), framework_requests_path(framework_support_form: form_data), method: :post, class: "govuk-back-link"
-    %>
-  <% end %>
+  <%= link_to I18n.t("generic.button.back"), framework_requests_path(framework_support_form: @form.go_back), method: :post, class: "govuk-back-link" %>
 <% end %>
 
-<% if Rails.env.development? %>
-  <%= debug @framework_support_request&.attributes %>
-  <%= debug @framework_support_form.step %>
-  <%= debug @current_user.supported_schools %>
-  <%= debug @framework_support_form.to_h %>
-<% end %>
-
-<%= form_with model: @framework_support_form, scope: :framework_support_form, url: path, method: verb  do |form| %>
+<%= form_with model: @form, scope: :framework_support_form, url: path, method: verb  do |form| %>
   <%= form.govuk_error_summary %>
 
-  <%= form.hidden_field :step, value: @framework_support_form.step %>
-  <%= render "framework_requests/steps/step_#{@framework_support_form.step}", form: form %>
+  <%= form.hidden_field :step, value: @form.step %>
+  <%= render "framework_requests/steps/step_#{@form.step}", form: form %>
 
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
 
-
-<p class="govuk-body">
-  <%=
-    if @framework_support_form.position?(1)
-      link_to I18n.t("faf.dsi_or_search.link.text"), I18n.t("faf.dsi_or_search.link.url"), class: "govuk-link"
-    end
-  %>
-</p>
+<% if Rails.env.development? %>
+  <%= debug @framework_request&.attributes %>
+  Step
+  <%= debug @form.step %>
+  Supported Schools
+  <%= debug @form.user.supported_schools %>
+  Input
+  <%= debug @form.to_h.except(:user) %>
+  Output
+  <%= debug @form.data %>
+  School
+  <%= debug @organisation&.attributes %>
+  Group
+  <%= debug @establishment_group&.attributes %>
+<% end %>
