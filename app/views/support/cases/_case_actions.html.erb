@@ -14,15 +14,11 @@
       <li>
         <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
       </li>
-    <% else %>
-      <li>
-        <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
-      </li>
     <% end %>
 
     <% if @current_case.resolved? %>
       <li>
-        <%= link_to I18n.t("support.case.label.reopen"), "#", class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
     <% else %>
       <li>

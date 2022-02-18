@@ -4,6 +4,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.0.1"
 
+gem "aasm"
 gem "aws-sdk-s3", require: false
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
@@ -11,7 +12,6 @@ gem "contentful", "~> 2.16"
 gem "dry-struct"
 gem "dry-transformer"
 gem "dry-validation"
-gem "aasm"
 gem "govuk_design_system_formbuilder", "~> 3.0"
 gem "httparty"
 gem "httpclient"

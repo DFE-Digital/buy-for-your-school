@@ -16,16 +16,28 @@ module Support
       agent: %i[first_name last_name],
     }
 
-    aasm do
+    aasm(column: :state, enum: true) do
       state :initial, initial: true
       state :opened, :resolved, :pending, :closed, :pipeline, :no_response
 
       event :resolve do
+        transitions from: :initial, to: :resolved
         transitions from: :opened, to: :resolved
       end
 
-      event :reopen do
-        transitions from :resolved, to: :opened
+      event :open do
+        transitions from: :initial, to: :opened
+        transitions from: :resolved, to: :opened
+        transitions from: :pending, to: :opened
+      end
+
+      event :hold do
+        transitions from: :opened, to: :pending
+      end
+
+      event :close do
+        transitions from: :initial, to: :closed
+        transitions from: :resolved, to: :closed
       end
     end
 

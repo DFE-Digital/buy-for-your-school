@@ -26,7 +26,7 @@ module Support
         agent_id: current_agent.id,
       )
 
-      current_case.resolved!
+      current_case.resolve!
     end
 
     def validation

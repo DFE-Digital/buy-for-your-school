@@ -28,9 +28,9 @@ module Support
       )
 
       record_action(case_id: current_case.id, action: "open_case") if current_case.initial?
+      current_case.open if current_case.may_open?
 
       current_case.update!(
-        state: :opened,
         agent_id: @case_assignment_form.agent_id,
       )
     end
