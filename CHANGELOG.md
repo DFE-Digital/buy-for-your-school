@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
+- add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
+
 <!--
 
 ## [release-xxx] - xxxx-xx-xx
@@ -16,11 +18,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
-
 ## [release-020] - 2022-02-15
-
-- add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
-
 ### "Find a Framework" support for trusts
 
 - form steps reordered [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/866)
