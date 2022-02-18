@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl"><%= I18n.t("feedback.header") %></h1>
 
-    <%= form_with model: @feedback_form, scope: :feedback_form, url: feedback_index_path(@feedback) do |form| %>
+    <%= form_with model: form, scope: :feedback_form, url: feedback_index_path, method: :post do |form| %>
       <%= form.govuk_error_summary %>
 
       <div class="govuk-form-group">
