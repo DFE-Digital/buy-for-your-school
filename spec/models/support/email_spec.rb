@@ -207,11 +207,20 @@ describe Support::Email do
   describe "#set_case_action_required" do
     context "when case is attached" do
       let(:support_case) { create(:support_case) }
-      let(:email) { build(:support_email, case: support_case) }
+      let(:email) { build(:support_email, case: support_case, folder: :inbox) }
 
       it "sets case to action required to inform users an email is to be read" do
         email.set_case_action_required
         expect(support_case.reload).to be_action_required
+      end
+
+      context "when email folder is sent_items" do
+        let(:email) { build(:support_email, case: support_case, folder: :sent_items) }
+
+        it "does not change the action required status" do
+          email.set_case_action_required
+          expect(support_case.reload).not_to be_action_required
+        end
       end
     end
   end
