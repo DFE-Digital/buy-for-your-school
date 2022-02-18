@@ -485,6 +485,7 @@ en:
         add_interaction: Log contact with school
         resolve: Resolve case
         reopen: Reopen case
+        close: Close case
         move_email: Move emails to existing case
         case: Case
         organisation: Organisation

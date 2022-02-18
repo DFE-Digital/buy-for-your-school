@@ -20,6 +20,9 @@
       <li>
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
+      <li>
+        <%= link_to I18n.t("support.case.label.close"), support_case_closing_path(@current_case), method: :post, class: "govuk-link" %>
+      </li>
     <% else %>
       <li>
         <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
