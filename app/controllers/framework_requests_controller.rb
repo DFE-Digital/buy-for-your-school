@@ -48,7 +48,7 @@ class FrameworkRequestsController < ApplicationController
       @framework_support_form = FrameworkSupportForm.new(
         step: form_params[:step],
         dsi: !current_user.guest?,
-        group: ActiveModel::Type::Boolean.new.cast(form_params[:group]),
+        group: form_params[:group],
         **validation.to_h.reject { |_k, v| v.blank? },
       )
 
@@ -69,9 +69,7 @@ class FrameworkRequestsController < ApplicationController
 
     elsif validation.success? && validation.to_h[:message_body]
 
-      # capture full "xxxxx - name"
-      session[:faf_school] = @framework_support_form.school_urn
-      session[:faf_group] = @framework_support_form.group_uid
+      store_org_ids
 
       # valid form with last question answered
       framework_request = FrameworkRequest.create!(
@@ -101,11 +99,7 @@ class FrameworkRequestsController < ApplicationController
     if validation.success?
       @framework_support_form.forget_org
 
-      # capture full "xxxxx - name"
-      session[:faf_school] = @framework_support_form.school_urn
-      session[:faf_group] = @framework_support_form.group_uid
-
-      # CONDITIONAL extra questions as a result of saved changes
+      store_org_ids
 
       # NOTE: Selecting school type change link on CYA (no dsi) permits user to proceed through to selecting school or group selection after step 2
       if @framework_support_form.position?(2)
@@ -157,7 +151,7 @@ private
 
   # FaF specific methods -------------------------------------------------------
 
-  # DSI with inferred school to 7, otherwise 3 to select
+  # DSI with inferred school to 7 (message), otherwise 3 (org select)
   #
   # @return [Integer]
   def initial_position
@@ -186,8 +180,26 @@ private
     end
   end
 
+  # capture full "xxxxx - name"
+  def store_org_ids
+    session[:faf_school] = @framework_support_form.school_urn
+    session[:faf_group] = @framework_support_form.group_uid
+  end
+
+  # @example
+  #
+  #   {
+  #     type: "group/school",
+  #     identifier: "1234",
+  #     name: "Group or School Name",
+  #   }
+  #
+  # @return [Hash]
+  # def organisation
+  #   QueryOrganisation.call(urn || group_uid)
+  # end
+
   # TODO: extract into a service rather than access supported data directly
-  # @return [OrganisationPresenter, nil]
   def organisation
     Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: urn)) if urn
   end

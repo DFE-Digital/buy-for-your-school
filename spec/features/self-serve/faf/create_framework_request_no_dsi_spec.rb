@@ -1,4 +1,4 @@
-RSpec.feature "Create a new framework request through non-DSI journey" do
+RSpec.feature "Create a new framework request as a guest" do
   before do
     create(:support_organisation, :with_address, urn: "100253", name: "School #1", phase: 7, number: "334", ukprn: "4346", establishment_type: create(:support_establishment_type, name: "Community school"))
     create(:support_establishment_group, :with_address, name: "Group #1", uid: "9876", establishment_group_type: create(:support_establishment_group_type, name: "Multi-academy Trust"))
@@ -26,16 +26,18 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
     end
   end
 
-  context "when single school", js: true do
+  context "when selecting a single school", js: true do
     before do
       choose "A single school"
       click_continue
     end
 
-    describe "search for a school page" do
-      it "has a back link to step 2" do
+    describe "the school search page (step 3)" do
+      it "has a back link to group or school decision page (step 2)" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=3"
+        # expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bstep%5D=3"
+        expect(page).to have_current_path(/step%5D=3/)
+        expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "What type of organisation are you buying for?"
       end
 
@@ -75,9 +77,11 @@ RSpec.feature "Create a new framework request through non-DSI journey" do
         complete_school_step
       end
 
-      it "has a back link to step 3" do
+      it "has a back link to the school search page (step 3)" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=4"
+        # expect(page).to have_current_path "/procurement-support?framework_support_form%5Bback%5D=true&framework_support_form%5Bdsi%5D=false&framework_support_form%5Bgroup%5D=false&framework_support_form%5Bschool_urn%5D=100253+-+School+%231&framework_support_form%5Bstep%5D=4"
+        expect(page).to have_current_path(/step%5D=4/)
+        expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "Search for your school"
       end
 

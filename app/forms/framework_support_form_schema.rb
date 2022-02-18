@@ -1,33 +1,33 @@
 #
 # Validate "find-a-framework support requests"
 #
-# :nocov:
+# @abstract Form Object for multi-step Find-a-Framework support questionnaire
+#
+#   1: dsi                    (skipped if logged in)
+#   2: group                  (skipped if inferred at login)
+#   3: school_urn             (skipped if inferred at login)
+#   3: group_uid              (skipped if inferred at login)
+#   4: correct_group          (guest only)
+#   4: correct_organisation   (guest only)
+#   5: first_nane             (guest only)
+#   5: last_name              (guest only)
+#   6: email                  (guest only)
+#   7: message_body           (last and compulsory)
+#
 class FrameworkSupportFormSchema < Schema
   config.messages.top_namespace = :framework_request
 
   params do
-    optional(:dsi).value(:bool)                 # step 1
-
-    optional(:group).value(:bool)               # step 2
-
-    optional(:first_name).value(:string)        # step 3
-    optional(:last_name).value(:string)         # step 3
-
-    optional(:school_urn).value(:string)        # step 4
-
-    optional(:email).value(:string)             # step 4
-
-    optional(:school_urn).value(:string)        # step 5
-
-    optional(:group_uid).value(:string)         # step 5
-
-    optional(:message_body).value(:string)      # step 7
-
-    optional(:correct_organisation).value(:bool) # step 6
-
-    optional(:correct_group).value(:bool) # step 6
-
-    optional(:affiliation).value(:string)
+    optional(:dsi).value(:bool)
+    optional(:group).value(:bool)
+    optional(:school_urn).value(:string)
+    optional(:group_uid).value(:string)
+    optional(:correct_organisation).value(:bool)
+    optional(:correct_group).value(:bool)
+    optional(:first_name).value(:string)
+    optional(:last_name).value(:string)
+    optional(:email).value(:string)
+    optional(:message_body).value(:string)
   end
 
   rule(:first_name) do
@@ -58,9 +58,10 @@ class FrameworkSupportFormSchema < Schema
     key.failure(:missing) if key? && value.blank?
   end
 
-  rule(:affiliation) do
-    # validate that either school_urn or group_uid is provided in the dsi journey
-    key.failure(:missing) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
+  rule do
+    # validate that an organisation from an authenticated user's approved list is selected
+    # either urn for a school or uid for a group
+    base.failure(:affiliation) if values[:dsi] && values[:school_urn].blank? && values[:group_uid].blank?
   end
 
   # TODO: extract into a look-up service rather than access supported data directly
@@ -80,4 +81,3 @@ class FrameworkSupportFormSchema < Schema
     end
   end
 end
-# :nocov:

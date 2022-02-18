@@ -2,27 +2,37 @@
 #
 # @author Peter Hamilton
 #
+#   1: phone_number   (temporarily disbaled until the service supports calls)
+#   2: school_urn     (skipped if only one supported school)
+#   3: journey_id     (option for 'none')
+#   4: category_id    (skipped if journey)
+#   5: message_body   (last and compulsory)
+#
 class SupportForm < Form
   # @!attribute [r] phone_number
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :phone_number, optional: true # 1
+  option :phone_number, optional: true
+
   # @!attribute [r] school_urn
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :school_urn, optional: true # 2 (skipped if only one supported school)
+  option :school_urn, optional: true
+
   # @!attribute [r] journey_id
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :journey_id, optional: true # 3 (option for 'none')
+  option :journey_id, optional: true
+
   # @!attribute [r] category_id
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :category_id, optional: true # 4 (skipped if 3)
+  option :category_id, optional: true
+
   # @!attribute [r] message_body
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :message_body, optional: true # 5 (last)
+  option :message_body, optional: true
 
   # @see SupportRequestsController#create
   #

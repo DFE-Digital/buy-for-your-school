@@ -1,46 +1,57 @@
 # @abstract Form Object for multi-step Find-a-Framework support questionnaire
 #
+#   1: dsi                    (skipped if logged in)
+#   2: group                  (skipped if inferred at login)
+#   3: school_urn             (skipped if inferred at login)
+#   3: group_uid              (skipped if inferred at login)
+#   4: correct_group          (guest only)
+#   4: correct_organisation   (guest only)
+#   5: first_nane             (guest only)
+#   5: last_name              (guest only)
+#   6: email                  (guest only)
+#   7: message_body           (last and compulsory)
+#
 class FrameworkSupportForm < Form
   # @!attribute [r] dsi
   # @return [Boolean]
-  option :dsi, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 1 (skipped if logged in)
+  option :dsi, Types::ConfirmationField, optional: true
 
   # @!attribute [r] group
   # @return [Boolean]
-  option :group, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 2 (skipped if logged in)
-
-  # @!attribute [r] first_name
-  # @return [String]
-  option :first_name, optional: true # 3 (skipped if logged in)
-
-  # @!attribute [r] last_name
-  # @return [String]
-  option :last_name, optional: true # 3 (skipped if logged in)
-
-  # @!attribute [r] email
-  # @return [String]
-  option :email, optional: true # 4 (skipped if logged in)
+  option :group, Types::ConfirmationField | Types::Nil, optional: true
 
   # @!attribute [r] school_urn
-  # @return [String] URN identifier and name in the format "100000 - School Name"
-  option :school_urn, optional: true # 5 (skipped if inferred at login)
+  # @return [String] identifier and name in the format "100000 - School Name"
+  option :school_urn, optional: true
 
   # @!attribute [r] group_uid
   # @return [String] identifier and name in the format "1000 - Group Name"
-  option :group_uid, optional: true # 4 (non-DSI only)
+  option :group_uid, optional: true
+
+  # @!attribute [r] correct_group
+  # @return [Boolean]
+  option :correct_group, Types::ConfirmationField, optional: true
+
+  # @!attribute [r] correct_organisation
+  # @return [Boolean]
+  option :correct_organisation, Types::ConfirmationField, optional: true
+
+  # @!attribute [r] first_name
+  # @return [String]
+  option :first_name, optional: true
+
+  # @!attribute [r] last_name
+  # @return [String]
+  option :last_name, optional: true
+
+  # @!attribute [r] email
+  # @return [String]
+  option :email, optional: true
 
   # @!attribute [r] message_body
   # @see SupportRequest SupportRequest attributes
   # @return [String]
-  option :message_body, optional: true # 7 (last and compulsory)
-
-  # @!attribute [r] correct_group
-  # @return [Boolean]
-  option :correct_group, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 6 (skipped if logged in)
-
-  # @!attribute [r] correct_organisation
-  # @return [Boolean]
-  option :correct_organisation, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true # 6 (skipped if logged in)
+  option :message_body, optional: true
 
   # @return [Hash] form data to be persisted as request attributes
   def to_h

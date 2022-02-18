@@ -246,6 +246,15 @@ RSpec.feature "Create a new framework request" do
         end
       end
 
+      describe "organisation choice" do
+        it "is validated" do
+          click_continue
+          within "div.govuk-error-summary" do
+            expect(page).to have_text "Select the school or group you want help buying for"
+          end
+        end
+      end
+
       describe "check answers page" do
         before do
           choose "Greendale Academy for Bright Sparks"
