@@ -3,6 +3,8 @@
 class UserFeedback < ApplicationRecord
   self.table_name = "user_feedback"
 
+  belongs_to :logged_in_as, class_name: "User", optional: true
+
   # Service
   #
   #   create_a_specification

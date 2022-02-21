@@ -18,6 +18,7 @@ en:
       update: Update
       yes_continue: Yes, continue
       save: Save
+      submit: Submit
       cancel: Cancel
     label:
       what_is: "What is %{label}?"
@@ -291,13 +292,27 @@ en:
       feedback_text_question: How could we improve this service? (Optional)
       feedback_text_hint: Do not include personal or financial information, for example your National Insurance or credit card numbers.
       submit: Submit
-    confirmation:
+    user:
+      header: Enter your contact details
+      body: Give your details to opt-in and take part in user research to help us improve the service. We will not use your details for any other purpose.
+      full_name: Full name
+      email: Email address
+    confirmation_feedback:
       submitted: Feedback submitted
       message: We will use your feedback to improve this service.
       get_involved:
         header: Get involved
         body: "%{contact_form_link} by opting in to take part in user research."
         contact_form_link: Help us improve this service
+    confirmation_details:
+      submitted: Confirmation
+      message: Thank you for opting in to take part in user research.
+      next:
+        header: What happens next
+        body: We will contact you via email and invite you to take part in research when it becomes available
+        link:
+          label: Go to Find an approved framework
+          url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
 
  
 
