@@ -14,6 +14,16 @@
       <li>
         <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
       </li>
+    <% else %>
+      <li>
+        <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
+      </li>
+    <% end %>
+
+    <% if @current_case.initial? %>
+      <li>
+        <%= link_to "Move emails to existing case", new_support_case_merge_emails_path(@current_case), class: "govuk-link" %>
+      </li>
     <% end %>
 
     <% if @current_case.resolved? %>
@@ -26,11 +36,6 @@
     <% else %>
       <li>
         <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
-      </li>
-    <% end %>
-    <% if @current_case.initial? %>
-      <li>
-        <%= link_to "Move emails to existing case", new_support_case_merge_emails_path(@current_case) %>
       </li>
     <% end %>
   </ul>

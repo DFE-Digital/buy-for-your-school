@@ -100,6 +100,7 @@ RSpec.feature "Case summary" do
     it "has action links" do
       within "ul.govuk-list" do
         expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/assignment/new", class: "govuk-link"
+        expect(page).to have_link "Move emails to existing case", href: "/support/cases/#{support_case.id}/merge-emails/new", class: "govuk-link"
         expect(page).to have_link "Resolve case", href: "/support/cases/#{support_case.id}/resolution/new", class: "govuk-link"
       end
     end
@@ -123,7 +124,7 @@ RSpec.feature "Case summary" do
 
     it "has action links" do
       within "ul.govuk-list" do
-        expect(page).to have_link "Reopen case", href: "#", class: "govuk-link"
+        expect(page).to have_link "Reopen case", href: "/support/cases/#{support_case.id}/opening", class: "govuk-link"
       end
     end
   end

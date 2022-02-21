@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -210,8 +210,8 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
   end
 
   create_table "support_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "support_case_id"
-    t.string "action"
+    t.uuid "support_case_id"
+    t.integer "action"
     t.jsonb "data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
