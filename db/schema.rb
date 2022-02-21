@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_170254) do
+ActiveRecord::Schema.define(version: 2022_02_18_085717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -472,6 +472,10 @@ ActiveRecord::Schema.define(version: 2022_02_16_170254) do
     t.boolean "logged_in", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "full_name"
+    t.string "email"
+    t.uuid "logged_in_as_id"
+    t.index ["logged_in_as_id"], name: "index_user_feedback_on_logged_in_as_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -499,6 +503,7 @@ ActiveRecord::Schema.define(version: 2022_02_16_170254) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
   create_view "support_establishment_searches", sql_definition: <<-SQL
       SELECT organisations.id,
