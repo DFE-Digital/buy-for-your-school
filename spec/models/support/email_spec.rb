@@ -108,6 +108,23 @@ describe Support::Email do
     end
   end
 
+  describe "#automatically_reopen_case" do
+    let(:support_case) { create(:support_case, :resolved, action_required: false) }
+    let(:email) { build(:support_email, case: support_case) }
+
+    it "reopens a resolved case" do
+      email.automatically_reopen_case
+
+      expect(support_case.opened?).to eq true
+    end
+
+    it "sets action required to true on the attached case" do
+      email.automatically_reopen_case
+
+      expect(support_case.action_required?).to eq true
+    end
+  end
+
   describe "#create_interaction" do
     let(:folder) { :inbox }
     let(:email) { create(:support_email, case: support_case, body: "Body Here", folder: folder) }
