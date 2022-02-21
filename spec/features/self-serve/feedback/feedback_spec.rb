@@ -58,7 +58,8 @@ RSpec.feature "User feedback page" do
         expect(find("h2.govuk-heading-m")).to have_text "Get involved"
         expect(all("p.govuk-body")[1]).to have_text "Help us improve this service by opting in to take part in user research."
         # TODO: update to link to contact form
-        expect(page).to have_link "Help us improve this service", href: "/feedback/new", class: "govuk-link"
+        feedback = UserFeedback.last
+        expect(page).to have_link "Help us improve this service", href: "/feedback/#{feedback.id}/edit", class: "govuk-link"
       end
     end
   end
