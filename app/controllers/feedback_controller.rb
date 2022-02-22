@@ -8,9 +8,9 @@ class FeedbackController < ApplicationController
   helper_method :form, :show_view
 
   breadcrumb "Dashboard", :dashboard_path
-  breadcrumb "Get involved", :new_feedback_path, match: :exact
 
   def new
+    breadcrumb "Give feedback", :new_feedback_path, match: :exact
     @form = FeedbackForm.new
   end
 
@@ -29,6 +29,7 @@ class FeedbackController < ApplicationController
   end
 
   def edit
+    breadcrumb "Get involved", :edit_feedback_path, match: :exact
     @form = FeedbackForm.new(**feedback.to_h.compact)
   end
 
@@ -41,7 +42,14 @@ class FeedbackController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    case show_view
+    when :details_submitted
+      breadcrumb "Get involved", :edit_feedback_path, match: :exact
+    else
+      breadcrumb "Give feedback", :new_feedback_path, match: :exact
+    end
+  end
 
 private
 
