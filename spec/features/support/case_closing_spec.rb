@@ -2,6 +2,7 @@ RSpec.feature "Case worker can close a case" do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, :resolved, agent: agent, ref: "000001") }
+  let(:closed_support_case) { create(:support_case, :closed, agent: agent, ref: "000002") }
 
   before do
     click_button "Agent Login"
@@ -25,5 +26,11 @@ RSpec.feature "Case worker can close a case" do
     within "#all-cases .case-row", text: "000001" do
       expect(page).to have_css(".case-status", text: "Closed")
     end
+  end
+
+  it "disables change links on school details tab" do
+    visit support_case_path(closed_support_case)
+    expect(page).not_to have_link "Change", href: "/support/cases/#{support_case.id}/contact_details/edit"
+    expect(page).not_to have_link "Change", href: "/support/cases/#{support_case.id}/organisation/edit"
   end
 end

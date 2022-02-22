@@ -32,6 +32,10 @@ FactoryBot.define do
       state { :resolved }
     end
 
+    trait :closed do
+      state { :closed }
+    end
+
     trait :with_documents do
       transient do
         document_count { 1 }
