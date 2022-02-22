@@ -29,6 +29,8 @@ module Support
   private
 
     def update_file_attributes
+      return unless file.new_record?
+
       self.file_name = file.filename
       self.file_size = file.attachment.byte_size
       self.file_type = file.attachment.content_type

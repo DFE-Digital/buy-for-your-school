@@ -1,0 +1,36 @@
+<%= form_with model: @save_attachments_form, scope: :save_attachments_form, url: support_email_save_attachments_path(@email), method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading"><%= I18n.t("support.save_attachments.form.header") %></h1>
+    </legend>
+
+    <p class="govuk-body"><%= I18n.t("support.save_attachments.form.subheader") %></p>
+
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <%= f.fields_for :attachments, nil, as: "attachments" do |af| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__cell govuk-!-font-weight-regular">
+              <%= af.hidden_field :support_case_id %>
+              <%= af.hidden_field :support_email_attachment_id %>
+
+              <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                <%= af.govuk_check_box :selected, 1, 0, multiple: false, small: true, label: { text: af.object.file_name } do %>
+                  <%= af.govuk_text_field :name, label: { text: I18n.t("support.save_attachments.form.rename_attachment") } %>
+                  <%= af.govuk_text_field :description, label: { text: I18n.t("support.save_attachments.form.description") } %>
+                <% end %>
+              </div>
+            </th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </fieldset>
+
+  <div class="govuk-button-group">
+    <%= f.submit I18n.t("support.save_attachments.form.submit"), class: "govuk-button" %>
+    <%= link_to I18n.t("support.save_attachments.form.cancel"), support_email_path(@email), class: "govuk-link" %>
+  </div>
+<% end %>

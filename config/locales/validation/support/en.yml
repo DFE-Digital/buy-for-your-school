@@ -127,3 +127,14 @@ en:
           invalid: is invalid
         ended_at:
           invalid: is invalid
+
+  save_attachments_form:
+    errors:
+      rules:
+        base: "Please check the details below"
+        name:
+          already_taken: Enter new attachment name
+        email_attachment_id:
+          missing: Select an attachment
+        description:
+          missing: Enter a description

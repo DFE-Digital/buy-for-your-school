@@ -793,6 +793,26 @@ en:
       my_cases:
         header_link: My cases
 
+    save_attachments:
+      initiate_journey: Save attachments
+      form:
+        header: Select attachments to save
+        subheader: You can rename and add a description to attachments you select
+        rename_attachment: Rename attachment (optional)
+        description: Add attachment description
+        submit: Save to case
+        cancel: Cancel
+      success:
+        header: Attachments saved
+        table:
+          header:
+            attachment: Attachment
+            description: Description
+        actions:
+          header: Actions
+          go_back_to_email: Go back to email
+          view_attachments: View saved attachments
+
     emails:
       header_link: Notifications
       index:
