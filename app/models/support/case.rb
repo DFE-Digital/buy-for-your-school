@@ -8,15 +8,6 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include ::PgSearch::Model
-
-    pg_search_scope :search, against: %i[ref], associated_against: {
-      organisation: %i[name urn],
-      agent: %i[first_name last_name],
-    }
-
-    scope :search, ->(q) { Support::CaseSearch.omnisearch(q).joins }
-
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     belongs_to :organisation, polymorphic: true, optional: true
