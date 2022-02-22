@@ -47,7 +47,7 @@ private
 
   # @return [Support::Organisation]
   def map_organisation
-    Support::Organisation.find_by(urn: request.school_urn)
+    Support::Organisation.find_by(urn: request.school_urn) || Support::EstablishmentGroup.find_by(uid: request.group_uid)
   end
 
   # @return [Support::Case] TODO: Move into inbound API
