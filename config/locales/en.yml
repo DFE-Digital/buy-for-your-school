@@ -832,6 +832,21 @@ en:
       show:
         header: Your specification
 
+    case_closures:
+      action: Close case
+      edit:
+        header: Close case
+        hint: Select reason for closing case.
+        reasons:
+          spam: Spam
+          out_of_scope: Out of scope
+          other: Other
+        submit: Save and close case
+      flash:
+        updated: Case has been closed
+        error: Only new cases created from emails can be closed
+
+
     cases:
       my_cases:
         header_link: My cases
