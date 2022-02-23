@@ -20,18 +20,18 @@ describe "Agent can save attachments from an email to the case", js: true do
         click_link "Save attachments"
         check "attachment1.txt"
         within ".govuk-checkboxes", text: "attachment1.txt" do
-          fill_in "Rename attachment (optional)", with: "MyNewFileName.txt"
+          fill_in "Rename attachment (optional)", with: "MyNewFileName"
           fill_in "Add attachment description", with: "Neat description"
         end
         check "attachment2.txt"
         within ".govuk-checkboxes", text: "attachment2.txt" do
-          fill_in "Rename attachment (optional)", with: "MyOtherFileName.txt"
+          fill_in "Rename attachment (optional)", with: "MyOtherFileName"
           fill_in "Add attachment description", with: "Pretty good description"
         end
         click_button "Save to case"
       end
 
-      it "displays the created case attachments" do
+      it "displays the created case attachments with file extensions automatically added" do
         expect(page).to have_content("Attachments saved")
 
         within "tr", text: "MyNewFileName.txt" do

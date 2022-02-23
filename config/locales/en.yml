@@ -520,6 +520,7 @@ en:
         case_detail: Case details
         case_history: Case history
         procurement_detail: Procurement details
+        case_attachments: Attachments
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -563,6 +564,11 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
+        attachments:
+          table:
+            attachment_name: Attachment name
+            description: Description
+            date_added: Date added
         procurement_details:
           change: change
           required_agreement_type: Required agreement type

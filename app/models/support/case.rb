@@ -17,6 +17,8 @@ module Support
     has_many :documents, class_name: "Support::Document", dependent: :destroy
     accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
 
+    has_many :case_attachments, class_name: "Support::CaseAttachment", foreign_key: :support_case_id
+
     has_one :hub_transition, class_name: "Support::HubTransition", dependent: :destroy
 
     belongs_to :existing_contract, class_name: "Support::ExistingContract", optional: true

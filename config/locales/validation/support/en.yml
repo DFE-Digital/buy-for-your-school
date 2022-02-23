@@ -133,7 +133,7 @@ en:
       rules:
         base: "Please check the details below"
         name:
-          already_taken: Enter new attachment name
+          already_taken: File already exists. Enter new attachment name
         email_attachment_id:
           missing: Select an attachment
         description:
