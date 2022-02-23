@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
 
 -->
-
+- add close new incoming email case journey [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/897)
 - add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
 - add details page to capture user details after giving feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/890)
 
