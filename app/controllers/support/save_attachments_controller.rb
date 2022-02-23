@@ -25,14 +25,17 @@ module Support
     end
 
     def save_attachments_form_params
-      params.require(:save_attachments_form).permit(attachments_attributes: %i[
-        selected
-        name
-        support_case_id
-        support_email_attachment_id
-        description
-        label
-      ])
+      params.require(:save_attachments_form).permit(
+        :show_file_type_warning,
+        attachments_attributes: %i[
+          selected
+          name
+          support_case_id
+          support_email_attachment_id
+          description
+          label
+        ],
+      )
     end
   end
 end

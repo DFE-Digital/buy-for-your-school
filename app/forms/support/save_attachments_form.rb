@@ -1,14 +1,21 @@
 module Support
   class SaveAttachmentsForm
     include ActiveModel::Model
-    attr_accessor :attachments
+    attr_accessor :attachments, :show_file_type_warning
 
     def self.from_email(email)
-      attachments = email.attachments.each_with_index.map do |attachment, i|
+      attachments = email.attachments.for_case_attachments.each_with_index.map do |attachment, i|
         [i, { support_email_attachment_id: attachment.id, support_case_id: email.case_id }]
       end
 
-      new(attachments_attributes: attachments.to_h)
+      new(
+        attachments_attributes: attachments.to_h,
+        show_file_type_warning: email.has_unattachable_files_attached? ? "1" : "0",
+      )
+    end
+
+    def show_file_type_warning?
+      show_file_type_warning == "1"
     end
 
     def valid?

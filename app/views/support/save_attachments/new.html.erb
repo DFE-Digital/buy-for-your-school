@@ -1,6 +1,14 @@
 <%= form_with model: @save_attachments_form, scope: :save_attachments_form, url: support_email_save_attachments_path(@email), method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
+  <% if @save_attachments_form.show_file_type_warning? %>
+    <%= render "components/panels/info" do %>
+      <%= I18n.t("support.save_attachments.form.file_types_notice") %>
+    <% end %>
+  <% end %>
+
+  <%= f.hidden_field :show_file_type_warning %>
+
   <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
       <h1 class="govuk-fieldset__heading"><%= I18n.t("support.save_attachments.form.header") %></h1>

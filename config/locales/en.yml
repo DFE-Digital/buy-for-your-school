@@ -275,7 +275,7 @@ en:
     users_header: Users
     download_csv: Download (.csv)
     download_json: Download (.json)
-  
+
   # /feedback
   feedback:
     title: Feedback - Get help buying for schools - GOV.UK
@@ -314,7 +314,7 @@ en:
           label: Go to Find an approved framework
           url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
 
- 
+
 
 
   #
@@ -839,6 +839,7 @@ en:
     save_attachments:
       initiate_journey: Save attachments
       form:
+        file_types_notice: Attachments that cannot be saved due to their field type have been excluded.
         header: Select attachments to save
         subheader: You can rename and add a description to attachments you select
         rename_attachment: Rename attachment (optional)
