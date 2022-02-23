@@ -3,8 +3,8 @@ require "rails_helper"
 describe Support::SaveAttachmentsForm do
   let(:case_1) { create(:support_case) }
   let(:case_2) { create(:support_case) }
-  let(:email_attachment_1) { create(:support_email_attachment).tap {|a| a.update(file_name: "test.pdf") } }
-  let(:email_attachment_2) { create(:support_email_attachment).tap {|a| a.update(file_name: "test.pdf") } }
+  let(:email_attachment_1) { create(:support_email_attachment).tap { |a| a.update(file_name: "test.pdf") } }
+  let(:email_attachment_2) { create(:support_email_attachment).tap { |a| a.update(file_name: "test.pdf") } }
 
   describe "#save_attachments" do
     before { described_class.new(**input).save_attachments }
