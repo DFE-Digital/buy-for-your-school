@@ -1,18 +1,8 @@
-<%= search_form_for @search do |form| %>
-
-  <div class="govuk-form-group">
-    <h1 class="govuk-label-wrapper">
-      <label class="govuk-label govuk-label--l" for="search_ref_or_organisation_urn_or_organisation_name_cont">
-        <%= I18n.t("support.case.label.search.heading") %>
-      </label>
-    </h1>
-
-    <div id="search_ref_or_organisation_urn_or_organisation_name_cont-hint" class="govuk-hint">
-      <%= I18n.t("support.case.label.search.hint") %>
-    </div>
-
-    <%= form.search_field :ref_or_organisation_urn_or_organisation_name_cont, class: "govuk-input govuk-input--width-20" %>
-  </div>
+<%= form_with model: @form, scope: :search_case_form, url: support_case_search_path do |form| %>
+  <%= form.govuk_text_field :search_term,
+                            label: { text: I18n.t("support.case.search.heading"), tag: "h1", size: "l" },
+                            hint:  { text: I18n.t("support.case.search.hint") }
+  %>
 
   <%= form.submit I18n.t("support.generic.search"), class: "govuk-button", role: "button" %>
 <% end %>

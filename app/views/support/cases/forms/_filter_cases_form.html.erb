@@ -1,0 +1,49 @@
+<%= form_with model: form, scope: "filter_#{tab.underscore}_form", url: support_cases_path(anchor: tab), method: :get, class: "filter-case-form" do |form| %>
+  <div id=<%="filter-#{tab}"%>>
+    <h2 class="govuk-heading-m">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </h2>
+
+    <div class="govuk-grid-row">
+      <% if tab == "all-cases" %>
+        <div class="govuk-grid-column-one-quarter">
+          <%= form.govuk_select :state,
+                                options_for_select(Support::Case.states.keys.map { |s| [I18n.t("support.case.label.state.state_#{s.downcase}"), s] }, form.object.state),
+                                options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
+                                label: { text: I18n.t("support.case.filter.labels.state") } %>
+        </div>
+      <% end %>
+
+      <div class="govuk-grid-column-one-quarter">
+        <%= form.govuk_select(:category_id, label: { text: I18n.t("support.case.filter.labels.category") }) do %>
+          <option data-tags="<%= I18n.t("support.case.filter.labels.all") %>" value=""><%= I18n.t("support.case.filter.labels.all") %></option>
+          <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
+            <optgroup label="<%= parent_name%>">
+              <% sub_categories.each do |name, value| %>
+                <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
+              <% end %>
+            </optgroup>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if tab == "all-cases" %>
+        <div class="govuk-grid-column-one-quarter">
+          <%= form.govuk_select :agent_id,
+                                options_for_select(form.object.agents.map { |a| [a.full_name, a.id] }, form.object.agent_id),
+                                options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
+                                label: { text: I18n.t("support.case.filter.labels.assignee") } %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-button-group">
+          <%= form.submit I18n.t("support.case.filter.buttons.apply"), class: "govuk-button govuk-button--secondary", role: "button" %>
+          <%= link_to I18n.t("support.case.filter.buttons.clear"), support_cases_path(anchor: tab), class: "govuk-button govuk-button--secondary", role: "button" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

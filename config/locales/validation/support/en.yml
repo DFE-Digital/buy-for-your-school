@@ -127,3 +127,13 @@ en:
           invalid: is invalid
         ended_at:
           invalid: is invalid
+
+  case_search_form:
+    rules:
+      search_term: Search term
+    errors:
+      rules:
+        search_term:
+          min_size?: must be at least 3 characters
+          format?: must only container letters or numbers
+

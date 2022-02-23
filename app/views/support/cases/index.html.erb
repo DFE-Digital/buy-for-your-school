@@ -28,6 +28,7 @@
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
         <% else %>
+          <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "my-cases" %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -69,6 +70,7 @@
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
         <% else %>
+          <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "new-cases" %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -106,10 +108,11 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <% if @cases.none? %>
-          <h1 class="govuk-heading-l">
+          <h1 class="govuk-heading-l flexalign__left">
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
         <% else %>
+          <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "all-cases" %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">

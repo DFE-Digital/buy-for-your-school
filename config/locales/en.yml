@@ -547,9 +547,6 @@ en:
           nw_hub: North west hub case
           sw_hub: South west hub case
           faf: Find a Framework
-        search:
-          heading: Find a case
-          hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -601,6 +598,19 @@ en:
         my_cases: My cases
         new_cases: New cases
         all_cases: All cases
+      search:
+        heading: Find a case
+        hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
+      filter:
+        filter_results: Filter results
+        labels:
+          state: Filter by status
+          category: Filter by category
+          assignee: Filter by assignee
+          all: All
+        buttons:
+          apply: Apply filter
+          clear: Clear filter
       link:
         edit_category: Change
         view_school_information: View school information (opens in a new tab)
