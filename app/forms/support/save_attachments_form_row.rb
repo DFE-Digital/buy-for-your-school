@@ -13,11 +13,22 @@ module Support
     delegate :file_name, to: :email_attachment
 
     before_validation do
-      self.name = email_attachment&.file_name if name.blank?
+      self.name = file_name_to_save
     end
 
     def selected=(value)
       @selected = value == "1"
+    end
+
+    def file_name_to_save
+      file_extension = ActiveStorage::Filename.new(file_name).extension_with_delimiter
+      potential_name = name.presence || file_name
+
+      if potential_name.ends_with?(file_extension)
+        potential_name
+      else
+        potential_name.concat(file_extension)
+      end
     end
   end
 end
