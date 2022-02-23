@@ -7,12 +7,14 @@ RSpec.describe Support::CreateCaseFormPresenter do
   let(:form_hash) do
     {
       category_id: category.id,
-      school_urn: "000001",
       hub_case_ref: "ce-00001",
       first_name: "first_name",
       last_name: "last_name",
       email: "test@example.com",
       phone_number: "00000000000",
+      organisation_id: organisation.id,
+      organisation_name: organisation.name,
+      organisation_type: organisation.class.to_s,
     }
   end
 
@@ -52,11 +54,11 @@ RSpec.describe Support::CreateCaseFormPresenter do
 
   describe "#establishment" do
     it "return school from the URN" do
-      expect(presenter.establishment).to eq organisation
+      expect(presenter.organisation).to eq organisation
     end
 
     it "return schools name" do
-      expect(presenter.establishment.name).to eq "Hillside School"
+      expect(presenter.organisation.name).to eq "Hillside School"
     end
   end
 end

@@ -68,16 +68,18 @@ module Notify
     # @return [Notifications::Client::ResponseNotification]
     #
     def send_message
-      client.send_email(
-        # `email_reply_to_id` can be omitted if the service only has one email
-        # reply-to address, or you want to use the default email address.
-        #
-        # email_reply_to_id: "",
+      message_params = {
         email_address: recipient.email,
         template_id: template,
         reference: reference,
         personalisation: personalisation,
-      )
+      }
+
+      if ENV["NOTIFY_EMAIL_REPLY_TO_ID"].present?
+        message_params[:email_reply_to_id] = ENV["NOTIFY_EMAIL_REPLY_TO_ID"]
+      end
+
+      client.send_email(message_params)
     end
 
     # Adds `link_to_file` template variable

@@ -47,7 +47,7 @@ module Support
     end
 
     def automatically_assign_case
-      return if case_id.present? || sent_items?
+      return if case_id.present?
 
       Support::IncomingEmails::CaseAssignment.detect_and_assign_case(self)
 
@@ -73,7 +73,7 @@ module Support
     end
 
     def set_case_action_required
-      self.case.update!(action_required: true) if self.case.present?
+      self.case.update!(action_required: true) if self.case.present? && inbox?
     end
   end
 end

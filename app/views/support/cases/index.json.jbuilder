@@ -1,13 +1,13 @@
-json.array! @cases do |kase|
+json.array! @cases do |case_search|
   # case
-  json.id kase.id
-  json.ref kase.ref
+  json.id case_search.case_id
+  json.ref case_search.case_ref
 
   # agent
-  json.agent_name "#{kase.agent&.first_name} #{kase.agent&.last_name}"
+  json.agent_name case_search.agent_name
 
   # organisation
-  json.organisation_name kase.organisation&.name
-  json.organisation_urn kase.organisation&.urn
-  json.organisation_ukprn kase.organisation&.ukprn
+  json.organisation_name case_search.organisation_name
+  json.organisation_urn case_search.organisation_urn
+  json.organisation_ukprn case_search.organisation_ukprn
 end

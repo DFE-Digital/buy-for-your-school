@@ -78,6 +78,43 @@ FactoryBot.define do
       end
     end
 
+    trait :one_supported_group do
+      orgs do
+        [{
+          "uid": "2314",
+          "name": "Testing Multi Academy Trust",
+          "category": { "id": GROUP_CATEGORY_IDS.first, "name": "Multi-academy Trust" },
+        }]
+      end
+    end
+
+    trait :many_supported_schools_and_groups do
+      orgs do
+        [
+          {
+            "urn": "100253",
+            "name": "Specialist School for Testing",
+            "type": { "id": ORG_TYPE_IDS.first, "name": "Community School" },
+          },
+          {
+            "urn": "100254",
+            "name": "Greendale Academy for Bright Sparks",
+            "type": { "id": ORG_TYPE_IDS.last, "name": "Academy Special Converter" },
+          },
+          {
+            "uid": "2314",
+            "name": "Testing Multi Academy Trust",
+            "category": { "id": GROUP_CATEGORY_IDS.first, "name": "Multi-academy Trust" },
+          },
+          {
+            "uid": "2315",
+            "name": "New Academy Trust",
+            "category": { "id": GROUP_CATEGORY_IDS.last, "name": "Single-academy Trust" },
+          },
+        ]
+      end
+    end
+
     trait :analyst do
       roles do
         %w[analyst]

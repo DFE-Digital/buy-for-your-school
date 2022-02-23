@@ -18,6 +18,7 @@ en:
       update: Update
       yes_continue: Yes, continue
       save: Save
+      submit: Submit
       cancel: Cancel
     label:
       what_is: "What is %{label}?"
@@ -25,7 +26,8 @@ en:
     design: "%{env} Environment"
     beta:
       tag: beta
-      message: This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
+      message: This is a new service – your %{feedback_link} will help us to improve it.
+      feedback_link: feedback
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -72,15 +74,16 @@ en:
           - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
       unsupported_organisation:
         page_title: Your organisation is not supported by this service
-        supported_schools: "This service is for those procuring for one school, either:"
+        supported_schools: "This service is for those procuring for a school in England. We can provide support to:"
         supported_schools_list:
-          - a local authority maintained school, or
-          - one academy within a single or multi-academy trust
+          - a local authority maintained school
+          - a federation school
+          - an academy in a single or multi-academy trust
         page_body:
-          - If you need to try a different account you can
-          - This service is available to all state-funded primary, secondary, special and alternative provision schools which have pupils aged between 5-16.
-          - Private, voluntary-aided and independent early years providers and institutions that provide only for pupils aged 16+ are not eligible for this service.
-        link: sign in into the service again.
+          - If you want to try a different account you can
+          - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
+        link: sign in to the service again.
   #
   # Self-Serve -----------------------------------------------------------------
   #
@@ -272,6 +275,47 @@ en:
     users_header: Users
     download_csv: Download (.csv)
     download_json: Download (.json)
+  
+  # /feedback
+  feedback:
+    title: Feedback - Get help buying for schools - GOV.UK
+    header: Give feedback on Get help buying for schools
+    survey:
+      title: Satisfaction survey
+      satisfaction_question: Overall, how did you feel about the service you received today?
+      satisfaction_options:
+        very_dissatisfied: Very dissatisfied
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied or dissatisfied
+        satisfied: Satisfied
+        very_satisfied: Very satisfied
+      feedback_text_question: How could we improve this service? (Optional)
+      feedback_text_hint: Do not include personal or financial information, for example your National Insurance or credit card numbers.
+      submit: Submit
+    user:
+      header: Enter your contact details
+      body: Give your details to opt-in and take part in user research to help us improve the service. We will not use your details for any other purpose.
+      full_name: Full name
+      email: Email
+    confirmation_feedback:
+      submitted: Feedback submitted
+      message: We will use your feedback to improve this service.
+      get_involved:
+        header: Get involved
+        body: "%{contact_form_link} by opting in to take part in user research."
+        contact_form_link: Help us improve this service
+    confirmation_details:
+      submitted: Confirmation
+      message: Thank you for opting in to take part in user research.
+      next:
+        header: What happens next
+        body: We will contact you via email and invite you to take part in research when it becomes available.
+        link:
+          label: Go to Find an approved framework
+          url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
+
+ 
+
 
   #
   # FaF -----------------------------------------------------------------
@@ -291,7 +335,7 @@ en:
       subheading: Before you start
       you_can: You can
 
-    # step 2
+    # step 2 - no DSI
     name:
       title: What is your name?
       subtitle: About you
@@ -300,7 +344,7 @@ en:
       last_name:
         label: Last Name
 
-    # step 3
+    # step 3 - no DSI
     email:
       title: What is your email address?
       subtitle: About you
@@ -337,6 +381,16 @@ en:
         dsi: Yes, use my DfE Sign-in
         no_dsi: No, continue without a DfE Sign-in account
 
+    school_or_group_or_trust:
+      header: What type of organisation are you buying for?
+      hint: If you're buying together informally as a group, choose a 'single school' to represent the group.
+      radios:
+        single_school:
+          label: A single school
+          hint: A local authority maintained school or an academy in a single or multi-academy trust
+        group_or_trust:
+          label: An academy trust or federation
+
     user_organisation:
       header: Which school are you buying for?
       subtitle: About your school
@@ -352,6 +406,8 @@ en:
         name: Your name
         email: Your email address
         school: Your school
+        school_type: School type
+        single: Single
         problem: Description of request
 
     search_for_a_school:
@@ -362,9 +418,24 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "You can only use this service if you are procuring for a single school in England. This should either be a local authority maintained school, or an academy in a single or multi-academy trust."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+        search_for_a_group_link: Search for an academy trust or federation
+      button: Continue
+
+    search_for_a_group:
+      title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Search for an academy trust or federation
+      hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
+      details:
+        summary: Can't find it?
+        body:
+          - "This search lists academy trusts and federations. %{search_for_a_school_link}"
+          - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
+        search_for_a_school_link: Search for a single school instead.
       button: Continue
 
     which_school:
@@ -387,7 +458,21 @@ en:
         ukprn: UKPRN
       choice:
         continue: "Yes"
-        go_back: "No, I need to choose another school"
+        go_back: No, I need to choose another school
+
+    confirm_group_or_trust:
+      title: Is this the academy trust or federation you're buying for? - Get help buying for schools - GOV.UK
+      caption: About your school
+      heading: Is this the academy trust or federation you're buying for?
+      summary:
+        group_name: Group name
+        address: Address
+        group_type: Group type
+        id: ID
+        uid: UID
+        ukprn: UKPRN
+      choice:
+        go_back: No, I need to choose another academy trust or federation
 
   faf_submissions:
     header:
@@ -413,8 +498,8 @@ en:
   #
   support:
     generic:
-      'yes': 'Yes'
-      'no': 'No'
+      "yes": "Yes"
+      "no": "No"
       continue: Continue
       cancel: Cancel
       back: Back
@@ -444,6 +529,7 @@ en:
         add_interaction: Log contact with school
         resolve: Resolve case
         reopen: Reopen case
+        move_email: Move emails to existing case
         case: Case
         organisation: Organisation
         status: Status
@@ -518,6 +604,7 @@ en:
       link:
         edit_category: Change
         view_school_information: View school information (opens in a new tab)
+        view_group_information: View group information (opens in a new tab)
 
     case_categorisations:
       edit:
@@ -595,9 +682,10 @@ en:
       header: Hub migration case information
       label:
         form_hint: The following fields are only for NW Hub cases that are being migrated.
-        school_urn: Establishment URN
-        school_name: Establishment name
-        school_postcode: Establishment postcode
+        school_urn: Organisation URN
+        school_ukprn: Organisation UKPRN
+        school_name: Organisation name
+        school_postcode: Organisation postcode
         name: Contact name
         first_name: Contact first name
         last_name: Contact last name
@@ -606,7 +694,6 @@ en:
         category: Category
         category_id: Buying category
         source: Case source
-        organisation_id: Establishment name
         case_type: Type of case
         hub_case_ref: Identification number %{optional}
         hub_case_ref_hint: We will use the existing Hub identification number to link the existing case data to a new case number
@@ -629,7 +716,7 @@ en:
       edit:
         header: Check your answers before creating a new case
         section:
-          establishment: Establishment details
+          establishment: Organisation details
           contact: Contact details
           case: Case details
           migration: Hub migration case information
@@ -683,7 +770,6 @@ en:
           this_case: "Go to Case %{case_ref}"
           notifications: Notifications
           my_cases: My Cases
-
 
     case_organisation:
       label: What Organisation do you want to add?
@@ -793,6 +879,7 @@ en:
         hub_progress_notes: Hub progress notes
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
+        procurement_updated: Procurement updated
       label:
         email_unread: Unread
         contact_detail: Contact details

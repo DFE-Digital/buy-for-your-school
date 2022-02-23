@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   resources :design, only: %i[index show]
   resources :categories, only: %i[index]
+  resources :feedback, only: %i[new show create edit update]
 
   #
   # Framework Requests ---------------------------------------------------------
@@ -78,6 +79,8 @@ Rails.application.routes.draw do
       resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :organisations, only: %i[index]
+    resources :establishments, only: %i[index]
+    resources :establishment_groups, only: %i[index]
     resources :cases, only: %i[index show edit update new create] do
       resources :interactions, only: %i[new create show]
       scope module: :cases do

@@ -54,9 +54,21 @@ RSpec.describe Support::CasePresenter do
     end
   end
 
-  describe "#organisation" do
-    it "is decorated" do
-      expect(presenter.organisation).to be_a(Support::OrganisationPresenter)
+  describe "#decorated_organisation" do
+    context "when organisation is an Organisation" do
+      it "is decorated with Support::OrganisationPresenter" do
+        presenter.organisation = Support::Organisation.new
+        presenter.organisation_type = "Support::Organisation"
+        expect(presenter.decorated_organisation).to be_a(Support::OrganisationPresenter)
+      end
+    end
+
+    context "when organisation is an EstablishmentGroup" do
+      it "is decorated with Support::EstablishmentGroupPresenter" do
+        presenter.organisation = Support::EstablishmentGroup.new
+        presenter.organisation_type = "Support::EstablishmentGroup"
+        expect(presenter.decorated_organisation).to be_a(Support::EstablishmentGroupPresenter)
+      end
     end
   end
 
@@ -65,35 +77,35 @@ RSpec.describe Support::CasePresenter do
       before { presenter.organisation = nil }
 
       it "returns the contact email" do
-        expect(presenter.org_name).to eq "school@email.co.uk"
+        expect(presenter.organisation_name).to eq "school@email.co.uk"
       end
 
       context "when no contact email is set" do
         before { presenter.email = nil }
 
         it "returns n/a" do
-          expect(presenter.org_name).to eq "n/a"
+          expect(presenter.organisation_name).to eq "n/a"
         end
       end
     end
 
     it "returns org name" do
-      expect(presenter.org_name).to eq "Example Org"
+      expect(presenter.organisation_name).to eq "Example Org"
     end
   end
 
-  describe "#org_urn" do
+  describe "#organisation_urn" do
     it "returns org urn" do
-      expect(presenter.org_urn).to eq "000000"
+      expect(presenter.organisation_urn).to eq "000000"
     end
   end
 
   context "without an organisation" do
     let(:organisation) { nil }
 
-    describe "#org_urn" do
-      it "returns org urn" do
-        expect(presenter.org_urn).to eq "n/a"
+    describe "#organisation_urn" do
+      it "returns n/a" do
+        expect(presenter.organisation_urn).to eq "n/a"
       end
     end
   end

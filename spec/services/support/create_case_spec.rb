@@ -11,7 +11,7 @@ RSpec.describe Support::CreateCase do
     let(:case_params) do
       {
         category_id: category.id,
-        organisation_id: organisation.id,
+        organisation: organisation,
         source: "sw_hub",
         first_name: "first_name",
         last_name: "last_name",

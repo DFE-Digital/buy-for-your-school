@@ -11,10 +11,18 @@
   Succinct list of changes explaining what has changed and why.
 -->
 
-## Screenshots of UI changes
+## Screen-shots or screen-capture of UI changes
 
 <!--
-  Include full page from header to footer, cropping the sides to fit.
+  # Screen-shots
+  - Include full page from header to footer, cropping the sides to fit.
+
+  # Screen-captures
+  - Record only the browser window
+  - Don't full screen the browser window (to avoid large files)
+  - Break into seperate videos if there are several journeys being preseneted
+  - Mac guide: https://support.apple.com/en-gb/HT208721
+  - Windows guide: https://support.microsoft.com/en-us/windows/5328cd25-9046-4472-8a14-c485f138802c
 -->
 
 ### Before

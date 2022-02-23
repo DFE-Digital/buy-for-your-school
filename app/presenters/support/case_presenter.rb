@@ -6,10 +6,13 @@ require_relative "agent_presenter"
 require_relative "organisation_presenter"
 require_relative "procurement_presenter"
 require_relative "contract_presenter"
+require_relative "establishment_group_presenter"
+require_relative "concerns/has_organisation"
 
 module Support
   class CasePresenter < BasePresenter
     include ActionView::Helpers::NumberHelper
+    include Support::Concerns::HasOrganisation
 
     # @return [String]
     def state
@@ -45,7 +48,9 @@ module Support
     # return interactions excluding the event_type of support_request
     # @return [Array<InteractionPresenter>]
     def interactions
-      @interactions ||= super.not_support_request.map { |i| InteractionPresenter.new(i) }
+      @interactions ||= super.not_support_request
+        .order("created_at ASC")
+        .map { |i| InteractionPresenter.new(i) }
     end
 
     # return single interaction of support_request event_type
@@ -64,27 +69,12 @@ module Support
       CategoryPresenter.new(super)
     end
 
-    # @return [String]
-    def org_name
-      if organisation.present?
-        organisation.name
-      elsif email.present?
-        email
-      else
-        "n/a"
-      end
+    def organisation_name
+      super || email || "n/a"
     end
 
-    # @return [String]
-    def org_urn
-      return "n/a" if organisation.blank?
-
-      organisation.urn
-    end
-
-    # @return [OrganisationPresenter]
-    def organisation
-      OrganisationPresenter.new(super) if super
+    def organisation_urn
+      super || "n/a"
     end
 
     def savings_status

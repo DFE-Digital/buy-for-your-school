@@ -7,8 +7,15 @@
   data-autocomplete-element-name="<%= element_name %>"
   data-autocomplete-template-suggestion="<%= template_suggestion %>"
   data-autocomplete-template-input="<%= value_field %>"
-  data-autocomplete-query-url="<%= query_url %>"
-  data-autocomplete-default-value="<%= defined?(default_value) ? default_value : "" %>">
+  data-autocomplete-default-value="<%= defined?(default_value) ? default_value : nil %>"
+  data-autocomplete-hidden-fields="<%= defined?(hidden_fields) ? hidden_fields.to_json : nil %>"
+  data-autocomplete-query-url="<%= query_url %>">
+
+  <% if defined?(hidden_fields) %>
+    <% hidden_fields.each do |field_name, key_or_key_and_default| %>
+      <input type="hidden" name="<%= field_name %>" value="<%= Array.wrap(key_or_key_and_default)[1] %>">
+    <% end %>
+  <% end %>
 </div>
 <noscript>
   <%= yield %>

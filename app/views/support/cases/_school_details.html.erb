@@ -40,7 +40,7 @@
       <%= I18n.t("support.case.label.organisation_name") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= current_case.organisation.present? ? current_case.org_name : "" %>
+      <%= current_case.organisation_name if current_case.organisation.present? %>
     </dd>
     <dd class="govuk-summary-list__actions">
       <%= link_to current_case.organisation.present? ? "Change" : "Add",
@@ -53,7 +53,7 @@
       <%= I18n.t("support.case.label.organisation_type") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= current_case.organisation&.establishment_type&.name %>
+      <%= current_case.organisation_type_name %>
     </dd>
     <dd class="govuk-summary-list__actions">
     </dd>
@@ -62,8 +62,8 @@
 
 <% if current_case.organisation.present? %>
   <p class="govuk-body">
-    <%= link_to I18n.t("support.case.link.view_school_information"),
-        "https://www.get-information-schools.service.gov.uk/Establishments/Establishment/Details/#{current_case.org_urn}",
+    <%= link_to current_case.organisation_gias_label,
+        current_case.organisation_gias_url,
         class: "govuk-link", target: "_blank", rel: "noreferrer noopener"
     %>
   </p>
