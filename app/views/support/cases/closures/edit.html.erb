@@ -1,0 +1,17 @@
+<%= form_with model: @form, scope: :case_closure_form, url: support_case_closures_path(@current_case), method: :patch, class: "govuk-!-display-inline" do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_radio_buttons_fieldset :reason, legend: { text: I18n.t("support.case_closures.edit.header"), size: "l" }, hint: { text: I18n.t("support.case_closures.edit.hint") } do %>
+
+  <%= form.hidden_field :reason, value: nil %>
+
+    <div class="govuk-radios">
+      <% @reasons.each do |reason| %>
+        <%= form.govuk_radio_button :reason, reason, label: { text: I18n.t("support.case_closures.edit.reasons.#{reason}") } %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+  <%= form.submit I18n.t("support.case_closures.edit.submit"), class: "govuk-button", role: "button" %>
+<% end %>
