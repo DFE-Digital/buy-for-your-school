@@ -7,6 +7,7 @@ RSpec.feature "User feedback page" do
   describe "navigate to the feedback page" do
     context "when a user selects the feedback link in the page header" do
       it "displays the feedback page" do
+        expect(page).to have_breadcrumbs ["Dashboard", "Give feedback"]
         expect(find("h1.govuk-heading-xl")).to have_text "Give feedback on Get help buying for schools"
         expect(find("h1.govuk-fieldset__heading")).to have_text "Satisfaction survey"
         expect(find("legend.govuk-fieldset__legend--s")).to have_text "Overall, how did you feel about the service you received today?"
@@ -53,6 +54,7 @@ RSpec.feature "User feedback page" do
       end
 
       it "navigates to the feedback confirmation page" do
+        expect(page).to have_breadcrumbs ["Dashboard", "Give feedback"]
         expect(find("h1.govuk-panel__title")).to have_text "Feedback submitted"
         expect(all("p.govuk-body")[0]).to have_text "We will use your feedback to improve this service."
         expect(find("h2.govuk-heading-m")).to have_text "Get involved"
