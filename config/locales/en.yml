@@ -296,7 +296,7 @@ en:
       header: Enter your contact details
       body: Give your details to opt-in and take part in user research to help us improve the service. We will not use your details for any other purpose.
       full_name: Full name
-      email: Email address
+      email: Email
     confirmation_feedback:
       submitted: Feedback submitted
       message: We will use your feedback to improve this service.
@@ -309,7 +309,7 @@ en:
       message: Thank you for opting in to take part in user research.
       next:
         header: What happens next
-        body: We will contact you via email and invite you to take part in research when it becomes available
+        body: We will contact you via email and invite you to take part in research when it becomes available.
         link:
           label: Go to Find an approved framework
           url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
