@@ -54,8 +54,8 @@ RSpec.feature "'Find a Framework' request as a guest" do
     click_continue
   end
 
-  describe "what type of organisation page" do
-    it "has a back link to the 'Do you have a DfE Sign-in' page" do
+  describe "the organisation type choice page" do
+    it "goes back to the login choice page" do
       click_on "Back"
       within("div.govuk-form-group") do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
@@ -63,7 +63,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
       end
     end
 
-    it "loads the page" do
+    it "asks for school or group" do
       expect(page).to have_text "What type of organisation are you buying for?"
     end
 
@@ -80,7 +80,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
     end
 
     describe "the school search page" do
-      it "goes back to the 'What type of organisation are you buying for?' page" do
+      it "goes back to the organisation choice page" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=3/)
         expect(page).to have_current_path(/back%5D=true/)
@@ -104,20 +104,20 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "has a link to the group search page" do
+      it "links to the group search page" do
         find("span", text: "Can't find it?").click
         click_on "Search for an academy trust or federation"
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
-      it "validates school field" do
+      it "validates the selected school" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Select the school you want help buying for", href: "#framework-support-form-school-urn-field-error"
       end
     end
 
-    describe "the school details page" do
+    describe "the school confirmation page" do
       before do
         complete_school_step
       end
@@ -177,7 +177,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_text "Search for your school"
       end
 
-      it "has the correct attributes" do
+      it "asks for their full name" do
         expect(find("span.govuk-caption-l")).to have_text "About you"
         expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
 
@@ -187,7 +187,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "raises a validation error when nothing entered" do
+      it "validates their name is entered" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter your first name", href: "#framework-support-form-first-name-field-error"
@@ -220,7 +220,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "validates email field" do
+      it "validates their email is entered" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter an email in the correct format. For example, 'someone@school.sch.uk'.", href: "#framework-support-form-email-field-error"
@@ -253,7 +253,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "validates the help message field" do
+      it "validates the message is entered" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
@@ -262,7 +262,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
     end
   end
 
-  context "when choosing a group or trust", js: true do
+  context "when selecting a group or trust", js: true do
     before do
       choose "An academy trust or federation"
       click_continue
@@ -276,7 +276,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_text "What type of organisation are you buying for?"
       end
 
-      it "has the correct attributes" do
+      it "asks to search for a group" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
 
@@ -293,14 +293,14 @@ RSpec.feature "'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "links to the search for a school page" do
+      it "links to the school search page" do
         find("span", text: "Can't find it?").click
 
         click_on "Search for a single school instead."
         expect(page).to have_text "Search for your school"
       end
 
-      it "validates group field" do
+      it "validates the selected group" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter your academy trust or federation name, or UKPRN and select it from the list", href: "#framework-support-form-group-uid-field-error"
@@ -312,16 +312,23 @@ RSpec.feature "'Find a Framework' request as a guest" do
         complete_group_step
       end
 
-      it "goes back to the search for a group page" do
+      it "goes back to the group search page" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=4/)
         expect(page).to have_current_path(/back%5D=true/)
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
-      it "displays a validation message if no selection made" do
+      it "validates the group is confirmed" do
         click_continue
         expect(find(".govuk-error-summary__body")).to have_text "Select whether this is the Group or Trust you're buying for"
+      end
+
+      it "choosing no goes back to the group search page" do
+        choose "No, I need to choose another academy trust or federation"
+        click_continue
+        expect(page).to have_current_path "/procurement-support"
+        expect(page).to have_text "Search for an academy trust or federation"
       end
 
       it "has the correct attributes" do

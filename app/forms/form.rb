@@ -17,7 +17,7 @@ class Form
   # @return [Integer] internal counter defaults to 1, coerces strings
   option :step, Types::Params::Integer, default: proc { 1 }
 
-  # @param num [Integer] number of steps to advance
+  # @param position [Integer] number of steps to advance
   #
   # @return [Boolean] assert step position
   def position?(position)

@@ -84,7 +84,7 @@ RSpec.describe FrameworkSupportForm do
     context "when authenticated with many schools" do
       let(:user) { create(:user, :many_supported_schools_and_groups) }
 
-      it "message > oerg select" do
+      it "message > org select" do
         form = described_class.new(user: user, step: 7)
         form.backward
         expect(form.step).to be 3

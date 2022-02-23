@@ -1,6 +1,6 @@
 RSpec.feature "'Find a Framework' request" do
   context "when not signed in" do
-    describe "log in choice page" do
+    describe "the log in choice page" do
       before do
         visit "/procurement-support/new"
       end
@@ -39,7 +39,7 @@ RSpec.feature "'Find a Framework' request" do
         visit "/procurement-support/new"
       end
 
-      describe "message page" do
+      describe "the message page" do
         it "is the only step" do
           expect(find("label.govuk-label--l")).to have_text "How can we help?"
           fill_in "framework_support_form[message_body]", with: "I have a problem"
@@ -53,7 +53,7 @@ RSpec.feature "'Find a Framework' request" do
           expect(page).to have_current_path "/procurement-support"
         end
 
-        it "raises a validation error if missing" do
+        it "validates the message exists" do
           click_continue
 
           expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
@@ -93,7 +93,7 @@ RSpec.feature "'Find a Framework' request" do
         visit "/procurement-support/new"
       end
 
-      it "lists all supported schools" do
+      it "lists all supported schools and groups" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("legend.govuk-fieldset__legend")).to have_text "Which school are you buying for?"
         expect(page).to have_unchecked_field "Specialist School for Testing"
@@ -102,7 +102,7 @@ RSpec.feature "'Find a Framework' request" do
         expect(page).to have_unchecked_field "New Academy Trust (MAT)"
       end
 
-      it "errors if a school is not selected" do
+      it "validates a group or school is selected" do
         click_continue
         within "div.govuk-error-summary" do
           expect(page).to have_text "Select the school or group you want help buying for"

@@ -78,7 +78,7 @@ class FrameworkSupportForm < Form
   def go_back
     to_h
       .except(:user, :messages, :correct_organisation, :correct_group)
-      .merge(back: true)
+      .merge(back: true, group: group_uid.present? || school_urn.blank?)
       .reject { |_, v| v.blank? }
   end
 
@@ -170,12 +170,12 @@ private
     !user.guest? && user.single_org?
   end
 
-  # @return [Boolean]
+  # @return [Boolean, nil]
   def school_unconfirmed?
     !correct_organisation unless correct_organisation.nil?
   end
 
-  # @return [Boolean]
+  # @return [Boolean, nil]
   def group_unconfirmed?
     !correct_group unless correct_group.nil?
   end
