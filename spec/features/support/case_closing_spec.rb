@@ -26,4 +26,8 @@ RSpec.feature "Case worker can close a case" do
       expect(page).to have_css(".case-status", text: "Closed")
     end
   end
+
+  it "has no action links" do
+    expect(page).not_to have_css("ul.govuk-list .case-actions")
+  end
 end

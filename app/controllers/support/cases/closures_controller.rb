@@ -1,5 +1,5 @@
 module Support
-  class Cases::ClosingsController < Cases::ApplicationController
+  class Cases::ClosuresController < Cases::ApplicationController
     def create
       current_case.interactions.note.build(
         body: "Case closed",

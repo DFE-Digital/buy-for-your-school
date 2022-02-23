@@ -18,7 +18,7 @@ module Support
 
     aasm(column: :state, enum: true) do
       state :initial, initial: true
-      state :opened, :resolved, :pending, :closed, :pipeline, :no_response
+      state :opened, :resolved, :on_hold, :closed, :pipeline, :no_response
 
       event :resolve do
         transitions from: :initial, to: :resolved
@@ -28,11 +28,11 @@ module Support
       event :open do
         transitions from: :initial, to: :opened
         transitions from: :resolved, to: :opened
-        transitions from: :pending, to: :opened
+        transitions from: :on_hold, to: :opened
       end
 
       event :hold do
-        transitions from: :opened, to: :pending
+        transitions from: :opened, to: :on_hold
       end
 
       event :close do
@@ -80,7 +80,7 @@ module Support
     #   closed
     #   pipeline
     #   no_response
-    enum state: { initial: 0, opened: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
+    enum state: { initial: 0, opened: 1, resolved: 2, on_hold: 3, closed: 4, pipeline: 5, no_response: 6 }
 
     # Source
     #
