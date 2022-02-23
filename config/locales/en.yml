@@ -829,6 +829,7 @@ en:
           subtitle: Help on social value section in creating a specification
 
     case_documents:
+      show:
         header: Your specification
 
     case_closures:
