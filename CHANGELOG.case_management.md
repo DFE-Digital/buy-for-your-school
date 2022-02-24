@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
+- Agent can update the problem description on a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/899)
 - Agent can save email attachments to a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/896)
 
 <!--
