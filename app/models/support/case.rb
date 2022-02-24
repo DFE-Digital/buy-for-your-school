@@ -8,13 +8,7 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include ::PgSearch::Model
     include AASM
-
-    pg_search_scope :search, against: %i[ref], associated_against: {
-      organisation: %i[name urn],
-      agent: %i[first_name last_name],
-    }
 
     aasm(column: :state, enum: true) do
       state :initial, initial: true
@@ -43,8 +37,6 @@ module Support
       end
     end
 
-    scope :search, ->(q) { Support::CaseSearch.omnisearch(q).joins }
-
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     belongs_to :organisation, polymorphic: true, optional: true
@@ -53,6 +45,8 @@ module Support
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy
     accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
+
+    has_many :case_attachments, class_name: "Support::CaseAttachment", foreign_key: :support_case_id
 
     has_one :hub_transition, class_name: "Support::HubTransition", dependent: :destroy
 

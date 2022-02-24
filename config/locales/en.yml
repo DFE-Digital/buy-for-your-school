@@ -517,6 +517,7 @@ en:
         case_detail: Case details
         case_history: Case history
         procurement_detail: Procurement details
+        case_attachments: Attachments
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -562,6 +563,11 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
+        attachments:
+          table:
+            attachment_name: Attachment name
+            description: Description
+            date_added: Date added
         procurement_details:
           change: change
           required_agreement_type: Required agreement type
@@ -862,6 +868,27 @@ en:
     cases:
       my_cases:
         header_link: My cases
+
+    save_attachments:
+      initiate_journey: Save attachments
+      form:
+        file_types_notice: Attachments that cannot be saved due to their field type have been excluded.
+        header: Select attachments to save
+        subheader: You can rename and add a description to attachments you select
+        rename_attachment: Rename attachment (optional)
+        description: Add attachment description
+        submit: Save to case
+        cancel: Cancel
+      success:
+        header: Attachments saved
+        table:
+          header:
+            attachment: Attachment
+            description: Description
+        actions:
+          header: Actions
+          go_back_to_email: Go back to email
+          view_attachments: View saved attachments
 
     emails:
       header_link: Notifications

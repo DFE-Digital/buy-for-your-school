@@ -14,10 +14,18 @@
   </h2>
 <% end %>
 
-<%= button_to I18n.t("support.emails.button.#{@email.is_read? ? "mark_as_unread" : "mark_as_read"}"),
-      support_email_read_status_path(@email, status: @email.is_read? ? "unread" : "read"),
-      method: :patch,
-      class: "govuk-button govuk-button--secondary" %>
+<div class="flex-align-center">
+  <%= button_to I18n.t("support.emails.button.#{@email.is_read? ? "mark_as_unread" : "mark_as_read"}"),
+        support_email_read_status_path(@email, status: @email.is_read? ? "unread" : "read"),
+        method: :patch,
+        class: "govuk-button govuk-button--secondary" %>
+
+  <% if @email.attachments.any? %>
+    <%= link_to I18n.t("support.save_attachments.initiate_journey"),
+                new_support_email_save_attachments_path(@email),
+                class: "govuk-button govuk-button--secondary govuk-!-margin-left-2" %>
+  <% end %>
+</div>
 
 <div class="email-preview govuk-body">
   <dl class="govuk-summary-list">
