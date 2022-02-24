@@ -37,8 +37,27 @@ RSpec.describe Support::CasePresenter do
   end
 
   describe "#last_updated_at" do
-    it "returns the formatted date on which the case was last updated - being the formatted date for when the interaction was created, given there is an interaction on the case" do
-      expect(presenter.last_updated_at).to eq("31 January 2021 at 12:00")
+    context "when no interaction" do
+      subject(:presenter) { described_class.new(support_case_without_interaction) }
+
+      let(:support_case_without_interaction) do
+        create(:support_case,
+               agent: agent,
+               organisation: organisation,
+               procurement: procurement,
+               created_at: Time.zone.local(2021, 1, 30, 12, 0, 0),
+               updated_at: Time.zone.local(2021, 1, 30, 12, 0, 0))
+      end
+
+      it "returns the formatted date on which the case was last updated" do
+        expect(presenter.last_updated_at).to eq("30 January 2021 at 12:00")
+      end
+    end
+
+    context "when there is an interaction" do
+      it "returns the formatted date for when the interaction was created on the case" do
+        expect(presenter.last_updated_at).to eq("31 January 2021 at 12:00")
+      end
     end
   end
 
