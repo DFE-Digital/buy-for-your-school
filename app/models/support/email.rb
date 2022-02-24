@@ -19,6 +19,10 @@ module Support
       email.set_case_action_required if is_first_import
     end
 
+    def has_unattachable_files_attached?
+      attachments.for_case_attachments.count < attachments.count
+    end
+
     def import_from_message(message, folder: :inbox)
       update!(
         outlook_id: message.id,

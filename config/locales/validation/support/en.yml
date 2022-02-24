@@ -133,6 +133,7 @@ en:
         ended_at:
           invalid: is invalid
 
+
   case_search_form:
     rules:
       search_term: Search term
@@ -142,3 +143,13 @@ en:
           min_size?: must be at least 3 characters
           format?: must only container letters or numbers
 
+  save_attachments_form:
+    errors:
+      rules:
+        base: "Please check the details below"
+        name:
+          already_taken: File already exists. Enter new attachment name
+        email_attachment_id:
+          missing: Select an attachment
+        description:
+          missing: Enter a description

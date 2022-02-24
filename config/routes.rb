@@ -75,7 +75,9 @@ Rails.application.routes.draw do
     end
     resources :agents, only: %i[create]
     if Features.enabled?(:incoming_emails)
-      resources :emails, only: %i[index show]
+      resources :emails, only: %i[index show] do
+        resource :save_attachments, only: %i[new create]
+      end
       resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :organisations, only: %i[index]
