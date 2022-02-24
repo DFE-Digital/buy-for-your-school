@@ -10,6 +10,7 @@ resource "cloudfoundry_app" "web_app" {
 
   service_binding { service_instance = cloudfoundry_service_instance.redis.id }
   service_binding { service_instance = cloudfoundry_service_instance.postgres.id }
+  service_binding { service_instance = cloudfoundry_service_instance.s3.id }
   service_binding { service_instance = cloudfoundry_user_provided_service.log_stream.id }
 
   environment = local.app_environment
