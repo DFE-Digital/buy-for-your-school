@@ -269,7 +269,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     end
 
     describe "the search for a group page" do
-      it "goes back to choosing school or group" do
+      it "goes back to the organisation choice page" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=3/)
         expect(page).to have_current_path(/back%5D=true/)
