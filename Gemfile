@@ -29,6 +29,7 @@ gem "pg"
 gem "pg_search"
 gem "puma", "~> 5.6"
 gem "rails", "~> 6.1.4"
+gem "ransack"
 gem "redis", "~> 4.5"
 gem "redis-namespace"
 gem "redis-rails"
@@ -42,7 +43,6 @@ gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 gem "will_paginate", "~> 3.3.0"
-gem "ransack"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]

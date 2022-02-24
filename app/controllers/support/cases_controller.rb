@@ -14,9 +14,9 @@ module Support
         format.html do
           @form = CaseFilterForm.new
 
-          @cases = Case.ransack(params[:search]).result.includes(%i[agent category organisation]).all.map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
-          @new_cases = Case.includes(%i[agent category organisation]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
-          @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+          @cases = FilterCases.new.filter(params[:filter_all_cases_form]).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
+          @new_cases = FilterCases.new.filter(params[:filter_new_cases_form]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
+          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         end
       end
     end

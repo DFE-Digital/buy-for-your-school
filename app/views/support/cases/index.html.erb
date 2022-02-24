@@ -23,12 +23,12 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.my_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
+        <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "my-cases" %>
         <% if @my_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
         <% else %>
-          <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "my-cases" %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -65,12 +65,12 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.new_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
+        <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "new-cases" %>
         <% if @new_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
         <% else %>
-          <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "new-cases" %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -107,12 +107,12 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.all_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
+        <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "all-cases" %>
         <% if @cases.none? %>
           <h1 class="govuk-heading-l flexalign__left">
             <%= I18n.t("support.case.list.not_found") %>
           </h1>
         <% else %>
-          <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "all-cases" %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
