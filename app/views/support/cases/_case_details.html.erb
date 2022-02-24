@@ -22,7 +22,11 @@
       <dd class="govuk-summary-list__value">
         <%= current_case.request_text %>
       </dd>
-      <dd class="govuk-summary-list__actions"></dd>
+      <dd class="govuk-summary-list__actions">
+        <% if current_case.created_manually? %>
+          <%= link_to I18n.t("support.case.link.edit_description"), edit_support_case_path(current_case), class: "govuk-link" %>
+        <% end %>
+      </dd>
     </div>
 
     <div class="govuk-summary-list__row">

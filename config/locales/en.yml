@@ -599,6 +599,7 @@ en:
         all_cases: All cases
       link:
         edit_category: Change
+        edit_description: Change
         view_school_information: View school information (opens in a new tab)
         view_group_information: View group information (opens in a new tab)
 
@@ -835,6 +836,12 @@ en:
     cases:
       my_cases:
         header_link: My cases
+    
+    case_description:
+      header: Update description of problem
+      flash:
+        updated: Description of problem updated successfully
+      submit: Save changes
 
     emails:
       header_link: Notifications
