@@ -20,6 +20,8 @@ module Support
       state :initial, initial: true
       state :opened, :resolved, :on_hold, :closed, :pipeline, :no_response
 
+      after_all_transitions :record_state_change
+
       event :resolve do
         transitions from: :initial, to: :resolved
         transitions from: :opened, to: :resolved
@@ -136,6 +138,10 @@ module Support
     # @return [Array, Support::Interaction]
     def support_request
       interactions&.support_request&.first
+    end
+
+    def record_state_change
+      Support::RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
     end
   end
 end

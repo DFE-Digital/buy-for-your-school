@@ -26,12 +26,6 @@
       </li>
     <% end %>
 
-    <% if @current_case.initial? %>
-      <li>
-        <%= link_to "Move emails to existing case", new_support_case_merge_emails_path(@current_case), class: "govuk-link" %>
-      </li>
-    <% end %>
-
      <% if @current_case.on_hold? %>
       <li>
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>

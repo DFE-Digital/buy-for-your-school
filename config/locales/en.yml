@@ -737,14 +737,12 @@ en:
     case_opening:
       flash:
         reopened: Case reopened successfully
-
-    case_closing:
-      flash:
-        created: Case closed successfully
+        error: Case cannot be reopened
 
     case_on_hold:
       flash:
         created: Case placed on hold successfully
+        error: Case cannot be placed on hold
 
     case_merge_emails:
       flash:
@@ -845,6 +843,7 @@ en:
 
     case_closures:
       action: Close case
+      created: Case closed successfully
       edit:
         header: Close case
         hint: Select reason for closing case.
@@ -855,7 +854,9 @@ en:
         submit: Save and close case
       flash:
         updated: Case has been closed
-        error: Only new cases created from emails can be closed
+        error:
+          initial: Only new cases created from emails can be closed
+          other: Case cannot be closed
 
 
     cases:
