@@ -12,7 +12,7 @@ module Support
                     notice: I18n.t("support.case_on_hold.flash.created")
 
       else
-        redirect_to support_case_path(current_case, anchor: "case-history"),
+        redirect_to support_case_path(current_case),
                     notice: I18n.t("support.case_on_hold.flash.error")
       end
     end

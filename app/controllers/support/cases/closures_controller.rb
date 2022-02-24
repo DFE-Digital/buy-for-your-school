@@ -5,7 +5,7 @@ module Support
     before_action :set_back_url, :set_reasons
 
     def create
-      if current_case.may_close?
+      if current_case.resolved?
         current_case.interactions.note.build(
           body: "Resolved case closed by agent",
           agent_id: current_agent.id,
@@ -17,7 +17,7 @@ module Support
         redirect_to support_case_path(current_case, anchor: "case-history"),
                     notice: I18n.t("support.case_closing.flash.created")
       else
-        redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error.other")
+        redirect_to support_case_path(current_case), notice: I18n.t("support.case_closures.flash.error.other")
       end
     end
 

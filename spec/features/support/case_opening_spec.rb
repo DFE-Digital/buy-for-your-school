@@ -28,7 +28,7 @@ RSpec.feature "Case worker can open a case" do
   end
 
   context "when a case is on hold" do
-    let(:support_case) { create(:support_case, state: :on_hold) }
+    let(:support_case) { create(:support_case, :on_hold) }
     let(:activity_log_item) { Support::ActivityLogItem.last }
 
     it "redirects to the case" do

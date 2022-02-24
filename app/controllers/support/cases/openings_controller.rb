@@ -7,7 +7,7 @@ module Support
         redirect_to support_case_path(current_case, anchor: "case-history"),
                     notice: I18n.t("support.case_opening.flash.reopened")
       else
-        redirect_to support_case_path(current_case, anchor: "case-history"),
+        redirect_to support_case_path(current_case),
                     notice: I18n.t("support.case_opening.flash.error")
       end
     end
