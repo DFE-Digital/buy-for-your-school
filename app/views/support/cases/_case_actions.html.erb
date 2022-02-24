@@ -46,4 +46,16 @@
         <%= link_to I18n.t("support.case.label.close"), support_case_closure_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
     <% end %>
+
+    <% if @current_case.initial? %>
+      <li>
+        <%= link_to "Move emails to existing case", new_support_case_merge_emails_path(@current_case), class: "govuk-link" %>
+      </li>
+    <% end  %>
+
+    <% if @current_case.initial? && @current_case.incoming_email? %>
+      <li>
+        <%= link_to I18n.t("support.case_closures.action"), edit_support_case_closures_path(@current_case), class: "govuk-link" %>
+      </li>
+    <% end %>
   </ul>
