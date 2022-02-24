@@ -22,7 +22,7 @@ class FrameworkSupportForm < Form
     if user.guest?
       1
     else
-      user.school_urn || user.group_uid ? 7 : 3
+      user.single_org? ? 7 : 3
     end
   }
 
@@ -32,7 +32,7 @@ class FrameworkSupportForm < Form
 
   # @!attribute [r] group
   #   @return [Boolean] requesting support for a group of schools confirmed
-  option :group, Types::ConfirmationField | Types::Nil, default: proc { false unless user.guest? }
+  option :group, Types::ConfirmationField | Types::Nil, default: proc { user.group_uid.present? unless user.guest? }
 
   # @!attribute [r] school_urn
   #   @return [String] identifier and name in the format "100000 - School Name"
@@ -70,16 +70,15 @@ class FrameworkSupportForm < Form
   def data
     to_h
       .except(:user, :step, :messages, :dsi, :correct_group, :correct_organisation)
-      .merge(user_id: user.id, school_urn: urn, group_uid: uid)
       .compact
+      .merge(user_id: user.id, school_urn: urn, group_uid: uid, group: uid.present?)
   end
 
+  # Prevent validation errors being raised for empty fields
+  #
   # @return [Hash] toggle form data to step backward
   def go_back
-    to_h
-      .except(:user, :messages, :correct_organisation, :correct_group)
-      .merge(back: true, group: group_uid.present? || school_urn.blank?)
-      .reject { |_, v| v.blank? }
+    to_h.except(:user, :messages).merge(back: true).reject { |_, v| v.blank? }
   end
 
   # @return [Hash] toggle form data to include "Search for a school"
@@ -94,33 +93,34 @@ class FrameworkSupportForm < Form
     go_back.merge(group: true)
   end
 
-  # As an authenticated user
-  # 1. on the last step with an inferred org
-  # 2. on the org selection step with many orgs
-  # When I click back
-  # Then I must return to the entry point
-  #
   # @return [Boolean]
   def restart?
     (position?(7) && login_with_inferred_org?) || (position?(3) && login_with_many_orgs?)
   end
 
   # @return [Boolean]
-  def affiliation_request_unconfirmed?
-    school_unconfirmed? || group_unconfirmed?
+  def reselect?
+    if user.guest? && position?(4)
+      affiliation_unconfirmed?
+    end
   end
 
-  # @return [nil]
-  def forget_org
-    forget_group! if position?(3) && school_urn.present?
-    forget_school! if position?(3) && group_uid.present?
+  # @return [Boolean]
+  def confirmation_required?
+    if guest_selecting_org?
+      group_uid.present? && correct_group.nil? || school_urn.present? && correct_organisation.nil?
+    end
   end
 
   # Conditional jumps to different steps or incremental move forward
   #
   # @return [Integer]
   def forward
-    if position?(3) && login_with_many_orgs? # jump to last question
+    if guest_selecting_org?
+      group ? forget_school! : forget_group!
+    end
+
+    if position?(3) && login_with_many_orgs?
       go_to!(7)
     else
       advance!
@@ -146,7 +146,7 @@ class FrameworkSupportForm < Form
   #
   # @return [String, nil]
   def urn
-    school_urn&.split(" - ")&.first
+    school_urn&.split(" - ")&.first unless group
   end
 
   # Extract the group UID from the format "uid - group name"
@@ -155,10 +155,20 @@ class FrameworkSupportForm < Form
   #
   # @return [String, nil]
   def uid
-    group_uid&.split(" - ")&.first
+    group_uid&.split(" - ")&.first if group
   end
 
 private
+
+  # @return [Boolean]
+  def guest_selecting_org?
+    user.guest? && (position?(2) || position?(3))
+  end
+
+  # @return [Boolean]
+  def affiliation_unconfirmed?
+    correct_group.eql?(false) || correct_organisation.eql?(false)
+  end
 
   # @return [Boolean]
   def login_with_many_orgs?
@@ -168,16 +178,6 @@ private
   # @return [Boolean]
   def login_with_inferred_org?
     !user.guest? && user.single_org?
-  end
-
-  # @return [Boolean, nil]
-  def school_unconfirmed?
-    !correct_organisation unless correct_organisation.nil?
-  end
-
-  # @return [Boolean, nil]
-  def group_unconfirmed?
-    !correct_group unless correct_group.nil?
   end
 
   # @return [nil]

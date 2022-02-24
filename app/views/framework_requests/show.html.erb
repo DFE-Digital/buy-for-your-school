@@ -40,18 +40,16 @@
         <dt class="govuk-summary-list__key">
           <%= I18n.t("faf.check_answers.details.school") %>
         </dt>
-        <% if @framework_request.group_uid.nil? %>
-          <dd class="govuk-summary-list__value">
+        <dd class="govuk-summary-list__value">
+          <% if @framework_request.group_uid.nil? %>
             <%= @framework_request.school_name %>
-          </dd>
           <% else %>
-          <dd class="govuk-summary-list__value">
             <%= @framework_request.group_name %>
-          </dd>
-        <% end %>
+          <% end %>
+        </dd>
         <dd class="govuk-summary-list__actions">
-          <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-school" unless current_user.single_org? %>
+          <% if !current_user.single_org? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-school" %>
           <% end %>
         </dd>
       </div>
@@ -59,17 +57,15 @@
         <dt class="govuk-summary-list__key">
           <%= I18n.t("faf.check_answers.details.school_type") %>
         </dt>
-        <% if @framework_request.group_uid.nil? %>
-          <dd class="govuk-summary-list__value">
+        <dd class="govuk-summary-list__value">
+          <% if @framework_request.group_uid.nil? %>
             <%= I18n.t("faf.check_answers.details.single") %>
-          </dd>
           <% else %>
-           <dd class="govuk-summary-list__value">
             <%= @framework_request.group_type %>
-          </dd>
-        <% end %>
+          <% end %>
+        </dd>
         <dd class="govuk-summary-list__actions">
-          <% unless @framework_request.submitted? || !current_user.guest? %>
+          <% if current_user.guest? %>
             <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 2), class: "govuk-link", id: "edit-school-type" %>
           <% end %>
         </dd>
@@ -82,9 +78,7 @@
           <%= @framework_request.message_body %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 7), class: "govuk-link", id: "edit-message" %>
-          <% end %>
+          <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 7), class: "govuk-link", id: "edit-message" %>
         </dd>
       </div>
     </dl>

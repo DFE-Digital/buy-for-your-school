@@ -10,6 +10,7 @@ class FrameworkRequestSubmissionsController < ApplicationController
 
     session.delete(:faf_referer)
     session.delete(:faf_school)
+    session.delete(:faf_group)
 
     redirect_to framework_request_submission_path(framework_request)
   end

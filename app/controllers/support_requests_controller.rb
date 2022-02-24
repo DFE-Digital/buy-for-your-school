@@ -23,22 +23,21 @@ class SupportRequestsController < ApplicationController
   end
 
   def create
-    if back_link?
-      @form.backward
-      render :new
-
-    # validated and complete
-    elsif validation.success? && validation.to_h[:message_body]
+    # 1. validated and complete
+    if validation.success? && validation.to_h[:message_body]
 
       request = SupportRequest.create!(@form.data)
       redirect_to support_request_path(request)
-
-    # validated but incomplete
-    elsif validation.success?
-      @form.forward
-      render :new
-
     else
+
+      # 2. back link clicked
+      if back_link?
+        @form.backward
+      # 3. validated but incomplete
+      elsif validation.success?
+        @form.forward
+      end
+
       render :new
     end
   end

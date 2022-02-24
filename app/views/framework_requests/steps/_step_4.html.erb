@@ -5,7 +5,12 @@
 <%= form.hidden_field :school_urn, value: form.object.school_urn %>
 <%= form.hidden_field :group_uid, value: form.object.group_uid %>
 
-<%= render "framework_requests/steps/confirm_school", form: form if @organisation %>
-<%= render "framework_requests/steps/confirm_group", form: form if @establishment_group %>
+<%=
+  if form.object.group
+    render "framework_requests/steps/confirm_group", form: form
+  else
+    render "framework_requests/steps/confirm_school", form: form
+  end
+%>
 
 <%= javascript_include_tag "faf_confirm_school" %>

@@ -7,58 +7,13 @@ RSpec.describe FrameworkSupportForm do
 
       expect(form.data).to eql(
         group: false,
+        group_uid: nil,
         school_urn: "100253",
         first_name: "first_name",
         last_name: "last_name",
         email: "test@test",
         user_id: user.id,
       )
-    end
-  end
-
-  describe "#forget_org" do
-    context "when on step 3" do
-      context "and school is set" do
-        it "clears the group value" do
-          form = described_class.new(user: user, step: 3, school_urn: "1234", group_uid: "")
-          form.forget_org
-
-          expect(form.to_h[:school_urn]).to eql "1234"
-          expect(form.to_h[:group_uid]).to be_nil
-        end
-      end
-
-      context "and group is set" do
-        it "clears the school value" do
-          form = described_class.new(user: user, step: 3, school_urn: "", group_uid: "4321")
-          form.forget_org
-
-          expect(form.to_h[:school_urn]).to be_nil
-          expect(form.to_h[:group_uid]).to eql "4321"
-        end
-      end
-    end
-
-    context "when not on step 3" do
-      context "and school is set" do
-        it "clears the group value" do
-          form = described_class.new(user: user, step: 99, school_urn: "1234", group_uid: "")
-          form.forget_org
-
-          expect(form.to_h[:school_urn]).to eql "1234"
-          expect(form.to_h[:group_uid]).to eql ""
-        end
-      end
-
-      context "and group is set" do
-        it "clears the school value" do
-          form = described_class.new(user: user, step: 99, school_urn: "", group_uid: "4321")
-          form.forget_org
-
-          expect(form.to_h[:school_urn]).to eql ""
-          expect(form.to_h[:group_uid]).to eql "4321"
-        end
-      end
     end
   end
 
@@ -95,6 +50,56 @@ RSpec.describe FrameworkSupportForm do
       form = described_class.new(user: user, step: 2)
       form.backward
       expect(form.step).to be 1
+    end
+  end
+
+  describe "#go_back" do
+    let(:form) do
+      described_class.new(user: user, step: 2)
+    end
+
+    context "with a user" do
+      it "defaults" do
+        params = form.go_back
+
+        expect(params).to be_a Hash
+        expect(params.values.any?(&:blank?)).to be false
+
+        expect(params[:back]).to be true
+        expect(params[:step]).to be 2 # originating position when back link was clicked
+
+        expect(params[:first_name]).to eql "first_name"
+        expect(params[:last_name]).to eql "last_name"
+        expect(params[:email]).to eql "test@test"
+
+        expect(params[:user]).to be_nil
+        expect(params[:messages]).to be_nil
+        expect(params[:correct_organisation]).to be_nil
+        expect(params[:correct_group]).to be_nil
+      end
+    end
+
+    context "with a guest" do
+      let(:user) { Guest.new }
+
+      it "defaults" do
+        params = form.go_back
+
+        expect(params).to be_a Hash
+        expect(params.values.any?(&:blank?)).to be false
+
+        expect(params[:back]).to be true
+        expect(params[:step]).to be 2 # originating position when back link was clicked
+
+        expect(params[:first_name]).to be_nil
+        expect(params[:last_name]).to be_nil
+        expect(params[:email]).to be_nil
+
+        expect(params[:user]).to be_nil
+        expect(params[:messages]).to be_nil
+        expect(params[:correct_organisation]).to be_nil
+        expect(params[:correct_group]).to be_nil
+      end
     end
   end
 end

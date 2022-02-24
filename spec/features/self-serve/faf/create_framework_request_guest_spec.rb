@@ -126,7 +126,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=4/)
         expect(page).to have_current_path(/back%5D=true/)
-        expect(page).to have_text "Search for your school"
+        expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
 
       it "has the correct attributes" do
@@ -160,7 +160,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         choose "No, I need to choose another school"
         click_continue
         expect(page).to have_current_path "/procurement-support"
-        expect(page).to have_text "Search for your school"
+        expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
     end
 
@@ -174,7 +174,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=5/)
         expect(page).to have_current_path(/back%5D=true/)
-        expect(page).to have_text "Search for your school"
+        expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
 
       it "asks for their full name" do
@@ -297,7 +297,7 @@ RSpec.feature "'Find a Framework' request as a guest" do
         find("span", text: "Can't find it?").click
 
         click_on "Search for a single school instead."
-        expect(page).to have_text "Search for your school"
+        expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
 
       it "validates the selected group" do

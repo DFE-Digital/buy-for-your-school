@@ -5,8 +5,11 @@
 
 <% if current_user.guest? %>
   <%=
-    template = @form.group ? "find_group" : "find_school"
-    render "framework_requests/steps/#{template}", form: form
+    if form.object.group.present? || form.object.group_uid.present?
+      render "framework_requests/steps/find_group", form: form
+    else
+      render "framework_requests/steps/find_school", form: form
+    end
   %>
 <% else %>
   <%= content_for :title, I18n.t("faf.user_organisation.header") %>
@@ -23,3 +26,4 @@
 
   <%= javascript_include_tag "faf_select_school" %>
 <% end %>
+

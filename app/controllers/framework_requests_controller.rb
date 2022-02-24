@@ -31,50 +31,46 @@ class FrameworkRequestsController < ApplicationController
   end
 
   def create
-    query_organisation! # TODO: this method sets instance variables by accessing data in Case Management
+    query_organisation!
 
-    @form.forget_org
-
-    if back_link? || @form.affiliation_request_unconfirmed?
-
-      if @form.restart?
-        redirect_to framework_requests_path
-      else
-        @form.backward
-        render :new
-      end
-
-    # validated and complete
+    if @form.restart? && back_link?
+      redirect_to framework_requests_path
     elsif validation.success? && validation.to_h[:message_body]
-      store_org_ids
       request = FrameworkRequest.create!(@form.data)
       redirect_to framework_request_path(request)
-
-    # validated but incomplete
-    elsif validation.success?
-      @form.forward
-      render :new
     else
+
+      if back_link?
+        @form.backward
+      elsif @form.reselect?
+        @form.back!
+      elsif validation.success?
+        @form.forward
+        cache_search_results!
+      end
+
       render :new
     end
   end
 
   def update
-    if validation.success?
-      @form.forget_org
+    query_organisation!
 
-      store_org_ids
+    if @form.confirmation_required?
+      @form.forward
+      render :edit
 
-      # Select school/group if choice changed
-      if @form.position?(2)
-        @form.go_to!(3)
-        render :edit
-      else
-        existing_answers = framework_request.attributes.symbolize_keys
-        framework_request.update!(**existing_answers, **@form.data)
+    elsif @form.reselect?
+      @form.back!
+      render :edit
 
-        redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
-      end
+    elsif validation.success?
+      cache_search_results!
+
+      existing_answers = framework_request.attributes.symbolize_keys
+      framework_request.update!(**existing_answers, **@form.data)
+
+      redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
     else
       render :edit
     end
@@ -84,13 +80,15 @@ private
 
   # @return [FrameworkSupportForm] form object populated with validation messages
   def form
-    @form ||= FrameworkSupportForm.new(
-      user: current_user,
-      dsi: !current_user.guest?,
-      step: form_params[:step],
-      messages: validation.errors(full: true).to_h,
-      **validation.to_h,
-    )
+    @form =
+      FrameworkSupportForm.new(
+        user: current_user,
+        dsi: !current_user.guest?,
+        step: form_params[:step],
+        messages: validation.errors(full: true).to_h,
+        **search_results,
+        **validation.to_h,
+      )
   end
 
   def form_params
@@ -120,8 +118,12 @@ private
     @framework_request = FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
   end
 
+  # Cleared once submitted
+  #
+  # @see FrameworkRequestSubmissionsController#update
+  #
   # Capture the full search strings for use when editing
-  def store_org_ids
+  def cache_search_results!
     session[:faf_school] = @form.school_urn
     session[:faf_group] = @form.group_uid
   end
@@ -129,21 +131,21 @@ private
   # @return [Hash] recover JS search result strings from session
   def search_results
     {
-      school_urn: session.fetch(:faf_school, @framework_request.school_urn),
-      group_uid: session.fetch(:faf_group, @framework_request.group_uid),
+      school_urn: session.fetch(:faf_school, @framework_request&.school_urn),
+      group_uid: session.fetch(:faf_group, @framework_request&.group_uid),
     }
   end
 
   # TODO: move the form back param into the parent class maybe?
+  #
   # @return [Boolean]
   def back_link?
-    form_params[:back] == "true"
+    @back_link = form_params[:back].eql?("true")
   end
 
   # TODO: refactor to return a single hash capable of providing all data needed
   #
   # @example
-  #
   #   {
   #     type: "group/school",
   #     identifier: "1234",
@@ -153,7 +155,11 @@ private
   # @return [Hash]
   def query_organisation!
     # QueryOrganisation.call(@form&.urn || @form&.uid)
-    @organisation = Support::OrganisationPresenter.new(Support::Organisation.find_by(urn: @form.urn)) if @form&.urn
-    @establishment_group = Support::EstablishmentGroupPresenter.new(Support::EstablishmentGroup.find_by(uid: @form.uid)) if @form&.uid
+
+    organisation = Support::Organisation.find_by(urn: @form.urn)
+    @organisation = Support::OrganisationPresenter.new(organisation) if organisation
+
+    establishment_group = Support::EstablishmentGroup.find_by(uid: @form.uid)
+    @establishment_group = Support::EstablishmentGroupPresenter.new(establishment_group) if establishment_group
   end
 end

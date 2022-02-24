@@ -1,4 +1,3 @@
-
 <% if @framework_request&.persisted? %>
   <%= link_to I18n.t("generic.button.back"), framework_request_path(@framework_request), class: "govuk-back-link" %>
 <% elsif @form.position?(1) %>
@@ -17,7 +16,10 @@
 <% end %>
 
 <% if Rails.env.development? %>
+  Saved Request
   <%= debug @framework_request&.attributes %>
+  Back
+  <%= debug @back_link %>
   Step
   <%= debug @form.step %>
   Supported Schools
