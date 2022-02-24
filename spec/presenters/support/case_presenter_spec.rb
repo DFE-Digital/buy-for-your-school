@@ -37,7 +37,7 @@ RSpec.describe Support::CasePresenter do
   end
 
   describe "#last_updated_at" do
-    it "returns the formatted date on which the case was last updated - the interaction updated_at given there is an interaction on the case" do
+    it "returns the formatted date on which the case was last updated - being the formatted date for when the interaction was created, given there is an interaction on the case" do
       expect(presenter.last_updated_at).to eq("31 January 2021 at 12:00")
     end
   end
