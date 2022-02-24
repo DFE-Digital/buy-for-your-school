@@ -2,7 +2,7 @@ module Support
   class Cases::OnHoldsController < Cases::ApplicationController
     def create
       if current_case.may_hold?
-        current_case.interactions.note.build(
+        current_case.interactions.state_change.build(
           body: "Case placed on hold",
           agent_id: current_agent.id,
         )

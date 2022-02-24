@@ -6,7 +6,7 @@ module Support
 
     def create
       if current_case.resolved?
-        current_case.interactions.note.build(
+        current_case.interactions.state_change.build(
           body: "Resolved case closed by agent",
           agent_id: current_agent.id,
         )
