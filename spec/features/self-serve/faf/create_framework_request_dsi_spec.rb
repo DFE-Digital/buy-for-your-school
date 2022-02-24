@@ -1,4 +1,4 @@
-RSpec.feature "'Find a Framework' request" do
+RSpec.feature "Creating a 'Find a Framework' request" do
   context "when not signed in" do
     describe "the log in choice page" do
       before do

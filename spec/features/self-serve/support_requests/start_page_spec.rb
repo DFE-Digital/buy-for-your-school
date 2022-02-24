@@ -1,4 +1,4 @@
-RSpec.feature "Create a new support request" do
+RSpec.feature "Starting a 'Digital Support' request" do
   let(:user) { create(:user, :one_supported_school) }
 
   describe "start page" do

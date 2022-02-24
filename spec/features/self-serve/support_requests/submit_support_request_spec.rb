@@ -1,4 +1,4 @@
-RSpec.feature "Submit a 'Digital Support' request" do
+RSpec.feature "Submitting a 'Digital Support' request" do
   before do
     create(:support_category, slug: "slug", title: "Slug")
     create(:support_organisation, urn: "urn-type-1", name: "Specialist School for Testing")

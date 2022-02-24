@@ -1,4 +1,4 @@
-RSpec.feature "'Find a Framework' start page" do
+RSpec.feature "Starting a 'Find a Framework' request" do
   before do
     visit "/procurement-support"
   end

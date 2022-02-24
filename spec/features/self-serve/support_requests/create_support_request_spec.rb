@@ -1,4 +1,4 @@
-RSpec.feature "'Digital Support' request" do
+RSpec.feature "Creating a 'Digital Support' request" do
   let(:user) { create(:user, :one_supported_school) }
 
   describe "contact details" do

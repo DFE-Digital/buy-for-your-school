@@ -1,4 +1,4 @@
-RSpec.feature "'Find a Framework' check your answers page" do
+RSpec.feature "Reviewing a 'Find a Framework' request's answers" do
   let(:keys) { all("dt.govuk-summary-list__key") }
   let(:values) { all("dd.govuk-summary-list__value") }
   let(:actions) { all("dd.govuk-summary-list__actions") }

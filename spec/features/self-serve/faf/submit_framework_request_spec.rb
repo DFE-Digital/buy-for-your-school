@@ -1,4 +1,4 @@
-RSpec.feature "Submit a 'Find a Framework' request" do
+RSpec.feature "Submitting a 'Find a Framework' request" do
   let(:user) { create(:user, :one_supported_school) }
 
   let(:email) do

@@ -1,4 +1,4 @@
-RSpec.feature "'Find a Framework' request as a guest" do
+RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   def complete_name_step
     fill_in "framework_support_form[first_name]", with: "Test"
     fill_in "framework_support_form[last_name]", with: "User"
