@@ -44,10 +44,11 @@ RSpec.feature "User feedback details" do
     end
 
     it "displays the feedback user details edit page" do
+      expect(page).to have_breadcrumbs ["Dashboard", "Get involved"]
       expect(find("h1.govuk-heading-l")).to have_text "Enter your contact details"
       expect(find("p.govuk-body-m")).to have_text "Give your details to opt-in and take part in user research to help us improve the service. We will not use your details for any other purpose."
       expect(all("label")[0]).to have_text "Full name"
-      expect(all("label")[1]).to have_text "Email address"
+      expect(all("label")[1]).to have_text "Email"
       expect(page).to have_button "Submit"
     end
 
@@ -58,10 +59,11 @@ RSpec.feature "User feedback details" do
       end
 
       it "displays the success page" do
+        expect(page).to have_breadcrumbs ["Dashboard", "Get involved"]
         expect(find("h1.govuk-panel__title")).to have_text "Confirmation"
         expect(all("p.govuk-body")[0]).to have_text "Thank you for opting in to take part in user research."
         expect(find("h2.govuk-heading-m")).to have_text "What happens next"
-        expect(all("p.govuk-body")[1]).to have_text "We will contact you via email and invite you to take part in research when it becomes available"
+        expect(all("p.govuk-body")[1]).to have_text "We will contact you via email and invite you to take part in research when it becomes available."
         expect(page).to have_link "Go to Find an approved framework", href: "https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school", class: "govuk-link"
       end
     end

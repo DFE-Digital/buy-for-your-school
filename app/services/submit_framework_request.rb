@@ -45,9 +45,9 @@ private
     @user ||= FrameworkRequestPresenter.new(request).user
   end
 
-  # @return [Support::Organisation]
+  # @return [Support::Organisation, Support::EstablishmentGroup]
   def map_organisation
-    Support::Organisation.find_by(urn: request.school_urn)
+    Support::Organisation.find_by(urn: request.school_urn) || Support::EstablishmentGroup.find_by(uid: request.group_uid)
   end
 
   # @return [Support::Case] TODO: Move into inbound API

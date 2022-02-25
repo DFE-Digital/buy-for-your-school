@@ -19,8 +19,8 @@ RSpec.feature "Case summary" do
     expect(find("h3#case-ref")).to have_text "000001"
   end
 
-  it "has 4 visible tabs" do
-    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(4)
+  it "has 5 visible tabs" do
+    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(5)
   end
 
   it "defaults to the 'School details' tab" do
@@ -101,7 +101,6 @@ RSpec.feature "Case summary" do
       within "ul.govuk-list" do
         expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/assignment/new", class: "govuk-link"
         expect(page).to have_link "Move emails to existing case", href: "/support/cases/#{support_case.id}/merge-emails/new", class: "govuk-link"
-        expect(page).to have_link "Resolve case", href: "/support/cases/#{support_case.id}/resolution/new", class: "govuk-link"
       end
     end
   end

@@ -7,7 +7,10 @@ locals {
   shared_cloudfoundry_domain = var.shared_cloudfoundry_domain
   custom_cloudfoundry_domain = var.custom_cloudfoundry_domain
 
-  custom_hostname = local.environment == "prod" ? "get-help-buying-for-schools" : "${local.environment}-get-help-buying-for-schools"
+  custom_hostname            = local.environment == "prod" ? "get-help-buying-for-schools" : "${local.environment}-get-help-buying-for-schools"
+  service_gov_uk_domain      = "get-help-buying-for-schools.service.gov.uk"
+  service_gov_uk_subdomain   = local.environment == "prod" ? "www" : local.environment
+  service_gov_uk_route_count = local.environment == "prod" ? 1 : 0
 
   redis_class    = var.redis_class
   redis_timeouts = var.redis_timeouts
@@ -15,6 +18,13 @@ locals {
   postgres_class       = local.environment == "prod" ? var.postgres_class_prod : var.postgres_class
   postgres_json_params = jsonencode(var.postgres_json_params)
   postgres_timeouts    = var.postgres_timeouts
+
+  s3_bucket_name = var.s3_bucket_name
+  s3_params = {
+    bucket = var.s3_bucket_name
+    acl    = "private"
+  }
+  s3_json_params = jsonencode(local.s3_params)
 
   app_env_yaml_file = file("${local.environment}_app_env.yml")
   app_env           = yamldecode(local.app_env_yaml_file)

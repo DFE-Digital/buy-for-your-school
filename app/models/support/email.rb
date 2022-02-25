@@ -20,6 +20,10 @@ module Support
       email.set_case_action_required if is_first_import
     end
 
+    def has_unattachable_files_attached?
+      attachments.for_case_attachments.count < attachments.count
+    end
+
     def import_from_message(message, folder: :inbox)
       update!(
         outlook_id: message.id,
@@ -48,7 +52,7 @@ module Support
     end
 
     def automatically_assign_case
-      return if case_id.present?
+      return if case_id.present? && !self.case&.closed?
 
       Support::IncomingEmails::CaseAssignment.detect_and_assign_case(self)
 

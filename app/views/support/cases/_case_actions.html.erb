@@ -14,15 +14,21 @@
       <li>
         <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
       </li>
+       <li>
+        <%= link_to I18n.t("support.case.label.place_on_hold"), support_case_on_hold_path(@current_case), method: :post, class: "govuk-link" %>
+      </li>
+       <li>
+        <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
+      </li>
     <% else %>
       <li>
         <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
       </li>
     <% end %>
 
-    <% if @current_case.initial? %>
+     <% if @current_case.on_hold? %>
       <li>
-        <%= link_to "Move emails to existing case", new_support_case_merge_emails_path(@current_case), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
     <% end %>
 
@@ -31,11 +37,19 @@
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case.label.close"), support_case_closing_path(@current_case), method: :post, class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.close"), support_case_closure_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
-    <% else %>
+    <% end %>
+
+    <% if @current_case.initial? %>
       <li>
-        <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
+        <%= link_to "Move emails to existing case", new_support_case_merge_emails_path(@current_case), class: "govuk-link" %>
+      </li>
+    <% end  %>
+
+    <% if @current_case.initial? && @current_case.incoming_email? %>
+      <li>
+        <%= link_to I18n.t("support.case_closures.action"), edit_support_case_closures_path(@current_case), class: "govuk-link" %>
       </li>
     <% end %>
   </ul>

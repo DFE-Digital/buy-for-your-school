@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_18_085717) do
+ActiveRecord::Schema.define(version: 2022_02_21_103854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -227,6 +227,17 @@ ActiveRecord::Schema.define(version: 2022_02_18_085717) do
     t.boolean "internal", default: false, null: false
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
+  end
+
+  create_table "support_case_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.uuid "support_email_attachment_id"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["support_case_id"], name: "index_support_case_attachments_on_support_case_id"
+    t.index ["support_email_attachment_id"], name: "index_support_case_attachments_on_support_email_attachment_id"
   end
 
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -500,6 +511,8 @@ ActiveRecord::Schema.define(version: 2022_02_18_085717) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_case_attachments", "support_cases"
+  add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
