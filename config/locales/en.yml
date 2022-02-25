@@ -930,6 +930,7 @@ en:
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
+        state_change: Status change
       label:
         email_unread: Unread
         contact_detail: Contact details
