@@ -121,10 +121,27 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
 
   describe "change the selected school", js: true do
     context "when confirmed" do
+      it "repopulates the field using previous search results" do
+        visit "/procurement-support/new"
+        choose "No, continue without a DfE Sign-in account"
+        click_continue
+        choose "A single school"
+        click_continue
+
+        fill_in "framework_support_form[school_urn]", with: "100253"
+        find(".autocomplete__option", text: "100253").click
+        click_continue
+
+        click_on "Back"
+        # "URN - NAME" recovered from session variable if available
+        expect(find_field("framework-support-form-school-urn-field").value).to eql "100253 - Specialist School for Testing"
+      end
+
       it "saves selected school" do
         click_link "edit-school"
 
         expect(page).to have_current_path "/procurement-support/#{framework_request.id}/edit?step=3"
+
         expect(find_field("framework-support-form-school-urn-field").value).to eql "100253"
 
         fill_in "framework_support_form[school_urn]", with: "100254"

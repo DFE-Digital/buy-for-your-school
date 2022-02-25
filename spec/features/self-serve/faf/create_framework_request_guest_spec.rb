@@ -16,7 +16,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     click_continue
   end
 
-  def complete_school_details_step
+  def confirm_choice_step
     choose "Yes"
     click_continue
   end
@@ -98,7 +98,8 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
           expect(page).to have_text "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. Search for an academy trust or federation instead."
           expect(page).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           expect(page).to have_text "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-          expect(page).to have_link "Search for an academy trust or federation"
+
+          expect(page).to have_link "Search for an academy trust or federation instead."
         end
 
         expect(page).to have_button "Continue"
@@ -108,6 +109,15 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         find("span", text: "Can't find it?").click
         click_on "Search for an academy trust or federation"
         expect(page).to have_text "Search for an academy trust or federation"
+
+        complete_group_step
+
+        expect(page).to have_text "Is this the academy trust or federation you're buying for?"
+
+        within("dl.govuk-summary-list") do
+          expect(all("dd.govuk-summary-list__value")[0]).to have_text "Group #1,"
+          expect(all("dd.govuk-summary-list__value")[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
+        end
       end
 
       it "validates the selected school" do
@@ -162,19 +172,26 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_current_path "/procurement-support"
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
+
+      it "choosing yes continues to the name page" do
+        choose "Yes"
+        click_continue
+        expect(page).to have_current_path "/procurement-support"
+        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
+      end
     end
 
     describe "the name page" do
       before do
         complete_school_step
-        complete_school_details_step
+        confirm_choice_step
       end
 
-      it "goes back to the school search page" do
+      it "goes back to the school confirmation page" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=5/)
         expect(page).to have_current_path(/back%5D=true/)
-        expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
+        expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
       end
 
       it "asks for their full name" do
@@ -187,7 +204,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "validates their name is entered" do
+      it "validates their name" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter your first name", href: "#framework-support-form-first-name-field-error"
@@ -200,7 +217,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     describe "the email address page" do
       before do
         complete_school_step
-        complete_school_details_step
+        confirm_choice_step
         complete_name_step
       end
 
@@ -220,7 +237,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_button "Continue"
       end
 
-      it "validates their email is entered" do
+      it "validates their email" do
         click_continue
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter an email in the correct format. For example, 'someone@school.sch.uk'.", href: "#framework-support-form-email-field-error"
@@ -231,7 +248,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     describe "the message text page" do
       before do
         complete_school_step
-        complete_school_details_step
+        confirm_choice_step
         complete_name_step
         complete_email_step
       end
@@ -276,7 +293,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_text "What type of organisation are you buying for?"
       end
 
-      it "asks to search for a group" do
+      it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
 
@@ -287,7 +304,8 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
           expect(page).to have_text "This search lists academy trusts and federations. Search for a single school instead."
           expect(page).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           expect(page).to have_text "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-          expect(page).to have_link "Search for a single school"
+
+          expect(page).to have_link "Search for a single school instead."
         end
 
         expect(page).to have_button "Continue"
@@ -298,6 +316,14 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         click_on "Search for a single school instead."
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
+
+        complete_school_step
+
+        expect(page).to have_text "Is this the school you're buying for?"
+
+        within("dl.govuk-summary-list") do
+          expect(all("dd.govuk-summary-list__value")[0]).to have_text "School #1, St James's Passage, Duke's Place, EC3A 5DE"
+        end
       end
 
       it "validates the selected group" do
@@ -329,6 +355,13 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         click_continue
         expect(page).to have_current_path "/procurement-support"
         expect(page).to have_text "Search for an academy trust or federation"
+      end
+
+      it "choosing yes continues to the name page" do
+        choose "Yes"
+        click_continue
+        expect(page).to have_current_path "/procurement-support"
+        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
       end
 
       it "has the correct attributes" do

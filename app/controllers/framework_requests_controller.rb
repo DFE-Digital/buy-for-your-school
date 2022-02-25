@@ -2,6 +2,7 @@ class FrameworkRequestsController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :framework_request, only: %i[edit show update]
   before_action :form, only: %i[create update]
+  before_action :query_organisation!, only: %i[create update]
 
   def index
     session[:support_journey] = "faf"
@@ -21,21 +22,22 @@ class FrameworkRequestsController < ApplicationController
       user: current_user,
       dsi: !current_user.guest?,
       step: params[:step],
-      **framework_request.attributes.symbolize_keys.merge(search_results),
+      **existing_answers.merge(search_results),
     )
   end
 
   def new
     session.delete(:support_journey)
+    clear_search_results!
+
     @form = FrameworkSupportForm.new(user: current_user)
   end
 
   def create
-    query_organisation!
-
     if @form.restart? && back_link?
       redirect_to framework_requests_path
     elsif validation.success? && validation.to_h[:message_body]
+
       request = FrameworkRequest.create!(@form.data)
       redirect_to framework_request_path(request)
     else
@@ -54,8 +56,6 @@ class FrameworkRequestsController < ApplicationController
   end
 
   def update
-    query_organisation!
-
     if @form.confirmation_required?
       @form.forward
       render :edit
@@ -67,7 +67,6 @@ class FrameworkRequestsController < ApplicationController
     elsif validation.success?
       cache_search_results!
 
-      existing_answers = framework_request.attributes.symbolize_keys
       framework_request.update!(**existing_answers, **@form.data)
 
       redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
@@ -118,22 +117,59 @@ private
     @framework_request = FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
   end
 
-  # Cleared once submitted
-  #
-  # @see FrameworkRequestSubmissionsController#update
-  #
-  # Capture the full search strings for use when editing
+  # @return [Hash]
+  def existing_answers
+    framework_request.attributes.symbolize_keys
+  end
+
+  # Capture the full search strings "100000 - School #1"
   def cache_search_results!
     session[:faf_school] = @form.school_urn
     session[:faf_group] = @form.group_uid
   end
 
-  # @return [Hash] recover JS search result strings from session
-  def search_results
+  # Clear results
+  def clear_search_results!
+    session.delete(:faf_school)
+    session.delete(:faf_group)
+  end
+
+  # @see #edit
+  # use session stored "URN - NAME" if available
+  def orgs
     {
       school_urn: session.fetch(:faf_school, @framework_request&.school_urn),
       group_uid: session.fetch(:faf_group, @framework_request&.group_uid),
     }
+  end
+
+  # priority to params then to session vars
+  #
+  # @return [Hash, nil]
+  def existing_orgs
+    if params[:group].present?
+
+      find_group = params[:group].eql?("true")
+
+      if find_group
+        orgs.merge(school_urn: nil, group: find_group)
+      else
+        orgs.merge(group_uid: nil, group: find_group)
+      end
+
+    elsif session[:faf_group].present?
+
+      orgs.merge(group: session[:faf_group].present?)
+    end
+  end
+
+  # @see form
+  #
+  # Repopulate form fields based on previous searches, used when stepping back
+  #
+  # @return [Hash]
+  def search_results
+    existing_orgs || orgs
   end
 
   # TODO: move the form back param into the parent class maybe?

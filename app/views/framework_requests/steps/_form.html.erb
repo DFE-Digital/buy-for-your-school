@@ -1,10 +1,4 @@
-<% if @framework_request&.persisted? %>
-  <%= link_to I18n.t("generic.button.back"), framework_request_path(@framework_request), class: "govuk-back-link" %>
-<% elsif @form.position?(1) %>
-  <%= link_to I18n.t("generic.button.back"), framework_requests_path, class: "govuk-back-link"  %>
-<% else %>
-  <%= link_to I18n.t("generic.button.back"), framework_requests_path(framework_support_form: @form.go_back), method: :post, class: "govuk-back-link" %>
-<% end %>
+<%= render "framework_requests/steps/back_link" %>
 
 <%= form_with model: @form, scope: :framework_support_form, url: path, method: verb  do |form| %>
   <%= form.govuk_error_summary %>

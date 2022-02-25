@@ -19,21 +19,22 @@ class SupportRequestsController < ApplicationController
   end
 
   def edit
-    @form = SupportForm.new(user: current_user, step: params[:step], **support_request.attributes.symbolize_keys)
+    @form = SupportForm.new(
+      user: current_user,
+      step: params[:step],
+      **existing_answers,
+    )
   end
 
   def create
-    # 1. validated and complete
     if validation.success? && validation.to_h[:message_body]
 
       request = SupportRequest.create!(@form.data)
       redirect_to support_request_path(request)
     else
 
-      # 2. back link clicked
       if back_link?
         @form.backward
-      # 3. validated but incomplete
       elsif validation.success?
         @form.forward
       end
@@ -50,7 +51,6 @@ class SupportRequestsController < ApplicationController
         @form.advance!
         render :edit
       else
-        existing_answers = support_request.attributes.symbolize_keys
         support_request.update!(**existing_answers, **@form.data)
 
         redirect_to support_request_path(support_request), notice: I18n.t("support_request.flash.updated")
@@ -66,6 +66,11 @@ private
   # @return [SupportRequest] restricted to the current user
   def support_request
     @support_request = SupportRequestPresenter.new(SupportRequest.where(user_id: current_user.id, id: params[:id]).first)
+  end
+
+  # @return [Hash]
+  def existing_answers
+    support_request.attributes.symbolize_keys
   end
 
   # @return [SupportForm] form object populated with validation messages
@@ -84,6 +89,7 @@ private
   end
 
   # TODO: move into the form
+  #
   # @return [Boolean]
   def back_link?
     form_params[:back] == "true"

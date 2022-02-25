@@ -78,7 +78,7 @@ class FrameworkSupportForm < Form
   #
   # @return [Hash] toggle form data to step backward
   def go_back
-    to_h.except(:user, :messages).merge(back: true).reject { |_, v| v.blank? }
+    to_h.except(:user, :messages).merge(back: true, group: group.to_s).reject { |_, v| v.blank? }
   end
 
   # @return [Hash] toggle form data to include "Search for a school"
@@ -133,14 +133,21 @@ class FrameworkSupportForm < Form
   def backward
     if position?(7) && login_with_many_orgs?
       go_to!(3)
-    elsif position?(5)
-      go_to!(3)
+
+    # This breaks the expected convention of going to the previous page but can
+    # be used to skip over the "confirm school/group details" page.
+    #
+    # @see https://design-system.service.gov.uk/components/back-link/
+    #
+    # elsif position?(5)
+    #   go_to!(3)
     else
       back!
     end
   end
 
   # Extract the school URN from the format "urn - school name"
+  #
   # @example
   #   "100000 - School #1" -> "100000"
   #
@@ -150,6 +157,7 @@ class FrameworkSupportForm < Form
   end
 
   # Extract the group UID from the format "uid - group name"
+  #
   # @example
   #   "1000 - Group #1" -> "1000"
   #
