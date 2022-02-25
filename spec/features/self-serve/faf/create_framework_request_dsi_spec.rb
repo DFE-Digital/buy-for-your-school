@@ -74,6 +74,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
       it "lists all supported schools and groups" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("legend.govuk-fieldset__legend")).to have_text "Which school are you buying for?"
+
         expect(page).to have_unchecked_field "Specialist School for Testing"
         expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
         expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
@@ -91,6 +92,27 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         choose "Greendale Academy for Bright Sparks"
         click_continue
         expect(find("span.govuk-caption-l")).to have_text "About your request"
+      end
+
+      context "when the school or group needs to be changed" do
+        it "goes back so a different school or group casn be selected" do
+          choose "Greendale Academy for Bright Sparks"
+          click_continue
+          click_on "Back"
+          expect(page).to have_checked_field "Greendale Academy for Bright Sparks"
+          choose "New Academy Trust (MAT)"
+          click_continue
+          click_on "Back"
+          expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
+          expect(page).to have_checked_field "New Academy Trust (MAT)"
+          click_continue
+          click_on "Back"
+          choose "Specialist School for Testing"
+          click_continue
+          click_on "Back"
+          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+          expect(page).to have_checked_field "Specialist School for Testing"
+        end
       end
     end
   end

@@ -95,32 +95,32 @@ class FrameworkSupportForm < Form
 
   # @return [Boolean]
   def restart?
-    (position?(7) && login_with_inferred_org?) || (position?(3) && login_with_many_orgs?)
+    (position?(7) && dsi_with_inferred_org?) ||
+    (position?(3) && dsi_with_many_orgs?)
   end
 
-  # @return [Boolean]
+  # @return [Boolean, nil]
   def reselect?
-    if user.guest? && position?(4)
-      affiliation_unconfirmed?
-    end
+    affiliation_unconfirmed? if guest_confirming_org?
   end
 
-  # @return [Boolean]
+  # @return [Boolean, nil]
   def confirmation_required?
     if guest_selecting_org?
-      group_uid.present? && correct_group.nil? || school_urn.present? && correct_organisation.nil?
+      group_uid.present? && correct_group.nil? ||
+      school_urn.present? && correct_organisation.nil?
     end
   end
 
   # Conditional jumps to different steps or incremental move forward
   #
-  # @return [Integer]
+  # @return [Integer] new step position
   def forward
-    if guest_selecting_org?
-      group ? forget_school! : forget_group!
-    end
+    toggle_guest_org_type if guest_selecting_org?
 
-    if position?(3) && login_with_many_orgs?
+    toggle_dsi_org_type if dsi_selecting_org?
+
+    if position?(3) && dsi_with_many_orgs?
       go_to!(7)
     else
       advance!
@@ -129,9 +129,10 @@ class FrameworkSupportForm < Form
 
   # Conditional jumps to different steps or incremental move backward
   #
-  # @return [Integer]
+  # @return [Integer] new step position
   def backward
-    if position?(7) && login_with_many_orgs?
+    if position?(7) && dsi_with_many_orgs?
+      toggle_dsi_org_type
       go_to!(3)
 
     # This breaks the expected convention of going to the previous page but can
@@ -169,32 +170,58 @@ class FrameworkSupportForm < Form
 private
 
   # @return [Boolean]
+  def affiliation_unconfirmed?
+    correct_group.eql?(false) || correct_organisation.eql?(false)
+  end
+
+  # Guest Users ----------------------------------------------------------------
+
+  # @return [nil]
+  def toggle_guest_org_type
+    if group
+      instance_variable_set :@school_urn, nil
+    else
+      instance_variable_set :@group_uid, nil
+    end
+  end
+
+  # @return [Boolean]
   def guest_selecting_org?
     user.guest? && (position?(2) || position?(3))
   end
 
   # @return [Boolean]
-  def affiliation_unconfirmed?
-    correct_group.eql?(false) || correct_organisation.eql?(false)
+  def guest_confirming_org?
+    user.guest? && position?(4)
+  end
+
+  # DSI Users ------------------------------------------------------------------
+
+  # @return [nil]
+  def toggle_dsi_org_type
+    if school_urn.present? && group
+      instance_variable_set :@group_uid, nil
+      instance_variable_set :@group, false
+    end
+
+    if group_uid.present? && !group
+      instance_variable_set :@school_urn, nil
+      instance_variable_set :@group, true
+    end
   end
 
   # @return [Boolean]
-  def login_with_many_orgs?
+  def dsi_selecting_org?
+    !user.guest? && position?(3)
+  end
+
+  # @return [Boolean]
+  def dsi_with_many_orgs?
     !user.guest? && !user.single_org?
   end
 
   # @return [Boolean]
-  def login_with_inferred_org?
+  def dsi_with_inferred_org?
     !user.guest? && user.single_org?
-  end
-
-  # @return [nil]
-  def forget_school!
-    instance_variable_set :@school_urn, nil
-  end
-
-  # @return [nil]
-  def forget_group!
-    instance_variable_set :@group_uid, nil
   end
 end
