@@ -8,14 +8,14 @@
 </h1>
 
 <%= render "components/autocomplete",
-      container_id: "framework-request-form-group-uid-field",
+      default_value: form.object.org_id,
+      container_id: "framework-support-form-org-id-field",
+      element_id: "framework-support-form-org-id-field",
+      element_name: "framework_support_form[org_id]",
       label_text: I18n.t("faf.search_for_a_group.hint"),
       label_class: "govuk-hint",
-      element_id: "framework-support-form-group-uid-field",
-      element_name: "framework_support_form[group_uid]",
       template_suggestion: "UID: {{uid}}, <strong>{{name}}</strong>, UKPRN: {{ukprn}}",
       value_field: :formatted_name,
-      default_value: form.object.group_uid,
       query_url: support_establishment_groups_path(format: :json, q: "{{QUERY}}") %>
 
 <details class="govuk-details" data-module="govuk-details">

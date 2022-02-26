@@ -21,7 +21,7 @@ RSpec.feature "Submitting a 'Find a Framework' request" do
   end
 
   let(:request) do
-    create(:framework_request, user: user, school_urn: "100253", group_uid: nil)
+    create(:framework_request, user: user, org_id: "100253", group: false)
   end
 
   before do

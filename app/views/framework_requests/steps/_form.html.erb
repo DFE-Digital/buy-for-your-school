@@ -8,22 +8,3 @@
 
   <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
 <% end %>
-
-<% if Rails.env.development? %>
-  Saved Request
-  <%= debug @framework_request&.attributes %>
-  Back
-  <%= debug @back_link %>
-  Step
-  <%= debug @form.step %>
-  DSI Supported Orgs
-  <%= debug @form.user.supported_orgs %>
-  Input
-  <%= debug @form.to_h.except(:user) %>
-  Output
-  <%= debug @form.data %>
-  School
-  <%= debug @organisation&.attributes %>
-  Group
-  <%= debug @establishment_group&.attributes %>
-<% end %>

@@ -14,9 +14,11 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         expect(page).to have_current_path "/procurement-support"
       end
 
-      it "errors if no selection is made" do
+      it "validates a choice is made" do
         click_continue
-        expect(find(".govuk-error-summary__body")).to have_text "Select whether you want to use a DfE Sign-in account"
+
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Select whether you want to use a DfE Sign-in account", href: "#framework-support-form-dsi-field-error"
       end
 
       # Javascript is used to change the form action
@@ -58,7 +60,6 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
           expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
           expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
-          expect(find(".govuk-error-message")).to have_text "You must tell us how we can help"
         end
       end
     end
@@ -74,6 +75,8 @@ RSpec.feature "Creating a 'Find a Framework' request" do
       it "lists all supported schools and groups" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("legend.govuk-fieldset__legend")).to have_text "Which school are you buying for?"
+
+        expect(all(".govuk-radios__item").count).to be 4
 
         expect(page).to have_unchecked_field "Specialist School for Testing"
         expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
@@ -95,23 +98,37 @@ RSpec.feature "Creating a 'Find a Framework' request" do
       end
 
       context "when the school or group needs to be changed" do
-        it "goes back so a different school or group casn be selected" do
+        it "goes back so a different school or group can be selected" do
+          # 1. select school
           choose "Greendale Academy for Bright Sparks"
           click_continue
           click_on "Back"
           expect(page).to have_checked_field "Greendale Academy for Bright Sparks"
+
+          expect(page).to have_unchecked_field "Specialist School for Testing"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+
+          # 2. select group
           choose "New Academy Trust (MAT)"
           click_continue
           click_on "Back"
-          expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
           expect(page).to have_checked_field "New Academy Trust (MAT)"
-          click_continue
-          click_on "Back"
+
+          expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
+          expect(page).to have_unchecked_field "Specialist School for Testing"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
+
+          # 3. select different school
           choose "Specialist School for Testing"
           click_continue
           click_on "Back"
-          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+
           expect(page).to have_checked_field "Specialist School for Testing"
+
+          expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
         end
       end
     end

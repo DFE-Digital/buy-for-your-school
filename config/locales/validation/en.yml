@@ -26,22 +26,19 @@ en:
     rules:
       dsi: "" # Omitted
       group: "" # Omitted
+      org_id: "" # Omitted
+      org_confirm: "" # Omitted
       first_name: "" # Omitted
       last_name: "" # Omitted
       email: "" # Omitted
-      school_urn: "" # Omitted
-      group_uid: "" # Omitted
       message_body: "" # Omitted
-      correct_organisation: "" # Omitted
-      correct_group: "" # Omitted
+
     errors:
       rules:
         affiliation: Select the school or group you want help buying for
         dsi:
-          missing: Select whether you want to use a DfE Sign-in account
           bool?: Select whether you want to use a DfE Sign-in account
         group:
-          missing: Select what type of organisation you're buying for
           bool?: Select what type of organisation you're buying for
         first_name:
           missing: Enter your first name
@@ -49,14 +46,11 @@ en:
           missing: Enter your last name
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-        school_urn:
-          missing: Select the school you want help buying for
-        group_uid:
-          missing: Enter your academy trust or federation name, or UKPRN and select it from the list
+        org_id:
+          school: Select the school you want help buying for
+          group: Enter your academy trust or federation name, or UKPRN and select it from the list
+        org_confirm:
+          school: Select whether this is the organisation you're buying for
+          group: Select whether this is the Group or Trust you're buying for
         message_body:
           missing: You must tell us how we can help
-        correct_group:
-          bool?: Select whether this is the Group or Trust you're buying for
-        correct_organisation:
-          bool?: Select whether this is the organisation you're buying for
-

@@ -1,7 +1,3 @@
-<% if Rails.env.development? %>
-  <%= debug @framework_request.attributes %>
-<% end %>
-
 <%= link_to I18n.t("generic.button.back"), edit_framework_request_path(@framework_request, step: 7), class: "govuk-back-link" %>
 
 <div class="govuk-grid-row">
@@ -41,14 +37,12 @@
           <%= I18n.t("faf.check_answers.details.school") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <% if @framework_request.group_uid.nil? %>
-            <%= @framework_request.school_name %>
-          <% else %>
-            <%= @framework_request.group_name %>
-          <% end %>
+          <%= @framework_request.org_name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <% if !current_user.single_org? %>
+          <% if current_user.guest? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3, group: @framework_request.group), class: "govuk-link", id: "edit-school" %>
+          <% elsif !current_user.single_org? %>
             <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_path(@framework_request, step: 3), class: "govuk-link", id: "edit-school" %>
           <% end %>
         </dd>
@@ -58,10 +52,10 @@
           <%= I18n.t("faf.check_answers.details.school_type") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <% if @framework_request.group_uid.nil? %>
-            <%= I18n.t("faf.check_answers.details.single") %>
-          <% else %>
+          <% if @framework_request.group %>
             <%= @framework_request.group_type %>
+          <% else %>
+            <%= I18n.t("faf.check_answers.details.single") %>
           <% end %>
         </dd>
         <dd class="govuk-summary-list__actions">
@@ -91,3 +85,7 @@
 
   </div>
 </div>
+
+<% if Rails.env.development? %>
+  <%= render "framework_requests/steps/debug" %>
+<% end %>

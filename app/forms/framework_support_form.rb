@@ -34,21 +34,13 @@ class FrameworkSupportForm < Form
   #   @return [Boolean] requesting support for a group of schools confirmed
   option :group, Types::ConfirmationField | Types::Nil, default: proc { user.group_uid.present? unless user.guest? }
 
-  # @!attribute [r] school_urn
-  #   @return [String] identifier and name in the format "100000 - School Name"
-  option :school_urn, default: proc { user.school_urn unless user.guest? }
-
-  # @!attribute [r] group_uid
-  #   @return [String] identifier and name in the format "1000 - Group Name"
-  option :group_uid, default: proc { user.group_uid unless user.guest? }
+  # @!attribute [r] org_id
+  #   @return [String] identifier and name in the format "xxxx - Group/School Name"
+  option :org_id, default: proc { user.school_urn || user.group_uid unless user.guest? }
 
   # @!attribute [r] correct_group
   #   @return [Boolean] selected group confirmed
-  option :correct_group, Types::ConfirmationField, optional: true
-
-  # @!attribute [r] correct_organisation
-  #   @return [Boolean] selected school confirmed
-  option :correct_organisation, Types::ConfirmationField, optional: true
+  option :org_confirm, Types::ConfirmationField, optional: true
 
   # @!attribute [r] first_name
   #   @return [String]
@@ -69,57 +61,25 @@ class FrameworkSupportForm < Form
   # @return [Hash] form data to be persisted as request attributes
   def data
     to_h
-      .except(:user, :step, :messages, :dsi, :correct_group, :correct_organisation)
+      .except(:user, :step, :messages, :dsi, :org_confirm)
       .compact
-      .merge(user_id: user.id, school_urn: urn, group_uid: uid, group: uid.present?)
+      .merge(user_id: user.id, org_id: found_uid_or_urn)
   end
 
   # Prevent validation errors being raised for empty fields
   #
   # @return [Hash] toggle form data to step backward
   def go_back
-    to_h.except(:user, :messages).merge(back: true, group: group.to_s).reject { |_, v| v.blank? }
-  end
-
-  # @return [Hash] toggle form data to include "Search for a school"
-  def find_school
-    advance!
-    go_back.merge(group: false)
-  end
-
-  # @return [Hash] toggle form data to include "Search for a group"
-  def find_group
-    advance!
-    go_back.merge(group: true)
-  end
-
-  # @return [Boolean]
-  def restart?
-    (position?(7) && dsi_with_inferred_org?) ||
-    (position?(3) && dsi_with_many_orgs?)
-  end
-
-  # @return [Boolean, nil]
-  def reselect?
-    affiliation_unconfirmed? if guest_confirming_org?
-  end
-
-  # @return [Boolean, nil]
-  def confirmation_required?
-    if guest_selecting_org?
-      group_uid.present? && correct_group.nil? ||
-      school_urn.present? && correct_organisation.nil?
-    end
+    to_h
+      .except(:user, :messages)
+      .merge(back: true, group: group, dsi: !user.guest?)
+      .reject { |_, v| v.to_s.empty? }
   end
 
   # Conditional jumps to different steps or incremental move forward
   #
   # @return [Integer] new step position
   def forward
-    toggle_guest_org_type if guest_selecting_org?
-
-    toggle_dsi_org_type if dsi_selecting_org?
-
     if position?(3) && dsi_with_many_orgs?
       go_to!(7)
     else
@@ -132,7 +92,6 @@ class FrameworkSupportForm < Form
   # @return [Integer] new step position
   def backward
     if position?(7) && dsi_with_many_orgs?
-      toggle_dsi_org_type
       go_to!(3)
 
     # This breaks the expected convention of going to the previous page but can
@@ -147,68 +106,61 @@ class FrameworkSupportForm < Form
     end
   end
 
-  # Extract the school URN from the format "urn - school name"
+  # Extract school URN or group UID from autocomplete search result
   #
   # @example
-  #   "100000 - School #1" -> "100000"
+  #   "1000 - Name" -> "1000"
   #
   # @return [String, nil]
-  def urn
-    school_urn&.split(" - ")&.first unless group
-  end
-
-  # Extract the group UID from the format "uid - group name"
-  #
-  # @example
-  #   "1000 - Group #1" -> "1000"
-  #
-  # @return [String, nil]
-  def uid
-    group_uid&.split(" - ")&.first if group
-  end
-
-private
-
-  # @return [Boolean]
-  def affiliation_unconfirmed?
-    correct_group.eql?(false) || correct_organisation.eql?(false)
+  def found_uid_or_urn
+    org_id&.split(" - ")&.first
   end
 
   # Guest Users ----------------------------------------------------------------
 
-  # @return [nil]
-  def toggle_guest_org_type
-    if group
-      instance_variable_set :@school_urn, nil
+  # @return [Hash] Guest "can't find group" tries "search for a school"
+  def find_school
+    advance!
+    go_back.merge(group: false, org_id: nil)
+  end
+
+  # @return [Hash] Guest "can't find school" tries "search for a group"
+  def find_group
+    advance!
+    go_back.merge(group: true, org_id: nil)
+  end
+
+  # Guest answered "no" to is this the correct school/group?
+  #
+  # @return [Boolean]
+  def reselect?
+    if user.guest? && position?(4)
+      org_confirm.eql?(false)
     else
-      instance_variable_set :@group_uid, nil
+      false
     end
   end
+
+  # @see FrameworkRequestController#update
+  #
+  def next?
+    if user.guest? && position?(2)
+      true # group choice
+    elsif user.guest? && position?(3)
+      org_id.present? # org selected
+    else
+      false
+    end
+  end
+
+  # DSI Users ----------------------------------------------------------------
 
   # @return [Boolean]
-  def guest_selecting_org?
-    user.guest? && (position?(2) || position?(3))
+  def restart?
+    position?(7) && dsi_with_inferred_org? || position?(3) && dsi_with_many_orgs?
   end
 
-  # @return [Boolean]
-  def guest_confirming_org?
-    user.guest? && position?(4)
-  end
-
-  # DSI Users ------------------------------------------------------------------
-
-  # @return [nil]
-  def toggle_dsi_org_type
-    if school_urn.present? && group
-      instance_variable_set :@group_uid, nil
-      instance_variable_set :@group, false
-    end
-
-    if group_uid.present? && !group
-      instance_variable_set :@school_urn, nil
-      instance_variable_set :@group, true
-    end
-  end
+private
 
   # @return [Boolean]
   def dsi_selecting_org?

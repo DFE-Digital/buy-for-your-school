@@ -7,8 +7,7 @@ RSpec.describe FrameworkSupportForm do
 
       expect(form.data).to eql(
         group: false,
-        group_uid: nil,
-        school_urn: "100253",
+        org_id: "100253",
         first_name: "first_name",
         last_name: "last_name",
         email: "test@test",
@@ -63,7 +62,6 @@ RSpec.describe FrameworkSupportForm do
         params = form.go_back
 
         expect(params).to be_a Hash
-        expect(params.values.any?(&:blank?)).to be false
 
         expect(params[:back]).to be true
         expect(params[:step]).to be 2 # originating position when back link was clicked
@@ -74,8 +72,6 @@ RSpec.describe FrameworkSupportForm do
 
         expect(params[:user]).to be_nil
         expect(params[:messages]).to be_nil
-        expect(params[:correct_organisation]).to be_nil
-        expect(params[:correct_group]).to be_nil
       end
     end
 
@@ -86,7 +82,6 @@ RSpec.describe FrameworkSupportForm do
         params = form.go_back
 
         expect(params).to be_a Hash
-        expect(params.values.any?(&:blank?)).to be false
 
         expect(params[:back]).to be true
         expect(params[:step]).to be 2 # originating position when back link was clicked
@@ -97,8 +92,6 @@ RSpec.describe FrameworkSupportForm do
 
         expect(params[:user]).to be_nil
         expect(params[:messages]).to be_nil
-        expect(params[:correct_organisation]).to be_nil
-        expect(params[:correct_group]).to be_nil
       end
     end
   end

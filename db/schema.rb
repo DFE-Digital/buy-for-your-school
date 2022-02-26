@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_092232) do
+ActiveRecord::Schema.define(version: 2022_02_25_175814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -101,12 +101,11 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "school_urn"
     t.string "message_body"
     t.boolean "submitted", default: false
     t.uuid "user_id"
-    t.string "group_uid"
     t.boolean "group", default: false
+    t.string "org_id"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -272,7 +271,7 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
-    t.index ["slug"], name: "index_support_categories_on_slug"
+    t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
