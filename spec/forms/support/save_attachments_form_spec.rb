@@ -64,6 +64,33 @@ describe Support::SaveAttachmentsForm do
       end
     end
 
+    context "when multiple attachments are given with the same names" do
+      let(:input) do
+        {
+          attachments_attributes: {
+            0 => {
+              support_case_id: case_1.id,
+              support_email_attachment_id: email_attachment_1.id,
+              name: "Case1EmailAttachment1.pdf",
+              description: "A really nice file...",
+              selected: "1",
+            },
+            1 => {
+              support_case_id: case_1.id,
+              support_email_attachment_id: email_attachment_2.id,
+              name: "Case1EmailAttachment1.pdf",
+              description: "A really pleasent file...",
+              selected: "1",
+            },
+          },
+        }
+      end
+
+      it "doesnt save any of the attachments" do
+        expect(Support::CaseAttachment.count).to be(0)
+      end
+    end
+
     context "when attachment name is empty" do
       let(:input) do
         {
