@@ -849,7 +849,6 @@ en:
 
     case_closures:
       action: Close case
-      created: Case closed successfully
       edit:
         header: Close case
         hint: Select reason for closing case.
@@ -859,11 +858,11 @@ en:
           other: Other
         submit: Save and close case
       flash:
+        created: Case closed successfully
         updated: Case has been closed
         error:
           initial: Only new cases created from emails can be closed
           other: Case cannot be closed
-
 
     cases:
       my_cases:
