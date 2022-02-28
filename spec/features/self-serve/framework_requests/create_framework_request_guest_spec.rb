@@ -106,6 +106,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         find("span", text: "Can't find it?").click
         click_on "Search for an academy trust or federation"
 
+        expect(page).not_to have_text "There is a problem"
         expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
 
         autocomplete_group_step

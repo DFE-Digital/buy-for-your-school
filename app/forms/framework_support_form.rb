@@ -106,6 +106,8 @@ class FrameworkSupportForm < Form
     end
   end
 
+  # Guest Users ----------------------------------------------------------------
+
   # Extract school URN or group UID from autocomplete search result
   #
   # @example
@@ -116,21 +118,13 @@ class FrameworkSupportForm < Form
     org_id&.split(" - ")&.first
   end
 
-  # Guest Users ----------------------------------------------------------------
-
-  # @return [Hash] Guest "can't find group" tries "search for a school"
-  def find_school
+  # @return [Hash] Guest "can't find school" tries "search for a group" and vice-versa
+  def find_other_type
     advance!
-    go_back.merge(group: false, org_id: nil)
+    go_back.except(:org_id).merge(group: !group)
   end
 
-  # @return [Hash] Guest "can't find school" tries "search for a group"
-  def find_group
-    advance!
-    go_back.merge(group: true, org_id: nil)
-  end
-
-  # Guest answered "no" to is this the correct school/group?
+  # Guest answered "no" to "is this the correct school/group?"
   #
   # @return [Boolean]
   def reselect?
