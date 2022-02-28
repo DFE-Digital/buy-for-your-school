@@ -57,6 +57,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to staging
         env:
           TF_VAR_environment: 'staging'
@@ -73,6 +77,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to research
         env:
           TF_VAR_environment: 'research'
@@ -97,6 +105,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to preview
         env:
           TF_VAR_environment: 'preview'
@@ -121,6 +133,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to prod
         env:
           TF_VAR_environment: 'prod'

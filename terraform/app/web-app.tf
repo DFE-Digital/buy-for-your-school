@@ -14,4 +14,8 @@ resource "cloudfoundry_app" "web_app" {
   service_binding { service_instance = cloudfoundry_user_provided_service.log_stream.id }
 
   environment = local.app_environment
+
+  routes {
+    route = cloudfoundry_route.shared_route.id
+  }
 }

@@ -1,0 +1,13 @@
+#!/bin/bash
+cf login -u $CF_USER -p $CF_PASSWORD -a https://api.london.cloud.service.gov.uk -s $TF_VAR_cloudfoundry_space
+
+# Wait for app to become started
+until cf app $CF_SERVICE_NAME | grep "requested state:" | grep started
+do
+  echo "Waiting for app to start..."
+  sleep 2
+done
+
+# Run seeding tasks
+cf ssh $CF_SERVICE_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails case_management:seed_shared_inbox_emails' # quicker
+cf ssh $CF_SERVICE_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails case_management:seed' # slower

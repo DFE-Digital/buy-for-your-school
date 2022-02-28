@@ -23,9 +23,9 @@ locals {
   postgres_timeouts    = var.postgres_timeouts
 
   s3_name = "${local.environment}-s3"
-  s3_bucket_name = var.s3_bucket_name
+  s3_bucket_name = var.s3_bucket_name == "" ? "${local.environment}-s3-bucket" : var.s3_bucket_name
   s3_params = {
-    bucket = var.s3_bucket_name
+    bucket = local.s3_bucket_name
     acl    = "private"
   }
   s3_json_params = jsonencode(local.s3_params)

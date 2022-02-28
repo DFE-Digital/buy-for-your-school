@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# WIP!
+
+# Get a JWT for DSI API requests
+jwt=$(ruby $PWD/script/get_dsi_jwt.rb)
+
+echo $jwt
+
+# https://pp-manage.signin.education.gov.uk/services/00487750-C9B8-414C-8746-1076885456E0
+
+# Get current redirect uris
+# redirect_uris=$(curl -f -X GET https://pp-api.signin.education.gov.uk/services/00487750-C9B8-414C-8746-1076885456E0 \
+#   -H 'Content-Type: application/json' \
+#   -H "Authorization: Bearer $jwt" | jq ".redirectUris += [\"$NEW_DSI_REDIRECT_URL\"]" | jq .redirectUris)
+
+# echo $redirect_uris
+
+# Update service redirect uris
+# curl -f -X PATCH https://dsi.com/services/$DSI_CLIENT_ID \
+#   -H 'Content-Type: application/json' \
+#   -H "Authorization: Bearer $jwt" \
+#   -d "{\"redirect_uris\":$redirect_uris}"

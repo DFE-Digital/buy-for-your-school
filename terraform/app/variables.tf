@@ -112,6 +112,12 @@ variable "docker_image" {
   type        = string
 }
 
+variable "s3_bucket_name" {
+  description = "Name of the s3 bucket"
+  default     = ""
+  type        = string
+}
+
 variable "syslog_drain_url" {
   description = "Syslog drain URL"
   type        = string
@@ -180,16 +186,5 @@ variable "web_worker_health_check_timeout" {
 variable "web_worker_command" {
   description = "Web worker command"
   default     = "bundle exec sidekiq -C config/sidekiq.yml"
-  type        = string
-}
-
-variable "s3_name" {
-  description = "s3 name of service"
-  default     = ""
-  type        = string
-}
-
-variable "s3_bucket_name" {
-  description = "Name of the running s3 bucket"
   type        = string
 }
