@@ -10,8 +10,7 @@ module Support
     def create
       @save_attachments_form = SaveAttachmentsForm.new(**save_attachments_form_params)
 
-      if @save_attachments_form.valid?
-        @save_attachments_form.save_attachments
+      if @save_attachments_form.valid? && @save_attachments_form.save_attachments
         @attachments = @save_attachments_form.selected_attachments
       else
         render :new
