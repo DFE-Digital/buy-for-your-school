@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+#
+# This will become an API call once Supported is standalone
+#
 # Submit an FaF request for support to the Supported case management team
-# :nocov:
 class SubmitFrameworkRequest
   extend Dry::Initializer
 
@@ -36,6 +38,7 @@ class SubmitFrameworkRequest
       },
     ).call
 
+    # TODO: save case reference to the request
     request.update!(submitted: true)
   end
 
@@ -45,9 +48,13 @@ private
     @user ||= FrameworkRequestPresenter.new(request).user
   end
 
-  # @return [Support::Organisation]
+  # @return [Support::Organisation, Support::EstablishmentGroup]
   def map_organisation
-    Support::Organisation.find_by(urn: request.school_urn)
+    if request.group
+      Support::EstablishmentGroup.find_by(uid: request.org_id)
+    else
+      Support::Organisation.find_by(urn: request.org_id)
+    end
   end
 
   # @return [Support::Case] TODO: Move into inbound API
@@ -55,7 +62,6 @@ private
     kase_attrs = {
       organisation: map_organisation,
       source: "faf",
-      # source: "digital",
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
@@ -79,4 +85,3 @@ private
     @kase
   end
 end
-# :nocov:

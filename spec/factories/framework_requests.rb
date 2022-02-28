@@ -3,7 +3,7 @@ FactoryBot.define do
     first_name { "David" }
     last_name { "Georgiou" }
     group { false }
-    school_urn { "000001" }
+    org_id { "000001" }
     email { "email@example.com" }
     message_body { "please help!" }
     submitted { false }

@@ -1,5 +1,6 @@
 $govuk-font-url-function: "font-url";
 $govuk-image-url-function: "image-url";
+
 @import "base/frontend";
 @import "base/misc";
 @import "components/govuk-radios-small";
@@ -9,4 +10,8 @@ $govuk-image-url-function: "image-url";
 @import "components/supported/email-preview";
 @import "components/supported/email-list";
 @import "components/supported/new-case-form";
-@import "components/pagination"
+@import "components/pagination";
+
+.debug_dump {
+  background: beige;
+}
