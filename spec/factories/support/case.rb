@@ -24,12 +24,20 @@ FactoryBot.define do
       state { :initial }
     end
 
-    trait :open do
-      state { :open }
+    trait :opened do
+      state { :opened }
+    end
+
+    trait :pending do
+      state { :pending }
     end
 
     trait :resolved do
       state { :resolved }
+    end
+
+    trait :closed do
+      state { :closed }
     end
 
     trait :with_documents do

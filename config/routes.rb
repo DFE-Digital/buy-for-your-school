@@ -109,6 +109,13 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    scope "/admin", as: "admin" do
+      get "/", to: "admin#show"
+      scope "/download", as: "download" do
+        get "cases", to: "admin#download_cases", as: "cases"
+      end
+    end
   end
 
   if Rails.env.development?
