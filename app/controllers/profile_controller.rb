@@ -12,7 +12,12 @@ class ProfileController < ApplicationController
 
     @support_journey = session.fetch(:support_journey, :digital).to_sym
 
-    breadcrumb "Dashboard", :dashboard_path
-    breadcrumb "Profile", profile_path, match: :exact
+    case @support_journey
+    when :digital
+      breadcrumb "Dashboard", :dashboard_path
+      breadcrumb "Profile", profile_path, match: :exact
+    when :faf
+      # breadcrumb "Find a Framework", :framework_requests_path
+    end
   end
 end

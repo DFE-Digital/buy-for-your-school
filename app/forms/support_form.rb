@@ -54,8 +54,8 @@ class SupportForm < Form
     position?(3) && !has_journey?
   end
 
-  # @return [nil]
-  def toggle
+  # @return [nil] request can be about either a category or a specific specification
+  def toggle_subject
     if position?(3) && has_journey?
       forget_category!
     elsif position?(4) && has_category?

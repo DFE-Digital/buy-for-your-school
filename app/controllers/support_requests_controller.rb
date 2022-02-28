@@ -19,11 +19,12 @@ class SupportRequestsController < ApplicationController
   end
 
   def edit
-    @form = SupportForm.new(
-      user: current_user,
-      step: params[:step],
-      **existing_answers,
-    )
+    @form =
+      SupportForm.new(
+        user: current_user,
+        step: params[:step],
+        **persisted_data,
+      )
   end
 
   def create
@@ -45,13 +46,13 @@ class SupportRequestsController < ApplicationController
 
   def update
     if validation.success?
-      @form.toggle
+      @form.toggle_subject
 
       if @form.jump_to_category?
         @form.advance!
         render :edit
       else
-        support_request.update!(**existing_answers, **@form.data)
+        support_request.update!(**persisted_data, **@form.data)
 
         redirect_to support_request_path(support_request), notice: I18n.t("support_request.flash.updated")
       end
@@ -69,7 +70,7 @@ private
   end
 
   # @return [Hash]
-  def existing_answers
+  def persisted_data
     support_request.attributes.symbolize_keys
   end
 
@@ -88,11 +89,11 @@ private
     SupportFormSchema.new.call(**form_params)
   end
 
-  # TODO: move into the form
+  # TODO: maybe? - move the form back param into the parent class
   #
   # @return [Boolean]
   def back_link?
-    form_params[:back] == "true"
+    @back_link = form_params[:back].eql?("true")
   end
 
   def form_params
