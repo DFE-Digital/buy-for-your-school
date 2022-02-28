@@ -35,7 +35,13 @@ module Support
     end
 
     def save_attachments
-      selected_attachments.each(&:save!)
+      Support::CaseAttachment.transaction do
+        selected_attachments.each(&:save!)
+      end
+
+      true
+    rescue StandardError
+      false
     end
   end
 end
