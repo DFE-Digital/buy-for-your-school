@@ -1,5 +1,5 @@
 resource "cloudfoundry_app" "web_worker" {
-  name                       = "${local.project_name}-worker-${local.environment}"
+  name                       = local.web_worker_name
   command                    = local.web_worker_command
   space                      = data.cloudfoundry_space.space.id
   instances                  = local.web_worker_instances

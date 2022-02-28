@@ -3,6 +3,12 @@ variable "environment" {
   type        = string
 }
 
+variable "app_yml_file" {
+  description = "Location of the env var yml file"
+  default     = ""
+  type        = string
+}
+
 variable "project_name" {
   description = "Project name"
   default     = "buy-for-your-school"
@@ -15,6 +21,12 @@ variable "cloudfoundry_org" {
   type        = string
 }
 
+variable "cloudfoundry_space" {
+  description = "CloudFoundry Space"
+  default     = ""
+  type        = string
+}
+
 variable "shared_cloudfoundry_domain" {
   description = "Shared Cloud Foundry domain"
   default     = "london.cloudapps.digital"
@@ -24,6 +36,18 @@ variable "shared_cloudfoundry_domain" {
 variable "custom_cloudfoundry_domain" {
   description = "Custom Cloud Foundry domain"
   default     = "education.gov.uk"
+  type        = string
+}
+
+variable "custom_hostname" {
+  description = "Custom hostname - creates: <this value>.education.gov.uk"
+  default     = ""
+  type        = string
+}
+
+variable "redis_name" {
+  description = "Redis name of service"
+  default     = ""
   type        = string
 }
 
@@ -41,6 +65,12 @@ variable "redis_timeouts" {
     delete = "2h"
   }
   type = map(string)
+}
+
+variable "postgres_name" {
+  description = "Postgres name of service"
+  default     = ""
+  type        = string
 }
 
 variable "postgres_class" {
@@ -87,6 +117,12 @@ variable "syslog_drain_url" {
   type        = string
 }
 
+variable "web_app_name" {
+  description = "Name of web_app, url will be: <value>.london.cloudapps.digital"
+  default     = ""
+  type        = string
+}
+
 variable "web_app_instances" {
   description = "Web app instance number"
   default     = 2
@@ -108,6 +144,12 @@ variable "web_app_timeout" {
 variable "web_app_health_check_http_endpoint" {
   description = "Web app health check HTTP endpoint"
   default     = "/health_check"
+  type        = string
+}
+
+variable "web_worker_name" {
+  description = "Name of web_app_worker"
+  default     = ""
   type        = string
 }
 
@@ -138,6 +180,12 @@ variable "web_worker_health_check_timeout" {
 variable "web_worker_command" {
   description = "Web worker command"
   default     = "bundle exec sidekiq -C config/sidekiq.yml"
+  type        = string
+}
+
+variable "s3_name" {
+  description = "s3 name of service"
+  default     = ""
   type        = string
 }
 

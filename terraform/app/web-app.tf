@@ -1,5 +1,5 @@
 resource "cloudfoundry_app" "web_app" {
-  name                       = "${local.project_name}-${local.environment}"
+  name                       = local.web_app_name
   space                      = data.cloudfoundry_space.space.id
   instances                  = local.web_app_instances
   disk_quota                 = local.web_app_disk_quota
@@ -14,11 +14,4 @@ resource "cloudfoundry_app" "web_app" {
   service_binding { service_instance = cloudfoundry_user_provided_service.log_stream.id }
 
   environment = local.app_environment
-
-  routes {
-    route = cloudfoundry_route.shared_route.id
-  }
-  routes {
-    route = cloudfoundry_route.custom_route.id
-  }
 }
