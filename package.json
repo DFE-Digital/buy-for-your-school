@@ -2,7 +2,7 @@
   "name": "sct-buy-for-your-school",
   "private": true,
   "dependencies": {
-    "@rails/ujs": "^7.0.1",
+    "@rails/ujs": "^7.0.2",
     "accessible-autocomplete": "^2.0.3",
     "govuk-frontend": "^4.0.1",
     "lodash": "^4.17.21"
