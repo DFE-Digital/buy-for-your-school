@@ -2,10 +2,6 @@ resource "cloudfoundry_route" "shared_route" {
   domain   = data.cloudfoundry_domain.shared.id
   space    = data.cloudfoundry_space.space.id
   hostname = local.web_app_name
-  target {
-    app = cloudfoundry_app.web_app.id
-    port = 3000
-  }
 }
 
 resource "cloudfoundry_route" "custom_route" {

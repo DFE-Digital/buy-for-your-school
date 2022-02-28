@@ -1,0 +1,79 @@
+name: Create Review Apps for QA
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [develop]
+
+env:
+  GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+  GHCR_PASSWORD: ${{ secrets.GHCR_PASSWORD }}
+  GHCR_REPO: 'ghcr.io/dfe-digital/buy-for-your-school'
+  CF_USER: ${{ secrets.CF_USER }}
+  CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      tf_var_docker_image: ${{ steps.tf_var_docker_image.outputs.value }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set Docker tag environment variable
+        run: echo "DOCKER_TAG=${GITHUB_RUN_ID}-${GITHUB_SHA}" >> $GITHUB_ENV
+      - name: Set Docker Image environment variable
+        run: echo "DOCKER_IMAGE=$GHCR_REPO:$DOCKER_TAG" >> $GITHUB_ENV
+      - name: Set TFVAR Docker Image environment variable
+        run: echo "TF_VAR_docker_image=$DOCKER_IMAGE" >> $GITHUB_ENV
+      - name: Set TFVAR Docker Image output
+        id: tf_var_docker_image
+        run: echo "::set-output name=value::$TF_VAR_docker_image"
+      - name: Build
+        run: script/docker-push-ghcr
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: qa
+    env:
+      GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
+      TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+      TF_VAR_environment: "qa-${{ github.event.number }}"
+      TF_VAR_cloudfoundry_space: "sct-preview"
+      TF_VAR_app_yml_file: "qa_app_env.yml"
+      TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"
+      ENV_APPLICATION_URL: "https://buy-for-your-school-qa-${{ github.event.number }}.london.cloudapps.digital"
+      ENV_DOMAIN: "buy-for-your-school-qa-${{ github.event.number }}.london.cloudapps.digital"
+      CF_SERVICE_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
+
+      - name: Deploy QA app
+        run: script/deploy-terraform
+
+      - name: comment on PR
+        uses: unsplash/comment-on-pr@v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: "QA application accessible at: https://buy-for-your-school-qa-${{ github.event.number }}.london.cloudapps.digital. Full organisation seeding may take 5 minutes."
+          check_for_duplicate_msg: true
+
+      - name: Run seeding
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf7-cli
+
+          script/post-qa-deploy-seed
+
