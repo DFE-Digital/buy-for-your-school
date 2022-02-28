@@ -228,6 +228,17 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
     t.index ["email"], name: "index_support_agents_on_email"
   end
 
+  create_table "support_case_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.uuid "support_email_attachment_id"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["support_case_id"], name: "index_support_case_attachments_on_support_case_id"
+    t.index ["support_email_attachment_id"], name: "index_support_case_attachments_on_support_email_attachment_id"
+  end
+
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ref"
     t.uuid "category_id"
@@ -464,6 +475,19 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
+  create_table "user_feedback", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "service", null: false
+    t.integer "satisfaction", null: false
+    t.string "feedback_text"
+    t.boolean "logged_in", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "full_name"
+    t.string "email"
+    t.uuid "logged_in_as_id"
+    t.index ["logged_in_as_id"], name: "index_user_feedback_on_logged_in_as_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -486,9 +510,12 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_case_attachments", "support_cases"
+  add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
   create_view "support_establishment_searches", sql_definition: <<-SQL
       SELECT organisations.id,

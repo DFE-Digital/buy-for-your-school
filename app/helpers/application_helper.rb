@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def banner_message
-    I18n.t("banner.beta.message", support_email: ENV.fetch("SUPPORT_EMAIL"))
+    I18n.t("banner.beta.message", feedback_link: link_to(I18n.t("banner.beta.feedback_link"), new_feedback_path, class: "govuk-link", target: "_blank", rel: :noopener))
   end
 
   def dsi_url(**args)

@@ -11,6 +11,7 @@ $govuk-image-url-function: "image-url";
 @import "components/supported/email-list";
 @import "components/supported/new-case-form";
 @import "components/pagination";
+@import "components/panels/info";
 
 .debug_dump {
   background: beige;

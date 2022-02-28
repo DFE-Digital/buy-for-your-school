@@ -54,3 +54,20 @@ en:
           group: Select whether this is the Group or Trust you're buying for
         message_body:
           missing: You must tell us how we can help
+
+  # Feedback form
+  feedback:
+    rules:
+      satisfaction: "" # Omitted
+      full_name: "" # Omitted
+      email: "" # Omitted
+
+    errors:
+      rules:
+        satisfaction:
+          missing: Select how you feel about the service you received
+        full_name:
+          missing: Enter your full name
+        email:
+          missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
+          format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
