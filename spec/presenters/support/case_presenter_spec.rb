@@ -151,4 +151,28 @@ RSpec.describe Support::CasePresenter do
       end
     end
   end
+
+  describe "#created_manually?" do
+    context "when case source is 'nw_hub', 'sw_hub' or nil" do
+      it "is true" do
+        support_case.nw_hub!
+        expect(presenter.created_manually?).to eq true
+        support_case.sw_hub!
+        expect(presenter.created_manually?).to eq true
+        support_case.source = nil
+        expect(presenter.created_manually?).to eq true
+      end
+    end
+
+    context "when case source is not 'nw_hub', 'sw_hub' or nil" do
+      it "is false" do
+        support_case.digital!
+        expect(presenter.created_manually?).to eq false
+        support_case.incoming_email!
+        expect(presenter.created_manually?).to eq false
+        support_case.faf!
+        expect(presenter.created_manually?).to eq false
+      end
+    end
+  end
 end
