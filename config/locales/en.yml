@@ -418,11 +418,10 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}"
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-        search_for_a_group_link: Search for an academy trust or federation
-      button: Continue
+        search_for_a_group_link: Search for an academy trust or federation instead.
 
     search_for_a_group:
       title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
@@ -436,7 +435,6 @@ en:
           - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
           - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
         search_for_a_school_link: Search for a single school instead.
-      button: Continue
 
     which_school:
       legend: Which school are you buying for?
