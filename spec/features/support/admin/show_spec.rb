@@ -15,7 +15,7 @@ RSpec.feature "Admin page" do
       visit "/support/admin"
     end
 
-    descibe "page content" do
+    describe "page content" do
       it "has the correct title and h1" do
         expect(page).to have_title "Case statistics"
         expect(find("h1.govuk-heading-l")).to have_text "Case statistics"
