@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [unreleased]
 
 - Agent can save email attachments to a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/896)
+- Add admin page so agents and analysts can review case statistics in real time [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/905)
 
 <!--
 
