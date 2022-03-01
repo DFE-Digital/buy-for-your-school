@@ -1,91 +1,97 @@
-RSpec.describe FrameworkSupportForm, type: :model do
-  subject(:form) { described_class.new }
+RSpec.describe FrameworkSupportForm do
+  let(:user) { create(:user, :one_supported_school) }
 
-  describe "#to_h" do
-    context "when populated" do
-      subject(:form) do
-        described_class.new(first_name: "Tester", email: "test@test.com", school_urn: "1234", message_body: "help", dsi: true)
-      end
+  describe "#data" do
+    it "infers values from the user" do
+      form = described_class.new(user: user)
 
-      it "has values" do
-        expect(form.to_h).to eql({
-          first_name: "Tester",
-          email: "test@test.com",
-          school_urn: "1234",
-          message_body: "help",
-        })
-      end
-
-      it "excludes dsi value" do
-        expect(form.to_h).not_to have_key(:dsi)
-      end
-    end
-
-    context "when unpopulated" do
-      it "is empty" do
-        expect(form.to_h).to be_empty
-      end
+      expect(form.data).to eql(
+        group: false,
+        org_id: "100253",
+        first_name: "first_name",
+        last_name: "last_name",
+        email: "test@test",
+        user_id: user.id,
+      )
     end
   end
 
-  describe "#dsi?" do
-    it "returns dsi value" do
-      form = described_class.new(dsi: true)
-      expect(form.dsi?).to be true
+  describe "#forward" do
+    context "when authenticated with many schools" do
+      let(:user) { create(:user, :many_supported_schools_and_groups) }
 
-      form = described_class.new(dsi: false)
-      expect(form.dsi?).to be false
-    end
-  end
-
-  describe "#guest?" do
-    it "returns flipped dsi value" do
-      form = described_class.new(dsi: true)
-      expect(form.guest?).to be false
-
-      form = described_class.new(dsi: false)
-      expect(form.guest?).to be true
-    end
-  end
-
-  describe "#multiple_schools?" do
-    it "returns group value" do
-      form = described_class.new(group: true)
-      expect(form.multiple_schools?).to be true
-
-      form = described_class.new(group: false)
-      expect(form.multiple_schools?).to be false
-    end
-  end
-
-  describe "#forget_org" do
-    context "when on form step 3" do
-      context "and school is set" do
-        subject(:form) do
-          described_class.new(step: 3, school_urn: "1234", group_uid: "")
-        end
-
-        it "clears the group value" do
-          form.forget_org
-          expect(form.to_h).to eql({
-            school_urn: "1234",
-            group_uid: nil,
-          })
-        end
+      it "org select > message" do
+        form = described_class.new(user: user, step: 3)
+        form.forward
+        expect(form.step).to be 7
       end
+    end
 
-      context "and group is set" do
-        subject(:form) do
-          described_class.new(step: 3, school_urn: "", group_uid: "4321")
-        end
+    it "defaults to stepping forward" do
+      form = described_class.new(user: user, step: 3)
+      form.forward
+      expect(form.step).to be 4
+    end
+  end
 
-        it "clears the school value" do
-          form.forget_org
-          expect(form.to_h).to eql({
-            school_urn: nil,
-            group_uid: "4321",
-          })
-        end
+  describe "#backward" do
+    context "when authenticated with many schools" do
+      let(:user) { create(:user, :many_supported_schools_and_groups) }
+
+      it "message > org select" do
+        form = described_class.new(user: user, step: 7)
+        form.backward
+        expect(form.step).to be 3
+      end
+    end
+
+    it "defaults to stepping backward" do
+      form = described_class.new(user: user, step: 2)
+      form.backward
+      expect(form.step).to be 1
+    end
+  end
+
+  describe "#go_back" do
+    let(:form) do
+      described_class.new(user: user, step: 2)
+    end
+
+    context "with a user" do
+      it "defaults" do
+        params = form.go_back
+
+        expect(params).to be_a Hash
+
+        expect(params[:back]).to be true
+        expect(params[:step]).to be 2 # originating position when back link was clicked
+
+        expect(params[:first_name]).to eql "first_name"
+        expect(params[:last_name]).to eql "last_name"
+        expect(params[:email]).to eql "test@test"
+
+        expect(params[:user]).to be_nil
+        expect(params[:messages]).to be_nil
+      end
+    end
+
+    context "with a guest" do
+      let(:user) { Guest.new }
+
+      it "defaults" do
+        params = form.go_back
+
+        expect(params).to be_a Hash
+
+        expect(params[:back]).to be true
+        expect(params[:step]).to be 2 # originating position when back link was clicked
+
+        expect(params[:first_name]).to be_nil
+        expect(params[:last_name]).to be_nil
+        expect(params[:email]).to be_nil
+
+        expect(params[:user]).to be_nil
+        expect(params[:messages]).to be_nil
       end
     end
   end

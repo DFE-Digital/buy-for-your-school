@@ -19,11 +19,23 @@ class Guest < Dry::Struct
     []
   end
 
-  def full_name; end
+  # @return [nil]
+  def full_name
+    nil
+  end
 
-  def first_name; end
+  # @return [nil]
+  def first_name
+    nil
+  end
 
-  def last_name; end
+  # @return [nil]
+  def last_name
+    nil
+  end
 
-  def email; end
+  # @return [nil]
+  def email
+    nil
+  end
 end

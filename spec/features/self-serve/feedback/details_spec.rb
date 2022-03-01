@@ -1,9 +1,11 @@
 RSpec.feature "User feedback details" do
+  let(:feedback) { UserFeedback.first }
+
   describe "Function" do
     context "when not logged in" do
       it "persists the user's details" do
         feedback_user_details
-        feedback = UserFeedback.first
+
         expect(feedback.full_name).to eq "Dave Georgiou"
         expect(feedback.email).to eq "dave@dave.com"
         expect(feedback.logged_in).to be false
@@ -17,7 +19,7 @@ RSpec.feature "User feedback details" do
       it "persists the user's details and loggged in status" do
         user_is_signed_in(user: user)
         feedback_user_details
-        feedback = UserFeedback.first
+
         expect(feedback.full_name).to eq "Dave Georgiou"
         expect(feedback.email).to eq "dave@dave.com"
         expect(feedback.logged_in).to be true

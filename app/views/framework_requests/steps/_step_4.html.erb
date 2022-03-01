@@ -1,138 +1,15 @@
-<!-- confirm school (4) -->
+<%# confirm school or group (4) %>
 
 <%= form.hidden_field :dsi, value: form.object.dsi  %>
 <%= form.hidden_field :group, value: form.object.group %>
-<%= form.hidden_field :school_urn, value: form.object.school_urn %>
-<%= form.hidden_field :group_uid, value: form.object.group_uid %>
+<%= form.hidden_field :org_id, value: form.object.org_id %>
 
-<% if @organisation %>
-  <%= content_for :title, I18n.t("faf.confirm_school.title") %>
-
-  <span class="govuk-caption-l"><%= I18n.t("faf.confirm_school.caption") %></span>
-  <h1 class="govuk-heading-l"><%= I18n.t("faf.confirm_school.heading") %></h1>
-
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_school.summary.name_and_address") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @organisation.name %>,<br>
-        <%= @organisation.formatted_address %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_school.summary.local_authority") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @organisation.local_authority %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_school.summary.headteacher") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @organisation.contact %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_school.summary.phase") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @organisation.phase %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_school.summary.school_type") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @organisation.establishment_type.name %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_school.summary.id") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= I18n.t("faf.confirm_school.summary.urn") %>: <%= @organisation.urn %><br>
-        <%= I18n.t("faf.confirm_school.summary.dfe_number") %>: <%= @organisation.number %><br>
-        <%= I18n.t("faf.confirm_school.summary.ukprn") %>: <%= @organisation.ukprn %>
-      </dd>
-    </div>
-  </dl>
-<% else %>
-  <%= content_for :title, I18n.t("faf.confirm_group_or_trust.title") %>
-
-  <span class="govuk-caption-l"><%= I18n.t("faf.confirm_group_or_trust.caption") %></span>
-  <h1 class="govuk-heading-l"><%= I18n.t("faf.confirm_group_or_trust.heading") %></h1>
-
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_group_or_trust.summary.group_name") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @establishment_group.name %>,<br>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_group_or_trust.summary.address") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @establishment_group.formatted_address %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_group_or_trust.summary.group_type") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= @establishment_group.group_type %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("faf.confirm_group_or_trust.summary.id") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= I18n.t("faf.confirm_group_or_trust.summary.uid") %>: <%= @establishment_group.uid %><br>
-        <% if @establishment_group.ukprn %>
-          <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= @establishment_group.ukprn %>
-        <% end %>
-      </dd>
-    </div>
-  </dl>
-<% end %>
-
-<% if @organisation %>
-  <%=
-    form.govuk_collection_radio_buttons :correct_organisation,
-      [
-        OpenStruct.new(value: true, label: I18n.t("faf.confirm_school.choice.continue")),
-        OpenStruct.new(value: false, label: I18n.t("faf.confirm_school.choice.go_back")),
-      ],
-      :value,
-      :label,
-      legend: nil
-    
-  %>
-  <% else %>
-  <%=
-    form.govuk_collection_radio_buttons :correct_group,
-      [
-        OpenStruct.new(value: true, label: I18n.t("faf.confirm_school.choice.continue")),
-        OpenStruct.new(value: false, label: I18n.t("faf.confirm_group_or_trust.choice.go_back")),
-      ],
-      :value,
-      :label,
-      legend: nil
-    
-  %>
-<% end %>
+<%=
+  if form.object.group
+    render "framework_requests/steps/confirm_group", form: form
+  else
+    render "framework_requests/steps/confirm_school", form: form
+  end
+%>
 
 <%= javascript_include_tag "faf_confirm_school" %>
