@@ -8,7 +8,7 @@ module Support
       role =  if current_user.analyst?
                 "analyst"
               else
-                "admin"
+                "agent"
               end
 
       Rollbar.info("User role has been granted access.", role: role, path: request.path)
