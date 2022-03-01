@@ -1,11 +1,10 @@
 RSpec.feature "Admin page" do
   before do
     category = create(:support_category, title: "OS software")
-    create(:support_case, :initial, category: category)
-    create(:support_case, :opened, category: category)
-    create(:support_case, :resolved, category: category)
-    create(:support_case, :closed, category: category)
-    create(:support_case, :pending, category: category)
+
+    %i[initial opened resolved closed pending].each do |state|
+      create(:support_case, state, category: category)
+    end
   end
 
   context "when the user is an admin" do
@@ -16,48 +15,63 @@ RSpec.feature "Admin page" do
       visit "/support/admin"
     end
 
-    it "shows the page content" do
-      expect(page).to have_title "Case statistics"
-      expect(find("h1.govuk-heading-l")).to have_text "Case statistics"
-      expect(all("th.govuk-table__header")[0]).to have_text "Number of cases"
-      expect(all("td.govuk-table__cell")[0]).to have_text "5"
+    descibe "page content" do
+      it "has the correct title and h1" do
+        expect(page).to have_title "Case statistics"
+        expect(find("h1.govuk-heading-l")).to have_text "Case statistics"
+      end
 
-      expect(all("h2.govuk-heading-m")[0]).to have_text "Number of cases by state"
-      expect(all("th.govuk-table__header")[1]).to have_text "New"
-      expect(all("td.govuk-table__cell")[1]).to have_text "1"
-      expect(all("th.govuk-table__header")[2]).to have_text "Open"
-      expect(all("td.govuk-table__cell")[2]).to have_text "1"
-      expect(all("th.govuk-table__header")[3]).to have_text "Resolved"
-      expect(all("td.govuk-table__cell")[3]).to have_text "1"
-      expect(all("th.govuk-table__header")[4]).to have_text "Pending"
-      expect(all("td.govuk-table__cell")[4]).to have_text "1"
-      expect(all("th.govuk-table__header")[5]).to have_text "Closed"
-      expect(all("td.govuk-table__cell")[5]).to have_text "1"
+      it "shows the correct number of cases" do
+        expect(all("th.govuk-table__header")[0]).to have_text "Number of cases"
+        expect(all("td.govuk-table__cell")[0]).to have_text "5"
+      end
 
-      expect(all("h2.govuk-heading-m")[1]).to have_text "Number of cases by category and state"
-      expect(all("th.govuk-table__header")[6]).to have_text "OS software"
-      expect(all("th.govuk-table__header")[7]).to have_text "New"
-      expect(all("td.govuk-table__cell")[6]).to have_text "1"
-      expect(all("th.govuk-table__header")[8]).to have_text "Open"
-      expect(all("td.govuk-table__cell")[7]).to have_text "1"
-      expect(all("th.govuk-table__header")[9]).to have_text "Resolved"
-      expect(all("td.govuk-table__cell")[8]).to have_text "1"
-      expect(all("th.govuk-table__header")[10]).to have_text "Pending"
-      expect(all("td.govuk-table__cell")[9]).to have_text "1"
-      expect(all("th.govuk-table__header")[11]).to have_text "Closed"
-      expect(all("td.govuk-table__cell")[10]).to have_text "1"
-      expect(all("th.govuk-table__header")[12]).to have_text "No category"
-      expect(all("th.govuk-table__header")[13]).to have_text "New"
-      expect(all("td.govuk-table__cell")[11]).to have_text "0"
-      expect(all("th.govuk-table__header")[14]).to have_text "Open"
-      expect(all("td.govuk-table__cell")[12]).to have_text "0"
-      expect(all("th.govuk-table__header")[15]).to have_text "Resolved"
-      expect(all("td.govuk-table__cell")[13]).to have_text "0"
-      expect(all("th.govuk-table__header")[16]).to have_text "Pending"
-      expect(all("td.govuk-table__cell")[14]).to have_text "0"
-      expect(all("th.govuk-table__header")[17]).to have_text "Closed"
-      expect(all("td.govuk-table__cell")[15]).to have_text "0"
-      expect(page).to have_link "Download CSV", class: "govuk-button", href: "/support/admin/download/cases.csv"
+      it "shows the number of cases by state" do
+        expect(all("h2.govuk-heading-m")[0]).to have_text "Number of cases by state"
+        expect(all("th.govuk-table__header")[1]).to have_text "New"
+        expect(all("td.govuk-table__cell")[1]).to have_text "1"
+        expect(all("th.govuk-table__header")[2]).to have_text "Open"
+        expect(all("td.govuk-table__cell")[2]).to have_text "1"
+        expect(all("th.govuk-table__header")[3]).to have_text "Resolved"
+        expect(all("td.govuk-table__cell")[3]).to have_text "1"
+        expect(all("th.govuk-table__header")[4]).to have_text "Pending"
+        expect(all("td.govuk-table__cell")[4]).to have_text "1"
+        expect(all("th.govuk-table__header")[5]).to have_text "Closed"
+        expect(all("td.govuk-table__cell")[5]).to have_text "1"
+      end
+
+      it "displays the number of cases in each category by state" do
+        expect(all("h2.govuk-heading-m")[1]).to have_text "Number of cases by category and state"
+        expect(all("th.govuk-table__header")[6]).to have_text "OS software"
+        expect(all("th.govuk-table__header")[7]).to have_text "New"
+        expect(all("td.govuk-table__cell")[6]).to have_text "1"
+        expect(all("th.govuk-table__header")[8]).to have_text "Open"
+        expect(all("td.govuk-table__cell")[7]).to have_text "1"
+        expect(all("th.govuk-table__header")[9]).to have_text "Resolved"
+        expect(all("td.govuk-table__cell")[8]).to have_text "1"
+        expect(all("th.govuk-table__header")[10]).to have_text "Pending"
+        expect(all("td.govuk-table__cell")[9]).to have_text "1"
+        expect(all("th.govuk-table__header")[11]).to have_text "Closed"
+        expect(all("td.govuk-table__cell")[10]).to have_text "1"
+      end
+
+      it "displays the number of cases with no category by state" do
+        expect(all("th.govuk-table__header")[12]).to have_text "No category"
+        expect(all("th.govuk-table__header")[13]).to have_text "New"
+        expect(all("td.govuk-table__cell")[11]).to have_text "0"
+        expect(all("th.govuk-table__header")[14]).to have_text "Open"
+        expect(all("td.govuk-table__cell")[12]).to have_text "0"
+        expect(all("th.govuk-table__header")[15]).to have_text "Resolved"
+        expect(all("td.govuk-table__cell")[13]).to have_text "0"
+        expect(all("th.govuk-table__header")[16]).to have_text "Pending"
+        expect(all("td.govuk-table__cell")[14]).to have_text "0"
+        expect(all("th.govuk-table__header")[17]).to have_text "Closed"
+        expect(all("td.govuk-table__cell")[15]).to have_text "0"
+      end
+
+      it "has a link to download the CSV of the case data" do
+        expect(page).to have_link "Download CSV", class: "govuk-button", href: "/support/admin/download/cases.csv"
+      end
     end
 
     it "reports access to Rollbar" do
@@ -65,7 +79,7 @@ RSpec.feature "Admin page" do
       visit "/support/admin"
     end
 
-    it "provides an activity log CSV download" do
+    it "provides a case data CSV download" do
       expect(Rollbar).to receive(:info).with("Case data downloaded.")
       click_on "Download CSV"
       expect(page.response_headers["Content-Type"]).to eq "text/csv"
