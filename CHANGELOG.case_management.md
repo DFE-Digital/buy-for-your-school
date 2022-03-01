@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 - Agent can save email attachments to a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/896)
 - Add admin page so agents and analysts can review case statistics in real time [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/905)
+- Agent can reopen, close and place a case on-hold, while incoming emails on closed cases create a new case, and reopens resolved cases. Agent can also track the time a state transition occurred [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/887)
 
 <!--
 
@@ -18,7 +19,6 @@ The format is based on [Keep a Changelog 1.0.0].
 - feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
 
 -->
-
 
 ## [release-004] - 2022-02-15 (020)
 

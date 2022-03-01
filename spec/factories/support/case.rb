@@ -28,16 +28,16 @@ FactoryBot.define do
       state { :opened }
     end
 
-    trait :pending do
-      state { :pending }
-    end
-
     trait :resolved do
       state { :resolved }
     end
 
     trait :closed do
       state { :closed }
+    end
+
+    trait :on_hold do
+      state { :on_hold }
     end
 
     trait :with_documents do

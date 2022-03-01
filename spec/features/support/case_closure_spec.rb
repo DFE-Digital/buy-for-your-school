@@ -5,7 +5,7 @@ RSpec.feature "Case closure" do
 
   let(:state) { :initial }
   let(:kase_source) { :incoming_email }
-  let(:kase) { create(:support_case, state: state, source: kase_source) }
+  let(:kase) { create(:support_case, state: state, source: kase_source, ref: "000001") }
   let(:activity_log_item) { Support::ActivityLogItem.last }
 
   describe "Function" do
@@ -23,6 +23,28 @@ RSpec.feature "Case closure" do
         expect(activity_log_item.support_case_id).to eq kase.id
         expect(activity_log_item.action).to eq "close_case"
         expect(activity_log_item.data).to eq({ "closure_reason" => "spam" })
+      end
+    end
+
+    context "when the case is resolved" do
+      let(:state) { :resolved }
+
+      before { click_link "Close case" }
+
+      it "closes the case and records the action" do
+        expect(kase.reload.closed?).to be true
+        expect(activity_log_item.support_case_id).to eq kase.id
+        expect(activity_log_item.action).to eq "close_case"
+        expect(activity_log_item.data).to eq({ "closure_reason" => "Resolved case closed by agent" })
+      end
+
+      it "removes the case from my cases tab" do
+        visit support_cases_path
+        expect(page).not_to have_css("#my-cases .case-row", text: "000001")
+
+        within "#all-cases .case-row", text: "000001" do
+          expect(page).to have_css(".case-status", text: "Closed")
+        end
       end
     end
 

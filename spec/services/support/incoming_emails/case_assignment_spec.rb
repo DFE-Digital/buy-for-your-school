@@ -2,14 +2,21 @@ require "rails_helper"
 
 describe Support::IncomingEmails::CaseAssignment do
   describe ".detect_and_assign_case" do
-    let(:email) { create(:support_email, sender: { "address" => "contact@email.com" }) }
+    let(:email) { create(:support_email, sender: { "address" => "contact@email.com", "name" => "Jane Doe" }, subject: "Re: #{support_case.ref}") }
     let(:support_case) { create(:support_case) }
-
-    before { allow_any_instance_of(described_class).to receive(:case_for_email).and_return(support_case) }
 
     it "assigns a case to the email determined by the email itself" do
       described_class.detect_and_assign_case(email)
       expect(email.case).to eq(support_case)
+    end
+
+    context "when the case has been closed" do
+      let(:support_case) { create(:support_case, state: "closed") }
+
+      it "creates a new case for the email" do
+        described_class.detect_and_assign_case(email)
+        expect(email.case).not_to eq(support_case)
+      end
     end
   end
 

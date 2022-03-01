@@ -49,7 +49,7 @@ RSpec.describe Support::MergeCaseEmails do
   end
 
   context "when the from_case is not 'new'" do
-    before { from_case.pending! }
+    before { from_case.on_hold! }
 
     it "raises Support::CaseNotNew error" do
       expect { merge.call }.to raise_error(Support::MergeCaseEmails::CaseNotNewError)

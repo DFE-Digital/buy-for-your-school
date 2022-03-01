@@ -314,9 +314,6 @@ en:
           label: Go to Find an approved framework
           url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
 
-
-
-
   #
   # FaF -----------------------------------------------------------------
   #
@@ -538,6 +535,8 @@ en:
         add_interaction: Log contact with school
         resolve: Resolve case
         reopen: Reopen case
+        close: Close case
+        place_on_hold: Place on hold
         move_email: Move emails to existing case
         case: Case
         organisation: Organisation
@@ -546,7 +545,7 @@ en:
           state_initial: New
           state_opened: Open
           state_resolved: Resolved
-          state_pending: Pending
+          state_on_hold: On Hold
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
@@ -750,6 +749,16 @@ en:
         label: Assign to case worker
       submit: Assign
 
+    case_opening:
+      flash:
+        reopened: Case reopened successfully
+        error: Case cannot be reopened
+
+    case_on_hold:
+      flash:
+        created: Case placed on hold successfully
+        error: Case cannot be placed on hold
+
     case_merge_emails:
       flash:
         case_not_new: The case being merged is not 'New' and cannot be merged
@@ -858,9 +867,11 @@ en:
           other: Other
         submit: Save and close case
       flash:
+        created: Case closed successfully
         updated: Case has been closed
-        error: Only new cases created from emails can be closed
-
+        error:
+          initial: Only new cases created from emails can be closed
+          other: Case cannot be closed
 
     cases:
       my_cases:
@@ -927,6 +938,7 @@ en:
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
+        state_change: Status change
       label:
         email_unread: Unread
         contact_detail: Contact details
