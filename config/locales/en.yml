@@ -858,6 +858,7 @@ en:
 
     case_closures:
       action: Close case
+      created: Case closed successfully
       edit:
         header: Close case
         hint: Select reason for closing case.
