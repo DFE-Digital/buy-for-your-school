@@ -3,7 +3,7 @@
 <h1 class="govuk-heading-l"><%= I18n.t("support.admin.header") %></h1>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters">
     <table class="govuk-table">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
@@ -12,12 +12,8 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</div>
 
-<h2 class="govuk-heading-m"><%= I18n.t("support.admin.body.no_of_cases_by_state") %></h2>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= I18n.t("support.admin.body.no_of_cases_by_state") %></h2>
     <table class="govuk-table">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
@@ -28,33 +24,28 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</div>
 
-<h2 class="govuk-heading-m"><%= I18n.t("support.admin.body.no_of_cases_by_state_and_category") %></h2>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
-      <table class="govuk-table">
-        <tbody class="govuk-table__body">
-          <% @categories.each do |category| %>
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header"><%= category.title %></th>
+    <h2 class="govuk-heading-m"><%= I18n.t("support.admin.body.no_of_cases_by_state_and_category") %></h2>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <% @categories.each do |category| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= category.title %></th>
+            <% @states.each do |state| %>
+              <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
+              <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, category.id]].to_i %></td>
+            <% end %>
+          </tr>
+        <% end %>
+          <tr>
+            <th scope="row" class="govuk-table__header">No category</th>
               <% @states.each do |state| %>
-                <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
-                <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, category.id]].to_i %></td>
-              <% end %>
-            </tr>
-          <% end %>
-            <tr>
-              <th scope="row" class="govuk-table__header">No category</th>
-              <% @states.each do |state| %>
-                <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
-                <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, nil]].to_i %></td>
-              <% end %>
-            </tr>
-        </tbody>
-      </table>
+              <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
+              <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, nil]].to_i %></td>
+            <% end %>
+          </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

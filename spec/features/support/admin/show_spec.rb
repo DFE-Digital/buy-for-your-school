@@ -2,7 +2,7 @@ RSpec.feature "Admin page" do
   before do
     category = create(:support_category, title: "OS software")
 
-    %i[initial opened resolved closed pending].each do |state|
+    %i[initial opened resolved closed on_hold].each do |state|
       create(:support_case, state, category: category)
     end
   end
@@ -34,7 +34,7 @@ RSpec.feature "Admin page" do
         expect(all("td.govuk-table__cell")[2]).to have_text "1"
         expect(all("th.govuk-table__header")[3]).to have_text "Resolved"
         expect(all("td.govuk-table__cell")[3]).to have_text "1"
-        expect(all("th.govuk-table__header")[4]).to have_text "On hold"
+        expect(all("th.govuk-table__header")[4]).to have_text "On Hold"
         expect(all("td.govuk-table__cell")[4]).to have_text "1"
         expect(all("th.govuk-table__header")[5]).to have_text "Closed"
         expect(all("td.govuk-table__cell")[5]).to have_text "1"
@@ -49,7 +49,7 @@ RSpec.feature "Admin page" do
         expect(all("td.govuk-table__cell")[7]).to have_text "1"
         expect(all("th.govuk-table__header")[9]).to have_text "Resolved"
         expect(all("td.govuk-table__cell")[8]).to have_text "1"
-        expect(all("th.govuk-table__header")[10]).to have_text "On hold"
+        expect(all("th.govuk-table__header")[10]).to have_text "On Hold"
         expect(all("td.govuk-table__cell")[9]).to have_text "1"
         expect(all("th.govuk-table__header")[11]).to have_text "Closed"
         expect(all("td.govuk-table__cell")[10]).to have_text "1"
@@ -63,7 +63,7 @@ RSpec.feature "Admin page" do
         expect(all("td.govuk-table__cell")[12]).to have_text "0"
         expect(all("th.govuk-table__header")[15]).to have_text "Resolved"
         expect(all("td.govuk-table__cell")[13]).to have_text "0"
-        expect(all("th.govuk-table__header")[16]).to have_text "On hold"
+        expect(all("th.govuk-table__header")[16]).to have_text "On Hold"
         expect(all("td.govuk-table__cell")[14]).to have_text "0"
         expect(all("th.govuk-table__header")[17]).to have_text "Closed"
         expect(all("td.govuk-table__cell")[15]).to have_text "0"
