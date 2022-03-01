@@ -15,7 +15,7 @@ module Support
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
 
         redirect_to support_case_path(current_case, anchor: "case-history"),
-                    notice: I18n.t("support.case_closing.flash.created")
+                    notice: I18n.t("support.case_closures.flash.created")
       else
         redirect_to support_case_path(current_case), notice: I18n.t("support.case_closures.flash.error.other")
       end

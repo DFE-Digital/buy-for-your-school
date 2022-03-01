@@ -4,14 +4,14 @@ class UserPresenter < BasePresenter
     journeys.initial.map { |j| JourneyPresenter.new(j) }
   end
 
-  # @return [String, nil] inferred unique school identifier
-  def school_urn
-    supported_orgs.first.urn if single_org? && !supported_orgs.first.group
-  end
-
   # @return [Boolean]
   def single_org?
     supported_orgs.one?
+  end
+
+  # @return [String, nil] inferred unique school identifier
+  def school_urn
+    supported_orgs.first.urn if single_org? && !supported_orgs.first.group
   end
 
   # @return [String, nil] inferred unique group identifier
