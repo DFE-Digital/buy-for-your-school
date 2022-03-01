@@ -8,7 +8,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
 
   context "when the case to be merged is not new" do
     before do
-      from_case.pending!
+      from_case.on_hold!
       visit "/support/cases/#{from_case.id}"
     end
 

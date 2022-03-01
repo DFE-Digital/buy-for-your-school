@@ -4,9 +4,26 @@ module Support
 
     before_action :set_back_url, :set_reasons
 
+    def create
+      if current_case.resolved?
+        current_case.interactions.state_change.build(
+          body: "Resolved case closed by agent",
+          agent_id: current_agent.id,
+        )
+        current_case.close!
+
+        record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
+
+        redirect_to support_case_path(current_case, anchor: "case-history"),
+                    notice: I18n.t("support.case_closures.flash.created")
+      else
+        redirect_to support_case_path(current_case), notice: I18n.t("support.case_closures.flash.error.other")
+      end
+    end
+
     def edit
       unless current_case.initial? && current_case.incoming_email?
-        return redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error")
+        return redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error.initial")
       end
 
       @form = CaseClosureForm.new
@@ -19,7 +36,7 @@ module Support
         current_case.transaction do
           raise CaseCannotBeClosed unless current_case.initial? && current_case.incoming_email?
 
-          current_case.closed!
+          current_case.close!
         end
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @form.reason })
         redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.updated")
@@ -27,7 +44,7 @@ module Support
         render :edit
       end
     rescue CaseCannotBeClosed
-      redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error")
+      redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error.initial")
     end
 
   private
