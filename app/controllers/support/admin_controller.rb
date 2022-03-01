@@ -5,8 +5,13 @@ module Support
     before_action :set_view_fields, only: :show
 
     def show
-      Rollbar.info("User role has been granted access.", role: "analyst", path: request.path) if current_user.analyst?
-      Rollbar.info("User role has been granted access.", role: "agent", path: request.path) if current_agent
+      role =  if current_user.analyst?
+                "analyst"
+              else
+                "admin"
+              end
+
+      Rollbar.info("User role has been granted access.", role: role, path: request.path) if current_user.analyst?
     end
 
     def download_cases
@@ -28,6 +33,7 @@ module Support
       @states = Case.states.first(5).to_h.keys
     end
 
+    # @return [nil]
     def authenticate_agent_or_analyst!
       return if current_agent
 
