@@ -7,7 +7,7 @@
     <p class="govuk-body-m"> <%= I18n.t("feedback.user.body") %> </p>
 
 
-    <%= form_with model: form,
+    <%= form_with model: @form,
                   scope: :feedback_form,
                   url: feedback_path,
                   method: :patch do |form|

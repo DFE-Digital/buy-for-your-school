@@ -70,5 +70,10 @@ FactoryBot.define do
       event_type { 12 }
       body { "This is an example savings update." }
     end
+
+    trait :state_change do
+      event_type { 13 }
+      body { "This is an example status update." }
+    end
   end
 end

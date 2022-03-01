@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [unreleased]
 
+- Agent can update the problem description on a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/899)
 - Agent can save email attachments to a case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/896)
+- Agent can reopen, close and place a case on-hold, while incoming emails on closed cases create a new case, and reopens resolved cases. Agent can also track the time a state transition occurred [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/887)
 
 <!--
 
@@ -18,9 +20,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
-
 ## [release-004] - 2022-02-15 (020)
 
+- add ability to close a new case created by an inbound email [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/897)
 - Case can be set to an organisation or group, with search box to search both organisations and groups [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/851)
 - Add pagination [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/854)
 - Ability to merge a NEW email case into an existing case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/853)

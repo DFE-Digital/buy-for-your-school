@@ -15,7 +15,19 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
+  turnstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: softprops/turnstyle@v1
+        name: Check workflow concurrency
+        with:
+          poll-interval-seconds: 20
+          same-branch-only: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: turnstyle
     runs-on: ubuntu-latest
     outputs:
       tf_var_docker_image: ${{ steps.tf_var_docker_image.outputs.value }}
@@ -69,6 +81,7 @@ jobs:
           check_for_duplicate_msg: true
 
       - name: Run seeding
+        if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
         run: |
           wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
           echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list

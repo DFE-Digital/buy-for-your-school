@@ -37,7 +37,7 @@ module Support
     # @return [String] 30 January 2000 at 12:00
     def last_updated_at
       # method to compare updated_at for case and updated_at for interaction (if exists) and select most recent
-      interactions.none? ? updated_at : interactions.last.created_at
+      interactions.none? ? updated_at : interactions.first.created_at
     end
 
     # @return [String]
@@ -123,6 +123,13 @@ module Support
     # @return [Time]
     def last_updated_at_date
       Time.zone.parse(last_updated_at)
+    end
+
+    # true if the case source is `nw_hub`, `sw_hub` or nil
+    #
+    # @return [Boolean]
+    def created_manually?
+      ["nw_hub", "sw_hub", nil].any? { |t| t == source }
     end
 
   private

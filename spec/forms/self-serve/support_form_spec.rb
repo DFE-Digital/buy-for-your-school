@@ -1,8 +1,16 @@
-RSpec.describe SupportForm, type: :model do
-  subject(:form) { described_class.new }
+RSpec.describe SupportForm do
+  subject(:form) { described_class.new(user: user) }
 
-  it "#step" do
-    expect(form.step).to be 1
+  let(:user) do
+    create(:user, :one_supported_school)
+  end
+
+  describe "#step" do
+    context "with inferred school" do
+      it "starts on step 4" do
+        expect(form.step).to be 4
+      end
+    end
   end
 
   it "#messages" do
@@ -17,7 +25,6 @@ RSpec.describe SupportForm, type: :model do
     expect(form.errors.any?).to be false
   end
 
-  # respond to
   it "form params" do
     expect(form.phone_number).to be_nil
     expect(form.journey_id).to be_nil
@@ -25,83 +32,58 @@ RSpec.describe SupportForm, type: :model do
     expect(form.message_body).to be_nil
   end
 
-  describe "#to_h" do
-    context "when populated" do
-      subject(:form) do
-        described_class.new(phone_number: "01234567890", message_body: "hello world")
-      end
-
-      it "has values" do
-        expect(form.to_h).to eql({
-          phone_number: "01234567890",
-          message_body: "hello world",
-        })
-      end
+  describe "#data" do
+    subject(:form) do
+      described_class.new(user: user, phone_number: "01234567890", message_body: "hello world")
     end
 
-    context "when unpopulated" do
-      it "is empty" do
-        expect(form.to_h).to be_empty
-      end
+    it "infers values from the user" do
+      expect(form.data).to eql(
+        phone_number: "01234567890",
+        message_body: "hello world",
+        school_urn: "100253",
+        user_id: user.id,
+      )
     end
   end
 
-  describe "#advance!" do
-    it "defaults to one move forward" do
-      form = described_class.new(step: 99)
-      form.advance!
-      expect(form.step).to be 100
+  describe "#forward" do
+    it "skips journey selection if none exist" do
+      form = described_class.new(user: user, step: 2)
+      form.forward
+      expect(form.step).to be 4
     end
 
-    it "can skip n steps" do
-      form = described_class.new(step: 99)
-      form.advance!(2)
-      expect(form.step).to be 101
-    end
-  end
-
-  describe "#back!" do
-    it "defaults to one move backward" do
-      form = described_class.new(step: 99)
-      form.back!
-      expect(form.step).to be 98
+    it "skips category selection if a journey is selected" do
+      form = described_class.new(user: user, step: 3, journey_id: "xxx")
+      form.forward
+      expect(form.step).to be 5
     end
 
-    it "can skip n steps back" do
-      form = described_class.new(step: 99)
-      form.back!(2)
-      expect(form.step).to be 97
+    it "defaults to stepping forward" do
+      form = described_class.new(user: user, step: 3)
+      form.forward
+      expect(form.step).to be 4
     end
   end
 
-  it "#has_journey?" do
-    form = described_class.new(journey_id: "foo")
-    expect(form).to have_journey
+  describe "#backward" do
+    it "skips journey selection if none exist" do
+      form = described_class.new(user: user, step: 4)
+      form.backward
+      expect(form.step).to be 2
+    end
 
-    form = described_class.new(journey_id: "none")
-    expect(form).not_to have_journey
+    it "skips category selection if a journey is selected" do
+      form = described_class.new(user: user, step: 5, journey_id: "xxx")
+      form.backward
+      expect(form.step).to be 3
+    end
 
-    form = described_class.new
-    expect(form).not_to have_journey
-  end
-
-  it "#has_category?" do
-    form = described_class.new(category_id: "foo")
-    expect(form).to have_category
-
-    form = described_class.new
-    expect(form).not_to have_category
-  end
-
-  it "#forget_category!" do
-    form = described_class.new(category_id: "foo")
-    form.forget_category!
-    expect(form).not_to have_category
-  end
-
-  it "#forget_journey!" do
-    form = described_class.new(journey_id: "foo")
-    form.forget_journey!
-    expect(form).not_to have_journey
+    it "defaults to stepping backward" do
+      form = described_class.new(user: user, step: 2)
+      form.backward
+      expect(form.step).to be 1
+    end
   end
 end
