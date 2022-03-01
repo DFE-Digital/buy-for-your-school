@@ -75,7 +75,7 @@ RSpec.feature "Case statistics page" do
     end
 
     it "reports access to Rollbar" do
-      expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "agent", path: "/support/admin")
+      expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "agent", path: "/support/case-statistics")
       visit "/support/case-statistics"
     end
 
@@ -104,7 +104,7 @@ RSpec.feature "Case statistics page" do
       end
 
       it "reports access to Rollbar" do
-        expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "analyst", path: "/support/admin")
+        expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "analyst", path: "/support/case-statistics")
         visit "/support/case-statistics"
       end
     end
