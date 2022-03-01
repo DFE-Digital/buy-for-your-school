@@ -30,7 +30,6 @@ class FrameworkRequestsController < ApplicationController
   end
 
   def new
-    session.delete(:support_journey)
     session.delete(:faf_group)
     session.delete(:faf_school)
 
@@ -38,6 +37,8 @@ class FrameworkRequestsController < ApplicationController
   end
 
   def create
+    session.delete(:support_journey) unless current_user.guest?
+
     if @form.restart? && back_link?
       redirect_to framework_requests_path
     elsif validation.success? && validation.to_h[:message_body]
