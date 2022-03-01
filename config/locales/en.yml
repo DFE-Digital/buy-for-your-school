@@ -686,6 +686,7 @@ en:
         school_ukprn: Organisation UKPRN
         school_name: Organisation name
         school_postcode: Organisation postcode
+        organisation_name: Organisation name
         name: Contact name
         first_name: Contact first name
         last_name: Contact last name
@@ -867,7 +868,7 @@ en:
     cases:
       my_cases:
         header_link: My cases
-    
+
     case_description:
       header: Update description of problem
       flash:
