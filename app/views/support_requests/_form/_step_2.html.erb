@@ -1,7 +1,7 @@
 <%= form.hidden_field :phone_number, value: form.object.phone_number %>
 
 <%= form.govuk_collection_radio_buttons :school_urn,
-  current_user.supported_schools,
+  form.object.user.supported_schools,
   :urn,
   :name,
   caption: { text: I18n.t("support_request.caption.school"), size: "l" },

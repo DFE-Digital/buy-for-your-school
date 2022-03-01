@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl"><%= I18n.t("feedback.header") %></h1>
 
-    <%= form_with model: form, scope: :feedback_form, url: feedback_index_path, method: :post do |form| %>
+    <%= form_with model: @form, scope: :feedback_form, url: feedback_index_path, method: :post do |form| %>
       <%= form.govuk_error_summary %>
 
       <div class="govuk-form-group">
@@ -14,7 +14,7 @@
           </legend>
           
           <%= form.govuk_radio_buttons_fieldset :satisfaction, legend: { text: I18n.t("feedback.survey.satisfaction_question"), size: "s" } do %>
-              <% @satisfaction_options.each do |option| %>
+              <% form.object.satisfaction_options.each do |option| %>
                 <%= form.govuk_radio_button :satisfaction, option, label: { text: I18n.t("feedback.survey.satisfaction_options.#{option}") } %>
               <% end %>
           <% end %>

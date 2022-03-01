@@ -41,7 +41,6 @@ Rails.application.routes.draw do
   #
   # Framework Requests ---------------------------------------------------------
   #
-  # resources :framework_requests, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
   resources :framework_requests, except: %i[delete], path: "procurement-support"
   resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
 
