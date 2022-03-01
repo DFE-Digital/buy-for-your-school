@@ -11,7 +11,7 @@ module Support
                 "admin"
               end
 
-      Rollbar.info("User role has been granted access.", role: role, path: request.path) if current_user.analyst?
+      Rollbar.info("User role has been granted access.", role: role, path: request.path)
     end
 
     def download_cases
