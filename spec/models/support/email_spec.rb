@@ -105,6 +105,35 @@ describe Support::Email do
 
         expect(Support::IncomingEmails::CaseAssignment).not_to have_received(:detect_and_assign_case).with(email)
       end
+
+      context "and the case has been closed" do
+        before { email.case.close! }
+
+        it "detects and assigns a case to the email" do
+          allow(Support::IncomingEmails::CaseAssignment).to receive(:detect_and_assign_case)
+
+          email.automatically_assign_case
+
+          expect(Support::IncomingEmails::CaseAssignment).to have_received(:detect_and_assign_case).with(email).once
+        end
+      end
+    end
+  end
+
+  describe "#automatically_reopen_case" do
+    let(:support_case) { create(:support_case, :resolved, action_required: false) }
+    let(:email) { build(:support_email, case: support_case) }
+
+    it "reopens a resolved case" do
+      email.automatically_reopen_case
+
+      expect(support_case.opened?).to eq true
+    end
+
+    it "sets action required to true on the attached case" do
+      email.automatically_reopen_case
+
+      expect(support_case.action_required?).to eq true
     end
   end
 

@@ -38,6 +38,7 @@ module Support
     #   existing_contract_updated
     #   new_contract_updated
     #   savings_updated
+    #   state_change
     enum event_type: {
       note: 0,
       phone_call: 1,
@@ -52,6 +53,7 @@ module Support
       existing_contract_updated: 10,
       new_contract_updated: 11,
       savings_updated: 12,
+      state_change: 13,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }
