@@ -1,5 +1,6 @@
 class FrameworkRequestsController < ApplicationController
   skip_before_action :authenticate_user!
+
   before_action :form, only: %i[create update]
   before_action :query_organisation!, only: %i[create update]
   before_action :framework_request, only: %i[edit show update]

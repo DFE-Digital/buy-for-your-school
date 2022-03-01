@@ -1,28 +1,20 @@
 class FeedbackController < ApplicationController
   skip_before_action :authenticate_user!
 
-  before_action :set_satisfaction_options, only: %i[new create]
-  before_action :show_view, only: %i[show]
   before_action :form, only: %i[create update]
-
-  helper_method :form, :show_view
 
   breadcrumb "Dashboard", :dashboard_path
 
   def new
     breadcrumb "Give feedback", :new_feedback_path, match: :exact
-    @form = FeedbackForm.new
+
+    @form = FeedbackForm.new(user: current_user)
   end
 
   def create
     if validation.success?
-      redirect_to feedback_path(
-        UserFeedback.create!(
-          logged_in: !current_user.guest?,
-          logged_in_as_id: current_user&.id,
-          **form.to_h,
-        ),
-      )
+      feedback = UserFeedback.create!(**form.data)
+      redirect_to feedback_path(feedback)
     else
       render :new
     end
@@ -30,12 +22,12 @@ class FeedbackController < ApplicationController
 
   def edit
     breadcrumb "Get involved", :edit_feedback_path, match: :exact
-    @form = FeedbackForm.new(**feedback.to_h.compact)
+    @form = FeedbackForm.new(user: current_user, **persisted_data)
   end
 
   def update
     if validation.success?
-      feedback.update!(**form.to_h.compact)
+      feedback.update!(**form.data)
       redirect_to feedback_path(feedback)
     else
       render :edit
@@ -43,7 +35,9 @@ class FeedbackController < ApplicationController
   end
 
   def show
-    case show_view
+    @show_view = feedback.full_name ? :details_submitted : :feedback_submitted
+
+    case @show_view
     when :details_submitted
       breadcrumb "Get involved", :edit_feedback_path, match: :exact
     else
@@ -53,20 +47,18 @@ class FeedbackController < ApplicationController
 
 private
 
-  def set_satisfaction_options
-    @satisfaction_options = UserFeedback.satisfactions.keys.reverse
-  end
-
   def feedback
-    @feedback ||= UserFeedback.find_by(id: params[:id])
+    @feedback = UserFeedback.find_by(id: params[:id])
   end
 
   # @return [FeedbackForm] form object populated with validation messages
   def form
-    @form ||= FeedbackForm.new(
-      messages: validation.errors(full: true).to_h,
-      **validation.to_h,
-    )
+    @form =
+      FeedbackForm.new(
+        user: current_user,
+        messages: validation.errors(full: true).to_h,
+        **validation.to_h,
+      )
   end
 
   def form_params
@@ -80,11 +72,8 @@ private
     FeedbackFormSchema.new.call(**form_params)
   end
 
-  def show_view
-    @show_view ||= if feedback.full_name.present?
-                     :details_submitted
-                   else
-                     :feedback_submitted
-                   end
+  # @return [Hash]
+  def persisted_data
+    feedback.attributes.symbolize_keys
   end
 end
