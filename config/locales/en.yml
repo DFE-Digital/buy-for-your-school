@@ -512,6 +512,7 @@ en:
 
     admin:
       header: Case statistics
+      header_link: Admin
       body:
         no_of_cases: Number of cases
         no_of_cases_by_state: Number of cases by state

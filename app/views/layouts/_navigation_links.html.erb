@@ -8,6 +8,9 @@
 
       <% if support? %>
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+          <%= link_to I18n.t("support.admin.header_link"), support_admin_path, class: "govuk-header__link" %>
+        </li>
+        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.cases.my_cases.header_link"), support_cases_path(anchor: 'my-cases'), class: "govuk-header__link" %>
         </li>
       <% end %>
