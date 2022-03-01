@@ -1,21 +1,21 @@
 module Support
-  class AdminController < ApplicationController
+  class CaseStatisticsController < ApplicationController
     skip_before_action :authenticate_agent!
     before_action :authenticate_agent_or_analyst!
     before_action :set_view_fields, only: :show
 
     def show
-      role =  if current_user.analyst?
-                "analyst"
-              else
-                "agent"
-              end
-
-      Rollbar.info("User role has been granted access.", role: role, path: request.path)
-    end
-
-    def download_cases
       respond_to do |format|
+        format.html do
+          role =  if current_user.analyst?
+                    "analyst"
+                  else
+                    "agent"
+                  end
+
+          Rollbar.info("User role has been granted access.", role: role, path: request.path)
+        end
+
         format.csv do
           Rollbar.info("Case data downloaded.")
           send_data CaseDatum.to_csv, filename: "case_data.csv", type: "text/csv"

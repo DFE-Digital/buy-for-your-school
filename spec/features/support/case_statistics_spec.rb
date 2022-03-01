@@ -1,4 +1,4 @@
-RSpec.feature "Admin page" do
+RSpec.feature "Case statistics page" do
   before do
     category = create(:support_category, title: "OS software")
 
@@ -12,7 +12,7 @@ RSpec.feature "Admin page" do
 
     before do
       click_button "Agent Login"
-      visit "/support/admin"
+      visit "/support/case-statistics"
     end
 
     describe "page content" do
@@ -70,13 +70,13 @@ RSpec.feature "Admin page" do
       end
 
       it "has a link to download the CSV of the case data" do
-        expect(page).to have_link "Download CSV", class: "govuk-button", href: "/support/admin/download/cases.csv"
+        expect(page).to have_link "Download CSV", class: "govuk-button", href: "/support/case-statistics.csv"
       end
     end
 
     it "reports access to Rollbar" do
       expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "agent", path: "/support/admin")
-      visit "/support/admin"
+      visit "/support/case-statistics"
     end
 
     it "provides a case data CSV download" do
@@ -93,7 +93,7 @@ RSpec.feature "Admin page" do
       user_exists_in_dfe_sign_in(user: user)
       visit "/"
       click_start
-      visit "/support/admin"
+      visit "/support/case-statistics"
     end
 
     context "and the user is an analyst" do
@@ -105,7 +105,7 @@ RSpec.feature "Admin page" do
 
       it "reports access to Rollbar" do
         expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "analyst", path: "/support/admin")
-        visit "/support/admin"
+        visit "/support/case-statistics"
       end
     end
 

@@ -507,16 +507,16 @@ en:
 
     header: Supported Buying Admin
 
-    admin:
+    case_statistics:
       header: Case statistics
-      header_link: Admin
+      header_link: Case Statistics
       body:
         no_of_cases: Number of cases
         no_of_cases_by_state: Number of cases by state
         no_of_cases_by_state_and_category: Number of cases by category and state
-      case:
+      download:
         header: Case data
-        download_csv: Download CSV
+        csv: Download CSV
 
     case:
       date_format: "%d %B %Y at %H:%M"

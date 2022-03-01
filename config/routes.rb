@@ -112,11 +112,8 @@ Rails.application.routes.draw do
       end
     end
 
-    scope "/admin", as: "admin" do
-      get "/", to: "admin#show"
-      scope "/download", as: "download" do
-        get "cases", to: "admin#download_cases", as: "cases"
-      end
+    scope "/case-statistics", as: "case_statistics" do
+      get "/", to: "case_statistics#show"
     end
   end
 

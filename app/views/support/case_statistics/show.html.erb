@@ -1,19 +1,19 @@
-<%= content_for :title, I18n.t("support.admin.header") %>
+<%= content_for :title, I18n.t("support.case_statistics.header") %>
 
-<h1 class="govuk-heading-l"><%= I18n.t("support.admin.header") %></h1>
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_statistics.header") %></h1>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <table class="govuk-table">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><%= I18n.t("support.admin.body.no_of_cases") %></th>
+          <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.body.no_of_cases") %></th>
           <td class="govuk-table__cell"><%= @no_of_cases.to_i %></td>
         </tr>
       </tbody>
     </table>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support.admin.body.no_of_cases_by_state") %></h2>
+    <h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.body.no_of_cases_by_state") %></h2>
     <table class="govuk-table">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
@@ -25,7 +25,7 @@
       </tbody>
     </table>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("support.admin.body.no_of_cases_by_state_and_category") %></h2>
+    <h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.body.no_of_cases_by_state_and_category") %></h2>
     <table class="govuk-table">
       <tbody class="govuk-table__body">
         <% @categories.each do |category| %>
@@ -49,5 +49,5 @@
   </div>
 </div>
 
-<h1 class="govuk-heading-m"><%= I18n.t("support.admin.case.header") %></h1>
-<%= link_to I18n.t("support.admin.case.download_csv"), support_admin_download_cases_path(format: :csv), class: "govuk-button", role: "button" %>
+<h1 class="govuk-heading-m"><%= I18n.t("support.case_statistics.download.header") %></h1>
+<%= link_to I18n.t("support.case_statistics.download.csv"), support_case_statistics_path(format: :csv), class: "govuk-button", role: "button" %>
