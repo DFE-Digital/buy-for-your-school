@@ -111,6 +111,10 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    scope "/case-statistics", as: "case_statistics" do
+      get "/", to: "case_statistics#show"
+    end
   end
 
   if Rails.env.development?

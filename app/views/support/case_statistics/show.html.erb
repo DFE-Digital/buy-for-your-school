@@ -1,0 +1,53 @@
+<%= content_for :title, I18n.t("support.case_statistics.header") %>
+
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_statistics.header") %></h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.body.no_of_cases") %></th>
+          <td class="govuk-table__cell"><%= @no_of_cases.to_i %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.body.no_of_cases_by_state") %></h2>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <% @states.each do |state| %>
+            <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
+            <td class="govuk-table__cell"><%= @no_of_cases_by_state[state].to_i %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.body.no_of_cases_by_state_and_category") %></h2>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <% @categories.each do |category| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= category.title %></th>
+            <% @states.each do |state| %>
+              <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
+              <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, category.id]].to_i %></td>
+            <% end %>
+          </tr>
+        <% end %>
+          <tr>
+            <th scope="row" class="govuk-table__header">No category</th>
+              <% @states.each do |state| %>
+              <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
+              <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, nil]].to_i %></td>
+            <% end %>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h1 class="govuk-heading-m"><%= I18n.t("support.case_statistics.download.header") %></h1>
+<%= link_to I18n.t("support.case_statistics.download.csv"), support_case_statistics_path(format: :csv), class: "govuk-button", role: "button" %>

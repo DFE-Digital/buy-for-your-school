@@ -24,12 +24,16 @@ FactoryBot.define do
       state { :initial }
     end
 
-    trait :open do
-      state { :open }
+    trait :opened do
+      state { :opened }
     end
 
     trait :resolved do
       state { :resolved }
+    end
+
+    trait :closed do
+      state { :closed }
     end
 
     trait :on_hold do
