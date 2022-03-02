@@ -29,22 +29,4 @@ RSpec.feature "An authenticated user" do
       expect(find("a.govuk-button")).to have_text "Request support"
     end
   end
-
-  # The profile page is a CYA page before requesting support.
-  # A user may authenticate to start a "Find a Framework" support request.
-  # After confirming the user's details for a FaF journey,
-  # ensure that the temporary session switch is cleared.
-  it "resets the support journey session flag" do
-    expect(find("a.govuk-button")).to have_text "Request support"
-
-    visit "/procurement-support"
-    visit "/profile"
-
-    expect(find("a.govuk-button")).to have_text "Yes, continue"
-
-    visit "/procurement-support/new"
-    visit "/profile"
-
-    expect(find("a.govuk-button")).to have_text "Request support"
-  end
 end

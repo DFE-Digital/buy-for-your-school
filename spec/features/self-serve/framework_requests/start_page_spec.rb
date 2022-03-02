@@ -33,6 +33,20 @@ RSpec.feature "Starting a 'Find a Framework' request" do
 
     it "shows their profile" do
       expect(page).to have_current_path "/profile"
+      expect(find("a.govuk-button")).to have_text "Yes, continue"
+    end
+
+    it "resets the profile support button" do
+      click_on "Yes, continue"
+
+      expect(page).to have_current_path "/procurement-support/new"
+      expect(find("label.govuk-label--l")).to have_text "How can we help?"
+
+      fill_in "framework_support_form[message_body]", with: "I have a problem"
+      click_continue
+      visit "/profile"
+
+      expect(find("a.govuk-button")).to have_text "Request support"
     end
 
     describe "when user signs out" do
