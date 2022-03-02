@@ -55,4 +55,15 @@ RSpec.describe Support::EmailAttachment, type: :model do
       expect(email_attachment.is_inline).to be(true)
     end
   end
+
+  describe ".for_case_attachments" do
+    let(:attachment_to_hide) { create(:support_email_attachment).tap { |a| a.update(file_type: "application/bad-file") } }
+    let(:attachment_to_show) { create(:support_email_attachment).tap { |a| a.update(file_type: CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST.first) } }
+
+    it "queries for only attachments with file types within CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST" do
+      results = described_class.for_case_attachments
+      expect(results).to include(attachment_to_show)
+      expect(results).not_to include(attachment_to_hide)
+    end
+  end
 end

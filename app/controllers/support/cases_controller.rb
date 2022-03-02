@@ -1,7 +1,7 @@
 module Support
   class CasesController < Cases::ApplicationController
     require "will_paginate/array"
-    before_action :current_case, only: %i[show]
+    before_action :current_case, only: %i[show edit]
 
     include Concerns::HasInteraction
 
@@ -14,7 +14,7 @@ module Support
         format.html do
           @cases = Case.includes(%i[agent category organisation]).all.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
           @new_cases = Case.includes(%i[agent category organisation]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
-          @my_cases = Case.includes(%i[agent category organisation]).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+          @my_cases = Case.includes(%i[agent category organisation]).where.not(state: :closed).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         end
       end
     end
@@ -41,6 +41,22 @@ module Support
       end
     end
 
+    def edit
+      return redirect_to support_case_path(current_case) unless current_case.created_manually?
+
+      @back_url = support_case_path(current_case)
+    end
+
+    def update
+      @form = EditCaseForm.from_validation(edit_validation)
+      if edit_validation.success?
+        current_case.update!(**@form.to_h)
+        redirect_to support_case_path(current_case), notice: I18n.t("support.case_description.flash.updated")
+      else
+        render :edit
+      end
+    end
+
   private
 
     # @return [CasePresenter, nil]
@@ -50,6 +66,10 @@ module Support
 
     def validation
       CreateCaseFormSchema.new.call(**form_params)
+    end
+
+    def edit_validation
+      EditCaseFormSchema.new.call(**edit_form_params)
     end
 
     def form_params
@@ -70,6 +90,10 @@ module Support
         :progress_notes,
         :request_type,
       )
+    end
+
+    def edit_form_params
+      params.require(:edit_case_form).permit(:request_text)
     end
   end
 end

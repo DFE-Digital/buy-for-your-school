@@ -4,6 +4,7 @@ module Support
 
     SUPPORTED_TYPES = [
       "Support::EmailAttachment",
+      "Support::CaseAttachment",
     ].freeze
 
     def show

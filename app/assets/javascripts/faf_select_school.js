@@ -1,32 +1,21 @@
 /*
-  Deselect school_urn radio buttons if a group_uid is selected and vice versa
+  DSI USERS ONLY
+
+  toggle "group" form field when an organisation is selected
 */
 
-function uncheck(radioButtons) {
-  radioButtons.forEach(r => r.checked = false);
-}
 
 window.addEventListener("load", () => {
-  const schoolRadioButtons = document.querySelectorAll("input[name='framework_support_form[school_urn]'][type=radio]");
-  const groupRadioButtons = document.querySelectorAll("input[name='framework_support_form[group_uid]'][type=radio]");
-  const schoolField = document.querySelector("input[name='framework_support_form[school_urn]'][type=hidden]");
-  const groupField = document.querySelector("input[name='framework_support_form[group_uid]'][type=hidden]");
 
-  schoolRadioButtons.forEach(r => {
+  const hiddenGroupField = document.querySelector("input[name='framework_support_form[group]'][type=hidden]");
+  const orgRadioButtons = document.querySelectorAll("input[name='framework_support_form[org_id]'][type=radio]");
+
+  orgRadioButtons.forEach(r => {
     r.addEventListener("change", () => {
       if (r.checked) {
-        uncheck(groupRadioButtons);
-        groupField.value = null;
+        hiddenGroupField.value = r.getAttribute("group");
       }
     });
   });
 
-  groupRadioButtons.forEach(r => {
-    r.addEventListener("change", () => {
-      if (r.checked) {
-        uncheck(schoolRadioButtons);
-        schoolField.value = null;
-      }
-    });
-  });
 });

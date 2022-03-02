@@ -1,5 +1,7 @@
 RSpec.feature "An authenticated user" do
-  subject(:user) { create(:user, first_name: "Peter", last_name: "Hamilton") }
+  subject(:user) do
+    create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton")
+  end
 
   around do |example|
     ClimateControl.modify(DSI_ENV: "test") { example.run }
@@ -24,10 +26,7 @@ RSpec.feature "An authenticated user" do
     it "confirms contact information" do
       expect(find("span.govuk-caption-l")).to have_text "About you"
       expect(find("h1.govuk-heading-l")).to have_text "Is this your contact information?"
-
       expect(find("a.govuk-button")).to have_text "Request support"
-
-      # expect(page).to have_link "Exit without saving", href: "/dashboard"
     end
   end
 end

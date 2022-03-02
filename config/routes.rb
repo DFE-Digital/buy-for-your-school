@@ -36,11 +36,11 @@ Rails.application.routes.draw do
 
   resources :design, only: %i[index show]
   resources :categories, only: %i[index]
+  resources :feedback, only: %i[new show create edit update]
 
   #
   # Framework Requests ---------------------------------------------------------
   #
-  # resources :framework_requests, except: %i[delete], path: "procurement-support", path_names: { new: "new/(:step)" }
   resources :framework_requests, except: %i[delete], path: "procurement-support"
   resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
 
@@ -74,7 +74,9 @@ Rails.application.routes.draw do
     end
     resources :agents, only: %i[create]
     if Features.enabled?(:incoming_emails)
-      resources :emails, only: %i[index show]
+      resources :emails, only: %i[index show] do
+        resource :save_attachments, only: %i[new create]
+      end
       resources :email_read_status, only: %i[update], param: :email_id
     end
     resources :organisations, only: %i[index]
@@ -90,11 +92,15 @@ Rails.application.routes.draw do
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
         resource :categorisation, only: %i[edit update destroy]
+        resource :closures, only: %i[edit update]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resource :assignment, only: %i[new create]
+        resource :opening, only: %i[create]
+        resource :closure, only: %i[create]
+        resource :on_hold, only: %i[create]
         resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do
@@ -104,6 +110,10 @@ Rails.application.routes.draw do
           end
         end
       end
+    end
+
+    scope "/case-statistics", as: "case_statistics" do
+      get "/", to: "case_statistics#show"
     end
   end
 

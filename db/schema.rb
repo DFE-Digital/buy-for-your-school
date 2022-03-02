@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_092232) do
+ActiveRecord::Schema.define(version: 2022_02_25_175814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -101,12 +101,11 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "school_urn"
     t.string "message_body"
     t.boolean "submitted", default: false
     t.uuid "user_id"
-    t.string "group_uid"
     t.boolean "group", default: false
+    t.string "org_id"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -227,6 +226,17 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.boolean "internal", default: false, null: false
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
+  end
+
+  create_table "support_case_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.uuid "support_email_attachment_id"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["support_case_id"], name: "index_support_case_attachments_on_support_case_id"
+    t.index ["support_email_attachment_id"], name: "index_support_case_attachments_on_support_email_attachment_id"
   end
 
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -465,6 +475,19 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
+  create_table "user_feedback", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "service", null: false
+    t.integer "satisfaction", null: false
+    t.string "feedback_text"
+    t.boolean "logged_in", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "full_name"
+    t.string "email"
+    t.uuid "logged_in_as_id"
+    t.index ["logged_in_as_id"], name: "index_user_feedback_on_logged_in_as_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -487,9 +510,12 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_case_attachments", "support_cases"
+  add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
   create_view "support_establishment_searches", sql_definition: <<-SQL
       SELECT organisations.id,
@@ -527,5 +553,88 @@ ActiveRecord::Schema.define(version: 2022_02_15_092232) do
      FROM ((support_cases sc
        LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
        LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))));
+  SQL
+  create_view "support_case_data", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      GREATEST(sc.updated_at, si.created_at) AS last_modified_at,
+      sc.source AS case_source,
+      sc.state AS case_state,
+      cat.title AS category_title,
+      sc.savings_actual,
+      sc.savings_actual_method,
+      sc.savings_estimate,
+      sc.savings_estimate_method,
+      sc.savings_status,
+      se.name AS organisation_name,
+      se.urn AS organisation_urn,
+      se.ukprn AS organisation_ukprn,
+      se.rsc_region AS organisation_rsc_region,
+      se.local_authority_name AS organisation_local_authority_name,
+      se.local_authority_code AS organisation_local_authority_code,
+      se.uid AS organisation_uid,
+      se.phase AS organisation_phase,
+      se.organisation_status,
+      se.egroup_status AS establishment_group_status,
+      se.establishment_type,
+      sp.framework_name,
+      sp.reason_for_route_to_market,
+      sp.required_agreement_type,
+      sp.route_to_market,
+      sp.stage AS procurement_stage,
+      sp.started_at AS procurement_started_at,
+      sp.ended_at AS procurement_ended_at,
+      ec.started_at AS previous_contract_started_at,
+      ec.ended_at AS previous_contract_ended_at,
+      ec.duration AS previous_contract_duration,
+      ec.spend AS previous_contract_spend,
+      ec.supplier AS previous_contract_supplier,
+      nc.started_at AS new_contract_started_at,
+      nc.ended_at AS new_contract_ended_at,
+      nc.duration AS new_contract_duration,
+      nc.spend AS new_contract_spend,
+      nc.supplier AS new_contract_supplier
+     FROM ((((((support_cases sc
+       LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
+             FROM support_interactions i
+            WHERE (i.case_id = sc.id)
+            ORDER BY i.created_at
+           LIMIT 1))))
+       LEFT JOIN ( SELECT organisations.id,
+              organisations.name,
+              organisations.rsc_region,
+              (organisations.local_authority ->> 'name'::text) AS local_authority_name,
+              (organisations.local_authority ->> 'code'::text) AS local_authority_code,
+              organisations.urn,
+              organisations.ukprn,
+              organisations.status AS organisation_status,
+              NULL::integer AS egroup_status,
+              NULL::character varying AS uid,
+              organisations.phase,
+              etypes.name AS establishment_type,
+              'Support::Organisation'::text AS source
+             FROM (support_organisations organisations
+               JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+          UNION ALL
+           SELECT egroups.id,
+              egroups.name,
+              NULL::character varying AS rsc_region,
+              NULL::text AS local_authority_name,
+              NULL::text AS local_authority_code,
+              NULL::character varying AS urn,
+              egroups.ukprn,
+              NULL::integer AS organisation_status,
+              egroups.status AS egroup_status,
+              egroups.uid,
+              NULL::integer AS phase,
+              egtypes.name AS establishment_type,
+              'Support::EstablishmentGroup'::text AS source
+             FROM (support_establishment_groups egroups
+               JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))) se ON (((sc.organisation_id = se.id) AND ((sc.organisation_type)::text = se.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
+       LEFT JOIN support_procurements sp ON ((sc.procurement_id = sp.id)))
+       LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
+       LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)));
   SQL
 end

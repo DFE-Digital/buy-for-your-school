@@ -18,6 +18,7 @@ en:
       update: Update
       yes_continue: Yes, continue
       save: Save
+      submit: Submit
       cancel: Cancel
     label:
       what_is: "What is %{label}?"
@@ -25,7 +26,8 @@ en:
     design: "%{env} Environment"
     beta:
       tag: beta
-      message: This is a new service – your <a href="mailto:%{support_email}" class="govuk-link">feedback</a> will help us to improve it.
+      message: This is a new service – your %{feedback_link} will help us to improve it.
+      feedback_link: feedback
     session:
       failure: Sign in failed unexpectedly, please try again.
       destroy: You have been signed out.
@@ -274,6 +276,44 @@ en:
     download_csv: Download (.csv)
     download_json: Download (.json)
 
+  # /feedback
+  feedback:
+    title: Feedback - Get help buying for schools - GOV.UK
+    header: Give feedback on Get help buying for schools
+    survey:
+      title: Satisfaction survey
+      satisfaction_question: Overall, how did you feel about the service you received today?
+      satisfaction_options:
+        very_dissatisfied: Very dissatisfied
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied or dissatisfied
+        satisfied: Satisfied
+        very_satisfied: Very satisfied
+      feedback_text_question: How could we improve this service? (Optional)
+      feedback_text_hint: Do not include personal or financial information, for example your National Insurance or credit card numbers.
+      submit: Submit
+    user:
+      header: Enter your contact details
+      body: Give your details to opt-in and take part in user research to help us improve the service. We will not use your details for any other purpose.
+      full_name: Full name
+      email: Email
+    confirmation_feedback:
+      submitted: Feedback submitted
+      message: We will use your feedback to improve this service.
+      get_involved:
+        header: Get involved
+        body: "%{contact_form_link} by opting in to take part in user research."
+        contact_form_link: Help us improve this service
+    confirmation_details:
+      submitted: Confirmation
+      message: Thank you for opting in to take part in user research.
+      next:
+        header: What happens next
+        body: We will contact you via email and invite you to take part in research when it becomes available.
+        link:
+          label: Go to Find an approved framework
+          url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
+
   #
   # FaF -----------------------------------------------------------------
   #
@@ -375,11 +415,10 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}"
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-        search_for_a_group_link: Search for an academy trust or federation
-      button: Continue
+        search_for_a_group_link: Search for an academy trust or federation instead.
 
     search_for_a_group:
       title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
@@ -389,11 +428,10 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "This search lists groups and trusts, such as a multi-academy trust or federation. %{search_for_a_school_link} instead."
-          - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
-          - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-        search_for_a_school_link: Search for a single school
-      button: Continue
+          - "This search lists academy trusts and federations. %{search_for_a_school_link}"
+          - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
+        search_for_a_school_link: Search for a single school instead.
 
     which_school:
       legend: Which school are you buying for?
@@ -415,7 +453,7 @@ en:
         ukprn: UKPRN
       choice:
         continue: "Yes"
-        go_back: "No, I need to choose another school"
+        go_back: No, I need to choose another school
 
     confirm_group_or_trust:
       title: Is this the academy trust or federation you're buying for? - Get help buying for schools - GOV.UK
@@ -429,7 +467,7 @@ en:
         uid: UID
         ukprn: UKPRN
       choice:
-        go_back: "No, I need to choose another group or trust"
+        go_back: No, I need to choose another academy trust or federation
 
   faf_submissions:
     header:
@@ -469,6 +507,17 @@ en:
 
     header: Supported Buying Admin
 
+    case_statistics:
+      header: Case statistics
+      header_link: Case Statistics
+      body:
+        no_of_cases: Number of cases
+        no_of_cases_by_state: Number of cases by state
+        no_of_cases_by_state_and_category: Number of cases by category and state
+      download:
+        header: Case data
+        csv: Download CSV
+
     case:
       date_format: "%d %B %Y at %H:%M"
       header:
@@ -477,6 +526,7 @@ en:
         case_detail: Case details
         case_history: Case history
         procurement_detail: Procurement details
+        case_attachments: Attachments
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -485,6 +535,8 @@ en:
         add_interaction: Log contact with school
         resolve: Resolve case
         reopen: Reopen case
+        close: Close case
+        place_on_hold: Place on hold
         move_email: Move emails to existing case
         case: Case
         organisation: Organisation
@@ -493,7 +545,7 @@ en:
           state_initial: New
           state_opened: Open
           state_resolved: Resolved
-          state_pending: Pending
+          state_on_hold: On Hold
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
@@ -520,6 +572,11 @@ en:
         case_owner: "Case owner: %{owner}"
         change_case_owner: change
         assign_to_agent: Assign to case worker
+        attachments:
+          table:
+            attachment_name: Attachment name
+            description: Description
+            date_added: Date added
         procurement_details:
           change: change
           required_agreement_type: Required agreement type
@@ -556,6 +613,7 @@ en:
         all_cases: All cases
       link:
         edit_category: Change
+        edit_description: Change
         view_school_information: View school information (opens in a new tab)
         view_group_information: View group information (opens in a new tab)
 
@@ -639,6 +697,7 @@ en:
         school_ukprn: Organisation UKPRN
         school_name: Organisation name
         school_postcode: Organisation postcode
+        organisation_name: Organisation name
         name: Contact name
         first_name: Contact first name
         last_name: Contact last name
@@ -691,6 +750,16 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_opening:
+      flash:
+        reopened: Case reopened successfully
+        error: Case cannot be reopened
+
+    case_on_hold:
+      flash:
+        created: Case placed on hold successfully
+        error: Case cannot be placed on hold
 
     case_merge_emails:
       flash:
@@ -789,9 +858,54 @@ en:
       show:
         header: Your specification
 
+    case_closures:
+      action: Close case
+      created: Case closed successfully
+      edit:
+        header: Close case
+        hint: Select reason for closing case.
+        reasons:
+          spam: Spam
+          out_of_scope: Out of scope
+          other: Other
+        submit: Save and close case
+      flash:
+        created: Case closed successfully
+        updated: Case has been closed
+        error:
+          initial: Only new cases created from emails can be closed
+          other: Case cannot be closed
+
     cases:
       my_cases:
         header_link: My cases
+
+    case_description:
+      header: Update description of problem
+      flash:
+        updated: Description of problem updated successfully
+      submit: Save changes
+
+    save_attachments:
+      initiate_journey: Save attachments
+      form:
+        file_types_notice: Attachments that cannot be saved due to their field type have been excluded.
+        header: Select attachments to save
+        subheader: You can rename and add a description to attachments you select
+        rename_attachment: Rename attachment (optional)
+        description: Add attachment description
+        submit: Save to case
+        cancel: Cancel
+      success:
+        header: Attachments saved
+        table:
+          header:
+            attachment: Attachment
+            description: Description
+        actions:
+          header: Actions
+          go_back_to_email: Go back to email
+          view_attachments: View saved attachments
 
     emails:
       header_link: Notifications
@@ -833,6 +947,7 @@ en:
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
+        state_change: Status change
       label:
         email_unread: Unread
         contact_detail: Contact details

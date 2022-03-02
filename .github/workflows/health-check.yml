@@ -12,7 +12,7 @@ jobs:
       - name: Production
         uses: jtalk/url-health-check-action@v2
         with:
-          url: https://get-help-buying-for-schools.education.gov.uk
+          url: https://www.get-help-buying-for-schools.service.gov.uk/
           max-attempts: 3
 
       - name: Staging
@@ -24,13 +24,13 @@ jobs:
       - name: Preview
         uses: jtalk/url-health-check-action@v2
         with:
-          url: https://preview.get-help-buying-for-schools.service.gov.uk
+          url: https://preview-get-help-buying-for-schools.education.gov.uk
           max-attempts: 3
 
       - name: Research
         uses: jtalk/url-health-check-action@v2
         with:
-          url: https://buy-for-your-school-research.london.cloudapps.digital
+          url: https://research-get-help-buying-for-schools.education.gov.uk/
           max-attempts: 3
 
       - name: Slack Workflow Notification
@@ -39,7 +39,7 @@ jobs:
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
-          channel: '#ghbs_health_checks'
+          channel: '#ghbs-tech-arch-and-devs'
           name: 'Health Checks'
 
 

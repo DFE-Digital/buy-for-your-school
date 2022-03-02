@@ -1,0 +1,36 @@
+<% if @form %>
+  Back
+  <%= debug @back_link %>
+
+  Form Input
+  <%= debug @form.to_h.except(:user) %>
+
+  Form Output
+  <%= debug @form.data %>
+
+  <% if !current_user.guest? %>
+    DSI Supported Orgs
+    <%= debug @form.user.supported_orgs %>
+  <% end %>
+<% end %>
+
+<% if @cached_group || @cached_school %>
+  Cached Group UID & Name
+  <%= debug @cached_group %>
+
+  Cached School URN & Name
+  <%= debug @cached_school %>
+<% end %>
+
+<% if @school || @group %>
+  School
+  <%= debug @school&.attributes %>
+
+  Group
+  <%= debug @group&.attributes %>
+<% end %>
+
+<% if @framework_request %>
+  Persisted Request
+  <%= debug @framework_request.attributes %>
+<% end %>

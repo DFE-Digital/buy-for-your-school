@@ -15,8 +15,13 @@ module Support
 
       email.import_from_message(message, folder: folder)
       email.automatically_assign_case
+      email.automatically_reopen_case if email&.case&.resolved?
       email.create_interaction
       email.set_case_action_required if is_first_import
+    end
+
+    def has_unattachable_files_attached?
+      attachments.for_case_attachments.count < attachments.count
     end
 
     def import_from_message(message, folder: :inbox)
@@ -47,11 +52,16 @@ module Support
     end
 
     def automatically_assign_case
-      return if case_id.present?
+      return if case_id.present? && !self.case&.closed?
 
       Support::IncomingEmails::CaseAssignment.detect_and_assign_case(self)
 
       save!
+    end
+
+    def automatically_reopen_case
+      self.case.action_required = true
+      self.case.open!
     end
 
     def create_interaction
