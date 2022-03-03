@@ -27,6 +27,3 @@ data "cloudfoundry_space" "space" {
   org  = data.cloudfoundry_org.org.id
 }
 
-data "cloudfoundry_domain" "publish_service_gov_uk" {
-  name = local.service_gov_uk_domain
-}
