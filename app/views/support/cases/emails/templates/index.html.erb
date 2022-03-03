@@ -49,3 +49,15 @@
 </p>
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+<h3 class="govuk-heading-m">
+  <%= link_to I18n.t("support.case_email_templates.index.user_research.link_text"),
+  support_case_email_content_path(@current_case, template: "fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779"),
+  class: "govuk-link" %>
+</h3>
+
+<p class="govuk-body">
+  <%= I18n.t("support.case_email_templates.index.user_research.subtitle") %>
+</p>
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
