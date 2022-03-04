@@ -115,4 +115,5 @@ jobs:
           echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
           sudo apt-get update
           sudo apt-get install cf7-cli
+          cf login -u $CF_USER -p $CF_PASSWORD -a api.london.cloud.service.gov.uk -s sct-production
           cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
