@@ -15,6 +15,12 @@ variable "cloudfoundry_org" {
   type        = string
 }
 
+variable "cloudfoundry_space" {
+  description = "CloudFoundry Space e.g. sct-production"
+  default     = ""
+  type        = string
+}
+
 variable "shared_cloudfoundry_domain" {
   description = "Shared Cloud Foundry domain"
   default     = "london.cloudapps.digital"

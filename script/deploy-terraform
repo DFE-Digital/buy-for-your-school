@@ -11,8 +11,12 @@ then
   exit 1
 fi
 
+# Remove digits from qa-XXX envs. staging, prod will be unchanged
+ENV_PREFIX=$([ "${TF_VAR_environment:0:3}" = "qa-" ] && echo "qa" || echo $TF_VAR_environment)
+ENV_FILE="${TF_VAR_environment}_app_env.yml"
+
 # Set env_TF_VAR_ environment variables from GITHUB_SECRETS_JSON
-eval $(echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith($e + "_TF_VAR_") ) ) | keys[] as $k | "export TF_VAR_\($k[($e + "_TF_VAR_" | length):] | ascii_downcase)=\(.[$k])"')
+eval $(echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$ENV_PREFIX" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith($e + "_TF_VAR_") ) ) | keys[] as $k | "export TF_VAR_\($k[($e + "_TF_VAR_" | length):] | ascii_downcase)=\(.[$k])"')
 
 # Disable the shellcheck check for unassigned variables. We export this var
 # in Github Actions, but Shellcheck complains because there are lowercase
@@ -21,19 +25,19 @@ eval $(echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment"
 # shellcheck disable=2154
 echo "deploying $TF_VAR_environment"
 
-cd terraform/app
-
 # Create app_env yaml file from GITHUB_SECRETS_JSON
-echo "---" > "${TF_VAR_environment}_app_env.yml"
-echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$TF_VAR_environment" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith("APP_ENV_" + $e) ) ) | keys[] as $k | "\($k[("APP_ENV_" + $e + "_" | length):]): \(.[$k])"' >> "${TF_VAR_environment}_app_env.yml"
+cd terraform/app
+echo "---" > $ENV_FILE
+echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$ENV_PREFIX" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith("APP_ENV_" + $e) ) ) | keys[] as $k | "\($k[("APP_ENV_" + $e + "_" | length):]): \(.[$k])"' >> $ENV_FILE
 
-# deploy terraform using tfenv
-if [ ! -e ~/.tfenv ]
-then
-git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+# Add extra env vars from github actions - dynamic values that cannot be added to secrets ahead of time
+if [ "${ENV_PREFIX}" = "qa" ]; then
+  sed -i '/nAPPLICATION_URL:/d' $ENV_FILE
+  sed -i '/DFE_SIGN_IN_REDIRECT_URL:/d' $ENV_FILE
+
+  echo "APPLICATION_URL: $ENV_APPLICATION_URL" >> $ENV_FILE
+  echo "DFE_SIGN_IN_REDIRECT_URL: $ENV_APPLICATION_URL/auth/dfe/callback" >> $ENV_FILE
 fi
-export PATH="$HOME/.tfenv/bin:$PATH"
-tfenv install
 
 # CF_PASSWORD, CF_USER, AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID
 # must be set for the following commands to run
@@ -41,8 +45,11 @@ tfenv install
 # initialise terraform
 terraform init
 
+# Create the workspace for this environment if not already there
+[[ $(terraform workspace list | grep $TF_VAR_environment) == "" ]] && terraform workspace new $TF_VAR_environment
+
 # select the correct workspace
-terraform workspace select "$TF_VAR_environment"
+terraform workspace select $TF_VAR_environment
 
 # plan the terraform
 terraform plan
