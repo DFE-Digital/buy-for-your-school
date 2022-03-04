@@ -35,8 +35,6 @@ jobs:
           TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
           TF_VAR_environment: "qa-${{ github.event.number }}"
           TF_VAR_cloudfoundry_space: "sct-preview"
-          TF_VAR_app_yml_file: "qa_app_env.yml"
           ENV_APPLICATION_URL: "https://get-help-buying-for-schools-qa-${{ github.event.number }}.education.gov.uk"
-          ENV_DOMAIN: "get-help-buying-for-schools-qa-${{ github.event.number }}.education.gov.uk"
-          CF_SERVICE_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
+          CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
         run: script/destroy-qa-env

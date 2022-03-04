@@ -1,13 +1,16 @@
 #!/bin/bash
 # see .github/workflows/cleanup-qa-environments.yml
-ENV_FILE="${$TF_VAR_environment}_app_env.yml"
+ENV_FILE="${TF_VAR_environment}_app_env.yml"
+
+# initialise terraform
+cd terraform/app
+terraform init
 
 # Create app_env yaml file from GITHUB_SECRETS_JSON
-cd terraform/app
 echo "---" > $ENV_FILE
 echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "qa" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith("APP_ENV_" + $e) ) ) | keys[] as $k | "\($k[("APP_ENV_" + $e + "_" | length):]): \(.[$k])"' >> $ENV_FILE
 
 # destroy infrastructure and workspace
-terraform workspaces select $TF_VAR_environment
+terraform workspace select $TF_VAR_environment
 terraform destroy -var-file=$ENV_FILE -input=false -auto-approve
-terraform workspaces delete $TF_VAR_environment
+terraform workspace delete $TF_VAR_environment

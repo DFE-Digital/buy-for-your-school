@@ -62,7 +62,7 @@ jobs:
       TF_VAR_cloudfoundry_space: "sct-preview"
       TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"
       ENV_APPLICATION_URL: "https://buy-for-your-school-qa-${{ github.event.number }}.london.cloudapps.digital"
-      CF_SERVICE_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
+      CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
     steps:
       - name: Check out code
         uses: actions/checkout@v2
