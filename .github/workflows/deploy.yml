@@ -7,7 +7,6 @@ on:
       - main
       - develop
       - research
-      - preview
 
 env:
   GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
@@ -84,26 +83,6 @@ jobs:
       - name: Deploy terraform to research
         env:
           TF_VAR_environment: 'research'
-        run: script/deploy-terraform
-
-  deploy_preview:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: preview
-    if: success() && github.ref == 'refs/heads/preview'
-    env:
-      TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
-      GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Terraform pin version
-        uses: hashicorp/setup-terraform@v1.3.2
-        with:
-          terraform_version: 0.14.7
-      - name: Deploy terraform to preview
-        env:
-          TF_VAR_environment: 'preview'
         run: script/deploy-terraform
 
   deploy_production:
