@@ -3,7 +3,7 @@ locals {
   environment  = var.environment
 
   cloudfoundry_org           = var.cloudfoundry_org
-  cloudfoundry_space         = local.environment == "prod" ? "sct-production" : "sct-${local.environment}"
+  cloudfoundry_space         = var.cloudfoundry_space == "" ? (local.environment == "prod" ? "sct-production" : "sct-${local.environment}") : var.cloudfoundry_space
   shared_cloudfoundry_domain = var.shared_cloudfoundry_domain
   custom_cloudfoundry_domain = var.custom_cloudfoundry_domain
   custom_hostname            = local.environment == "prod" ? "get-help-buying-for-schools" : "${local.environment}-get-help-buying-for-schools"

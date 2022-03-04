@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Destroy the QA environment
+
+cf login -u $CF_USER -p $CF_PASSWORD -a https://api.london.cloud.service.gov.uk -s $TF_VAR_cloudfoundry_space
+
+# First empty out the S3 bucket - to avoid BucketNotEmpty error
+cf ssh $CF_APP_NAME -c 'cd /srv/app; export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin; echo "Aws::S3::Resource.new.bucket(ENV[\"BUCKET_NAME\"]).objects.batch_delete!" | rails console'
+
+# see .github/workflows/cleanup-qa-environments.yml
+ENV_FILE="${TF_VAR_environment}_app_env.yml"
+
+# initialise terraform
+cd terraform/app
+terraform init
+
+# Create app_env yaml file from GITHUB_SECRETS_JSON
+echo "---" > $ENV_FILE
+echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "qa" | awk '{ print toupper($0) }' )" 'with_entries(select(.key | startswith("APP_ENV_" + $e) ) ) | keys[] as $k | "\($k[("APP_ENV_" + $e + "_" | length):]): \(.[$k])"' >> $ENV_FILE
+
+# destroy infrastructure and workspace
+terraform workspace select $TF_VAR_environment
+terraform destroy -var-file=$ENV_FILE -input=false -auto-approve
+terraform workspace select default
+terraform workspace delete -force $TF_VAR_environment
