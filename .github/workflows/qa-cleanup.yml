@@ -1,0 +1,44 @@
+name: "QA apps - Cleanup"
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - "feature/*"
+
+env:
+  GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+  GHCR_PASSWORD: ${{ secrets.GHCR_PASSWORD }}
+  GHCR_REPO: 'ghcr.io/dfe-digital/buy-for-your-school'
+  CF_USER: ${{ secrets.CF_USER }}
+  CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  destroy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
+
+      - name: Destroy QA app
+        env:
+          GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
+          TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+          TF_VAR_environment: "qa-${{ github.event.number }}"
+          TF_VAR_cloudfoundry_space: "sct-preview"
+          TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"
+          TF_VAR_syslog_drain_url: "value-not-needed-for-destroy"
+          ENV_APPLICATION_URL: "https://buy-for-your-school-qa-${{ github.event.number }}"
+          CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
+        run: |
+          script/install-cf
+          script/qa/destroy
