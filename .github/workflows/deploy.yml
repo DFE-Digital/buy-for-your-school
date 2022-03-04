@@ -77,14 +77,6 @@ jobs:
         env:
           TF_VAR_environment: 'research'
         run: script/deploy-terraform
-      # - name: Notify
-      #   uses: 8398a7/action-slack@v3
-      #   if: failure()
-      #   with:
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     status: ${{ job.status }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy_preview:
     needs: build
@@ -101,14 +93,6 @@ jobs:
         env:
           TF_VAR_environment: 'preview'
         run: script/deploy-terraform
-      # - name: Notify
-      #   uses: 8398a7/action-slack@v3
-      #   if: failure()
-      #   with:
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     status: ${{ job.status }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy_production:
     needs: build
@@ -125,11 +109,10 @@ jobs:
         env:
           TF_VAR_environment: 'prod'
         run: script/deploy-terraform
-      # - name: Notify
-      #   uses: 8398a7/action-slack@v3
-      #   if: failure()
-      #   with:
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     status: ${{ job.status }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Map www route
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf7-cli
+          cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
