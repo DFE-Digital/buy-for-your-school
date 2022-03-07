@@ -84,5 +84,5 @@ en:
           missing: Select what you are buying
         name:
           missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less
+          # max_size?: The name must be 30 characters or less
 

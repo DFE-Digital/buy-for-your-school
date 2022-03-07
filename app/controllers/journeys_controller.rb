@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class JourneysController < ApplicationController
+  before_action :form, only: %i[create]
+  before_action :categories, only: %i[new create]
+
   breadcrumb "Dashboard", :dashboard_path
 
   before_action :check_user_belongs_to_journey?, only: %w[show destroy]
@@ -115,7 +118,7 @@ private
 
   def form_params
     params.require(:new_journey_form).permit(*%i[
-      category name
+      category name step
     ])
   end
 
@@ -123,4 +126,8 @@ private
   def validation
     NewJourneyFormSchema.new.call(**form_params)
   end
+
+  def categories
+    @categories = Category.published.map { |c| CategoryPresenter.new(c) }
+  end  
 end

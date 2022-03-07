@@ -19,7 +19,7 @@ class NewJourneyForm < Form
 
   # @!attribute [r] step
   #   @return [Integer]
-  option :step, Types::Params::Integer
+  option :step, Types::Params::Integer, default: proc { 1 }
 
   # @return [Hash] form data to be persisted as request attributes
   def data

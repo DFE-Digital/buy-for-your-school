@@ -16,5 +16,5 @@ class NewJourneyFormSchema < Schema
     key.failure(:missing) if value.blank?
   end
 
-  rule(:name).validate(max_size?: 30)
+  # rule(:name).validate(max_size?: 30)
 end
