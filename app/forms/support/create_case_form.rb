@@ -19,7 +19,7 @@ module Support
     option :estimated_savings, optional: true
     option :hub_notes, optional: true
     option :progress_notes, optional: true
-    option :request_type, Types::Params::Bool | Types.Constructor(::TrueClass, &:present?), optional: true
+    option :request_type, Types::ConfirmationField, optional: true
 
     # @see Support::Case#source
     # @return [String]

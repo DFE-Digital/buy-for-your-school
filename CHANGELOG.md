@@ -15,14 +15,24 @@ The format is based on [Keep a Changelog 1.0.0].
 - feature [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/<id>)
 
 -->
-- add ability to close a new case created by an inbound email [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/897)
+
+
 - add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
 - add details page to capture user details after giving feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/890)
+- fix issue with boolean form fields auto-selecting after validation [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/906)
+
+### "Find a Framework" fixes
+
+- editing school/group includes confirmation step [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/906)
+- switching org type functions as intended [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/906)
+- back links remain consistent [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/906)
+- profile page support button resets after [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/906)
 
 - Added ability to search cases
 - Ability to merge a NEW email case into an existing case [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/853)
 - On Create a case, allow Category to be 'undefined' [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/848)
 ## [release-020] - 2022-02-15
+
 ### "Find a Framework" support for trusts
 
 - form steps reordered [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/866)

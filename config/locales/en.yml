@@ -314,9 +314,6 @@ en:
           label: Go to Find an approved framework
           url: https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school
 
-
-
-
   #
   # FaF -----------------------------------------------------------------
   #
@@ -418,11 +415,10 @@ en:
       details:
         summary: Can't find it?
         body:
-          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link} instead."
+          - "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}"
           - "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
           - "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
-        search_for_a_group_link: Search for an academy trust or federation
-      button: Continue
+        search_for_a_group_link: Search for an academy trust or federation instead.
 
     search_for_a_group:
       title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
@@ -436,7 +432,6 @@ en:
           - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
           - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
         search_for_a_school_link: Search for a single school instead.
-      button: Continue
 
     which_school:
       legend: Which school are you buying for?
@@ -513,6 +508,17 @@ en:
 
     header: Supported Buying Admin
 
+    case_statistics:
+      header: Case statistics
+      header_link: Case Statistics
+      body:
+        no_of_cases: Number of cases
+        no_of_cases_by_state: Number of cases by state
+        no_of_cases_by_state_and_category: Number of cases by category and state
+      download:
+        header: Case data
+        csv: Download CSV
+
     case:
       date_format: "%d %B %Y at %H:%M"
       header:
@@ -530,6 +536,8 @@ en:
         add_interaction: Log contact with school
         resolve: Resolve case
         reopen: Reopen case
+        close: Close case
+        place_on_hold: Place on hold
         move_email: Move emails to existing case
         case: Case
         organisation: Organisation
@@ -538,7 +546,7 @@ en:
           state_initial: New
           state_opened: Open
           state_resolved: Resolved
-          state_pending: Pending
+          state_on_hold: On Hold
           state_closed: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
@@ -622,6 +630,7 @@ en:
           clear: Clear filter
       link:
         edit_category: Change
+        edit_description: Change
         view_school_information: View school information (opens in a new tab)
         view_group_information: View group information (opens in a new tab)
 
@@ -705,6 +714,7 @@ en:
         school_ukprn: Organisation UKPRN
         school_name: Organisation name
         school_postcode: Organisation postcode
+        organisation_name: Organisation name
         name: Contact name
         first_name: Contact first name
         last_name: Contact last name
@@ -757,6 +767,16 @@ en:
       agent_id:
         label: Assign to case worker
       submit: Assign
+
+    case_opening:
+      flash:
+        reopened: Case reopened successfully
+        error: Case cannot be reopened
+
+    case_on_hold:
+      flash:
+        created: Case placed on hold successfully
+        error: Case cannot be placed on hold
 
     case_merge_emails:
       flash:
@@ -857,6 +877,7 @@ en:
 
     case_closures:
       action: Close case
+      created: Case closed successfully
       edit:
         header: Close case
         hint: Select reason for closing case.
@@ -866,13 +887,21 @@ en:
           other: Other
         submit: Save and close case
       flash:
+        created: Case closed successfully
         updated: Case has been closed
-        error: Only new cases created from emails can be closed
-
+        error:
+          initial: Only new cases created from emails can be closed
+          other: Case cannot be closed
 
     cases:
       my_cases:
         header_link: My cases
+
+    case_description:
+      header: Update description of problem
+      flash:
+        updated: Description of problem updated successfully
+      submit: Save changes
 
     save_attachments:
       initiate_journey: Save attachments
@@ -935,6 +964,7 @@ en:
         hub_migration: Hub migration
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
+        state_change: Status change
       label:
         email_unread: Unread
         contact_detail: Contact details

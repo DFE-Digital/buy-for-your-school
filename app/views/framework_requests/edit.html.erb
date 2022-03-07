@@ -3,3 +3,7 @@
     <%= render "framework_requests/steps/form", path: framework_request_path(@framework_request), verb: :patch %>
   </div>
 </div>
+
+<% if Rails.env.development? %>
+  <%= render "framework_requests/steps/debug" %>
+<% end %>

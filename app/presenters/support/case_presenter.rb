@@ -125,6 +125,13 @@ module Support
       Time.zone.parse(last_updated_at)
     end
 
+    # true if the case source is `nw_hub`, `sw_hub` or nil
+    #
+    # @return [Boolean]
+    def created_manually?
+      ["nw_hub", "sw_hub", nil].any? { |t| t == source }
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

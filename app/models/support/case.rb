@@ -8,6 +8,35 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
+    include AASM
+
+    aasm(column: :state, enum: true) do
+      state :initial, initial: true
+      state :opened, :resolved, :on_hold, :closed, :pipeline, :no_response
+
+      after_all_transitions :record_state_change
+
+      event :resolve do
+        transitions from: :initial, to: :resolved
+        transitions from: :opened, to: :resolved
+      end
+
+      event :open do
+        transitions from: :initial, to: :opened
+        transitions from: :resolved, to: :opened
+        transitions from: :on_hold, to: :opened
+      end
+
+      event :hold do
+        transitions from: :opened, to: :on_hold
+      end
+
+      event :close do
+        transitions from: :initial, to: :closed
+        transitions from: :resolved, to: :closed
+      end
+    end
+
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     belongs_to :organisation, polymorphic: true, optional: true
@@ -49,7 +78,7 @@ module Support
     #   closed
     #   pipeline
     #   no_response
-    enum state: { initial: 0, opened: 1, resolved: 2, pending: 3, closed: 4, pipeline: 5, no_response: 6 }
+    enum state: { initial: 0, opened: 1, resolved: 2, on_hold: 3, closed: 4, pipeline: 5, no_response: 6 }
 
     # Source
     #
@@ -105,6 +134,10 @@ module Support
     # @return [Array, Support::Interaction]
     def support_request
       interactions&.support_request&.first
+    end
+
+    def record_state_change
+      Support::RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
     end
   end
 end
