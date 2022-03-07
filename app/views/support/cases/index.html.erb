@@ -20,10 +20,13 @@
   </ul>
 
   <div class="govuk-tabs__panel" id="my-cases">
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-my-cases" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.my_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "my-cases" %>
+        <%= render "support/cases/forms/filter_cases_form", form: @my_cases_filter_form, tab: "my-cases" %>
         <% if @my_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
@@ -62,10 +65,13 @@
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="new-cases">
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-new-cases" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.new_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "new-cases" %>
+        <%= render "support/cases/forms/filter_cases_form", form: @new_cases_filter_form, tab: "new-cases" %>
         <% if @new_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
@@ -104,10 +110,13 @@
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="all-cases">
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-all-cases" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.all_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <%= render "support/cases/forms/filter_cases_form", form: @form, tab: "all-cases" %>
+        <%= render "support/cases/forms/filter_cases_form", form: @all_cases_filter_form, tab: "all-cases" %>
         <% if @cases.none? %>
           <h1 class="govuk-heading-l flexalign__left">
             <%= I18n.t("support.case.list.not_found") %>

@@ -2,6 +2,7 @@
 
 module Support
   class Cases::SearchesController < Cases::ApplicationController
+    require "will_paginate/array"
     before_action :back_url
 
     def new
@@ -11,10 +12,17 @@ module Support
     def create
       @form = CaseSearchForm.from_validation(validation)
       if validation.success?
-        redirect_to support_cases_path(search: @form.ransack_params, anchor: "all-cases")
+        # @cases = CaseSearch.find_a_case(@form.search_term).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
+        @cases = Case.last(20).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
+        @filter_form = CaseFilterForm.new
+        render :index
       else
         render :new
       end
+    end
+
+    def index
+      @filter_form = CaseFilterForm.new
     end
 
   private

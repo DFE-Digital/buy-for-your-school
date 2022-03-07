@@ -1,5 +1,5 @@
-<%= form_with model: form, scope: "filter_#{tab.underscore}_form", url: support_cases_path(anchor: tab), method: :get, class: "filter-case-form" do |form| %>
-  <div id=<%="filter-#{tab}"%>>
+<div class="<%= toggle_visibility?("filter_#{tab.underscore}_form") %>" id="<%= "filter-#{tab}" %>">
+  <%= form_with model: form, scope: "filter_#{tab.underscore}_form", url: support_cases_path(anchor: tab), method: :get, class: "filter-case-form" do |form| %>
     <h2 class="govuk-heading-m">
       <%= I18n.t("support.case.filter.filter_results") %>
     </h2>
@@ -7,31 +7,27 @@
     <div class="govuk-grid-row">
       <% if tab == "all-cases" %>
         <div class="govuk-grid-column-one-quarter">
-          <%= form.object.state %>
           <%= form.govuk_select :state,
-                                options_for_select(Support::Case.states.keys.map { |s| [I18n.t("support.case.label.state.state_#{s.downcase}"), s] }, form.object.state),
+                                options_for_select(Support::Case.states.keys.map { |s| [I18n.t("support.case.label.state.state_#{s.downcase}"), s] },
+                                                   params.dig("filter_#{tab.underscore}_form", :state)),
                                 options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
                                 label: { text: I18n.t("support.case.filter.labels.state") } %>
         </div>
       <% end %>
 
       <div class="govuk-grid-column-one-quarter">
-        <%= form.govuk_select(:category, label: { text: I18n.t("support.case.filter.labels.category") }) do %>
-          <option data-tags="<%= I18n.t("support.case.filter.labels.all") %>" value=""><%= I18n.t("support.case.filter.labels.all") %></option>
-          <% Support::Category.grouped_opts.each do |parent_name, sub_categories| %>
-            <optgroup label="<%= parent_name%>">
-              <% sub_categories.each do |name, value| %>
-                <option data-tags="<%= name %>" value="<%= value %>"><%= name %></option>
-              <% end %>
-            </optgroup>
-          <% end %>
-        <% end %>
+        <%= form.govuk_select :category,
+                              options_for_select(form.object.categories.map { |a| [a.title, a.id] },
+                                                 params.dig("filter_#{tab.underscore}_form", :category)),
+                              options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
+                              label: { text: I18n.t("support.case.filter.labels.category") } %>
       </div>
 
       <% if tab == "all-cases" %>
         <div class="govuk-grid-column-one-quarter">
           <%= form.govuk_select :agent,
-                                options_for_select(form.object.agents.map { |a| [a.full_name, a.id] }, form.object.agent),
+                                options_for_select(form.object.agents.map { |a| [a.full_name, a.id] },
+                                                   params.dig("filter_#{tab.underscore}_form", :agent)),
                                 options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
                                 label: { text: I18n.t("support.case.filter.labels.assignee") } %>
         </div>
@@ -46,5 +42,5 @@
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

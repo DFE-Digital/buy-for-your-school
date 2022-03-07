@@ -28,4 +28,16 @@ RSpec.describe Support::CaseFilterForm, type: :model do
       expect(form.agents.first.full_name).to eql("Example Support Agent")
     end
   end
+
+  describe "#categories" do
+    before do
+      create(:support_category, title: "Example Category (No Cases)")
+      create(:support_case, :with_fixed_category)
+    end
+
+    it "returns only categories that have cases attached" do
+      expect(form.categories.count).to be(1)
+      expect(form.categories.first.title).to eql("Fixed Category")
+    end
+  end
 end

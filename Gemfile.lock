@@ -583,7 +583,6 @@ DEPENDENCIES
   rails (~> 6.1.4)
   rails-erd
   rails_layout
-  ransack
   redis (~> 4.5)
   redis-namespace
   redis-rails

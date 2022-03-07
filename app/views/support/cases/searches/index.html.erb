@@ -1,5 +1,62 @@
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    Results
+  <div class="govuk-grid-column-full">
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-all-cases" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("support.case.search.results") %>
+    </h1>
+    <p class="govuk-body"><%= I18n.t("support.case.search.count", count: @cases.count, term: @form.search_term) %></p>
   </div>
 </div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render "support/cases/forms/filter_cases_form", form: @filter_form, tab: "all-cases" %>
+
+    <% if @cases.none? %>
+      <h1 class="govuk-heading-l">
+        <%= I18n.t("support.case.list.not_found") %>
+      </h1>
+    <% else %>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.case") %>
+          </th>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.organisation") %>
+          </th>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.category") %>
+          </th>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.status") %>
+          </th>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.assigned_to") %>
+          </th>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.last_updated") %>
+          </th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% @cases.each do |kase| %>
+          <%= render "support/cases/row", kase: kase, tab: :all_cases %>
+        <% end %>
+        </tbody>
+      </table>
+      <%= render "components/pagination", records: @cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
+    <% end %>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= link_to I18n.t("support.case.search.button"), new_support_case_search_path, class: "govuk-button govuk-!-margin-top-4", "role" => "button" %>
+  </div>
+</div>
+

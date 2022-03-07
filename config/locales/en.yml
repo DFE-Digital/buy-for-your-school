@@ -607,6 +607,9 @@ en:
       search:
         heading: Find a case
         hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
+        results: Search results
+        count: "%{count} cases found containing '%{term}'"
+        button: Start a new search
       filter:
         filter_results: Filter results
         labels:

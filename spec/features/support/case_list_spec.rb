@@ -97,12 +97,19 @@ RSpec.feature "Case management dashboard" do
   context "when all cases tab" do
     before do
       create(:support_case, state: :resolved)
+      create(:support_case, state: :closed)
       visit "/support/cases"
     end
 
-    it "shows all cases" do
+    it "shows all valid cases" do
       within "#all-cases" do
         expect(all(".govuk-table__body .govuk-table__row").count).to eq(4)
+      end
+    end
+
+    it "does not show closed cases" do
+      within "#all-cases" do
+        expect(page).not_to have_text("Closed")
       end
     end
 
