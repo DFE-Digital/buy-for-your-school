@@ -28,26 +28,49 @@ class JourneysController < ApplicationController
     end
   end
 
+  def new
+    @form = NewJourneyForm.new(user: current_user)
+  end
+
   # Log 'begin_journey'
   #
   # @see CreateJourney
   def create
-    return redirect_to categories_path unless params[:category]
+    if validation.success? && validation.to_h[:name]
+      journey = CreateJourney.new(**form.data).call
 
-    category = Category.find_by(slug: params[:category])
-    journey = CreateJourney.new(
-      category: category,
-      user: current_user,
-    ).call
+      RecordAction.new(
+        action: "begin_journey",
+        journey_id: journey.id,
+        user_id: journey.user.id,
+        contentful_category_id: journey.category.contentful_id,
+      ).call
 
-    RecordAction.new(
-      action: "begin_journey",
-      journey_id: journey.id,
-      user_id: current_user.id,
-      contentful_category_id: category.contentful_id,
-    ).call
+      redirect_to journey_path(journey)
+    else
+      if validation.success?
+        @form.advance!
+      end
 
-    redirect_to journey_path(journey)
+      render :new
+    end
+
+    # return redirect_to categories_path unless params[:category]
+
+    # category = Category.find_by(slug: params[:category])
+    # journey = CreateJourney.new(
+    #   category: category,
+    #   user: current_user,
+    # ).call
+
+    # RecordAction.new(
+    #   action: "begin_journey",
+    #   journey_id: journey.id,
+    #   user_id: current_user.id,
+    #   contentful_category_id: category.contentful_id,
+    # ).call
+
+    # redirect_to journey_path(journey)
   end
 
   # Log 'view_journey'
@@ -76,5 +99,28 @@ class JourneysController < ApplicationController
       @current_journey.remove!
       render :delete
     end
+  end
+
+private
+
+  # @return [NewJourneyForm] form object populated with validation messages
+  def form
+    @form =
+      NewJourneyForm.new(
+        user: current_user,
+        messages: validation.errors(full: true).to_h,
+        **validation.to_h,
+      )
+  end
+
+  def form_params
+    params.require(:new_journey_form).permit(*%i[
+      category name
+    ])
+  end
+
+  # @return [NewJourneyFormSchema] validated form input
+  def validation
+    NewJourneyFormSchema.new.call(**form_params)
   end
 end
