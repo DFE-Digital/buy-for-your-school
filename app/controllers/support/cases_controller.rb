@@ -4,7 +4,6 @@ module Support
     before_action :filter_forms, only: %i[index]
     before_action :current_case, only: %i[show edit]
 
-
     include Concerns::HasInteraction
 
     def index
@@ -98,7 +97,7 @@ module Support
       @my_cases_filter_form = CaseFilterForm.new
       @new_cases_filter_form = CaseFilterForm.new
       @all_cases_filter_form = CaseFilterForm.new
-    end  
+    end
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
