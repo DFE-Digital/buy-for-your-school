@@ -9,11 +9,11 @@ module Support
     # @return [String]
     option :state, optional: true
 
-    # @!attribute [r] category_id
+    # @!attribute [r] category
     # @return [String]
     option :category, optional: true
 
-    # @!attribute [r] agent_id
+    # @!attribute [r] agent
     # @return [String]
     option :agent, optional: true
 
