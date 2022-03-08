@@ -33,4 +33,11 @@ class NewJourneyForm < Form
   def get_category
     Category.find_by(slug: category)
   end
+
+  def go_back
+    to_h
+      .except(:user, :messages)
+      .merge(back: true, category: category)
+      .reject { |_, v| v.to_s.empty? }
+  end
 end

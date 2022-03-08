@@ -4,8 +4,6 @@ class JourneysController < ApplicationController
   before_action :form, only: %i[create]
   before_action :categories, only: %i[new create]
 
-  breadcrumb "Dashboard", :dashboard_path
-
   before_action :check_user_belongs_to_journey?, only: %w[show destroy]
   unless Rails.env.development?
     rescue_from GetCategory::InvalidLiquidSyntax do |exception|
@@ -51,7 +49,9 @@ class JourneysController < ApplicationController
 
       redirect_to journey_path(journey)
     else
-      if validation.success?
+      if back_link?
+        @form.back!  
+      elsif validation.success?
         @form.advance!
       end
 
@@ -101,13 +101,18 @@ private
 
   def form_params
     params.require(:new_journey_form).permit(*%i[
-      category name step
+      category name step back
     ])
   end
 
   # @return [NewJourneyFormSchema] validated form input
   def validation
     NewJourneyFormSchema.new.call(**form_params)
+  end
+
+  # @return [Boolean]
+  def back_link?
+    @back_link = form_params[:back].eql?("true")
   end
 
   # @return [Array<CategoryPresenter>]
