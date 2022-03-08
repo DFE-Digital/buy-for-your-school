@@ -16,7 +16,7 @@ env:
 
 jobs:
   destroy:
-    if: ${{ github.event.label.name == 'in-qa-env' }}
+    if: contains(github.event.pull_request.labels.*.name, 'in-qa-env')
 
     runs-on: ubuntu-20.04
     steps:

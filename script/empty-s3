@@ -1,8 +1,0 @@
-#!/bin/bash
-
-AWS_ACCESS_KEY=AKIAV3ON3AJYF2LIPJUH \
-  AWS_REGION=eu-west-2 \
-  AWS_SECRET_ACCESS_KEY="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" \
-  aws s3 rm s3://paas-s3-broker-prod-lon-1f7bde03-a03d-4c3d-8f0b-cf6f061ad820
-
-
