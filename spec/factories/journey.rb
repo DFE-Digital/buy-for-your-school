@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :journey do
     started { false }
     state { :initial }
+    name { "test spec" }
 
     association :user, factory: :user
     association :category, factory: :category

@@ -14,8 +14,8 @@ class NewJourneyForm < Form
   option :name, optional: true
 
   # @!attribute [r] user
-  #   @return [UserPresenter] decorate respondent
-  option :user, ::Types.Constructor(UserPresenter)
+  #   @return [User]
+  option :user, Types.Instance(User)
 
   # @!attribute [r] step
   #   @return [Integer]
@@ -24,11 +24,12 @@ class NewJourneyForm < Form
   # @return [Hash] form data to be persisted as request attributes
   def data
     to_h
-      .except(:user, :step, :category, :messages)
+      .except(:step, :messages)
       .compact
-      .merge(user_id: user.id, category_id: get_category.id)
+      .merge(category: get_category)
   end
 
+  # @return [Category, nil]
   def get_category
     Category.find_by(slug: category)
   end

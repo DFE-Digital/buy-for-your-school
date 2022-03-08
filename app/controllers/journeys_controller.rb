@@ -57,23 +57,6 @@ class JourneysController < ApplicationController
 
       render :new
     end
-
-    # return redirect_to categories_path unless params[:category]
-
-    # category = Category.find_by(slug: params[:category])
-    # journey = CreateJourney.new(
-    #   category: category,
-    #   user: current_user,
-    # ).call
-
-    # RecordAction.new(
-    #   action: "begin_journey",
-    #   journey_id: journey.id,
-    #   user_id: current_user.id,
-    #   contentful_category_id: category.contentful_id,
-    # ).call
-
-    # redirect_to journey_path(journey)
   end
 
   # Log 'view_journey'
@@ -127,7 +110,30 @@ private
     NewJourneyFormSchema.new.call(**form_params)
   end
 
+  # @return [Array<CategoryPresenter>]
   def categories
+    populate_categories if Category.none?
     @categories = Category.published.map { |c| CategoryPresenter.new(c) }
-  end  
+  end
+
+  # CMS: initialise Content::Client in the base controller
+  def client
+    Content::Client.new
+  end
+
+  # On an initial run the `categories` table will be empty
+  #
+  def populate_categories
+    client.by_type(:category).each do |entry|
+      contentful_category = GetCategory.new(category_entry_id: entry.id).call
+
+      # TODO: create category service
+      Category.find_or_create_by!(contentful_id: contentful_category.id) do |category|
+        category.title = contentful_category.title
+        category.description = contentful_category.description
+        category.liquid_template = contentful_category.combined_specification_template
+        category.slug = contentful_category.slug
+      end
+    end
+  end
 end

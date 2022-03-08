@@ -142,6 +142,12 @@ en:
         heading: Giving us feedback
         body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
         button: Give feedback (opens in a new tab)
+    new:
+      categories:
+        header: What are you buying?
+      name:
+        label: Name your specification
+        hint: This will help you to find it if you need to come back to it later. Use a maximum of 30 characters.
 
   # /dashboard
   dashboard:
@@ -157,11 +163,6 @@ en:
     existing:
       header: Existing specifications
       body: Continue with a draft specification, and review completed specifications.
-
-  # /categories
-  categories:
-    header: What are you buying?
-    not_found: No categories found
 
   # /journeys#show
   journeys_title: Create a specification to procure %{category} for your school

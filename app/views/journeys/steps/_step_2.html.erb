@@ -1,3 +1,3 @@
 <%= form.hidden_field :category, value: @form.category %>
 
-<%= form.govuk_text_field :name, label: {text: "test"}, hint: {text: "test"} %> 
+<%= form.govuk_text_field :name, label: { text: I18n.t("journey.new.name.label"), size: "l" }, hint: { text: I18n.t("journey.new.name.hint") } %> 
