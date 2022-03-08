@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
       - develop
       - research
 
@@ -45,11 +44,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+  # Deploy staging automatically on push to main
   deploy_staging:
     needs: build
     runs-on: ubuntu-latest
     environment: staging
-    if: success() && github.ref == 'refs/heads/develop'
+    if: success() && github.ref == 'refs/heads/main' && github.event.action == 'push'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
@@ -65,6 +65,7 @@ jobs:
           TF_VAR_environment: 'staging'
         run: script/deploy-terraform
 
+  # Deploy research automatically on push to research
   deploy_research:
     needs: build
     runs-on: ubuntu-latest
@@ -85,6 +86,7 @@ jobs:
           TF_VAR_environment: 'research'
         run: script/deploy-terraform
 
+  # Deploy production manually on workflow dispatch
   deploy_production:
     needs: build
     runs-on: ubuntu-latest
