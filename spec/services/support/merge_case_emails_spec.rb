@@ -44,7 +44,7 @@ RSpec.describe Support::MergeCaseEmails do
 
       merge.call
 
-      expect(from_case.interactions.count).to be 1
+      expect(from_case.interactions.count).to be 2
       expect(to_case.interactions.count).to be 3
     end
   end
