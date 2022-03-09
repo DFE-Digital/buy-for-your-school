@@ -36,7 +36,6 @@ RSpec.describe Support::InteractionPresenter do
         have_attributes(id: "phone_call", label: "Phone call"),
         have_attributes(id: "email_from_school", label: "Email from school"),
         have_attributes(id: "email_to_school", label: "Email to school"),
-        have_attributes(id: "email_merge", label: "Email merge"),
       ])
     end
   end
