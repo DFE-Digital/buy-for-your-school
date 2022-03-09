@@ -12,12 +12,19 @@ RSpec.feature "A journey page has" do
     click_create
     # choose category
     find("label", text: category.title).click
+    click_continue
+    # enter name
+    fill_in "new_journey_form[name]", with: "testspec"
     # begin
     click_continue
   end
 
   context "when the category is 'catering'" do
     let(:fixture) { "radio-question" }
+
+    it "shows the specification name" do
+      expect(page).to have_text "You are editing: testspec"
+    end  
 
     specify "breadcrumbs" do
       expect(page).to have_breadcrumbs ["Dashboard", "Create specification"]
@@ -33,7 +40,7 @@ RSpec.feature "A journey page has" do
 
     # specifying.start_page.page_title
     specify "heading" do
-      expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
+      expect(find("h1.govuk-heading-xl")).to have_text "Edit your specification to procure catering for your school"
     end
 
     specify do
@@ -59,7 +66,7 @@ RSpec.feature "A journey page has" do
 
     # specifying.start_page.page_title
     specify "heading" do
-      expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure multi-function devices for your school"
+      expect(find("h1.govuk-heading-xl")).to have_text "Edit your specification to procure multi-function devices for your school"
     end
 
     specify do

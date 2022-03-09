@@ -59,10 +59,15 @@ class JourneysController < ApplicationController
     end
   end
 
+  def edit
+    @form = EditJourneyForm.new(**persisted_data)
+  end  
+
   # Log 'view_journey'
   #
   # @see SectionPresenter
   def show
+    breadcrumb "Dashboard", dashboard_path
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
 
     @journey = current_journey
@@ -73,6 +78,16 @@ class JourneysController < ApplicationController
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
     ).call
+  end
+
+  def update
+    @form = EditJourneyForm.new(messages: edit_validation.errors(full: true).to_h, **edit_validation.to_h)
+    if edit_validation.success?
+      current_journey.update!(**@form.data)
+      redirect_to journey_path(current_journey), notice: I18n.t("journey.update.notice")
+    else
+      render :edit
+    end
   end
 
   # Mark journey as remove
@@ -105,9 +120,30 @@ private
     ])
   end
 
+  def edit_form_params
+    params.require(:edit_journey_form).permit(*%i[
+      name
+    ])
+  end
+
   # @return [NewJourneyFormSchema] validated form input
   def validation
     NewJourneyFormSchema.new.call(**form_params)
+  end
+
+  # @return [EditJourneyFormSchema] validated form input
+  def edit_validation
+    EditJourneyFormSchema.new.call(**edit_form_params)
+  end
+
+  # @return [Journey]
+  def journey
+    @journey = Journey.find(params[:id])
+  end
+
+  # @return [Hash]
+  def persisted_data
+    current_journey.attributes.symbolize_keys
   end
 
   # @return [Boolean]

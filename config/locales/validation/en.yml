@@ -86,3 +86,14 @@ en:
           missing: Enter a name for your specification
           max_size?: The name must be 30 characters or less
 
+  # Edit journey form
+  edit_journey:
+    rules:
+      name: "" # Omitted
+    
+    errors:
+      rules:
+        name:
+          missing: Enter a name for your specification
+          max_size?: The name must be 30 characters or less        
+
