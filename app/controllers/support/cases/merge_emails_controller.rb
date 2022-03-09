@@ -26,7 +26,7 @@ module Support
         MergeCaseEmails.new(
           from_case: from_case.__getobj__,
           to_case: to_case.__getobj__,
-          agent: current_agent.__getobj__,
+          agent: current_agent,
         ).call
 
         return redirect_to support_case_merge_emails_path(from_case)

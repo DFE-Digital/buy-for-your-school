@@ -14,7 +14,7 @@ RSpec.feature "Case closure" do
       visit "/support/cases/#{kase.id}"
     end
 
-    context "when case is new and from an incoming email", js: true do
+    context "when case is new and from an incoming email" do
       it "closes the case and records the interaction" do
         click_link "Close case"
         choose "Spam"
@@ -26,10 +26,9 @@ RSpec.feature "Case closure" do
         expect(activity_log_item.data).to eq({ "closure_reason" => "spam" })
 
         visit "/support/cases/#{kase.id}#case-history"
-        click_button "Open all"
 
         expect(find("##{interaction.id}")).to have_text "Status change"
-        expect(find("##{interaction.id}")).to have_text "New to closed by first_name last_name. Reason given: Spam"
+        expect(find("##{interaction.id}")).to have_text "From new to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}. Reason given: Spam"
       end
     end
 

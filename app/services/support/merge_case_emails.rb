@@ -26,32 +26,43 @@ module Support
 
     # @!attribute agent
     #   @return [Support::Agent]
-    option :agent, Types.Instance(Support::Agent), optional: false
+    option :agent, Types.Instance(Support::AgentPresenter), optional: false
 
     # @return [TrueClass]
     def call
-      to_me!
-      to_you!
+      from!
+      to!
     end
 
   private
 
-    def to_me!
+    def from!
       from_case.transaction do
         raise CaseNotNewError unless from_case.initial?
 
+        # move emails and interactions over to the to_case
         from_case.interactions&.update_all(case_id: to_case.id)
         from_case.emails&.update_all(case_id: to_case.id)
+
+        # create a email_merge interaction record
         from_case.interactions.email_merge.build(
           body: "to ##{to_case.ref}",
           agent_id: agent.id,
         )
+
+        # create a state_change interaction record
+        from_case.interactions.state_change.build(
+          body: "From new to closed by #{agent.full_name} on #{Time.zone.now.to_formatted_s(:short)}",
+          agent_id: agent.id,
+        )
+
+        # close the case
         from_case.close!
         from_case.update!(action_required: false)
       end
     end
 
-    def to_you!
+    def to!
       to_case.transaction do
         to_case.interactions.email_merge.build(
           body: "from ##{from_case.ref}",
