@@ -7,7 +7,7 @@ module Support
     def create
       if current_case.resolved?
         current_case.interactions.state_change.build(
-          body: "Resolved case closed by agent",
+          body: state_change_body("closed"),
           agent_id: current_agent.id,
         )
         current_case.close!
@@ -35,6 +35,12 @@ module Support
       if validation.success?
         current_case.transaction do
           raise CaseCannotBeClosed unless current_case.initial? && current_case.incoming_email?
+
+          reason = "Reason given: #{I18n.t("support.case_closures.edit.reasons.#{@form.reason}")}"
+          current_case.interactions.state_change.build(
+            body: "#{state_change_body("closed")}. #{reason}",
+            agent_id: current_agent.id,
+          )
 
           current_case.close!
         end

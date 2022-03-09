@@ -3,7 +3,7 @@ module Support
     def create
       if current_case.may_hold?
         current_case.interactions.state_change.build(
-          body: "Case placed on hold",
+          body: "From #{current_state} to on hold by #{current_agent.full_name} on #{now}",
           agent_id: current_agent.id,
         )
         current_case.hold!

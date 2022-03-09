@@ -951,6 +951,7 @@ en:
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
         state_change: Status change
+        email_merge: Email merge
       label:
         email_unread: Unread
         contact_detail: Contact details

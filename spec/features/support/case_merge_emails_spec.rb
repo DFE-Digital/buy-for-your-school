@@ -3,8 +3,11 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
     agent_is_signed_in
   end
 
-  let!(:to_case) { Support::CasePresenter.new(create(:support_case, ref: "000001", agent: Support::Agent.first)) }
-  let!(:from_case) { Support::CasePresenter.new(create(:support_case, ref: "000002", agent: Support::Agent.first)) }
+  let(:agent) { Support::Agent.first }
+  let!(:to_case) { Support::CasePresenter.new(create(:support_case, ref: "000001", agent: agent)) }
+  let!(:from_case) { Support::CasePresenter.new(create(:support_case, ref: "000002", agent: agent)) }
+  let(:interaction_from) { from_case.interactions.last }
+  let(:interaction_to) { to_case.interactions.last }
 
   context "when the case to be merged is not new" do
     before do
@@ -82,6 +85,30 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       expect(all(".govuk-list.govuk-list--bullet li")[0]).to have_link("Go to Case #{to_case.ref}", href: "/support/cases/#{to_case.id}")
       expect(all(".govuk-list.govuk-list--bullet li")[1]).to have_link("Notifications", href: "/support/emails")
       expect(all(".govuk-list.govuk-list--bullet li")[2]).to have_link("My Cases", href: "/support/cases")
+    end
+
+    context "when successfull merged" do
+      before do
+        ::MergeCaseEmails.new(
+          from_case: from_case,
+          to_case: to_case,
+          agent: agent
+        ).call
+      end
+
+      it "records the interaction against the from case" do
+        visit "/support/cases/#{from_case.id}#case-history"
+
+        expect(find("##{interaction_from.id}")).to have_text "Email merge"
+        expect(find("##{interaction_from.id}")).to have_text "to: ##{to_case.ref}"
+      end
+
+      it "records the interaction against the to case" do
+        visit "/support/cases/#{to_case.id}#case-history"
+
+        expect(find("##{interaction_to.id}")).to have_text "Email merge"
+        expect(find("##{interaction_to.id}")).to have_text "from: ##{from_case.ref}"
+      end
     end
   end
 end

@@ -22,7 +22,7 @@ module Support
 
     def resolve_case
       current_case.interactions.state_change.build(
-        body: "Case resolved: #{@case_resolution_form.notes}",
+        body: "#{state_change_body('resolved')}: #{@case_resolution_form.notes}",
         agent_id: current_agent.id,
       )
 

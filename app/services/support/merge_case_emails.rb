@@ -24,17 +24,41 @@ module Support
     #   @return [Support::Case]
     option :to_case, Types.Instance(Support::Case), optional: false
 
+    # @!attribute agent
+    #   @return [Support::Agent]
+    option :agent, Types.Instance(Support::Agent), optional: false
+
     # @return [TrueClass]
     def call
+      to_me!
+      to_you!
+    end
+
+private
+
+    def to_me!
       from_case.transaction do
         raise CaseNotNewError unless from_case.initial?
 
         from_case.interactions&.update_all(case_id: to_case.id)
         from_case.emails&.update_all(case_id: to_case.id)
-        from_case.close
+        from_case.interactions.email_merge.build(
+          body: "to ##{to_case.ref}",
+          agent_id: agent.id,
+        )
+        from_case.close!
         from_case.update!(action_required: false)
       end
-      to_case.update!(action_required: true)
+    end
+
+    def to_you!
+      to_case.transaction do
+        to_case.interactions.email_merge.build(
+          body: "from ##{from_case.ref}",
+          agent_id: agent.id,
+        )
+        to_case.update!(action_required: true)
+      end
     end
   end
 end

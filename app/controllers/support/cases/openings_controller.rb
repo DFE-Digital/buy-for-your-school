@@ -3,7 +3,7 @@ module Support
     def create
       if current_case.may_open?
         current_case.interactions.state_change.build(
-          body: "Case set to open",
+          body: state_change_body("opened"),
           agent_id: current_agent.id,
         )
 
