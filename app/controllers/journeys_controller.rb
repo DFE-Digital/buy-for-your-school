@@ -50,7 +50,7 @@ class JourneysController < ApplicationController
       redirect_to journey_path(journey)
     else
       if back_link?
-        @form.back!  
+        @form.back!
       elsif validation.success?
         @form.advance!
       end

@@ -7,7 +7,7 @@ RSpec.feature "View existing journeys" do
       before do
         create(:journey,
                user: user,
-               name: "MFD123",               
+               name: "MFD123",
                category: create(:category, :mfd),
                created_at: Time.zone.local(2021, 2, 15, 12, 0, 0),
                updated_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
@@ -52,24 +52,24 @@ RSpec.feature "View existing journeys" do
         expect(find(:xpath, "//table/tbody/tr[1]/td[1]")).to have_text "MFD123"
         expect(find(:xpath, "//table/tbody/tr[2]/td[1]")).to have_text "Catering456"
       end
-      
+
       it "shows the category title in column two" do
         expect(find(:xpath, "//table/thead/tr[1]/th[2]")).to have_text "Category"
         expect(find(:xpath, "//table/tbody/tr[1]/td[2]")).to have_text "Multi-functional devices"
         expect(find(:xpath, "//table/tbody/tr[2]/td[2]")).to have_text "Catering"
       end
-      
+
       it "shows the creation date in column three" do
         expect(find(:xpath, "//table/thead/tr[1]/th[3]")).to have_text "Date started"
         expect(find(:xpath, "//table/tbody/tr[1]/td[3]")).to have_text "15 February 2021"
         expect(find(:xpath, "//table/tbody/tr[2]/td[3]")).to have_text "20 March 2021"
-      end    
-      
+      end
+
       it "redirects to the specification page" do
         click_link "MFD123"
 
         expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
-      end  
+      end
     end
 
     context "when the journey does not belong to the user" do

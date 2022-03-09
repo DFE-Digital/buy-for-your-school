@@ -31,7 +31,7 @@
         <tbody class="govuk-table__body">
           <% @journeys.each do |journey| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= link_to journey.name || journey.id, journey_specification_path(journey), class: "govuk-link"%></td>
+              <td class="govuk-table__cell"><%= link_to journey.name, journey_specification_path(journey), class: "govuk-link"%></td>
               <td class="govuk-table__cell"><%= journey.category.title %></td>
               <td class="govuk-table__cell"><%= journey.created_at %></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">

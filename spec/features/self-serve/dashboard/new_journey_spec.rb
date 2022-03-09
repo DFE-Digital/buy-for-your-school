@@ -1,50 +1,71 @@
-RSpec.feature "Create a new journey" do
-  context "when the user is signed in" do
+RSpec.describe "Creating a new specification" do
+  def complete_category_step
+    choose "Catering"
+    click_continue
+  end
+
+  def complete_name_step
+    fill_in "new_journey_form[name]", with: "Test specification"
+    click_continue
+  end
+
+  before do
+    # TODO: refactor stubbing here
+    persist_category(stub_contentful_category(fixture_filename: "radio-question.json"))
+    create(:category, :mfd)
+    user_is_signed_in
+    visit "/dashboard"
+  end
+
+  context "when a user starts a new specification" do
     before do
-      user_is_signed_in
-      visit "/dashboard"
-    end
-
-    specify { expect(page).to have_current_path "/dashboard" }
-
-    scenario "they can start a new journey" do
-      # TODO: refactor stubbing here
-      persist_category(stub_contentful_category(fixture_filename: "radio-question.json"))
-
       click_create
-      click_continue
+    end
 
-      expect(page).to have_breadcrumbs ["Dashboard", "Create specification"]
+    describe "the category page" do
+      it "prompts them to select a category" do
+        expect(page.title).to have_text "What are you buying?"
+        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
+        expect(page).to have_unchecked_field "Catering"
+        expect(page).to have_unchecked_field "Multi-functional devices"
+      end
 
-      within "ul.app-task-list__items" do
-        expect(find("a.govuk-link")).to have_text "Radio task"
-        expect(find("strong.govuk-tag--grey")).to have_text "Not started"
+      it "goes back to the dashboard" do
+        click_on "Back"
+
+        expect(page).to have_current_path("/dashboard")
       end
     end
 
-    it "is full page width" do
-      expect(page).to have_css "div.govuk-grid-column-full"
+    describe "the name page" do
+      before do
+        complete_category_step
+      end
+
+      it "prompts them to enter a name" do
+        expect(page.title).to have_text "Name your specification"
+        expect(page).to have_field "Name your specification"
+        expect(find("div.govuk-hint")).to have_text "This will help you to find it if you need to come back to it later. Use a maximum of 30 characters."
+      end
+
+      it "goes back to the category page" do
+        click_on "Back"
+
+        expect(page).to have_current_path(/step%5D=2/)
+        expect(page).to have_current_path(/back%5D=true/)
+        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
+      end
     end
 
-    it "dashboard.header" do
-      expect(page.title).to have_text "Specifications dashboard"
-      expect(find("h1.govuk-heading-xl")).to have_text "Specifications dashboard"
-    end
+    it "saves the specification with the given category and name" do
+      complete_category_step
+      complete_name_step
 
-    context "when the user has no specifications" do
-      it "dashboard.create.header" do
-        expect(find("h2.govuk-heading-m")).to have_text "Create a new specification"
-      end
+      journey = Journey.first
 
-      it "dashboard.create.body" do
-        expect(find("p.govuk-body")).to have_text "Create a new specification for a procurement."
-      end
-
-      # duplicates dashboard.create.header
-      it "dashboard.create.button" do
-        expect(find("a.govuk-button")).to have_text "Create a new specification"
-        expect(find("a.govuk-button")[:role]).to eq "button"
-      end
+      expect(journey.name).to eq "Test specification"
+      expect(journey.category.title).to eq "Catering"
+      expect(page).to have_current_path "/journeys/#{journey.id}"
     end
   end
 end
