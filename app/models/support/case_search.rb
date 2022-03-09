@@ -1,5 +1,8 @@
 module Support
   class CaseSearch < ApplicationRecord
+
+    belongs_to :case, class_name: "Support::Case", foreign_key: :case_id
+
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
         case_ref LIKE :q OR

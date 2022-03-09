@@ -9,20 +9,14 @@ module Support
       @form = CaseSearchForm.new
     end
 
-    def create
+    def index
       @form = CaseSearchForm.from_validation(validation)
       if validation.success?
-        # @cases = CaseSearch.find_a_case(@form.search_term).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
-        @cases = Case.last(20).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
-        @filter_form = CaseFilterForm.new
+        @results = SearchCases.results(form_params).map { |c| BasePresenter.new(c) }.paginate(page: params[:cases_page])
         render :index
       else
         render :new
       end
-    end
-
-    def index
-      @filter_form = CaseFilterForm.new
     end
 
   private
@@ -32,7 +26,7 @@ module Support
     end
 
     def form_params
-      params.require(:search_case_form).permit(:search_term).each_value { |value| value.try(:strip!) }
+      params.require(:search_case_form).permit(:search_term, :state, :category, :agent).each_value { |value| value.try(:strip!) }
     end
 
     def validation

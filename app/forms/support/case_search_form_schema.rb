@@ -1,7 +1,6 @@
 # :nocov:
 module Support
-  class CaseSearchFormSchema < Dry::Validation::Contract
-    include Concerns::TranslatableFormSchema
+  class CaseSearchFormSchema < CaseFilterFormSchema
     config.messages.top_namespace = :case_search_form
 
     params do

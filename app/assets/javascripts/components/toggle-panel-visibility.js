@@ -4,11 +4,10 @@
 
 function toggleElementDisplay(element) {
   const targetElement = document.getElementById(element);
-
   if (targetElement.className === "govuk-!-display-none") {
-    targetElement.className = "govuk-!-display-block show";
+    targetElement.className = "govuk-!-display-block";
   } else {
-    targetElement.className = "govuk-!-display-none hide";
+    targetElement.className = "govuk-!-display-none";
   }
 }
 

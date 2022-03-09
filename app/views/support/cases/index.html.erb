@@ -26,7 +26,12 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.my_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <%= render "support/cases/forms/filter_cases_form", form: @my_cases_filter_form, tab: "my-cases" %>
+        <%= render "support/cases/forms/filter_cases_form",
+                   form: @my_cases_filter_form,
+                   scope: :filter_my_cases_form,
+                   filter_url: support_cases_path(anchor: "my-cases"),
+                   clear_url: support_cases_path(anchor: "my-cases"),
+                   tab: "my-cases" %>
         <% if @my_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
@@ -71,7 +76,12 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.new_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <%= render "support/cases/forms/filter_cases_form", form: @new_cases_filter_form, tab: "new-cases" %>
+        <%= render "support/cases/forms/filter_cases_form",
+                   form: @new_cases_filter_form,
+                   scope: :filter_new_cases_form,
+                   filter_url: support_cases_path(anchor: "new-cases"),
+                   clear_url: support_cases_path(anchor: "new-cases"),
+                   tab: "new-cases" %>
         <% if @new_cases.none? %>
           <h1 class="govuk-heading-l">
             <%= I18n.t("support.case.list.not_found") %>
@@ -116,7 +126,12 @@
     <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.all_cases") %></h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <%= render "support/cases/forms/filter_cases_form", form: @all_cases_filter_form, tab: "all-cases" %>
+        <%= render "support/cases/forms/filter_cases_form",
+                   form: @all_cases_filter_form,
+                   scope: :filter_all_cases_form,
+                   filter_url: support_cases_path(anchor: "all-cases"),
+                   clear_url: support_cases_path(anchor: "all-cases"),
+                   tab: "all-cases" %>
         <% if @cases.none? %>
           <h1 class="govuk-heading-l flexalign__left">
             <%= I18n.t("support.case.list.not_found") %>

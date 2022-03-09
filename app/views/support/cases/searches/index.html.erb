@@ -6,15 +6,21 @@
     <h1 class="govuk-heading-l">
       <%= I18n.t("support.case.search.results") %>
     </h1>
-    <p class="govuk-body"><%= I18n.t("support.case.search.count", count: @cases.count, term: @form.search_term) %></p>
+    <p class="govuk-body"><%= I18n.t("support.case.search.count", count: @results.count, term: @form.search_term) %></p>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render "support/cases/forms/filter_cases_form", form: @filter_form, tab: "all-cases" %>
+    <%= render "support/cases/forms/filter_cases_form",
+               form: @form,
+               scope: :search_case_form,
+               filter_url: support_case_search_index_path,
+               clear_url: new_support_case_search_path,
+               tab: "all-cases",
+               search_term: @form.search_term %>
 
-    <% if @cases.none? %>
+    <% if @results.none? %>
       <h1 class="govuk-heading-l">
         <%= I18n.t("support.case.list.not_found") %>
       </h1>
@@ -43,12 +49,12 @@
         </tr>
         </thead>
         <tbody class="govuk-table__body">
-        <% @cases.each do |kase| %>
-          <%= render "support/cases/row", kase: kase, tab: :all_cases %>
+        <% @results.each do |result| %>
+          <%= render "support/cases/searches/result", result: result %>
         <% end %>
         </tbody>
       </table>
-      <%= render "components/pagination", records: @cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
+      <%= render "components/pagination", records: @results, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
     <% end %>
 
   </div>
