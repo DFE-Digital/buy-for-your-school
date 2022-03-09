@@ -19,7 +19,7 @@ RSpec.describe Support::FilterCases, bullet: :skip do
       let(:filtering_params) { nil }
 
       it "returns all cases" do
-        expect(service.new.filter(filtering_params).count).to be(13)
+        expect(service.new.filter(filtering_params).count).to be(12)
       end
     end
 

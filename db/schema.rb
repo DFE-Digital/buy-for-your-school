@@ -627,7 +627,6 @@ ActiveRecord::Schema.define(version: 2022_03_08_155358) do
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
       sc.created_at,
-      sc.updated_at,
       sc.state AS case_state,
       ses.name AS organisation_name,
       ses.urn AS organisation_urn,
