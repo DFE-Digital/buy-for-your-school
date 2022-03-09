@@ -137,6 +137,7 @@ GEM
     debug_inspector (1.1.0)
     deep_merge (1.2.2)
     diff-lcs (1.5.0)
+    digest (3.1.0)
     docile (1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -226,6 +227,7 @@ GEM
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    io-wait (0.2.1)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -268,6 +270,13 @@ GEM
     msgpack (1.4.5)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    net-protocol (0.1.2)
+      io-wait
+      timeout
+    net-smtp (0.3.1)
+      digest
+      net-protocol
+      timeout
     nio4r (2.5.8)
     nokogiri (1.13.3-arm64-darwin)
       racc (~> 1.4)
@@ -490,6 +499,7 @@ GEM
       httpclient (>= 2.4)
     thor (1.2.1)
     tilt (2.0.10)
+    timeout (0.2.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -574,6 +584,7 @@ DEPENDENCIES
   loaf
   mini_racer
   mock_redis
+  net-smtp
   notifications-ruby-client
   omniauth
   omniauth-rails_csrf_protection

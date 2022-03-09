@@ -16,7 +16,7 @@ RUN wget -q https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2
 
 RUN apt-get install -qq -y \
     texlive \
-    texlive-generic-extra \
+    texlive-latex-recommended \
     lmodern \
     --fix-missing --no-install-recommends
 
