@@ -38,7 +38,7 @@ module Support
 
           reason = "Reason given: #{I18n.t("support.case_closures.edit.reasons.#{@form.reason}")}"
           current_case.interactions.state_change.build(
-            body: "#{state_change_body("closed")}. #{reason}",
+            body: "#{state_change_body('closed')}. #{reason}",
             agent_id: current_agent.id,
           )
 

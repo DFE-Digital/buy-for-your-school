@@ -92,7 +92,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
         ::MergeCaseEmails.new(
           from_case: from_case,
           to_case: to_case,
-          agent: agent
+          agent: agent,
         ).call
       end
 

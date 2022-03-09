@@ -34,7 +34,7 @@ module Support
       to_you!
     end
 
-private
+  private
 
     def to_me!
       from_case.transaction do
