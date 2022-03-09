@@ -86,7 +86,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       expect(all(".govuk-list.govuk-list--bullet li")[2]).to have_link("My Cases", href: "/support/cases")
     end
 
-    context "when successfull merged", bullet: :skip, js: true do
+    context "when successfull merged", bullet: :skip do
       before do
         ::Support::MergeCaseEmails.new(
           from_case: from_case.__getobj__,
@@ -97,7 +97,6 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
 
       it "records the interaction against the from case" do
         visit "/support/cases/#{from_case.id}#case-history"
-        byebug
         expect(find("##{from_case.interactions[0].id}")).to have_text "Status change"
         expect(find("##{from_case.interactions[0].id}")).to have_text "From new to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}"
 
