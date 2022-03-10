@@ -1,50 +1,51 @@
-RSpec.feature "Filter cases", bullet: :skip do
+RSpec.feature "Filter cases", bullet: :skip, js: true do
   include_context "with an agent"
 
   let(:catering_cat) { create(:support_category, title: "Catering") }
+  let(:agent) { create(:support_agent, first_name: "Example Support Agent") }
 
   before do
     create_list(:support_case, 10)
+    create(:support_case, category: catering_cat)
+    create(:support_case, agent: agent)
+    create(:support_case, state: :closed)
     click_button "Agent Login"
   end
 
-  it "the my cases 'filter results' form is initially hidden" do
-    expect(find("#filter-my-cases")).not_to have_css "show"
-  end
-
-  it "the new cases 'filter results' form is initially hidden" do
-    expect(find("#filter-new-cases")).not_to have_css "show"
-  end
-
-  it "the all cases 'filter results' form is initially hidden" do
-    expect(find("#filter-all-cases")).not_to have_css "show"
-  end
-
-  describe "filter results button" do
-    context "when viewing my cases tab" do
-      it "shows the form on click" do
-        within "#my-cases" do
-          click_button "Filter results"
-          expect(find("#filter-my-cases")).to have_css "show"
-        end
+  describe "case filtering" do
+    it "filters by category" do
+      click_link "All cases"
+      within "#all-cases" do
+        click_button "Filter results"
+        find("#filter-all-cases-form-category-field").find(:option, "Catering").select_option
+        click_button "Apply filter"
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
+        row = all(".govuk-table__body .govuk-table__row")
+        expect(row[0]).to have_text "Catering"
       end
     end
 
-    context "when viewing new cases tab" do
-      it "shows the form on click" do
-        within "#new-cases" do
-          click_button "Filter results"
-          expect(find("#filter-new-cases")).to have_css "show"
-        end
+    it "filters by agent" do
+      click_link "All cases"
+      within "#all-cases" do
+        click_button "Filter results"
+        find("#filter-all-cases-form-agent-field").find(:option, "Example Support Agent").select_option
+        click_button "Apply filter"
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
+        row = all(".govuk-table__body .govuk-table__row")
+        expect(row[0]).to have_text "Example Support Agent"
       end
     end
 
-    context "when viewing all cases tab" do
-      it "shows the form on click" do
-        within "#all-cases" do
-          click_button "Filter results"
-          expect(find("#filter-all-cases")).to have_css "show"
-        end
+    it "filters by state" do
+      click_link "All cases"
+      within "#all-cases" do
+        click_button "Filter results"
+        find("#filter-all-cases-form-state-field").find(:option, "Closed").select_option
+        click_button "Apply filter"
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
+        row = all(".govuk-table__body .govuk-table__row")
+        expect(row[0]).to have_text "Closed"
       end
     end
   end

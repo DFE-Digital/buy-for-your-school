@@ -19,9 +19,8 @@ RSpec.describe Support::SearchCases, bullet: :skip do
     end
 
     context "when searching by 'search term'" do
-
       context "when searching for a full URN" do
-        let(:search_term) { "12345678"}
+        let(:search_term) { "12345678" }
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
@@ -30,7 +29,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
       end
 
       context "when searching for a partial URN" do
-        let(:search_term) { "1234"}
+        let(:search_term) { "1234" }
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
@@ -39,7 +38,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
       end
 
       context "when searching for a full organisation name" do
-        let(:search_term) { "Example School"}
+        let(:search_term) { "Example School" }
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
@@ -48,7 +47,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
       end
 
       context "when searching for a partial organisation name" do
-        let(:search_term) { "Example"}
+        let(:search_term) { "Example" }
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
@@ -57,7 +56,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
       end
 
       context "when searching for a case ref" do
-        let(:search_term) { "000999"}
+        let(:search_term) { "000999" }
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)

@@ -12,8 +12,6 @@ module Support
       results
     end
 
-  private
-
     def self.search_results(search_term)
       Support::CaseSearch.find_a_case(search_term).joins(:case)
     end
