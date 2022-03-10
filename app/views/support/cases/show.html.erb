@@ -27,11 +27,6 @@
       </a>
     </li>
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#procurement-details">
-        <%= I18n.t("support.case.header.procurement_detail") %>
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#case-attachments">
         <%= I18n.t("support.case.header.case_attachments") %>
       </a>
@@ -42,9 +37,6 @@
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
     <%= render "case_details", current_case: @current_case %>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="procurement-details">
-    <%= render "procurement_details", current_case: @current_case %>
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
