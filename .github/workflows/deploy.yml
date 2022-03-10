@@ -4,10 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
       - develop
       - research
-      - preview
 
 env:
   GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
@@ -46,22 +44,28 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+  # Deploy staging automatically on push to main
   deploy_staging:
     needs: build
     runs-on: ubuntu-latest
     environment: staging
-    if: success() && github.ref == 'refs/heads/develop'
+    if: success() && github.ref == 'refs/heads/main' && github.event.action == 'push'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to staging
         env:
           TF_VAR_environment: 'staging'
         run: script/deploy-terraform
 
+  # Deploy research automatically on push to research
   deploy_research:
     needs: build
     runs-on: ubuntu-latest
@@ -73,43 +77,16 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to research
         env:
           TF_VAR_environment: 'research'
         run: script/deploy-terraform
-      # - name: Notify
-      #   uses: 8398a7/action-slack@v3
-      #   if: failure()
-      #   with:
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     status: ${{ job.status }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  deploy_preview:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: preview
-    if: success() && github.ref == 'refs/heads/preview'
-    env:
-      TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
-      GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Deploy terraform to preview
-        env:
-          TF_VAR_environment: 'preview'
-        run: script/deploy-terraform
-      # - name: Notify
-      #   uses: 8398a7/action-slack@v3
-      #   if: failure()
-      #   with:
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     status: ${{ job.status }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+  # Deploy production manually on workflow dispatch
   deploy_production:
     needs: build
     runs-on: ubuntu-latest
@@ -121,15 +98,19 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1.3.2
+        with:
+          terraform_version: 0.14.7
       - name: Deploy terraform to prod
         env:
           TF_VAR_environment: 'prod'
         run: script/deploy-terraform
-      # - name: Notify
-      #   uses: 8398a7/action-slack@v3
-      #   if: failure()
-      #   with:
-      #     fields: workflow,job,commit,repo,ref,author,took
-      #     status: ${{ job.status }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Map www route
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf7-cli
+          cf login -u $CF_USER -p $CF_PASSWORD -a api.london.cloud.service.gov.uk -s sct-production
+          cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
