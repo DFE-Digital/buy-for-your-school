@@ -4,7 +4,7 @@
 <div class="govuk-!-margin-bottom-7">
   <%= render "status_badge", kase: @current_case %>
 </div>
-<p class="govuk-body">
+<p class="govuk-body" id="case-ref">
   <strong><%= @current_case.ref %></strong>
   <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
 </p>

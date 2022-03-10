@@ -35,9 +35,8 @@ module Support
     end
 
     def normalised_case_summary_for_params
-      normalised_params = {}
+      normalised_params = { support_level: case_summary_form_params[:support_level] }
       normalised_params[:value] = case_summary_form_params[:value].to_f if case_summary_form_params[:value].present?
-      normalised_params[:support_level] = case_summary_form_params[:support_level] if case_summary_form_params[:support_level].present?
 
       normalised_params
     end

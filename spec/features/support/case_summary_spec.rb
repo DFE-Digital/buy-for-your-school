@@ -16,7 +16,7 @@ RSpec.feature "Case summary" do
   end
 
   it "shows the case reference heading" do
-    expect(find("h3#case-ref")).to have_text "000001"
+    expect(find("p#case-ref")).to have_text "000001"
   end
 
   it "has 5 visible tabs" do
@@ -42,9 +42,12 @@ RSpec.feature "Case summary" do
 
     it "lists request details" do
       within "#case-details" do
-        expect(all(".govuk-summary-list__row")[0]).to have_text "Category"
-        expect(all(".govuk-summary-list__row")[1]).to have_text "Description of problem"
-        expect(all(".govuk-summary-list__row")[2]).to have_text "Attached specification"
+        expect(all(".govuk-summary-list__row")[0]).to have_text "Case level"
+        expect(all(".govuk-summary-list__row")[1]).to have_text "Case value"
+        expect(all(".govuk-summary-list__row")[2]).to have_text "Received"
+        expect(all(".govuk-summary-list__row")[3]).to have_text "Category"
+        expect(all(".govuk-summary-list__row")[4]).to have_text "Description of problem"
+        expect(all(".govuk-summary-list__row")[5]).to have_text "Attached specification"
       end
     end
 
