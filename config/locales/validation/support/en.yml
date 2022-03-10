@@ -62,6 +62,10 @@ en:
         reason:
           missing: You must choose a reason for closing the case
 
+        # Case value
+        value:
+          decimal: Enter a number
+
 
   case_migration_form:
     rules:

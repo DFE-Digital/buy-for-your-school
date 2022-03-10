@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_25_175814) do
+ActiveRecord::Schema.define(version: 2022_03_08_110931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "journeys_count"
-    t.string "slug", null: false
+    t.string "slug"
     t.index ["contentful_id"], name: "index_categories_on_contentful_id", unique: true
   end
 
@@ -209,8 +209,8 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
   end
 
   create_table "support_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "support_case_id"
-    t.string "action"
+    t.uuid "support_case_id"
+    t.integer "action"
     t.jsonb "data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
     t.decimal "savings_actual", precision: 9, scale: 2
     t.boolean "action_required", default: false
     t.string "organisation_type"
+    t.decimal "value", precision: 9, scale: 2
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -571,8 +572,6 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
       se.urn AS organisation_urn,
       se.ukprn AS organisation_ukprn,
       se.rsc_region AS organisation_rsc_region,
-      se.local_authority_name AS organisation_local_authority_name,
-      se.local_authority_code AS organisation_local_authority_code,
       se.uid AS organisation_uid,
       se.phase AS organisation_phase,
       se.organisation_status,
@@ -604,8 +603,6 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
        LEFT JOIN ( SELECT organisations.id,
               organisations.name,
               organisations.rsc_region,
-              (organisations.local_authority ->> 'name'::text) AS local_authority_name,
-              (organisations.local_authority ->> 'code'::text) AS local_authority_code,
               organisations.urn,
               organisations.ukprn,
               organisations.status AS organisation_status,
@@ -620,8 +617,6 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
            SELECT egroups.id,
               egroups.name,
               NULL::character varying AS rsc_region,
-              NULL::text AS local_authority_name,
-              NULL::text AS local_authority_code,
               NULL::character varying AS urn,
               egroups.ukprn,
               NULL::integer AS organisation_status,

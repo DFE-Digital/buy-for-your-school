@@ -4,10 +4,10 @@
 <div class="govuk-!-margin-bottom-7">
   <%= render "status_badge", kase: @current_case %>
 </div>
-<h3 id="case-ref" class="govuk-heading-m">
-  <%= @current_case.ref %>
-</h3>
-
+<p class="govuk-body">
+  <strong><%= @current_case.ref %></strong>
+  <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
+</p>
 
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">

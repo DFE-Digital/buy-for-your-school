@@ -1,8 +1,46 @@
 <div role="tabpanel" aria-labelledby="tab_case-details">
-  <p class="govuk-body">
-    <%= I18n.t("support.case.label.requested_at", time: current_case.received_at) %>
-  </p>
+  <h2 class="govuk-heading-m">
+    <%= I18n.t("support.case.case_details.case_summary.heading") %>
+    <%= link_to I18n.t("support.case.link.edit_case_summary"), edit_support_case_summary_path(current_case), class: "govuk-link" %>
+  </h2>
   <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.support_level.header") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <% if current_case.support_level.present? %>
+          <%= I18n.t("support.case.label.support_level.#{current_case.support_level}") %>
+        <% else %>
+          <%= I18n.t("support.case.label.support_level.unspecified") %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.case_value") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <% if current_case.value.present? %>
+          &#163;<%= current_case.value %>
+        <% else %>
+          <%= I18n.t("support.case.label.value.unspecified") %>
+        <% end %>
+      </dd>
+    </div>
+  </dl>
+
+  <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+    <h2 class="govuk-heading-m"><%= I18n.t("support.case.case_details.request.heading") %></h2>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.received_at") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= current_case.received_at %>
+      </dd>
+    </div>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.category") %>
