@@ -20,19 +20,19 @@ RSpec.feature "Case procurement details" do
 
     it "shows blank fields" do
       within("div#case-details") do
-        expect(all("dt.govuk-summary-list__key")[6]).to have_text "Required agreement type"
+        expect(all("dt.govuk-summary-list__key")[7]).to have_text "Required agreement type"
         expect(all("dt.govuk-summary-list__value")[0]).to have_text ""
-        expect(all("dt.govuk-summary-list__key")[7]).to have_text "Route to market"
+        expect(all("dt.govuk-summary-list__key")[8]).to have_text "Route to market"
         expect(all("dt.govuk-summary-list__value")[1]).to have_text ""
-        expect(all("dt.govuk-summary-list__key")[8]).to have_text "Reason for route to market"
+        expect(all("dt.govuk-summary-list__key")[9]).to have_text "Reason for route to market"
         expect(all("dt.govuk-summary-list__value")[2]).to have_text ""
-        expect(all("dt.govuk-summary-list__key")[9]).to have_text "Framework name"
+        expect(all("dt.govuk-summary-list__key")[10]).to have_text "Framework name"
         expect(all("dt.govuk-summary-list__value")[3]).to have_text ""
-        expect(all("dt.govuk-summary-list__key")[10]).to have_text "Procurement start date"
+        expect(all("dt.govuk-summary-list__key")[11]).to have_text "Procurement start date"
         expect(all("dt.govuk-summary-list__value")[4]).to have_text ""
-        expect(all("dt.govuk-summary-list__key")[11]).to have_text "Procurement end date"
+        expect(all("dt.govuk-summary-list__key")[12]).to have_text "Procurement end date"
         expect(all("dt.govuk-summary-list__value")[5]).to have_text ""
-        expect(all("dt.govuk-summary-list__key")[12]).to have_text "Procurement stage"
+        expect(all("dt.govuk-summary-list__key")[13]).to have_text "Procurement stage"
         expect(all("dt.govuk-summary-list__value")[7]).to have_text ""
       end
     end
@@ -51,19 +51,19 @@ RSpec.feature "Case procurement details" do
 
       it "shows fields with hyphens" do
         within("div#case-details") do
-          expect(all("dt.govuk-summary-list__key")[6]).to have_text "Required agreement type"
+          expect(all("dt.govuk-summary-list__key")[7]).to have_text "Required agreement type"
           expect(all("dt.govuk-summary-list__value")[0]).to have_text "-"
-          expect(all("dt.govuk-summary-list__key")[7]).to have_text "Route to market"
+          expect(all("dt.govuk-summary-list__key")[8]).to have_text "Route to market"
           expect(all("dt.govuk-summary-list__value")[1]).to have_text "-"
-          expect(all("dt.govuk-summary-list__key")[8]).to have_text "Reason for route to market"
+          expect(all("dt.govuk-summary-list__key")[9]).to have_text "Reason for route to market"
           expect(all("dt.govuk-summary-list__value")[2]).to have_text "-"
-          expect(all("dt.govuk-summary-list__key")[9]).to have_text "Framework name"
+          expect(all("dt.govuk-summary-list__key")[10]).to have_text "Framework name"
           expect(all("dt.govuk-summary-list__value")[3]).to have_text "-"
-          expect(all("dt.govuk-summary-list__key")[10]).to have_text "Procurement start date"
+          expect(all("dt.govuk-summary-list__key")[11]).to have_text "Procurement start date"
           expect(all("dt.govuk-summary-list__value")[4]).to have_text "-"
-          expect(all("dt.govuk-summary-list__key")[11]).to have_text "Procurement end date"
+          expect(all("dt.govuk-summary-list__key")[12]).to have_text "Procurement end date"
           expect(all("dt.govuk-summary-list__value")[5]).to have_text "-"
-          expect(all("dt.govuk-summary-list__key")[12]).to have_text "Procurement stage"
+          expect(all("dt.govuk-summary-list__key")[13]).to have_text "Procurement stage"
           expect(all("dt.govuk-summary-list__value")[6]).to have_text "-"
         end
       end
@@ -81,19 +81,19 @@ RSpec.feature "Case procurement details" do
 
       it "shows fields with details" do
         within("div#case-details") do
-          expect(all("dt.govuk-summary-list__key")[6]).to have_text "Required agreement type"
+          expect(all("dt.govuk-summary-list__key")[7]).to have_text "Required agreement type"
           expect(all("dt.govuk-summary-list__value")[0]).to have_text "Ongoing"
-          expect(all("dt.govuk-summary-list__key")[7]).to have_text "Route to market"
+          expect(all("dt.govuk-summary-list__key")[8]).to have_text "Route to market"
           expect(all("dt.govuk-summary-list__value")[1]).to have_text "Bespoke Procurement"
-          expect(all("dt.govuk-summary-list__key")[8]).to have_text "Reason for route to market"
+          expect(all("dt.govuk-summary-list__key")[9]).to have_text "Reason for route to market"
           expect(all("dt.govuk-summary-list__value")[2]).to have_text "School Preference"
-          expect(all("dt.govuk-summary-list__key")[9]).to have_text "Framework name"
+          expect(all("dt.govuk-summary-list__key")[10]).to have_text "Framework name"
           expect(all("dt.govuk-summary-list__value")[3]).to have_text "Framework"
-          expect(all("dt.govuk-summary-list__key")[10]).to have_text "Procurement start date"
+          expect(all("dt.govuk-summary-list__key")[11]).to have_text "Procurement start date"
           expect(all("dt.govuk-summary-list__value")[4]).to have_text "2 December 2020"
-          expect(all("dt.govuk-summary-list__key")[11]).to have_text "Procurement end date"
+          expect(all("dt.govuk-summary-list__key")[12]).to have_text "Procurement end date"
           expect(all("dt.govuk-summary-list__value")[5]).to have_text "1 December 2021"
-          expect(all("dt.govuk-summary-list__key")[12]).to have_text "Procurement stage"
+          expect(all("dt.govuk-summary-list__key")[13]).to have_text "Procurement stage"
           expect(all("dt.govuk-summary-list__value")[6]).to have_text "Need"
         end
       end
