@@ -1,7 +1,6 @@
 module Support
   class CaseSearch < ApplicationRecord
-
-    belongs_to :case, class_name: "Support::Case", foreign_key: :case_id
+    belongs_to :case, class_name: "Support::Case"
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
