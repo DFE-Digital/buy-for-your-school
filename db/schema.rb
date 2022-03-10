@@ -257,12 +257,12 @@ ActiveRecord::Schema.define(version: 2022_03_10_170158) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
+    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
-    t.uuid "procurement_id"
     t.boolean "action_required", default: false
     t.string "organisation_type"
     t.integer "closure_reason"
