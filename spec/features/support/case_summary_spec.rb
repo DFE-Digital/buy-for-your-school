@@ -19,8 +19,8 @@ RSpec.feature "Case summary" do
     expect(find("p#case-ref")).to have_text "000001"
   end
 
-  it "has 5 visible tabs" do
-    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(5)
+  it "has 4 visible tabs" do
+    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(4)
   end
 
   it "defaults to the 'School details' tab" do
@@ -59,10 +59,10 @@ RSpec.feature "Case summary" do
   end
 
   describe "Procurement details tab" do
-    before { visit "/support/cases/#{support_case.id}#procurement-details" }
+    before { visit "/support/cases/#{support_case.id}#contract-details" }
 
     it "lists section headings details" do
-      within "#procurement-details" do
+      within "#case-details" do
         expect(find("#procurement-details-procurement")).to have_text "Procurement details"
         expect(find("#pd-existing-contract")).to have_text "Existing contract details"
         expect(find("#pd-new-contract")).to have_text "New contract details"
