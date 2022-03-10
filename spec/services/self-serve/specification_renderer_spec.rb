@@ -18,7 +18,7 @@ RSpec.describe SpecificationRenderer do
     context "when the specification is a draft" do
       it "adds a draft warning" do
         allow(DocumentFormatter).to receive(:new)
-          .with(content: "# category title specification: test spec\n\nDraft message\n\nYour answer was 4", from: :markdown, to: :docx)
+          .with(content: "# category title specification: test spec\n\n\\\n\nDraft message\n\nYour answer was 4", from: :markdown, to: :docx)
           .and_return(document_formatter_instance)
 
         allow(document_formatter_instance).to receive(:call)
@@ -30,7 +30,7 @@ RSpec.describe SpecificationRenderer do
     context "when the specification is not a draft" do
       it "does not modify the specification" do
         allow(DocumentFormatter).to receive(:new)
-          .with(content: "# category title specification: test spec\n\nYour answer was 4", from: :markdown, to: :docx)
+          .with(content: "# category title specification: test spec\n\n\\\n\nYour answer was 4", from: :markdown, to: :docx)
           .and_return(document_formatter_instance)
 
         allow(document_formatter_instance).to receive(:call)

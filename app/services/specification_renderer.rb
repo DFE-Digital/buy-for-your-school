@@ -31,7 +31,7 @@ class SpecificationRenderer
     ).call
 
     template.prepend("#{draft_msg}\n\n") if is_draft
-    template.prepend("# #{journey.category.title} specification: #{journey.name}\n\n") if to == :docx
+    template.prepend("# #{journey.category.title} specification: #{journey.name}\n\n\\\n\n") if to == :docx
 
     document_formatter(template)
   end

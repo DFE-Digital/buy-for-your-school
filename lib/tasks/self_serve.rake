@@ -17,4 +17,14 @@ namespace :self_serve do
       end
     end
   end
+
+  desc "Populate Contentful categories"
+  task populate_categories: :environment do
+    client = Content::Client.new
+
+    client.by_type(:category).each do |entry|
+      contentful_category = GetCategory.new(category_entry_id: entry.id).call
+      CreateCategory.new(contentful_category: contentful_category).call
+    end
+  end
 end

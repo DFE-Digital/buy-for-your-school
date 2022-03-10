@@ -34,10 +34,11 @@ class NewJourneyForm < Form
     Category.find_by(slug: category)
   end
 
+  # @return [Hash]
   def go_back
     to_h
       .except(:user, :messages)
-      .merge(back: true, category: category)
+      .merge(back: true)
       .reject { |_, v| v.to_s.empty? }
   end
 end

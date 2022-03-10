@@ -61,7 +61,7 @@ class JourneysController < ApplicationController
 
   def edit
     @form = EditJourneyForm.new(**persisted_data)
-  end  
+  end
 
   # Log 'view_journey'
   #
@@ -136,11 +136,6 @@ private
     EditJourneyFormSchema.new.call(**edit_form_params)
   end
 
-  # @return [Journey]
-  def journey
-    @journey = Journey.find(params[:id])
-  end
-
   # @return [Hash]
   def persisted_data
     current_journey.attributes.symbolize_keys
@@ -153,28 +148,6 @@ private
 
   # @return [Array<CategoryPresenter>]
   def categories
-    populate_categories if Category.none?
     @categories = Category.published.map { |c| CategoryPresenter.new(c) }
-  end
-
-  # CMS: initialise Content::Client in the base controller
-  def client
-    Content::Client.new
-  end
-
-  # On an initial run the `categories` table will be empty
-  #
-  def populate_categories
-    client.by_type(:category).each do |entry|
-      contentful_category = GetCategory.new(category_entry_id: entry.id).call
-
-      # TODO: create category service
-      Category.find_or_create_by!(contentful_id: contentful_category.id) do |category|
-        category.title = contentful_category.title
-        category.description = contentful_category.description
-        category.liquid_template = contentful_category.combined_specification_template
-        category.slug = contentful_category.slug
-      end
-    end
   end
 end

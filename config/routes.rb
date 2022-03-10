@@ -35,7 +35,6 @@ Rails.application.routes.draw do
   get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
 
   resources :design, only: %i[index show]
-  resources :categories, only: %i[index]
   resources :feedback, only: %i[new show create edit update]
 
   #
