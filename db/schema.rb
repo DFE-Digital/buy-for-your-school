@@ -622,7 +622,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_110931) do
               egroups.name,
               NULL::character varying AS rsc_region,
               NULL::text AS local_authority_name,
-              NULL::text varying AS local_authority_code,
+              NULL::text AS local_authority_code,
               NULL::character varying AS urn,
               egroups.ukprn,
               NULL::integer AS organisation_status,
