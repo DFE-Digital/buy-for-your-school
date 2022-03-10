@@ -59,7 +59,7 @@ module Support
         from_case.update!(
           action_required: false,
           state: :closed,
-          closure_reason: 'email_merge'
+          closure_reason: "email_merge",
         )
       end
     end

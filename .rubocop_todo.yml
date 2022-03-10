@@ -14,7 +14,7 @@ Naming/MethodName:
   Exclude:
     - 'lib/microsoft_graph/microsoft_graph.rb'
 
-# Offense count: 20
+# Offense count: 19
 RSpec/AnyInstance:
   Exclude:
     - 'spec/jobs/self-serve/warm_entry_cache_job_spec.rb'
@@ -24,7 +24,6 @@ RSpec/AnyInstance:
     - 'spec/services/self-serve/create_task_spec.rb'
     - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
     - 'spec/services/self-serve/save_answer_spec.rb'
-    - 'spec/services/support/incoming_emails/case_assignment_spec.rb'
     - 'spec/services/support/incoming_emails/email_attachments_spec.rb'
     - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
     - 'spec/support/shared/notify_email_templates.rb'
@@ -46,7 +45,7 @@ RSpec/VerifiedDoubles:
     - 'spec/services/support/incoming_emails/case_assignment_spec.rb'
     - 'spec/support/contentful_helpers.rb'
 
-# Offense count: 7
+# Offense count: 9
 # Configuration parameters: Database, Include.
 # SupportedDatabases: mysql, postgresql
 # Include: db/migrate/*.rb
@@ -57,6 +56,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20211217092216_add_extra_outlook_fields_to_support_email.rb'
     - 'db/migrate/20220112131559_add_is_inline_to_support_email_attachments.rb'
     - 'db/migrate/20220225175814_change_framework_requests_to_combine_orgs.rb'
+    - 'db/migrate/20220310170158_change_closure_reason_to_enum.rb'
 
 # Offense count: 1
 # Configuration parameters: Include.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_10_153239) do
+ActiveRecord::Schema.define(version: 2022_03_10_170158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -257,15 +257,15 @@ ActiveRecord::Schema.define(version: 2022_03_10_153239) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
-    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
+    t.uuid "procurement_id"
     t.boolean "action_required", default: false
     t.string "organisation_type"
-    t.string "closure_reason"
+    t.integer "closure_reason"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -628,6 +628,7 @@ ActiveRecord::Schema.define(version: 2022_03_10_153239) do
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
       sc.created_at,
+      sc.updated_at,
       sc.state AS case_state,
       ses.name AS organisation_name,
       ses.urn AS organisation_urn,

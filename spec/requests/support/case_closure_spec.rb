@@ -35,7 +35,7 @@ RSpec.describe "Case closure", type: :request do
         end
       end
 
-      context "when the case is on_hold" do
+      context "when the case is resolved" do
         let(:support_case) { create(:support_case, :resolved) }
 
         it "redirects to support_cases_path with the state changed" do

@@ -13,7 +13,7 @@ module Support
 
         current_case.update!(
           state: :closed,
-          closure_reason: 'resolved'
+          closure_reason: :resolved,
         )
 
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
@@ -48,7 +48,7 @@ module Support
 
           current_case.update!(
             state: :closed,
-            closure_reason: @form.reason
+            closure_reason: @form.reason,
           )
         end
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @form.reason })
