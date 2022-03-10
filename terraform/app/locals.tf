@@ -3,14 +3,10 @@ locals {
   environment  = var.environment
 
   cloudfoundry_org           = var.cloudfoundry_org
-  cloudfoundry_space         = local.environment == "prod" ? "sct-production" : "sct-${local.environment}"
+  cloudfoundry_space         = var.cloudfoundry_space == "" ? (local.environment == "prod" ? "sct-production" : "sct-${local.environment}") : var.cloudfoundry_space
   shared_cloudfoundry_domain = var.shared_cloudfoundry_domain
   custom_cloudfoundry_domain = var.custom_cloudfoundry_domain
-
   custom_hostname            = local.environment == "prod" ? "get-help-buying-for-schools" : "${local.environment}-get-help-buying-for-schools"
-  service_gov_uk_domain      = "get-help-buying-for-schools.service.gov.uk"
-  service_gov_uk_subdomain   = local.environment == "prod" ? "www" : local.environment
-  service_gov_uk_route_count = local.environment == "prod" ? 1 : 0
 
   redis_class    = var.redis_class
   redis_timeouts = var.redis_timeouts
