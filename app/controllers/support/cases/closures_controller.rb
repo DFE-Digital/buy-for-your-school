@@ -10,7 +10,11 @@ module Support
           body: state_change_body("closed"),
           agent_id: current_agent.id,
         )
-        current_case.close!
+
+        current_case.update!(
+          state: :closed,
+          closure_reason: 'resolved'
+        )
 
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
 
@@ -42,7 +46,10 @@ module Support
             agent_id: current_agent.id,
           )
 
-          current_case.close!
+          current_case.update!(
+            state: :closed,
+            closure_reason: @form.reason
+          )
         end
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @form.reason })
         redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.updated")

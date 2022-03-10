@@ -21,6 +21,7 @@ RSpec.feature "Case closure" do
         click_button "Save and close case"
 
         expect(kase.reload.closed?).to be true
+        expect(kase.closure_reason).to eq 'spam'
         expect(activity_log_item.support_case_id).to eq kase.id
         expect(activity_log_item.action).to eq "close_case"
         expect(activity_log_item.data).to eq({ "closure_reason" => "spam" })
@@ -39,6 +40,7 @@ RSpec.feature "Case closure" do
 
       it "closes the case and records the interaction" do
         expect(kase.reload.closed?).to be true
+        expect(kase.closure_reason).to eq 'resolved'
         expect(activity_log_item.support_case_id).to eq kase.id
         expect(activity_log_item.action).to eq "close_case"
         expect(activity_log_item.data).to eq({ "closure_reason" => "Resolved case closed by agent" })

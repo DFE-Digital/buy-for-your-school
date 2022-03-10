@@ -56,9 +56,11 @@ module Support
           agent_id: agent.id,
         )
 
-        # close the case
-        from_case.close!
-        from_case.update!(action_required: false)
+        from_case.update!(
+          action_required: false,
+          state: :closed,
+          closure_reason: 'email_merge'
+        )
       end
     end
 

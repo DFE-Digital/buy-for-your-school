@@ -28,6 +28,7 @@ RSpec.describe Support::MergeCaseEmails do
       merge.call
 
       expect(from_case.closed?).to be true
+      expect(from_case.closure_reason).to eql 'email_merge'
       expect(from_case.action_required?).to be false
       expect(to_case.action_required?).to be true
     end
