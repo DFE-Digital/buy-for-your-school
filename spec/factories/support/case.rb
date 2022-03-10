@@ -20,6 +20,10 @@ FactoryBot.define do
 
     association :new_contract, factory: :support_new_contract
 
+    trait :with_fixed_category do
+      association :category, factory: :support_category, title: "Fixed Category"
+    end
+
     trait :initial do
       state { :initial }
     end

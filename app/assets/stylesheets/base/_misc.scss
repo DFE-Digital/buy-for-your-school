@@ -13,3 +13,9 @@
   display: block;
   width: 350px;
 }
+
+.pull-right {
+  @include govuk-media-query($from: tablet) {
+    float: right;
+  }
+}

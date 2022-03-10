@@ -54,10 +54,6 @@ RSpec.feature "Case closure" do
       it "removes the case from my cases tab" do
         visit support_cases_path
         expect(page).not_to have_css("#my-cases .case-row", text: "000001")
-
-        within "#all-cases .case-row", text: "000001" do
-          expect(page).to have_css(".case-status", text: "Closed")
-        end
       end
     end
 
