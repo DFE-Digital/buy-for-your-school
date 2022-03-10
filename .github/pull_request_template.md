@@ -11,6 +11,17 @@
   Succinct list of changes explaining what has changed and why.
 -->
 
+## Checklist
+
+Please complete the following tasks to allow merging of this feature:
+
+- [ ] Updated CHANGELOG
+- [ ] Documented any architecture desisions in an ADR
+- [ ] Get QA Approval of test coverage
+
+Note: Check a task if it is not relevent to this PR.
+Note: Please uncheck any relevent tasks if you make further changes to the code.
+
 ## Screen-shots or screen-capture of UI changes
 
 <!--
