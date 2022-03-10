@@ -140,3 +140,5 @@ storage
 
 # dont ignore sql views
 !db/views/*.sql
+
+.run/

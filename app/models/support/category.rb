@@ -19,7 +19,7 @@ module Support
     scope :ordered_by_title, -> { order(title: :asc) }
 
     def self.grouped_opts
-      top_level.each_with_object({}) do |category, parent_hash|
+      top_level.includes([:sub_categories]).each_with_object({}) do |category, parent_hash|
         parent_hash[category.title] =
           category.sub_categories.each_with_object({}) do |sub_category, child_hash|
             child_hash[sub_category.title] = sub_category.id
