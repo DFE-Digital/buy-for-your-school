@@ -9,7 +9,7 @@ RSpec.feature "A journey page has" do
   end
 
   it "shows the specification name" do
-    expect(page).to have_text "You are editing: test spec"
+    expect(page).to have_text "You are creating: test spec"
   end
 
   specify "breadcrumbs" do
@@ -26,7 +26,7 @@ RSpec.feature "A journey page has" do
 
   # specifying.start_page.page_title
   specify "heading" do
-    expect(find("h1.govuk-heading-xl")).to have_text "Edit your specification to procure catering for your school"
+    expect(find("h1.govuk-heading-xl")).to have_text "Create your specification to procure catering for your school"
   end
 
   specify do

@@ -52,7 +52,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
       end
 
       click_back
-      expect(find("h1.govuk-heading-xl")).to have_text "Edit your specification to procure catering for your school"
+      expect(find("h1.govuk-heading-xl")).to have_text "Create your specification to procure catering for your school"
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
 
       # list of tasks
       click_on "Return to task list" # task.button.back
-      expect(page).to have_content "Edit your specification to procure catering for your school"
+      expect(page).to have_content "Create your specification to procure catering for your school"
     end
 
     it "shows a list of the task steps" do

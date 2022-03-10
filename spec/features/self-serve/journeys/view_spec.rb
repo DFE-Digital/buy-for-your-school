@@ -30,7 +30,7 @@ RSpec.feature "Users can see their specification" do
     click_view
 
     click_breadcrumb "Create specification"
-    expect(find("h1.govuk-heading-xl")).to have_text "Edit your specification to procure catering for your school"
+    expect(find("h1.govuk-heading-xl")).to have_text "Create your specification to procure catering for your school"
   end
 
   scenario "renders radio responses that have futher information" do
