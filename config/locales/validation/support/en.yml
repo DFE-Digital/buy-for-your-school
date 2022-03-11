@@ -12,7 +12,7 @@ en:
       organisation_id: "" # Omitted
       organisation_formatted_name: "" # Omitted
       merge_into_case_ref: "" # Omitted
-      reason: "" # Omited
+      reason: "" # Omitted
 
     errors:
       rules:
@@ -61,11 +61,6 @@ en:
         # Closing a new case
         reason:
           missing: You must choose a reason for closing the case
-
-        # Case value
-        value:
-          decimal: Enter a number
-
 
   case_migration_form:
     rules:
@@ -147,3 +142,11 @@ en:
           missing: Select an attachment
         description:
           missing: Enter a description
+
+  case_summary_form:
+    rules:
+      value: "" # Omitted
+    errors:
+      rules:
+        value:
+          decimal?: Enter a number
