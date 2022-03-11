@@ -26,15 +26,22 @@ else
   echo "==> Linting Ruby..."
   bundle exec rake rubocop
 
+  echo "==> Running Brakeman"
+  bundle exec brakeman -o /dev/stdout
+
   #echo "==> CC Test Reporter Before Build..."
   #GIT_COMMITTED_AT=$DATE cc-test-reporter before-build
 
+  # Allow the command to pass every time, the below will return non-0 exit code
+  # if there are failures after second attempt
   echo "==> Running the tests..."
-  bundle exec rspec
+  bundle exec rspec || :
+
+  if [[ $(cat spec/examples.txt | grep failed) != "" ]]; then
+    echo "==> Running failed tests again..."
+    bundle exec rspec --only-failures
+  fi
 
   #echo "==> CC Test Reporter After Build... "
   #GIT_COMMITTED_AT=$DATE cc-test-reporter after-build --debug -t simplecov
-
-  echo "==> Running Brakeman"
-  bundle exec brakeman -o /dev/stdout
 fi
