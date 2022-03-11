@@ -38,4 +38,15 @@ RSpec.feature "Search cases", bullet: :skip do
       end
     end
   end
+
+  context "when search term contains spaces" do
+    it "validates the search term" do
+      fill_in "search_case_form[search_term]", with: "Example Search"
+      click_on "Search"
+
+      within(all("h1.govuk-heading-l")[0]) do
+        expect(page).to have_text "Search result"
+      end
+    end
+  end
 end
