@@ -1,21 +1,21 @@
-require 'nokogiri'
+require "nokogiri"
 
 module Support
   class EmailPresenter < ::Support::BasePresenter
-    ALLOWED_HTML_TAGS = [
-      'img',
-      'strong',
-      'b',
-      'br',
-      'p',
-      'hr',
-      'ul',
-      'ol',
-      'li',
-      'dt',
-      'dd',
-      'em',
-      'blockquote'
+    ALLOWED_HTML_TAGS = %w[
+      img
+      strong
+      b
+      br
+      p
+      hr
+      ul
+      ol
+      li
+      dt
+      dd
+      em
+      blockquote
     ].freeze
 
     # @return [String]
@@ -50,7 +50,8 @@ module Support
     def body_for_display(view_context)
       # Do initial removal of links, and replace images with inline attachments
       new_body = body_with_links_removed(
-        view_context, body_with_inline_attachments(view_context))
+        view_context, body_with_inline_attachments(view_context)
+      )
 
       # Removal all html tags not defined in ALLOWED_HTML_TAGS list
       scrubber = Rails::Html::PermitScrubber.new
@@ -63,13 +64,17 @@ module Support
       html_fragment.to_s
     end
 
-    private
+  private
 
-    def body_with_links_removed(view_context, cleaned_body = body)
+    def body_with_links_removed(_view_context, cleaned_body = body)
       html = Nokogiri::HTML(cleaned_body)
 
-      html.xpath('//a[@href]').each do |link|
-        link.replace("#{link.text} (#{link["href"]}) ")
+      html.xpath("//a[@href]").each do |link|
+        if link["href"].starts_with?("javascript")
+          link.remove
+        else
+          link.replace("#{link.text} (#{link['href']}) ")
+        end
       end
 
       html.xpath("//body/node()").to_html

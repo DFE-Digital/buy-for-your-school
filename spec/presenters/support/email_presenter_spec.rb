@@ -10,6 +10,7 @@ describe Support::EmailPresenter do
 
     context "when there are link tags in the email body" do
       subject(:presenter) { described_class.new(email) }
+
       let(:email) { create(:support_email, body: body) }
 
       context "with a standard link" do
@@ -19,7 +20,7 @@ describe Support::EmailPresenter do
           view_context = self  # as application route helpers are included
 
           expect(presenter.body_for_display(view_context)).to eq(
-            "Link 1 (http://example.org?link=1)"
+            "Link 1 (http://example.org?link=1) ",
           )
         end
       end
@@ -31,7 +32,7 @@ describe Support::EmailPresenter do
           view_context = self  # as application route helpers are included
 
           expect(presenter.body_for_display(view_context)).to eq(
-            "Link 1 (http://example.org?link=1)"
+            "Link 1 (http://example.org?link=1) ",
           )
         end
       end
@@ -43,7 +44,7 @@ describe Support::EmailPresenter do
           view_context = self  # as application route helpers are included
 
           expect(presenter.body_for_display(view_context)).to eq(
-            "Check out the following: (http://example.org?link=1)Here (http://example.org?link=2)"
+            "Check out the following: (http://example.org?link=1) Here (http://example.org?link=2) ",
           )
         end
       end
