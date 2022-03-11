@@ -49,18 +49,15 @@ module Support
           body: "to ##{to_case.ref}",
           agent_id: agent.id,
         )
+        from_case.update!(action_required: false)
 
-        # create a state_change interaction record
-        from_case.interactions.state_change.build(
-          body: "From new to closed by #{agent.full_name} on #{Time.zone.now.to_formatted_s(:short)}",
-          agent_id: agent.id,
-        )
-
-        from_case.update!(
-          action_required: false,
-          state: :closed,
-          closure_reason: "email_merge",
-        )
+        # update the case status and create a state_change interaction record
+        ChangeCaseState.new(
+          kase: from_case,
+          agent: agent,
+          to: :closed,
+          reason: :email_merge,
+        ).call
       end
     end
 

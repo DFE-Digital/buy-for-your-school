@@ -8,7 +8,10 @@ module Support
       @case_resolution_form = CaseResolutionForm.from_validation(validation)
 
       if validation.success? && !current_case.resolved?
-        resolve_case
+        change_case_status(
+          to: :resolved,
+          after: ": #{@case_resolution_form.notes}",
+        )
 
         record_action(case_id: current_case.id, action: "resolve_case")
 
@@ -19,15 +22,6 @@ module Support
     end
 
   private
-
-    def resolve_case
-      current_case.interactions.state_change.build(
-        body: "#{state_change_body('resolved')}: #{@case_resolution_form.notes}",
-        agent_id: current_agent.id,
-      )
-
-      current_case.resolve!
-    end
 
     def validation
       CaseResolutionFormSchema.new.call(**case_resolution_form_params)

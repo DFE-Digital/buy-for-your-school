@@ -4,16 +4,12 @@ module Support
 
   private
 
-    def state_change_body(to)
-      "From #{current_state} to #{to} by #{current_agent.full_name} on #{now}"
-    end
-
-    def current_state
-      I18n.t("support.case.label.state.state_#{current_case.state}").downcase
-    end
-
-    def now
-      Time.zone.now.to_formatted_s(:short)
+    def change_case_state(args)
+      ChangeCaseState.new(
+        kase: current_case,
+        agent: current_agent,
+        **args,
+      ).call
     end
 
     # @return [Case, nil]
