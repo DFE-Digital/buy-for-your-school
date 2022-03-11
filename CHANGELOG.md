@@ -16,6 +16,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 -->
 
+- add ability to give names to specifications [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/927)
+
+## [release-020] - 2022-03-02
 
 - add feedback page to capture user feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/885)
 - add details page to capture user details after giving feedback [#ref](https://github.com/DFE-Digital/buy-for-your-school/pull/890)
