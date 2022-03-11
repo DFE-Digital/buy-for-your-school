@@ -574,6 +574,7 @@ en:
           nw_hub: North west hub case
           sw_hub: South west hub case
           faf: Find a Framework
+          incoming_email: Email
           unspecified: "-"
         category: Category
         last_updated: Last updated
