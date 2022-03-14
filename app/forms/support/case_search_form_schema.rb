@@ -7,7 +7,7 @@ module Support
       required(:search_term).value(:string)
     end
 
-    rule(:search_term).validate(min_size?: 3, format?: /(^[A-Za-z0-9_-]*$)/)
+    rule(:search_term).validate(min_size?: 3)
   end
 end
 # :nocov:
