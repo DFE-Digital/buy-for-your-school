@@ -40,7 +40,7 @@ module Support
   private
 
     def from
-      @from ||= I18n.t("support.case.label.state.state_#{kase.state}")
+      @from ||= I18n.t("support.case.label.state.state_#{kase.state}").downcase
     end
 
     def to_message
