@@ -27,7 +27,7 @@ RSpec.feature "Case worker can open a case" do
     end
 
     it "records the interaction for case history" do
-      expect(Support::Interaction.last.body).to eql "From resolved to opened by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
+      expect(Support::Interaction.last.body).to eql "From resolved to open by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.feature "Case worker can open a case" do
     end
 
     it "records the interaction for case history" do
-      expect(Support::Interaction.last.body).to eql "From on hold to opened by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
+      expect(Support::Interaction.last.body).to eql "From on hold to open by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
     end
   end
 end

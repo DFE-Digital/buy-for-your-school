@@ -2,7 +2,7 @@ module Support
   class Cases::OpeningsController < Cases::ApplicationController
     def create
       if current_case.may_open?
-        change_case_status(to: :opened)
+        change_case_state(to: :opened)
 
         redirect_to support_case_path(current_case, anchor: "case-history"),
                     notice: I18n.t("support.case_opening.flash.reopened")

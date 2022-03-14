@@ -8,9 +8,9 @@ module Support
       @case_resolution_form = CaseResolutionForm.from_validation(validation)
 
       if validation.success? && !current_case.resolved?
-        change_case_status(
+        change_case_state(
           to: :resolved,
-          after: ": #{@case_resolution_form.notes}",
+          info: ": #{@case_resolution_form.notes}",
         )
 
         record_action(case_id: current_case.id, action: "resolve_case")

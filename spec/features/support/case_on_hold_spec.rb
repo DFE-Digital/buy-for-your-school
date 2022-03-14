@@ -30,7 +30,7 @@ RSpec.feature "Case worker can place an open case on hold" do
   it "records the interaction against the case" do
     visit "/support/cases/#{support_case.id}#case-history"
 
-    expect(find("##{interaction.id}")).to have_text "Status change"
-    expect(find("##{interaction.id}")).to have_text "From open to on hold by Procurement Specialist on #{now}"
+    expect(page).to have_text "Status change"
+    expect(page).to have_text "From open to on hold by Procurement Specialist on #{now}"
   end
 end

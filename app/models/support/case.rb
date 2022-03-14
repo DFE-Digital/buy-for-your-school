@@ -146,7 +146,7 @@ module Support
     end
 
     def record_state_change
-      Support::RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
+      RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
     end
   end
 end
