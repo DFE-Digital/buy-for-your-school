@@ -545,9 +545,13 @@ en:
         state:
           state_initial: New
           state_opened: Open
+          state_open: Open
           state_resolved: Resolved
+          state_resolve: Resolved
           state_on_hold: On Hold
+          state_hold: On Hold
           state_closed: Closed
+          state_close: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
           state_action_required: Action

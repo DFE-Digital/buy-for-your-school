@@ -6,7 +6,7 @@ module Support
 
     def create
       if current_case.resolved?
-        change_case_state(to: :closed, reason: :resolved)
+        change_case_state(to: :close, reason: :resolved)
 
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
 
@@ -34,7 +34,7 @@ module Support
 
           reason = I18n.t("support.case_closures.edit.reasons.#{@form.reason}")
           change_case_state(
-            to: :closed,
+            to: :close,
             reason: @form.reason,
             info: ". Reason given: #{reason}",
           )

@@ -55,7 +55,7 @@ module Support
         ChangeCaseState.new(
           kase: from_case,
           agent: agent,
-          to: :closed,
+          to: :close,
           reason: :email_merge,
         ).call
       end

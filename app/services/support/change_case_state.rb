@@ -9,9 +9,9 @@ module Support
     extend Dry::Initializer
 
     option :kase, ::Types.Instance(Case), optional: false
-    option :agent, lambda { |value| value.is_a?(Agent) ? AgentPresenter.new(value) : value }, optional: false
+    option :agent, ->(value) { value.is_a?(Agent) ? AgentPresenter.new(value) : value }, optional: false
     option :to, ::Types::Symbol, optional: false
-    
+
     #  reason:
     #   a closure reason can be supplied and is applied if the new state is "closed"
     #
@@ -32,16 +32,15 @@ module Support
         agent_id: agent.id,
       )
 
-      kase.update!(
-        state: to,
-        closure_reason: (reason if to == :closed),
-      )
+      kase.closure_reason = reason if to == :close
+
+      kase.send("#{to}!")
     end
 
-    private
+  private
 
     def from
-      @from ||= CasePresenter.new(kase).state_I18n.downcase
+      @from ||= I18n.t("support.case.label.state.state_#{kase.state}")
     end
 
     def to_message

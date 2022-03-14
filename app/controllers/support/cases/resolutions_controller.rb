@@ -9,7 +9,7 @@ module Support
 
       if validation.success? && !current_case.resolved?
         change_case_state(
-          to: :resolved,
+          to: :resolve,
           info: ": #{@case_resolution_form.notes}",
         )
 

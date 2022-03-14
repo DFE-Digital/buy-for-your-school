@@ -20,11 +20,6 @@ module Support
     end
 
     # @return [String]
-    def state_I18n
-      I18n.t("support.case.label.state.state_#{__getobj__.state}")
-    end
-
-    # @return [String]
     def agent_name
       agent&.full_name || "UNASSIGNED"
     end
