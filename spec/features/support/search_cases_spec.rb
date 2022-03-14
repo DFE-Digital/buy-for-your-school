@@ -28,17 +28,6 @@ RSpec.feature "Search cases", bullet: :skip do
     end
   end
 
-  context "when search term contains special characters" do
-    it "validates the search term" do
-      fill_in "search_case_form[search_term]", with: "!!!"
-      click_on "Search"
-
-      within "p.govuk-error-message" do
-        expect(page).to have_text "Search term must only container letters or numbers"
-      end
-    end
-  end
-
   context "when search term contains spaces" do
     it "validates the search term" do
       fill_in "search_case_form[search_term]", with: "Example Search"
