@@ -10,6 +10,6 @@ set -o pipefail
 echo "$GHCR_PASSWORD" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
 
 # production stage
-docker build --target app --tag "$GHCR_REPO:$DOCKER_TAG" --cache-from="$GHCR_REPO:latest" .
+docker build --target app --tag "$GHCR_REPO:$DOCKER_TAG" .
 
 docker push "$GHCR_REPO:$DOCKER_TAG"
