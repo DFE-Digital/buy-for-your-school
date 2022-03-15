@@ -82,6 +82,7 @@ module Support
         :last_name,
         :email,
         :phone_number,
+        :extension_number,
         :category_id,
         :hub_case_ref,
         :estimated_procurement_completion_date,

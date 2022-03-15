@@ -704,6 +704,7 @@ en:
         last_name: Contact last name
         email: Contact email
         phone_number: Contact phone number %{optional}
+        extension_number: Contact extension number %{optional}
         category: Category
         category_id: Buying category
         source: Case source
