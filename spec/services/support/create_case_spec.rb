@@ -17,6 +17,7 @@ RSpec.describe Support::CreateCase do
         last_name: "last_name",
         email: "test@example.com",
         phone_number: "00000000000",
+        extension_number: "2121",
       }
     end
 

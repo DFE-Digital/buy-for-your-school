@@ -19,6 +19,7 @@ module Support
         last_name: @attrs[:last_name],
         email: @attrs[:email],
         phone_number: @attrs[:phone_number],
+        extension_number: @attrs[:extension_number],
         request_text: @attrs[:request_text],
         action_required: @attrs.fetch(:action_required, false),
         new_contract: NewContract.create!,
