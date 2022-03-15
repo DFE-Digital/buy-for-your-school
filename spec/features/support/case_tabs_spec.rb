@@ -52,12 +52,6 @@ RSpec.feature "Case summary" do
       end
     end
 
-    it "lists specifications for viewing" do
-      document = support_case.documents.first
-
-      expect(page).to have_link "specification-1 (opens in new tab)", href: support_case_document_path(support_case, document)
-    end
-
     it "lists Procurement section headings details" do
       within "#case-details" do
         expect(find("#procurement-details-procurement")).to have_text "Procurement details"
