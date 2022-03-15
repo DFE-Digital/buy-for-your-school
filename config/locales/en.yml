@@ -561,6 +561,7 @@ en:
         assigned_to: Assigned to
         contact_name: Contact name
         contact_phone: Contact phone
+        contact_extension_number: Contact extension
         contact_email: Contact email
         organisation_name: Organisation name
         organisation_type: Organisation type
@@ -806,6 +807,7 @@ en:
         last_name: Last name
         phone: Phone number
         email: Email address
+        extension_number: Extension number
       flash:
         updated: Contact details updated successfully
       submit: Save changes

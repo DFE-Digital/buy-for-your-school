@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_25_175814) do
+ActiveRecord::Schema.define(version: 2022_03_15_104542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 2022_02_25_175814) do
     t.decimal "savings_actual", precision: 9, scale: 2
     t.boolean "action_required", default: false
     t.string "organisation_type"
+    t.string "extension_number"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"

@@ -6,11 +6,8 @@
   <%= form.govuk_text_field :first_name, autofocus: true, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.first_name") } %>
   <%= form.govuk_text_field :last_name, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.last_name") } %>
   <%= form.govuk_text_field :phone, width: 'one-quarter', label: { text: I18n.t("support.case_contact_details.label.phone") } %>
+  <%= form.govuk_text_field :extension_number, width: 'one-quarter', label: { text: I18n.t("support.case_contact_details.label.extension_number") } %>
   <%= form.govuk_text_field :email, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.email") } %>
 
   <%= form.submit I18n.t("support.case_contact_details.submit"), class: "govuk-button" %>
 <% end %>
-
-
-
-
