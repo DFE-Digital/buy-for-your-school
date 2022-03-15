@@ -141,7 +141,6 @@ en:
       rules:
         search_term:
           min_size?: must be at least 3 characters
-          format?: must only container letters or numbers
 
   save_attachments_form:
     errors:
