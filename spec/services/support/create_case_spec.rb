@@ -32,6 +32,7 @@ RSpec.describe Support::CreateCase do
       expect(result.new_contract).not_to be_nil
       expect(result.existing_contract).not_to be_nil
       expect(result.procurement).not_to be_nil
+      expect(result.extension_number).to eq "2121"
       expect(Support::Case.count).to be 1
     end
 
