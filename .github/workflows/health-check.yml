@@ -21,18 +21,6 @@ jobs:
           url: https://staging-get-help-buying-for-schools.education.gov.uk
           max-attempts: 3
 
-      - name: Preview
-        uses: jtalk/url-health-check-action@v2
-        with:
-          url: https://preview-get-help-buying-for-schools.education.gov.uk
-          max-attempts: 3
-
-      - name: Research
-        uses: jtalk/url-health-check-action@v2
-        with:
-          url: https://research-get-help-buying-for-schools.education.gov.uk/
-          max-attempts: 3
-
       - name: Slack Workflow Notification
         if: failure()
         uses: Gamesight/slack-workflow-status@master
