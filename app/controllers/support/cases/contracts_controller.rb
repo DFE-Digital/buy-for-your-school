@@ -51,7 +51,7 @@ module Support
     end
 
     def create_contract_interaction
-      current_contract.type == Support::ExistingContract ? create_interaction(params[:case_id], "existing_contract_updated", "existing contract details updated") : create_interaction(params[:case_id], "new_contract_updated", "new contract details updated")
+      current_contract.instance_of?(Support::ExistingContract) ? create_interaction(params[:case_id], "existing_contract_updated", "existing contract details updated", data: { contract_id: current_contract.id }) : create_interaction(params[:case_id], "new_contract_updated", "new contract details updated", data: { contract_id: current_contract.id })
     end
   end
 end
