@@ -510,6 +510,7 @@ en:
       continue: Continue
       cancel: Cancel
       back: Back
+      search: Search
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -623,6 +624,22 @@ en:
         my_cases: My cases
         new_cases: New cases
         all_cases: All cases
+      search:
+        heading: Find a case
+        hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
+        results: Search results
+        count: "%{count} cases found containing '%{term}'"
+        button: Start a new search
+      filter:
+        filter_results: Filter results
+        labels:
+          state: Filter by status
+          category: Filter by category
+          assignee: Filter by assignee
+          all: All
+        buttons:
+          apply: Apply filter
+          clear: Clear filter
       link:
         edit_category: Change
         edit_description: Change

@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       scope module: :cases do
         collection do
           resource :preview, only: %i[new create], as: :create_case_preview
+          resources :searches, only: %i[new index], as: :case_search, path: "find-a-case"
         end
         resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
