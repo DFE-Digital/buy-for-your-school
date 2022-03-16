@@ -132,6 +132,15 @@ en:
         ended_at:
           invalid: is invalid
 
+
+  case_search_form:
+    rules:
+      search_term: Search term
+    errors:
+      rules:
+        search_term:
+          min_size?: must be at least 3 characters
+
   save_attachments_form:
     errors:
       rules:
