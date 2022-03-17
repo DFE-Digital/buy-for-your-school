@@ -26,9 +26,9 @@ jobs:
         uses: Gamesight/slack-workflow-status@master
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
-          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
-          channel: '#ghbs-tech-arch-and-devs'
-          name: 'Health Checks'
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL_MONITORING}}
+          name: "Health check failures occured"
+          include_jobs: true
 
 
 
