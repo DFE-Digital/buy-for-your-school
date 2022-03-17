@@ -57,6 +57,7 @@ module Support
           agent: agent,
           to: :close,
           reason: :email_merge,
+          info: ". Email(s) moved to case ##{to_case.ref}"
         ).call
       end
     end

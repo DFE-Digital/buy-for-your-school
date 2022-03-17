@@ -98,7 +98,7 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
       it "records the interaction against the from case" do
         visit "/support/cases/#{from_case.id}#case-history"
         expect(page).to have_text "Status change"
-        expect(page).to have_text "From new to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}"
+        expect(page).to have_text "From new to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}. Email(s) moved to case ##{to_case.ref}"
 
         expect(page).to have_text "Email merge"
         expect(page).to have_text "to ##{to_case.ref}"
