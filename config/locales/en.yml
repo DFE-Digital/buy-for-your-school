@@ -117,6 +117,7 @@ en:
   journey:
     specification:
       header: Your specification
+      caption: "You are viewing: %{name}"
       body: Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed.
       draft: You have not completed all the tasks. Your specification is incomplete.
       button: View your specification
@@ -142,6 +143,18 @@ en:
         heading: Giving us feedback
         body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
         button: Give feedback (opens in a new tab)
+    new:
+      categories:
+        header: What are you buying?
+      name:
+        label: Name your specification
+        hint: This will help you to find it if you need to come back to it later. Use a maximum of 30 characters.
+    edit:
+      name:
+        label: Edit the name of your specification
+        hint: This will help you to find it if you need to come back to it later. Use a maximum of 30 characters.
+    update:
+      notice: Specification name updated
 
   # /dashboard
   dashboard:
@@ -158,19 +171,17 @@ en:
       header: Existing specifications
       body: Continue with a draft specification, and review completed specifications.
 
-  # /categories
-  categories:
-    header: What are you buying?
-    not_found: No categories found
-
   # /journeys#show
-  journeys_title: Create a specification to procure %{category} for your school
+  journeys_title: Create your specification to procure %{category} for your school
+  journeys_caption: "You are creating: %{name}"
   journeys_body: Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time.
   task_list:
     status:
       not_started: Not started
       in_progress: In progress
       completed: Completed
+  journeys_edit:
+    button: Edit name    
 
   # /tasks#show
   task:
@@ -188,6 +199,7 @@ en:
   design:
     category_selection_header: Choose a category
     spec_template_tag_title: Specification tag
+    not_found: No categories found
 
   # /profile
   profile:

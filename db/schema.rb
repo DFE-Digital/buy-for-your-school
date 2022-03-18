@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_155358) do
     t.boolean "started", default: false
     t.uuid "category_id"
     t.integer "state", default: 0
+    t.string "name"
     t.index ["category_id"], name: "index_journeys_on_category_id"
     t.index ["started"], name: "index_journeys_on_started"
     t.index ["user_id"], name: "index_journeys_on_user_id"
