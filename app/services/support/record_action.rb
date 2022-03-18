@@ -23,6 +23,7 @@ module Support
       close_case
       case_modified
       first_contact
+      change_case_summary
     ].freeze
 
     # @!attribute action
