@@ -23,7 +23,7 @@ module Support
         lower(agent_last_name) LIKE lower(:q)
       SQL
 
-      where(sql, q: "#{query}%")
+      where(sql, q: "#{query}%").order("case_ref DESC")
     }
   end
 end

@@ -12,7 +12,7 @@ module Support
         results = results.public_send("by_#{key}", value) if value.present?
       end
 
-      results
+      results.order("ref DESC")
     end
   end
 end

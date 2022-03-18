@@ -102,6 +102,8 @@ Rails.application.routes.draw do
         resource :opening, only: %i[create]
         resource :closure, only: %i[create]
         resource :on_hold, only: %i[create]
+        resource :summary, only: %i[edit update]
+        resource :summary_submission, only: %i[edit update]
         resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do

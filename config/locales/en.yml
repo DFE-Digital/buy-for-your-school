@@ -528,6 +528,11 @@ en:
         case_history: Case history
         procurement_detail: Procurement details
         case_attachments: Attachments
+      case_details:
+        case_summary:
+          heading: Case summary -
+        request:
+          heading: Request
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -555,11 +560,27 @@ en:
           state_pipeline: Pipeline
           state_no_response: No Response
           state_action_required: Action
+        support_level:
+          header: Case level
+          L1: 1 - General guidance
+          L2: 2 - Specific advice
+          L3: 3 - Support with buying
+          L4: 4 - DfE buying through a framework
+          L5: 5 - DfE buying by getting quotes or bids
+          unspecified: Not specified
+        value:
+          unspecified: Not specified
+        unspecified: Not specified
+        case_value: Case value
+        received_at: Received
         source:
+          header: Source
           digital: Specify case
           nw_hub: North west hub case
           sw_hub: South west hub case
           faf: Find a Framework
+          incoming_email: Email
+          unspecified: "-"
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -635,6 +656,7 @@ en:
       link:
         edit_category: Change
         edit_description: Change
+        edit_case_summary: change
         view_school_information: View school information (opens in a new tab)
         view_group_information: View group information (opens in a new tab)
 
@@ -677,6 +699,23 @@ en:
           submit: Continue
       flash:
         updated: Successfully changed case contracts
+
+    case_summary:
+      edit:
+        header: Update case summary
+        submit: Continue
+        support_level:
+          label: Case level (optional)
+        value:
+          label: Case value or estimated contract value (optional)
+      flash:
+        updated: Case summary successfully updated
+
+    case_summary_submissions:
+      edit:
+        header: Check your answers before updating case summary
+        submit: Save
+
     case_savings:
       show:
         header: Savings details
