@@ -562,9 +562,13 @@ en:
         state:
           state_initial: New
           state_opened: Open
+          state_open: Open
           state_resolved: Resolved
+          state_resolve: Resolved
           state_on_hold: On Hold
+          state_hold: On Hold
           state_closed: Closed
+          state_close: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
           state_action_required: Action
@@ -1019,6 +1023,7 @@ en:
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
         state_change: Status change
+        email_merge: Email merge
       label:
         email_unread: Unread
         contact_detail: Contact details

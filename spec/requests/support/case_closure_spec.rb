@@ -34,6 +34,17 @@ RSpec.describe "Case closure", type: :request do
           expect(response).to redirect_to(support_case_path(support_case))
         end
       end
+
+      context "when the case is resolved" do
+        let(:support_case) { create(:support_case, :resolved) }
+
+        it "redirects to support_cases_path with the state changed" do
+          post support_case_closure_path(support_case)
+          expect(support_case.reload.state).to eq("closed")
+          expect(support_case.closure_reason).to eq("resolved")
+          expect(response).to redirect_to("#{support_case_path(support_case)}#case-history")
+        end
+      end
     end
   end
 end

@@ -56,7 +56,7 @@ module Support
 
     # @return [Boolean]
     def email?
-      event_type.match?(/\Aemail.*/)
+      event_type != "email_merge" && event_type.match?(/\Aemail.*/)
     end
 
     def outlook_email?
@@ -88,7 +88,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge].include?(key)
       end
     end
 

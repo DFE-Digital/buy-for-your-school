@@ -1,6 +1,7 @@
 RSpec.describe Support::MergeCaseEmails do
-  subject(:merge) { described_class.new(from_case: from_case, to_case: to_case) }
+  subject(:merge) { described_class.new(from_case: from_case, to_case: to_case, agent: agent) }
 
+  let(:agent) { ::Support::AgentPresenter.new(create(:support_agent)) }
   let(:from_case) { create(:support_case, action_required: true) }
   let(:to_case) { create(:support_case, action_required: false) }
 
@@ -26,7 +27,8 @@ RSpec.describe Support::MergeCaseEmails do
 
       merge.call
 
-      expect(from_case.closed?).to be true
+      expect(from_case.reload.closed?).to be true
+      expect(from_case.closure_reason).to eql "email_merge"
       expect(from_case.action_required?).to be false
       expect(to_case.action_required?).to be true
     end
@@ -43,8 +45,8 @@ RSpec.describe Support::MergeCaseEmails do
 
       merge.call
 
-      expect(from_case.interactions.count).to be 0
-      expect(to_case.interactions.count).to be 2
+      expect(from_case.interactions.count).to be 2
+      expect(to_case.interactions.count).to be 3
     end
   end
 
