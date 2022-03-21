@@ -18,7 +18,7 @@ module Support
     option :agent, optional: true
 
     def agents
-      @agents ||= Support::Agent.all.map { |a| AgentPresenter.new(a) }
+      @agents ||= Support::Agent.caseworkers.map { |a| AgentPresenter.new(a) }
     end
 
     def categories

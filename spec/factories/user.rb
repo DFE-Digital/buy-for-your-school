@@ -18,17 +18,6 @@ FactoryBot.define do
       }]
     end
 
-    after(:create, :build, :stub) do |user|
-      if ENV["POST_MIGRATION_CHANGES"] == "true"
-        user.email = nil
-        user.full_name = nil
-        user.first_name = nil
-        user.last_name = nil
-        user.orgs = nil
-        user.roles = nil
-      end
-    end
-
     trait :caseworker do
       email       { "ops@education.gov.uk"   }
       first_name  { "Procurement"            }

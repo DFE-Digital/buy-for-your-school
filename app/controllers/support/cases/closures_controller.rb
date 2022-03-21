@@ -6,11 +6,7 @@ module Support
 
     def create
       if current_case.resolved?
-        current_case.interactions.state_change.build(
-          body: "Resolved case closed by agent",
-          agent_id: current_agent.id,
-        )
-        current_case.close!
+        change_case_state(to: :close, reason: :resolved)
 
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
 
@@ -36,7 +32,12 @@ module Support
         current_case.transaction do
           raise CaseCannotBeClosed unless current_case.initial? && current_case.incoming_email?
 
-          current_case.close!
+          reason = I18n.t("support.case_closures.edit.reasons.#{@form.reason}")
+          change_case_state(
+            to: :close,
+            reason: @form.reason,
+            info: ". Reason given: #{reason}",
+          )
         end
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @form.reason })
         redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.updated")

@@ -4,6 +4,14 @@ module Support
 
   private
 
+    def change_case_state(args)
+      ChangeCaseState.new(
+        kase: current_case,
+        agent: current_agent,
+        **args,
+      ).call
+    end
+
     # @return [Case, nil]
     def current_case
       @current_case ||= Case.find_by(id: params[:case_id])

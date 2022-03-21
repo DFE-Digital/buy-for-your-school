@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - develop
+      - main
       - research
 
 env:
@@ -17,7 +17,19 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
+  turnstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: softprops/turnstyle@v1
+        name: Check workflow concurrency
+        with:
+          poll-interval-seconds: 20
+          same-branch-only: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: turnstyle
     runs-on: ubuntu-latest
     outputs:
       tf_var_docker_image: ${{ steps.tf_var_docker_image.outputs.value }}
@@ -49,7 +61,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: staging
-    if: success() && github.ref == 'refs/heads/main' && github.event.action == 'push'
+    if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
@@ -91,7 +103,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: production
-    if: success() && github.ref == 'refs/heads/main'
+    if: success() && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}

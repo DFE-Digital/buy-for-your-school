@@ -35,5 +35,30 @@ RSpec.feature "Specification dashboard" do
     it "offers support with requests" do
       expect(page).to have_link "Request free help and support with your specification", href: "/support-requests", class: "govuk-link"
     end
+
+    it "is full page width" do
+      expect(page).to have_css "div.govuk-grid-column-full"
+    end
+
+    it "dashboard.header" do
+      expect(page.title).to have_text "Specifications dashboard"
+      expect(find("h1.govuk-heading-xl")).to have_text "Specifications dashboard"
+    end
+
+    context "when the user has no specifications" do
+      it "dashboard.create.header" do
+        expect(find("h2.govuk-heading-m")).to have_text "Create a new specification"
+      end
+
+      it "dashboard.create.body" do
+        expect(find("p.govuk-body")).to have_text "Create a new specification for a procurement."
+      end
+
+      # duplicates dashboard.create.header
+      it "dashboard.create.button" do
+        expect(find("a.govuk-button")).to have_text "Create a new specification"
+        expect(find("a.govuk-button")[:role]).to eq "button"
+      end
+    end
   end
 end

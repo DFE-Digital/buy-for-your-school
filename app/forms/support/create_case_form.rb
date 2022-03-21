@@ -13,6 +13,7 @@ module Support
     option :last_name, optional: true
     option :email, optional: true
     option :phone_number, optional: true
+    option :extension_number, optional: true
     option :category_id, optional: true
     option :hub_case_ref, optional: true
     option :estimated_procurement_completion_date, optional: true

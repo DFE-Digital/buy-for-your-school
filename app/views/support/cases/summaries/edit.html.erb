@@ -1,0 +1,16 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_summary.edit.header") %></h1>
+
+<%= form_with model: @case_summary_form, scope: :case_summary_form, url: support_case_summary_path(@current_case), method: :patch, class: "govuk-!-display-inline" do |form| %>
+  <%= form.govuk_radio_buttons_fieldset :support_level, legend: { text: I18n.t("support.case_summary.edit.support_level.label") } do %>
+
+    <div class="govuk-radios">
+      <% Support::Case.support_levels.each do |level| %>
+        <%= form.govuk_radio_button :support_level, level.first, label: { text: I18n.t("support.case.label.support_level.#{level.first}") } %>
+      <% end %>
+      <%= form.govuk_radio_button :support_level, "", label: { text: I18n.t("support.case.label.support_level.unspecified") } %>
+    </div>
+  <% end %>
+
+  <%= form.govuk_text_field :value, width: 5, label: { text: I18n.t("support.case_summary.edit.value.label"), size: 'm' }, prefix_text: '£' %>
+  <%= form.submit I18n.t("support.case_summary.edit.submit"), class: "govuk-button", role: "button" %>
+<% end %>
