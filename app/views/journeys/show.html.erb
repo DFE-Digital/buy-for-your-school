@@ -1,12 +1,16 @@
-<%= content_for :title, @journey.category.title %>
+<%= content_for :title, @journey.name %>
 
 <h1 class="govuk-heading-xl">
   <%= I18n.t("journeys_title", category: @journey.category.title_downcase) %>
 </h1>
+<p class="govuk-caption-l"><%= I18n.t("journeys_caption", name: @journey.name)%></p>
+<br>
+<%= link_to I18n.t("journeys_edit.button"), edit_journey_path(@journey), class: "govuk-link" %>
+<br>
+<br>
 <p class="govuk-body"><%= I18n.t("journeys_body") %></p>
-
-<div class="govuk-inset-text">
-  <%= link_to I18n.t("support_request.link"), support_requests_path, class: "govuk-link" %>
+<div class="govuk-inset-text">  
+<%= link_to I18n.t("support_request.link"), support_requests_path, class: "govuk-link" %>
 </div>
 
 <ol class="app-task-list sections">

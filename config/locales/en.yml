@@ -117,6 +117,7 @@ en:
   journey:
     specification:
       header: Your specification
+      caption: "You are viewing: %{name}"
       body: Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed.
       draft: You have not completed all the tasks. Your specification is incomplete.
       button: View your specification
@@ -142,6 +143,18 @@ en:
         heading: Giving us feedback
         body: Tell us how Get Help Buying for Schools is working for you. We use this to make improvements. It takes 3 minutes to complete.
         button: Give feedback (opens in a new tab)
+    new:
+      categories:
+        header: What are you buying?
+      name:
+        label: Name your specification
+        hint: This will help you to find it if you need to come back to it later. Use a maximum of 30 characters.
+    edit:
+      name:
+        label: Edit the name of your specification
+        hint: This will help you to find it if you need to come back to it later. Use a maximum of 30 characters.
+    update:
+      notice: Specification name updated
 
   # /dashboard
   dashboard:
@@ -158,19 +171,17 @@ en:
       header: Existing specifications
       body: Continue with a draft specification, and review completed specifications.
 
-  # /categories
-  categories:
-    header: What are you buying?
-    not_found: No categories found
-
   # /journeys#show
-  journeys_title: Create a specification to procure %{category} for your school
+  journeys_title: Create your specification to procure %{category} for your school
+  journeys_caption: "You are creating: %{name}"
   journeys_body: Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time.
   task_list:
     status:
       not_started: Not started
       in_progress: In progress
       completed: Completed
+  journeys_edit:
+    button: Edit name    
 
   # /tasks#show
   task:
@@ -188,6 +199,7 @@ en:
   design:
     category_selection_header: Choose a category
     spec_template_tag_title: Specification tag
+    not_found: No categories found
 
   # /profile
   profile:
@@ -498,6 +510,7 @@ en:
       continue: Continue
       cancel: Cancel
       back: Back
+      search: Search
       link:
         opens_in_new_tab: (opens in new tab)
       form:
@@ -527,6 +540,11 @@ en:
         case_history: Case history
         procurement_detail: Procurement details
         case_attachments: Attachments
+      case_details:
+        case_summary:
+          heading: Case summary -
+        request:
+          heading: Request
       label:
         create: Create a new case
         change_owner: Change case owner
@@ -544,17 +562,37 @@ en:
         state:
           state_initial: New
           state_opened: Open
+          state_open: Open
           state_resolved: Resolved
+          state_resolve: Resolved
           state_on_hold: On Hold
+          state_hold: On Hold
           state_closed: Closed
+          state_close: Closed
           state_pipeline: Pipeline
           state_no_response: No Response
           state_action_required: Action
+        support_level:
+          header: Case level
+          L1: 1 - General guidance
+          L2: 2 - Specific advice
+          L3: 3 - Support with buying
+          L4: 4 - DfE buying through a framework
+          L5: 5 - DfE buying by getting quotes or bids
+          unspecified: Not specified
+        value:
+          unspecified: Not specified
+        unspecified: Not specified
+        case_value: Case value
+        received_at: Received
         source:
+          header: Source
           digital: Specify case
           nw_hub: North west hub case
           sw_hub: South west hub case
           faf: Find a Framework
+          incoming_email: Email
+          unspecified: "-"
         category: Category
         last_updated: Last updated
         date_received: Date received
@@ -612,9 +650,26 @@ en:
         my_cases: My cases
         new_cases: New cases
         all_cases: All cases
+      search:
+        heading: Find a case
+        hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
+        results: Search results
+        count: "%{count} cases found containing '%{term}'"
+        button: Start a new search
+      filter:
+        filter_results: Filter results
+        labels:
+          state: Filter by status
+          category: Filter by category
+          assignee: Filter by assignee
+          all: All
+        buttons:
+          apply: Apply filter
+          clear: Clear filter
       link:
         edit_category: Change
         edit_description: Change
+        edit_case_summary: change
         view_school_information: View school information (opens in a new tab)
         view_group_information: View group information (opens in a new tab)
 
@@ -657,6 +712,23 @@ en:
           submit: Continue
       flash:
         updated: Successfully changed case contracts
+
+    case_summary:
+      edit:
+        header: Update case summary
+        submit: Continue
+        support_level:
+          label: Case level (optional)
+        value:
+          label: Case value or estimated contract value (optional)
+      flash:
+        updated: Case summary successfully updated
+
+    case_summary_submissions:
+      edit:
+        header: Check your answers before updating case summary
+        submit: Save
+
     case_savings:
       show:
         header: Savings details
@@ -954,6 +1026,7 @@ en:
         faf_support_request: Find a Framework Support Request
         procurement_updated: Procurement updated
         state_change: Status change
+        email_merge: Email merge
       label:
         email_unread: Unread
         contact_detail: Contact details

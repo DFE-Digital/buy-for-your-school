@@ -93,7 +93,7 @@ RSpec.feature "Create case", js: true do
       complete_valid_form
 
       click_on "Create case"
-      expect(find("h3#case-ref")).to have_text "000001"
+      expect(find("p#case-ref")).to have_text "000001"
     end
 
     context "with valid data" do
@@ -102,7 +102,7 @@ RSpec.feature "Create case", js: true do
         fill_in "create_case_form[phone_number]", with: "01234567890"
         click_on "Save and continue"
         click_on "Create case"
-        expect(find("h3#case-ref")).to have_text "000001"
+        expect(find("p#case-ref")).to have_text "000001"
       end
 
       it "validates a phone number (valid +44)" do
@@ -110,7 +110,7 @@ RSpec.feature "Create case", js: true do
         fill_in "create_case_form[phone_number]", with: "+441234567890"
         click_on "Save and continue"
         click_on "Create case"
-        expect(find("h3#case-ref")).to have_text "000001"
+        expect(find("p#case-ref")).to have_text "000001"
       end
     end
 

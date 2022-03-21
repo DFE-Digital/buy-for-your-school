@@ -21,7 +21,7 @@ RSpec.feature "Delete a journey" do
     scenario "the deleted journey is not shown in the table" do
       within("tbody.govuk-table__body") do
         expect(page).to have_css "tr.govuk-table__row", count: 1
-        expect(find(:xpath, "//tr[1]/td[1]")).to have_text "15 February 2021"
+        expect(find(:xpath, "//tr[1]/td[3]")).to have_text "15 February 2021"
         expect(find(:xpath, "//tr[1]/td[2]")).to have_text "Multi-functional devices"
       end
     end
@@ -43,7 +43,7 @@ RSpec.feature "Delete a journey" do
     it "table has delete button" do
       within("tbody.govuk-table__body") do
         expect(page).to have_css "tr.govuk-table__row", count: 1
-        expect(find(:xpath, "//tr[1]/td[3]")).to have_text "Delete"
+        expect(find(:xpath, "//tr[1]/td[4]")).to have_text "Delete"
       end
     end
 
