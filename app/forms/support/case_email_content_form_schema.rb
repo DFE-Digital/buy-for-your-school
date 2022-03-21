@@ -3,14 +3,13 @@ module Support
     include Concerns::TranslatableFormSchema
 
     params do
-      optional(:email_body).value(:string)
+      required(:email_body).value(:string)
       required(:email_subject).value(:string)
       optional(:email_template).value(:string)
-      required(:text).value(:string)
     end
 
-    rule(:text) do
-      key(:text).failure(:missing) if value.blank? && EmailTemplates.basic_template?(value[:email_template])
+    rule(:email_body) do
+      key(:email_body).failure(:missing) if value.blank?
     end
 
     rule(:email_subject) do

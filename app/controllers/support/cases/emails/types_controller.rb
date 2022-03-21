@@ -22,7 +22,7 @@ module Support
       if choice == "template"
         redirect_to support_case_email_templates_path(@current_case)
       else
-        redirect_to edit_support_case_email_content_path(@current_case, template: EmailTemplates::IDS[:basic_template])
+        redirect_to edit_support_case_email_content_path(@current_case, template: "ac679471-8bb9-4364-a534-e87f585c46f3")
       end
     end
 

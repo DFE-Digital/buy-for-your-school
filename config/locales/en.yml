@@ -181,7 +181,7 @@ en:
       in_progress: In progress
       completed: Completed
   journeys_edit:
-    button: Edit name
+    button: Edit name    
 
   # /tasks#show
   task:
@@ -791,9 +791,6 @@ en:
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
         referer: Referer
-        email_template: Email template
-        email_subject: Email subject
-        email_preview: Preview email
       request_type:
         legend: Request type
         hint: Is the request related to a procurement category?
@@ -916,8 +913,6 @@ en:
     case_email_templates:
       index:
         header: Send template email
-        basic_template:
-          link_text: Non-template
         what_is_a_framework:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
@@ -933,8 +928,6 @@ en:
         user_research:
           link_text: Ask schools to take part in user research
           subtitle: Links to a survey and interview booking form for schools
-        unknown:
-          link_text: Unknown template
 
     case_documents:
       show:
@@ -1037,7 +1030,6 @@ en:
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         body: Notes
         created_by: Created by
-        email_sender: Sender
       message:
         created_flash: "%{type} added to case"
       link_to_email_preview: Open email preview in new tab

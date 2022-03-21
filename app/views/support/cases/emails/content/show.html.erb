@@ -14,15 +14,14 @@
   </dl>
 
   <div class="email-preview-body">
-    <%= @case_email_content_form.email_body %>
+    <%= simple_format(@case_email_content_form.email_body) %>
   </div>
 </div>
 
 <%= form_with model: @case_email_content_form, scope: :case_email_content_form, url: support_case_email_path(@current_case), method: :post do |form| %>
-  <%= form.hidden_field :email_body, value: form.object.email_body %>
+  <%= form.hidden_field :email_body, value: basic_email_body %>
   <%= form.hidden_field :email_subject, value: form.object.email_subject %>
   <%= form.hidden_field :email_template, value: form.object.email_template %>
-  <%= form.hidden_field :text, value: form.object.text %>
 
   <%= form.submit I18n.t("support.case_email_content.preview.submit"), class: "govuk-button", role: "button" %>
 <% end %>

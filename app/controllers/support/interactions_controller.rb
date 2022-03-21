@@ -5,7 +5,7 @@ module Support
     def index; end
 
     def show
-      @interaction = InteractionPresenter.new(current_case.interactions.find(params[:id]))
+      @interaction = current_case.interactions.find(params[:id])
     end
 
     def new

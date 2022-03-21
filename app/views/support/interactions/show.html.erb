@@ -1,3 +1,1 @@
-<div class="govuk-body">
-  <%= @interaction.body.html_safe %>
-</div>
+<div class="govuk-body"><%= markdown_to_html @interaction.body %></div>
