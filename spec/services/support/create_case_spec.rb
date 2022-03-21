@@ -17,6 +17,7 @@ RSpec.describe Support::CreateCase do
         last_name: "last_name",
         email: "test@example.com",
         phone_number: "00000000000",
+        extension_number: "2121",
       }
     end
 
@@ -31,6 +32,7 @@ RSpec.describe Support::CreateCase do
       expect(result.new_contract).not_to be_nil
       expect(result.existing_contract).not_to be_nil
       expect(result.procurement).not_to be_nil
+      expect(result.extension_number).to eq "2121"
       expect(Support::Case.count).to be 1
     end
 

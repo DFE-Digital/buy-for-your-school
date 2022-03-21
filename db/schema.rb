@@ -266,6 +266,7 @@ ActiveRecord::Schema.define(version: 2022_03_16_155306) do
     t.decimal "savings_actual", precision: 9, scale: 2
     t.boolean "action_required", default: false
     t.string "organisation_type"
+    t.string "extension_number"
     t.integer "closure_reason"
     t.decimal "value", precision: 9, scale: 2
     t.index ["category_id"], name: "index_support_cases_on_category_id"

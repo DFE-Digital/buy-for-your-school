@@ -23,6 +23,7 @@ describe "Agent can set case contact details" do
         last_name: "Name",
         phone: "07888666555",
         email: "new@name.com",
+        extension_number: "6182",
       )
     end
 
@@ -32,6 +33,7 @@ describe "Agent can set case contact details" do
       expect(support_case.last_name).to eq("Name")
       expect(support_case.email).to eq("new@name.com")
       expect(support_case.phone_number).to eq("07888666555")
+      expect(support_case.extension_number).to eq("6182")
     end
   end
 
@@ -42,6 +44,7 @@ describe "Agent can set case contact details" do
         last_name: "Name",
         phone: "07888666555",
         email: "",
+        extension_number: "6182",
       )
     end
 
@@ -54,7 +57,7 @@ describe "Agent can set case contact details" do
     end
   end
 
-  def update_case_contact_details(first_name:, last_name:, phone:, email:)
+  def update_case_contact_details(first_name:, last_name:, phone:, email:, extension_number:)
     within "#school-details .govuk-summary-list__row", text: "Contact name" do
       click_link "Change"
     end
@@ -63,6 +66,7 @@ describe "Agent can set case contact details" do
     fill_in "Last name", with: last_name
     fill_in "Phone number", with: phone
     fill_in "Email address", with: email
+    fill_in "Extension number", with: extension_number
     click_button "Save changes"
   end
 end
