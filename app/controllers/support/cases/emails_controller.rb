@@ -10,8 +10,8 @@ module Support
           body: @case_email_content_form.email_body,
           additional_data: {
             email_template: email_template_uuid,
-            email_subject: @case_email_content_form.email_subject
-          }
+            email_subject: @case_email_content_form.email_subject,
+          },
         )
 
         send_email_to_school

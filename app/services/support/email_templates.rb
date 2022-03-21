@@ -7,14 +7,14 @@ module Support
       catering_frameworks: "12430165-4ae7-47aa-baa3-d0b3c5440a9b",
       social_value: "bb4e6925-3491-44b8-8747-bdbb31257403",
       user_research: "fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779",
-    }
+    }.freeze
 
     def self.basic_template?(id)
       IDS[:basic_template] == id
     end
 
     def self.label_for(id)
-      I18n.t("support.case_email_templates.index.#{(EmailTemplates::IDS.key(id) || :unknown)}.link_text")
+      I18n.t("support.case_email_templates.index.#{EmailTemplates::IDS.key(id) || :unknown}.link_text")
     end
   end
 end
