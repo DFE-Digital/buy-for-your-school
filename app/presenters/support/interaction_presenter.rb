@@ -17,6 +17,8 @@ module Support
         case field
         when "category_id"
           formatted_hash["category_id"] = category(value).title if value.present?
+        when "email_template"
+          formatted_hash["email_template"] = EmailTemplates.label_for(value)
         else
           formatted_hash[field] = value
         end
