@@ -39,6 +39,10 @@
                              label: { text: I18n.t("support.case_hub_migration.label.phone_number", optional: I18n.t("support.generic.form.optional")) }
   %>
 
+  <%= form.govuk_phone_field :extension_number,
+                             label: { text: I18n.t("support.case_hub_migration.label.extension_number", optional: I18n.t("support.generic.form.optional")) }
+  %>
+
   <%=
     form.govuk_collection_radio_buttons :request_type,
       [
@@ -52,7 +56,7 @@
       legend: { text: I18n.t("support.case_hub_migration.request_type.legend"), size: "l" }
   %>
 
-  <% 
+  <%
     category_id_hidden = unless form.object.category_id && form.object.request_type
         "govuk-!-display-none"
     end

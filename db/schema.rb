@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
     t.uuid "category_id"
     t.integer "state", default: 0
     t.datetime "finsihed_at"
+    t.string "name"
     t.index ["category_id"], name: "index_journeys_on_category_id"
     t.index ["started"], name: "index_journeys_on_started"
     t.index ["user_id"], name: "index_journeys_on_user_id"
@@ -267,6 +268,8 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
     t.boolean "action_required", default: false
     t.string "organisation_type"
     t.integer "closure_reason"
+    t.decimal "value", precision: 9, scale: 2
+    t.string "extension_number"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"

@@ -35,7 +35,6 @@ Rails.application.routes.draw do
   get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
 
   resources :design, only: %i[index show]
-  resources :categories, only: %i[index]
   resources :feedback, only: %i[new show create edit update]
 
   #
@@ -51,7 +50,7 @@ Rails.application.routes.draw do
   resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
   post "/submit", to: "api/support/requests#create", as: :submit_request
 
-  resources :journeys, only: %i[show create destroy] do
+  resources :journeys, only: %i[new show create destroy edit update] do
     resource :specification, only: %i[create show] do
       get :download, to: "specifications#new"
     end
@@ -104,6 +103,8 @@ Rails.application.routes.draw do
         resource :opening, only: %i[create]
         resource :closure, only: %i[create]
         resource :on_hold, only: %i[create]
+        resource :summary, only: %i[edit update]
+        resource :summary_submission, only: %i[edit update]
         resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do

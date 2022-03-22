@@ -30,6 +30,5 @@ RSpec.shared_context "with data migrations" do
   after do
     ActiveRecord::Migration.suppress_messages { up }
     ActiveRecord::Base.connection.clear_cache!
-    ENV["POST_MIGRATION_CHANGES"] = nil
   end
 end

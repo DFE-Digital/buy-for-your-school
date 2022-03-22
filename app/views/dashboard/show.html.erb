@@ -12,9 +12,9 @@
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.create.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.create.body") %></p>
 
-      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button", role: "button" %>
+      <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button", role: "button" %>
     <% else %>
-      <%= link_to I18n.t("dashboard.create.button"), categories_path, class: "govuk-button", role: "button" %>
+      <%= link_to I18n.t("dashboard.create.button"), new_journey_path, class: "govuk-button", role: "button" %>
 
       <h2 class="govuk-heading-m"><%= I18n.t("dashboard.existing.header") %></h2>
       <p class="govuk-body"><%= I18n.t("dashboard.existing.body") %></p>
@@ -22,6 +22,7 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>  
             <th scope="col" class="govuk-table__header">Category</th>
             <th scope="col" class="govuk-table__header">Status</th>
             <th scope="col" class="govuk-table__header">Date started</th>
@@ -31,6 +32,7 @@
         <tbody class="govuk-table__body">
           <% @journeys.each do |journey| %>
             <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= link_to journey.name, journey_specification_path(journey), class: "govuk-link"%></td>
               <td class="govuk-table__cell"><%= journey.category.title %></td>
               <td class="govuk-table__cell"><%= journey.status %></td>
               <td class="govuk-table__cell"><%= journey.created_at %></td>

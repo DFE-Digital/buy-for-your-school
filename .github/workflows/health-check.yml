@@ -21,26 +21,14 @@ jobs:
           url: https://staging-get-help-buying-for-schools.education.gov.uk
           max-attempts: 3
 
-      - name: Preview
-        uses: jtalk/url-health-check-action@v2
-        with:
-          url: https://preview-get-help-buying-for-schools.education.gov.uk
-          max-attempts: 3
-
-      - name: Research
-        uses: jtalk/url-health-check-action@v2
-        with:
-          url: https://research-get-help-buying-for-schools.education.gov.uk/
-          max-attempts: 3
-
       - name: Slack Workflow Notification
         if: failure()
         uses: Gamesight/slack-workflow-status@master
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
-          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
-          channel: '#ghbs-tech-arch-and-devs'
-          name: 'Health Checks'
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL_MONITORING}}
+          name: "Health check failures occured"
+          include_jobs: true
 
 
 

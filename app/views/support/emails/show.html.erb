@@ -59,6 +59,6 @@
   </dl>
 
   <div class="email-preview-body">
-    <%= @email.body_with_inline_attachments(self).html_safe %>
+    <%= @email.body_for_display(self).html_safe %>
   </div>
 </div>

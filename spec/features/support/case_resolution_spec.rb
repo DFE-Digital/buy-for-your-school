@@ -25,7 +25,7 @@ describe "Resolving a case" do
     end
 
     it "saves the given note to the case" do
-      expect(case_resolved_interaction.body).to eq("Case resolved: A note when resolving the case")
+      expect(case_resolved_interaction.body).to eq("From open to resolved by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}: A note when resolving the case")
     end
 
     it "sets the current agent on the case note" do
