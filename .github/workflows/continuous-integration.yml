@@ -41,4 +41,6 @@ jobs:
           path: coverage
       - name: Code coverage check
         if: always()
-        run: (( $(cat coverage/.last_run.json| jq .result.line) > 99.0 )) && exit 0 || exit 1
+        run: |
+          coverage=$(cat coverage/.last_run.json| jq .result.line)
+          (( $(echo "$coverage > 99.00" | bc) == 1 )) && exit 0 || exit 1
