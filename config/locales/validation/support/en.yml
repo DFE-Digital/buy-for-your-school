@@ -6,7 +6,7 @@ en:
       agent_id: "" # Omitted
       choice: "" # Omitted
       email: "" # Omitted
-      email_body: "" # Omitted
+      text: "" # Omitted
       email_subject: "" # Omitted
       category_id: "" # Omitted
       organisation_id: "" # Omitted
@@ -29,7 +29,7 @@ en:
           missing: Please choose a type of email to send
 
         # Case email content
-        email_body:
+        text:
           missing: Please enter an email body to be sent
 
         email_subject:

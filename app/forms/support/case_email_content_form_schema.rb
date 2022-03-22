@@ -10,7 +10,7 @@ module Support
     end
 
     rule(:text) do
-      key(:text).failure(:missing) if value.blank? && EmailTemplates.basic_template?(value[:email_template])
+      key(:text).failure(:missing) if value.blank? && EmailTemplates.basic_template?(values[:email_template])
     end
 
     rule(:email_subject) do

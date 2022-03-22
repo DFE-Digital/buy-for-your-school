@@ -2,12 +2,10 @@ module Support
   class Cases::Emails::ContentController < Cases::ApplicationController
     include MarkdownHelper
 
-    before_action :set_template
-
     # Edit non-templated content
     def edit
       @back_url = new_support_case_email_type_path(@current_case)
-      @case_email_content_form = CaseEmailContentForm.new(text: basic_email_text_variable)
+      @case_email_content_form = CaseEmailContentForm.new(text: basic_email_text_variable, email_template: params[:template])
     end
 
     # Preview of email with send button
@@ -106,10 +104,6 @@ module Support
       params.require(:case_email_content_form)
         .permit(:email_body, :email_subject, :email_template, :text)
         .reverse_merge(defaults)
-    end
-
-    def set_template
-      @template = params.fetch(:template, :basic).to_sym
     end
 
     def notify_client
