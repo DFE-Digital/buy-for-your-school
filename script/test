@@ -35,12 +35,9 @@ else
   # Allow the command to pass every time, the below will return non-0 exit code
   # if there are failures after second attempt
   echo "==> Running the tests..."
-  bundle exec rspec || :
-
-  if [[ $(cat spec/examples.txt | grep failed) != "" ]]; then
-    echo "==> Running failed tests again..."
-    bundle exec rspec --only-failures
-  fi
+  bundle exec rspec
+  # Re run once if there are any failures
+  bundle exec rspec --only-failures
 
   #echo "==> CC Test Reporter After Build... "
   #GIT_COMMITTED_AT=$DATE cc-test-reporter after-build --debug -t simplecov
