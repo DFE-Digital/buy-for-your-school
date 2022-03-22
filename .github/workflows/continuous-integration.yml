@@ -39,3 +39,6 @@ jobs:
         with:
           name: code-coverage-report
           path: coverage
+      - name: Code coverage check
+        if: always()
+        run: (( $(cat coverage/.last_run.json| jq .result.line) > 99.0 )) && exit 0 || exit 1
