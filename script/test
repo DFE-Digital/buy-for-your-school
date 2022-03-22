@@ -36,7 +36,4 @@ else
   bundle exec rspec || :
   # Re run once if there are any failures
   SKIP_COVERAGE=1 bundle exec rspec --only-failures
-  RSPEC_EXIT_CODE=$?
-  echo "Exiting with code $RSPEC_EXIT_CODE..."
-  exit $RSPEC_EXIT_CODE
 fi
