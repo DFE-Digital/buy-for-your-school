@@ -117,7 +117,7 @@ en:
       contentful_entry_not_found: An unexpected error occurred. The starting step has been revoked by the content team.
 
   journey:
-    states:
+    state:
       finished: Finished
       in_progress: In progress
     specification:

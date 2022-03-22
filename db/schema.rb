@@ -116,8 +116,8 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
     t.boolean "started", default: false
     t.uuid "category_id"
     t.integer "state", default: 0
-    t.datetime "finsihed_at"
     t.string "name"
+    t.datetime "finished_at"
     t.index ["category_id"], name: "index_journeys_on_category_id"
     t.index ["started"], name: "index_journeys_on_started"
     t.index ["user_id"], name: "index_journeys_on_user_id"

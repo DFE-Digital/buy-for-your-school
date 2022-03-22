@@ -12,7 +12,12 @@ class SpecificationsController < ApplicationController
     if validation.success?
       if form.finished
         current_journey.finish!
-        redirect_to "/next-steps-catering", redirect_url: journey_specification_url(current_journey, format: :docx)
+        redirect_to(
+          URI::HTTPS.build(
+            path: '/next-steps-catering',
+            query: { redirect_url: journey_specification_url(current_journey, format: :docx) }.to_query
+          ).request_uri
+        )
       else
         @redirect_url = journey_specification_url(current_journey, format: :docx)
         render :show

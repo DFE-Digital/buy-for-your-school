@@ -5,7 +5,7 @@
   <!-- SPECIFICATION -->
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.show.header") %></h1>
-    <p class="govuk-caption-l"><%= I18n.t("journey.specification.caption", name: @journey.name)%></p>
+    <p class="govuk-caption-l"><%= I18n.t("journey.specification.caption", name: current_journey.name)%></p>
     <br>
     <p class="govuk-body">
       <% body_link = link_to I18n.t("journey.specification.show.body.link"), journey_path(current_journey) %>
