@@ -29,16 +29,13 @@ else
   echo "==> Running Brakeman"
   bundle exec brakeman -o /dev/stdout
 
-  #echo "==> CC Test Reporter Before Build..."
-  #GIT_COMMITTED_AT=$DATE cc-test-reporter before-build
-
   # Allow the command to pass every time, the below will return non-0 exit code
   # if there are failures after second attempt
   echo "==> Running the tests..."
-  bundle exec rspec
+  RSPEC_EXIT_CODE=0
+  bundle exec rspec || (RSPEC_EXIT_CODE=1)
   # Re run once if there are any failures
-  bundle exec rspec --only-failures
+  bundle exec rspec --only-failures || (RSPEC_EXIT_CODE=1)
 
-  #echo "==> CC Test Reporter After Build... "
-  #GIT_COMMITTED_AT=$DATE cc-test-reporter after-build --debug -t simplecov
+  exit $RSPEC_EXIT_CODE
 fi
