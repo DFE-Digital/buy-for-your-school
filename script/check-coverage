@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo apt-get install jq
 coverage=$(cat coverage/.last_run.json | jq .result.line)
 
 if [ $(echo "$coverage > 99.00" | bc) != 1 ]; then

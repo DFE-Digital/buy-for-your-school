@@ -39,6 +39,3 @@ jobs:
         with:
           name: code-coverage-report
           path: coverage
-      - name: Code coverage check
-        if: always()
-        run: script/check-coverage
