@@ -1,29 +1,47 @@
-<%= content_for :title, @journey.category.title %>
+<%= content_for :title, current_journey.category.title %>
 
-<h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.header") %></h1>
-<p class="govuk-body"><%= I18n.t("journey.specification.body") %></p>
-<% unless @journey.all_tasks_completed? %>
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive">Warning</span>
-      <%= I18n.t("journey.specification.draft") %>
-    </strong>
+<div class="govuk-grid-row">
+
+  <!-- SPECIFICATION -->
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.show.header") %></h1>
+    <p class="govuk-body">
+      <% body_link = link_to I18n.t("journey.specification.show.body.link"), journey_path(current_journey) %>
+      <%= I18n.t("journey.specification.show.body.text", link: body_link).html_safe %>
+    </p>
+    <% unless current_journey.finished? || current_journey.all_tasks_completed? %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          <%= I18n.t("journey.specification.show.draft") %>
+        </strong>
+      </div>
+    <% end %>
+
+    <h2 class="govuk-heading-m">
+        <%= I18n.t("journey.specification.show.sub_header") %>
+    </h2>
+
+    <div class="govuk-inset-text">
+      <%= link_to "Request free help and support with your specification", "/support-requests" %>
+    </div>
+
+    <article class="specification">
+      <%= current_journey.specification %>
+    </article>
+
+    <%= link_to I18n.t("journey.specification.show.download.button"), download_journey_specification_path(current_journey), class: "govuk-button", role: "button" %>
   </div>
-<% end %>
-<%= link_to I18n.t("journey.specification.download.button"), journey_specification_path(@journey, format: :docx), class: "govuk-button", role: "button" %>
-<article class="specification">
-  <p>
-    <%= I18n.t("journey.specification.next_steps.text") %>
-    <%= link_to I18n.t("journey.specification.next_steps.link_text"), "/next-steps-#{@journey.category.slug}" %>
-  </p>
-  <h2 class="govuk-heading-m">
-    <%= I18n.t("journey.specification.feedback.heading") %>
-  </h2>
-  <p>
-    <%= I18n.t("journey.specification.feedback.body") %>
-  </p>
-  <%= link_to I18n.t("journey.specification.feedback.button"), ENV.fetch('QUALTRICS_SURVEY_URL', 'https://dferesearch.fra1.qualtrics.com'), class: "govuk-button govuk-button--secondary", role: "button", target: "_blank", rel: "noopener noreferrer" %>
+  <!-- END -->
 
-  <%= @journey.specification %>
-</article>
+  <!-- SIDEBAR -->
+  <div class="govuk-grid-column-one-third">
+    <ul>
+      <li> <%= link_to I18n.t("journey.specification.show.sidebar.links")[0], "/next-steps-catering", class: "govuk-link" %> </li>
+      <li> <%= link_to I18n.t("journey.specification.show.sidebar.links")[1], new_feedback_path, class: "govuk-link" %> </li>
+    </ul>
+  </div>
+  <!-- END -->
+
+</div>

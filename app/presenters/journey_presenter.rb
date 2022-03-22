@@ -26,4 +26,10 @@ class JourneyPresenter < BasePresenter
   def category
     CategoryPresenter.new(super)
   end
+
+  def status
+    return I18n.t('journey.state.in_progress') unless finished?
+
+    I18n.t('journey.state.finished')
+  end
 end

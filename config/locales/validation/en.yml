@@ -55,6 +55,16 @@ en:
         message_body:
           missing: You must tell us how we can help
 
+  # Find a Framework support request form
+  download_specification:
+    rules:
+      finished: "" # Omitted
+
+    errors:
+      rules:
+        finished:
+          bool?: Select if you want your specification to be marked as 'finished'
+
   # Feedback form
   feedback:
     rules:

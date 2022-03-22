@@ -1,9 +1,26 @@
 # frozen_string_literal: true
 
 class SpecificationsController < ApplicationController
-  breadcrumb "Dashboard", :dashboard_path
-
   before_action :check_user_belongs_to_journey?
+  helper_method :current_journey, :form
+
+  def new
+    @form = DownloadSpecificationForm.new
+  end
+
+  def create
+    if validation.success?
+      if form.finished
+        current_journey.finish!
+        redirect_to "/next-steps-catering", redirect_url: journey_specification_url(current_journey, format: :docx)
+      else
+        @redirect_url = journey_specification_url(current_journey, format: :docx)
+        render :show
+      end
+    else
+      render :new
+    end
+  end
 
   # Render HTML and DOCX formats
   #
@@ -11,41 +28,56 @@ class SpecificationsController < ApplicationController
   #
   # @see SpecificationRenderer
   def show
+    breadcrumb "Dashboard", :dashboard_path
     breadcrumb "Create specification", journey_path(current_journey), match: :exact
     breadcrumb "View specification", journey_specification_path(current_journey), match: :exact
-    @journey = current_journey
 
     RecordAction.new(
       action: "view_specification",
-      journey_id: @journey.id,
+      journey_id: current_journey.id,
       user_id: current_user.id,
-      contentful_category_id: @journey.category.contentful_id,
+      contentful_category_id: current_journey.category.contentful_id,
       data: {
         format: request.format.symbol,
-        all_tasks_completed: @journey.all_tasks_completed?,
+        all_tasks_completed: current_journey.all_tasks_completed?,
       },
     ).call
 
-    file_name = @journey.all_tasks_completed? ? "specification.#{file_ext}" : "specification-incomplete.#{file_ext}"
+    file_name = current_journey.all_tasks_completed? ? "specification.#{file_ext}" : "specification-incomplete.#{file_ext}"
 
     respond_to do |format|
       format.html
       format.docx do
-        document = SpecificationRenderer.new(journey: @journey).call
+        document = SpecificationRenderer.new(journey: current_journey).call
         send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
       # format.pdf do
-      #   document = SpecificationRenderer.new(journey: @journey, to: :pdf).call
+      #   document = SpecificationRenderer.new(journey: current_journey, to: :pdf).call
       #   send_data document, filename: file_name, type: "application/pdf"
       # end
       # format.odt do
-      #   document = SpecificationRenderer.new(journey: @journey, to: :odt).call
+      #   document = SpecificationRenderer.new(journey: current_journey, to: :odt).call
       #   send_data document, filename: file_name, type: "application/vnd.oasis.opendocument.text"
       # end
     end
   end
 
 private
+
+  def form
+    @form ||= DownloadSpecificationForm.new(
+      messages: validation.errors(full: true).to_h,
+      **validation.to_h,
+    )
+  end
+
+  def validation
+    @validation ||= DownloadSpecificationFormSchema.new.call(**form_params)
+  end
+
+  def form_params
+    params.require(:form).permit(:finished)
+  end
 
   # @return [String]
   def file_ext
