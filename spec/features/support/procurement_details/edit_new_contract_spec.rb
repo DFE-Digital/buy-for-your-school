@@ -6,7 +6,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
   before do
     click_button "Agent Login"
     visit support_case_path(support_case)
-    click_link "Procurement details"
+    click_link "Case details"
   end
 
   context "when adding values to new contract" do

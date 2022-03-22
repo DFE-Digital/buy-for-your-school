@@ -25,6 +25,10 @@ RSpec.feature "Case worker can open a case" do
       expect(activity_log_item.action).to eq "change_state"
       expect(activity_log_item.data).to eq({ "old_state" => "resolved", "new_state" => "opened" })
     end
+
+    it "records the interaction for case history" do
+      expect(Support::Interaction.last.body).to eql "From resolved to open by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
+    end
   end
 
   context "when a case is on hold" do
@@ -44,6 +48,10 @@ RSpec.feature "Case worker can open a case" do
       expect(activity_log_item.support_case_id).to eq support_case.id
       expect(activity_log_item.action).to eq "change_state"
       expect(activity_log_item.data).to eq({ "old_state" => "on_hold", "new_state" => "opened" })
+    end
+
+    it "records the interaction for case history" do
+      expect(Support::Interaction.last.body).to eql "From on hold to open by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
     end
   end
 end

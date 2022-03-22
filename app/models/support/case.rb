@@ -57,6 +57,8 @@ module Support
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
+    scope :by_state, ->(state) { where(state: state) }
+    scope :by_category, ->(category_id) { where(category_id: category_id) }
 
     # Support level
     #
@@ -77,6 +79,15 @@ module Support
     #   pipeline
     #   no_response
     enum state: { initial: 0, opened: 1, resolved: 2, on_hold: 3, closed: 4, pipeline: 5, no_response: 6 }
+
+    # Closure reason
+    #
+    #   resolved
+    #   email_merge
+    #   spam
+    #   out_of_scope
+    #   other
+    enum closure_reason: { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4 }, _suffix: true
 
     # Source
     #
@@ -135,7 +146,7 @@ module Support
     end
 
     def record_state_change
-      Support::RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
+      RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
     end
   end
 end

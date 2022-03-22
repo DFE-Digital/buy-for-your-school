@@ -1,6 +1,7 @@
 module Support
   class CasesController < Cases::ApplicationController
     require "will_paginate/array"
+    before_action :filter_forms, only: %i[index]
     before_action :current_case, only: %i[show edit]
 
     include Concerns::HasInteraction
@@ -12,9 +13,9 @@ module Support
         end
 
         format.html do
-          @cases = Case.includes(%i[agent category organisation]).all.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
-          @new_cases = Case.includes(%i[agent category organisation]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
-          @my_cases = Case.includes(%i[agent category organisation]).where.not(state: :closed).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+          @cases = FilterCases.new.filter(params[:filter_all_cases_form]).order("ref DESC").map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
+          @new_cases = FilterCases.new.filter(params[:filter_new_cases_form]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
+          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).where.not(state: :closed).by_agent(current_agent&.id).order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         end
       end
     end
@@ -90,6 +91,12 @@ module Support
         :progress_notes,
         :request_type,
       )
+    end
+
+    def filter_forms
+      @my_cases_filter_form = CaseFilterForm.new
+      @new_cases_filter_form = CaseFilterForm.new
+      @all_cases_filter_form = CaseFilterForm.new
     end
 
     def edit_form_params

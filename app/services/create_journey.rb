@@ -8,15 +8,17 @@
 class CreateJourney
   # @param user [User]
   # @param category [Category]
+  # @param name [String]
   #
-  def initialize(user:, category:)
+  def initialize(user:, category:, name:)
     @user = user
     @category = category
+    @name = name
   end
 
   # @return [Journey]
   def call
-    journey = Journey.new(category: @category, user: @user)
+    journey = Journey.new(category: @category, user: @user, name: @name)
     journey.save!
 
     # Contentful::Entry[category]

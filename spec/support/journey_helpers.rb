@@ -62,7 +62,9 @@ module JourneyHelpers
     visit "/"
     click_start
     click_create
-    find("#category-#{category_slug}-field").click
+    find("#new-journey-form-category-#{category_slug}-field").click
+    click_continue
+    fill_in "new_journey_form[name]", with: "New specification"
     click_continue
   end
 

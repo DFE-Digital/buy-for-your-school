@@ -36,7 +36,7 @@ module Support
     end
 
     def set_back_url
-      @back_url = support_case_path(current_contract.support_case, anchor: "procurement-details")
+      @back_url = support_case_path(current_contract.support_case, anchor: "case-details")
     end
 
     def current_contract

@@ -4,10 +4,10 @@
 <div class="govuk-!-margin-bottom-7">
   <%= render "status_badge", kase: @current_case %>
 </div>
-<h3 id="case-ref" class="govuk-heading-m">
-  <%= @current_case.ref %>
-</h3>
-
+<p class="govuk-body" id="case-ref">
+  <strong><%= @current_case.ref %></strong>
+  <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
+</p>
 
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
@@ -27,11 +27,6 @@
       </a>
     </li>
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#procurement-details">
-        <%= I18n.t("support.case.header.procurement_detail") %>
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#case-attachments">
         <%= I18n.t("support.case.header.case_attachments") %>
       </a>
@@ -42,9 +37,6 @@
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
     <%= render "case_details", current_case: @current_case %>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="procurement-details">
-    <%= render "procurement_details", current_case: @current_case %>
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">

@@ -10,10 +10,11 @@ RSpec.feature "Users can see their specification" do
     click_view
 
     expect(page).to have_breadcrumbs ["Dashboard", "Create specification", "View specification"]
-    expect(page).to have_title "Catering"
+    expect(page).to have_title "New specification"
 
     # journey.specification.header
     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
+    expect(page).to have_text "You are viewing: New specification"
 
     within("article#specification") do
       expect(page).to have_content("Menus and ordering")
@@ -29,7 +30,7 @@ RSpec.feature "Users can see their specification" do
     click_view
 
     click_breadcrumb "Create specification"
-    expect(find("h1.govuk-heading-xl")).to have_text "Create a specification to procure catering for your school"
+    expect(find("h1.govuk-heading-xl")).to have_text "Create your specification to procure catering for your school"
   end
 
   scenario "renders radio responses that have futher information" do
@@ -41,7 +42,7 @@ RSpec.feature "Users can see their specification" do
     click_continue
     click_view
 
-    expect(page).to have_title "Catering"
+    expect(page).to have_title "New specification"
 
     # journey.specification.header
     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
