@@ -111,6 +111,9 @@ ignore_unused:
   - 'date.formats.default'
   - 'errors.unexpected_contentful_step_type.*'
   - 'support.case.label.state.*'
+  - 'generic.label.what_is'
+  - 'support.emails.button.*'
+  - 'errors.attributes.response.blank'
 
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:

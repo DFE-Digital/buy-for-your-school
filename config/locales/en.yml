@@ -203,8 +203,6 @@ en:
       you_can_ask_for: You can ask for
     user_organisation:
       header: Which school are you buying for?
-      hint: You are linked to more than one school. Select the one that's related to your support request.
-      subtitle: About your school
     user_query:
       caption: About your request
       hint: Briefly describe what advice or guidance you need in a few sentences.
@@ -276,7 +274,6 @@ en:
       start: Start now
       submit: Submit
       update: Update
-      yes_continue: Yes, continue
     label:
       what_is: What is %{label}?
   journey:
@@ -299,7 +296,6 @@ en:
           cancel: Cancel
           dashboard: Continue to dashboard
           delete: Delete specification
-        confirmed: Specification %{title} was successfully deleted.
         download:
           link: download this specification
           message: You can %{link} before you delete it.
@@ -327,9 +323,6 @@ en:
   journeys_title: Create your specification to procure %{category} for your school
   page:
     updated_at: Last updated %{date}
-  planning:
-    start_page:
-      page_title: Catering services
   profile:
     body: 'These are the details we have for you, if they are not correct or up to date you will need to either:'
     caption: About you
@@ -339,8 +332,6 @@ en:
       email: Your email address
       full_name: Your name
   specifying:
-    errors:
-      contentful_entry_not_found: An unexpected error occurred. The starting step has been revoked by the content team.
     start_page:
       before_you_start_body:
       - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.
@@ -405,7 +396,6 @@ en:
             attachment_name: Attachment name
             date_added: Date added
             description: Description
-        back: Back to case list
         case: Case
         case_owner: 'Case owner: %{owner}'
         case_value: Case value
@@ -447,7 +437,6 @@ en:
           supplier: Supplier
         received_at: Received
         reopen: Reopen case
-        requested_at: Request sent on %{time}
         resolve: Resolve case
         send_email: Send email
         source:
@@ -480,7 +469,6 @@ en:
           L5: 5 - DfE buying by getting quotes or bids
           header: Case level
           unspecified: Not specified
-        unspecified: Not specified
         value:
           unspecified: Not specified
       link:
@@ -519,7 +507,6 @@ en:
         please_select: Please select
     case_closures:
       action: Close case
-      created: Case closed successfully
       edit:
         header: Close case
         hint: Select reason for closing case.
@@ -591,8 +578,6 @@ en:
         submit: Preview email
       preview:
         header: Preview email
-        salutation: Dear %{first_name} %{last_name}
-        signature_html: Regards<br>%{agent_name}<br>Procurement Specialist<br>Get help buying for schools
         subject:
           default_value: 'DfE Get help buying for schools: your request for support'
           label: Subject
@@ -635,8 +620,6 @@ en:
           establishment: Organisation details
           migration: Hub migration case information
         submit: Create case
-      flash:
-        created: Case created/migrated successfully
       header: Hub migration case information
       label:
         case_type: Type of case
@@ -805,7 +788,6 @@ en:
         my_case_emails: My Case Emails
         new_emails: New Emails
     generic:
-      back: Back
       cancel: Cancel
       continue: Continue
       currency:
@@ -817,7 +799,6 @@ en:
       'no': 'No'
       search: Search
       'yes': 'Yes'
-    header: Supported Buying Admin
     interaction:
       header:
         add_case_note: Add case note
@@ -863,7 +844,6 @@ en:
           header: Route to market
         stage:
           header: Procurement stage
-          select: "-- Select stage --"
         started_at:
           header: Start date of the procurement
         submit: Continue
@@ -919,7 +899,6 @@ en:
       school: About your school
       specification: Share a specification
     flash:
-      created: Support request created
       updated: Support request updated
     heading: Request help and support with your specification
     hint:
