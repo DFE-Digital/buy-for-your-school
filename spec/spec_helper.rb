@@ -16,9 +16,11 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-require "simplecov"
-SimpleCov.minimum_coverage 99
-SimpleCov.start "rails"
+unless ENV["SKIP_COVERAGE"] == "1"
+  require "simplecov"
+  SimpleCov.minimum_coverage 99
+  SimpleCov.start "rails"
+end
 
 # NOTE: This is necessary for sign_in helpers to work correctly when feature
 # NOTE: are run in isolation, hence needing Dsi::Client class loaded in.

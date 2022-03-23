@@ -22,7 +22,7 @@ module Support
     end
 
     def case_contact_details_form_params
-      params.require(:case_contact_details_form).permit(:first_name, :last_name, :phone, :email)
+      params.require(:case_contact_details_form).permit(:first_name, :last_name, :phone, :email, :extension_number)
     end
   end
 end

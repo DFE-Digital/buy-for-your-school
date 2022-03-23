@@ -29,6 +29,20 @@
 
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.contact_extension_number") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= current_case.extension_number %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+       <% if !current_case.closed? %>
+        <%= link_to "Change", edit_support_case_contact_details_path(current_case), class: "govuk-link" %>
+      <% end %>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
       <%= I18n.t("support.case.label.contact_email") %>
     </dt>
     <dd class="govuk-summary-list__value">

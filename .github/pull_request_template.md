@@ -15,7 +15,6 @@
 
 Please complete the following tasks to allow merging of this feature:
 
-- [ ] Updated CHANGELOG
 - [ ] Documented any architecture desisions in an ADR
 - [ ] Get QA Approval of test coverage
 

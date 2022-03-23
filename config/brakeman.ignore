@@ -3,19 +3,19 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "55a40e18bfdb22296c2883cd469b194cc721fd4762abdc4d8b4a40d338ea5401",
+      "fingerprint": "9591bbe675c084eadcbba48cc46c8a27f79fa0676c64f749e61dd335d2935bf7",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
       "file": "app/views/support/emails/show.html.erb",
-      "line": 37,
+      "line": 62,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "EmailPresenter.new(Support::Email.find(params[:id])).body_with_inline_attachments(self)",
+      "code": "EmailPresenter.new(Support::Email.find(params[:id])).body_for_display(self)",
       "render_path": [
         {
           "type": "controller",
           "class": "Support::EmailsController",
           "method": "show",
-          "line": 12,
+          "line": 11,
           "file": "app/controllers/support/emails_controller.rb",
           "rendered": {
             "name": "support/emails/show",
@@ -26,6 +26,37 @@
       "location": {
         "type": "template",
         "template": "support/emails/show"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "c289d69486facd757683d592de98ac021bb2d3537200167ec9d82813f22dcd8d",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/support/interactions/show.html.erb",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "InteractionPresenter.new(current_case.interactions.find(params[:id])).body",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Support::InteractionsController",
+          "method": "show",
+          "line": 9,
+          "file": "app/controllers/support/interactions_controller.rb",
+          "rendered": {
+            "name": "support/interactions/show",
+            "file": "app/views/support/interactions/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "support/interactions/show"
       },
       "user_input": "params[:id]",
       "confidence": "Weak",
@@ -63,6 +94,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-01-13 09:06:32 +0000",
-  "brakeman_version": "5.2.0"
+  "updated": "2022-03-22 11:16:27 +0000",
+  "brakeman_version": "5.2.1"
 }
