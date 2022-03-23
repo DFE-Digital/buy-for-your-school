@@ -4,11 +4,14 @@ module Support
       @case_email_content_form = CaseEmailContentForm.from_validation(validation)
 
       if validation.success?
-
         # create interaction
         @current_case.interactions.email_to_school.create!(
           agent_id: current_agent.id,
           body: @case_email_content_form.email_body,
+          additional_data: {
+            email_template: email_template_uuid,
+            email_subject: @case_email_content_form.email_subject,
+          },
         )
 
         send_email_to_school
@@ -20,7 +23,7 @@ module Support
   private
 
     def case_email_content_form_params
-      params.require(:case_email_content_form).permit(:email_body, :email_subject, :email_template)
+      params.require(:case_email_content_form).permit(:email_body, :email_subject, :email_template, :text)
     end
 
     # @return [Dry::Validation::Result]
@@ -28,7 +31,6 @@ module Support
       CaseEmailContentFormSchema.new.call(**case_email_content_form_params)
     end
 
-    # @return [String] email template (default: basic => ac679471-8bb9-4364-a534-e87f585c46f3)
     def email_template_uuid
       case_email_content_form_params.fetch(:email_template)
     end
@@ -40,7 +42,7 @@ module Support
         template: email_template_uuid,
         reference: @current_case.ref,
         variables: {
-          text: @case_email_content_form.email_body,
+          text: @case_email_content_form.text,
           from_name: current_agent.full_name,
         },
       ).call

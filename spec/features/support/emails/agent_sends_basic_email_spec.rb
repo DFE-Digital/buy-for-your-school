@@ -212,7 +212,7 @@ describe "Support agent sends a basic email" do
       interacton = support_case.reload.interactions.last
 
       expect(interacton.event_type).to eq "email_to_school"
-      expect(interacton.body).to eq "New email body"
+      expect(interacton.body).to eq "<p>Dear School Contact</p>\n\n<p><p>New email body</p></p>\n\n<p>Regards\n<br />Procurement Specialist\n<br />Get help buying for schools</p>"
       expect(interacton.agent).to eq agent
     end
   end
