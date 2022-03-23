@@ -790,7 +790,7 @@ en:
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
-        referer: Referer
+        referrer: Referrer
       request_type:
         legend: Request type
         hint: Is the request related to a procurement category?

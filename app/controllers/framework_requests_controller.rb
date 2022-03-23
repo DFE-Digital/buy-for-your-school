@@ -8,7 +8,7 @@ class FrameworkRequestsController < ApplicationController
 
   def index
     session[:support_journey] = "faf"
-    session[:faf_referer] = request.referer || "direct"
+    session[:faf_referrer] = referral_link
   end
 
   def show
@@ -74,6 +74,10 @@ class FrameworkRequestsController < ApplicationController
   end
 
 private
+
+  def referral_link
+    params[:referred_by] ? Base64.decode64(params[:referred_by]) : request.referer || "direct" 
+  end  
 
   # @return [FrameworkSupportForm] form object populated with validation messages
   def form
