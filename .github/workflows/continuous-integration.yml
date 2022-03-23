@@ -33,3 +33,9 @@ jobs:
         run: mkdir -p /tmp/docker-save && docker save ghbs_app:latest -o
           /tmp/docker-save/snapshot.tar && ls -lh /tmp/docker-save
         if: always() && steps.cache-docker.outputs.cache-hit != 'true'
+      - name: Archive code coverage results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage

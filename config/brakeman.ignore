@@ -34,6 +34,37 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
+      "fingerprint": "c289d69486facd757683d592de98ac021bb2d3537200167ec9d82813f22dcd8d",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/support/interactions/show.html.erb",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "InteractionPresenter.new(current_case.interactions.find(params[:id])).body",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Support::InteractionsController",
+          "method": "show",
+          "line": 9,
+          "file": "app/controllers/support/interactions_controller.rb",
+          "rendered": {
+            "name": "support/interactions/show",
+            "file": "app/views/support/interactions/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "support/interactions/show"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
       "fingerprint": "d3456c155dedafeca54754530611334bcde4c8cc1091b1acde3bd473184c091f",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
@@ -63,6 +94,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-03-11 13:22:01 +0000",
+  "updated": "2022-03-22 11:16:27 +0000",
   "brakeman_version": "5.2.1"
 }
