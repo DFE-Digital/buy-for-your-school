@@ -10,7 +10,7 @@ describe Support::SynchronizeSharedInboxJob do
       job.perform
 
       expect(Support::IncomingEmails::SharedMailbox).to have_received(:synchronize)
-        .with(emails_since: be_within(1.second).of(4.minutes.ago), folder: :inbox).once
+        .with(emails_since: be_within(1.second).of(15.minutes.ago), folder: :inbox).once
     end
 
     it "synchronizes emails from the last 4 minutes with the shared mailbox sent messages folder" do
@@ -19,7 +19,7 @@ describe Support::SynchronizeSharedInboxJob do
       job.perform
 
       expect(Support::IncomingEmails::SharedMailbox).to have_received(:synchronize)
-        .with(emails_since: be_within(1.second).of(4.minutes.ago), folder: :sent_items).once
+        .with(emails_since: be_within(1.second).of(15.minutes.ago), folder: :sent_items).once
     end
   end
 end

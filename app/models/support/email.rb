@@ -25,7 +25,7 @@ module Support
     end
 
     def import_from_message(message, folder: :inbox)
-      update!(
+      assign_attributes(
         outlook_id: message.id,
         outlook_conversation_id: message.conversation_id,
         folder: folder,
@@ -48,6 +48,9 @@ module Support
           }
         end,
       )
+
+      save! if changed?
+
       IncomingEmails::EmailAttachments.download(email: self) if message.has_attachments
     end
 

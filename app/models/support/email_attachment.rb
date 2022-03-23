@@ -14,6 +14,8 @@ module Support
     end
 
     def import_from_ms_attachment(attachment)
+      return unless new_record?
+
       Tempfile.create(attachment.name, binmode: true) do |f|
         f.write(Base64.decode64(attachment.content_bytes))
         f.rewind
