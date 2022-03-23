@@ -809,8 +809,8 @@ en:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         created_by: Created by
-        email_unread: Unread
         email_sender: Sender
+        email_unread: Unread
       link_to_email_preview: Open email preview in new tab
       message:
         created_flash: "%{type} added to case"
