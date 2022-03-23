@@ -100,7 +100,7 @@ describe "Support agent sends a templated email" do
       interacton = support_case.reload.interactions.last
 
       expect(interacton.event_type).to eq "email_to_school"
-      expect(interacton.body).to eq "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification."
+      expect(interacton.body).to eq "<p>Hi School Contact, here is information regarding frameworks</p>\n"
       expect(interacton.agent).to eq agent
     end
   end
