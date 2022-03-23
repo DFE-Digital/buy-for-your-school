@@ -76,8 +76,8 @@ class FrameworkRequestsController < ApplicationController
 private
 
   def referral_link
-    params[:referred_by] ? Base64.decode64(params[:referred_by]) : request.referer || "direct" 
-  end  
+    params[:referred_by] ? Base64.decode64(params[:referred_by]) : request.referer || "direct"
+  end
 
   # @return [FrameworkSupportForm] form object populated with validation messages
   def form

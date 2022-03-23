@@ -6,20 +6,20 @@ describe FrameworkRequestsController do
       it "sets the referral url in the session" do
         get :index, params: { referred_by: Base64.encode64("https://www.google.com") }
         expect(session[:faf_referrer]).to eq("https://www.google.com")
-      end  
-    end  
+      end
+    end
 
     context "when request has a referrer" do
       it "sets the referral url in the session" do
-        @request.env['HTTP_REFERER'] = 'https://www.google.com'
+        request.env["HTTP_REFERER"] = "https://www.google.com"
         get :index
         expect(session[:faf_referrer]).to eq("https://www.google.com")
-      end  
-    end  
+      end
+    end
 
     it "sets the referral url to direct" do
       get :index
       expect(session[:faf_referrer]).to eq("direct")
-    end  
-  end  
-end  
+    end
+  end
+end
