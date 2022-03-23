@@ -55,4 +55,10 @@ namespace :case_management do
     Support::IncomingEmails::SharedMailbox.synchronize(folder: :inbox)
     Support::IncomingEmails::SharedMailbox.synchronize(folder: :sent_items)
   end
+
+  desc "Populate frameworks"
+  task :seed_frameworks, [:file_path] => :environment do |_t, args|
+    file_path = Rails.root.join(args[:file_path])
+    Support::SeedFrameworks.new(data: file_path).call
+  end
 end

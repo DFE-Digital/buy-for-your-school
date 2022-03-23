@@ -67,15 +67,31 @@ RSpec.describe Support::ProcurementPresenter do
     end
   end
 
-  describe "#framework_name" do
+  describe "#framework" do
     context "when present" do
-      it "returns the framework name" do
-        expect(presenter.framework_name).to eq "Framework"
+      it "returns the framework presenter" do
+        expect(presenter.framework).to be_a(Support::FrameworkPresenter)
       end
     end
 
     context "when nil" do
-      let(:procurement) { build(:support_procurement, framework_name: nil) }
+      let(:procurement) { build(:support_procurement, framework: nil) }
+
+      it "returns nil" do
+        expect(presenter.framework).to be_nil
+      end
+    end
+  end
+
+  describe "#framework_name" do
+    context "when present" do
+      it "returns the framework name" do
+        expect(presenter.framework_name).to eq "Test framework"
+      end
+    end
+
+    context "when nil" do
+      let(:procurement) { build(:support_procurement, framework: nil) }
 
       it "returns a hyphen" do
         expect(presenter.framework_name).to eq "-"
