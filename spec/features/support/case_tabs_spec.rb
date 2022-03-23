@@ -68,25 +68,11 @@ RSpec.feature "Case summary" do
     end
   end
 
-  describe "Case history tab" do
-    before { visit "/support/cases/#{support_case.id}#case-history" }
+  context "when assigned to an agent" do
+    let(:support_case) { create(:support_case, agent: agent) }
 
-    context "when assigned to an agent" do
-      let(:support_case) { create(:support_case, agent: agent) }
-
-      it "shows a link to change case owner" do
-        within "#case-history" do
-          expect(find("p.govuk-body")).to have_text "Case owner: Procurement Specialist"
-        end
-      end
-    end
-
-    context "when not assigned to an agent" do
-      it "does not show a link to change case owner" do
-        within "#case-history" do
-          expect(page).not_to have_selector("p.govuk-body")
-        end
-      end
+    it "shows a link to change case owner" do
+      expect(page).to have_text "Case owner: Procurement Specialist"
     end
   end
 

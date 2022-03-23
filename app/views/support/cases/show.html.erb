@@ -41,13 +41,6 @@
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">
-      <% if @current_case.agent.present? %>
-      <p class="govuk-body">
-        <%= I18n.t("support.case.label.case_owner", owner: @current_case.agent_name ) %>
-        <%= link_to I18n.t("support.case.label.change_case_owner"), new_support_case_assignment_path(@current_case) %>
-      </p>
-    <% end %>
-
       <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions, locals: { current_case: @current_case } %>
 
       <%# Only cases from Specify are initiated by a support request %>
