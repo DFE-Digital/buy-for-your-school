@@ -33,3 +33,14 @@ jobs:
         run: mkdir -p /tmp/docker-save && docker save ghbs_app:latest -o
           /tmp/docker-save/snapshot.tar && ls -lh /tmp/docker-save
         if: always() && steps.cache-docker.outputs.cache-hit != 'true'
+      - name: Archive code coverage results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: coverage
+      - name: Code coverage check
+        if: always()
+        run: |
+          coverage=$(cat coverage/.last_run.json| jq .result.line)
+          (( $(echo "$coverage > 99.00" | bc) == 1 )) && exit 0 || exit 1

@@ -7,6 +7,7 @@ module Support
       optional(:last_name).value(:string)
       optional(:phone).value(:string)
       required(:email).value(:string)
+      optional(:extension_number).value(:string)
     end
 
     rule(:email) do

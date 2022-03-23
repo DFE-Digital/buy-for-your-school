@@ -15,6 +15,7 @@ module Support
       optional(:organisation_name).value(:string)
       optional(:organisation_urn).value(:string)
       optional(:phone_number).value(:string)
+      optional(:extension_number).value(:string)
       optional(:category_id).value(:string)
       optional(:hub_case_ref).value(:string)
       optional(:estimated_procurement_completion_date).value(:string)
