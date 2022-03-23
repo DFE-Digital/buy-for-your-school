@@ -1,7 +1,8 @@
+---
 en:
   will_paginate:
-    previous_label: "Previous"
-    next_label: "Next"
+    next_label: Next
     page_entries_info:
-      single_page_html: page 1 of 1
       multi_page_html: Showing <b>%{from}</b> to <b>%{to}</b> of <b>%{count}</b> results
+      single_page_html: page 1 of 1
+    previous_label: Previous
