@@ -93,7 +93,7 @@ RSpec.feature "Users can see their specification" do
       # Don't answer any questions to create a in progress spec
 
       click_view
-      expect(page).to have_content("You have not completed all the tasks. Your specification is incomplete.")
+      expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
     end
   end
 

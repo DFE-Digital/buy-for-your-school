@@ -8,11 +8,12 @@ RSpec.feature "Users can see their catering specification" do
     user_is_signed_in(user: user)
     task_radio = create(:task, title: "Radio task", section: section)
     create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_radio, order: 0)
-
+    create(:page, title: "Next steps", slug: "next-steps-catering")
     visit "/journeys/#{journey.id}"
   end
 
-  context "when the journey has been completed" do
+  context "when the journey has been completed", js: true do
+    before { DownloadHelpers.clear_downloads }
     scenario "HTML" do
       click_first_link_in_section_list
 
@@ -27,29 +28,20 @@ RSpec.feature "Users can see their catering specification" do
 
       # journey.specification.body
       expect(find("p.govuk-body")).to have_text "Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed."
-
-      # journey.specification.download.button
-      expect(find("a.govuk-button:contains('Download (.docx)')")[:href]).to include "specification.docx"
-
-      within "article.specification" do
-        # journey.specification.next_steps
-        expect(page).to have_text("Once you have a completed specification,")
-        expect(page).to have_link("see what the next steps are.", href: "/next-steps-catering")
-        # journey.specification.feedback.heading
-        expect(find("h2.govuk-heading-m")).to have_text "Giving us feedback"
-        # journey.specification.feedback.body
-        expect(page).to have_text "Tell us how Get Help Buying for Schools is working for you."
-        # journey.specification.feedback.button
-        expect(page).to have_link("Give feedback (opens in a new tab)", href: "https://dferesearch.fra1.qualtrics.com", count: 1)
-        # ensure button opens in new tab
-        expect(find("a.govuk-button:contains('Give feedback (opens in a new tab)')")[:target]).to eq "_blank"
+      
+      # sidebar
+      within ".govuk-grid-column-one-quarter" do
+        expect(page).to have_link("What to do when you have completed a specification", href: "/next-steps-catering")
+        expect(page).to have_link("Give feedback", href: "/feedback/new")
       end
 
       click_on "Download (.docx)"
 
-      expect(page.response_headers["Content-Type"]).to eql "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
-      expect(page.response_headers["Content-Disposition"]).to match(/filename="specification.docx"/)
+      # download page
+      expect(find("h1")).to have_text "Would you like to mark this specification as 'finished' after you download the document?"
+      choose 'Yes'
+      click_button "Save and continue"
+      expect(page).to have_text "Next steps"
     end
   end
 
@@ -59,11 +51,14 @@ RSpec.feature "Users can see their catering specification" do
       click_view
 
       # journey.specification.draft
-      expect(find("strong.govuk-warning-text__text")).to have_text "You have not completed all the tasks. Your specification is incomplete."
-
+      expect(find("strong.govuk-warning-text__text")).to have_text "You have not completed all the tasks. There may be information missing from your specification."
       click_on "Download (.docx)"
-
-      expect(page.response_headers["Content-Disposition"]).to match(/filename="specification-incomplete.docx"/)
+      # download page
+      expect(find("h1")).to have_text "Would you like to mark this specification as 'finished' after you download the document?"
+      choose 'No'
+      click_button "Save and continue"
+      expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
+      # expect(page.response_headers["Content-Disposition"]).to match(/filename="specification-incomplete.docx"/)
     end
   end
 end

@@ -154,7 +154,7 @@ en:
         header: Your specification
         body:
           text: Your answers have been used to create a specification, which also includes standard rules and regulations. You can %{link} if needed.
-          link: go back and edit yor answers
+          link: go back and edit your answers
         sub_header: Need support?
         draft: You have not completed all the tasks. There may be information missing from your specification.
         download:
