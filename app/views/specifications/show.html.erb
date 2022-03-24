@@ -3,7 +3,7 @@
 <div class="govuk-grid-row">
 
   <!-- SPECIFICATION -->
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl"><%= I18n.t("journey.specification.show.header") %></h1>
     <p class="govuk-caption-l"><%= I18n.t("journey.specification.caption", name: current_journey.name)%></p>
     <br>
@@ -38,8 +38,8 @@
   <!-- END -->
 
   <!-- SIDEBAR -->
-  <div class="govuk-grid-column-one-third">
-    <ul>
+  <div class="govuk-grid-column-one-quarter">
+    <ul class="govuk-list govuk-list--bullet">
       <li> <%= link_to I18n.t("journey.specification.show.sidebar.links")[0], "/next-steps-catering", class: "govuk-link" %> </li>
       <li> <%= link_to I18n.t("journey.specification.show.sidebar.links")[1], new_feedback_path, class: "govuk-link" %> </li>
     </ul>
