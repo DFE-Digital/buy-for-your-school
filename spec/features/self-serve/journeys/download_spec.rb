@@ -45,7 +45,7 @@ RSpec.feature "Users can see their catering specification" do
     end
   end
 
-  context "when the journey has not yet been completed" do
+  context "when the journey has not yet been completed", js: true do
     scenario "includes an incomple warning" do
       # Omit answering a question to simulate an incomplete spec
       click_view
@@ -58,7 +58,6 @@ RSpec.feature "Users can see their catering specification" do
       choose 'No'
       click_button "Save and continue"
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
-      # expect(page.response_headers["Content-Disposition"]).to match(/filename="specification-incomplete.docx"/)
     end
   end
 end
