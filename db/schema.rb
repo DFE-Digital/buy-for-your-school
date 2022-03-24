@@ -448,6 +448,7 @@ ActiveRecord::Schema.define(version: 2022_03_16_155306) do
     t.integer "required_agreement_type"
     t.integer "route_to_market"
     t.integer "reason_for_route_to_market"
+    t.string "framework_name"
     t.date "started_at"
     t.date "ended_at"
     t.integer "stage"
