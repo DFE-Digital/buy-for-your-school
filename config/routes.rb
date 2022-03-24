@@ -97,7 +97,7 @@ Rails.application.routes.draw do
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
-        resource :assignment, only: %i[new create]
+        resources :assignments, only: %i[new create index]
         resource :opening, only: %i[create]
         resource :closure, only: %i[create]
         resource :on_hold, only: %i[create]

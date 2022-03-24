@@ -1,6 +1,14 @@
 module Support
   class Cases::AssignmentsController < Cases::ApplicationController
-    before_action :load_agents, :set_back_url
+    before_action :set_back_url
+
+    def index
+      respond_to do |format|
+        format.json do
+          render json: Agent.omnisearch(params[:q]).map { |a| AgentPresenter.new(a) }.as_json
+        end
+      end
+    end
 
     def new
       @case_assignment_form = CaseAssignmentForm.new
@@ -45,10 +53,6 @@ module Support
 
     def set_back_url
       @back_url = support_cases_path(current_case)
-    end
-
-    def load_agents
-      @agents = Agent.caseworkers.map { |a| AgentPresenter.new(a) }.sort_by(&:full_name)
     end
   end
 end

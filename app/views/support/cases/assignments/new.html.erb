@@ -1,12 +1,26 @@
-<%= form_with model: @case_assignment_form, scope: :case_assignment_form, url: support_case_assignment_path(@current_case) do |form| %>
-  <%= form.govuk_error_summary %>
+<%= content_for :title, I18n.t("support.case_assignment.header") %>
 
-  <%= form.govuk_collection_radio_buttons :agent_id,
-    @agents,
-    :id,
-    :full_name,
-    legend: { text: I18n.t("support.case_assignment.agent_id.label"), size: "l" }
-  %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= I18n.t("support.case_assignment.header") %></h1>
 
-  <%= form.submit I18n.t("support.case_assignment.submit"), class: "govuk-button" %>
-<% end %>
+    <%= form_with model: @case_assignment_form, scope: :case_assignment_form, url: support_case_assignments_path(@current_case) do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <%= render "components/autocomplete",
+            container_id: "case-assignment-form-agent-field",
+            label_text: I18n.t("support.case_assignment.agent_id.label"),
+            label_class: "govuk-hint",
+            element_id: "agent-autocomplete",
+            element_name: "case_assignment_form[agent_name]",
+            template_suggestion: "{{full_name}}",
+            value_field: :full_name,
+            hidden_fields: {
+              'case_assignment_form[agent_id]' => [:id, form.object.agent_id]
+            },
+            query_url: support_case_assignments_path(format: :json, q: "{{QUERY}}") %>
+
+      <%= form.submit I18n.t("support.case_assignment.submit"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

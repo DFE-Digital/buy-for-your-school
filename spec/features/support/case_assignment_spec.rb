@@ -1,4 +1,4 @@
-RSpec.feature "Case worker assignment" do
+RSpec.feature "Case worker assignment", js: true do
   include_context "with an agent"
 
   context "when re-assigning an agent to a case" do
@@ -8,7 +8,7 @@ RSpec.feature "Case worker assignment" do
       click_button "Agent Login"
       visit support_case_path(support_case)
       click_link "Change case owner"
-      choose "Procurement Specialist"
+      select_agent "Procurement Specialist"
       click_button "Assign"
     end
 
@@ -28,7 +28,7 @@ RSpec.feature "Case worker assignment" do
       click_button "Agent Login"
       visit support_case_path(support_case)
       click_link "Assign to case worker"
-      choose "Procurement Specialist"
+      select_agent "Procurement Specialist"
       click_button "Assign"
     end
 
@@ -60,8 +60,15 @@ RSpec.feature "Case worker assignment" do
     end
 
     it "does not show them in the caseworker list" do
-      expect(page).to have_field "Procurement Specialist"
-      expect(page).not_to have_field "Internal Agent"
+      fill_in "case_assignment_form[agent_name]", with: "Internal Agent"
+      sleep 0.5
+      expect(page).not_to have_selector(".autocomplete__option", text: "Internal Agent")
     end
+  end
+
+  def select_agent(term)
+    fill_in "case_assignment_form[agent_name]", with: term
+    sleep 0.5
+    find(".autocomplete__option", text: term)&.click
   end
 end
