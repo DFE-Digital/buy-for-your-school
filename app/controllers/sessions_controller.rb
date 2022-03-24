@@ -72,7 +72,7 @@ private
 
   # @return [Boolean]
   def find_framework_entrypoint?
-    session[:faf_referer].present?
+    session[:faf_referrer].present?
   end
 
   # Routing logic for users after authentication
@@ -92,7 +92,7 @@ private
   # @return [String]
   def exit_path
     if find_framework_entrypoint?
-      session.delete(:faf_referer)
+      session.delete(:faf_referrer)
       return framework_requests_path
     end
 
