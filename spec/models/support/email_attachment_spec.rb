@@ -55,8 +55,8 @@ RSpec.describe Support::EmailAttachment, type: :model do
       let(:email_attachment) { create(:support_email_attachment, outlook_id: ms_attachment.id) }
 
       it "does not update the attachment" do
-        expect { email_attachment.import_from_ms_attachment(ms_attachment) }.not_to change { email_attachment.file }
-        expect { email_attachment.import_from_ms_attachment(ms_attachment) }.not_to change { email_attachment.updated_at }
+        expect { email_attachment.import_from_ms_attachment(ms_attachment) }.not_to change(email_attachment, :file)
+        expect { email_attachment.import_from_ms_attachment(ms_attachment) }.not_to change(email_attachment, :updated_at)
       end
     end
   end
