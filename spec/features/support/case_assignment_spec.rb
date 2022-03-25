@@ -60,15 +60,15 @@ RSpec.feature "Case worker assignment", js: true do
     end
 
     it "does not show them in the caseworker list" do
-      fill_in "case_assignment_form[agent_name]", with: "Internal Agent"
+      fill_in "Search for caseworker name", with: "Internal Agent"
       sleep 0.5
       expect(page).not_to have_selector(".autocomplete__option", text: "Internal Agent")
     end
   end
 
   def select_agent(term)
-    fill_in "case_assignment_form[agent_name]", with: term
-    sleep 1
-    find(".autocomplete__option", text: term)&.click
+    fill_in "Search for caseworker name", with: term
+    sleep 2
+    find(".autocomplete__option", text: term).click
   end
 end
