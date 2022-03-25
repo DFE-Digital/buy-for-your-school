@@ -397,10 +397,8 @@ en:
             date_added: Date added
             description: Description
         case: Case
-        case_owner: 'Case owner: %{owner}'
         case_value: Case value
         category: Category
-        change_case_owner: change
         change_owner: Change case owner
         close: Close case
         contact_email: Contact email

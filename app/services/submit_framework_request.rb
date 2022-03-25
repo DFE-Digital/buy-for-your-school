@@ -15,9 +15,9 @@ class SubmitFrameworkRequest
   #   @return [String] Template UUID
   option :template, Types::String, default: proc { "621a9fe9-018c-425e-ae6e-709c6718fe8d" }
 
-  # @!attribute referer
+  # @!attribute referrer
   #   @return [String]
-  option :referer
+  option :referrer
 
   # TODO: Replace with outbound API call
   #
@@ -77,7 +77,7 @@ private
         "last_name": user.last_name,
         "email": user.email,
         "message": request.message_body,
-        "referer": referer,
+        "referrer": referrer,
       },
     }
     Support::CreateInteraction.new(@kase.id, "faf_support_request", nil, interaction_attrs).call
