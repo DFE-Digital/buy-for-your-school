@@ -825,6 +825,7 @@ en:
         note: Case note
         phone_call: Phone call
         procurement_updated: Procurement updated
+        savings_updated: Savings updated
         state_change: Status change
         support_request: Request for support
     procurement_details:
