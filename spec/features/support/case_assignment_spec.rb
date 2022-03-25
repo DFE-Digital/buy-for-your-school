@@ -68,7 +68,7 @@ RSpec.feature "Case worker assignment", js: true do
 
   def select_agent(term)
     fill_in "case_assignment_form[agent_name]", with: term
-    sleep 0.5
+    sleep 1
     find(".autocomplete__option", text: term)&.click
   end
 end
