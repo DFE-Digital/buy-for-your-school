@@ -11,8 +11,9 @@
       <% body_link = link_to I18n.t("journey.specification.show.body.link"), journey_path(current_journey) %>
       <%= I18n.t("journey.specification.show.body.text", link: body_link).html_safe %>
     </p>
+
     <% unless current_journey.finished? || current_journey.all_tasks_completed? %>
-      <div class="govuk-warning-text">
+      <div class="info-box-grey govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
           <span class="govuk-warning-text__assistive">Warning</span>
