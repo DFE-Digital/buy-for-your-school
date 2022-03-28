@@ -1,5 +1,7 @@
-<nav class="navbar-component">
-  <ul id="navigation" class="govuk-header__navigation navbar-component__navigation", aria-label="Top level navigation">
+<nav aria-label="Menu" class="govuk-header__navigation">
+  <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu">Menu</button>
+
+  <ul id="navigation" class="govuk-header__navigation-list" aria-label="Top level navigation">
     <% unless current_user.guest? %>
       <li id="userInfo" class="navbar-component__navigation-item--right govuk-header__navigation-item">
         <%# TODO: Use UserDecorator for full_name %>
@@ -10,6 +12,7 @@
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
         </li>
+
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.cases.my_cases.header_link"), support_cases_path(anchor: 'my-cases'), class: "govuk-header__link" %>
         </li>

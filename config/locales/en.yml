@@ -792,7 +792,7 @@ en:
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         message: Message
-        referer: Referer
+        referrer: Referrer
         email_template: Email template
         email_subject: Email subject
         email_preview: Preview email
