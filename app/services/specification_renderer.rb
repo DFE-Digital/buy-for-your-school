@@ -22,7 +22,7 @@ class SpecificationRenderer
   # @param draft (optional) [Boolean] - if true, prepends `draft_msg` to the spec (overrides journey completeness check)
   #
   # return [String]
-  def call(draft: nil, clean: false)
+  def call(draft: nil)
     is_draft = draft.nil? ? !journey.all_tasks_completed? : draft
 
     template = LiquidParser.new(
@@ -37,13 +37,6 @@ class SpecificationRenderer
   end
 
 private
-  
-  def cleaned(template)
-    template.split("\n## ").select do |fraction|
-      fraction = PandocRuby.convert(fraction, "--strip-comments", from: :markdown, to: :html)
-      %w[ol ul p].any? { |tag| fraction.include?("</#{tag}>") }
-    end.join("\n## ")
-  end
 
   # Return the answers in this journey
   #

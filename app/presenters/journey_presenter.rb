@@ -28,8 +28,8 @@ class JourneyPresenter < BasePresenter
   end
 
   def status
-    return I18n.t('journey.state.in_progress') unless finished?
+    return I18n.t("journey.state.in_progress") unless finished?
 
-    I18n.t('journey.state.finished')
+    I18n.t("journey.state.finished")
   end
 end

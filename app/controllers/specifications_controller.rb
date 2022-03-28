@@ -14,9 +14,9 @@ class SpecificationsController < ApplicationController
         current_journey.finish!
         redirect_to(
           URI::HTTPS.build(
-            path: '/next-steps-catering',
-            query: { redirect_url: journey_specification_url(current_journey, format: :docx) }.to_query
-          ).request_uri
+            path: "/next-steps-catering",
+            query: { redirect_url: journey_specification_url(current_journey, format: :docx) }.to_query,
+          ).request_uri,
         )
       else
         @redirect_url = journey_specification_url(current_journey, format: :docx)

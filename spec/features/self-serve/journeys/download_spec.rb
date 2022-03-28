@@ -14,6 +14,7 @@ RSpec.feature "Users can see their catering specification" do
 
   context "when the journey has been completed", js: true do
     before { DownloadHelpers.clear_downloads }
+
     scenario "HTML" do
       click_first_link_in_section_list
 
@@ -28,7 +29,7 @@ RSpec.feature "Users can see their catering specification" do
 
       # journey.specification.body
       expect(find("p.govuk-body")).to have_text "Your answers have been used to create a specification, which also includes standard rules and regulations. You can go back and edit your answers if needed."
-      
+
       # sidebar
       within ".govuk-grid-column-one-quarter" do
         expect(page).to have_link("What to do when you have completed a specification", href: "/next-steps-catering")
@@ -39,7 +40,7 @@ RSpec.feature "Users can see their catering specification" do
 
       # download page
       expect(find("h1")).to have_text "Would you like to mark this specification as 'finished' after you download the document?"
-      choose 'Yes'
+      choose "Yes"
       click_button "Save and continue"
       expect(page).to have_text "Next steps"
     end
@@ -55,7 +56,7 @@ RSpec.feature "Users can see their catering specification" do
       click_on "Download (.docx)"
       # download page
       expect(find("h1")).to have_text "Would you like to mark this specification as 'finished' after you download the document?"
-      choose 'No'
+      choose "No"
       click_button "Save and continue"
       expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
     end
