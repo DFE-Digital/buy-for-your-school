@@ -14,11 +14,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :support?, :download?
-
-  def download?
-    @download || params[:download]
-  end
+  helper_method :current_user, :support?
 
   # @return [User, Guest]
   #
