@@ -13,8 +13,6 @@ RSpec.feature "Users can see their catering specification" do
   end
 
   context "when the journey has been completed", js: true do
-    before { DownloadHelpers.clear_downloads }
-
     scenario "HTML" do
       click_first_link_in_section_list
 
