@@ -52,7 +52,7 @@ module Support
     end
 
     def set_back_url
-      @back_url = support_cases_path(current_case)
+      @back_url = support_case_path(current_case)
     end
   end
 end
