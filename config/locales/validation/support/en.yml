@@ -73,6 +73,8 @@ en:
       phone_number: Phone number
       estimated_procurement_completion_date: Estimated procurement date
       organisation_id: "" # Omitted
+      source: "" # Omitted
+      request_text: "" # Omitted
 
     errors:
       rules:
@@ -105,6 +107,13 @@ en:
 
         organisation_id:
           missing: Please select an organisation or group
+
+        source:
+          blank: Select the source of the case
+          missing: Select the source of the case
+
+        request_text:
+          missing: Enter a description of the query
 
   case_procurement_details_form:
     rules:

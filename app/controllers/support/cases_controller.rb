@@ -33,9 +33,7 @@ module Support
       @form = CreateCaseForm.from_validation(validation)
       if validation.success? && params[:button] == "create"
         kase = CreateCase.new(@form.to_h).call
-        create_interaction(kase.id, "hub_notes", form_params["hub_notes"]) if form_params["hub_notes"].present?
-        create_interaction(kase.id, "hub_progress_notes", form_params["progress_notes"]) if form_params["progress_notes"].present?
-        create_interaction(kase.id, "hub_migration", "Case Migration Data", @form.to_h)
+        create_interaction(kase.id, "create_case", "Case created", @form.to_h.slice(:source, :category))
         redirect_to support_case_path(kase)
       else
         render :new
@@ -85,12 +83,12 @@ module Support
         :phone_number,
         :extension_number,
         :category_id,
-        :hub_case_ref,
         :estimated_procurement_completion_date,
         :estimated_savings,
-        :hub_notes,
         :progress_notes,
         :request_type,
+        :source,
+        :request_text,
       )
     end
 

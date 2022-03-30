@@ -19,10 +19,6 @@ RSpec.feature "Create case", js: true do
     expect(find("h1.govuk-heading-l")).to have_text "Create a new case"
   end
 
-  it "shows the hub case information heading" do
-    expect(find("h2.govuk-heading-l")).to have_text "Hub migration case information"
-  end
-
   context "when not selecting an organisation" do
     it "validates the school urn" do
       valid_form_data_without_organisation
@@ -76,16 +72,6 @@ RSpec.feature "Create case", js: true do
       it "doesnt show case type" do
         complete_valid_form
         expect(find("dd.case-type")).to have_text ""
-      end
-    end
-
-    context "when south west identification number provided" do
-      it "doesnt show case type" do
-        valid_form_data
-        fill_in "create_case_form[hub_case_ref]", with: "CE-11111"
-        click_on "Save and continue"
-
-        expect(find("dd.case-type")).to have_text "South west hub case"
       end
     end
 
@@ -218,6 +204,8 @@ RSpec.feature "Create case", js: true do
     fill_in "create_case_form[email]", with: "test@example.com"
     fill_in "create_case_form[phone_number]", with: "0778974653"
     choose "No" # request type
+    select "nw_hub", from: "create_case_form[source]"
+    fill_in "create_case_form[request_text]", with: "This is a request"
   end
 
   def valid_form_data

@@ -126,16 +126,6 @@
       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.case_type") %>
-          </dt>
-          <dd class="govuk-summary-list__value case-type">
-            <%= I18n.t("support.case.label.source.#{@form.case_type}") unless @form.case_type.nil? %>
-          </dd>
-          <dd class="govuk-summary-list__actions"></dd>
-        </div>
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
             <%= I18n.t("support.case_hub_migration.label.category") %>
           </dt>
           <dd class="govuk-summary-list__value">
@@ -148,66 +138,36 @@
       </dl>
 
       <h2 class="govuk-heading-m">
-        <%= I18n.t("support.case_hub_migration.edit.section.migration") %>
+        <%= I18n.t("support.case_hub_migration.edit.section.source") %>
       </h2>
 
       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.hub_case_ref", optional: nil) %>
+            <%= I18n.t("support.case_hub_migration.label.case_source") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @form.hub_case_ref %>
+            <%= I18n.t("support.case.label.source.#{@form.source}") %>
           </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changeCategory" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
+      </dl>
 
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.request_text") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date", optional: nil) %>
+            <%= I18n.t("support.case_hub_migration.label.request_text") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @form.estimated_procurement_completion_date %>
+            <%= @form.request_text %>
           </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
-          </dd>
-        </div>
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.estimated_savings", optional: nil) %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= @form.estimated_savings %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
-          </dd>
-        </div>
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.hub_notes", optional: nil) %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= @form.hub_notes %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
-          </dd>
-        </div>
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.progress_notes", optional: nil) %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= @form.progress_notes %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
+          <dd id="changeCategory" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>

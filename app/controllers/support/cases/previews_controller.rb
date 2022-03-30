@@ -29,12 +29,12 @@ module Support
         :phone_number,
         :extension_number,
         :category_id,
-        :hub_case_ref,
         :estimated_procurement_completion_date,
         :estimated_savings,
-        :hub_notes,
         :progress_notes,
         :request_type,
+        :source,
+        :request_text,
       )
     end
   end

@@ -426,7 +426,7 @@ en:
         organisation_name: Organisation name
         organisation_type: Organisation type
         place_on_hold: Place on hold
-        problem_description: Description of problem
+        problem_description: Description of query
         procurement_details:
           change: change
           contract_duration: Contract duration
@@ -452,11 +452,13 @@ en:
         send_email: Send email
         source:
           digital: Specify case
+          engagement_and_outreach: Engagement and Outreach (E&O)
           faf: Find a Framework
           header: Source
           incoming_email: Email
-          nw_hub: North west hub case
-          sw_hub: South west hub case
+          nw_hub: North West (NW) Hub
+          schools_commercial_team: Schools Commercial Team (SCT)
+          sw_hub: South West (SW) Hub
           unspecified: "-"
         state:
           state_action_required: Action
@@ -493,6 +495,10 @@ en:
         my_cases: My cases
         new_cases: New cases
         not_found: No cases found
+      new:
+        request_text:
+          header: Description of query
+          hint: Enter a summary of the query
       search:
         button: Start a new search
         count: "%{count} cases found containing '%{term}'"
@@ -626,15 +632,16 @@ en:
         label:
           confirm: Check all the details before submitting as it is not currently possible to edit case details once they are created.
         section:
-          case: Case details
+          case: Request type
           contact: Contact details
           establishment: Organisation details
-          migration: Hub migration case information
+          request_text: Description of query
+          source: Case source
         submit: Create case
-      header: Hub migration case information
       label:
+        case_source: Case source
         case_type: Type of case
-        category: Category
+        category: Procurement category
         category_id: Buying category
         email: Contact email
         estimated_procurement_completion_date: Procurement estimated completion date %{optional}
@@ -656,11 +663,12 @@ en:
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         referer: Referer
+        request_text: Summary
         school_name: Organisation name
         school_postcode: Organisation postcode
         school_ukprn: Organisation UKPRN
         school_urn: Organisation URN
-        source: Case source
+        source: Source
       request_type:
         hint: Is the request related to a procurement category?
         legend: Request type
@@ -748,6 +756,10 @@ en:
       show:
         header: Savings details
         link: change
+    case_source:
+      header: Case source
+      select:
+        header: Source
     case_statistics:
       body:
         no_of_cases: Number of cases
@@ -801,8 +813,6 @@ en:
     generic:
       cancel: Cancel
       continue: Continue
-      currency:
-        unit_symbol: "£"
       form:
         optional: "(optional)"
       link:
@@ -826,6 +836,7 @@ en:
       message:
         created_flash: "%{type} added to case"
       type:
+        create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge
         email_to_school: Email to school

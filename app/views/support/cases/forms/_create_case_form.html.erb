@@ -74,38 +74,23 @@
   <% end %>
 
   <h2 class="govuk-heading-l">
-    <%= I18n.t("support.case_hub_migration.header") %>
+    <%= I18n.t("support.case_source.header") %>
   </h2>
 
-  <p class="govuk-body">
-    <%= I18n.t("support.case_hub_migration.label.form_hint") %>
-  </p>
+  <%= form.govuk_select(:source, label: { text: I18n.t("support.case_source.select.header") }) do %>
+    <optgroup>
+      <option value="" >Please select</option>
+      <% ["nw_hub", "sw_hub","engagement_and_outreach", "schools_commercial_team"].each do |source| %>
+        <option value="<%= source %>"><%= I18n.t("support.case.label.source.#{source}") %></option>
+      <% end %>
+    </optgroup>
+  <% end %>
 
-  <%= form.govuk_text_field :hub_case_ref,
-                             label: { text: I18n.t("support.case_hub_migration.label.hub_case_ref", optional: I18n.t("support.generic.form.optional")) },
-                             hint:  { text: I18n.t("support.case_hub_migration.label.hub_case_ref_hint") }
-  %>
-
-  <%= form.govuk_text_field :estimated_procurement_completion_date,
-                            label: { text: I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date", optional: I18n.t("support.generic.form.optional")) },
-                             hint:  { text: I18n.t("support.case_hub_migration.label.estimated_procurement_completion_date_hint") },
-                              placeholder: "DD/MM/YYYY"
-  %>
-
-  <%= form.govuk_text_field :estimated_savings,
-                            label: { text: I18n.t("support.case_hub_migration.label.estimated_savings", optional: I18n.t("support.generic.form.optional")) },
-                            hint:  { text: I18n.t("support.case_hub_migration.label.estimated_savings_hint") },
-                            prefix_text: I18n.t("support.generic.currency.unit_symbol")
-  %>
-
-  <%= form.govuk_text_area :hub_notes,
-                            label: { text: I18n.t("support.case_hub_migration.label.hub_notes", optional: I18n.t("support.generic.form.optional")) },
-                            hint:  { text: I18n.t("support.case_hub_migration.label.hub_notes_hint") }
-  %>
-
-  <%= form.govuk_text_area :progress_notes,
-                           label: { text: I18n.t("support.case_hub_migration.label.progress_notes", optional: I18n.t("support.generic.form.optional")) },
-                           hint:  { text: I18n.t("support.case_hub_migration.label.progress_notes_hint") }
+  <%= form.govuk_text_area :request_text,
+                            autofocus: true,
+                            rows: 5,
+                            label: { text: I18n.t("support.case.new.request_text.header"), size: "l" },
+                            hint: { text: I18n.t("support.case.new.request_text.hint") }
   %>
 
   <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
