@@ -148,7 +148,7 @@ en:
         body:
          - "You can still edit specifications that are marked as 'finished'. Marking it as being 'finished' will:"
          - change the status of the specification in the dashboard so that you can see which ones have been finished
-         - remove any references to the specification being 'incomplete' in you download
+         - remove any references to the specification being 'incomplete' in your download
 
       show:
         header: Your specification
