@@ -60,6 +60,5 @@ module Support
     rule(:request_text) do
       key(:request_text).failure(:missing) if value.blank?
     end
-
   end
 end
