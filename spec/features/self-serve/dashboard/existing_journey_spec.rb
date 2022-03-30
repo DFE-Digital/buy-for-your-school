@@ -44,7 +44,7 @@ RSpec.feature "View existing journeys" do
 
       it "shows tabular data in four columns" do
         expect(page).to have_css "table.govuk-table"
-        expect(page).to have_css "td.govuk-table__cell", count: 8
+        expect(page).to have_css "td.govuk-table__cell", count: 10
       end
 
       it "shows the spec name in column one" do
@@ -60,9 +60,9 @@ RSpec.feature "View existing journeys" do
       end
 
       it "shows the creation date in column three" do
-        expect(find(:xpath, "//table/thead/tr[1]/th[3]")).to have_text "Date started"
-        expect(find(:xpath, "//table/tbody/tr[1]/td[3]")).to have_text "15 February 2021"
-        expect(find(:xpath, "//table/tbody/tr[2]/td[3]")).to have_text "20 March 2021"
+        expect(find(:xpath, "//table/thead/tr[1]/th[4]")).to have_text "Date started"
+        expect(find(:xpath, "//table/tbody/tr[1]/td[4]")).to have_text "15 February 2021"
+        expect(find(:xpath, "//table/tbody/tr[2]/td[4]")).to have_text "20 March 2021"
       end
 
       it "redirects to the specification page" do

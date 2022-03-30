@@ -109,6 +109,7 @@
     </footer>
 
     <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+    <%= render partial: "layouts/redirect" %>
     <%= javascript_tag nonce: true do -%>
       window.GOVUKFrontend.initAll()
     <% end -%>

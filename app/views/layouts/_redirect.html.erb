@@ -1,0 +1,6 @@
+<% redirect_url = @redirect_url || params[:redirect_url] %>
+
+<% if redirect_url %>
+  <%= content_tag :div, nil, id: "js-redirect", data: { redirect_url: redirect_url } %>
+  <%= javascript_include_tag 'redirect' %>
+<% end %>
