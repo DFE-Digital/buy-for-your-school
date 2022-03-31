@@ -577,6 +577,10 @@ en:
       submit: Save changes
     case_documents:
       show:
+        body: Notes
+        contact_detail_hint: Add details of the phone call or copy and paste the email here
+        created_by: Created by
+        email_sender: Sender
         header: Your specification
     case_email_content:
       edit:

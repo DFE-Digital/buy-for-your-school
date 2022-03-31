@@ -115,6 +115,7 @@ ignore_unused:
   - 'generic.label.what_is'
   - 'support.emails.button.*'
   - 'errors.attributes.response.blank'
+  - 'support.case_documents.show.*'
 
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:
