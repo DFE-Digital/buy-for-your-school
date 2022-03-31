@@ -320,6 +320,7 @@ en:
         draft: You have not completed all the tasks. There may be information missing from your specification.
         header: Your specification
         sidebar:
+          header: Related content
           links:
           - What to do when you have completed a specification
           - Give feedback
