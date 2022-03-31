@@ -644,6 +644,7 @@ en:
         category: Procurement category
         category_id: Buying category
         email: Contact email
+        email_subject: Subject
         estimated_procurement_completion_date: Procurement estimated completion date %{optional}
         estimated_procurement_completion_date_hint: Enter the procurement estimated completion date supplied from the Hub
         estimated_savings: Estimated total savings %{optional}

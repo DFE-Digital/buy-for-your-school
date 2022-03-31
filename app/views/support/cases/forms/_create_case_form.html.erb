@@ -77,14 +77,16 @@
     <%= I18n.t("support.case_source.header") %>
   </h2>
 
-  <%= form.govuk_select(:source, label: { text: I18n.t("support.case_source.select.header") }) do %>
-    <optgroup>
-      <option value="" >Please select</option>
-      <% ["nw_hub", "sw_hub","engagement_and_outreach", "schools_commercial_team"].each do |source| %>
-        <option value="<%= source %>"><%= I18n.t("support.case.label.source.#{source}") %></option>
-      <% end %>
-    </optgroup>
-  <% end %>
+<%= form.govuk_select(:source,
+                        [
+                          ["Please select", ""],
+                          [I18n.t("support.case.label.source.nw_hub"), "nw_hub"],
+                          [I18n.t("support.case.label.source.sw_hub"), "sw_hub"],
+                          [I18n.t("support.case.label.source.engagement_and_outreach"), "engagement_and_outreach"],
+                          [I18n.t("support.case.label.source.schools_commercial_team"), "schhools_commercial_team"]
+                        ],
+                        label: { text: I18n.t("support.case_source.select.header") })
+  %>
 
   <%= form.govuk_text_area :request_text,
                             autofocus: true,
