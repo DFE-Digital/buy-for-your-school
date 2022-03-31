@@ -73,6 +73,7 @@ en:
       phone_number: Phone number
       estimated_procurement_completion_date: Estimated procurement date
       organisation_id: "" # Omitted
+      organisation_name: "" # Omitted
       source: "" # Omitted
       request_text: "" # Omitted
 
@@ -106,6 +107,9 @@ en:
           missing: Please select a procurement category
 
         organisation_id:
+          missing: Please select an organisation or group
+
+        organisation_name:
           missing: Please select an organisation or group
 
         source:

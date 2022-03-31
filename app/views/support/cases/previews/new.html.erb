@@ -149,7 +149,7 @@
           <dd class="govuk-summary-list__value">
             <%= I18n.t("support.case.label.source.#{@form.source}") %>
           </dd>
-          <dd id="changeCategory" class="govuk-summary-list__list__actions">
+          <dd id="changeSource" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -167,7 +167,7 @@
           <dd class="govuk-summary-list__value">
             <%= @form.request_text %>
           </dd>
-          <dd id="changeCategory" class="govuk-summary-list__list__actions">
+          <dd id="changeRequestText" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
