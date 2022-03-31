@@ -24,6 +24,7 @@
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Name</th>  
             <th scope="col" class="govuk-table__header">Category</th>
+            <th scope="col" class="govuk-table__header">Status</th>
             <th scope="col" class="govuk-table__header">Date started</th>
             <th scope="col" class="govuk-table__header govuk-table__cell--numeric"> </th>
           </tr>
@@ -33,6 +34,7 @@
             <tr class="govuk-table__row">
               <td class="govuk-table__cell"><%= link_to journey.name, journey_specification_path(journey), class: "govuk-link"%></td>
               <td class="govuk-table__cell"><%= journey.category.title %></td>
+              <td class="govuk-table__cell"><%= journey.status %></td>
               <td class="govuk-table__cell"><%= journey.created_at %></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
                 <%= link_to I18n.t("dashboard.edit.button"), journey_path(journey), class: "govuk-link" %>
