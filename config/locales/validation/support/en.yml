@@ -90,7 +90,7 @@ en:
           missing: Enter the first name of the contact
 
         last_name:
-          missing: Enter the last name of the contact.
+          missing: Enter the last name of the contact
 
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'
