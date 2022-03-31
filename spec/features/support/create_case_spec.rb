@@ -204,7 +204,7 @@ RSpec.feature "Create case", js: true do
     fill_in "create_case_form[email]", with: "test@example.com"
     fill_in "create_case_form[phone_number]", with: "0778974653"
     choose "No" # request type
-    select "nw_hub", from: "create_case_form[source]"
+    select "North West (NW) Hub", from: "create_case_form[source]"
     fill_in "create_case_form[request_text]", with: "This is a request"
   end
 

@@ -47,7 +47,7 @@ RSpec.feature "Case summary" do
         expect(all(".govuk-summary-list__row")[2]).to have_text "Case value"
         expect(all(".govuk-summary-list__row")[3]).to have_text "Received"
         expect(all(".govuk-summary-list__row")[4]).to have_text "Category"
-        expect(all(".govuk-summary-list__row")[5]).to have_text "Description of problem"
+        expect(all(".govuk-summary-list__row")[5]).to have_text "Description of query"
         expect(all(".govuk-summary-list__row")[6]).to have_text "Attached specification"
       end
     end

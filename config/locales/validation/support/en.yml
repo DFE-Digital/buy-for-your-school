@@ -67,9 +67,9 @@ en:
       school_urn: "" # Omitted
       request_type: "" # Omitted
       category_id: "" # Omitted
-      first_name: First name
-      last_name: Last name
-      email: Email
+      first_name: "" # Omitted
+      last_name: "" # Omitted
+      email: "" # Omitted
       phone_number: Phone number
       estimated_procurement_completion_date: Estimated procurement date
       organisation_id: "" # Omitted
@@ -79,20 +79,20 @@ en:
     errors:
       rules:
         request_type:
-          bool?: Select the request type
-          missing: Select the request type
+          bool?: Select whether the request is related to a procurement category
+          missing: Select whether the request is related to a procurement category
         school_urn:
           missing: You must select a school
           invalid: Invalid school URN
 
         first_name:
-          missing: is missing
+          missing: Enter the first name of the contact
 
         last_name:
-          missing: is missing
+          missing: Enter the last name of the contact.
 
         email:
-          missing: is missing
+          missing: Enter an email in the correct format
 
         phone_number:
           # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
