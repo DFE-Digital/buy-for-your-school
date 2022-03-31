@@ -578,8 +578,8 @@ en:
             header: New contract supplier
     case_description:
       flash:
-        updated: Description of problem updated successfully
-      header: Update description of problem
+        updated: Description of query updated successfully
+      header: Update description of query
       submit: Save changes
     case_documents:
       show:

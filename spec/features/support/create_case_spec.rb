@@ -68,13 +68,6 @@ RSpec.feature "Create case", js: true do
       end
     end
 
-    context "when no identification number provided" do
-      it "doesnt show case type" do
-        complete_valid_form
-        expect(find("dd.case-type")).to have_text ""
-      end
-    end
-
     it "allows case to be created" do
       complete_valid_form
 
@@ -168,7 +161,7 @@ RSpec.feature "Create case", js: true do
       click_on "Save and continue"
 
       within "div.govuk-error-summary" do
-        expect(page).to have_text "Select the request type"
+        expect(page).to have_text "Select whether the request is related to a procurement category"
         expect(page).not_to have_text "Please select a procurement category"
       end
     end
@@ -180,7 +173,7 @@ RSpec.feature "Create case", js: true do
       click_on "Save and continue"
 
       within "div.govuk-error-summary" do
-        expect(page).not_to have_text "Select the request type"
+        expect(page).not_to have_text "Select whether the request is related to a procurement category"
         expect(page).to have_text "Please select a procurement category"
       end
     end

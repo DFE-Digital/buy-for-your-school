@@ -92,7 +92,7 @@ en:
           missing: Enter the last name of the contact.
 
         email:
-          missing: Enter an email in the correct format
+          missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'
 
         phone_number:
           # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
