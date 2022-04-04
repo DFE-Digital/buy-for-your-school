@@ -14,4 +14,12 @@ RSpec.describe Support::AgentPresenter do
       expect(presenter.guest?).to be false
     end
   end
+
+  describe "#as_json" do
+    it "returns the full name" do
+      expect(presenter.as_json).to include(
+        "full_name" => "Ronald McDonald",
+      )
+    end
+  end
 end

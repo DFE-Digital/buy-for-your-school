@@ -502,9 +502,10 @@ en:
         results: Search results
     case_assignment:
       agent_id:
-        label: Assign to case worker
+        label: Search for caseworker name
       flash:
         created: Agent assigned to case successfully
+      header: Assign to case worker
       submit: Assign
     case_categorisations:
       edit:
