@@ -379,6 +379,15 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
     t.index ["name"], name: "index_support_establishment_types_on_name", unique: true
   end
 
+  create_table "support_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "supplier"
+    t.string "category"
+    t.date "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "support_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "code", null: false
@@ -446,6 +455,8 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
     t.integer "stage"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "framework_id"
+    t.index ["framework_id"], name: "index_support_procurements_on_framework_id"
     t.index ["stage"], name: "index_support_procurements_on_stage"
   end
 
@@ -520,6 +531,7 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
   create_view "support_establishment_searches", sql_definition: <<-SQL
@@ -588,7 +600,7 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
       se.organisation_status,
       se.egroup_status AS establishment_group_status,
       se.establishment_type,
-      sp.framework_name,
+      sf.name AS framework_name,
       sp.reason_for_route_to_market,
       sp.required_agreement_type,
       sp.route_to_market,
@@ -605,7 +617,7 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
       nc.duration AS new_contract_duration,
       nc.spend AS new_contract_spend,
       nc.supplier AS new_contract_supplier
-     FROM ((((((support_cases sc
+     FROM (((((((support_cases sc
        LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
              FROM support_interactions i
             WHERE (i.case_id = sc.id)
@@ -644,6 +656,7 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
                JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))) se ON (((sc.organisation_id = se.id) AND ((sc.organisation_type)::text = se.source))))
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
        LEFT JOIN support_procurements sp ON ((sc.procurement_id = sp.id)))
+       LEFT JOIN support_frameworks sf ON ((sp.framework_id = sf.id)))
        LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
        LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)));
   SQL
