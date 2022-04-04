@@ -674,8 +674,8 @@ en:
         phone_number: Contact phone number %{optional}
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
-        request_text: Summary
         referrer: Referrer
+        request_text: Summary
         school_name: Organisation name
         school_postcode: Organisation postcode
         school_ukprn: Organisation UKPRN
