@@ -25,4 +25,26 @@ RSpec.describe Support::Agent, type: :model do
       expect { create(:support_agent, last_name: nil) }.to raise_error(ActiveRecord::NotNullViolation)
     end
   end
+
+  describe ".omnisearch" do
+    before do
+      create(:support_agent, first_name: "Monica", last_name: "Geller")
+      create(:support_agent, first_name: "Steve", last_name: "Gelon")
+    end
+
+    it "returns agents when searching by first name" do
+      agents = described_class.omnisearch("mon")
+
+      expect(agents.size).to eq 1
+      expect(agents[0].first_name).to eq "Monica"
+    end
+
+    it "returns agents when searching by last name" do
+      agents = described_class.omnisearch("gel")
+
+      expect(agents.size).to eq 2
+      expect(agents[0].last_name).to eq "Geller"
+      expect(agents[1].last_name).to eq "Gelon"
+    end
+  end
 end

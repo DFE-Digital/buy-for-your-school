@@ -17,5 +17,16 @@ module Support
     # def agent?
     #   true
     # end
+
+    # Include 'full_name' in the JSON representation
+    #
+    # @see Support::AssignmentsController
+    #
+    # @return [Hash]
+    def as_json(options = {})
+      super(options).merge({
+        "full_name" => full_name,
+      })
+    end
   end
 end
