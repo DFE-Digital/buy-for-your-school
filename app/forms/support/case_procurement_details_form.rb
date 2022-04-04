@@ -11,9 +11,12 @@ module Support
     # @!attribute [r] reason_for_route_to_market
     #   @return [Symbol, nil]
     option :reason_for_route_to_market, optional: true
+    # @!attribute [r] framework_id
+    #   @return [String, nil]
+    option :framework_id, optional: true
     # @!attribute [r] framework_name
     #   @return [String, nil]
-    option :framework_name, default: proc { nil }
+    option :framework_name, optional: true
     # @!attribute [r] started_at
     #   @return [Date, nil]
     option :started_at, Types::DateField, optional: true
