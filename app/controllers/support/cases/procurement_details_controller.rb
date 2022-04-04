@@ -1,12 +1,12 @@
 module Support
   class Cases::ProcurementDetailsController < Cases::ApplicationController
-    before_action :set_back_url, :set_enums, :set_framework_names
+    before_action :set_back_url, :set_enums
 
     include Concerns::HasDateParams
     include Concerns::HasInteraction
 
     def edit
-      @case_procurement_details_form = CaseProcurementDetailsForm.new(**current_case.procurement.to_h)
+      @case_procurement_details_form = CaseProcurementDetailsForm.new(**persisted_data)
     end
 
     def update
@@ -36,10 +36,6 @@ module Support
       end
     end
 
-    def set_framework_names
-      @framework_names = [[I18n.t("support.procurement_details.edit.framework_name.select"), nil]]
-    end
-
     def set_back_url
       @back_url = support_case_path(@current_case, anchor: "case-details")
     end
@@ -49,10 +45,15 @@ module Support
     end
 
     def case_procurement_details_form_params
-      form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :framework_name, :stage)
+      form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :framework_id, :stage)
       form_params[:started_at] = date_param(:case_procurement_details_form, :started_at)
       form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at)
       form_params
+    end
+
+    # @return [Hash]
+    def persisted_data
+      current_case.procurement.to_h.merge(framework_name: current_case.procurement.framework&.name)
     end
   end
 end

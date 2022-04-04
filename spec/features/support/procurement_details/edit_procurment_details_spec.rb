@@ -40,10 +40,10 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
-  it "shows framework name dropdown" do
+  it "shows framework name dropdown", js: true do
     within(all("div.govuk-form-group")[3]) do
       expect(find("label.govuk-label")).to have_text "Framework name"
-      expect(page).to have_select "case_procurement_details_form[framework_name]", options: ["-- Select framework --"], disabled: true
+      expect(page).to have_field "case_procurement_details_form[framework_name]"
     end
   end
 
@@ -82,14 +82,19 @@ RSpec.feature "Edit case procurement details" do
     expect(page).to have_button "Continue"
   end
 
-  context "when there are no errors" do
+  context "when there are no errors", js: true do
     before do
+      create(:support_framework)
+
       # required agreement type
       choose "One-off"
       # route to market
       choose "Direct Award"
       # reason for route to market
       choose "School Preference"
+      # framework name
+      fill_in "case_procurement_details_form[framework_name]", with: "test"
+      find(".autocomplete__option", text: "Test framework").click
       # start date
       fill_in "case_procurement_details_form[started_at(3i)]", with: "3"
       fill_in "case_procurement_details_form[started_at(2i)]", with: "12"
@@ -113,6 +118,7 @@ RSpec.feature "Edit case procurement details" do
       expect(procurement.required_agreement_type).to eq "one_off"
       expect(procurement.route_to_market).to eq "direct_award"
       expect(procurement.reason_for_route_to_market).to eq "school_pref"
+      expect(procurement.framework.name).to eq "Test framework"
       expect(procurement.started_at).to eq Date.parse("2020-12-3")
       expect(procurement.ended_at).to eq Date.parse("2021-12-2")
       expect(procurement.stage).to eq "need"
