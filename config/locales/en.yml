@@ -501,11 +501,11 @@ en:
         hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
         results: Search results
     case_assignment:
+      agent_id:
+        label: Search for caseworker name
       flash:
         created: Agent assigned to case successfully
       header: Assign to case worker
-      agent_id:
-        label: Search for caseworker name
       submit: Assign
     case_categorisations:
       edit:
