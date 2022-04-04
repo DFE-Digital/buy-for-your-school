@@ -49,5 +49,8 @@ module BuyForYourSchool
     config.exceptions_app = routes
 
     config.feature_flags = config_for(:feature_flags)
+
+    # Set London as the timezone - handles daylight savings automatically
+    config.time_zone = "London"
   end
 end
