@@ -16,11 +16,12 @@ class Journey < ApplicationRecord
   # Automatic and User-defined flags
   # @see DeleteStaleJourneys
   #
-  # initial (default)       - no actionable state
-  # stale (automatic)       - unedited for a time
-  # archive (user-defined)  - hide in dashboard
-  # remove (user-defined)   - delete (permanent/soft)
-  enum state: { initial: 0, stale: 1, archive: 2, remove: 3 }
+  # initial (default)        - no actionable state
+  # stale (automatic)        - unedited for a time
+  # archive (user-defined)   - hide in dashboard
+  # remove (user-defined)    - delete (permanent/soft)
+  # finished (user-definied) - marked as 'finished'
+  enum state: { initial: 0, stale: 1, archive: 2, remove: 3, finished: 4 }
 
   # TODO: test scopes
 
@@ -52,6 +53,13 @@ class Journey < ApplicationRecord
   # @return [Boolean]
   def start!
     update!(started: true, state: :initial)
+  end
+
+  # Mark as finished and set state
+  #
+  # @return [Boolean]
+  def finish!
+    update!(finished_at: Time.zone.now, state: :finished)
   end
 
   # Next incomplete section in order, or first from beginning

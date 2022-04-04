@@ -1,14 +1,12 @@
 ---
 en:
-  errors:
-    attributes:
-      response:
-        # Default answer for blank steps
-        blank: Please complete this field to continue.
-
   activerecord:
     errors:
       models:
         single_date_answer:
           attributes:
             response: Provide a real date for this answer
+  errors:
+    attributes:
+      response:
+        blank: Please complete this field to continue.
