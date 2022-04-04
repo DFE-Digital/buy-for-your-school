@@ -53,7 +53,7 @@ class SpecificationsController < ApplicationController
     respond_to do |format|
       format.html
       format.docx do
-        document = SpecificationRenderer.new(journey: current_journey).call
+        document = SpecificationRenderer.new(journey: current_journey).call(draft: !current_journey.finished?)
         send_data document, filename: file_name, type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       end
       # format.pdf do
