@@ -859,7 +859,6 @@ en:
           header: End date of the procurement
         framework_name:
           header: Framework name
-          select: "-- Select framework --"
         header: Update procurement details
         reason_for_route_to_market:
           header: Reason for route to market
