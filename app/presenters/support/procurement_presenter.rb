@@ -30,9 +30,14 @@ module Support
       I18n.t("support.procurement_details.stages.#{super}")
     end
 
+    # @return [FrameworkPresenter]
+    def framework
+      Support::FrameworkPresenter.new(super) if super
+    end
+
     # @return [String]
     def framework_name
-      super || "-"
+      framework&.name || "-"
     end
 
     # @return [String] "26 November 2021" or "-"

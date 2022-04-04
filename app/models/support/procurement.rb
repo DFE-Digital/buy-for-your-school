@@ -5,6 +5,7 @@ module Support
     before_save :normalize_blank_values
 
     has_many :cases, class_name: "Support::Case", dependent: :nullify
+    belongs_to :framework, class_name: "Support::Framework", optional: true
 
     # Stage
     #
