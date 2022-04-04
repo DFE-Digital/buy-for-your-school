@@ -10,7 +10,7 @@ RSpec.feature "Users can see their specification" do
     click_view
 
     expect(page).to have_breadcrumbs ["Dashboard", "Create specification", "View specification"]
-    expect(page).to have_title "New specification"
+    expect(find(".govuk-caption-l")).to have_text "You are viewing: New specification"
 
     # journey.specification.header
     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
@@ -42,7 +42,7 @@ RSpec.feature "Users can see their specification" do
     click_continue
     click_view
 
-    expect(page).to have_title "New specification"
+    expect(find(".govuk-caption-l")).to have_text "You are viewing: New specification"
 
     # journey.specification.header
     expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
@@ -93,7 +93,7 @@ RSpec.feature "Users can see their specification" do
       # Don't answer any questions to create a in progress spec
 
       click_view
-      expect(page).to have_content("You have not completed all the tasks. Your specification is incomplete.")
+      expect(page).to have_content("You have not completed all the tasks. There may be information missing from your specification.")
     end
   end
 

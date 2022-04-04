@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_16_155306) do
+ActiveRecord::Schema.define(version: 2022_03_22_085246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2022_03_16_155306) do
     t.uuid "category_id"
     t.integer "state", default: 0
     t.string "name"
+    t.datetime "finished_at"
     t.index ["category_id"], name: "index_journeys_on_category_id"
     t.index ["started"], name: "index_journeys_on_started"
     t.index ["user_id"], name: "index_journeys_on_user_id"
@@ -258,12 +259,12 @@ ActiveRecord::Schema.define(version: 2022_03_16_155306) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
-    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
+    t.uuid "procurement_id"
     t.boolean "action_required", default: false
     t.string "organisation_type"
     t.decimal "value", precision: 9, scale: 2

@@ -19,3 +19,15 @@
     float: right;
   }
 }
+
+.info-box-grey {
+    background: govuk-colour("light-grey");
+    padding: 20px;
+    margin: 0px;
+    margin-bottom: 20px;
+
+    .govuk-warning-text__icon{
+      margin-top: 3px;
+      margin-left: 15px;
+    }
+}
