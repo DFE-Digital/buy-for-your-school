@@ -51,7 +51,9 @@ Rails.application.routes.draw do
   post "/submit", to: "api/support/requests#create", as: :submit_request
 
   resources :journeys, only: %i[new show create destroy edit update] do
-    resource :specification, only: [:show]
+    resource :specification, only: %i[create show] do
+      get :download, to: "specifications#new"
+    end
     resources :steps, only: %i[new show edit update] do
       resources :answers, only: %i[create update]
     end
