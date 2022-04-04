@@ -320,6 +320,7 @@ en:
         draft: You have not completed all the tasks. There may be information missing from your specification.
         header: Your specification
         sidebar:
+          header: Related content
           links:
           - What to do when you have completed a specification
           - Give feedback
@@ -577,6 +578,10 @@ en:
       submit: Save changes
     case_documents:
       show:
+        body: Notes
+        contact_detail_hint: Add details of the phone call or copy and paste the email here
+        created_by: Created by
+        email_sender: Sender
         header: Your specification
     case_email_content:
       edit:
@@ -597,6 +602,8 @@ en:
           label: To
     case_email_templates:
       index:
+        basic_template:
+          link_text: Non-template
         catering_frameworks:
           link_text: Catering frameworks
           subtitle: Link to catering on find a framework
@@ -607,6 +614,8 @@ en:
         social_value:
           link_text: Social value
           subtitle: Help on social value section in creating a specification
+        unknown:
+          link_text: Unknown template
         user_research:
           link_text: Ask schools to take part in user research
           subtitle: Links to a survey and interview booking form for schools
@@ -637,6 +646,9 @@ en:
         category: Category
         category_id: Buying category
         email: Contact email
+        email_preview: Preview email
+        email_subject: Email subject
+        email_template: Email template
         estimated_procurement_completion_date: Procurement estimated completion date %{optional}
         estimated_procurement_completion_date_hint: Enter the procurement estimated completion date supplied from the Hub
         estimated_savings: Estimated total savings %{optional}
