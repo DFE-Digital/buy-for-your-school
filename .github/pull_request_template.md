@@ -11,16 +11,6 @@
   Succinct list of changes explaining what has changed and why.
 -->
 
-## Checklist
-
-Please complete the following tasks to allow merging of this feature:
-
-- [ ] Documented any architecture desisions in an ADR
-- [ ] Get QA Approval of test coverage
-
-Note: Check a task if it is not relevent to this PR.
-Note: Please uncheck any relevent tasks if you make further changes to the code.
-
 ## Screen-shots or screen-capture of UI changes
 
 <!--
@@ -33,14 +23,4 @@ Note: Please uncheck any relevent tasks if you make further changes to the code.
   - Break into separate videos if there are several journeys being presented
   - Mac guide: https://support.apple.com/en-gb/HT208721
   - Windows guide: https://support.microsoft.com/en-us/windows/5328cd25-9046-4472-8a14-c485f138802c
--->
-
-### Before
-
-### After
-
-## Next steps
-
-<!--
-  Document this change in [Confluence](https://dfedigital.atlassian.net/wiki/spaces/GHBFS)
 -->
