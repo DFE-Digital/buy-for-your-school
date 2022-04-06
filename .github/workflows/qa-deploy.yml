@@ -78,8 +78,19 @@ jobs:
           STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
           STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
           echo "STATIC_ROUTE=${STATIC_ROUTE}" >> $GITHUB_ENV
-          echo "STATIC_ROUTE_NUMBER=${STATIC_ROUTE_NUMBER}" >> $GITHUB_ENV
+          echo "ENV_ROLLBAR_ENV=qa-${STATIC_ROUTE_NUMBER}-gpaas" >> $GITHUB_ENV
           echo "ENV_APPLICATION_URL=https://${STATIC_ROUTE}.london.cloudapps.digital" >> $GITHUB_ENV
+
+      - name: Notify start deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_pre_deploy
+        with:
+          environment: ${{ env.ENV_ROLLBAR_ENV }}
+          version: ${{ github.sha }}
+          status: 'started'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
       - name: Deploy QA app
         run: script/deploy-terraform
@@ -89,6 +100,18 @@ jobs:
           script/install-cf
           script/qa/cf-login
           script/qa/map-static-route
+
+      - name: Notify finish deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_post_deploy
+        with:
+          environment: ${{ env.ENV_ROLLBAR_ENV }}
+          version: ${{ github.sha }}
+          status: 'succeeded'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
 
       - name: Comment QA URL to PR
         uses: mshick/add-pr-comment@v1
