@@ -629,6 +629,9 @@ en:
         what_is_a_framework:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
+        exit_survey:
+          link_text: Send the exit survey to closed cases
+          subtitle: Link to exit survey to be sent to all cases closed within the last 7 days
     case_email_type:
       choices:
         non_template: Non-template
