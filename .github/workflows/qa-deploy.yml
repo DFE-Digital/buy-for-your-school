@@ -94,7 +94,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            QA application accessible at: ${{ env.ENV_APPLICATION_URL }}.london.cloudapps.digital.
+            QA application accessible at: ${{ env.ENV_APPLICATION_URL }}
             Note: Full organisation seeding may take up to 5 minutes.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
