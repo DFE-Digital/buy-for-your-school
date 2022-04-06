@@ -96,7 +96,7 @@ jobs:
         with:
           environment: staging-gpaas
           version: ${{ github.sha }}
-          status: 'succeeded'
+          status: ${{ job.status == 'success' && 'succeeded' || 'failed' }}
           local_username: ${{ github.actor }}
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
@@ -172,7 +172,7 @@ jobs:
         with:
           environment: production-gpaas
           version: ${{ github.sha }}
-          status: 'succeeded'
+          status: ${{ job.status == 'success' && 'succeeded' || 'failed' }}
           local_username: ${{ github.actor }}
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}

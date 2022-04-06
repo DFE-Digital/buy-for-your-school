@@ -107,7 +107,7 @@ jobs:
         with:
           environment: ${{ env.ENV_ROLLBAR_ENV }}
           version: ${{ github.sha }}
-          status: 'succeeded'
+          status: ${{ job.status == 'success' && 'succeeded' || 'failed' }}
           local_username: ${{ github.actor }}
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
