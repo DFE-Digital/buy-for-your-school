@@ -10,5 +10,14 @@ module Support
 
     # agents that are not internal team members (genuine caseworkers)
     scope :caseworkers, -> { where(internal: false) }
+
+    scope :omnisearch, lambda { |query|
+      sql = <<-SQL
+        lower(first_name) LIKE lower(:q) OR
+        lower(last_name) LIKE lower(:q)
+      SQL
+
+      caseworkers.where(sql, q: "#{query}%").limit(30)
+    }
   end
 end

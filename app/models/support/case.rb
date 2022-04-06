@@ -96,7 +96,7 @@ module Support
     #   sw_hub          - south west hub cases
     #   incoming_email  -
     #   faf             - find a framework
-    enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4 }
+    enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6 }
 
     # Savings status
     #

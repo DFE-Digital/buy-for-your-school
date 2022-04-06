@@ -47,7 +47,7 @@ RSpec.feature "Case summary" do
         expect(all(".govuk-summary-list__row")[2]).to have_text "Case value"
         expect(all(".govuk-summary-list__row")[3]).to have_text "Received"
         expect(all(".govuk-summary-list__row")[4]).to have_text "Category"
-        expect(all(".govuk-summary-list__row")[5]).to have_text "Description of problem"
+        expect(all(".govuk-summary-list__row")[5]).to have_text "Description of query"
         expect(all(".govuk-summary-list__row")[6]).to have_text "Attached specification"
       end
     end
@@ -79,7 +79,7 @@ RSpec.feature "Case summary" do
   context "when the case is created" do
     it "has action links" do
       within "ul.govuk-list" do
-        expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/assignment/new", class: "govuk-link"
+        expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/assignments/new", class: "govuk-link"
         expect(page).to have_link "Move emails to existing case", href: "/support/cases/#{support_case.id}/merge-emails/new", class: "govuk-link"
       end
     end
@@ -90,7 +90,7 @@ RSpec.feature "Case summary" do
 
     it "has action links" do
       within "ul.govuk-list" do
-        expect(page).to have_link "Change case owner", href: "/support/cases/#{support_case.id}/assignment/new", class: "govuk-link"
+        expect(page).to have_link "Change case owner", href: "/support/cases/#{support_case.id}/assignments/new", class: "govuk-link"
         expect(page).to have_link "Add a case note", href: "/support/cases/#{support_case.id}/interactions/new?option=note", class: "govuk-link"
         expect(page).to have_link "Send email", href: "/support/cases/#{support_case.id}/email/type/new", class: "govuk-link"
         expect(page).to have_link "Log contact with school", href: "/support/cases/#{support_case.id}/interactions/new?option=contact", class: "govuk-link"

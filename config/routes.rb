@@ -83,6 +83,7 @@ Rails.application.routes.draw do
     resources :organisations, only: %i[index]
     resources :establishments, only: %i[index]
     resources :establishment_groups, only: %i[index]
+    resources :frameworks, only: %i[index]
     resources :cases, only: %i[index show edit update new create] do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
@@ -99,7 +100,7 @@ Rails.application.routes.draw do
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
-        resource :assignment, only: %i[new create]
+        resources :assignments, only: %i[new create index]
         resource :opening, only: %i[create]
         resource :closure, only: %i[create]
         resource :on_hold, only: %i[create]
