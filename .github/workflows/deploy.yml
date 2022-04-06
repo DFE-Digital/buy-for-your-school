@@ -68,14 +68,39 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+
       - name: Terraform pin version
         uses: hashicorp/setup-terraform@v1.3.2
         with:
           terraform_version: 0.14.7
+
+      - name: Notify start deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_pre_deploy
+        with:
+          environment: staging-gpaas
+          version: ${{ github.sha }}
+          status: 'started'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+
       - name: Deploy terraform to staging
         env:
           TF_VAR_environment: 'staging'
         run: script/deploy-terraform
+
+      - name: Notify finish deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_post_deploy
+        with:
+          environment: staging-gpaas
+          version: ${{ github.sha }}
+          status: 'succeeded'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
 
   # Deploy research automatically on push to research
   deploy_research:
@@ -110,14 +135,28 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+
       - name: Terraform pin version
         uses: hashicorp/setup-terraform@v1.3.2
         with:
           terraform_version: 0.14.7
+
+      - name: Notify start deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_pre_deploy
+        with:
+          environment: production-gpaas
+          version: ${{ github.sha }}
+          status: 'started'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+
       - name: Deploy terraform to prod
         env:
           TF_VAR_environment: 'prod'
         run: script/deploy-terraform
+
       - name: Map www route
         run: |
           wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
@@ -126,3 +165,15 @@ jobs:
           sudo apt-get install cf7-cli
           cf login -u $CF_USER -p $CF_PASSWORD -a api.london.cloud.service.gov.uk -s sct-production
           cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
+
+      - name: Notify finish deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_post_deploy
+        with:
+          environment: production-gpaas
+          version: ${{ github.sha }}
+          status: 'succeeded'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}

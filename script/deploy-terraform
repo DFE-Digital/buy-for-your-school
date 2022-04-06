@@ -34,9 +34,11 @@ echo "$GITHUB_SECRETS_JSON" | jq -r --arg e "$(echo "$ENV_PREFIX" | awk '{ print
 if [ "${ENV_PREFIX}" = "qa" ]; then
   sed -i '/APPLICATION_URL:/d' $ENV_FILE
   sed -i '/DFE_SIGN_IN_REDIRECT_URL:/d' $ENV_FILE
+  sed -i '/ROLLBAR_ENV:/d' $ENV_FILE
 
   echo "APPLICATION_URL: $ENV_APPLICATION_URL" >> $ENV_FILE
   echo "DFE_SIGN_IN_REDIRECT_URL: $ENV_APPLICATION_URL/auth/dfe/callback" >> $ENV_FILE
+  echo "ROLLBAR_ENV: qa-$STATIC_ROUTE_NUMBER-gpaas" >> $ENV_FILE
 fi
 
 # CF_PASSWORD, CF_USER, AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID

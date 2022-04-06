@@ -76,7 +76,9 @@ jobs:
           script/install-cf
           script/qa/cf-login
           STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
+          STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
           echo "STATIC_ROUTE=${STATIC_ROUTE}" >> $GITHUB_ENV
+          echo "STATIC_ROUTE_NUMBER=${STATIC_ROUTE_NUMBER}" >> $GITHUB_ENV
           echo "ENV_APPLICATION_URL=https://${STATIC_ROUTE}.london.cloudapps.digital" >> $GITHUB_ENV
 
       - name: Deploy QA app
