@@ -61,7 +61,6 @@ jobs:
       TF_VAR_environment: "qa-${{ github.event.number }}"
       TF_VAR_cloudfoundry_space: "sct-preview"
       TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"
-      ENV_APPLICATION_URL: "https://buy-for-your-school-qa-${{ github.event.number }}.london.cloudapps.digital"
       CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
     steps:
       - name: Check out code
@@ -72,14 +71,53 @@ jobs:
         with:
           terraform_version: 0.14.7
 
+      - name: Get Static Route
+        run: |
+          script/install-cf
+          script/qa/cf-login
+          STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
+          STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
+          echo "STATIC_ROUTE=${STATIC_ROUTE}" >> $GITHUB_ENV
+          echo "ENV_ROLLBAR_ENV=qa-${STATIC_ROUTE_NUMBER}-gpaas" >> $GITHUB_ENV
+          echo "ENV_APPLICATION_URL=https://${STATIC_ROUTE}.london.cloudapps.digital" >> $GITHUB_ENV
+
+      - name: Notify start deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_pre_deploy
+        with:
+          environment: ${{ env.ENV_ROLLBAR_ENV }}
+          version: ${{ github.sha }}
+          status: 'started'
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+
       - name: Deploy QA app
         run: script/deploy-terraform
+
+      - name: Map static route
+        run: |
+          script/install-cf
+          script/qa/cf-login
+          script/qa/map-static-route
+
+      - name: Notify finish deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.1
+        id: rollbar_post_deploy
+        with:
+          environment: ${{ env.ENV_ROLLBAR_ENV }}
+          version: ${{ github.sha }}
+          status: ${{ job.status == 'success' && 'succeeded' || 'failed' }}
+          local_username: ${{ github.actor }}
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
 
       - name: Comment QA URL to PR
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            QA application accessible at: https://buy-for-your-school-qa-${{ github.event.number }}.london.cloudapps.digital.
+            QA application accessible at: ${{ env.ENV_APPLICATION_URL }}
             Note: Full organisation seeding may take up to 5 minutes.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -87,4 +125,5 @@ jobs:
         if: ${{ github.event.action != 'synchronize' }}
         run: |
           script/install-cf
+          script/qa/cf-login
           script/qa/seed
