@@ -4,17 +4,19 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-    time: "11:00"
+    time: "07:00"
     timezone: Europe/London
   open-pull-requests-limit: 5
   versioning-strategy: auto
-  target-branch: develop
+  target-branch: main
+
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: daily
-    time: "11:00"
+    time: "07:00"
     timezone: Europe/London
   open-pull-requests-limit: 5
   versioning-strategy: auto
-  target-branch: develop
+  target-branch: main
+
