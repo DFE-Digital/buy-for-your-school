@@ -61,6 +61,9 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
 
+  config.log_format = :json # For parsing in Logit
+  config.active_record.logger = nil # Don't log SQL
+
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 

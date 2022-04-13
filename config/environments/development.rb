@@ -70,4 +70,6 @@ Rails.application.configure do
 
   # Set active storage location
   config.active_storage.service = :local
+
+  config.log_format = :color # Console colorised output
 end
