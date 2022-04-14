@@ -37,7 +37,7 @@
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case.label.close"), support_case_closure_path(@current_case), method: :post, class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.close"), new_support_case_closure_path(@current_case), class: "govuk-link" %>
       </li>
     <% end %>
 

@@ -4,6 +4,10 @@ module Support
 
     before_action :set_back_url, :set_reasons
 
+    def new
+      @current_case = CasePresenter.new(@current_case)
+    end
+
     def create
       if current_case.resolved?
         change_case_state(to: :close, reason: :resolved)

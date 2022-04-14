@@ -540,6 +540,18 @@ en:
           initial: Only new cases created from emails can be closed
           other: Case cannot be closed
         updated: Case has been closed
+      new:
+        body: This is a permanent action. Once you close this case, it cannot be reopened or edited. You will only be able to view the details of the case.
+        cancel: Cancel
+        close: Permanently close case
+        header: Are you sure you want to close this case?
+        table:
+          case_id: Case ID
+          category: Category
+          contact_email: Contact email
+          date_received: Date received
+          last_updated: Last updated
+          organisation: Organisation
     case_contact_details:
       flash:
         updated: Contact details updated successfully
