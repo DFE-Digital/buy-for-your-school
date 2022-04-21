@@ -21,7 +21,7 @@ module Support
     end
 
     def show
-      @back_url = params[:back_link] || support_cases_path
+      @back_url = support_cases_path(cases_query_params)
     end
 
     def new
@@ -100,6 +100,19 @@ module Support
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
+    end
+
+    def cases_query_params
+      return if params[:cases_query].blank?
+
+      params.require(:cases_query).permit(
+        { filter_all_cases_form: %i[state category agent] },
+        { filter_new_cases_form: %i[state category agent] },
+        { filter_my_cases_form: %i[state category agent] },
+        :cases_page,
+        :new_cases_page,
+        :my_cases_page,
+      )
     end
   end
 end
