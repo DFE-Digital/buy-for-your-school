@@ -21,7 +21,7 @@ module Support
     end
 
     def show
-      @back_url = Base64.decode64(params[:back_to]) || support_cases_path
+      @back_url = back_link_param || support_cases_path
     end
 
     def new
@@ -100,6 +100,12 @@ module Support
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
+    end
+
+    def back_link_param
+      return if params[:back_to].blank?
+
+      Base64.decode64(params[:back_to])
     end
   end
 end
