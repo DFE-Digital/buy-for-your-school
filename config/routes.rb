@@ -70,16 +70,12 @@ Rails.application.routes.draw do
   get "support", to: "support/pages#start_page", as: :support_root
 
   namespace :support do
-    if Features.enabled?(:incoming_emails)
-      resources :document_downloads, only: %i[show]
-    end
+    resources :document_downloads, only: %i[show]
     resources :agents, only: %i[create]
-    if Features.enabled?(:incoming_emails)
-      resources :emails, only: %i[index show] do
-        resource :save_attachments, only: %i[new create]
-      end
-      resources :email_read_status, only: %i[update], param: :email_id
+    resources :emails, only: %i[index show] do
+      resource :save_attachments, only: %i[new create]
     end
+    resources :email_read_status, only: %i[update], param: :email_id
     resources :organisations, only: %i[index]
     resources :establishments, only: %i[index]
     resources :establishment_groups, only: %i[index]

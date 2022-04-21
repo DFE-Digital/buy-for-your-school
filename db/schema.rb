@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_22_085246) do
+ActiveRecord::Schema.define(version: 2022_03_23_155649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -449,7 +449,6 @@ ActiveRecord::Schema.define(version: 2022_03_22_085246) do
     t.integer "required_agreement_type"
     t.integer "route_to_market"
     t.integer "reason_for_route_to_market"
-    t.string "framework_name"
     t.date "started_at"
     t.date "ended_at"
     t.integer "stage"
