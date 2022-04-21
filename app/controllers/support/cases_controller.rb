@@ -21,7 +21,7 @@ module Support
     end
 
     def show
-      @back_url = support_cases_path
+      @back_url = params[:back_link] || support_cases_path
     end
 
     def new
