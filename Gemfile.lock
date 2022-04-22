@@ -196,6 +196,16 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    flipper (0.24.1)
+    flipper-active_record (0.24.1)
+      activerecord (>= 4.2, < 8)
+      flipper (~> 0.24.1)
+    flipper-ui (0.24.1)
+      erubi (>= 1.0.0, < 2.0.0)
+      flipper (~> 0.24.1)
+      rack (>= 1.4, < 3)
+      rack-protection (>= 1.5.3, <= 2.2.0)
+      sanitize (< 7)
     foreman (0.87.2)
     fugit (1.5.3)
       et-orbi (~> 1, >= 1.2.7)
@@ -457,6 +467,9 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    sanitize (6.0.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.12.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -583,6 +596,9 @@ DEPENDENCIES
   dry-validation
   factory_bot_rails
   faker
+  flipper
+  flipper-active_record
+  flipper-ui
   foreman
   govuk_design_system_formbuilder (~> 3.0)
   httparty

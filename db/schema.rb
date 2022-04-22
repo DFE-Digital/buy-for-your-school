@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_23_155649) do
+ActiveRecord::Schema.define(version: 2022_04_21_135501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -93,6 +93,22 @@ ActiveRecord::Schema.define(version: 2022_03_23_155649) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "flipper_features", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
   create_table "framework_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -259,12 +275,12 @@ ActiveRecord::Schema.define(version: 2022_03_23_155649) do
     t.uuid "organisation_id"
     t.uuid "existing_contract_id"
     t.uuid "new_contract_id"
+    t.uuid "procurement_id"
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
     t.decimal "savings_estimate", precision: 9, scale: 2
     t.decimal "savings_actual", precision: 9, scale: 2
-    t.uuid "procurement_id"
     t.boolean "action_required", default: false
     t.string "organisation_type"
     t.decimal "value", precision: 9, scale: 2

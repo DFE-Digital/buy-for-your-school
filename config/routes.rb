@@ -123,6 +123,15 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: "/sidekiq"
   end
 
+  flipper_app = Flipper::UI.app do |builder|
+    if Rails.env.production?
+      builder.use Rack::Auth::Basic do |_username, password|
+        username == ENV["FLIPPER_USERNAME"] && password == ENV["FLIPPER_PASSWORD"]
+      end
+    end
+  end
+  mount flipper_app, at: "/flipper"
+
   #
   # Common ---------------------------------------------------------------------
   #
