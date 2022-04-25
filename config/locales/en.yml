@@ -418,6 +418,15 @@ en:
             date: Date
             attachments: Attachments
             date_format: "%d %B %Y %H:%M"
+        case_history:
+          table:
+            type: Type
+            note: Note
+            added_by: Added by
+            message: Message
+            date: Date
+            attachments: Attachments
+            date_format: "%d %B %Y %H:%M"
         case: Case
         case_value: Case value
         category: Category

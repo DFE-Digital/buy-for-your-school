@@ -1,0 +1,17 @@
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header"><%= I18n.t("support.case.label.case_history.table.type") %></th>
+      <th class="govuk-table__header"><%= I18n.t("support.case.label.case_history.table.note") %></th>
+      <th class="govuk-table__header"><%= I18n.t("support.case.label.case_history.table.date") %></th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <%= render partial: "support/cases/case_history/interaction", collection: interactions, as: :interaction %>
+
+    <!-- DONT FORGET MEE % if @current_case.support_request.present? %>
+      <--%= render "support/cases/case_history/support_request", support_request: @current_case.support_request %>
+    <--% end %-->
+  </tbody>
+</table>
