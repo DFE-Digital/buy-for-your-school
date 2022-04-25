@@ -30,8 +30,8 @@ module Support
       true
     end
 
-    def current_url_b64
-      Base64.encode64(request.fullpath)
+    def current_url_b64(tab = "")
+      Base64.encode64("#{request.fullpath}##{tab.to_s.dasherize}")
     end
   end
 end
