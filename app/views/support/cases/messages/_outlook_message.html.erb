@@ -1,0 +1,14 @@
+<% email = message.email %>
+<tr class="govuk-table__row">
+  <th class="govuk-body govuk-!-font-weight-regular govuk-table__header">
+    <strong><%= email.sent_by_name %></strong>
+    <br>
+    sender type
+  </th>
+  <td class="govuk-table__cell">
+    <strong><%= I18n.t("support.case.label.messages.table.attachments") %></strong>
+    <hr>
+    <%= email.body_for_display(self).html_safe %>
+  </td>
+  <td class="govuk-table__cell"><%= email.sent_at_formatted %></td>
+</tr>

@@ -44,12 +44,12 @@
     <%= render "case_details", current_case: @current_case %>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages">
-    <%= render "messages", locals: { messages: @current_case.interactions.messages }, current_case: @current_case %>
+    <%= render "messages", messages: @current_case.message_interactions, current_case: @current_case %>
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">
-      <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions.case_history, locals: { current_case: @current_case } %>
+      <%= render partial: "support/cases/case_history/interaction", collection: @current_case.case_history_interactions, locals: { current_case: @current_case } %>
 
       <%# Only cases from Specify are initiated by a support request %>
       <% if @current_case.support_request.present? %>

@@ -53,10 +53,20 @@ module Support
         .map { |i| InteractionPresenter.new(i) }
     end
 
-    # return email interactions
+    # return message interactions
     # @return [Array<InteractionPresenter>]
-    def email_interactions
-      interactions.filter { |i| i.email.present? }
+    def message_interactions
+      @message_interactions ||= __getobj__.interactions.messages
+        .order("created_at ASC")
+        .map { |i| InteractionPresenter.new(i) }
+    end
+
+    # return case history interactions
+    # @return [Array<InteractionPresenter>]
+    def case_history_interactions
+      @case_history_interactions ||= __getobj__.interactions.case_history
+        .order("created_at ASC")
+        .map { |i| InteractionPresenter.new(i) }
     end
 
     # return single interaction of support_request event_type
