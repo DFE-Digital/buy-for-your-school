@@ -1,0 +1,11 @@
+<% support_request = @current_case.support_request %>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.problem_description") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= support_request.additional_data["message"] %>
+    </dd>
+  </div>
+</dl>
