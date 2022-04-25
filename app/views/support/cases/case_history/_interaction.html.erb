@@ -4,8 +4,11 @@
   </th>
 
   <td class="govuk-table__cell">
-    <%= interaction.body %>
-
+    <% if interaction.support_request? %>
+      <%= render "support/cases/case_history/support_request_body", interaction: interaction %>
+    <% else %>
+      <%= interaction.body %>
+    <% end %>
     <!--  DONT FORGET MEE Hub migration stuff -->
     <!--% interaction.additional_data.each do |key, value|  %>
       <--div class="govuk-summary-list__row">
