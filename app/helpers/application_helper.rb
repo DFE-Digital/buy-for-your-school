@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def banner_message
-    I18n.t("banner.beta.message", feedback_link: link_to(I18n.t("banner.beta.feedback_link"), new_feedback_path, class: "govuk-link", target: "_blank", rel: :noopener))
+    I18n.t("banner.beta.message", feedback_link: link_to(I18n.t("banner.beta.feedback_link"), "https://dferesearch.fra1.qualtrics.com/jfe/form/SV_2gE5Us8IIKxYge2", class: "govuk-link", target: "_blank", rel: :noopener))
   end
 
   def dsi_url(**args)
