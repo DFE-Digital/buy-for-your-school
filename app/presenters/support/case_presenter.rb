@@ -53,6 +53,12 @@ module Support
         .map { |i| InteractionPresenter.new(i) }
     end
 
+    # return email interactions
+    # @return [Array<InteractionPresenter>]
+    def email_interactions
+      interactions.filter { |i| i.email.present? }
+    end
+
     # return single interaction of support_request event_type
     # @return [nil, InteractionPresenter]
     def support_request

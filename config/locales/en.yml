@@ -386,6 +386,7 @@ en:
         action: Actions
         case_attachments: Attachments
         case_detail: Case details
+        messages: Messages
         case_history: Case history
         procurement_detail: Procurement details
         school_detail: School details
@@ -410,6 +411,13 @@ en:
             attachment_name: Attachment name
             date_added: Date added
             description: Description
+        messages:
+          table:
+            added_by: Added by
+            message: Message
+            date: Date
+            attachments: Attachments
+            date_format: "%d %B %Y %H:%M"
         case: Case
         case_value: Case value
         category: Category

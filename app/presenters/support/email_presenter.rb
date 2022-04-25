@@ -43,8 +43,12 @@ module Support
       sender["name"]
     end
 
+    def sent_by_type
+      # "Caseworker" if self.case.agent.
+    end
+
     def sent_at_formatted
-      sent_at.strftime(short_date_time)
+      sent_at.strftime(date_format)
     end
 
     def body_for_display(view_context)
@@ -92,6 +96,10 @@ module Support
       end
 
       html.xpath("//body/node()").to_html
+    end
+
+    def date_format
+      I18n.t("support.case.label.messages.table.date_format")
     end
   end
 end
