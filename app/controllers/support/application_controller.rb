@@ -4,7 +4,7 @@ module Support
 
   protected
 
-    helper_method :current_agent
+    helper_method :current_agent, :current_url_b64
 
     # @return [Agent, nil]
     def current_agent
@@ -28,6 +28,10 @@ module Support
 
     def support?
       true
+    end
+
+    def current_url_b64(tab = "")
+      Base64.encode64("#{request.fullpath}##{tab.to_s.dasherize}")
     end
   end
 end

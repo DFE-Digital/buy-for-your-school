@@ -1,7 +1,6 @@
 RSpec.feature "User feedback page" do
   before do
-    visit "/"
-    click_on "feedback"
+    visit "/feedback/new"
   end
 
   describe "navigate to the feedback page" do
