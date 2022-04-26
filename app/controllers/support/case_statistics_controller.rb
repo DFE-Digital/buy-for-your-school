@@ -1,5 +1,5 @@
 module Support
-  class CaseStatisticsController < ApplicationController
+  class CaseStatisticsController < Support::ApplicationController
     skip_before_action :authenticate_agent!
     before_action :authenticate_agent_or_analyst!
     before_action :set_view_fields, only: :show
