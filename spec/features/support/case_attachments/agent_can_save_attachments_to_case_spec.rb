@@ -6,7 +6,9 @@ describe "Agent can save attachments from an email to the case", js: true do
   before { click_button "Agent Login" }
 
   context "with email attachments on an email" do
-    let(:email) { create(:support_email) }
+    let!(:email) { create(:support_email, case: support_case) }
+    let!(:email_interaction) { create(:support_interaction, :email_from_school, case: support_case, additional_data: { email_id: email.id }) }
+    let(:support_case) { create(:support_case) }
     let(:email_attachment1) { create(:support_email_attachment, email: email) }
     let(:email_attachment2) { create(:support_email_attachment, email: email) }
 
@@ -15,9 +17,12 @@ describe "Agent can save attachments from an email to the case", js: true do
         email_attachment1.update!(file_name: "attachment1.txt")
         email_attachment2.update!(file_name: "attachment2.txt")
 
-        visit support_email_path(email)
-
-        click_link "Save attachments"
+        visit support_case_path(support_case)
+        click_link "Messages"
+        save_and_open_screenshot
+        within ".attachments" do
+          click_link "Save"
+        end
         check "attachment1.txt"
         within ".govuk-checkboxes", text: "attachment1.txt" do
           fill_in "Rename attachment (optional)", with: "MyNewFileName"

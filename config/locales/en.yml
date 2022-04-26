@@ -420,6 +420,7 @@ en:
             date_format: "%d %B %Y %H:%M"
             from_school: from School
             caseworker: Caseworker
+            save_attachments: Save
         case_history:
           table:
             type: Type
