@@ -1,12 +1,11 @@
 <% if email.attachments.any? %>
-  <div class="govuk-summary-list__row email-attachments">
-    <dt class="govuk-summary-list__key">
-      <%= I18n.t("support.case.label.messages.table.attachments") %>
-    </dt>
-    <dd class="govuk-summary-list__value">
-      <% email.attachments.each do |attachment| %>
-        <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %><br />
-      <% end %>
-    </dd>
+  <div>
+    <strong><%= I18n.t("support.case.label.messages.table.attachments") %></strong>
+    <br />
+    <% email.attachments.each do |attachment| %>
+      <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %><br />
+    <% end %>
   </div>
+
+  <hr />
 <% end %>

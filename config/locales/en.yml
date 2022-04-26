@@ -418,6 +418,8 @@ en:
             date: Date
             attachments: Attachments
             date_format: "%d %B %Y %H:%M"
+            from_school: from School
+            caseworker: Caseworker
         case_history:
           table:
             type: Type
