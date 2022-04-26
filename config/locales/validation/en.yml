@@ -5,6 +5,7 @@ en:
       phone_number: Your phone number
       message_body: "" # Omitted
       category_id: The type of procurement
+      school_urn: "" # Omitted
 
     errors:
       rules:
