@@ -79,9 +79,9 @@ module Support
 
   private
 
-    # @return [String] 20 March 2021 at 12:00
+    # @return [String] 20 March 2021 12:00
     def date_format
-      I18n.t("support.case.date_format")
+      I18n.t("support.case.label.case_history.table.date_format")
     end
 
     # @example

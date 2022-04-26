@@ -3,23 +3,25 @@
     <%= I18n.t("support.interaction.type.#{interaction.event_type}") %>
   </th>
 
-  <td class="govuk-table__cell">
+  <td class="govuk-table__cell govuk-!-width-two-thirds">
     <% if interaction.support_request? %>
       <%= render "support/cases/case_history/support_request_body", interaction: interaction %>
     <% else %>
       <%= interaction.body %>
+
+      <dl class="govuk-summary-list">
+        <% interaction.additional_data.each do |key, value|  %>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= I18n.t("support.case_hub_migration.label.#{key}", optional: nil) %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= value.humanize %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
     <% end %>
-    <!--  DONT FORGET MEE Hub migration stuff -->
-    <!--% interaction.additional_data.each do |key, value|  %>
-      <--div class="govuk-summary-list__row">
-        <--dt class="govuk-summary-list__key">
-          <--%= I18n.t("support.case_hub_migration.label.#{key}", optional: nil) %>
-        <--/dt>
-        <--dd class="govuk-summary-list__value">
-          <--%= value.humanize %>
-        <--/dd>
-      <--/div>
-    <---% end -->
   </td>
 
   <td class="govuk-table__cell">

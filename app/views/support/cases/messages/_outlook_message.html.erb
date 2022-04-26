@@ -6,7 +6,7 @@
     sender type
   </th>
   <td class="govuk-table__cell">
-    <strong><%= I18n.t("support.case.label.messages.table.attachments") %></strong>
+    <%= render "support/cases/messages/attachments", email: email %>
     <hr>
     <%= email.body_for_display(self).html_safe %>
   </td>

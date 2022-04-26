@@ -11,7 +11,7 @@
     <% messages.each do |message| %>
       <% email = message.email %>
       <% if email.present? %>
-        <% render "support/cases/messages/outlook_message", message: message %>
+        <%= render "support/cases/messages/outlook_message", message: message %>
       <% end %>
     <% end %>
   </tbody>
