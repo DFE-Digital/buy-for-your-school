@@ -75,46 +75,48 @@ RSpec.feature "New case event" do
     end
 
     context "when choosing phone call" do
-      it "logs phone call in case history" do
+      it "logs phone call in messages" do
         choose "Phone call"
         fill_in "interaction[body]", with: "this is an example phone call"
 
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Phone call added to case"
 
-        visit "/support/cases/#{support_case.id}#case-history"
-        within "#case-history" do
+        visit "/support/cases/#{support_case.id}#messages"
+        within "#messages" do
           expect(page).to have_text "Phone call"
         end
       end
     end
 
     context "when choosing email from school" do
-      it "logs email from school in case history" do
+      it "logs email from school in messages" do
         choose "Email from school"
         fill_in "interaction[body]", with: "this is an example email from the school"
 
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Email from school added to case"
 
-        visit "/support/cases/#{support_case.id}#case-history"
-        within "#case-history" do
-          expect(find("h2.govuk-accordion__section-heading")).to have_text "Email from school"
+        visit "/support/cases/#{support_case.id}#messages"
+        within "#messages" do
+          expect(page).to have_text "from School"
+          expect(page).to have_text "this is an example email from the school"
         end
       end
     end
 
     context "when choosing email to school" do
-      it "logs email to school in case history" do
+      it "logs email to school in messages" do
         choose "Email to school"
         fill_in "interaction[body]", with: "this is an example email to the school"
 
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Email to school added to case"
 
-        visit "/support/cases/#{support_case.id}#case-history"
-        within "#case-history" do
-          expect(find("h2.govuk-accordion__section-heading")).to have_text "Email to school"
+        visit "/support/cases/#{support_case.id}#messages"
+        within "#messages" do
+          expect(page).to have_text "Caseworker"
+          expect(page).to have_text "this is an example email to the school"
         end
       end
     end

@@ -12,6 +12,8 @@
       <% email = message.email %>
       <% if email.present? %>
         <%= render "support/cases/messages/outlook_message", message: message %>
+      <% else %>
+        <%= render "support/cases/messages/message", message: message %>
       <% end %>
     <% end %>
   </tbody>

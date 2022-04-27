@@ -62,9 +62,9 @@ module Support
 
     default_scope { order(created_at: :desc) }
 
-    scope :messages, -> { where(event_type: %i[email_from_school email_to_school]) }
+    scope :messages, -> { where(event_type: %i[email_from_school email_to_school phone_call]) }
 
-    scope :case_history, -> { where.not(event_type: %i[email_from_school email_to_school]) }
+    scope :case_history, -> { where.not(event_type: %i[email_from_school email_to_school phone_call]) }
 
     def email
       return unless additional_data.key?("email_id")

@@ -56,6 +56,7 @@ module Support
     # return message interactions
     # @return [Array<InteractionPresenter>]
     def message_interactions
+      # byebug
       @message_interactions ||= __getobj__.interactions.messages
         .order("created_at ASC")
         .map { |i| InteractionPresenter.new(i) }
