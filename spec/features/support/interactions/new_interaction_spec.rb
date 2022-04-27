@@ -54,7 +54,7 @@ RSpec.feature "New case event" do
 
       visit "/support/cases/#{support_case.id}#case-history"
       within "#case-history" do
-        expect(find("h2.govuk-accordion__section-heading")).to have_text "Case note"
+        expect(page).to have_text "Case note"
       end
     end
   end
@@ -84,7 +84,7 @@ RSpec.feature "New case event" do
 
         visit "/support/cases/#{support_case.id}#case-history"
         within "#case-history" do
-          expect(find("h2.govuk-accordion__section-heading")).to have_text "Phone call"
+          expect(page).to have_text "Phone call"
         end
       end
     end

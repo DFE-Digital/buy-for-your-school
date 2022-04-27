@@ -33,13 +33,11 @@ RSpec.feature "Support request case history", bullet: :skip do
       end
     end
 
-    describe "first event" do
-      context "when no specification is attached" do
-        specify do
-          within "#case-history" do
-            expect(find_all("dt.govuk-summary-list__key")[3]).to have_text "Attached specification"
-            expect(find_all("dd.govuk-summary-list__value")[3]).to have_text "None"
-          end
+    context "when no specification is attached" do
+      specify do
+        within "#case-history #case-history-table tbody:last-child" do
+          expect(page).to have_text "Attached specification"
+          expect(page).to have_text "None"
         end
       end
     end

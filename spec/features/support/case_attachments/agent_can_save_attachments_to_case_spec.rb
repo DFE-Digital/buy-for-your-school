@@ -20,8 +20,8 @@ describe "Agent can save attachments from an email to the case", js: true do
         visit support_case_path(support_case)
         click_link "Messages"
 
-        within ".attachments" do
-          click_link "Save"
+        within ".actions" do
+          click_link "Save attachments"
         end
         check "attachment1.txt"
         within ".govuk-checkboxes", text: "attachment1.txt" do

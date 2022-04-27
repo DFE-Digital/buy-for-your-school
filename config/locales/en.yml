@@ -386,8 +386,8 @@ en:
         action: Actions
         case_attachments: Attachments
         case_detail: Case details
-        messages: Messages
         case_history: Case history
+        messages: Messages
         procurement_detail: Procurement details
         school_detail: School details
       label:
@@ -411,24 +411,13 @@ en:
             attachment_name: Attachment name
             date_added: Date added
             description: Description
-        messages:
-          table:
-            added_by: Added by
-            message: Message
-            date: Date
-            date_format: "%d %B %Y %H:%M"
-            from_school: from School
-            caseworker: Caseworker
-            save_attachments: Save attachments
-            mark_as_read: Mark as read
-            mark_as_unread: Mark as unread
+        case: Case
         case_history:
           table:
-            type: Type
-            note: Note
             date: Date
             date_format: "%d %B %Y %H:%M"
-        case: Case
+            note: Note
+            type: Type
         case_value: Case value
         category: Category
         change_owner: Change case owner
@@ -440,6 +429,17 @@ en:
         create: Create a new case
         date_received: Date received
         last_updated: Last updated
+        messages:
+          table:
+            added_by: Added by
+            caseworker: Caseworker
+            date: Date
+            date_format: "%d %B %Y %H:%M"
+            from_school: from School
+            mark_as_read: Mark as read
+            mark_as_unread: Mark as unread
+            message: Message
+            save_attachments: Save attachments
         move_email: Move emails to existing case
         organisation: Organisation
         organisation_name: Organisation name
