@@ -416,11 +416,12 @@ en:
             added_by: Added by
             message: Message
             date: Date
-            attachments: Attachments
             date_format: "%d %B %Y %H:%M"
             from_school: from School
             caseworker: Caseworker
-            save_attachments: Save
+            save_attachments: Save attachments
+            mark_as_read: Mark as read
+            mark_as_unread: Mark as unread
         case_history:
           table:
             type: Type

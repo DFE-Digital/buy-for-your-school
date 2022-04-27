@@ -61,7 +61,7 @@ RSpec.describe Support::CasePresenter do
 
     context "when there is an interaction" do
       it "returns the formatted date for when the interaction was created on the case" do
-        expect(presenter.last_updated_at).to eq("30 June 2020 at 12:00")
+        expect(presenter.last_updated_at).to eq("30 June 2020 12:00")
       end
     end
   end

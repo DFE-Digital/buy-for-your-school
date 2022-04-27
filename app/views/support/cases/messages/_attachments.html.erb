@@ -1,12 +1,8 @@
 <% if email.attachments.any? %>
   <div class="attachments">
-    <strong><%= I18n.t("support.case.label.messages.table.attachments") %></strong>
-    <br />
     <% email.attachments.each do |attachment| %>
       <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %><br />
     <% end %>
-
-    <%= link_to I18n.t("support.case.label.messages.table.save_attachments"), new_support_email_save_attachments_path(email), class: "govuk-link govuk-!-font-weight-bold" %><br />
   </div>
 
   <hr />

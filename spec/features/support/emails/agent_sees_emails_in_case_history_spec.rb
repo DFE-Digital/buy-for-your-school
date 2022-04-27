@@ -1,9 +1,9 @@
 require "rails_helper"
 
-describe "Agent sees emails in case history" do
+describe "Agent sees emails in messages" do
   include_context "with an agent"
 
-  let(:email) { create(:support_email, case: support_case, subject: "Catering requirements") }
+  let(:email) { create(:support_email, case: support_case, body: "Catering requirements") }
   let(:support_case) { create(:support_case) }
 
   before do
@@ -18,13 +18,14 @@ describe "Agent sees emails in case history" do
   context "when there are interactions for emails sent from the school" do
     let(:interaction_type) { :email_from_school }
 
-    it "displays the email details under a title 'Email from school'" do
+    it "displays the email details" do
       visit support_case_path(support_case)
 
-      within "#case-history .govuk-accordion__section", text: "Email from school" do
+      within "#messages" do
         expect(page).to have_content("Catering requirements")
         expect(page).to have_content(email.sent_at.strftime("%e %B %Y"))
-        expect(page).to have_link("Open email preview in new tab", href: support_email_path(email))
+        expect(page).to have_content("first_name last_name")
+        expect(page).to have_content("from School")
       end
     end
 

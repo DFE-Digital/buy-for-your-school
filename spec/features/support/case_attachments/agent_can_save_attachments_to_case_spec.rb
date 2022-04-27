@@ -19,7 +19,7 @@ describe "Agent can save attachments from an email to the case", js: true do
 
         visit support_case_path(support_case)
         click_link "Messages"
-        save_and_open_screenshot
+
         within ".attachments" do
           click_link "Save"
         end

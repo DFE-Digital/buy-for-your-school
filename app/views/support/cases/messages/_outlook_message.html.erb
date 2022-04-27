@@ -11,6 +11,7 @@
     <% end %>
   </th>
   <td class="govuk-table__cell">
+    <%= render "support/cases/messages/actions", email: email %>
     <%= render "support/cases/messages/attachments", email: email %>
     <%= email.body_for_display(self).html_safe %>
   </td>
