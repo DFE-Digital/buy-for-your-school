@@ -322,8 +322,8 @@ en:
         sidebar:
           header: Related content
           links:
-          - What to do when you have completed a specification
-          - Give feedback
+            completed_specification: What to do when you have completed a specification
+            feedback: Give feedback
         sub_header: Need support?
     state:
       finished: Finished
