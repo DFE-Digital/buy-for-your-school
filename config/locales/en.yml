@@ -440,6 +440,7 @@ en:
             mark_as_unread: Mark as unread
             message: Message
             save_attachments: Save attachments
+            logged: (logged)
         move_email: Move emails to existing case
         organisation: Organisation
         organisation_name: Organisation name

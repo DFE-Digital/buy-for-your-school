@@ -66,7 +66,7 @@ module Support
     end
 
     def notify_email?
-      event_type == "email_to_school" && !additional_data.key?("email_id")
+      event_type == "email_to_school" && additional_data.key?("email_template")
     end
 
     def email

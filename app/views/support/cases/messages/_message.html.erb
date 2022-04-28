@@ -9,6 +9,10 @@
     <% else %>
       <%= I18n.t("support.interaction.type.#{message.event_type}") %>
     <% end %>
+
+    <% unless message.notify_email? %>
+      <%= I18n.t("support.case.label.messages.table.logged") %>
+    <% end %>
   </th>
   <td class="govuk-table__cell">
     <% if message.notify_email? %>
