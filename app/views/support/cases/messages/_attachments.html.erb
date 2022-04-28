@@ -1,7 +1,7 @@
 <% if email.attachments.any? %>
   <div class="attachments">
     <% email.attachments.each do |attachment| %>
-      <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %><br />
+      <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noreferrer noopener" %><br />
     <% end %>
   </div>
 
