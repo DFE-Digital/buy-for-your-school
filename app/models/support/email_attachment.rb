@@ -9,8 +9,9 @@ module Support
     scope :for_case_attachments, -> { where(file_type: CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST) }
 
     def self.import_attachment(attachment, email)
-      email_attachment = email.attachments.find_or_initialize_by(outlook_id: attachment.id)
-      email_attachment.import_from_ms_attachment(attachment)
+      Support::EmailAttachment.find_or_initialize_by(email: email, outlook_id: attachment.id) do |email_attachment|
+        email_attachment.import_from_ms_attachment(attachment)
+      end
     end
 
     def import_from_ms_attachment(attachment)

@@ -29,14 +29,14 @@ RSpec.describe Support::EmailAttachment, type: :model do
       double(id: "123", content_bytes: "1024", name: "example_file.pdf")
     end
 
-    before { allow(email).to receive(:attachments).and_return(double(find_or_initialize_by: email_attachment)) }
+    context "when attachment has already been imported" do
+      it "does not import again" do
+        allow(email_attachment).to receive(:import_from_ms_attachment)
 
-    it "imports the attachment" do
-      allow(email_attachment).to receive(:import_from_ms_attachment)
+        described_class.import_attachment(ms_attachment, email)
 
-      described_class.import_attachment(ms_attachment, email)
-
-      expect(email_attachment).to have_received(:import_from_ms_attachment).with(ms_attachment).once
+        expect(email_attachment).not_to have_received(:import_from_ms_attachment)
+      end
     end
   end
 
