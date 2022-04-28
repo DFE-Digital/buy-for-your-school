@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe Support::Email do
+  before { allow(Support::IncomingEmails::EmailAttachments).to receive(:download).and_return(nil) }
+  
   describe "#import_from_message" do
     let(:has_attachments) { false }
     let(:email) { build(:support_email) }
@@ -40,8 +42,6 @@ describe Support::Email do
     end
 
     it "calls IncomingEmails::EmailAttachments.download with the email" do
-      allow(Support::IncomingEmails::EmailAttachments).to receive(:download)
-
       email.import_from_message(message)
 
       expect(Support::IncomingEmails::EmailAttachments).to have_received(:download).with(email: email)
