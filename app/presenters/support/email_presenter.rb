@@ -43,10 +43,6 @@ module Support
       sender["name"]
     end
 
-    def sent_by_type
-      # "Caseworker" if self.case.agent.
-    end
-
     def sent_at_formatted
       sent_at.strftime(date_format)
     end
