@@ -6,7 +6,7 @@ module Support
       @email.update!(is_read: new_status)
       @email.case.update!(action_required: @email.case.emails.unread.inbox.any?) if @email.case.present?
 
-      redirect_back fallback_location: support_email_path(@email)
+      redirect_to support_case_path(@email.case, anchor: "messages")
     end
 
   private
