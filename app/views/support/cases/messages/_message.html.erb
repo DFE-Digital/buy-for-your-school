@@ -11,7 +11,11 @@
     <% end %>
   </th>
   <td class="govuk-table__cell">
-    <%= message.body.html_safe %>
+    <% if message.notify_email? %>
+     <%= message.body.html_safe %>
+    <% else %>
+     <%= simple_format(message.body) %>
+    <% end %>
   </td>
   <td class="govuk-table__cell"><%= message.created_at %></td>
 </tr>
