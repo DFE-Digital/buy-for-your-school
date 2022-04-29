@@ -49,11 +49,11 @@ describe MicrosoftGraph::Client do
 
     before do
       allow(client_session).to receive(:graph_api_get)
-        .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages")
+        .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages?$select=internetMessageHeaders,body,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients")
         .and_return(graph_api_response)
     end
 
-    it "returns a MailFolder for each result in the response" do
+    it "returns a Message for each result in the response" do
       message_1 = instance_double("MicrosoftGraph::Resource::Message")
       message_2 = instance_double("MicrosoftGraph::Resource::Message")
 
