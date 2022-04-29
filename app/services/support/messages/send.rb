@@ -16,7 +16,7 @@ module Support
       render = Liquid::Template.parse(basic_template, error_mode: :strict).render(basic_template_variables)
       email_body = markdown_to_html(render)
 
-      email = Support::Email.new(body: email_body, case: kase, sent_at: Time.zone.now)
+      email = Support::Email.new(body: email_body, case: kase, sent_at: Time.zone.now, sender: { name: agent.full_name, address: nil })
       email.save!
       email.create_interaction
     end

@@ -881,6 +881,7 @@ en:
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         created_by: Created by
         email_sender: Sender
+        email_read: Read
         email_unread: Unread
       link_to_email_preview: Open email preview in new tab
       message:
