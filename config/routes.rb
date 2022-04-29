@@ -114,6 +114,7 @@ Rails.application.routes.draw do
             resources :templates, only: %i[index], param: :template
           end
         end
+        resource :message, only: %i[create]
       end
     end
 

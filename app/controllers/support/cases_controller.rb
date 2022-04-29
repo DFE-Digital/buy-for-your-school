@@ -2,6 +2,7 @@ module Support
   class CasesController < Cases::ApplicationController
     require "will_paginate/array"
     before_action :filter_forms, only: %i[index]
+    before_action :reply_form, only: %i[show]
     before_action :current_case, only: %i[show edit]
 
     include Concerns::HasInteraction
@@ -97,6 +98,10 @@ module Support
       @new_cases_filter_form = CaseFilterForm.new
       @all_cases_filter_form = CaseFilterForm.new
     end
+
+    def reply_form
+      @reply_form = Messages::ReplyForm.new
+    end  
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
