@@ -6,26 +6,34 @@ module Support
 
     option :body, Types::String, optional: false
     option :kase, Types.Instance(Support::Case), optional: false
-    option :agent, optional: false, default: proc { |value| Support::AgentPresenter.new(value) }
+    option :agent, Types.Instance(Support::AgentPresenter), optional: false
 
     def call
       # create an email
       # add a signature
       # create the interaction
       # send the email
-      template = "{{text}}\n\n"\
-                  ""\
-                  "Regards\n"\
-                  "{{agent}}\n"\
-                  "Procurement Specialist\n"\
-                  "Get help buying for schools"
-        
-      render = Liquid::Template.parse(template, error_mode: :strict).render("text" => body, "agent" => agent.full_name)
+      render = Liquid::Template.parse(basic_template, error_mode: :strict).render(basic_template_variables)
       email_body = markdown_to_html(render)
 
-      email = Support::Email.new(body: email_body, case: kase, sent_at: DateTime.now)
-      email.save
+      email = Support::Email.new(body: email_body, case: kase, sent_at: Time.zone.now)
+      email.save!
       email.create_interaction
-    end  
+    end
+
+    def basic_template
+      "{{body}}\n\n"\
+      "Regards<br>"\
+      "{{agent}}<br>"\
+      "Procurement Specialist<br>"\
+      "Get help buying for schools"
+    end
+
+    def basic_template_variables
+      {
+        "body" => body,
+        "agent" => agent.full_name,
+      }
+    end
   end
-end    
+end

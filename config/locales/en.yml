@@ -430,6 +430,9 @@ en:
         date_received: Date received
         last_updated: Last updated
         messages:
+          reply:
+            send_reply: Send reply
+            summary_text: Reply to message
           table:
             added_by: Added by
             caseworker: Caseworker
@@ -441,9 +444,6 @@ en:
             mark_as_unread: Mark as unread
             message: Message
             save_attachments: Save attachments
-          reply:
-            summary_text: Reply to message
-            send_reply: Send reply
         move_email: Move emails to existing case
         organisation: Organisation
         organisation_name: Organisation name

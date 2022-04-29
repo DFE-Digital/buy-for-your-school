@@ -15,7 +15,6 @@
     <%= render "support/cases/messages/attachments", email: email %>
     <%= email.body_for_display(self).html_safe %>
     <br>
-    <br>
     <%= render "support/cases/messages/reply_form" %>
   </td>
   <td class="govuk-table__cell"><%= email.sent_at_formatted %></td>

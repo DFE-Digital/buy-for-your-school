@@ -101,7 +101,7 @@ module Support
 
     def reply_form
       @reply_form = Messages::ReplyForm.new
-    end  
+    end
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
