@@ -631,8 +631,10 @@ ActiveRecord::Schema.define(version: 2022_04_21_135501) do
       nc.ended_at AS new_contract_ended_at,
       nc.duration AS new_contract_duration,
       nc.spend AS new_contract_spend,
-      nc.supplier AS new_contract_supplier
-     FROM (((((((support_cases sc
+      nc.supplier AS new_contract_supplier,
+      ps.created_at AS participation_survey_date,
+      es.created_at AS exit_survey_date
+     FROM (((((((((support_cases sc
        LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
              FROM support_interactions i
             WHERE (i.case_id = sc.id)
@@ -673,6 +675,14 @@ ActiveRecord::Schema.define(version: 2022_04_21_135501) do
        LEFT JOIN support_procurements sp ON ((sc.procurement_id = sp.id)))
        LEFT JOIN support_frameworks sf ON ((sp.framework_id = sf.id)))
        LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
-       LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)));
+       LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)))
+       LEFT JOIN ( SELECT si_1.created_at,
+              si_1.case_id
+             FROM support_interactions si_1
+            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = 'fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779'::text))) ps ON ((si.case_id = ps.case_id)))
+       LEFT JOIN ( SELECT si_1.created_at,
+              si_1.case_id
+             FROM support_interactions si_1
+            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)));
   SQL
 end

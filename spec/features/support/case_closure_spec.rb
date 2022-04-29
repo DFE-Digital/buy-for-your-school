@@ -38,22 +38,51 @@ RSpec.feature "Case closure" do
 
       before { click_link "Close case" }
 
-      it "closes the case and records the interaction" do
-        expect(kase.reload.closed?).to be true
-        expect(kase.closure_reason).to eq "resolved"
-        expect(activity_log_item.support_case_id).to eq kase.id
-        expect(activity_log_item.action).to eq "close_case"
-        expect(activity_log_item.data).to eq({ "closure_reason" => "Resolved case closed by agent" })
+      describe "asks to confirm case closure" do
+        it "shows current case details" do
+          expect(page).to have_text "Are you sure you want to close this case?"
+          expect(page).to have_text "Case ID"
+          expect(page).to have_text "000001"
+          expect(page).to have_text "Organisation"
+          expect(page).to have_text "School #"
+          expect(page).to have_text "Category"
+          expect(page).to have_text "support category title"
+          expect(page).to have_text "Contact email"
+          expect(page).to have_text "school@email.co.uk"
+          expect(page).to have_text "Date received"
+          expect(page).to have_text "Last updated"
+          expect(page).to have_text "This is a permanent action. Once you close this case, it cannot be reopened or edited. You will only be able to view the details of the case."
+        end
 
-        visit "/support/cases/#{kase.id}#case-history"
+        context "when closure is confirmed" do
+          before { click_on "Permanently close case" }
 
-        expect(find("##{interaction.id}")).to have_text "Status change"
-        expect(find("##{interaction.id}")).to have_text "From resolved to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}"
-      end
+          it "closes the case and records the interaction" do
+            expect(kase.reload.closed?).to be true
+            expect(kase.closure_reason).to eq "resolved"
+            expect(activity_log_item.support_case_id).to eq kase.id
+            expect(activity_log_item.action).to eq "close_case"
+            expect(activity_log_item.data).to eq({ "closure_reason" => "Resolved case closed by agent" })
 
-      it "removes the case from my cases tab" do
-        visit support_cases_path
-        expect(page).not_to have_css("#my-cases .case-row", text: "000001")
+            visit "/support/cases/#{kase.id}#case-history"
+
+            expect(find("##{interaction.id}")).to have_text "Status change"
+            expect(find("##{interaction.id}")).to have_text "From resolved to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}"
+          end
+
+          it "removes the case from my cases tab" do
+            visit support_cases_path
+            expect(page).not_to have_css("#my-cases .case-row", text: "000001")
+          end
+        end
+
+        context "when closure is cancelled" do
+          before { click_on "Cancel" }
+
+          it "goes back to the case page" do
+            expect(page).to have_current_path "/support/cases/#{kase.id}"
+          end
+        end
       end
     end
 
