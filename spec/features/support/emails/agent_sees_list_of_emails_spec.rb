@@ -46,13 +46,13 @@ describe "Agent sees a list of emails seperate to cases" do
 
       within "#new-emails" do
         within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
-          expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
+          expect(page).to have_css(".email-sent-at", text: "25 December 2021 12:00")
           expect(page).to have_css(".email-case-ref", text: "012345")
           expect(page).to have_css(".email-sent-by", text: "Sender 1")
         end
 
         within "tr.email-row", text: "Email subject 2 - Not linked to a case" do
-          expect(page).to have_css(".email-sent-at", text: "25-12-2020 15:00")
+          expect(page).to have_css(".email-sent-at", text: "25 December 2020 15:00")
           expect(page).to have_css(".email-sent-by", text: "Sender 2")
         end
       end
@@ -117,7 +117,7 @@ describe "Agent sees a list of emails seperate to cases" do
 
         within "#my-case-emails" do
           within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
-            expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
+            expect(page).to have_css(".email-sent-at", text: "25 December 2021 12:00")
             expect(page).to have_css(".email-case-ref", text: "012345")
             expect(page).to have_css(".email-sent-by", text: "Sender 1")
           end

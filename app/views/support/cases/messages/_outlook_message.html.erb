@@ -1,0 +1,19 @@
+<% email = message.email %>
+
+<tr class="govuk-table__row">
+  <th class="govuk-body govuk-!-font-weight-regular govuk-table__header">
+    <strong><%= email.sent_by_name %></strong>
+    <br>
+    <% if email.inbox? %>
+      <%= I18n.t("support.case.label.messages.table.from_school") %>
+    <% else %>
+      <%= I18n.t("support.case.label.messages.table.caseworker") %>
+    <% end %>
+  </th>
+  <td class="govuk-table__cell">
+    <%= render "support/cases/messages/actions", email: email %>
+    <%= render "support/cases/messages/attachments", email: email %>
+    <%= email.body_for_display(self).html_safe %>
+  </td>
+  <td class="govuk-table__cell"><%= email.sent_at_formatted %></td>
+</tr>

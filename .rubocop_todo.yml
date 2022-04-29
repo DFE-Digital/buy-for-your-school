@@ -29,6 +29,11 @@ RSpec/AnyInstance:
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
 
+# Offense count: 1
+RSpec/LetSetup:
+  Exclude:
+    - 'spec/features/support/case_attachments/agent_can_save_attachments_to_case_spec.rb'
+
 # Offense count: 50
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
