@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe Support::Email do
+  before { allow(Support::IncomingEmails::EmailAttachments).to receive(:download).and_return(nil) }
+
   describe "#import_from_message" do
     let(:has_attachments) { false }
     let(:email) { build(:support_email) }
@@ -39,28 +41,10 @@ describe Support::Email do
       end
     end
 
-    context "when message has no attachments" do
-      let(:has_attachments) { false }
+    it "calls IncomingEmails::EmailAttachments.download with the email" do
+      email.import_from_message(message)
 
-      it "calls IncomingEmails::EmailAttachments.download with the email" do
-        allow(Support::IncomingEmails::EmailAttachments).to receive(:download)
-
-        email.import_from_message(message)
-
-        expect(Support::IncomingEmails::EmailAttachments).not_to have_received(:download)
-      end
-    end
-
-    context "when message has attachments" do
-      let(:has_attachments) { true }
-
-      it "calls IncomingEmails::EmailAttachments.download with the email" do
-        allow(Support::IncomingEmails::EmailAttachments).to receive(:download)
-
-        email.import_from_message(message)
-
-        expect(Support::IncomingEmails::EmailAttachments).to have_received(:download).with(email: email)
-      end
+      expect(Support::IncomingEmails::EmailAttachments).to have_received(:download).with(email: email)
     end
 
     it "sets all necessary fields on the Support::Email record" do

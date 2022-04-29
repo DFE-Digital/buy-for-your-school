@@ -33,7 +33,7 @@ refresh_schools:
     is an expensive operation (10% @ 41k records persisted).
 
 synchronize_shared_inbox:
-  cron: "*/3 * * * *" # every 3 minutes
+  cron: "* * * * *" # every minute
   class: Support::SynchronizeSharedInboxJob
   description: Persist emails from the shared inbox into the database
 
