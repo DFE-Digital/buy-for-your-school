@@ -4,22 +4,23 @@ describe Support::SynchronizeSharedInboxJob do
   subject(:job) { described_class.new }
 
   describe "#perform" do
-    it "synchronizes emails from the last 15 minutes with the shared mailbox inbox folder" do
-      allow(Support::IncomingEmails::SharedMailbox).to receive(:synchronize)
+    it "synchronizes emails from the last 15 minutes for inbox and sent items" do
+      allow(Support::Messages::Outlook::SynchroniseMailFolder).to receive(:call).and_return(nil)
+
+      mail_folder_inbox = double("mail_folder_inbox")
+      allow(Support::Messages::Outlook::MailFolder)
+        .to receive(:new).with(messages_after: within(1.second).of(15.minutes.ago), folder: :inbox)
+        .and_return(mail_folder_inbox)
+
+      mail_folder_sent_items = double("mail_folder_sent_items")
+      allow(Support::Messages::Outlook::MailFolder)
+        .to receive(:new).with(messages_after: within(1.second).of(15.minutes.ago), folder: :sent_items)
+        .and_return(mail_folder_sent_items)
 
       job.perform
 
-      expect(Support::IncomingEmails::SharedMailbox).to have_received(:synchronize)
-        .with(emails_since: be_within(1.second).of(15.minutes.ago), folder: :inbox).once
-    end
-
-    it "synchronizes emails from the last 15 minutes with the shared mailbox sent messages folder" do
-      allow(Support::IncomingEmails::SharedMailbox).to receive(:synchronize)
-
-      job.perform
-
-      expect(Support::IncomingEmails::SharedMailbox).to have_received(:synchronize)
-        .with(emails_since: be_within(1.second).of(15.minutes.ago), folder: :sent_items).once
+      expect(Support::Messages::Outlook::SynchroniseMailFolder).to have_received(:call).with(mail_folder_inbox).once
+      expect(Support::Messages::Outlook::SynchroniseMailFolder).to have_received(:call).with(mail_folder_sent_items).once
     end
   end
 end

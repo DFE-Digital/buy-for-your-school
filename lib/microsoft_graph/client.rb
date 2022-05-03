@@ -33,6 +33,12 @@ module MicrosoftGraph
       Transformer::Attachment.transform_collection(file_attachments, into: Resource::Attachment)
     end
 
+    # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
+    def create_message
+      # set importance to high
+      # set inferenceClassification to focused
+    end
+
   private
 
     def format_query(query_parts)

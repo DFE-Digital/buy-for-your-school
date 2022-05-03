@@ -8,26 +8,6 @@ module Support
     scope :inline, -> { where(is_inline: true) }
     scope :for_case_attachments, -> { where(file_type: CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST) }
 
-    def self.import_attachment(attachment, email)
-      Support::EmailAttachment.find_or_initialize_by(email: email, outlook_id: attachment.id) do |email_attachment|
-        email_attachment.import_from_ms_attachment(attachment)
-      end
-    end
-
-    def import_from_ms_attachment(attachment)
-      Tempfile.create(attachment.name, binmode: true) do |f|
-        f.write(Base64.decode64(attachment.content_bytes))
-        f.rewind
-
-        file.attach(io: f, filename: attachment.name)
-
-        update!(
-          is_inline: attachment.is_inline,
-          content_id: attachment.content_id,
-        )
-      end
-    end
-
   private
 
     def update_file_attributes
