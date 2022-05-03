@@ -882,7 +882,6 @@ en:
         created_by: Created by
         email_read: Read
         email_sender: Sender
-        email_read: Read
         email_unread: Unread
       link_to_email_preview: Open email preview in new tab
       message:
