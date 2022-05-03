@@ -23,8 +23,9 @@ describe "Agent can reply to incoming emails" do
         within("#messages") do
           find("span", text: "Reply to message").click
           fill_in "message_reply_form[body]", with: "This is a test reply"
-          click_button "Send reply"
+          click_button "Preview and send"
         end
+        click_button "Send"
       end
 
       it "shows the reply" do

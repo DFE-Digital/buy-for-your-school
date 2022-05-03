@@ -114,7 +114,11 @@ Rails.application.routes.draw do
             resources :templates, only: %i[index], param: :template
           end
         end
-        resource :message, only: %i[create]
+        resource :message, only: %i[create] do
+          scope module: :messages do
+            resources :reply, only: %i[edit show], param: :email
+          end
+        end
       end
     end
 
