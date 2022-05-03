@@ -18,12 +18,12 @@ RSpec.describe Support::Messages::Send do
 
   it "creates an email record with templated body" do
     email = Support::Email.first
-    expect(email.body).to eq "<p>This is a test message</p>\n<p>Regards<br>Test Agent<br>Procurement Specialist<br>Get help buying\nfor schools</p>\n"
+    expect(email.body).to eq "<p>This is a test message</p>\n<p>Regards<br>Test Agent<br>Procurement Specialist<br>Get help buying for schools</p>\n"
   end
 
   it "creates an email_to_school interaction record" do
     interaction = Support::Interaction.first
-    expect(interaction.body).to eq "<p>This is a test message</p>\n<p>Regards<br>Test Agent<br>Procurement Specialist<br>Get help buying\nfor schools</p>\n"
+    expect(interaction.body).to eq "<p>This is a test message</p>\n<p>Regards<br>Test Agent<br>Procurement Specialist<br>Get help buying for schools</p>\n"
     expect(interaction.event_type).to eq "email_to_school"
   end
 end
