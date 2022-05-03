@@ -172,3 +172,11 @@ en:
       rules:
         value:
           decimal?: Enter a number
+
+  message_reply_form:
+    rules:
+      body: ""
+    errors:
+      rules:
+        body: 
+          missing: The reply body cannot be blank  

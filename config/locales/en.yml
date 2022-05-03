@@ -430,6 +430,9 @@ en:
         date_received: Date received
         last_updated: Last updated
         messages:
+          reply:
+            send_reply: Send reply
+            summary_text: Reply to message
           table:
             added_by: Added by
             caseworker: Caseworker
@@ -877,6 +880,7 @@ en:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         created_by: Created by
+        email_read: Read
         email_sender: Sender
         email_unread: Unread
       link_to_email_preview: Open email preview in new tab
