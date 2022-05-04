@@ -430,6 +430,9 @@ en:
         date_received: Date received
         last_updated: Last updated
         messages:
+          reply:
+            preview_and_send: Preview and send
+            summary_text: Reply to message
           table:
             added_by: Added by
             caseworker: Caseworker
@@ -515,6 +518,20 @@ en:
         my_cases: My cases
         new_cases: New cases
         not_found: No cases found
+      messages:
+        reply:
+          edit:
+            label:
+              heading: Edit reply
+              preview_reply: Preview reply
+              reply_body: Enter reply body
+          show:
+            label:
+              add_attachments: Add attachments
+              edit: Edit
+              heading: Preview email
+              send: Send
+              to: To
       new:
         request_text:
           header: Description of query
@@ -877,6 +894,7 @@ en:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         created_by: Created by
+        email_read: Read
         email_sender: Sender
         email_unread: Unread
       link_to_email_preview: Open email preview in new tab

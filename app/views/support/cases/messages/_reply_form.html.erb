@@ -1,0 +1,15 @@
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= I18n.t("support.case.label.messages.reply.summary_text") %>
+    </span>
+  </summary>
+
+    <div class="govuk-details__text">
+      <%= form_with model: @reply_form, scope: :message_reply_form, url: support_case_message_reply_path(@current_case, email), method: :get  do |form| %>
+        <%= form.govuk_error_summary %>
+        <%= form.govuk_text_area :body, label: nil, rows: 8 %>
+        <%= form.submit I18n.t("support.case.label.messages.reply.preview_and_send"), class: "govuk-button", role: "button" %>
+      <% end %>
+    </div>
+</details>

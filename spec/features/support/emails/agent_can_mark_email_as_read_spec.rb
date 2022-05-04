@@ -1,10 +1,10 @@
 require "rails_helper"
 
-describe "Agent sees emails in case history" do
+describe "Agent sees emails in messages" do
   include_context "with an agent"
 
   let(:is_read) { true }
-  let(:email) { create(:support_email, case: support_case, subject: "Catering requirements", is_read: is_read) }
+  let(:email) { create(:support_email, :inbox, case: support_case, subject: "Catering requirements", is_read: is_read) }
   let(:support_case) { create(:support_case) }
 
   before do
@@ -33,9 +33,9 @@ describe "Agent sees emails in case history" do
   end
 
   context "when email is read" do
-    it "does not display UNREAD next to the interaction in case history" do
+    it "displays READ next to the interaction in messages" do
       within "#messages .actions" do
-        expect(page).not_to have_css(".email-read-status", text: "Unread")
+        expect(page).to have_css(".email-read-status", text: "Read")
       end
     end
 

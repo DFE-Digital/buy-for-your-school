@@ -1,7 +1,5 @@
 <div class="flex-gap-15px actions">
-  <% unless email.is_read? %>
-    <%= render "support/cases/emails/unread_badge" %>
-  <% end %>
+  <%= render "support/cases/emails/#{email.is_read? ? "read_badge" : "unread_badge"}" %>
 
   <%= link_to I18n.t("support.case.label.messages.table.#{email.is_read? ? "mark_as_unread" : "mark_as_read"}"),
         support_email_read_status_path(email, status: email.is_read? ? "unread" : "read"),
