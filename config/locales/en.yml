@@ -431,7 +431,7 @@ en:
         last_updated: Last updated
         messages:
           reply:
-            send_reply: Send reply
+            preview_and_send: Preview and send
             summary_text: Reply to message
           table:
             added_by: Added by
@@ -518,6 +518,20 @@ en:
         my_cases: My cases
         new_cases: New cases
         not_found: No cases found
+      messages:
+        reply:
+          edit:
+            label:
+              heading: Edit reply
+              preview_reply: Preview reply
+              reply_body: Enter reply body
+          show:
+            label:
+              add_attachments: Add attachments
+              edit: Edit
+              heading: Preview email
+              send: Send
+              to: To
       new:
         request_text:
           header: Description of query
