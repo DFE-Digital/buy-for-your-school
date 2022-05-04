@@ -5,14 +5,14 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
   let(:is_in_inbox) { true }
   let(:message)     do
     double(
-      inbox?:             is_in_inbox,
-      sender:             { name: "Sender", address: "sender@email.com" },
-      recipients:         ["1", "2"],
-      conversation_id:    "123",
-      subject:            "Subject Line",
-      body:               double(content: "Email body content"),
-      received_date_time: DateTime.parse("01/01/2022 10:32"),
-      sent_date_time:     DateTime.parse("01/01/2022 10:30")
+      inbox?: is_in_inbox,
+      sender: { name: "Sender", address: "sender@email.com" },
+      recipients: %w[1 2],
+      conversation_id: "123",
+      subject: "Subject Line",
+      body: double(content: "Email body content"),
+      received_date_time: Time.zone.parse("01/01/2022 10:32"),
+      sent_date_time: Time.zone.parse("01/01/2022 10:30"),
     )
   end
 
@@ -22,11 +22,11 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
     email.reload
 
     expect(email.sender).to eq({ "name" => "Sender", "address" => "sender@email.com" })
-    expect(email.recipients).to eq(["1", "2"])
+    expect(email.recipients).to eq(%w[1 2])
     expect(email.outlook_conversation_id).to eq("123")
     expect(email.subject).to eq("Subject Line")
-    expect(email.received_at).to eq(DateTime.parse("01/01/2022 10:32"))
-    expect(email.sent_at).to eq(DateTime.parse("01/01/2022 10:30"))
+    expect(email.received_at).to eq(Time.zone.parse("01/01/2022 10:32"))
+    expect(email.sent_at).to eq(Time.zone.parse("01/01/2022 10:30"))
   end
 
   context "when message is coming from the inbox mail folder" do

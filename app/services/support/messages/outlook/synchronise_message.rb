@@ -11,7 +11,7 @@ module Support
             Synchronisation::Steps::PersistEmail,
             Synchronisation::Steps::AttachEmailToCase,
             Synchronisation::Steps::PersistEmailAttachments,
-            Synchronisation::Steps::SurfaceEmailOnCase
+            Synchronisation::Steps::SurfaceEmailOnCase,
           ]
 
           Support::Email.transaction do

@@ -18,10 +18,10 @@ module Support
             last_name              = Array(last_name).join(" ")
 
             Support::CreateCase.new(
-              source:     :incoming_email,
-              email:      message.sender[:address],
+              source: :incoming_email,
+              email: message.sender[:address],
               first_name: first_name,
-              last_name:  last_name
+              last_name: last_name,
             ).call
           end
 
@@ -36,11 +36,11 @@ module Support
               CaseDetectors::EmailMessageHeadersDetector,
               CaseDetectors::EmailBodyDetector,
               CaseDetectors::EmailSubjectLineDetector,
-              CaseDetectors::EmailConversationDetector
+              CaseDetectors::EmailConversationDetector,
             ]
 
             @detected_case_reference = detectors.lazy
-              .map {|detector| detector.detect(message) }
+              .map { |detector| detector.detect(message) }
               .find(&:present?)
           end
         end

@@ -14,12 +14,12 @@ describe MicrosoftGraph::Transformer::Message do
         "internetMessageHeaders" => [
           {
             "name" => "CaseReference",
-            "value" => "000123"
+            "value" => "000123",
           },
           {
             "name" => "OtherHeader",
-            "value" => "OtherValue"
-          }
+            "value" => "OtherValue",
+          },
         ],
         "importance" => "high",
         "isDraft" => false,

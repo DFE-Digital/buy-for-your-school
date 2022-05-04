@@ -12,11 +12,11 @@ module Support
             email_attachment.file.attach(
               io: message_attachment.io,
               filename: message_attachment.name,
-              content_type: message_attachment.content_type
+              content_type: message_attachment.content_type,
             )
 
             email_attachment.update!(
-              is_inline:  message_attachment.is_inline,
+              is_inline: message_attachment.is_inline,
               content_id: message_attachment.content_id,
             )
           end

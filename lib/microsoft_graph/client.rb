@@ -15,7 +15,7 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder, query: [])
-      query = Array(query).push('$select=internetMessageHeaders,body,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients')
+      query = Array(query).push("$select=internetMessageHeaders,body,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients")
       json = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
       Transformer::Message.transform_collection(json["value"], into: Resource::Message)
     end

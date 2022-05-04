@@ -1,9 +1,8 @@
 require "rails_helper"
 
 describe Support::Messages::Outlook::Synchronisation::CaseDetectors::EmailMessageHeadersDetector do
-
   def message_with_headers(headers)
-    double("message-with-headers", internet_message_headers: headers.map {|k, v| { name: k, value: v }})
+    double("message-with-headers", internet_message_headers: headers.map { |k, v| { name: k, value: v } })
   end
 
   context "when the GHBSCaseReference header exists" do

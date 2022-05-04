@@ -2,11 +2,11 @@ module Support
   module Messages
     module Outlook
       class MailFolder
-        FOLDER_INBOX      = 'Inbox'.freeze
-        FOLDER_SENT_ITEMS = 'SentItems'.freeze
+        FOLDER_INBOX      = "Inbox".freeze
+        FOLDER_SENT_ITEMS = "SentItems".freeze
         FOLDER_MAP        = {
-          inbox:      FOLDER_INBOX,
-          sent_items: FOLDER_SENT_ITEMS
+          inbox: FOLDER_INBOX,
+          sent_items: FOLDER_SENT_ITEMS,
         }.freeze
 
         def initialize(folder:, messages_after: 15.minutes.ago, ms_graph_client: MicrosoftGraph.client)
@@ -20,14 +20,15 @@ module Support
 
           ms_graph_client
             .list_messages_in_folder(SHARED_MAILBOX_USER_ID, folder, query: query)
-            .map {|message| Message.from_resource(message, mail_folder: self, ms_graph_client: ms_graph_client) }
+            .map { |message| Message.from_resource(message, mail_folder: self, ms_graph_client: ms_graph_client) }
         end
 
         def inbox?
           folder == FOLDER_INBOX
         end
 
-        private
+      private
+
         attr_reader :folder, :messages_after, :ms_graph_client
       end
     end

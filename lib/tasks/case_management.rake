@@ -54,8 +54,8 @@ namespace :case_management do
   task seed_shared_inbox_emails: :environment do
     include Support::Messages::Outlook
 
-    SynchroniseMailFolder.call(MailFolder.new(messages_after: DateTime.parse("01/10/2021 00:00:00"), folder: :inbox))
-    SynchroniseMailFolder.call(MailFolder.new(messages_after: DateTime.parse("01/10/2021 00:00:00"), folder: :sent_items))
+    SynchroniseMailFolder.call(MailFolder.new(messages_after: Time.zone.parse("01/10/2021 00:00:00"), folder: :inbox))
+    SynchroniseMailFolder.call(MailFolder.new(messages_after: Time.zone.parse("01/10/2021 00:00:00"), folder: :sent_items))
   end
 
   desc "Populate frameworks"

@@ -3,7 +3,7 @@ require "rails_helper"
 describe Support::Messages::Outlook::Synchronisation::Steps::SurfaceEmailOnCase do
   let(:support_case) { create(:support_case, action_required: false) }
   let(:email)        { create(:support_email, case: support_case) }
-  let(:message)      { double(inbox?: true, sent_date_time: DateTime.parse("01/01/2022 10:30"), body: double(content: "Email body content")) }
+  let(:message)      { double(inbox?: true, sent_date_time: Time.zone.parse("01/01/2022 10:30"), body: double(content: "Email body content")) }
 
   it "sets the case to action required" do
     described_class.call(message, email)
@@ -30,7 +30,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::SurfaceEmailOnCase 
   end
 
   context "when message is coming from sent items folder mail folder" do
-    let(:message) { double(inbox?: false, sent_date_time: DateTime.parse("01/01/2022 10:30"), body: double(content: "Email body content")) }
+    let(:message) { double(inbox?: false, sent_date_time: Time.zone.parse("01/01/2022 10:30"), body: double(content: "Email body content")) }
 
     it "sets the interaction event type as email_to_school" do
       described_class.call(message, email)

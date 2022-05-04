@@ -10,13 +10,13 @@ module Support
               support_case.update!(action_required: true)
 
               event_type = "email_#{message.inbox? ? 'from' : 'to'}_school"
-              email_body = message.body.content.presence || '- No message body -'
+              email_body = message.body.content.presence || "- No message body -"
 
               support_case.interactions.create!(
-                event_type:      event_type,
-                body:            email_body,
+                event_type: event_type,
+                body: email_body,
                 additional_data: { email_id: email.id },
-                created_at:      message.sent_date_time,
+                created_at: message.sent_date_time,
               )
             end
           end

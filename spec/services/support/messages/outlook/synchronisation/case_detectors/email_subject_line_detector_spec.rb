@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe Support::Messages::Outlook::Synchronisation::CaseDetectors::EmailSubjectLineDetector do
-
   def message_with_subject(subject)
     double("message-with-ref", subject: subject)
   end

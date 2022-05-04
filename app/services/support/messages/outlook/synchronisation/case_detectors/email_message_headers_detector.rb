@@ -7,7 +7,7 @@ module Support
             def self.detect(message)
               case_reference_header = message
                 .internet_message_headers
-                .find {|header| header[:name] == "GHBSCaseReference" }
+                .find { |header| header[:name] == "GHBSCaseReference" }
 
               (case_reference_header || {})[:value]
             end

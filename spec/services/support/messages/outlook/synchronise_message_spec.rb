@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe Support::Messages::Outlook::SynchroniseMessage do
-
   before do
     allow(Support::Messages::Outlook::Synchronisation::Steps::PersistEmail).to receive(:call).and_return(nil)
     allow(Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase).to receive(:call).and_return(nil)
