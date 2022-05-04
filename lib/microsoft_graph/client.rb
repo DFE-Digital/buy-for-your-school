@@ -17,6 +17,8 @@ module MicrosoftGraph
     def list_messages_in_folder(user_id, mail_folder, query: [])
       message_fields = %w[
         internetMessageHeaders
+        internetMessageId
+        importance
         body
         bodyPreview
         conversationId
