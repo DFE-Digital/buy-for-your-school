@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Support::Messages::Outlook::Synchronisation::MessageAttachmentImporter do
   let(:email)               { create(:support_email) }
-  let(:message)             { double(id: "123", name: "hello.txt", is_inline: true, content_id: "123", content_bytes: Base64.encode64("Hello, World\n")) }
+  let(:message)             { double(id: "123", name: "hello.txt", is_inline: true, content_type: "text/plain", content_id: "123", content_bytes: Base64.encode64("Hello, World\n")) }
   let(:message_attachment)  { Support::Messages::Outlook::MessageAttachment.new(message) }
 
   context "when the email attachment has already been imported" do

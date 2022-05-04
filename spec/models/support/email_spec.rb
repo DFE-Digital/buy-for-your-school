@@ -1,8 +1,6 @@
 require "rails_helper"
 
 describe Support::Email do
-  before { allow(Support::IncomingEmails::EmailAttachments).to receive(:download).and_return(nil) }
-
   describe "#has_unattachable_files_attached?" do
     let(:email) { create(:support_email) }
 
