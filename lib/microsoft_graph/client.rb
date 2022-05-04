@@ -9,8 +9,8 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/user-list-mailfolders?view=graph-rest-1.0
     def list_mail_folders(user_id)
-      json = client_session.graph_api_get("users/#{user_id}/mailFolders")
-      Transformer::MailFolder.transform_collection(json["value"], into: Resource::MailFolder)
+      results = client_session.graph_api_get("users/#{user_id}/mailFolders")
+      Transformer::MailFolder.transform_collection(results, into: Resource::MailFolder)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
@@ -33,8 +33,8 @@ module MicrosoftGraph
       ]
 
       query = Array(query).push("$select=#{message_fields.join(',')}")
-      json = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
-      Transformer::Message.transform_collection(json["value"], into: Resource::Message)
+      results = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
+      Transformer::Message.transform_collection(results, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
@@ -45,15 +45,26 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/message-list-attachments?view=graph-rest-1.0&tabs=http
     def get_file_attachments(user_id, message_ms_id)
-      json = client_session.graph_api_get("users/#{user_id}/messages/#{message_ms_id}/attachments")
-      file_attachments = json["value"].select { |item| item["@odata.type"] == "#microsoft.graph.fileAttachment" }
+      results = client_session.graph_api_get("users/#{user_id}/messages/#{message_ms_id}/attachments")
+      file_attachments = results.select { |item| item["@odata.type"] == "#microsoft.graph.fileAttachment" }
       Transformer::Attachment.transform_collection(file_attachments, into: Resource::Attachment)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
-    def create_message
+    def create_draft_message(user_id, subject:, html_body:, headers: {})
       # set importance to high
       # set inferenceClassification to focused
+      # set case ref header
+      # set immutible id header
+    end
+
+    # https://docs.microsoft.com/en-us/graph/api/message-createreply?view=graph-rest-1.0&tabs=http
+    def create_draft_reply_message
+    end
+
+    # https://docs.microsoft.com/en-us/graph/api/message-send?view=graph-rest-1.0&tabs=http
+    def send_message(user_id, message_ms_id)
+      json = client_session.graph_api_post("users/#{user_id}/messages/#{message_ms_id}/send")
     end
 
   private

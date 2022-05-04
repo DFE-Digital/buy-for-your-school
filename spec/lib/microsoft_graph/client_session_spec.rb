@@ -11,18 +11,14 @@ describe MicrosoftGraph::ClientSession do
     let(:api_response) { '{"value":[{"displayName":"testResponse"}]}' }
     let(:api_response_code) { 200 }
 
-    before { stub_request(:get, endpoint).to_return(body: api_response, status: api_response_code) }
-
-    it "returns the response from the API" do
-      expect(client_session.graph_api_get("test/endpoint")).to eq(JSON.parse(api_response))
+    before do
+      stub_request(:get, endpoint)
+        .with(headers: { "Authorization" => "Bearer #{access_token}" })
+        .to_return(body: api_response, status: api_response_code)
     end
 
-    it "makes a GET request to the graph API on the given resource path, supplying authentication headers" do
-      client_session.graph_api_get("test/endpoint")
-
-      expect(a_request(:get, endpoint)
-        .with(headers: { "Authorization" => "Bearer #{access_token}" }))
-        .to(have_been_made.once)
+    it "returns the response from the API" do
+      expect(client_session.graph_api_get("test/endpoint")).to match_array(JSON.parse(api_response)["value"])
     end
 
     context "when the response is not 2XX" do
@@ -30,7 +26,7 @@ describe MicrosoftGraph::ClientSession do
       let(:api_response) { '{"error":{"code":"ResourceNotFound","message":"Resource could not be discovered."}}' }
 
       it "raises a GraphRequestFailedError with details of the error included" do
-        expect { client_session.graph_api_get("test/endpoint") }.to raise_error(
+        expect { client_session.graph_api_get("test/endpoint").to_a }.to raise_error(
           MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
@@ -50,7 +46,7 @@ describe MicrosoftGraph::ClientSession do
       it "calls each page and returns the combined results" do
         response = client_session.graph_api_get("test/endpoint")
 
-        expect(response["value"]).to match_array([
+        expect(response).to match_array([
           { "displayName" => "testResponse1" },
           { "displayName" => "testResponse2" },
           { "displayName" => "testResponse3" },
@@ -64,18 +60,14 @@ describe MicrosoftGraph::ClientSession do
     let(:api_response) { '{"value":[{"displayName":"testResponse"}]}' }
     let(:api_response_code) { 200 }
 
-    before { stub_request(:post, endpoint).to_return(body: api_response, status: api_response_code) }
-
-    it "returns the response from the API" do
-      expect(client_session.graph_api_post("test/endpoint", request_body)).to eq(JSON.parse(api_response))
+    before do
+      stub_request(:post, endpoint)
+        .with(headers: { "Authorization" => "Bearer #{access_token}" })
+        .to_return(body: api_response, status: api_response_code)
     end
 
-    it "makes a POST request to the graph API on the given resource path, supplying authentication headers" do
-      client_session.graph_api_post("test/endpoint", request_body)
-
-      expect(a_request(:post, endpoint)
-        .with(body: request_body, headers: { "Authorization" => "Bearer #{access_token}" }))
-        .to(have_been_made.once)
+    it "returns the response from the API" do
+      expect(client_session.graph_api_post("test/endpoint", request_body)).to match_array(JSON.parse(api_response)["value"])
     end
 
     context "when the response is not 2XX" do
@@ -83,7 +75,7 @@ describe MicrosoftGraph::ClientSession do
       let(:api_response) { '{"error":{"code":"ResourceNotFound","message":"Resource could not be discovered."}}' }
 
       it "raises a GraphRequestFailedError with details of the error included" do
-        expect { client_session.graph_api_post("test/endpoint", request_body) }.to raise_error(
+        expect { client_session.graph_api_post("test/endpoint", request_body).to_a }.to raise_error(
           MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
@@ -96,18 +88,14 @@ describe MicrosoftGraph::ClientSession do
     let(:api_response) { '{"value":[{"displayName":"testResponse"}]}' }
     let(:api_response_code) { 200 }
 
-    before { stub_request(:patch, endpoint).to_return(body: api_response, status: api_response_code) }
-
-    it "returns the response from the API" do
-      expect(client_session.graph_api_patch("test/endpoint", request_body)).to eq(JSON.parse(api_response))
+    before do
+      stub_request(:patch, endpoint)
+        .with(headers: { "Authorization" => "Bearer #{access_token}" })
+        .to_return(body: api_response, status: api_response_code)
     end
 
-    it "makes a PATCH request to the graph API on the given resource path, supplying authentication headers" do
-      client_session.graph_api_patch("test/endpoint", request_body)
-
-      expect(a_request(:patch, endpoint)
-        .with(body: request_body, headers: { "Authorization" => "Bearer #{access_token}" }))
-        .to(have_been_made.once)
+    it "returns the response from the API" do
+      expect(client_session.graph_api_patch("test/endpoint", request_body)).to match_array(JSON.parse(api_response)["value"])
     end
 
     context "when the response is not 2XX" do
@@ -115,7 +103,7 @@ describe MicrosoftGraph::ClientSession do
       let(:api_response) { '{"error":{"code":"ResourceNotFound","message":"Resource could not be discovered."}}' }
 
       it "raises a GraphRequestFailedError with details of the error included" do
-        expect { client_session.graph_api_patch("test/endpoint", request_body) }.to raise_error(
+        expect { client_session.graph_api_patch("test/endpoint", request_body).to_a }.to raise_error(
           MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )

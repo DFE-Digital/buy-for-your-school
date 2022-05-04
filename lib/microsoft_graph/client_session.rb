@@ -25,29 +25,20 @@ module MicrosoftGraph
 
     def paginated_request(http_verb, initial_path, body = {})
       request_url = "https://graph.microsoft.com/v1.0/#{initial_path}"
-      overral_response = { "value" => [] }
 
-      loop do
-        json = handle_api_response(
-          HTTParty.send(
-            http_verb,
-            request_url,
-            body: body,
-            headers: { authorization: "Bearer #{access_token}" },
-          ),
-        )
+      Enumerator.new do |yielder|
+        loop do
+          json = handle_api_response(
+            HTTParty.send(http_verb, request_url, body: body, headers: { authorization: "Bearer #{access_token}" }))
 
-        overral_response["value"].concat(json["value"])
+          json["value"].each { |value| yielder << value }
 
-        if json.key?("@odata.nextLink")
+          break unless json.key?("@odata.nextLink")
+
           request_url = json["@odata.nextLink"]
           body = {}
-        else
-          break
         end
-      end
-
-      overral_response
+      end.lazy
     end
 
     def access_token

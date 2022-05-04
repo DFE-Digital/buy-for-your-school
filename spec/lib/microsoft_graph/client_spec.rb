@@ -9,12 +9,10 @@ describe MicrosoftGraph::Client do
   describe "#list_mail_folders" do
     context "when two mail folders exist for given user" do
       let(:graph_api_response) do
-        {
-          "value" => [
-            { "mailFolder" => 1 },
-            { "mailFolder" => 2 },
-          ],
-        }
+        [
+          { "mailFolder" => 1 },
+          { "mailFolder" => 2 },
+        ]
       end
 
       before do
@@ -28,7 +26,7 @@ describe MicrosoftGraph::Client do
         mail_folder_2 = instance_double("MicrosoftGraph::Resource::MailFolder")
 
         allow(MicrosoftGraph::Transformer::MailFolder).to receive(:transform_collection)
-          .with(graph_api_response["value"], into: MicrosoftGraph::Resource::MailFolder)
+          .with(graph_api_response, into: MicrosoftGraph::Resource::MailFolder)
           .and_return([mail_folder_1, mail_folder_2])
 
         expect(client.list_mail_folders(user_id)).to match_array([mail_folder_1, mail_folder_2])
@@ -39,12 +37,10 @@ describe MicrosoftGraph::Client do
   describe "#list_messages_in_folder" do
     let(:mail_folder) { "MAIL_FOLDER_1" }
     let(:graph_api_response) do
-      {
-        "value" => [
-          { "message" => 1 },
-          { "message" => 2 },
-        ],
-      }
+      [
+        { "message" => 1 },
+        { "message" => 2 },
+      ]
     end
 
     before do
@@ -58,7 +54,7 @@ describe MicrosoftGraph::Client do
       message_2 = instance_double("MicrosoftGraph::Resource::Message")
 
       allow(MicrosoftGraph::Transformer::Message).to receive(:transform_collection)
-          .with(graph_api_response["value"], into: MicrosoftGraph::Resource::Message)
+          .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
           .and_return([message_1, message_2])
 
       expect(client.list_messages_in_folder(user_id, mail_folder)).to match_array([message_1, message_2])
@@ -106,30 +102,28 @@ describe MicrosoftGraph::Client do
     let(:message_id) { "MESSAGE_ID" }
 
     let(:graph_api_response) do
-      {
-        "value" => [
-          { "@odata.type" => "#microsoft.graph.fileAttachment",
-            "contentType": "contentType-value",
-            "contentLocation": "contentLocation-value",
-            "contentBytes": "contentBytes-value",
-            "contentId": "null",
-            "lastModifiedDateTime": "datetime-value",
-            "id": "id-value",
-            "isInline": false,
-            "name": "example-file-1",
-            "size": 99 },
-          { "@odata.type" => "#microsoft.graph.fileAttachment",
-            "contentType": "contentType-value",
-            "contentLocation": "contentLocation-value",
-            "contentBytes": "contentBytes-value",
-            "contentId": "null",
-            "lastModifiedDateTime": "datetime-value",
-            "id": "id-value",
-            "isInline": false,
-            "name": "example-file-2",
-            "size": 99 },
-        ],
-      }
+      [
+        { "@odata.type" => "#microsoft.graph.fileAttachment",
+          "contentType": "contentType-value",
+          "contentLocation": "contentLocation-value",
+          "contentBytes": "contentBytes-value",
+          "contentId": "null",
+          "lastModifiedDateTime": "datetime-value",
+          "id": "id-value",
+          "isInline": false,
+          "name": "example-file-1",
+          "size": 99 },
+        { "@odata.type" => "#microsoft.graph.fileAttachment",
+          "contentType": "contentType-value",
+          "contentLocation": "contentLocation-value",
+          "contentBytes": "contentBytes-value",
+          "contentId": "null",
+          "lastModifiedDateTime": "datetime-value",
+          "id": "id-value",
+          "isInline": false,
+          "name": "example-file-2",
+          "size": 99 },
+      ]
     end
 
     before do
@@ -143,7 +137,7 @@ describe MicrosoftGraph::Client do
       file_2 = instance_double("MicrosoftGraph::Resource::Attachment")
 
       allow(MicrosoftGraph::Transformer::Attachment).to receive(:transform_collection)
-                                                       .with(graph_api_response["value"], into: MicrosoftGraph::Resource::Attachment)
+                                                       .with(graph_api_response, into: MicrosoftGraph::Resource::Attachment)
                                                        .and_return([file_1, file_2])
 
       expect(client.get_file_attachments(user_id, message_id)).to match_array([file_1, file_2])
