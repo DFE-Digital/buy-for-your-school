@@ -14,7 +14,8 @@ module Support
       email_body = Messages::Templates.new(params: { body: body, agent: agent.full_name }).call
       email = Support::Email.new(body: email_body, case: kase, sent_at: Time.zone.now, sender: { name: agent.full_name, address: nil })
       email.save!
-      email.create_interaction
+
+      ::Support::Messages::Outlook::SurfaceEmailOnCase.call(email)
     end
   end
 end

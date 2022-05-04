@@ -15,6 +15,22 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder, query: [])
+      message_fields = %w[
+        internetMessageHeaders
+        body
+        bodyPreview
+        conversationId
+        subject
+        receivedDateTime
+        sentDateTime
+        from
+        toRecipients
+        isRead
+        isDraft
+        hasAttachments
+      ]
+
+      query = Array(query).push("$select=#{message_fields.join(',')}")
       json = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
       Transformer::Message.transform_collection(json["value"], into: Resource::Message)
     end
@@ -30,6 +46,12 @@ module MicrosoftGraph
       json = client_session.graph_api_get("users/#{user_id}/messages/#{message_ms_id}/attachments")
       file_attachments = json["value"].select { |item| item["@odata.type"] == "#microsoft.graph.fileAttachment" }
       Transformer::Attachment.transform_collection(file_attachments, into: Resource::Attachment)
+    end
+
+    # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
+    def create_message
+      # set importance to high
+      # set inferenceClassification to focused
     end
 
   private
