@@ -3,12 +3,15 @@ module Support
     extend Dry::Initializer
 
     include MarkdownHelper
+
     option :params, Types::Hash, optional: false
 
     def call
       render = Liquid::Template.parse(basic_template, error_mode: :strict).render(basic_template_variables(**params))
       markdown_to_html(render)
     end
+
+  private
 
     def basic_template
       "{{body}}\n\n"\
