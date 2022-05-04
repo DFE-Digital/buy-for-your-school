@@ -9,11 +9,14 @@ module Support
                 folder: message.inbox? ? :inbox : :sent_items,
                 sender: message.sender,
                 recipients: message.recipients,
-                outlook_conversation_id: message.conversation_id,
                 subject: message.subject,
                 body: message.body.content,
-                received_at: message.received_date_time,
                 sent_at: message.sent_date_time,
+                outlook_conversation_id: message.conversation_id,
+                outlook_received_at: message.received_date_time,
+                outlook_has_attachments: message.has_attachments,
+                outlook_is_read: message.is_read,
+                outlook_is_draft: message.is_draft,
               )
             end
           end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_21_093823) do
+ActiveRecord::Schema.define(version: 2022_05_04_110354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -331,15 +331,14 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
     t.string "outlook_conversation_id"
     t.uuid "case_id"
     t.datetime "sent_at"
-    t.datetime "received_at"
-    t.datetime "read_at"
+    t.datetime "outlook_received_at"
+    t.datetime "outlook_read_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "outlook_id"
     t.boolean "outlook_is_read", default: false
-    t.boolean "is_draft", default: false
-    t.boolean "has_attachments", default: false
-    t.text "body_preview"
+    t.boolean "outlook_is_draft", default: false
+    t.boolean "outlook_has_attachments", default: false
     t.integer "folder"
     t.boolean "is_read", default: false
   end
