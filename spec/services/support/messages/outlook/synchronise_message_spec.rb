@@ -6,13 +6,13 @@ describe Support::Messages::Outlook::SynchroniseMessage do
     allow(Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase).to receive(:call).and_return(nil)
     allow(Support::Messages::Outlook::Synchronisation::Steps::PersistEmailAttachments).to receive(:call).and_return(nil)
     allow(Support::Messages::Outlook::Synchronisation::Steps::SurfaceEmailOnCase).to receive(:call).and_return(nil)
-    allow(Support::Email).to receive(:find_or_initialize_by).with(outlook_id: "123").and_return(email)
+    allow(Support::Email).to receive(:find_or_initialize_by).with(outlook_internet_message_id: "123").and_return(email)
   end
 
-  let(:message) { double("message", id: "123") }
+  let(:message) { double("message", internet_message_id: "123") }
 
   context "when this message has already been persisted" do
-    let(:email) { create(:support_email, outlook_id: "123") }
+    let(:email) { create(:support_email, outlook_internet_message_id: "123") }
 
     it "allows the email to update its simple fields only but nothing else" do
       described_class.call(message)

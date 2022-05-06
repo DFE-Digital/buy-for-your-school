@@ -1,10 +1,12 @@
 require "rails_helper"
 
 describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
+  let(:reply_to_email) { create(:support_email) }
   let(:email)       { create(:support_email) }
   let(:is_in_inbox) { true }
   let(:message)     do
     double(
+      id: "345",
       inbox?: is_in_inbox,
       sender: { name: "Sender", address: "sender@email.com" },
       recipients: %w[1 2],
@@ -15,7 +17,9 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
       sent_date_time: Time.zone.parse("01/01/2022 10:30"),
       is_draft: true,
       is_read: false,
-      has_attachments: true
+      has_attachments: true,
+      case_reference_from_headers: "000888",
+      replying_to_email_from_headers: reply_to_email.id,
     )
   end
 
@@ -27,12 +31,15 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
     expect(email.sender).to eq({ "name" => "Sender", "address" => "sender@email.com" })
     expect(email.recipients).to eq(%w[1 2])
     expect(email.subject).to eq("Subject Line")
+    expect(email.outlook_id).to eq("345")
     expect(email.outlook_conversation_id).to eq("123")
     expect(email.outlook_is_read).to eq(false)
     expect(email.outlook_is_draft).to eq(true)
     expect(email.outlook_has_attachments).to eq(true)
     expect(email.outlook_received_at).to eq(Time.zone.parse("01/01/2022 10:32"))
     expect(email.sent_at).to eq(Time.zone.parse("01/01/2022 10:30"))
+    expect(email.replying_to).to eq(reply_to_email)
+    expect(email.case_reference_from_headers).to eq("000888")
   end
 
   context "when message is coming from the inbox mail folder" do
