@@ -13,7 +13,9 @@
   <td class="govuk-table__cell">
     <%= render "support/cases/messages/actions", email: email if email.inbox? %>
     <%= render "support/cases/messages/attachments", email: email %>
-    <%= email.body_for_display(self).html_safe %>
+    <div class="outlook-message-body">
+      <%= email.body_for_display(self).html_safe %>
+    </div>
     <br>
     <%= render "support/cases/messages/reply_form", email: email if email.inbox? %>
   </td>
