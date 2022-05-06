@@ -67,7 +67,7 @@ describe MicrosoftGraph::ClientSession do
     end
 
     it "returns the response from the API" do
-      expect(client_session.graph_api_post("test/endpoint", request_body)).to match_array(JSON.parse(api_response)["value"])
+      expect(client_session.graph_api_post("test/endpoint", request_body)).to match_array(JSON.parse(api_response))
     end
 
     context "when the response is not 2XX" do
@@ -75,7 +75,7 @@ describe MicrosoftGraph::ClientSession do
       let(:api_response) { '{"error":{"code":"ResourceNotFound","message":"Resource could not be discovered."}}' }
 
       it "raises a GraphRequestFailedError with details of the error included" do
-        expect { client_session.graph_api_post("test/endpoint", request_body).to_a }.to raise_error(
+        expect { client_session.graph_api_post("test/endpoint", request_body) }.to raise_error(
           MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
@@ -95,7 +95,7 @@ describe MicrosoftGraph::ClientSession do
     end
 
     it "returns the response from the API" do
-      expect(client_session.graph_api_patch("test/endpoint", request_body)).to match_array(JSON.parse(api_response)["value"])
+      expect(client_session.graph_api_patch("test/endpoint", request_body)).to match_array(JSON.parse(api_response))
     end
 
     context "when the response is not 2XX" do
@@ -103,7 +103,7 @@ describe MicrosoftGraph::ClientSession do
       let(:api_response) { '{"error":{"code":"ResourceNotFound","message":"Resource could not be discovered."}}' }
 
       it "raises a GraphRequestFailedError with details of the error included" do
-        expect { client_session.graph_api_patch("test/endpoint", request_body).to_a }.to raise_error(
+        expect { client_session.graph_api_patch("test/endpoint", request_body) }.to raise_error(
           MicrosoftGraph::ClientSession::GraphRequestFailedError,
           "Code: ResourceNotFound, Message: Resource could not be discovered.",
         )
