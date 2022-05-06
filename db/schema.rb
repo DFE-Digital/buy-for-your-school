@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_04_110354) do
+ActiveRecord::Schema.define(version: 2022_05_05_103423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -341,6 +341,10 @@ ActiveRecord::Schema.define(version: 2022_05_04_110354) do
     t.boolean "outlook_has_attachments", default: false
     t.integer "folder"
     t.boolean "is_read", default: false
+    t.uuid "replying_to_id"
+    t.string "case_reference_from_headers"
+    t.string "outlook_internet_message_id"
+    t.index ["replying_to_id"], name: "index_support_emails_on_replying_to_id"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -529,6 +533,7 @@ ActiveRecord::Schema.define(version: 2022_05_04_110354) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "support_emails", "support_emails", column: "replying_to_id"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
