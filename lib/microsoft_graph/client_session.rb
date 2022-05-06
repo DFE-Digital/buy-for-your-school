@@ -28,9 +28,6 @@ module MicrosoftGraph
     end
 
     def enact_request(http_verb, request_url, body = {}, headers = {})
-      puts http_verb
-      puts request_url
-
       handle_api_response(
         HTTParty.send(
           http_verb,
