@@ -1,4 +1,4 @@
-if Features.enabled?(:incoming_emails)
+if ENV["MS_GRAPH_CLIENT_ID"].present?
   require "microsoft_graph/microsoft_graph"
 
   configuration = MicrosoftGraph::ClientConfiguration.new(

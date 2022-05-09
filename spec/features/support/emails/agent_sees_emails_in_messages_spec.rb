@@ -45,19 +45,6 @@ describe "Agent sees emails in messages" do
         expect(page).to have_content("This is an attachment for an email")
       end
     end
-
-    context "when the incoming_email feature is disabled" do
-      before { allow(Features).to receive(:enabled?).with(:incoming_emails).and_return(false) }
-
-      it "does not display interactions regarding emails_from_school" do
-        visit support_case_path(support_case)
-
-        within "#case-history" do
-          expect(page).not_to have_content("Email from school")
-          expect(page).not_to have_content("Catering requirements")
-        end
-      end
-    end
   end
 
   context "when there are interactions for emails sent to the school" do
