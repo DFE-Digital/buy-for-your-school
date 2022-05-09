@@ -15,7 +15,10 @@ module Support
       dt
       dd
       em
-      blockquote
+      details
+      summary
+      span
+      div
     ].freeze
 
     # @return [String]
@@ -52,6 +55,9 @@ module Support
       new_body = body_with_links_removed(
         view_context, body_with_inline_attachments(view_context)
       )
+
+      # remove comments
+      new_body = new_body.gsub(/(<!--.*-->)/m, "")
 
       # Removal all html tags not defined in ALLOWED_HTML_TAGS list
       scrubber = Rails::Html::PermitScrubber.new
@@ -90,6 +96,16 @@ module Support
           img["src"] = view_context.support_document_download_path(attachment, type: attachment.class)
         end
       end
+
+      html.xpath("//body/node()").to_html
+    end
+
+    def body_with_quotes_condensed(view_context, cleaned_body = body)
+      html = Nokogiri::HTML(cleaned_body)
+
+      # div.gmail_quote for gmail
+      # hr tabindex -1 for some outlook
+      #
 
       html.xpath("//body/node()").to_html
     end
