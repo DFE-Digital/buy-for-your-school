@@ -5,6 +5,6 @@ class ChangeSupportEmails < ActiveRecord::Migration[6.1]
     rename_column :support_emails, :is_draft, :outlook_is_draft
     rename_column :support_emails, :has_attachments, :outlook_has_attachments
 
-    remove_column :support_emails, :body_preview
+    remove_column :support_emails, :body_preview, :string
   end
 end

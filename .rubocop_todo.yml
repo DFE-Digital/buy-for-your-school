@@ -52,6 +52,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220112131559_add_is_inline_to_support_email_attachments.rb'
     - 'db/migrate/20220225175814_change_framework_requests_to_combine_orgs.rb'
     - 'db/migrate/20220310170158_change_closure_reason_to_enum.rb'
+    - 'db/migrate/20220505103423_add_replying_to_id_to_support_emails.rb'
 
 # Offense count: 1
 # Configuration parameters: Include.

@@ -16,7 +16,9 @@ describe Support::Messages::ReplyForm do
 
       expect(Support::Messages::Outlook::SendReplyToEmail).to have_received(:new).with(
         reply_to_email: email,
-        reply_text: email_body)
+        reply_text: email_body,
+        sender: agent,
+      )
       expect(reply).to have_received(:call).once
     end
   end

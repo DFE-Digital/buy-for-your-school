@@ -18,6 +18,17 @@ describe "Agent can reply to incoming emails" do
   end
 
   context "when there is an email from the school" do
+    before do
+      send_reply_service = double("send_reply_service")
+
+      allow(send_reply_service).to receive(:call) do
+        reply = create(:support_email, :sent_items, case: support_case, replying_to: email, body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
+        create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: reply.id })
+      end
+
+      allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
+    end
+
     describe "allows agent to send a reply" do
       before do
         within("#messages") do
@@ -30,9 +41,8 @@ describe "Agent can reply to incoming emails" do
 
       it "shows the reply" do
         within("#messages") do
-          expect(page).to have_text "Caseworker"
+          expect(page).to have_text "Caseworker Caseworker"
           expect(page).to have_text "This is a test reply"
-          expect(page).to have_text "RegardsProcurement SpecialistProcurement SpecialistGet help buying for schools"
         end
       end
     end

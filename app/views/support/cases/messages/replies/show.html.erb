@@ -15,7 +15,7 @@
 </div>
 
 <div class="govuk-button-group">
-  <%= form_with model: @reply_form, scope: :message_reply_form, url: support_case_message_path(@current_case), method: :post do |form| %>
+  <%= form_with model: @reply_form, scope: :message_reply_form, url: support_case_message_reply_path(@current_case), method: :post do |form| %>
     <%= form.hidden_field :body, value: form.object.body %>
 
     <%= form.submit I18n.t("support.case.messages.reply.show.label.send"), class: "govuk-button", role: "button" %>

@@ -143,4 +143,84 @@ describe MicrosoftGraph::Client do
       expect(client.get_file_attachments(user_id, message_id)).to match_array([file_1, file_2])
     end
   end
+
+  describe "#create_reply_message" do
+    let(:reply_to_id) { "REPLYING_TO_ID" }
+    let(:http_headers) { { "headers" => "here" } }
+    let(:graph_api_response) { { "id" => "NEW_DRAFT_MESSAGE_ID" } }
+    let(:message) { double("message") }
+
+    before do
+      allow(client_session).to receive(:graph_api_post)
+        .and_return(graph_api_response)
+
+      allow(MicrosoftGraph::Transformer::Message).to receive(:transform)
+        .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
+        .and_return(message)
+    end
+
+    it "makes a post request to the API" do
+      client.create_reply_message(user_id: user_id, reply_to_id: reply_to_id, http_headers: http_headers)
+
+      expect(client_session).to have_received(:graph_api_post).with(
+        "users/#{user_id}/messages/#{reply_to_id}/createReply",
+        nil,
+        http_headers,
+      )
+    end
+
+    it "returns the draft message from the api response" do
+      expect(client.create_reply_message(user_id: user_id, reply_to_id: reply_to_id, http_headers: http_headers)).to eq(message)
+    end
+  end
+
+  describe "#update_message" do
+    let(:message_id) { "MESSAGE_ID" }
+    let(:http_headers) { { "headers" => "here" } }
+    let(:details) { { "details" => "here" } }
+    let(:graph_api_response) { { "id" => message_id } }
+    let(:message) { double("message") }
+
+    before do
+      allow(client_session).to receive(:graph_api_patch)
+        .and_return(graph_api_response)
+
+      allow(MicrosoftGraph::Transformer::Message).to receive(:transform)
+        .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
+        .and_return(message)
+    end
+
+    it "makes a patch request to the API" do
+      client.update_message(user_id: user_id, message_id: message_id, details: details, http_headers: http_headers)
+
+      expect(client_session).to have_received(:graph_api_patch).with(
+        "users/#{user_id}/messages/#{message_id}",
+        details.to_json,
+        http_headers.merge("Content-Type" => "application/json"),
+      )
+    end
+
+    it "returns the message from the api response" do
+      expect(client.update_message(user_id: user_id, message_id: message_id, details: details, http_headers: http_headers)).to eq(message)
+    end
+  end
+
+  describe "#send_message" do
+    let(:message_id) { "MESSAGE_ID" }
+    let(:http_headers) { {} }
+
+    before do
+      allow(client_session).to receive(:graph_api_post)
+    end
+
+    it "makes a post request to the API" do
+      client.send_message(user_id: user_id, message_id: message_id, http_headers: http_headers)
+
+      expect(client_session).to have_received(:graph_api_post).with(
+        "users/#{user_id}/messages/#{message_id}/send",
+        nil,
+        http_headers,
+      )
+    end
+  end
 end

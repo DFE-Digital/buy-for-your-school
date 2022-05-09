@@ -50,21 +50,27 @@ module MicrosoftGraph
       Transformer::Attachment.transform_collection(file_attachments, into: Resource::Attachment)
     end
 
-    # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
-    def create_draft_message(user_id, subject:, html_body:, headers: {})
-      # set importance to high
-      # set inferenceClassification to focused
-      # set case ref header
-      # set immutible id header
+    # https://docs.microsoft.com/en-us/graph/api/message-createreply?view=graph-rest-1.0&tabs=http
+    def create_reply_message(user_id:, reply_to_id:, http_headers: {})
+      response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReply", nil, http_headers)
+      Transformer::Message.transform(response, into: Resource::Message)
     end
 
-    # https://docs.microsoft.com/en-us/graph/api/message-createreply?view=graph-rest-1.0&tabs=http
-    def create_draft_reply_message
+    # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
+    def update_message(user_id:, message_id:, details:, http_headers: {})
+      response = client_session.graph_api_patch(
+        "users/#{user_id}/messages/#{message_id}",
+        details.to_json,
+        http_headers.merge(
+          "Content-Type" => "application/json",
+        ),
+      )
+      Transformer::Message.transform(response, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-send?view=graph-rest-1.0&tabs=http
-    def send_message(user_id, message_ms_id)
-      json = client_session.graph_api_post("users/#{user_id}/messages/#{message_ms_id}/send")
+    def send_message(user_id:, message_id:, http_headers: {})
+      client_session.graph_api_post("users/#{user_id}/messages/#{message_id}/send", nil, http_headers)
     end
 
   private

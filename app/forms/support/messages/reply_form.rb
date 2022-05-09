@@ -11,6 +11,7 @@ module Support
       reply = Support::Messages::Outlook::SendReplyToEmail.new(
         reply_to_email: email,
         reply_text: email_body,
+        sender: agent,
       )
 
       reply.call
