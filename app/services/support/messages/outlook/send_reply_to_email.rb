@@ -28,15 +28,17 @@ module Support
         attr_reader :ms_graph_client, :reply_to_email, :reply_text, :sender
 
         def create_draft_reply
-          Reply::DraftMessage.new(ms_graph_client.create_reply_message(
-                                    user_id: SHARED_MAILBOX_USER_ID,
-                                    reply_to_id: reply_to_email.outlook_id,
-                                    http_headers: { "Prefer" => 'IdType="ImmutableId"' },
-                                  ))
+          draft_reply = ms_graph_client.create_reply_message(
+            user_id: SHARED_MAILBOX_USER_ID,
+            reply_to_id: reply_to_email.outlook_id,
+            http_headers: { "Prefer" => 'IdType="ImmutableId"' },
+          )
+
+          Reply::DraftMessage.new(draft_reply)
         end
 
         def update_message_with_content(draft_reply)
-          ms_graph_client.update_message(
+          updated_message = ms_graph_client.update_message(
             user_id: SHARED_MAILBOX_USER_ID,
             message_id: draft_reply.id,
             details: {
@@ -46,6 +48,8 @@ module Support
               },
             },
           )
+
+          Reply::DraftMessage.new(updated_message)
         end
 
         def send_message(draft_reply)
