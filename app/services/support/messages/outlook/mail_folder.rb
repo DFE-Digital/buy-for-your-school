@@ -9,6 +9,10 @@ module Support
           sent_items: FOLDER_SENT_ITEMS,
         }.freeze
 
+        def self.sent_items
+          new(folder: :sent_items)
+        end
+
         def initialize(folder:, messages_after: 15.minutes.ago, ms_graph_client: MicrosoftGraph.client)
           @folder          = FOLDER_MAP.fetch(folder)
           @messages_after  = messages_after

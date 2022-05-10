@@ -223,4 +223,31 @@ describe MicrosoftGraph::Client do
       )
     end
   end
+
+  describe "#add_file_attachment_to_message" do
+    let(:message_id) { "MESSAGE_ID" }
+
+    before do
+      allow(client_session).to receive(:graph_api_post)
+    end
+
+    it "makes a post request to the API" do
+      file = double("file_attachment", content_bytes: "XYZ", content_type: "text/plain", name: "xyz.txt")
+
+      request_body = {
+        "@odata.type" => "#microsoft.graph.fileAttachment",
+        "name" => "xyz.txt",
+        "contentBytes" => "XYZ",
+        "contentType" => "text/plain",
+      }
+
+      client.add_file_attachment_to_message(user_id: user_id, message_id: message_id, file_attachment: file)
+
+      expect(client_session).to have_received(:graph_api_post).with(
+        "users/#{user_id}/messages/#{message_id}/attachments",
+        request_body.to_json,
+        { "Content-Type" => "application/json" },
+      )
+    end
+  end
 end

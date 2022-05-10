@@ -16,11 +16,11 @@ module Support
 
       if validation.success?
         @reply_form.reply_to_email(current_email, current_agent)
+
+        redirect_to support_case_path(@current_case, anchor: "messages")
       else
         redirect_to support_case_message_reply_path(current_case, current_email)
       end
-
-      redirect_to support_case_path(@current_case, anchor: "messages")
     end
 
   private
@@ -30,7 +30,7 @@ module Support
     end
 
     def form_params
-      params.require(:message_reply_form).permit(:body)
+      params.require(:message_reply_form).permit(:body, attachments: [])
     end
 
     def current_email

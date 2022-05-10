@@ -1,7 +1,7 @@
 describe "Agent can preview and edit a reply before sending it" do
   include_context "with an agent"
 
-  let(:email) { create(:support_email, :inbox, case: support_case) }
+  let(:email) { create(:support_email, :inbox, case: support_case, sender: { name: "School User", address: "school@user.com" }) }
   let(:support_case) { create(:support_case) }
 
   before do
@@ -24,17 +24,17 @@ describe "Agent can preview and edit a reply before sending it" do
     end
 
     it "previews the reply" do
-      expect(page).to have_text "school@email.co.uk"
+      expect(page).to have_text "School User <school@user.com>"
       expect(page).to have_text "This is a test reply"
       expect(page).to have_text "RegardsProcurement SpecialistProcurement SpecialistGet help buying for schools"
     end
 
     it "allows to edit the reply" do
-      click_button "Edit"
+      click_link "Edit reply"
       fill_in "Enter reply body", with: "Updated reply"
       click_button "Preview reply"
 
-      expect(page).to have_text "school@email.co.uk"
+      expect(page).to have_text "School User"
       expect(page).to have_text "Updated reply"
       expect(page).to have_text "RegardsProcurement SpecialistProcurement SpecialistGet help buying for schools"
     end

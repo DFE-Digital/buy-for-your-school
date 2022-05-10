@@ -3,6 +3,23 @@ module MicrosoftGraph
   class Client
     attr_reader :client_session
 
+    MESSAGE_SELECT_FIELDS = %w[
+      internetMessageHeaders
+      internetMessageId
+      importance
+      body
+      bodyPreview
+      conversationId
+      subject
+      receivedDateTime
+      sentDateTime
+      from
+      toRecipients
+      isRead
+      isDraft
+      hasAttachments
+    ]
+
     def initialize(client_session)
       @client_session = client_session
     end
@@ -15,24 +32,7 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder, query: [])
-      message_fields = %w[
-        internetMessageHeaders
-        internetMessageId
-        importance
-        body
-        bodyPreview
-        conversationId
-        subject
-        receivedDateTime
-        sentDateTime
-        from
-        toRecipients
-        isRead
-        isDraft
-        hasAttachments
-      ]
-
-      query = Array(query).push("$select=#{message_fields.join(',')}")
+      query = Array(query).push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
       results = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
       Transformer::Message.transform_collection(results, into: Resource::Message)
     end
@@ -54,6 +54,22 @@ module MicrosoftGraph
     def create_reply_message(user_id:, reply_to_id:, http_headers: {})
       response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReply", nil, http_headers)
       Transformer::Message.transform(response, into: Resource::Message)
+    end
+
+    # https://docs.microsoft.com/en-us/graph/api/message-post-attachments?view=graph-rest-1.0&tabs=http#example-file-attachment
+    def add_file_attachment_to_message(user_id:, message_id:, file_attachment:)
+      request_body = {
+        "@odata.type" => "#microsoft.graph.fileAttachment",
+        "name" => file_attachment.name,
+        "contentBytes" => file_attachment.content_bytes,
+        "contentType" => file_attachment.content_type,
+      }.to_json
+
+      http_headers = {
+        "Content-Type" => "application/json",
+      }
+
+      client_session.graph_api_post("users/#{user_id}/messages/#{message_id}/attachments", request_body, http_headers)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http

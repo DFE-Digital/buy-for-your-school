@@ -3,10 +3,18 @@
 }
 
 .email-preview dt.govuk-summary-list__key,
-.email-preview .email-preview-body {
+.email-preview .email-preview-body,
+.email-preview .email-preview-panel {
   padding-left: 60px;
+  padding-right: 60px;
 }
 
 .email-preview .email-preview-body {
   padding-bottom: 30px;
+}
+
+.email-preview .email-preview-panel {
+  border-top: 1px solid #b1b4b6;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }

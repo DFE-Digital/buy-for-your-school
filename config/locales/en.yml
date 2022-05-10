@@ -522,14 +522,16 @@ en:
         reply:
           edit:
             label:
+              cancel: Cancel
               heading: Edit reply
               preview_reply: Preview reply
               reply_body: Enter reply body
           show:
             label:
-              add_attachments: Add attachments
-              edit: Edit
-              heading: Preview email
+              attachments: Attachments
+              attachments_hint: 'Select one or multiple files to attach to the email.<br />NOTE: You will have to select your files again if you leave this page.'
+              edit: Edit reply
+              heading: Preview and send email
               send: Send
               to: To
       new:

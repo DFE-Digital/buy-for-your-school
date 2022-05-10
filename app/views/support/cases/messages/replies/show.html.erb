@@ -1,31 +1,35 @@
 <h1 class="govuk-heading-l"><%= I18n.t("support.case.messages.reply.show.label.heading") %></h1>
 
-<div class="email-preview govuk-body">
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key"><%= I18n.t("support.case.messages.reply.show.label.to") %></dt>
-      <dd class="govuk-summary-list__value"><%= @current_case.email %></dd>
+<%= form_with model: @reply_form, scope: :message_reply_form, url: support_case_message_reply_path(@current_case, @current_email), method: :post do |form| %>
+  <div class="email-preview govuk-body">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= I18n.t("support.case.messages.reply.show.label.to") %></dt>
+        <dd class="govuk-summary-list__value">
+          <% if @current_email.sender["name"].present? && @current_email.sender["address"].present? %>
+            <%= @current_email.sender["name"] %> &lt;<%= @current_email.sender["address"] %>&gt;
+          <% else %>
+            <%= @current_email.sender["address"] %>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="email-preview-body">
+      <%= @reply_body %>
+      <%= form.hidden_field :body, value: form.object.body %>
     </div>
-
-  </dl>
-
-  <div class="email-preview-body">
-    <%= @reply_body %>
   </div>
-</div>
 
-<div class="govuk-button-group">
-  <%= form_with model: @reply_form, scope: :message_reply_form, url: support_case_message_reply_path(@current_case), method: :post do |form| %>
-    <%= form.hidden_field :body, value: form.object.body %>
+  <%=
+    form.govuk_file_field :attachments,
+      multiple: true,
+      label: { text: I18n.t("support.case.messages.reply.show.label.attachments"), class: "govuk-heading-s" },
+      hint: { text: I18n.t("support.case.messages.reply.show.label.attachments_hint").html_safe }
+  %>
 
+  <div class="govuk-button-group">
     <%= form.submit I18n.t("support.case.messages.reply.show.label.send"), class: "govuk-button", role: "button" %>
-  <% end %>
-
-  <%= form_with model: @reply_form, scope: :message_reply_form, url: edit_support_case_message_reply_path(@current_case, @current_email), method: :get do |form| %>
-    <%= form.hidden_field :body, value: form.object.body %>
-
-    <%= form.submit I18n.t("support.case.messages.reply.show.label.edit"), class: "govuk-button govuk-button--secondary", role: "button" %>
-  <% end %>
-
-  <%= button_to I18n.t("support.case.messages.reply.show.label.add_attachments"), "#", class: "govuk-button govuk-button--secondary" %>
-</div>
+    <%= link_to I18n.t("support.case.messages.reply.show.label.edit"), edit_support_case_message_reply_path(@current_case, @current_email, message_reply_form: { body: form.object.body }), class: "govuk-button govuk-button--secondary", role: "button" %>
+  </div>
+<% end %>

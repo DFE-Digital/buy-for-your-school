@@ -2,30 +2,24 @@ module Support
   module Messages
     module Outlook
       class SendReplyToEmail
-        def initialize(reply_to_email:, reply_text:, sender:, ms_graph_client: MicrosoftGraph.client)
+        def initialize(reply_to_email:, reply_text:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
           @ms_graph_client = ms_graph_client
           @reply_to_email = reply_to_email
           @reply_text = reply_text
           @sender = sender
+          @file_attachments = file_attachments
         end
 
         def call
           draft_reply = update_message_with_content(create_draft_reply)
+          update_message_with_file_attachments(draft_reply)
           send_message(draft_reply)
-
-          email = Support::Email.find_or_initialize_by(outlook_internet_message_id: draft_reply.internet_message_id)
-          email.case = reply_to_email.case
-          email.replying_to = reply_to_email
-          email.sender = { name: sender.full_name, address: sender.email }
-          email.save!
-
-          Synchronisation::Steps::PersistEmail.call(draft_reply, email)
-          Synchronisation::Steps::SurfaceEmailOnCase.call(draft_reply, email)
+          SynchroniseMessage.call(draft_reply)
         end
 
       private
 
-        attr_reader :ms_graph_client, :reply_to_email, :reply_text, :sender
+        attr_reader :ms_graph_client, :reply_to_email, :reply_text, :sender, :file_attachments
 
         def create_draft_reply
           draft_reply = ms_graph_client.create_reply_message(
@@ -34,7 +28,7 @@ module Support
             http_headers: { "Prefer" => 'IdType="ImmutableId"' },
           )
 
-          Reply::DraftMessage.new(draft_reply)
+          wrap_message(draft_reply)
         end
 
         def update_message_with_content(draft_reply)
@@ -49,7 +43,17 @@ module Support
             },
           )
 
-          Reply::DraftMessage.new(updated_message)
+          wrap_message(updated_message)
+        end
+
+        def update_message_with_file_attachments(draft_reply)
+          file_attachments.each do |file_attachment|
+            ms_graph_client.add_file_attachment_to_message(
+              user_id: SHARED_MAILBOX_USER_ID,
+              message_id: draft_reply.id,
+              file_attachment: file_attachment,
+            )
+          end
         end
 
         def send_message(draft_reply)
@@ -62,6 +66,10 @@ module Support
         def reply_body_content(draft_reply)
           # reply_text    # - for a more concise reply, although from reply 3 it gets messy again
           "<html><body>#{reply_text}</body></html>#{draft_reply.body.content}"
+        end
+
+        def wrap_message(draft_reply)
+          Message.from_resource(draft_reply, mail_folder: MailFolder.sent_items, ms_graph_client: ms_graph_client)
         end
       end
     end

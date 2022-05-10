@@ -100,7 +100,7 @@ module Support
       html.xpath("//body/node()").to_html
     end
 
-    def body_with_quotes_condensed(view_context, cleaned_body = body)
+    def body_with_quotes_condensed(_view_context, cleaned_body = body)
       html = Nokogiri::HTML(cleaned_body)
 
       # div.gmail_quote for gmail

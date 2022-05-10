@@ -7,5 +7,8 @@
 
   <%= form.govuk_text_area :body, rows: 10, label: { text: I18n.t("support.case.messages.reply.edit.label.reply_body") }, autofocus: true %>
 
-  <%= form.submit I18n.t("support.case.messages.reply.edit.label.preview_reply"), class: "govuk-button", role: "button" %>
+  <div class="govuk-button-group">
+    <%= form.submit I18n.t("support.case.messages.reply.edit.label.preview_reply"), class: "govuk-button", role: "button" %>
+    <%= link_to I18n.t("support.case.messages.reply.edit.label.cancel"), support_case_message_reply_path(@current_case, @current_email, message_reply_form: { body: form.object.body }), class: "govuk-button govuk-button--secondary", role: "button" %>
+  </div>
 <% end %>
