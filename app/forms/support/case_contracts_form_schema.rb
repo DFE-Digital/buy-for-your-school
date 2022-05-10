@@ -6,8 +6,12 @@ module Support
       optional(:supplier).maybe(:string)
       optional(:started_at).maybe(:hash)
       optional(:ended_at).maybe(:hash)
-      optional(:spend).maybe(:decimal)
+      optional(:spend).maybe(Types::DecimalField)
       optional(:duration).maybe(:integer)
+    end
+
+    rule :spend do
+      key.failure(:invalid) if value == ""
     end
 
     rule :started_at do
