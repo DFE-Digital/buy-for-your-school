@@ -74,7 +74,7 @@ jobs:
       - name: Get Static Route
         run: |
           script/install-cf
-          script/qa/cf-login
+          script/cf-login
           STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
           STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
           echo "STATIC_ROUTE=${STATIC_ROUTE}" >> $GITHUB_ENV
@@ -98,7 +98,7 @@ jobs:
       - name: Map static route
         run: |
           script/install-cf
-          script/qa/cf-login
+          script/cf-login
           script/qa/map-static-route
 
       - name: Notify finish deploy to Rollbar
@@ -125,5 +125,5 @@ jobs:
         if: ${{ github.event.action != 'synchronize' }}
         run: |
           script/install-cf
-          script/qa/cf-login
+          script/cf-login
           script/qa/seed
