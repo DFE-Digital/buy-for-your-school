@@ -10,6 +10,12 @@
       <%= I18n.t("support.interaction.type.#{message.event_type}") %>
     <% end %>
 
+    <% if message.additional_data["email_template"].present? %>
+      <div class="govuk-!-margin-top-5">
+        <%= I18n.t("support.case.label.messages.table.using_template", template: message.additional_data["email_template"]) %>
+      </div>
+    <% end %>
+
     <% unless message.notify_email? %>
       <%= I18n.t("support.case.label.messages.table.logged") %>
     <% end %>
