@@ -18,6 +18,7 @@ RUN apt-get install -qq -y \
     texlive \
     texlive-generic-extra \
     lmodern \
+    clamav clamav-daemon \
     --fix-missing --no-install-recommends
 
 

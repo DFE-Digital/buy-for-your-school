@@ -1,6 +1,6 @@
 module Support
   class Cases::Messages::RepliesController < Cases::ApplicationController
-    before_action :current_email, only: %i[show edit]
+    before_action :current_email, only: %i[show edit create]
 
     def show
       @reply_body = templates(body: form_params[:body], agent: current_agent.full_name)
@@ -15,11 +15,14 @@ module Support
       @reply_form = Messages::ReplyForm.from_validation(validation)
 
       if validation.success?
-        @reply_form.reply_to_email(current_email, current_agent)
+        raise "ok"
+        # @reply_form.reply_to_email(@current_email, current_agent)
 
-        redirect_to support_case_path(@current_case, anchor: "messages")
+        # redirect_to support_case_path(@current_case, anchor: "messages")
       else
-        redirect_to support_case_message_reply_path(current_case, current_email)
+        @reply_body = templates(body: form_params[:body], agent: current_agent.full_name)
+        
+        render :show
       end
     end
 

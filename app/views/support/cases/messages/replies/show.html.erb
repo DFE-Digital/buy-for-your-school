@@ -1,6 +1,8 @@
 <h1 class="govuk-heading-l"><%= I18n.t("support.case.messages.reply.show.label.heading") %></h1>
 
 <%= form_with model: @reply_form, scope: :message_reply_form, url: support_case_message_reply_path(@current_case, @current_email), method: :post do |form| %>
+  <%= form.govuk_error_summary %>
+
   <div class="email-preview govuk-body">
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">

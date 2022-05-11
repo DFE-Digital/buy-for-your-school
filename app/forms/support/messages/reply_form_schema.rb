@@ -13,7 +13,8 @@ module Support
 
     rule(:attachments) do
       if value.present?
-        # check for viruses!
+        all_files_safe = Array(value).all? {|upload_file| Support::VirusScanner.uploaded_file_safe?(upload_file) }
+        key(:attachments).failure(:infected) unless all_files_safe
       end
     end
   end
