@@ -128,7 +128,7 @@ Rails.application.routes.draw do
 
   flipper_app = Flipper::UI.app do |builder|
     if Rails.env.production?
-      builder.use Rack::Auth::Basic do |_username, password|
+      builder.use Rack::Auth::Basic do |username, password|
         username == ENV["FLIPPER_USERNAME"] && password == ENV["FLIPPER_PASSWORD"]
       end
     end
