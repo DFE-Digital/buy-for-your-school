@@ -1,13 +1,12 @@
 require "clamav_rest/clamav_rest"
 
-clamav_configuration = ClamavRest::Configuration.new(
-  service_url: ENV["CLAMAV_REST_SERVICE_URL"],
-)
+if Rails.env.production? || ENV["CLAM_AV_REST_ENABLED"] == "1"
+  clamav_configuration = ClamavRest::Configuration.new(
+    service_url: ENV["CLAMAV_REST_SERVICE_URL"]
+  )
 
-ClamavRest.get_scanner_strategy = lambda {
-  if Flipper.enabled?(:clamav_rest)
-    ClamavRest::Scanner.new(clamav_configuration)
-  else
-    ClamavRest::MockScanner.new(is_safe: true)
-  end
-}
+  ClamavRest.scanner = ClamavRest::Scanner.new(clamav_configuration)
+else
+  # Always return file is safe
+  ClamavRest.scanner = ClamavRest::MockScanner.new(is_safe: true)
+end
