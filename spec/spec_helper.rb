@@ -26,6 +26,7 @@ end
 # NOTE: are run in isolation, hence needing Dsi::Client class loaded in.
 require_relative "../lib/dsi/client"
 require_relative "../lib/microsoft_graph/microsoft_graph"
+require_relative "../lib/clamav_rest/clamav_rest"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
