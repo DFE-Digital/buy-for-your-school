@@ -1,11 +1,13 @@
 #!/bin/bash
 # make sure to log into CF first ./script/cf-login
 
-if [[ $(cf apps | grep buy-for-your-school-clamav-rest) != "" ]]; then
+app_name="buy-for-your-school-clamav-rest-$1"
+
+if [[ $(cf apps | grep $app_name) != "" ]]; then
   echo "Already created..."
   exit 0
 fi
 
-cf create-app buy-for-your-school-clamav-rest --app-type docker
-cf push buy-for-your-school-clamav-rest --docker-image niilo/clamav-rest
+cf create-app $app_name --app-type docker
+cf push $app_name --docker-image niilo/clamav-rest
 
