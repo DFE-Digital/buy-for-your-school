@@ -19,6 +19,15 @@ module Support
       summary
       span
       div
+      blockquote
+      font
+      table
+      td
+      tr
+      th
+      tbody
+      thead
+      tfooter
     ].freeze
 
     # @return [String]

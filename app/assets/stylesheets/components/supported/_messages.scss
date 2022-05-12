@@ -1,0 +1,20 @@
+.outlook-message-body {
+  table,
+  tr,
+  td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+  }
+}
+
+.messages-table {
+  table-layout: fixed;
+
+  .name-column {
+    width: 15%;
+  }
+
+  .date-column {
+    width: 15%;
+  }
+}
