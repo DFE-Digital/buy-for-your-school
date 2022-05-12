@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe ClamavRest::Scanner do
+  subject(:scanner) { described_class.new(ClamavRest::Configuration.new(service_url: service_url)) }
+
   let(:service_url)       { "http://service.com/scan" }
   let(:good_api_response) { '{ Status: "OK", Description: "" }' } # Please note invalid json format is real response of api
   let(:bad_api_response)  { '{ Status: "FOUND", Description: "Eicar-Test-Signature" }' }
   let(:file)              { Tempfile.new }
-
-  subject(:scanner) { described_class.new(ClamavRest::Configuration.new(service_url: service_url)) }
 
   context "when given file does not contain infections" do
     before do

@@ -9,22 +9,22 @@ module ClamavRest
     end
 
     def file_is_safe?(file)
-      response = HTTParty.post(configuration.service_url, body: {file: file}, format: :plain)
-      status, description = parse_response(response)
+      response = HTTParty.post(configuration.service_url, body: { file: file }, format: :plain)
+      status, _description = parse_response(response)
 
       status == "OK"
-    rescue StandardError => error
+    rescue StandardError
       false
     end
 
-    private
+  private
 
     def parse_response(response)
       body = response.body
 
-      raise UnableToParseResponseError if body == "" || !(body.scan(/Status/))
+      raise UnableToParseResponseError if body == "" || !body.scan(/Status/)
 
-      body.scan(/Status: \"(.+)\", Description: \"(.?)\"/).first
+      body.scan(/Status: "(.+)", Description: "(.?)"/).first
     end
   end
 end

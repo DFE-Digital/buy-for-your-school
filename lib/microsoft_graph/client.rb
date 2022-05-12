@@ -18,7 +18,7 @@ module MicrosoftGraph
       isRead
       isDraft
       hasAttachments
-    ]
+    ].freeze
 
     def initialize(client_session)
       @client_session = client_session
