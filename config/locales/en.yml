@@ -858,7 +858,6 @@ en:
       button:
         mark_as_read: Mark as read
         mark_as_unread: Mark as unread
-      header_link: Notifications
       index:
         header: Notifications
         table:

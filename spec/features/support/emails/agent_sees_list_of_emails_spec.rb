@@ -33,7 +33,7 @@ describe "Agent sees a list of emails seperate to cases" do
     end
 
     specify "then I can see emails from the inbox listed without going to a case" do
-      click_link "Notifications"
+      visit support_emails_path
 
       within "#new-emails" do
         within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
@@ -50,13 +50,13 @@ describe "Agent sees a list of emails seperate to cases" do
     end
 
     specify "then I do not see emails from the sent folder" do
-      click_link "Notifications"
+      visit support_emails_path
 
       expect(page).not_to have_content("RE: Email subject 2")
     end
 
     specify "then I can click on an email to see its body" do
-      click_link "Notifications"
+      visit support_emails_path
 
       within "#new-emails" do
         click_link "Email subject 1"
@@ -101,7 +101,7 @@ describe "Agent sees a list of emails seperate to cases" do
       before { agent.cases << Support::Email.first.case }
 
       specify "then I can see emails for only cases I am assigned to" do
-        click_link "Notifications"
+        visit support_emails_path
         click_link "My Case Emails"
 
         expect(page).to have_css(".my-case-emails-count", text: 1)
