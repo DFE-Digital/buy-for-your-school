@@ -529,7 +529,8 @@ en:
               reply_body: Enter reply body
           show:
             label:
-              attachments: Attachments
+              add_attachments: Add attachments
+              attachments_added: Attachments added
               attachments_hint: 'Select one or multiple files to attach to the email.<br />NOTE: You will have to select your files again if you leave this page.'
               edit: Edit reply
               heading: Preview and send email

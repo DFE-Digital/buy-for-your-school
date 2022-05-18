@@ -26,12 +26,28 @@
   <%=
     form.govuk_file_field :attachments,
       multiple: true,
-      label: { text: I18n.t("support.case.messages.reply.show.label.attachments"), class: "govuk-heading-s" },
+      hidden: true,
+      label: { text: I18n.t("support.case.messages.reply.show.label.add_attachments"), class: "govuk-button govuk-button--secondary" },
       hint: { text: I18n.t("support.case.messages.reply.show.label.attachments_hint").html_safe }
   %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div id="added_attachments" hidden="true">
+        <table id="added_attachments_table" class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--s govuk-!-padding-bottom-2"><%= I18n.t("support.case.messages.reply.show.label.attachments_added") %></caption>
+          <tbody class="govuk-table__body">
+            <% # to be populated by javascript %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
   <div class="govuk-button-group">
     <%= form.submit I18n.t("support.case.messages.reply.show.label.send"), class: "govuk-button", role: "button" %>
     <%= link_to I18n.t("support.case.messages.reply.show.label.edit"), edit_support_case_message_reply_path(@current_case, @current_email, message_reply_form: { body: form.object.body }), class: "govuk-button govuk-button--secondary", role: "button" %>
   </div>
 <% end %>
+
+<%= javascript_include_tag "supported_display_attachments" %>
