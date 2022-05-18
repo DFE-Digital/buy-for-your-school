@@ -8,7 +8,7 @@
 #   4: category_id    (skipped if journey)
 #   5: message_body   (last and compulsory)
 #
-class SupportForm < Form
+class SupportForm < RequestForm
   # @!attribute [r] user
   #   @return [UserPresenter]
   option :user, ::Types.Constructor(UserPresenter)
@@ -67,10 +67,13 @@ class SupportForm < Form
   #
   # @return [Integer]
   def forward
+    # byebug
     if position?(2) && user.active_journeys.none?
       go_to!(4)
     elsif position?(3) && has_journey?
       go_to!(5)
+    elsif position?(6) && !about_procurement?
+      go_to!(8)
     else
       advance!
     end
@@ -92,6 +95,19 @@ class SupportForm < Form
   # @return [Hash] toggle form data to step backward
   def go_back
     to_h.merge(back: true)
+  end
+
+  def next?
+    # byebug
+    if position?(6)
+      if about_procurement? && confidence_level.blank?
+        true
+      elsif about_procurement? && confidence_level.present?
+        false
+      end
+    else
+      false
+    end
   end
 
 private

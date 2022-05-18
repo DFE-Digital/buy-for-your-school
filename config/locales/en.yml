@@ -971,6 +971,9 @@ en:
       phone_number: What is your phone number?
       school: Which school are you buying for?
       specification: Which specification is this related to?
+      procurement_amount: Procurement amount
+      confidence_level: Confidence level
+      special_requirements: Special requirements
     link: Request free help and support with your specification
     response_time: Once you send this request, we will review it and get in touch within 2 working days.
     section:
@@ -1009,3 +1012,28 @@ en:
       completed: Completed
       in_progress: In progress
       not_started: Not started
+  request:
+    procurement_amount:
+      caption: About your procurement
+      heading: Do you know how much the school will be spending on this procurement in total?
+      hint_1: This is the approximate amount you will be spending over the lifetime of the contract.
+      hint_2: This information will help us to make sure you're buying compliantly for the amount you intend to spend.
+      radios:
+        not_about_procurement: My request is not about a procurement
+      how_much: Approximately how much?
+    confidence_level:
+      caption: About your procurement
+      heading: How confident do you feel about running this procurement?
+      hint: This will help us to give you the right level of support.
+      levels:
+        not_applicable: Not applicable
+        not_at_all_confident: Not at all confident
+        somewhat_confident: Somewhat confident
+        slightly_confident: Slightly confident
+        confident: Confident
+        very_confident: Very confident
+    special_requirements:
+      caption: Special requirements
+      heading: Do you have any special requirements when you communicate or use technology and/or online services?
+      hint: We will be contacting you by email or video call. Tell us about any adjustments we can make, so that we can help and interact with you in the best way possible.
+      requirements: What are your requirements?

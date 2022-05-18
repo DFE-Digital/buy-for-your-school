@@ -11,7 +11,7 @@
 #   6: email                  (guest only)
 #   7: message_body           (last and compulsory)
 #
-class FrameworkSupportForm < Form
+class FrameworkSupportForm < RequestForm
   # @!attribute [r] user
   #   @return [UserPresenter] decorate respondent
   option :user, ::Types.Constructor(UserPresenter)

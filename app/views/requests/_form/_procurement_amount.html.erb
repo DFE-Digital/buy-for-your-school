@@ -1,0 +1,23 @@
+<%= form.hidden_field :procurement_choice, value: nil %>
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="support-form-procurement-amount-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <span class="govuk-caption-l"><%= I18n.t("request.procurement_amount.caption") %></span>
+      <%= I18n.t("request.procurement_amount.heading") %>
+    </legend>
+    <div class="govuk-hint" id="support-form-procurement-amount-hint-1">
+      <%= I18n.t("request.procurement_amount.hint_1") %>
+    </div>
+    <div class="govuk-hint" id="support-form-procurement-amount-hint-2">
+      <%= I18n.t("request.procurement_amount.hint_2") %>
+    </div>
+    <div class="govuk-radios" data-module="govuk-radios">
+      <%= form.govuk_radio_button :procurement_choice, :yes, label: { text: I18n.t("generic.yes") } do %>
+        <%= form.govuk_text_field :procurement_amount, width: 5, label: { text: I18n.t("request.procurement_amount.how_much") }, prefix_text: "£" %>
+      <% end %>
+      <%= form.govuk_radio_button :procurement_choice, :no, label: { text: I18n.t("generic.no") } %>
+      <%= form.govuk_radio_button :procurement_choice, :not_about_procurement, label: { text: I18n.t("request.procurement_amount.radios.not_about_procurement") } %>
+    </div>
+  </fieldset>
+</div>
