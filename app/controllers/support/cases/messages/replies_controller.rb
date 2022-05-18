@@ -28,7 +28,7 @@ module Support
   private
 
     def validation
-      Messages::ReplyFormSchema.new.call(**form_params)
+      @validation ||= Messages::ReplyFormSchema.new.call(**form_params)
     end
 
     def form_params
