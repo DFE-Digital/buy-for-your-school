@@ -13,39 +13,30 @@ class RequestForm < Form
 
   # @return [Hash] form params as request attributes
   def data
-    super.except(:procurement_choice, :special_requirements_choice).merge(**normalised_data_values)
+    super.except(:procurement_choice, :special_requirements_choice).merge(**data_values)
   end
 
-  # Get the procurement choice for the form based on stored values
+  # Return whether the request is about a procurement
+  # based on procurement_choice or persisted value
   #
-  # @return [String, nil]
-  def procurement_choice
-    if about_procurement == false || @procurement_choice == "not_about_procurement"
-      "not_about_procurement"
-    elsif @procurement_amount == Dry::Initializer::UNDEFINED
-      nil
-    elsif @procurement_amount.blank?
-      "no"
-    else
-      "yes"
-    end
+  # @return [Boolean]
+  def about_procurement?
+    return procurement_choice != "not_about_procurement" if procurement_choice.present?
+
+    about_procurement
   end
 
   # Get the special requirements choice for the form based on stored values
   #
   # @return [String, nil]
   def special_requirements_choice
-    if @special_requirements == Dry::Initializer::UNDEFINED
-      nil
-    elsif @special_requirements.blank?
+    return @special_requirements_choice if errors.any?
+
+    if special_requirements == ""
       "no"
-    else
+    elsif special_requirements.present?
       "yes"
     end
-  end
-
-  def about_procurement?
-    procurement_choice != "not_about_procurement"
   end
 
 private
@@ -53,36 +44,11 @@ private
   # Adjusted values for persisting in the database
   #
   # @return [Hash]
-  def normalised_data_values
-    # byebug
-    values = {}
-    values[:procurement_amount] = procurement_amount_normalised if procurement_amount.present?
-    values[:special_requirements] = special_requirements_normalised
-    values[:confidence_level] = about_procurement? ? @confidence_level : nil
-    values[:about_procurement] = about_procurement_normalised
-
-    values
-  end
-
-  # Get the procurement amount based on the choice
-  #
-  # @return [String, nil]
-  def procurement_amount_normalised
-    procurement_amount unless @procurement_choice == "no" || @procurement_choice == "not_about_procurement"
-  end
-
-  # Get the special requirements based on the choice
-  #
-  # @return [String, nil]
-  def special_requirements_normalised
-    # byebug
-    special_requirements unless @special_requirements_choice == "no"
-  end
-
-  # Is the request about a procurement -- based on the procurement_choice value
-  #
-  # @return [String, nil]
-  def about_procurement_normalised
-    @procurement_choice != "not_about_procurement"
+  def data_values
+    {
+      procurement_amount: about_procurement? ? procurement_amount : nil,
+      confidence_level: about_procurement? ? confidence_level : nil,
+      about_procurement: about_procurement?,
+    }
   end
 end

@@ -35,7 +35,9 @@ class SupportRequestPresenter < SimpleDelegator
 
   # return [String]
   def special_requirements
-    super || "-"
+    return "-" if super.blank?
+
+    super
   end
 
 private

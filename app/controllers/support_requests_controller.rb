@@ -28,7 +28,6 @@ class SupportRequestsController < ApplicationController
   end
 
   def create
-    # byebug
     if validation.success? && validation.to_h[:special_requirements]
 
       request = SupportRequest.create!(@form.data)
@@ -75,7 +74,7 @@ private
 
   # @return [Hash]
   def persisted_data
-    support_request.attributes.symbolize_keys
+    support_request.attributes.compact.symbolize_keys
   end
 
   # @return [SupportForm] form object populated with validation messages
@@ -90,7 +89,7 @@ private
 
   # @return [SupportFormSchema] validated form input
   def validation
-    SupportFormSchema.new.call(**form_params)
+    @validation ||= SupportFormSchema.new.call(**form_params)
   end
 
   # TODO: maybe? - move the form back param into the parent class
@@ -102,7 +101,19 @@ private
 
   def form_params
     params.require(:support_form).permit(*%i[
-      step phone_number journey_id category_id message_body school_urn procurement_amount procurement_choice confidence_level special_requirements_choice special_requirements back
+      step
+      phone_number
+      journey_id
+      category_id
+      message_body
+      school_urn
+      procurement_amount
+      procurement_choice
+      confidence_level
+      special_requirements_choice
+      special_requirements
+      about_procurement
+      back
     ])
   end
 end

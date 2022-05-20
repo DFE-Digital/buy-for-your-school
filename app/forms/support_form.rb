@@ -67,7 +67,6 @@ class SupportForm < RequestForm
   #
   # @return [Integer]
   def forward
-    # byebug
     if position?(2) && user.active_journeys.none?
       go_to!(4)
     elsif position?(3) && has_journey?
@@ -98,7 +97,8 @@ class SupportForm < RequestForm
   end
 
   def next?
-    # byebug
+    # navigate to step 7 (confidence level) if the request is about a procurement
+    # and we don't have confidence_level
     if position?(6)
       if about_procurement? && confidence_level.blank?
         true

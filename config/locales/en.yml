@@ -415,6 +415,7 @@ en:
         category: Category
         change_owner: Change case owner
         close: Close case
+        confidence_level: Confidence level
         contact_email: Contact email
         contact_extension_number: Contact extension
         contact_name: Contact name
@@ -428,6 +429,7 @@ en:
         organisation_type: Organisation type
         place_on_hold: Place on hold
         problem_description: Description of query
+        procurement_amount: Procurement amount
         procurement_details:
           change: change
           contract_duration: Contract duration
@@ -461,6 +463,7 @@ en:
           schools_commercial_team: Schools Commercial Team (SCT)
           sw_hub: South West (SW) Hub
           unspecified: "-"
+        special_requirements: Special requirements
         state:
           state_action_required: Action
           state_close: Closed
@@ -1016,8 +1019,7 @@ en:
     procurement_amount:
       caption: About your procurement
       heading: Do you know how much the school will be spending on this procurement in total?
-      hint_1: This is the approximate amount you will be spending over the lifetime of the contract.
-      hint_2: This information will help us to make sure you're buying compliantly for the amount you intend to spend.
+      hint: This is the approximate amount you will be spending over the lifetime of the contract.<br><br>This information will help us to make sure you're buying compliantly for the amount you intend to spend.
       radios:
         not_about_procurement: My request is not about a procurement
       how_much: Approximately how much?

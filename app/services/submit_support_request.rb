@@ -29,8 +29,8 @@ class SubmitSupportRequest
   extend Dry::Initializer
 
   # @!attribute request
-  #   @return [SupportRequestPresenter]
-  option :request, ::Types.Constructor(SupportRequestPresenter)
+  #   @return [SupportRequest]
+  option :request, Types.Instance(SupportRequest)
 
   # @!attribute template
   #   @return [String] Template UUID
@@ -103,6 +103,9 @@ private
       email: user.email,
       phone_number: request.phone_number,
       request_text: request.message_body,
+      procurement_amount: request.procurement_amount,
+      confidence_level: request.confidence_level,
+      special_requirements: request.special_requirements.presence,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
