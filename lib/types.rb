@@ -1,5 +1,6 @@
 require "dry-types"
 require "./lib/date_builder"
+require "./lib/decimal_builder"
 
 module Types
   include Dry.Types
@@ -9,4 +10,6 @@ module Types
 
   # Boolean radio boxes
   ConfirmationField = Types::Params::Bool | Types::String
+
+  DecimalField = Types.Constructor(String) { |input| ::DecimalBuilder.call(input) }
 end
