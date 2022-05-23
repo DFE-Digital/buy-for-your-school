@@ -57,7 +57,7 @@ variable "postgres_class" {
 
 variable "postgres_class_prod" {
   description = "Postgres class (Production environment)"
-  default     = "medium-11"
+  default     = "medium-ha-11"
   type        = string
 }
 

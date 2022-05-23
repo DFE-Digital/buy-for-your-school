@@ -85,8 +85,7 @@ describe "Support agent sends a templated email" do
           first_name: "School",
           last_name: "Contact",
           email: "school@email.co.uk",
-          # This text needs to be set to the default non-template text to make the spec pass, but in practice the text used is set on the template on notify and isn't controlled by our application directly
-          text: "Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification.",
+          text: "",
           from_name: "Procurement Specialist",
         },
       }
