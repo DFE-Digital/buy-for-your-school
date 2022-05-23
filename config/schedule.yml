@@ -41,8 +41,3 @@ refresh_establishment_groups:
   cron: 0 4 1 * * # At 04:00 on day-of-month 1.
   class: Support::RefreshEstablishmentGroupsJob
   description: Update internal EstablishmentGroup records using public data from GIAS.
-
-update_virus_definitions:
-  cron: 30 4 * * * # At 4:30 am
-  class: Support::RefreshVirusDefinitions
-  description: Update virus definitons for clamAv
