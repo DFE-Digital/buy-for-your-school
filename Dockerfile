@@ -6,6 +6,7 @@ FROM ruby:3.1.2 as base
 RUN apt-get update && apt-get install -qq -y \
     build-essential \
     libpq-dev \
+    iproute2 \
     --fix-missing --no-install-recommends
 
 # https://github.com/jgm/pandoc/releases/download/2.17.0.1/pandoc-2.17.0.1-1-arm64.deb
