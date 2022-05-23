@@ -570,6 +570,8 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
       sc.savings_estimate,
       sc.savings_estimate_method,
       sc.savings_status,
+      sc.support_level AS case_support_level,
+      sc.value AS case_value,
       se.name AS organisation_name,
       se.urn AS organisation_urn,
       se.ukprn AS organisation_ukprn,
@@ -599,8 +601,9 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
       nc.spend AS new_contract_spend,
       nc.supplier AS new_contract_supplier,
       ps.created_at AS participation_survey_date,
-      es.created_at AS exit_survey_date
-     FROM (((((((((support_cases sc
+      es.created_at AS exit_survey_date,
+      sir.referrer
+     FROM ((((((((((support_cases sc
        LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
              FROM support_interactions i
             WHERE (i.case_id = sc.id)
@@ -649,7 +652,11 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
        LEFT JOIN ( SELECT si_1.created_at,
               si_1.case_id
              FROM support_interactions si_1
-            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)));
+            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)))
+       LEFT JOIN ( SELECT (si_1.additional_data ->> 'referrer'::text) AS referrer,
+              si_1.case_id
+             FROM support_interactions si_1
+            WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
   create_view "support_case_searches", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
