@@ -21,6 +21,8 @@ gem "jwt"
 gem "liquid"
 gem "loaf"
 gem "mini_racer"
+gem "net-imap", require: false
+gem "net-pop", require: false
 gem "net-smtp", require: false
 gem "notifications-ruby-client"
 gem "omniauth"

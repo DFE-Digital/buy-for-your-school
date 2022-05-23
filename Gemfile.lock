@@ -291,6 +291,14 @@ GEM
     msgpack (1.5.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    net-imap (0.2.3)
+      digest
+      net-protocol
+      strscan
+    net-pop (0.1.1)
+      digest
+      net-protocol
+      timeout
     net-protocol (0.1.3)
       timeout
     net-smtp (0.3.1)
@@ -523,6 +531,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    strscan (3.0.3)
     swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -617,6 +626,8 @@ DEPENDENCIES
   loaf
   mini_racer
   mock_redis
+  net-imap
+  net-pop
   net-smtp
   notifications-ruby-client
   omniauth
