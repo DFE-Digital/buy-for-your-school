@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "3.0.1"
+ruby "3.1.2"
 
 gem "aasm"
 gem "aws-sdk-s3", require: false
@@ -21,6 +21,7 @@ gem "jwt"
 gem "liquid"
 gem "loaf"
 gem "mini_racer"
+gem "net-smtp", require: false
 gem "notifications-ruby-client"
 gem "omniauth"
 gem "omniauth_openid_connect"
