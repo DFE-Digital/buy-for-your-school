@@ -13,7 +13,8 @@ window.addEventListener("load", () => {
   const procurementChoiceNotProcurementRadioButton = document.getElementById(`${formId}-procurement-choice-not-about-procurement-field`);
   const procurementAmountInput = document.getElementsByName(`${formIdUnderscore}[procurement_amount]`)[0];
   const aboutProcurementInput = document.getElementsByName(`${formIdUnderscore}[about_procurement]`)[0];
-  const procurementChoiceValue = document.querySelector(`input[name='${formIdUnderscore}[procurement_choice]']:checked`)?.value;
+  const procurementChoice = document.querySelector(`input[name='${formIdUnderscore}[procurement_choice]']:checked`);
+  const procurementChoiceValue = procurementChoice && procurementChoice.value;
 
   // set the radio button based on existing values
   if (procurementChoiceValue == undefined) {
