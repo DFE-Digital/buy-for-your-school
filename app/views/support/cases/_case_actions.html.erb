@@ -34,6 +34,9 @@
 
     <% if @current_case.resolved? %>
       <li>
+        <%= link_to I18n.t("support.case.label.send_email"), new_support_case_email_type_path(@current_case), class: "govuk-link" %>
+      </li>
+      <li>
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
       <li>
