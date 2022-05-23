@@ -25,18 +25,16 @@
     </span>
   </summary>
 
-  <%
-    text = I18n.t "faf.search_for_a_school.details.search_for_a_group_link"
+  <% text = I18n.t("faf.search_for_a_school.details.search_for_a_group_link") %>
 
-    link =
+  <% link =
       if @framework_request&.persisted?
         link_to text, edit_framework_request_path(@framework_request, step: 3, group: true), class: "govuk-link"
       else
         link_to text, framework_requests_path(framework_support_form: form.object.find_other_type), method: :post, class: "govuk-link"
       end
-
-    for body in I18n.t "faf.search_for_a_school.details.body", search_for_a_group_link: link
   %>
+  <% I18n.t("faf.search_for_a_school.details.body", search_for_a_group_link: link).each do |body| %>
     <div class="govuk-details__text">
       <%= body.html_safe %>
     </div>
