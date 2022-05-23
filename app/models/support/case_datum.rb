@@ -19,6 +19,7 @@ module Support
     enum reason_for_route_to_market: Procurement.reason_for_route_to_markets, _prefix: :procurement
     enum required_agreement_type: Procurement.required_agreement_types, _prefix: :procurement
     enum procurement_stage: Procurement.stages, _prefix: :procurement
+    enum case_support_level: Case.support_levels, _prefix: :level
 
     def readonly?
       true
