@@ -183,4 +183,5 @@ en:
           missing: The reply body cannot be blank
         attachments:
           infected: One or more of the files you uploaded contained a virus and have been rejected
+          incorrect_file_type: One or more of the files you uploaded was an incorrect file type
 
