@@ -2,14 +2,14 @@
 
 static_route_base=ghbs-qa
 app_name=$1
-IFS=$'\n' all_web_apps=($(cf apps | sed -e "1,/^name/d" | awk '{print $1}' | grep -v "worker"))
+IFS=$'\n' all_web_apps=($(cf apps | sed -e "1,/^name/d" | awk '{print $1}' | grep -v "worker" | xargs))
 
 # initialize list of static route usage statuses (15 routes + 1 at the beginning to avoid 0 indexing logic)
 static_routes=(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 
 function getStaticRouteForApp()
 {
-  route_for_current_app=$(cf app $1 | grep 'routes:' | cut -d ':' -f 2 | tr "," "\\n" | grep $static_route_base | cut -d '.' -f 1)
+  route_for_current_app=$(cf app $1 | grep 'routes:' | cut -d ':' -f 2 | tr "," "\\n" | grep $static_route_base | cut -d '.' -f 1 | xargs)
 
   if [[ $route_for_current_app != "" ]]; then
     echo $route_for_current_app
@@ -28,6 +28,8 @@ if [[ $(echo $all_web_apps | grep $app_name) != "" ]]; then
 fi
 
 # detect which routes are currently being used
+IFS=$' ' all_web_apps=($all_web_apps)
+
 for current_app in "${all_web_apps[@]}"; do
   static_route=$(getStaticRouteForApp $current_app | xargs)
 
