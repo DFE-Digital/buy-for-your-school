@@ -13,7 +13,7 @@ class RequestFormSchema < Schema
   end
 
   rule(:procurement_choice) do
-    key.failure(:missing) if key? && value.blank? && values[:step] == "6"
+    key.failure(:missing) if key? && value.blank?
   end
 
   rule(:procurement_amount) do
@@ -21,7 +21,8 @@ class RequestFormSchema < Schema
   end
 
   rule(:confidence_level) do
-    key.failure(:missing) if key? && value.blank? && values[:step] == "7" && !values[:back]
+    # byebug
+    key.failure(:missing) if key? && value.blank? && values[:procurement_choice] != "not_about_procurement" && !values[:back]
   end
 
   rule(:special_requirements_choice) do

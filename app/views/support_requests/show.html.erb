@@ -110,9 +110,9 @@
         </dd>
       </div>
 
-      <div id="support-request-message" class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support_request.label.procurement_amount") %>
+          <%= I18n.t("request.label.procurement_amount") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= @support_request.procurement_amount %>
@@ -125,9 +125,9 @@
       </div>
 
       <% if @support_request.confidence_level %>
-        <div id="support-request-message" class="govuk-summary-list__row">
+        <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support_request.label.confidence_level") %>
+            <%= I18n.t("request.label.confidence_level") %>
           </dt>
           <dd class="govuk-summary-list__value">
             <%= @support_request.confidence_level %>
@@ -140,9 +140,9 @@
         </div>
       <% end %>
 
-      <div id="support-request-message" class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support_request.label.special_requirements") %>
+          <%= I18n.t("request.label.special_requirements") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= @support_request.special_requirements %>

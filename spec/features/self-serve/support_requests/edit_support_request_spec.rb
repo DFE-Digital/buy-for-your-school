@@ -247,4 +247,155 @@ RSpec.feature "Editing a 'Digital Support' request" do
       expect(support_request.reload.message_body).to eql "I need help"
     end
   end
+
+  describe "step 6: providing the procurement amount", js: true do
+    let(:support_request) do
+      create(:support_request,
+             user: journey.user,
+             journey: journey,
+             category: nil,
+             phone_number: nil,
+             school_urn: "123")
+    end
+
+    context "when procurement amount is known and the request was about a procurement" do
+      before do
+        click_link "edit-procurement-amount"
+        choose "Yes"
+        fill_in "support_form[procurement_amount]", with: "56.24"
+        click_continue
+      end
+
+      it "updates the procurement amount" do
+        expect(answers[6]).to have_text "£56.24"
+        expect(support_request.reload.procurement_amount).to eq 56.24
+      end
+    end
+
+    context "when procurement amount is known and the request was not about a procurement" do
+      let(:support_request) do
+        create(:support_request,
+               user: journey.user,
+               journey: journey,
+               category: nil,
+               phone_number: nil,
+               school_urn: "123",
+               procurement_amount: nil,
+               confidence_level: nil,
+               about_procurement: false)
+      end
+
+      before do
+        click_link "edit-procurement-amount"
+        choose "Yes"
+        fill_in "support_form[procurement_amount]", with: "56.24"
+        click_continue
+        choose "Very confident"
+        click_continue
+      end
+
+      it "updates the procurement amount and sets the confidence level" do
+        expect(answers[6]).to have_text "£56.24"
+        expect(answers[7]).to have_text "Very confident"
+        expect(support_request.reload.procurement_amount).to eq 56.24
+        expect(support_request.reload.confidence_level).to eq "very_confident"
+        expect(support_request.reload.about_procurement).to eq true
+      end
+    end
+
+    context "when procurement amount is unknown" do
+      before do
+        click_link "edit-procurement-amount"
+        choose "No"
+        click_continue
+      end
+
+      it "removes the procurement amount" do
+        expect(answers[6]).to have_text "-"
+        expect(support_request.reload.procurement_amount).to be_nil
+      end
+    end
+
+    context "when the request is not about a procurement" do
+      before do
+        click_link "edit-procurement-amount"
+        choose "My request is not about a procurement"
+        click_continue
+      end
+
+      it "removes the procurement amount" do
+        expect(answers[6]).to have_text "-"
+        expect(support_request.reload.procurement_amount).to be_nil
+      end
+
+      it "hides and removes the confidence level" do
+        expect(page).not_to have_text "Confidence level"
+        expect(support_request.reload.confidence_level).to be_nil
+      end
+
+      it "marks the request as not about a procurement" do
+        expect(support_request.reload.about_procurement).to eq false
+      end
+    end
+  end
+
+  describe "step 7: setting the confidence level" do
+    let(:support_request) do
+      create(:support_request,
+             user: journey.user,
+             journey: journey,
+             category: nil,
+             phone_number: nil,
+             school_urn: "123")
+    end
+
+    before do
+      click_link "edit-confidence-level"
+      choose "Not applicable"
+      click_continue
+    end
+
+    it "updates the confidence level" do
+      expect(answers[7]).to have_text "Not applicable"
+      expect(support_request.reload.confidence_level).to eq "not_applicable"
+    end
+  end
+
+  describe "step 8: providing special requirements", js: true do
+    let(:support_request) do
+      create(:support_request,
+             user: journey.user,
+             journey: journey,
+             category: nil,
+             phone_number: nil,
+             school_urn: "123")
+    end
+
+    context "when there are special requirements" do
+      before do
+        click_link "edit-special-requirements"
+        choose "Yes"
+        fill_in "support_form[special_requirements]", with: "Updated special requirements"
+        click_continue
+      end
+
+      it "updates the special requirements" do
+        expect(answers[8]).to have_text "Updated special requirements"
+        expect(support_request.reload.special_requirements).to eq "Updated special requirements"
+      end
+    end
+
+    context "when there are no special requirements" do
+      before do
+        click_link "edit-special-requirements"
+        choose "No"
+        click_continue
+      end
+
+      it "updates the special requirements" do
+        expect(answers[8]).to have_text "-"
+        expect(support_request.reload.special_requirements).to eq ""
+      end
+    end
+  end
 end

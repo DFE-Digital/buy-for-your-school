@@ -357,6 +357,10 @@ en:
         slightly_confident: Slightly confident
         somewhat_confident: Somewhat confident
         very_confident: Very confident
+    label:
+      confidence_level: Confidence level
+      procurement_amount: Procurement amount
+      special_requirements: Special requirements
     procurement_amount:
       caption: About your procurement
       heading: Do you know how much the school will be spending on this procurement in total?
@@ -994,12 +998,9 @@ en:
     - DfE's supported buying team will respond to you within 2 working days.
     label:
       category: What are you buying?
-      confidence_level: Confidence level
       message: How can we help?
       phone_number: What is your phone number?
-      procurement_amount: Procurement amount
       school: Which school are you buying for?
-      special_requirements: Special requirements
       specification: Which specification is this related to?
     link: Request free help and support with your specification
     response_time: Once you send this request, we will review it and get in touch within 2 working days.

@@ -42,14 +42,6 @@ RSpec.feature "Creating a 'Find a Framework' request" do
       end
 
       describe "the message page" do
-        it "is the only step" do
-          expect(find("label.govuk-label--l")).to have_text "How can we help?"
-          fill_in "framework_support_form[message_body]", with: "I have a problem"
-          click_continue
-          expect(find("h1.govuk-heading-l")).to have_text "Send your request"
-          expect(FrameworkRequest.count).to eq(1)
-        end
-
         it "goes back to the start page" do
           click_on "Back"
           expect(page).to have_current_path "/procurement-support"
@@ -60,6 +52,26 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
           expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
           expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
+        end
+      end
+
+      describe "the special requirements page" do
+        before do
+          fill_in "framework_support_form[message_body]", with: "I have a problem"
+          click_continue
+          choose "No"
+          click_continue
+          choose "Confident"
+          click_continue
+        end
+
+        it "is the last step" do
+          expect(page).to have_text "Special requirements"
+          choose "Yes"
+          fill_in "What are your requirements?", with: "My requirements"
+          click_continue
+          expect(page).to have_text "Send your request"
+          expect(FrameworkRequest.count).to eq(1)
         end
       end
     end

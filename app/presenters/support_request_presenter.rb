@@ -1,7 +1,5 @@
 # Helpers for a support request to display information on the page
-class SupportRequestPresenter < SimpleDelegator
-  include ActionView::Helpers::NumberHelper
-
+class SupportRequestPresenter < RequestPresenter
   # @return [String] email address of user requesting support
   def email
     user&.email
@@ -17,27 +15,6 @@ class SupportRequestPresenter < SimpleDelegator
   # return [JourneyPresenter, nil]
   def journey
     JourneyPresenter.new(super) if super.present?
-  end
-
-  # return [String]
-  def procurement_amount
-    return "-" unless super
-
-    number_to_currency(super, unit: "£", precision: 2)
-  end
-
-  # return [String, nil]
-  def confidence_level
-    return if super.blank?
-
-    I18n.t("request.confidence_level.levels.#{super}")
-  end
-
-  # return [String]
-  def special_requirements
-    return "-" if super.blank?
-
-    super
   end
 
 private

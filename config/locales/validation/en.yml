@@ -1,26 +1,25 @@
 # config/validation/en.yml
 en:
-  forms:
-    rules:
-      phone_number: Your phone number
-      message_body: "" # Omitted
-      category_id: The type of procurement
-      school_urn: "" # Omitted
-
+  request:
+    rules: &request_rules
+      procurement_choice: "" # Omitted
+      procurement_amount: "" # Omitted
+      confidence_level: "" # Omitted
+      special_requirements_choice: "" # Omitted
+      special_requirements: "" # Omitted
+    
     errors:
-      rules:
-        phone_number:
-          missing: is missing
-          # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
-          format?: must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
-          # value in schema set to 13 as includes the + in +44
-          max_size?: "can not have more than 12 digits"
-        message_body:
-          missing: You must tell us how we can help
-        category_id:
-          no_spec: is required if you do not select an existing specification
-        school_urn:
-          missing: You must select a school
+      rules: &request_errors
+        procurement_choice:
+          missing: Select whether you know how much is being spent
+        procurement_amount:
+          missing: Enter the approximate amount that will be spent
+        confidence_level:
+          missing: Select how confident you feel about running this procurement
+        special_requirements_choice:
+          missing: Select whether you want to tell us about any special requirements
+        special_requirements:
+          missing: Enter what your requirements are
 
   # Find a Framework support request form
   framework_request:
@@ -33,6 +32,7 @@ en:
       last_name: "" # Omitted
       email: "" # Omitted
       message_body: "" # Omitted
+      <<: *request_rules
 
     errors:
       rules:
@@ -55,27 +55,31 @@ en:
           group: Select whether this is the Group or Trust you're buying for
         message_body:
           missing: You must tell us how we can help
+        <<: *request_errors
   
-  request:
+  support_request:
     rules:
-      procurement_choice: "" # Omitted
-      procurement_amount: "" # Omitted
-      confidence_level: "" # Omitted
-      special_requirements_choice: "" # Omitted
-      special_requirements: "" # Omitted
-    
+      phone_number: Your phone number
+      message_body: "" # Omitted
+      category_id: The type of procurement
+      school_urn: "" # Omitted
+      <<: *request_rules
+
     errors:
       rules:
-        procurement_choice:
-          missing: Select whether you know how much is being spent
-        procurement_amount:
-          missing: Enter the approximate amount that will be spent
-        confidence_level:
-          missing: Select how confident you feel about running this procurement
-        special_requirements_choice:
-          missing: Select whether you want to tell us about any special requirements
-        special_requirements:
-          missing: Enter what your requirements are
+        phone_number:
+          missing: is missing
+          # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
+          format?: must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
+          # value in schema set to 13 as includes the + in +44
+          max_size?: "can not have more than 12 digits"
+        message_body:
+          missing: You must tell us how we can help
+        category_id:
+          no_spec: is required if you do not select an existing specification
+        school_urn:
+          missing: You must select a school
+        <<: *request_errors
 
   # Find a Framework support request form
   download_specification:

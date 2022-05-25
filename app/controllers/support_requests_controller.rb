@@ -74,7 +74,7 @@ private
 
   # @return [Hash]
   def persisted_data
-    support_request.attributes.compact.symbolize_keys
+    support_request.attributes.symbolize_keys
   end
 
   # @return [SupportForm] form object populated with validation messages

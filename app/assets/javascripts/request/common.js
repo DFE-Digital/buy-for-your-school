@@ -7,5 +7,5 @@ export function getFormId() {
 }
 
 export function getFormIdUnderscore() {
-  return getFormId().replace("-", "_");
+  return getFormId().replaceAll("-", "_");
 }

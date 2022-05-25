@@ -60,10 +60,11 @@ class FrameworkSupportForm < RequestForm
 
   # @return [Hash] form data to be persisted as request attributes
   def data
-    to_h
-      .except(:user, :step, :messages, :dsi, :org_confirm)
-      .compact
-      .merge(user_id: user.id, org_id: found_uid_or_urn)
+    # byebug
+    super
+      .except(:dsi, :org_confirm)
+      # .compact
+      .merge(org_id: found_uid_or_urn)
   end
 
   # Prevent validation errors being raised for empty fields
@@ -82,6 +83,8 @@ class FrameworkSupportForm < RequestForm
   def forward
     if position?(3) && dsi_with_many_orgs?
       go_to!(7)
+    elsif position?(8) && !about_procurement?
+      go_to!(10)
     else
       advance!
     end
@@ -142,6 +145,14 @@ class FrameworkSupportForm < RequestForm
       true # group choice
     elsif user.guest? && position?(3)
       org_id.present? # org selected
+    elsif position?(8)
+      # navigate to step 9 (confidence level) if the request is about a procurement
+      # and we don't have confidence_level
+      if about_procurement? && confidence_level.blank?
+        true
+      elsif about_procurement? && confidence_level.present?
+        false
+      end
     else
       false
     end
