@@ -45,13 +45,11 @@ private
   #
   # @return [Hash]
   def data_values
-    # byebug
     values = {}
     values[:procurement_amount] = about_procurement? ? procurement_amount : nil unless @procurement_amount == Dry::Initializer::UNDEFINED
     values[:confidence_level] = about_procurement? ? confidence_level : nil unless @confidence_level == Dry::Initializer::UNDEFINED
     values[:about_procurement] = about_procurement? unless @procurement_choice == Dry::Initializer::UNDEFINED
 
-    # byebug
     values
   end
 end

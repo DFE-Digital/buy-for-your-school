@@ -37,7 +37,6 @@ class FrameworkRequestsController < ApplicationController
   end
 
   def create
-    # byebug
     session.delete(:support_journey) unless current_user.guest?
 
     if @form.restart? && back_link?
@@ -59,7 +58,6 @@ class FrameworkRequestsController < ApplicationController
   end
 
   def update
-    # byebug
     if @form.next?
       @form.forward
       render :edit

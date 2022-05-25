@@ -21,7 +21,6 @@ class RequestFormSchema < Schema
   end
 
   rule(:confidence_level) do
-    # byebug
     key.failure(:missing) if key? && value.blank? && values[:procurement_choice] != "not_about_procurement" && !values[:back]
   end
 
