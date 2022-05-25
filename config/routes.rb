@@ -111,7 +111,7 @@ Rails.application.routes.draw do
           end
         end
         resources :messages, module: :messages do
-          resource :reply, only: %i[edit show create]
+          resource :reply, only: %i[create]
         end
       end
     end

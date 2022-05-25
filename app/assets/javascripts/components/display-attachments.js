@@ -2,9 +2,9 @@
   Supported: Display email attachments
 */
 
-function removeAttachment(attachment) {
+
+function removeAttachment(attachment, fileInput) {
   const dataTransfer = new DataTransfer();
-  const fileInput = getFileInput();
   const files = Array.from(fileInput.files);
   const index = files.indexOf(attachment);
   files.splice(index, 1);
@@ -13,18 +13,21 @@ function removeAttachment(attachment) {
   fileInput.dispatchEvent(new Event("change"));
 }
 
-function createRemoveLink(attachment) {
+function createRemoveLink(attachment, fileInput) {
   const removeLink = document.createElement("a");
   removeLink.classList.add("govuk-link", "govuk-link--no-visited-state");
   removeLink.href = "#";
   const removeLabel = document.createTextNode("Remove");
   removeLink.appendChild(removeLabel);
-  removeLink.addEventListener("click", () => removeAttachment(attachment));
+  removeLink.addEventListener("click", e => {
+    e.preventDefault();
+    removeAttachment(attachment, fileInput)
+  });
 
   return removeLink;
 }
 
-function createAttachmentRow(attachment) {
+function createAttachmentRow(attachment, fileInput) {
   const attachmentRow = document.createElement("tr");
   attachmentRow.classList.add("govuk-table__row");
 
@@ -40,7 +43,7 @@ function createAttachmentRow(attachment) {
   const attachmentRemoveTd = document.createElement("td");
   attachmentRemoveTd.classList.add("govuk-table__cell", "govuk-table__cell--numeric");
 
-  attachmentRemoveTd.appendChild(createRemoveLink(attachment));
+  attachmentRemoveTd.appendChild(createRemoveLink(attachment, fileInput));
 
   attachmentRow.appendChild(attachmentTh);
   attachmentRow.appendChild(attachmentBlankTd);
@@ -49,25 +52,32 @@ function createAttachmentRow(attachment) {
   return attachmentRow;
 }
 
-function displayEmailAttachments(attachments) {
-  const attachmentBox = document.getElementById("added_attachments");
+function getFileInputs() {
+  return document.querySelectorAll('[data-component="display-attachments"]');
+}
+
+function displayEmailAttachments(fileInput) {
+  const attachments = fileInput.files;
+  const target = `#${fileInput.dataset.displayAttachmentsId}`;
+
+  const attachmentBox = document.querySelector(target);
   attachmentBox.hidden = attachments.length == 0 ? true : false;
 
-  const attachmentTable = document.getElementById("added_attachments_table");
+  const attachmentTable = document.querySelector(`${target} .added_attachments_table`);
   const tableBody = attachmentTable.tBodies[0];
   tableBody.replaceChildren();
 
-  Array.from(attachments).forEach(a => tableBody.appendChild(createAttachmentRow(a)));
+  Array.from(attachments).forEach(a => tableBody.appendChild(createAttachmentRow(a, fileInput)));
 }
 
-function getFileInput() {
-  // the input ID changes if there's been a validation error
-  return document.getElementById("message-reply-form-attachments-field") || document.getElementById("message-reply-form-attachments-field-error");
-}
+(() => {
 
-window.addEventListener("load", () => {
-  const fileInput = getFileInput();
-  fileInput.addEventListener("change", () => {
-    displayEmailAttachments(fileInput.files);
+  window.addEventListener("DOMContentLoaded", () => {
+    getFileInputs().forEach(function (el, i) {
+      el.addEventListener("change", function () {
+        displayEmailAttachments(el)
+      });
+    })
   });
-});
+
+})();

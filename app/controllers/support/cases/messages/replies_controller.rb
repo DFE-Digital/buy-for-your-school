@@ -1,15 +1,6 @@
 module Support
   class Cases::Messages::RepliesController < Cases::ApplicationController
-    before_action :current_email, only: %i[show edit create]
-
-    def show
-      @reply_body = templates(body: form_params[:body], agent: current_agent.full_name)
-      @reply_form = Messages::ReplyForm.new(body: form_params[:body])
-    end
-
-    def edit
-      @reply_form = Messages::ReplyForm.new(body: form_params[:body])
-    end
+    before_action :current_email, only: :create
 
     def create
       @reply_form = Messages::ReplyForm.from_validation(validation)
@@ -19,7 +10,7 @@ module Support
 
         redirect_to support_case_path(@current_case, anchor: "messages")
       else
-        @reply_body = templates(body: form_params[:body], agent: current_agent.full_name)
+        @reply_body = form_params[:body]
 
         render :show
       end
@@ -32,15 +23,11 @@ module Support
     end
 
     def form_params
-      params.require(:message_reply_form).permit(:body, attachments: [])
+      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:body, attachments: [])
     end
 
     def current_email
-      @current_email = Support::Email.find(params[:message_id])
-    end
-
-    def templates(params)
-      Messages::Templates.new(params: params).call
+      @current_email = Support::Email.find(params[:message_id]) if params[:message_id].present?
     end
   end
 end

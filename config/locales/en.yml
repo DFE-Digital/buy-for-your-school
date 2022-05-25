@@ -432,6 +432,7 @@ en:
         messages:
           reply:
             preview_and_send: Preview and send
+            send: Send reply
             summary_text: Reply to message
           table:
             added_by: Added by
@@ -527,7 +528,8 @@ en:
               heading: Edit reply
               preview_reply: Preview reply
               reply_body: Enter reply body
-          show:
+        preview:
+          create:
             label:
               add_attachments: Add attachments
               attachments_added: Attachments added
