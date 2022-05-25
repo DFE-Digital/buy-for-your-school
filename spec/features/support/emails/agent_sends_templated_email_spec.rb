@@ -29,9 +29,7 @@ describe "Support agent sends a templated email" do
 
     click_button "Agent Login"
     visit support_case_path(support_case)
-    click_link "Send email"
-    choose "Template"
-    click_button "Save"
+    click_link "Send template email"
   end
 
   describe "list of templates" do

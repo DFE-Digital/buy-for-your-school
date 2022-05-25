@@ -450,7 +450,7 @@ en:
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
-        send_email: Send email
+        send_template_email: Send template email
         source:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
@@ -642,13 +642,6 @@ en:
         what_is_a_framework:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
-    case_email_type:
-      choices:
-        non_template: Non-template
-        template: Template
-      header: Send email
-      legend: Type of email
-      submit: Save
     case_hub_migration:
       edit:
         header: Check your answers before creating a new case

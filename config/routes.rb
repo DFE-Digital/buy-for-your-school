@@ -109,7 +109,6 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do
-            resource :type, only: %i[new create]
             resources :content, only: %i[edit show update], param: :template
             resources :templates, only: %i[index], param: :template
           end
