@@ -30,14 +30,13 @@ describe "Agent can add attachments to replies", js: true do
 
       within("#messages") do
         find("span", text: "Reply to message").click
-        fill_in "message_reply_form[body]", with: "This is a test reply"
-        click_button "Preview and send"
+        fill_in_editor "Your message", with: "This is a test reply"
       end
     end
 
     describe "allows agent to add attachments" do
       before do
-        attach_file("message-reply-form-attachments-field", Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"))
+        attach_file("Add attachments", Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"))
       end
 
       it "shows the attached file" do
@@ -50,8 +49,11 @@ describe "Agent can add attachments to replies", js: true do
       end
 
       it "shows attachment on submitted reply" do
-        click_button "Send"
-        expect(page).to have_text "attachment.txt"
+        click_button "Send reply"
+
+        within "#messages tr", text: "This is a test reply" do
+          expect(page).to have_text "attachment.txt"
+        end
       end
     end
   end

@@ -45,7 +45,7 @@ CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST = [
   "application/ld+json", # .jsonld,JSON-LD format
   "audio/midi", # .mid,Musical Instrument Digital Interface (MIDI)
   "audio/x-midi", # .midi,Musical Instrument Digital Interface (MIDI)
-  #"text/javascript", # .js/.mjs,JavaScript / Javascript module
+  # "text/javascript", # .js/.mjs,JavaScript / Javascript module
   "audio/mpeg", # .mp3,MP3 audio
   "video/mp4",  # .mp4,MP4 video
   "video/mpeg", # .mpeg,MPEG Video

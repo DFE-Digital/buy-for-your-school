@@ -431,7 +431,9 @@ en:
         last_updated: Last updated
         messages:
           reply:
-            preview_and_send: Preview and send
+            add_attachments: Add attachments
+            attachments_added: Attachments added
+            body: Your message
             send: Send reply
             summary_text: Reply to message
           table:
@@ -520,24 +522,6 @@ en:
         my_cases: My cases
         new_cases: New cases
         not_found: No cases found
-      messages:
-        reply:
-          edit:
-            label:
-              cancel: Cancel
-              heading: Edit reply
-              preview_reply: Preview reply
-              reply_body: Enter reply body
-        preview:
-          create:
-            label:
-              add_attachments: Add attachments
-              attachments_added: Attachments added
-              attachments_hint: 'Select one or multiple files to attach to the email.<br />NOTE: You will have to select your files again if you leave this page.'
-              edit: Edit reply
-              heading: Preview and send email
-              send: Send
-              to: To
       new:
         request_text:
           header: Description of query

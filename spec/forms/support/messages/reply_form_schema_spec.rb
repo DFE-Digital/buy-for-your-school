@@ -11,14 +11,12 @@ RSpec.describe Support::Messages::ReplyFormSchema do
   end
 
   context "when files have been attached" do
+    subject(:schema) { described_class.new.call(body: "Filled in", attachments: attachments) }
 
-    let(:infected_file)        { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
+    let(:infected_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
+    let(:attachments) { [infected_file, ok_file] }
     let(:ok_file)              { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
     let(:wrong_file_type_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "text/javascript") }
-
-
-    subject(:schema) { described_class.new.call(body: "Filled in", attachments: attachments) }
-    let(:attachments) { [infected_file, ok_file] }
 
     context "when a file is infected with a virus" do
       before { allow(Support::VirusScanner).to receive(:uploaded_file_safe?).with(infected_file).and_return(false) }

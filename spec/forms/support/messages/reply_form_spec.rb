@@ -9,7 +9,7 @@ describe Support::Messages::ReplyForm do
     let(:attachment1) { fixture_file_upload Rails.root.join("spec/fixtures/gias/example_schools_data.csv"), "text/csv" }
     let(:attachment2) { fixture_file_upload Rails.root.join("spec/fixtures/gias/example_establishment_groups_data.csv"), "text/csv" }
 
-    it "delegates to SendReplyToEmail with the correct template" do
+    it "delegates to SendReplyToEmail" do
       reply = double(call: nil)
       allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(reply)
 
@@ -18,13 +18,11 @@ describe Support::Messages::ReplyForm do
       allow(Support::Messages::Outlook::Reply::FileAttachment).to receive(:from_uploaded_file).with(attachment1).and_return(file_attachment1)
       allow(Support::Messages::Outlook::Reply::FileAttachment).to receive(:from_uploaded_file).with(attachment2).and_return(file_attachment2)
 
-      email_body = Support::Messages::Templates.new(params: { body: body, agent: agent.full_name }).call
-
       described_class.new(body: body, attachments: [attachment1, attachment2]).reply_to_email(email, agent)
 
       expect(Support::Messages::Outlook::SendReplyToEmail).to have_received(:new).with(
         reply_to_email: email,
-        reply_text: email_body,
+        reply_text: body,
         sender: agent,
         file_attachments: [file_attachment1, file_attachment2],
       )

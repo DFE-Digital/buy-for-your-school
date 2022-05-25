@@ -29,17 +29,18 @@ describe "Agent can reply to incoming emails" do
       allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
     end
 
-    describe "allows agent to send a reply" do
+    describe "allows agent to send a reply", js: true do
       before do
-        within("#messages") do
-          find("span", text: "Reply to message").click
-          fill_in "message_reply_form[body]", with: "This is a test reply"
-          click_button "Preview and send"
-        end
-        click_button "Send"
+        click_link "Messages"
+
+        find("span", text: "Reply to message").click
+        fill_in_editor "Your message", with: "This is a test reply"
+        click_button "Send reply"
       end
 
       it "shows the reply" do
+        click_link "Messages"
+
         within("#messages") do
           expect(page).to have_text "Caseworker Caseworker"
           expect(page).to have_text "This is a test reply"
