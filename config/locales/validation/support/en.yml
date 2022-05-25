@@ -136,6 +136,7 @@ en:
     rules:
       started_at: Start date of the contract
       ended_at: End date of the contract
+      spend: The spend value
 
     errors:
       rules:
@@ -143,6 +144,8 @@ en:
           before_end_date: must come before the end date
           invalid: is invalid
         ended_at:
+          invalid: is invalid
+        spend:
           invalid: is invalid
 
 

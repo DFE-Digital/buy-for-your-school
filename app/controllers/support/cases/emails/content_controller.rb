@@ -90,8 +90,6 @@ module Support
 
     def basic_email_text_variable
       return case_email_content_form_params[:text] if params[:case_email_content_form].present?
-
-      I18n.t("support.case_email_content.edit.default_email_body.non_template")
     end
 
     def validation
