@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 2022_05_20_071637) do
     t.boolean "has_attachments", default: false
     t.integer "folder"
     t.boolean "is_read", default: false
+    t.string "body_preview"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
