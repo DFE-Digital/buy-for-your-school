@@ -1,6 +1,10 @@
 module Support
   class Cases::Messages::RepliesController < Cases::ApplicationController
-    before_action :current_email, only: :create
+    before_action :current_email
+
+    def edit
+      @reply_form = Messages::ReplyForm.from_validation(validation)
+    end
 
     def create
       @reply_form = Messages::ReplyForm.from_validation(validation)
@@ -12,7 +16,7 @@ module Support
       else
         @reply_body = form_params[:body]
 
-        render :show
+        render :edit
       end
     end
 

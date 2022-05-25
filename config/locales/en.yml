@@ -436,6 +436,7 @@ en:
             body: Your message
             send: Send reply
             summary_text: Reply to message
+            edit_header: Edit reply
           table:
             added_by: Added by
             caseworker: Caseworker
