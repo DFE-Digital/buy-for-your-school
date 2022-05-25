@@ -50,8 +50,5 @@ module BuyForYourSchool
 
     # Set London as the timezone - handles daylight savings automatically
     config.time_zone = "London"
-
-    # https://github.com/spohlenz/tinymce-rails#asset-compilation
-    config.tinymce.install = :compile
   end
 end
