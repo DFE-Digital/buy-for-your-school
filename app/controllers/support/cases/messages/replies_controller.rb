@@ -2,10 +2,6 @@ module Support
   class Cases::Messages::RepliesController < Cases::ApplicationController
     before_action :current_email
 
-    def edit
-      @reply_form = Messages::ReplyForm.from_validation(validation)
-    end
-
     def create
       @reply_form = Messages::ReplyForm.from_validation(validation)
 
@@ -15,6 +11,7 @@ module Support
         redirect_to support_case_path(@current_case, anchor: "messages")
       else
         @reply_body = form_params[:body]
+        @show_attachment_warning = Array(form_params[:attachments]).any?
 
         render :edit
       end
