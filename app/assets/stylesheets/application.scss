@@ -14,6 +14,7 @@ $govuk-image-url-function: "image-url";
 @import "components/supported/filter-case-form";
 @import "components/pagination";
 @import "components/panels/info";
+@import "components/tinymce";
 
 .debug_dump {
   background: beige;

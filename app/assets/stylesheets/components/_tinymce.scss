@@ -1,0 +1,24 @@
+.tox-tinymce {
+  border-radius: 0px !important;
+  border: 2px solid #0b0c0c !important;
+}
+
+.tox-editor-header,
+.tox-toolbar-overlord,
+.tox-toolbar__primary {
+  background: #f3f2f1 !important;
+}
+
+.tox:not(.tox-tinymce-inline) .tox-editor-header {
+  box-shadow: none !important;
+  border: 2px solid #000 !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.govuk-textarea:focus {
+  outline: 3px solid #ffdd00;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 2px;
+}

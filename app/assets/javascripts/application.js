@@ -19,3 +19,4 @@
 //= require components/autocomplete/autocomplete
 //= require components/close-tab-link
 //= require components/toggle-panel-visibility
+//= require components/tinymce
