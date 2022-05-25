@@ -6,6 +6,6 @@ module Support
     option :email_template, Types::Params::String, optional: true, default: proc { EmailTemplates::IDS[:basic_template] }
     option :email_subject, Types::Params::String, optional: true
     option :email_body, Types::Params::String, optional: true
-    option :text, Types::Params::String
+    option :text, Types::Params::String | Types::Nil
   end
 end

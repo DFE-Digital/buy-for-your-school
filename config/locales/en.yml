@@ -646,8 +646,6 @@ en:
         header: Your specification
     case_email_content:
       edit:
-        default_email_body:
-          non_template: Thank you for getting in touch with the Get Help Buying For Schools team, and thank you for using our online service to create your catering specification.
         email_body:
           label: Enter email body
         header:
