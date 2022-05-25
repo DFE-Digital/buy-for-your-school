@@ -52,7 +52,7 @@ class FrameworkSupportForm < RequestForm
 
   # @!attribute [r] email
   #   @return [String]
-  option :email, default: proc { user.email }
+  option :email, default: proc { user.email || Dry::Initializer::UNDEFINED }
 
   # @!attribute [r] message_body
   #   @return [String]
