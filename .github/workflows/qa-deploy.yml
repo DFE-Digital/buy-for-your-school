@@ -71,10 +71,13 @@ jobs:
         with:
           terraform_version: 0.14.7
 
-      - name: Get Static Route
+      - name: Cloudfoundry login
         run: |
           script/install-cf
           script/cf-login
+
+      - name: Get Static Route
+        run: |
           STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
           STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
           echo "STATIC_ROUTE=${STATIC_ROUTE}" >> $GITHUB_ENV
@@ -92,13 +95,14 @@ jobs:
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
-      - name: Deploy QA app & Map static route & Link to clamav-rest
-        run: |
-          script/install-cf
-          script/cf-login
-          script/deploy-terraform
-          script/qa/map-static-route
-          script/clamav-rest/create-network-policy pre-prod $CF_APP_NAME sct-staging
+      - name: Deploy QA app
+        run: script/deploy-terraform
+
+      - name: Map static route
+        run: script/qa/map-static-route
+
+      - name: Connect to clamav-rest
+        run: script/clamav-rest/create-network-policy pre-prod $CF_APP_NAME sct-staging
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
