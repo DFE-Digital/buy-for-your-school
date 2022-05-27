@@ -86,16 +86,14 @@ jobs:
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
-      - name: Deploy terraform to staging
+      - name: Deploy terraform to staging & Link to clamav-rest
         env:
           TF_VAR_environment: 'staging'
-        run: script/deploy-terraform
-
-      - name: Link to clamav-rest
         run: |
           script/install-cf
           script/cf-login
-          script/create-network-policy pre-prod buy-for-your-school-staging sct-staging
+          script/deploy-terraform
+          script/clamav-rest/create-network-policy pre-prod buy-for-your-school-staging sct-staging
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
@@ -169,7 +167,7 @@ jobs:
           script/cf-login
           script/deploy-terraform
           cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
-          script/create-network-policy production buy-for-your-school-prod sct-production
+          cript/clamav-rest/create-network-policy production buy-for-your-school-prod sct-production
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1

@@ -98,7 +98,7 @@ jobs:
           script/cf-login
           script/deploy-terraform
           script/qa/map-static-route
-          script/create-network-policy pre-prod $CF_APP_NAME sct-staging
+          script/clamav-rest/create-network-policy pre-prod $CF_APP_NAME sct-staging
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
