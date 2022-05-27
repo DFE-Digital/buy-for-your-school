@@ -1,6 +1,6 @@
 class RequestForm < Form
   option :procurement_choice, optional: true
-  option :procurement_amount, optional: true
+  option :procurement_amount, Types::DecimalField, optional: true
   option :confidence_level, optional: true
   option :special_requirements_choice, optional: true
   option :special_requirements, optional: true

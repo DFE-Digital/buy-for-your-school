@@ -3,7 +3,7 @@ class RequestFormSchema < Schema
 
   params do
     optional(:procurement_choice).value(:string)
-    optional(:procurement_amount).value(:string)
+    optional(:procurement_amount).maybe(Types::DecimalField)
     optional(:confidence_level).value(:string)
     optional(:special_requirements_choice).value(:string)
     optional(:special_requirements).value(:string)
@@ -17,7 +17,11 @@ class RequestFormSchema < Schema
   end
 
   rule(:procurement_amount) do
-    key.failure(:missing) if key? && value.blank? && values[:procurement_choice] == "yes"
+    if values[:procurement_choice] == "yes"
+      key.failure(:invalid) if key? && value == ""
+      key.failure(:missing) if key? && value.nil?
+      key.failure(:too_large) if key? && value.present? && Float(value) >= 10**7
+    end
   end
 
   rule(:confidence_level) do

@@ -29,6 +29,7 @@ RSpec.describe RequestFormSchema do
   end
 
   describe "validates procurement_amount" do
+    # update
     context "when the procurement_amount key is provided" do
       context "and it is blank while the procurement_choice is yes" do
         subject(:schema) { described_class.new.call(procurement_amount: "", procurement_choice: "yes") }
@@ -39,7 +40,25 @@ RSpec.describe RequestFormSchema do
         end
       end
 
-      context "and it is not blank while the procurement_choice is yes" do
+      context "and it is non-numeric while the procurement_choice is yes" do
+        subject(:schema) { described_class.new.call(procurement_amount: "abc", procurement_choice: "yes") }
+
+        it "raises a validation error" do
+          expect(schema.errors.messages.size).to eq 1
+          expect(schema.errors.messages[0].to_s).to eq "The amount value is invalid"
+        end
+      end
+
+      context "and it is greater than 9,999,999.99 while the procurement_choice is yes" do
+        subject(:schema) { described_class.new.call(procurement_amount: "10000000.00", procurement_choice: "yes") }
+
+        it "raises a validation error" do
+          expect(schema.errors.messages.size).to eq 1
+          expect(schema.errors.messages[0].to_s).to eq "The amount cannot be larger than 9,999,999.99"
+        end
+      end
+
+      context "and it is valid while the procurement_choice is yes" do
         subject(:schema) { described_class.new.call(procurement_amount: "45.21", procurement_choice: "yes") }
 
         it "does not raise a validation error" do
