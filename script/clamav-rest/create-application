@@ -1,4 +1,5 @@
 #!/bin/bash
+# call: ./script/create-application prod
 # make sure to log into CF first ./script/cf-login
 
 app_name="buy-for-your-school-clamav-rest-$1"
@@ -10,4 +11,5 @@ fi
 
 cf create-app $app_name --app-type docker
 cf push $app_name --docker-image niilo/clamav-rest
-
+cf unmap-route $app_name london.cloudapps.digital --hostname $app_name
+cf map-route $app_name apps.internal --hostname $app_name

@@ -64,6 +64,7 @@ jobs:
     if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+      TF_VAR_cloudfoundry_space: "sct-staging"
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
@@ -90,6 +91,12 @@ jobs:
           TF_VAR_environment: 'staging'
         run: script/deploy-terraform
 
+      - name: Link to clamav-rest
+        run: |
+          script/install-cf
+          script/cf-login
+          script/create-network-policy pre-prod buy-for-your-school-staging sct-staging
+
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
         id: rollbar_post_deploy
@@ -110,6 +117,7 @@ jobs:
     if: success() && github.ref == 'refs/heads/research'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+      TF_VAR_cloudfoundry_space: "sct-research"
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
@@ -131,6 +139,7 @@ jobs:
     if: success() && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
+      TF_VAR_cloudfoundry_space: "sct-production"
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
@@ -152,19 +161,15 @@ jobs:
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
-      - name: Deploy terraform to prod
+      - name: Deploy terraform to prod & Map www route & connect to clamav-rest
         env:
           TF_VAR_environment: 'prod'
-        run: script/deploy-terraform
-
-      - name: Map www route
         run: |
-          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-          sudo apt-get update
-          sudo apt-get install cf7-cli
-          cf login -u $CF_USER -p $CF_PASSWORD -a api.london.cloud.service.gov.uk -s sct-production
+          script/install-cf
+          script/cf-login
+          script/deploy-terraform
           cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
+          script/create-network-policy production buy-for-your-school-prod sct-production
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1

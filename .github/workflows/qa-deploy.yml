@@ -14,6 +14,7 @@ env:
   GHCR_REPO: 'ghcr.io/dfe-digital/buy-for-your-school'
   CF_USER: ${{ secrets.CF_USER }}
   CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -61,7 +62,6 @@ jobs:
       TF_VAR_environment: "qa-${{ github.event.number }}"
       TF_VAR_cloudfoundry_space: "sct-preview"
       TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"
-      CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -92,14 +92,13 @@ jobs:
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
-      - name: Deploy QA app
-        run: script/deploy-terraform
-
-      - name: Map static route
+      - name: Deploy QA app & Map static route & Link to clamav-rest
         run: |
           script/install-cf
           script/cf-login
+          script/deploy-terraform
           script/qa/map-static-route
+          script/create-network-policy pre-prod $CF_APP_NAME sct-staging
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
