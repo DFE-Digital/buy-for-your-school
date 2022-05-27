@@ -126,7 +126,4 @@ jobs:
 
       - name: Run seeding
         if: ${{ github.event.action != 'synchronize' }}
-        run: |
-          script/install-cf
-          script/cf-login
-          script/qa/seed
+        run: script/qa/seed

@@ -65,6 +65,7 @@ jobs:
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
       TF_VAR_cloudfoundry_space: "sct-staging"
+      TF_VAR_environment: 'staging'
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
@@ -74,6 +75,11 @@ jobs:
         uses: hashicorp/setup-terraform@v1.3.2
         with:
           terraform_version: 0.14.7
+
+      - name: Cloudfoundry login
+        run: |
+          script/install-cf
+          script/cf-login
 
       - name: Notify start deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
@@ -86,14 +92,11 @@ jobs:
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
-      - name: Deploy terraform to staging & Link to clamav-rest
-        env:
-          TF_VAR_environment: 'staging'
-        run: |
-          script/install-cf
-          script/cf-login
-          script/deploy-terraform
-          script/clamav-rest/create-network-policy pre-prod buy-for-your-school-staging sct-staging
+      - name: Deploy
+        run: script/deploy-terraform
+
+      - name: Link to clamav-rest
+        run: script/clamav-rest/create-network-policy pre-prod buy-for-your-school-staging sct-staging
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
@@ -138,6 +141,7 @@ jobs:
     env:
       TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
       TF_VAR_cloudfoundry_space: "sct-production"
+      TF_VAR_environment: 'prod'
       GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
     steps:
       - name: Check out code
@@ -147,6 +151,11 @@ jobs:
         uses: hashicorp/setup-terraform@v1.3.2
         with:
           terraform_version: 0.14.7
+
+      - name: Cloudfoundry login
+        run: |
+          script/install-cf
+          script/cf-login
 
       - name: Notify start deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
@@ -159,15 +168,14 @@ jobs:
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 
-      - name: Deploy terraform to prod & Map www route & connect to clamav-rest
-        env:
-          TF_VAR_environment: 'prod'
-        run: |
-          script/install-cf
-          script/cf-login
-          script/deploy-terraform
-          cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
-          cript/clamav-rest/create-network-policy production buy-for-your-school-prod sct-production
+      - name: Deploy
+        run: script/deploy-terraform
+
+      - name: Map route
+        run: cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
+
+      - name: Connect to clamav-rest
+        run: script/clamav-rest/create-network-policy production buy-for-your-school-prod sct-production
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
