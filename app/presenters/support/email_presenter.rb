@@ -109,16 +109,6 @@ module Support
       html.xpath("//body/node()").to_html
     end
 
-    def body_with_quotes_condensed(_view_context, cleaned_body = body)
-      html = Nokogiri::HTML(cleaned_body)
-
-      # div.gmail_quote for gmail
-      # hr tabindex -1 for some outlook
-      #
-
-      html.xpath("//body/node()").to_html
-    end
-
     def date_format
       I18n.t("support.case.label.messages.table.date_format")
     end

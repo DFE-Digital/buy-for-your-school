@@ -23,7 +23,7 @@ module Support
   private
 
     def case_email_content_form_params
-      params.require(:case_email_content_form).permit(:email_body, :email_subject, :email_template, :text)
+      params.require(:case_email_content_form).permit(:email_body, :email_subject, :email_template)
     end
 
     # @return [Dry::Validation::Result]
@@ -42,7 +42,6 @@ module Support
         template: email_template_uuid,
         reference: @current_case.ref,
         variables: {
-          text: @case_email_content_form.text,
           from_name: current_agent.full_name,
         },
       ).call

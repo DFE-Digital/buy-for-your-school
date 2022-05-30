@@ -22,7 +22,6 @@
   <%= form.hidden_field :email_body, value: form.object.email_body %>
   <%= form.hidden_field :email_subject, value: form.object.email_subject %>
   <%= form.hidden_field :email_template, value: form.object.email_template %>
-  <%= form.hidden_field :text, value: form.object.text %>
 
   <%= form.submit I18n.t("support.case_email_content.preview.submit"), class: "govuk-button", role: "button" %>
 <% end %>
