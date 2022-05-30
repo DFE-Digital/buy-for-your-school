@@ -10,7 +10,7 @@ module Support
       @case_email_content_form = CaseEmailContentForm.new(
         email_body: preview_email_body,
         email_subject: selected_template_preview.subject,
-        email_template: params[:template]
+        email_template: params[:template],
       )
     end
 
