@@ -1,7 +1,7 @@
 <% email = message.email %>
 
 <tr class="govuk-table__row">
-  <th class="govuk-body govuk-!-font-weight-regular govuk-table__header">
+  <td class="govuk-table__cell">
     <strong><%= email.sent_by_name %></strong>
     <br>
     <% if email.inbox? %>
@@ -9,7 +9,7 @@
     <% else %>
       <%= I18n.t("support.case.label.messages.table.caseworker") %>
     <% end %>
-  </th>
+  </td>
   <td class="govuk-table__cell">
     <%= render "support/cases/messages/actions", email: email if email.inbox? %>
     <%= render "support/cases/messages/attachments", email: email %>

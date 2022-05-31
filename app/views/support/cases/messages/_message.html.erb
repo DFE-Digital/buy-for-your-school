@@ -1,5 +1,5 @@
 <tr class="govuk-table__row">
-  <th class="govuk-body govuk-!-font-weight-regular govuk-table__header">
+  <td class="govuk-table__cell govuk-!-margin-right-2">
     <strong><%= message.agent&.full_name %></strong>
     <br>
     <% if message.email_to_school? %>
@@ -19,7 +19,7 @@
     <% unless message.notify_email? %>
       <%= I18n.t("support.case.label.messages.table.logged") %>
     <% end %>
-  </th>
+  </td>
   <td class="govuk-table__cell">
     <% if message.notify_email? %>
      <%= message.body.html_safe %>
