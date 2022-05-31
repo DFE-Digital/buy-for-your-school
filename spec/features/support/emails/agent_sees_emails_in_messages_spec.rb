@@ -57,7 +57,7 @@ describe "Agent sees emails in messages" do
       within "#messages" do
         expect(page).to have_content("Catering requirements")
         expect(page).to have_content(email.sent_at.strftime("%e %B %Y"))
-        expect(page).to have_content("Sender 1")
+        expect(page).to have_content("GHBS")
         expect(page).to have_content("Caseworker")
       end
     end
