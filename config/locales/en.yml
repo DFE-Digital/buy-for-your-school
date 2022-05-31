@@ -434,9 +434,9 @@ en:
             add_attachments: Add attachments
             attachments_added: Attachments added
             body: Your message
+            edit_header: Edit reply
             send: Send reply
             summary_text: Reply to message
-            edit_header: Edit reply
             warning: Warning
             warning_body: You must upload your attachments again
           table:
