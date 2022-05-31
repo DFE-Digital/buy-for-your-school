@@ -7,7 +7,7 @@ module Support
             def self.call(message, email)
               support_case = email.case
 
-              support_case.update!(action_required: true)
+              support_case.update!(action_required: true) if message.inbox?
 
               ::Support::Messages::Outlook::SurfaceEmailOnCase.call(MessageEmailAdapter.new(message, email))
             end

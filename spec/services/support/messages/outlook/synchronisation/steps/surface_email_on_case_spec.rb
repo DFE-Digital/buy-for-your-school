@@ -37,5 +37,11 @@ describe Support::Messages::Outlook::Synchronisation::Steps::SurfaceEmailOnCase 
 
       expect(support_case.reload.interactions.last.event_type).to eq("email_to_school")
     end
+
+    it "does not set the case to action required" do
+      described_class.call(message, email)
+
+      expect(support_case.reload.action_required).not_to be(true)
+    end
   end
 end
