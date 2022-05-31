@@ -95,6 +95,22 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
   end
 
+  create_table "flipper_features", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
+  end
+
   create_table "framework_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -331,17 +347,20 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.string "outlook_conversation_id"
     t.uuid "case_id"
     t.datetime "sent_at"
-    t.datetime "received_at"
-    t.datetime "read_at"
+    t.datetime "outlook_received_at"
+    t.datetime "outlook_read_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "outlook_id"
     t.boolean "outlook_is_read", default: false
-    t.boolean "is_draft", default: false
-    t.boolean "has_attachments", default: false
-    t.text "body_preview"
+    t.boolean "outlook_is_draft", default: false
+    t.boolean "outlook_has_attachments", default: false
     t.integer "folder"
     t.boolean "is_read", default: false
+    t.uuid "replying_to_id"
+    t.string "case_reference_from_headers"
+    t.string "outlook_internet_message_id"
+    t.index ["replying_to_id"], name: "index_support_emails_on_replying_to_id"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -530,6 +549,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "support_emails", "support_emails", column: "replying_to_id"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 

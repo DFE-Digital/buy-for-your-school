@@ -15,7 +15,19 @@ module Support
       dt
       dd
       em
+      details
+      summary
+      span
+      div
       blockquote
+      font
+      table
+      td
+      tr
+      th
+      tbody
+      thead
+      tfooter
     ].freeze
 
     # @return [String]
@@ -44,7 +56,7 @@ module Support
     end
 
     def sent_at_formatted
-      sent_at.strftime(short_date_time)
+      sent_at.strftime(date_format)
     end
 
     def body_for_display(view_context)
@@ -52,6 +64,9 @@ module Support
       new_body = body_with_links_removed(
         view_context, body_with_inline_attachments(view_context)
       )
+
+      # remove comments
+      new_body = new_body.gsub(/(<!--.*-->)/m, "")
 
       # Removal all html tags not defined in ALLOWED_HTML_TAGS list
       scrubber = Rails::Html::PermitScrubber.new
@@ -92,6 +107,10 @@ module Support
       end
 
       html.xpath("//body/node()").to_html
+    end
+
+    def date_format
+      I18n.t("support.case.label.messages.table.date_format")
     end
   end
 end

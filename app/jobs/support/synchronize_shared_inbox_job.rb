@@ -5,9 +5,11 @@ module Support
   class SynchronizeSharedInboxJob < ApplicationJob
     queue_as :support
 
+    include Support::Messages::Outlook
+
     def perform
-      IncomingEmails::SharedMailbox.synchronize(emails_since: 4.minutes.ago, folder: :inbox)
-      IncomingEmails::SharedMailbox.synchronize(emails_since: 4.minutes.ago, folder: :sent_items)
+      SynchroniseMailFolder.call(MailFolder.new(messages_after: 15.minutes.ago, folder: :inbox))
+      SynchroniseMailFolder.call(MailFolder.new(messages_after: 15.minutes.ago, folder: :sent_items))
     end
   end
 end

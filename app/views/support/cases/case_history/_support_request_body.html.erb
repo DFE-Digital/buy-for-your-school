@@ -1,0 +1,39 @@
+<% support_request = @current_case.support_request %>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.problem_description") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= support_request.additional_data["message"] %>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.attached_specification") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <% if support_request.case.documents.for_rendering.none? %>
+        <%= I18n.t("support.case.label.attached_specification_none") %>
+      <% end %>
+
+      <% support_request.case.documents.for_rendering.each.with_index(1) do |document, i| %>
+        <%= link_to "specification-#{i} #{I18n.t("support.generic.link.opens_in_new_tab")}",
+              support_case_document_path(support_request.case, document),
+              class: "govuk-link", target: "_blank", rel: "noreferrer noopener" %>
+      <% end %>
+    </dd>
+  </div>
+
+  <% support_request.additional_data.each do |key, value|  %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.additional_data.support_request.#{key}", optional: nil) %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= value.humanize %>
+      </dd>
+    </div>
+  <% end %>
+</dl>

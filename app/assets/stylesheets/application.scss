@@ -9,10 +9,12 @@ $govuk-image-url-function: "image-url";
 @import "components/task-list";
 @import "components/supported/email-preview";
 @import "components/supported/email-list";
+@import "components/supported/messages";
 @import "components/supported/new-case-form";
 @import "components/supported/filter-case-form";
 @import "components/pagination";
 @import "components/panels/info";
+@import "components/tinymce";
 
 .debug_dump {
   background: beige;

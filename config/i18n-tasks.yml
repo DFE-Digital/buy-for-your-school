@@ -116,6 +116,8 @@ ignore_unused:
   - 'support.emails.button.*'
   - 'errors.attributes.response.blank'
   - 'support.case_documents.show.*'
+  - 'support.case.label.messages.table.mark_as_read'
+  - 'support.case.label.messages.table.mark_as_unread'
 
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:

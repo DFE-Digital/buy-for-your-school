@@ -53,6 +53,23 @@ module Support
         .map { |i| InteractionPresenter.new(i) }
     end
 
+    # return message interactions
+    # @return [Array<InteractionPresenter>]
+    def message_interactions
+      # byebug
+      @message_interactions ||= __getobj__.interactions.messages
+        .order("created_at ASC")
+        .map { |i| InteractionPresenter.new(i) }
+    end
+
+    # return case history interactions
+    # @return [Array<InteractionPresenter>]
+    def case_history_interactions
+      @case_history_interactions ||= __getobj__.interactions.case_history
+        .order("created_at ASC")
+        .map { |i| InteractionPresenter.new(i) }
+    end
+
     # return single interaction of support_request event_type
     # @return [nil, InteractionPresenter]
     def support_request

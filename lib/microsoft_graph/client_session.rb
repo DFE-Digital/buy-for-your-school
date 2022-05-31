@@ -10,44 +10,47 @@ module MicrosoftGraph
     end
 
     def graph_api_get(path)
-      paginated_request(:get, path)
+      paginated_request(:get, api_path(path))
     end
 
-    def graph_api_post(path, body)
-      paginated_request(:post, path, body)
+    def graph_api_post(path, body, headers = {})
+      enact_request(:post, api_path(path), body, headers)
     end
 
-    def graph_api_patch(path, body)
-      paginated_request(:patch, path, body)
+    def graph_api_patch(path, body, headers = {})
+      enact_request(:patch, api_path(path), body, headers)
     end
 
   private
 
-    def paginated_request(http_verb, initial_path, body = {})
-      request_url = "https://graph.microsoft.com/v1.0/#{initial_path}"
-      overral_response = { "value" => [] }
+    def api_path(path)
+      "https://graph.microsoft.com/v1.0/#{path}"
+    end
 
-      loop do
-        json = handle_api_response(
-          HTTParty.send(
-            http_verb,
-            request_url,
-            body: body,
-            headers: { authorization: "Bearer #{access_token}" },
-          ),
-        )
+    def enact_request(http_verb, request_url, body = {}, headers = {})
+      handle_api_response(
+        HTTParty.send(
+          http_verb,
+          request_url,
+          body: body,
+          headers: { authorization: "Bearer #{access_token}" }.merge(headers),
+        ),
+      )
+    end
 
-        overral_response["value"].concat(json["value"])
+    def paginated_request(http_verb, request_url, body = {}, headers = {})
+      Enumerator.new do |yielder|
+        loop do
+          json = enact_request(http_verb, request_url, body, headers)
 
-        if json.key?("@odata.nextLink")
+          json["value"].each { |value| yielder << value }
+
+          break unless json.key?("@odata.nextLink")
+
           request_url = json["@odata.nextLink"]
           body = {}
-        else
-          break
         end
       end
-
-      overral_response
     end
 
     def access_token
@@ -55,16 +58,23 @@ module MicrosoftGraph
     end
 
     def handle_api_response(response)
-      json = JSON.parse(response.body)
       valid_response = response.code.to_s[0] == "2"
 
-      if valid_response
-        json
+      if response.body == ""
+        unless valid_response
+          raise GraphRequestFailedError, "Status Code: #{response.code}"
+        end
       else
-        error_code = json.dig("error", "code")
-        error_message = json.dig("error", "message")
+        json = JSON.parse(response.body)
 
-        raise GraphRequestFailedError, "Code: #{error_code}, Message: #{error_message}"
+        if valid_response
+          json
+        else
+          error_code = json.dig("error", "code")
+          error_message = json.dig("error", "message")
+
+          raise GraphRequestFailedError, "Code: #{error_code}, Message: #{error_message}"
+        end
       end
     end
   end
