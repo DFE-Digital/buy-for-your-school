@@ -175,7 +175,7 @@ jobs:
         run: cf map-route buy-for-your-school-prod get-help-buying-for-schools.service.gov.uk --hostname www
 
       - name: Connect to clamav-rest
-        run: script/clamav-rest/create-network-policy production buy-for-your-school-prod sct-production
+        run: script/clamav-rest/create-network-policy prod buy-for-your-school-prod sct-production
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1

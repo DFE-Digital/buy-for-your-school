@@ -42,7 +42,7 @@ describe "Agent can reply to incoming emails" do
         click_link "Messages"
 
         within("#messages") do
-          expect(page).to have_text "Caseworker Caseworker"
+          expect(page).to have_text "GHBS Caseworker"
           expect(page).to have_text "This is a test reply"
         end
       end
