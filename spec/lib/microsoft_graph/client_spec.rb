@@ -174,6 +174,35 @@ describe MicrosoftGraph::Client do
     end
   end
 
+  describe "#create_message" do
+    let(:http_headers) { { "headers" => "here" } }
+    let(:graph_api_response) { { "id" => "NEW_DRAFT_MESSAGE_ID" } }
+    let(:message) { double("message") }
+
+    before do
+      allow(client_session).to receive(:graph_api_post)
+        .and_return(graph_api_response)
+
+      allow(MicrosoftGraph::Transformer::Message).to receive(:transform)
+        .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
+        .and_return(message)
+    end
+
+    it "makes a post request to the API" do
+      client.create_message(user_id: user_id, http_headers: http_headers)
+
+      expect(client_session).to have_received(:graph_api_post).with(
+        "users/#{user_id}/messages",
+        nil,
+        http_headers,
+      )
+    end
+
+    it "returns the draft message from the api response" do
+      expect(client.create_message(user_id: user_id, http_headers: http_headers)).to eq(message)
+    end
+  end
+
   describe "#update_message" do
     let(:message_id) { "MESSAGE_ID" }
     let(:http_headers) { { "headers" => "here" } }
