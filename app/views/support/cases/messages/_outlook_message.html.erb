@@ -2,7 +2,13 @@
 
 <tr class="govuk-table__row">
   <td class="govuk-table__cell">
-    <strong><%= email.sent_by_name %></strong>
+    <strong>
+      <% if email.inbox? %>
+        <%= email.sent_by_name %>
+      <% else %>
+        <%= I18n.t("support.case.label.messages.table.ghbs") %>
+      <% end %>
+    </strong>
     <br>
     <% if email.inbox? %>
       <%= I18n.t("support.case.label.messages.table.from_school") %>

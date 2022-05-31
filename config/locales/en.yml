@@ -445,6 +445,7 @@ en:
             date: Date
             date_format: "%d %B %Y %H:%M"
             from_school: from School
+            ghbs: GHBS
             logged: "(logged)"
             mark_as_read: Mark as read
             mark_as_unread: Mark as unread
