@@ -13,6 +13,11 @@ namespace :case_management do
     Support::SeedCategories.new.call
   end
 
+  desc "Populate the queries tables"
+  task seed_queries: :environment do
+    Support::SeedQueries.new.call
+  end
+
   desc "Populate supported group types for establishments"
   task seed_group_types: :environment do
     Support::SeedGroupTypes.new.call
