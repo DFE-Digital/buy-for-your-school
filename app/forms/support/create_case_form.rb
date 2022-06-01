@@ -15,7 +15,10 @@ module Support
     option :phone_number, optional: true
     option :extension_number, optional: true
     option :category_id, optional: true
+    option :query_id, optional: true
     option :request_type, Types::ConfirmationField, optional: true
+    option :other_category, optional: true
+    option :other_query, optional: true
     option :source, optional: true
     option :request_text, optional: true
 

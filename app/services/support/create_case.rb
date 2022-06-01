@@ -26,6 +26,9 @@ module Support
         existing_contract: ExistingContract.create!,
         procurement: Procurement.create!,
         **organisation_attributes,
+        other_category: @attrs[:other_category],
+        other_query: @attrs[:other_query],
+        query_id: @attrs[:query_id],
       )
 
       Support::RecordAction.new(

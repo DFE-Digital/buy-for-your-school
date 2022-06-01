@@ -53,17 +53,34 @@
         <%= current_case.received_at %>
       </dd>
     </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case.label.category") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= current_case.category.title %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%= link_to I18n.t("support.case.link.edit_category"), edit_support_case_categorisation_path(current_case), class: "govuk-link" %>
-      </dd>
-    </div>
+
+    <% if current_case.category.present? %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.category") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.category.title %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("support.case.link.edit_category"), edit_support_case_categorisation_path(current_case), class: "govuk-link" %>
+        </dd>
+      </div>
+    <% end %>
+
+    <% if current_case.query.present? %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.query") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.query.title %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("support.case.link.edit_category"), edit_support_case_categorisation_path(current_case), class: "govuk-link" %>
+        </dd>
+      </div>
+    <% end %>
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">

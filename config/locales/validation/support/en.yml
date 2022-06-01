@@ -9,6 +9,7 @@ en:
       text: "" # Omitted
       email_subject: "" # Omitted
       category_id: "" # Omitted
+      query_id: ""  # Omitted
       organisation_id: "" # Omitted
       organisation_formatted_name: "" # Omitted
       merge_into_case_ref: "" # Omitted
@@ -67,6 +68,9 @@ en:
       school_urn: "" # Omitted
       request_type: "" # Omitted
       category_id: "" # Omitted
+      query_id: ""  # Omitted
+      other_category: "" # Omitted
+      other_query: "" # Omitted
       first_name: "" # Omitted
       last_name: "" # Omitted
       email: "" # Omitted
@@ -105,6 +109,12 @@ en:
           format?: must follow the format of DD/MM/YYYY
         category_id:
           missing: Please select a procurement category
+        query_id:
+          missing: Please select a query category  
+        other_category:
+          missing: Enter the procurement category
+        other_query:
+          missing: Enter the type of query 
 
         organisation_id:
           missing: Please select an organisation or group

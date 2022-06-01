@@ -83,12 +83,15 @@ module Support
         :phone_number,
         :extension_number,
         :category_id,
+        :query_id,
         :estimated_procurement_completion_date,
         :estimated_savings,
         :progress_notes,
         :request_type,
         :source,
         :request_text,
+        :other_category,
+        :other_query,
       )
     end
 

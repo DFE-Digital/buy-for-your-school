@@ -19,6 +19,9 @@ module Support
       optional(:phone_number).value(:string)
       optional(:extension_number).value(:string)
       optional(:category_id).value(:string)
+      optional(:query_id).value(:string)
+      optional(:other_category).value(:string)
+      optional(:other_query).value(:string)
     end
 
     rule(:organisation_name) do
@@ -41,8 +44,24 @@ module Support
     # TODO: custom macro for phone number validation
     rule(:phone_number).validate(max_size?: 13, format?: /^$|^(0|\+?44)[12378]\d{8,9}$/)
 
+    rule(:request_type) do
+      key.failure(:missing) if value.nil? # can't do blank as false value
+    end
+
     rule(:category_id) do
-      key.failure(:missing) if values[:request_type].presence && value.blank?
+      key.failure(:missing) if values[:request_type] == true && value.blank?
+    end
+
+    rule(:query_id) do
+      key.failure(:missing) if values[:request_type] == false && value.blank?
+    end
+
+    rule(:other_category) do
+      key.failure(:missing) if values[:category_id] == "5c8a01e6-8a21-4329-947e-1ec1043c0229" && value.blank?
+    end
+
+    rule(:other_query) do
+      key.failure(:missing) if values[:query_id] == "5477cbf4-f208-4ee7-88b4-0962da6b4ffe" && value.blank?
     end
 
     rule(:source) do

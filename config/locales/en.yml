@@ -447,6 +447,7 @@ en:
           savings_status: Status
           start_date: Start date
           supplier: Supplier
+        query: Query  
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
@@ -686,10 +687,17 @@ en:
         last_name: Contact last name
         message: Message
         name: Contact name
+        non_procurement: Non-procurement
+        other_category: Other
+        other_query: Other
         organisation_name: Organisation name
         phone_number: Contact phone number %{optional}
+        procurement: Procurement
+        procurement_category_details: Procurement category details
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
+        query: Query
+        query_details: Query details
         referrer: Referrer
         request_text: Summary
         school_name: Organisation name
@@ -697,8 +705,8 @@ en:
         school_ukprn: Organisation UKPRN
         school_urn: Organisation URN
         source: Source
+        type: Type
       request_type:
-        hint: Is the request related to a procurement category?
         legend: Request type
       submit: Save and continue
     case_merge_emails:
