@@ -2,10 +2,11 @@ module Support
   module Messages
     module Outlook
       class SendNewMessage
-        def initialize(message_text:, recipient:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
+        def initialize(message_text:, recipient:, subject:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
           @ms_graph_client = ms_graph_client
           @message_text = message_text
           @recipient = recipient
+          @subject = subject
           @sender = sender
           @file_attachments = file_attachments
         end
@@ -22,22 +23,26 @@ module Support
         attr_reader :ms_graph_client, :message_text, :recipient, :sender, :file_attachments
 
         def create_draft_message
-          draft_message = ms_graph_client.create_message(
+          ms_graph_client.create_message(
             user_id: SHARED_MAILBOX_USER_ID,
             http_headers: { "Prefer" => 'IdType="ImmutableId"' },
           )
-
-          wrap_message(draft_message)
         end
 
-        def update_message_with_content(draft_message)
+        def update_message_with_content(draft_message_id)
           updated_message = ms_graph_client.update_message(
             user_id: SHARED_MAILBOX_USER_ID,
-            message_id: draft_message.id,
+            message_id: draft_message_id,
             details: {
               body: {
                 "ContentType" => "HTML",
-                "content" => message_body_content(draft_message),
+                "content" => @message_text,
+              },
+              from: {
+                "emailAddress": {
+                  "name" => SHARED_MAILBOX_NAME,
+                  "address" => SHARED_MAILBOX_ADDRESS,
+                },
               },
               toRecipients: [
                 {
@@ -46,6 +51,7 @@ module Support
                   },
                 },
               ],
+              subject: @subject,
             },
           )
 

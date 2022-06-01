@@ -5,7 +5,8 @@ describe Support::Messages::Outlook::SendNewMessage do
     described_class.new(
       ms_graph_client: ms_graph_client,
       recipient: "test@test.com",
-      message_text: "<p>My Reply</p>",
+      subject: "subject",
+      message_text: "<p>Message</p>",
       sender: agent,
       file_attachments: [attachment1, attachment2],
     )
@@ -17,8 +18,8 @@ describe Support::Messages::Outlook::SendNewMessage do
   let(:attachment1)                   { double("attachment1") }
   let(:attachment2)                   { double("attachment2") }
 
-  let(:create_message_response) { double("create_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "Previous content here")) }
-  let(:update_message_response)       { double("update_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "Previous content here")) }
+  let(:create_message_response)       { "DRAFT-OUTLOOK-ID" }
+  let(:update_message_response)       { double("update_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "<p>Message</p>")) }
   let(:send_message_response)         { nil }
 
   before do
@@ -50,8 +51,15 @@ describe Support::Messages::Outlook::SendNewMessage do
         details: {
           body: {
             "ContentType" => "HTML",
-            "content" => "Previous content here",
+            "content" => "<p>Message</p>",
           },
+          from: {
+            emailAddress: {
+              "address" => "test@mailbox.com",
+              "name" => "mailbox",
+            },
+          },
+          subject: "subject",
           toRecipients: [
             {
               "emailAddress": {

@@ -48,7 +48,7 @@
     <%= render "case_details", current_case: @current_case %>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages">
-    <%= render "messages", messages: @current_case.message_interactions, current_case: @current_case %>
+    <%= render "messages", messages: @current_case.message_interactions, received_messages: @current_case.received_message_interactions, current_case: @current_case %>
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">

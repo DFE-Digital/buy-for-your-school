@@ -17,6 +17,18 @@ module Support
       reply.call
     end
 
+    def create_new_message(recipient, agent, case_reference)
+      message = Support::Messages::Outlook::SendNewMessage.new(
+        recipient: recipient,
+        message_text: body,
+        sender: agent,
+        file_attachments: file_attachments,
+        subject: "Case #{case_reference} – DfE Get help buying for schools: your request for advice and guidance",
+      )
+
+      message.call
+    end
+
   private
 
     def file_attachments

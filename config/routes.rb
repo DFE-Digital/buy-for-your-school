@@ -109,7 +109,7 @@ Rails.application.routes.draw do
             resources :templates, only: %i[index], param: :template
           end
         end
-        resources :messages, module: :messages do
+        resources :messages, module: :messages, only: %i[create] do
           resource :reply, only: %i[create]
         end
       end
