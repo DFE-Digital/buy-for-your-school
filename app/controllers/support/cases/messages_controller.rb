@@ -1,12 +1,12 @@
 module Support
-  class Cases::Messages::MessagesController < Cases::ApplicationController
+  class Cases::MessagesController < Cases::ApplicationController
     before_action :current_email
 
     def create
-      @form = Messages::ReplyForm.from_validation(validation)
+      @reply_form = Messages::ReplyForm.from_validation(validation)
 
       if validation.success?
-        @form.create_new_message(@current_email, current_agent, @current_case.ref)
+        @reply_form.create_new_message(@current_email, current_agent, @current_case.ref)
 
         redirect_to support_case_path(@current_case, anchor: "messages")
       else

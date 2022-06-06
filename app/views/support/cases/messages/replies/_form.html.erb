@@ -1,5 +1,5 @@
 <% unique_id = "A#{SecureRandom.uuid}" %>
-<% url = reply ? support_case_message_reply_path(@current_case, email, unique_id: unique_id) : support_case_messages_path(@current_case, unique_id: unique_id) %>
+<% url = reply ? support_case_message_reply_path(@current_case, email, unique_id: unique_id) : support_case_message_path(@current_case, unique_id: unique_id) %>
 <% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
 
 <%= form_with model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
