@@ -1,6 +1,8 @@
 <% unique_id = "A#{SecureRandom.uuid}" %>
+<% url = reply ? support_case_message_reply_path(@current_case, email, unique_id: unique_id) : support_case_message_path(@current_case, unique_id: unique_id) %>
+<% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
 
-<%= form_with model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: support_case_message_reply_path(@current_case, email, unique_id: unique_id), method: :post  do |form| %>
+<%= form_with model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
   <%= form.govuk_error_summary %>
 
   <%= form.govuk_text_area :body, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
@@ -11,7 +13,7 @@
   %>
 
   <div class="govuk-button-group flex-align-center">
-    <%= form.submit I18n.t("support.case.label.messages.reply.send"), class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
     <%= form.govuk_file_field :attachments,
       multiple: true,
       hidden: true,

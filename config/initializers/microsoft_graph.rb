@@ -16,4 +16,6 @@ if ENV["MS_GRAPH_CLIENT_ID"].present?
   MicrosoftGraph.client = MicrosoftGraph::Client.new(client_session)
 
   SHARED_MAILBOX_USER_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_USER_ID")
+  SHARED_MAILBOX_NAME = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_NAME")
+  SHARED_MAILBOX_ADDRESS = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_ADDRESS")
 end
