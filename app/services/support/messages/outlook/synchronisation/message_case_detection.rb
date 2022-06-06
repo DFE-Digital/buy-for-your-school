@@ -33,7 +33,6 @@ module Support
             return @detected_case_reference if @detected_case_reference.present?
 
             detectors = [
-              CaseDetectors::EmailMessageHeadersDetector,
               CaseDetectors::EmailBodyDetector,
               CaseDetectors::EmailSubjectLineDetector,
               CaseDetectors::EmailConversationDetector,

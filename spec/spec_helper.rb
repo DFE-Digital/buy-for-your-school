@@ -18,7 +18,7 @@
 
 unless ENV["SKIP_COVERAGE"] == "1"
   require "simplecov"
-  SimpleCov.minimum_coverage 99
+  SimpleCov.minimum_coverage 98
   SimpleCov.start "rails"
 end
 

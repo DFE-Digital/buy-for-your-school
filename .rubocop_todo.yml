@@ -32,8 +32,7 @@ RSpec/AnyInstance:
 
 # Offense count: 1
 RSpec/LetSetup:
-  Exclude:
-    - 'spec/features/support/case_attachments/agent_can_save_attachments_to_case_spec.rb'
+  Enabled: false
 
 # Offense count: 50
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
@@ -86,3 +85,11 @@ Style/DateTime:
   Exclude:
     - 'lib/microsoft_graph/transformer/attachment.rb'
     - 'lib/microsoft_graph/transformer/message.rb'
+
+RSpec/SubjectStub:
+  Exclude:
+    - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/services/support/messages/outlook/resync_email_ids_spec.rb'

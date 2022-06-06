@@ -274,4 +274,17 @@ describe MicrosoftGraph::Client do
       )
     end
   end
+
+  describe "#list_messages" do
+    let(:user_id) { "USER_ID" }
+
+    before do
+      allow(client_session).to receive(:graph_api_get)
+    end
+
+    it "calls the GET messages endpoint for a mailbox user" do
+      client.list_messages(user_id)
+      expect(client_session).to have_received(:graph_api_get).with("users/#{user_id}/messages")
+    end
+  end
 end

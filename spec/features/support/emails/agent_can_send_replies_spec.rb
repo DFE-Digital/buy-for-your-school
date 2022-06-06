@@ -49,6 +49,20 @@ describe "Agent can reply to incoming emails" do
     end
   end
 
+  describe "a caseworker must enter a reply body", js: true do
+    before do
+      click_link "Messages"
+
+      find("span", text: "Reply to message").click
+      fill_in_editor "Your message", with: ""
+      click_button "Send reply"
+    end
+
+    it "shows a warning about not sending an empty reply" do
+      expect(page).to have_content("The reply body cannot be blank")
+    end
+  end
+
   context "when there is an email from the caseworker" do
     let(:origin) { :sent_items }
     let(:interaction_type) { :email_to_school }
