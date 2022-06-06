@@ -18,3 +18,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if received_messages.empty? %>
+  <%= render "support/cases/messages/replies/form", reply: false %>
+<% end %>

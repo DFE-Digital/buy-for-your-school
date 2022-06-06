@@ -56,6 +56,18 @@ module MicrosoftGraph
       Transformer::Message.transform(response, into: Resource::Message)
     end
 
+    # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
+    def create_message(user_id:, request_body: {}, http_headers: {})
+      response = client_session.graph_api_post(
+        "users/#{user_id}/messages",
+        request_body.to_json,
+        http_headers.merge(
+          "Content-Type" => "application/json",
+        ),
+      )
+      response["id"]
+    end
+
     # https://docs.microsoft.com/en-us/graph/api/message-post-attachments?view=graph-rest-1.0&tabs=http#example-file-attachment
     def add_file_attachment_to_message(user_id:, message_id:, file_attachment:)
       request_body = {
