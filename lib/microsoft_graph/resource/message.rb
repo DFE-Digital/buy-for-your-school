@@ -14,6 +14,7 @@ module MicrosoftGraph
       option :importance, Types::String
       option :is_draft, Types::Bool
       option :is_read, Types::Bool
+      option :internet_message_headers, Types.Array(Types::Hash)
       option :received_date_time, Types.Instance(DateTime)
       option :sent_date_time, Types.Instance(DateTime)
       option :subject, Types::String

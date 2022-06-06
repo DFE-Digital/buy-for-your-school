@@ -33,11 +33,11 @@ refresh_schools:
     is an expensive operation (10% @ 41k records persisted).
 
 synchronize_shared_inbox:
-  cron: "*/3 * * * *" # every 3 minutes
+  cron: "* * * * *" # every minute
   class: Support::SynchronizeSharedInboxJob
   description: Persist emails from the shared inbox into the database
 
-refresh_schools:
-  cron: 0 4 1 * *
+refresh_establishment_groups:
+  cron: 0 4 1 * * # At 04:00 on day-of-month 1.
   class: Support::RefreshEstablishmentGroupsJob
   description: Update internal EstablishmentGroup records using public data from GIAS.

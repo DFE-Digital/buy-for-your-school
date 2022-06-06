@@ -70,16 +70,12 @@ Rails.application.routes.draw do
   get "support", to: "support/pages#start_page", as: :support_root
 
   namespace :support do
-    if Features.enabled?(:incoming_emails)
-      resources :document_downloads, only: %i[show]
-    end
+    resources :document_downloads, only: %i[show]
     resources :agents, only: %i[create]
-    if Features.enabled?(:incoming_emails)
-      resources :emails, only: %i[index show] do
-        resource :save_attachments, only: %i[new create]
-      end
-      resources :email_read_status, only: %i[update], param: :email_id
+    resources :emails, only: %i[index show] do
+      resource :save_attachments, only: %i[new create]
     end
+    resources :email_read_status, only: %i[update], param: :email_id
     resources :organisations, only: %i[index]
     resources :establishments, only: %i[index]
     resources :establishment_groups, only: %i[index]
@@ -109,10 +105,12 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do
-            resource :type, only: %i[new create]
-            resources :content, only: %i[edit show update], param: :template
+            resources :content, only: %i[show], param: :template
             resources :templates, only: %i[index], param: :template
           end
+        end
+        resources :messages, module: :messages do
+          resource :reply, only: %i[create]
         end
       end
     end
@@ -126,6 +124,15 @@ Rails.application.routes.draw do
     require "sidekiq/web"
     mount Sidekiq::Web, at: "/sidekiq"
   end
+
+  flipper_app = Flipper::UI.app do |builder|
+    if Rails.env.production?
+      builder.use Rack::Auth::Basic do |username, password|
+        username == ENV["FLIPPER_USERNAME"] && password == ENV["FLIPPER_PASSWORD"]
+      end
+    end
+  end
+  mount flipper_app, at: "/flipper"
 
   #
   # Common ---------------------------------------------------------------------
