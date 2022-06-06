@@ -1,5 +1,5 @@
 module Support
-  class Cases::ApplicationController < ApplicationController
+  class Cases::ApplicationController < ::Support::ApplicationController
     before_action :current_case
 
   private

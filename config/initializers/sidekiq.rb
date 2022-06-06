@@ -11,7 +11,3 @@ end
 Sidekiq.configure_client do |config|
   config.redis = { url: "#{ENV['REDIS_URL']}/0" }
 end
-
-if !Features.enabled?(:incoming_emails) && ENV["REDIS_URL"].present?
-  Sidekiq::Cron::Job.destroy("synchronize_shared_inbox")
-end

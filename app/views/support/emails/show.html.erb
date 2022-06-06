@@ -1,7 +1,7 @@
 <a href="#" data-close-tab-link class="govuk-back-link">Close</a>
 
 <h1 class="govuk-heading-l flex-align-center">
-  <%= I18n.t("support.emails.show.header") %>
+  <span class="govuk-!-margin-right-2"><%= I18n.t("support.emails.show.header") %></span>
 
   <% unless @email.is_read? %>
     <%= render "support/cases/emails/unread_badge" %>

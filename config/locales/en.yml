@@ -387,6 +387,7 @@ en:
         case_attachments: Attachments
         case_detail: Case details
         case_history: Case history
+        messages: Messages
         procurement_detail: Procurement details
         school_detail: School details
       label:
@@ -411,6 +412,12 @@ en:
             date_added: Date added
             description: Description
         case: Case
+        case_history:
+          table:
+            date: Date
+            date_format: "%d %B %Y %H:%M"
+            note: Note
+            type: Type
         case_value: Case value
         category: Category
         change_owner: Change case owner
@@ -422,6 +429,30 @@ en:
         create: Create a new case
         date_received: Date received
         last_updated: Last updated
+        messages:
+          reply:
+            add_attachments: Add attachments
+            attachments_added: Attachments added
+            body: Your message
+            edit_header: Edit reply
+            send_message: Send message
+            send_reply: Send reply
+            summary_text: Reply to message
+            warning: Warning
+            warning_body: You must upload your attachments again
+          table:
+            added_by: Added by
+            caseworker: Caseworker
+            date: Date
+            date_format: "%d %B %Y %H:%M"
+            from_school: from School
+            ghbs: GHBS
+            logged: "(logged)"
+            mark_as_read: Mark as read
+            mark_as_unread: Mark as unread
+            message: Message
+            save_attachments: Save attachments
+            using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
         organisation: Organisation
         organisation_name: Organisation name
@@ -450,7 +481,7 @@ en:
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
-        send_email: Send email
+        send_template_email: Send template email
         source:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
@@ -603,16 +634,9 @@ en:
         email_sender: Sender
         header: Your specification
     case_email_content:
-      edit:
-        email_body:
-          label: Enter email body
-        header:
-          non_template: Send non-template email
-        submit: Preview email
       preview:
         header: Preview email
         subject:
-          default_value: 'DfE Get help buying for schools: your request for support'
           label: Subject
         submit: Confirm and send email
         to:
@@ -642,13 +666,6 @@ en:
         what_is_a_framework:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
-    case_email_type:
-      choices:
-        non_template: Non-template
-        template: Template
-      header: Send email
-      legend: Type of email
-      submit: Save
     case_hub_migration:
       edit:
         header: Check your answers before creating a new case
@@ -817,7 +834,6 @@ en:
       button:
         mark_as_read: Mark as read
         mark_as_unread: Mark as unread
-      header_link: Notifications
       index:
         header: Notifications
         table:
@@ -856,6 +872,7 @@ en:
         contact_detail: Contact details
         contact_detail_hint: Add details of the phone call or copy and paste the email here
         created_by: Created by
+        email_read: Read
         email_sender: Sender
         email_unread: Unread
       link_to_email_preview: Open email preview in new tab

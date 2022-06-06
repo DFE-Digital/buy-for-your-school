@@ -25,36 +25,20 @@ RSpec.feature "Support request case history", bullet: :skip do
     visit "/support/cases/#{support_case.id}#case-history"
   end
 
-  describe "first event" do
-    specify "heading" do
-      within "#case-history" do
-        expect(find_all("h2.govuk-accordion__section-heading")[1]).to have_text "Request for support"
-      end
-    end
-
-    specify "timestamp" do
-      within "#case-history" do
-        expect(find_all("div.govuk-accordion__section-summary")[1]).to have_text "20 March 2021 at 12:00"
+  context "when case is a result of a request for support" do
+    it "displays request for support as first time in the case history" do
+      within "#case-history #case-history-table tbody:last-child" do
+        expect(page).to have_text "Request for support"
+        expect(page).to have_text "20 March 2021 12:00"
       end
     end
 
     context "when no specification is attached" do
       specify do
-        within "#case-history" do
-          expect(find_all("dt.govuk-summary-list__key")[3]).to have_text "Attached specification"
-          expect(find_all("dd.govuk-summary-list__value")[3]).to have_text "None"
+        within "#case-history #case-history-table tbody:last-child" do
+          expect(page).to have_text "Attached specification"
+          expect(page).to have_text "None"
         end
-      end
-    end
-  end
-
-  describe "email interaction" do
-    specify do
-      within "#case-history" do
-        expect(find_all("dd.govuk-summary-list__value")[1]).to have_link_to_open_in_new_tab("Open email preview in new tab")
-
-        click_link "Open email preview in new tab"
-        expect(page).to have_current_path "/support/cases/#{support_case.id}/interactions/#{support_case.interactions.email_to_school.first.id}"
       end
     end
   end
@@ -67,7 +51,7 @@ RSpec.feature "Support request case history", bullet: :skip do
 
     specify do
       within "#case-history" do
-        expect(find_all("h2.govuk-accordion__section-heading")[0]).to have_text "Case note"
+        expect(page).to have_text "Case note"
       end
     end
   end

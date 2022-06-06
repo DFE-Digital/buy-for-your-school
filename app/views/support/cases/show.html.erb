@@ -1,3 +1,7 @@
+<% content_for :title do %>
+  Buy for your school | Case <%= @current_case.ref %>
+<% end %>
+
 <h1 class="govuk-heading-l">
   <%= @current_case.organisation_name %>
 </h1>
@@ -22,6 +26,11 @@
       </a>
     </li>
     <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#messages">
+        <%= I18n.t("support.case.header.messages") %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#case-history">
         <%= I18n.t("support.case.header.case_history") %>
       </a>
@@ -38,17 +47,12 @@
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
     <%= render "case_details", current_case: @current_case %>
   </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages">
+    <%= render "messages", messages: @current_case.message_interactions, received_messages: @current_case.received_message_interactions, current_case: @current_case %>
+  </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
-    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-case-history">
-      <%= render partial: "support/cases/case_history/interaction", collection: @current_case.interactions, locals: { current_case: @current_case } %>
-
-      <%# Only cases from Specify are initiated by a support request %>
-      <% if @current_case.support_request.present? %>
-        <%= render "support/cases/case_history/support_request", support_request: @current_case.support_request %>
-      <% end %>
-
-    </div>
+    <%= render "case_history", interactions: @current_case.case_history_interactions, current_case: @current_case %>
   </div>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-attachments">

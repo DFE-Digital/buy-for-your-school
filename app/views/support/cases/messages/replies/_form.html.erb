@@ -1,0 +1,39 @@
+<% unique_id = "A#{SecureRandom.uuid}" %>
+<% url = reply ? support_case_message_replies_path(@current_case, email, unique_id: unique_id) : support_case_messages_path(@current_case, unique_id: unique_id) %>
+<% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
+
+<%= form_with model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_text_area :body, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
+    value: (render "support/cases/messages/reply_form_template"),
+    "data-component" => "tinymce",
+    "data-tinymce-profile" => "basic",
+    "data-tinymce-selector" => ".message-reply-box"
+  %>
+
+  <div class="govuk-button-group flex-align-center">
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
+    <%= form.govuk_file_field :attachments,
+      multiple: true,
+      hidden: true,
+      label: { text: I18n.t("support.case.label.messages.reply.add_attachments"), class: "govuk-button govuk-button--secondary" },
+      form_group: { class: "not-form-group-to-flex-align" },
+      "data-component" => "display-attachments",
+      "data-display-attachments-id" => unique_id
+    %>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div id="<%= unique_id %>" hidden="true">
+        <table class="govuk-table added_attachments_table">
+          <caption class="govuk-table__caption govuk-table__caption--s govuk-!-padding-bottom-2"><%= I18n.t("support.case.label.messages.reply.attachments_added") %></caption>
+          <tbody class="govuk-table__body">
+            <% # to be populated by javascript %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

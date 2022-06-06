@@ -66,7 +66,7 @@ module Support
     end
 
     def notify_email?
-      event_type == "email_to_school" && !additional_data.key?("email_id")
+      event_type == "email_to_school" && additional_data.key?("email_template")
     end
 
     def email
@@ -79,9 +79,9 @@ module Support
 
   private
 
-    # @return [String] 20 March 2021 at 12:00
+    # @return [String] 20 March 2021 12:00
     def date_format
-      I18n.t("support.case.date_format")
+      I18n.t("support.case.label.case_history.table.date_format")
     end
 
     # @example

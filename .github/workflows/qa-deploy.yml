@@ -14,6 +14,7 @@ env:
   GHCR_REPO: 'ghcr.io/dfe-digital/buy-for-your-school'
   CF_USER: ${{ secrets.CF_USER }}
   CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -61,7 +62,6 @@ jobs:
       TF_VAR_environment: "qa-${{ github.event.number }}"
       TF_VAR_cloudfoundry_space: "sct-preview"
       TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"
-      CF_APP_NAME: "buy-for-your-school-qa-${{ github.event.number }}"
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -71,10 +71,13 @@ jobs:
         with:
           terraform_version: 0.14.7
 
-      - name: Get Static Route
+      - name: Cloudfoundry login
         run: |
           script/install-cf
-          script/qa/cf-login
+          script/cf-login
+
+      - name: Get Static Route
+        run: |
           STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
           STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
           echo "STATIC_ROUTE=${STATIC_ROUTE}" >> $GITHUB_ENV
@@ -96,10 +99,10 @@ jobs:
         run: script/deploy-terraform
 
       - name: Map static route
-        run: |
-          script/install-cf
-          script/qa/cf-login
-          script/qa/map-static-route
+        run: script/qa/map-static-route
+
+      - name: Connect to clamav-rest
+        run: script/clamav-rest/create-network-policy pre-prod $CF_APP_NAME sct-staging
 
       - name: Notify finish deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.1
@@ -123,7 +126,4 @@ jobs:
 
       - name: Run seeding
         if: ${{ github.event.action != 'synchronize' }}
-        run: |
-          script/install-cf
-          script/qa/cf-login
-          script/qa/seed
+        run: script/qa/seed
