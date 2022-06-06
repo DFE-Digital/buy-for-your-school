@@ -15,7 +15,7 @@ module Support
     end
 
     def create
-      @interaction = Interaction.new(interaction_params)
+      @interaction = InteractionPresenter.new(Interaction.new(interaction_params))
       if @interaction.save
         record_action(case_id: @interaction.case.id, action: "add_interaction", data: { event_type: @interaction.event_type })
 
