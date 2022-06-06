@@ -13,10 +13,20 @@ RSpec.describe RequestPresenter do
     end
 
     context "when there is no procurement_amount" do
-      let(:support_request) { build(:support_request, procurement_amount: nil) }
+      context "and the request is not about a procurement" do
+        let(:support_request) { build(:support_request, procurement_amount: nil, about_procurement: false) }
 
-      it "returns a dash" do
-        expect(presenter.procurement_amount).to eq "-"
+        it "returns a dash" do
+          expect(presenter.procurement_amount).to eq "-"
+        end
+      end
+
+      context "and the request is about a procurement" do
+        let(:support_request) { build(:support_request, procurement_amount: nil, about_procurement: true) }
+
+        it "returns 'Not known'" do
+          expect(presenter.procurement_amount).to eq "Not known"
+        end
       end
     end
   end

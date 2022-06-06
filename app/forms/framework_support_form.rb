@@ -94,6 +94,8 @@ class FrameworkSupportForm < RequestForm
   def backward
     if position?(7) && dsi_with_many_orgs?
       go_to!(3)
+    elsif position?(10) && !about_procurement?
+      go_to!(8)
 
     # This breaks the expected convention of going to the previous page but can
     # be used to skip over the "confirm school/group details" page.

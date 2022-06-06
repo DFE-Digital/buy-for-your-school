@@ -14,7 +14,7 @@ en:
           missing: Select whether you know how much is being spent
         procurement_amount:
           missing: Enter the approximate amount that will be spent
-          invalid: The amount value is invalid
+          invalid: Enter a number
           too_large: The amount cannot be larger than 9,999,999.99
         confidence_level:
           missing: Select how confident you feel about running this procurement

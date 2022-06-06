@@ -86,6 +86,8 @@ class SupportForm < RequestForm
       go_to!(2)
     elsif position?(5) && has_journey?
       go_to!(3)
+    elsif position?(8) && !about_procurement?
+      go_to!(6)
     else
       back!
     end

@@ -366,6 +366,7 @@ en:
       heading: Do you know how much the school will be spending on this procurement in total?
       hint: This is the approximate amount you will be spending over the lifetime of the contract.<br><br>This information will help us to make sure you're buying compliantly for the amount you intend to spend.
       how_much: Approximately how much?
+      not_known: Not known
       radios:
         not_about_procurement: My request is not about a procurement
     special_requirements:
