@@ -45,7 +45,7 @@ RSpec.describe RequestFormSchema do
 
         it "raises a validation error" do
           expect(schema.errors.messages.size).to eq 1
-          expect(schema.errors.messages[0].to_s).to eq "The amount value is invalid"
+          expect(schema.errors.messages[0].to_s).to eq "Enter a number"
         end
       end
 
