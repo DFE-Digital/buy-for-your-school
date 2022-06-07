@@ -7,8 +7,6 @@ module Support
             def self.call(message, email)
               email.update!(
                 outlook_id: message.id,
-                case_reference_from_headers: message.case_reference_from_headers,
-                replying_to_id: message.replying_to_email_from_headers,
                 folder: message.inbox? ? :inbox : :sent_items,
                 sender: message.sender,
                 recipients: message.recipients,

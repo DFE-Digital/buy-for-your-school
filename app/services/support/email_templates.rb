@@ -10,10 +10,6 @@ module Support
       exit_survey: "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
     }.freeze
 
-    def self.basic_template?(id)
-      IDS[:basic_template] == id
-    end
-
     def self.label_for(id)
       I18n.t("support.case_email_templates.index.#{EmailTemplates::IDS.key(id) || :unknown}.link_text")
     end

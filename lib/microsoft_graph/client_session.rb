@@ -9,8 +9,12 @@ module MicrosoftGraph
       @authenticator = authenticator
     end
 
-    def graph_api_get(path)
-      paginated_request(:get, api_path(path))
+    def graph_api_get(path, multiple_results: true)
+      if multiple_results
+        paginated_request(:get, api_path(path))
+      else
+        enact_request(:get, api_path(path))
+      end
     end
 
     def graph_api_post(path, body, headers = {})
@@ -40,15 +44,17 @@ module MicrosoftGraph
 
     def paginated_request(http_verb, request_url, body = {}, headers = {})
       Enumerator.new do |yielder|
-        loop do
-          json = enact_request(http_verb, request_url, body, headers)
+        json = enact_request(http_verb, request_url, body, headers)
 
+        loop do
+          # yield values from current page
           json["value"].each { |value| yielder << value }
 
+          # No more pages left, break out of loop
           break unless json.key?("@odata.nextLink")
 
-          request_url = json["@odata.nextLink"]
-          body = {}
+          # Request next page, NOTE: body is not required for subsequent requests
+          json = enact_request(http_verb, json["@odata.nextLink"], {}, headers)
         end
       end
     end

@@ -63,4 +63,11 @@ namespace :case_management do
     file_path = Rails.root.join(args[:file_path])
     Support::SeedFrameworks.new(data: file_path).call
   end
+
+  desc "Re-sync ids of moved messages"
+  task resync_moved_messages: :environment do
+    incoming_email_went_live = Time.zone.parse("01/01/2022 00:00:00")
+    resync_email_ids = Support::Messages::Outlook::ResyncEmailIds.new(messages_updated_after: incoming_email_went_live)
+    resync_email_ids.call
+  end
 end

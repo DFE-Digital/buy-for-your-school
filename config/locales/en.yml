@@ -465,7 +465,8 @@ en:
             attachments_added: Attachments added
             body: Your message
             edit_header: Edit reply
-            send: Send reply
+            send_message: Send message
+            send_reply: Send reply
             summary_text: Reply to message
             warning: Warning
             warning_body: You must upload your attachments again

@@ -37,6 +37,12 @@ module MicrosoftGraph
       Transformer::Message.transform_collection(results, into: Resource::Message)
     end
 
+    # https://docs.microsoft.com/en-us/graph/api/user-list-messages?view=graph-rest-1.0&tabs=http
+    def list_messages(user_id, query: [])
+      client_session.graph_api_get("users/#{user_id}/messages".concat(format_query(query)))
+      # results are not transformed
+    end
+
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
     def mark_message_as_read(user_id, mail_folder, message_ms_id)
       body = { isRead: true }.to_json
@@ -54,6 +60,18 @@ module MicrosoftGraph
     def create_reply_message(user_id:, reply_to_id:, http_headers: {})
       response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReply", nil, http_headers)
       Transformer::Message.transform(response, into: Resource::Message)
+    end
+
+    # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
+    def create_message(user_id:, request_body: {}, http_headers: {})
+      response = client_session.graph_api_post(
+        "users/#{user_id}/messages",
+        request_body.to_json,
+        http_headers.merge(
+          "Content-Type" => "application/json",
+        ),
+      )
+      response["id"]
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-post-attachments?view=graph-rest-1.0&tabs=http#example-file-attachment
