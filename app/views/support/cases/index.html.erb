@@ -33,9 +33,9 @@
                    clear_url: support_cases_path(anchor: "my-cases"),
                    tab: "my-cases" %>
         <% if @my_cases.none? %>
-          <h1 class="govuk-heading-l">
+          <p class="govuk-body">
             <%= I18n.t("support.case.list.not_found") %>
-          </h1>
+          </p>
         <% else %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
@@ -83,9 +83,9 @@
                    clear_url: support_cases_path(anchor: "new-cases"),
                    tab: "new-cases" %>
         <% if @new_cases.none? %>
-          <h1 class="govuk-heading-l">
+          <p class="govuk-body">
             <%= I18n.t("support.case.list.not_found") %>
-          </h1>
+          </p>
         <% else %>
           <table class="govuk-table">
             <thead class="govuk-table__head">
@@ -133,9 +133,9 @@
                    clear_url: support_cases_path(anchor: "all-cases"),
                    tab: "all-cases" %>
         <% if @cases.none? %>
-          <h1 class="govuk-heading-l flexalign__left">
+          <p class="govuk-body">
             <%= I18n.t("support.case.list.not_found") %>
-          </h1>
+          </p>
         <% else %>
           <table class="govuk-table">
             <thead class="govuk-table__head">

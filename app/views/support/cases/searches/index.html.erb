@@ -21,9 +21,9 @@
                search_term: @form.search_term %>
 
     <% if @results.none? %>
-      <h1 class="govuk-heading-l">
+      <p class="govuk-body">
         <%= I18n.t("support.case.list.not_found") %>
-      </h1>
+      </p>
     <% else %>
       <table class="govuk-table">
         <thead class="govuk-table__head">
