@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_21_093823) do
+ActiveRecord::Schema.define(version: 2022_05_17_093315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -93,6 +93,22 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "flipper_features", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
   create_table "framework_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -331,17 +347,20 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
     t.string "outlook_conversation_id"
     t.uuid "case_id"
     t.datetime "sent_at"
-    t.datetime "received_at"
-    t.datetime "read_at"
+    t.datetime "outlook_received_at"
+    t.datetime "outlook_read_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "outlook_id"
     t.boolean "outlook_is_read", default: false
-    t.boolean "is_draft", default: false
-    t.boolean "has_attachments", default: false
-    t.text "body_preview"
+    t.boolean "outlook_is_draft", default: false
+    t.boolean "outlook_has_attachments", default: false
     t.integer "folder"
     t.boolean "is_read", default: false
+    t.uuid "replying_to_id"
+    t.string "case_reference_from_headers"
+    t.string "outlook_internet_message_id"
+    t.index ["replying_to_id"], name: "index_support_emails_on_replying_to_id"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -530,6 +549,7 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "support_emails", "support_emails", column: "replying_to_id"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
@@ -556,24 +576,6 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
        JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
     WHERE (egroups.status <> 2);
   SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
-  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -588,6 +590,8 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
       sc.savings_estimate,
       sc.savings_estimate_method,
       sc.savings_status,
+      sc.support_level AS case_support_level,
+      sc.value AS case_value,
       se.name AS organisation_name,
       se.urn AS organisation_urn,
       se.ukprn AS organisation_ukprn,
@@ -617,8 +621,9 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
       nc.spend AS new_contract_spend,
       nc.supplier AS new_contract_supplier,
       ps.created_at AS participation_survey_date,
-      es.created_at AS exit_survey_date
-     FROM (((((((((support_cases sc
+      es.created_at AS exit_survey_date,
+      sir.referrer
+     FROM ((((((((((support_cases sc
        LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
              FROM support_interactions i
             WHERE (i.case_id = sc.id)
@@ -667,6 +672,29 @@ ActiveRecord::Schema.define(version: 2022_04_21_093823) do
        LEFT JOIN ( SELECT si_1.created_at,
               si_1.case_id
              FROM support_interactions si_1
-            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)));
+            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)))
+       LEFT JOIN ( SELECT (si_1.additional_data ->> 'referrer'::text) AS referrer,
+              si_1.case_id
+             FROM support_interactions si_1
+            WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
 end

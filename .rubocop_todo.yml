@@ -28,22 +28,16 @@ RSpec/AnyInstance:
     - 'spec/services/support/incoming_emails/shared_mailbox_spec.rb'
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
+    - 'spec/services/support/messages/outlook/synchronisation/steps/attach_email_to_case_spec.rb'
+
+# Offense count: 1
+RSpec/LetSetup:
+  Enabled: false
 
 # Offense count: 50
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
-  Exclude:
-    - 'spec/lib/microsoft_graph/client_session_spec.rb'
-    - 'spec/models/support/email_attachment_spec.rb'
-    - 'spec/models/support/email_spec.rb'
-    - 'spec/services/self-serve/content/client_spec.rb'
-    - 'spec/services/self-serve/create_section_spec.rb'
-    - 'spec/services/self-serve/create_task_spec.rb'
-    - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
-    - 'spec/services/self-serve/get_entry_spec.rb'
-    - 'spec/services/support/emails/to_school_spec.rb'
-    - 'spec/services/support/incoming_emails/case_assignment_spec.rb'
-    - 'spec/support/contentful_helpers.rb'
+  Enabled: false
 
 # Offense count: 9
 # Configuration parameters: Database, Include.
@@ -57,6 +51,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220112131559_add_is_inline_to_support_email_attachments.rb'
     - 'db/migrate/20220225175814_change_framework_requests_to_combine_orgs.rb'
     - 'db/migrate/20220310170158_change_closure_reason_to_enum.rb'
+    - 'db/migrate/20220505103423_add_replying_to_id_to_support_emails.rb'
 
 # Offense count: 1
 # Configuration parameters: Include.
@@ -90,3 +85,11 @@ Style/DateTime:
   Exclude:
     - 'lib/microsoft_graph/transformer/attachment.rb'
     - 'lib/microsoft_graph/transformer/message.rb'
+
+RSpec/SubjectStub:
+  Exclude:
+    - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/services/support/messages/outlook/resync_email_ids_spec.rb'

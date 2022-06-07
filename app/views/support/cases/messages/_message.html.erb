@@ -1,0 +1,31 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell govuk-!-margin-right-2">
+    <strong><%= message.agent&.full_name %></strong>
+    <br>
+    <% if message.email_to_school? %>
+      <%= I18n.t("support.case.label.messages.table.caseworker") %>
+    <% elsif message.email_from_school? %>
+      <%= I18n.t("support.case.label.messages.table.from_school") %>
+    <% else %>
+      <%= I18n.t("support.interaction.type.#{message.event_type}") %>
+    <% end %>
+
+    <% if message.additional_data["email_template"].present? %>
+      <div class="govuk-!-margin-top-5">
+        <%= I18n.t("support.case.label.messages.table.using_template", template: message.additional_data["email_template"]) %>
+      </div>
+    <% end %>
+
+    <% unless message.notify_email? %>
+      <%= I18n.t("support.case.label.messages.table.logged") %>
+    <% end %>
+  </td>
+  <td class="govuk-table__cell">
+    <% if message.notify_email? %>
+     <%= message.body.html_safe %>
+    <% else %>
+     <%= simple_format(message.body) %>
+    <% end %>
+  </td>
+  <td class="govuk-table__cell"><%= message.created_at %></td>
+</tr>

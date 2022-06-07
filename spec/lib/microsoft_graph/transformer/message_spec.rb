@@ -11,6 +11,16 @@ describe MicrosoftGraph::Transformer::Message do
         "hasAttachments" => true,
         "id" => "AAMkAGmnprAAA=",
         "internetMessageId" => "<imid_AAMkAGmnprAAA@mail.gmail.com",
+        "internetMessageHeaders" => [
+          {
+            "name" => "CaseReference",
+            "value" => "000123",
+          },
+          {
+            "name" => "OtherHeader",
+            "value" => "OtherValue",
+          },
+        ],
         "importance" => "high",
         "isDraft" => false,
         "isRead" => true,
@@ -38,6 +48,10 @@ describe MicrosoftGraph::Transformer::Message do
       expect(message.has_attachments).to eq(true)
       expect(message.id).to eq("AAMkAGmnprAAA=")
       expect(message.internet_message_id).to eq("<imid_AAMkAGmnprAAA@mail.gmail.com")
+      expect(message.internet_message_headers).to eq([
+        { name: "CaseReference", value: "000123" },
+        { name: "OtherHeader", value: "OtherValue" },
+      ])
       expect(message.importance).to eq("high")
       expect(message.is_draft).to eq(false)
       expect(message.is_read).to eq(true)

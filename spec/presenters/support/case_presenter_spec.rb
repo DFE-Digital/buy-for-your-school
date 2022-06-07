@@ -61,7 +61,7 @@ RSpec.describe Support::CasePresenter do
 
     context "when there is an interaction" do
       it "returns the formatted date for when the interaction was created on the case" do
-        expect(presenter.last_updated_at).to eq("30 June 2020 at 12:00")
+        expect(presenter.last_updated_at).to eq("30 June 2020 12:00")
       end
     end
   end
@@ -172,6 +172,18 @@ RSpec.describe Support::CasePresenter do
         expect(presenter.created_manually?).to eq false
         support_case.faf!
         expect(presenter.created_manually?).to eq false
+      end
+    end
+  end
+
+  describe "#received_message_interactions" do
+    context "when there are emails from the school" do
+      before do
+        create_list(:support_interaction, 2, :email_from_school, case: support_case)
+      end
+
+      it "returns them" do
+        expect(presenter.received_message_interactions.size).to eq 2
       end
     end
   end

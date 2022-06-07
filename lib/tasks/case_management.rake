@@ -57,13 +57,22 @@ namespace :case_management do
 
   desc "Populate shared inbox emails"
   task seed_shared_inbox_emails: :environment do
-    Support::IncomingEmails::SharedMailbox.synchronize(folder: :inbox)
-    Support::IncomingEmails::SharedMailbox.synchronize(folder: :sent_items)
+    include Support::Messages::Outlook
+
+    SynchroniseMailFolder.call(MailFolder.new(messages_after: Time.zone.parse("01/10/2021 00:00:00"), folder: :inbox))
+    SynchroniseMailFolder.call(MailFolder.new(messages_after: Time.zone.parse("01/10/2021 00:00:00"), folder: :sent_items))
   end
 
   desc "Populate frameworks"
   task :seed_frameworks, [:file_path] => :environment do |_t, args|
     file_path = Rails.root.join(args[:file_path])
     Support::SeedFrameworks.new(data: file_path).call
+  end
+
+  desc "Re-sync ids of moved messages"
+  task resync_moved_messages: :environment do
+    incoming_email_went_live = Time.zone.parse("01/01/2022 00:00:00")
+    resync_email_ids = Support::Messages::Outlook::ResyncEmailIds.new(messages_updated_after: incoming_email_went_live)
+    resync_email_ids.call
   end
 end

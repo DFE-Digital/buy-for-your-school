@@ -146,6 +146,7 @@ en:
     rules:
       started_at: Start date of the contract
       ended_at: End date of the contract
+      spend: The spend value
 
     errors:
       rules:
@@ -153,6 +154,8 @@ en:
           before_end_date: must come before the end date
           invalid: is invalid
         ended_at:
+          invalid: is invalid
+        spend:
           invalid: is invalid
 
 
@@ -182,3 +185,16 @@ en:
       rules:
         value:
           decimal?: Enter a number
+
+  message_reply_form:
+    rules:
+      body: ""
+      attachments: ""
+    errors:
+      rules:
+        body:
+          missing: The reply body cannot be blank
+        attachments:
+          infected: One or more of the files you uploaded contained a virus and have been rejected
+          incorrect_file_type: One or more of the files you uploaded was an incorrect file type
+

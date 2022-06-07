@@ -7,15 +7,6 @@ describe "Agent sees a list of emails seperate to cases" do
     click_button "Agent Login"
   end
 
-  context "when the :incoming_emails feature flag is disabled" do
-    before { allow(Features).to receive(:enabled?).with(:incoming_emails).and_return(false) }
-
-    it "does not show the Notifications link to access emails" do
-      visit support_root_path
-      expect(page).not_to have_link("Notifications")
-    end
-  end
-
   context "when there are emails in the system" do
     before do
       create(:support_email, :inbox,
@@ -42,30 +33,30 @@ describe "Agent sees a list of emails seperate to cases" do
     end
 
     specify "then I can see emails from the inbox listed without going to a case" do
-      click_link "Notifications"
+      visit support_emails_path
 
       within "#new-emails" do
         within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
-          expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
+          expect(page).to have_css(".email-sent-at", text: "25 December 2021 12:00")
           expect(page).to have_css(".email-case-ref", text: "012345")
           expect(page).to have_css(".email-sent-by", text: "Sender 1")
         end
 
         within "tr.email-row", text: "Email subject 2 - Not linked to a case" do
-          expect(page).to have_css(".email-sent-at", text: "25-12-2020 15:00")
+          expect(page).to have_css(".email-sent-at", text: "25 December 2020 15:00")
           expect(page).to have_css(".email-sent-by", text: "Sender 2")
         end
       end
     end
 
     specify "then I do not see emails from the sent folder" do
-      click_link "Notifications"
+      visit support_emails_path
 
       expect(page).not_to have_content("RE: Email subject 2")
     end
 
     specify "then I can click on an email to see its body" do
-      click_link "Notifications"
+      visit support_emails_path
 
       within "#new-emails" do
         click_link "Email subject 1"
@@ -110,14 +101,14 @@ describe "Agent sees a list of emails seperate to cases" do
       before { agent.cases << Support::Email.first.case }
 
       specify "then I can see emails for only cases I am assigned to" do
-        click_link "Notifications"
+        visit support_emails_path
         click_link "My Case Emails"
 
         expect(page).to have_css(".my-case-emails-count", text: 1)
 
         within "#my-case-emails" do
           within "tr.email-row", text: "Email subject 1 - Linked to case 012345" do
-            expect(page).to have_css(".email-sent-at", text: "25-12-2021 12:00")
+            expect(page).to have_css(".email-sent-at", text: "25 December 2021 12:00")
             expect(page).to have_css(".email-case-ref", text: "012345")
             expect(page).to have_css(".email-sent-by", text: "Sender 1")
           end
