@@ -2,10 +2,10 @@
   Common methods for request forms
 */
 
-export function getFormId() {
+function getFormId() {
   return document.getElementsByTagName("form")[0].id;
 }
 
-export function getFormIdUnderscore() {
+function getFormIdUnderscore() {
   return getFormId().replaceAll("-", "_");
 }

@@ -2,11 +2,11 @@
   Manage the procurement amount fields in the support/FaF request form
 */
 
-import * as common from "./common.js";
+// import * as common from "../request/common.js";
 
 window.addEventListener("load", () => {
-  const formId = common.getFormId();
-  const formIdUnderscore = common.getFormIdUnderscore();
+  const formId = getFormId();
+  const formIdUnderscore = getFormIdUnderscore();
 
   const procurementChoiceYesRadioButton = document.getElementById(`${formId}-procurement-choice-yes-field`);
   const procurementChoiceNoRadioButton = document.getElementById(`${formId}-procurement-choice-no-field`);
