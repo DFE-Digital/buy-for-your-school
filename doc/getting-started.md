@@ -74,7 +74,7 @@ for chaining together dependency updates, migrations, testing, linting and secur
 **OSX**
 
 - Install [Homebrew](https://brew.sh)
-- Copy `/Brewfile.example` to `/Brewfile` and uncomment any required dependencies like `pandoc`, `basictex` and `graphviz`
+- Copy `/Brewfile.example` to `/Brewfile` and uncomment any required dependencies like `pandoc` and `basictex`
 - Run `$ brew bundle` to install any missing dependencies
 
 ### Development
