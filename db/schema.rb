@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_093315) do
+ActiveRecord::Schema.define(version: 2022_05_25_154235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -286,10 +286,14 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.decimal "value", precision: 9, scale: 2
     t.integer "closure_reason"
     t.string "extension_number"
+    t.string "other_category"
+    t.string "other_query"
+    t.uuid "query_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
     t.index ["procurement_id"], name: "index_support_cases_on_procurement_id"
+    t.index ["query_id"], name: "index_support_cases_on_query_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
     t.index ["status"], name: "index_support_cases_on_status"
@@ -478,6 +482,12 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.index ["stage"], name: "index_support_procurements_on_stage"
   end
 
+  create_table "support_queries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "support_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id"
     t.uuid "journey_id"
@@ -549,6 +559,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
+  add_foreign_key "support_cases", "support_queries", column: "query_id"
   add_foreign_key "support_emails", "support_emails", column: "replying_to_id"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
