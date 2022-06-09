@@ -18,6 +18,10 @@ module Support
     scope :top_level, -> { where(parent_id: nil) }
     scope :ordered_by_title, -> { order(title: :asc) }
 
+    def self.other_category_id
+      find_by(title: "Other")&.id
+    end
+
     def self.grouped_opts
       top_level.includes([:sub_categories]).each_with_object({}) do |category, parent_hash|
         parent_hash[category.title] =

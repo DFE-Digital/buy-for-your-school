@@ -6,6 +6,7 @@ namespace :case_management do
     Support::SeedSchools.new.call
     Support::SeedEstablishmentGroupTypes.new.call
     Support::SeedEstablishmentGroups.new.call
+    Support::SeedQueries.new.call
   end
 
   desc "Populate the categories and sub_categories tables"

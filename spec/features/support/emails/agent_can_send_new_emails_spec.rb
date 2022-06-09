@@ -13,5 +13,30 @@ describe "Agent can send new emails" do
     it "shows the email text box in the messages tab" do
       expect(page).to have_field "Your message"
     end
+
+    describe "sending a message", js: true do
+      before do
+        send_message_service = double("send_message_service")
+
+        allow(send_message_service).to receive(:call) do
+          email = create(:support_email, :sent_items, case: support_case, body: "This is a test message", sender: { name: "Caseworker", address: agent.email })
+          create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: email.id })
+        end
+
+        allow(Support::Messages::Outlook::SendNewMessage).to receive(:new).and_return(send_message_service)
+      end
+
+      it "shows the reply" do
+        click_link "Messages"
+        fill_in_editor "Your message", with: "This is a test message"
+        click_button "Send message"
+        click_link "Messages"
+
+        within("#messages") do
+          expect(page).to have_text "GHBS Caseworker"
+          expect(page).to have_text "This is a test message"
+        end
+      end
+    end
   end
 end

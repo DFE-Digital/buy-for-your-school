@@ -10,5 +10,9 @@ module Support
     validates :title, presence: true
 
     scope :ordered_by_title, -> { order(title: :asc) }
+
+    def self.other_query_id
+      find_by(title: "Other")&.id
+    end
   end
 end

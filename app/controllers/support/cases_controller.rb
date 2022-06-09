@@ -1,5 +1,5 @@
 module Support
-  class CasesController < Cases::ApplicationController
+  class CasesController < ApplicationController
     require "will_paginate/array"
     before_action :filter_forms, only: %i[index]
     before_action :reply_form, only: %i[show]
@@ -36,9 +36,12 @@ module Support
 
     def create
       @form = CreateCaseForm.from_validation(validation)
+
       if validation.success? && params[:button] == "create"
-        kase = CreateCase.new(@form.to_h).call
+        kase = @form.create_case
+
         create_interaction(kase.id, "create_case", "Case created", @form.to_h.slice(:source, :category))
+
         redirect_to support_case_path(kase)
       else
         render :new
@@ -66,6 +69,11 @@ module Support
     # @return [CasePresenter, nil]
     def current_case
       @current_case ||= CasePresenter.new(Case.find_by(id: params[:id]))
+    end
+
+    # @return [AgentPresenter, nil]
+    def current_agent
+      AgentPresenter.new(super) if super
     end
 
     def validation

@@ -2,6 +2,9 @@ RSpec.feature "Create case", js: true do
   include_context "with an agent"
 
   before do
+    define_basic_categories
+    define_basic_queries
+
     create(:support_category, :with_sub_category)
     create(:support_organisation, name: "Hillside School", urn: "000001")
 
@@ -19,18 +22,6 @@ RSpec.feature "Create case", js: true do
     expect(find("h1.govuk-heading-l")).to have_text "Create a new case"
   end
 
-  context "when not selecting an organisation" do
-    it "validates the school urn" do
-      valid_form_data_without_organisation
-
-      click_on "Save and continue"
-
-      within "div.govuk-error-summary" do
-        expect(page).to have_text "Please select an organisation"
-      end
-    end
-  end
-
   context "with valid data" do
     it "previews a complete form with valid data" do
       valid_form_data
@@ -39,7 +30,6 @@ RSpec.feature "Create case", js: true do
 
       expect(page).to have_current_path "/support/cases/preview"
       expect(find("h1.govuk-heading-l")).to have_text "Check your answers before creating a new case"
-      expect(find("#changeCategory").sibling("dd")).to have_text "Not applicable"
     end
 
     it "allows you to change answers" do
@@ -73,120 +63,13 @@ RSpec.feature "Create case", js: true do
 
       click_on "Create case"
       expect(find("p#case-ref")).to have_text "000001"
-    end
 
-    context "with valid data" do
-      it "validates a phone number (valid 0)" do
-        valid_form_data
-        fill_in "create_case_form[phone_number]", with: "01234567890"
-        click_on "Save and continue"
-        click_on "Create case"
-        expect(find("p#case-ref")).to have_text "000001"
+      click_on "Case details"
+      within ".govuk-summary-list__row", text: "Category" do
+        expect(page).to have_content("Other - Other Category Details")
       end
-
-      it "validates a phone number (valid +44)" do
-        valid_form_data
-        fill_in "create_case_form[phone_number]", with: "+441234567890"
-        click_on "Save and continue"
-        click_on "Create case"
-        expect(find("p#case-ref")).to have_text "000001"
-      end
-    end
-
-    context "with invalid data it validates a phone number" do
-      it "(min size)" do
-        fill_in "create_case_form[phone_number]", with: "0123"
-        click_on "Save and continue"
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#create-case-form-phone-number-field-error"
-        within "div.govuk-error-summary__body" do
-          expect(page).to have_text "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-        end
-      end
-
-      it "(international code)" do
-        fill_in "create_case_form[phone_number]", with: "+3551234567"
-        click_on "Save and continue"
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#create-case-form-phone-number-field-error"
-        within "div.govuk-error-summary__body" do
-          expect(page).to have_text "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-        end
-      end
-
-      it "(white space)" do
-        fill_in "create_case_form[phone_number]", with: "0208 590 1465"
-        click_on "Save and continue"
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#create-case-form-phone-number-field-error"
-        within "div.govuk-error-summary__body" do
-          expect(page).to have_text "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-        end
-      end
-
-      it "(leading zero)" do
-        fill_in "create_case_form[phone_number]", with: "11234567890"
-        click_on "Save and continue"
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#create-case-form-phone-number-field-error"
-        within "div.govuk-error-summary__body" do
-          expect(page).to have_text "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-        end
-      end
-
-      it "(only numbers)" do
-        fill_in "create_case_form[phone_number]", with: "0123456789x"
-        click_on "Save and continue"
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#create-case-form-phone-number-field-error"
-        within "div.govuk-error-summary__body" do
-          expect(page).to have_text "Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-        end
-      end
-
-      it "(max size)" do
-        fill_in "create_case_form[phone_number]", with: "+4412345678901343"
-        click_on "Save and continue"
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Phone number can not have more than 12 digits", href: "#create-case-form-phone-number-field-error"
-        within "div.govuk-error-summary__body" do
-          expect(page).to have_text "Phone number can not have more than 12 digits"
-        end
-      end
-    end
-  end
-
-  context "with unchosen request type" do
-    it "only raises missing request type error" do
-      click_on "Save and continue"
-
-      within "div.govuk-error-summary" do
-        expect(page).to have_text "Select whether the request is related to a procurement category"
-        expect(page).not_to have_text "Please select a procurement category"
-      end
-    end
-  end
-
-  context "with request type 'yes' and no procurement category selected", js: true do
-    it "only raises missing procurement category error" do
-      choose "Yes"
-      click_on "Save and continue"
-
-      within "div.govuk-error-summary" do
-        expect(page).not_to have_text "Select whether the request is related to a procurement category"
-        expect(page).to have_text "Please select a procurement category"
-      end
-    end
-  end
-
-  context "with request type 'yes' and procurement category selected", js: true do
-    it "raises no errors" do
-      choose "Yes"
-      find("#create-case-form-category-id-field").find(:option, "Catering").select_option
-      click_on "Save and continue"
-      within "div.govuk-error-summary" do
-        expect(page).not_to have_text "Select the request type"
-        expect(page).not_to have_text "Please select a procurement category"
+      within ".govuk-summary-list__row", text: "Description of query" do
+        expect(page).to have_content("This is a request")
       end
     end
   end
@@ -196,7 +79,9 @@ RSpec.feature "Create case", js: true do
     fill_in "create_case_form[last_name]", with: "last_name"
     fill_in "create_case_form[email]", with: "test@example.com"
     fill_in "create_case_form[phone_number]", with: "0778974653"
-    choose "No" # request type
+    choose "Procurement" # request type
+    select "Other", from: "select_request_details_category_id"
+    find("#request_details_other_category_text").set("Other Category Details")
     select "North West (NW) Hub", from: "create_case_form[source]"
     fill_in "create_case_form[request_text]", with: "This is a request"
   end

@@ -1,37 +1,37 @@
 window.addEventListener("load", () => {
-  const querySelect = document.querySelectorAll("select[name='create_case_form[query_id]']")[0];
+  const querySelect = document.getElementById("select_request_details_query_id");
 
-  if (querySelect.options[querySelect.selectedIndex].text != 'Other') { 
+  if (querySelect.options[querySelect.selectedIndex].text != 'Other') {
     changeOtherQueryTextState("hidden")
   }
 
   querySelect.addEventListener("change", toggleQueryOtherBoxVisibility);
 
-  const categorySelect = document.querySelectorAll("select[name='create_case_form[category_id]']")[0];
-  
+  const categorySelect = document.getElementById("select_request_details_category_id");
+
   if (categorySelect.options[categorySelect.selectedIndex].text != "Other") {
     changeOtherCategoryTextState("hidden")
   }
   categorySelect.addEventListener("change", toggleCategoryOtherBoxVisibility);
 
-  const requestTypeOptions = document.querySelectorAll("input[name='create_case_form[request_type]']")
+  const requestTypeOptions = document.querySelectorAll(".request_type_option")
 
-  requestTypeOptions.forEach(option => {option.addEventListener("click", removeValuesOnSelect)})
+  requestTypeOptions.forEach(option => {option.addEventListener("click", removeValuesOnSelect)});
 });
 
 function removeValuesOnSelect() {
- 
+
   // true is procurement (has categories), false is non-procurement (has queries)
   if(this.value == "true") {
-    const querySelect = document.querySelectorAll("select[name='create_case_form[query_id]']")[0];
-    const otherQueryText = document.getElementById("create-case-form-other-query-field");
+    const querySelect = document.getElementById("select_request_details_query_id");
+    const otherQueryText = document.getElementById("request_details_other_query_text");
     changeOtherQueryTextState("hidden")
 
     querySelect.value = '';
     otherQueryText.value = '';
   } else {
-    const otherCategoryText = document.getElementById("create-case-form-other-category-field");
-    const categorySelect = document.querySelectorAll("select[name='create_case_form[category_id]']")[0];
+    const otherCategoryText = document.getElementById("request_details_other_category_text");
+    const categorySelect = document.getElementById("select_request_details_category_id");
     changeOtherCategoryTextState("hidden")
 
     otherCategoryText.value = '';
@@ -40,23 +40,23 @@ function removeValuesOnSelect() {
 }
 
 function changeCategorySelectState(state) {
-  const categorySelect = document.querySelectorAll("select[name='create_case_form[category_id]']")[0];
+  const categorySelect = document.getElementById("select_request_details_category_id");
 
   if (state == "hidden") {
     categorySelect.selectedIndex = 0;
-  } 
+  }
 }
 
 function changeQuerySelectState(state) {
-  const querySelect = document.querySelectorAll("select[name='create_case_form[query_id]']")[0];
+  const querySelect = document.getElementById("select_request_details_query_id");
 
   if (state == "hidden") {
     querySelect.selectedIndex = 0;
-  } 
+  }
 }
 
 function changeOtherCategoryTextState(state) {
-  const otherCategoryText = document.getElementById("create-case-form-other-category-field");
+  const otherCategoryText = document.getElementById("request_details_other_category_text");
 
   if (state == "hidden") {
     otherCategoryText.value = '';
@@ -70,7 +70,7 @@ function changeOtherCategoryTextState(state) {
 }
 
 function changeOtherQueryTextState(state) {
-  const otherQueryText = document.getElementById("create-case-form-other-query-field");
+  const otherQueryText = document.getElementById("request_details_other_query_text");
 
   if (state == "hidden") {
     otherQueryText.value = '';
@@ -88,7 +88,7 @@ function toggleQueryOtherBoxVisibility() {
     changeOtherQueryTextState("visible");
   } else {
     changeOtherQueryTextState("hidden")
-  }  
+  }
 }
 
 function toggleCategoryOtherBoxVisibility() {

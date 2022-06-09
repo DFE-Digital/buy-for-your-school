@@ -42,69 +42,23 @@
                              label: { text: I18n.t("support.case_hub_migration.label.extension_number", optional: I18n.t("support.generic.form.optional")) }
   %>
 
-  <%#= need to figure out the 'unless' conditions for both of the below %>
+  <%= render "support/cases/request_details/form_fields", form: form, show_request_text: false %>
 
-  <%
-    other_category_hidden = unless form.object.other_category && form.object.request_type
-        "govuk-!-display-none"
-        end
-   %> 
-
- <%
-    other_query_hidden = unless form.object.other_query && form.object.query_id
-        "govuk-!-display-none"
-    end
-   %> 
-
-  <%= form.govuk_radio_buttons_fieldset :request_type, legend: { size: 'l', text: I18n.t("support.case_hub_migration.request_type.legend") } do %>
-      
-      <%= form.govuk_radio_button :request_type, true, label: { text: I18n.t("support.case_hub_migration.label.procurement") } do %>
-        <%= form.govuk_select :category_id, 
-                              grouped_options_for_select(Support::Category.grouped_opts.collect do |parent_name, sub_categories|
-                                                            [parent_name, sub_categories.collect do |name, value|
-                                                              [name, value, { selected: form.object.category_id == value }]
-                                                            end]
-                                                          end),
-                              options: { include_blank: I18n.t("support.case_categorisations.label.please_select") },
-                              label: { text: I18n.t("support.case_hub_migration.label.category") } %>
-              <%= form.govuk_text_field :other_category, class: other_category_hidden,
-                                    label: { text: I18n.t("support.case_hub_migration.label.other_category"), class: "govuk-label #{other_category_hidden}" }
-              %>
-      <% end %> 
-
-      <%= form.govuk_radio_button :request_type, false, label: { text: I18n.t("support.case_hub_migration.label.non_procurement") } do %>
-        <%= form.govuk_select :query_id, 
-                              options_for_select(Support::Query.all.map { |q| [q.title, q.id, { selected: form.object.query_id == q.id}] }),
-                              options: { include_blank: I18n.t("support.case_categorisations.label.please_select") },
-                              label: { text: I18n.t("support.case_hub_migration.label.query") } %>
-        <%= form.govuk_text_field :other_query, class: other_query_hidden,
-                                label: { text: I18n.t("support.case_hub_migration.label.other_query"), class: "govuk-label #{other_query_hidden}" }
-          %>  
-      <% end %>  
-  <% end %>
-
-  <h2 class="govuk-heading-l">
+  <h2 class="govuk-heading-m">
     <%= I18n.t("support.case_source.header") %>
   </h2>
 
   <%= form.govuk_select(:source,
-                          [
-                            ["Please select", ""],
-                            [I18n.t("support.case.label.source.nw_hub"), "nw_hub"],
-                            [I18n.t("support.case.label.source.sw_hub"), "sw_hub"],
-                            [I18n.t("support.case.label.source.engagement_and_outreach"), "engagement_and_outreach"],
-                            [I18n.t("support.case.label.source.schools_commercial_team"), "schools_commercial_team"]
-                          ],
-                          label: { text: I18n.t("support.case_source.select.header") })
-    %>
+                        [
+                          ["Please select", ""],
+                          [I18n.t("support.case.label.source.nw_hub"), "nw_hub"],
+                          [I18n.t("support.case.label.source.sw_hub"), "sw_hub"],
+                          [I18n.t("support.case.label.source.engagement_and_outreach"), "engagement_and_outreach"],
+                          [I18n.t("support.case.label.source.schools_commercial_team"), "schools_commercial_team"]
+                        ],
+                        label: { text: I18n.t("support.case_source.select.header") })
+  %>
 
-    <%= form.govuk_text_area :request_text,
-                              rows: 5,
-                              label: { text: I18n.t("support.case.new.request_text.header"), size: "l" },
-                              hint: { text: I18n.t("support.case.new.request_text.hint") }
-    %>
+  <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
+<% end %>
 
-    <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
-  <% end %>
-
-<%= javascript_include_tag "supported_create_case" %>

@@ -110,11 +110,11 @@ en:
         category_id:
           missing: Please select a procurement category
         query_id:
-          missing: Please select a query category  
+          missing: Please select a query category
         other_category:
           missing: Enter the procurement category
         other_query:
-          missing: Enter the type of query 
+          missing: Enter the type of query
 
         organisation_id:
           missing: Please select an organisation or group

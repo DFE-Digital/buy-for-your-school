@@ -12,7 +12,7 @@ RSpec.feature "Editing procurement savings details" do
   context "when adding values to savings" do
     it "shows values as expected" do
       # check fields are blank
-      within "[aria-labelledby='pd-savings']" do
+      within "#pd-savings-details" do
         expect(page).not_to have_text "Realised"
         expect(page).not_to have_text "[Previous spend] - [Cheapest quote]"
         expect(page).not_to have_text "[Previous spend] - [Award Price]"
@@ -29,7 +29,7 @@ RSpec.feature "Editing procurement savings details" do
       # save
       click_on "Continue"
       # check fields are populated
-      within "[aria-labelledby='pd-savings']" do
+      within "#pd-savings-details" do
         expect(page).to have_text "Realised"
         expect(page).to have_text "[Previous spend] - [Cheapest quote]"
         expect(page).to have_text "[Previous spend] - [Award Price]"
