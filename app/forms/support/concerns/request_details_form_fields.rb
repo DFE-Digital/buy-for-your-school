@@ -28,7 +28,7 @@ module Support
         instance_variable_get :@request_type
       end
 
-      def update(support_case)
+      def update!(support_case)
         support_case.update!(
           category_id: category_id,
           query_id: query_id,
