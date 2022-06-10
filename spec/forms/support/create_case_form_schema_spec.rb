@@ -14,7 +14,7 @@ describe Support::CreateCaseFormSchema do
         let(:values) { { category_id: 1, other_category: "" } }
 
         it "gives a validation error for other_category" do
-          error_message = schema.errors.messages.find {|x| x.path == [:other_category] }
+          error_message = schema.errors.messages.find { |x| x.path == [:other_category] }
           expect(error_message.text).to eq("Enter the procurement category")
         end
       end
@@ -27,7 +27,7 @@ describe Support::CreateCaseFormSchema do
         let(:values) { { query_id: 2, other_query: "" } }
 
         it "gives a validation error for other_query" do
-          error_message = schema.errors.messages.find {|x| x.path == [:other_query] }
+          error_message = schema.errors.messages.find { |x| x.path == [:other_query] }
           expect(error_message.text).to eq("Enter the type of query")
         end
       end
@@ -40,7 +40,7 @@ describe Support::CreateCaseFormSchema do
         let(:values) { { request_type: false, query_id: "" } }
 
         it "gives a validation error for query_id" do
-          error_message = schema.errors.messages.find {|x| x.path == [:query_id] }
+          error_message = schema.errors.messages.find { |x| x.path == [:query_id] }
           expect(error_message.text).to eq("Please select a query category")
         end
       end

@@ -47,7 +47,7 @@ module Support
     rule(:phone_number) do
       if value.present?
         key.failure(:max_size?) if value.length > 13
-        key.failure(:format?)   unless value =~ /^$|^(0|\+?44)[12378]\d{8,9}$/
+        key.failure(:format?)   unless /^$|^(0|\+?44)[12378]\d{8,9}$/.match?(value)
       end
     end
 

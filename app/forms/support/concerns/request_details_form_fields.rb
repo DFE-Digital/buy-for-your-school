@@ -18,7 +18,7 @@ module Support
             other_category: support_case.other_category,
             other_query: support_case.other_query,
             request_text: support_case.request_text,
-            request_type: support_case.category_id.present?
+            request_type: support_case.category_id.present?,
           )
         end
       end
@@ -34,7 +34,7 @@ module Support
           query_id: query_id,
           other_category: other_category,
           other_query: other_query,
-          request_text: request_text
+          request_text: request_text,
         )
       end
     end
