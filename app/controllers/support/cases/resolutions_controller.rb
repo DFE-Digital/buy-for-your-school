@@ -13,6 +13,9 @@ module Support
           info: ": #{@case_resolution_form.notes}",
         )
 
+        # send automated exit survey email
+        send_exit_survey
+
         record_action(case_id: current_case.id, action: "resolve_case")
 
         redirect_to support_case_path(current_case), notice: I18n.t("support.case_resolution.flash.created")
@@ -29,6 +32,12 @@ module Support
 
     def case_resolution_form_params
       params.require(:case_resolution_form).permit(:notes)
+    end
+
+    def send_exit_survey
+      unless current_case.exit_survey_sent
+        SendExitSurveyJob.set(wait: 5.days).perform_later(current_case.ref)
+      end
     end
   end
 end
