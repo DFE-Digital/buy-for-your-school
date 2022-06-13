@@ -156,6 +156,25 @@ module Support
       ["nw_hub", "sw_hub", nil].any? { |t| t == source }
     end
 
+    # return [String]
+    def procurement_amount
+      return "-" unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
+    end
+
+    # return [String]
+    def confidence_level
+      return "-" unless super
+
+      super.humanize
+    end
+
+    # return [String]
+    def special_requirements
+      super || "-"
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

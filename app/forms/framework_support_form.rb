@@ -11,7 +11,7 @@
 #   6: email                  (guest only)
 #   7: message_body           (last and compulsory)
 #
-class FrameworkSupportForm < Form
+class FrameworkSupportForm < RequestForm
   # @!attribute [r] user
   #   @return [UserPresenter] decorate respondent
   option :user, ::Types.Constructor(UserPresenter)
@@ -52,7 +52,7 @@ class FrameworkSupportForm < Form
 
   # @!attribute [r] email
   #   @return [String]
-  option :email, default: proc { user.email }
+  option :email, default: proc { user.email || Dry::Initializer::UNDEFINED }
 
   # @!attribute [r] message_body
   #   @return [String]
@@ -60,10 +60,9 @@ class FrameworkSupportForm < Form
 
   # @return [Hash] form data to be persisted as request attributes
   def data
-    to_h
-      .except(:user, :step, :messages, :dsi, :org_confirm)
-      .compact
-      .merge(user_id: user.id, org_id: found_uid_or_urn)
+    super
+      .except(:dsi, :org_confirm)
+      .merge(org_id: found_uid_or_urn)
   end
 
   # Prevent validation errors being raised for empty fields
@@ -82,6 +81,8 @@ class FrameworkSupportForm < Form
   def forward
     if position?(3) && dsi_with_many_orgs?
       go_to!(7)
+    elsif position?(8) && !about_procurement?
+      go_to!(10)
     else
       advance!
     end
@@ -93,6 +94,8 @@ class FrameworkSupportForm < Form
   def backward
     if position?(7) && dsi_with_many_orgs?
       go_to!(3)
+    elsif position?(10) && !about_procurement?
+      go_to!(8)
 
     # This breaks the expected convention of going to the previous page but can
     # be used to skip over the "confirm school/group details" page.
@@ -142,6 +145,14 @@ class FrameworkSupportForm < Form
       true # group choice
     elsif user.guest? && position?(3)
       org_id.present? # org selected
+    elsif position?(8)
+      # navigate to step 9 (confidence level) if the request is about a procurement
+      # and we don't have confidence_level
+      if about_procurement? && confidence_level.blank?
+        true
+      elsif about_procurement? && confidence_level.present?
+        false
+      end
     else
       false
     end

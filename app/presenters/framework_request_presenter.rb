@@ -1,4 +1,4 @@
-class FrameworkRequestPresenter < BasePresenter
+class FrameworkRequestPresenter < RequestPresenter
   # @return [UserPresenter, OpenStruct]
   def user
     if user_id

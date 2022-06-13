@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_093315) do
+ActiveRecord::Schema.define(version: 2022_05_20_071637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -122,6 +122,10 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.uuid "user_id"
     t.boolean "group", default: false
     t.string "org_id"
+    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.integer "confidence_level"
+    t.string "special_requirements"
+    t.boolean "about_procurement", default: true
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -286,6 +290,9 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.decimal "value", precision: 9, scale: 2
     t.integer "closure_reason"
     t.string "extension_number"
+    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.string "confidence_level"
+    t.string "special_requirements"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -488,6 +495,10 @@ ActiveRecord::Schema.define(version: 2022_05_17_093315) do
     t.string "phone_number"
     t.boolean "submitted", default: false, null: false
     t.string "school_urn"
+    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.integer "confidence_level"
+    t.string "special_requirements"
+    t.boolean "about_procurement", default: true
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"

@@ -2,6 +2,10 @@ FactoryBot.define do
   factory :support_request do
     message_body { "Support request message from a School Buying Professional" }
     phone_number { "07756471233" }
+    procurement_amount { "10.50" }
+    confidence_level { "confident" }
+    special_requirements { "special_requirements" }
+    about_procurement { true }
     association :user
     association :category
 

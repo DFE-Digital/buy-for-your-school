@@ -7,7 +7,7 @@
   <%= link_to I18n.t("generic.button.back"), support_requests_path(@support_request, support_form: @form.go_back), method: :post, class: "govuk-back-link" %>
 <% end %>
 
-<%= form_with model: @form, scope: :support_form, url: path, method: verb  do |form| %>
+<%= form_with model: @form, scope: :support_form, url: path, method: verb, id: "support-form"  do |form| %>
   <%# form.govuk_error_summary(presenter: presenter_class) %>
   <%= form.govuk_error_summary %>
 

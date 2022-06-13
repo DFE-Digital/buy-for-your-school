@@ -1,5 +1,5 @@
 # Helpers for a support request to display information on the page
-class SupportRequestPresenter < SimpleDelegator
+class SupportRequestPresenter < RequestPresenter
   # @return [String] email address of user requesting support
   def email
     user&.email

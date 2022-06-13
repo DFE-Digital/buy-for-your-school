@@ -36,6 +36,17 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     click_continue
   end
 
+  def complete_procurement_amount_step
+    choose "Yes"
+    fill_in "framework_support_form[procurement_amount]", with: "120.32"
+    click_continue
+  end
+
+  def complete_confidence_level_step
+    choose "Very confident"
+    click_continue
+  end
+
   let(:keys) { all("dt.govuk-summary-list__key") }
   let(:values) { all("dd.govuk-summary-list__value") }
   let(:actions) { all("dd.govuk-summary-list__actions") }
@@ -276,6 +287,104 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
+      end
+    end
+
+    describe "the procurement amount page", js: true do
+      before do
+        autocomplete_school_step
+        confirm_choice_step
+        complete_name_step
+        complete_email_step
+        complete_help_message_step
+      end
+
+      it "goes back to the message page" do
+        click_on "Back"
+        expect(page).to have_current_path(/step%5D=8/)
+        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_text "How can we help?"
+      end
+
+      it "has the correct attributes" do
+        expect(page).to have_text "About your procurement"
+        expect(page).to have_text "Do you know how much the school will be spending on this procurement in total?"
+
+        expect(page).to have_text "This is the approximate amount you will be spending over the lifetime of the contract."
+        expect(page).to have_text "This information will help us to make sure you're buying compliantly for the amount you intend to spend."
+
+        expect(page).to have_unchecked_field "Yes"
+        expect(page).to have_field "Approximately how much?"
+        expect(page).to have_unchecked_field "No"
+        expect(page).to have_unchecked_field "My request is not about a procurement"
+
+        expect(page).to have_button "Continue"
+      end
+    end
+
+    describe "the confidence level page", js: true do
+      before do
+        autocomplete_school_step
+        confirm_choice_step
+        complete_name_step
+        complete_email_step
+        complete_help_message_step
+        complete_procurement_amount_step
+      end
+
+      it "goes back to the procurement amount page" do
+        click_on "Back"
+        expect(page).to have_current_path(/step%5D=9/)
+        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_text "Do you know how much the school will be spending on this procurement in total?"
+      end
+
+      it "has the correct attributes" do
+        expect(page).to have_text "About your procurement"
+        expect(page).to have_text "How confident do you feel about running this procurement?"
+
+        expect(page).to have_text "This will help us to give you the right level of support."
+
+        expect(page).to have_unchecked_field "Very confident"
+        expect(page).to have_unchecked_field "Confident"
+        expect(page).to have_unchecked_field "Slightly confident"
+        expect(page).to have_unchecked_field "Somewhat confident"
+        expect(page).to have_unchecked_field "Not at all confident"
+        expect(page).to have_unchecked_field "Not applicable"
+
+        expect(page).to have_button "Continue"
+      end
+    end
+
+    describe "the special requirements page", js: true do
+      before do
+        autocomplete_school_step
+        confirm_choice_step
+        complete_name_step
+        complete_email_step
+        complete_help_message_step
+        complete_procurement_amount_step
+        complete_confidence_level_step
+      end
+
+      it "goes back to the confidence level page" do
+        click_on "Back"
+        expect(page).to have_current_path(/step%5D=10/)
+        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_text "How confident do you feel about running this procurement?"
+      end
+
+      it "has the correct attributes" do
+        expect(page).to have_text "Special requirements"
+        expect(page).to have_text "Do you have any special requirements when you communicate or use technology and/or online services?"
+
+        expect(page).to have_text "We will be contacting you by email or video call. Tell us about any adjustments we can make, so that we can help and interact with you in the best way possible."
+
+        expect(page).to have_unchecked_field "Yes"
+        expect(page).to have_field "What are your requirements?"
+        expect(page).to have_unchecked_field "No"
+
+        expect(page).to have_button "Continue"
       end
     end
   end
