@@ -90,7 +90,7 @@ Rails.application.routes.draw do
         resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
-        resource :categorisation, only: %i[edit update destroy]
+        resource :request_details, only: %i[edit update]
         resource :closures, only: %i[edit update]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]

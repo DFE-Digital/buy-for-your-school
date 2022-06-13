@@ -64,7 +64,6 @@ group :development do
   gem "binding_of_caller"
   gem "foreman"
   gem "listen", ">= 3.0.5", "< 3.8"
-  gem "rails-erd"
   gem "rails_layout"
   gem "spring"
   gem "spring-commands-rspec"

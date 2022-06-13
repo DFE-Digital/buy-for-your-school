@@ -397,7 +397,7 @@ en:
     case:
       case_details:
         case_summary:
-          heading: Case summary -
+          heading: Case summary
         request:
           heading: Request
       date_format: "%d %B %Y at %H:%M"
@@ -491,7 +491,6 @@ en:
         problem_description: Description of query
         procurement_amount: Procurement amount
         procurement_details:
-          change: change
           contract_duration: Contract duration
           contract_spend: Contract spend
           end_date: End date
@@ -509,6 +508,7 @@ en:
           savings_status: Status
           start_date: Start date
           supplier: Supplier
+        query: Query
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
@@ -549,9 +549,7 @@ en:
         value:
           unspecified: Not specified
       link:
-        edit_case_summary: change
-        edit_category: Change
-        edit_description: Change
+        change: change
         view_group_information: View group information (opens in a new tab)
         view_school_information: View school information (opens in a new tab)
       list:
@@ -577,13 +575,6 @@ en:
       header: Assign to case worker
       submit: Assign
     case_categorisations:
-      edit:
-        delete: Remove procurement category
-        header: Select a category
-        submit: Save and continue
-      flash:
-        deleted: Successfully removed case category
-        updated: Successfully changed case category
       label:
         none: Not applicable
         please_select: Please select
@@ -733,10 +724,17 @@ en:
         last_name: Contact last name
         message: Message
         name: Contact name
+        non_procurement: Non-procurement
         organisation_name: Organisation name
+        other_category: Other
+        other_query: Other
         phone_number: Contact phone number %{optional}
+        procurement: Procurement
+        procurement_category_details: Procurement category details
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
+        query: Query
+        query_details: Query details
         referrer: Referrer
         request_text: Summary
         school_name: Organisation name
@@ -744,8 +742,8 @@ en:
         school_ukprn: Organisation UKPRN
         school_urn: Organisation URN
         source: Source
+        type: Type
       request_type:
-        hint: Is the request related to a procurement category?
         legend: Request type
       submit: Save and continue
     case_merge_emails:
@@ -792,6 +790,16 @@ en:
         updated: Organisation updated successfully
       label: What Organisation do you want to add?
       submit: Save selected organisation
+    case_request_details:
+      check_answers:
+        category: Category
+        change: Change
+        query: Query
+        submit: Submit
+        title: Check your answers before updating request details
+        type: Type
+      edit:
+        title: Update request details
     case_resolution:
       flash:
         created: Case resolved successfully
@@ -891,9 +899,7 @@ en:
         optional: "(optional)"
       link:
         opens_in_new_tab: "(opens in new tab)"
-      'no': 'No'
       search: Search
-      'yes': 'Yes'
     interaction:
       header:
         add_case_note: Add case note

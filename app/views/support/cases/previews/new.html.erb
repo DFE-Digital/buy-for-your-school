@@ -124,17 +124,44 @@
       </h2>
 
       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.category") %>
+            <%= I18n.t("support.case_hub_migration.label.type") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @form.category_name %>
+            <%= @form.type %>
           </dd>
-          <dd id="changeCategory" class="govuk-summary-list__list__actions">
+          <dd id="changeRequestType" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
+
+        <% if @form.type == "Procurement" %>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= I18n.t("support.case_hub_migration.label.category") %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= @form.category_name %>
+            </dd>
+            <dd id="changeCategory" class="govuk-summary-list__list__actions">
+              <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+            </dd>
+          </div>
+        <% else %>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= I18n.t("support.case_hub_migration.label.query") %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= @form.query_name %>
+            </dd>
+            <dd id="changeQuery" class="govuk-summary-list__list__actions">
+              <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+            </dd>
+          </div>
+        <% end %>
       </dl>
 
       <h2 class="govuk-heading-m">

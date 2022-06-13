@@ -38,6 +38,7 @@ module Support
     end
 
     belongs_to :category, class_name: "Support::Category", optional: true
+    belongs_to :query, class_name: "Support::Query", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     belongs_to :organisation, polymorphic: true, optional: true
     has_many :interactions, class_name: "Support::Interaction"

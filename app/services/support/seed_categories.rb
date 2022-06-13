@@ -2,6 +2,9 @@ require "yaml"
 require "dry-initializer"
 require "types"
 
+# make task that goes through support categories and renames No applicable category to Other
+# put this in seed categories and run first so it won't add a new one
+
 module Support
   #
   # Persist (Sub)Categories from YAML file
@@ -25,7 +28,7 @@ module Support
       Category.destroy_all if reset
 
       YAML.load_file(data).each do |group|
-        category = Category.top_level.find_or_create_by!(title: group["title"]) do |cat|
+        category = Support::Category.top_level.find_or_create_by!(title: group["title"]) do |cat|
           cat.description = group["description"]
           cat.slug = group["slug"]
         end

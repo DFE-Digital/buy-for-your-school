@@ -36,8 +36,5 @@ brew "libpq"
 # Depends upon Node v16.3.0 (optional)
 # brew "contentful-cli"
 
-# Install `graphviz` for generating Entity Relationship Diagrams (optional)
-# brew "graphviz"
-
 # Install `ngrok` for allowing web tunneling to assist working with webhooks (optional)
 # brew "ngrok"

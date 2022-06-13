@@ -6,11 +6,17 @@ namespace :case_management do
     Support::SeedSchools.new.call
     Support::SeedEstablishmentGroupTypes.new.call
     Support::SeedEstablishmentGroups.new.call
+    Support::SeedQueries.new.call
   end
 
   desc "Populate the categories and sub_categories tables"
   task seed_categories: :environment do
     Support::SeedCategories.new.call
+  end
+
+  desc "Populate the queries tables"
+  task seed_queries: :environment do
+    Support::SeedQueries.new.call
   end
 
   desc "Populate supported group types for establishments"

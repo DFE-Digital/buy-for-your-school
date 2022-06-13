@@ -14,7 +14,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
 
     it "shows values as expected" do
       # check fields are blank
-      within "[aria-labelledby='pd-new-contract']" do
+      within "#pd-new-contract-details" do
         details = all(".govuk-summary-list__value")
         expect(details[0]).to have_text "-"
         expect(details[1]).to have_text "-"
@@ -34,7 +34,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
       # save
       click_on "Continue"
       # check fields are populated
-      within "[aria-labelledby='pd-new-contract']" do
+      within "#pd-new-contract-details" do
         details = all(".govuk-summary-list__value")
         expect(details[0]).to have_text "1 January 2000"
         expect(details[1]).to have_text "6 months"
@@ -65,7 +65,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
 
     it "when removing values from an existing contract" do
       # check fields are blank
-      within "[aria-labelledby='pd-new-contract']" do
+      within "#pd-new-contract-details" do
         details = all(".govuk-summary-list__value")
         expect(details[0]).to have_text "1 January 2020"
         expect(details[1]).to have_text "1 year"
@@ -85,7 +85,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
       # save
       click_on "Continue"
       # check fields are populated
-      within "[aria-labelledby='pd-new-contract']" do
+      within "#pd-new-contract-details" do
         details = all(".govuk-summary-list__value")
         expect(details[0]).to have_text "-"
         expect(details[1]).to have_text "-"
