@@ -8,8 +8,8 @@ class SubmitFrameworkRequest
   extend Dry::Initializer
 
   # @!attribute request
-  #   @return [FrameworkRequestPresenter]
-  option :request, ::Types.Constructor(FrameworkRequestPresenter)
+  #   @return [FrameworkRequest]
+  option :request, Types.Instance(FrameworkRequest)
 
   # @!attribute template
   #   @return [String] Template UUID
@@ -66,6 +66,9 @@ private
       last_name: user.last_name,
       email: user.email,
       request_text: request.message_body,
+      procurement_amount: request.procurement_amount,
+      confidence_level: request.confidence_level,
+      special_requirements: request.special_requirements.presence,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call

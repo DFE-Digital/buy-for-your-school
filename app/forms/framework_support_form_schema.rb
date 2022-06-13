@@ -12,7 +12,7 @@
 #   6: email          (guest only)
 #   7: message_body   (last and compulsory)
 #
-class FrameworkSupportFormSchema < Schema
+class FrameworkSupportFormSchema < RequestFormSchema
   config.messages.top_namespace = :framework_request
 
   params do

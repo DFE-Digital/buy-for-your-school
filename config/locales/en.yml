@@ -345,6 +345,35 @@ en:
     label:
       email: Your email address
       full_name: Your name
+  request:
+    confidence_level:
+      caption: About your procurement
+      heading: How confident do you feel about running this procurement?
+      hint: This will help us to give you the right level of support.
+      levels:
+        confident: Confident
+        not_applicable: Not applicable
+        not_at_all_confident: Not at all confident
+        slightly_confident: Slightly confident
+        somewhat_confident: Somewhat confident
+        very_confident: Very confident
+    label:
+      confidence_level: Confidence level
+      procurement_amount: Procurement amount
+      special_requirements: Special requirements
+    procurement_amount:
+      caption: About your procurement
+      heading: Do you know how much the school will be spending on this procurement in total?
+      hint: This is the approximate amount you will be spending over the lifetime of the contract.<br><br>This information will help us to make sure you're buying compliantly for the amount you intend to spend.
+      how_much: Approximately how much?
+      not_known: Not known
+      radios:
+        not_about_procurement: My request is not about a procurement
+    special_requirements:
+      caption: Special requirements
+      heading: Do you have any special requirements when you communicate or use technology and/or online services?
+      hint: We will be contacting you by email or video call. Tell us about any adjustments we can make, so that we can help and interact with you in the best way possible.
+      requirements: What are your requirements?
   specifying:
     start_page:
       before_you_start_body:
@@ -422,6 +451,7 @@ en:
         category: Category
         change_owner: Change case owner
         close: Close case
+        confidence_level: Confidence level
         contact_email: Contact email
         contact_extension_number: Contact extension
         contact_name: Contact name
@@ -459,6 +489,7 @@ en:
         organisation_type: Organisation type
         place_on_hold: Place on hold
         problem_description: Description of query
+        procurement_amount: Procurement amount
         procurement_details:
           contract_duration: Contract duration
           contract_spend: Contract spend
@@ -492,6 +523,7 @@ en:
           schools_commercial_team: Schools Commercial Team (SCT)
           sw_hub: South West (SW) Hub
           unspecified: "-"
+        special_requirements: Special requirements
         state:
           state_action_required: Action
           state_close: Closed

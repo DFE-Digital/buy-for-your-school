@@ -88,6 +88,33 @@
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.procurement_amount") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= current_case.procurement_amount %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.confidence_level") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= current_case.confidence_level %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.special_requirements") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= current_case.special_requirements %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.problem_description") %>
       </dt>
       <dd class="govuk-summary-list__value">

@@ -41,7 +41,7 @@ class FrameworkRequestsController < ApplicationController
 
     if @form.restart? && back_link?
       redirect_to framework_requests_path
-    elsif validation.success? && validation.to_h[:message_body]
+    elsif validation.success? && validation.to_h[:special_requirements]
       request = FrameworkRequest.create!(@form.data)
       redirect_to framework_request_path(request)
     else
@@ -101,12 +101,18 @@ private
       last_name
       email
       message_body
+      procurement_amount
+      procurement_choice
+      confidence_level
+      special_requirements_choice
+      special_requirements
+      about_procurement
     ])
   end
 
   # @return [FrameworkSupportFormSchema] validated form input
   def validation
-    FrameworkSupportFormSchema.new.call(**form_params)
+    @validation ||= FrameworkSupportFormSchema.new.call(**form_params)
   end
 
   # @return [FrameworkRequestPresenter]

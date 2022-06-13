@@ -7,5 +7,9 @@ FactoryBot.define do
     email { "email@example.com" }
     message_body { "please help!" }
     submitted { false }
+    procurement_amount { "10.50" }
+    confidence_level { "confident" }
+    special_requirements { "special_requirements" }
+    about_procurement { true }
   end
 end
