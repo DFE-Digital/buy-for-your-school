@@ -24,13 +24,13 @@ module Support
   private
 
     def set_back_url
-      if submit_action == "confirm"
-        # Go back to edit
-        @back_url = edit_support_case_request_details_path(@current_case, case_request_details_form: validation.to_h)
-      else
-        # Go back to case
-        @back_url = support_case_path(@current_case, anchor: "case-details")
-      end
+      @back_url = if submit_action == "confirm"
+                    # Go back to edit
+                    edit_support_case_request_details_path(@current_case, case_request_details_form: validation.to_h)
+                  else
+                    # Go back to case
+                    support_case_path(@current_case, anchor: "case-details")
+                  end
     end
 
     def submit_action
