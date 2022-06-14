@@ -8,8 +8,8 @@ class SubmitFrameworkRequest
   extend Dry::Initializer
 
   # @!attribute request
-  #   @return [FrameworkRequest]
-  option :request, Types.Instance(FrameworkRequest)
+  #   @return [FrameworkRequestPresenter]
+  option :request, ::Types.Constructor(FrameworkRequestPresenter)
 
   # @!attribute template
   #   @return [String] Template UUID
@@ -66,8 +66,8 @@ private
       last_name: user.last_name,
       email: user.email,
       request_text: request.message_body,
-      procurement_amount: request.procurement_amount,
-      confidence_level: request.confidence_level,
+      procurement_amount: request.__getobj__.procurement_amount,
+      confidence_level: request.__getobj__.confidence_level,
       special_requirements: request.special_requirements.presence,
     }
 
