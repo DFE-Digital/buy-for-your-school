@@ -36,8 +36,16 @@ module Support
 
     def send_exit_survey
       unless current_case.exit_survey_sent
-        SendExitSurveyJob.set(wait: 5.days).perform_later(current_case.ref)
+        if exit_survey_delay.present?
+          SendExitSurveyJob.set(wait: exit_survey_delay.to_i.minutes).perform_later(current_case.ref)
+        else
+          SendExitSurveyJob.perform_now(current_case.ref)
+        end
       end
+    end
+
+    def exit_survey_delay
+      ENV["EXIT_SURVEY_EMAIL_DELAY"]
     end
   end
 end

@@ -12,7 +12,11 @@ describe Support::SendExitSurveyJob do
           first_name: "School",
           last_name: "Contact",
           full_name: "School Contact",
-        ), reference: "000001")
+        ),
+              variables: {
+                survey_query_string: /\?Q_EED=eyJjYXNlX3JlZiI6IjAwMDAwMSIsInNjaG9vbF9uYW1lIjoiU2Nob29sICM/,
+              },
+              reference: "000001")
         .and_return(exit_survey_service)
 
       job.perform("000001")
