@@ -13,9 +13,7 @@ describe Support::SendExitSurveyJob do
           last_name: "Contact",
           full_name: "School Contact",
         ),
-              variables: {
-                survey_query_string: /\?Q_EED=eyJjYXNlX3JlZiI6IjAwMDAwMSIsInNjaG9vbF9uYW1lIjoiU2Nob29sICM/,
-              },
+              school_name: kase.organisation.name,
               reference: "000001")
         .and_return(exit_survey_service)
 

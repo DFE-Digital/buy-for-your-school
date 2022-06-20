@@ -18,11 +18,34 @@ require "notify/email"
 #   ).call
 #
 class Emails::ExitSurvey < Notify::Email
+  # @see https://www.notifications.service.gov.uk/services/&ltUUID&gt/templates
+  # @!attribute [r] template
+  #   @return [String] Template by UUID
   option :template, Types::String, default: proc { Support::EmailTemplates::IDS[:exit_survey] }
+
+  # @!attribute [r] school_name
+  #   @return [String] Name of the school associated to the case
+  option :school_name, Types::String
+
+  def self.generate_survey_query_string(case_ref, school_name, email)
+    populated_responses = {
+      "case_ref": case_ref,
+      "school_name": school_name,
+      "email": email,
+    }
+
+    "?Q_EED=#{Base64.strict_encode64(populated_responses.to_json)}"
+  end
 
   def call
     Rollbar.info("Sending exit survey email")
 
     super
+  end
+
+private
+
+  def template_params
+    super.merge(survey_query_string: self.class.generate_survey_query_string(reference, school_name, recipient.email))
   end
 end

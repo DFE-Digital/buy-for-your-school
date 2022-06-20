@@ -25,9 +25,15 @@ module Support
 
     # return [Hash]
     def personalisation
+      template = EmailTemplates::IDS.key(params[:template])
       contact = CaseContactPresenter.new(@current_case)
+      details = { first_name: contact.first_name, last_name: contact.last_name, from_name: current_agent.full_name, reference: @current_case.ref }
 
-      { first_name: contact.first_name, last_name: contact.last_name, from_name: current_agent.full_name, reference: @current_case.ref }
+      if template == :exit_survey
+        details[:survey_query_string] = ::Emails::ExitSurvey.generate_survey_query_string(@current_case.ref, @current_case.organisation.name, @current_case.email)
+      end
+
+      details
     end
 
     def preview_email_body
