@@ -65,7 +65,7 @@
     <% if current_case.category.present? %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.category") %>
+          <%= I18n.t("support.case.label.sub_category") %>
         </dt>
         <dd class="govuk-summary-list__value">
           <%= current_case.category.title %><%= " - #{current_case.other_category}" if current_case.other_category.present? %>

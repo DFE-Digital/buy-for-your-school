@@ -12,7 +12,7 @@ RSpec.feature "Case list navigation", bullet: :skip do
       before do
         within "#all-cases" do
           click_on "Filter results"
-          select "Example Category", from: "Filter by category"
+          select "Example Category", from: "Filter by sub-category"
           click_on "Apply filter"
           click_on "Next"
           click_on "000001"
@@ -22,7 +22,7 @@ RSpec.feature "Case list navigation", bullet: :skip do
       it "has a back link to the previous page" do
         click_on "Back"
         within "#all-cases" do
-          expect(page).to have_select "Filter by category", selected: "Example Category"
+          expect(page).to have_select "Filter by sub-category", selected: "Example Category"
           expect(page).to have_selector "em", text: "2", class: "current"
           expect(page).to have_text "Showing 11 to 13 of 13 results"
         end
