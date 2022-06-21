@@ -63,6 +63,18 @@ module Notify
       e.message
     end
 
+    # Adds `link_to_file` template variable
+    #
+    # @return [Hash]
+    #
+    def personalisation
+      if attachment
+        template_params.merge(link_to_file: link_to_file)
+      else
+        template_params
+      end
+    end
+
   private
 
     # @return [Notifications::Client::ResponseNotification]
@@ -80,18 +92,6 @@ module Notify
       end
 
       client.send_email(message_params)
-    end
-
-    # Adds `link_to_file` template variable
-    #
-    # @return [Hash]
-    #
-    def personalisation
-      if attachment
-        template_params.merge(link_to_file: link_to_file)
-      else
-        template_params
-      end
     end
 
     # @example

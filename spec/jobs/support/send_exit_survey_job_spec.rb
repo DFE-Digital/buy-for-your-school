@@ -1,18 +1,38 @@
 describe Support::SendExitSurveyJob do
   subject(:job) { described_class.new }
 
+  describe "#self.start" do
+    context "when there is a survey email delay" do
+      around do |example|
+        ClimateControl.modify(EXIT_SURVEY_EMAIL_DELAY: "5") do
+          example.run
+        end
+      end
+
+      it "sets the delay" do
+        allow(job.class).to receive(:set).with({ wait: 5.minutes }).and_return(job.class)
+        expect(job.class).to receive(:perform_later).with("000001")
+
+        job.class.start("000001")
+      end
+    end
+
+    context "when there is no survey email delay" do
+      it "sends the survey immediately" do
+        expect(job.class).to receive(:perform_now).with("000001")
+
+        job.class.start("000001")
+      end
+    end
+  end
+
   describe "#perform" do
     let!(:kase) { create(:support_case, ref: "000001") }
     let(:exit_survey_service) { double("exit_survey_service", call: nil) }
 
     before do
       allow(Emails::ExitSurvey).to receive(:new)
-        .with(recipient: OpenStruct.new(
-          email: "school@email.co.uk",
-          first_name: "School",
-          last_name: "Contact",
-          full_name: "School Contact",
-        ),
+        .with(recipient: kase,
               school_name: kase.organisation.name,
               reference: "000001")
         .and_return(exit_survey_service)

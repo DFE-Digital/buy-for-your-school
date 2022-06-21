@@ -5,17 +5,23 @@ module Support
   class SendExitSurveyJob < ApplicationJob
     queue_as :support
 
+    def self.start(case_ref)
+      if exit_survey_delay.present?
+        set(wait: exit_survey_delay.to_i.minutes).perform_later(case_ref)
+      else
+        perform_now(case_ref)
+      end
+    end
+
+    def self.exit_survey_delay
+      ENV["EXIT_SURVEY_EMAIL_DELAY"]
+    end
+
     def perform(case_ref)
       kase = Case.find_by_ref(case_ref)
-      recipient = OpenStruct.new(
-        email: kase.email,
-        first_name: kase.first_name,
-        last_name: kase.last_name,
-        full_name: "#{kase.first_name} #{kase.last_name}",
-      )
 
       ::Emails::ExitSurvey.new(
-        recipient: recipient,
+        recipient: kase,
         reference: case_ref,
         school_name: kase.organisation.name,
       ).call

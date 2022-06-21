@@ -27,16 +27,6 @@ class Emails::ExitSurvey < Notify::Email
   #   @return [String] Name of the school associated to the case
   option :school_name, Types::String
 
-  def self.generate_survey_query_string(case_ref, school_name, email)
-    populated_responses = {
-      "case_ref": case_ref,
-      "school_name": school_name,
-      "email": email,
-    }
-
-    "?Q_EED=#{Base64.strict_encode64(populated_responses.to_json)}"
-  end
-
   def call
     Rollbar.info("Sending exit survey email")
 
@@ -46,6 +36,16 @@ class Emails::ExitSurvey < Notify::Email
 private
 
   def template_params
-    super.merge(survey_query_string: self.class.generate_survey_query_string(reference, school_name, recipient.email))
+    super.merge(survey_query_string: generate_survey_query_string)
+  end
+
+  def generate_survey_query_string
+    populated_responses = {
+      "case_ref": reference,
+      "school_name": school_name,
+      "email": recipient.email,
+    }
+
+    "?Q_EED=#{Base64.strict_encode64(populated_responses.to_json)}"
   end
 end
