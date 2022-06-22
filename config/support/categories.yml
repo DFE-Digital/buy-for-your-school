@@ -11,54 +11,71 @@
     - title: Peripherals
       description: computer peripherals
       slug: peripherals
+      tower: ICT
     - title: Laptops
       description: Mobile computing
       slug: laptops
+      tower: ICT
     - title: Broadband service
       description:
       slug: broadband_service
+      tower: ICT
     - title: Switches & Routers
       description: networking hardware
       slug: switches_routers
+      tower: ICT
     - title: Cyber services
       description:
       slug: cyber_services
+      tower: ICT
     - title: Cloud SaaS
       description:
       slug: cloud_saas
+      tower: ICT
     - title: AV Displays
       description: TVs, projectors
       slug: displays
+      tower: ICT
     - title: Hosting & Storage
       description:
       slug: hosting_and_storage
+      tower: ICT
     - title: MIS
       description:
       slug: mis
+      tower: ICT
     - title: VLEs
       description: Virtual Learning Environments
       slug: vle
+      tower: ICT
     - title: Curriculum Content
       description:
       slug: curriculum_content
+      tower: ICT
     - title: Server Configuration & Support
       description:
       slug: servers
+      tower: ICT
     - title: Broadband Infrastructure
       description:
       slug: broadband_infrastructure
+      tower: ICT
     - title: Safeguarding & Content
       description:
       slug: safeguarding
+      tower: ICT
     - title: OS Software
       description:
       slug: software
+      tower: ICT
     - title: Websites
       description:
       slug: websites
+      tower: ICT
     - title: Telecoms & Broadband
       description:
       slug: broadband
+      tower: ICT
 
 
 - title: FM
@@ -68,28 +85,43 @@
     - title: Water, drains & sewerage
       description:
       slug: sewerage
+      tower: FM
     - title: Fire Safety (Goods & Systems)
       description:
       slug:
+      tower: FM
     - title: Security
       description:
       slug:
+      tower: FM
     - title: Building maintenance & BMS
       description:
       slug:
+      tower: FM
     - title: Mechanical & Electrical Systems
       description:
       slug:
+      tower: FM
     - title: Statutory testing
+      tower: FM
     - title: Roof Maintenance
+      tower: FM
     - title: Cleaning Services
+      tower: FM
     - title: Cleaning Products
+      tower: FM
     - title: Waste management
+      tower: FM
     - title: Grounds Maintenance
+      tower: FM
     - title: Removal & relocation
+      tower: FM
     - title: IPC (PPE & Uniform)
+      tower: FM
     - title: MUGAs (Multi Use Games Area)
+      tower: FM
     - title: Transport
+      tower: Business Services
 
 
 - title: Energy
@@ -97,8 +129,11 @@
   slug: energy
   sub_categories:
     - title: Electricity
+      tower: Energy & Utilities
     - title: Gas
+      tower: Energy & Utilities
     - title: Other fuels
+      tower: Energy & Utilities
 
 
 - title: Utilities
@@ -106,6 +141,7 @@
   slug: utilities
   sub_categories:
     - title: Water
+      tower: Energy & Utilities
 
 
 - title: Catering
@@ -113,7 +149,9 @@
   slug: catering
   sub_categories:
     - title: Equipment
+      tower: Catering
     - title: Catering Services
+      tower: Catering
 
 
 - title: Furniture
@@ -121,6 +159,7 @@
   slug: furniture
   sub_categories:
     - title: Furniture
+      tower: Furniture
 
 
 - title: Books
@@ -128,6 +167,7 @@
   slug: books
   sub_categories:
     - title: Books
+      tower: Business Services
 
 
 - title: Business Services
@@ -136,6 +176,7 @@
   sub_categories:
     - title: MFD
       slug: mfd
+      tower: ICT
 
 
 - title: Financial
@@ -143,9 +184,13 @@
   slug: financial
   sub_categories:
     - title: Audit
+      tower: Business Services
     - title: Insurance
+      tower: Business Services
     - title: Leasing
+      tower: Business Services
     - title: Spend Analysis
+      tower: Business Services
 
 
 - title: Professional
@@ -153,11 +198,17 @@
   slug: professional
   sub_categories:
     - title: Legal Services
+      tower: Professional Services
     - title: Professional services Bloom
+      tower: Professional Services
     - title: Recruitment screening
+      tower: Professional Services
     - title: Supply Teachers & Agency workers
+      tower: Professional Services
     - title: Payroll
+      tower: Professional Services
     - title: HR
+      tower: Professional Services
 
 
 - title: Office supplies
@@ -165,6 +216,7 @@
   slug: office_supplies
   sub_categories:
     - title: Stationery supply & office supplies
+      tower: Business Services
 
 
 - title: Capital
@@ -172,12 +224,21 @@
   slug: capital
   sub_categories:
     - title: Boilers and plumbing services
+      tower: FM
     - title: Solar
+      tower: Energy & Utilities
 
 - title: Or
   description:
   slug: or
   sub_categories:
     - title: Not yet known
+      tower: 
     - title: Other
+      tower: 
 
+# add tower to each sub-category DONE
+# add tower field to the support_categories table DONE
+# edit seed_categories to do cat.tower (run through it same as the others)
+# when filtering look for all subcategories where the tower is equal to the selected tower
+# tower filter is unique towers
