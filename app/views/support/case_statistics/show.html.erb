@@ -38,7 +38,7 @@
           </tr>
         <% end %>
           <tr>
-            <th scope="row" class="govuk-table__header">No category</th>
+            <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.no_sub_category") %></th>
               <% @states.each do |state| %>
               <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
               <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, nil]].to_i %></td>

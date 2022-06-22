@@ -483,6 +483,7 @@ en:
             save_attachments: Save attachments
             using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
+        no_sub_category: No sub-category
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
