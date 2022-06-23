@@ -41,7 +41,7 @@ RSpec.feature "Case statistics page" do
       end
 
       it "displays the number of cases in each category by state" do
-        expect(all("h2.govuk-heading-m")[1]).to have_text "Number of cases by category and state"
+        expect(all("h2.govuk-heading-m")[1]).to have_text "Number of cases by sub-category and state"
         expect(all("th.govuk-table__header")[6]).to have_text "OS software"
         expect(all("th.govuk-table__header")[7]).to have_text "New"
         expect(all("td.govuk-table__cell")[6]).to have_text "1"
@@ -56,7 +56,7 @@ RSpec.feature "Case statistics page" do
       end
 
       it "displays the number of cases with no category by state" do
-        expect(all("th.govuk-table__header")[12]).to have_text "No category"
+        expect(all("th.govuk-table__header")[12]).to have_text "No sub-category"
         expect(all("th.govuk-table__header")[13]).to have_text "New"
         expect(all("td.govuk-table__cell")[11]).to have_text "0"
         expect(all("th.govuk-table__header")[14]).to have_text "Open"

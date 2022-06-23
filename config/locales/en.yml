@@ -409,8 +409,8 @@ en:
         labels:
           all: All
           assignee: Filter by assignee
-          category: Filter by category
           state: Filter by status
+          sub_category: Filter by sub-category
       header:
         action: Actions
         case_attachments: Attachments
@@ -424,12 +424,12 @@ en:
         add_note: Add a case note
         additional_data:
           support_request:
-            category: Category
             email: Email address
             first_name: First name
             last_name: Last name
             message: Message
             phone_number: Phone number
+            sub_category: Sub-category
             support_request_id: Support request ID
         assign_to_agent: Assign to case worker
         assigned_to: Assigned to
@@ -448,7 +448,6 @@ en:
             note: Note
             type: Type
         case_value: Case value
-        category: Category
         change_owner: Change case owner
         close: Close case
         confidence_level: Confidence level
@@ -484,6 +483,7 @@ en:
             save_attachments: Save attachments
             using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
+        no_sub_category: No sub-category
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
@@ -538,6 +538,7 @@ en:
           state_resolve: Resolved
           state_resolved: Resolved
         status: Status
+        sub_category: Sub-category
         support_level:
           L1: 1 - General guidance
           L2: 2 - Specific advice
@@ -601,11 +602,11 @@ en:
         header: Are you sure you want to close this case?
         table:
           case_id: Case ID
-          category: Category
           contact_email: Contact email
           date_received: Date received
           last_updated: Last updated
           organisation: Organisation
+          sub_category: Sub-category
     case_contact_details:
       flash:
         updated: Contact details updated successfully
@@ -704,7 +705,6 @@ en:
       label:
         case_source: Case source
         case_type: Type of case
-        category: Procurement category
         category_id: Buying category
         email: Contact email
         email_preview: Preview email
@@ -730,7 +730,7 @@ en:
         other_query: Other
         phone_number: Contact phone number %{optional}
         procurement: Procurement
-        procurement_category_details: Procurement category details
+        procurement_sub_category_details: Procurement sub-category details
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         query: Query
@@ -742,6 +742,7 @@ en:
         school_ukprn: Organisation UKPRN
         school_urn: Organisation URN
         source: Source
+        sub_category: Procurement sub-category
         type: Type
       request_type:
         legend: Request type
@@ -756,7 +757,7 @@ en:
         table:
         - Case
         - Organisation
-        - Category
+        - Sub-category
         - Status
         - Assigned to
         - Date received
@@ -792,9 +793,9 @@ en:
       submit: Save selected organisation
     case_request_details:
       check_answers:
-        category: Category
         change: Change
         query: Query
+        sub_category: Sub-category
         submit: Submit
         title: Check your answers before updating request details
         type: Type
@@ -847,7 +848,7 @@ en:
       body:
         no_of_cases: Number of cases
         no_of_cases_by_state: Number of cases by state
-        no_of_cases_by_state_and_category: Number of cases by category and state
+        no_of_cases_by_state_and_sub_category: Number of cases by sub-category and state
       download:
         csv: Download CSV
         header: Case data
