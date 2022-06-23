@@ -23,9 +23,5 @@ module Support
     def self.other_category_id
       find_by(title: "Other")&.id
     end
-
-    def self.grouped_opts
-      top_level.map { |category| [category.title, category.sub_categories.pluck(:title, :id).to_h].to_h }
-    end
   end
 end
