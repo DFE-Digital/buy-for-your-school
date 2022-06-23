@@ -16,19 +16,16 @@ module Support
     # validates :slug, presence: true
 
     scope :top_level, -> { where(parent_id: nil) }
+    scope :sub_categories, -> { where.not(parent_id: nil) }
     scope :ordered_by_title, -> { order(title: :asc) }
+    scope :except_for, ->(title) { where.not(title: title) }
 
     def self.other_category_id
       find_by(title: "Other")&.id
     end
 
     def self.grouped_opts
-      top_level.includes([:sub_categories]).each_with_object({}) do |category, parent_hash|
-        parent_hash[category.title] =
-          category.sub_categories.each_with_object({}) do |sub_category, child_hash|
-            child_hash[sub_category.title] = sub_category.id
-          end
-      end
+      top_level.map { |category| [category.title, category.sub_categories.pluck(:title, :id).to_h].to_h }
     end
   end
 end

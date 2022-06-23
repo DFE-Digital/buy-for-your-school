@@ -59,6 +59,9 @@
     - title: Telecoms & Broadband
       description:
       slug: broadband
+    - title: MFD
+      slug: mfd
+      description:
 
 
 - title: FM
@@ -133,10 +136,7 @@
 - title: Business Services
   description:
   slug: business
-  sub_categories:
-    - title: MFD
-      slug: mfd
-
+  sub_categories: []
 
 - title: Financial
   description:
