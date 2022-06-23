@@ -26,14 +26,4 @@ RSpec.describe Support::Category, type: :model do
       end
     end
   end
-
-  describe ".grouped_options" do
-    context "with sub categories" do
-      let(:parent_category) { create(:support_category, :with_sub_category) }
-
-      it "returns nested hash" do
-        expect(parent_category.class.grouped_opts).to be_categorised(parent: parent_category.title, child: parent_category.sub_categories.first.title)
-      end
-    end
-  end
 end
