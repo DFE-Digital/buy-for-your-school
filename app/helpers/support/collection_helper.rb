@@ -1,13 +1,15 @@
 module Support
   module CollectionHelper
     def procurement_category_grouped_options(selected_category_id: -1)
-      Support::Category.grouped_opts.collect do |parent_name, sub_categories|
-        [parent_name,
-         sub_categories.collect { |name, value|
-           if name != "No applicable category"
-             [name, value, { selected: selected_category_id == value }]
-           end
-         }.compact]
+      category_to_select_option = ->(category) { [category.title, category.id, { selected: selected_category_id == category.id }] }
+
+      Support::Category.top_level.each_with_object([]) do |category, grouped_options|
+        sub_categories = category.sub_categories.except_for("No applicable category")
+
+        # Don't show categories with no sub-categories
+        next unless sub_categories.any?
+
+        grouped_options << [category.title, sub_categories.map(&category_to_select_option)]
       end
     end
 
