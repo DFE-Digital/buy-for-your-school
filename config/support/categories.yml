@@ -236,9 +236,3 @@
       tower: 
     - title: Other
       tower: 
-
-# add tower to each sub-category DONE
-# add tower field to the support_categories table DONE
-# edit seed_categories to do cat.tower (run through it same as the others)
-# when filtering look for all subcategories where the tower is equal to the selected tower
-# tower filter is unique towers

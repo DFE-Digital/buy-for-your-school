@@ -4,5 +4,9 @@ module Support
     def title
       __getobj__.nil? ? I18n.t("support.case_categorisations.label.none") : super
     end
+
+    def tower
+      __getobj__.nil? ? I18n.t("support.case_categorisations.label.none") : super
+    end
   end
 end

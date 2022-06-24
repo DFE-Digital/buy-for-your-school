@@ -411,6 +411,7 @@ en:
           assignee: Filter by assignee
           category: Filter by category
           state: Filter by status
+          tower: Filter by tower
       header:
         action: Actions
         case_attachments: Attachments
@@ -546,6 +547,7 @@ en:
           L5: 5 - DfE buying by getting quotes or bids
           header: Case level
           unspecified: Not specified
+        tower: Tower  
         value:
           unspecified: Not specified
       link:
