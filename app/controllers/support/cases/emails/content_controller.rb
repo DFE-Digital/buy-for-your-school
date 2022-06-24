@@ -1,3 +1,5 @@
+require "notify/email"
+
 module Support
   class Cases::Emails::ContentController < Cases::ApplicationController
     include MarkdownHelper
@@ -25,9 +27,16 @@ module Support
 
     # return [Hash]
     def personalisation
-      contact = CaseContactPresenter.new(@current_case)
+      template = EmailTemplates::IDS.key(params[:template])
+      details = { from_name: current_agent.full_name }
 
-      { first_name: contact.first_name, last_name: contact.last_name, from_name: current_agent.full_name, reference: @current_case.ref }
+      if template == :exit_survey
+        details.merge!(::Emails::ExitSurvey.new(recipient: @current_case, reference: @current_case.ref, school_name: @current_case.organisation.name).personalisation)
+      else
+        details.merge!(::Notify::Email.new(recipient: @current_case, reference: @current_case.ref, template: params[:template]).personalisation)
+      end
+
+      details
     end
 
     def preview_email_body

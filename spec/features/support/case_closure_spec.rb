@@ -45,7 +45,7 @@ RSpec.feature "Case closure" do
           expect(page).to have_text "000001"
           expect(page).to have_text "Organisation"
           expect(page).to have_text "School #"
-          expect(page).to have_text "Category"
+          expect(page).to have_text "Sub-category"
           expect(page).to have_text "support category title"
           expect(page).to have_text "Contact email"
           expect(page).to have_text "school@email.co.uk"

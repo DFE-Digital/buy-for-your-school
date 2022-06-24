@@ -66,7 +66,6 @@ Rails.application.configure do
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :checkbox_answers
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Support::Case", association: :organisation
   end
 
   # Set active storage location

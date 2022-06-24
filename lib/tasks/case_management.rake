@@ -76,4 +76,12 @@ namespace :case_management do
     resync_email_ids = Support::Messages::Outlook::ResyncEmailIds.new(messages_updated_after: incoming_email_went_live)
     resync_email_ids.call
   end
+
+  desc "Move sub category to new parent"
+  task :change_sub_category_parent, %i[sub_category_title new_parent_category_title] => :environment do |_task, args|
+    sub_category = Support::Category.find_by(title: args.sub_category_title)
+    new_parent_category = Support::Category.find_by(title: args.new_parent_category_title)
+
+    sub_category.update!(parent: new_parent_category)
+  end
 end

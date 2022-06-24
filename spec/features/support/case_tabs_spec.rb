@@ -46,7 +46,7 @@ RSpec.feature "Case summary" do
         expect(all(".govuk-summary-list__row")[1]).to have_text "Case level"
         expect(all(".govuk-summary-list__row")[2]).to have_text "Case value"
         expect(all(".govuk-summary-list__row")[3]).to have_text "Received"
-        expect(all(".govuk-summary-list__row")[4]).to have_text "Category"
+        expect(all(".govuk-summary-list__row")[4]).to have_text "Sub-category"
         expect(all(".govuk-summary-list__row")[5]).to have_text "Procurement amount"
         expect(all(".govuk-summary-list__row")[6]).to have_text "Confidence level"
         expect(all(".govuk-summary-list__row")[7]).to have_text "Special requirements"

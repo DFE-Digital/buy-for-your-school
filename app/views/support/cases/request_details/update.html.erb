@@ -22,7 +22,7 @@
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case_request_details.check_answers.#{@case_request_details_form.request_type ? "category" : "query"}") %>
+        <%= I18n.t("support.case_request_details.check_answers.#{@case_request_details_form.request_type ? "sub_category" : "query"}") %>
       </dt>
       <dd class="govuk-summary-list__value">
         <%= @case_request_details_form.send(@case_request_details_form.request_type ? "category_name" : "query_name") %>

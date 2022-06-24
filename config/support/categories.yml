@@ -75,6 +75,9 @@
     - title: Telecoms & Broadband
       description:
       slug: broadband
+    - title: MFD
+      slug: mfd
+      description:
       tower: ICT
 
 
@@ -173,11 +176,7 @@
 - title: Business Services
   description:
   slug: business
-  sub_categories:
-    - title: MFD
-      slug: mfd
-      tower: ICT
-
+  sub_categories: []
 
 - title: Financial
   description:
@@ -233,6 +232,6 @@
   slug: or
   sub_categories:
     - title: Not yet known
-      tower: 
+      tower:
     - title: Other
-      tower: 
+      tower:

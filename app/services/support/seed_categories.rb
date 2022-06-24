@@ -31,7 +31,7 @@ module Support
         end
 
         group["sub_categories"].each do |sub_group|
-          sub_category = category.sub_categories.find_or_create_by!(title: sub_group["title"])
+          sub_category = category.sub_categories.find_or_initialize_by(title: sub_group["title"])
           sub_category.description = sub_group["description"]
           sub_category.slug = sub_group["slug"]
           sub_category.tower = sub_group["tower"]

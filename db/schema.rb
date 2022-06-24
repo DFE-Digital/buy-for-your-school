@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_25_154235) do
+ActiveRecord::Schema.define(version: 2022_06_10_125240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -296,6 +296,7 @@ ActiveRecord::Schema.define(version: 2022_05_25_154235) do
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.string "confidence_level"
     t.string "special_requirements"
+    t.boolean "exit_survey_sent", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"

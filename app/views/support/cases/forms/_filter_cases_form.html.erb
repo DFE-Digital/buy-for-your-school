@@ -20,7 +20,7 @@
                               options_for_select(form.object.categories.map { |a| [a.title, a.id] },
                                                  params.dig(scope, :category)),
                               options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
-                              label: { text: I18n.t("support.case.filter.labels.category") } %>
+                              label: { text: I18n.t("support.case.filter.labels.sub_category") } %>
       </div>
 
       <div class="govuk-grid-column-one-quarter">
