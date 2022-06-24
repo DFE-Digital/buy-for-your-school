@@ -7,6 +7,22 @@ describe "Resolving a case" do
   let(:support_case) { create(:support_case, :opened, agent: existing_agent) }
 
   before do
+    # exit survey stub
+    stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
+      .with(body: {
+        "email_address": "school@email.co.uk",
+        "template_id": "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+        "reference": "000001",
+        "personalisation": {
+          "reference": "000001",
+          "first_name": "School",
+          "last_name": "Contact",
+          "email": "school@email.co.uk",
+          "survey_query_string": /\?Q_EED=/,
+        },
+      })
+      .to_return(body: {}.to_json, status: 200, headers: {})
+
     click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Resolve case"

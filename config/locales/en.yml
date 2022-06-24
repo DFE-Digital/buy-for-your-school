@@ -917,6 +917,7 @@ en:
       link_to_email_preview: Open email preview in new tab
       message:
         created_flash: "%{type} added to case"
+        exit_survey_sent: The exit survey email has been sent
       type:
         create_case: Case created
         email_from_school: Email from school
