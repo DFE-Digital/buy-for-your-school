@@ -61,15 +61,3 @@
 </p>
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-
-<h3 class="govuk-heading-m">
-  <%= link_to I18n.t("support.case_email_templates.index.exit_survey.link_text"),
-  support_case_email_content_path(@current_case, template: Support::EmailTemplates::IDS[:exit_survey]),
-  class: "govuk-link" %>
-</h3>
-
-<p class="govuk-body">
-  <%= I18n.t("support.case_email_templates.index.exit_survey.subtitle") %>
-</p>
-
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
