@@ -6,6 +6,7 @@ ruby "3.0.1"
 
 gem "aasm"
 gem "aws-sdk-s3", require: false
+gem "babel-transpiler"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.16"
@@ -85,5 +86,6 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov"
+  gem "show_me_the_cookies"
   gem "webmock"
 end
