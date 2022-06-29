@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       post "category" => "categories#changed"
       resources :pages, only: %i[create destroy]
     end
+
+    namespace :find_a_framework do
+      post "framework" => "frameworks#changed"
+    end
   end
 
   # NB: guard against use of back button after form validation errors
