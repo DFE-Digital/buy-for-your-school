@@ -21,3 +21,4 @@
 //= require components/close-tab-link
 //= require components/toggle-panel-visibility
 //= require components/tinymce
+//= require components/hide

@@ -33,6 +33,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  config.include ShowMeTheCookies, type: :feature
   config.include CategoryHelpers
   config.include ContentfulHelpers
   config.include JourneyHelpers, type: :feature

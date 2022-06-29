@@ -28,9 +28,11 @@
   </head>
 
   <body class="govuk-template__body ">
-      <%= javascript_tag nonce: true do -%>
+    <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
+
+    <%= render "cookie_preferences/banner" %>
 
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
@@ -108,7 +110,6 @@
       </div>
     </footer>
 
-    <%= tinymce_assets %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
     <%= render partial: "layouts/redirect" %>
     <%= javascript_tag nonce: true do -%>
