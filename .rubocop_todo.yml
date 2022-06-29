@@ -17,6 +17,8 @@ Lint/AmbiguousBlockAssociation:
 # SupportedStyles: snake_case, camelCase
 Naming/MethodName:
   EnforcedStyle: snake_case
+  Exclude:
+    - 'lib/microsoft_graph/microsoft_graph.rb'
 
 # Offense count: 23
 RSpec/AnyInstance:
