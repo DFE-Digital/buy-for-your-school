@@ -411,6 +411,7 @@ en:
           assignee: Filter by assignee
           state: Filter by status
           sub_category: Filter by sub-category
+          tower: Filter by tower
       header:
         action: Actions
         case_attachments: Attachments

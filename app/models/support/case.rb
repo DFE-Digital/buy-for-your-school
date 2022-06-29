@@ -60,6 +60,7 @@ module Support
     scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
     scope :by_state, ->(state) { where(state: state) }
     scope :by_category, ->(category_id) { where(category_id: category_id) }
+    scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: tower }) }
 
     # Support level
     #

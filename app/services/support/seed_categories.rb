@@ -2,9 +2,6 @@ require "yaml"
 require "dry-initializer"
 require "types"
 
-# make task that goes through support categories and renames No applicable category to Other
-# put this in seed categories and run first so it won't add a new one
-
 module Support
   #
   # Persist (Sub)Categories from YAML file
@@ -34,10 +31,11 @@ module Support
         end
 
         group["sub_categories"].each do |sub_group|
-          category.sub_categories.find_or_create_by!(title: sub_group["title"]) do |cat|
-            cat.description = sub_group["description"]
-            cat.slug = sub_group["slug"]
-          end
+          sub_category = category.sub_categories.find_or_initialize_by(title: sub_group["title"])
+          sub_category.description = sub_group["description"]
+          sub_category.slug = sub_group["slug"]
+          sub_category.tower = sub_group["tower"]
+          sub_category.save!
         end
       end
     end

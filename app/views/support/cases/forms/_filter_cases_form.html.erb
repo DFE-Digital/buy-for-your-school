@@ -23,6 +23,14 @@
                               label: { text: I18n.t("support.case.filter.labels.sub_category") } %>
       </div>
 
+      <div class="govuk-grid-column-one-quarter">
+        <%= form.govuk_select :tower,
+                              options_for_select(form.object.towers,
+                                                 params.dig(scope, :tower)),
+                              options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
+                              label: { text: I18n.t("support.case.filter.labels.tower") } %>
+      </div>
+
       <% if tab == "all-cases" %>
         <div class="govuk-grid-column-one-quarter">
           <%= form.govuk_select :agent,

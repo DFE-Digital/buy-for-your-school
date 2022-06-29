@@ -23,5 +23,9 @@ module Support
     def self.other_category_id
       find_by(title: "Other")&.id
     end
+
+    def self.unique_towers
+      order(tower: :asc).where.not(tower: nil).pluck(:tower).uniq
+    end
   end
 end

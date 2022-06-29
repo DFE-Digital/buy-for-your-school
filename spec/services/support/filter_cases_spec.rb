@@ -4,7 +4,7 @@ RSpec.describe Support::FilterCases, bullet: :skip do
   end
 
   let(:catering_cat) { create(:support_category, title: "Catering") }
-  let(:it_cat) { create(:support_category, title: "IT") }
+  let(:it_cat) { create(:support_category, title: "IT", tower: "ICT") }
   let(:agent) { create(:support_agent, first_name: "Example Support Agent") }
 
   before do
@@ -54,6 +54,17 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         it "filters by agent" do
           expect(service.new.filter(filtering_params).count).to be(1)
           expect(service.new.filter(filtering_params).first.agent.first_name).to eql("Example Support Agent")
+        end
+      end
+
+      context "when filtered by tower" do
+        let(:filtering_params) do
+          { tower: it_cat.tower }
+        end
+
+        it "filters by tower" do
+          expect(service.new.filter(filtering_params).count).to be(1)
+          expect(service.new.filter(filtering_params).first.category.tower).to eql("ICT")
         end
       end
     end

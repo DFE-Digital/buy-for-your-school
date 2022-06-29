@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_10_125240) do
+ActiveRecord::Schema.define(version: 2022_06_22_125156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -315,6 +315,7 @@ ActiveRecord::Schema.define(version: 2022_06_10_125240) do
     t.string "slug"
     t.string "description"
     t.uuid "parent_id"
+    t.string "tower"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
@@ -599,6 +600,25 @@ ActiveRecord::Schema.define(version: 2022_06_10_125240) do
        JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
     WHERE (egroups.status <> 2);
   SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -607,7 +627,7 @@ ActiveRecord::Schema.define(version: 2022_06_10_125240) do
       sc.source AS case_source,
       sc.state AS case_state,
       sc.closure_reason AS case_closure_reason,
-      cat.title AS category_title,
+      cat.title AS sub_category_title,
       sc.savings_actual,
       sc.savings_actual_method,
       sc.savings_estimate,
@@ -700,24 +720,5 @@ ActiveRecord::Schema.define(version: 2022_06_10_125240) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
 end
