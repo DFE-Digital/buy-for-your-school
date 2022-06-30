@@ -2,5 +2,5 @@
 
 <% if redirect_url %>
   <%= content_tag :div, nil, id: "js-redirect", data: { redirect_url: redirect_url } %>
-  <%= javascript_include_tag 'redirect' %>
+  <%= javascript_include_tag 'misc/redirect' %>
 <% end %>

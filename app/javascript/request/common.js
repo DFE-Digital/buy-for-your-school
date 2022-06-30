@@ -9,3 +9,5 @@ function getFormId() {
 function getFormIdUnderscore() {
   return getFormId().replaceAll("-", "_");
 }
+
+export { getFormId, getFormIdUnderscore }

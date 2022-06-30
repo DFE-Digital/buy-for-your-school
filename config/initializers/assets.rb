@@ -8,30 +8,38 @@ Rails.application.config.assets.version = "1.0"
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 
-# Add the GOVUK Frontend images path
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets/images")
+# JS-bundling
+Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 
-# Add the GOVUK Frontend fonts path
+# Add the GOVUK Frontend assets paths
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets/images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets/fonts")
+
+### PLEASE NOTE - DUE TO THE WAY govuk-frontend WORKS THE PRODUCTION SERVER SERVES NON DIGESTED
+###               VERSIONS OF SOME ASSETS DUE TO THE CSS NOT REFERENCING DIGESTED VERSIONS
+### PLEASE SEE  - https://github.com/DFE-Digital/rails-template/pull/8
+###             - https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#copy-the-font-and-image-files-into-your-application
+###             - ./script/assets/copy-assets.sh
+
+# Add GOVUK assets by name, these are assets not loaded via sass
+Rails.application.config.assets.precompile += [
+  "images/favicon.ico",
+  "images/govuk-apple-touch-icon-152x152.png",
+  "images/govuk-apple-touch-icon-167x167.png",
+  "images/govuk-apple-touch-icon-180x180.png",
+  "images/govuk-apple-touch-icon.png",
+  "images/govuk-crest-2x.png",
+  "images/govuk-crest.png",
+  "images/govuk-logotype-crown.png",
+  "images/govuk-mask-icon.svg",
+  "images/govuk-opengraph-image.png"
+]
 
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join("node_modules")
 
-# Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in the app/assets
-# folder are already added.
-# Rails.application.config.assets.precompile += %w( admin.js admin.css )
-
-# Add GOVUK assets by name, these are assets not loaded via sass
-Rails.application.config.assets.precompile += [
-  "favicon.ico",
-  "govuk-apple-touch-icon-152x152.png",
-  "govuk-apple-touch-icon-167x167.png",
-  "govuk-apple-touch-icon-180x180.png",
-  "govuk-apple-touch-icon.png",
-  "govuk-crest-2x.png",
-  "govuk-crest.png",
-  "govuk-logotype-crown.png",
-  "govuk-mask-icon.svg",
-  "govuk-opengraph-image.png",
-]
+# Add TinyMce To precompile (is referenced seperately to application.js)
+# NOTE: it's static assets are copied to public/assets/tinymce to be served
+# See: ./script/assets/copy-assets.sh
+Rails.application.config.assets.precompile << "tinymce/tinymce.min.js"

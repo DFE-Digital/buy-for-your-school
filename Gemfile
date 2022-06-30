@@ -9,6 +9,7 @@ gem "aws-sdk-s3", require: false
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.16"
+gem "cssbundling-rails", "~> 1.1"
 gem "dry-struct"
 gem "dry-transformer"
 gem "dry-validation"
@@ -20,6 +21,7 @@ gem "httparty"
 gem "httpclient"
 gem "jbuilder", "~> 2.11"
 gem "jquery-rails"
+gem 'jsbundling-rails'
 gem "jwt"
 gem "liquid"
 gem "loaf"
@@ -38,12 +40,10 @@ gem "redis", "~> 4.5"
 gem "redis-namespace"
 gem "redis-rails"
 gem "rollbar"
-gem "sass-rails", "~> 6.0"
 gem "scenic"
 gem "sidekiq", "~> 6.4"
 gem "sidekiq-cron", "~> 1.2"
 gem "thor"
-gem "tinymce-rails"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
@@ -87,3 +87,4 @@ group :test do
   gem "simplecov"
   gem "webmock"
 end
+
