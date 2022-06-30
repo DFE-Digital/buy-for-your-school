@@ -118,7 +118,7 @@ RSpec.feature "Edit case procurement details" do
       expect(procurement.required_agreement_type).to eq "one_off"
       expect(procurement.route_to_market).to eq "direct_award"
       expect(procurement.reason_for_route_to_market).to eq "school_pref"
-      expect(procurement.framework.name).to eq "Test framework"
+      expect(procurement.framework.name).to match(/Test framework \d+/)
       expect(procurement.started_at).to eq Date.parse("2020-12-3")
       expect(procurement.ended_at).to eq Date.parse("2021-12-2")
       expect(procurement.stage).to eq "need"

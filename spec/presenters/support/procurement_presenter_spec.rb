@@ -86,7 +86,7 @@ RSpec.describe Support::ProcurementPresenter do
   describe "#framework_name" do
     context "when present" do
       it "returns the framework name" do
-        expect(presenter.framework_name).to eq "Test framework"
+        expect(presenter.framework_name).to match(/Test framework \d+/)
       end
     end
 
