@@ -45,6 +45,7 @@ class JourneysController < ApplicationController
         journey_id: journey.id,
         user_id: journey.user.id,
         contentful_category_id: journey.category.contentful_id,
+        contentful_category: journey.category.title,
       ).call
 
       redirect_to journey_path(journey)
@@ -77,6 +78,7 @@ class JourneysController < ApplicationController
       journey_id: @journey.id,
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
+      contentful_category: @journey.category.title,
     ).call
   end
 

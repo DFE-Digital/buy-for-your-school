@@ -42,6 +42,7 @@ class SpecificationsController < ApplicationController
       journey_id: current_journey.id,
       user_id: current_user.id,
       contentful_category_id: current_journey.category.contentful_id,
+      contentful_category: current_journey.category.title,
       data: {
         format: request.format.symbol,
         all_tasks_completed: current_journey.all_tasks_completed?,
