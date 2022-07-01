@@ -18,6 +18,6 @@ describe "Visitor to GHBS service sees cookie banner", js: true do
   end
 
   def_Then :"I have a cookie to enable tracking with GA" do
-    # expect(get_me_the_cookie(:cookie_consent)).not_to be(nil)
+    expect(page).to have_content("You’ve accepted analytics cookies")
   end
 end
