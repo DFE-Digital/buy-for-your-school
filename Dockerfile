@@ -80,6 +80,7 @@ COPY package.json ${APP_HOME}/package.json
 COPY babel.config.js ${APP_HOME}/babel.config.js
 COPY .browserslistrc ${APP_HOME}/.browserslistrc
 
+COPY --from=assets /deps/node_modules /srv/node_modules
 COPY --from=assets /deps/node_modules $APP_HOME/node_modules
 
 RUN yarn config set ignore-engines true

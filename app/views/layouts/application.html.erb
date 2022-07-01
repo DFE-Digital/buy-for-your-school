@@ -32,7 +32,9 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
 
-    <%= render "cookie_preferences/banner" %>
+    <% unless support? %>
+      <%= render "cookie_preferences/banner" %>
+    <% end %>
 
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
