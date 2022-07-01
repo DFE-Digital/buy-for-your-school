@@ -2,26 +2,28 @@
 
 class Api::FindAFramework::FrameworksController < Api::FindAFramework::BaseController
   def changed
-    framework = Support::Framework.upsert(
-      {
-        name: framework_params[:title],
-        supplier: framework_params[:provider][:initials],
-        category: framework_params[:cat][:title],
-        expires_at: framework_params[:expiry],
-      },
-      unique_by: %i[name supplier],
-      returning: %w[name supplier],
-    )
-
-    if framework.first
-      render json: { status: "OK" }, status: :ok
-      Rollbar.info("Processed webhook event for FaF framework", **framework.first)
+    added_frameworks = []
+    framework_params.each do |framework|
+      f = Support::Framework.upsert(
+        {
+          name: framework[:title],
+          supplier: framework[:provider][:initials],
+          category: framework[:cat][:title],
+          expires_at: framework[:expiry],
+        },
+        unique_by: %i[name supplier],
+        returning: %w[name supplier],
+      )
+      added_frameworks << f.first
     end
+
+    render json: { status: "OK" }, status: :ok
+    Rollbar.info("Processed webhook event for FaF framework", added_frameworks)
   end
 
 private
 
   def framework_params
-    params.require(:framework).permit(:title, { provider: [:initials] }, { cat: [:title] }, :expiry)
+    params.permit(_json: [:title, { provider: [:initials] }, { cat: [:title] }, :expiry])[:_json]
   end
 end

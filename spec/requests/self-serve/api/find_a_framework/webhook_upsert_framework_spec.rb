@@ -1,22 +1,26 @@
 RSpec.describe "Webhook upserts frameworks", type: :request do
   let(:webhook_payload) do
-    {
-      "title" => "Framework title",
-      "provider" => {
-        "initials" => "PRVDR",
+    [
+      {
+        "title" => "Framework title",
+        "provider" => {
+          "initials" => "PRVDR",
+        },
+        "cat" => {
+          "title" => "Supplies",
+        },
+        "expiry" => "2022-12-31",
       },
-      "cat" => {
-        "title" => "Supplies",
-      },
-      "expiry" => "2022-12-31",
-    }
+    ]
   end
 
   let(:rollbar_info) do
-    {
-      "name" => "Framework title",
-      "supplier" => "PRVDR",
-    }
+    [
+      {
+        "name" => "Framework title",
+        "supplier" => "PRVDR",
+      },
+    ]
   end
 
   before do
