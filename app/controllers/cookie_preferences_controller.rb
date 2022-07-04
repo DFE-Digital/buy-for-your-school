@@ -3,7 +3,7 @@ class CookiePreferencesController < ApplicationController
 
   # display cookies in use
   def show
-    @form = CookiePreferencesForm.new(accepted_or_rejected: cookies['cookie_policy'])
+    @form = CookiePreferencesForm.new(accepted_or_rejected: cookie_policy.response)
   end
 
   # form to update preferences
@@ -12,13 +12,11 @@ class CookiePreferencesController < ApplicationController
 
   # save updates to preferences
   def update
-    cookies[:cookie_policy] = { value: cookie_preferences_params[:accepted_or_rejected], expires: 1.year.from_now }
-
-    user_has_accepted = cookie_preferences_params[:accepted_or_rejected] == "accepted"
+    cookie_policy.response = cookie_preferences_params[:accepted_or_rejected]
 
     respond_to do |format|
       format.html { redirect_to cookie_preferences_path, notice: I18n.t("cookies.information.updated.success") }
-      format.js   { render user_has_accepted ? :update_cookies_accepted : :update_cookies_rejected }
+      format.js   { render cookie_policy.accepted? ? :update_cookies_accepted : :update_cookies_rejected }
     end
   end
 

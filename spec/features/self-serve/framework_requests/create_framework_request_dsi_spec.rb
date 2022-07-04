@@ -21,12 +21,8 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         expect(page).to have_link "Select whether you want to use a DfE Sign-in account", href: "#framework-support-form-dsi-field-error"
       end
 
-      # Javascript is used to change the form action
-      context "and user selects DfE Sign-in", js: true do
-        it "redirects to DSI" do
-          find("label", text: "Yes, use my DfE Sign-in").click
-          expect(find("form")["action"]).to match(/\/auth\/dfe/)
-        end
+      it "allows the use of DSI" do
+        expect(find("label", text: "Yes, use my DfE Sign-in")).to be_present
       end
     end
   end

@@ -62,10 +62,10 @@ RSpec.feature "User feedback details" do
 
       it "displays the success page" do
         expect(page).to have_breadcrumbs ["Dashboard", "Get involved"]
-        expect(find("h1.govuk-panel__title")).to have_text "Confirmation"
-        expect(all("p.govuk-body")[0]).to have_text "Thank you for opting in to take part in user research."
-        expect(find("h2.govuk-heading-m")).to have_text "What happens next"
-        expect(all("p.govuk-body")[1]).to have_text "We will contact you via email and invite you to take part in research when it becomes available."
+        expect(page).to have_content "Confirmation"
+        expect(find("p.govuk-body", text: "Thank you for opting in to take part in user research.")).to be_present
+        expect(page).to have_content  "What happens next"
+        expect(find("p.govuk-body", text: "We will contact you via email and invite you to take part in research when it becomes available.")).to be_present
         expect(page).to have_link "Go to Find an approved framework", href: "https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school", class: "govuk-link"
       end
     end

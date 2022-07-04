@@ -33,9 +33,8 @@ RSpec.feature "Toggling additional steps" do
       click_continue
 
       # continue to newly revealed statement step
-      within ".govuk-body" do
-        expect(find("h2")).to have_text "Heading 2"
-      end
+      expect(find("h2", text: "Heading 2")).to be_present
+      
       # acknowledge the statement
       click_continue
 

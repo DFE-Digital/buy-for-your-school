@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :support?
+  helper_method :current_user, :support?, :cookie_policy
 
   # @return [User, Guest]
   #
@@ -59,5 +59,9 @@ protected
 
   def set_active_storage_host
     ActiveStorage::Current.host = request.base_url
+  end
+
+  def cookie_policy
+    CookiePolicy.new(cookies)
   end
 end

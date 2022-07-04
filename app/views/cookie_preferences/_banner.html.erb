@@ -1,35 +1,36 @@
-<% return if cookies[:cookie_consent].in?(["accepted", "rejected"]) %>
+<% return if cookie_policy.set? %>
 
-<div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on Get Help Buying for Schools">
+<div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="<%= I18n.t("cookies.banner.header") %>">
   <div id="cookie-step-1" class="govuk-cookie-banner__message govuk-width-container">
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on Get Help Buying for Schools</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+          <%= I18n.t("cookies.banner.header") %>
+        </h2>
 
         <div class="govuk-cookie-banner__content">
-          <p class="govuk-body">We use some essential cookies to make this service work.</p>
-          <p class="govuk-body">We&rsquo;d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+          <% I18n.t("cookies.banner.description").each do |text| %>
+            <p class="govuk-body"><%= text %></p>
+          <% end %>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group flex-align-center">
-      <%= button_to "Accept analytics cookies", cookie_preferences_path,
+      <%= button_to I18n.t("cookies.banner.actions.accept"), cookie_preferences_path,
             method: :patch,
             remote: true,
             params: { "cookie_preferences_form[accepted_or_rejected]" => "accepted" },
-            class: "govuk-button",
-            data: { disable_with: "loading..." } %>
+            class: "govuk-button" %>
 
-      <%= button_to "Reject analytics cookies", cookie_preferences_path,
+      <%= button_to I18n.t("cookies.banner.actions.reject"), cookie_preferences_path,
             method: :patch,
             remote: true,
             params: { "cookie_preferences_form[accepted_or_rejected]" => "rejected" },
-            class: "govuk-button",
-            data: { disable_with: "loading..." } %>
+            class: "govuk-button" %>
 
-      <%= link_to "View cookies", cookie_preferences_path, class: "govuk-link" %>
+      <%= link_to I18n.t("cookies.banner.actions.view_cookies"), cookie_preferences_path, class: "govuk-link" %>
     </div>
   </div>
 
@@ -39,14 +40,16 @@
       <div class="govuk-grid-column-two-thirds">
 
         <div class="govuk-cookie-banner__content">
-          <p class="govuk-body">You&rsquo;ve accepted analytics cookies. You can <%= link_to "change your cookie settings", cookie_preferences_path, class: "govuk-link" %> at any time.</p>
+          <p class="govuk-body">
+            <%= I18n.t("cookies.banner.accepted.message", action_link: (link_to I18n.t("cookies.banner.accepted.action_link"), cookie_preferences_path, class: "govuk-link")).html_safe %>
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
       <button class="govuk-button" data-module="govuk-button" data-hide=".govuk-cookie-banner">
-        Hide cookie message
+        <%= I18n.t("cookies.banner.accepted.hide") %>
       </button>
     </div>
   </div>
@@ -57,14 +60,16 @@
       <div class="govuk-grid-column-two-thirds">
 
         <div class="govuk-cookie-banner__content">
-          <p class="govuk-body">You&rsquo;ve rejected analytics cookies. You can <%= link_to "change your cookie settings", cookie_preferences_path, class: "govuk-link" %> at any time.</p>
+          <p class="govuk-body">
+          <%= I18n.t("cookies.banner.rejected.message", action_link: (link_to I18n.t("cookies.banner.rejected.action_link"), cookie_preferences_path, class: "govuk-link")).html_safe %>
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
       <button class="govuk-button" data-module="govuk-button" data-hide=".govuk-cookie-banner">
-        Hide cookie message
+        <%= I18n.t("cookies.banner.rejected.hide") %>
       </button>
     </div>
   </div>

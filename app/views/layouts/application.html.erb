@@ -2,6 +2,14 @@
 <html lang="en" class="govuk-template ">
 
   <head>
+    <% if Rails.env.production? && !support? %>
+      <%= javascript_include_tag "google-tag-manager/include" %>
+
+      <% if cookie_policy.accepted? %>
+        <%= javascript_include_tag "google-tag-manager/activate" %>
+      <% end %>
+    <% end %>
+
     <meta charset="utf-8">
     <title>
       <%= content_for?(:title) ? yield(:title) : "Buy for your school" %>
@@ -28,6 +36,13 @@
   </head>
 
   <body class="govuk-template__body ">
+    <% if Rails.env.production? && cookie_policy.accepted? %>
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXQDGR"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+    <% end %>
+
     <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
