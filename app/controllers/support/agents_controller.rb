@@ -1,5 +1,5 @@
 module Support
-  class AgentsController < ApplicationController
+  class AgentsController < ::Support::ApplicationController
     skip_before_action :authenticate_agent!, only: :create
 
     def create

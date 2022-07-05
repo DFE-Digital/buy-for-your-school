@@ -270,6 +270,8 @@ GEM
       aes_key_wrap
       bindata
     jwt (2.4.0)
+    knapsack (4.0.0)
+      rake
     libv8-node (16.10.0.0-arm64-darwin)
     libv8-node (16.10.0.0-x86_64-darwin)
     libv8-node (16.10.0.0-x86_64-linux)
@@ -616,6 +618,7 @@ DEPENDENCIES
   jbuilder (~> 2.11)
   jquery-rails
   jwt
+  knapsack
   liquid
   listen (>= 3.0.5, < 3.8)
   loaf
