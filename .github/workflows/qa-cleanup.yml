@@ -16,8 +16,6 @@ env:
 
 jobs:
   destroy:
-    if: contains(github.event.pull_request.labels.*.name, 'in-qa-env')
-
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +29,6 @@ jobs:
       - name: Destroy QA app
         env:
           GITHUB_SECRETS_JSON: ${{ toJson(secrets) }}
-          TF_VAR_docker_image: ${{needs.build.outputs.tf_var_docker_image}}
           TF_VAR_environment: "qa-${{ github.event.number }}"
           TF_VAR_cloudfoundry_space: "sct-preview"
           TF_VAR_s3_bucket_name: "s3-bucket-qa-${{ github.event.number }}"

@@ -1,0 +1,195 @@
+name: Deploy a docker image to an environment
+description: Deploy a docker image to an environment
+
+inputs:
+  docker_image:
+    description: The docker image that will be deployed
+    required: true
+  deployment_environment:
+    description: The environment to deploy to (qa, staging, production)
+    required: true
+  pr_number:
+    description: The number of the pull request (#1234) - Used to name QA application
+    required: false
+  github_secrets_json:
+    description: Github screts json
+    required: true
+  cf_username:
+    description: CF_USER
+    required: true
+  cf_password:
+    description: CF_PASSWORD
+    required: true
+  rollbar_access_token:
+    description: ROLLBAR_ACCESS_TOKEN
+    required: true
+  github_token:
+    description: GITHUB_TOKEN
+    required: true
+  aws_access_key_id:
+    description: AWS_ACCESS_KEY_ID
+    required: true
+  aws_secret_access_key:
+    description: AWS_SECRET_ACCESS_KEY
+    required: true
+
+outputs:
+  application_url:
+    description: The URL of the application that has been deployed
+    value: ${{ steps.prep.outputs.application_url }}
+  is_first_release:
+    description: Is this the first release of this application
+    value: ${{ steps.check_deploy.outputs.is_first_release }}
+
+runs:
+  using: composite
+  steps:
+    - name: Terraform pin version
+      uses: hashicorp/setup-terraform@v1.3.2
+      with:
+        terraform_version: 0.14.7
+
+    - name: Cloudfoundry login
+      shell: bash
+      run: |
+        script/install-cf
+        script/cf-login
+      env:
+        CF_USER: ${{ inputs.cf_username }}
+        CF_PASSWORD: ${{ inputs.cf_password }}
+        TF_VAR_cloudfoundry_space: sct-preview   # log into preview space initially, switch later on...
+
+    - name: Prepare environment
+      id: prep
+      shell: bash
+      run: |
+        if [ "${{ inputs.deployment_environment }}" == "qa" ]; then
+
+          CF_APP_NAME=buy-for-your-school-qa-${{ inputs.pr_number }}
+          STATIC_ROUTE=$(${GITHUB_WORKSPACE}/script/qa/get-free-dsi-redirect-route $CF_APP_NAME)
+          STATIC_ROUTE_NUMBER=$(echo $STATIC_ROUTE | cut -d '-' -f 3)
+          TF_VAR_s3_bucket_name="s3-bucket-qa-${{ inputs.pr_number }}"
+
+          # defined as env var to be picked up by ./scripts/deploy-terraform
+          echo "TF_VAR_s3_bucket_name=$TF_VAR_s3_bucket_name" >> $GITHUB_ENV
+
+          echo ::set-output name=cf_app_name::$CF_APP_NAME
+          echo ::set-output name=cf_space::sct-preview
+          echo ::set-output name=terraform_workspace::qa-${{ inputs.pr_number }}
+          echo ::set-output name=rollbar_env::qa-${STATIC_ROUTE_NUMBER}-gpaas
+          echo ::set-output name=application_url::https://${STATIC_ROUTE}.london.cloudapps.digital
+          echo ::set-output name=clamav_application_suffix::pre-prod
+          echo ::set-output name=clamav_application_space::sct-staging
+          echo ::set-output name=route_domain::london.cloudapps.digital
+          echo ::set-output name=route_hostname::$STATIC_ROUTE
+
+        elif [ "${{ inputs.deployment_environment }}" == "research" ]; then
+
+          echo ::set-output name=cf_app_name::buy-for-your-school-research
+          echo ::set-output name=cf_space::sct-research
+          echo ::set-output name=terraform_workspace::research
+          echo ::set-output name=rollbar_env::research-gpaas
+          echo ::set-output name=application_url::https://buy-for-your-school-research.london.cloudapps.digital
+          echo ::set-output name=clamav_application_suffix::pre-prod
+          echo ::set-output name=clamav_application_space::sct-staging
+          echo ::set-output name=route_domain::london.cloudapps.digital
+          echo ::set-output name=route_hostname::buy-for-your-school-research
+
+        elif [ "${{ inputs.deployment_environment }}" == "staging" ]; then
+
+          echo ::set-output name=cf_app_name::buy-for-your-school-staging
+          echo ::set-output name=cf_space::sct-preview
+          echo ::set-output name=terraform_workspace::staging
+          echo ::set-output name=rollbar_env::staging-gpaas
+          echo ::set-output name=application_url::https://staging-get-help-buying-for-schools.education.gov.uk
+          echo ::set-output name=clamav_application_suffix::pre-prod
+          echo ::set-output name=clamav_application_space::sct-staging
+          echo ::set-output name=route_domain::education.gov.uk
+          echo ::set-output name=route_hostname::staging-get-help-buying-for-schools
+
+        elif [ "${{ inputs.deployment_environment }}" == "production" ]; then
+
+          echo ::set-output name=cf_app_name::buy-for-your-school-prod
+          echo ::set-output name=cf_space::sct-production
+          echo ::set-output name=terraform_workspace::prod
+          echo ::set-output name=rollbar_env::production-gpaas
+          echo ::set-output name=application_url::https://www.get-help-buying-for-schools.service.gov.uk
+          echo ::set-output name=clamav_application_suffix::prod
+          echo ::set-output name=clamav_application_space::sct-production
+          echo ::set-output name=route_domain::get-help-buying-for-schools.service.gov.uk
+          echo ::set-output name=route_hostname::www
+
+        fi
+
+    - name: Switch to correct GPaaS Space
+      shell: bash
+      run: cf target -s ${{ steps.prep.outputs.cf_space }}
+
+    - name: Check if first deploy
+      id: check_deploy
+      shell: bash
+      run: |
+        # Record if this is first deploy of the app or not
+        # Do this by checking if it exists already pre-deploy
+        if [[ $(cf apps | grep ${{ steps.prep.outputs.cf_app_name }}) ]]; then
+          echo ::set-output name=is_first_release::true
+        else
+          echo ::set-output name=is_first_release::false
+        fi
+
+    - name: Notify start deploy to Rollbar
+      uses: rollbar/github-deploy-action@2.1.1
+      id: rollbar_pre_deploy
+      with:
+        environment: ${{ steps.prep.outputs.rollbar_env }}
+        version: ${{ github.sha }}
+        status: 'started'
+        local_username: ${{ github.actor }}
+      env:
+        ROLLBAR_ACCESS_TOKEN: ${{ inputs.rollbar_access_token }}
+
+    - name: Deploy application
+      shell: bash
+      run: script/deploy-terraform
+      env:
+        # THERE ARE STILL ALOT OF ENV VARS DEFINED IN GITHUB SECRETS
+        # THIS IS NOT AN EXHASTIVE LIST
+        TF_VAR_environment: ${{ steps.prep.outputs.terraform_workspace }}
+        TF_VAR_docker_image: ${{ inputs.docker_image }}
+        TF_VAR_cloudfoundry_space: ${{ steps.prep.outputs.cf_space }}
+        ENV_APPLICATION_URL: ${{ steps.prep.outputs.application_url }}
+        ENV_ROLLBAR_ENV: ${{ steps.prep.outputs.rollbar_env }}
+        GITHUB_SECRETS_JSON: ${{ inputs.github_secrets_json }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
+        CF_USER: ${{ inputs.cf_username }}
+        CF_PASSWORD: ${{ inputs.cf_password }}
+
+    - name: Map static route
+      shell: bash
+      run: cf map-route ${{ steps.prep.outputs.cf_app_name }} ${{ steps.prep.outputs.route_domain }} --hostname ${{ steps.prep.outputs.route_hostname }}
+
+    - name: Connect to clamav-rest
+      shell: bash
+      run: script/clamav-rest/create-network-policy ${{ steps.prep.outputs.clamav_application_suffix }} ${{ steps.prep.outputs.cf_app_name }} ${{ steps.prep.outputs.clamav_application_space }}
+
+    - name: Notify finish deploy to Rollbar
+      uses: rollbar/github-deploy-action@2.1.1
+      id: rollbar_post_deploy
+      with:
+        environment: ${{ steps.prep.outputs.rollbar_env }}
+        version: ${{ github.sha }}
+        status: ${{ job.status == 'success' && 'succeeded' || 'failed' }}
+        local_username: ${{ github.actor }}
+      env:
+        DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
+        ROLLBAR_ACCESS_TOKEN: ${{ inputs.rollbar_access_token }}
+
+    - name: Smoke test
+      shell: bash
+      run: |
+        status=$(curl -s ${{ steps.prep.outputs.application_url }}/health_check | jq -r .rails)
+        if [[ "$status" != "OK" ]]; then
+          exit 1
+        fi
