@@ -1,0 +1,45 @@
+name: Build and push docker image
+description: Build and push docker image
+
+inputs:
+  target:
+    description: The docker stage to target
+    required: true
+
+outputs:
+  docker_image:
+    description: The docker image and tag that has been built and pushed
+    value: ${{ steps.prep.outputs.tagged_image }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+      name: Checkout Code
+
+    - name: Prepare
+      id: prep
+      shell: bash
+      run: |
+        TAG=$(echo $GITHUB_SHA | head -c7)
+
+        if [ "${{ inputs.target }}" == "test" ]; then
+          echo ::set-output name=tagged_image::ghcr.io/dfe-digital/buy-for-your-school:${TAG}-test
+        else
+          echo ::set-output name=tagged_image::ghcr.io/dfe-digital/buy-for-your-school:${TAG}
+        fi
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        target: ${{ inputs.target }}
+        tags: ${{ steps.prep.outputs.tagged_image }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

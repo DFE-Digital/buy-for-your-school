@@ -115,11 +115,9 @@ RUN bundle install --no-binstubs --retry=10 --jobs=4
 
 RUN apt-get install -qq -y shellcheck wait-for-it
 
-RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/bin/cc-test-reporter
-RUN chmod +x /usr/bin/cc-test-reporter
-
 COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
 COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml
+COPY knapsack_rspec_report.json ${APP_HOME}/knapsack_rspec_report.json
 
 COPY .rspec ${APP_HOME}/.rspec
 COPY spec ${APP_HOME}/spec
