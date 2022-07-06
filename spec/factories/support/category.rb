@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :support_category, class: "Support::Category" do
     sequence(:title) { |n| "support category title #{n}" }
     sequence(:slug) { |n| "support category slug #{n}" }
+    sequence(:tower) { |n| "support category tower #{n}" }
     parent { nil }
     description { "support category description" }
 

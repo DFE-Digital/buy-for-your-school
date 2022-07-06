@@ -411,6 +411,7 @@ en:
           assignee: Filter by assignee
           state: Filter by status
           sub_category: Filter by sub-category
+          tower: Filter by tower
       header:
         action: Actions
         case_attachments: Attachments
@@ -674,7 +675,6 @@ en:
           subtitle: Link to catering on find a framework
         exit_survey:
           link_text: Send the exit survey to closed cases
-          subtitle: Link to exit survey to be sent to all cases closed within the last 7 days
         header: Send template email
         how_to_approach_suppliers:
           link_text: How to approach suppliers

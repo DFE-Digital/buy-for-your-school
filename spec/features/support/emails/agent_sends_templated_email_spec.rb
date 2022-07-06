@@ -53,10 +53,6 @@ describe "Support agent sends a templated email" do
       # support.case_email_templates.index.user_research.link_text
       expect(page).to have_link "Ask schools to take part in user research",
                                 href: "/support/cases/#{support_case.id}/email/content/fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779"
-
-      # support.case_email_templates.index.exit_survey.link_text
-      expect(page).to have_link "Send the exit survey to closed cases",
-                                href: "/support/cases/#{support_case.id}/email/content/134bc268-2c6b-4b74-b6f4-4a58e22d6c8b"
     end
   end
 

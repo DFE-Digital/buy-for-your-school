@@ -17,12 +17,20 @@ module Support
     # @return [String]
     option :agent, optional: true
 
+    # @!attribute [r] tower
+    # @return [String]
+    option :tower, optional: true
+
     def agents
       @agents ||= Support::Agent.caseworkers.map { |a| AgentPresenter.new(a) }
     end
 
     def categories
       @categories ||= Case.joins(:category).select("support_categories.id, support_categories.title").order("support_categories.title").uniq
+    end
+
+    def towers
+      @towers ||= Support::Category.unique_towers
     end
   end
 end
