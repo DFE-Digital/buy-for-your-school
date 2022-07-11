@@ -64,7 +64,7 @@ RSpec.feature "User feedback details" do
         expect(page).to have_breadcrumbs ["Dashboard", "Get involved"]
         expect(page).to have_content "Confirmation"
         expect(find("p.govuk-body", text: "Thank you for opting in to take part in user research.")).to be_present
-        expect(page).to have_content  "What happens next"
+        expect(page).to have_content "What happens next"
         expect(find("p.govuk-body", text: "We will contact you via email and invite you to take part in research when it becomes available.")).to be_present
         expect(page).to have_link "Go to Find an approved framework", href: "https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school", class: "govuk-link"
       end

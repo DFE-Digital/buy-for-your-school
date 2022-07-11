@@ -7,7 +7,7 @@ describe "Visitor can amend cookie preferences" do
     Then :"I am notified my changes have been saved"
   end
 
-  protected
+protected
 
   def_Given :"I am a visitor wanting to update my cookie preferences" do
     visit cookie_preferences_path

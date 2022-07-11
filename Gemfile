@@ -21,7 +21,7 @@ gem "httparty"
 gem "httpclient"
 gem "jbuilder", "~> 2.11"
 gem "jquery-rails"
-gem 'jsbundling-rails'
+gem "jsbundling-rails"
 gem "jwt"
 gem "liquid"
 gem "loaf"
@@ -87,4 +87,3 @@ group :test do
   gem "simplecov"
   gem "webmock"
 end
-

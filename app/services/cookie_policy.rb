@@ -17,7 +17,6 @@ class CookiePolicy
 
   def response=(response)
     @cookies[:cookie_policy] = { value: response, expires: 1.year.from_now }
-    response
   end
 
   def response

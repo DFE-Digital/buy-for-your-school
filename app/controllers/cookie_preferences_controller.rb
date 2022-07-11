@@ -7,8 +7,7 @@ class CookiePreferencesController < ApplicationController
   end
 
   # form to update preferences
-  def edit
-  end
+  def edit; end
 
   # save updates to preferences
   def update
@@ -20,7 +19,7 @@ class CookiePreferencesController < ApplicationController
     end
   end
 
-  private
+private
 
   def cookie_preferences_params
     params.require(:cookie_preferences_form).permit(:accepted_or_rejected)

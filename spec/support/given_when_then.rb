@@ -12,7 +12,7 @@ module GivenWhenThen
       _gwt_define(:Then, name, *args, &block)
     end
 
-    private
+  private
 
     def _gwt_define(prefix, name, *args, &block)
       define_method("#{prefix} #{name}", *args, &block)
@@ -39,7 +39,7 @@ module GivenWhenThen
     _gwt_call(:And, name, *args)
   end
 
-  private
+private
 
   def _gwt_call(prefix, name, *args)
     if prefix == :And
@@ -47,7 +47,6 @@ module GivenWhenThen
     end
 
     public_send("#{prefix} #{name}", *args)
-
   ensure
     @_gwt_last_prefix = prefix
   end

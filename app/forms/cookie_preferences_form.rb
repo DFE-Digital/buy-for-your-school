@@ -4,8 +4,8 @@ class CookiePreferencesForm
 
   def options
     [
-      OpenStruct.new(value: 'accepted', label: I18n.t("cookies.information.analytics_cookies.action.choice_yes")),
-      OpenStruct.new(value: 'rejected', label: I18n.t("cookies.information.analytics_cookies.action.choice_no"))
+      OpenStruct.new(value: "accepted", label: I18n.t("cookies.information.analytics_cookies.action.choice_yes")),
+      OpenStruct.new(value: "rejected", label: I18n.t("cookies.information.analytics_cookies.action.choice_no")),
     ]
   end
 end

@@ -311,7 +311,6 @@ RSpec.feature "Editing a 'Digital Support' request" do
       end
 
       it "removes the procurement amount" do
-        save_and_open_screenshot
         expect(answers[6]).to have_text "Not known"
         expect(support_request.reload.procurement_amount).to be_nil
       end
