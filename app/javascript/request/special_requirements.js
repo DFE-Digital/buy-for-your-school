@@ -2,7 +2,7 @@
   Manage the special requirements fields in the support/FaF request form
 */
 
-import { getFormId, getFormIdUnderscore } from "./common";
+import { getFormId, getFormIdUnderscore } from "./common.js";
 
 window.addEventListener("load", () => {
   const formId = getFormId();
