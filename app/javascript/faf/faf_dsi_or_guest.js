@@ -5,7 +5,7 @@
 */
 
 function changeFormAction(path) {
-  const form = document.getElementsByTagName("form")[0];
+  const form = document.getElementById("framework-support-form");
   form.action = path;
 }
 
