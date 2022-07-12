@@ -1,4 +1,4 @@
 web: bundle exec rails server -b 'ssl://localhost:3000?key=localhost.key&cert=localhost.crt'
-sidekiq: bundle exec sidekiqjs
+sidekiq: bundle exec sidekiq
 webpack: yarn build --watch
 css: yarn build:css --watch
