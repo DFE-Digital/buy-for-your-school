@@ -23,8 +23,10 @@ RSpec.describe "Webhook upserts frameworks", type: :request do
     ]
   end
 
-  before do
-    allow_any_instance_of(Api::FindAFramework::BaseController).to receive(:authenticate_api_user!).and_return(true)
+  around do |example|
+    ClimateControl.modify(FAF_WEBHOOK_SECRET: "foo") do
+      example.run
+    end
   end
 
   it "creates a new framework" do
@@ -35,6 +37,7 @@ RSpec.describe "Webhook upserts frameworks", type: :request do
 
     post "/api/find_a_framework/framework",
          params: webhook_payload,
+         headers: { "Authorization": "Token foo" },
          as: :json
 
     expect(response).to have_http_status(:ok)
@@ -52,6 +55,7 @@ RSpec.describe "Webhook upserts frameworks", type: :request do
 
     post "/api/find_a_framework/framework",
          params: webhook_payload,
+         headers: { "Authorization": "Token foo" },
          as: :json
 
     expect(response).to have_http_status(:ok)
