@@ -39,6 +39,11 @@ module Support
         action: "create_case",
       ).call
 
+      CreateExitSurveyResponse.new(
+        case_id: kase.id,
+        case_ref: kase.ref,
+        ).call
+
       kase
     end
 
