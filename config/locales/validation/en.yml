@@ -133,5 +133,16 @@ en:
       rules:
         name:
           missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less        
+          max_size?: The name must be 30 characters or less  
+ 
+  # Exit survey form
+  exit_survey:
+    rules:
+      satisfaction_level: "" # Omitted
+    
+    errors:
+      rules:
+        satisfaction_level:
+          missing: Select how you feel about the service you recieved.     
+
 
