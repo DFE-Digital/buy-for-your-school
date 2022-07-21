@@ -1,5 +1,4 @@
 class ExitSurveyResponse < ApplicationRecord
-
   belongs_to :case, class_name: "Support::Case", optional: true
 
   # Satisfaction rating
@@ -40,7 +39,7 @@ class ExitSurveyResponse < ApplicationRecord
 
   # Hear about the service
   #
-  #   dfe_email 
+  #   dfe_email
   #   dfe_event
   #   non_dfe_event
   #   dfe_promotion
@@ -49,14 +48,13 @@ class ExitSurveyResponse < ApplicationRecord
   #   social_media
   #   word_of_mouth
   #   other
-  enum hear_about_service: {  dfe_email: 0, 
-                              dfe_event: 1, 
-                              non_dfe_event: 2, 
-                              dfe_promotion: 3, 
+  enum hear_about_service: {  dfe_email: 0,
+                              dfe_event: 1,
+                              non_dfe_event: 2,
+                              dfe_promotion: 3,
                               other_dfe_service_referral: 4,
                               online_search: 5,
                               social_media: 6,
                               word_of_mouth: 7,
-                              other: 8
-                            }
+                              other: 8 }
 end

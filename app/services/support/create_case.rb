@@ -42,7 +42,7 @@ module Support
       CreateExitSurveyResponse.new(
         case_id: kase.id,
         case_ref: kase.ref,
-        ).call
+      ).call
 
       kase
     end

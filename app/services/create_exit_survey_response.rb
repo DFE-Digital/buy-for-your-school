@@ -11,9 +11,9 @@ class CreateExitSurveyResponse
 
   # @return ExitSurveyResponse
   def call
-    e = ExitSurveyResponse.create!(
+    ExitSurveyResponse.create!(
       case_id: @case_id,
-      case_ref: @case_ref
+      case_ref: @case_ref,
     )
   end
 end
