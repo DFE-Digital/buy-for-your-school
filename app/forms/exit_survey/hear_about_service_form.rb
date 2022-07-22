@@ -1,4 +1,4 @@
-# Collect hear about service 
+# Collect hear about service
 #
 class ExitSurvey::HearAboutServiceForm < ExitSurvey::Form
   # @!attribute [r] hear about service
