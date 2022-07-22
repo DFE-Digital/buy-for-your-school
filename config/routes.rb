@@ -164,6 +164,7 @@ Rails.application.routes.draw do
     resources :future_support, only: %i[edit update]
     resources :hear_about_service, only: %i[edit update]
     resources :opt_in, only: %i[edit update]
+    resources :opt_in_detail, only: %i[edit update]
     resources :thank_you, only: %i[show]
   end
 

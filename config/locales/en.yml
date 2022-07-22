@@ -208,16 +208,16 @@ en:
     thank_you:
       link: Get help buying for schools
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
+      title: Thank you
     title: Get help buying for schools feedback
     opt_in:
-      details:
-        email_address: Email adress 
+      detail:
+        email_address: Email address 
         full_name: Full name
         prompt: Provide your details to opt in to research opportunities
         text: We will use these details to contact you about taking part in future research. <br><br> Your details will not be used for any other purpose. 
-      options: 
-        yes: 'Yes'
-        no: 'No'
+      'yes': 'Yes'
+      'no': 'No'
       question: Would you like to be contacted about DfE research opportunities?
       text: Your feedback helps us to improve services for schools. <br><br> You can always say no to an invite and you can unsubscribe at any time.
   faf:

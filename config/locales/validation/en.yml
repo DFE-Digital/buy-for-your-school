@@ -142,6 +142,9 @@ en:
       future_support: "" # Omitted
       hear_about_service: "" # Omitted
       hear_about_service_other: "" # Omitted
+      opt_in: "" # Omitted
+      opt_in_email: "" # Omitted
+      opt_in_name: "" # Omitted
       satisfaction_level: "" # Omitted
       saved_time: "" # Omitted
       
@@ -154,7 +157,13 @@ en:
         hear_about_service:     
           missing: Select how you heard about the service.
         hear_about_service_other:     
-          missing: Enter how you heard about the service.        
+          missing: Enter how you heard about the service.   
+        opt_in:
+          missing: Select if you would like to be contacted about DfE research opportunities. 
+        opt_in_email:
+          missing: Enter an email address. For example, 'someone@school.sch.uk'.               
+        opt_in_name:
+          missing: Enter your full name.             
         satisfaction_level:
           missing: Select how you feel about the service you recieved.  
         saved_time:
