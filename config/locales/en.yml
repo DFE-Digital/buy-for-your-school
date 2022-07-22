@@ -160,17 +160,17 @@ en:
       options:
         strongly_agree: Strongly agree
         agree: Agree
-        neither_agree_nor_disagree: Neither agree nor disagree
+        neither: Neither agree nor disagree
         disagree: Disagree
-        strongly_disagee: Strongly disagree
+        strongly_disagree: Strongly disagree
       question: Do you agree or disagree that using the service helped your school to buy better quality goods or services?
     future_support:
       options:
         strongly_agree: Strongly agree
         agree: Agree
-        neither_agree_nor_disagree: Neither agree nor disagree
+        neither: Neither agree nor disagree
         disagree: Disagree
-        strongly_disagee: Strongly disagree
+        strongly_disagree: Strongly disagree
       question: Do you agree or disagree that you've learned enough to run the same type of procurement in the future with less support?
     hear_about_service:
       options:
@@ -183,6 +183,7 @@ en:
         social_media: Social media
         word_of_mouth: Word of mouth
         other: Other
+      please_specify: Please specify  
       question: How did you hear about the service?
     satisfaction:
       options:
@@ -198,9 +199,9 @@ en:
       options:
         strongly_agree: Strongly agree
         agree: Agree
-        neither_agree_nor_disagree: Neither agree nor disagree
+        neither: Neither agree nor disagree
         disagree: Disagree
-        strongly_disagee: Strongly disagree
+        strongly_disagree: Strongly disagree
       question: Do you agree or disagree that using the service saved your or your school time?
     start:
       body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.

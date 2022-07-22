@@ -138,11 +138,27 @@ en:
   # Exit survey form
   exit_survey:
     rules:
+      better_quality: "" # Omitted
+      future_support: "" # Omitted
+      hear_about_service: "" # Omitted
+      hear_about_service_other: "" # Omitted
       satisfaction_level: "" # Omitted
-    
+      saved_time: "" # Omitted
+      
     errors:
       rules:
+        better_quality:     
+          missing: Select whether you agree or disagree that using the service helped your school to buy better quality goods or services.     
+        future_support:     
+          missing: Select whether you agree or disagree that you have learned enough to run the same type of proecurement in future with less support.     
+        hear_about_service:     
+          missing: Select how you heard about the service.
+        hear_about_service_other:     
+          missing: Enter how you heard about the service.        
         satisfaction_level:
-          missing: Select how you feel about the service you recieved.     
+          missing: Select how you feel about the service you recieved.  
+        saved_time:
+          missing: Select whether you agree or disagree that using the service helped save you or your school time.      
+         
 
 

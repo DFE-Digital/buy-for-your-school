@@ -1,0 +1,28 @@
+<%= content_for :title, I18n.t("exit_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+    <%= form_with model: @form, scope: :future_support_form, url: exit_survey_future_support_path, method: :patch do |form| %>
+    <%= form.govuk_error_summary %> 
+
+    <%= form.hidden_field :future_support, value: form.object.future_support %> 
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading"><%= I18n.t("exit_survey.future_support.question") %></h1>
+          </legend>
+          
+          <%= form.govuk_radio_buttons_fieldset :future_support, legend: nil do %>
+              <% form.object.future_support_options.each do |option| %>
+                <%= form.govuk_radio_button :future_support, option, label: { text: I18n.t("exit_survey.future_support.options.#{option}") } %>
+              <% end %>
+          <% end %>
+      </div> 
+
+      <%= form.submit I18n.t("exit_survey.continue"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
+
