@@ -6,7 +6,7 @@ RSpec.feature "Content errors" do
       # errors.unexpected_contentful_model.page_title
       expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
       # errors.unexpected_contentful_model.page_body
-      expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+      expect(find("p.govuk-body", text: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")).to be_present
     end
   end
 
@@ -17,7 +17,7 @@ RSpec.feature "Content errors" do
       # errors.unexpected_contentful_step_type.page_title
       expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
       # errors.unexpected_contentful_step_type.page_body
-      expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+      expect(find("p.govuk-body", text: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")).to be_present
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.feature "Content errors" do
       # errors.contentful_entry_not_found.page_title
       expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
       # errors.contentful_entry_not_found.page_body
-      expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly."
+      expect(find("p.govuk-body", text: "The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.")).to be_present
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.feature "Content errors" do
       # errors.specification_template_invalid.page_title
       expect(find("h1.govuk-heading-xl")).to have_text "An unexpected error occurred"
       # errors.specification_template_invalid.page_body
-      expect(find("p.govuk-body")).to have_text "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly."
+      expect(find("p.govuk-body", text: "The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.")).to be_present
     end
   end
 end

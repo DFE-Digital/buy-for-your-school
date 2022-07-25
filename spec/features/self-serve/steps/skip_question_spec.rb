@@ -18,9 +18,7 @@ RSpec.feature "Skipping questions" do
     end
 
     it "has a skip button" do
-      within("div.govuk-button-group") do
-        expect(page).to have_link "Skip for now", class: "govuk-button govuk-button--secondary"
-      end
+      expect(page).to have_link "Skip for now"
     end
 
     context "when skipped" do
@@ -51,9 +49,7 @@ RSpec.feature "Skipping questions" do
 
     it "has a skip button" do
       click_on "Task"
-      within("div.govuk-button-group") do
-        expect(page).to have_link "Skip for now", class: "govuk-button govuk-button--secondary"
-      end
+      expect(page).to have_link "Skip for now"
     end
 
     context "when all steps are unanswered" do

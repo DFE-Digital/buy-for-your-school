@@ -42,22 +42,21 @@ RSpec.feature "Specification dashboard" do
 
     it "dashboard.header" do
       expect(page.title).to have_text "Specifications dashboard"
-      expect(find("h1.govuk-heading-xl")).to have_text "Specifications dashboard"
+      expect(find("h1.govuk-heading-xl", text: "Specifications dashboard")).to be_present
     end
 
     context "when the user has no specifications" do
       it "dashboard.create.header" do
-        expect(find("h2.govuk-heading-m")).to have_text "Create a new specification"
+        expect(find("h2.govuk-heading-m", text: "Create a new specification")).to be_present
       end
 
       it "dashboard.create.body" do
-        expect(find("p.govuk-body")).to have_text "Create a new specification for a procurement."
+        expect(find("p.govuk-body", text: "Create a new specification for a procurement.")).to be_present
       end
 
       # duplicates dashboard.create.header
       it "dashboard.create.button" do
-        expect(find("a.govuk-button")).to have_text "Create a new specification"
-        expect(find("a.govuk-button")[:role]).to eq "button"
+        expect(find("a.govuk-button", text: "Create a new specification")).to be_present
       end
     end
   end

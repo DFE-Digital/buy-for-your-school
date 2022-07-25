@@ -2,7 +2,7 @@
   Manage the procurement amount fields in the support/FaF request form
 */
 
-// import * as common from "../request/common.js";
+//= require './common'
 
 window.addEventListener("load", () => {
   const formId = getFormId();

@@ -1,0 +1,76 @@
+<% return if cookie_policy.set? %>
+
+<div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="<%= I18n.t("cookies.banner.header") %>">
+  <div id="cookie-step-1" class="govuk-cookie-banner__message govuk-width-container">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+          <%= I18n.t("cookies.banner.header") %>
+        </h2>
+
+        <div class="govuk-cookie-banner__content">
+          <% I18n.t("cookies.banner.description").each do |text| %>
+            <p class="govuk-body"><%= text %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group flex-align-center">
+      <%= button_to I18n.t("cookies.banner.actions.accept"), cookie_preferences_path,
+            method: :patch,
+            remote: true,
+            params: { "cookie_preferences_form[accepted_or_rejected]" => "accepted" },
+            class: "govuk-button" %>
+
+      <%= button_to I18n.t("cookies.banner.actions.reject"), cookie_preferences_path,
+            method: :patch,
+            remote: true,
+            params: { "cookie_preferences_form[accepted_or_rejected]" => "rejected" },
+            class: "govuk-button" %>
+
+      <%= link_to I18n.t("cookies.banner.actions.view_cookies"), cookie_preferences_path, class: "govuk-link" %>
+    </div>
+  </div>
+
+  <div id="cookie-step-accepted" class="govuk-cookie-banner__message govuk-width-container" role="alert" hidden>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-cookie-banner__content">
+          <p class="govuk-body">
+            <%= I18n.t("cookies.banner.accepted.message", action_link: (link_to I18n.t("cookies.banner.accepted.action_link"), cookie_preferences_path, class: "govuk-link")).html_safe %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      <button class="govuk-button" data-module="govuk-button" data-hide=".govuk-cookie-banner">
+        <%= I18n.t("cookies.banner.accepted.hide") %>
+      </button>
+    </div>
+  </div>
+
+  <div id="cookie-step-rejected" class="govuk-cookie-banner__message govuk-width-container" role="alert" hidden>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-cookie-banner__content">
+          <p class="govuk-body">
+          <%= I18n.t("cookies.banner.rejected.message", action_link: (link_to I18n.t("cookies.banner.rejected.action_link"), cookie_preferences_path, class: "govuk-link")).html_safe %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      <button class="govuk-button" data-module="govuk-button" data-hide=".govuk-cookie-banner">
+        <%= I18n.t("cookies.banner.rejected.hide") %>
+      </button>
+    </div>
+  </div>
+</div>

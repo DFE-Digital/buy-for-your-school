@@ -13,6 +13,7 @@ Naming/MethodName:
   EnforcedStyle: snake_case
   Exclude:
     - 'lib/microsoft_graph/microsoft_graph.rb'
+    - 'spec/support/given_when_then.rb'
 
 # Offense count: 19
 RSpec/AnyInstance:

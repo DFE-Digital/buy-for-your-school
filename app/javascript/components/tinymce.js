@@ -57,7 +57,8 @@
       ...profile,
       selector,
       menubar: false,
-      statusbar: false
+      statusbar: false,
+      contextmenu: false
     });
   }
 

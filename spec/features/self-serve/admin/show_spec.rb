@@ -60,8 +60,8 @@ RSpec.feature "Admin page" do
 
     it "shows a missing role error" do
       expect(page).to have_title "Missing user role"
-      expect(find("h1.govuk-heading-l")).to have_text "Missing user role"
-      expect(find("p.govuk-body")).to have_text "You do not have the required role to access this page."
+      expect(page).to have_title "Missing user role"
+      expect(page).to have_content "You do not have the required role to access this page."
     end
   end
 end
