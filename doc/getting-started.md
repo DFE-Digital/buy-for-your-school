@@ -79,7 +79,7 @@ for chaining together dependency updates, migrations, testing, linting and secur
 
 ### Development
 
-- The assets need to be pre-compiled by running `$ rake assets:precompile`
+- The assets need to be pre-compiled by running `$ rake webpack:compile`
 - Run the server using `$ bundle exec rails server` if you are bypassing DfE Sign In,
 otherwise [click here](dfe-sign-in.md) for more information.
 - Start the console `$ bundle exec rails console`

@@ -1,5 +1,5 @@
-//= link_tree ../images
-//= link_directory ../javascripts .js
-//= link_directory ../stylesheets .css
-//= link_directory ../javascripts/supported/case .js
-//= link_directory ../javascripts/request .js
+//= link_tree ../builds
+//= link_tree ../../javascript/faf
+//= link_tree ../../javascript/misc
+//= link_tree ../../javascript/request
+//= link_tree ../../javascript/google-tag-manager

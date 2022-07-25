@@ -54,10 +54,10 @@ RSpec.feature "User feedback page" do
 
       it "navigates to the feedback confirmation page" do
         expect(page).to have_breadcrumbs ["Dashboard", "Give feedback"]
-        expect(find("h1.govuk-panel__title")).to have_text "Feedback submitted"
-        expect(all("p.govuk-body")[0]).to have_text "We will use your feedback to improve this service."
-        expect(find("h2.govuk-heading-m")).to have_text "Get involved"
-        expect(all("p.govuk-body")[1]).to have_text "Help us improve this service by opting in to take part in user research."
+        expect(find("h1.govuk-panel__title", text: "Feedback submitted")).to be_present
+        expect(find("p.govuk-body", text: "We will use your feedback to improve this service.")).to be_present
+        expect(find("h2.govuk-heading-m", text: "Get involved")).to be_present
+        expect(find("p.govuk-body", text: "Help us improve this service by opting in to take part in user research.")).to be_present
         feedback = UserFeedback.last
         expect(page).to have_link "Help us improve this service", href: "/feedback/#{feedback.id}/edit", class: "govuk-link"
       end

@@ -128,7 +128,4 @@ Rails.application.configure do
 
   # Set active storage location
   config.active_storage.service = ENV["BUCKET_NAME"].blank? ? :local : :amazon
-
-  # https://github.com/spohlenz/tinymce-rails#asset-compilation
-  config.tinymce.install = :copy
 end

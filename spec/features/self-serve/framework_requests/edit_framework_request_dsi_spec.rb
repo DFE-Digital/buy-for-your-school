@@ -22,8 +22,8 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
   end
 
   it "has submission information" do
-    expect(find("h1.govuk-heading-l")).to have_text "Send your request"
-    expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
+    expect(find("h1.govuk-heading-l", text: "Send your request")).to be_present
+    expect(find("p.govuk-body", text: "Once you send this request, we will review it and get in touch within 2 working days.")).to be_present
     expect(page).to have_button "Send request"
   end
 

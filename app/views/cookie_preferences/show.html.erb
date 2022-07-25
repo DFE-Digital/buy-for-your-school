@@ -1,0 +1,87 @@
+<% if flash[:notice].present? %>
+  <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        <%= I18n.t("cookies.information.updated.success.header") %>
+      </h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+      <h3 class="govuk-notification-banner__heading">
+        <%= I18n.t("cookies.information.updated.success.message") %>
+      </h3>
+
+      <p class="govuk-body"><%= link_to I18n.t("cookies.information.updated.success.go_back"), root_path, class: "govuk-link govuk-link--no-visited-state" %></p>
+    </div>
+  </div>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= I18n.t("cookies.information.header") %></h1>
+
+<% I18n.t("cookies.information.header_lead_text").each do |text| %>
+  <p class="govuk-body"><%= text %></p>
+<% end %>
+
+<h2 class="govuk-heading-m"><%= I18n.t("cookies.information.strictly_necessary_cookies.header") %></h2>
+
+<p class="govuk-body"><%= I18n.t("cookies.information.strictly_necessary_cookies.header_lead_text") %></p>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" width="25%"><%= I18n.t("cookies.information.table.name") %></th>
+      <th scope="col" class="govuk-table__header" width="50%"><%= I18n.t("cookies.information.table.description") %></th>
+      <th scope="col" class="govuk-table__header" width="25%"><%= I18n.t("cookies.information.table.expires") %></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">cookie_policy</th>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.strictly_necessary_cookies.cookie_consent_desc") %></td>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.expiry.one_year") %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-m"><%= I18n.t("cookies.information.analytics_cookies.header") %></h2>
+
+<% I18n.t("cookies.information.analytics_cookies.usage").each do |text| %>
+  <p class="govuk-body"><%= text %></p>
+<% end %>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% I18n.t("cookies.information.analytics_cookies.usage_stored").each do |text| %>
+    <li><%= text %></li>
+  <% end %>
+</ul>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" width="25%"><%= I18n.t("cookies.information.table.name") %></th>
+      <th scope="col" class="govuk-table__header" width="50%"><%= I18n.t("cookies.information.table.description") %></th>
+      <th scope="col" class="govuk-table__header" width="25%"><%= I18n.t("cookies.information.table.expires") %></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">_ga</th>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.analytics_cookies._ga_description") %></td>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.expiry.two_years") %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">_gid</th>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.analytics_cookies._gid_description") %></td>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.expiry.twenty_four_hours") %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">_gat_ua_</th>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.analytics_cookies._gat_ua__description") %></td>
+      <td class="govuk-table__cell"><%= I18n.t("cookies.information.expiry.one_minute") %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= form_with model: @form, scope: :cookie_preferences_form, method: :patch, url: cookie_preferences_path do |f| %>
+  <%= f.govuk_collection_radio_buttons :accepted_or_rejected, @form.options, :value, :label, inline: true, legend: { text: I18n.t("cookies.information.analytics_cookies.action.label") } %>
+  <%= f.govuk_submit I18n.t("cookies.information.analytics_cookies.action.submit") %>
+<% end %>

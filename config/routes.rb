@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#show"
   get "profile", to: "profile#show"
 
+  resource :cookie_preferences, only: %i[show edit update]
+
   # Contentful
   namespace :api do
     namespace :contentful do

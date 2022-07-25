@@ -20,6 +20,12 @@ RUN apt-get install -qq -y \
     lmodern \
     --fix-missing --no-install-recommends
 
+# Yarn
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y nodejs yarn
+
 
 # ------------------------------------------------------------------------------
 # Assets
@@ -28,14 +34,16 @@ FROM node:alpine as assets
 
 ENV NODE_ENV ${NODE_ENV:-production}
 
-RUN mkdir /deps
+RUN mkdir -p /deps/config/webpack
+RUN mkdir -p /deps/script/assets
 
 WORKDIR /deps
 
-COPY package-lock.json /deps/package-lock.json
+COPY yarn.lock /deps/yarn.lock
 COPY package.json /deps/package.json
+COPY script /deps/script
 
-RUN npm install
+RUN yarn install
 
 # ------------------------------------------------------------------------------
 # Production Stage
@@ -67,10 +75,15 @@ COPY lib ${APP_HOME}/lib
 COPY config ${APP_HOME}/config
 COPY db ${APP_HOME}/db
 COPY app ${APP_HOME}/app
+COPY yarn.lock ${APP_HOME}/yarn.lock
+COPY package.json ${APP_HOME}/package.json
+COPY babel.config.js ${APP_HOME}/babel.config.js
+COPY .browserslistrc ${APP_HOME}/.browserslistrc
 
 COPY --from=assets /deps/node_modules /srv/node_modules
+COPY --from=assets /deps/node_modules $APP_HOME/node_modules
 
-RUN cp -R /srv/node_modules $APP_HOME/node_modules
+RUN yarn config set ignore-engines true
 RUN RAILS_ENV=production SECRET_KEY_BASE=key bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /

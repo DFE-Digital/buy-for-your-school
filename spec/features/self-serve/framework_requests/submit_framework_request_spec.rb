@@ -35,18 +35,16 @@ RSpec.feature "Submitting a 'Find a Framework' request" do
   end
 
   it "confirms where the message was sent and the response time" do
-    expect(find("h1.govuk-panel__title")).to have_text "Your request for support has been sent"
-    expect(find("div.govuk-panel__body")).to have_text "We have sent a confirmation email to: email@example.com"
+    expect(page).to have_content "Your request for support has been sent"
+    expect(page).to have_content "We have sent a confirmation email to: email@example.com"
 
-    expect(all("h1.govuk-heading-m")[0]).to have_text "What happens next"
-    expect(all("p.govuk-body")[0]).to have_text "The Get help buying for schools team will be in touch within 2 working days."
-    expect(all("p.govuk-body")[1]).to have_text "Please check to make sure you receive the email confirmation within the next 10 minutes. Check your junk folder if you do not see it."
-    expect(all("p.govuk-body")[2]).to have_text "You will need to submit the request again if you do not receive an email from us because this is how we will be contacting you."
+    expect(page).to have_content "What happens next"
+    expect(page).to have_content "The Get help buying for schools team will be in touch within 2 working days."
+    expect(page).to have_content "Please check to make sure you receive the email confirmation within the next 10 minutes. Check your junk folder if you do not see it."
+    expect(page).to have_content "You will need to submit the request again if you do not receive an email from us because this is how we will be contacting you."
 
-    expect(all("h1.govuk-heading-m")[1]).to have_text "What you can do next"
-    within("ul.govuk-list") do
-      expect(page).to have_link "read buying procedures and procurement law for schools", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
-      expect(page).to have_link "read guides about goods and services", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
-    end
+    expect(page).to have_content "What you can do next"
+    expect(page).to have_link "read buying procedures and procurement law for schools", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link"
+    expect(page).to have_link "read guides about goods and services", href: "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link"
   end
 end

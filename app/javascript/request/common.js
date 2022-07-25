@@ -3,9 +3,11 @@
 */
 
 function getFormId() {
-  return document.getElementsByTagName("form")[0].id;
+  return document.querySelectorAll("[id$=support-form]")[0].id;
 }
 
 function getFormIdUnderscore() {
   return getFormId().replaceAll("-", "_");
 }
+
+export { getFormId, getFormIdUnderscore }
