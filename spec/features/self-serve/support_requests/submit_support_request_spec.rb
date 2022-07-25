@@ -46,19 +46,12 @@ RSpec.feature "Submitting a 'Digital Support' request" do
 
   describe "summary" do
     it "support_requests.sections.send_your_request" do
-      expect(find("h1.govuk-heading-l")).to have_text "Send your request"
-    end
-
-    it "has section headings" do
-      headings = find_all("h2.govuk-heading-m")
-
-      expect(headings[0]).to have_text "About you"
-      expect(headings[1]).to have_text "About your request for support"
+      expect(find("h1.govuk-heading-l", text: "Send your request")).to be_present
     end
 
     # support_requests.response_time
     it "confirms the expected response time" do
-      expect(find("p.govuk-body")).to have_text "Once you send this request, we will review it and get in touch within 2 working days."
+      expect(find("p.govuk-body", text: "Once you send this request, we will review it and get in touch within 2 working days.")).to be_present
     end
   end
 
@@ -71,7 +64,7 @@ RSpec.feature "Submitting a 'Digital Support' request" do
     it "submits the request" do
       expect(support_request.reload).to be_submitted
       # support_request_submissions.confirmation.header
-      expect(find("h1.govuk-panel__title")).to have_text "Your request for support has been sent"
+      expect(find("h1.govuk-panel__title", text: "Your request for support has been sent")).to be_present
     end
 
     it "can be submitted only once" do
@@ -79,7 +72,7 @@ RSpec.feature "Submitting a 'Digital Support' request" do
       expect(page).not_to have_button "Send request"
       expect(page).not_to have_link "Change"
       # support_request_submissions.confirmation.header
-      expect(find("h1.govuk-panel__title")).to have_text "Your request for support has been sent"
+      expect(find("h1.govuk-panel__title", text: "Your request for support has been sent")).to be_present
     end
   end
 

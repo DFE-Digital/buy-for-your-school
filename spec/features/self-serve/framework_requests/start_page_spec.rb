@@ -33,7 +33,7 @@ RSpec.feature "Starting a 'Find a Framework' request" do
 
     it "shows their profile" do
       expect(page).to have_current_path "/profile"
-      expect(find("a.govuk-button")).to have_text "Yes, continue"
+      expect(find("a.govuk-button", text: "Yes, continue")).to be_present
     end
 
     it "resets the profile support button" do
@@ -56,7 +56,7 @@ RSpec.feature "Starting a 'Find a Framework' request" do
 
       it "redirects to the start page" do
         expect(page).to have_current_path "/procurement-support"
-        expect(find("h3.govuk-notification-banner__heading")).to have_text "You have been signed out."
+        expect(page).to have_content "You have been signed out."
       end
     end
   end

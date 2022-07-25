@@ -7,7 +7,12 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
 Rails.application.config.content_security_policy do |policy|
-  policy.default_src :self, :https
+  if Rails.env.development? # allow for webpack-dev-server websockets to function
+    policy.default_src :self, :https, :wss
+  else
+    policy.default_src :self, :https
+  end
+
   policy.font_src :self, :https, :data
   policy.img_src :self, :https, :data
   policy.object_src :none

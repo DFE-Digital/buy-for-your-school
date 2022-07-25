@@ -29,11 +29,11 @@ RSpec.feature "View existing journeys" do
       end
 
       it "dashboard.existing.header" do
-        expect(find("h2.govuk-heading-m")).to have_text "Existing specifications"
+        expect(find("h2.govuk-heading-m", text: "Existing specifications")).to be_present
       end
 
       it "dashboard.existing.body" do
-        expect(find("p.govuk-body")).to have_text "Continue with a draft specification, and review completed specifications."
+        expect(find("p.govuk-body", text: "Continue with a draft specification, and review completed specifications.")).to be_present
       end
 
       # duplicates dashboard.create.header
@@ -68,7 +68,7 @@ RSpec.feature "View existing journeys" do
       it "redirects to the specification page" do
         click_link "MFD123"
 
-        expect(find("h1.govuk-heading-xl")).to have_text "Your specification"
+        expect(find("h1.govuk-heading-xl", text: "Your specification")).to be_present
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.feature "View existing journeys" do
 
       scenario "that journey is not shown" do
         # dashboard.existing.header
-        expect(find("h2.govuk-heading-m")).not_to have_text "Existing specifications"
+        expect(page).not_to have_content("Existing specifications")
       end
     end
   end

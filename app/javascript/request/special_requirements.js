@@ -2,6 +2,8 @@
   Manage the special requirements fields in the support/FaF request form
 */
 
+//= require './common'
+
 window.addEventListener("load", () => {
   const formId = getFormId();
   const formIdUnderscore = getFormIdUnderscore();

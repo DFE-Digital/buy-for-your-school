@@ -26,11 +26,11 @@ RSpec.feature "A journey page has" do
 
   # specifying.start_page.page_title
   specify "heading" do
-    expect(find("h1.govuk-heading-xl")).to have_text "Create your specification to procure catering for your school"
+    expect(find("h1.govuk-heading-xl", text: "Create your specification to procure catering for your school")).to be_present
   end
 
   specify do
     # journeys_body
-    expect(find("p.govuk-body")).to have_text "Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time."
+    expect(find("p.govuk-body", text: "Answer all questions in each section to create a specification to share with suppliers. You can work through the sections in any order, and come back to questions later by skipping those you can't answer yet. View your specification at any time.")).to be_present
   end
 end

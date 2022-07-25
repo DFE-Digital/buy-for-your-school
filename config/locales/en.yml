@@ -22,6 +22,65 @@ en:
       destroy: You have been signed out.
       failure: Sign in failed unexpectedly, please try again.
       visitor: You must sign in.
+  cookies:
+    banner:
+      accepted:
+        action_link: change your cookie settings
+        hide: Hide cookie message
+        message: You’ve accepted analytics cookies. %{action_link} at any time.
+      actions:
+        accept: Accept analytics cookies
+        reject: Reject analytics cookies
+        view_cookies: View cookies
+      description:
+      - We use some essential cookies to make this service work.
+      - We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+      header: Cookies on Get Help Buying for Schools
+      rejected:
+        action_link: change your cookie settings
+        hide: Hide cookie message
+        message: You’ve rejected analytics cookies. %{action_link} at any time.
+    information:
+      analytics_cookies:
+        _ga_description: Checks if you’ve visited Get Help Buying for Schools before. This helps us count how many people visit our site.
+        _gat_ua__description: Used to throttle request rate to Google Analytics.
+        _gid_description: Checks if you’ve visited Get Help Buying for Schools before. This helps us count how many people visit our site.
+        action:
+          choice_no: 'No'
+          choice_yes: 'Yes'
+          label: Do you want to accept analytics cookies?
+          submit: Save cookie settings
+        header: Analytics cookies
+        usage:
+        - With your permission, we use Google Analytics to collect data about how you use Get Help Buying for Schools. This information helps us to improve our service.
+        - Google is not allowed to use or share our analytics data with anyone.
+        - 'Google Analytics stores anonymised information about:'
+        usage_stored:
+        - how you got to Get Help Buying for Schools
+        - the pages you visit on Get Help Buying for Schools and how long you spend on them
+        - any errors you see while using Get Help Buying for Schools
+      expiry:
+        one_minute: 1 minute
+        one_year: 1 year
+        twenty_four_hours: 24 hours
+        two_years: 2 years
+      header: Cookie policy
+      header_lead_text:
+      - Cookies are small files saved on your phone, tablet or computer when you visit a website.
+      - We use cookies to make Get Help Buying for Schools work and collect information about how you use our service.
+      strictly_necessary_cookies:
+        cookie_consent_desc: Saves your cookie consent settings
+        header: Strictly necessary cookies
+        header_lead_text: Essential cookies keep your information secure while you use Get Help Buying for Schools. We do not need to ask permission to use them.
+      table:
+        description: Description
+        expires: Expires
+        name: Name
+      updated:
+        success:
+          go_back: Go back to the homepage
+          header: Success
+          message: Your cookie settings were saved
   dashboard:
     create:
       body: Create a new specification for a procurement.

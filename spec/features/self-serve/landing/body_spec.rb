@@ -43,27 +43,28 @@ RSpec.feature "Users can see a start page" do
   # How this service works
   scenario do
     # specifying.start_page.overview_purpose
-    expect(all("p.govuk-body")[0]).to have_text "Use this service to create a specification for either:"
+    # TODO: Change this!!! Dont index paragraphs on the page that is awful!!!
+    expect(find("p.govuk-body", text: "Use this service to create a specification for either:")).to be_present
     within(all("ul.govuk-list.govuk-list--bullet")[0]) do
       # specifying.start_page.overview_supported_category_list
       expect(page).to have_text "a catering service, or multi-functional devices"
     end
 
     # specifying.start_page.overview_download
-    expect(all("p.govuk-body")[1]).to have_text "You will be able to download the specification that you create and share it with suppliers when you invite them to bid."
+    expect(find("p.govuk-body", text: "You will be able to download the specification that you create and share it with suppliers when you invite them to bid.")).to be_present
 
     # specifying.start_page.who_can_use_body
-    expect(all("p.govuk-body")[2]).to have_text "You can use this service if you:"
+    expect(find("p.govuk-body", text: "You can use this service if you:")).to be_present
     within(all("ul.govuk-list.govuk-list--bullet")[1]) do
       # specifying.start_page.who_can_use_list
       expect(page).to have_text "are procuring for a single school in England - either a local authority maintained school or an academy in a single or multi-academy trust are procuring a single contract"
     end
 
     # specifying.start_page.before_you_start_title
-    expect(all("h2.govuk-heading-m")[0]).to have_text "Before you start"
+    expect(find("h2.govuk-heading-m", text: "Before you start")).to be_present
     # specifying.start_page.before_you_start_body[0]
-    expect(all("p.govuk-body")[3]).to have_text "The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically."
+    expect(find("p.govuk-body", text: "The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.")).to be_present
     # specifying.start_page.before_you_start_body[1]
-    expect(all("p.govuk-body")[4]).to have_text "You can save your specification and come back to it later if you want."
+    expect(find("p.govuk-body", text: "You can save your specification and come back to it later if you want.")).to be_present
   end
 end

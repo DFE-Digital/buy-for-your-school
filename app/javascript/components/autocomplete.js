@@ -1,4 +1,5 @@
-//= require accessible-autocomplete/dist/accessible-autocomplete.min
+import accessibleAutocomplete from 'accessible-autocomplete';
+import _ from "lodash";
 
 (() => {
 
@@ -80,7 +81,7 @@
           return suggestion;
         }
 
-        output = template;
+        let output = template;
 
         Object.entries(suggestion).forEach(([key, value]) => {
           output = output.replace(new RegExp(`{{${key}}}`, 'g'), value);
