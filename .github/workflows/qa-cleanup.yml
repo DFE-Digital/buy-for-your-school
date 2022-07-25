@@ -17,7 +17,7 @@ env:
 jobs:
   destroy:
     runs-on: ubuntu-20.04
-    if: contains(github.event.pull_request.labels.*.name, 'qa-')
+    if: contains(github.event.pull_request.labels.*.name, 'qa-deployed')
 
     steps:
       - uses: actions/checkout@v2
@@ -39,3 +39,8 @@ jobs:
         run: |
           script/install-cf
           script/qa/destroy
+
+      - uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: |
+            qa-deployed

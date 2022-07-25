@@ -222,7 +222,9 @@ jobs:
 
       - uses: actions-ecosystem/action-add-labels@v1
         with:
-          labels: qa-${{ steps.deploy.outputs.qa_number }}
+          labels: |
+            qa-${{ steps.deploy.outputs.qa_number }}
+            qa-deployed
 
   seed_qa:
     name: Seed environment (QA)
