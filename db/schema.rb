@@ -56,6 +56,10 @@ ActiveRecord::Schema.define(version: 2022_06_29_145001) do
     t.jsonb "data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contentful_category"
+    t.string "contentful_section"
+    t.string "contentful_task"
+    t.string "contentful_step"
     t.index ["action"], name: "index_activity_log_on_action"
     t.index ["contentful_category_id"], name: "index_activity_log_on_contentful_category_id"
     t.index ["contentful_section_id"], name: "index_activity_log_on_contentful_section_id"
