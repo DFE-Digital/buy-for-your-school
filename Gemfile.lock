@@ -460,7 +460,7 @@ GEM
       rubocop-rails (= 2.14.2)
       rubocop-rake (= 0.6.0)
       rubocop-rspec (= 2.10.0)
-    rubocop-performance (1.14.1)
+    rubocop-performance (1.14.3)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.14.2)
@@ -533,7 +533,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    unicode-display_width (2.1.0)
+    unicode-display_width (2.2.0)
     uniform_notifier (1.16.0)
     validate_email (0.1.6)
       activemodel (>= 3.0)
