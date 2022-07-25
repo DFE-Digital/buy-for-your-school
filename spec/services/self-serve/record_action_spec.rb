@@ -68,9 +68,13 @@ RSpec.describe RecordAction do
             journey_id: "12345678",
             user_id: "23456789",
             contentful_category_id: nil,
+            contentful_category: nil,
             contentful_section_id: nil,
+            contentful_section: nil,
             contentful_task_id: nil,
+            contentful_task: nil,
             contentful_step_id: nil,
+            contentful_step: nil,
             data: nil,
             allowed_action_types: "begin_journey, view_journey, begin_task, view_task, begin_step, view_step, skip_step, save_answer, acknowledge_statement, update_answer, view_specification",
           ).and_call_original

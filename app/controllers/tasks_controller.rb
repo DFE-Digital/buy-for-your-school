@@ -14,7 +14,6 @@ class TasksController < ApplicationController
     @steps = task.eager_loaded_visible_steps.map do |step|
       StepPresenter.new(step)
     end
-
     record_action("view_task")
   end
 
@@ -49,8 +48,11 @@ private
       journey_id: @journey.id,
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,
+      contentful_category: @journey.category.title,
       contentful_section_id: task.section.contentful_id,
+      contentful_section: task.section.title,
       contentful_task_id: task.contentful_id,
+      contentful_task: task.title,
       data: {
         task_status: task.status,
         task_step_tally: task.step_tally,

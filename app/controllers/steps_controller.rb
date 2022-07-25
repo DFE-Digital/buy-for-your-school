@@ -93,9 +93,13 @@ private
       # We safe navigate here because in preview we don't have sections or
       # tasks. This saves us from having to implement extra logic.
       contentful_category_id: @journey.category&.contentful_id,
+      contentful_category: @journey.category&.title,
       contentful_section_id: step.task&.section&.contentful_id,
+      contentful_section: step.task&.section&.title,
       contentful_task_id: step&.task&.contentful_id,
+      contentful_task: step&.task&.title,
       contentful_step_id: step.contentful_id,
+      contentful_step: step.title,
     ).call
   end
 end

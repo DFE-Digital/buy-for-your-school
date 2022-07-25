@@ -27,4 +27,15 @@ namespace :self_serve do
       CreateCategory.new(contentful_category: contentful_category).call
     end
   end
+
+  desc "Backfill contentful text fields"
+  task backfill_contentful_text: :environment do
+    ActivityLogItem.where(contentful_category: nil).each do |c|
+      c.contentful_category = c.category&.title
+      c.contentful_section = c.section&.title
+      c.contentful_task = c.task&.title
+      c.contentful_step = c.step&.title
+      c.save!
+    end
+  end
 end

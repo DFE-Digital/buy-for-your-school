@@ -22,9 +22,13 @@ class RecordAction
   # @param journey_id [String]
   # @param user_id [String]
   # @param contentful_category_id [String]
+  # @param contentful_category [String]
   # @param contentful_section_id [String]
+  # @param contentful_section [String]
   # @param contentful_task_id [String]
+  # @param contentful_task [String]
   # @param contentful_step_id [String]
+  # @param contentful_step [String]
   # @param data [Hash]
   #
   def initialize(
@@ -32,18 +36,26 @@ class RecordAction
     journey_id:,
     user_id:,
     contentful_category_id: nil,
+    contentful_category: nil,
     contentful_section_id: nil,
+    contentful_section: nil,
     contentful_task_id: nil,
+    contentful_task: nil,
     contentful_step_id: nil,
+    contentful_step: nil,
     data: nil
   )
     @action_type = action
     @journey_id = journey_id
     @user_id = user_id
     @contentful_category_id = contentful_category_id
+    @contentful_category = contentful_category
     @contentful_section_id = contentful_section_id
+    @contentful_section = contentful_section
     @contentful_task_id = contentful_task_id
+    @contentful_task = contentful_task
     @contentful_step_id = contentful_step_id
+    @contentful_step = contentful_step
     @data = data
   end
 
@@ -61,9 +73,13 @@ class RecordAction
       journey_id: @journey_id,
       user_id: @user_id,
       contentful_category_id: @contentful_category_id,
+      contentful_category: @contentful_category,
       contentful_section_id: @contentful_section_id,
+      contentful_section: @contentful_section,
       contentful_task_id: @contentful_task_id,
+      contentful_task: @contentful_task,
       contentful_step_id: @contentful_step_id,
+      contentful_step: @contentful_step,
       data: @data,
     )
   end
@@ -85,9 +101,13 @@ private
       journey_id: @journey_id,
       user_id: @user_id,
       contentful_category_id: @contentful_category_id,
+      contentful_category: @contentful_category,
       contentful_section_id: @contentful_section_id,
+      contentful_section: @contentful_section,
       contentful_task_id: @contentful_task_id,
+      contentful_task: @contentful_task,
       contentful_step_id: @contentful_step_id,
+      contentful_step: @contentful_step,
       data: @data,
       allowed_action_types: ACTION_TYPES.join(", "),
     )
