@@ -256,7 +256,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [build_release, rspec, brakeman, rubocop]
 
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Check out code

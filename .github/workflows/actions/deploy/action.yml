@@ -109,7 +109,7 @@ runs:
         elif [ "${{ inputs.deployment_environment }}" == "staging" ]; then
 
           echo ::set-output name=cf_app_name::buy-for-your-school-staging
-          echo ::set-output name=cf_space::sct-preview
+          echo ::set-output name=cf_space::sct-staging
           echo ::set-output name=terraform_workspace::staging
           echo ::set-output name=rollbar_env::staging-gpaas
           echo ::set-output name=application_url::https://staging-get-help-buying-for-schools.education.gov.uk
