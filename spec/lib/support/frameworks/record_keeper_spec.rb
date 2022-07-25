@@ -23,7 +23,7 @@ RSpec.describe Support::Frameworks::RecordKeeper do
 
   describe "#call" do
     it "persists the framework" do
-      expect { record_keeper.call([record]) }.to change { Support::Framework.count }.by 1
+      expect { record_keeper.call([record]) }.to change(Support::Framework, :count).by 1
       expect(Support::Framework.last.supplier).to eq record[:supplier]
     end
 

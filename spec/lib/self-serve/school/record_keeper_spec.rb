@@ -194,7 +194,7 @@ RSpec.describe School::RecordKeeper do
       before { create(:support_establishment_type, code: 34) }
 
       it "persists the opened organisation" do
-        expect { record_keeper.call([legacy_record, new_record]) }.to change { Support::Organisation.count }.by(1)
+        expect { record_keeper.call([legacy_record, new_record]) }.to change(Support::Organisation, :count).by(1)
         expect(Support::Organisation.last.urn).to eq(new_record[:urn])
       end
 
