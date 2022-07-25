@@ -36,7 +36,7 @@ RSpec.describe Support::EstablishmentGroups::RecordKeeper do
       before { create(:support_establishment_group_type, code: 1) }
 
       it "persists the opened organisation" do
-        expect { record_keeper.call([record]) }.to change { Support::EstablishmentGroup.count }.by(1)
+        expect { record_keeper.call([record]) }.to change(Support::EstablishmentGroup, :count).by(1)
         expect(Support::EstablishmentGroup.last.uid).to eq(record[:uid])
       end
 
