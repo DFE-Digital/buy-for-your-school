@@ -57,6 +57,6 @@ terraform workspace select $TF_VAR_environment
 terraform plan
 
 # apply the terraform
-# terraform apply -auto-approve
+terraform apply -auto-approve
 
 echo "$TF_VAR_environment has been deployed"

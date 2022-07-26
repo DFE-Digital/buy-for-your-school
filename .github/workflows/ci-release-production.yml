@@ -23,7 +23,7 @@ jobs:
         name: Deploy
         id: deploy
         with:
-          docker_image: ${{ needs.build_release.outputs.docker_image }}
+          docker_image: ${{ inputs.docker_image_and_tag }}
           deployment_environment: production
           pr_number: ${{ github.event.number }}
           github_secrets_json: ${{ toJson(secrets) }}
