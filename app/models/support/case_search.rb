@@ -3,27 +3,20 @@ module Support
     belongs_to :case, class_name: "Support::Case"
 
     scope :omnisearch, lambda { |query|
-      sql = <<-SQL
-        case_ref LIKE :q OR
-        lower(organisation_name) LIKE lower(:q) OR
-        lower(organisation_urn) LIKE lower(:q) OR
-        lower(agent_first_name) LIKE lower(:q) OR
-        lower(agent_last_name) LIKE lower(:q)
-      SQL
-
-      where(sql, q: "#{query}%").limit(30)
+      find_a_case(query).limit(30)
     }
 
     scope :find_a_case, lambda { |query|
       sql = <<-SQL
-        case_ref LIKE :q OR
-        lower(organisation_name) LIKE '%' || lower(:q) || '%' OR
-        lower(organisation_urn) LIKE lower(:q) OR
-        lower(agent_first_name) LIKE lower(:q) OR
-        lower(agent_last_name) LIKE lower(:q)
+        lower(organisation_name) LIKE :q OR
+        lower(organisation_urn) LIKE :q OR
+        lower(agent_first_name) LIKE :q OR
+        lower(agent_last_name) LIKE :q
       SQL
 
-      where(sql, q: "#{query}%").order("case_ref DESC")
+      where("case_ref = ?", sprintf("%06d", query.to_i))
+        .or(where(sql, q: "#{query.downcase}%"))
+        .order("case_ref DESC")
     }
   end
 end

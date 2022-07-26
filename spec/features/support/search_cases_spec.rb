@@ -17,13 +17,13 @@ RSpec.feature "Search cases", bullet: :skip do
     expect(find("label.govuk-label--l")).to have_text "Find a case"
   end
 
-  context "when searching with less than 3 characters" do
+  context "when searching with less than 2 characters" do
     it "validates the search term" do
-      fill_in "search_case_form[search_term]", with: "12"
+      fill_in "search_case_form[search_term]", with: "1"
       click_on "Search"
 
       within "p.govuk-error-message" do
-        expect(page).to have_text "Search term must be at least 3 characters"
+        expect(page).to have_text "Search term must be at least 2 characters"
       end
     end
   end

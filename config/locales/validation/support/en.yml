@@ -165,7 +165,7 @@ en:
     errors:
       rules:
         search_term:
-          min_size?: must be at least 3 characters
+          min_size?: must be at least 2 characters
 
   save_attachments_form:
     errors:
