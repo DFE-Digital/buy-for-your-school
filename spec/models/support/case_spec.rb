@@ -60,4 +60,31 @@ RSpec.describe Support::Case, type: :model do
       )
     end
   end
+
+  describe ".my_cases_ordering" do
+    it "is ordered correctly" do
+      # Cases are listed in the following order:
+      # - Action
+      # - New / Initial
+      # - Open
+      # - On hold
+      # - Resolved
+      # - Everything else
+
+      create(:support_case, ref: "000500", action_required: true,  state: :initial)
+      create(:support_case, ref: "000501", action_required: false, state: :initial)
+      create(:support_case, ref: "000502", action_required: false, state: :resolved)
+      create(:support_case, ref: "000503", action_required: false, state: :resolved)
+      create(:support_case, ref: "000504", action_required: false, state: :opened)
+      create(:support_case, ref: "000505", action_required: false, state: :opened)
+      create(:support_case, ref: "000506", action_required: false, state: :on_hold)
+      create(:support_case, ref: "000507", action_required: false, state: :on_hold)
+      create(:support_case, ref: "000508", action_required: false, state: :closed)
+      create(:support_case, ref: "000509", action_required: true,  state: :closed)
+
+      results = described_class.my_cases_ordering.pluck(:ref)
+
+      expect(results).to eq(%w[000509 000500 000501 000505 000504 000507 000506 000503 000502 000508])
+    end
+  end
 end
