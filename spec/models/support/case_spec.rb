@@ -61,7 +61,7 @@ RSpec.describe Support::Case, type: :model do
     end
   end
 
-  describe ".my_cases_ordering" do
+  describe ".priority_ordering" do
     it "is ordered correctly" do
       # Cases are listed in the following order:
       # - Action
@@ -82,7 +82,7 @@ RSpec.describe Support::Case, type: :model do
       create(:support_case, ref: "000508", action_required: false, state: :closed)
       create(:support_case, ref: "000509", action_required: true,  state: :closed)
 
-      results = described_class.my_cases_ordering.pluck(:ref)
+      results = described_class.priority_ordering.pluck(:ref)
 
       expect(results).to eq(%w[000509 000500 000501 000505 000504 000507 000506 000503 000502 000508])
     end

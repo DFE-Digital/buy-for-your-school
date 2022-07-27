@@ -62,7 +62,7 @@ module Support
     scope :by_category, ->(category_id) { where(category_id: category_id) }
     scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: tower }) }
 
-    scope :my_cases_ordering, lambda {
+    scope :priority_ordering, lambda {
       order(
         Arel.sql(
           <<-SQL,
