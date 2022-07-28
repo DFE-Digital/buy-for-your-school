@@ -1,11 +1,10 @@
 RSpec.describe Emails::ExitSurvey do
   describe "#personalisation" do
-    it "includes a query string with encoded case reference, school name, and email" do
-      personalisation = described_class.new(recipient: OpenStruct.new(email: "test@email.com"), reference: "000003", school_name: "The Good School").personalisation
-      query_string = personalisation[:survey_query_string]
+    it "includes the link to the exit survey" do
+      personalisation = described_class.new(recipient: OpenStruct.new(email: "test@email.com"), reference: "000003", survey_id: "survey1").personalisation
+      exit_survey_link = personalisation[:exit_survey_link]
 
-      expect(query_string).to match(/\?Q_EED=/)
-      expect(Base64.decode64(query_string)).to eq "@A\x03{\"case_ref\":\"000003\",\"school_name\":\"The Good School\",\"email\":\"test@email.com\"}"
+      expect(exit_survey_link).to match(%r{/exit_survey/start/survey1$})
     end
   end
 end

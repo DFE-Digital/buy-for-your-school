@@ -155,36 +155,46 @@ en:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
       page_title: An unexpected error occurred
   exit_survey:
-    continue: Continue
     better_quality:
       options:
-        strongly_agree: Strongly agree
         agree: Agree
-        neither: Neither agree nor disagree
         disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
         strongly_disagree: Strongly disagree
       question: Do you agree or disagree that using the service helped your school to buy better quality goods or services?
+    continue: Continue
     future_support:
       options:
-        strongly_agree: Strongly agree
         agree: Agree
-        neither: Neither agree nor disagree
         disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
         strongly_disagree: Strongly disagree
       question: Do you agree or disagree that you've learned enough to run the same type of procurement in the future with less support?
     hear_about_service:
       options:
         dfe_email: An email from the DfE
         dfe_event: At a DfE event
-        non_dfe_event: At a non-DfE event or conference
         dfe_promotion: A DfE promotion
-        other_dfe_service_referral: Referred from another DfE service
+        non_dfe_event: At a non-DfE event or conference
         online_search: Online search
+        other: Other
+        other_dfe_service_referral: Referred from another DfE service
         social_media: Social media
         word_of_mouth: Word of mouth
-        other: Other
-      please_specify: Please specify  
+      please_specify: Please specify
       question: How did you hear about the service?
+    opt_in:
+      detail:
+        email_address: Email address
+        full_name: Full name
+        prompt: Provide your details to opt in to research opportunities
+        text: We will use these details to contact you about taking part in future research. <br><br> Your details will not be used for any other purpose.
+      'no': 'No'
+      question: Would you like to be contacted about DfE research opportunities?
+      text: Your feedback helps us to improve services for schools. You can always say no to an invite and you can unsubscribe at any time.
+      'yes': 'Yes'
     satisfaction:
       options:
         dissatisfied: Dissatisfied
@@ -194,33 +204,23 @@ en:
         very_satisfied: Very satisfied
       question: How do you feel about the service you received?
     satisfaction_reason:
-      question: Tell us why you felt %{previous_response} with the service? 
+      question: Tell us why you felt %{previous_response} with the service?
     saved_time:
       options:
-        strongly_agree: Strongly agree
         agree: Agree
-        neither: Neither agree nor disagree
         disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
         strongly_disagree: Strongly disagree
       question: Do you agree or disagree that using the service saved you or your school time?
     start:
-      privacy_policy: Privacy policy
       body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.
+      privacy_policy: Privacy policy
     thank_you:
       link: Get help buying for schools
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you
     title: Get help buying for schools feedback
-    opt_in:
-      detail:
-        email_address: Email address 
-        full_name: Full name
-        prompt: Provide your details to opt in to research opportunities
-        text: We will use these details to contact you about taking part in future research. <br><br> Your details will not be used for any other purpose. 
-      'yes': 'Yes'
-      'no': 'No'
-      question: Would you like to be contacted about DfE research opportunities?
-      text: Your feedback helps us to improve services for schools. You can always say no to an invite and you can unsubscribe at any time.
   faf:
     check_answers:
       button:

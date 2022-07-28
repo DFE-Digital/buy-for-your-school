@@ -11,14 +11,15 @@ describe "Resolving a case" do
     stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
       .with(body: {
         "email_address": "school@email.co.uk",
-        "template_id": "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+        # "template_id": "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+        "template_id": "7206a6c3-1c06-4f9c-8ae7-46879098fea5",
         "reference": "000001",
         "personalisation": {
           "reference": "000001",
           "first_name": "School",
           "last_name": "Contact",
           "email": "school@email.co.uk",
-          "survey_query_string": /\?Q_EED=/,
+          "exit_survey_link": %r{/exit_survey/start/},
         },
       })
       .to_return(body: {}.to_json, status: 200, headers: {})
