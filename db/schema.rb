@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_145001) do
+ActiveRecord::Schema.define(version: 2022_07_22_124019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -97,6 +97,23 @@ ActiveRecord::Schema.define(version: 2022_06_29_145001) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "exit_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "case_id"
+    t.integer "satisfaction_level"
+    t.string "satisfaction_text"
+    t.integer "saved_time"
+    t.integer "better_quality"
+    t.integer "future_support"
+    t.integer "hear_about_service"
+    t.boolean "opt_in"
+    t.string "opt_in_name"
+    t.string "opt_in_email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "hear_about_service_other"
+    t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
   create_table "flipper_features", force: :cascade do |t|
@@ -296,10 +313,10 @@ ActiveRecord::Schema.define(version: 2022_06_29_145001) do
     t.string "extension_number"
     t.string "other_category"
     t.string "other_query"
-    t.uuid "query_id"
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.string "confidence_level"
     t.string "special_requirements"
+    t.uuid "query_id"
     t.boolean "exit_survey_sent", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
@@ -568,6 +585,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_145001) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade

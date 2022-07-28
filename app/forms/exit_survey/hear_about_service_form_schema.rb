@@ -4,7 +4,7 @@ class ExitSurvey::HearAboutServiceFormSchema < Schema
   config.messages.top_namespace = :exit_survey
 
   params do
-    optional(:hear_about_service).value(:string)
+    required(:hear_about_service).value(:string)
     optional(:hear_about_service_other).value(:string)
   end
 

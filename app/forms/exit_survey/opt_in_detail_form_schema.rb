@@ -4,8 +4,8 @@ class ExitSurvey::OptInDetailFormSchema < Schema
   config.messages.top_namespace = :exit_survey
 
   params do
-    optional(:opt_in_name).value(:string)
-    optional(:opt_in_email).value(:string)
+    required(:opt_in_name).value(:string)
+    required(:opt_in_email).value(:string)
   end
 
   rule(:opt_in_name) do

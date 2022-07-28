@@ -23,9 +23,9 @@ class Emails::ExitSurvey < Notify::Email
   #   @return [String] Template by UUID
   option :template, Types::String, default: proc { Support::EmailTemplates::IDS[:exit_survey] }
 
-  # @!attribute [r] school_name
-  #   @return [String] Name of the school associated to the case
-  option :school_name, Types::String
+  # @!attribute [r] survey_id
+  #   @return [String] ID of the exit survey to be filled out
+  option :survey_id, Types::String
 
   def call
     Rollbar.info("Sending exit survey email")
@@ -36,16 +36,10 @@ class Emails::ExitSurvey < Notify::Email
 private
 
   def template_params
-    super.merge(survey_query_string: generate_survey_query_string)
+    super.merge(exit_survey_link: exit_survey_link)
   end
 
-  def generate_survey_query_string
-    populated_responses = {
-      "case_ref": reference,
-      "school_name": school_name,
-      "email": recipient.email,
-    }
-
-    "?Q_EED=#{Base64.strict_encode64(populated_responses.to_json)}"
+  def exit_survey_link
+    Rails.application.routes.url_helpers.exit_survey_start_url(@survey_id)
   end
 end

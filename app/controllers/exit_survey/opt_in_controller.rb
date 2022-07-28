@@ -4,13 +4,14 @@ class ExitSurvey::OptInController < ApplicationController
   before_action :form, only: %i[update]
 
   def edit
-    @form = ExitSurvey::OptInForm.new
+    @form = ExitSurvey::OptInForm.new(**exit_survey_response.to_h.compact)
+    @back_url = edit_exit_survey_hear_about_service_path
   end
 
   def update
     if validation.success?
       exit_survey_response.update!(**form.data)
-      redirect_to edit_exit_survey_opt_in_detail_path(exit_survey_response)
+      redirect_to @form.opt_in ? edit_exit_survey_opt_in_detail_path(exit_survey_response) : exit_survey_thank_you_path(exit_survey_response)
     else
       render :edit
     end
@@ -39,6 +40,6 @@ private
 
   # @return [OptInFormSchema] validated form input
   def validation
-    ExitSurvey::OptInFormSchema.new.call(**form_params)
+    @validation ||= ExitSurvey::OptInFormSchema.new.call(**form_params)
   end
 end

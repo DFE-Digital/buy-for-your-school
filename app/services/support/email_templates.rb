@@ -7,7 +7,8 @@ module Support
       catering_frameworks: "12430165-4ae7-47aa-baa3-d0b3c5440a9b",
       social_value: "bb4e6925-3491-44b8-8747-bdbb31257403",
       user_research: "fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779",
-      exit_survey: "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+      # exit_survey: "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+      exit_survey: "7206a6c3-1c06-4f9c-8ae7-46879098fea5",
     }.freeze
 
     def self.label_for(id)

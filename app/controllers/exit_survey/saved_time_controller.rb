@@ -4,7 +4,8 @@ class ExitSurvey::SavedTimeController < ApplicationController
   before_action :form, only: %i[update]
 
   def edit
-    @form = ExitSurvey::SavedTimeForm.new
+    @form = ExitSurvey::SavedTimeForm.new(**exit_survey_response.to_h.compact)
+    @back_url = edit_exit_survey_satisfaction_reason_path
   end
 
   def update
@@ -39,6 +40,6 @@ private
 
   # @return [SavedTimeFormSchema] validated form input
   def validation
-    ExitSurvey::SavedTimeFormSchema.new.call(**form_params)
+    @validation ||= ExitSurvey::SavedTimeFormSchema.new.call(**form_params)
   end
 end

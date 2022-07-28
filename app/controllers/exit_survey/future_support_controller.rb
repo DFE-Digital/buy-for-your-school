@@ -4,7 +4,8 @@ class ExitSurvey::FutureSupportController < ApplicationController
   before_action :form, only: %i[update]
 
   def edit
-    @form = ExitSurvey::FutureSupportForm.new
+    @form = ExitSurvey::FutureSupportForm.new(**exit_survey_response.to_h.compact)
+    @back_url = edit_exit_survey_better_quality_path
   end
 
   def update
@@ -39,6 +40,6 @@ private
 
   # @return [FutureSupportFormSchema] validated form input
   def validation
-    ExitSurvey::FutureSupportFormSchema.new.call(**form_params)
+    @validation ||= ExitSurvey::FutureSupportFormSchema.new.call(**form_params)
   end
 end

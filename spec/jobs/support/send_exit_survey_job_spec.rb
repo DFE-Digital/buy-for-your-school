@@ -33,8 +33,8 @@ describe Support::SendExitSurveyJob do
     before do
       allow(Emails::ExitSurvey).to receive(:new)
         .with(recipient: kase,
-              school_name: kase.organisation.name,
-              reference: "000001")
+              reference: "000001",
+              survey_id: instance_of(String))
         .and_return(exit_survey_service)
 
       job.perform("000001")

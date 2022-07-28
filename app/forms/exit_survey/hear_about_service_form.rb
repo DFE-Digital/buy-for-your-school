@@ -14,4 +14,11 @@ class ExitSurvey::HearAboutServiceForm < ExitSurvey::Form
   def hear_about_service_options
     @hear_about_service_options ||= ExitSurveyResponse.hear_about_services.keys
   end
+
+  # Set hear_about_service_other only if hear_about_service == :other so we don't end up with an empty string
+  #
+  # @return [Hash] form params as request attributes
+  def data
+    super.merge(hear_about_service_other: @hear_about_service == :other ? @hear_about_service_other : nil)
+  end
 end

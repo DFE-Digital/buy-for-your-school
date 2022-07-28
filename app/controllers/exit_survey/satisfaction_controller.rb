@@ -4,7 +4,8 @@ class ExitSurvey::SatisfactionController < ApplicationController
   before_action :form, only: %i[update]
 
   def edit
-    @form = ExitSurvey::SatisfactionForm.new
+    @form = ExitSurvey::SatisfactionForm.new(**exit_survey_response.to_h.compact)
+    @back_url = exit_survey_start_path
   end
 
   def update
@@ -39,6 +40,6 @@ private
 
   # @return [SatisfactionFormSchema] validated form input
   def validation
-    ExitSurvey::SatisfactionFormSchema.new.call(**form_params)
+    @validation ||= ExitSurvey::SatisfactionFormSchema.new.call(**form_params)
   end
 end

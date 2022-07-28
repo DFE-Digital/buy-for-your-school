@@ -4,7 +4,8 @@ class ExitSurvey::BetterQualityController < ApplicationController
   before_action :form, only: %i[update]
 
   def edit
-    @form = ExitSurvey::BetterQualityForm.new
+    @form = ExitSurvey::BetterQualityForm.new(**exit_survey_response.to_h.compact)
+    @back_url = edit_exit_survey_saved_time_path
   end
 
   def update
@@ -39,6 +40,6 @@ private
 
   # @return [BetterQualityFormSchema] validated form input
   def validation
-    ExitSurvey::BetterQualityFormSchema.new.call(**form_params)
+    @validation ||= ExitSurvey::BetterQualityFormSchema.new.call(**form_params)
   end
 end

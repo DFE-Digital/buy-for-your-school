@@ -4,7 +4,7 @@ class ExitSurvey::SatisfactionFormSchema < Schema
   config.messages.top_namespace = :exit_survey
 
   params do
-    optional(:satisfaction_level).value(:string)
+    required(:satisfaction_level).value(:string)
   end
 
   rule(:satisfaction_level) do

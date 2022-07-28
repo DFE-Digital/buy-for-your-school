@@ -4,7 +4,7 @@ class ExitSurvey::FutureSupportFormSchema < Schema
   config.messages.top_namespace = :exit_survey
 
   params do
-    optional(:future_support).value(:string)
+    required(:future_support).value(:string)
   end
 
   rule(:future_support) do

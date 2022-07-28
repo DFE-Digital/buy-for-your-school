@@ -1,34 +1,23 @@
 <%= content_for :title, I18n.t("exit_survey.title") %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :opt_in_form, url: exit_survey_opt_in_path, method: :patch, id: "opt-in-form" do |form| %>
+      <%= form.govuk_error_summary %>
 
-    <%= form_with model: @form, scope: :opt_in_form, url: exit_survey_opt_in_path, method: :patch do |form| %>
-    <%= form.govuk_error_summary %> 
-
-    <%= form.hidden_field :opt_in, value: form.object.opt_in %> 
-
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h1 class="govuk-fieldset__heading"><%= I18n.t("exit_survey.opt_in.question") %></h1>   
-          </legend>
-          <p class="govuk-body"><%= I18n.t("exit_survey.opt_in.text").html_safe %></p>
-
-          <%=
-            form.govuk_collection_radio_buttons :opt_in,
-                [
-                OpenStruct.new(value: true, label: I18n.t("exit_survey.opt_in.yes")),
-                OpenStruct.new(value: false, label: I18n.t("exit_survey.opt_in.no")),
-                ],
-                :value,
-                :label,
-                legend: nil
-            %>
-      </div> 
+      <%=
+        form.govuk_collection_radio_buttons :opt_in,
+            [
+            OpenStruct.new(value: true, label: I18n.t("exit_survey.opt_in.yes")),
+            OpenStruct.new(value: false, label: I18n.t("exit_survey.opt_in.no")),
+            ],
+            :value,
+            :label,
+            legend: { text: I18n.t("exit_survey.opt_in.question"), size: "l" },
+            hint: { text: I18n.t("exit_survey.opt_in.text") }
+        %>
 
       <%= form.submit I18n.t("exit_survey.continue"), class: "govuk-button" %>
     <% end %>
   </div>
 </div>
-
