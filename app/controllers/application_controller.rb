@@ -70,6 +70,8 @@ protected
   #
   # @return [Boolean]
   def url_internal?(url)
+    return false if url.nil?
+
     [request.host, nil].include?(URI(url).host)
   end
 end
