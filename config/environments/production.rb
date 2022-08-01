@@ -124,6 +124,8 @@ Rails.application.configure do
   # NB: ITHC finding 6.1.3 mitigation
   config.action_dispatch.default_headers = {
     "X-Xss-Protection" => "0",
+    "X-Frame-Options" => "DENY",
+    "X-Content-Type-Options" => "nosniff",
   }
 
   # Set active storage location
