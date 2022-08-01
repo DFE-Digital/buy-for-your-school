@@ -26,7 +26,7 @@ module Support
     end
 
     def show
-      @back_url = back_link_param || support_cases_path
+      @back_url = url_internal?(back_link_param) ? back_link_param : support_cases_path
     end
 
     def new
