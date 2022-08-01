@@ -13,6 +13,10 @@ class ExitSurvey::OptInDetailFormSchema < Schema
   end
 
   rule(:opt_in_email) do
-    key.failure(:missing) if value.blank?
+    if value.blank?
+      key.failure(:missing)
+    else
+      key.failure(:invalid) unless URI::MailTo::EMAIL_REGEXP.match?(value)
+    end
   end
 end

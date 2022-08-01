@@ -163,6 +163,7 @@ en:
           bool?: Select if you would like to be contacted about DfE research opportunities.
         opt_in_email:
           missing: Enter an email address. For example, 'someone@school.sch.uk'.
+          invalid: Enter a valid email address. For example, 'someone@school.sch.uk'.
         opt_in_name:
           missing: Enter your full name.
         satisfaction_level:
