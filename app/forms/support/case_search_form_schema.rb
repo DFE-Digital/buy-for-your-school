@@ -7,7 +7,7 @@ module Support
       required(:search_term).value(:string)
     end
 
-    rule(:search_term).validate(min_size?: 3)
+    rule(:search_term).validate(min_size?: 2)
   end
 end
 # :nocov:

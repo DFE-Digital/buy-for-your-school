@@ -22,7 +22,7 @@ module Support
     option :tower, optional: true
 
     def agents
-      @agents ||= Support::Agent.caseworkers.map { |a| AgentPresenter.new(a) }
+      @agents ||= Support::Agent.caseworkers.by_first_name.map { |a| AgentPresenter.new(a) }
     end
 
     def categories

@@ -10,6 +10,7 @@ module Support
 
     # agents that are not internal team members (genuine caseworkers)
     scope :caseworkers, -> { where(internal: false) }
+    scope :by_first_name, -> { order("first_name ASC") }
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
