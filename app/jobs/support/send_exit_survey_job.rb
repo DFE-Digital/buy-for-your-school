@@ -23,7 +23,7 @@ module Support
       ::Emails::ExitSurvey.new(
         recipient: kase,
         reference: case_ref,
-        school_name: kase.organisation.name,
+        school_name: kase.organisation&.name,
       ).call
 
       update_case(kase)
