@@ -8,19 +8,14 @@
 
 Rails.application.configure do
   config.content_security_policy do |policy|
-    if Rails.env.development? # allow for webpack-dev-server websockets to function
-      policy.default_src :self, :https, :wss
-    else
-      policy.default_src :self, :https
-    end
-
+    policy.default_src :self, :https
     policy.font_src :self, :https, :data
     policy.img_src :self, :https, :data
     policy.object_src :none
     policy.script_src :self, :https
     policy.style_src :self, :https
     # If you are using webpack-dev-server then specify webpack-dev-server host
-    # policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
+    policy.connect_src :self, :https, :wss if Rails.env.development?
 
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
