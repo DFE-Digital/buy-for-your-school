@@ -62,6 +62,23 @@ module Support
     scope :by_category, ->(category_id) { where(category_id: category_id) }
     scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: tower }) }
 
+    scope :priority_ordering, lambda {
+      order(
+        Arel.sql(
+          <<-SQL,
+            CASE
+              WHEN action_required = true THEN 20
+              WHEN state = 0 THEN 10
+              WHEN state = 1 THEN 9
+              WHEN state = 3 THEN 8
+              WHEN state = 2 THEN 7
+              ELSE 1
+            END DESC, ref DESC
+          SQL
+        ),
+      )
+    }
+
     # Support level
     #
     #   L1       - Advice and guidance only
