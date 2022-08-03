@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "support/save_attachments/new.html.erb" do
+describe "support/save_attachments/new" do
   describe "file type excluded warning" do
     before do
       view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder

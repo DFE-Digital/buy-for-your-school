@@ -22,7 +22,7 @@ module BuyForYourSchool
     end
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 6.1
 
     # Make sure the `form_with` helper generates local forms, instead of defaulting
     # to remote and unobtrusive XHR forms
@@ -50,5 +50,8 @@ module BuyForYourSchool
 
     # Set London as the timezone - handles daylight savings automatically
     config.time_zone = "London"
+
+    # Allows to enable new connection handling API
+    config.active_record.legacy_connection_handling = false
   end
 end
