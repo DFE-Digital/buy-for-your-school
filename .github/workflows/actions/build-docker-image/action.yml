@@ -15,7 +15,7 @@ inputs:
 outputs:
   docker_image:
     description: The docker image and tag that has been built and pushed
-    value: ${{ steps.prep.outputs.tagged_image_1 }}
+    value: ${{ steps.prep.outputs.main_tag }}
 
 runs:
   using: composite
@@ -36,13 +36,19 @@ runs:
       shell: bash
       run: |
         TAG=$(echo $GITHUB_SHA | head -c7)
+        BASE_IMAGE=ghcr.io/dfe-digital/buy-for-your-school
 
         if [ "${{ inputs.target }}" == "test" ]; then
-          echo ::set-output name=tagged_image_1::ghcr.io/dfe-digital/buy-for-your-school:${TAG}-test
-          echo ::set-output name=tagged_image_2::ghcr.io/dfe-digital/buy-for-your-school:latest-test
+          echo ::set-output name=main_tag::${BASE_IMAGE}:${TAG}-test
+          echo ::set-output name=tags_to_push::${BASE_IMAGE}:${TAG}-test,${BASE_IMAGE}:latest-test
+
+        elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
+          echo ::set-output name=main_tag::${BASE_IMAGE}:${TAG}
+          echo ::set-output name=tags_to_push::${BASE_IMAGE}:${TAG},${BASE_IMAGE}:main
+
         else
-          echo ::set-output name=tagged_image_1::ghcr.io/dfe-digital/buy-for-your-school:${TAG}
-          echo ::set-output name=tagged_image_2::ghcr.io/dfe-digital/buy-for-your-school:latest-release
+          echo ::set-output name=main_tag::${BASE_IMAGE}:${TAG}
+          echo ::set-output name=tags_to_push::${BASE_IMAGE}:${TAG}
         fi
 
     - name: Set up Docker Buildx
@@ -56,8 +62,6 @@ runs:
         builder: ${{ steps.buildx.outputs.name }}
         push: ${{ github.actor != 'dependabot[bot]' }}
         target: ${{ inputs.target }}
-        tags: |
-          ${{ steps.prep.outputs.tagged_image_1 }}
-          ${{ steps.prep.outputs.tagged_image_2 }}
+        tags: ${{ steps.prep.outputs.tags_to_push }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
