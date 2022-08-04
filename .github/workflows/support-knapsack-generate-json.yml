@@ -62,9 +62,9 @@ jobs:
             -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
             -e SUPPORT_EMAIL=email@example.gov.uk \
             -e KNAPSACK_GENERATE_REPORT=true \
-            -v ${{ github.workspace }}/knapsack:/srv/app/ \
+            -v ${{ github.workspace }}/knapsack:/srv/app/knapsack \
             ghcr.io/dfe-digital/buy-for-your-school:latest-test \
-            bash -c "bundle exec rspec || :"
+            bash -c "bundle exec rspec || : ; mv knapsack_rspec_report.json knapsack"
 
       - name: Upload Knapsack JSON report
         if: always()
