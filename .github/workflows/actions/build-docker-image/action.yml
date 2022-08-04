@@ -5,6 +5,12 @@ inputs:
   target:
     description: The docker stage to target
     required: true
+  ghcr_username:
+    description: The username of the GHCR docker repo
+    required: true
+  ghcr_password:
+    description: The password of the GHCR docker repo
+    required: true
 
 outputs:
   docker_image:
@@ -16,6 +22,14 @@ runs:
   steps:
     - uses: actions/checkout@v3
       name: Checkout Code
+
+    - name: Login to GitHub Container Registry
+      if: github.actor != 'dependabot[bot]'
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ inputs.ghcr_username }}
+        password: ${{ inputs.ghcr_password }}
 
     - name: Prepare
       id: prep
@@ -38,7 +52,7 @@ runs:
       with:
         context: .
         builder: ${{ steps.buildx.outputs.name }}
-        push: true
+        push: ${{ github.actor != 'dependabot[bot]' }}
         target: ${{ inputs.target }}
         tags: ${{ steps.prep.outputs.tagged_image }}
         cache-from: type=gha
