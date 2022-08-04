@@ -1,0 +1,271 @@
+name: "CI/CD - Full Pipeline"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_test:
+    name: Build (Test)
+    runs-on: ubuntu-20.04
+    outputs:
+      docker_image: ${{ steps.build.outputs.docker_image }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/workflows/actions/build-docker-image
+        name: Build docker image
+        id: build
+        with:
+          target: test
+          ghcr_username: ${{ secrets.GHCR_USERNAME }}
+          ghcr_password: ${{ secrets.GHCR_PASSWORD }}
+
+  build_release:
+    name: Build (Release)
+    runs-on: ubuntu-20.04
+    outputs:
+      docker_image: ${{ steps.build.outputs.docker_image }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/workflows/actions/build-docker-image
+        name: Build docker image
+        id: build
+        with:
+          target: app
+          ghcr_username: ${{ secrets.GHCR_USERNAME }}
+          ghcr_password: ${{ secrets.GHCR_PASSWORD }}
+
+  brakeman:
+    name: Checks - Brakeman
+    needs: build_test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec brakeman
+
+  rubocop:
+    name: Checks - Rubocop
+    needs: build_test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
+
+  rspec:
+    name: Checks - Rspec
+    needs: build_test
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ci_node_total: [6]
+        ci_node_index: [0, 1, 2, 3, 4, 5]
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      chrome:
+        image: selenium/standalone-chrome:95.0-chromedriver-95.0
+        ports:
+          - 4444:4444
+
+    steps:
+      - name: Run Rspec tests
+        id: run_rspec
+        run: |
+          docker run --rm \
+            --network ${{ job.container.network }} \
+            -e RAILS_ENV=test \
+            -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
+            -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
+            -e DOCKER=true \
+            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
+            -e REDIS_URL=redis://redis:6379 \
+            -e APPLICATION_URL=http://localhost:3000 \
+            -e SECRET_KEY_BASE=test \
+            -e CONTENTFUL_SPACE=test \
+            -e CONTENTFUL_ENVIRONMENT=master \
+            -e CONTENTFUL_DELIVERY_TOKEN=123 \
+            -e CONTENTFUL_PREVIEW_TOKEN=123 \
+            -e CONTENTFUL_ENTRY_CACHING=false \
+            -e CONTENTFUL_WEBHOOK_API_KEY=test \
+            -e NOTIFY_API_KEY=development_team-12345678-1234-1234-1234-abcd12345678-12345678-1234-1234-1234-abcd12345678 \
+            -e MS_GRAPH_TENANT=test \
+            -e MS_GRAPH_CLIENT_ID=test \
+            -e MS_GRAPH_CLIENT_SECRET=test \
+            -e MS_GRAPH_SHARED_MAILBOX_USER_ID=test \
+            -e MS_GRAPH_SHARED_MAILBOX_NAME=mailbox \
+            -e MS_GRAPH_SHARED_MAILBOX_ADDRESS=test@mailbox.com \
+            -e CLAMAV_REST_SERVICE_URL=test \
+            -e DSI_ENV=test \
+            -e DFE_SIGN_IN_IDENTIFIER=service \
+            -e DFE_SIGN_IN_API_SECRET=secret \
+            -e PROC_OPS_TEAM=test \
+            -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
+            -e SUPPORT_EMAIL=email@example.gov.uk \
+            -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \
+            -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
+            -e CI=1 \
+            -v ${PWD}/coverage/coverage-${{ matrix.ci_node_index }}:/srv/app/coverage \
+            ${{ needs.build_test.outputs.docker_image }} \
+            bash -c "bundle exec rake knapsack:rspec || bundle exec rspec --only-failure"
+
+      - name: Upload code coverage reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: code_coverage
+          path: ${{ github.workspace }}/coverage
+
+  coverage_report:
+    name: Code Coverage Report
+    runs-on: ubuntu-20.04
+    needs: [build_test, rspec]
+
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Combine Coverage Reports
+        id: results
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/code_coverage:/srv/app/coverage \
+            -e COVERAGE_DIR \
+            ${{ needs.build_test.outputs.docker_image }} \
+            bundle exec ruby lib/code_coverage_collate.rb
+
+          line_coverage=$(cat ${{ github.workspace }}/code_coverage/.last_run.json | jq .result.line)
+          echo "::set-output name=line::$line_coverage"
+
+          echo "---------- REPORT --------------"
+          echo "Line coverage is $line_coverage%"
+        env:
+          COVERAGE_DIR: /srv/app/coverage
+
+      - name: Upload combined code coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: code_coverage
+          path: |
+            ${{ github.workspace }}/code_coverage/.last_run.json
+            ${{ github.workspace }}/code_coverage/.resultset.json
+            ${{ github.workspace }}/code_coverage/.resultset.json.lock
+            ${{ github.workspace }}/code_coverage/assets
+            ${{ github.workspace }}/code_coverage/index.html
+
+  release_qa:
+    name: Deploy release (QA)
+    runs-on: ubuntu-20.04
+    needs: build_release
+    environment: qa
+
+    if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: ./.github/workflows/actions/deploy
+        name: Deploy
+        id: deploy
+        with:
+          docker_image: ${{ needs.build_release.outputs.docker_image }}
+          deployment_environment: qa
+          pr_number: ${{ github.event.number }}
+          github_secrets_json: ${{ toJson(secrets) }}
+          cf_username: ${{ secrets.CF_USER }}
+          cf_password: ${{ secrets.CF_PASSWORD }}
+          cf_app_name: buy-for-your-school-qa-${{ github.event.number }}
+          rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Comment QA URL to PR
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            QA application accessible at: ${{ steps.deploy.outputs.application_url }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: |
+            qa-${{ steps.deploy.outputs.qa_number }}
+            qa-deployed
+
+  seed_qa:
+    name: Seed environment (QA)
+    runs-on: ubuntu-20.04
+    needs: release_qa
+
+    # Don't run with qa-seeded or dont-seed labels
+    if: ${{ !(contains(github.event.pull_request.labels.*.name, 'qa-seeded') || contains(github.event.pull_request.labels.*.name, 'dont-seed')) }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Run seeding
+        run: |
+          script/install-cf
+          script/cf-login
+          script/qa/seed
+        env:
+          CF_USER: ${{ secrets.CF_USER }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_APP_NAME: buy-for-your-school-qa-${{ github.event.number }}
+          TF_VAR_cloudfoundry_space: sct-preview
+
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: qa-seeded
+
+  release_staging:
+    name: Deploy release (Staging)
+    runs-on: ubuntu-20.04
+    needs: build_release
+    environment: staging
+
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: ./.github/workflows/actions/deploy
+        name: Deploy
+        id: deploy
+        with:
+          docker_image: ${{ needs.build_release.outputs.docker_image }}
+          deployment_environment: staging
+          pr_number: ${{ github.event.number }}
+          github_secrets_json: ${{ toJson(secrets) }}
+          cf_username: ${{ secrets.CF_USER }}
+          cf_password: ${{ secrets.CF_PASSWORD }}
+          rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
