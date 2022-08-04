@@ -247,6 +247,7 @@ jobs:
     name: Deploy release (Staging)
     runs-on: ubuntu-20.04
     needs: [build_release, rspec, brakeman, rubocop]
+    environment: staging
 
     if: github.ref == 'refs/heads/main'
 
