@@ -9,3 +9,5 @@ Rails.application.load_tasks
 
 desc "Run all the tests"
 task default: %i[spec rubocop]
+
+Knapsack.load_tasks if defined?(Knapsack)
