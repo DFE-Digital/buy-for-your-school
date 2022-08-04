@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ActiveStorage::SetCurrent
+
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :authenticate_user!, except: :health_check
-  before_action :set_active_storage_host
 
   protect_from_forgery
 
@@ -55,10 +56,6 @@ protected
   # Is the user currently on the support side?
   def support?
     false
-  end
-
-  def set_active_storage_host
-    ActiveStorage::Current.host = request.base_url
   end
 
   def cookie_policy
