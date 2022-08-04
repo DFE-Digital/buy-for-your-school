@@ -38,9 +38,11 @@ runs:
         TAG=$(echo $GITHUB_SHA | head -c7)
 
         if [ "${{ inputs.target }}" == "test" ]; then
-          echo ::set-output name=tagged_image::ghcr.io/dfe-digital/buy-for-your-school:${TAG}-test
+          echo ::set-output name=tagged_image_1::ghcr.io/dfe-digital/buy-for-your-school:${TAG}-test
+          echo ::set-output name=tagged_image_2::ghcr.io/dfe-digital/buy-for-your-school:latest-test
         else
-          echo ::set-output name=tagged_image::ghcr.io/dfe-digital/buy-for-your-school:${TAG}
+          echo ::set-output name=tagged_image_1::ghcr.io/dfe-digital/buy-for-your-school:${TAG}
+          echo ::set-output name=tagged_image_2::ghcr.io/dfe-digital/buy-for-your-school:latest-release
         fi
 
     - name: Set up Docker Buildx
@@ -54,6 +56,8 @@ runs:
         builder: ${{ steps.buildx.outputs.name }}
         push: ${{ github.actor != 'dependabot[bot]' }}
         target: ${{ inputs.target }}
-        tags: ${{ steps.prep.outputs.tagged_image }}
+        tags: |
+          ${{ steps.prep.outputs.tagged_image_1 }}
+          ${{ steps.prep.outputs.tagged_image_2 }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
