@@ -25,7 +25,7 @@ class Emails::ExitSurvey < Notify::Email
 
   # @!attribute [r] school_name
   #   @return [String] Name of the school associated to the case
-  option :school_name, Types::String
+  option :school_name, Types::String | Types::Nil, optional: true
 
   def call
     Rollbar.info("Sending exit survey email")
@@ -42,9 +42,10 @@ private
   def generate_survey_query_string
     populated_responses = {
       "case_ref": reference,
-      "school_name": school_name,
       "email": recipient.email,
     }
+
+    populated_responses["school_name"] = school_name if school_name.present?
 
     "?Q_EED=#{Base64.strict_encode64(populated_responses.to_json)}"
   end
