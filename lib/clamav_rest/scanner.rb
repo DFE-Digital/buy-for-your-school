@@ -9,7 +9,7 @@ module ClamavRest
     end
 
     def file_is_safe?(file)
-      response = HTTParty.post(configuration.service_url, body: { file: file }, format: :plain)
+      response = HTTParty.post(configuration.service_url, body: { file: }, format: :plain)
       status, _description = parse_response(response)
 
       status == "OK"

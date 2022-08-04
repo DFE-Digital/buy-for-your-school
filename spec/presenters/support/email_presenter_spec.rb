@@ -11,7 +11,7 @@ describe Support::EmailPresenter do
     context "when there are link tags in the email body" do
       subject(:presenter) { described_class.new(email) }
 
-      let(:email) { create(:support_email, body: body) }
+      let(:email) { create(:support_email, body:) }
 
       context "with a standard link" do
         let(:body) { "<a href=\"http://example.org?link=1\">Link 1</a>" }
@@ -64,8 +64,8 @@ describe Support::EmailPresenter do
       subject(:presenter) { described_class.new(email) }
 
       let(:email) { create(:support_email, body: "<img src=\"cid:A.B.C\" /> <img src=\"cid:X.Y.Z\" />") }
-      let!(:attachment1) { create(:support_email_attachment, is_inline: true, content_id: "A.B.C", email: email) }
-      let!(:attachment2) { create(:support_email_attachment, is_inline: true, content_id: "X.Y.Z", email: email) }
+      let!(:attachment1) { create(:support_email_attachment, is_inline: true, content_id: "A.B.C", email:) }
+      let!(:attachment2) { create(:support_email_attachment, is_inline: true, content_id: "X.Y.Z", email:) }
 
       it "replaces each attachment content id with its url" do
         view_context = self # as application route helpers are included

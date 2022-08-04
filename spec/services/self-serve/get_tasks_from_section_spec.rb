@@ -8,7 +8,7 @@ RSpec.describe GetTasksFromSection do
       )
       stub_contentful_tasks(sections: [section])
 
-      result = described_class.new(section: section).call
+      result = described_class.new(section:).call
 
       expect(result).to be_kind_of(Array)
       # INFO: We should test this is a Contentful::Entry however it wasn't

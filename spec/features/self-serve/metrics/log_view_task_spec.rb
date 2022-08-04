@@ -1,16 +1,16 @@
 RSpec.feature "User task actions are recorded" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, title: "Catering", journey:, contentful_id: "contentful-section-entry") }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when there is a task with multiple steps" do
     before do
-      task_checkbox_and_radio = create(:task, title: "Task with multiple steps", section: section)
+      task_checkbox_and_radio = create(:task, title: "Task with multiple steps", section:)
       create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_checkbox_and_radio, order: 0)
       create(:step, :short_text, title: "What email address did you use?", task: task_checkbox_and_radio, order: 1)
       create(:step, :long_text, title: "Describe what you need", task: task_checkbox_and_radio, order: 2)
@@ -59,7 +59,7 @@ RSpec.feature "User task actions are recorded" do
       it "records an action in the event log that an in-progress task has been revisited" do
         task = Task.find_by(title: "Task with multiple steps")
         step = task.steps.first
-        create(:radio_answer, step: step)
+        create(:radio_answer, step:)
 
         # /journeys/3303d91e-e09a-4956-90d5-2628564ae901
         expect(page).to have_a_journey_path

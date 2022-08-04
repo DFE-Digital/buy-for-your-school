@@ -20,9 +20,9 @@ module Support
 
     def record_action(case_id:, action:, data: {})
       Support::RecordAction.new(
-        case_id: case_id,
-        action: action,
-        data: data,
+        case_id:,
+        action:,
+        data:,
       ).call
     end
 

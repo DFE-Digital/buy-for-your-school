@@ -3,7 +3,7 @@ RSpec.feature "Case list navigation", bullet: :skip do
 
   before do
     category = create(:support_category, :fixed_title)
-    create_list(:support_case, 13, category: category)
+    create_list(:support_case, 13, category:)
     click_button "Agent Login"
   end
 

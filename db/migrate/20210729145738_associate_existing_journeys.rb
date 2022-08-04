@@ -25,8 +25,8 @@ class AssociateExistingJourneys < ActiveRecord::Migration[6.1]
     Category.reset_counters(catering.id, :journeys)
 
     Rollbar.info("Migration: Journeys associated to a category",
-                 journeys_total: journeys_total,
-                 journeys_updated: journeys_updated,
+                 journeys_total:,
+                 journeys_updated:,
                  contentful_category_id: catering_entry.id,
                  contentful_category_title: catering_entry.title)
   end

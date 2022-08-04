@@ -10,7 +10,7 @@ class UpdateSlugsAndContentfulIdsInPages < ActiveRecord::Migration[6.1]
       %w[terms_and_conditions terms-and-conditions 4jW1v1202HOoZoJr19lfpa],
     ].each do |old_slug, new_slug, contentful_id|
       Page.find_by(slug: old_slug)
-         &.update!(contentful_id: contentful_id, slug: new_slug)
+         &.update!(contentful_id:, slug: new_slug)
     end
 
     # Once all pages have the correct slug and coresponding contentful id

@@ -83,7 +83,7 @@ describe "Agent sees a list of emails seperate to cases" do
       let(:email) { Support::Email.first }
 
       before do
-        create(:support_email_attachment, email: email)
+        create(:support_email_attachment, email:)
       end
 
       it "allows the user to download the attachment" do

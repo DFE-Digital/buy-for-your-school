@@ -72,7 +72,7 @@ RSpec.feature "Case summary" do
   end
 
   context "when assigned to an agent" do
-    let(:support_case) { create(:support_case, agent: agent) }
+    let(:support_case) { create(:support_case, agent:) }
 
     it "shows a link to change case owner" do
       expect(page).to have_text "Case owner: Procurement Specialist"

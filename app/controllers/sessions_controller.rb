@@ -54,7 +54,7 @@ private
 
   # @return [UserSession]
   def user_session
-    UserSession.new(session: session, redirect_url: issuer_redirect_url)
+    UserSession.new(session:, redirect_url: issuer_redirect_url)
   end
 
   # @return [OmniAuth::AuthHash]

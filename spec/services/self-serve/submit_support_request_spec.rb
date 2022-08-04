@@ -42,7 +42,7 @@ RSpec.describe SubmitSupportRequest do
 
     let(:support_request) do
       create(:support_request, :with_specification,
-             user: user,
+             user:,
              phone_number: "01234567890",
              school_urn: chosen_organisation["urn"])
     end
@@ -72,7 +72,7 @@ RSpec.describe SubmitSupportRequest do
         context "without a specification" do
           let(:support_request) do
             create(:support_request,
-                   user: user,
+                   user:,
                    phone_number: "01234567890",
                    school_urn: chosen_organisation["urn"])
           end

@@ -1,7 +1,7 @@
 RSpec.feature "Editing a 'Digital Support' request" do
   let(:category) { create(:category, title: "Utilities") }
   let(:user) { create(:user) }
-  let(:journey) { create(:journey, category: category, user: user) }
+  let(:journey) { create(:journey, category:, user:) }
   let(:answers) { find_all("dd.govuk-summary-list__value") }
 
   before do
@@ -15,7 +15,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: "invalid phone number",
              message_body: "",
@@ -55,7 +55,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: nil,
              message_body: "",
@@ -68,7 +68,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
       let(:support_request) do
         create(:support_request,
                user: journey.user,
-               journey: journey,
+               journey:,
                category: nil,
                phone_number: nil,
                message_body: "",
@@ -111,7 +111,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
         create(:support_request,
                user: journey.user,
                journey: nil,
-               category: category,
+               category:,
                phone_number: nil,
                message_body: nil,
                school_urn: "123")
@@ -188,7 +188,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: nil,
              message_body: nil,
@@ -222,7 +222,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: nil,
              message_body: nil,
@@ -252,7 +252,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: nil,
              school_urn: "123")
@@ -276,7 +276,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
       let(:support_request) do
         create(:support_request,
                user: journey.user,
-               journey: journey,
+               journey:,
                category: nil,
                phone_number: nil,
                school_urn: "123",
@@ -343,7 +343,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: nil,
              school_urn: "123")
@@ -365,7 +365,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
-             journey: journey,
+             journey:,
              category: nil,
              phone_number: nil,
              school_urn: "123")

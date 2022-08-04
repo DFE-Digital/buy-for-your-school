@@ -1,16 +1,16 @@
 RSpec.feature "Back link works after failed form validations" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, title: "Catering", journey:, contentful_id: "contentful-section-entry") }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when there is a task containing every type of step" do
     before do
-      task_with_every_type_of_step = create(:task, title: "Task containing every type of step", section: section)
+      task_with_every_type_of_step = create(:task, title: "Task containing every type of step", section:)
       create(:step, :long_text, title: "Describe what you need", task: task_with_every_type_of_step, order: 0)
       create(:step, :short_text, title: "What email address did you use?", task: task_with_every_type_of_step, order: 1)
       create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_with_every_type_of_step, order: 2)

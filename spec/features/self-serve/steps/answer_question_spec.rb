@@ -6,8 +6,8 @@ RSpec.feature "Answering questions" do
   let(:journey) { answer.step.journey }
 
   before do
-    user_is_signed_in(user: user)
-    journey.update!(user: user)
+    user_is_signed_in(user:)
+    journey.update!(user:)
     visit_journey
     click_on title
   end

@@ -31,7 +31,7 @@ RSpec.feature "Case management dashboard" do
   end
 
   context "when my cases tab" do
-    let!(:new_case) { create(:support_case, agent: agent) }
+    let!(:new_case) { create(:support_case, agent:) }
 
     before do
       visit "/support/cases"

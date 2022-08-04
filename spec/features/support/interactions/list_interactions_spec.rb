@@ -12,8 +12,8 @@ RSpec.feature "Support request case history", bullet: :skip do
 
   before do
     travel_to Time.zone.local(2021, 3, 20, 12, 0, 0)
-    create(:support_interaction, :support_request, case: support_case, agent: agent)
-    create(:support_interaction, :email_to_school, case: support_case, agent: agent)
+    create(:support_interaction, :support_request, case: support_case, agent:)
+    create(:support_interaction, :email_to_school, case: support_case, agent:)
     travel_back
 
     # create(:support_interaction, :note, case: support_case, agent: agent)
@@ -45,7 +45,7 @@ RSpec.feature "Support request case history", bullet: :skip do
 
   describe "ordering of interactions" do
     before do
-      create(:support_interaction, :note, body: "test", case: support_case, agent: agent)
+      create(:support_interaction, :note, body: "test", case: support_case, agent:)
       visit "/support/cases/#{support_case.id}#case-history"
     end
 

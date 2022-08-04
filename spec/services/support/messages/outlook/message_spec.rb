@@ -26,7 +26,7 @@ describe Support::Messages::Outlook::Message do
   end
 
   describe "#attachments" do
-    subject(:message) { described_class.from_resource(double(id: "MESSAGEID"), mail_folder: double("mail_folder"), ms_graph_client: ms_graph_client) }
+    subject(:message) { described_class.from_resource(double(id: "MESSAGEID"), mail_folder: double("mail_folder"), ms_graph_client:) }
 
     let(:ms_graph_client) { double("ms_graph_client") }
     let(:result1) { double("result1") }

@@ -20,8 +20,8 @@ module Support
             Support::CreateCase.new(
               source: :incoming_email,
               email: message.sender[:address],
-              first_name: first_name,
-              last_name: last_name,
+              first_name:,
+              last_name:,
             ).call
           end
 

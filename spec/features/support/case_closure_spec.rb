@@ -5,7 +5,7 @@ RSpec.feature "Case closure" do
 
   let(:state) { :initial }
   let(:kase_source) { :incoming_email }
-  let(:kase) { create(:support_case, state: state, source: kase_source, ref: "000001") }
+  let(:kase) { create(:support_case, state:, source: kase_source, ref: "000001") }
   let(:activity_log_item) { Support::ActivityLogItem.last }
   let(:interaction) { kase.interactions.last }
 

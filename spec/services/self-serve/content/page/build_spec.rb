@@ -1,5 +1,5 @@
 RSpec.describe Content::Page::Build do
-  subject(:service) { described_class.new(contentful_page: contentful_page) }
+  subject(:service) { described_class.new(contentful_page:) }
 
   let(:contentful_page) do
     fields = {

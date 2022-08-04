@@ -76,10 +76,10 @@ private
   # @return [User]
   def update_user!
     current_user.update!(
-      email: email,
-      first_name: first_name,
-      last_name: last_name,
-      orgs: orgs,
+      email:,
+      first_name:,
+      last_name:,
+      orgs:,
       # Commenting this out for now so it can be restored
       # when we are pulling the roles over from DSI
       # roles: roles,
@@ -92,11 +92,11 @@ private
   def create_user!
     user = User.create!(
       dfe_sign_in_uid: user_id,
-      email: email,
-      full_name: full_name,
-      first_name: first_name,
-      last_name: last_name,
-      orgs: orgs,
+      email:,
+      full_name:,
+      first_name:,
+      last_name:,
+      orgs:,
       # Commenting this out for now so it can be restored
       # when we are pulling the roles over from DSI
       # roles: roles,
@@ -147,7 +147,7 @@ private
 
   # @return [Array] User's affliated organisations from DSI API
   def orgs
-    client.orgs(user_id: user_id)
+    client.orgs(user_id:)
   rescue ::Dsi::Client::ApiError
     Rollbar.info "User #{user_id} has no organisation"
     []

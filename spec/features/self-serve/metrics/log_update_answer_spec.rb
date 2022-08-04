@@ -13,9 +13,9 @@ RSpec.feature "Answering a question" do
   let(:logged_event) { ActivityLogItem.all[-2] }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
 
-    journey.update!(user: user)
+    journey.update!(user:)
     visit_journey
     click_on answer.step.task.title
     fill_in "answer[response]", with: "email@example.com"

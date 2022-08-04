@@ -38,7 +38,7 @@ module Support
     #
     # @return [?]
     def call
-      ::Support::EstablishmentGroups::Information.new(filter: filter, file: data, exporter: export_proc).call
+      ::Support::EstablishmentGroups::Information.new(filter:, file: data, exporter: export_proc).call
       # TODO: report something useful for the task or job
     end
 

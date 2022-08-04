@@ -11,7 +11,7 @@ module Support
       # add a signature
       # create the interaction
       # send the email
-      email_body = Messages::Templates.new(params: { body: body, agent: agent.full_name }).call
+      email_body = Messages::Templates.new(params: { body:, agent: agent.full_name }).call
       email = Support::Email.new(body: email_body, case: kase, sent_at: Time.zone.now, sender: { name: agent.full_name, address: nil })
       email.save!
 

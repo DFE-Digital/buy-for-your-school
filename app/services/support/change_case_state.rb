@@ -28,7 +28,7 @@ module Support
 
     def call
       kase.interactions.state_change.build(
-        body: body,
+        body:,
         agent_id: agent.id,
       )
 

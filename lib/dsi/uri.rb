@@ -45,8 +45,8 @@ module Dsi
     def call
       URI::HTTPS.build(
         host: "#{prefix}#{subdomain}.signin.education.gov.uk",
-        path: path,
-        query: query,
+        path:,
+        query:,
       )
     end
 

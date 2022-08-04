@@ -1,18 +1,18 @@
 RSpec.feature "Expected tasks are visible" do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, journey: journey) }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, journey:) }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when a task has one step" do
     context "and it is a question" do
       before do
-        task = create(:task, title: "Task with single question", section: section)
-        create(:step, :number, task: task)
+        task = create(:task, title: "Task with single question", section:)
+        create(:step, :number, task:)
         visit "/journeys/#{journey.id}"
       end
 
@@ -25,8 +25,8 @@ RSpec.feature "Expected tasks are visible" do
 
     context "and it is a statement" do
       before do
-        task = create(:task, title: "Task with single statement", section: section)
-        create(:step, :statement, task: task)
+        task = create(:task, title: "Task with single statement", section:)
+        create(:step, :statement, task:)
         visit "/journeys/#{journey.id}"
       end
 
@@ -41,9 +41,9 @@ RSpec.feature "Expected tasks are visible" do
   context "when a task has multiple steps" do
     context "and all are questions" do
       before do
-        task = create(:task, title: "Task with only questions", section: section)
-        create(:step, :number, task: task)
-        create(:step, :number, task: task)
+        task = create(:task, title: "Task with only questions", section:)
+        create(:step, :number, task:)
+        create(:step, :number, task:)
         visit "/journeys/#{journey.id}"
       end
 
@@ -56,9 +56,9 @@ RSpec.feature "Expected tasks are visible" do
 
     context "and all are statements" do
       before do
-        task = create(:task, title: "Task with only statements", section: section)
-        create(:step, :statement, task: task)
-        create(:step, :statement, task: task)
+        task = create(:task, title: "Task with only statements", section:)
+        create(:step, :statement, task:)
+        create(:step, :statement, task:)
         visit "/journeys/#{journey.id}"
       end
 
@@ -71,9 +71,9 @@ RSpec.feature "Expected tasks are visible" do
 
     context "and there are questions and statements" do
       before do
-        task = create(:task, title: "Task with questions and statements", section: section)
-        create(:step, :number, task: task)
-        create(:step, :statement, task: task)
+        task = create(:task, title: "Task with questions and statements", section:)
+        create(:step, :number, task:)
+        create(:step, :statement, task:)
         visit "/journeys/#{journey.id}"
       end
 

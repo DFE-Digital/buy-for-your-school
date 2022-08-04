@@ -3,7 +3,7 @@ RSpec.feature "Starting a 'Digital Support' request" do
 
   describe "start page" do
     before do
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/support-requests"
     end
 

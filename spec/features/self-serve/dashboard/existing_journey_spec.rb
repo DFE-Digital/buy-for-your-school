@@ -6,20 +6,20 @@ RSpec.feature "View existing journeys" do
     context "with existing journeys" do
       before do
         create(:journey,
-               user: user,
+               user:,
                name: "MFD123",
                category: create(:category, :mfd),
                created_at: Time.zone.local(2021, 2, 15, 12, 0, 0),
                updated_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
 
         create(:journey,
-               user: user,
+               user:,
                name: "Catering456",
                category: create(:category, :catering),
                created_at: Time.zone.local(2021, 3, 20, 12, 0, 0),
                updated_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
 
-        user_is_signed_in(user: user)
+        user_is_signed_in(user:)
         visit "/dashboard"
       end
 
@@ -76,7 +76,7 @@ RSpec.feature "View existing journeys" do
       before do
         create(:journey, user: create(:user))
 
-        user_is_signed_in(user: user)
+        user_is_signed_in(user:)
         visit "/dashboard"
       end
 

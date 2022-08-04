@@ -3,8 +3,8 @@ RSpec.feature "A journey page has" do
   let(:category) { create(:category, :catering) }
 
   before do
-    journey = create(:journey, category: category, user: user)
-    user_is_signed_in(user: user)
+    journey = create(:journey, category:, user:)
+    user_is_signed_in(user:)
     visit("/journeys/#{journey.id}")
   end
 

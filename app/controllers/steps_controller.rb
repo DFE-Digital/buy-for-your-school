@@ -9,7 +9,7 @@ class StepsController < ApplicationController
   def show
     @journey = current_journey
 
-    @answer = AnswerFactory.new(step: step).call
+    @answer = AnswerFactory.new(step:).call
     # TODO: extract @back_url to a shared private method
     @back_url =
       if !step.task || step.task.has_single_visible_step?
@@ -87,7 +87,7 @@ private
 
   def record_action(action)
     RecordAction.new(
-      action: action,
+      action:,
       journey_id: @journey.id,
       user_id: current_user.id,
       # We safe navigate here because in preview we don't have sections or

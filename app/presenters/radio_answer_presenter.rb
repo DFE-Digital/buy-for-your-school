@@ -9,8 +9,8 @@ class RadioAnswerPresenter < BasePresenter
   # @return [Hash]
   def to_param
     {
-      response: response,
-      further_information: further_information,
+      response:,
+      further_information:,
     }
   end
 

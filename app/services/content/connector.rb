@@ -38,9 +38,9 @@ class Content::Connector
     api_url = preview ? "preview.contentful.com" : "cdn.contentful.com"
 
     options = {
-      api_url: api_url,
+      api_url:,
       space: space_id,
-      access_token: access_token,
+      access_token:,
       environment: ENV["CONTENTFUL_ENVIRONMENT"],
       raise_errors: true,
       application_name: "DfE: Buy For Your School",
@@ -77,13 +77,13 @@ private
     @preview_token = preview_token
 
     @delivery_client = self.class.create_client(
-      space_id: space_id,
+      space_id:,
       access_token: delivery_token,
       preview: false,
     )
 
     @preview_client = self.class.create_client(
-      space_id: space_id,
+      space_id:,
       access_token: preview_token,
       preview: true,
     )

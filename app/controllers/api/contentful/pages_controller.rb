@@ -12,14 +12,14 @@ class Api::Contentful::PagesController < Api::Contentful::BaseController
   end
 
   def destroy
-    Page.find_by(contentful_id: contentful_id).destroy!
+    Page.find_by(contentful_id:).destroy!
     render json: { status: "OK" }, status: :ok
   end
 
 private
 
   def page
-    @page ||= ::Content::Page::Build.new(contentful_page: contentful_page).call
+    @page ||= ::Content::Page::Build.new(contentful_page:).call
   end
 
   def contentful_page

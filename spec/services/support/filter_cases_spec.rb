@@ -11,7 +11,7 @@ RSpec.describe Support::FilterCases, bullet: :skip do
     create_list(:support_case, 10)
     create(:support_case, category: it_cat)
     create(:support_case, category: catering_cat, state: :closed)
-    create(:support_case, category: catering_cat, agent: agent)
+    create(:support_case, category: catering_cat, agent:)
   end
 
   describe "#filter" do

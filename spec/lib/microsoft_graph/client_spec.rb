@@ -160,7 +160,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "makes a post request to the API" do
-      client.create_reply_message(user_id: user_id, reply_to_id: reply_to_id, http_headers: http_headers)
+      client.create_reply_message(user_id:, reply_to_id:, http_headers:)
 
       expect(client_session).to have_received(:graph_api_post).with(
         "users/#{user_id}/messages/#{reply_to_id}/createReply",
@@ -170,7 +170,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "returns the draft message from the api response" do
-      expect(client.create_reply_message(user_id: user_id, reply_to_id: reply_to_id, http_headers: http_headers)).to eq(message)
+      expect(client.create_reply_message(user_id:, reply_to_id:, http_headers:)).to eq(message)
     end
   end
 
@@ -184,7 +184,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "makes a post request to the API" do
-      client.create_message(user_id: user_id, http_headers: http_headers)
+      client.create_message(user_id:, http_headers:)
 
       expect(client_session).to have_received(:graph_api_post).with(
         "users/#{user_id}/messages",
@@ -194,7 +194,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "returns the draft message from the api response" do
-      expect(client.create_message(user_id: user_id, http_headers: http_headers)).to eq("NEW_DRAFT_MESSAGE_ID")
+      expect(client.create_message(user_id:, http_headers:)).to eq("NEW_DRAFT_MESSAGE_ID")
     end
   end
 
@@ -215,7 +215,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "makes a patch request to the API" do
-      client.update_message(user_id: user_id, message_id: message_id, details: details, http_headers: http_headers)
+      client.update_message(user_id:, message_id:, details:, http_headers:)
 
       expect(client_session).to have_received(:graph_api_patch).with(
         "users/#{user_id}/messages/#{message_id}",
@@ -225,7 +225,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "returns the message from the api response" do
-      expect(client.update_message(user_id: user_id, message_id: message_id, details: details, http_headers: http_headers)).to eq(message)
+      expect(client.update_message(user_id:, message_id:, details:, http_headers:)).to eq(message)
     end
   end
 
@@ -238,7 +238,7 @@ describe MicrosoftGraph::Client do
     end
 
     it "makes a post request to the API" do
-      client.send_message(user_id: user_id, message_id: message_id, http_headers: http_headers)
+      client.send_message(user_id:, message_id:, http_headers:)
 
       expect(client_session).to have_received(:graph_api_post).with(
         "users/#{user_id}/messages/#{message_id}/send",
@@ -265,7 +265,7 @@ describe MicrosoftGraph::Client do
         "contentType" => "text/plain",
       }
 
-      client.add_file_attachment_to_message(user_id: user_id, message_id: message_id, file_attachment: file)
+      client.add_file_attachment_to_message(user_id:, message_id:, file_attachment: file)
 
       expect(client_session).to have_received(:graph_api_post).with(
         "users/#{user_id}/messages/#{message_id}/attachments",

@@ -43,7 +43,7 @@ class UserSession
       post_logout_redirect_uri: @redirect_url,
     }.to_query
 
-    ::Dsi::Uri.new(subdomain: "oidc", path: "/session/end", query: query).call.to_s
+    ::Dsi::Uri.new(subdomain: "oidc", path: "/session/end", query:).call.to_s
   end
 
   # Store user uid in the session

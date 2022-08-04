@@ -1,5 +1,5 @@
 RSpec.describe NewJourneyForm do
-  subject(:form) { described_class.new(name: "Test spec", category: "catering", user: user) }
+  subject(:form) { described_class.new(name: "Test spec", category: "catering", user:) }
 
   let(:user) { create(:user) }
 
@@ -12,7 +12,7 @@ RSpec.describe NewJourneyForm do
       expect(form.data).to eql(
         name: "Test spec",
         category: Category.first,
-        user: user,
+        user:,
       )
     end
   end

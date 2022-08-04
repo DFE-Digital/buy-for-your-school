@@ -1,12 +1,12 @@
 RSpec.feature "Users can see their catering specification" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering) }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "Section A", journey: journey) }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, title: "Section A", journey:) }
 
   before do
-    user_is_signed_in(user: user)
-    task_radio = create(:task, title: "Radio task", section: section)
+    user_is_signed_in(user:)
+    task_radio = create(:task, title: "Radio task", section:)
     create(:step, :radio, title: "Which service do you need?", options: [{ "value" => "Catering" }], task: task_radio, order: 0)
     create(:page, title: "Next steps", slug: "next-steps-catering")
     visit "/journeys/#{journey.id}"

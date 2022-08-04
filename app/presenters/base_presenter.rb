@@ -19,7 +19,7 @@ private
   # @return [String] html from markdown
   def format(content)
     DocumentFormatter.new(
-      content: content,
+      content:,
       from: :markdown,
       to: :html,
     ).call

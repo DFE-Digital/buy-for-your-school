@@ -1,17 +1,17 @@
 RSpec.feature "Skipping questions" do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, journey: journey) }
-  let(:task) { create(:task, section: section, title: "Task") }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, journey:) }
+  let(:task) { create(:task, section:, title: "Task") }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when there is a single step" do
     before do
-      create(:step, :number, task: task)
+      create(:step, :number, task:)
 
       visit_journey
       click_on "Task"
@@ -39,9 +39,9 @@ RSpec.feature "Skipping questions" do
   end
 
   context "when there are multiple steps" do
-    let!(:number_step) { create(:step, :number, task: task, title: "Number step", order: 0) }
-    let!(:checkbox_step) { create(:step, :checkbox, task: task, title: "Checkbox step", order: 1) }
-    let!(:radio_step) { create(:step, :radio, task: task, title: "Radio step", order: 2) }
+    let!(:number_step) { create(:step, :number, task:, title: "Number step", order: 0) }
+    let!(:checkbox_step) { create(:step, :checkbox, task:, title: "Checkbox step", order: 1) }
+    let!(:radio_step) { create(:step, :radio, task:, title: "Radio step", order: 2) }
 
     before do
       visit_journey

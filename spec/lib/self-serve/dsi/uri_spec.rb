@@ -81,7 +81,7 @@ RSpec.describe Dsi::Uri do
       end
 
       context "and subdomain" do
-        subject(:service) { described_class.new(subdomain: subdomain) }
+        subject(:service) { described_class.new(subdomain:) }
 
         describe "is profile" do
           let(:subdomain) { "profile" }

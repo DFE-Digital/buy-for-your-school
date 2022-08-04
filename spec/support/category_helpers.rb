@@ -3,7 +3,7 @@ module CategoryHelpers
     nested_categories.each do |parent_category, sub_categories|
       parent = create(:support_category, title: parent_category)
       sub_categories.each do |sub_category|
-        create(:support_category, title: sub_category, parent: parent)
+        create(:support_category, title: sub_category, parent:)
       end
     end
   end

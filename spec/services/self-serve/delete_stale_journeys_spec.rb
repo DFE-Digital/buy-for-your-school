@@ -38,7 +38,7 @@ RSpec.describe DeleteStaleJourneys do
       it "is destroyed with all associated records" do
         step = create(:step, :radio)
         step.journey.update!(state: :stale, updated_at: 31.days.ago)
-        create(:radio_answer, step: step)
+        create(:radio_answer, step:)
 
         expect(Journey.count).to be 1
         expect(Section.count).to be 1

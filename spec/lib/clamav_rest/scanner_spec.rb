@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ClamavRest::Scanner do
-  subject(:scanner) { described_class.new(ClamavRest::Configuration.new(service_url: service_url)) }
+  subject(:scanner) { described_class.new(ClamavRest::Configuration.new(service_url:)) }
 
   let(:service_url)       { "http://service.com/scan" }
   let(:good_api_response) { '{ Status: "OK", Description: "" }' } # Please note invalid json format is real response of api

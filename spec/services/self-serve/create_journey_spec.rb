@@ -1,7 +1,7 @@
 # CMS: CreateJourney deserves to be tested with a complex real-world scenario fixture
 # TODO: expand on category-peter.json to mirror the complexity in shared context factories
 RSpec.describe CreateJourney do
-  subject(:service) { described_class.new(category: category, user: user, name: name) }
+  subject(:service) { described_class.new(category:, user:, name:) }
 
   let(:category) do
     build(:category,

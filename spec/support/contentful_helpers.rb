@@ -19,7 +19,7 @@ module ContentfulHelpers
 
     contentful_array = instance_double(Contentful::Array)
     contentful_categories = category_fixtures.map do |fixture|
-      stub_contentful_category(fixture_filename: fixture.concat(".json"), client: client)
+      stub_contentful_category(fixture_filename: fixture.concat(".json"), client:)
     end
 
     iterator = allow(contentful_array).to receive(:each)
@@ -42,10 +42,10 @@ module ContentfulHelpers
     allow(client).to receive(:by_slug).with(:category, category.slug).and_return(category)
 
     if stub_sections
-      sections = stub_contentful_sections(category: category, client: client)
+      sections = stub_contentful_sections(category:, client:)
 
       if stub_tasks
-        stub_contentful_tasks(sections: sections, client: client)
+        stub_contentful_tasks(sections:, client:)
       end
     end
 
@@ -57,7 +57,7 @@ module ContentfulHelpers
       fake_section =
         fake_contentful_section(
           contentful_fixture_filename: "sections/#{section.id}.json",
-          client: client,
+          client:,
         )
 
       allow(client).to receive(:by_id).with(fake_section.id).and_return(fake_section)
@@ -80,7 +80,7 @@ module ContentfulHelpers
       end
       allow(section).to receive(:tasks).and_return(fake_tasks)
 
-      stub_contentful_steps(tasks: fake_tasks, client: client)
+      stub_contentful_steps(tasks: fake_tasks, client:)
     end
   end
 
@@ -143,10 +143,10 @@ module ContentfulHelpers
       id: hash_response.dig("sys", "id"),
       title: hash_response.dig("fields", "title"),
       description: hash_response.dig("fields", "description"),
-      sections: sections,
+      sections:,
       specification_template: hash_response.dig("fields", "specificationTemplate"),
       specification_template_part2: hash_response.dig("fields", "specificationTemplatePart2"),
-      combined_specification_template: combined_specification_template,
+      combined_specification_template:,
       environment: double(id: hash_response.dig("sys", "environment", "sys", "id")),
       space: double(id: hash_response.dig("sys", "space", "sys", "id")),
       slug: hash_response.dig("fields", "slug"),
@@ -181,7 +181,7 @@ module ContentfulHelpers
       fake_task
     end
     allow(section).to receive(:tasks).and_return(fake_tasks)
-    stub_contentful_steps(tasks: fake_tasks, client: client)
+    stub_contentful_steps(tasks: fake_tasks, client:)
     section
   end
 
@@ -218,7 +218,7 @@ module ContentfulHelpers
       environment: double(id: hash_response.dig("sys", "environment", "sys", "id")),
       content_type: double(id: hash_response.dig("sys", "contentType", "sys", "id")),
       raw: hash_response,
-      fields: fields,
+      fields:,
       **fields,
     )
   end
