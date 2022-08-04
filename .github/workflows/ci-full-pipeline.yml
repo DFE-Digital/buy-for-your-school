@@ -181,7 +181,7 @@ jobs:
     needs: build_release
     environment: qa
 
-    if: ${{ github.ref != 'refs/heads/main' }}
+    if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' }}
 
     steps:
       - name: Check out code
