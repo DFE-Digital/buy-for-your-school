@@ -181,7 +181,7 @@ jobs:
     needs: build_release
     environment: qa
 
-    if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' }}
+    if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' && !contains(github.event.pull_request.labels.*.name, 'qa-skip') }}
 
     steps:
       - name: Check out code
