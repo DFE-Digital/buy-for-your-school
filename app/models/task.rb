@@ -110,6 +110,7 @@ class Task < ApplicationRecord
         currency_answer
         number_answer
         single_date_answer
+        task
       ],
     ).ordered
   end

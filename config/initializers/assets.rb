@@ -39,6 +39,10 @@ Rails.application.config.assets.precompile += [
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join("node_modules")
 
+# Precompile additional assets.
+# application.js, application.css, and all non-JS/CSS in the app/assets
+# folder are already added.
+
 # Add TinyMce To precompile (is referenced seperately to application.js)
 # NOTE: it's static assets are copied to public/assets/tinymce to be served
 # See: ./script/assets/copy-assets.sh
