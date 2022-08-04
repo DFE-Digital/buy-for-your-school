@@ -10,7 +10,7 @@ class Content::Page::Build
 
   # @return [Page]
   def call
-    page = Page.upsert(
+    page = ::Page.upsert(
       {
         title: contentful_page.fields[:title],
         body: contentful_page.fields[:body],
@@ -24,6 +24,6 @@ class Content::Page::Build
     )
 
     Rollbar.info("Built Contentful page", **page.first) if page
-    Page.find_by(contentful_id: contentful_page.id)
+    ::Page.find_by(contentful_id: contentful_page.id)
   end
 end
