@@ -59,7 +59,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec brakeman
+      - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
 
   rspec:
     name: Checks - Rspec
