@@ -1,7 +1,7 @@
 RSpec.feature "Editing a 'Find a Framework' request as a user" do
   subject(:request) do
     # Specialist School for Testing
-    create(:framework_request, user: user, org_id: "100253", group: false)
+    create(:framework_request, user:, org_id: "100253", group: false)
   end
 
   include_context "with schools and groups"
@@ -11,7 +11,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
   let(:actions) { all("dd.govuk-summary-list__actions") }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit "/procurement-support/#{request.id}"
   end
 

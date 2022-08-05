@@ -15,11 +15,11 @@ module Support
 
     def update_contact_details(kase)
       kase.update(
-        first_name: first_name,
-        last_name: last_name,
+        first_name:,
+        last_name:,
         phone_number: phone,
-        email: email,
-        extension_number: extension_number,
+        email:,
+        extension_number:,
       )
     end
   end

@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Support::Messages::Outlook::Synchronisation::CaseDetectors::EmailSubjectLineDetector do
   def message_with_subject(subject)
-    double("message-with-ref", subject: subject)
+    double("message-with-ref", subject:)
   end
 
   context "when message subject contains the 6 digit case reference" do

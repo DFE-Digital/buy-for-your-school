@@ -25,6 +25,6 @@ class DocumentFormatter
   #
   # @return [String]
   def call
-    PandocRuby.convert(content, "--strip-comments", from: from, to: to)
+    PandocRuby.convert(content, "--strip-comments", from:, to:)
   end
 end

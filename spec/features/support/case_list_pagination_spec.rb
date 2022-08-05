@@ -10,7 +10,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
 
   describe "#my-cases" do
     before do
-      create_list(:support_case, 15, agent: agent)
+      create_list(:support_case, 15, agent:)
       visit "/support/cases#my-cases"
     end
 
@@ -32,7 +32,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
   describe "#all-cases" do
     before do
       create_list(:support_case, 20)
-      create_list(:support_case, 15, agent: agent)
+      create_list(:support_case, 15, agent:)
       visit "/support/cases#all-cases"
     end
 
@@ -54,7 +54,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
   describe "#new-cases" do
     before do
       create_list(:support_case, 20)
-      create_list(:support_case, 15, agent: agent)
+      create_list(:support_case, 15, agent:)
       visit "/support/cases#new-cases"
     end
 

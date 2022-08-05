@@ -108,7 +108,7 @@ RSpec.describe "Authentication", type: :request do
         # Simulate how we create a session lookup store
         RedisSessionLookup.redis.set("user_dsi_id:123", "2::1098345703928457320948572304")
 
-        user_exists_in_dfe_sign_in(user: user)
+        user_exists_in_dfe_sign_in(user:)
       end
 
       after do

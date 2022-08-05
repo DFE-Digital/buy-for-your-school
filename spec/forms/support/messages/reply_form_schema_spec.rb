@@ -11,7 +11,7 @@ RSpec.describe Support::Messages::ReplyFormSchema do
   end
 
   context "when files have been attached" do
-    subject(:schema) { described_class.new.call(body: "Filled in", attachments: attachments) }
+    subject(:schema) { described_class.new.call(body: "Filled in", attachments:) }
 
     let(:infected_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
     let(:attachments) { [infected_file, ok_file] }

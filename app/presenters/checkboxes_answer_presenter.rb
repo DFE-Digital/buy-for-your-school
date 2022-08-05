@@ -21,10 +21,10 @@ class CheckboxesAnswerPresenter < BasePresenter
   # @return [Hash]
   def to_param
     {
-      response: response,
-      concatenated_response: concatenated_response,
-      skipped: skipped,
-      selected_answers: selected_answers,
+      response:,
+      concatenated_response:,
+      skipped:,
+      selected_answers:,
     }
   end
 

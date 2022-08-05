@@ -54,7 +54,7 @@ module Support
         # update the case status and create a state_change interaction record
         ChangeCaseState.new(
           kase: from_case,
-          agent: agent,
+          agent:,
           to: :close,
           reason: :email_merge,
           info: ". Email(s) moved to case ##{to_case.ref}",

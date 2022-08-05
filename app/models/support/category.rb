@@ -18,7 +18,7 @@ module Support
     scope :top_level, -> { where(parent_id: nil) }
     scope :sub_categories, -> { where.not(parent_id: nil) }
     scope :ordered_by_title, -> { order(title: :asc) }
-    scope :except_for, ->(title) { where.not(title: title) }
+    scope :except_for, ->(title) { where.not(title:) }
 
     def self.other_category_id
       find_by(title: "Other")&.id

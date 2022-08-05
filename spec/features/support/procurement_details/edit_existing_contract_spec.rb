@@ -1,7 +1,7 @@
 RSpec.feature "Editing existing contract details in procurement tab section" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, :opened, existing_contract: existing_contract) }
+  let(:support_case) { create(:support_case, :opened, existing_contract:) }
 
   before do
     click_button "Agent Login"

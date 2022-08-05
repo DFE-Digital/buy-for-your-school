@@ -2,16 +2,16 @@ RSpec.describe CreateStep do
   describe "#call" do
     subject(:service) do
       described_class.new(
-        task: task,
-        contentful_step: contentful_step,
+        task:,
+        contentful_step:,
         order: 0,
       )
     end
 
     let(:category) { create(:category, :catering) }
-    let(:journey) { create(:journey, category: category) }
-    let(:section) { create(:section, journey: journey) }
-    let(:task) { create(:task, section: section) }
+    let(:journey) { create(:journey, category:) }
+    let(:section) { create(:section, journey:) }
+    let(:task) { create(:task, section:) }
 
     let(:contentful_step) do
       fake_contentful_step(contentful_fixture_filename: "steps/#{fixture}.json")

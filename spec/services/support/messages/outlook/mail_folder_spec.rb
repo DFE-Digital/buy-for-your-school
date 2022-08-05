@@ -20,7 +20,7 @@ describe Support::Messages::Outlook::MailFolder do
   end
 
   describe "#recent_messages" do
-    subject(:mail_folder)  { described_class.new(folder: :inbox, ms_graph_client: ms_graph_client) }
+    subject(:mail_folder)  { described_class.new(folder: :inbox, ms_graph_client:) }
 
     let(:messages_after)   { 15.minutes.ago }
     let(:ms_graph_client)  { double("ms_graph_client") }

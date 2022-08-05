@@ -4,7 +4,7 @@ RSpec.describe Support::InteractionPresenter do
   let(:organisation) { create(:support_organisation, :fixed_name, name: "Example Organisation") }
   let(:category) { create(:support_category, :fixed_title, title: "Example Category") }
   let(:additional_data) { nil }
-  let(:interaction) { build(:support_interaction, body: "\n foo \n", additional_data: additional_data) }
+  let(:interaction) { build(:support_interaction, body: "\n foo \n", additional_data:) }
 
   let(:event_types) do
     {

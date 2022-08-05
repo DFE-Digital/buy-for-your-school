@@ -8,7 +8,7 @@ RSpec.feature "An authenticated user" do
   end
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit "/profile"
   end
 

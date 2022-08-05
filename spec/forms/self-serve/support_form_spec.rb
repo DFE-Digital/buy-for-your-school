@@ -1,5 +1,5 @@
 RSpec.describe SupportForm do
-  subject(:form) { described_class.new(user: user) }
+  subject(:form) { described_class.new(user:) }
 
   let(:user) do
     create(:user, :one_supported_school)
@@ -34,7 +34,7 @@ RSpec.describe SupportForm do
 
   describe "#data" do
     subject(:form) do
-      described_class.new(user: user, phone_number: "01234567890", message_body: "hello world")
+      described_class.new(user:, phone_number: "01234567890", message_body: "hello world")
     end
 
     it "infers values from the user" do
@@ -49,19 +49,19 @@ RSpec.describe SupportForm do
 
   describe "#forward" do
     it "skips journey selection if none exist" do
-      form = described_class.new(user: user, step: 2)
+      form = described_class.new(user:, step: 2)
       form.forward
       expect(form.step).to be 4
     end
 
     it "skips category selection if a journey is selected" do
-      form = described_class.new(user: user, step: 3, journey_id: "xxx")
+      form = described_class.new(user:, step: 3, journey_id: "xxx")
       form.forward
       expect(form.step).to be 5
     end
 
     it "defaults to stepping forward" do
-      form = described_class.new(user: user, step: 3)
+      form = described_class.new(user:, step: 3)
       form.forward
       expect(form.step).to be 4
     end
@@ -69,19 +69,19 @@ RSpec.describe SupportForm do
 
   describe "#backward" do
     it "skips journey selection if none exist" do
-      form = described_class.new(user: user, step: 4)
+      form = described_class.new(user:, step: 4)
       form.backward
       expect(form.step).to be 2
     end
 
     it "skips category selection if a journey is selected" do
-      form = described_class.new(user: user, step: 5, journey_id: "xxx")
+      form = described_class.new(user:, step: 5, journey_id: "xxx")
       form.backward
       expect(form.step).to be 3
     end
 
     it "defaults to stepping backward" do
-      form = described_class.new(user: user, step: 2)
+      form = described_class.new(user:, step: 2)
       form.backward
       expect(form.step).to be 1
     end

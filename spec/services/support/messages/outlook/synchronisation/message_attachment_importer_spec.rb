@@ -6,7 +6,7 @@ describe Support::Messages::Outlook::Synchronisation::MessageAttachmentImporter 
   let(:message_attachment)  { Support::Messages::Outlook::MessageAttachment.new(message) }
 
   context "when the email attachment has already been imported" do
-    let!(:existing_email_attachment) { create(:support_email_attachment, email: email, outlook_id: "123") }
+    let!(:existing_email_attachment) { create(:support_email_attachment, email:, outlook_id: "123") }
 
     it "does not import the attachment again" do
       starting_updated_at = existing_email_attachment.updated_at

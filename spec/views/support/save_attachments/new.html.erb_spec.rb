@@ -6,8 +6,8 @@ describe "support/save_attachments/new" do
       view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 
       email = create(:support_email)
-      attachment = create(:support_email_attachment, email: email)
-      attachment.update!(file_type: file_type)
+      attachment = create(:support_email_attachment, email:)
+      attachment.update!(file_type:)
 
       assign(:save_attachments_form, Support::SaveAttachmentsForm.from_email(email))
       assign(:email, email)

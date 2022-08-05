@@ -44,7 +44,7 @@ private
 
   def record_action(action)
     RecordAction.new(
-      action: action,
+      action:,
       journey_id: @journey.id,
       user_id: current_user.id,
       contentful_category_id: @journey.category.contentful_id,

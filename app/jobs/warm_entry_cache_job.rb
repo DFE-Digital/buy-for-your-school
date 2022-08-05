@@ -19,11 +19,11 @@ class WarmEntryCacheJob < ApplicationJob
     categories.each do |contentful_category|
       # TODO: these build steps are repeated may times, can we consolidate?
       category = GetCategory.new(category_entry_id: contentful_category.id).call
-      sections = GetSectionsFromCategory.new(category: category).call
-      tasks = sections.flat_map { |section| GetTasksFromSection.new(section: section).call }
+      sections = GetSectionsFromCategory.new(category:).call
+      tasks = sections.flat_map { |section| GetTasksFromSection.new(section:).call }
 
       begin
-        tasks.flat_map { |task| GetStepsFromTask.new(task: task).call }
+        tasks.flat_map { |task| GetStepsFromTask.new(task:).call }
       rescue GetStepsFromTask::RepeatEntryDetected
         restore_old_cache
         Rollbar.error("Cache warming task failed. The old cached data was extended by 24 hours.")
@@ -65,10 +65,10 @@ private
       entry_id = key.sub(old_key_prefix, "")
       new_cache_key = "#{new_key_prefix}#{entry_id}"
 
-      value = cache.get(key: key)
+      value = cache.get(key:)
 
-      cache.set(key: new_cache_key, value: value)
-      Cache.delete(key: key)
+      cache.set(key: new_cache_key, value:)
+      Cache.delete(key:)
     end
   end
 end

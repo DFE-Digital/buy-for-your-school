@@ -10,7 +10,7 @@ describe "Agent can reply to incoming emails" do
   before do
     create(:support_interaction, interaction_type,
            body: email.body,
-           additional_data: additional_data,
+           additional_data:,
            case: support_case)
 
     click_button "Agent Login"

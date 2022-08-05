@@ -5,7 +5,7 @@ RSpec.feature "Revising an answered question" do
     journey = Journey.last
     task = Task.find_by(title: "Radio task")
     step = task.steps.first
-    create(:radio_answer, step: step)
+    create(:radio_answer, step:)
 
     visit edit_journey_step_path(journey, step)
 

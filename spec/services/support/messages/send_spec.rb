@@ -7,7 +7,7 @@ RSpec.describe Support::Messages::Send do
   let(:params) do
     {
       body: "This is a test message",
-      kase: kase,
+      kase:,
       agent: Support::AgentPresenter.new(agent),
     }
   end

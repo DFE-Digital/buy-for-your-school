@@ -3,7 +3,7 @@ RSpec.feature "Sign out" do
 
   context "when user is signed in" do
     before do
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
 
       visit "/dashboard"
     end

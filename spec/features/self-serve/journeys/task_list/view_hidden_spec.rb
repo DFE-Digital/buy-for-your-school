@@ -1,20 +1,20 @@
 RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "section a", journey: journey) }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, title: "section a", journey:) }
 
   let(:options) { [{ "value" => "School expert", "display_further_information" => true, "further_information_help_text" => "Explain why this is the case" }, { "value" => "External expert" }, { "value" => "none" }] }
   let(:additional_step_rules) { [{ "required_answer" => "School expert", "question_identifiers" => %w[1] }] }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when a task includes an initially HIDDEN step" do
     before do
-      task_1 = create(:task, title: "Hidden field task", section: section)
-      task_2 = create(:task, title: "Shown field task", section: section)
+      task_1 = create(:task, title: "Hidden field task", section:)
+      task_2 = create(:task, title: "Shown field task", section:)
       create(:step, :radio, title: "Hidden field", task: task_1, hidden: true)
       create(:step, :radio, title: "Shown field", task: task_2)
 
@@ -28,14 +28,14 @@ RSpec.feature "Users can view the task list" do
 
     context "when that step becomes visible" do
       before do
-        task_1 = create(:task, title: "One additional question task", section: section)
+        task_1 = create(:task, title: "One additional question task", section:)
         create(
           :step,
           :radio,
           title: "What support do you have available?",
           task: task_1,
-          options: options,
-          additional_step_rules: additional_step_rules,
+          options:,
+          additional_step_rules:,
           contentful_id: 0,
           order: 0,
         )
@@ -91,7 +91,7 @@ RSpec.feature "Users can view the task list" do
 
   context "when a section has only hidden tasks" do
     before do
-      task_1 = create(:task, title: "Hidden field task", section: section)
+      task_1 = create(:task, title: "Hidden field task", section:)
       create(:step, :radio, title: "Hidden field", task: task_1, hidden: true)
 
       visit "/journeys/#{journey.id}"

@@ -1,7 +1,7 @@
 RSpec.feature "Case worker can place an open case on hold" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, :opened, agent: agent, ref: "000001") }
+  let(:support_case) { create(:support_case, :opened, agent:, ref: "000001") }
   let(:activity_log_item) { Support::ActivityLogItem.last }
   let(:interaction) { support_case.interactions.last }
   let(:now) { Time.zone.now.to_formatted_s(:short) }

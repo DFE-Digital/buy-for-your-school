@@ -1,5 +1,5 @@
 RSpec.describe Content::Page::Get do
-  subject(:service) { described_class.new(entry_id: entry_id, client: client) }
+  subject(:service) { described_class.new(entry_id:, client:) }
 
   let(:entry_id) { "entry_id" }
   let(:client) { stub_client }

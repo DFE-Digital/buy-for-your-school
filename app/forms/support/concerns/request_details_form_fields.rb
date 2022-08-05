@@ -30,11 +30,11 @@ module Support
 
       def update!(support_case)
         support_case.update!(
-          category_id: category_id,
-          query_id: query_id,
-          other_category: other_category,
-          other_query: other_query,
-          request_text: request_text,
+          category_id:,
+          query_id:,
+          other_category:,
+          other_query:,
+          request_text:,
         )
       end
     end

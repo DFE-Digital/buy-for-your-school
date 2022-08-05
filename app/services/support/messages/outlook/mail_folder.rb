@@ -23,8 +23,8 @@ module Support
           query = ["$filter=sentDateTime ge #{messages_after.utc.iso8601}", "$orderby=sentDateTime asc"]
 
           ms_graph_client
-            .list_messages_in_folder(SHARED_MAILBOX_USER_ID, folder, query: query)
-            .map { |message| Message.from_resource(message, mail_folder: self, ms_graph_client: ms_graph_client) }
+            .list_messages_in_folder(SHARED_MAILBOX_USER_ID, folder, query:)
+            .map { |message| Message.from_resource(message, mail_folder: self, ms_graph_client:) }
         end
 
         def inbox?

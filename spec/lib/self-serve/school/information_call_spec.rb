@@ -17,7 +17,7 @@ RSpec.describe School::Information, "#call" do
     end
 
     context "and an exporter" do
-      subject(:service) { described_class.new(exporter: exporter) }
+      subject(:service) { described_class.new(exporter:) }
 
       let(:exporter) { ->(x) { x } }
 
@@ -30,7 +30,7 @@ RSpec.describe School::Information, "#call" do
   end
 
   context "when the file is a File" do
-    subject(:service) { described_class.new(file: file) }
+    subject(:service) { described_class.new(file:) }
 
     let(:file) { File.open(gias_data) }
 

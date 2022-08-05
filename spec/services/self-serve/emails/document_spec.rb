@@ -1,7 +1,7 @@
 RSpec.describe Emails::Document do
   subject(:service) do
     described_class.new(
-      recipient: recipient,
+      recipient:,
       template: "f6895ff7-86e0-4d38-80ab-c9525856c3ff",
       attachment: "./spec/fixtures/gias/example_schools_data.csv",
     )

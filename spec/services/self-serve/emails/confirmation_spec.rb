@@ -1,6 +1,6 @@
 RSpec.describe Emails::Confirmation do
   subject(:service) do
-    described_class.new(recipient: recipient, template: "auto-reply")
+    described_class.new(recipient:, template: "auto-reply")
   end
 
   let(:recipient) do

@@ -1,6 +1,6 @@
 RSpec.describe UserSession do
   subject(:user_session) do
-    described_class.new(session: session, redirect_url: redirect_url)
+    described_class.new(session:, redirect_url:)
   end
 
   let(:redirect_url) { "https://ghbs-self-serve.app:123/session/end" }

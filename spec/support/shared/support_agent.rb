@@ -18,7 +18,7 @@ RSpec.shared_context "with an agent" do
   # they will be permitted to enter
   #
   before do
-    user_exists_in_dfe_sign_in(user: user)
+    user_exists_in_dfe_sign_in(user:)
     visit "/"
     click_start
     visit "/support"

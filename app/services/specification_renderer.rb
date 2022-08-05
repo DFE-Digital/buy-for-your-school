@@ -27,7 +27,7 @@ class SpecificationRenderer
 
     template = LiquidParser.new(
       template: journey.category.liquid_template,
-      answers: answers,
+      answers:,
     ).call
 
     template.prepend("#{draft_msg}\n\n") if is_draft
@@ -51,6 +51,6 @@ private
   #
   # @return [String]
   def document_formatter(template)
-    DocumentFormatter.new(content: template, from: from, to: to).call
+    DocumentFormatter.new(content: template, from:, to:).call
   end
 end

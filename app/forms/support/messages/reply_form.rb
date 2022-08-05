@@ -11,7 +11,7 @@ module Support
         reply_to_email: email,
         reply_text: body,
         sender: agent,
-        file_attachments: file_attachments,
+        file_attachments:,
       )
 
       reply.call
@@ -19,10 +19,10 @@ module Support
 
     def create_new_message(recipient, agent, case_reference)
       message = Support::Messages::Outlook::SendNewMessage.new(
-        recipient: recipient,
+        recipient:,
         message_text: body,
         sender: agent,
-        file_attachments: file_attachments,
+        file_attachments:,
         subject: "Case #{case_reference} – DfE Get help buying for schools: your request for advice and guidance",
       )
 

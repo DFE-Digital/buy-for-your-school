@@ -1,6 +1,6 @@
 class Preview::EntriesController < ApplicationController
   def show
-    contentful_step = GetEntry.new(entry_id: params[:id], client: client).call
+    contentful_step = GetEntry.new(entry_id: params[:id], client:).call
 
     category = Category.find_or_create_by!(
       title: "Designer Preview Category",
@@ -11,7 +11,7 @@ class Preview::EntriesController < ApplicationController
     )
 
     journey = Journey.find_or_create_by!(
-      category: category,
+      category:,
       user: current_user,
       state: 3, # flagged for deletion
     )
@@ -20,19 +20,19 @@ class Preview::EntriesController < ApplicationController
       title: "Designer Preview Section",
       contentful_id: 0,
       order: 0,
-      journey: journey,
+      journey:,
     )
 
     task = Task.find_or_create_by!(
       title: "Designer Preview Task",
       contentful_id: 0,
       order: 0,
-      section: section,
+      section:,
     )
 
     step = CreateStep.new(
-      task: task,
-      contentful_step: contentful_step,
+      task:,
+      contentful_step:,
       order: 0,
     ).call
 

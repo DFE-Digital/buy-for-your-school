@@ -22,10 +22,10 @@ class CreateTask
   # @return [Task]
   def call
     task = Task.new(
-      section: section,
+      section:,
       title: contentful_task.title,
       contentful_id: contentful_task.id,
-      order: order,
+      order:,
     )
     begin
       task.save!

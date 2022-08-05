@@ -7,7 +7,7 @@ RSpec.describe CreateTask do
   describe "#call" do
     context "when the task is valid" do
       it "creates a new task" do
-        expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }
+        expect { described_class.new(section:, contentful_task:, order: 0).call }
           .to change(Task, :count).by(1)
         expect(Task.last.title).to eql("Task 1")
         expect(Task.last.contentful_id).to eql("5m26U35YLau4cOaJq6FXZA")
@@ -20,7 +20,7 @@ RSpec.describe CreateTask do
       before { allow_any_instance_of(Task).to receive(:save!).and_raise(ActiveRecord::RecordInvalid) }
 
       it "raises UnexpectedContentfulModel" do
-        expect { described_class.new(section: section, contentful_task: contentful_task, order: 0).call }
+        expect { described_class.new(section:, contentful_task:, order: 0).call }
           .to raise_error(CreateTask::UnexpectedContentfulModel)
           .and change(Task, :count).by(0)
       end

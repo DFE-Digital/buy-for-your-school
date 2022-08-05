@@ -23,8 +23,8 @@ RSpec.describe Section, type: :model do
   describe "#incomplete?" do
     it "returns true if all steps in the section are not complete" do
       task = create(:task)
-      question = create(:step, :radio, task: task)
-      statement = create(:step, :statement, task: task)
+      question = create(:step, :radio, task:)
+      statement = create(:step, :statement, task:)
       section = create(:section, tasks: [task])
 
       expect(section.incomplete?).to be true

@@ -21,7 +21,7 @@ module Support
     def selected_template_preview
       notify_client.generate_template_preview(
         params[:template],
-        personalisation: personalisation,
+        personalisation:,
       )
     end
 

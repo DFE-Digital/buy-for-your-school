@@ -63,7 +63,7 @@ module Support
             ms_graph_client.add_file_attachment_to_message(
               user_id: SHARED_MAILBOX_USER_ID,
               message_id: draft_message.id,
-              file_attachment: file_attachment,
+              file_attachment:,
             )
           end
         end
@@ -80,7 +80,7 @@ module Support
         end
 
         def wrap_message(draft_message)
-          Message.from_resource(draft_message, mail_folder: MailFolder.sent_items, ms_graph_client: ms_graph_client)
+          Message.from_resource(draft_message, mail_folder: MailFolder.sent_items, ms_graph_client:)
         end
       end
     end
