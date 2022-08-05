@@ -1,5 +1,5 @@
 RSpec.describe SpecificationRenderer do
-  subject(:renderer) { described_class.new(journey: journey, draft_msg: "Draft message") }
+  subject(:renderer) { described_class.new(journey:, draft_msg: "Draft message") }
 
   let(:journey) { build(:journey) }
   let(:liquid_parser_instance) { instance_double(LiquidParser) }

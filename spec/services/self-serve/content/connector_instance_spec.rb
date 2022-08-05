@@ -27,7 +27,7 @@ RSpec.describe Content::Connector, ".instance" do
               application_version: "1.0.0",
               api_url: "cdn.contentful.com",
               space: space_id,
-              environment: environment,
+              environment:,
               raise_errors: true,
               access_token: delivery_token)
         .and_return(delivery_client)
@@ -38,7 +38,7 @@ RSpec.describe Content::Connector, ".instance" do
               application_version: "1.0.0",
               api_url: "preview.contentful.com",
               space: space_id,
-              environment: environment,
+              environment:,
               raise_errors: true,
               access_token: preview_token)
         .and_return(preview_client)

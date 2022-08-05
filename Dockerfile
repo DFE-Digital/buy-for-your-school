@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:3.0.1 as base
+FROM ruby:3.1.2 as base
 
 RUN apt-get update && apt-get install -qq -y \
     build-essential \
@@ -16,7 +16,7 @@ RUN wget -q https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2
 
 RUN apt-get install -qq -y \
     texlive \
-    texlive-generic-extra \
+    texlive-latex-recommended \
     lmodern \
     --fix-missing --no-install-recommends
 
@@ -113,7 +113,7 @@ RUN bundle config unset without
 RUN bundle config set without development
 RUN bundle install --no-binstubs --retry=10 --jobs=4
 
-RUN apt-get install -qq -y shellcheck wait-for-it
+RUN apt-get install -qq -y shellcheck wait-for-it iproute2
 
 COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
 COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml

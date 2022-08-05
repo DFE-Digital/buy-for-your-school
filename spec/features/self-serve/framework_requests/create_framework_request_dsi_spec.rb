@@ -33,7 +33,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
       before do
         create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
-        user_is_signed_in(user: user)
+        user_is_signed_in(user:)
         visit "/procurement-support/new"
       end
 
@@ -76,7 +76,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
       include_context "with schools and groups"
 
       before do
-        user_is_signed_in(user: user)
+        user_is_signed_in(user:)
         visit "/procurement-support/new"
       end
 

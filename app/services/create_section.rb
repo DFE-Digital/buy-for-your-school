@@ -16,10 +16,10 @@ class CreateSection
   # @return [Section]
   def call
     section = Section.new(
-      journey: journey,
+      journey:,
       contentful_id: contentful_section.id,
       title: contentful_section.title,
-      order: order,
+      order:,
     )
     section.save!
     section

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Support::Messages::Outlook::ResyncEmailIds do
-  subject(:resync_email_ids)    { described_class.new(messages_updated_after: messages_updated_after, ms_graph_client: ms_graph_client) }
+  subject(:resync_email_ids)    { described_class.new(messages_updated_after:, ms_graph_client:) }
 
   let(:ms_graph_client)         { double("ms_graph_client") }
   let(:messages_updated_after)  { 10.minutes.ago }

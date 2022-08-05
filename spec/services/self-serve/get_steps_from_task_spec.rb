@@ -1,5 +1,5 @@
 RSpec.describe GetStepsFromTask do
-  subject(:service) { described_class.new(task: task) }
+  subject(:service) { described_class.new(task:) }
 
   let(:task) do
     # TODO: shorten "contentful_fixture_filename" param

@@ -4,7 +4,7 @@ RSpec.describe Support::Frameworks::Information, "#call" do
   include_context "with framework data"
 
   context "when the file is a File" do
-    subject(:service) { described_class.new(file: file) }
+    subject(:service) { described_class.new(file:) }
 
     let(:file) { File.open(framework_data) }
 

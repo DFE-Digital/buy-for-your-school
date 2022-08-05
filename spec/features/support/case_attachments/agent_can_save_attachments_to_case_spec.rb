@@ -9,8 +9,8 @@ describe "Agent can save attachments from an email to the case", js: true do
     let!(:email) { create(:support_email, :inbox, case: support_case) }
     let!(:email_interaction) { create(:support_interaction, :email_from_school, case: support_case, additional_data: { email_id: email.id }) }
     let(:support_case) { create(:support_case) }
-    let(:email_attachment1) { create(:support_email_attachment, email: email) }
-    let(:email_attachment2) { create(:support_email_attachment, email: email) }
+    let(:email_attachment1) { create(:support_email_attachment, email:) }
+    let(:email_attachment2) { create(:support_email_attachment, email:) }
 
     describe "saving an attachment to the case" do
       before do

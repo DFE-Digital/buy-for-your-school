@@ -29,8 +29,8 @@ class CreateJourney
     contentful_sections.each_with_index do |contentful_section, section_index|
       # Section
       section = CreateSection.new(
-        journey: journey,
-        contentful_section: contentful_section,
+        journey:,
+        contentful_section:,
         order: section_index,
       ).call
 
@@ -40,8 +40,8 @@ class CreateJourney
       contentful_tasks.each_with_index do |contentful_task, task_index|
         # Task
         task = CreateTask.new(
-          section: section,
-          contentful_task: contentful_task,
+          section:,
+          contentful_task:,
           order: task_index,
         ).call
 
@@ -52,7 +52,7 @@ class CreateJourney
           # Step
           CreateStep.new(
             contentful_step: entry,
-            task: task,
+            task:,
             order: step_index,
           ).call
         end

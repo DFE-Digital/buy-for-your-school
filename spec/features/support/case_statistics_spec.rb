@@ -3,7 +3,7 @@ RSpec.feature "Case statistics page" do
     category = create(:support_category, title: "OS software")
 
     %i[initial opened resolved closed on_hold].each do |state|
-      create(:support_case, state, category: category)
+      create(:support_case, state, category:)
     end
   end
 
@@ -90,7 +90,7 @@ RSpec.feature "Case statistics page" do
 
   context "when the user is not an admin" do
     before do
-      user_exists_in_dfe_sign_in(user: user)
+      user_exists_in_dfe_sign_in(user:)
       visit "/"
       click_start
       visit "/support/case-statistics"

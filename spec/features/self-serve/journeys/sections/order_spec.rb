@@ -1,16 +1,16 @@
 RSpec.feature "Users can view an ordered list of sections" do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
-  let(:journey) { create(:journey, user: user, category: category) }
+  let(:journey) { create(:journey, user:, category:) }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   it "the user can see multiple sections" do
-    create(:section, journey: journey, title: "Section A", order: 0)
-    create(:section, journey: journey, title: "Section B", order: 1)
-    create(:section, journey: journey, title: "Section C", order: 2)
+    create(:section, journey:, title: "Section A", order: 0)
+    create(:section, journey:, title: "Section B", order: 1)
+    create(:section, journey:, title: "Section C", order: 2)
 
     visit "/journeys/#{journey.id}"
 
@@ -25,9 +25,9 @@ RSpec.feature "Users can view an ordered list of sections" do
   context "when sections are saved in a different order than in Contentful" do
     before do
       # Create sections with different created_at to simulate slow database inserts/selects
-      create(:section, journey: journey, title: "Section A", order: 0, created_at: 2.hours.ago)
-      create(:section, journey: journey, title: "Section B", order: 1, created_at: 1.hour.ago)
-      create(:section, journey: journey, title: "Section C", order: 2, created_at: 3.hours.ago)
+      create(:section, journey:, title: "Section A", order: 0, created_at: 2.hours.ago)
+      create(:section, journey:, title: "Section B", order: 1, created_at: 1.hour.ago)
+      create(:section, journey:, title: "Section C", order: 2, created_at: 3.hours.ago)
 
       visit "/journeys/#{journey.id}"
     end

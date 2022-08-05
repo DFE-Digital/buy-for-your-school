@@ -1,6 +1,6 @@
 RSpec.feature "Admin page" do
   before do
-    user_exists_in_dfe_sign_in(user: user)
+    user_exists_in_dfe_sign_in(user:)
     visit "/"
     click_start
     visit "/admin"

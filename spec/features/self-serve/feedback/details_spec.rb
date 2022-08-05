@@ -17,7 +17,7 @@ RSpec.feature "User feedback details" do
       let(:user) { create(:user) }
 
       it "persists the user's details and loggged in status" do
-        user_is_signed_in(user: user)
+        user_is_signed_in(user:)
         feedback_user_details
 
         expect(feedback.full_name).to eq "Dave Georgiou"

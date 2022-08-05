@@ -19,7 +19,7 @@ class GetTasksFromSection
     end
 
     task_ids.map do |entry_id|
-      GetEntry.new(entry_id: entry_id, client: @client).call
+      GetEntry.new(entry_id:, client: @client).call
     end
   end
 end

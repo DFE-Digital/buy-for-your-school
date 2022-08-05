@@ -1,5 +1,5 @@
 RSpec.describe CreateCategory do
-  subject(:service) { described_class.new(contentful_category: contentful_category) }
+  subject(:service) { described_class.new(contentful_category:) }
 
   let(:contentful_category) { stub_contentful_category(fixture_filename: "radio-question.json", stub_sections: false) }
 

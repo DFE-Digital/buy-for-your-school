@@ -17,7 +17,7 @@ describe "Organisations API" do
         ["Edith Neville Primary School", "100113", "NW1 1DN"],
       ]
       data.each do |(name, urn, postcode)|
-        create(:support_organisation, name: name, urn: urn, address: { "postcode" => postcode })
+        create(:support_organisation, name:, urn:, address: { "postcode" => postcode })
       end
     end
 

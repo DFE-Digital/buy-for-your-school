@@ -1,9 +1,9 @@
 RSpec.feature "Users can view the task list" do # journeys#show
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering) }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section_a) { create(:section, title: "Section A", journey: journey) }
-  let(:section_b) { create(:section, title: "Section B", journey: journey) }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section_a) { create(:section, title: "Section A", journey:) }
+  let(:section_b) { create(:section, title: "Section B", journey:) }
 
   before do
     task_radio = create(:task, title: "Radio task", section: section_a)
@@ -12,7 +12,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
     create(:step, :short_text, title: "What email address did you use?", task: task_radio, order: 1)
     create(:step, :long_text, title: "Describe what you need", task: task_radio, order: 2)
     create(:step, :checkbox, title: "Everyday services that are required and need to be considered", options: [{ "value" => "Breakfast" }], task: task_radio, order: 3)
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit "/journeys/#{journey.id}"
   end
 
@@ -142,7 +142,7 @@ RSpec.feature "Users can view the task list" do # journeys#show
       it "takes the user to the task page" do
         task = Task.find_by(title: "Radio task")
         step = task.steps.first
-        create(:radio_answer, step: step)
+        create(:radio_answer, step:)
 
         within(".app-task-list") do
           click_on "Radio task"

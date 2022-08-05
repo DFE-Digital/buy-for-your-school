@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Support::Messages::Outlook::Reply::FileAttachment do
-  subject(:file_attachment) { described_class.new(file: file, name: "example_schools_data.csv") }
+  subject(:file_attachment) { described_class.new(file:, name: "example_schools_data.csv") }
 
   let(:file) { File.open(Rails.root.join("spec/fixtures/gias/example_schools_data.csv")) }
 

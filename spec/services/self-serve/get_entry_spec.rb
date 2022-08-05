@@ -1,5 +1,5 @@
 RSpec.describe GetEntry do
-  subject(:service) { described_class.new(entry_id: entry_id) }
+  subject(:service) { described_class.new(entry_id:) }
 
   let(:entry_id) { "1a2b3c4d5" }
 

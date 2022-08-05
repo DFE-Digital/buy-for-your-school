@@ -40,7 +40,7 @@ private
   def range(type:, lower:, upper:)
     case type
     when "single_date"
-      Range.new(Time.zone.local(lower), Time.zone.local(upper))
+      Range.new(Time.zone.parse(lower), Time.zone.parse(upper))
     when "number"
       Range.new(lower.to_i, upper.to_i)
     when "currency"

@@ -12,8 +12,8 @@ shared_examples_for "task_counters" do |step, answer|
     task = create(:task)
     expect(task.step_tally["answered"]).to eq 0
 
-    step = create(:step, step, hidden: false, task: task)
-    answer = create(answer, step: step)
+    step = create(:step, step, hidden: false, task:)
+    answer = create(answer, step:)
 
     expect(task.step_tally["answered"]).to eq 1
 

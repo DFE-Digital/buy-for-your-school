@@ -71,7 +71,7 @@ class FrameworkSupportForm < RequestForm
   def go_back
     to_h
       .except(:user, :messages)
-      .merge(back: true, group: group, dsi: !user.guest?)
+      .merge(back: true, group:, dsi: !user.guest?)
       .reject { |_, v| v.to_s.empty? }
   end
 

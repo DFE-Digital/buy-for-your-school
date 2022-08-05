@@ -1,11 +1,11 @@
 RSpec.feature "Users can view the task list" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section_one) { create(:section, title: "Catering", journey: journey, contentful_id: "contentful-section-entry") }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section_one) { create(:section, title: "Catering", journey:, contentful_id: "contentful-section-entry") }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when a task has more than one unanswered step" do
@@ -99,7 +99,7 @@ RSpec.feature "Users can view the task list" do
   end
 
   context "when a task includes a step that has been answered" do
-    let(:section_two) { create(:section, title: "Section with a single task", journey: journey, contentful_id: "contentful-section-entry") }
+    let(:section_two) { create(:section, title: "Section with a single task", journey:, contentful_id: "contentful-section-entry") }
 
     before do
       task_with_single_step = create(:task, title: "Task with a single step", section: section_two)

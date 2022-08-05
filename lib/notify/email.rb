@@ -69,7 +69,7 @@ module Notify
     #
     def personalisation
       if attachment
-        template_params.merge(link_to_file: link_to_file)
+        template_params.merge(link_to_file:)
       else
         template_params
       end
@@ -83,8 +83,8 @@ module Notify
       message_params = {
         email_address: recipient.email,
         template_id: template,
-        reference: reference,
-        personalisation: personalisation,
+        reference:,
+        personalisation:,
       }
 
       if ENV["NOTIFY_EMAIL_REPLY_TO_ID"].present?
@@ -102,7 +102,7 @@ module Notify
     # @return [Hash<Symbol>] Keys are substituted in the template
     def template_params
       {
-        reference: reference,
+        reference:,
         first_name: recipient.first_name,
         last_name: recipient.last_name,
         email: recipient.email,

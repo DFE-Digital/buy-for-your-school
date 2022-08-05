@@ -7,7 +7,7 @@ RSpec.describe GetSectionsFromCategory do
         fixture_filename: "radio-question.json",
       )
 
-      result = described_class.new(category: category).call
+      result = described_class.new(category:).call
 
       expect(result).to eq(category.sections)
     end

@@ -8,9 +8,9 @@ RSpec.describe Support::CasePresenter do
   let(:support_case_updated_at) { Time.zone.local(2020, 5, 30, 12, 0, 0) }
   let(:support_case) do
     create(:support_case,
-           agent: agent,
-           organisation: organisation,
-           procurement: procurement,
+           agent:,
+           organisation:,
+           procurement:,
            created_at: support_case_created_at,
            updated_at: support_case_updated_at)
   end
@@ -47,9 +47,9 @@ RSpec.describe Support::CasePresenter do
       let(:support_case_without_interaction_updated_at) { Time.zone.local(2021, 1, 31, 12, 0, 0) }
       let(:support_case_without_interaction) do
         create(:support_case,
-               agent: agent,
-               organisation: organisation,
-               procurement: procurement,
+               agent:,
+               organisation:,
+               procurement:,
                created_at: support_case_without_interaction_created_at,
                updated_at: support_case_without_interaction_updated_at)
       end

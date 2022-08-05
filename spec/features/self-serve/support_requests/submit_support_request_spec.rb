@@ -12,13 +12,13 @@ RSpec.feature "Submitting a 'Digital Support' request" do
   end
 
   let(:category) { create(:category, slug: "slug") }
-  let(:journey) { create(:journey, category: category) }
+  let(:journey) { create(:journey, category:) }
 
   let(:support_request) do
     create(:support_request,
            user: journey.user,
-           journey: journey,
-           category: category,
+           journey:,
+           category:,
            school_urn: "urn-type-1")
   end
 
@@ -111,7 +111,7 @@ RSpec.feature "Submitting a 'Digital Support' request" do
 
     context "when the request is about a category" do
       let(:support_request) do
-        create(:support_request, user: journey.user, category: category, school_urn: "urn-type-1")
+        create(:support_request, user: journey.user, category:, school_urn: "urn-type-1")
       end
 
       it "has no specification link" do

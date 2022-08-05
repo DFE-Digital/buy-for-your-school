@@ -36,7 +36,7 @@ module MicrosoftGraph
         HTTParty.send(
           http_verb,
           request_url,
-          body: body,
+          body:,
           headers: { authorization: "Bearer #{access_token}" }.merge(headers),
         ),
       )

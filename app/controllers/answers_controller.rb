@@ -18,10 +18,10 @@ class AnswersController < ApplicationController
   def create
     @journey = current_journey
 
-    @answer = AnswerFactory.new(step: step).call
+    @answer = AnswerFactory.new(step:).call
     @answer.step = step.__getobj__
 
-    result = SaveAnswer.new(answer: step.answer).call(params: prepared_params(step: step))
+    result = SaveAnswer.new(answer: step.answer).call(params: prepared_params(step:))
     @answer = result.object
 
     @back_url =
@@ -57,7 +57,7 @@ class AnswersController < ApplicationController
     result =
       if step.question?
         # Save the question answer
-        SaveAnswer.new(answer: step.answer).call(params: prepared_params(step: step))
+        SaveAnswer.new(answer: step.answer).call(params: prepared_params(step:))
       elsif step.statement?
         # Acknowledge the statement
         step.task.statement_ids << step.id unless step.task.statement_ids.include?(step.id)
@@ -84,7 +84,7 @@ private
 
   def record_action(action, data)
     RecordAction.new(
-      action: action,
+      action:,
       journey_id: @journey.id,
       user_id: current_user.id,
       # We safe navigate here because in preview we don't have sections or
@@ -97,7 +97,7 @@ private
       contentful_task: step&.task&.title,
       contentful_step_id: step.contentful_id,
       contentful_step: step.title,
-      data: data,
+      data:,
     ).call
   end
 

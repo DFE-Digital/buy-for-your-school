@@ -13,7 +13,7 @@ module Support
                     "agent"
                   end
 
-          Rollbar.info("User role has been granted access.", role: role, path: request.path)
+          Rollbar.info("User role has been granted access.", role:, path: request.path)
         end
 
         format.csv do

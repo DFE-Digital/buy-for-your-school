@@ -49,10 +49,10 @@ class SubmitSupportRequest
     Emails::Confirmation.new(
       recipient: request.user,
       reference: @kase.ref,
-      template: template,
+      template:,
       variables: {
         message: request.message_body,
-        category: category,
+        category:,
       },
     ).call
 
@@ -79,7 +79,7 @@ private
 
   # @return [Support::Document] TODO: Move into inbound API
   def document
-    Support::Document.new(file_type: "HTML attachment", document_body: document_body)
+    Support::Document.new(file_type: "HTML attachment", document_body:)
   end
 
   # @return [Support::Category]

@@ -1,6 +1,6 @@
 RSpec.feature "User authentication filter" do
   before do
-    user_exists_in_dfe_sign_in(user: user)
+    user_exists_in_dfe_sign_in(user:)
   end
 
   context "when the user is not associated with any organisation" do

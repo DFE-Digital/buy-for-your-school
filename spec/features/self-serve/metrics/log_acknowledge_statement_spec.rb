@@ -1,14 +1,14 @@
 RSpec.feature "A step is answered with no user input" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering, contentful_id: "contentful-category-entry") }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section) { create(:section, title: "Section A", journey: journey, contentful_id: "statement-section") }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section) { create(:section, title: "Section A", journey:, contentful_id: "statement-section") }
 
   it "is logged" do
-    statement_task = create(:task, title: "Task with a single statement step", section: section)
+    statement_task = create(:task, title: "Task with a single statement step", section:)
     create(:step, :statement, title: "statement-step.json title", task: statement_task)
 
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit "/journeys/#{journey.id}"
 
     within(".app-task-list") do

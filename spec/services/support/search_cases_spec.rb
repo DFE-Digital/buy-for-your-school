@@ -15,7 +15,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
 
     let(:search_term) { nil }
     let(:search_params) do
-      { search_term: search_term }
+      { search_term: }
     end
 
     context "when searching by 'search term'" do

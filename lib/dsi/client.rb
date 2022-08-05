@@ -31,7 +31,7 @@ module Dsi
     # @return [Array<Dsi::User>]
     #
     def users
-      get_users.map { |user| Dsi::User.new(user: user) }
+      get_users.map { |user| Dsi::User.new(user:) }
     end
 
     # Get user access to service
@@ -154,7 +154,7 @@ module Dsi
     #
     # @return [URI::HTTPS]
     def api_uri(path)
-      ::Dsi::Uri.new(subdomain: "api", path: path).call
+      ::Dsi::Uri.new(subdomain: "api", path:).call
     end
 
     # TODO: benchmark performance for http clients

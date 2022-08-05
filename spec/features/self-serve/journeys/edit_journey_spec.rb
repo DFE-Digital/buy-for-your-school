@@ -1,9 +1,9 @@
 RSpec.describe "Editing a specification" do
   let(:user) { create(:user) }
-  let(:journey) { create(:journey, user: user) }
+  let(:journey) { create(:journey, user:) }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit "/journeys/#{journey.id}"
   end
 

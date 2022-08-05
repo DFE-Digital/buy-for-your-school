@@ -58,10 +58,10 @@ module Support
 
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
-    scope :by_agent, ->(agent_id) { where(agent_id: agent_id) }
-    scope :by_state, ->(state) { where(state: state) }
-    scope :by_category, ->(category_id) { where(category_id: category_id) }
-    scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: tower }) }
+    scope :by_agent, ->(agent_id) { where(agent_id:) }
+    scope :by_state, ->(state) { where(state:) }
+    scope :by_category, ->(category_id) { where(category_id:) }
+    scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: }) }
 
     scope :priority_ordering, lambda {
       order(

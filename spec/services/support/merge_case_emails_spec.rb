@@ -1,5 +1,5 @@
 RSpec.describe Support::MergeCaseEmails do
-  subject(:merge) { described_class.new(from_case: from_case, to_case: to_case, agent: agent) }
+  subject(:merge) { described_class.new(from_case:, to_case:, agent:) }
 
   let(:agent) { ::Support::AgentPresenter.new(create(:support_agent)) }
   let(:from_case) { create(:support_case, action_required: true) }

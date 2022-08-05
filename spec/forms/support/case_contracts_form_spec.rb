@@ -49,7 +49,7 @@ RSpec.describe Support::CaseContractsForm, type: :model do
   end
 
   describe "#to_h" do
-    subject(:form) { described_class.new(duration: duration) }
+    subject(:form) { described_class.new(duration:) }
 
     context "when duration is nil" do
       let(:duration) { nil }
