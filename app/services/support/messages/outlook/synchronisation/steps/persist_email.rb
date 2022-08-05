@@ -18,6 +18,7 @@ module Support
                 outlook_has_attachments: message.has_attachments,
                 outlook_is_read: message.is_read,
                 outlook_is_draft: message.is_draft,
+                in_reply_to_id: message.in_reply_to_id
               )
             end
           end

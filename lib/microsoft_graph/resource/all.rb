@@ -4,6 +4,7 @@ module MicrosoftGraph
 end
 
 require_relative "attachment"
+require_relative "single_value_extended_property"
 require_relative "email_address"
 require_relative "item_body"
 require_relative "recipient"

@@ -18,6 +18,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
       is_read: false,
       has_attachments: true,
       case_reference_from_headers: "000888",
+      in_reply_to_id: "IMID-2"
     )
   end
 
@@ -36,6 +37,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
     expect(email.outlook_has_attachments).to eq(true)
     expect(email.outlook_received_at).to eq(Time.zone.parse("01/01/2022 10:32"))
     expect(email.sent_at).to eq(Time.zone.parse("01/01/2022 10:30"))
+    expect(email.in_reply_to_id).to eq("IMID-2")
   end
 
   context "when message is coming from the inbox mail folder" do

@@ -32,8 +32,12 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder, query: [])
-      query = Array(query).push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
+      query = Array(query)
+        .push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
+        .push("$expand=singleValueExtendedProperties($filter=id eq '#{Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')")
+
       results = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
+
       Transformer::Message.transform_collection(results, into: Resource::Message)
     end
 
