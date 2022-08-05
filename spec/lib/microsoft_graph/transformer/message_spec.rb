@@ -24,7 +24,7 @@ describe MicrosoftGraph::Transformer::Message do
         "singleValueExtendedProperties" => [
           { "id" => "x", "value" => "y" },
           { "id" => "a", "value" => "b" },
-        ]
+        ],
       }
 
       message = described_class.transform(payload, into: MicrosoftGraph::Resource::Message)
@@ -50,12 +50,12 @@ describe MicrosoftGraph::Transformer::Message do
       expect(message.to_recipients.map(&:as_json)).to match(
         payload["toRecipients"]
           .map { |recipient| MicrosoftGraph::Transformer::Recipient.transform(recipient, into: MicrosoftGraph::Resource::Recipient) }
-          .map(&:as_json)
+          .map(&:as_json),
       )
       expect(message.single_value_extended_properties.map(&:as_json)).to eq(
         payload["singleValueExtendedProperties"]
           .map { |svep| MicrosoftGraph::Transformer::JsonResponse.transform(svep, into: MicrosoftGraph::Resource::SingleValueExtendedProperty) }
-          .map(&:as_json)
+          .map(&:as_json),
       )
     end
   end

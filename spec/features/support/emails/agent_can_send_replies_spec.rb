@@ -22,7 +22,7 @@ describe "Agent can reply to incoming emails" do
       send_reply_service = double("send_reply_service")
 
       allow(send_reply_service).to receive(:call) do
-        reply = create(:support_email, :sent_items, case: support_case, replying_to: email, body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
+        reply = create(:support_email, :sent_items, case: support_case, in_reply_to: email, body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
         create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: reply.id })
       end
 
