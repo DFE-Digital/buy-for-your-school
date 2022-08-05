@@ -25,7 +25,7 @@ class GetEntry
       entry = find_and_build_entry_from_cache(cache: @cache, key: cache_key)
     else
       entry = @client.by_id(@entry_id)
-      store_in_cache(cache: @cache, key: cache_key, entry: entry)
+      store_in_cache(cache: @cache, key: cache_key, entry:)
     end
 
     if entry.nil?

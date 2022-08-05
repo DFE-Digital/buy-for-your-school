@@ -12,7 +12,7 @@ class SingleDateAnswerPresenter < BasePresenter
   # @return [Hash]
   def to_param
     {
-      response: response,
+      response:,
     }
   end
 end

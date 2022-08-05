@@ -195,11 +195,11 @@ RSpec.describe GetAnswersForSteps do
     context "when there is no answer for a step" do
       it "does not try to prepare that answer in the result" do
         journey = create(:journey)
-        section = create(:section, journey: journey)
-        task = create(:task, section: section)
-        answerable_step = create(:step, :radio, task: task)
+        section = create(:section, journey:)
+        task = create(:task, section:)
+        answerable_step = create(:step, :radio, task:)
         _answer = create(:radio_answer, step: answerable_step)
-        unanswerable_step = create(:step, :radio, task: task)
+        unanswerable_step = create(:step, :radio, task:)
 
         result = described_class.new(visible_steps: [answerable_step]).call
 

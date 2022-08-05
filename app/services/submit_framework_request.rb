@@ -32,7 +32,7 @@ class SubmitFrameworkRequest
     Emails::Confirmation.new(
       recipient: request.user,
       reference: @kase.ref,
-      template: template,
+      template:,
       variables: {
         message: request.message_body,
       },

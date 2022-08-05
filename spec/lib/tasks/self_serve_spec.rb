@@ -6,10 +6,10 @@ RSpec.describe "Self-serve tasks" do
 
   describe "self_serve:backfill_journey_names" do
     let(:user) { create(:user) }
-    let(:catering_journey_1) { create(:journey, category: create(:category, :catering), name: nil, user: user) }
-    let(:catering_journey_2) { create(:journey, category: create(:category, :catering), name: nil, user: user) }
-    let(:mfd_journey_1) { create(:journey, category: create(:category, :mfd), name: nil, user: user) }
-    let(:mfd_journey_2) { create(:journey, category: create(:category, :mfd), name: nil, user: user) }
+    let(:catering_journey_1) { create(:journey, category: create(:category, :catering), name: nil, user:) }
+    let(:catering_journey_2) { create(:journey, category: create(:category, :catering), name: nil, user:) }
+    let(:mfd_journey_1) { create(:journey, category: create(:category, :mfd), name: nil, user:) }
+    let(:mfd_journey_2) { create(:journey, category: create(:category, :mfd), name: nil, user:) }
 
     it "gives names to journeys that do not have them" do
       expect(catering_journey_1.name).to be_nil

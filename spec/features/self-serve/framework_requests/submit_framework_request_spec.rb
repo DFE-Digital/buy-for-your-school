@@ -21,7 +21,7 @@ RSpec.feature "Submitting a 'Find a Framework' request" do
   end
 
   let(:request) do
-    create(:framework_request, user: user, org_id: "100253", group: false)
+    create(:framework_request, user:, org_id: "100253", group: false)
   end
 
   before do
@@ -29,7 +29,7 @@ RSpec.feature "Submitting a 'Find a Framework' request" do
       .with(body: email.to_json)
       .to_return(body: {}.to_json, status: 200, headers: {})
 
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit "/procurement-support/#{request.id}"
     click_on "Send request"
   end

@@ -5,7 +5,7 @@ RSpec.describe "Entry previews", type: :request do
   let(:step) { journey.steps.first }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
 
     stub_contentful_entry(
       entry_id: "short-text-question",

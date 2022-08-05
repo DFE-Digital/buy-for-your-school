@@ -32,7 +32,7 @@ describe "Agent sees emails in messages" do
 
     context "when the email contains attachments" do
       before do
-        create(:support_email_attachment, email: email)
+        create(:support_email_attachment, email:)
       end
 
       it "allows the user to download the attachment" do

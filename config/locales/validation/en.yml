@@ -1,7 +1,7 @@
 # config/validation/en.yml
 en:
   request:
-    rules: &request_rules
+    rules:
       procurement_choice: "" # Omitted
       procurement_amount: "" # Omitted
       confidence_level: "" # Omitted
@@ -9,7 +9,7 @@ en:
       special_requirements: "" # Omitted
     
     errors:
-      rules: &request_errors
+      rules:
         procurement_choice:
           missing: Select whether you know how much is being spent
         procurement_amount:
@@ -34,7 +34,11 @@ en:
       last_name: "" # Omitted
       email: "" # Omitted
       message_body: "" # Omitted
-      <<: *request_rules
+      procurement_choice: "" # Omitted
+      procurement_amount: "" # Omitted
+      confidence_level: "" # Omitted
+      special_requirements_choice: "" # Omitted
+      special_requirements: "" # Omitted
 
     errors:
       rules:
@@ -57,7 +61,18 @@ en:
           group: Select whether this is the Group or Trust you're buying for
         message_body:
           missing: You must tell us how we can help
-        <<: *request_errors
+        procurement_choice:
+          missing: Select whether you know how much is being spent
+        procurement_amount:
+          missing: Enter the approximate amount that will be spent
+          invalid: Enter a number
+          too_large: The amount cannot be larger than 9,999,999.99
+        confidence_level:
+          missing: Select how confident you feel about running this procurement
+        special_requirements_choice:
+          missing: Select whether you want to tell us about any special requirements
+        special_requirements:
+          missing: Enter what your requirements are
   
   support_request:
     rules:
@@ -65,7 +80,11 @@ en:
       message_body: "" # Omitted
       category_id: The type of procurement
       school_urn: "" # Omitted
-      <<: *request_rules
+      procurement_choice: "" # Omitted
+      procurement_amount: "" # Omitted
+      confidence_level: "" # Omitted
+      special_requirements_choice: "" # Omitted
+      special_requirements: "" # Omitted
 
     errors:
       rules:
@@ -81,7 +100,18 @@ en:
           no_spec: is required if you do not select an existing specification
         school_urn:
           missing: You must select a school
-        <<: *request_errors
+        procurement_choice:
+          missing: Select whether you know how much is being spent
+        procurement_amount:
+          missing: Enter the approximate amount that will be spent
+          invalid: Enter a number
+          too_large: The amount cannot be larger than 9,999,999.99
+        confidence_level:
+          missing: Select how confident you feel about running this procurement
+        special_requirements_choice:
+          missing: Select whether you want to tell us about any special requirements
+        special_requirements:
+          missing: Enter what your requirements are
 
   # Find a Framework support request form
   download_specification:

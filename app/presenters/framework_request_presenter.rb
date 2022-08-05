@@ -5,9 +5,9 @@ class FrameworkRequestPresenter < RequestPresenter
       UserPresenter.new(super)
     else
       OpenStruct.new(
-        email: email,
-        first_name: first_name,
-        last_name: last_name,
+        email:,
+        first_name:,
+        last_name:,
         full_name: "#{first_name} #{last_name}",
       )
     end

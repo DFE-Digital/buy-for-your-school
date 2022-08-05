@@ -34,7 +34,7 @@ module Support
 
     # @return [Array<Hash>]
     def call
-      ::Support::Frameworks::Information.new(filter: filter, file: data, exporter: export_proc).call
+      ::Support::Frameworks::Information.new(filter:, file: data, exporter: export_proc).call
     end
 
   private

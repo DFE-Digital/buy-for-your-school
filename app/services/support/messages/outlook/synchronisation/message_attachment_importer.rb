@@ -5,7 +5,7 @@ module Support
         class MessageAttachmentImporter
           def self.call(message_attachment, email)
             email_attachment = Support::EmailAttachment
-              .find_or_initialize_by(email: email, outlook_id: message_attachment.id)
+              .find_or_initialize_by(email:, outlook_id: message_attachment.id)
 
             return unless email_attachment.new_record?
 

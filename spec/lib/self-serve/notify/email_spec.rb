@@ -34,7 +34,7 @@ RSpec.describe Notify::Email do
 
   describe "default behaviour" do
     subject(:service) do
-      described_class.new(recipient: recipient, template: "xxx")
+      described_class.new(recipient:, template: "xxx")
     end
 
     it "connects to the defined service" do
@@ -62,14 +62,14 @@ RSpec.describe Notify::Email do
     end
 
     it "the client raises an error" do
-      expect { described_class.new(recipient: recipient, template: "xxx") }.to raise_error ArgumentError
+      expect { described_class.new(recipient:, template: "xxx") }.to raise_error ArgumentError
     end
   end
 
   context "with an attachment" do
     subject(:service) do
       described_class.new(
-        recipient: recipient,
+        recipient:,
         template: "xxx",
         attachment: "./spec/fixtures/gias/example_schools_data.csv",
       )
@@ -82,7 +82,7 @@ RSpec.describe Notify::Email do
 
   context "when message invalid" do
     subject(:service) do
-      described_class.new(recipient: recipient, template: "xxx")
+      described_class.new(recipient:, template: "xxx")
     end
 
     let(:response) do

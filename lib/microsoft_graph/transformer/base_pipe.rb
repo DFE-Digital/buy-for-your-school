@@ -6,7 +6,7 @@ module MicrosoftGraph
       end
 
       def self.transform_collection(response, into:)
-        response.map { |item| transform(item, into: into) }
+        response.map { |item| transform(item, into:) }
       end
     end
   end

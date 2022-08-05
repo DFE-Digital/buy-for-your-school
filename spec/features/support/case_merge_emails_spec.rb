@@ -4,8 +4,8 @@ RSpec.feature "Merge a New Cases email(s) into an Existing Case" do
   end
 
   let(:agent) { Support::Agent.first }
-  let!(:to_case) { Support::CasePresenter.new(create(:support_case, ref: "000001", agent: agent)) }
-  let!(:from_case) { Support::CasePresenter.new(create(:support_case, ref: "000002", agent: agent)) }
+  let!(:to_case) { Support::CasePresenter.new(create(:support_case, ref: "000001", agent:)) }
+  let!(:from_case) { Support::CasePresenter.new(create(:support_case, ref: "000002", agent:)) }
   let(:interaction_to) { to_case.interactions.last }
 
   context "when the case to be merged is not new" do

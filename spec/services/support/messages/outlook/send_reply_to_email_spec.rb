@@ -3,8 +3,8 @@ require "rails_helper"
 describe Support::Messages::Outlook::SendReplyToEmail do
   subject(:send_reply) do
     described_class.new(
-      ms_graph_client: ms_graph_client,
-      reply_to_email: reply_to_email,
+      ms_graph_client:,
+      reply_to_email:,
       reply_text: "<p>My Reply</p>",
       sender: agent,
       file_attachments: [attachment1, attachment2],

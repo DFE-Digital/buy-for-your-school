@@ -209,7 +209,7 @@ RSpec.describe Step, type: :model do
 
   describe "#skip!" do
     let(:task) { create(:task) }
-    let(:step) { create(:step, :number, task: task) }
+    let(:step) { create(:step, :number, task:) }
 
     it "records skipped step if not present" do
       expect(task.skipped_ids.size).to eq 0
@@ -228,7 +228,7 @@ RSpec.describe Step, type: :model do
 
   describe "#unskip!" do
     let(:task) { create(:task) }
-    let(:step) { create(:step, :number, task: task) }
+    let(:step) { create(:step, :number, task:) }
 
     it "removes existing ID if present" do
       step.skip!
@@ -246,7 +246,7 @@ RSpec.describe Step, type: :model do
 
   describe "#skipped?" do
     let(:task) { create(:task) }
-    let(:step) { create(:step, :number, task: task) }
+    let(:step) { create(:step, :number, task:) }
 
     it "returns true if step is skipped" do
       step.skip!
@@ -267,8 +267,8 @@ RSpec.describe Step, type: :model do
 
   describe "#last?" do
     let(:task) { create(:task) }
-    let!(:step_1) { create(:step, :number, task: task, order: 1) }
-    let!(:step_2) { create(:step, :number, task: task, order: 2) }
+    let!(:step_1) { create(:step, :number, task:, order: 1) }
+    let!(:step_2) { create(:step, :number, task:, order: 2) }
 
     it "returns true if a given step is the last one" do
       expect(step_2.last?).to be true
@@ -281,8 +281,8 @@ RSpec.describe Step, type: :model do
 
   describe "#last_skipped?" do
     let(:task) { create(:task) }
-    let(:step_1) { create(:step, :number, task: task) }
-    let(:step_2) { create(:step, :number, task: task) }
+    let(:step_1) { create(:step, :number, task:) }
+    let(:step_2) { create(:step, :number, task:) }
 
     before do
       step_1.skip!

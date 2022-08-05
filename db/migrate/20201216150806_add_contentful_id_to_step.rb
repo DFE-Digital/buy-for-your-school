@@ -7,7 +7,7 @@ class AddContentfulIdToStep < ActiveRecord::Migration[6.1]
         contentful_id = JSON.parse(
           step.raw.gsub("=>", ":"),
         ).dig("sys", "id")
-        step.update!(contentful_id: contentful_id)
+        step.update!(contentful_id:)
       end
     end
 

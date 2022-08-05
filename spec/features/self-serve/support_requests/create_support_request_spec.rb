@@ -3,7 +3,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
 
   describe "contact details" do
     before do
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/support-requests/new"
     end
 
@@ -100,7 +100,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
 
   describe "school details" do
     before do
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/support-requests/new"
     end
 
@@ -131,7 +131,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
   context "when the user has existing specs" do
     let(:user) { create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
     let(:category) { create(:category, title: "Laptops") }
-    let(:journey) { create(:journey, category: category, user: user) }
+    let(:journey) { create(:journey, category:, user:) }
 
     before do
       # TODO: use `title` and remove `travel_to` used to control `created_at`
@@ -169,7 +169,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
       create(:category, title: "Maintenance")
       create(:category, title: "Broadband")
 
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/support-requests/new"
       click_continue
     end
@@ -204,7 +204,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
     before do
       create(:category, title: "Maintenance")
 
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/support-requests/new"
       click_continue
       choose "Maintenance"
@@ -231,7 +231,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
     before do
       create(:category, title: "Maintenance")
 
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/support-requests/new"
       click_continue
       choose "Maintenance"
@@ -260,7 +260,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
 
     before do
       create(:category, title: "Laptops")
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
 
       visit "/support-requests/new"
       click_continue

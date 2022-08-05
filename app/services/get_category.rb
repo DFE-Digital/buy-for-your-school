@@ -27,7 +27,7 @@ class GetCategory
 
     # INFO: Due to a 50k character limit within Contentful we check to see if
     # we need to combine this value from multiple fields set on a Contentful Category.
-    category.combined_specification_template = combined_specification_templates(category: category)
+    category.combined_specification_template = combined_specification_templates(category:)
 
     begin
       validate_liquid(template: category.combined_specification_template)

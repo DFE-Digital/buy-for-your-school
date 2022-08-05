@@ -57,7 +57,7 @@ RSpec.describe "Cache invalidation", type: :request do
 
     post "/api/contentful/entry_updated",
          params: fake_contentful_webook_payload,
-         headers: headers,
+         headers:,
          as: :json
   end
 

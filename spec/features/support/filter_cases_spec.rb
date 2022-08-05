@@ -7,7 +7,7 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
   before do
     create_list(:support_case, 10)
     create(:support_case, category: catering_cat)
-    create(:support_case, agent: agent)
+    create(:support_case, agent:)
     create(:support_case, state: :closed)
     click_button "Agent Login"
   end

@@ -20,7 +20,7 @@ RSpec.feature "Toggling additional steps" do
              hidden: true,
              task: step.task)
 
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit_journey
     end
 
@@ -54,7 +54,7 @@ RSpec.feature "Toggling additional steps" do
 
   context "when there are no additional steps" do
     before do
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit_journey
     end
 

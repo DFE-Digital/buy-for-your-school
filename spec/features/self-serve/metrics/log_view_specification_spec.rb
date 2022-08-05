@@ -1,10 +1,10 @@
 RSpec.feature "Viewing a specification" do
   let(:user) { create(:user) }
-  let(:journey) { create(:journey, user: user) }
+  let(:journey) { create(:journey, user:) }
   let(:logged_event) { ActivityLogItem.last }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
     visit_journey
     click_view
   end

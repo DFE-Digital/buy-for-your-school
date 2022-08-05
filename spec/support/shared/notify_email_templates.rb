@@ -44,7 +44,7 @@ RSpec.shared_context "with notify email templates" do
 
       instance_double("Notifications::Client::TemplatePreview",
                       id: template_to_preview.id,
-                      body: body,
+                      body:,
                       subject: template_to_preview.subject,
                       version: 1,
                       type: "email")

@@ -1,7 +1,7 @@
 RSpec.describe Support::BasePresenter do
   subject(:presenter) { described_class.new(model) }
 
-  let(:model) { OpenStruct.new(created_at: created_at, updated_at: updated_at) }
+  let(:model) { OpenStruct.new(created_at:, updated_at:) }
 
   let(:created_at) { Time.zone.local(2000, 1, 30, 12) }
   let(:updated_at) { Time.zone.local(2000, 3, 30, 12) }

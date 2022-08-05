@@ -8,7 +8,7 @@ module Support
     option :organisation_type, Types::Params::String, optional: true
 
     def assign_organisation_to_case(kase)
-      kase.update(organisation_id: organisation_id, organisation_type: organisation_type)
+      kase.update(organisation_id:, organisation_type:)
     end
   end
 end

@@ -18,7 +18,7 @@ describe Support::Messages::ReplyForm do
       allow(Support::Messages::Outlook::Reply::FileAttachment).to receive(:from_uploaded_file).with(attachment1).and_return(file_attachment1)
       allow(Support::Messages::Outlook::Reply::FileAttachment).to receive(:from_uploaded_file).with(attachment2).and_return(file_attachment2)
 
-      described_class.new(body: body, attachments: [attachment1, attachment2]).reply_to_email(email, agent)
+      described_class.new(body:, attachments: [attachment1, attachment2]).reply_to_email(email, agent)
 
       expect(Support::Messages::Outlook::SendReplyToEmail).to have_received(:new).with(
         reply_to_email: email,

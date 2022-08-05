@@ -1,13 +1,13 @@
 RSpec.feature "Custom question validation" do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
-  let(:journey) { create(:journey, category: category, user: user) }
-  let(:section) { create(:section, journey: journey) }
-  let(:task) { create(:task, section: section) }
+  let(:journey) { create(:journey, category:, user:) }
+  let(:section) { create(:section, journey:) }
+  let(:task) { create(:task, section:) }
 
   before do
-    user_is_signed_in(user: user)
-    create(:step, question_type, task: task, title: title, criteria: criteria)
+    user_is_signed_in(user:)
+    create(:step, question_type, task:, title:, criteria:)
     visit_journey
     within ".app-task-list" do
       click_on "Task title"

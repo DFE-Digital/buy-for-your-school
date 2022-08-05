@@ -1,5 +1,5 @@
 RSpec.describe Form do
-  subject(:form) { described_class.new(user: user) }
+  subject(:form) { described_class.new(user:) }
 
   let(:user) { create(:user) }
 

@@ -12,7 +12,7 @@ namespace :self_serve do
       grouped_unnamed_journeys.each do |category, journeys|
         journeys.each_with_index do |journey, i|
           name = "#{category} specification #{sprintf('%02i', i + 1)}"
-          journey.update!(name: name)
+          journey.update!(name:)
         end
       end
     end
@@ -24,7 +24,7 @@ namespace :self_serve do
 
     client.by_type(:category).each do |entry|
       contentful_category = GetCategory.new(category_entry_id: entry.id).call
-      CreateCategory.new(contentful_category: contentful_category).call
+      CreateCategory.new(contentful_category:).call
     end
   end
 

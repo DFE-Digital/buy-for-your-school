@@ -1,17 +1,17 @@
 RSpec.feature "Journey continue button behaviour" do
   let(:user) { create(:user) }
   let(:category) { create(:category, :catering) }
-  let(:journey) { create(:journey, user: user, category: category) }
-  let(:section_b) { create(:section, title: "Section B", journey: journey) }
+  let(:journey) { create(:journey, user:, category:) }
+  let(:section_b) { create(:section, title: "Section B", journey:) }
 
   before do
-    user_is_signed_in(user: user)
+    user_is_signed_in(user:)
   end
 
   context "when a task has a single step and the user answers it" do
     before do
       task = create(:task, title: "Long text task", section: section_b)
-      create(:step, :long_text, title: "Describe what you need", task: task, order: 0)
+      create(:step, :long_text, title: "Describe what you need", task:, order: 0)
       visit "/journeys/#{journey.id}"
     end
 
@@ -31,7 +31,7 @@ RSpec.feature "Journey continue button behaviour" do
   end
 
   context "when a task has many steps" do
-    let(:section_a) { create(:section, title: "Section A", journey: journey) }
+    let(:section_a) { create(:section, title: "Section A", journey:) }
 
     before do
       task_with_multiple_steps = create(:task, title: "Task with multiple steps", section: section_a)

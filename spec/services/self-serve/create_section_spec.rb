@@ -8,8 +8,8 @@ RSpec.describe CreateSection do
     it "creates a new section" do
       expect {
         described_class.new(
-          journey: journey,
-          contentful_section: contentful_section,
+          journey:,
+          contentful_section:,
           order: 0,
         ).call
       }.to change(Section, :count).by(1)

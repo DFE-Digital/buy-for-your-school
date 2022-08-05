@@ -22,8 +22,8 @@ class AddMissingOrderToExistingTasks < ActiveRecord::Migration[6.1]
       end
 
       Rollbar.info("Migration: Tasks with missing order",
-                   tasks_total: tasks_total,
-                   tasks_updated: tasks_updated)
+                   tasks_total:,
+                   tasks_updated:)
     end
   end
 

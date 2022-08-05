@@ -4,17 +4,17 @@ RSpec.feature "Delete a journey" do
   context "with an existing deleted journey" do
     before do
       create(:journey,
-             user: user,
+             user:,
              category: create(:category, :mfd),
              created_at: Time.zone.local(2021, 2, 15, 12, 0, 0))
 
       create(:journey,
-             user: user,
+             user:,
              state: 3,
              category: create(:category, :catering),
              created_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
 
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/dashboard"
     end
 
@@ -30,13 +30,13 @@ RSpec.feature "Delete a journey" do
   context "when a user deletes existing journey" do
     let!(:specification) do
       create(:journey,
-             user: user,
+             user:,
              category: create(:category, :catering),
              created_at: Time.zone.local(2021, 3, 20, 12, 0, 0))
     end
 
     before do
-      user_is_signed_in(user: user)
+      user_is_signed_in(user:)
       visit "/dashboard"
     end
 

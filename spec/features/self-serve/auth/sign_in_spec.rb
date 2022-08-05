@@ -3,7 +3,7 @@ RSpec.feature "DfE Sign-in" do
     before do
       contentful_category = stub_contentful_category(fixture_filename: "radio-question.json")
       category = persist_category(contentful_category)
-      user_exists_in_dfe_sign_in(user: user) # omniauth mock config
+      user_exists_in_dfe_sign_in(user:) # omniauth mock config
 
       # landing page
       visit "/"
@@ -66,7 +66,7 @@ RSpec.feature "DfE Sign-in" do
 
         step = create(:step, :radio)
         journey = step.journey
-        journey.update!(user: user)
+        journey.update!(user:)
         visit journey_step_path(journey, step)
         expect(page).to have_content(step.title)
       end

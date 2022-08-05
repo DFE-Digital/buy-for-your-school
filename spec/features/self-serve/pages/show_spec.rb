@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Showing a Page" do
   # `our_page` so we don't clash with Capybara `page`
-  let(:our_page) { create(:page, sidebar: sidebar, body: body, updated_at: Date.parse("1 January 2022")) }
+  let(:our_page) { create(:page, sidebar:, body:, updated_at: Date.parse("1 January 2022")) }
   let(:updated_at) { "Last updated 1 January 2022" }
 
   context "when visiting a non-existent page slug" do

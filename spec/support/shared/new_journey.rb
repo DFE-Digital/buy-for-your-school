@@ -8,19 +8,19 @@
 #
 RSpec.shared_context "with a journey" do
   let(:category) { create(:category) }
-  let(:journey) { create(:journey, category: category) }
+  let(:journey) { create(:journey, category:) }
 
   # Sections -------------------------------------------------------------------
   let(:section_1) do
-    create(:section, journey: journey, title: "section_1", order: 0)
+    create(:section, journey:, title: "section_1", order: 0)
   end
 
   let(:section_2) do
-    create(:section, journey: journey, title: "section_2", order: 1)
+    create(:section, journey:, title: "section_2", order: 1)
   end
 
   let(:section_3) do
-    create(:section, journey: journey, title: "section_3", order: 2)
+    create(:section, journey:, title: "section_3", order: 2)
   end
 
   # Tasks ----------------------------------------------------------------------
