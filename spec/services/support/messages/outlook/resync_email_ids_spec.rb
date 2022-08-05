@@ -17,7 +17,7 @@ describe Support::Messages::Outlook::ResyncEmailIds do
       "$filter=lastModifiedDateTime ge #{messages_updated_after.utc.iso8601}",
       "$select=internetMessageId,subject,sentDateTime",
       "$orderby=lastModifiedDateTime asc",
-      "$expand=singleValueExtendedProperties($filter=id eq '#{MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')"
+      "$expand=singleValueExtendedProperties($filter=id eq '#{MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')",
     ]).and_return(recently_updated_messages_results)
   end
 

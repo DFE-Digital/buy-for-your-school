@@ -18,7 +18,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
       is_read: false,
       has_attachments: true,
       case_reference_from_headers: "000888",
-      in_reply_to_id: "IMID-2"
+      in_reply_to_id: "IMID-2",
     )
   end
 

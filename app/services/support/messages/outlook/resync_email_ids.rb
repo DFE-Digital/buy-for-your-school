@@ -13,14 +13,14 @@ module Support
           recently_updated_messages.each do |message|
             email = find_local_email(message)
 
-            if local_email_should_be_updated?(email, message)
-              email.update!(
-                outlook_internet_message_id: message["internetMessageId"],
-                outlook_id: message["id"],
-                outlook_conversation_id: message["conversationId"],
-                in_reply_to_id: in_reply_to_id(message)
-              )
-            end
+            next unless local_email_should_be_updated?(email, message)
+
+            email.update!(
+              outlook_internet_message_id: message["internetMessageId"],
+              outlook_id: message["id"],
+              outlook_conversation_id: message["conversationId"],
+              in_reply_to_id: in_reply_to_id(message),
+            )
           end
         end
 
@@ -30,7 +30,7 @@ module Support
 
         def find_local_email(message)
           Support::Email.find_by(outlook_internet_message_id: message["internetMessageId"]) || \
-            Support::Email.find_by(subject: message["subject"], sent_at: message["sentDateTime"])  # fallback to subject and sent time pair
+            Support::Email.find_by(subject: message["subject"], sent_at: message["sentDateTime"]) # fallback to subject and sent time pair
         end
 
         def local_email_should_be_updated?(email, message)
@@ -46,13 +46,12 @@ module Support
           outlook_conversation_id_needs_setting = email.outlook_conversation_id.nil?
           return true if outlook_conversation_id_needs_setting
 
-          in_reply_to_id_needs_setting = email.in_reply_to_id.nil? && in_reply_to_id(message).present?
-          return in_reply_to_id_needs_setting
+          email.in_reply_to_id.nil? && in_reply_to_id(message).present?
         end
 
         def in_reply_to_id(message)
           found_value = Array(message["singleValueExtendedProperties"])
-            .find {|svep| svep["id"] == MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
+            .find { |svep| svep["id"] == MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
           found_value.present? ? found_value["value"] : nil
         end
 
@@ -61,7 +60,7 @@ module Support
             "$filter=lastModifiedDateTime ge #{messages_updated_after.utc.iso8601}",
             "$select=internetMessageId,subject,sentDateTime",
             "$orderby=lastModifiedDateTime asc",
-            "$expand=singleValueExtendedProperties($filter=id eq '#{MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')"
+            "$expand=singleValueExtendedProperties($filter=id eq '#{MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')",
           ])
         end
       end

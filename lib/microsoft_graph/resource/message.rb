@@ -22,7 +22,7 @@ module MicrosoftGraph
 
       def in_reply_to_id
         single_value_extended_properties
-          .find {|svep| svep.id == SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
+          .find { |svep| svep.id == SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
           &.value
       end
     end
