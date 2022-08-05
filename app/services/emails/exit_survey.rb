@@ -36,7 +36,7 @@ class Emails::ExitSurvey < Notify::Email
 private
 
   def template_params
-    super.merge(exit_survey_link: exit_survey_link)
+    super.merge(exit_survey_link:)
   end
 
   def exit_survey_link
