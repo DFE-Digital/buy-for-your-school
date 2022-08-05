@@ -115,6 +115,7 @@ Rails.application.routes.draw do
             resources :templates, only: %i[index], param: :template
           end
         end
+        resources :message_threads, only: %i[index show]
         resources :messages, only: %i[create] do
           scope module: :messages do
             resources :replies, only: %i[create]

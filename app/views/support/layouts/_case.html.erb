@@ -1,0 +1,39 @@
+<% content_for :title do %>
+  Buy for your school | Case <%= @current_case.ref %>
+<% end %>
+
+<h1 class="govuk-heading-l">
+  <%= @current_case.organisation_name %>
+</h1>
+<div class="govuk-!-margin-bottom-7">
+  <%= render "support/cases/status_badge", kase: @current_case %>
+</div>
+<p class="govuk-body" id="case-ref">
+  <strong><%= @current_case.ref %></strong>
+  <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
+</p>
+
+<div class="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item">
+      <%= link_to I18n.t("support.case.header.school_detail"), support_case_path(@current_case, anchor: "school-details"), class: "govuk-tabs__tab_custom" %>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <%= link_to I18n.t("support.case.header.case_detail"), support_case_path(@current_case, anchor: "case-details"), class: "govuk-tabs__tab_custom" %>
+    </li>
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case), class: "govuk-tabs__tab_custom" %>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <%= link_to I18n.t("support.case.header.case_history"), support_case_path(@current_case, anchor: "case-history"), class: "govuk-tabs__tab_custom" %>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <%= link_to I18n.t("support.case.header.case_attachments"), support_case_path(@current_case, anchor: "case-attachments"), class: "govuk-tabs__tab_custom" %>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id=<%= tab %> role="tabpanel" aria-labelledby=<%= "tab_#{tab}" %>>
+    <%= yield %>
+  </div>
+</div>
+
+<%= render "support/cases/case_actions" unless @current_case.closed?  %>

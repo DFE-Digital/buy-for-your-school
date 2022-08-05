@@ -61,14 +61,4 @@ protected
   def cookie_policy
     CookiePolicy.new(cookies)
   end
-
-  # Check if the given URL is internal to this application
-  # Returns true for relative paths without validating them
-  #
-  # @return [Boolean]
-  def url_internal?(url)
-    return false if url.nil?
-
-    [request.host, nil].include?(URI(url).host)
-  end
 end

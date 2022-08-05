@@ -21,5 +21,11 @@ module Support
     def current_agent
       AgentPresenter.new(super) if super
     end
+
+    def back_link_param
+      return if params[:back_to].blank?
+
+      Base64.decode64(params[:back_to])
+    end
   end
 end

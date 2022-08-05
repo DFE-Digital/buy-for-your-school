@@ -175,6 +175,11 @@ module Support
       super || "-"
     end
 
+    # @return [Array<MessageThreadPresenter>]
+    def message_threads
+      super.map { |thread| MessageThreadPresenter.new(thread) }
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
