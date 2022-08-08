@@ -4,10 +4,13 @@
 
 function toggleElementDisplay(element) {
   const targetElement = document.getElementById(element);
+
   if (targetElement.classList.contains("govuk-!-display-none")) {
-    targetElement.className = "govuk-!-display-block";
+    targetElement.classList.add("govuk-!-display-block");
+    targetElement.classList.remove("govuk-!-display-none");
   } else {
-    targetElement.className = "govuk-!-display-none";
+    targetElement.classList.remove("govuk-!-display-block");
+    targetElement.classList.add("govuk-!-display-none");
   }
 }
 
