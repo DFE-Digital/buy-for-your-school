@@ -25,6 +25,9 @@ describe MicrosoftGraph::Transformer::Message do
           { "id" => "x", "value" => "y" },
           { "id" => "a", "value" => "b" },
         ],
+        "uniqueBody" => {
+          "content" => "c", "contentType" => "cT"
+        },
       }
 
       message = described_class.transform(payload, into: MicrosoftGraph::Resource::Message)
@@ -56,6 +59,10 @@ describe MicrosoftGraph::Transformer::Message do
         payload["singleValueExtendedProperties"]
           .map { |svep| MicrosoftGraph::Transformer::JsonResponse.transform(svep, into: MicrosoftGraph::Resource::SingleValueExtendedProperty) }
           .map(&:as_json),
+      )
+      expect(message.unique_body.as_json).to match(
+        MicrosoftGraph::Transformer::ItemBody.transform(payload["uniqueBody"],
+                                                        into: MicrosoftGraph::Resource::ItemBody).as_json,
       )
     end
   end
