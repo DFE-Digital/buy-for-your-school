@@ -1,0 +1,4 @@
+<% subject = "Email Subject Here" %>
+<h3 class="govuk-heading-m"><%= subject %></h3>
+
+<%= render "support/cases/message_threads/#{messages.count > 4 ? "greater" : "less"}_than_four_messages", messages: messages, current_case: current_case %>

@@ -1,5 +1,8 @@
 <%= render layout: "support/layouts/case", locals: { tab: "messages" } do %>
   <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link" %>
 
-  <%= render "messages", messages: @current_thread.messages %>
+  <% subject = "Email Subject Here" %>
+  <h3 class="govuk-heading-m"><%= @current_case.messages.first.subject %></h3>
+
+  <%= render "support/cases/message_threads/#{@current_case.messages.count > 4 ? "greater" : "less"}_than_four_messages", messages: @current_case.messages, current_case: @current_case %>
 <% end %>
