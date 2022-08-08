@@ -2,10 +2,8 @@ module Support
   class MessageThread < ApplicationRecord
     self.primary_key = :conversation_id
 
-    default_scope { order(last_updated: :desc) }
+    has_many :messages, class_name: "Support::Email", foreign_key: :outlook_conversation_id
 
-    def messages
-      Support::Email.find_by(outlook_conversation_id: conversation_id)
-    end
+    default_scope { order(last_updated: :desc) }
   end
 end
