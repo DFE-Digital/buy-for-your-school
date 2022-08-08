@@ -14,8 +14,9 @@ module MicrosoftGraph
         map_value(:from) { transform_recipient }
         map_value(:received_date_time) { to_datetime }
         map_value(:sent_date_time) { to_datetime }
-        map_value(:to_recipients) { map_array { transform_recipient } }
         map_value(:single_value_extended_properties) { map_array { transform_json_response } }
+        map_value(:to_recipients) { map_array { transform_recipient } }
+        map_value(:unique_body) { transform_body }
       end
     end
   end

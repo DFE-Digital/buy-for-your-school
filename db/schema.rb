@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_05_130609) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_082326) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -376,6 +376,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_05_130609) do
     t.string "case_reference_from_headers"
     t.string "outlook_internet_message_id"
     t.string "in_reply_to_id"
+    t.text "unique_body"
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
   end
 

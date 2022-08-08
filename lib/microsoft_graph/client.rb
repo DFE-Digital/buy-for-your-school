@@ -18,6 +18,7 @@ module MicrosoftGraph
       isRead
       isDraft
       hasAttachments
+      uniqueBody
     ].freeze
 
     def initialize(client_session)

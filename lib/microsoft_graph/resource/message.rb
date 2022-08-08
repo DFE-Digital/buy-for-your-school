@@ -16,9 +16,10 @@ module MicrosoftGraph
       option :is_read, Types::Bool
       option :received_date_time, Types.Instance(DateTime)
       option :sent_date_time, Types.Instance(DateTime)
+      option :single_value_extended_properties, Types.Array(Types.DryConstructor(SingleValueExtendedProperty)) | Types::Nil, optional: true
       option :subject, Types::String
       option :to_recipients, Types.Array(Types.DryConstructor(Recipient))
-      option :single_value_extended_properties, Types.Array(Types.DryConstructor(SingleValueExtendedProperty)) | Types::Nil, optional: true
+      option :unique_body, Types.DryConstructor(ItemBody)
 
       def in_reply_to_id
         single_value_extended_properties
