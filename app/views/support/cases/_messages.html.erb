@@ -1,4 +1,11 @@
-<% unless messages.empty? %>
+<% subject = "Email Subject Here" %>
+<h3 class="govuk-heading-m"><%= subject %></h3>
+
+<%= render "support/cases/message_threads/#{messages.count > 4 ? "greater" : "less"}_than_four_messages", messages: messages, current_case: current_case %>
+
+<%
+=begin%>
+ <% unless messages.empty? %>
   <table class="govuk-table messages-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -21,6 +28,7 @@
   </table>
 <% end %>
 
-<% if received_messages.empty? %>
-  <%= render "support/cases/messages/replies/form", reply: false %>
-<% end %>
+FIX ME TO BE REPLY
+<%= render "support/cases/messages/replies/form", reply: false %>
+<%
+=end%>

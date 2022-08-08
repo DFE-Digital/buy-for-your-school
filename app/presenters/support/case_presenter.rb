@@ -53,20 +53,10 @@ module Support
         .map { |i| InteractionPresenter.new(i) }
     end
 
-    # return message interactions
-    # @return [Array<InteractionPresenter>]
-    def message_interactions
+    def messages
       @message_interactions ||= __getobj__.interactions.messages
         .order("created_at ASC")
-        .map { |i| InteractionPresenter.new(i) }
-    end
-
-    # return message interactions from the school
-    # @return [Array<InteractionPresenter>]
-    def received_message_interactions
-      @received_message_interactions ||= __getobj__.interactions.email_from_school
-        .order("created_at ASC")
-        .map { |i| InteractionPresenter.new(i) }
+        .map { |i| Support::MessagePresenter.presenter_for(i) }
     end
 
     # return case history interactions

@@ -1,0 +1,5 @@
+<% messages[0...-1].each do |message| %>
+  <%= render "support/cases/message_threads/truncated_message", message: message, current_case: current_case %>
+<% end %>
+
+<%= render "support/cases/message_threads/full_view_message", message: messages.last, current_case: current_case %>

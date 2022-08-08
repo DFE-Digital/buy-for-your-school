@@ -3,3 +3,24 @@
   max-width: 735px;
   overflow: scroll;
 }
+
+.message {
+  margin-bottom: 10px;
+
+  .message-details {
+    display: flex;
+    justify-content: space-between;
+
+    @extend .govuk-body;
+
+    font-weight: bold;
+  }
+
+  .message-preview.truncated-view {
+    height: 20px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+  }
+}
