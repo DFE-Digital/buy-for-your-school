@@ -44,15 +44,11 @@ module Support
       end
 
       def sent_by_email
-        return nil if sender.nil?
-
-        sender["address"]
+        sender&.[]("address")
       end
 
       def sent_by_name
-        return nil if sender.nil?
-
-        sender["name"]
+        sender&.[]("name")
       end
 
       def body_for_display(view_context)

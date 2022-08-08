@@ -4,6 +4,10 @@
   overflow: scroll;
 }
 
+.pull-up {
+  margin-top: -10px;
+}
+
 .message {
   margin-bottom: 10px;
 
@@ -17,7 +21,6 @@
   }
 
   .message-preview.truncated-view {
-    height: 20px;
     overflow-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;

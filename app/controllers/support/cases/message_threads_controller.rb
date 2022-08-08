@@ -2,7 +2,12 @@ module Support
   module Cases
     class MessageThreadsController < Cases::ApplicationController
       before_action :current_thread, only: %i[show]
+      before_action :reply_form, only: %i[show]
       before_action :back_url, only: %i[index show]
+
+      content_security_policy do |policy|
+        policy.style_src_attr :unsafe_inline
+      end
 
       def index; end
 
@@ -15,7 +20,11 @@ module Support
       end
 
       def current_thread
-        @current_thread ||= Support::MessageThread.find_by(conversation_id: params[:id])
+        @current_thread ||= Support::MessageThreadPresenter.new(Support::MessageThread.find_by(conversation_id: params[:id]))
+      end
+
+      def reply_form
+        @reply_form = Support::Messages::ReplyForm.new
       end
 
       def back_url

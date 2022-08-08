@@ -5,10 +5,6 @@ module Support
     before_action :reply_form, only: %i[show]
     before_action :current_case, only: %i[show edit]
 
-    content_security_policy do |policy|
-      policy.style_src_attr :unsafe_inline
-    end
-
     include Concerns::HasInteraction
 
     def index

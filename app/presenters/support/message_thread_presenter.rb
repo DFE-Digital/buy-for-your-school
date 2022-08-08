@@ -10,6 +10,14 @@ module Support
       super.strftime(date_format)
     end
 
+    def messages
+      super.map {|message| Support::Messages::OutlookMessagePresenter.new(message) }
+    end
+
+    def subject
+      messages.first.subject
+    end
+
   private
 
     def date_format

@@ -53,12 +53,6 @@ module Support
         .map { |i| InteractionPresenter.new(i) }
     end
 
-    def messages
-      @message_interactions ||= __getobj__.interactions.messages
-        .order("created_at ASC")
-        .map { |i| Support::MessagePresenter.presenter_for(i) }
-    end
-
     # return case history interactions
     # @return [Array<InteractionPresenter>]
     def case_history_interactions
