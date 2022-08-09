@@ -5,27 +5,7 @@
   <div class="message-details">
     <div>
       <%= message.sent_by_name %>
-
-      <% if message.can_mark_as_read? %>
-        <% unless message.is_read? %>
-          <span class="govuk-!-margin-left-2">
-            <%= render "support/cases/emails/unread_badge" %>
-          </span>
-        <% end %>
-
-        <span class="govuk-!-margin-left-1">
-          <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
-            support_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
-            method: :patch,
-            class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
-        </span>
-      <% end %>
-
-      <% if message.can_save_attachments? %>
-        <span class="govuk-!-margin-left-2">
-          <%= link_to I18n.t("support.case.label.messages.table.save_attachments"), new_support_email_save_attachments_path(message), class: "govuk-link govuk-link--no-underline govuk-link--no-visited-state govuk-!-font-weight-bold" %>
-        </span>
-      <% end %>
+      <%= message.render_actions(self) %>
     </div>
 
     <div><%= message.sent_at_formatted %></div>

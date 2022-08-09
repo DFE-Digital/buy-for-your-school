@@ -96,6 +96,10 @@ module Support
         attachments.non_inline
       end
 
+      def render_actions(view_context)
+        view_context.render("support/cases/message_threads/outlook/actions", message: self, current_case: self.case)
+      end
+
     private
 
       def body_with_links_removed(_view_context, cleaned_body)

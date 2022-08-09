@@ -32,6 +32,10 @@ module Support
         []
       end
 
+      def render_actions(view_context)
+        view_context.render("support/cases/message_threads/notify/actions", message: self, current_case: self.case)
+      end
+
       private
 
       def message_sent_at_date
