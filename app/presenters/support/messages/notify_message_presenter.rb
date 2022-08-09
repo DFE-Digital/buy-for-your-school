@@ -16,6 +16,22 @@ module Support
         "yyy"
       end
 
+      def is_read?
+        true
+      end
+
+      def can_save_attachments?
+        false
+      end
+
+      def can_mark_as_read?
+        false
+      end
+
+      def attachments_for_display
+        []
+      end
+
       private
 
       def message_sent_at_date

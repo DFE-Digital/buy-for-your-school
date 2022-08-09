@@ -84,6 +84,18 @@ module Support
         view_context.strip_tags(body_for_display(view_context)).truncate(90)
       end
 
+      def can_save_attachments?
+        attachments.non_inline.any?
+      end
+
+      def can_mark_as_read?
+        inbox?
+      end
+
+      def attachments_for_display
+        attachments.non_inline
+      end
+
     private
 
       def body_with_links_removed(_view_context, cleaned_body)

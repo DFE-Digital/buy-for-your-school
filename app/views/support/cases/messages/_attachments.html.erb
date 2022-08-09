@@ -1,8 +1,8 @@
-<% if email.attachments.non_inline.any? %>
+<% if email.attachments_for_display.any? %>
   <div class="attachments">
     <strong>Attachments:</strong><br />
 
-    <% email.attachments.non_inline.each do |attachment| %>
+    <% email.attachments_for_display.each do |attachment| %>
       <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noreferrer noopener" %><br />
     <% end %>
   </div>
