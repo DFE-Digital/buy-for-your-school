@@ -19,6 +19,10 @@
     }
   }
 
+  &.unread {
+    // background-color: #1d70b8;
+  }
+
   .message-details {
     display: flex;
     justify-content: space-between;
@@ -26,6 +30,16 @@
     @extend .govuk-body;
 
     font-weight: bold;
+
+    .date-and-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .message-actions {
+    margin-top: -15px;
+    margin-bottom: 20px;
   }
 
   .message-preview.truncated-view {

@@ -1,10 +1,18 @@
 <% truncated_message = defined?(truncated_message) ? truncated_message : false %>
 <% show_recap = defined?(show_recap) ? show_recap : false %>
 
-<div class="message">
+<div class="message <%= message.is_read? ? "read" : "unread" %>">
   <div class="message-details">
-    <span><%= message.sent_by_name %></span>
+    <span><%= render "support/cases/emails/#{message.is_read? ? "read_badge" : "unread_badge"}" %> <%= message.sent_by_name %></span>
     <span><%= message.sent_at_formatted %></span>
+  </div>
+
+  <div class="message-actions">
+    <span></span>
+    <span><%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
+        support_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
+        method: :patch,
+        class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %></span>
   </div>
 
   <div <% if truncated_message %>class="message-preview govuk-body truncated-view" data-component="toggle-truncate"<% else %>class="message-preview govuk-body"<% end %>>

@@ -6,7 +6,7 @@ module Support
       @email.update!(is_read: new_status)
       @email.case.update!(action_required: @email.case.emails.unread.inbox.any?) if @email.case.present?
 
-      redirect_to support_case_path(@email.case, anchor: "messages")
+      redirect_to support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.case_id)
     end
 
   private
