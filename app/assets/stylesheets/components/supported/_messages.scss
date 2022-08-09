@@ -11,6 +11,14 @@
 .message {
   margin-bottom: 10px;
 
+  .attachments {
+    margin-top: 20px;
+
+    strong {
+      font-size: 17px;
+    }
+  }
+
   .message-details {
     display: flex;
     justify-content: space-between;

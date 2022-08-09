@@ -6,6 +6,7 @@ module Support
     before_save :update_file_attributes
 
     scope :inline, -> { where(is_inline: true) }
+    scope :non_inline, -> { where(is_inline: false) }
     scope :for_case_attachments, -> { where(file_type: CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST) }
 
   private

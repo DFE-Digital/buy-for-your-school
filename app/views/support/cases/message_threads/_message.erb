@@ -17,6 +17,8 @@
     <div class="full-view <% if truncated_message %>govuk-!-display-none<% end %>">
       <%= message.body_for_display(self) %>
 
+      <%= render "support/cases/messages/attachments", email: message %>
+
       <% if show_recap %>
         <div class="message-recap">
           <div class="recap-controls" data-component="toggle-panel-visibility" data-panel="recap-<%= message.id %>">
