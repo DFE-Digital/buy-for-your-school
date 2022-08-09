@@ -3,21 +3,30 @@
 
 <div class="message <%= message.is_read? ? "read" : "unread" %>">
   <div class="message-details">
-    <span>
-      <% unless message.is_read? %>
-        <%= render "support/cases/emails/unread_badge" %>
-      <% end %>
+    <div>
       <%= message.sent_by_name %>
-    </span>
 
-    <span><%= message.sent_at_formatted %></span>
-  </div>
+      <% unless message.is_read? %>
+        <span class="govuk-!-margin-left-2">
+          <%= render "support/cases/emails/unread_badge" %>
+        </span>
+      <% end %>
 
-  <div class="message-actions">
-    <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
-        support_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
-        method: :patch,
-        class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
+      <span class="govuk-!-margin-left-1">
+        <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
+          support_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
+          method: :patch,
+          class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
+      </span>
+
+      <% if message.attachments.non_inline.any? %>
+        <span class="govuk-!-margin-left-2">
+          <%= link_to I18n.t("support.case.label.messages.table.save_attachments"), new_support_email_save_attachments_path(message), class: "govuk-link govuk-link--no-underline govuk-link--no-visited-state govuk-!-font-weight-bold" %>
+        </span>
+      <% end %>
+    </div>
+
+    <div><%= message.sent_at_formatted %></div>
   </div>
 
   <div <% if truncated_message %>class="message-preview govuk-body truncated-view" data-component="toggle-truncate"<% else %>class="message-preview govuk-body"<% end %>>
@@ -42,19 +51,6 @@
             <%= message.message_recap(self) %>
           </div>
         </div>
-      <% end %>
-
-      <% if message.inbox? %>
-        <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Reply to message
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <%= render "support/cases/messages/replies/form", reply: true, email: message %>
-          </div>
-        </details>
       <% end %>
     </div>
   </div>
