@@ -51,10 +51,15 @@ module Support
         sender&.[]("name")
       end
 
-      def body_for_display(view_context)
+      def message_recap(view_context)
+        return nil unless in_reply_to.present?
+        OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, :body)
+      end
+
+      def body_for_display(view_context, body_field = :unique_body)
         # Do initial removal of links, and replace images with inline attachments
         new_body = body_with_links_removed(
-          view_context, body_with_inline_attachments(view_context, unique_body)
+          view_context, body_with_inline_attachments(view_context, send(body_field))
         )
 
         # remove comments

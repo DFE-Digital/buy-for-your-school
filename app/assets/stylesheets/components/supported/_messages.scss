@@ -21,9 +21,39 @@
   }
 
   .message-preview.truncated-view {
+    cursor: pointer;
+
     overflow-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
     position: relative;
+  }
+
+  .recap-controls {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    position: relative;
+    background-color: #1d70b8;
+    border-radius: 20px;
+    height: 5px;
+    width: 35px;
+    padding: 10px;
+
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .recap-controls .dots {
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+    position: absolute;
+    top: -7%;
+    right: 14%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 50px;
   }
 }
