@@ -19,11 +19,11 @@ module MicrosoftGraph
       option :single_value_extended_properties, Types.Array(Types.DryConstructor(SingleValueExtendedProperty)) | Types::Nil, optional: true
       option :subject, Types::String
       option :to_recipients, Types.Array(Types.DryConstructor(Recipient))
-      option :unique_body, Types.DryConstructor(ItemBody)
+      option :unique_body, Types.DryConstructor(ItemBody), optional: true
 
       def in_reply_to_id
         single_value_extended_properties
-          .find { |svep| svep.id == SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
+          &.find { |svep| svep.id == SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
           &.value
       end
     end

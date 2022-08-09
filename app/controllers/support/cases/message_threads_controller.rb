@@ -2,7 +2,7 @@ module Support
   module Cases
     class MessageThreadsController < Cases::ApplicationController
       before_action :current_thread, only: %i[show]
-      before_action :reply_form, only: %i[show]
+      before_action :reply_form, only: %i[index show]
       before_action :back_url, only: %i[index show]
 
       content_security_policy do |policy|

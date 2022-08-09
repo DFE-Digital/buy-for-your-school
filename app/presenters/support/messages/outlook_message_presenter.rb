@@ -53,13 +53,17 @@ module Support
 
       def message_recap(view_context)
         return nil unless in_reply_to.present?
-        OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, :body)
+        OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, just_show_body: true)
       end
 
-      def body_for_display(view_context, body_field = :unique_body)
+      def body_for_display(view_context, just_show_body: false)
+        # There may be a moments lag where unique body is not filled in, fall back to body
+        # But when showing recaps, we choose to show body not unique body
+        email_body = just_show_body ? body : (unique_body || body)
+
         # Do initial removal of links, and replace images with inline attachments
         new_body = body_with_links_removed(
-          view_context, body_with_inline_attachments(view_context, send(body_field))
+          view_context, body_with_inline_attachments(view_context, email_body)
         )
 
         # remove comments
