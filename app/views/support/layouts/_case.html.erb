@@ -16,19 +16,19 @@
 <div class="govuk-tabs">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item">
-      <%= link_to I18n.t("support.case.header.school_detail"), support_case_path(@current_case, anchor: "school-details", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+      <%= link_to I18n.t("support.case.header.school_detail"), support_case_path(@current_case, anchor: "school-details", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item">
-      <%= link_to I18n.t("support.case.header.case_detail"), support_case_path(@current_case, anchor: "case-details", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+      <%= link_to I18n.t("support.case.header.case_detail"), support_case_path(@current_case, anchor: "case-details", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case, back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case, back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item">
-      <%= link_to I18n.t("support.case.header.case_history"), support_case_path(@current_case, anchor: "case-history", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+      <%= link_to I18n.t("support.case.header.case_history"), support_case_path(@current_case, anchor: "case-history", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item">
-      <%= link_to I18n.t("support.case.header.case_attachments"), support_case_path(@current_case, anchor: "case-attachments", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+      <%= link_to I18n.t("support.case.header.case_attachments"), support_case_path(@current_case, anchor: "case-attachments", back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab" %>
     </li>
   </ul>
   <div class="govuk-tabs__panel" id=<%= tab %> role="tabpanel" aria-labelledby=<%= "tab_#{tab}" %>>
