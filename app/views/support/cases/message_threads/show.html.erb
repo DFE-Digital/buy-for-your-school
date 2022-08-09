@@ -1,5 +1,7 @@
 <%= render layout: "support/layouts/case", locals: { tab: "messages" } do %>
-  <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+  <% if @current_case.message_threads.size > 1 %>
+    <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+  <% end %>
 
   <h3 class="govuk-heading-l"><%= @current_thread.subject %></h3>
 
