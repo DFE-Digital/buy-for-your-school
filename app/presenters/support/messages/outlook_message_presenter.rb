@@ -52,7 +52,8 @@ module Support
       end
 
       def message_recap(view_context)
-        return nil unless in_reply_to.present?
+        return nil if in_reply_to.blank?
+
         OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, just_show_body: true)
       end
 

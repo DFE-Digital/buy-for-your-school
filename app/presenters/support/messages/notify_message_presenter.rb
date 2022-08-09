@@ -9,10 +9,9 @@ module Support
         "Name"
       end
 
-      def body_for_display(_)
-      end
+      def body_for_display(_); end
 
-      def truncated_body_for_display(view_context)
+      def truncated_body_for_display(_view_context)
         "yyy"
       end
 
@@ -36,7 +35,7 @@ module Support
         view_context.render("support/cases/message_threads/notify/actions", message: self, current_case: self.case)
       end
 
-      private
+    private
 
       def message_sent_at_date
         __getobj__.created_at

@@ -99,3 +99,4 @@ Style/DateTime:
   Exclude:
     - 'lib/microsoft_graph/transformer/attachment.rb'
     - 'lib/microsoft_graph/transformer/message.rb'
+    - 'lib/microsoft_graph/transformer/update_message.rb'

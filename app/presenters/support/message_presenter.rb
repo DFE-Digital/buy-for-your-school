@@ -12,7 +12,7 @@ module Support
       message_sent_at_date.strftime(sent_at_date_format)
     end
 
-    private
+  private
 
     def sent_at_date_format
       return "Yesterday at %H:%M" if message_sent_at_date.yesterday?
