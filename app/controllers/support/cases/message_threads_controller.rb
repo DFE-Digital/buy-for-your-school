@@ -9,11 +9,7 @@ module Support
         policy.style_src_attr :unsafe_inline
       end
 
-      def index
-        if @current_case.message_threads.size == 1
-          redirect_to support_case_message_thread_path(id: @current_case.message_threads.first)
-        end
-      end
+      def index; end
 
       def show; end
 
