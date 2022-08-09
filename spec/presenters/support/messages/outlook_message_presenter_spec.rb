@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Support::EmailPresenter do
+describe Support::Messages::OutlookMessagePresenter do
   describe "#body_for_display" do
     include Rails.application.routes.url_helpers
 

@@ -54,17 +54,13 @@ module Support
       def message_recap(view_context)
         return nil if in_reply_to.blank?
 
-        OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, just_show_body: true)
+        OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, body_field: :body)
       end
 
-      def body_for_display(view_context, just_show_body: false)
-        # There may be a moments lag where unique body is not filled in, fall back to body
-        # But when showing recaps, we choose to show body not unique body
-        email_body = just_show_body ? body : (unique_body || body)
-
+      def body_for_display(view_context, body_field: :unique_body)
         # Do initial removal of links, and replace images with inline attachments
         new_body = body_with_links_removed(
-          view_context, body_with_inline_attachments(view_context, email_body)
+          view_context, body_with_inline_attachments(view_context, send(body_field))
         )
 
         # remove comments
@@ -76,8 +72,6 @@ module Support
 
         html_fragment = Loofah.fragment(new_body)
         html_fragment.scrub!(scrubber)
-
-        # Return the cleaned body
         html_fragment.to_s.html_safe
       end
 
@@ -98,7 +92,7 @@ module Support
       end
 
       def render_actions(view_context)
-        view_context.render("support/cases/message_threads/outlook/actions", message: self, current_case: self.case)
+        view_context.render("support/cases/message_threads/outlook/actions", message: self)
       end
 
     private

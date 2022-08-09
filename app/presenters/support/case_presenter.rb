@@ -161,7 +161,7 @@ module Support
 
     # @return [Array<MessageThreadPresenter>]
     def message_threads
-      super.map { |thread| MessageThreadPresenter.new(thread) }
+      super.includes([:messages]).map { |thread| MessageThreadPresenter.new(thread) }
     end
 
   private

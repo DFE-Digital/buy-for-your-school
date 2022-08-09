@@ -175,16 +175,4 @@ RSpec.describe Support::CasePresenter do
       end
     end
   end
-
-  describe "#received_message_interactions" do
-    context "when there are emails from the school" do
-      before do
-        create_list(:support_interaction, 2, :email_from_school, case: support_case)
-      end
-
-      it "returns them" do
-        expect(presenter.received_message_interactions.size).to eq 2
-      end
-    end
-  end
 end

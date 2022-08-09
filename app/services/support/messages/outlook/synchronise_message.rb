@@ -21,7 +21,6 @@ module Support
               Synchronisation::Steps::PersistEmail,
               Synchronisation::Steps::AttachEmailToCase,
               Synchronisation::Steps::PersistEmailAttachments,
-              Synchronisation::Steps::SurfaceEmailOnCase,
             ]
           else
             # Allow existing emails to update certain fields

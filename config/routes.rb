@@ -78,9 +78,6 @@ Rails.application.routes.draw do
   namespace :support do
     resources :document_downloads, only: %i[show]
     resources :agents, only: %i[create]
-    resources :emails, only: %i[index show] do
-      resource :save_attachments, only: %i[new create]
-    end
     resources :email_read_status, only: %i[update], param: :email_id
     resources :organisations, only: %i[index]
     resources :establishments, only: %i[index]
@@ -122,6 +119,9 @@ Rails.application.routes.draw do
           end
         end
       end
+    end
+    resources :messages do
+      resource :save_attachments, only: %i[new create]
     end
 
     scope "/case-statistics", as: "case_statistics" do
