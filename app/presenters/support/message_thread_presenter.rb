@@ -2,7 +2,7 @@ module Support
   class MessageThreadPresenter < BasePresenter
     # @return [String]
     def recipients
-      super.pluck("name").join(", ")
+      super.pluck("name").filter { |name| name != ENV["MS_GRAPH_SHARED_MAILBOX_NAME"] }.join(", ")
     end
 
     # @return [String]
@@ -11,7 +11,7 @@ module Support
     end
 
     def messages
-      super.map {|message| Support::Messages::OutlookMessagePresenter.new(message) }
+      super.map { |message| Support::Messages::OutlookMessagePresenter.new(message) }
     end
 
     def subject
