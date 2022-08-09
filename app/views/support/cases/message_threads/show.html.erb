@@ -1,10 +1,13 @@
 <%= render layout: "support/layouts/case", locals: { tab: "messages" } do %>
   <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
 
-  <% subject = "Email Subject Here" %>
   <h3 class="govuk-heading-l"><%= @current_thread.subject %></h3>
 
-  <%= render "support/cases/message_threads/#{@current_thread.messages.count > 4 ? "greater" : "less"}_than_four_messages", messages: @current_thread.messages, current_case: @current_case %>
+  <%= render "support/cases/message_threads/#{@current_thread.messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @current_thread.messages, current_case: @current_case %>
 
-  <%= render "support/cases/messages/replies/form", reply: true, email: @current_thread.last_received_reply %>
+  <% if @current_thread.last_received_reply.present? %>
+    <%= render "support/cases/messages/replies/form", reply: true, email: @current_thread.last_received_reply %>
+  <% else %>
+    <%= render "support/cases/messages/replies/form", reply: false %>
+  <% end %>
 <% end %>
