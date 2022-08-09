@@ -65,10 +65,10 @@ module Support
         end
 
         def get_full_message_details(draft_reply)
-          ms_graph_client.get_message(
+          wrap_message(ms_graph_client.get_message(
             user_id: SHARED_MAILBOX_USER_ID,
             message_id: draft_reply.id,
-          )
+          ))
         end
 
         def reply_body_content(draft_reply)
