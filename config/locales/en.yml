@@ -518,6 +518,13 @@ en:
         create: Create a new case
         date_received: Date received
         last_updated: Last updated
+        message_threads:
+          action: Action
+          back: Back to message list
+          last_update: Last update
+          recipients: Recipients
+          subject: Subject
+          view: View
         messages:
           reply:
             add_attachments: Add attachments
@@ -542,13 +549,6 @@ en:
             message: Message
             save_attachments: Save attachments
             using_template: 'Template: "%{template}"'
-        message_threads:
-          recipients: Recipients
-          subject: Subject
-          last_update: Last update
-          action: Action
-          view: View
-          back: Back to message list
         move_email: Move emails to existing case
         no_sub_category: No sub-category
         organisation: Organisation
