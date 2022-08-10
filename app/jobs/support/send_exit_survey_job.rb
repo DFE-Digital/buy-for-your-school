@@ -21,6 +21,7 @@ module Support
       kase = Case.find_by_ref(case_ref)
       survey = ExitSurveyResponse.create!(
         case: kase,
+        status: :sent_out,
       )
 
       ::Emails::ExitSurvey.new(

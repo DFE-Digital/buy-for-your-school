@@ -10,7 +10,6 @@ class ExitSurvey::HearAboutServiceController < ApplicationController
 
   def update
     if validation.success?
-      # byebug
       exit_survey_response.update!(**form.data)
       redirect_to edit_exit_survey_opt_in_path(exit_survey_response)
     else

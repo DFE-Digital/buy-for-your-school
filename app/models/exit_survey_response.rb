@@ -1,6 +1,13 @@
 class ExitSurveyResponse < ApplicationRecord
   belongs_to :case, class_name: "Support::Case", optional: true
 
+  # Status
+  #
+  #   sent_out
+  #   in_progress
+  #   completed
+  enum status: { sent_out: 0, in_progress: 1, completed: 2 }, _suffix: true
+
   # Satisfaction rating
   #
   #   very_dissatisfied

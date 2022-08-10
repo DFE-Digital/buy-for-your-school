@@ -10,7 +10,9 @@ class ExitSurvey::OptInController < ApplicationController
 
   def update
     if validation.success?
-      exit_survey_response.update!(**form.data)
+      exit_survey_response.update!(**form.data.merge(user_ip: request.remote_ip))
+      exit_survey_response.completed_status!
+
       redirect_to @form.opt_in ? edit_exit_survey_opt_in_detail_path(exit_survey_response) : exit_survey_thank_you_path(exit_survey_response)
     else
       render :edit
