@@ -38,4 +38,13 @@ namespace :self_serve do
       c.save!
     end
   end
+
+  desc "Populate Contentful pages"
+  task populate_pages: :environment do
+    client = Content::Client.new
+
+    client.by_type(:page).each do |entry|
+      Content::Page::Build.new(contentful_page: entry).call
+    end
+  end
 end

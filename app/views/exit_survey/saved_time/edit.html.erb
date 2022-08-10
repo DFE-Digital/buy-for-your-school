@@ -1,0 +1,19 @@
+<%= content_for :title, I18n.t("exit_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :saved_time_form, url: exit_survey_saved_time_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %> 
+
+      <%= form.hidden_field :saved_time, value: form.object.saved_time %>
+
+      <%= form.govuk_radio_buttons_fieldset :saved_time, legend: { text: I18n.t("exit_survey.saved_time.question"), size: "l" } do %>
+        <% form.object.saved_time_options.each do |option| %>
+          <%= form.govuk_radio_button :saved_time, option, label: { text: I18n.t("exit_survey.saved_time.options.#{option}") } %>
+        <% end %>
+      <% end %>
+
+      <%= form.submit I18n.t("exit_survey.continue"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

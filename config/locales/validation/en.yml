@@ -163,5 +163,45 @@ en:
       rules:
         name:
           missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less        
+          max_size?: The name must be 30 characters or less  
+ 
+  # Exit survey form
+  exit_survey:
+    rules:
+      better_quality: "" # Omitted
+      future_support: "" # Omitted
+      hear_about_service: "" # Omitted
+      hear_about_service_other: "" # Omitted
+      opt_in: "" # Omitted
+      opt_in_email: "" # Omitted
+      opt_in_name: "" # Omitted
+      satisfaction_level: "" # Omitted
+      satisfaction_text: "" # Omitted
+      saved_time: "" # Omitted
+      
+    errors:
+      rules:
+        better_quality:
+          missing: Select whether you agree or disagree that using the service helped your school to buy better quality goods or services.
+        future_support:
+          missing: Select whether you agree or disagree that you have learned enough to run the same type of proecurement in future with less support.
+        hear_about_service:
+          missing: Select how you heard about the service.
+        hear_about_service_other:
+          missing: Enter how you heard about the service.
+        opt_in:
+          bool?: Select if you would like to be contacted about DfE research opportunities.
+        opt_in_email:
+          missing: Enter an email address. For example, 'someone@school.sch.uk'.
+          invalid: Enter a valid email address. For example, 'someone@school.sch.uk'.
+        opt_in_name:
+          missing: Enter your full name.
+        satisfaction_level:
+          missing: Select how you feel about the service you recieved.
+        satisfaction_text:
+          missing: Enter why you felt this way about the service you received.
+        saved_time:
+          missing: Select whether you agree or disagree that using the service helped save you or your school time.
+         
+
 

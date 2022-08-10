@@ -19,11 +19,14 @@ module Support
 
     def perform(case_ref)
       kase = Case.find_by_ref(case_ref)
+      survey = ExitSurveyResponse.create!(
+        case: kase,
+      )
 
       ::Emails::ExitSurvey.new(
         recipient: kase,
         reference: case_ref,
-        school_name: kase.organisation&.name,
+        survey_id: survey.id,
       ).call
 
       update_case(kase)
