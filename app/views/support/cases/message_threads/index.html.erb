@@ -13,6 +13,12 @@
       <% @current_case.message_threads.each do |thread| %>
         <%= render "thread", thread: thread %>
       <% end %>
+      <% if @current_case.templated_messages.any? %>
+        <%= render "templated_message_thread" %>
+      <% end %>
+      <% if @current_case.logged_contacts.any? %>
+        <%= render "logged_contact_thread" %>
+      <% end %>
     </tbody>
   </table>
 

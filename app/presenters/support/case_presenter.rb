@@ -164,6 +164,26 @@ module Support
       super.includes([:messages]).map { |thread| MessageThreadPresenter.new(thread) }
     end
 
+    # @return [Array<Messages::NotifyMessagePresenter>]
+    def templated_messages
+      __getobj__.interactions.templated_messages.map { |message| Messages::NotifyMessagePresenter.new(message) }
+    end
+
+    # @return [Array<Messages::NotifyMessagePresenter>]
+    def logged_contacts
+      __getobj__.interactions.logged_contacts.map { |contact| Messages::NotifyMessagePresenter.new(contact) }
+    end
+
+    # @return [String]
+    def templated_messages_last_updated
+      templated_messages.first.__getobj__.created_at.strftime("%d %B %Y %H:%M")
+    end
+
+    # @return [String]
+    def logged_contacts_last_updated
+      logged_contacts.first.__getobj__.created_at.strftime("%d %B %Y %H:%M")
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

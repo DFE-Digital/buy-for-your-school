@@ -13,7 +13,7 @@ describe Support::Messages::NotifyMessagePresenter do
 
   describe "#sent_by_name" do
     it "returns the sender's name" do
-      expect(presenter.sent_by_name).to eq "Name"
+      expect(presenter.sent_by_name).to eq "first_name last_name"
     end
   end
 
@@ -52,6 +52,44 @@ describe Support::Messages::NotifyMessagePresenter do
       expect(view).to receive(:render).with("support/cases/message_threads/notify/actions", message: presenter)
 
       presenter.render_actions(view)
+    end
+  end
+
+  describe "#render_details" do
+    it "renders the message details" do
+      expect(view).to receive(:render).with("support/cases/message_threads/notify/details", message: presenter)
+
+      presenter.render_details(view)
+    end
+  end
+
+  describe "#templated_message?" do
+    context "when it is an email with a template" do
+      let(:message_interaction) { create(:support_interaction, :email_from_school, additional_data: { email_template: "123" }) }
+
+      it "returns true" do
+        expect(presenter.templated_message?).to eq true
+      end
+    end
+
+    context "when it is an email without a template" do
+      it "returns false" do
+        expect(presenter.templated_message?).to eq false
+      end
+    end
+  end
+
+  describe "#case" do
+    it "returns a case presenter" do
+      expect(presenter.case).to be_a Support::CasePresenter
+    end
+  end
+
+  describe "#additional_data" do
+    let(:message_interaction) { create(:support_interaction, :email_from_school, additional_data: { email_template: "f4696e59-8d89-4ac5-84ca-17293b79c337" }) }
+
+    it "returns the email template name" do
+      expect(presenter.additional_data["email_template"]).to eq "What is a framework?"
     end
   end
 end

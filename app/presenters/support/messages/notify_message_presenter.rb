@@ -6,10 +6,12 @@ module Support
       end
 
       def sent_by_name
-        "Name"
+        self.case.agent_name
       end
 
-      def body_for_display(_); end
+      def body_for_display(_)
+        body.html_safe
+      end
 
       def truncated_body_for_display(_view_context)
         "yyy"
@@ -33,6 +35,30 @@ module Support
 
       def render_actions(view_context)
         view_context.render("support/cases/message_threads/notify/actions", message: self)
+      end
+
+      def render_details(view_context)
+        view_context.render("support/cases/message_threads/notify/details", message: self)
+      end
+
+      def templated_message?
+        event_type.in?(%w[email_from_school email_to_school]) && additional_data.key?("email_template")
+      end
+
+      def case
+        CasePresenter.new(super)
+      end
+
+      # @return [Hash]
+      def additional_data
+        super.each_with_object({}) do |(field, value), formatted_hash|
+          case field
+          when "email_template"
+            formatted_hash["email_template"] = EmailTemplates.label_for(value)
+          else
+            formatted_hash[field] = value
+          end
+        end
       end
 
     private

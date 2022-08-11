@@ -522,8 +522,11 @@ en:
           action: Action
           back: Back to message list
           last_update: Last update
+          logged_contacts: Logged contacts
           recipients: Recipients
           subject: Subject
+          templated_messages: Templated messages
+          using_template: 'Template: "%{template}"'
           view: View
         messages:
           reply:

@@ -6,6 +6,7 @@
     <div>
       <%= message.sent_by_name %>
       <%= message.render_actions(self) %>
+      <%= message.render_details(self) %>
     </div>
 
     <div><%= message.sent_at_formatted %></div>

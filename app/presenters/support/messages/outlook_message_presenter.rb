@@ -95,6 +95,10 @@ module Support
         view_context.render("support/cases/message_threads/outlook/actions", message: self)
       end
 
+      def render_details(view_context)
+        view_context.render("support/cases/message_threads/outlook/details", message: self)
+      end
+
     private
 
       def body_with_links_removed(_view_context, cleaned_body)

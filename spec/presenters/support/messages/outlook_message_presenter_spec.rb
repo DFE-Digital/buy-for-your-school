@@ -236,6 +236,14 @@ describe Support::Messages::OutlookMessagePresenter do
     end
   end
 
+  describe "#render_details" do
+    it "renders the message details" do
+      expect(view).to receive(:render).with("support/cases/message_threads/outlook/details", message: presenter)
+
+      presenter.render_actions(view)
+    end
+  end
+
   describe "#sent_at_formatted" do
     let(:email) { create(:support_email, sent_at:) }
 

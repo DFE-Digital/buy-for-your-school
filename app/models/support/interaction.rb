@@ -66,6 +66,10 @@ module Support
 
     scope :case_history, -> { where.not(event_type: %i[email_from_school email_to_school phone_call]) }
 
+    scope :templated_messages, -> { where(event_type: %i[email_from_school email_to_school]).where("additional_data::jsonb ? 'email_template'").order(created_at: :desc) }
+
+    scope :logged_contacts, -> { where(event_type: %i[email_from_school email_to_school phone_call]).where("additional_data::text = '{}'::text").order(created_at: :desc) }
+
     def email
       return unless additional_data.key?("email_id")
 

@@ -23,4 +23,29 @@ RSpec.describe Support::Interaction, type: :model do
       expect(interaction).not_to be_valid
     end
   end
+
+  describe ".templated_messages" do
+    before do
+      create(:support_interaction, :email_from_school, additional_data: { email_template: "template" })
+      create(:support_interaction, :email_to_school, additional_data: { email_template: "template" })
+    end
+
+    it "returns message interactions that have an email template" do
+      expect(described_class.templated_messages.size).to eq 2
+      expect(described_class.templated_messages.map(&:additional_data)).to all(have_key("email_template"))
+    end
+  end
+
+  describe ".logged_contacts" do
+    before do
+      create(:support_interaction, :email_from_school, additional_data: {})
+      create(:support_interaction, :email_to_school, additional_data: {})
+      create(:support_interaction, :phone_call, additional_data: {})
+    end
+
+    it "returns email and phone interactions with no additional data" do
+      expect(described_class.logged_contacts.size).to eq 3
+      expect(described_class.logged_contacts.map(&:additional_data)).to all(eq({}))
+    end
+  end
 end

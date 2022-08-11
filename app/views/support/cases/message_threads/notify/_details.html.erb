@@ -1,0 +1,9 @@
+<% if message.templated_message? %>
+  <span class="govuk-!-margin-left-9">
+    <%= I18n.t("support.case.label.message_threads.using_template", template: message.additional_data["email_template"]) %>
+  </span>
+<% else %>
+  <span class="govuk-!-margin-left-9">
+    <%= I18n.t("support.interaction.type.#{message.event_type}") %>
+  </span>
+<% end %>
