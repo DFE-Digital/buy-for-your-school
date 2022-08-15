@@ -20,7 +20,7 @@ module Support
         format.html do
           @cases = FilterCases.new.filter(params[:filter_all_cases_form]).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
           @new_cases = FilterCases.new.filter(params[:filter_new_cases_form]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
-          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).where.not(state: %i[closed, resolved]).by_agent(current_agent&.id).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).where.not(state: %i[closed resolved]).by_agent(current_agent&.id).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         end
       end
     end
