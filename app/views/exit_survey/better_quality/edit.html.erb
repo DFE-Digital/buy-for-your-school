@@ -1,0 +1,19 @@
+<%= content_for :title, I18n.t("exit_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :better_quality_form, url: exit_survey_better_quality_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %> 
+
+      <%= form.hidden_field :better_quality, value: form.object.better_quality %>
+
+      <%= form.govuk_radio_buttons_fieldset :better_quality, legend: { text: I18n.t("exit_survey.better_quality.question"), size: "l" } do %>
+        <% form.object.better_quality_options.each do |option| %>
+          <%= form.govuk_radio_button :better_quality, option, label: { text: I18n.t("exit_survey.better_quality.options.#{option}") } %>
+        <% end %>
+      <% end %>
+
+      <%= form.submit I18n.t("exit_survey.continue"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

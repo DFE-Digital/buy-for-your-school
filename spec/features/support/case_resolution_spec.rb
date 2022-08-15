@@ -18,7 +18,7 @@ describe "Resolving a case" do
           "first_name": "School",
           "last_name": "Contact",
           "email": "school@email.co.uk",
-          "survey_query_string": /\?Q_EED=/,
+          "exit_survey_link": %r{/exit_survey/start/},
         },
       })
       .to_return(body: {}.to_json, status: 200, headers: {})
