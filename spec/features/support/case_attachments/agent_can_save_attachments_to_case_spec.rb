@@ -19,8 +19,9 @@ describe "Agent can save attachments from an email to the case", js: true do
 
         visit support_case_path(support_case)
         click_link "Messages"
+        click_link "View"
 
-        within ".actions" do
+        within ".message-details" do
           click_link "Save attachments"
         end
         check "attachment1.txt"

@@ -11,6 +11,7 @@ describe "Agent can send new emails" do
 
   context "when there are no emails from the school" do
     it "shows the email text box in the messages tab" do
+      find("span", text: "Send New Message").click
       expect(page).to have_field "Your message"
     end
 
@@ -19,7 +20,7 @@ describe "Agent can send new emails" do
         send_message_service = double("send_message_service")
 
         allow(send_message_service).to receive(:call) do
-          email = create(:support_email, :sent_items, case: support_case, body: "This is a test message", sender: { name: "Caseworker", address: agent.email })
+          email = create(:support_email, :sent_items, case: support_case, unique_body: "This is a test message", sender: { name: "Caseworker", address: agent.email })
           create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: email.id })
         end
 
@@ -28,12 +29,14 @@ describe "Agent can send new emails" do
 
       it "shows the reply" do
         click_link "Messages"
+        find("span", text: "Send New Message").click
         fill_in_editor "Your message", with: "This is a test message"
         click_button "Send message"
         click_link "Messages"
+        click_link "View"
 
         within("#messages") do
-          expect(page).to have_text "GHBS Caseworker"
+          expect(page).to have_text "Caseworker"
           expect(page).to have_text "This is a test message"
         end
       end

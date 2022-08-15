@@ -39,6 +39,6 @@
 
   <div class="govuk-button-group">
     <%= f.submit I18n.t("support.save_attachments.form.submit"), class: "govuk-button" %>
-    <%= link_to I18n.t("support.save_attachments.form.cancel"), @back_url, class: "govuk-link" %>
+    <%= link_to I18n.t("support.save_attachments.form.cancel"), support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.case_id), class: "govuk-link" %>
   </div>
 <% end %>

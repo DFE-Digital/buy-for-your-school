@@ -19,7 +19,7 @@ module Support
       if @interaction.save
         record_action(case_id: @interaction.case.id, action: "add_interaction", data: { event_type: @interaction.event_type })
 
-        redirect_to support_case_path(@interaction.case),
+        redirect_to logged_contacts_support_case_message_threads_path(@interaction.case),
                     notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize
       else
         render :new, locals: { option: safe_interaction }

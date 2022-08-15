@@ -82,7 +82,8 @@ RSpec.feature "New case event" do
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Phone call added to case"
 
-        visit "/support/cases/#{support_case.id}#messages"
+        visit "/support/cases/#{support_case.id}/message_threads"
+        click_link "View"
         within "#messages" do
           expect(page).to have_text "Phone call"
         end
@@ -97,9 +98,10 @@ RSpec.feature "New case event" do
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Email from school added to case"
 
-        visit "/support/cases/#{support_case.id}#messages"
+        visit "/support/cases/#{support_case.id}/message_threads"
+        click_link "View"
         within "#messages" do
-          expect(page).to have_text "from School"
+          expect(page).to have_text "Email from school"
           expect(page).to have_text "this is an example email from the school"
         end
       end
@@ -113,9 +115,10 @@ RSpec.feature "New case event" do
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Email to school added to case"
 
-        visit "/support/cases/#{support_case.id}#messages"
+        visit "/support/cases/#{support_case.id}/message_threads"
+        click_link "View"
         within "#messages" do
-          expect(page).to have_text "Caseworker"
+          expect(page).to have_text "first_name last_name"
           expect(page).to have_text "this is an example email to the school"
         end
       end

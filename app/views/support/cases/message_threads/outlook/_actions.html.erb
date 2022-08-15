@@ -1,9 +1,7 @@
 <% if message.can_mark_as_read? %>
-  <% unless message.is_read? %>
-    <span class="govuk-!-margin-left-2">
-      <%= render "support/cases/emails/unread_badge" %>
-    </span>
-  <% end %>
+  <span class="govuk-!-margin-left-2">
+    <%= render "support/cases/emails/#{message.is_read? ? "read_badge" : "unread_badge"}" %>
+  </span>
 
   <span class="govuk-!-margin-left-1">
     <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),

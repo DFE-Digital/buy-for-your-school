@@ -154,7 +154,7 @@ describe MicrosoftGraph::Client do
       allow(client_session).to receive(:graph_api_post)
         .and_return(graph_api_response)
 
-      allow(MicrosoftGraph::Transformer::Message).to receive(:transform)
+      allow(MicrosoftGraph::Transformer::UpdateMessage).to receive(:transform)
         .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
         .and_return(message)
     end
@@ -209,7 +209,7 @@ describe MicrosoftGraph::Client do
       allow(client_session).to receive(:graph_api_patch)
         .and_return(graph_api_response)
 
-      allow(MicrosoftGraph::Transformer::Message).to receive(:transform)
+      allow(MicrosoftGraph::Transformer::UpdateMessage).to receive(:transform)
         .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
         .and_return(message)
     end

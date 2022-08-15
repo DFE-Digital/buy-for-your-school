@@ -16,7 +16,7 @@ module Support
 
         send_email_to_school
 
-        redirect_to support_case_path(@current_case, anchor: "case-history")
+        redirect_to templated_messages_support_case_message_threads_path(@current_case)
       end
     end
 

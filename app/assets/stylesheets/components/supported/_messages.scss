@@ -65,13 +65,9 @@
   .recap-controls .dots {
     cursor: pointer;
     user-select: none;
-    margin: 0;
     position: absolute;
-    top: -7%;
-    right: 14%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    color: #fff;
-    font-size: 50px;
+    top: -10%;
+    right: 23%;
+    fill: white;
   }
 }
