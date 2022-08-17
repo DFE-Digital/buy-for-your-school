@@ -21,9 +21,9 @@ RSpec.feature "Case statistics page" do
         expect(find("h1.govuk-heading-l")).to have_text "Case statistics"
       end
 
-      it "shows the correct number of cases" do
-        expect(all("th.govuk-table__header")[0]).to have_text "Number of cases"
-        expect(all("td.govuk-table__cell")[0]).to have_text "5"
+      it "shows the correct number of live cases" do
+        expect(all("h1.govuk-panel__title")[0]).to have_text "3"
+        expect(all(".govuk-panel__body")[0]).to have_text "Live cases"
       end
 
       it "shows the number of cases by state" do

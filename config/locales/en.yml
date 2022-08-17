@@ -972,14 +972,24 @@ en:
         header: Source
     case_statistics:
       body:
-        no_of_cases: Number of cases
-        no_of_cases_by_state: Number of cases by state
-        no_of_cases_by_state_and_sub_category: Number of cases by sub-category and state
+        no_of_live_cases: Live cases
       download:
         csv: Download CSV
         header: Case data
       header: Case statistics
       header_link: Case Statistics
+      overview_by_tower: 
+        header: Overview by tower
+        no_tower: No tower 
+        tower: Tower
+      states:
+        tower: Tower
+        live: Live
+        open: Open
+        on_hold: On hold
+        new: New
+      tower: 
+        header: "%{type} Statistics"
     case_summary:
       edit:
         header: Update case summary

@@ -26,11 +26,14 @@ module Support
   private
 
     def set_view_fields
-      @no_of_cases = Case.count
-      @no_of_cases_by_state = Case.group(:state).count
-      @no_of_cases_by_state_and_category = Case.order(:state).group(:state, :category_id).count
-      @categories = Case.joins(:category).select("support_categories.id, support_categories.title").order("support_categories.title").uniq
+      @no_of_live_cases = Case.where(state: %i[initial opened on_hold]).count
+      @no_of_live_cases_by_state = Case.where(state: %i[initial opened on_hold]).group(:state).count
+      @no_of_live_cases_by_tower = Case.where(state: %i[initial opened on_hold]).joins(:category).group(:tower).count("support_cases.id")
+      @no_of_live_cases_by_tower_and_state = Case.where(state: %i[initial opened on_hold]).joins(:category).group(:tower, :state).count("support_cases.id")
+      @categories = Case.joins(:category).select("support_categories.title").order("support_categories.title").uniq
+      @towers = Category.unique_towers
       @states = Case.states.first(5).to_h.keys
+      @live_states = %w[opened on_hold initial]
     end
 
     # @return [nil]

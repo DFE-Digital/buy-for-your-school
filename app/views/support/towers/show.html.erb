@@ -1,0 +1,30 @@
+<%= content_for :title, I18n.t("support.case_statistics.header") %>
+
+<%= link_to I18n.t("generic.button.back"), support_case_statistics_path, class: "govuk-back-link" %>
+
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_statistics.tower.header", type: params[:id] ) %></h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title govuk-!-margin-bottom-0">
+        <%= @no_of_live_cases_by_tower[params[:id]] %>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= I18n.t("support.case_statistics.body.no_of_live_cases") %>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-inset-text border-left-colour-green"><strong><%= @no_of_live_cases_by_tower_and_state[[params[:id], "opened"]].to_i || 0 %> </strong> <%= I18n.t("support.case.label.state.state_opened") %></div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-inset-text border-left-colour-yellow"><strong><%= @no_of_live_cases_by_tower_and_state[[params[:id], "on_hold"]].to_i || 0 %> </strong><%= I18n.t("support.case.label.state.state_on_hold") %></div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-inset-text border-left-colour-blue"><strong><%= @no_of_live_cases_by_tower_and_state[[params[:id], "initial"]].to_i || 0 %> </strong><%= I18n.t("support.case.label.state.state_initial") %></div>
+  </div>
+</div>
