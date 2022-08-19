@@ -4,7 +4,7 @@ module MicrosoftGraph
     class Recipient
       extend Dry::Initializer
 
-      option :email_address, Types.DryConstructor(EmailAddress)
+      option :email_address, Types.DryConstructor(EmailAddress), optional: true
     end
   end
 end

@@ -17,6 +17,8 @@ module MicrosoftGraph
         map_value(:received_date_time) { to_datetime }
         map_value(:sent_date_time) { to_datetime }
         map_value(:to_recipients) { map_array { transform_recipient } }
+        map_value(:cc_recipients) { map_array { transform_recipient } }
+        map_value(:bcc_recipients) { map_array { transform_recipient } }
       end
     end
   end

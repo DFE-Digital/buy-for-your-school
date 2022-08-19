@@ -15,6 +15,8 @@ module MicrosoftGraph
       sentDateTime
       from
       toRecipients
+      ccRecipients
+      bccRecipients
       isRead
       isDraft
       hasAttachments

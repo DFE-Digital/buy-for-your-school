@@ -2,8 +2,9 @@ module Support
   module Cases
     class MessageThreadsController < Cases::ApplicationController
       before_action :current_thread, only: %i[show]
-      before_action :reply_form, only: %i[index show]
-      before_action :back_url, only: %i[index show templated_messages logged_contacts]
+      before_action :reply_form, only: %i[index show new]
+      before_action :back_url, only: %i[index show new templated_messages logged_contacts]
+      before_action :default_subject_line, only: %i[new]
 
       content_security_policy do |policy|
         policy.style_src_attr :unsafe_inline
@@ -12,6 +13,8 @@ module Support
       def index; end
 
       def show; end
+
+      def new; end
 
       def templated_messages; end
 
@@ -33,6 +36,10 @@ module Support
 
       def back_url
         @back_url ||= url_from(back_link_param) || support_cases_path
+      end
+
+      def default_subject_line
+        @default_subject_line ||= "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
       end
     end
   end

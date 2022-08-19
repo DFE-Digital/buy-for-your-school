@@ -79,3 +79,13 @@
     fill: white;
   }
 }
+
+.recipient-input-group {
+  display: flex;
+  justify-content: space-between;
+  width: 420px;
+
+  .govuk-input__wrapper {
+    width: 350px;
+  }
+}
