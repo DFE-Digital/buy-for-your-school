@@ -57,7 +57,7 @@ describe "Agent can send new emails" do
         send_message_service = double("send_message_service")
 
         allow(send_message_service).to receive(:call) do
-          email = create(:support_email, :sent_items, case: support_case, unique_body: "This is a test message", sender: { name: "Caseworker", address: agent.email })
+          email = create(:support_email, :sent_items, case: support_case, unique_body: "This is a test message", subject: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance", sender: { name: "Caseworker", address: agent.email }, recipients: [{ name: "to@email.com", address: "to@email.com" }, { name: "cc@email.com", address: "cc@email.com" }, { name: "bcc@email.com", address: "bcc@email.com" }])
           create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: email.id })
         end
 
@@ -67,6 +67,7 @@ describe "Agent can send new emails" do
 
       it "shows the message" do
         within("#messages") do
+          expect(page).to have_text "to@email.com, cc@email.com, bcc@email.com"
           expect(page).to have_text "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
         end
       end
