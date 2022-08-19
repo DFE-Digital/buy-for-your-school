@@ -14,13 +14,15 @@ describe Support::Messages::Outlook::Message do
   end
 
   describe "#recipients" do
-    subject(:message) { described_class.new(double(to_recipients: Array.new(3) { |i| mock_recipient(i + 1) })) }
+    subject(:message) { described_class.new(double(to_recipients: Array.new(3) { |i| mock_recipient(i + 1) }, cc_recipients: [mock_recipient(4)], bcc_recipients: [mock_recipient(5)])) }
 
     it "returns the recipients information in a simpler format for persisting" do
       expect(message.recipients).to eq([
         { address: "email1@address.com", name: "Sender 1" },
         { address: "email2@address.com", name: "Sender 2" },
         { address: "email3@address.com", name: "Sender 3" },
+        { address: "email4@address.com", name: "Sender 4" },
+        { address: "email5@address.com", name: "Sender 5" },
       ])
     end
   end

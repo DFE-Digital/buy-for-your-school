@@ -590,21 +590,20 @@ en:
           back: Back to message list
           last_update: Last update
           logged_contacts: Logged contacts
+          new:
+            add: Add
+            add_recipients: Add recipients to the email
+            bcc: BCC
+            cc: CC
+            enter_subject: Enter an email subject
+            hide_cc_bcc: Hide CC / BCC
+            to: TO
+          new_thread: Create a new message thread
           recipients: Recipients
           subject: Subject
           templated_messages: Templated messages
           using_template: 'Template: "%{template}"'
           view: View
-          new_thread: Create a new message thread
-          new:
-            enter_subject: Enter an email subject
-            add_recipients: Add recipients to the email
-            to: TO
-            cc: CC
-            bcc: BCC
-            add_message: Add a message to the email
-            hide_cc_bcc: "Hide CC / BCC"
-            add: Add
         messages:
           reply:
             add_attachments: Add attachments
