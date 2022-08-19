@@ -3,8 +3,10 @@ describe Support::MessageThreadPresenter do
 
   before do
     kase = create(:support_case)
-    create(:support_email, recipients: [{ name: "recipient 1", email: "recipient1@email.com" }], sent_at: Time.zone.parse("01/01/2022 10:30"), case: kase)
-    create(:support_email, recipients: [{ name: "sharedMailbox", email: "sharedMailbox@email.com" }], sent_at: Time.zone.parse("01/01/2022 10:35"), case: kase)
+    create(:support_email, recipients: [{ name: "recipient 1", address: "recipient1@email.com" }], sent_at: Time.zone.parse("01/01/2022 10:30"), case: kase)
+    create(:support_email, recipients: [{ name: "recipient1@email.com", address: "recipient1@email.com" }], sent_at: Time.zone.parse("01/01/2022 10:32"), case: kase)
+    create(:support_email, recipients: [{ name: "school@email.co.uk", address: "school@email.co.uk" }], sent_at: Time.zone.parse("01/01/2022 10:34"), case: kase)
+    create(:support_email, recipients: [{ name: "sharedMailbox", address: "sharedMailbox@email.com" }], sent_at: Time.zone.parse("01/01/2022 10:35"), case: kase)
   end
 
   let(:thread) { Support::MessageThread.find_by(conversation_id: "MyString") }
@@ -17,7 +19,7 @@ describe Support::MessageThreadPresenter do
     end
 
     it "lists all the recipients except for the shared mailbox" do
-      expect(presenter.recipients).to eq "recipient 1"
+      expect(presenter.recipients).to eq "recipient 1, School Contact"
     end
   end
 

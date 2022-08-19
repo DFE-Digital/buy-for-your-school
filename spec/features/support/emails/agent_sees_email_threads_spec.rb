@@ -7,8 +7,8 @@ describe "Agent sees email threads", bullet: :skip do
 
   context "when messages accross multiple threads exist" do
     before do
-      create(:support_email, case: support_case, outlook_conversation_id: "OCID1", subject: "Email thread 1", recipients: [{ "name" => "Test 1" }], unique_body: "Email 1")
-      create(:support_email, case: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2" }], unique_body: "Email 2")
+      create(:support_email, case: support_case, outlook_conversation_id: "OCID1", subject: "Email thread 1", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1")
+      create(:support_email, case: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2", "address" => "test2@email.com" }], unique_body: "Email 2")
       create(:support_email, case: support_case, outlook_conversation_id: "OCID2", subject: "Re: Email thread 2", unique_body: "Email 3")
 
       click_button "Agent Login"
@@ -50,7 +50,7 @@ describe "Agent sees email threads", bullet: :skip do
 
     it "displays the templated messages thread within the case messages tab" do
       within "tr", text: "Templated messages" do
-        expect(page).to have_content("school@email.co.uk")
+        expect(page).to have_content("School Contact")
       end
     end
 
@@ -79,7 +79,7 @@ describe "Agent sees email threads", bullet: :skip do
 
     it "displays the logged contacts thread within the case messages tab" do
       within "tr", text: "Logged contacts" do
-        expect(page).to have_content("school@email.co.uk")
+        expect(page).to have_content("School Contact")
       end
     end
 
