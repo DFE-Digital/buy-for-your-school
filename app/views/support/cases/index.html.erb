@@ -59,12 +59,13 @@
             </thead>
             <tbody class="govuk-table__body">
               <% @my_cases.each do |kase| %>
-                <%= render "row", kase: kase, tab: :my_cases %>
+                  <%= render "row", kase: kase, tab: :my_cases %>
               <% end %>
             </tbody>
           </table>
           <%= render "components/pagination", records: @my_cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
         <% end %>
+        <%= link_to I18n.t("support.case.label.view_resolved_cases"), support_case_search_index_path(search_case_form: { search_term: current_agent.last_name.downcase, state: "resolved", agent: current_agent.id }), class: "govuk-link govuk-link--no-visited-state" %>
       </div>
     </div>
   </div>
