@@ -1,0 +1,7 @@
+<% if messages.count > 1 %>
+  <% messages[0...-1].each do |message| %>
+    <%= render "support/cases/message_threads/message", truncated_message: true, message: message, current_case: current_case %>
+  <% end %>
+<% end %>
+
+<%= render "support/cases/message_threads/message", message: messages.last, current_case: current_case, show_recap: messages.count > 1 %>

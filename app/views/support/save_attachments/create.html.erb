@@ -26,7 +26,7 @@
   <p class="govuk-heading-m"><%= I18n.t("support.save_attachments.success.actions.header") %></p>
 
   <ul class="govuk-list govuk-list">
-    <li><%= link_to I18n.t("support.save_attachments.success.actions.go_back_to_email"), support_email_path(@email) %></li>
+    <li><%= link_to I18n.t("support.save_attachments.success.actions.go_back_to_email"), support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.case_id) %></li>
     <li><%= link_to I18n.t("support.save_attachments.success.actions.view_attachments"), support_case_path(@email.case, anchor: "case-attachments") %></li>
   </ul>
 </div>

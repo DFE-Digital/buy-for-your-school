@@ -14,7 +14,8 @@ module Support
           draft_reply = update_message_with_content(create_draft_reply)
           update_message_with_file_attachments(draft_reply)
           send_message(draft_reply)
-          SynchroniseMessage.call(draft_reply)
+          full_message = get_full_message_details(draft_reply)
+          SynchroniseMessage.call(full_message)
         end
 
       private
@@ -61,6 +62,14 @@ module Support
             user_id: SHARED_MAILBOX_USER_ID,
             message_id: draft_reply.id,
           )
+        end
+
+        def get_full_message_details(draft_reply)
+          response = ms_graph_client.get_message(
+            user_id: SHARED_MAILBOX_USER_ID,
+            message_id: draft_reply.id,
+          )
+          wrap_message(response)
         end
 
         def reply_body_content(draft_reply)

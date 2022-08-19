@@ -84,4 +84,19 @@ namespace :case_management do
 
     sub_category.update!(parent: new_parent_category)
   end
+
+  desc "Backfill email uniqueBody field"
+  task backfill_email_unique_body: :environment do
+    messages = MicrosoftGraph.client.list_messages(SHARED_MAILBOX_USER_ID, query: [
+      "$select=internetMessageId,uniqueBody",
+      "$orderby=lastModifiedDateTime desc",
+    ])
+    messages.each do |message|
+      email = Support::Email.find_by(outlook_internet_message_id: message["internetMessageId"])
+
+      if message["uniqueBody"].present? && email.present?
+        email.update!(unique_body: message["uniqueBody"]["content"])
+      end
+    end
+  end
 end

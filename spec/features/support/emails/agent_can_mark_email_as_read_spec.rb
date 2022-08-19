@@ -15,13 +15,15 @@ describe "Agent sees emails in messages" do
 
     click_button "Agent Login"
     visit support_case_path(support_case)
+    click_link "Messages"
+    click_link "View"
   end
 
   context "when email is unread" do
     let(:is_read) { false }
 
     it "displays UNREAD next to the interaction in messages" do
-      within "#messages .actions" do
+      within "#messages .message-details" do
         expect(page).to have_css(".email-read-status", text: "Unread")
       end
     end
@@ -34,7 +36,7 @@ describe "Agent sees emails in messages" do
 
   context "when email is read" do
     it "displays READ next to the interaction in messages" do
-      within "#messages .actions" do
+      within "#messages .message-details" do
         expect(page).to have_css(".email-read-status", text: "Read")
       end
     end

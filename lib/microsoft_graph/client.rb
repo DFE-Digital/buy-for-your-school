@@ -18,6 +18,7 @@ module MicrosoftGraph
       isRead
       isDraft
       hasAttachments
+      uniqueBody
     ].freeze
 
     def initialize(client_session)
@@ -32,8 +33,12 @@ module MicrosoftGraph
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
     def list_messages_in_folder(user_id, mail_folder, query: [])
-      query = Array(query).push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
+      query = Array(query)
+        .push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
+        .push("$expand=singleValueExtendedProperties($filter=id eq '#{Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')")
+
       results = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
+
       Transformer::Message.transform_collection(results, into: Resource::Message)
     end
 
@@ -41,6 +46,16 @@ module MicrosoftGraph
     def list_messages(user_id, query: [])
       client_session.graph_api_get("users/#{user_id}/messages".concat(format_query(query)))
       # results are not transformed
+    end
+
+    def get_message(user_id:, message_id:)
+      query = Array(query)
+        .push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
+        .push("$expand=singleValueExtendedProperties($filter=id eq '#{Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')")
+
+      response = client_session.graph_api_get("users/#{user_id}/messages/#{message_id}".concat(format_query(query)), multiple_results: false)
+
+      Transformer::Message.transform(response, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
@@ -59,7 +74,7 @@ module MicrosoftGraph
     # https://docs.microsoft.com/en-us/graph/api/message-createreply?view=graph-rest-1.0&tabs=http
     def create_reply_message(user_id:, reply_to_id:, http_headers: {})
       response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReply", nil, http_headers)
-      Transformer::Message.transform(response, into: Resource::Message)
+      Transformer::UpdateMessage.transform(response, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
@@ -99,7 +114,7 @@ module MicrosoftGraph
           "Content-Type" => "application/json",
         ),
       )
-      Transformer::Message.transform(response, into: Resource::Message)
+      Transformer::UpdateMessage.transform(response, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-send?view=graph-rest-1.0&tabs=http

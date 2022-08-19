@@ -1,0 +1,35 @@
+<%= render layout: "support/layouts/case", locals: { tab: "messages" } do %>
+  <table class="govuk-table messages-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header name-column"><%= I18n.t("support.case.label.message_threads.recipients") %></th>
+        <th class="govuk-table__header"><%= I18n.t("support.case.label.message_threads.subject") %></th>
+        <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.last_update") %></th>
+        <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.action") %></th>
+      </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+      <% @current_case.message_threads.each do |thread| %>
+        <%= render "thread", thread: thread %>
+      <% end %>
+      <% if @current_case.templated_messages.any? %>
+        <%= render "templated_message_thread" %>
+      <% end %>
+      <% if @current_case.logged_contacts.any? %>
+        <%= render "logged_contact_thread" %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        Send New Message
+      </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= render "support/cases/messages/replies/form", reply: false %>
+    </div>
+  </details>
+<% end %>

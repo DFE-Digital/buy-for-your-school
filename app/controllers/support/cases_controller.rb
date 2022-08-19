@@ -1,13 +1,9 @@
 module Support
-  class CasesController < ApplicationController
+  class CasesController < Cases::ApplicationController
     require "will_paginate/array"
     before_action :filter_forms, only: %i[index]
     before_action :reply_form, only: %i[show]
     before_action :current_case, only: %i[show edit]
-
-    content_security_policy do |policy|
-      policy.style_src_attr :unsafe_inline
-    end
 
     include Concerns::HasInteraction
 
@@ -26,7 +22,7 @@ module Support
     end
 
     def show
-      @back_url = url_internal?(back_link_param) ? back_link_param : support_cases_path
+      @back_url = url_from(back_link_param) || support_cases_path
     end
 
     def new
@@ -120,12 +116,6 @@ module Support
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
-    end
-
-    def back_link_param
-      return if params[:back_to].blank?
-
-      Base64.decode64(params[:back_to])
     end
   end
 end

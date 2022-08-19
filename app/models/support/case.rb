@@ -56,6 +56,8 @@ module Support
     belongs_to :new_contract, class_name: "Support::NewContract", optional: true
     belongs_to :procurement, class_name: "Support::Procurement", optional: true
 
+    has_many :message_threads, class_name: "Support::MessageThread"
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id:) }

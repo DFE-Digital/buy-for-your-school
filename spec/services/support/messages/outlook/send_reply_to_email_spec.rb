@@ -21,11 +21,13 @@ describe Support::Messages::Outlook::SendReplyToEmail do
   let(:create_reply_message_repsonse) { double("create_reply_message_repsonse", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "Previous content here")) }
   let(:update_message_response)       { double("update_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "My Reply - Previous content here")) }
   let(:send_message_response)         { nil }
+  let(:get_message_response)          { double("get_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "My Reply - Previous content here")) }
 
   before do
     allow(ms_graph_client).to receive(:create_reply_message).and_return(create_reply_message_repsonse)
     allow(ms_graph_client).to receive(:update_message).and_return(update_message_response)
     allow(ms_graph_client).to receive(:send_message).and_return(send_message_response)
+    allow(ms_graph_client).to receive(:get_message).and_return(get_message_response)
     allow(ms_graph_client).to receive(:add_file_attachment_to_message)
 
     allow(Support::Messages::Outlook::SynchroniseMessage).to receive(:call).and_return(nil)
@@ -89,6 +91,6 @@ describe Support::Messages::Outlook::SendReplyToEmail do
     send_reply.call
 
     expect(Support::Messages::Outlook::SynchroniseMessage).to have_received(:call)
-      .with(Support::Messages::Outlook::Message.new(update_message_response))
+      .with(Support::Messages::Outlook::Message.new(get_message_response))
   end
 end

@@ -1,9 +1,9 @@
-<% if email.attachments.any? %>
+<% if email.attachments_for_display.any? %>
   <div class="attachments">
-    <% email.attachments.each do |attachment| %>
+    <strong>Attachments:</strong><br />
+
+    <% email.attachments_for_display.each do |attachment| %>
       <%= link_to attachment.file_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noreferrer noopener" %><br />
     <% end %>
   </div>
-
-  <hr />
 <% end %>

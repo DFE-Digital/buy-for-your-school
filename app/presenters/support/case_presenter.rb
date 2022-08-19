@@ -53,22 +53,6 @@ module Support
         .map { |i| InteractionPresenter.new(i) }
     end
 
-    # return message interactions
-    # @return [Array<InteractionPresenter>]
-    def message_interactions
-      @message_interactions ||= __getobj__.interactions.messages
-        .order("created_at ASC")
-        .map { |i| InteractionPresenter.new(i) }
-    end
-
-    # return message interactions from the school
-    # @return [Array<InteractionPresenter>]
-    def received_message_interactions
-      @received_message_interactions ||= __getobj__.interactions.email_from_school
-        .order("created_at ASC")
-        .map { |i| InteractionPresenter.new(i) }
-    end
-
     # return case history interactions
     # @return [Array<InteractionPresenter>]
     def case_history_interactions
@@ -173,6 +157,31 @@ module Support
     # return [String]
     def special_requirements
       super || "-"
+    end
+
+    # @return [Array<MessageThreadPresenter>]
+    def message_threads
+      super.includes([:messages]).map { |thread| MessageThreadPresenter.new(thread) }
+    end
+
+    # @return [Array<Messages::NotifyMessagePresenter>]
+    def templated_messages
+      __getobj__.interactions.templated_messages.map { |message| Messages::NotifyMessagePresenter.new(message) }
+    end
+
+    # @return [Array<Messages::NotifyMessagePresenter>]
+    def logged_contacts
+      __getobj__.interactions.logged_contacts.map { |contact| Messages::NotifyMessagePresenter.new(contact) }
+    end
+
+    # @return [String]
+    def templated_messages_last_updated
+      templated_messages.first.__getobj__.created_at.strftime("%d %B %Y %H:%M")
+    end
+
+    # @return [String]
+    def logged_contacts_last_updated
+      logged_contacts.first.__getobj__.created_at.strftime("%d %B %Y %H:%M")
     end
 
   private

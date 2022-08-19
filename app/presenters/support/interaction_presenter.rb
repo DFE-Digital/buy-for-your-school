@@ -1,6 +1,5 @@
 require_relative "case_presenter"
 require_relative "agent_presenter"
-require_relative "email_presenter"
 
 module Support
   class InteractionPresenter < BasePresenter
@@ -56,25 +55,12 @@ module Support
       CasePresenter.new(super)
     end
 
-    # @return [Boolean]
-    def email?
-      event_type != "email_merge" && event_type.match?(/\Aemail.*/)
+    def no_display?
+      event_type.in?(%w[procurement_updated])
     end
 
     def outlook_email?
       event_type.in?(%w[email_from_school email_to_school]) && additional_data.key?("email_id")
-    end
-
-    def notify_email?
-      event_type == "email_to_school" && additional_data.key?("email_template")
-    end
-
-    def email
-      EmailPresenter.new(super) if super
-    end
-
-    def no_display?
-      event_type.in?(%w[procurement_updated])
     end
 
   private

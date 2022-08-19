@@ -8,7 +8,7 @@ module Support
       if validation.success?
         @reply_form.reply_to_email(@current_email, current_agent)
 
-        redirect_to support_case_path(@current_case, anchor: "messages")
+        redirect_to support_case_message_thread_path(id: @current_email.outlook_conversation_id, case_id: current_case.id)
       else
         @reply_body = form_params[:body]
         @show_attachment_warning = Array(form_params[:attachments]).any?

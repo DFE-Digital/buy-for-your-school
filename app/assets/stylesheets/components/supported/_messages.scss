@@ -3,3 +3,79 @@
   max-width: 735px;
   overflow: scroll;
 }
+
+.pull-up {
+  margin-top: -10px;
+}
+
+#messages {
+  hr {
+    border: none;
+    height: 1px;
+    background-color: #B1B4B6;
+  }
+}
+
+.message {
+  margin-bottom: 10px;
+
+  .attachments {
+    margin-top: 20px;
+
+    strong {
+      font-size: 17px;
+    }
+  }
+
+  .message-details {
+    display: flex;
+    justify-content: space-between;
+
+    @extend .govuk-body;
+
+    font-weight: bold;
+
+    .date-and-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .message-actions {
+    margin-top: -15px;
+    margin-bottom: 20px;
+  }
+
+  .message-preview.truncated-view {
+    cursor: pointer;
+
+    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+  }
+
+  .recap-controls {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    position: relative;
+    background-color: #1d70b8;
+    border-radius: 20px;
+    height: 5px;
+    width: 35px;
+    padding: 10px;
+
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .recap-controls .dots {
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    top: -10%;
+    right: 23%;
+    fill: white;
+  }
+}

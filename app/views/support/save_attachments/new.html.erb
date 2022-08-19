@@ -1,4 +1,4 @@
-<%= form_with model: @save_attachments_form, scope: :save_attachments_form, url: support_email_save_attachments_path(@email), method: :post do |f| %>
+<%= form_with model: @save_attachments_form, scope: :save_attachments_form, url: support_message_save_attachments_path(message_id: @email.id), method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
   <% if @save_attachments_form.show_file_type_warning? %>
@@ -39,6 +39,6 @@
 
   <div class="govuk-button-group">
     <%= f.submit I18n.t("support.save_attachments.form.submit"), class: "govuk-button" %>
-    <%= link_to I18n.t("support.save_attachments.form.cancel"), support_email_path(@email), class: "govuk-link" %>
+    <%= link_to I18n.t("support.save_attachments.form.cancel"), support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.case_id), class: "govuk-link" %>
   </div>
 <% end %>

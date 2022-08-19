@@ -1,0 +1,4 @@
+<%= render "support/cases/message_threads/message", truncated_message: true,  message: messages.first, current_case: current_case %>
+<%= render "support/cases/message_threads/view_more_responses", messages: messages[1...-2], current_case: current_case %>
+<%= render "support/cases/message_threads/message", truncated_message: true,  message: messages.second_to_last, current_case: current_case %>
+<%= render "support/cases/message_threads/message", truncated_message: false, message: messages.last, current_case: current_case, show_recap: true %>

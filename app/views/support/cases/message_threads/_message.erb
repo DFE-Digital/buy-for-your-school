@@ -1,0 +1,48 @@
+<% truncated_message = defined?(truncated_message) ? truncated_message : false %>
+<% show_recap = defined?(show_recap) ? show_recap : false %>
+
+<div class="message">
+  <div class="message-details">
+    <div>
+      <%= message.sent_by_name %>
+      <%= message.render_actions(self) %>
+      <%= message.render_details(self) %>
+    </div>
+
+    <div><%= message.sent_at_formatted %></div>
+  </div>
+
+  <div <% if truncated_message %>class="message-preview govuk-body truncated-view" data-component="toggle-truncate"<% else %>class="message-preview govuk-body"<% end %>>
+    <% if truncated_message %>
+      <div class="truncated">
+        <%= message.truncated_body_for_display(self) %>
+      </div>
+    <% end %>
+
+    <div class="full-view <% if truncated_message %>govuk-!-display-none<% end %>">
+      <%= message.body_for_display(self) %>
+
+      <%= render "support/cases/messages/attachments", email: message %>
+
+      <% if show_recap %>
+        <div class="message-recap">
+          <div class="recap-controls" data-component="toggle-panel-visibility" data-panel="recap-<%= message.id %>">
+            <div class="dots">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="2"/>
+                <circle cx="3" cy="10" r="2"/>
+                <circle cx="17" cy="10" r="2"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="recap-view govuk-!-display-none" id="recap-<%= message.id %>">
+            <%= message.message_recap(self) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<hr class="govuk-!-margin-bottom-6" />

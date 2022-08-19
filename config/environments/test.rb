@@ -70,6 +70,8 @@ Rails.application.configure do
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
     Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :task
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Support::MessageThread", association: :messages
+    Bullet.add_safelist type: :unused_eager_loading, class_name: "Support::Email", association: :in_reply_to
   end
 
   # Set active storage location

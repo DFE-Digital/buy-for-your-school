@@ -26,9 +26,7 @@
       </a>
     </li>
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#messages">
-        <%= I18n.t("support.case.header.messages") %>
-      </a>
+      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case, back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
     </li>
     <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#case-history">
@@ -47,14 +45,9 @@
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
     <%= render "case_details", current_case: @current_case %>
   </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages">
-    <%= render "messages", messages: @current_case.message_interactions, received_messages: @current_case.received_message_interactions, current_case: @current_case %>
-  </div>
-
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
     <%= render "case_history", interactions: @current_case.case_history_interactions, current_case: @current_case %>
   </div>
-
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-attachments">
     <%= render "case_attachments", current_case: @current_case %>
   </div>

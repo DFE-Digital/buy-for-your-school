@@ -1,4 +1,4 @@
-describe "Agent can reply to incoming emails" do
+describe "Agent can reply to incoming emails", js: true do
   include_context "with an agent"
 
   let(:email) { create(:support_email, origin, case: support_case) }
@@ -22,16 +22,17 @@ describe "Agent can reply to incoming emails" do
       send_reply_service = double("send_reply_service")
 
       allow(send_reply_service).to receive(:call) do
-        reply = create(:support_email, :sent_items, case: support_case, replying_to: email, body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
+        reply = create(:support_email, :sent_items, case: support_case, in_reply_to: email, unique_body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
         create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: reply.id })
       end
 
       allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
     end
 
-    describe "allows agent to send a reply", js: true do
+    describe "allows agent to send a reply" do
       before do
         click_link "Messages"
+        click_link "View"
 
         find("span", text: "Reply to message").click
         fill_in_editor "Your message", with: "This is a test reply"
@@ -39,19 +40,19 @@ describe "Agent can reply to incoming emails" do
       end
 
       it "shows the reply" do
-        click_link "Messages"
-
+        # sleep 50
         within("#messages") do
-          expect(page).to have_text "GHBS Caseworker"
+          expect(page).to have_text "Caseworker"
           expect(page).to have_text "This is a test reply"
         end
       end
     end
   end
 
-  describe "a caseworker must enter a reply body", js: true do
+  describe "a caseworker must enter a reply body" do
     before do
       click_link "Messages"
+      click_link "View"
 
       find("span", text: "Reply to message").click
       fill_in_editor "Your message", with: ""
@@ -67,6 +68,11 @@ describe "Agent can reply to incoming emails" do
     let(:origin) { :sent_items }
     let(:interaction_type) { :email_to_school }
 
+    before do
+      click_link "Messages"
+      click_link "View"
+    end
+
     it "does not show the reply form" do
       within("#messages") do
         expect(page).not_to have_text "Reply to message"
@@ -77,6 +83,13 @@ describe "Agent can reply to incoming emails" do
 
   context "when there is a logged email" do
     let(:additional_data) { {} }
+
+    before do
+      click_link "Messages"
+      within("#thread_logged_contacts") do
+        click_link "View"
+      end
+    end
 
     it "does not show the reply form" do
       within("#messages") do
