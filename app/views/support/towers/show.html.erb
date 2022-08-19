@@ -28,3 +28,65 @@
     <div class="govuk-inset-text border-left-colour-blue"><strong><%= @no_of_live_cases_by_tower_and_state[[params[:id], "initial"]].to_i || 0 %> </strong><%= I18n.t("support.case.label.state.state_initial") %></div>
   </div>
 </div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_statistics.tower.live_cases_by_stage") %></caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.tower.stage") %></th>
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.open") %></th>
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.on_hold") %></th>
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.new") %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @stages.each do | stage | %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.stages.#{stage[0]}") %></th>
+            <% @live_states.each do |state| %>
+              <td class="govuk-table__cell"><%= @no_of_live_cases_by_tower_state_and_stage[[params[:id], state, stage[1]]].to_i %></td>
+            <% end %>   
+          </tr>
+        <% end %> 
+        <tr>
+          <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.tower.unspecified") %></th>
+            <% @live_states.each do |state| %>
+              <td class="govuk-table__cell"><%= @no_of_live_cases_by_tower_state_and_stage[[params[:id], state, nil]].to_i %></td>
+          <% end %>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_statistics.tower.live_cases_by_level") %></caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.tower.level") %></th>
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.open") %></th>
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.on_hold") %></th>
+          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.new") %></th>
+        </tr>
+      </thead>
+      
+      <tbody class="govuk-table__body">
+        <% @levels.each do | level | %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= level %></th>
+            <% @live_states.each do |state| %>
+              <td class="govuk-table__cell"><%= @no_of_live_cases_by_tower_state_and_level[[params[:id], state, level]].to_i %></td>
+            <% end %>   
+          </tr>
+        <% end %> 
+        <tr>
+          <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.tower.unspecified") %></th>
+            <% @live_states.each do |state| %>
+              <td class="govuk-table__cell"><%= @no_of_live_cases_by_tower_state_and_level[[params[:id], state, nil]].to_i %></td>
+          <% end %>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+</div>

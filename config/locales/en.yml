@@ -982,6 +982,14 @@ en:
         header: Overview by tower
         no_tower: No tower 
         tower: Tower
+      stages:
+        contract_award: Contract award
+        evaluation: Evaluation
+        go_to_market: Go to market
+        handover: Handover
+        market_analysis: Market analysis
+        need: Need
+        sourcing_options: Sourcing options  
       states:
         tower: Tower
         live: Live
@@ -990,6 +998,11 @@ en:
         new: New
       tower: 
         header: "%{type} Statistics"
+        level: Level
+        live_cases_by_level: Live cases by level
+        live_cases_by_stage: Live cases by stage
+        stage: Stage
+        unspecified: Unspecified
     case_summary:
       edit:
         header: Update case summary
