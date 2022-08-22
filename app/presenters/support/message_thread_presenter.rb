@@ -6,7 +6,7 @@ module Support
     def recipients
       # group by email address in case there are multiple recipients with the same address
       # and prefer the one that has a proper name (rather than an email address for a name)
-      grouped = super
+      grouped = Array(super)
         .group_by { |r| r["address"].downcase }
         .map { |_k, v|
           if v.size > 1
