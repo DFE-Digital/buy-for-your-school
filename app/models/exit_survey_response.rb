@@ -64,4 +64,9 @@ class ExitSurveyResponse < ApplicationRecord
                               social_media: 6,
                               word_of_mouth: 7,
                               other: 8 }
+
+  def start_survey!
+    self.survey_started_at = Time.zone.now if survey_started_at.blank?
+    in_progress_status!
+  end
 end

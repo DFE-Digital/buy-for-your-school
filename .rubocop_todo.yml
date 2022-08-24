@@ -9,8 +9,7 @@
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.
 Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'spec/services/support/messages/outlook/resync_email_ids_spec.rb'
+  Enabled: false
 
 # Offense count: 1
 # Configuration parameters: IgnoredPatterns.
