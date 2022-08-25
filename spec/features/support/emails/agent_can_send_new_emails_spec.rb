@@ -67,7 +67,7 @@ describe "Agent can send new emails" do
 
       it "shows the message" do
         within("#messages") do
-          expect(page).to have_text "to@email.com, cc@email.com, bcc@email.com"
+          expect(page).to have_text "bcc@email.com, cc@email.com, to@email.com"
           expect(page).to have_text "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
         end
       end

@@ -15,5 +15,5 @@ module Types
   DecimalField = Types.Constructor(String) { |input| ::DecimalBuilder.call(input) }
 
   # Coerce JSON arrays to arrays
-  JSONArrayField = Types.Constructor(::Array) { |input| ::ArrayBuilder.new.call(input) }
+  JSONArrayField = Types.Constructor(::Array) { |input| ::ArrayBuilder.call(input) }
 end

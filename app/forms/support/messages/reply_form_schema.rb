@@ -22,9 +22,9 @@ module Support
 
     rule do
       base.failure(:no_recipients) if (key?(:to_recipients) && values[:to_recipients].empty?) && (key?(:cc_recipients) && values[:cc_recipients].empty?) && (key?(:bcc_recipients) && values[:bcc_recipients].empty?)
-      base.failure(:invalid_recipients) if key?(:to_recipients) && !values[:to_recipients].empty? && contains_invalid_emails?(values[:to_recipients])
-      base.failure(:invalid_recipients) if key?(:cc_recipients) && !values[:cc_recipients].empty? && contains_invalid_emails?(values[:cc_recipients])
-      base.failure(:invalid_recipients) if key?(:bcc_recipients) && !values[:bcc_recipients].empty? && contains_invalid_emails?(values[:bcc_recipients])
+      base.failure(:invalid_to_recipients) if key?(:to_recipients) && !values[:to_recipients].empty? && contains_invalid_emails?(values[:to_recipients])
+      base.failure(:invalid_cc_recipients) if key?(:cc_recipients) && !values[:cc_recipients].empty? && contains_invalid_emails?(values[:cc_recipients])
+      base.failure(:invalid_bcc_recipients) if key?(:bcc_recipients) && !values[:bcc_recipients].empty? && contains_invalid_emails?(values[:bcc_recipients])
       base.failure(:no_ref, case_ref: values[:case_ref]) if (key?(:subject) && values[:subject].present? && values[:subject].match(/([0-9]{6,6})/).to_a.last.blank?) && (key?(:body) && values[:body].present? && values[:body].match(/Your reference number is: ([0-9]{6,6})\./).to_a.last.blank?)
     end
 

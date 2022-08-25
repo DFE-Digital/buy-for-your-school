@@ -36,4 +36,48 @@ RSpec.describe Support::Messages::ReplyFormSchema do
       end
     end
   end
+
+  describe "validates subject" do
+    context "when it is blank" do
+      subject(:schema) { described_class.new.call(body: "Filled in", subject: "") }
+
+      it "raises a validation error" do
+        expect(schema.errors.messages.size).to eq 1
+        expect(schema.errors.messages[0].to_s).to eq "The subject cannot be blank"
+      end
+    end
+  end
+
+  describe "validates recipients" do
+    context "when all recipients are blank" do
+      subject(:schema) { described_class.new.call(body: "Filled in", subject: "Subject 000001", to_recipients: "", cc_recipients: "", bcc_recipients: "") }
+
+      it "raises a validation error" do
+        expect(schema.errors.messages.size).to eq 1
+        expect(schema.errors.messages[0].to_s).to eq "At least one recipient must be specified"
+      end
+    end
+
+    context "when recipients contain invalid emails" do
+      subject(:schema) { described_class.new.call(body: "Filled in", subject: "Subject 000001", to_recipients: "[\"recipient1\"]", cc_recipients: "[\"recipient2\"]", bcc_recipients: "[\"recipient3\"]") }
+
+      it "raises a validation error" do
+        expect(schema.errors.messages.size).to eq 3
+        expect(schema.errors.messages[0].to_s).to eq "The TO recipients contain an invalid email address"
+        expect(schema.errors.messages[1].to_s).to eq "The CC recipients contain an invalid email address"
+        expect(schema.errors.messages[2].to_s).to eq "The BCC recipients contain an invalid email address"
+      end
+    end
+  end
+
+  describe "validates for presence of a case reference" do
+    context "when not present in the subject or the body" do
+      subject(:schema) { described_class.new.call(body: "hi", subject: "hello", case_ref: "000001") }
+
+      it "raises a validation error" do
+        expect(schema.errors.messages.size).to eq 1
+        expect(schema.errors.messages[0].to_s).to eq "Either the subject or the message body must contain the case reference 000001"
+      end
+    end
+  end
 end
