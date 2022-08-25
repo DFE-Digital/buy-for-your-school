@@ -11,7 +11,7 @@ class ExitSurvey::SatisfactionController < ApplicationController
   def update
     if validation.success?
       exit_survey_response.update!(**form.data.merge(user_ip: request.remote_ip))
-      exit_survey_response.in_progress_status!
+      exit_survey_response.start_survey!
       redirect_to edit_exit_survey_satisfaction_reason_path(exit_survey_response)
     else
       render :edit

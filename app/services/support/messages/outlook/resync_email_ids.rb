@@ -58,7 +58,7 @@ module Support
         def recently_updated_messages
           @recently_updated_messages ||= ms_graph_client.list_messages(SHARED_MAILBOX_USER_ID, query: [
             "$filter=lastModifiedDateTime ge #{messages_updated_after.utc.iso8601}",
-            "$select=internetMessageId,subject,sentDateTime",
+            "$select=internetMessageId,subject,sentDateTime,conversationId",
             "$orderby=lastModifiedDateTime asc",
             "$expand=singleValueExtendedProperties($filter=id eq '#{MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')",
           ])

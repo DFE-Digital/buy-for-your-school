@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_24_084204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
     t.string "hear_about_service_other"
     t.integer "status"
     t.string "user_ip"
+    t.datetime "survey_started_at"
     t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
