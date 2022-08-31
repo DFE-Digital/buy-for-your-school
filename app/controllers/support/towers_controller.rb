@@ -7,10 +7,10 @@ module Support
   private
 
     def set_tower_view_fields
-      @stages = Procurement.stages.to_h
+      @stages = Procurement.stages.to_h.keys
       @levels = Case.support_levels.to_h.keys
-      @no_of_live_cases_by_tower_state_and_stage = Case.where(state: %i[initial opened on_hold]).left_outer_joins(:category, :procurement).group(:tower, :state, :stage).count("support_cases.id")
-      @no_of_live_cases_by_tower_state_and_level = Case.where(state: %i[initial opened on_hold]).left_outer_joins(:category).group(:tower, :state, :support_level).count("support_cases.id")
+      @no_of_live_cases_by_tower_state_and_stage = Tower.group(:procops_tower, :state, :stage).count
+      @no_of_live_cases_by_tower_state_and_level = Tower.group(:procops_tower, :state, :support_level).count
     end
   end
 end
