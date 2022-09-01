@@ -112,7 +112,7 @@ Rails.application.routes.draw do
             resources :templates, only: %i[index], param: :template
           end
         end
-        resources :message_threads, only: %i[index show] do
+        resources :message_threads, only: %i[index show new] do
           scope do
             collection do
               get "templated_messages"

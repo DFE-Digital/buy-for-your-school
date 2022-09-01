@@ -4,6 +4,10 @@ module Support
     include Concerns::ValidatableForm
 
     option :body, Types::Params::String, optional: true
+    option :to_recipients, Types::JSONArrayField, optional: true
+    option :cc_recipients, Types::JSONArrayField, optional: true
+    option :bcc_recipients, Types::JSONArrayField, optional: true
+    option :subject, Types::Params::String, optional: true
     option :attachments, optional: true
 
     def reply_to_email(email, agent)
@@ -17,13 +21,15 @@ module Support
       reply.call
     end
 
-    def create_new_message(recipient, agent, case_reference)
+    def create_new_message(agent)
       message = Support::Messages::Outlook::SendNewMessage.new(
-        recipient:,
+        to_recipients:,
+        cc_recipients:,
+        bcc_recipients:,
         message_text: body,
         sender: agent,
         file_attachments:,
-        subject: "Case #{case_reference} – DfE Get help buying for schools: your request for advice and guidance",
+        subject:,
       )
 
       message.call

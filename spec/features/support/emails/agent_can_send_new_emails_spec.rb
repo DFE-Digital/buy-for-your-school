@@ -9,35 +9,66 @@ describe "Agent can send new emails" do
     click_on "Messages"
   end
 
-  context "when there are no emails from the school" do
-    it "shows the email text box in the messages tab" do
-      find("span", text: "Send New Message").click
-      expect(page).to have_field "Your message"
+  it "shows the new thread button" do
+    expect(page).to have_link "Create a new message thread"
+  end
+
+  describe "creating a new thread", js: true do
+    before do
+      click_link "Create a new message thread"
+
+      to_input = find("input[name$='[to]']")
+      to_input.fill_in with: "to@email.com"
+      to_add_button = find("button[data-input-field$='[to]']")
+      to_add_button.click
+      cc_input = find("input[name$='[cc]']")
+      cc_input.fill_in with: "cc@email.com"
+      cc_add_button = find("button[data-input-field$='[cc]']")
+      cc_add_button.click
+      bcc_input = find("input[name$='[bcc]']")
+      bcc_input.fill_in with: "bcc@email.com"
+      bcc_add_button = find("button[data-input-field$='[bcc]']")
+      bcc_add_button.click
     end
 
-    describe "sending a message", js: true do
+    it "pre-fills the default subject line" do
+      expect(page).to have_field "Enter an email subject", with: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
+    end
+
+    it "shows added recipients" do
+      to_table = find("table[data-row-label='TO']")
+      within(to_table) do
+        expect(page).to have_text "to@email.com"
+      end
+
+      cc_table = find("table[data-row-label='CC']")
+      within(cc_table) do
+        expect(page).to have_text "cc@email.com"
+      end
+
+      bcc_table = find("table[data-row-label='BCC']")
+      within(bcc_table) do
+        expect(page).to have_text "bcc@email.com"
+      end
+    end
+
+    context "when a new message is sent" do
       before do
         send_message_service = double("send_message_service")
 
         allow(send_message_service).to receive(:call) do
-          email = create(:support_email, :sent_items, case: support_case, unique_body: "This is a test message", sender: { name: "Caseworker", address: agent.email })
+          email = create(:support_email, :sent_items, case: support_case, unique_body: "This is a test message", subject: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance", sender: { name: "Caseworker", address: agent.email }, recipients: [{ name: "to@email.com", address: "to@email.com" }, { name: "cc@email.com", address: "cc@email.com" }, { name: "bcc@email.com", address: "bcc@email.com" }])
           create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: email.id })
         end
 
         allow(Support::Messages::Outlook::SendNewMessage).to receive(:new).and_return(send_message_service)
+        click_on "Send message"
       end
 
-      it "shows the reply" do
-        click_link "Messages"
-        find("span", text: "Send New Message").click
-        fill_in_editor "Your message", with: "This is a test message"
-        click_button "Send message"
-        click_link "Messages"
-        click_link "View"
-
+      it "shows the message" do
         within("#messages") do
-          expect(page).to have_text "Caseworker"
-          expect(page).to have_text "This is a test message"
+          expect(page).to have_text "bcc@email.com, cc@email.com, to@email.com"
+          expect(page).to have_text "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
         end
       end
     end

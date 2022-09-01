@@ -2,11 +2,15 @@
 <% url = reply ? support_case_message_replies_path(@current_case, email, unique_id: unique_id) : support_case_messages_path(@current_case, unique_id: unique_id) %>
 <% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
 
-<%= form_with model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
+<%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
   <%= form.govuk_error_summary %>
 
+  <% if !reply %>
+    <%= render "support/cases/messages/replies/new_message_components", form: form, unique_id: unique_id %>
+  <% end %>
+
   <%= form.govuk_text_area :body, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
-    value: (render "support/cases/messages/reply_form_template"),
+    value: @body || (render "support/cases/messages/reply_form_template"),
     "data-component" => "tinymce",
     "data-tinymce-profile" => "basic",
     "data-tinymce-selector" => ".message-reply-box"
@@ -22,6 +26,11 @@
       "data-component" => "display-attachments",
       "data-display-attachments-id" => unique_id
     %>
+    <% if !reply %>
+      <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-cc-bcc" type="button">
+        <%= I18n.t("support.case.label.message_threads.new.hide_cc_bcc") %>
+      </button>
+    <% end %>
   </div>
 
   <div class="govuk-grid-row">

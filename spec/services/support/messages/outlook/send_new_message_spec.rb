@@ -4,7 +4,9 @@ describe Support::Messages::Outlook::SendNewMessage do
   subject(:send_message) do
     described_class.new(
       ms_graph_client:,
-      recipient: "test@test.com",
+      to_recipients: ["test@test.com"],
+      cc_recipients: ["cc@test.com"],
+      bcc_recipients: ["bcc@test.com"],
       subject: "subject",
       message_text: "<p>Message</p>",
       sender: agent,
@@ -64,8 +66,22 @@ describe Support::Messages::Outlook::SendNewMessage do
           subject: "subject",
           toRecipients: [
             {
-              "emailAddress": {
-                "address": "test@test.com",
+              "emailAddress" => {
+                "address" => "test@test.com",
+              },
+            },
+          ],
+          ccRecipients: [
+            {
+              "emailAddress" => {
+                "address" => "cc@test.com",
+              },
+            },
+          ],
+          bccRecipients: [
+            {
+              "emailAddress" => {
+                "address" => "bcc@test.com",
               },
             },
           ],

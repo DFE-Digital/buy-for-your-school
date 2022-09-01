@@ -45,7 +45,7 @@ describe MicrosoftGraph::Client do
 
     before do
       allow(client_session).to receive(:graph_api_get)
-        .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages?$select=internetMessageHeaders,internetMessageId,importance,body,bodyPreview,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients,isRead,isDraft,hasAttachments,uniqueBody&$expand=singleValueExtendedProperties($filter=id eq 'String 0x1042')")
+        .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages?$select=internetMessageHeaders,internetMessageId,importance,body,bodyPreview,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients,ccRecipients,bccRecipients,isRead,isDraft,hasAttachments,uniqueBody&$expand=singleValueExtendedProperties($filter=id eq 'String 0x1042')")
         .and_return(graph_api_response)
     end
 
@@ -71,7 +71,7 @@ describe MicrosoftGraph::Client do
         client.list_messages_in_folder(user_id, mail_folder, query: ["$filter=sentDateTime eq X", "$orderBy=receivedDateTime desc"])
 
         expect(client_session).to have_received(:graph_api_get)
-          .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages?$filter=sentDateTime eq X&$orderBy=receivedDateTime desc&$select=internetMessageHeaders,internetMessageId,importance,body,bodyPreview,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients,isRead,isDraft,hasAttachments,uniqueBody&$expand=singleValueExtendedProperties($filter=id eq 'String 0x1042')")
+          .with("users/#{user_id}/mailFolders('#{mail_folder}')/messages?$filter=sentDateTime eq X&$orderBy=receivedDateTime desc&$select=internetMessageHeaders,internetMessageId,importance,body,bodyPreview,conversationId,subject,receivedDateTime,sentDateTime,from,toRecipients,ccRecipients,bccRecipients,isRead,isDraft,hasAttachments,uniqueBody&$expand=singleValueExtendedProperties($filter=id eq 'String 0x1042')")
       end
     end
   end
