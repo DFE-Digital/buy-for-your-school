@@ -9,8 +9,7 @@
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.
 Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'spec/services/support/messages/outlook/resync_email_ids_spec.rb'
+  Enabled: false
 
 # Offense count: 1
 # Configuration parameters: IgnoredPatterns.
@@ -65,6 +64,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220225175814_change_framework_requests_to_combine_orgs.rb'
     - 'db/migrate/20220310170158_change_closure_reason_to_enum.rb'
     - 'db/migrate/20220505103423_add_replying_to_id_to_support_emails.rb'
+    - 'db/migrate/20220805130609_change_support_emails_in_reply_to_id.rb'
 
 # Offense count: 1
 # Configuration parameters: Include.
@@ -98,3 +98,4 @@ Style/DateTime:
   Exclude:
     - 'lib/microsoft_graph/transformer/attachment.rb'
     - 'lib/microsoft_graph/transformer/message.rb'
+    - 'lib/microsoft_graph/transformer/update_message.rb'

@@ -189,11 +189,20 @@ en:
   message_reply_form:
     rules:
       body: ""
+      subject: ""
+      to_recipients: ""
       attachments: ""
     errors:
       rules:
         body:
           missing: The reply body cannot be blank
+        subject:
+          missing: The subject cannot be blank
+        no_recipients: At least one recipient must be specified
+        invalid_to_recipients: The TO recipients contain an invalid email address
+        invalid_cc_recipients: The CC recipients contain an invalid email address
+        invalid_bcc_recipients: The BCC recipients contain an invalid email address
+        no_ref: Either the subject or the message body must contain the case reference %{case_ref}
         attachments:
           infected: One or more of the files you uploaded contained a virus and have been rejected
           incorrect_file_type: One or more of the files you uploaded was an incorrect file type

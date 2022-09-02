@@ -1,0 +1,16 @@
+<tr class="govuk-table__row" id="thread_logged_contacts">
+  <td class="govuk-table__cell">
+    <strong>
+      <%= @current_case.full_name.presence || @current_case.email %>
+    </strong>
+  </td>
+  <td class="govuk-table__cell">
+    <%= I18n.t("support.case.label.message_threads.logged_contacts") %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= @current_case.logged_contacts_last_updated %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= link_to I18n.t("support.case.label.message_threads.view"), logged_contacts_support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-link" %>
+  </td>
+</tr>

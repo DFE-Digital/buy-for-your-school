@@ -1,0 +1,33 @@
+// copied from govuk-frontend/govuk/components/tabs/_index.scss
+
+.govuk-tabs__tab_custom {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+
+  display: inline-block;
+  margin-bottom: govuk-spacing(2);
+}
+
+// JavaScript enabled
+.js-enabled {
+  .govuk-tabs__tab_custom {
+    @include govuk-link-style-text;
+
+    margin-bottom: 0;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+
+.govuk-tabs__list-item--selected {
+  .govuk-tabs__tab_custom {
+    text-decoration: none;
+  }
+}

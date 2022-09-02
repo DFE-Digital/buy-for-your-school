@@ -11,16 +11,6 @@ describe MicrosoftGraph::Transformer::Message do
         "hasAttachments" => true,
         "id" => "AAMkAGmnprAAA=",
         "internetMessageId" => "<imid_AAMkAGmnprAAA@mail.gmail.com",
-        "internetMessageHeaders" => [
-          {
-            "name" => "CaseReference",
-            "value" => "000123",
-          },
-          {
-            "name" => "OtherHeader",
-            "value" => "OtherValue",
-          },
-        ],
         "importance" => "high",
         "isDraft" => false,
         "isRead" => true,
@@ -31,6 +21,13 @@ describe MicrosoftGraph::Transformer::Message do
           { "emailAddress" => { "address" => "x", "name" => "y" } },
           { "emailAddress" => { "address" => "a", "name" => "b" } },
         ],
+        "singleValueExtendedProperties" => [
+          { "id" => "x", "value" => "y" },
+          { "id" => "a", "value" => "b" },
+        ],
+        "uniqueBody" => {
+          "content" => "c", "contentType" => "cT"
+        },
       }
 
       message = described_class.transform(payload, into: MicrosoftGraph::Resource::Message)
@@ -42,16 +39,11 @@ describe MicrosoftGraph::Transformer::Message do
       expect(message.body_preview).to eq("<p>Hello, World</p>")
       expect(message.conversation_id).to eq("CONVID123")
       expect(message.from.as_json).to match(
-        MicrosoftGraph::Transformer::Recipient.transform(payload["from"],
-                                                         into: MicrosoftGraph::Resource::Recipient).as_json,
+        MicrosoftGraph::Transformer::Recipient.transform(payload["from"], into: MicrosoftGraph::Resource::Recipient).as_json,
       )
       expect(message.has_attachments).to eq(true)
       expect(message.id).to eq("AAMkAGmnprAAA=")
       expect(message.internet_message_id).to eq("<imid_AAMkAGmnprAAA@mail.gmail.com")
-      expect(message.internet_message_headers).to eq([
-        { name: "CaseReference", value: "000123" },
-        { name: "OtherHeader", value: "OtherValue" },
-      ])
       expect(message.importance).to eq("high")
       expect(message.is_draft).to eq(false)
       expect(message.is_read).to eq(true)
@@ -60,11 +52,17 @@ describe MicrosoftGraph::Transformer::Message do
       expect(message.subject).to eq("Important, please read")
       expect(message.to_recipients.map(&:as_json)).to match(
         payload["toRecipients"]
-          .map { |recipient|
-            MicrosoftGraph::Transformer::Recipient.transform(recipient,
-                                                             into: MicrosoftGraph::Resource::Recipient)
-          }
+          .map { |recipient| MicrosoftGraph::Transformer::Recipient.transform(recipient, into: MicrosoftGraph::Resource::Recipient) }
           .map(&:as_json),
+      )
+      expect(message.single_value_extended_properties.map(&:as_json)).to eq(
+        payload["singleValueExtendedProperties"]
+          .map { |svep| MicrosoftGraph::Transformer::JsonResponse.transform(svep, into: MicrosoftGraph::Resource::SingleValueExtendedProperty) }
+          .map(&:as_json),
+      )
+      expect(message.unique_body.as_json).to match(
+        MicrosoftGraph::Transformer::ItemBody.transform(payload["uniqueBody"],
+                                                        into: MicrosoftGraph::Resource::ItemBody).as_json,
       )
     end
   end

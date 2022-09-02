@@ -1,13 +1,9 @@
 module Support
-  class CasesController < ApplicationController
+  class CasesController < Cases::ApplicationController
     require "will_paginate/array"
     before_action :filter_forms, only: %i[index]
     before_action :reply_form, only: %i[show]
     before_action :current_case, only: %i[show edit]
-
-    content_security_policy do |policy|
-      policy.style_src_attr :unsafe_inline
-    end
 
     include Concerns::HasInteraction
 
@@ -20,13 +16,13 @@ module Support
         format.html do
           @cases = FilterCases.new.filter(params[:filter_all_cases_form]).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
           @new_cases = FilterCases.new.filter(params[:filter_new_cases_form]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
-          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).where.not(state: :closed).by_agent(current_agent&.id).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).where.not(state: %i[closed resolved]).by_agent(current_agent&.id).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         end
       end
     end
 
     def show
-      @back_url = url_internal?(back_link_param) ? back_link_param : support_cases_path
+      @back_url = url_from(back_link_param) || support_cases_path
     end
 
     def new
@@ -120,12 +116,6 @@ module Support
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
-    end
-
-    def back_link_param
-      return if params[:back_to].blank?
-
-      Base64.decode64(params[:back_to])
     end
   end
 end

@@ -1,0 +1,15 @@
+<div data-component="view-hidden-responses">
+  <div class="show-action">
+    <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      View <%= messages.count %> more responses
+    </button>
+
+    <hr class="govuk-!-margin-bottom-6" />
+  </div>
+
+  <div class="hidden-responses govuk-!-display-none">
+    <% messages.each do |message| %>
+      <%= render "support/cases/message_threads/message", truncated_message: true, message: message, current_case: current_case %>
+    <% end %>
+  </div>
+</div>

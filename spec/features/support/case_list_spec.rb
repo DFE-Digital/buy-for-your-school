@@ -34,6 +34,7 @@ RSpec.feature "Case management dashboard" do
     let!(:new_case) { create(:support_case, agent:) }
 
     before do
+      create(:support_case, state: :resolved)
       visit "/support/cases"
     end
 
@@ -42,6 +43,14 @@ RSpec.feature "Case management dashboard" do
         expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
         row = all(".govuk-table__body .govuk-table__row")
         expect(row[0]).to have_text new_case.ref
+      end
+    end
+
+    it "does not show resolved cases" do
+      within "#my-cases" do
+        within "tbody.govuk-table__body" do
+          expect(page).not_to have_text("Resolved")
+        end
       end
     end
 
@@ -54,6 +63,11 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[3]).to have_text "Status"
         expect(table_headers[4]).to have_text "Last updated"
       end
+    end
+
+    it "displays a link to view all the agent's resolved cases" do
+      url = "/support/cases/find-a-case?search_case_form%5Bagent%5D=#{agent.id}&search_case_form%5Bsearch_term%5D=#{agent.last_name.downcase}&search_case_form%5Bstate%5D=resolved"
+      expect(page).to have_link("View all my resolved cases", href: url)
     end
   end
 
@@ -98,6 +112,14 @@ RSpec.feature "Case management dashboard" do
       within "#all-cases" do
         within "tbody.govuk-table__body" do
           expect(page).not_to have_text("Closed")
+        end
+      end
+    end
+
+    it "shows resolved cases" do
+      within "#all-cases" do
+        within "tbody.govuk-table__body" do
+          expect(page).to have_text("Resolved")
         end
       end
     end

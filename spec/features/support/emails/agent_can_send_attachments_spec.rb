@@ -19,7 +19,7 @@ describe "Agent can add attachments to replies", js: true do
       send_reply_service = double("send_reply_service")
 
       allow(send_reply_service).to receive(:call) do
-        reply = create(:support_email, :sent_items, case: support_case, replying_to: email, body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
+        reply = create(:support_email, :sent_items, case: support_case, in_reply_to: email, body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
         create(:support_email_attachment, email: reply)
         create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: reply.id })
       end
@@ -27,6 +27,7 @@ describe "Agent can add attachments to replies", js: true do
       allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
 
       click_on "Messages"
+      click_on "View"
 
       within("#messages") do
         find("span", text: "Reply to message").click
@@ -51,7 +52,7 @@ describe "Agent can add attachments to replies", js: true do
       it "shows attachment on submitted reply" do
         click_button "Send reply"
 
-        within "#messages tr", text: "This is a test reply" do
+        within "#messages .attachments" do
           expect(page).to have_text "attachment.txt"
         end
       end

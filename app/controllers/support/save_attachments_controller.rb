@@ -1,7 +1,7 @@
 module Support
   class SaveAttachmentsController < ::Support::ApplicationController
     before_action :find_email
-    before_action { @back_url = support_email_path(@email) }
+    before_action { @back_url = support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.case_id) }
 
     def new
       @save_attachments_form = SaveAttachmentsForm.from_email(@email)
@@ -20,7 +20,7 @@ module Support
   private
 
     def find_email
-      @email = Support::Email.find(params[:email_id])
+      @email = Support::Email.find(params[:message_id])
     end
 
     def save_attachments_form_params

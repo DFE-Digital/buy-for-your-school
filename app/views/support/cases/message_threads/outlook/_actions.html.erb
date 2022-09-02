@@ -1,0 +1,18 @@
+<% if message.can_mark_as_read? %>
+  <span class="govuk-!-margin-left-2">
+    <%= render "support/cases/emails/#{message.is_read? ? "read_badge" : "unread_badge"}" %>
+  </span>
+
+  <span class="govuk-!-margin-left-1">
+    <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
+      support_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
+      method: :patch,
+      class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
+  </span>
+<% end %>
+
+<% if message.can_save_attachments? %>
+  <span class="govuk-!-margin-left-2">
+    <%= link_to I18n.t("support.case.label.messages.table.save_attachments"), new_support_message_save_attachments_path(message_id: message.id), class: "govuk-link govuk-link--no-underline govuk-link--no-visited-state govuk-!-font-weight-bold" %>
+  </span>
+<% end %>

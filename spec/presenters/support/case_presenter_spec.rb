@@ -176,15 +176,63 @@ RSpec.describe Support::CasePresenter do
     end
   end
 
-  describe "#received_message_interactions" do
-    context "when there are emails from the school" do
-      before do
-        create_list(:support_interaction, 2, :email_from_school, case: support_case)
-      end
+  describe "#message_threads" do
+    before do
+      create(:support_email, case: support_case)
+      create(:support_email, case: support_case)
+    end
 
-      it "returns them" do
-        expect(presenter.received_message_interactions.size).to eq 2
-      end
+    it "returns all the message threads wrapped in a presenter" do
+      expect(presenter.message_threads.size).to eq 1
+      expect(presenter.message_threads).to all(be_a(Support::MessageThreadPresenter))
+    end
+  end
+
+  describe "#templated_messages" do
+    before do
+      create(:support_interaction, :email_from_school, additional_data: { email_template: "template" }, case: support_case)
+      create(:support_interaction, :email_to_school, additional_data: { email_template: "template" }, case: support_case)
+    end
+
+    it "returns all the templated messages wrapped in a presenter" do
+      expect(presenter.templated_messages.size).to eq 2
+      expect(presenter.templated_messages).to all(be_a(Support::Messages::NotifyMessagePresenter))
+    end
+  end
+
+  describe "#logged_contacts" do
+    before do
+      create(:support_interaction, :email_from_school, additional_data: {}, case: support_case)
+      create(:support_interaction, :email_to_school, additional_data: {}, case: support_case)
+      create(:support_interaction, :phone_call, additional_data: {}, case: support_case)
+    end
+
+    it "returns all the logged contacts wrapped in a presenter" do
+      expect(presenter.logged_contacts.size).to eq 3
+      expect(presenter.logged_contacts).to all(be_a(Support::Messages::NotifyMessagePresenter))
+    end
+  end
+
+  describe "#templated_messages_last_updated" do
+    before do
+      create(:support_interaction, :email_from_school, additional_data: { email_template: "template" }, case: support_case, created_at: Time.zone.parse("01/01/2022 10:30"))
+      create(:support_interaction, :email_to_school, additional_data: { email_template: "template" }, case: support_case, created_at: Time.zone.parse("01/01/2022 10:35"))
+    end
+
+    it "returns the creation date of the latest templated message" do
+      expect(presenter.templated_messages_last_updated).to eq "01 January 2022 10:35"
+    end
+  end
+
+  describe "#logged_contacts_last_updated" do
+    before do
+      create(:support_interaction, :email_from_school, additional_data: {}, case: support_case, created_at: Time.zone.parse("01/01/2022 10:30"))
+      create(:support_interaction, :email_to_school, additional_data: {}, case: support_case, created_at: Time.zone.parse("01/01/2022 11:22"))
+      create(:support_interaction, :phone_call, additional_data: {}, case: support_case, created_at: Time.zone.parse("01/01/2022 10:35"))
+    end
+
+    it "returns the creation date of the latest logged contact" do
+      expect(presenter.logged_contacts_last_updated).to eq "01 January 2022 11:22"
     end
   end
 end

@@ -585,6 +585,25 @@ en:
         create: Create a new case
         date_received: Date received
         last_updated: Last updated
+        message_threads:
+          action: Action
+          back: Back to message list
+          last_update: Last update
+          logged_contacts: Logged contacts
+          new:
+            add: Add
+            add_recipients: Add recipients to the email
+            bcc: BCC
+            cc: CC
+            enter_subject: Enter an email subject
+            hide_cc_bcc: Hide CC / BCC
+            to: TO
+          new_thread: Create a new message thread
+          recipients: Recipients
+          subject: Subject
+          templated_messages: Templated messages
+          using_template: 'Template: "%{template}"'
+          view: View
         messages:
           reply:
             add_attachments: Add attachments
@@ -676,6 +695,7 @@ en:
           unspecified: Not specified
         value:
           unspecified: Not specified
+        view_resolved_cases: View all my resolved cases
       link:
         change: change
         view_group_information: View group information (opens in a new tab)
@@ -1024,24 +1044,9 @@ en:
       button:
         mark_as_read: Mark as read
         mark_as_unread: Mark as unread
-      index:
-        header: Notifications
-        table:
-          case: Case
-          sender: Sender
-          sent_at: Sent at
-          subject: Subject
       show:
-        attachments: Attachments
-        case_id: Case ID
-        header: View Email
-        recipients: Recipients
         sender: Sender
-        sent_at: Sent at
         subject: Subject
-      tabs:
-        my_case_emails: My Case Emails
-        new_emails: New Emails
     generic:
       cancel: Cancel
       continue: Continue
@@ -1133,7 +1138,6 @@ en:
         rename_attachment: Rename attachment (optional)
         subheader: You can rename and add a description to attachments you select
         submit: Save to case
-      initiate_journey: Save attachments
       success:
         actions:
           go_back_to_email: Go back to email

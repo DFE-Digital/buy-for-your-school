@@ -27,7 +27,8 @@ module Support
         end
 
         def recipients
-          to_recipients.map(&:email_address).map do |email_address|
+          all_recipients = to_recipients + cc_recipients + bcc_recipients
+          all_recipients.map(&:email_address).map do |email_address|
             { address: email_address.address, name: email_address.name }
           end
         end

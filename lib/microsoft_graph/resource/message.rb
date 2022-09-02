@@ -14,11 +14,20 @@ module MicrosoftGraph
       option :importance, Types::String
       option :is_draft, Types::Bool
       option :is_read, Types::Bool
-      option :internet_message_headers, Types.Array(Types::Hash)
       option :received_date_time, Types.Instance(DateTime)
       option :sent_date_time, Types.Instance(DateTime)
+      option :single_value_extended_properties, Types.Array(Types.DryConstructor(SingleValueExtendedProperty)) | Types::Nil, optional: true
       option :subject, Types::String
       option :to_recipients, Types.Array(Types.DryConstructor(Recipient))
+      option :cc_recipients, Types.Array(Types.DryConstructor(Recipient)), optional: true
+      option :bcc_recipients, Types.Array(Types.DryConstructor(Recipient)), optional: true
+      option :unique_body, Types.DryConstructor(ItemBody), optional: true
+
+      def in_reply_to_id
+        single_value_extended_properties
+          &.find { |svep| svep.id == SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID }
+          &.value
+      end
     end
   end
 end

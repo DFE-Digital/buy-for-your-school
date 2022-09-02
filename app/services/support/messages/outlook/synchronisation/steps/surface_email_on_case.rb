@@ -5,11 +5,7 @@ module Support
         module Steps
           class SurfaceEmailOnCase
             def self.call(message, email)
-              support_case = email.case
-
-              support_case.update!(action_required: true) if message.inbox?
-
-              ::Support::Messages::Outlook::SurfaceEmailOnCase.call(MessageEmailAdapter.new(message, email))
+              email.case.update!(action_required: true) if message.inbox?
             end
           end
         end

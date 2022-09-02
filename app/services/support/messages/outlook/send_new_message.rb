@@ -2,10 +2,12 @@ module Support
   module Messages
     module Outlook
       class SendNewMessage
-        def initialize(message_text:, recipient:, subject:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
+        def initialize(message_text:, to_recipients:, cc_recipients:, bcc_recipients:, subject:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
           @ms_graph_client = ms_graph_client
           @message_text = message_text
-          @recipient = recipient
+          @to_recipients = to_recipients
+          @cc_recipients = cc_recipients
+          @bcc_recipients = bcc_recipients
           @subject = subject
           @sender = sender
           @file_attachments = file_attachments
@@ -15,7 +17,8 @@ module Support
           draft_message = update_message_with_content(create_draft_message)
           update_message_with_file_attachments(draft_message)
           send_message(draft_message)
-          SynchroniseMessage.call(draft_message)
+          full_message = get_full_message_details(draft_message)
+          SynchroniseMessage.call(full_message)
         end
 
       private
@@ -30,29 +33,28 @@ module Support
         end
 
         def update_message_with_content(draft_message_id)
+          details = {
+            body: {
+              "ContentType" => "HTML",
+              "content" => @message_text,
+            },
+            from: {
+              "emailAddress": {
+                "name" => SHARED_MAILBOX_NAME,
+                "address" => SHARED_MAILBOX_ADDRESS,
+              },
+            },
+            subject: @subject,
+          }
+
+          details[:toRecipients] = @to_recipients.map { |r| { "emailAddress" => { "address" => r } } }
+          details[:ccRecipients] = @cc_recipients.map { |r| { "emailAddress" => { "address" => r } } }
+          details[:bccRecipients] = @bcc_recipients.map { |r| { "emailAddress" => { "address" => r } } }
+
           updated_message = ms_graph_client.update_message(
             user_id: SHARED_MAILBOX_USER_ID,
             message_id: draft_message_id,
-            details: {
-              body: {
-                "ContentType" => "HTML",
-                "content" => @message_text,
-              },
-              from: {
-                "emailAddress": {
-                  "name" => SHARED_MAILBOX_NAME,
-                  "address" => SHARED_MAILBOX_ADDRESS,
-                },
-              },
-              toRecipients: [
-                {
-                  "emailAddress": {
-                    "address": @recipient,
-                  },
-                },
-              ],
-              subject: @subject,
-            },
+            details:,
           )
 
           wrap_message(updated_message)
@@ -73,6 +75,14 @@ module Support
             user_id: SHARED_MAILBOX_USER_ID,
             message_id: draft_message.id,
           )
+        end
+
+        def get_full_message_details(draft_reply)
+          response = ms_graph_client.get_message(
+            user_id: SHARED_MAILBOX_USER_ID,
+            message_id: draft_reply.id,
+          )
+          wrap_message(response)
         end
 
         def message_body_content(draft_message)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_24_084204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
     t.string "hear_about_service_other"
     t.integer "status"
     t.string "user_ip"
+    t.datetime "survey_started_at"
     t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
@@ -392,10 +393,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
     t.boolean "outlook_has_attachments", default: false
     t.integer "folder"
     t.boolean "is_read", default: false
-    t.uuid "replying_to_id"
     t.string "case_reference_from_headers"
     t.string "outlook_internet_message_id"
-    t.index ["replying_to_id"], name: "index_support_emails_on_replying_to_id"
+    t.string "in_reply_to_id"
+    t.text "unique_body"
+    t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -597,7 +599,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
-  add_foreign_key "support_emails", "support_emails", column: "replying_to_id"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
@@ -744,5 +745,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_112447) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
+  SQL
+  create_view "support_message_threads", sql_definition: <<-SQL
+      SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
+      se.case_id,
+      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
+             FROM support_emails se2,
+              LATERAL jsonb_array_elements(se2.recipients) elems(value)
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
+      se.subject,
+      ( SELECT se2.sent_at
+             FROM support_emails se2
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
+            ORDER BY se2.sent_at DESC
+           LIMIT 1) AS last_updated
+     FROM support_emails se;
   SQL
 end
