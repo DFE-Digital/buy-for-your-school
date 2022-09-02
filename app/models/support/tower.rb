@@ -1,6 +1,5 @@
 module Support
   class Tower < ApplicationRecord
-
     # Since these are all coming from other records, there is a risk of method collision
     # To avoid this, prefixes are used
     enum state: Case.states, _prefix: :case
