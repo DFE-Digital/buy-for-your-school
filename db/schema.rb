@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_24_084204) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_30_135926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -760,5 +760,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_084204) do
             ORDER BY se2.sent_at DESC
            LIMIT 1) AS last_updated
      FROM support_emails se;
+  SQL
+  create_view "support_towers", sql_definition: <<-SQL
+      SELECT cases.id,
+          CASE
+              WHEN ((cats.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
+              WHEN ((cats.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
+              WHEN ((cats.tower)::text = 'ICT'::text) THEN 'ICT'::text
+              WHEN ((cats.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
+              ELSE NULL::text
+          END AS procops_tower,
+      procs.stage,
+      cases.state,
+      cases.support_level
+     FROM ((support_cases cases
+       LEFT JOIN support_procurements procs ON ((procs.id = cases.procurement_id)))
+       LEFT JOIN support_categories cats ON ((cases.category_id = cats.id)))
+    WHERE (cases.state = ANY (ARRAY[0, 1, 3]));
   SQL
 end
