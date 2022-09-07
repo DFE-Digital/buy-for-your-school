@@ -52,9 +52,7 @@ module Support
       end
 
       def message_recap(view_context)
-        return nil if in_reply_to.blank?
-
-        OutlookMessagePresenter.new(in_reply_to).body_for_display(view_context, body_field: :body)
+        body_for_display(view_context, body_field: :body)
       end
 
       def body_for_display(view_context, body_field: :unique_body)
