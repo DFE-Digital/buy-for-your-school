@@ -1,15 +1,31 @@
 <tr class="govuk-table__row">
-  <td class="govuk-table__cell">
-    <strong>
+  <% if thread.messages.any? { |message| message.can_mark_as_read? && !message.is_read? } %>
+    <td class="govuk-table__cell govuk-!-font-weight-bold">
+      <strong>
+        <%= thread.recipients %>
+      </strong>
+    </td>
+    <td class="govuk-table__cell">
+      <strong>
+        <%= thread.subject %>
+      </strong>
+    </td>      
+    <td class="govuk-table__cell">
+      <strong>
+        <%= thread.last_updated %>
+      </strong>
+    </td>
+  <% else %>
+    <td class="govuk-table__cell">
       <%= thread.recipients %>
-    </strong>
-  </td>
-  <td class="govuk-table__cell">
-    <%= thread.subject %>
-  </td>
-  <td class="govuk-table__cell">
-    <%= thread.last_updated %>
-  </td>
+    </td>
+    <td class="govuk-table__cell">
+      <%= thread.subject %>
+    </td>
+    <td class="govuk-table__cell">
+      <%= thread.last_updated %>
+    </td>
+  <% end %>  
   <td class="govuk-table__cell">
     <%= link_to I18n.t("support.case.label.message_threads.view"), support_case_message_thread_path(id: thread, back_to: Base64.encode64(@back_url)), class: "govuk-link" %>
   </td>
