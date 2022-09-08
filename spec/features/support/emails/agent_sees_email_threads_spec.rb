@@ -26,11 +26,9 @@ describe "Agent sees email threads", bullet: :skip do
     end
 
     it "displays the thread as bold when a message is unread within the case messages tab" do
-      within "tr", text: "Email thread 1" do
-        expect(page).to have_selector("strong")
-      end
-      within "tr", text: "Email thread 2" do
-        expect(page).not_to have_selector("strong")
+      within ".messages-table" do
+        expect(page).to have_css(".unread-thread", text: "Email thread 1")
+        expect(page).not_to have_css(".unread-thread", text: "Email thread 2")
       end
     end
 

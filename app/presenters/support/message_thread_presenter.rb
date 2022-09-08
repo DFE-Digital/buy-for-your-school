@@ -37,6 +37,10 @@ module Support
       Support::CasePresenter.new(super)
     end
 
+    def unread_messages?
+      messages.any? { |message| message.can_mark_as_read? && !message.is_read? }
+    end
+
   private
 
     def date_format
