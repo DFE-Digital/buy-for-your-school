@@ -33,6 +33,10 @@ module Support
         []
       end
 
+      def show_recap?
+        false
+      end
+
       def render_actions(view_context)
         view_context.render("support/cases/message_threads/notify/actions", message: self)
       end
