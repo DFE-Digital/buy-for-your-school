@@ -148,21 +148,10 @@ describe Support::Messages::OutlookMessagePresenter do
   end
 
   describe "#message_recap" do
-    context "when the email is not a reply" do
-      let(:email) { create(:support_email, in_reply_to: nil) }
+    let(:email) { create(:support_email, body: "<p>message body</p>") }
 
-      it "returns nil" do
-        expect(presenter.message_recap(nil)).to be_nil
-      end
-    end
-
-    context "when the email is a reply" do
-      let(:in_reply_to) { create(:support_email, body: "message body") }
-      let(:email) { create(:support_email, in_reply_to:) }
-
-      it "returns the body of the previous message" do
-        expect(presenter.message_recap(nil)).to eq "<p>message body</p>"
-      end
+    it "returns the body of the current message" do
+      expect(presenter.message_recap(nil)).to eq "<p>message body</p>"
     end
   end
 

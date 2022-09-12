@@ -1,5 +1,4 @@
 <% truncated_message = defined?(truncated_message) ? truncated_message : false %>
-<% show_recap = defined?(show_recap) ? show_recap : false %>
 
 <div class="message">
   <div class="message-details">
@@ -24,7 +23,7 @@
 
       <%= render "support/cases/messages/attachments", email: message %>
 
-      <% if show_recap %>
+      <% if message.show_recap? %>
         <div class="message-recap">
           <div class="recap-controls" data-component="toggle-panel-visibility" data-panel="recap-<%= message.id %>">
             <div class="dots">

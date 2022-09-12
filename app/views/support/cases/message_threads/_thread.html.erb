@@ -1,8 +1,6 @@
-<tr class="govuk-table__row">
+<tr class="govuk-table__row <%= thread.unread_messages? ? "unread-thread" : "" %>">
   <td class="govuk-table__cell">
-    <strong>
-      <%= thread.recipients %>
-    </strong>
+    <%= thread.recipients %>
   </td>
   <td class="govuk-table__cell">
     <%= thread.subject %>

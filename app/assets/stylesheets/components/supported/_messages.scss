@@ -89,3 +89,7 @@
     width: 350px;
   }
 }
+
+.unread-thread {
+  @extend .govuk-\!-font-weight-bold;
+}
