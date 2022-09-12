@@ -55,6 +55,10 @@ module Support
         body_for_display(view_context, body_field: :body)
       end
 
+      def show_recap?
+        true
+      end
+
       def body_for_display(view_context, body_field: :unique_body)
         # Do initial removal of links, and replace images with inline attachments
         new_body = body_with_links_removed(
