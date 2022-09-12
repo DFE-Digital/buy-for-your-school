@@ -10,6 +10,7 @@ FactoryBot.define do
     sent_at { "2021-12-15 11:51:12" }
     outlook_received_at { "2021-12-15 11:51:12" }
     outlook_read_at { "2021-12-15 11:51:12" }
+    is_read { false }
     association :case, factory: :support_case
 
     trait :inbox do

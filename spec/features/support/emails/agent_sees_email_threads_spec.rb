@@ -7,8 +7,8 @@ describe "Agent sees email threads", bullet: :skip do
 
   context "when messages accross multiple threads exist" do
     before do
-      create(:support_email, case: support_case, outlook_conversation_id: "OCID1", subject: "Email thread 1", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1")
-      create(:support_email, case: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2", "address" => "test2@email.com" }], unique_body: "Email 2")
+      create(:support_email, :inbox, case: support_case, outlook_conversation_id: "OCID1", subject: "Email thread 1", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1", is_read: false)
+      create(:support_email, :inbox, case: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2", "address" => "test2@email.com" }], unique_body: "Email 2", is_read: true)
       create(:support_email, case: support_case, outlook_conversation_id: "OCID2", subject: "Re: Email thread 2", unique_body: "Email 3")
 
       click_button "Agent Login"
@@ -22,6 +22,13 @@ describe "Agent sees email threads", bullet: :skip do
       end
       within "tr", text: "Email thread 2" do
         expect(page).to have_content("Test 2")
+      end
+    end
+
+    it "displays the thread as bold when a message is unread within the case messages tab" do
+      within ".messages-table" do
+        expect(page).to have_css(".unread-thread", text: "Email thread 1")
+        expect(page).not_to have_css(".unread-thread", text: "Email thread 2")
       end
     end
 
