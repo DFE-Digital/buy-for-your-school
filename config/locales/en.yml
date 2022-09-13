@@ -629,7 +629,6 @@ en:
             save_attachments: Save attachments
             using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
-        no_sub_category: No sub-category
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
@@ -992,14 +991,35 @@ en:
         header: Source
     case_statistics:
       body:
-        no_of_cases: Number of cases
-        no_of_cases_by_state: Number of cases by state
-        no_of_cases_by_state_and_sub_category: Number of cases by sub-category and state
+        no_of_live_cases: Live cases
       download:
         csv: Download CSV
-        header: Case data
       header: Case statistics
       header_link: Case Statistics
+      overview_by_tower:
+        header: Overview by tower
+        no_tower: No tower
+        tower: Tower
+      stages:
+        contract_award: Contract award
+        evaluation: Evaluation
+        go_to_market: Go to market
+        handover: Handover
+        market_analysis: Market analysis
+        need: Need
+        sourcing_options: Sourcing options
+      states:
+        live: Live
+        new: New
+        on_hold: On hold
+        open: Open
+      tower:
+        header: "%{type} Statistics"
+        level: Level
+        live_cases_by_level: Live cases by level
+        live_cases_by_stage: Live cases by stage
+        stage: Stage
+        unspecified: Unspecified
     case_summary:
       edit:
         header: Update case summary

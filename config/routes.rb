@@ -133,6 +133,7 @@ Rails.application.routes.draw do
 
     scope "/case-statistics", as: "case_statistics" do
       get "/", to: "case_statistics#show"
+      resources :towers, only: %i[show], path: "tower"
     end
   end
 

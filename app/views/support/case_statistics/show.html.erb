@@ -3,51 +3,68 @@
 <h1 class="govuk-heading-l"><%= I18n.t("support.case_statistics.header") %></h1>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <table class="govuk-table">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.body.no_of_cases") %></th>
-          <td class="govuk-table__cell"><%= @no_of_cases.to_i %></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.body.no_of_cases_by_state") %></h2>
-    <table class="govuk-table">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <% @states.each do |state| %>
-            <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
-            <td class="govuk-table__cell"><%= @no_of_cases_by_state[state].to_i %></td>
-          <% end %>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.body.no_of_cases_by_state_and_sub_category") %></h2>
-    <table class="govuk-table">
-      <tbody class="govuk-table__body">
-        <% @categories.each do |category| %>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><%= category.title %></th>
-            <% @states.each do |state| %>
-              <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
-              <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, category.id]].to_i %></td>
-            <% end %>
-          </tr>
-        <% end %>
-          <tr>
-            <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.no_sub_category") %></th>
-              <% @states.each do |state| %>
-              <th scope="row" class="govuk-table__header"><%= I18n.t("support.case.label.state.state_#{state}") %></th>
-              <td class="govuk-table__cell"><%= @no_of_cases_by_state_and_category[[state, nil]].to_i %></td>
-            <% end %>
-          </tr>
-      </tbody>
-    </table>
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title govuk-!-margin-bottom-0 no_of_live_cases">
+        <%= @no_of_live_cases %>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= I18n.t("support.case_statistics.body.no_of_live_cases") %>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-inset-text border-left-colour-green opened-live-cases">
+      <strong><%= @no_of_live_cases_by_state["opened"] || 0 %> </strong> <%= I18n.t("support.case_statistics.states.open") %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter on-hold-live-cases">
+    <div class="govuk-inset-text border-left-colour-yellow">
+      <strong><%= @no_of_live_cases_by_state["on_hold"] || 0 %> </strong><%= I18n.t("support.case_statistics.states.on_hold") %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter initial-live-cases">
+    <div class="govuk-inset-text border-left-colour-blue">
+      <strong><%= @no_of_live_cases_by_state["initial"] || 0 %> </strong><%= I18n.t("support.case_statistics.states.new") %>
+    </div>
   </div>
 </div>
 
-<h1 class="govuk-heading-m"><%= I18n.t("support.case_statistics.download.header") %></h1>
-<%= link_to I18n.t("support.case_statistics.download.csv"), support_case_statistics_path(format: :csv), class: "govuk-button", role: "button" %>
+  <table class="govuk-table overview-by-tower">
+    <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_statistics.overview_by_tower.header") %></caption> 
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.overview_by_tower.tower") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.live") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.open") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.on_hold") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case_statistics.states.new") %></th>
+      </tr>
+    </thead>  
+    <tbody class="govuk-table__body">
+      <% @towers.each do | tower | %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= link_to tower, support_case_statistics_tower_path(tower), class: "govuk-link govuk-link--no-visited-state" %></th>
+          <td class="<%="govuk-table__cell #{tower.gsub(" ", "-")}-live-cell"%>"><%= @no_of_live_cases_by_tower[tower].to_i %></td>
+          <% @live_states.each do |state| %>
+            <td class="<%="govuk-table__cell #{tower.gsub(" ", "-")}-#{state}-cell"%>"><%= @no_of_live_cases_by_tower_and_state[[tower, state]].to_i %></td>
+          <% end %>   
+        </tr>
+      <% end %> 
+      <tr>
+        <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.overview_by_tower.no_tower") %></th>
+        <td class="govuk-table__cell no-tower-live-cell"><%= @no_of_live_cases_by_tower[nil].to_i %></td>  
+          <% @live_states.each do |state| %>
+            <td class="<%="govuk-table__cell no-tower-#{state}-cell"%>"><%= @no_of_live_cases_by_tower_and_state[[nil, state]].to_i %></td> 
+        <% end %>
+      </tr> 
+    </tbody>
+  </table>
+
+    <%= link_to I18n.t("support.case_statistics.download.csv"), support_case_statistics_path(format: :csv), class: "govuk-button", role: "button" %>
+  </div>
+</div>
+
