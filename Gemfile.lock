@@ -513,7 +513,7 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.11.0)
       concurrent-ruby (~> 1.0)
-    shoulda-matchers (5.1.0)
+    shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
     sidekiq (6.5.6)
       connection_pool (>= 2.2.5)
