@@ -11,7 +11,7 @@
     "accessible-autocomplete": "^2.0.4",
     "babel-loader": "^8.2.5",
     "babel-plugin-macros": "^3.1.0",
-    "core-js": "^3.24.1",
+    "core-js": "^3.25.2",
     "govuk-frontend": "^4.3.1",
     "lodash": "^4.17.21",
     "sass": "^1.54.4",
