@@ -7,7 +7,7 @@ on:
       - auto-update-dependencies
   schedule:
     # At 00:00 on Wednesday. https://crontab.guru/every-wednesday
-    - cron: '27 13 * * WED'
+    - cron: '0 0 * * WED'
 
 jobs:
   update_bundler_and_yarn:
@@ -16,11 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Run updates
       - run: |
           docker run --rm \
             -v ${PWD}:/srv/app \
             ghcr.io/dfe-digital/buy-for-your-school:latest-test \
-            bash -c 'bundle update && yarn upgrade'
+            bash -c 'bundle config unset frozen && bundle update && yarn upgrade'
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
