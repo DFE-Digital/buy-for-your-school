@@ -23,7 +23,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          branch: update-dependencies
+          branch: main
           delete-branch: true
           title: 'Support: Updated dependencies'
           commit-message: 'Updated bundled gems and node modules'
