@@ -2,9 +2,6 @@ name: "Support - Update Dependencies"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - auto-update-dependencies
   schedule:
     # At 00:00 on Wednesday. https://crontab.guru/every-wednesday
     - cron: '0 0 * * WED'
