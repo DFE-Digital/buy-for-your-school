@@ -1,10 +1,10 @@
-name: "Support - Updated Dependencies"
+name: "Support - Update Dependencies"
 
 on:
   workflow_dispatch:
   schedule:
     # At 00:00 on Wednesday. https://crontab.guru/every-wednesday
-    - cron: '0 0 * * WED'
+    - cron: '27 13 * * WED'
 
 jobs:
   update_bundler_and_yarn:
