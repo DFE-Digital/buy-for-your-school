@@ -5,6 +5,9 @@ on:
   schedule:
     # At 00:00 on Wednesday. https://crontab.guru/every-wednesday
     - cron: '0 0 * * WED'
+  push:
+    branches:
+      - auto-update-dependencies
 
 jobs:
   update_bundler_and_yarn:
