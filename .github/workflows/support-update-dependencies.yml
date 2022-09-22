@@ -1,0 +1,31 @@
+name: "Support - Updated Dependencies"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # At 00:00 on Wednesday. https://crontab.guru/every-wednesday
+    - cron: '0 0 * * WED'
+
+jobs:
+  update_bundler_and_yarn:
+    name: Update bundler and yarn
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: |
+          docker run --rm \
+            -v ${PWD}:/srv/app \
+            ghcr.io/dfe-digital/buy-for-your-school:latest-test \
+            bash -c 'bundle update && yarn upgrade'
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: update-dependencies
+          delete-branch: true
+          title: 'Support: Updated dependencies'
+          commit-message: 'Updated bundled gems and node modules'
+          add-paths: |
+            Gemfile.lock
+            yarn.lock
