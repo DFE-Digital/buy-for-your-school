@@ -1,7 +1,7 @@
 <%= form.hidden_field :confidence_level, value: form.object.confidence_level if form.object.confidence_level.present? %>
 
 <span class="govuk-caption-l"><%= I18n.t("request.procurement_amount.caption") %></span>
-<h1 class="govuk-heading-l"><%= I18n.t("request.procurement_amount.heading") %></p>
+<h1 class="govuk-heading-l"><%= I18n.t("request.procurement_amount.heading") %></h1>
 <% for content in I18n.t("request.procurement_amount.helper_content") do %>
   <p class="govuk-hint"><%= content %></p>
 <% end %>
