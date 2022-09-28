@@ -157,12 +157,24 @@ jobs:
             bundle exec ruby lib/code_coverage_collate.rb
 
           line_coverage=$(cat ${{ github.workspace }}/code_coverage/.last_run.json | jq .result.line)
+          branch_coverage=$(cat ${{ github.workspace }}/code_coverage/.last_run.json | jq .result.branch)
           echo "::set-output name=line::$line_coverage"
+          echo "::set-output name=branch::$branch_coverage"
 
           echo "---------- REPORT --------------"
           echo "Line coverage is $line_coverage%"
+          echo "Branch coverage is $branch_coverage%"
         env:
           COVERAGE_DIR: /srv/app/coverage
+
+      - name: Comment coverage results to PR
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            ### Code Coverage Report
+            Line coverage: ${{ steps.results.outputs.line }}%
+            Branch coverage: ${{ steps.results.outputs.branch }}%
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload combined code coverage report
         uses: actions/upload-artifact@v3

@@ -22,7 +22,9 @@ Knapsack::Adapters::RSpecAdapter.bind
 unless ENV["SKIP_COVERAGE"] == "1"
   require "simplecov"
   # SimpleCov.minimum_coverage 98
-  SimpleCov.start "rails"
+  SimpleCov.start "rails" do
+    enable_coverage :branch if ENV["CI"] == "1"
+  end
 end
 
 # NOTE: This is necessary for sign_in helpers to work correctly when feature
