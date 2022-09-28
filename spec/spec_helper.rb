@@ -23,7 +23,7 @@ unless ENV["SKIP_COVERAGE"] == "1"
   require "simplecov"
   # SimpleCov.minimum_coverage 98
   SimpleCov.start "rails" do
-    enable_coverage :branch if ENV["CI"] == "1"
+    enable_coverage :branch
   end
 end
 

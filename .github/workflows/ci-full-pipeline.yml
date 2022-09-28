@@ -171,7 +171,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            ### Code Coverage Report
+            #### Code Coverage Report
             Line coverage: ${{ steps.results.outputs.line }}%
             Branch coverage: ${{ steps.results.outputs.branch }}%
           repo-token: ${{ secrets.GITHUB_TOKEN }}
