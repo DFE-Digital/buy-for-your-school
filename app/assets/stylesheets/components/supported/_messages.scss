@@ -80,15 +80,43 @@
   }
 }
 
+$message-table-width: 75%;
+$message-key-width: 52px;
+
+.subject-input {
+  width: $message-table-width;
+}
+
 .recipient-input-group {
   display: flex;
   justify-content: space-between;
-  width: 420px;
+  width:  $message-table-width;
+
+  .govuk-form-group {
+    flex-grow: 1;
+  }
+
+  button {
+    margin-left: 10px;
+  }
 
   .govuk-input__wrapper {
-    width: 350px;
+    .govuk-input__prefix {
+      width: $message-key-width;
+    }
+    input {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
   }
 }
+
+.added_recipients_table {
+  .govuk-table__header {
+    width: $message-key-width;
+  }
+}
+
 
 .unread-thread {
   @extend .govuk-\!-font-weight-bold;

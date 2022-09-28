@@ -38,16 +38,11 @@ function createRecipientRow(tableId, label, value, collectionName) {
   const recipientEmail = document.createTextNode(value);
   recipientTd.appendChild(recipientEmail);
 
-  const recipientBlankTd = document.createElement("td");
-  recipientBlankTd.classList.add("govuk-table__cell");
-
   const recipientRemoveTd = document.createElement("td");
   recipientRemoveTd.classList.add("govuk-table__cell", "govuk-table__cell--numeric");
-
   recipientRemoveTd.appendChild(createRemoveLink(tableId, value, collectionName));
 
   recipientRow.appendChild(labelTh);
-  recipientRow.appendChild(recipientBlankTd);
   recipientRow.appendChild(recipientTd);
   recipientRow.appendChild(recipientRemoveTd);
 
@@ -86,13 +81,26 @@ function getRecipientsButtons() {
   return document.querySelectorAll('[data-component="add-recipients"]');
 }
 
+function pressEnterInInputBoxToAddRecipient(addButton) {
+  const inputField = document.querySelector(`input[name="${addButton.dataset.inputField}"]`);
+  inputField.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+      addButton.click();
+    }
+  })
+}
+
+function clickAddButtonToAddRecipient(addButton) {
+  addButton.addEventListener("click", () => addRecipient(addButton.dataset.inputField));
+}
+
 (() => {
   window.addEventListener("DOMContentLoaded", () => {
     getRecipientsButtons().forEach(b => {
       showTables(b.dataset.inputField);
-      b.addEventListener("click", () => {
-        addRecipient(b.dataset.inputField);
-      });
+      pressEnterInInputBoxToAddRecipient(b);
+      clickAddButtonToAddRecipient(b);
     });
   });
 })();
