@@ -71,8 +71,6 @@ class SupportForm < RequestForm
       go_to!(4)
     elsif position?(3) && has_journey?
       go_to!(5)
-    elsif position?(6) && !about_procurement?
-      go_to!(8)
     else
       advance!
     end
@@ -86,8 +84,6 @@ class SupportForm < RequestForm
       go_to!(2)
     elsif position?(5) && has_journey?
       go_to!(3)
-    elsif position?(8) && !about_procurement?
-      go_to!(6)
     else
       back!
     end
@@ -96,20 +92,6 @@ class SupportForm < RequestForm
   # @return [Hash] toggle form data to step backward
   def go_back
     to_h.merge(back: true)
-  end
-
-  def next?
-    # navigate to step 7 (confidence level) if the request is about a procurement
-    # and we don't have confidence_level
-    if position?(6)
-      if about_procurement? && confidence_level.blank?
-        true
-      elsif about_procurement? && confidence_level.present?
-        false
-      end
-    else
-      false
-    end
   end
 
 private

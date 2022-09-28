@@ -102,11 +102,9 @@ private
       email
       message_body
       procurement_amount
-      procurement_choice
       confidence_level
       special_requirements_choice
       special_requirements
-      about_procurement
     ])
   end
 

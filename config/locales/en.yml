@@ -489,12 +489,11 @@ en:
       special_requirements: Special requirements
     procurement_amount:
       caption: About your procurement
-      heading: Do you know how much the school will be spending on this procurement in total?
-      hint: This is the approximate amount you will be spending over the lifetime of the contract.<br><br>This information will help us to make sure you're buying compliantly for the amount you intend to spend.
-      how_much: Approximately how much?
+      heading: Approximately how much will the school be spending on this procurement in total?
+      helper_content:
+      - This is the approximate amount you'll be spending over the lifetime of the contract. Use the value of a previous or existing contract if you're unsure.
+      - We only use this value as a guide to understand your procurement better. We know it can change.
       not_known: Not known
-      radios:
-        not_about_procurement: My request is not about a procurement
     special_requirements:
       caption: Special requirements
       heading: Do you have any special requirements when you communicate or use technology and/or online services?

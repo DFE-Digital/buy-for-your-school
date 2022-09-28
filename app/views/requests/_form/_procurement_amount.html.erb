@@ -1,16 +1,9 @@
-<%= form.hidden_field :procurement_choice, value: form.object.procurement_choice %>
 <%= form.hidden_field :confidence_level, value: form.object.confidence_level if form.object.confidence_level.present? %>
-<%= form.hidden_field :about_procurement, value: form.object.about_procurement %>
 
-<%= form.govuk_radio_buttons_fieldset :procurement_choice,
-      caption: { text: I18n.t("request.procurement_amount.caption"), size: "l" },
-      legend: { text: I18n.t("request.procurement_amount.heading"), size: "l" },
-      hint: { text: I18n.t("request.procurement_amount.hint").html_safe } do %>
-        <%= form.govuk_radio_button :procurement_choice, :yes, label: { text: I18n.t("generic.yes") } do %>
-          <%= form.govuk_text_field :procurement_amount, width: 5, label: { text: I18n.t("request.procurement_amount.how_much") }, prefix_text: "£" %>
-        <% end %>
-        <%= form.govuk_radio_button :procurement_choice, :no, label: { text: I18n.t("generic.no") } %>
-        <%= form.govuk_radio_button :procurement_choice, :not_about_procurement, label: { text: I18n.t("request.procurement_amount.radios.not_about_procurement") } %>
+<span class="govuk-caption-l"><%= I18n.t("request.procurement_amount.caption") %></span>
+<h1 class="govuk-heading-l"><%= I18n.t("request.procurement_amount.heading") %></p>
+<% for content in I18n.t("request.procurement_amount.helper_content") do %>
+  <p class="govuk-hint"><%= content %></p>
 <% end %>
 
-<%= javascript_include_tag "request/procurement_amount", type: "module" %>
+<%= form.govuk_text_field :procurement_amount, width: 5, label: nil, prefix_text: "£" %>
