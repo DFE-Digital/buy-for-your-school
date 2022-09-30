@@ -5,7 +5,7 @@
 <%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
   <%= form.govuk_error_summary %>
 
-  <% if !reply %>
+  <% unless reply %>
     <%= render "support/cases/messages/replies/new_message_components", form: form, unique_id: unique_id %>
   <% end %>
 

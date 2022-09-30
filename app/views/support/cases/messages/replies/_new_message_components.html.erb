@@ -2,13 +2,14 @@
 <%= form.hidden_field :cc_recipients, value: @cc_recipients || nil  %>
 <%= form.hidden_field :bcc_recipients, value: @bcc_recipients || nil  %>
 
-<%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "govuk-!-width-one-half", value: @subject || @default_subject_line %>
-    
+<%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input", value: @subject || @default_subject_line %>
+
 <p class="govuk-label govuk-label--m"><%= I18n.t("support.case.label.message_threads.new.add_recipients") %></p>
 <span class="recipient-input-group">
   <%= form.govuk_text_field :to,
         label: nil,
         prefix_text: I18n.t("support.case.label.message_threads.new.to"),
+        placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_recipients"),
         "data-collection" => "message_reply_form_#{unique_id}[to_recipients]",
         "data-table" => "#{unique_id}_to" %>
   <button class="govuk-button"
@@ -24,6 +25,7 @@
     <%= form.govuk_text_field :cc,
           label: nil,
           prefix_text: I18n.t("support.case.label.message_threads.new.cc"),
+          placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_cc"),
           "data-collection" => "message_reply_form_#{unique_id}[cc_recipients]",
           "data-table" => "#{unique_id}_cc" %>
     <button class="govuk-button"
@@ -38,6 +40,7 @@
     <%= form.govuk_text_field :bcc,
           label: nil,
           prefix_text: I18n.t("support.case.label.message_threads.new.bcc"),
+          placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_bcc"),
           "data-collection" => "message_reply_form_#{unique_id}[bcc_recipients]",
           "data-table" => "#{unique_id}_bcc" %>
     <button class="govuk-button"
@@ -51,7 +54,7 @@
 </div>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-three-quarters">
     <table id="<%= unique_id %>_to" class="govuk-table added_recipients_table" data-row-label="TO" hidden="true">
       <tbody class="govuk-table__body">
         <% # to be populated by javascript %>

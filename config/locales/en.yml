@@ -597,6 +597,9 @@ en:
             cc: CC
             enter_subject: Enter an email subject
             hide_cc_bcc: Hide CC / BCC
+            press_enter_to_add_bcc: Press Enter to add recipients as BCC
+            press_enter_to_add_cc: Press Enter to add recipients as CC
+            press_enter_to_add_recipients: Press Enter to add recipients
             to: TO
           new_thread: Create a new message thread
           recipients: Recipients

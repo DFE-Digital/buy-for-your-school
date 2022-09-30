@@ -14,7 +14,9 @@ module Support
 
       def show; end
 
-      def new; end
+      def new
+        @to_recipients = Array(current_case.email).to_json
+      end
 
       def templated_messages; end
 
