@@ -1,6 +1,4 @@
 <%= form.hidden_field :confidence_level, value: form.object.confidence_level %>
-<%= form.hidden_field :procurement_choice, value: form.object.procurement_choice if form.object.procurement_choice.present? %>
-<%= form.hidden_field :about_procurement, value: form.object.about_procurement %>
 
 <%= form.govuk_radio_buttons_fieldset :confidence_level,
       caption: { text: I18n.t("request.confidence_level.caption"), size: "l" },

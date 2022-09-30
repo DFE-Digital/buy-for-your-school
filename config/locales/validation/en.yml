@@ -2,7 +2,6 @@
 en:
   request:
     rules:
-      procurement_choice: "" # Omitted
       procurement_amount: "" # Omitted
       confidence_level: "" # Omitted
       special_requirements_choice: "" # Omitted
@@ -10,11 +9,8 @@ en:
     
     errors:
       rules:
-        procurement_choice:
-          missing: Select whether you know how much is being spent
         procurement_amount:
-          missing: Enter the approximate amount that will be spent
-          invalid: Enter a number
+          invalid: Enter a valid number
           too_large: The amount cannot be larger than 9,999,999.99
         confidence_level:
           missing: Select how confident you feel about running this procurement
@@ -34,7 +30,6 @@ en:
       last_name: "" # Omitted
       email: "" # Omitted
       message_body: "" # Omitted
-      procurement_choice: "" # Omitted
       procurement_amount: "" # Omitted
       confidence_level: "" # Omitted
       special_requirements_choice: "" # Omitted
@@ -61,11 +56,8 @@ en:
           group: Select whether this is the Group or Trust you're buying for
         message_body:
           missing: You must tell us how we can help
-        procurement_choice:
-          missing: Select whether you know how much is being spent
         procurement_amount:
-          missing: Enter the approximate amount that will be spent
-          invalid: Enter a number
+          invalid: Enter a valid number
           too_large: The amount cannot be larger than 9,999,999.99
         confidence_level:
           missing: Select how confident you feel about running this procurement
@@ -80,7 +72,6 @@ en:
       message_body: "" # Omitted
       category_id: The type of procurement
       school_urn: "" # Omitted
-      procurement_choice: "" # Omitted
       procurement_amount: "" # Omitted
       confidence_level: "" # Omitted
       special_requirements_choice: "" # Omitted
@@ -100,11 +91,8 @@ en:
           no_spec: is required if you do not select an existing specification
         school_urn:
           missing: You must select a school
-        procurement_choice:
-          missing: Select whether you know how much is being spent
         procurement_amount:
-          missing: Enter the approximate amount that will be spent
-          invalid: Enter a number
+          invalid: Enter a valid number
           too_large: The amount cannot be larger than 9,999,999.99
         confidence_level:
           missing: Select how confident you feel about running this procurement

@@ -81,8 +81,6 @@ class FrameworkSupportForm < RequestForm
   def forward
     if position?(3) && dsi_with_many_orgs?
       go_to!(7)
-    elsif position?(8) && !about_procurement?
-      go_to!(10)
     else
       advance!
     end
@@ -94,8 +92,6 @@ class FrameworkSupportForm < RequestForm
   def backward
     if position?(7) && dsi_with_many_orgs?
       go_to!(3)
-    elsif position?(10) && !about_procurement?
-      go_to!(8)
 
     # This breaks the expected convention of going to the previous page but can
     # be used to skip over the "confirm school/group details" page.
@@ -145,14 +141,6 @@ class FrameworkSupportForm < RequestForm
       true # group choice
     elsif user.guest? && position?(3)
       org_id.present? # org selected
-    elsif position?(8)
-      # navigate to step 9 (confidence level) if the request is about a procurement
-      # and we don't have confidence_level
-      if about_procurement? && confidence_level.blank?
-        true
-      elsif about_procurement? && confidence_level.present?
-        false
-      end
     else
       false
     end

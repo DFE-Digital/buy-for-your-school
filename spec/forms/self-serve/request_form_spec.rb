@@ -9,39 +9,6 @@ RSpec.describe RequestForm do
     end
   end
 
-  describe "#about_procurement?" do
-    context "when we have a procurement_choice" do
-      context "and it is not_about_procurement" do
-        subject(:form) { described_class.new(user:, procurement_choice: "not_about_procurement") }
-
-        it "returns false" do
-          expect(form.about_procurement?).to eq false
-        end
-      end
-
-      context "and it is not not_about_procurement" do
-        subject(:form) { described_class.new(user:, procurement_choice: "yes") }
-
-        it "returns true" do
-          expect(form.about_procurement?).to eq true
-        end
-      end
-    end
-
-    context "when we do not have a procurement_choice" do
-      it "returns the value of about_procurement" do
-        form = described_class.new(user:, about_procurement: true)
-        expect(form.about_procurement?).to eq true
-
-        form = described_class.new(user:, about_procurement: false)
-        expect(form.about_procurement?).to eq false
-
-        form = described_class.new(user:)
-        expect(form.about_procurement?).to eq nil
-      end
-    end
-  end
-
   describe "#special_requirements_choice" do
     context "when there are validation errors" do
       subject(:form) { described_class.new(user:, special_requirements_choice: "yes", messages: { a: :b }) }
@@ -64,34 +31,15 @@ RSpec.describe RequestForm do
 
   describe "#data" do
     it "excludes radio button choices" do
-      form = described_class.new(user:, procurement_choice: "a", special_requirements_choice: "b")
-      expect(form.data).not_to include "procurement_choice"
+      form = described_class.new(user:, special_requirements_choice: "b")
       expect(form.data).not_to include "special_requirements_choice"
     end
 
     context "when procurement_amount is provided" do
-      context "and the request is about a procurement" do
-        subject(:form) { described_class.new(user:, procurement_amount: "55.12", procurement_choice: "yes") }
+      subject(:form) { described_class.new(user:, procurement_amount: "55.12") }
 
-        it "includes the procurement amount" do
-          expect(form.data[:procurement_amount]).to eq "55.12"
-        end
-
-        it "includes sets about_procurement to true" do
-          expect(form.data[:about_procurement]).to eq true
-        end
-      end
-
-      context "and the request is not about a procurement" do
-        subject(:form) { described_class.new(user:, procurement_choice: "not_about_procurement") }
-
-        it "sets the procurement amount to nil" do
-          expect(form.data[:procurement_amount]).to eq nil
-        end
-
-        it "sets about_procurement to false" do
-          expect(form.data[:about_procurement]).to eq false
-        end
+      it "includes the procurement amount" do
+        expect(form.data[:procurement_amount]).to eq "55.12"
       end
     end
 
@@ -102,20 +50,10 @@ RSpec.describe RequestForm do
     end
 
     context "when confidence_level is provided" do
-      context "and the request is about a procurement" do
-        subject(:form) { described_class.new(user:, confidence_level: "confident", about_procurement: true) }
+      subject(:form) { described_class.new(user:, confidence_level: "confident") }
 
-        it "includes the confidence level" do
-          expect(form.data[:confidence_level]).to eq "confident"
-        end
-      end
-
-      context "and the request is not about a procurement" do
-        subject(:form) { described_class.new(user:, confidence_level: "confident", about_procurement: false) }
-
-        it "sets the confidence level to nil" do
-          expect(form.data[:confidence_level]).to eq nil
-        end
+      it "includes the confidence level" do
+        expect(form.data[:confidence_level]).to eq "confident"
       end
     end
 
