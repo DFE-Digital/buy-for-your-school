@@ -1,0 +1,17 @@
+<%= turbo_frame_tag dom_id(message, 'message_recap') do %>
+  <div class="recap-controls">
+    <%= link_to support_case_message_recaps_path(message.case, message, expand: !expand_recap), class: 'dots', :"data-turbo-frame" => dom_id(message, 'message_recap') do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20">
+        <circle cx="10" cy="10" r="2"/>
+        <circle cx="3" cy="10" r="2"/>
+        <circle cx="17" cy="10" r="2"/>
+      </svg>
+    <% end %>
+  </div>
+
+  <% if expand_recap %>
+    <div class="recap-view">
+      <%= message.message_recap(self) %>
+    </div>
+  <% end %>
+<% end %>

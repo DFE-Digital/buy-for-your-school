@@ -24,21 +24,7 @@
       <%= render "support/cases/messages/attachments", email: message %>
 
       <% if message.show_recap? %>
-        <div class="message-recap">
-          <div class="recap-controls" data-component="toggle-panel-visibility" data-panel="recap-<%= message.id %>">
-            <div class="dots">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20">
-                <circle cx="10" cy="10" r="2"/>
-                <circle cx="3" cy="10" r="2"/>
-                <circle cx="17" cy="10" r="2"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="recap-view govuk-!-display-none" id="recap-<%= message.id %>">
-            <%= message.message_recap(self) %>
-          </div>
-        </div>
+        <%= render "support/cases/messages/recaps/recap", message: message, expand_recap: false %>
       <% end %>
     </div>
   </div>

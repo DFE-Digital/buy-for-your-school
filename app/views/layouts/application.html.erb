@@ -33,6 +33,10 @@
     <meta property="og:image" content="<%=image_path("images/govuk-opengraph-image.png")%>">
 
     <%= stylesheet_link_tag "application" %>
+
+    <% if support? %>
+      <%= javascript_include_tag "turbo", type: :module %>
+    <% end %>
   </head>
 
   <body class="govuk-template__body ">

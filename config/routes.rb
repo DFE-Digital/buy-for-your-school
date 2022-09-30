@@ -123,6 +123,7 @@ Rails.application.routes.draw do
         resources :messages, only: %i[create] do
           scope module: :messages do
             resources :replies, only: %i[create]
+            resource :recaps, only: %i[show]
           end
         end
       end
