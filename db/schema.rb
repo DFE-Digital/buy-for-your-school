@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_30_135926) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -148,7 +148,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_135926) do
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.integer "confidence_level"
     t.string "special_requirements"
-    t.boolean "about_procurement", default: true
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -535,7 +534,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_135926) do
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.integer "confidence_level"
     t.string "special_requirements"
-    t.boolean "about_procurement", default: true
     t.index ["category_id"], name: "index_support_requests_on_category_id"
     t.index ["journey_id"], name: "index_support_requests_on_journey_id"
     t.index ["user_id"], name: "index_support_requests_on_user_id"

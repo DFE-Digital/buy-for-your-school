@@ -118,6 +118,7 @@ ignore_unused:
   - 'support.case_documents.show.*'
   - 'support.case.label.messages.table.mark_as_read'
   - 'support.case.label.messages.table.mark_as_unread'
+  - 'request.procurement_amount.helper_content'
 
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:

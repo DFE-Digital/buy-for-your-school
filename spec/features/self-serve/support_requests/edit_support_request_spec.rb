@@ -258,10 +258,9 @@ RSpec.feature "Editing a 'Digital Support' request" do
              school_urn: "123")
     end
 
-    context "when procurement amount is known and the request was about a procurement" do
+    context "when procurement amount is known" do
       before do
         click_link "edit-procurement-amount"
-        choose "Yes"
         fill_in "support_form[procurement_amount]", with: "56.24"
         click_continue
       end
@@ -272,69 +271,16 @@ RSpec.feature "Editing a 'Digital Support' request" do
       end
     end
 
-    context "when procurement amount is known and the request was not about a procurement" do
-      let(:support_request) do
-        create(:support_request,
-               user: journey.user,
-               journey:,
-               category: nil,
-               phone_number: nil,
-               school_urn: "123",
-               procurement_amount: nil,
-               confidence_level: nil,
-               about_procurement: false)
-      end
-
-      before do
-        click_link "edit-procurement-amount"
-        choose "Yes"
-        fill_in "support_form[procurement_amount]", with: "56.24"
-        click_continue
-        choose "Very confident"
-        click_continue
-      end
-
-      it "updates the procurement amount and sets the confidence level" do
-        expect(answers[6]).to have_text "£56.24"
-        expect(answers[7]).to have_text "Very confident"
-        expect(support_request.reload.procurement_amount).to eq 56.24
-        expect(support_request.reload.confidence_level).to eq "very_confident"
-        expect(support_request.reload.about_procurement).to eq true
-      end
-    end
-
     context "when procurement amount is unknown" do
       before do
         click_link "edit-procurement-amount"
-        choose "No"
+        fill_in "support_form[procurement_amount]", with: nil
         click_continue
       end
 
       it "removes the procurement amount" do
         expect(answers[6]).to have_text "Not known"
         expect(support_request.reload.procurement_amount).to be_nil
-      end
-    end
-
-    context "when the request is not about a procurement" do
-      before do
-        click_link "edit-procurement-amount"
-        choose "My request is not about a procurement"
-        click_continue
-      end
-
-      it "removes the procurement amount" do
-        expect(answers[6]).to have_text "-"
-        expect(support_request.reload.procurement_amount).to be_nil
-      end
-
-      it "hides and removes the confidence level" do
-        expect(page).not_to have_text "Confidence level"
-        expect(support_request.reload.confidence_level).to be_nil
-      end
-
-      it "marks the request as not about a procurement" do
-        expect(support_request.reload.about_procurement).to eq false
       end
     end
   end
