@@ -29,7 +29,6 @@ class SupportRequestsController < ApplicationController
 
   def create
     if validation.success? && validation.to_h[:special_requirements]
-
       request = SupportRequest.create!(@form.data)
       redirect_to support_request_path(request)
     else
@@ -49,9 +48,6 @@ class SupportRequestsController < ApplicationController
       @form.toggle_subject
 
       if @form.jump_to_category?
-        @form.advance!
-        render :edit
-      elsif @form.next?
         @form.advance!
         render :edit
       else
@@ -108,11 +104,9 @@ private
       message_body
       school_urn
       procurement_amount
-      procurement_choice
       confidence_level
       special_requirements_choice
       special_requirements
-      about_procurement
       back
     ])
   end

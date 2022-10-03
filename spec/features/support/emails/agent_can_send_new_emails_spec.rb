@@ -1,7 +1,7 @@
 describe "Agent can send new emails" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case) }
+  let(:support_case) { create(:support_case, email: "contact@email.com") }
 
   before do
     click_button "Agent Login"
@@ -38,6 +38,8 @@ describe "Agent can send new emails" do
     it "shows added recipients" do
       to_table = find("table[data-row-label='TO']")
       within(to_table) do
+        # case email added by default
+        expect(page).to have_text "contact@email.com"
         expect(page).to have_text "to@email.com"
       end
 

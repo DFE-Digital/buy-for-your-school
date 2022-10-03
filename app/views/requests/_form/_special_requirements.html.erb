@@ -1,6 +1,4 @@
-<%= form.hidden_field :procurement_choice, value: form.object.procurement_choice if form.object.procurement_choice.present? %>
 <%= form.hidden_field :special_requirements_choice, value: form.object.special_requirements_choice %>
-<%= form.hidden_field :about_procurement, value: form.object.about_procurement %>
 
 <%= form.govuk_radio_buttons_fieldset :special_requirements,
       caption: { text: I18n.t("request.special_requirements.caption"), size: "l" },

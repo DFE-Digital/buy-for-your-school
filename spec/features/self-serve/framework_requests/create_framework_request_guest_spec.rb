@@ -37,7 +37,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   end
 
   def complete_procurement_amount_step
-    choose "Yes"
     fill_in "framework_support_form[procurement_amount]", with: "120.32"
     click_continue
   end
@@ -308,15 +307,10 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "has the correct attributes" do
         expect(page).to have_text "About your procurement"
-        expect(page).to have_text "Do you know how much the school will be spending on this procurement in total?"
+        expect(page).to have_text "Approximately how much will the school be spending on this procurement in total?"
 
-        expect(page).to have_text "This is the approximate amount you will be spending over the lifetime of the contract."
-        expect(page).to have_text "This information will help us to make sure you're buying compliantly for the amount you intend to spend."
-
-        expect(page).to have_unchecked_field "Yes"
-        expect(page).to have_field "Approximately how much?"
-        expect(page).to have_unchecked_field "No"
-        expect(page).to have_unchecked_field "My request is not about a procurement"
+        expect(page).to have_text "This is the approximate amount you'll be spending over the lifetime of the contract. Use the value of a previous or existing contract if you're unsure."
+        expect(page).to have_text "We only use this value as a guide to understand your procurement better. We know it can change."
 
         expect(page).to have_button "Continue"
       end
@@ -336,7 +330,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         click_on "Back"
         expect(page).to have_current_path(/step%5D=9/)
         expect(page).to have_current_path(/back%5D=true/)
-        expect(page).to have_text "Do you know how much the school will be spending on this procurement in total?"
+        expect(page).to have_text "Approximately how much will the school be spending on this procurement in total?"
       end
 
       it "has the correct attributes" do

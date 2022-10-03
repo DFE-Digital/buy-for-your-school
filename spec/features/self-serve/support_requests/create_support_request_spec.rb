@@ -226,32 +226,6 @@ RSpec.feature "Creating a 'Digital Support' request" do
     end
   end
 
-  # step 6
-  describe "procurement amount" do
-    before do
-      create(:category, title: "Maintenance")
-
-      user_is_signed_in(user:)
-      visit "/support-requests/new"
-      click_continue
-      choose "Maintenance"
-      click_continue
-      fill_in "How can we help?", with: "help"
-      click_continue
-    end
-
-    context "when the request is not about a procurement" do
-      before do
-        choose "My request is not about a procurement"
-        click_continue
-      end
-
-      it "goes straight to special requirements" do
-        expect(page).to have_text "Special requirements"
-      end
-    end
-  end
-
   # show
   describe "a completed support request" do
     let(:user) { create(:user, :one_supported_school, first_name: "Peter", last_name: "Hamilton", email: "ghbfs@example.com") }
@@ -271,7 +245,6 @@ RSpec.feature "Creating a 'Digital Support' request" do
       fill_in "support_form[message_body]", with: "I have a problem"
       click_continue
 
-      choose "No"
       click_continue
 
       choose "Not applicable"
