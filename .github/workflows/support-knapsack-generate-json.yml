@@ -29,6 +29,8 @@ jobs:
           - 4444:4444
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Generate JSON
         run: |
           docker run --rm \
@@ -62,13 +64,17 @@ jobs:
             -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
             -e SUPPORT_EMAIL=email@example.gov.uk \
             -e KNAPSACK_GENERATE_REPORT=true \
-            -v ${{ github.workspace }}/knapsack:/srv/app/knapsack \
+            -v ${PWD}:/srv/app \
             ghcr.io/dfe-digital/buy-for-your-school:latest-test \
-            bash -c "bundle exec rspec || : ; mv knapsack_rspec_report.json knapsack"
+            bash -c "bundle exec rspec || :"
 
-      - name: Upload Knapsack JSON report
-        if: always()
-        uses: actions/upload-artifact@v3
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          name: knapsack_rspec_report
-          path: ${{ github.workspace }}/knapsack/knapsack_rspec_report.json
+          branch: update-knapsack
+          base: main
+          delete-branch: true
+          title: 'Support: Updated knapsack config'
+          commit-message: 'Updated knapsack config'
+          add-paths: |
+            knapsack_rspec_report.json
