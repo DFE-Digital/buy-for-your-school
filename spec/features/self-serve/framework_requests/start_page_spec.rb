@@ -4,7 +4,6 @@ RSpec.feature "Starting a 'Find a Framework' request" do
   end
 
   it "loads without requiring authentication" do
-    expect(find("h1")).to have_text "Request advice and guidance for your procurement"
     expect(page).to have_current_path "/procurement-support"
   end
 
