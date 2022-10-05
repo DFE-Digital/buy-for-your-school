@@ -28,7 +28,7 @@ RSpec.describe Support::Case, type: :model do
   it { is_expected.to define_enum_for(:state).with_values(%i[initial opened resolved on_hold closed pipeline no_response]) }
   it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub incoming_email faf engagement_and_outreach schools_commercial_team]) }
 
-  describe '#reopen_due_to_email' do
+  describe "#reopen_due_to_email" do
     context "when the has been resolved" do
       subject(:support_case) { create(:support_case, :resolved) }
 
