@@ -40,6 +40,14 @@ describe Support::SendExitSurveyJob do
       job.perform("000001")
     end
 
+    context "when the email has already been sent out" do
+      let!(:kase) { create(:support_case, ref: "000001", exit_survey_sent: true) }
+
+      it "does not send the email again" do
+        expect(exit_survey_service).not_to have_received(:call)
+      end
+    end
+
     it "sends an exit survey email to the contact of the specified case" do
       expect(exit_survey_service).to have_received(:call).once
     end
