@@ -2,43 +2,49 @@ require "rails_helper"
 
 describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase do
   let(:email)   { create(:support_email, case: assigned_case) }
-  let(:message) { double }
+  let(:message) { double(inbox?: true) }
 
   context "when the email is not already attached to a case" do
     let(:assigned_case) { nil }
+    let(:detected_case) { create(:support_case) }
 
-    it "assigns the email detected case" do
-      detected_case = build(:support_case)
-
+    before do
       allow_any_instance_of(Support::Messages::Outlook::Synchronisation::MessageCaseDetection)
         .to receive(:detect_existing_or_create_new_case).and_return(detected_case)
+    end
 
+    it "assigns the email detected case" do
       described_class.call(message, email)
-
       expect(email.reload.case).to eq(detected_case)
     end
 
     context "when detected case is resolved" do
-      it "re-opens the case" do
-        detected_case = create(:support_case, :resolved)
+      let(:detected_case) { create(:support_case, :resolved) }
 
-        allow_any_instance_of(Support::Messages::Outlook::Synchronisation::MessageCaseDetection)
-          .to receive(:detect_existing_or_create_new_case).and_return(detected_case)
+      context "when the message is incoming" do
+        let(:message) { double(inbox?: true) }
 
-        described_class.call(message, email)
+        it "re-opens the case" do
+          described_class.call(message, email)
+          expect(detected_case.reload).to be_opened
+        end
+      end
 
-        expect(email.reload.case).to eq(detected_case)
-        expect(detected_case.reload).to be_opened
+      context "when message is not incoming" do
+        let(:message) { double(inbox?: false) }
+
+        it "does not re-open the case" do
+          described_class.call(message, email)
+
+          expect(detected_case.reload).not_to be_opened
+        end
       end
     end
 
     context "when detected case is closed" do
+      let(:detected_case) { create(:support_case, :closed) }
+
       it "creates a new case and assigns the email to that" do
-        detected_case = build(:support_case, :closed)
-
-        allow_any_instance_of(Support::Messages::Outlook::Synchronisation::MessageCaseDetection)
-          .to receive(:detect_existing_or_create_new_case).and_return(detected_case)
-
         newly_created_case = build(:support_case)
 
         allow_any_instance_of(Support::Messages::Outlook::Synchronisation::MessageCaseDetection)

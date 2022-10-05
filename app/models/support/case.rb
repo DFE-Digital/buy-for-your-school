@@ -154,6 +154,11 @@ module Support
       end
     end
 
+    def reopen_due_to_email
+      open!
+      interactions.state_change.create!(body: "Case reopened due to receiving a new email.")
+    end
+
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
     # @return [String]
     def generate_ref
