@@ -28,6 +28,23 @@ RSpec.describe Support::Case, type: :model do
   it { is_expected.to define_enum_for(:state).with_values(%i[initial opened resolved on_hold closed pipeline no_response]) }
   it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub incoming_email faf engagement_and_outreach schools_commercial_team]) }
 
+  describe '#reopen_due_to_email' do
+    context "when the has been resolved" do
+      subject(:support_case) { create(:support_case, :resolved) }
+
+      it "reopens the case" do
+        support_case.reopen_due_to_email
+        expect(support_case.reload).to be_opened
+      end
+
+      it "logs this reopening in case history" do
+        support_case.reopen_due_to_email
+        expect(support_case.interactions.last.event_type).to eq("state_change")
+        expect(support_case.interactions.last.body).to eq("Case reopened due to receiving a new email.")
+      end
+    end
+  end
+
   describe "#generate_ref" do
     context "when no cases exist" do
       it "generates a reference starting at 1" do
