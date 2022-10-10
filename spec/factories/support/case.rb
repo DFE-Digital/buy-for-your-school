@@ -58,5 +58,37 @@ FactoryBot.define do
     trait :action_required do
       action_required { true }
     end
+
+    trait :stage_need do
+      association :procurement, factory: %i[support_procurement stage_need]
+    end
+
+    trait :stage_market_analysis do
+      association :procurement, factory: %i[support_procurement stage_market_analysis]
+    end
+
+    trait :stage_sourcing_options do
+      association :procurement, factory: %i[support_procurement stage_sourcing_options]
+    end
+
+    trait :stage_go_to_market do
+      association :procurement, factory: %i[support_procurement stage_go_to_market]
+    end
+
+    trait :stage_evaluation do
+      association :procurement, factory: %i[support_procurement stage_evaluation]
+    end
+
+    trait :stage_contract_award do
+      association :procurement, factory: %i[support_procurement stage_contract_award]
+    end
+
+    trait :stage_handover do
+      association :procurement, factory: %i[support_procurement stage_handover]
+    end
+
+    trait :stage_unspecified do
+      association :procurement, factory: %i[support_procurement stage_unspecified]
+    end
   end
 end

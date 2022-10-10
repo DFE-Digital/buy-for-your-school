@@ -995,15 +995,29 @@ en:
         header: Source
     case_statistics:
       body:
-        no_of_live_cases: Live cases
+        no_of_live_cases:
+          zero: Live cases
+          one: Live case
+          other: Live cases
+        live_value: Live value
       download:
         csv: Download CSV
       header: Case statistics
       header_link: Case Statistics
-      overview_by_tower:
-        header: Overview by tower
-        no_tower: No tower
-        tower: Tower
+      missing_data:
+        header: Missing data
+        no_level:
+          zero: There are no live cases that have no level
+          one: There is 1 live case with no level
+          other: There are %{count} live cases that have no level
+        no_stage:
+          zero: There are no live cases that have no stage
+          one: There is 1 live case with no stage
+          other: There are %{count} live cases that have no stage
+        no_value:
+          zero: There are no live cases that have no value
+          one: There is 1 live case with no value
+          other: There are %{count} live cases that have no value
       stages:
         contract_award: Contract award
         evaluation: Evaluation
@@ -1012,11 +1026,26 @@ en:
         market_analysis: Market analysis
         need: Need
         sourcing_options: Sourcing options
+        unspecified: Unspecified
+      support_levels:
+        L1: 1
+        L2: 2
+        L3: 3
+        L4: 4
+        L5: 5
+        unspecified: Unspecified
+      support_levels_by_tower:
+        header: Overview by case levels by tower
+        tower: Tower
       states:
         live: Live
         new: New
         on_hold: On hold
         open: Open
+      states_by_tower:
+        header: Overview by tower
+        tower: Tower
+        value: Value
       tower:
         header: "%{type} Statistics"
         level: Level
