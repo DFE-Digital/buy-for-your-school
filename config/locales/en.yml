@@ -318,15 +318,17 @@ en:
       hint: Enter the name, postcode or unique reference number (URN) of your school
       title: Search for your school - Get help buying for schools - GOV.UK
     start_page:
-      header: Request advice and guidance for your procurement
+      header: Request help and support for your procurement
       overview_category_list:
-      - general guidance on buying goods or services for schools
-      - specific advice on buying goods or services for your school using a DfE approved framework
+      - give you general guidance or specific advice on buying goods or services for your school
+      - give you support with buying goods or services for your school using a framework agreement
+      - buy on your behalf through a framework agreement
+      - buy on your behalf by getting quotes or bids for contract renewals or new procurements from an open supplier market
       overview_purpose: Use this service if you're a state funded school in England.
-      overview_response: The Get help buying for schools team will respond to you within 2 working days.
+      overview_response: The Get help buying for schools team aim to respond to you within 2 working days.
       subheading: Before you start
+      we_can: We can
       you_can: You can
-      you_can_ask_for: You can ask for
     user_organisation:
       header: Which school are you buying for?
     user_query:
