@@ -131,10 +131,16 @@ Rails.application.routes.draw do
       resource :save_attachments, only: %i[new create]
     end
 
-    scope "/case-statistics", as: "case_statistics" do
-      get "/", to: "case_statistics#show"
-      resources :towers, only: %i[show], path: "tower"
+    resource :case_statistics, only: :show do
+      scope module: :case_statistics do
+        resources :towers, only: :show
+      end
     end
+
+    # scope "/case-statistics", as: "case_statistics" do
+    #   get "/", to: "case_statistics#show"
+    #   resources :towers, only: %i[show], path: "tower"
+    # end
   end
 
   if Rails.env.development?
