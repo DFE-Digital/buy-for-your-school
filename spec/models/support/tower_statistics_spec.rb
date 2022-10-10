@@ -48,56 +48,56 @@ describe Support::TowerStatistics do
       expect(results.to_a.length).to eq(8) # 7 stages + unspecified
 
       need_row = results[0]
-      expect(need_row.stage).to eq(Support::Procurement.stages[:need])
+      expect(need_row.stage).to eq("need")
       expect(need_row.open_cases).to eq(1)
       expect(need_row.on_hold_cases).to eq(2)
       expect(need_row.new_cases).to eq(0)
       expect(need_row.live_value).to eq(16.00)
 
       market_analysis_row = results[1]
-      expect(market_analysis_row.stage).to eq(Support::Procurement.stages[:market_analysis])
+      expect(market_analysis_row.stage).to eq("market_analysis")
       expect(market_analysis_row.open_cases).to eq(0)
       expect(market_analysis_row.on_hold_cases).to eq(0)
       expect(market_analysis_row.new_cases).to eq(0)
       expect(market_analysis_row.live_value).to eq(0.00)
 
       sourcing_options_row = results[2]
-      expect(sourcing_options_row.stage).to eq(Support::Procurement.stages[:sourcing_options])
+      expect(sourcing_options_row.stage).to eq("sourcing_options")
       expect(sourcing_options_row.open_cases).to eq(0)
       expect(sourcing_options_row.on_hold_cases).to eq(0)
       expect(sourcing_options_row.new_cases).to eq(0)
       expect(sourcing_options_row.live_value).to eq(0.00)
 
       go_to_market_row = results[3]
-      expect(go_to_market_row.stage).to eq(Support::Procurement.stages[:go_to_market])
+      expect(go_to_market_row.stage).to eq("go_to_market")
       expect(go_to_market_row.open_cases).to eq(2)
       expect(go_to_market_row.on_hold_cases).to eq(0)
       expect(go_to_market_row.new_cases).to eq(2)
       expect(go_to_market_row.live_value).to eq(17.00)
 
       evaluation_row = results[4]
-      expect(evaluation_row.stage).to eq(Support::Procurement.stages[:evaluation])
+      expect(evaluation_row.stage).to eq("evaluation")
       expect(evaluation_row.open_cases).to eq(0)
       expect(evaluation_row.on_hold_cases).to eq(0)
       expect(evaluation_row.new_cases).to eq(0)
       expect(evaluation_row.live_value).to eq(0.00)
 
       contract_award_row = results[5]
-      expect(contract_award_row.stage).to eq(Support::Procurement.stages[:contract_award])
+      expect(contract_award_row.stage).to eq("contract_award")
       expect(contract_award_row.open_cases).to eq(0)
       expect(contract_award_row.on_hold_cases).to eq(0)
       expect(contract_award_row.new_cases).to eq(0)
       expect(contract_award_row.live_value).to eq(0.00)
 
       handover_row = results[6]
-      expect(handover_row.stage).to eq(Support::Procurement.stages[:handover])
+      expect(handover_row.stage).to eq("handover")
       expect(handover_row.open_cases).to eq(0)
       expect(handover_row.on_hold_cases).to eq(2)
       expect(handover_row.new_cases).to eq(2)
       expect(handover_row.live_value).to eq(11.00)
 
       unspecified_row = results[7]
-      expect(unspecified_row.stage).to eq(99)
+      expect(unspecified_row.stage).to eq("unspecified")
       expect(unspecified_row.open_cases).to eq(1)
       expect(unspecified_row.on_hold_cases).to eq(1)
       expect(unspecified_row.new_cases).to eq(1)
@@ -138,42 +138,42 @@ describe Support::TowerStatistics do
       expect(results.to_a.length).to eq(6) # 5 levels + unspecified
 
       level_1_row = results[0]
-      expect(level_1_row.support_level).to eq(Support::Case.support_levels[:L1])
+      expect(level_1_row.support_level).to eq("L1")
       expect(level_1_row.open_cases).to eq(1)
       expect(level_1_row.on_hold_cases).to eq(2)
       expect(level_1_row.new_cases).to eq(0)
       expect(level_1_row.live_value).to eq(16.00)
 
       level_2_row = results[1]
-      expect(level_2_row.support_level).to eq(Support::Case.support_levels[:L2])
+      expect(level_2_row.support_level).to eq("L2")
       expect(level_2_row.open_cases).to eq(1)
       expect(level_2_row.on_hold_cases).to eq(1)
       expect(level_2_row.new_cases).to eq(1)
       expect(level_2_row.live_value).to eq(11.00)
 
       level_3_row = results[2]
-      expect(level_3_row.support_level).to eq(Support::Case.support_levels[:L3])
+      expect(level_3_row.support_level).to eq("L3")
       expect(level_3_row.open_cases).to eq(0)
       expect(level_3_row.on_hold_cases).to eq(1)
       expect(level_3_row.new_cases).to eq(2)
       expect(level_3_row.live_value).to eq(9.00)
 
       level_4_row = results[3]
-      expect(level_4_row.support_level).to eq(Support::Case.support_levels[:L4])
+      expect(level_4_row.support_level).to eq("L4")
       expect(level_4_row.open_cases).to eq(1)
       expect(level_4_row.on_hold_cases).to eq(1)
       expect(level_4_row.new_cases).to eq(1)
       expect(level_4_row.live_value).to eq(7.00)
 
       level_5_row = results[4]
-      expect(level_5_row.support_level).to eq(Support::Case.support_levels[:L5])
+      expect(level_5_row.support_level).to eq("L5")
       expect(level_5_row.open_cases).to eq(1)
       expect(level_5_row.on_hold_cases).to eq(1)
       expect(level_5_row.new_cases).to eq(1)
       expect(level_5_row.live_value).to eq(5.20)
 
       unspecified_row = results[5]
-      expect(unspecified_row.support_level).to eq(99)
+      expect(unspecified_row.support_level).to eq("unspecified")
       expect(unspecified_row.open_cases).to eq(1)
       expect(unspecified_row.on_hold_cases).to eq(0)
       expect(unspecified_row.new_cases).to eq(2)
