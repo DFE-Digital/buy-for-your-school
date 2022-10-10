@@ -25,10 +25,10 @@ RSpec.feature "Case statistics tower page" do
 
     describe "tower page content" do
       it "shows the number of cases by live state" do
-        within('.tower-overview', text: 'Live cases') { expect(page).to have_content('6') }
-        within('.tower-overview', text: 'Open') { expect(page).to have_content('2') }
-        within('.tower-overview', text: 'On hold') { expect(page).to have_content('2') }
-        within('.tower-overview', text: 'New') { expect(page).to have_content('2') }
+        within(".tower-overview", text: "Live cases") { expect(page).to have_content("6") }
+        within(".tower-overview", text: "Open") { expect(page).to have_content("2") }
+        within(".tower-overview", text: "On hold") { expect(page).to have_content("2") }
+        within(".tower-overview", text: "New") { expect(page).to have_content("2") }
       end
 
       it "shows main sections" do

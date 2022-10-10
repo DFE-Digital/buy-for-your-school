@@ -34,31 +34,31 @@ RSpec.feature "Case statistics page" do
 
     describe "case statistics page content" do
       it "shows the number of cases by live state" do
-        within('.case-overview', text: 'Live cases') { expect(page).to have_content('25')  }
-        within('.case-overview', text: 'Open') { expect(page).to have_content('8')  }
-        within('.case-overview', text: 'On hold') { expect(page).to have_content('8')  }
-        within('.case-overview', text: 'New') { expect(page).to have_content('9')  }
+        within(".case-overview", text: "Live cases") { expect(page).to have_content("25") }
+        within(".case-overview", text: "Open") { expect(page).to have_content("8") }
+        within(".case-overview", text: "On hold") { expect(page).to have_content("8") }
+        within(".case-overview", text: "New") { expect(page).to have_content("9") }
       end
 
       it "displays each tower in an overview by tower section" do
         within ".overview-by-tower" do
-          expect(page).to have_css('tr', text: 'Energy and Utilities')
-          expect(page).to have_css('tr', text: 'FM and Catering')
-          expect(page).to have_css('tr', text: 'ICT')
-          expect(page).to have_css('tr', text: 'Services')
-          expect(page).to have_css('tr', text: 'No Tower')
+          expect(page).to have_css("tr", text: "Energy and Utilities")
+          expect(page).to have_css("tr", text: "FM and Catering")
+          expect(page).to have_css("tr", text: "ICT")
+          expect(page).to have_css("tr", text: "Services")
+          expect(page).to have_css("tr", text: "No Tower")
         end
       end
     end
 
-    describe 'case statistics navigation' do
+    describe "case statistics navigation" do
       it "links to a drilldown page for a particular tower" do
         click_on "Services"
         expect(page).to have_text "Services Statistics"
       end
     end
 
-    describe 'case statistics downloads' do
+    describe "case statistics downloads" do
       it "has a link to download the CSV of the case data" do
         expect(page).to have_link "Download CSV", class: "govuk-button", href: support_case_statistics_path(format: :csv)
       end
