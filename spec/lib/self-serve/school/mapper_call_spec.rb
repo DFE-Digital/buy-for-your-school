@@ -58,6 +58,8 @@ RSpec.describe School::Mapper, "#call" do
           # religion
           "ReligiousCharacter (code)" => "2",                                   # AC:
           "ReligiousCharacter (name)" => "Church of England",                   # AD:
+          # Trust
+          "Trusts (name)" => "Cool Green School Trust",                         # AU:
 
           "SchoolCapacity" => "100",
           "NumberofPupils" => "101",
@@ -129,6 +131,12 @@ RSpec.describe School::Mapper, "#call" do
 
     specify do
       expect(entity).to eql(name: "King's Cross", code: "E05009308")
+    end
+  end
+
+  describe "trust_name" do
+    specify do
+      expect(output.first[:school][:trust_name]).to eq("Cool Green School Trust")
     end
   end
 
