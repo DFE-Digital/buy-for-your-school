@@ -99,6 +99,7 @@ module School
         required(:student_number).filled(:integer)
         required(:website).filled(:string)
         required(:telephone_number).filled(:string)
+        required(:trust_name).filled(:string)
         required(:opened_date).maybe(:string)
       end
     end

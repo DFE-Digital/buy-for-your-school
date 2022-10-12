@@ -21,19 +21,20 @@ module School
           # "Establishment" model has been proposed.
           #
           Support::Organisation.find_or_initialize_by(urn: record[:urn]).tap do |org|
-            org.establishment_type_id = type(record).id                         # uuid
-            org.name = record[:school][:name]                                   # string
-            org.address = record[:school][:address]                             # jsonb
-            org.contact = record[:school][:head_teacher]                        # jsonb
-            org.phase = record[:school][:phase][:code]                          # integer
-            org.gender = record[:school][:gender][:code]                        # integer
-            org.status = record[:establishment_status][:code]                   # integer
-            org.number = record[:school][:number]                               # string
-            org.rsc_region = record[:rsc_region]                                # string
-            org.local_authority = record[:local_authority]                      # jsonb
-            org.opened_date = parse_opened_date(record[:school][:opened_date])  # datetime
-            org.ukprn = record[:ukprn]                                          # string
-            org.telephone_number = record[:school][:telephone_number]           # string
+            org.establishment_type_id = type(record).id
+            org.name = record[:school][:name]
+            org.address = record[:school][:address]
+            org.contact = record[:school][:head_teacher]
+            org.phase = record[:school][:phase][:code]
+            org.gender = record[:school][:gender][:code]
+            org.status = record[:establishment_status][:code]
+            org.number = record[:school][:number]
+            org.rsc_region = record[:rsc_region]
+            org.local_authority = record[:local_authority]
+            org.opened_date = parse_opened_date(record[:school][:opened_date])
+            org.ukprn = record[:ukprn]
+            org.telephone_number = record[:school][:telephone_number]
+            org.trust_name = record[:school][:trust_name].presence
             org.save!
           end
         end

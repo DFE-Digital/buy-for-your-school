@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_03_145228) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -498,6 +498,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_03_145228) do
     t.datetime "opened_date", precision: nil
     t.string "number"
     t.string "rsc_region"
+    t.string "trust_name"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
@@ -782,8 +783,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_03_145228) do
            SELECT support_categories.id,
               support_categories.title,
                   CASE
-                      WHEN ((support_categories.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
-                      WHEN ((support_categories.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
+                      WHEN ((support_categories.tower)::text = ANY (ARRAY[('Business Services'::character varying)::text, ('Professional Services'::character varying)::text])) THEN 'Services'::text
+                      WHEN ((support_categories.tower)::text = ANY (ARRAY[('Catering'::character varying)::text, ('FM'::character varying)::text, ('Furniture'::character varying)::text])) THEN 'FM and Catering'::text
                       WHEN ((support_categories.tower)::text = 'ICT'::text) THEN 'ICT'::text
                       WHEN ((support_categories.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
                       ELSE 'No Tower'::text
