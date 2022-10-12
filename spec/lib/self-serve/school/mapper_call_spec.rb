@@ -59,7 +59,7 @@ RSpec.describe School::Mapper, "#call" do
           "ReligiousCharacter (code)" => "2",                                   # AC:
           "ReligiousCharacter (name)" => "Church of England",                   # AD:
           # Trust
-          "Trusts (name)" => "Cool Green School Trust",                         # AU:
+          "Trusts (name)" => "Cool Green School Trust", # AU:
 
           "SchoolCapacity" => "100",
           "NumberofPupils" => "101",

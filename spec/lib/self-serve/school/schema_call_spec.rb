@@ -86,6 +86,7 @@ RSpec.describe School::Schema, "#call" do
           county: "Hertfordshire",
           postcode: "WD25 0UU",
         },
+        trust_name: "Test Trust Name",
       },
     }
   end

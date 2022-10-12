@@ -84,7 +84,7 @@ RSpec.describe School::RecordKeeper do
           county: "Hertfordshire",
           postcode: "WD25 0UU",
         },
-        trust_name: "Legacy School Trust Name"
+        trust_name: "Legacy School Trust Name",
       },
     }
   end
@@ -170,7 +170,7 @@ RSpec.describe School::RecordKeeper do
           county: "Hertfordshire",
           postcode: "WD25 0UU",
         },
-        trust_name: "New School Trust Name"
+        trust_name: "New School Trust Name",
       },
     }
   end
