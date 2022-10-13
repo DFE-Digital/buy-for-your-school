@@ -32,10 +32,8 @@ module Support
           tower = sub_group["tower"] || group["tower"]
 
           sub_category.tower = if tower.present?
-            Support::Tower.find_or_initialize_by(title: sub_group["tower"] || group["tower"])
-          else
-            nil
-          end
+                                 Support::Tower.find_or_initialize_by(title: sub_group["tower"] || group["tower"])
+                               end
 
           sub_category.save!
         end

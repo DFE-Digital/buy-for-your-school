@@ -65,8 +65,8 @@ RSpec.describe Support::SeedCategories do
       it "sets the sub category tower to be the tower defined on the parent" do
         service.call
 
-        water = Support::Category.find_by(title: 'Water, drains & sewerage')
-        expect(water.tower_title).to eq('FM & Catering')
+        water = Support::Category.find_by(title: "Water, drains & sewerage")
+        expect(water.tower_title).to eq("FM & Catering")
       end
     end
 
@@ -74,8 +74,8 @@ RSpec.describe Support::SeedCategories do
       it "sets the sub category tower to be its own defined tower" do
         service.call
 
-        water = Support::Category.find_by(title: 'Transport')
-        expect(water.tower_title).to eq('Services')
+        water = Support::Category.find_by(title: "Transport")
+        expect(water.tower_title).to eq("Services")
       end
     end
   end
