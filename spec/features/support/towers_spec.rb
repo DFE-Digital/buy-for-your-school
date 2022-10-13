@@ -1,18 +1,12 @@
 RSpec.feature "Case statistics tower page" do
   before do
-    categories = { "Business Services": "Books",
-                   "Professional Services": "HR" }
+    category = create(:support_category, title: "Books", with_tower: "Services")
 
-    categories.each do |tower, cat|
-      category = create(:support_category, title: cat, tower:)
-      procurement = create(:support_procurement)
-
-      create(:support_case, :initial, category:, support_level: 0, procurement:)
-      create(:support_case, :opened, category:, support_level: 1, procurement:)
-      create(:support_case, :resolved, category:)
-      create(:support_case, :closed, category:)
-      create(:support_case, :on_hold, category:, support_level: 2, procurement:)
-    end
+    create(:support_case, :initial, category:)
+    create(:support_case, :opened, category:)
+    create(:support_case, :resolved, category:)
+    create(:support_case, :closed, category:)
+    create(:support_case, :on_hold, category:)
   end
 
   context "when the user is an admin" do
@@ -25,10 +19,10 @@ RSpec.feature "Case statistics tower page" do
 
     describe "tower page content" do
       it "shows the number of cases by live state" do
-        within(".tower-overview", text: "Live cases") { expect(page).to have_content("6") }
-        within(".tower-overview", text: "Open") { expect(page).to have_content("2") }
-        within(".tower-overview", text: "On hold") { expect(page).to have_content("2") }
-        within(".tower-overview", text: "New") { expect(page).to have_content("2") }
+        within(".tower-overview", text: "Live cases") { expect(page).to have_content("3") }
+        within(".tower-overview", text: "Open") { expect(page).to have_content("1") }
+        within(".tower-overview", text: "On hold") { expect(page).to have_content("1") }
+        within(".tower-overview", text: "New") { expect(page).to have_content("1") }
       end
 
       it "shows main sections" do

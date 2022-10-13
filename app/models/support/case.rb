@@ -63,7 +63,7 @@ module Support
     scope :by_agent, ->(agent_id) { where(agent_id:) }
     scope :by_state, ->(state) { where(state:) }
     scope :by_category, ->(category_id) { where(category_id:) }
-    scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: }) }
+    scope :by_tower, ->(support_tower_id) { joins(:category).where(support_categories: { support_tower_id: }) }
 
     scope :priority_ordering, lambda {
       order(

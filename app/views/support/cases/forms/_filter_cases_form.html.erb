@@ -25,7 +25,7 @@
 
       <div class="govuk-grid-column-one-quarter">
         <%= form.govuk_select :tower,
-                              options_for_select(form.object.towers,
+                              options_for_select(form.object.towers.map { |a| [a.title, a.id] },
                                                  params.dig(scope, :tower)),
                               options: { include_blank: false, prompt: I18n.t("support.case.filter.labels.all") },
                               label: { text: I18n.t("support.case.filter.labels.tower") } %>

@@ -30,7 +30,7 @@ module Support
     end
 
     def towers
-      @towers ||= Support::Category.unique_towers
+      @towers ||= Support::Tower.unique_towers
     end
   end
 end

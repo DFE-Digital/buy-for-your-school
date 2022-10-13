@@ -12,15 +12,9 @@ module Support
   class SeedCategories
     extend Dry::Initializer
 
-    # @!attribute [r] data
-    # @return [String] (defaults to ./config/support/categories.yml)
     option :data, Types::String, default: proc { "./config/support/categories.yml" }
-    # @!attribute [r] reset
-    # @return [Boolean] (defaults to false)
     option :reset, Types::Bool, default: proc { false }
 
-    # @return [Array<Hash>]
-    #
     def call
       Category.destroy_all if reset
 
@@ -34,7 +28,15 @@ module Support
           sub_category = category.sub_categories.find_or_initialize_by(title: sub_group["title"])
           sub_category.description = sub_group["description"]
           sub_category.slug = sub_group["slug"]
-          sub_category.tower = sub_group["tower"]
+
+          tower = sub_group["tower"] || group["tower"]
+
+          sub_category.tower = if tower.present?
+            Support::Tower.find_or_initialize_by(title: sub_group["tower"] || group["tower"])
+          else
+            nil
+          end
+
           sub_category.save!
         end
       end

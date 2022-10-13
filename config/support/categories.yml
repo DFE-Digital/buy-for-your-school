@@ -7,223 +7,176 @@
 - title: ICT
   description: Information and Communications Technology
   slug: ict
+  tower: ICT
   sub_categories:
     - title: Peripherals
       description: computer peripherals
       slug: peripherals
-      tower: ICT
     - title: Laptops
       description: Mobile computing
       slug: laptops
-      tower: ICT
     - title: Broadband service
       description:
       slug: broadband_service
-      tower: ICT
     - title: Switches & Routers
       description: networking hardware
       slug: switches_routers
-      tower: ICT
     - title: Cyber services
       description:
       slug: cyber_services
-      tower: ICT
     - title: Cloud SaaS
       description:
       slug: cloud_saas
-      tower: ICT
     - title: AV Displays
       description: TVs, projectors
       slug: displays
-      tower: ICT
     - title: Hosting & Storage
       description:
       slug: hosting_and_storage
-      tower: ICT
     - title: MIS
       description:
       slug: mis
-      tower: ICT
     - title: VLEs
       description: Virtual Learning Environments
       slug: vle
-      tower: ICT
     - title: Curriculum Content
       description:
       slug: curriculum_content
-      tower: ICT
     - title: Server Configuration & Support
       description:
       slug: servers
-      tower: ICT
     - title: Broadband Infrastructure
       description:
       slug: broadband_infrastructure
-      tower: ICT
     - title: Safeguarding & Content
       description:
       slug: safeguarding
-      tower: ICT
     - title: OS Software
       description:
       slug: software
-      tower: ICT
     - title: Websites
       description:
       slug: websites
-      tower: ICT
     - title: Telecoms & Broadband
       description:
       slug: broadband
     - title: MFD
       slug: mfd
       description:
-      tower: ICT
-
 
 - title: FM
   description: Facilities Management
   slug: facilities
+  tower: FM & Catering
   sub_categories:
     - title: Water, drains & sewerage
       description:
       slug: sewerage
-      tower: FM
     - title: Fire Safety (Goods & Systems)
       description:
       slug:
-      tower: FM
     - title: Security
       description:
       slug:
-      tower: FM
     - title: Building maintenance & BMS
       description:
       slug:
-      tower: FM
     - title: Mechanical & Electrical Systems
       description:
       slug:
-      tower: FM
     - title: Statutory testing
-      tower: FM
     - title: Roof Maintenance
-      tower: FM
     - title: Cleaning Services
-      tower: FM
     - title: Cleaning Products
-      tower: FM
     - title: Waste management
-      tower: FM
     - title: Grounds Maintenance
-      tower: FM
     - title: Removal & relocation
-      tower: FM
     - title: IPC (PPE & Uniform)
-      tower: FM
     - title: MUGAs (Multi Use Games Area)
-      tower: FM
     - title: Transport
-      tower: Business Services
+      tower: Services
 
 
 - title: Energy
   description:
   slug: energy
+  tower: Energy & Utilities
   sub_categories:
     - title: Electricity
-      tower: Energy & Utilities
     - title: Gas
-      tower: Energy & Utilities
     - title: Other fuels
-      tower: Energy & Utilities
-
 
 - title: Utilities
   description:
   slug: utilities
+  tower: Energy & Utilities
   sub_categories:
     - title: Water
-      tower: Energy & Utilities
-
 
 - title: Catering
   description:
   slug: catering
+  tower: FM & Catering
   sub_categories:
     - title: Equipment
-      tower: Catering
     - title: Catering Services
-      tower: Catering
-
 
 - title: Furniture
   description:
   slug: furniture
+  tower: FM & Catering
   sub_categories:
     - title: Furniture
-      tower: Furniture
-
 
 - title: Books
   description:
   slug: books
+  tower: Services
   sub_categories:
     - title: Books
-      tower: Business Services
-
 
 - title: Business Services
   description:
   slug: business
   sub_categories: []
+  tower: Services
 
 - title: Financial
   description:
   slug: financial
+  tower: Services
   sub_categories:
     - title: Audit
-      tower: Business Services
     - title: Insurance
-      tower: Business Services
     - title: Leasing
-      tower: Business Services
     - title: Spend Analysis
-      tower: Business Services
-
 
 - title: Professional
   description:
   slug: professional
+  tower: Services
   sub_categories:
     - title: Legal Services
-      tower: Professional Services
     - title: Professional services Bloom
-      tower: Professional Services
     - title: Recruitment screening
-      tower: Professional Services
     - title: Supply Teachers & Agency workers
-      tower: Professional Services
     - title: Payroll
-      tower: Professional Services
     - title: HR
-      tower: Professional Services
 
 
 - title: Office supplies
   description:
   slug: office_supplies
+  tower: Services
   sub_categories:
     - title: Stationery supply & office supplies
-      tower: Business Services
-
 
 - title: Capital
   description:
   slug: capital
   sub_categories:
     - title: Boilers and plumbing services
-      tower: FM
+      tower: FM & Catering
     - title: Solar
       tower: Energy & Utilities
 
@@ -232,6 +185,4 @@
   slug: or
   sub_categories:
     - title: Not yet known
-      tower:
     - title: Other
-      tower:

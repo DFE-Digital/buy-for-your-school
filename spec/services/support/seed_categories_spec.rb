@@ -59,4 +59,24 @@ RSpec.describe Support::SeedCategories do
       expect(parent.sub_categories.pluck(:title)).to eq(%w[Furniture])
     end
   end
+
+  context "when the parent category has a tower" do
+    context "and the sub category has not defined a tower" do
+      it "sets the sub category tower to be the tower defined on the parent" do
+        service.call
+
+        water = Support::Category.find_by(title: 'Water, drains & sewerage')
+        expect(water.tower_title).to eq('FM & Catering')
+      end
+    end
+
+    context "and the sub category has defined a tower" do
+      it "sets the sub category tower to be its own defined tower" do
+        service.call
+
+        water = Support::Category.find_by(title: 'Transport')
+        expect(water.tower_title).to eq('Services')
+      end
+    end
+  end
 end

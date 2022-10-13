@@ -22,8 +22,8 @@ describe Support::CaseStatistics do
   describe "breakdown of case stages by tower" do
     subject(:results) { report.breakdown_of_stages_by_tower }
 
-    let(:ict)    { create(:support_category, title: "Laptops", tower: "ICT") }
-    let(:energy) { create(:support_category, title: "Gas", tower: "Energy & Utilities") }
+    let(:ict)    { create(:support_category, title: "Laptops", with_tower: "ICT") }
+    let(:energy) { create(:support_category, title: "Gas", with_tower: "Energy & Utilities") }
 
     before do
       # Uncategorised cases
@@ -44,7 +44,7 @@ describe Support::CaseStatistics do
       expect(results.to_a.length).to eq(3)
 
       energy_tower_row = results[0]
-      expect(energy_tower_row.name).to eq("Energy and Utilities")
+      expect(energy_tower_row.name).to eq("Energy & Utilities")
       expect(energy_tower_row.live_cases).to eq(9)
       expect(energy_tower_row.open_cases).to eq(3)
       expect(energy_tower_row.on_hold_cases).to eq(3)
@@ -72,8 +72,8 @@ describe Support::CaseStatistics do
     subject(:results) { report.breakdown_of_levels_by_tower }
 
     before do
-      ict = create(:support_category, title: "Laptops", tower: "ICT")
-      energy = create(:support_category, title: "Gas", tower: "Energy & Utilities")
+      ict = create(:support_category, title: "Laptops", with_tower: "ICT")
+      energy = create(:support_category, title: "Gas", with_tower: "Energy & Utilities")
 
       # Uncategorised cases
       create_list(:support_case, 2, support_level: :L1, category: nil)
@@ -91,7 +91,7 @@ describe Support::CaseStatistics do
 
     it "overview of case levels for each tower alphabetically with uncategorised last" do
       energy_tower_row = results[0]
-      expect(energy_tower_row.name).to eq("Energy and Utilities")
+      expect(energy_tower_row.name).to eq("Energy & Utilities")
       expect(energy_tower_row.level_1_cases).to eq(1)
       expect(energy_tower_row.level_2_cases).to eq(2)
       expect(energy_tower_row.level_3_cases).to eq(3)

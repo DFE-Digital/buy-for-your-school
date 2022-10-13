@@ -3,8 +3,9 @@ RSpec.describe Support::FilterCases, bullet: :skip do
     described_class
   end
 
+  let(:ict_tower) { create(:support_tower, title: "ICT") }
   let(:catering_cat) { create(:support_category, title: "Catering") }
-  let(:it_cat) { create(:support_category, title: "IT", tower: "ICT") }
+  let(:it_cat) { create(:support_category, title: "IT", tower: ict_tower) }
   let(:agent) { create(:support_agent, first_name: "Example Support Agent") }
 
   before do
@@ -59,12 +60,12 @@ RSpec.describe Support::FilterCases, bullet: :skip do
 
       context "when filtered by tower" do
         let(:filtering_params) do
-          { tower: it_cat.tower }
+          { tower: ict_tower.id }
         end
 
         it "filters by tower" do
           expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.category.tower).to eql("ICT")
+          expect(service.new.filter(filtering_params).first.category.tower_title).to eql("ICT")
         end
       end
     end

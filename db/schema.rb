@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -268,8 +269,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
     t.string "dsi_uid", default: "", null: false
     t.string "email", default: "", null: false
     t.boolean "internal", default: false, null: false
+    t.uuid "support_tower_id"
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
+    t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"
   end
 
   create_table "support_case_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -338,7 +341,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
     t.string "description"
     t.uuid "parent_id"
     t.string "tower"
+    t.uuid "support_tower_id"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["support_tower_id"], name: "index_support_categories_on_support_tower_id"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
@@ -542,6 +547,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
     t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
+  create_table "support_towers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+  end
+
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "section_id"
     t.string "title", null: false
@@ -594,57 +605,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_agents", "support_towers"
   add_foreign_key "support_case_attachments", "support_cases"
   add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
+  add_foreign_key "support_categories", "support_towers"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE (organisations.status <> 2)
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
-  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -747,6 +718,48 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
@@ -762,49 +775,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
            LIMIT 1) AS last_updated
      FROM support_emails se;
   SQL
-  create_view "support_towers", sql_definition: <<-SQL
-      SELECT cases.id,
-          CASE
-              WHEN ((cats.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
-              WHEN ((cats.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
-              WHEN ((cats.tower)::text = 'ICT'::text) THEN 'ICT'::text
-              WHEN ((cats.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
-              ELSE NULL::text
-          END AS procops_tower,
-      procs.stage,
-      cases.state,
-      cases.support_level
-     FROM ((support_cases cases
-       LEFT JOIN support_procurements procs ON ((procs.id = cases.procurement_id)))
-       LEFT JOIN support_categories cats ON ((cases.category_id = cats.id)))
-    WHERE (cases.state = ANY (ARRAY[0, 1, 3]));
-  SQL
   create_view "support_tower_cases", sql_definition: <<-SQL
-      WITH category_towers AS (
-           SELECT support_categories.id,
-              support_categories.title,
-                  CASE
-                      WHEN ((support_categories.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
-                      WHEN ((support_categories.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
-                      WHEN ((support_categories.tower)::text = 'ICT'::text) THEN 'ICT'::text
-                      WHEN ((support_categories.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
-                      ELSE 'No Tower'::text
-                  END AS tower_name
-             FROM support_categories
-          )
-   SELECT sc.id,
+      SELECT sc.id,
       sc.state,
       sc.value,
       sc.procurement_id,
       COALESCE(sp.stage, 99) AS procurement_stage,
       COALESCE(sc.support_level, 99) AS support_level,
-      COALESCE(cat.tower_name, 'No Tower'::text) AS tower_name,
-      lower(replace(COALESCE(cat.tower_name, 'No Tower'::text), ' '::text, '-'::text)) AS tower_slug,
+      COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
+      lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
+      tow.id AS tower_id,
       sc.created_at,
       sc.updated_at
-     FROM ((support_cases sc
+     FROM (((support_cases sc
        JOIN support_procurements sp ON ((sp.id = sc.procurement_id)))
-       LEFT JOIN category_towers cat ON ((sc.category_id = cat.id)))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
+       LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
 end
