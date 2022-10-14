@@ -1,0 +1,42 @@
+<% user_type_options = [OpenStruct.new(id: true, name: "Internal"), OpenStruct.new(id: false, name: "Proc-Ops")] %>
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to "CMS Management", support_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to "Agents", support_management_agents_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+  </ol>
+</div>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--l">Agents</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Tower</th>
+      <th scope="col" class="govuk-table__header">Type</th>
+      <th scope="col" class="govuk-table__header">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @agents.each do |agent| %>
+      <%= form_with(model: agent, url: support_management_agent_path(agent), method: :patch, scope: :agent) do |form| %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= agent.full_name %></th>
+          <td class="govuk-table__cell">
+            <%= form.govuk_collection_select :support_tower_id, @towers, :id, :title, options: { include_blank: "- No Tower Selected -" }, label: { text: "Tower", class: "govuk-!-display-none" } %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= form.govuk_collection_radio_buttons :internal, user_type_options, :id, :name, inline: true, small: true, legend: { text: 'User type', class: "govuk-!-display-none" } %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= form.submit "Save", class: "govuk-button" %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

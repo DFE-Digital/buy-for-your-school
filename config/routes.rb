@@ -137,10 +137,11 @@ Rails.application.routes.draw do
       end
     end
 
-    # scope "/case-statistics", as: "case_statistics" do
-    #   get "/", to: "case_statistics#show"
-    #   resources :towers, only: %i[show], path: "tower"
-    # end
+    namespace :management do
+      get "/", to: "base#index"
+      resources :agents, only: %i[index update]
+      resources :categories, only: %i[index update]
+    end
   end
 
   if Rails.env.development?

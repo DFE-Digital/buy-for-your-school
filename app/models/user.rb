@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
   # users who have the "analyst" role
   scope :analysts, -> { where("roles @> ?", %("analyst")) }
+  scope :admins, -> { where("roles @> ?", %("admin")) }
 
   # @return [false] distinguish from unauthenticated user
   #
@@ -38,5 +39,9 @@ class User < ApplicationRecord
   # @return [Boolean] user is not an internal team member or in a supported organisation
   def unsupported?
     self.class.internal.exclude?(self) && self.class.supported.exclude?(self)
+  end
+
+  def admin?
+    self.class.admins.include?(self)
   end
 end
