@@ -7,10 +7,12 @@ module Support
   #
   class Agent < ApplicationRecord
     has_many :cases, class_name: "Support::Case"
+    belongs_to :support_tower, class_name: "Support::Tower", optional: true
 
     # agents that are not internal team members (genuine caseworkers)
     scope :caseworkers, -> { where(internal: false) }
-    scope :by_first_name, -> { order("first_name ASC") }
+    scope :internal, -> { where(internal: true) }
+    scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
