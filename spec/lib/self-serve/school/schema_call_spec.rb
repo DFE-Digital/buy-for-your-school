@@ -69,6 +69,7 @@ RSpec.describe School::Schema, "#call" do
           code: "1",
           name: "Mixed",
         },
+        gor_name: "GOR NAME",
         age: {
           lower: "11",
           upper: "18",
@@ -87,6 +88,7 @@ RSpec.describe School::Schema, "#call" do
           postcode: "WD25 0UU",
         },
         trust_name: "Test Trust Name",
+        trust_code: "Test Trust Code"
       },
     }
   end
