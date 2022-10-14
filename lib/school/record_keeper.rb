@@ -27,6 +27,7 @@ module School
             org.contact = record[:school][:head_teacher]
             org.phase = record[:school][:phase][:code]
             org.gender = record[:school][:gender][:code]
+            org.gor_name = record[:school][:gor_name]
             org.status = record[:establishment_status][:code]
             org.number = record[:school][:number]
             org.rsc_region = record[:rsc_region]
@@ -35,6 +36,7 @@ module School
             org.ukprn = record[:ukprn]
             org.telephone_number = record[:school][:telephone_number]
             org.trust_name = record[:school][:trust_name].presence
+            org.trust_code = record[:school][:trust_code].presence
             org.save!
           end
         end
