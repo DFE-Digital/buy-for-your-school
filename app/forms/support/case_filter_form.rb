@@ -14,9 +14,6 @@ module Support
     option :base_cases, optional: true, default: proc { Case.where(nil) }
 
     def results
-      # Default to not showing closed cases but allow explicit selection of it
-      @base_cases = @base_cases.not_closed unless state == "closed"
-
       Support::FilterCases.new(base_cases:)
         .filter(state:, category:, agent:, tower:)
         .priority_ordering

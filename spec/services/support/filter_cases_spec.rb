@@ -11,7 +11,7 @@ RSpec.describe Support::FilterCases, bullet: :skip do
   before do
     create_list(:support_case, 10)
     create(:support_case, category: it_cat)
-    create(:support_case, category: catering_cat, state: :closed)
+    create(:support_case, category: catering_cat, state: :closed, ref: "999888")
     create(:support_case, category: catering_cat, agent:)
   end
 
@@ -19,8 +19,11 @@ RSpec.describe Support::FilterCases, bullet: :skip do
     context "without filtering_params" do
       let(:filtering_params) { nil }
 
-      it "returns all cases" do
-        expect(service.new.filter(filtering_params).count).to be(12)
+      it "returns all cases except closed cases" do
+        results = service.new.filter(filtering_params)
+
+        expect(results.pluck(:ref)).not_to include("999888")
+        expect(results.count).to eq(12)
       end
     end
 
