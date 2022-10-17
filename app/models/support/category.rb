@@ -25,10 +25,6 @@ module Support
       find_by(title: "Other")&.id
     end
 
-    def self.unique_towers
-      Tower.unique_towers.pluck(:title)
-    end
-
     def tower_title
       tower&.title
     end

@@ -64,7 +64,6 @@ module Support
     scope :by_state, ->(state) { where(state:) }
     scope :by_category, ->(category_id) { where(category_id:) }
     scope :by_tower, ->(support_tower_id) { joins(:category).where(support_categories: { support_tower_id: }) }
-    scope :without_tower, -> { where(category_id: nil).or(by_tower(nil)) }
 
     scope :priority_ordering, lambda {
       order(
