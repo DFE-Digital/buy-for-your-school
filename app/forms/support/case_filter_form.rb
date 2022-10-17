@@ -5,28 +5,45 @@ module Support
     extend Dry::Initializer
     include Concerns::ValidatableForm
 
-    # @!attribute [r] state
-    # @return [String]
     option :state, optional: true
-
-    # @!attribute [r] category
-    # @return [String]
     option :category, optional: true
-
-    # @!attribute [r] agent
-    # @return [String]
     option :agent, optional: true
-
-    # @!attribute [r] tower
-    # @return [String]
     option :tower, optional: true
+
+    # Potentially pre-scope results with as scope / query
+    option :base_cases, optional: true, default: proc { Case.where(nil) }
+
+    def results
+      # Default to not showing closed cases but allow explicit selection of it
+      @base_cases = @base_cases.not_closed unless state == "closed"
+
+      Support::FilterCases.new(base_cases:)
+        .filter(state:, category:, agent:, tower:)
+        .priority_ordering
+    end
+
+    def case_states
+      Support::Case.states.keys
+        .map { |key| OpenStruct.new(title: I18n.t("support.case.label.state.state_#{key.downcase}"), id: key) }
+    end
 
     def agents
       @agents ||= Support::Agent.caseworkers.by_first_name.map { |a| AgentPresenter.new(a) }
     end
 
     def categories
-      @categories ||= Case.joins(:category).select("support_categories.id, support_categories.title").order("support_categories.title").uniq
+      @categories ||= if tower.present?
+                        Support::Category
+                          .select("support_categories.id, support_categories.title")
+                          .where(support_tower_id: tower)
+                          .order("support_categories.title")
+                          .uniq
+                      else
+                        base_cases.joins(:category)
+                          .select("support_categories.id, support_categories.title")
+                          .order("support_categories.title")
+                          .uniq
+                      end
     end
 
     def towers
