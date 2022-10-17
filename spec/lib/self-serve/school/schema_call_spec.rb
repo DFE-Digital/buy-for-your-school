@@ -88,7 +88,7 @@ RSpec.describe School::Schema, "#call" do
           postcode: "WD25 0UU",
         },
         trust_name: "Test Trust Name",
-        trust_code: "Test Trust Code"
+        trust_code: "Test Trust Code",
       },
     }
   end
