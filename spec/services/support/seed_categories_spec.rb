@@ -61,6 +61,13 @@ RSpec.describe Support::SeedCategories do
   end
 
   context "when the parent category has a tower" do
+    it "saves the tower to the parent category" do
+      service.call
+
+      catering = Support::Category.find_by(title: "Catering")
+      expect(catering.tower_title).to eq("FM & Catering")
+    end
+
     context "and the sub category has not defined a tower" do
       it "sets the sub category tower to be the tower defined on the parent" do
         service.call
