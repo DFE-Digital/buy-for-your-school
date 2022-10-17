@@ -83,6 +83,7 @@ Rails.application.routes.draw do
     resources :establishments, only: %i[index]
     resources :establishment_groups, only: %i[index]
     resources :frameworks, only: %i[index]
+    resources :towers, only: [:show]
     resources :cases, only: %i[index show edit update new create] do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
@@ -127,6 +128,7 @@ Rails.application.routes.draw do
         end
       end
     end
+
     resources :messages do
       resource :save_attachments, only: %i[new create]
     end

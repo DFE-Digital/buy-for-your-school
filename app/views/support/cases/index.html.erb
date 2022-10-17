@@ -65,7 +65,11 @@
           </table>
           <%= render "components/pagination", records: @my_cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
         <% end %>
+        
         <%= link_to I18n.t("support.case.label.view_resolved_cases"), support_case_search_index_path(search_case_form: { search_term: current_agent.last_name.downcase, state: "resolved", agent: current_agent.id }), class: "govuk-link govuk-link--no-visited-state" %>
+        <% if current_agent.support_tower.present? %>
+          <br /><%= link_to I18n.t("support.case.label.view_tower_cases"), support_tower_path(current_agent.support_tower), class: "govuk-link govuk-link--no-visited-state" %>
+        <% end %>
       </div>
     </div>
   </div>
