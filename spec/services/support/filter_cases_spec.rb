@@ -16,17 +16,6 @@ RSpec.describe Support::FilterCases, bullet: :skip do
   end
 
   describe "#filter" do
-    context "without filtering_params" do
-      let(:filtering_params) { nil }
-
-      it "returns all cases except closed cases" do
-        results = service.new.filter(filtering_params)
-
-        expect(results.pluck(:ref)).not_to include("999888")
-        expect(results.count).to eq(12)
-      end
-    end
-
     context "with filter params" do
       context "when filtered by category" do
         let(:filtering_params) do
