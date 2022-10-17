@@ -7,6 +7,7 @@ module Support
       @tower_overview = CaseStatistics.new.breakdown_of_stages_by_tower.find_by(tower_slug:)
     end
 
+    def tower_id = @tower_overview.tower_id
     def name = @tower_overview.name
     def live_cases = @tower_overview.live_cases
     def live_value = @tower_overview.live_value

@@ -1,7 +1,8 @@
 RSpec.feature "Case statistics tower page" do
-  before do
-    category = create(:support_category, title: "Books", with_tower: "Services")
+  let(:services_tower) { create(:support_tower, title: "Services") }
+  let(:category) { create(:support_category, title: "Books", tower: services_tower) }
 
+  before do
     create(:support_case, :initial, category:)
     create(:support_case, :opened, category:)
     create(:support_case, :resolved, category:)
@@ -23,6 +24,12 @@ RSpec.feature "Case statistics tower page" do
         within(".tower-overview", text: "Open") { expect(page).to have_content("1") }
         within(".tower-overview", text: "On hold") { expect(page).to have_content("1") }
         within(".tower-overview", text: "New") { expect(page).to have_content("1") }
+      end
+
+      context "when tower is not 'No Tower'" do
+        it "links Live Cases to the tower page for this tower" do
+          expect(page).to have_link(href: support_tower_path(services_tower.id), text: "3\nLive cases")
+        end
       end
 
       it "shows main sections" do

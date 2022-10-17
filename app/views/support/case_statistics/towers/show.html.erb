@@ -4,17 +4,23 @@
 
 <div class="govuk-grid-row tower-overview">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l"><%= I18n.t("support.case_statistics.tower.header", type: @tower_statistics.name ) %></h1>
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("support.case_statistics.tower.header", type: @tower_statistics.name ) %>
+    </h1>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third">
         <div class="govuk-panel govuk-panel--confirmation">
+          <%= link_to @tower_statistics.tower_slug == 'no-tower' ? '#' : support_tower_path(@tower_statistics.tower_id), class: "govuk-link govuk-link--inverse" do %>
+
           <h1 class="govuk-panel__title govuk-!-margin-bottom-0 no_of_live_cases">
             <%= @tower_statistics.live_cases %>
           </h1>
           <div class="govuk-panel__body">
             <%= I18n.t("support.case_statistics.body.no_of_live_cases", count: @tower_statistics.live_cases) %>
           </div>
+
+          <% end %>
         </div>
       </div>
 

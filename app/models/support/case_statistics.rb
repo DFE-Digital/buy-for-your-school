@@ -10,6 +10,7 @@ module Support
       TowerCase.select(<<-SQL,
         tower_name AS name,
         tower_slug AS slug,
+        tower_id,
         COUNT(id) AS live_cases,
         SUM(CASE WHEN state = 1 THEN 1 ELSE 0 END) AS open_cases,
         SUM(CASE WHEN state = 3 THEN 1 ELSE 0 END) AS on_hold_cases,
@@ -18,7 +19,7 @@ module Support
         '' as id
       SQL
                       )
-      .group("tower_name, tower_slug")
+      .group("tower_name, tower_slug, tower_id")
       .order(Arel.sql("(CASE WHEN tower_name = 'No Tower' THEN 9999 ELSE 0 END), tower_name ASC"))
     end
 
