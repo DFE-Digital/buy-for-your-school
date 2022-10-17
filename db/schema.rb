@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_14_140003) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -499,6 +498,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
     t.string "number"
     t.string "rsc_region"
     t.string "trust_name"
+    t.string "trust_code"
+    t.string "gor_name"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
@@ -602,6 +603,48 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
 
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -704,48 +747,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE (organisations.status <> 2)
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
-  SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
@@ -764,8 +765,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
   create_view "support_towers", sql_definition: <<-SQL
       SELECT cases.id,
           CASE
-              WHEN ((cats.tower)::text = ANY (ARRAY[('Business Services'::character varying)::text, ('Professional Services'::character varying)::text])) THEN 'Services'::text
-              WHEN ((cats.tower)::text = ANY (ARRAY[('Catering'::character varying)::text, ('FM'::character varying)::text, ('Furniture'::character varying)::text])) THEN 'FM and Catering'::text
+              WHEN ((cats.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
+              WHEN ((cats.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
               WHEN ((cats.tower)::text = 'ICT'::text) THEN 'ICT'::text
               WHEN ((cats.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
               ELSE NULL::text
@@ -783,8 +784,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_130837) do
            SELECT support_categories.id,
               support_categories.title,
                   CASE
-                      WHEN ((support_categories.tower)::text = ANY (ARRAY[('Business Services'::character varying)::text, ('Professional Services'::character varying)::text])) THEN 'Services'::text
-                      WHEN ((support_categories.tower)::text = ANY (ARRAY[('Catering'::character varying)::text, ('FM'::character varying)::text, ('Furniture'::character varying)::text])) THEN 'FM and Catering'::text
+                      WHEN ((support_categories.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
+                      WHEN ((support_categories.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
                       WHEN ((support_categories.tower)::text = 'ICT'::text) THEN 'ICT'::text
                       WHEN ((support_categories.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
                       ELSE 'No Tower'::text

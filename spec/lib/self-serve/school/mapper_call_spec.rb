@@ -60,6 +60,8 @@ RSpec.describe School::Mapper, "#call" do
           "ReligiousCharacter (name)" => "Church of England",                   # AD:
           # Trust
           "Trusts (name)" => "Cool Green School Trust", # AU:
+          "Trusts (code)" => "Cool Green School Trust CODE", # AT:
+          "GOR (name)" => "GOR NAME", # CZ:
 
           "SchoolCapacity" => "100",
           "NumberofPupils" => "101",
@@ -134,11 +136,9 @@ RSpec.describe School::Mapper, "#call" do
     end
   end
 
-  describe "trust_name" do
-    specify do
-      expect(output.first[:school][:trust_name]).to eq("Cool Green School Trust")
-    end
-  end
+  specify("trust_name") { expect(output.first[:school][:trust_name]).to eq("Cool Green School Trust") }
+  specify("trust_code") { expect(output.first[:school][:trust_code]).to eq("Cool Green School Trust CODE") }
+  specify("gor_name")   { expect(output.first[:school][:gor_name]).to eq("GOR NAME") }
 
   describe "district" do
     let(:key) { :district }
