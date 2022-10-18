@@ -40,6 +40,6 @@
 
 <ul class="govuk-list case-actions">
   <% @towers.each do |tower| %>
-    <li><%= link_to "View #{tower.title} cases", support_tower_path(id: tower.id), class: "govuk-link" %></li>
+    <li><%= link_to "View #{tower.title} cases", support_tower_path(id: tower.id), class: "govuk-link govuk-link--no-visited-state" %></li>
   <% end %>
 </ul>
