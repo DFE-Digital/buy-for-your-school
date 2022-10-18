@@ -85,7 +85,7 @@ private
     else
       # - default to the specify dashboard
       # - support request journeys start from the profile page
-      find_framework_entrypoint? ? profile_path : dashboard_path
+      find_framework_entrypoint? ? confirm_sign_in_framework_requests_path : dashboard_path
     end
   end
 

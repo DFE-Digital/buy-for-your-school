@@ -32,11 +32,7 @@
 
 
     <% if @current_user.supported_schools.any? %>
-      <% if @support_journey.eql?(:faf) %>
-        <%= link_to "Yes, continue", new_framework_request_path, class: "govuk-button", role: "button" %>
-      <% else %>
-        <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
-      <% end %>
+      <%= link_to "Request support", new_support_request_path, class: "govuk-button", role: "button" %>
     <% else %>
       <p class="govuk-body">
         <%= I18n.t("support_request.unsupported_school") %>
