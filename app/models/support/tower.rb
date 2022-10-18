@@ -7,8 +7,17 @@ module Support
       order(title: :asc).uniq
     end
 
+    def self.every_tower
+      all.to_a.push(nil_tower)
+    end
+
     def self.nil_tower
-      OpenStruct.new(title: "No Tower", categories: Support::Category, cases: Support::Case.without_tower)
+      OpenStruct.new(
+        id: 'no-tower',
+        title: "No Tower",
+        categories: Support::Category,
+        cases: Support::Case.without_tower
+      )
     end
   end
 end

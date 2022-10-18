@@ -35,3 +35,11 @@
 </table>
 
 <%= render "components/pagination", records: @cases %>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-5">Other towers</h3>
+
+<ul class="govuk-list case-actions">
+  <% @towers.each do |tower| %>
+    <li><%= link_to "View #{tower.title} cases", support_tower_path(id: tower.id), class: "govuk-link" %></li>
+  <% end %>
+</ul>

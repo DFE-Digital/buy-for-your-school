@@ -32,18 +32,10 @@ module Support
     end
 
     def categories
-      @categories ||= if tower.present?
-                        Support::Category
-                          .select("support_categories.id, support_categories.title")
-                          .where(support_tower_id: tower)
-                          .order("support_categories.title")
-                          .uniq
-                      else
-                        base_cases.joins(:category)
-                          .select("support_categories.id, support_categories.title")
-                          .order("support_categories.title")
-                          .uniq
-                      end
+      @categories ||= (tower.present? ? tower.categories : base_cases.joins(:category))
+        .select("support_categories.id, support_categories.title")
+        .order("support_categories.title")
+        .uniq
     end
 
     def towers

@@ -5,6 +5,8 @@ module Support
     def show
       @back_url = request.referer || support_cases_path
 
+      @towers = Support::Tower.every_tower
+
       @tower = tower
 
       @filter_form = Support::CaseFilterForm.new(
