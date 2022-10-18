@@ -50,6 +50,12 @@ Rails.application.routes.draw do
   resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
 
   #
+  # Situational Content ---------------------------------------------------------
+  #
+
+  get "/pages/:page", to: "static_pages#show"
+
+  #
   # General Support Requests ---------------------------------------------------
   #
   resources :support_requests, except: %i[destroy], path: "support-requests"
