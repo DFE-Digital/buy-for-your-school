@@ -6,5 +6,9 @@ module Support
     def self.unique_towers
       order(title: :asc).uniq
     end
+
+    def self.nil_tower
+      OpenStruct.new(title: "No Tower", categories: Support::Category, cases: Support::Case.without_tower)
+    end
   end
 end

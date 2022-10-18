@@ -1,7 +1,5 @@
 <%= content_for :title, I18n.t("support.case_statistics.header") %>
 
-<%= link_to I18n.t("generic.button.back"), support_case_statistics_path, class: "govuk-back-link" %>
-
 <div class="govuk-grid-row tower-overview">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">
@@ -11,7 +9,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third">
         <div class="govuk-panel govuk-panel--confirmation">
-          <%= link_to @tower_statistics.tower_slug == 'no-tower' ? '#' : support_tower_path(@tower_statistics.tower_id), class: "govuk-link govuk-link--inverse" do %>
+          <%= link_to support_tower_path(@tower_statistics.tower_id || @tower_statistics.tower_slug), class: "govuk-link govuk-link--inverse" do %>
 
           <h1 class="govuk-panel__title govuk-!-margin-bottom-0 no_of_live_cases">
             <%= @tower_statistics.live_cases %>
