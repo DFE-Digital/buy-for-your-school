@@ -246,7 +246,6 @@ en:
         id: ID
         uid: UID
         ukprn: UKPRN
-      title: Is this the academy trust or federation you're buying for? - Get help buying for schools - GOV.UK
     confirm_school:
       caption: About your school
       choice:
@@ -263,7 +262,6 @@ en:
         school_type: School type
         ukprn: UKPRN
         urn: URN
-      title: Is this the school you're buying for? - Get help buying for schools - GOV.UK
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school that your request is about?
       link:
@@ -304,7 +302,6 @@ en:
         summary: Can't find it?
       heading: Search for an academy trust or federation
       hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
-      title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
     search_for_a_school:
       caption: About your school
       details:
@@ -316,7 +313,6 @@ en:
         summary: Can't find it?
       heading: Search for your school
       hint: Enter the name, postcode or unique reference number (URN) of your school
-      title: Search for your school - Get help buying for schools - GOV.UK
     start_page:
       header: Request help and support for your procurement
       overview_category_list:
