@@ -15,10 +15,10 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
     visit "/procurement-support/#{request.id}"
   end
 
-  it "goes back to the message page" do
+  it "goes back to the special requirements page" do
     click_on "Back"
-    expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=7"
-    expect(find("label.govuk-label--l")).to have_text "How can we help?"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/special_requirements/edit"
+    expect(page).to have_text "Special requirements"
   end
 
   it "has submission information" do
@@ -52,7 +52,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
   it "edit message" do
     click_link "edit-message"
 
-    expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=7"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/message/edit"
     expect(find_field("framework-support-form-message-body-field").value).to eql "please help!"
 
     fill_in "framework_support_form[message_body]", with: "I have a problem"
@@ -67,7 +67,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
     it "the school or group can be edited" do
       click_link "edit-school"
 
-      expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=3"
+      expect(page).to have_current_path "/procurement-support/#{request.id}/select_organisation/edit"
       expect(all(".govuk-radios__item").count).to be 4
 
       expect(page).to have_checked_field "Specialist School for Testing"
