@@ -1,7 +1,7 @@
 RSpec.describe Support::CaseFilterForm, type: :model do
   subject(:form) { described_class.new }
 
-  describe '#results' do
+  describe "#results" do
     let!(:closed_case) { create(:support_case, :closed) }
     let!(:opened_case) { create(:support_case, :opened) }
 
@@ -12,14 +12,14 @@ RSpec.describe Support::CaseFilterForm, type: :model do
     end
 
     context "when specifying a state of closed" do
-      it 'returns closed cases' do
-        results = described_class.new(state: 'closed').results
+      it "returns closed cases" do
+        results = described_class.new(state: "closed").results
         expect(results).to include(closed_case)
         expect(results).not_to include(opened_case)
       end
     end
 
-    it 'doesnt return any closed cases' do
+    it "doesnt return any closed cases" do
       results = described_class.new.results
       expect(results).to include(opened_case)
       expect(results).not_to include(closed_case)
