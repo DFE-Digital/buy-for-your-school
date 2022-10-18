@@ -64,20 +64,20 @@ module Support
     scope :by_state, ->(state) { where(state:) }
     scope :by_category, ->(category_id) { where(category_id:) }
     scope :by_tower, ->(support_tower_id) { joins(:category).where(support_categories: { support_tower_id: }) }
-    scope :without_tower, -> { joins(:category).where(support_categories: { support_tower_id: nil }).or(where(category: nil)) }
+    scope :without_tower, -> { joins("JOIN support_tower_cases stc ON stc.id = support_cases.id").where(stc: { tower_slug: "no-tower" }) }
 
     scope :priority_ordering, lambda {
       order(
         Arel.sql(
           <<-SQL,
             CASE
-              WHEN action_required = true THEN 20
-              WHEN state = 0 THEN 10
-              WHEN state = 1 THEN 9
-              WHEN state = 3 THEN 8
-              WHEN state = 2 THEN 7
+              WHEN support_cases.action_required = true THEN 20
+              WHEN support_cases.state = 0 THEN 10
+              WHEN support_cases.state = 1 THEN 9
+              WHEN support_cases.state = 3 THEN 8
+              WHEN support_cases.state = 2 THEN 7
               ELSE 1
-            END DESC, ref DESC
+            END DESC, support_cases.ref DESC
           SQL
         ),
       )

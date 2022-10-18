@@ -2,7 +2,7 @@
   <%= @tower.title %> cases
 </h1>
 
-<%= render "support/cases/forms/simple_case_filters", form: @filter_form, clear_url: support_tower_path(@tower), hide_towers: true %>
+<%= render "support/cases/forms/simple_case_filters", form: @filter_form, clear_url: support_tower_path(id: @tower.id), hide_towers: true %>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
