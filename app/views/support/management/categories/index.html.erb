@@ -3,23 +3,23 @@
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <%= link_to "CMS Management", support_management_path, class: "govuk-breadcrumbs__link" %>
+      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
     </li>
     <li class="govuk-breadcrumbs__list-item">
-      <%= link_to "Categories", support_management_categories_path, class: "govuk-breadcrumbs__link" %>
+      <%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
 </div>
 
 <table class="govuk-table">
-  <caption class="govuk-table__caption govuk-table__caption--l">Categories</caption>
+  <caption class="govuk-table__caption govuk-table__caption--l"><%= I18n.t("support.management.categories.header") %></caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Title</th>
-      <th scope="col" class="govuk-table__header"># Cases</th>
-      <th scope="col" class="govuk-table__header">Parent</th>
-      <th scope="col" class="govuk-table__header">Tower</th>
-      <th scope="col" class="govuk-table__header">Actions</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.categories.table.title") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.num_cases") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.parent") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.tower") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.actions") %></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -32,13 +32,13 @@
               <%= category.cases.length %>
             </td>
             <td class="govuk-table__cell">
-              <%= form.govuk_collection_select :parent_id, @top_level_categories, :id, :title, options: { include_blank: "- No Parent Selected -" }, label: { text: "Parent Category", class: "govuk-!-display-none" } %>
+              <%= form.govuk_collection_select :parent_id, @top_level_categories, :id, :title, options: { include_blank: I18n.t("support.management.categories.table.no_parent_selected") }, label: { text: I18n.t("support.management.categories.table.parent_category"), class: "govuk-!-display-none" } %>
             </td>
             <td class="govuk-table__cell">
-              <%= form.govuk_collection_select :support_tower_id, @towers, :id, :title, options: { include_blank: "- No Tower Selected -" }, label: { text: "Tower", class: "govuk-!-display-none" } %>
+              <%= form.govuk_collection_select :support_tower_id, @towers, :id, :title, options: { include_blank: I18n.t("support.management.categories.table.no_tower_selected") }, label: { text: I18n.t("support.management.categories.table.tower"), class: "govuk-!-display-none" } %>
             </td>
             <td class="govuk-table__cell">
-              <%= form.submit "Save", class: "govuk-button" %>
+              <%= form.submit I18n.t("support.management.categories.table.save"), class: "govuk-button" %>
             </td>
           </tr>
         <% end %>

@@ -997,11 +997,11 @@ en:
         header: Source
     case_statistics:
       body:
+        live_value: Live value
         no_of_live_cases:
-          zero: Live cases
           one: Live case
           other: Live cases
-        live_value: Live value
+          zero: Live cases
       download:
         csv: Download CSV
       header: Case statistics
@@ -1009,17 +1009,17 @@ en:
       missing_data:
         header: Missing data
         no_level:
-          zero: There are no live cases that have no level
           one: There is 1 live case with no level
           other: There are %{count} live cases that have no level
+          zero: There are no live cases that have no level
         no_stage:
-          zero: There are no live cases that have no stage
           one: There is 1 live case with no stage
           other: There are %{count} live cases that have no stage
+          zero: There are no live cases that have no stage
         no_value:
-          zero: There are no live cases that have no value
           one: There is 1 live case with no value
           other: There are %{count} live cases that have no value
+          zero: There are no live cases that have no value
       stages:
         contract_award: Contract award
         evaluation: Evaluation
@@ -1029,6 +1029,15 @@ en:
         need: Need
         sourcing_options: Sourcing options
         unspecified: Unspecified
+      states:
+        live: Live
+        new: New
+        on_hold: On hold
+        open: Open
+      states_by_tower:
+        header: Overview by tower
+        tower: Tower
+        value: Value
       support_levels:
         L1: 1
         L2: 2
@@ -1039,15 +1048,6 @@ en:
       support_levels_by_tower:
         header: Overview by case levels by tower
         tower: Tower
-      states:
-        live: Live
-        new: New
-        on_hold: On hold
-        open: Open
-      states_by_tower:
-        header: Overview by tower
-        tower: Tower
-        value: Value
       tower:
         header: "%{type} Statistics"
         level: Level
@@ -1121,6 +1121,31 @@ en:
         savings_updated: Savings updated
         state_change: Status change
         support_request: Request for support
+    management:
+      agents:
+        header: Agents
+        table:
+          actions: Actions
+          name: Name
+          no_tower_selected: "- No Tower Selected -"
+          save: Save
+          tower: Tower
+          type: Type
+          user_type: User type
+      base:
+        header: CMS Management
+      categories:
+        header: Categories
+        table:
+          actions: Actions
+          no_parent_selected: "- No Parent Selected -"
+          no_tower_selected: "- No Tower Selected -"
+          num_cases: "# Cases"
+          parent: Parent
+          parent_category: Parent Category
+          save: Save
+          title: Title
+          tower: Tower
     procurement_details:
       edit:
         ended_at:

@@ -13,10 +13,10 @@ module Support
 
     def self.nil_tower
       OpenStruct.new(
-        id: 'no-tower',
+        id: "no-tower",
         title: "No Tower",
         categories: Support::Category,
-        cases: Support::Case.without_tower
+        cases: Support::Case.without_tower,
       )
     end
   end
