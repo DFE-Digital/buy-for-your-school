@@ -76,10 +76,10 @@ class FrameworkSupportForm < RequestForm
   def school_or_group
     if group
       group = Support::EstablishmentGroup.find_by(uid: found_uid_or_urn)
-      @group = Support::EstablishmentGroupPresenter.new(group) if group
+      Support::EstablishmentGroupPresenter.new(group)
     else
       school = Support::Organisation.find_by(urn: found_uid_or_urn)
-      @school = Support::OrganisationPresenter.new(school) if school
+      Support::OrganisationPresenter.new(school)
     end
   end
 end
