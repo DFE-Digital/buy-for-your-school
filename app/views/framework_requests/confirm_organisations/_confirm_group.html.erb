@@ -9,7 +9,7 @@
       <%= I18n.t("faf.confirm_group_or_trust.summary.group_name") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @group.name %>,<br>
+      <%= org.name %>,<br>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -17,7 +17,7 @@
       <%= I18n.t("faf.confirm_group_or_trust.summary.address") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @group.formatted_address %>
+      <%= org.formatted_address %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -25,7 +25,7 @@
       <%= I18n.t("faf.confirm_group_or_trust.summary.group_type") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @group.group_type %>
+      <%= org.group_type %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -33,9 +33,9 @@
       <%= I18n.t("faf.confirm_group_or_trust.summary.id") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= I18n.t("faf.confirm_group_or_trust.summary.uid") %>: <%= @group.uid %><br>
-      <% if @group.ukprn %>
-        <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= @group.ukprn %>
+      <%= I18n.t("faf.confirm_group_or_trust.summary.uid") %>: <%= org.uid %><br>
+      <% if org.ukprn %>
+        <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= org.ukprn %>
       <% end %>
     </dd>
   </div>

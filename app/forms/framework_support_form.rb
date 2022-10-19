@@ -72,4 +72,14 @@ class FrameworkSupportForm < RequestForm
       .merge(group: !group, dsi: !user.guest?)
       .reject { |_, v| v.to_s.empty? }
   end
+
+  def school_or_group
+    if group
+      group = Support::EstablishmentGroup.find_by(uid: found_uid_or_urn)
+      @group = Support::EstablishmentGroupPresenter.new(group) if group
+    else
+      school = Support::Organisation.find_by(urn: found_uid_or_urn)
+      @school = Support::OrganisationPresenter.new(school) if school
+    end
+  end
 end

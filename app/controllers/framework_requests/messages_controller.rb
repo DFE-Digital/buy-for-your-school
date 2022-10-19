@@ -17,15 +17,13 @@ module FrameworkRequests
     end
 
     def determine_back_path
+      return email_framework_requests_path(framework_support_form: validation.to_h) unless @form.dsi
+
       @current_user = UserPresenter.new(current_user)
-      if @form.dsi
-        if @current_user.single_org?
-          framework_requests_path
-        else
-          select_organisation_framework_requests_path(framework_support_form: validation.to_h)
-        end
+      if @current_user.single_org?
+        framework_requests_path
       else
-        email_framework_requests_path(framework_support_form: validation.to_h)
+        select_organisation_framework_requests_path(framework_support_form: validation.to_h)
       end
     end
   end

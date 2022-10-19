@@ -9,8 +9,8 @@
       <%= I18n.t("faf.confirm_school.summary.name_and_address") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @school.name %>,<br>
-      <%= @school.formatted_address %>
+      <%= org.name %>,<br>
+      <%= org.formatted_address %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -18,7 +18,7 @@
       <%= I18n.t("faf.confirm_school.summary.local_authority") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @school.local_authority %>
+      <%= org.local_authority %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -26,7 +26,7 @@
       <%= I18n.t("faf.confirm_school.summary.headteacher") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @school.contact %>
+      <%= org.contact %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -34,7 +34,7 @@
       <%= I18n.t("faf.confirm_school.summary.phase") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @school.phase %>
+      <%= org.phase %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -42,7 +42,7 @@
       <%= I18n.t("faf.confirm_school.summary.school_type") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @school.establishment_type.name %>
+      <%= org.establishment_type.name %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -50,9 +50,9 @@
       <%= I18n.t("faf.confirm_school.summary.id") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= I18n.t("faf.confirm_school.summary.urn") %>: <%= @school.urn %><br>
-      <%= I18n.t("faf.confirm_school.summary.dfe_number") %>: <%= @school.number %><br>
-      <%= I18n.t("faf.confirm_school.summary.ukprn") %>: <%= @school.ukprn %>
+      <%= I18n.t("faf.confirm_school.summary.urn") %>: <%= org.urn %><br>
+      <%= I18n.t("faf.confirm_school.summary.dfe_number") %>: <%= org.number %><br>
+      <%= I18n.t("faf.confirm_school.summary.ukprn") %>: <%= org.ukprn %>
     </dd>
   </div>
 </dl>

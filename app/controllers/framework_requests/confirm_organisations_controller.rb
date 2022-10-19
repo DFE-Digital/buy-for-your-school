@@ -2,7 +2,7 @@ module FrameworkRequests
   class ConfirmOrganisationsController < BaseController
     skip_before_action :authenticate_user!
 
-    before_action :query_organisation!, only: %i[create index edit]
+    before_action :form, only: %i[index edit create update]
 
     def index; end
 
@@ -51,16 +51,6 @@ module FrameworkRequests
       else
         session[:faf_school] = @form.org_id
         session.delete(:faf_group)
-      end
-    end
-
-    def query_organisation!
-      if form.group
-        group = Support::EstablishmentGroup.find_by(uid: form.found_uid_or_urn)
-        @group = Support::EstablishmentGroupPresenter.new(group) if group
-      else
-        school = Support::Organisation.find_by(urn: form.found_uid_or_urn)
-        @school = Support::OrganisationPresenter.new(school) if school
       end
     end
 

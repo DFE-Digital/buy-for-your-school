@@ -3,11 +3,8 @@
 <%= form.hidden_field :org_id, value: form.object.org_id %>
 
 <%=
-  if form.object.group
-    render "confirm_group", form: form
-  else
-    render "confirm_school", form: form
-  end
+  partial = form.object.group ? "confirm_group" : "confirm_school"
+  render partial, form: form, org: form.object.school_or_group
 %>
 
 <%= javascript_include_tag "faf/faf_confirm_school" %>
