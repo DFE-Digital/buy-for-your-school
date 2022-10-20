@@ -20,5 +20,9 @@ module FrameworkRequests
     def current_user
       @current_user = UserPresenter.new(super)
     end
+
+    def step_description
+      I18n.t("profile.heading")
+    end
   end
 end

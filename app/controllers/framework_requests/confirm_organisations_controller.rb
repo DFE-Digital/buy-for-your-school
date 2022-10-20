@@ -61,5 +61,9 @@ module FrameworkRequests
     def edit_back_url
       @back_url = edit_framework_request_search_for_organisation_path(framework_support_form: validation.to_h)
     end
+
+    def step_description
+      form.group ? I18n.t("faf.confirm_group_or_trust.heading") : I18n.t("faf.confirm_school.heading")
+    end
   end
 end

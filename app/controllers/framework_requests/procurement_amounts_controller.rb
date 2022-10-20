@@ -15,5 +15,9 @@ module FrameworkRequests
     def back_url
       @back_url = message_framework_requests_path(framework_support_form: validation.to_h)
     end
+
+    def step_description
+      I18n.t("request.procurement_amount.heading")
+    end
   end
 end

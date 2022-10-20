@@ -26,5 +26,9 @@ module FrameworkRequests
         select_organisation_framework_requests_path(framework_support_form: validation.to_h)
       end
     end
+
+    def step_description
+      I18n.t("faf.user_query.label")
+    end
   end
 end

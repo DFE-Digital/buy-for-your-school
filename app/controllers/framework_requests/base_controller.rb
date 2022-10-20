@@ -4,6 +4,7 @@ module FrameworkRequests
     before_action :framework_request, only: %i[edit update]
     before_action :back_url, except: %i[edit]
     before_action :cached_orgs
+    before_action :create_user_journey_step, only: %i[index]
 
     def index; end
 
@@ -100,6 +101,15 @@ module FrameworkRequests
       @cached_school = session[:faf_school]
     end
 
+    def create_user_journey_step
+      UserJourneys::CreateStep.new(
+        step_description:,
+        product_section: session[:support_journey],
+        user_journey_id: session[:user_journey_id],
+        session_id: session[:session_id],
+      ).call
+    end
+
     def back_url; end
 
     def edit_back_url
@@ -111,5 +121,7 @@ module FrameworkRequests
     def update_redirect_path; end
 
     def update_data; end
+
+    def step_description; end
   end
 end

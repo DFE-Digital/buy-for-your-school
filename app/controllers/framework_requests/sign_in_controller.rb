@@ -20,5 +20,9 @@ module FrameworkRequests
     def back_url
       @back_url = framework_requests_path
     end
+
+    def step_description
+      I18n.t("faf.dsi_or_search.header")
+    end
   end
 end

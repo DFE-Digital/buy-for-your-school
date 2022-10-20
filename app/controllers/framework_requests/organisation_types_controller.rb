@@ -23,5 +23,9 @@ module FrameworkRequests
     def back_url
       @back_url = sign_in_framework_requests_path(framework_support_form: validation.to_h)
     end
+
+    def step_description
+      I18n.t("faf.school_or_group_or_trust.header")
+    end
   end
 end
