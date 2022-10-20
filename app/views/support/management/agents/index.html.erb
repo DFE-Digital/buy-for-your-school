@@ -16,8 +16,9 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.agents.table.name") %></th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.agents.table.tower") %></th>
+      <th scope="col" class="govuk-table__header "><%= I18n.t("support.management.agents.table.tower") %></th>
       <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.agents.table.type") %></th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.agents.table.admin") %></th>
       <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.agents.table.actions") %></th>
     </tr>
   </thead>
@@ -31,6 +32,15 @@
           </td>
           <td class="govuk-table__cell">
             <%= form.govuk_collection_radio_buttons :internal, user_type_options, :id, :name, inline: true, small: true, legend: { text: I18n.t("support.management.agents.table.user_type"), class: "govuk-!-display-none" } %>
+
+
+          </td>
+          <td class="govuk-table__cell">
+          <%= form.fields_for :user do |user_form| %>
+              <%= user_form.govuk_check_boxes_fieldset :terms_and_conditions_agreed, multiple: false,small: true, legend: { text: I18n.t("support.management.agents.table.admin"), size: 'l', class: "govuk-!-display-none" } do %>
+                <%= user_form.govuk_check_box :admin, 1, 0, multiple: false, small: true, link_errors: true, label: { text: I18n.t("support.management.agents.table.admin") } %>
+              <% end %>
+            <% end %>
           </td>
           <td class="govuk-table__cell">
             <%= form.submit I18n.t("support.management.agents.table.save"), class: "govuk-button" %>

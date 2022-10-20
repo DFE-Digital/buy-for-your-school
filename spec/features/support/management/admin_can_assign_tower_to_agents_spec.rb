@@ -20,7 +20,7 @@ describe "Admin can assign Support Agents to a Tower" do
 protected
 
   def_Given :"I am an admin" do
-    user.update!(roles: %w[admin])
+    user.update!(admin: true)
   end
 
   def_Given :"I am not an admin" do

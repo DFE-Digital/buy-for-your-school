@@ -1126,6 +1126,7 @@ en:
         header: Agents
         table:
           actions: Actions
+          admin: Admin
           name: Name
           no_tower_selected: "- No Tower Selected -"
           save: Save
