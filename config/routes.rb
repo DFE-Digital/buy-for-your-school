@@ -46,7 +46,61 @@ Rails.application.routes.draw do
   #
   # Framework Requests ---------------------------------------------------------
   #
-  resources :framework_requests, except: %i[delete], path: "procurement-support"
+  resources :framework_requests, only: %i[index show], path: "procurement-support" do
+    scope module: "framework_requests" do
+      collection do
+        post "/start", to: "start#create"
+
+        get "/sign_in", to: "sign_in#index"
+        post "/sign_in", to: "sign_in#create"
+
+        get "/confirm_sign_in", to: "confirm_sign_in#index"
+        post "/confirm_sign_in", to: "confirm_sign_in#create"
+
+        get "/select_organisation", to: "select_organisations#index"
+        post "/select_organisation", to: "select_organisations#create"
+
+        get "/organisation_type", to: "organisation_types#index"
+        post "/organisation_type", to: "organisation_types#create"
+
+        get "/search_for_organisation", to: "search_for_organisations#index"
+        post "/search_for_organisation", to: "search_for_organisations#create"
+
+        get "/confirm_organisation", to: "confirm_organisations#index"
+        post "/confirm_organisation", to: "confirm_organisations#create"
+
+        get "/name", to: "names#index"
+        post "/name", to: "names#create"
+
+        get "/email", to: "emails#index"
+        post "/email", to: "emails#create"
+
+        get "/message", to: "messages#index"
+        post "/message", to: "messages#create"
+
+        get "/procurement_amount", to: "procurement_amounts#index"
+        post "/procurement_amount", to: "procurement_amounts#create"
+
+        get "/procurement_confidence", to: "procurement_confidences#index"
+        post "/procurement_confidence", to: "procurement_confidences#create"
+
+        get "/special_requirements", to: "special_requirements#index"
+        post "/special_requirements", to: "special_requirements#create"
+      end
+      member do
+        resource :select_organisation, only: %i[edit update], as: :framework_request_select_organisation
+        resource :organisation_type, only: %i[edit update], as: :framework_request_organisation_type
+        resource :search_for_organisation, only: %i[edit update], as: :framework_request_search_for_organisation
+        resource :confirm_organisation, only: %i[edit update], as: :framework_request_confirm_organisation
+        resource :name, only: %i[edit update], as: :framework_request_name
+        resource :email, only: %i[edit update], as: :framework_request_email
+        resource :message, only: %i[edit update], as: :framework_request_message
+        resource :procurement_amount, only: %i[edit update], as: :framework_request_procurement_amount
+        resource :procurement_confidence, only: %i[edit update], as: :framework_request_procurement_confidence
+        resource :special_requirements, only: %i[edit update], as: :framework_request_special_requirements
+      end
+    end
+  end
   resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
 
   #

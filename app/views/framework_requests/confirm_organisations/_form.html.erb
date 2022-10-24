@@ -1,0 +1,10 @@
+<%= form.hidden_field :dsi, value: form.object.dsi  %>
+<%= form.hidden_field :group, value: form.object.group %>
+<%= form.hidden_field :org_id, value: form.object.org_id %>
+
+<%=
+  partial = form.object.group ? "confirm_group" : "confirm_school"
+  render partial, form: form, org: form.object.school_or_group
+%>
+
+<%= javascript_include_tag "faf/faf_confirm_school" %>

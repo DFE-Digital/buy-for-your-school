@@ -1,0 +1,10 @@
+<%= form.hidden_field :dsi, value: form.object.dsi  %>
+<%= form.hidden_field :group, value: form.object.group %>
+
+<%=
+  if form.object.group
+    render "find_group", form: form
+  else
+    render "find_school", form: form
+  end
+%>

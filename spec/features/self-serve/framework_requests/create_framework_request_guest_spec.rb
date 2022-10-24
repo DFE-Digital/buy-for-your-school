@@ -51,7 +51,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   let(:actions) { all("dd.govuk-summary-list__actions") }
 
   before do
-    visit "/procurement-support/new"
+    visit "/procurement-support/sign_in"
     choose "No, continue without a DfE Sign-in account"
     click_continue
   end
@@ -88,8 +88,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       it "goes back to the organisation choice page" do
         click_on "Back"
 
-        expect(page).to have_current_path(/step%5D=3/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/organisation_type}
         expect(find("legend.govuk-fieldset__legend--l")).to have_text "What type of organisation are you buying for?"
       end
 
@@ -143,8 +142,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       it "goes back to the school search page and retains the autocompleted result" do
         click_on "Back"
 
-        expect(page).to have_current_path(/step%5D=4/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/search_for_organisation}
         expect(page).to have_current_path(/group%5D=false/)
 
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
@@ -181,14 +179,14 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       it "choosing no goes back to the school search page" do
         choose "No, I need to choose another school"
         click_continue
-        expect(page).to have_current_path "/procurement-support"
+        expect(page).to have_current_path %r{/procurement-support/search_for_organisation}
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
 
       it "choosing yes continues to the name page" do
         choose "Yes"
         click_continue
-        expect(page).to have_current_path "/procurement-support"
+        expect(page).to have_current_path %r{/procurement-support/name}
         expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
       end
     end
@@ -201,8 +199,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the school confirmation page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=5/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/confirm_organisation}
         expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
       end
 
@@ -234,8 +231,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the name page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=6/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/name}
         expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
       end
 
@@ -266,8 +262,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the email address page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=7/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/email}
         expect(find("label.govuk-label--l")).to have_text "What is your email address?"
       end
 
@@ -300,8 +295,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the message page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=8/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/message}
         expect(page).to have_text "How can we help?"
       end
 
@@ -328,8 +322,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the procurement amount page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=9/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/procurement_amount}
         expect(page).to have_text "Approximately how much will the school be spending on this procurement in total?"
       end
 
@@ -363,8 +356,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the confidence level page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=10/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/procurement_confidence}
         expect(page).to have_text "How confident do you feel about running this procurement?"
       end
 
@@ -392,8 +384,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     describe "the search for a group page" do
       it "goes back to the organisation choice page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=3/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{/procurement-support/organisation_type}
         expect(find("legend.govuk-fieldset__legend--l")).to have_text "What type of organisation are you buying for?"
       end
 
@@ -443,8 +434,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
       it "goes back to the group search page" do
         click_on "Back"
-        expect(page).to have_current_path(/step%5D=4/)
-        expect(page).to have_current_path(/back%5D=true/)
+        expect(page).to have_current_path %r{procurement-support/search_for_organisation}
         expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
       end
 
@@ -458,14 +448,14 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       it "choosing no goes back to the group search page" do
         choose "No, I need to choose another academy trust or federation"
         click_continue
-        expect(page).to have_current_path "/procurement-support"
+        expect(page).to have_current_path %r{procurement-support/search_for_organisation}
         expect(page).to have_text "Search for an academy trust or federation"
       end
 
       it "choosing yes continues to the name page" do
         choose "Yes"
         click_continue
-        expect(page).to have_current_path "/procurement-support"
+        expect(page).to have_current_path %r{/procurement-support/name}
         expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
       end
 

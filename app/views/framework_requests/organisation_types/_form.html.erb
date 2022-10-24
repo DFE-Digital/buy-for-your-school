@@ -1,0 +1,12 @@
+<%= content_for :title, I18n.t("faf.school_or_group_or_trust.header") %>
+
+<%= form.hidden_field :dsi, value: form.object.dsi  %>
+<%= form.hidden_field :group, value: form.object.group %>
+
+<%= form.govuk_radio_buttons_fieldset :group,
+  legend: { text: I18n.t("faf.school_or_group_or_trust.header"), size: "l" },
+  hint: { text: I18n.t("faf.school_or_group_or_trust.hint"), size: "l" } do %>
+    <%= form.govuk_radio_button :group, :false, label: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.label") },
+        hint: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.hint"), size: "l" } %>
+    <%= form.govuk_radio_button :group, :true, label: { text: I18n.t("faf.school_or_group_or_trust.radios.group_or_trust.label") } %>
+<% end %>

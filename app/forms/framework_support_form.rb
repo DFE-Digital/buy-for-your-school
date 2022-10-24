@@ -16,16 +16,6 @@ class FrameworkSupportForm < RequestForm
   #   @return [UserPresenter] decorate respondent
   option :user, ::Types.Constructor(UserPresenter)
 
-  # @!attribute [r] step
-  #   @return [Integer]
-  option :step, Types::Params::Integer, default: proc {
-    if user.guest?
-      1
-    else
-      user.single_org? ? 7 : 3
-    end
-  }
-
   # @!attribute [r] dsi
   #   @return [Boolean] true if respondent authenticated
   option :dsi, Types::ConfirmationField | Types::Nil, default: proc { true unless user.guest? }
@@ -65,48 +55,6 @@ class FrameworkSupportForm < RequestForm
       .merge(org_id: found_uid_or_urn)
   end
 
-  # Prevent validation errors being raised for empty fields
-  #
-  # @return [Hash] toggle form data to step backward
-  def go_back
-    to_h
-      .except(:user, :messages)
-      .merge(back: true, group:, dsi: !user.guest?)
-      .reject { |_, v| v.to_s.empty? }
-  end
-
-  # Conditional jumps to different steps or incremental move forward
-  #
-  # @return [Integer] new step position
-  def forward
-    if position?(3) && dsi_with_many_orgs?
-      go_to!(7)
-    else
-      advance!
-    end
-  end
-
-  # Conditional jumps to different steps or incremental move backward
-  #
-  # @return [Integer] new step position
-  def backward
-    if position?(7) && dsi_with_many_orgs?
-      go_to!(3)
-
-    # This breaks the expected convention of going to the previous page but can
-    # be used to skip over the "confirm school/group details" page.
-    #
-    # @see https://design-system.service.gov.uk/components/back-link/
-    #
-    # elsif position?(5)
-    #   go_to!(3)
-    else
-      back!
-    end
-  end
-
-  # Guest Users ----------------------------------------------------------------
-
   # Extract school URN or group UID from autocomplete search result
   #
   # @example
@@ -119,54 +67,19 @@ class FrameworkSupportForm < RequestForm
 
   # @return [Hash] Guest "can't find school" tries "search for a group" and vice-versa
   def find_other_type
-    advance!
-    go_back.except(:org_id).merge(group: !group)
+    to_h
+      .except(:user, :messages, :org_id)
+      .merge(group: !group, dsi: !user.guest?)
+      .reject { |_, v| v.to_s.empty? }
   end
 
-  # Guest answered "no" to "is this the correct school/group?"
-  #
-  # @return [Boolean]
-  def reselect?
-    if user.guest? && position?(4)
-      org_confirm.eql?(false)
+  def school_or_group
+    if group
+      group = Support::EstablishmentGroup.find_by(uid: found_uid_or_urn)
+      Support::EstablishmentGroupPresenter.new(group)
     else
-      false
+      school = Support::Organisation.find_by(urn: found_uid_or_urn)
+      Support::OrganisationPresenter.new(school)
     end
-  end
-
-  # @see FrameworkRequestController#update
-  #
-  def next?
-    if user.guest? && position?(2)
-      true # group choice
-    elsif user.guest? && position?(3)
-      org_id.present? # org selected
-    else
-      false
-    end
-  end
-
-  # DSI Users ----------------------------------------------------------------
-
-  # @return [Boolean]
-  def restart?
-    position?(7) && dsi_with_inferred_org? || position?(3) && dsi_with_many_orgs?
-  end
-
-private
-
-  # @return [Boolean]
-  def dsi_selecting_org?
-    !user.guest? && position?(3)
-  end
-
-  # @return [Boolean]
-  def dsi_with_many_orgs?
-    !user.guest? && !user.single_org?
-  end
-
-  # @return [Boolean]
-  def dsi_with_inferred_org?
-    !user.guest? && user.single_org?
   end
 end

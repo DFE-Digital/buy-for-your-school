@@ -124,9 +124,9 @@ RSpec.feature "User authentication filter" do
       click_continue
     end
 
-    it "takes them to the profile page" do
+    it "takes them to the sign-in confirmation page" do
       expect(page).to have_text "Is this your contact information?"
-      expect(page).to have_current_path "/profile"
+      expect(page).to have_current_path "/procurement-support/confirm_sign_in"
     end
   end
 end

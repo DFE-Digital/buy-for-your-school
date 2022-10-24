@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
 
   guestRadioButton.addEventListener("change", () => {
     if (guestRadioButton.checked) {
-      changeFormAction("/procurement-support");
+      changeFormAction("/procurement-support/sign_in");
     }
   });
 });
