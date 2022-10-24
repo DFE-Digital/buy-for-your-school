@@ -3,26 +3,19 @@ RSpec.describe Support::FilterCases, bullet: :skip do
     described_class
   end
 
+  let(:ict_tower) { create(:support_tower, title: "ICT") }
   let(:catering_cat) { create(:support_category, title: "Catering") }
-  let(:it_cat) { create(:support_category, title: "IT", tower: "ICT") }
+  let(:it_cat) { create(:support_category, title: "IT", tower: ict_tower) }
   let(:agent) { create(:support_agent, first_name: "Example Support Agent") }
 
   before do
     create_list(:support_case, 10)
     create(:support_case, category: it_cat)
-    create(:support_case, category: catering_cat, state: :closed)
+    create(:support_case, category: catering_cat, state: :closed, ref: "999888")
     create(:support_case, category: catering_cat, agent:)
   end
 
   describe "#filter" do
-    context "without filtering_params" do
-      let(:filtering_params) { nil }
-
-      it "returns all cases" do
-        expect(service.new.filter(filtering_params).count).to be(12)
-      end
-    end
-
     context "with filter params" do
       context "when filtered by category" do
         let(:filtering_params) do
@@ -59,12 +52,12 @@ RSpec.describe Support::FilterCases, bullet: :skip do
 
       context "when filtered by tower" do
         let(:filtering_params) do
-          { tower: it_cat.tower }
+          { tower: ict_tower.id }
         end
 
         it "filters by tower" do
           expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.category.tower).to eql("ICT")
+          expect(service.new.filter(filtering_params).first.category.tower_title).to eql("ICT")
         end
       end
     end

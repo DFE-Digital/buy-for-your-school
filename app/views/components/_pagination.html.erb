@@ -1,3 +1,6 @@
+<% page_param_name ||= 'page' %>
+<% pagination_params ||= {} %>
+
 <div class="govuk-grid-row pagination">
   <div class="pagination__list">
     <%= will_paginate records, container: false, inner_window: 1, outer_window: 0, param_name: page_param_name, params: pagination_params %>

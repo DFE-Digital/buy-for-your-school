@@ -1,0 +1,45 @@
+<h1 class="govuk-heading-l">
+  <%= @tower.title %> cases
+</h1>
+
+<%= render "support/cases/forms/simple_case_filters", form: @filter_form, clear_url: support_tower_path(id: @tower.id), hide_towers: true %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">
+        <%= I18n.t("support.case.label.case") %>
+      </th>
+      <th class="govuk-table__header" scope="col">
+        <%= I18n.t("support.case.label.organisation") %>
+      </th>
+      <th class="govuk-table__header" scope="col">
+        <%= I18n.t("support.case.label.sub_category") %>
+      </th>
+      <th class="govuk-table__header" scope="col">
+        <%= I18n.t("support.case.label.status") %>
+      </th>
+      <th class="govuk-table__header" scope="col">
+        <%= I18n.t("support.case.label.assigned_to") %>
+      </th>
+      <th class="govuk-table__header" scope="col">
+        <%= I18n.t("support.case.label.last_updated") %>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @cases.each do |kase| %>
+      <%= render "support/cases/row", tab: :all_cases, kase: Support::CasePresenter.new(kase) %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render "components/pagination", records: @cases %>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-5">Other towers</h3>
+
+<ul class="govuk-list case-actions">
+  <% @towers.each do |tower| %>
+    <li><%= link_to "View #{tower.title} cases", support_tower_path(id: tower.id), class: "govuk-link govuk-link--no-visited-state" %></li>
+  <% end %>
+</ul>

@@ -42,6 +42,7 @@ RSpec/LetSetup:
     - 'spec/features/support/case_attachments/agent_can_save_attachments_to_case_spec.rb'
     - 'spec/jobs/support/send_exit_survey_job_spec.rb'
     - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
+    - 'spec/features/support/towers/agent_can_view_tower_spec.rb'
 
 # Offense count: 1
 RSpec/SubjectStub:

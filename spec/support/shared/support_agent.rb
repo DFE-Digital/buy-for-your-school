@@ -5,11 +5,8 @@ RSpec.shared_context "with an agent" do
     end
   end
 
-  let(:user) { build(:user, :caseworker) }
-
-  let(:agent) do
-    Support::Agent.find_by(email: "ops@education.gov.uk")
-  end
+  let(:user) { create(:user, :caseworker) }
+  let(:agent) { Support::Agent.find_by(email: user.email) }
 
   #
   # Provided a caseworker is added to the DSI organisation

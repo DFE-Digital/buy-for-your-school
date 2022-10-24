@@ -2,17 +2,20 @@
 
 module Support
   class FilterCases
-    def filter(filtering_params)
-      results = Case.preload(:organisation).includes(%i[agent category]).where.not(state: :closed)
-      return results if filtering_params.nil?
+    attr_reader :base_cases
 
-      results = Case.preload(:organisation).includes(%i[agent category]).where(nil)
+    def initialize(base_cases: nil) = @base_cases = base_cases || Case
+
+    def filter(filtering_params)
+      results = base_cases.preload(:organisation).includes(%i[agent category])
+
+      return results if filtering_params.nil?
 
       filtering_params.each do |key, value|
         results = results.public_send("by_#{key}", value) if value.present?
       end
 
-      results.order("ref DESC")
+      results
     end
   end
 end
