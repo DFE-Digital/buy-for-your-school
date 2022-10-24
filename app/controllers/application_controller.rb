@@ -61,4 +61,26 @@ protected
   def cookie_policy
     CookiePolicy.new(cookies)
   end
+
+  def create_user_journey
+    user_journey = UserJourneys::GetOrCreate.new(
+      session_id: session[:journey_session_id],
+      referral_campaign: session[:faf_referrer],
+      get: ::UserJourneys::Get,
+      create: ::UserJourneys::Create,
+    ).call
+
+    session[:user_journey_id] = user_journey.id
+  end
+
+  def create_user_journey_step
+    create_user_journey unless session[:user_journey_id]
+
+    UserJourneys::CreateStep.new(
+      step_description:,
+      product_section: session[:product_section],
+      user_journey_id: session[:user_journey_id],
+      session_id: session[:journey_session_id],
+    ).call
+  end
 end

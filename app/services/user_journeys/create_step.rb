@@ -13,7 +13,7 @@ module UserJourneys
     end
 
     def call
-      UserJourneyStep.create!(
+      UserJourneyStep.create(
         step_description: @step_description,
         product_section: @product_section,
         user_journey_id: @user_journey_id,

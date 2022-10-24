@@ -1,6 +1,6 @@
 <%= content_for :title, I18n.t("faf.dsi_or_search.header") %>
 
-<%= form.hidden_field :dsi, value: form.object.dsi  %>
+<%= render "framework_requests/common_form_fields", form: form %>
 
 <%= form.govuk_radio_buttons_fieldset :dsi,
   legend: { text: I18n.t("faf.dsi_or_search.header"), size: "l" },

@@ -3,7 +3,7 @@ module FrameworkRequests
     skip_before_action :authenticate_user!
 
     def update
-      if validation.success?
+      if @form.valid?
         redirect_to update_redirect_path
       else
         render :edit
@@ -12,8 +12,16 @@ module FrameworkRequests
 
   private
 
+    def form
+      @form ||= FrameworkRequests::SearchForOrganisationForm.new(all_form_params)
+    end
+
+    def form_params
+      [:org_id]
+    end
+
     def create_redirect_path
-      confirm_organisation_framework_requests_path(framework_support_form: validation.to_h)
+      confirm_organisation_framework_requests_path(framework_support_form: @form.common)
     end
 
     def update_redirect_path
@@ -21,7 +29,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = organisation_type_framework_requests_path(framework_support_form: validation.to_h)
+      @back_url = organisation_type_framework_requests_path(framework_support_form: @form.common)
     end
 
     def step_description

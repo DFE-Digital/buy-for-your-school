@@ -1,6 +1,6 @@
 module UserJourneys
   class Create
-    def initialize(referral_campaign:, status: UserJourney.statuses[:in_progress])
+    def initialize(referral_campaign: nil, status: UserJourney.statuses[:in_progress])
       @referral_campaign = referral_campaign
       @status = status
     end

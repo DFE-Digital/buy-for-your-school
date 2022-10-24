@@ -4,16 +4,20 @@ module FrameworkRequests
 
   private
 
-    def update_data
-      { confidence_level: @form.confidence_level }
+    def form
+      @form ||= FrameworkRequests::ProcurementConfidenceForm.new(all_form_params)
+    end
+
+    def form_params
+      [:confidence_level]
     end
 
     def create_redirect_path
-      special_requirements_framework_requests_path(framework_support_form: validation.to_h)
+      special_requirements_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url
-      @back_url = procurement_amount_framework_requests_path(framework_support_form: validation.to_h)
+      @back_url = procurement_amount_framework_requests_path(framework_support_form: form.common)
     end
 
     def step_description

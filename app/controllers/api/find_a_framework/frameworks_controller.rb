@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::FindAFramework::FrameworksController < Api::FindAFramework::BaseController
+class Api::FindAFramework::FrameworksController < Api::BaseController
   def changed
     added_frameworks = []
     framework_params.each do |framework|

@@ -11,47 +11,95 @@
 #   6: email                  (guest only)
 #   7: message_body           (last and compulsory)
 #
-class FrameworkSupportForm < RequestForm
+class FrameworkSupportForm
+  include ActiveModel::Model
+
+  # option :id
+
   # @!attribute [r] user
   #   @return [UserPresenter] decorate respondent
-  option :user, ::Types.Constructor(UserPresenter)
+  # option :user, ::Types.Constructor(UserPresenter)
 
   # @!attribute [r] dsi
   #   @return [Boolean] true if respondent authenticated
-  option :dsi, Types::ConfirmationField | Types::Nil, default: proc { true unless user.guest? }
+  # option :dsi, Types::ConfirmationField | Types::Nil, default: proc { true unless user.guest? }
 
   # @!attribute [r] group
   #   @return [Boolean] requesting support for a group of schools confirmed
-  option :group, Types::ConfirmationField | Types::Nil, default: proc { user.group_uid.present? unless user.guest? }
+  # option :group, Types::ConfirmationField | Types::Nil, default: proc { user.group_uid.present? unless user.guest? }
 
   # @!attribute [r] org_id
   #   @return [String] identifier and name in the format "xxxx - Group/School Name"
-  option :org_id, default: proc { user.school_urn || user.group_uid unless user.guest? }
+  # option :org_id, default: proc { user.school_urn || user.group_uid unless user.guest? }
 
   # @!attribute [r] correct_group
   #   @return [Boolean] selected group confirmed
-  option :org_confirm, Types::ConfirmationField, optional: true
+  # option :org_confirm, Types::ConfirmationField, optional: true
 
   # @!attribute [r] first_name
   #   @return [String]
-  option :first_name, default: proc { user.first_name }
+  # option :first_name, default: proc { user.first_name }
 
   # @!attribute [r] last_name
   #   @return [String]
-  option :last_name, default: proc { user.last_name }
+  # option :last_name, default: proc { user.last_name }
 
   # @!attribute [r] email
   #   @return [String]
-  option :email, default: proc { user.email || Dry::Initializer::UNDEFINED }
+  # option :email, default: proc { user.email || Dry::Initializer::UNDEFINED }
 
   # @!attribute [r] message_body
   #   @return [String]
-  option :message_body, optional: true
+  # option :message_body, optional: true
+
+  attr_accessor(
+    :id,
+    :dsi,
+    :user,
+    :group,
+    :org_id,
+    :org_confirm,
+    :first_name,
+    :last_name,
+    :email,
+    :message_body,
+    :procurement_amount,
+    :confidence_level,
+    :special_requirements_choice,
+    :special_requirements,
+  )
+
+  def initialize(attributes = {})
+    super
+    @user = UserPresenter.new(@user)
+    @dsi ||= true unless @user.guest?
+    @group ||= @user.group_uid.present? unless @user.guest?
+    @org_id ||= @user.school_urn || @user.group_uid unless @user.guest?
+    @first_name ||= @user.first_name
+    @last_name ||= @user.last_name
+    @email ||= @user.email
+  end
+
+  def self.from_framework_request(framework_request_id:, user:)
+    # byebug
+    framework_request = FrameworkRequest.find(framework_request_id)
+    attributes = framework_request.to_h.except(:created_at, :updated_at, :submitted, :user_id)
+    attributes.merge!(user:, dsi: !user.guest?) if user
+    new(attributes)
+  end
+
+  def save!
+    framework_request.update!(data)
+  end
+
+  def framework_request
+    @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(@id))
+  end
 
   # @return [Hash] form data to be persisted as request attributes
   def data
-    super
-      .except(:dsi, :org_confirm)
+    to_h
+      .except(:user, :dsi, :org_confirm, :special_requirements_choice, :framework_request)
       .merge(org_id: found_uid_or_urn)
   end
 
@@ -62,7 +110,7 @@ class FrameworkSupportForm < RequestForm
   #
   # @return [String, nil]
   def found_uid_or_urn
-    org_id&.split(" - ")&.first
+    @org_id&.split(" - ")&.first
   end
 
   # @return [Hash] Guest "can't find school" tries "search for a group" and vice-versa
@@ -74,7 +122,7 @@ class FrameworkSupportForm < RequestForm
   end
 
   def school_or_group
-    if group
+    if group?
       group = Support::EstablishmentGroup.find_by(uid: found_uid_or_urn)
       Support::EstablishmentGroupPresenter.new(group)
     else
@@ -82,4 +130,26 @@ class FrameworkSupportForm < RequestForm
       Support::OrganisationPresenter.new(school)
     end
   end
+
+  def to_h
+    instance_values.symbolize_keys
+  end
+
+  def group?
+    ActiveModel::Type::Boolean.new.cast(@group)
+  end
+
+  def confidence_levels
+    @confidence_levels ||= Request.confidence_levels.keys.reverse
+  end
+
+  # def special_requirements_choice
+  #   return @special_requirements_choice if errors.any?
+
+  #   if special_requirements == ""
+  #     "no"
+  #   elsif special_requirements.present?
+  #     "yes"
+  #   end
+  # end
 end

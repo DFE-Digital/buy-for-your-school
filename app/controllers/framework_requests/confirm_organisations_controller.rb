@@ -7,24 +7,20 @@ module FrameworkRequests
     def index; end
 
     def create
-      if validation.success?
-        cache_search_result!
-        @form.forward
+      if @form.valid?
+        # cache_search_result!
+        @form.save!
         redirect_to create_redirect_path
       else
         render :index
       end
     end
 
-    def edit
-      @back_url = edit_back_url
-    end
-
     def update
-      if validation.success?
-        if @form.org_confirm
-          cache_search_result!
-          framework_request.update!(group: @form.group, org_id: @form.found_uid_or_urn)
+      if @form.valid?
+        if @form.org_confirm?
+          # cache_search_result!
+          @form.save!
           redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
         else
           redirect_to edit_framework_request_search_for_organisation_path(framework_request, group: @form.group)
@@ -36,9 +32,13 @@ module FrameworkRequests
 
   private
 
+    def form
+      @form ||= FrameworkRequests::ConfirmOrganisationForm.new(all_form_params)
+    end
+
     def create_redirect_path
-      if @form.org_confirm
-        name_framework_requests_path(framework_support_form: validation.to_h)
+      if @form.org_confirm?
+        name_framework_requests_path(framework_support_form: @form.common)
       else
         back_url
       end
@@ -55,7 +55,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = search_for_organisation_framework_requests_path(framework_support_form: validation.to_h)
+      @back_url = search_for_organisation_framework_requests_path(framework_support_form: form.common)
     end
 
     def edit_back_url

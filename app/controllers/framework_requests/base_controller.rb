@@ -1,16 +1,15 @@
 module FrameworkRequests
   class BaseController < ApplicationController
-    before_action :form, only: %i[index create update]
-    before_action :framework_request, only: %i[edit update]
+    before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
-    before_action :cached_orgs
+    # before_action :cached_orgs
     before_action :create_user_journey_step, only: %i[index]
 
     def index; end
 
     def create
-      if validation.success?
-        @form.forward
+      if @form.valid?
+        @form.save!
         redirect_to create_redirect_path
       else
         render :index
@@ -18,19 +17,22 @@ module FrameworkRequests
     end
 
     def edit
-      @form =
-        FrameworkSupportForm.new(
-          user: current_user,
-          dsi: !current_user.guest?,
-          **persisted_data,
-          **cached_search_result,
-        )
+      # @form =
+      #   FrameworkSupportForm.new(
+      #     id: framework_request_id,
+      #     user: current_user,
+      #     dsi: !current_user.guest?,
+      #     **persisted_data,
+      #     **cached_search_result,
+      #   )
+      # @form = FrameworkSupportForm.from_framework_request(framework_request_id: params[:id], user: current_user)
+      # @form = FrameworkRequests::BaseForm.new(all_form_params)
       @back_url = edit_back_url
     end
 
     def update
-      if validation.success?
-        framework_request.update!(update_data)
+      if @form.valid?
+        @form.save!
         redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
       else
         render :edit
@@ -40,42 +42,32 @@ module FrameworkRequests
   private
 
     def form
-      return unless params.key?(:framework_support_form)
-
-      @form =
-        FrameworkSupportForm.new(
-          user: current_user,
-          messages: validation.errors(full: true).to_h,
-          **validation.to_h,
-        )
+      @form ||= FrameworkRequests::BaseForm.new(all_form_params)
     end
 
-    def form_params
-      params.require(:framework_support_form).permit(*%i[
-        step
-        back
+    def all_form_params
+      params.fetch(:framework_support_form, {}).permit(*%i[
         dsi
         group
-        org_id
         org_confirm
-        first_name
-        last_name
-        email
-        message_body
-        procurement_amount
-        confidence_level
-        special_requirements_choice
-        special_requirements
-      ])
+      ], *form_params).merge(id: framework_request_id, user: current_user)
     end
 
     def validation
-      @validation ||= FrameworkSupportFormSchema.new.call(**form_params)
+      @validation ||= FrameworkSupportFormSchema.new.call(**all_form_params)
     end
 
     # @return [FrameworkRequestPresenter]
     def framework_request
-      @framework_request = FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
+      @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(framework_request_id))
+    end
+
+    def framework_request_id
+      return session[:framework_request_id] if session[:framework_request_id]
+      return params[:id] if params[:id]
+
+      session[:framework_request_id] = FrameworkRequest.create!.id
+      session[:framework_request_id]
     end
 
     # @return [Hash]
@@ -96,24 +88,15 @@ module FrameworkRequests
       end
     end
 
-    def cached_orgs
-      @cached_group = session[:faf_group]
-      @cached_school = session[:faf_school]
-    end
-
-    def create_user_journey_step
-      UserJourneys::CreateStep.new(
-        step_description:,
-        product_section: session[:support_journey],
-        user_journey_id: session[:user_journey_id],
-        session_id: session[:session_id],
-      ).call
-    end
+    # def cached_orgs
+    #   @cached_group = session[:faf_group]
+    #   @cached_school = session[:faf_school]
+    # end
 
     def back_url; end
 
     def edit_back_url
-      framework_request_path(framework_request)
+      framework_request_path(form.framework_request)
     end
 
     def create_redirect_path; end
@@ -123,5 +106,7 @@ module FrameworkRequests
     def update_data; end
 
     def step_description; end
+
+    def form_params; end
   end
 end

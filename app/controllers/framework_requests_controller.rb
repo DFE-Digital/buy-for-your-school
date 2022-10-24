@@ -4,9 +4,9 @@ class FrameworkRequestsController < ApplicationController
   before_action :framework_request, only: %i[show]
 
   def index
-    session[:support_journey] = "faf"
+    session[:product_section] = :ghbs_rfh
     session[:faf_referrer] = referral_link
-    session[:session_id] = session_id
+    session[:journey_session_id] = session_id
     create_user_journey
   end
 
@@ -27,11 +27,6 @@ private
 
   def session_id
     params[:session_id] || SecureRandom.uuid
-  end
-
-  def create_user_journey
-    user_journey = UserJourneys::Create.new(referral_campaign: session[:faf_referrer]).call
-    session[:user_journey_id] = user_journey.id
   end
 
   # @return [FrameworkRequestPresenter]
