@@ -8,7 +8,7 @@ module Support
 
     # @return [Agent, nil]
     def current_agent
-      Agent.find_by(dsi_uid: session[:dfe_sign_in_uid])
+      ::Support::Agent.find_by(dsi_uid: session[:dfe_sign_in_uid])
     end
 
     # @return [nil]

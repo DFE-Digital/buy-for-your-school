@@ -1,0 +1,48 @@
+<% user_type_options = [OpenStruct.new(id: true, name: "Internal"), OpenStruct.new(id: false, name: "Proc-Ops")] %>
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+  </ol>
+</div>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--l"><%= I18n.t("support.management.categories.header") %></caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.categories.table.title") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.num_cases") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.parent") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.tower") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.categories.table.actions") %></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @top_level_categories.each do |parent_category| %>
+      <% parent_category.sub_categories.each do |category| %>
+        <%= form_with(model: category, url: support_management_category_path(category), method: :patch, scope: :category) do |form| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= [parent_category.title, category.title].join(" / ") %></th>
+            <td class="govuk-table__cell govuk-!-text-align-centre">
+              <%= category.cases.length %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= form.govuk_collection_select :parent_id, @top_level_categories, :id, :title, options: { include_blank: I18n.t("support.management.categories.table.no_parent_selected") }, label: { text: I18n.t("support.management.categories.table.parent_category"), class: "govuk-!-display-none" } %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= form.govuk_collection_select :support_tower_id, @towers, :id, :title, options: { include_blank: I18n.t("support.management.categories.table.no_tower_selected") }, label: { text: I18n.t("support.management.categories.table.tower"), class: "govuk-!-display-none" } %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= form.submit I18n.t("support.management.categories.table.save"), class: "govuk-button" %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

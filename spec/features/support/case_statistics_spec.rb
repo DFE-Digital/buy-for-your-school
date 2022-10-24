@@ -1,16 +1,12 @@
 RSpec.feature "Case statistics page" do
   before do
-    categories = { "ICT": %w[Laptops],
-                   "Energy & Utilities": %w[Electricity Water],
-                   "FM": ["Waste management"],
-                   "Catering": %w[Catering],
-                   "Furniture": %w[Furniture],
-                   "Business Services": %w[Books],
-                   "Professional Services": %w[HR] }
+    categories = { "ICT" => %w[Laptops],
+                   "Energy & Utilities" => %w[Electricity Water],
+                   "Services" => %w[Gas] }
 
     categories.each do |tower, cats|
       cats.each do |cat|
-        category = create(:support_category, title: cat, tower:)
+        category = create(:support_category, title: cat, with_tower: tower)
 
         create(:support_case, :initial, category:)
         create(:support_case, :opened, category:)
@@ -34,16 +30,15 @@ RSpec.feature "Case statistics page" do
 
     describe "case statistics page content" do
       it "shows the number of cases by live state" do
-        within(".case-overview", text: "Live cases") { expect(page).to have_content("25") }
-        within(".case-overview", text: "Open") { expect(page).to have_content("8") }
-        within(".case-overview", text: "On hold") { expect(page).to have_content("8") }
-        within(".case-overview", text: "New") { expect(page).to have_content("9") }
+        within(".case-overview", text: "Live cases") { expect(page).to have_content("13") }
+        within(".case-overview", text: "Open") { expect(page).to have_content("4") }
+        within(".case-overview", text: "On hold") { expect(page).to have_content("4") }
+        within(".case-overview", text: "New") { expect(page).to have_content("5") }
       end
 
       it "displays each tower in an overview by tower section" do
         within ".overview-by-tower" do
-          expect(page).to have_css("tr", text: "Energy and Utilities")
-          expect(page).to have_css("tr", text: "FM and Catering")
+          expect(page).to have_css("tr", text: "Energy & Utilities")
           expect(page).to have_css("tr", text: "ICT")
           expect(page).to have_css("tr", text: "Services")
           expect(page).to have_css("tr", text: "No Tower")

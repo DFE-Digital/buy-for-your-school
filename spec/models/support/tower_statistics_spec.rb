@@ -3,7 +3,7 @@ require "rails_helper"
 describe Support::TowerStatistics do
   subject(:report) { described_class.new(tower_slug: "ict") }
 
-  let(:ict) { create(:support_category, title: "Laptops", tower: "ICT") }
+  let(:ict) { create(:support_category, title: "Laptops", with_tower: "ICT") }
 
   describe "top level statistics" do
     before do

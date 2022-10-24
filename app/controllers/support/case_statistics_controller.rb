@@ -19,8 +19,9 @@ module Support
   private
 
     def authenticate_agent_or_analyst!
+      # CMS users (agents) allowed
       return if current_agent
-
+      # Other users must have analyst role
       return render "errors/missing_role" unless current_user.analyst?
     end
   end

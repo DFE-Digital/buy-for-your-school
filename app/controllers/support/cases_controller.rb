@@ -14,9 +14,17 @@ module Support
         end
 
         format.html do
-          @cases = FilterCases.new.filter(params[:filter_all_cases_form]).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:cases_page])
-          @new_cases = FilterCases.new.filter(params[:filter_new_cases_form]).initial.order(created_at: :desc).map { |c| CasePresenter.new(c) }.paginate(page: params[:new_cases_page])
-          @my_cases = FilterCases.new.filter(params[:filter_my_cases_form]).where.not(state: %i[closed resolved]).by_agent(current_agent&.id).priority_ordering.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+          @cases = CasePresenter
+            .wrap_collection(@all_cases_filter_form.results)
+            .paginate(page: params[:cases_page])
+
+          @new_cases = CasePresenter
+            .wrap_collection(@new_cases_filter_form.results)
+            .paginate(page: params[:new_cases_page])
+
+          @my_cases = CasePresenter
+            .wrap_collection(@my_cases_filter_form.results)
+            .paginate(page: params[:my_cases_page])
         end
       end
     end
@@ -104,10 +112,22 @@ module Support
       )
     end
 
+    def filter_forms_params(scope)
+      params.fetch(scope, {}).permit(:state, :agent, :tower, :category).to_h.symbolize_keys
+    end
+
     def filter_forms
-      @my_cases_filter_form = CaseFilterForm.new
-      @new_cases_filter_form = CaseFilterForm.new
-      @all_cases_filter_form = CaseFilterForm.new
+      my_cases_form_params = filter_forms_params(:filter_my_cases_form)
+        .merge(base_cases: Case.by_agent(current_agent.id).where.not(state: %i[closed resolved]))
+
+      all_cases_form_params = filter_forms_params(:filter_all_cases_form)
+
+      new_cases_form_params = filter_forms_params(:filter_new_cases_form)
+        .merge(base_cases: Case.initial)
+
+      @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
+      @new_cases_filter_form = CaseFilterForm.new(**new_cases_form_params)
+      @all_cases_filter_form = CaseFilterForm.new(**all_cases_form_params)
     end
 
     def reply_form
