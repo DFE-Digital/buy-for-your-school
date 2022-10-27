@@ -1,5 +1,5 @@
 describe FrameworkRequests::ConfirmOrganisationForm, type: :model do
-  subject(:form) { described_class.new(id: framework_request.id, school_type:, org_confirm:, org_id:) }
+  subject(:form) { described_class.new(id: framework_request.id, school_type:, org_confirm:, org_id:, user: build(:guest)) }
 
   let(:framework_request) { create(:framework_request, org_id: nil) }
   let(:school_type) { "school" }
@@ -49,6 +49,14 @@ describe FrameworkRequests::ConfirmOrganisationForm, type: :model do
         expect(form).not_to be_valid
         expect(form.errors.messages[:org_confirm]).to eq ["Select whether this is the Group or Trust you're buying for"]
       end
+    end
+  end
+
+  describe "#common" do
+    let(:org_id) { "123 - Test school" }
+
+    it "includes the full organisation name" do
+      expect(form.common).to include(org_id:)
     end
   end
 

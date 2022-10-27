@@ -4,8 +4,11 @@ module FrameworkRequests
 
     attr_accessor :org_id
 
+    attr_reader :org_full_name
+
     def initialize(attributes = {})
       super
+      @org_full_name = @org_id
       @org_id = found_uid_or_urn || framework_request.org_id
     end
 
@@ -14,7 +17,11 @@ module FrameworkRequests
     end
 
     def data
-      super.merge(group: group?)
+      super.merge(group: group?).except(:org_full_name)
+    end
+
+    def common
+      super.merge(org_id: @org_full_name)
     end
 
     def org_confirm_validation
