@@ -29,6 +29,8 @@ RSpec.feature "Submitting a 'Find a Framework' request" do
       .with(body: email.to_json)
       .to_return(body: {}.to_json, status: 200, headers: {})
 
+    create(:user_journey, framework_request: request)
+
     user_is_signed_in(user:)
     visit "/procurement-support/#{request.id}"
     click_on "Send request"
