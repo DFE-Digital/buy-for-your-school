@@ -1,28 +1,23 @@
 module FrameworkRequests
-  class ConfirmSignInController < ApplicationController
-    before_action :current_user
+  class ConfirmSignInController < BaseController
+    def index
+      @current_user = UserPresenter.new(current_user)
+    end
 
     def create
+      framework_request.update!(user: current_user, first_name: current_user.first_name, last_name: current_user.last_name, email: current_user.email)
       redirect_to create_redirect_path
     end
 
   private
 
     def create_redirect_path
+      @current_user = UserPresenter.new(current_user)
       if @current_user.single_org?
-        form = FrameworkSupportForm.new(user: current_user)
         message_framework_requests_path(framework_support_form: form.data)
       else
         select_organisation_framework_requests_path
       end
-    end
-
-    def current_user
-      @current_user = UserPresenter.new(super)
-    end
-
-    def step_description
-      I18n.t("profile.heading")
     end
   end
 end

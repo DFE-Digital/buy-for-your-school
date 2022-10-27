@@ -2,28 +2,13 @@ module FrameworkRequests
   class ConfirmOrganisationsController < BaseController
     skip_before_action :authenticate_user!
 
-    before_action :form, only: %i[index edit create update]
-
-    def index; end
-
-    def create
-      if @form.valid?
-        # cache_search_result!
-        @form.save!
-        redirect_to create_redirect_path
-      else
-        render :index
-      end
-    end
-
     def update
       if @form.valid?
         if @form.org_confirm?
-          # cache_search_result!
           @form.save!
           redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
         else
-          redirect_to edit_framework_request_search_for_organisation_path(framework_request, group: @form.group)
+          redirect_to edit_framework_request_search_for_organisation_path(framework_request, school_type: @form.school_type)
         end
       else
         render :edit
@@ -36,21 +21,15 @@ module FrameworkRequests
       @form ||= FrameworkRequests::ConfirmOrganisationForm.new(all_form_params)
     end
 
+    def form_params
+      [:org_id]
+    end
+
     def create_redirect_path
       if @form.org_confirm?
         name_framework_requests_path(framework_support_form: @form.common)
       else
-        back_url
-      end
-    end
-
-    def cache_search_result!
-      if @form.group
-        session[:faf_group] = @form.org_id
-        session.delete(:faf_school)
-      else
-        session[:faf_school] = @form.org_id
-        session.delete(:faf_group)
+        search_for_organisation_framework_requests_path(framework_support_form: form.common.except(:org_confirm))
       end
     end
 
@@ -59,11 +38,7 @@ module FrameworkRequests
     end
 
     def edit_back_url
-      @back_url = edit_framework_request_search_for_organisation_path(framework_support_form: validation.to_h)
-    end
-
-    def step_description
-      form.group ? I18n.t("faf.confirm_group_or_trust.heading") : I18n.t("faf.confirm_school.heading")
+      @back_url = edit_framework_request_search_for_organisation_path(framework_support_form: @form.common)
     end
   end
 end

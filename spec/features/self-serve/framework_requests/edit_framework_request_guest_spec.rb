@@ -146,7 +146,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     end
 
     it "goes to the school search page" do
-      expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit?group=false"
+      expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit"
       expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
     end
 
@@ -154,7 +154,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
       find("span", text: "Can't find it?").click
       click_on "Search for an academy trust or federation instead."
 
-      expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit?group=true"
+      expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit?school_type=group"
       expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
       expect(page).not_to have_text "There is a problem"
     end

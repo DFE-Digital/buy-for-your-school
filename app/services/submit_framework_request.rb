@@ -38,6 +38,8 @@ class SubmitFrameworkRequest
       },
     ).call
 
+    UserJourneys::Get.by_framework_request_id(framework_request_id: request.id).update!(case: @kase)
+
     # TODO: save case reference to the request
     request.update!(submitted: true)
   end

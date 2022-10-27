@@ -2,10 +2,10 @@
 
 <%= render "framework_requests/common_form_fields", form: form %>
 
-<%= form.govuk_radio_buttons_fieldset :group,
+<%= form.govuk_radio_buttons_fieldset :school_type,
   legend: { text: I18n.t("faf.school_or_group_or_trust.header"), size: "l" },
   hint: { text: I18n.t("faf.school_or_group_or_trust.hint"), size: "l" } do %>
-    <%= form.govuk_radio_button :group, :false, label: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.label") },
+    <%= form.govuk_radio_button :school_type, :school, label: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.label") },
         hint: { text: I18n.t("faf.school_or_group_or_trust.radios.single_school.hint"), size: "l" } %>
-    <%= form.govuk_radio_button :group, :true, label: { text: I18n.t("faf.school_or_group_or_trust.radios.group_or_trust.label") } %>
+    <%= form.govuk_radio_button :school_type, :group, label: { text: I18n.t("faf.school_or_group_or_trust.radios.group_or_trust.label") } %>
 <% end %>

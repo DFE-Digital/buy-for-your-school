@@ -24,9 +24,5 @@ module FrameworkRequests
     def back_url
       @back_url = confirm_organisation_framework_requests_path(framework_support_form: form.common)
     end
-
-    def step_description
-      I18n.t("faf.name.title")
-    end
   end
 end

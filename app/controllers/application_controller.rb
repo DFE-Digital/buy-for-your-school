@@ -66,11 +66,10 @@ protected
     user_journey = UserJourneys::GetOrCreate.new(
       session_id: session[:journey_session_id],
       referral_campaign: session[:faf_referrer],
-      get: ::UserJourneys::Get,
-      create: ::UserJourneys::Create,
     ).call
 
     session[:user_journey_id] = user_journey.id
+    user_journey
   end
 
   def create_user_journey_step

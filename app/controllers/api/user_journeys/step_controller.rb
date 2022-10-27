@@ -14,14 +14,13 @@ module Api
     private
 
       def step_params
-        params.permit(:sessionId, :productSection, :stepDescription)
+        params.permit(:sessionId, :productSection, :stepDescription, :referralCampaign)
       end
 
       def get_user_journey
         ::UserJourneys::GetOrCreate.new(
           session_id: step_params[:sessionId],
-          get: ::UserJourneys::Get,
-          create: ::UserJourneys::Create,
+          referral_campaign: step_params[:referralCampaign],
         ).call
       end
     end

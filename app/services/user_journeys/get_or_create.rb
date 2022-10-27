@@ -1,6 +1,6 @@
 module UserJourneys
   class GetOrCreate
-    def initialize(session_id:, get:, create:, referral_campaign: nil)
+    def initialize(session_id:, get: Get, create: Create, referral_campaign: nil)
       @session_id = session_id
       @referral_campaign = referral_campaign
       @get = get
@@ -8,7 +8,7 @@ module UserJourneys
     end
 
     def call
-      @get.new(session_id: @session_id).call.first ||
+      @get.by_session_id(session_id: @session_id).first ||
         @create.new(referral_campaign: @referral_campaign).call
     end
   end

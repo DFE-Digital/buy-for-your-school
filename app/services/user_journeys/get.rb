@@ -1,11 +1,11 @@
 module UserJourneys
   class Get
-    def initialize(session_id:)
-      @session_id = session_id
+    def self.by_session_id(session_id:)
+      UserJourney.by_session_id(session_id).to_a
     end
 
-    def call
-      UserJourney.by_session_id(@session_id).to_a
+    def self.by_framework_request_id(framework_request_id:)
+      UserJourney.find_by(framework_request_id:)
     end
   end
 end

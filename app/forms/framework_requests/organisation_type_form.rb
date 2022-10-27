@@ -1,5 +1,5 @@
 module FrameworkRequests
   class OrganisationTypeForm < BaseForm
-    validates :group, presence: true
+    validates :school_type, presence: true
   end
 end

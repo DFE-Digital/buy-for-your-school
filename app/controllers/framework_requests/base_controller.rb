@@ -2,8 +2,8 @@ module FrameworkRequests
   class BaseController < ApplicationController
     before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
-    # before_action :cached_orgs
     before_action :create_user_journey_step, only: %i[index]
+    before_action :framework_request, only: %i[edit]
 
     def index; end
 
@@ -17,16 +17,6 @@ module FrameworkRequests
     end
 
     def edit
-      # @form =
-      #   FrameworkSupportForm.new(
-      #     id: framework_request_id,
-      #     user: current_user,
-      #     dsi: !current_user.guest?,
-      #     **persisted_data,
-      #     **cached_search_result,
-      #   )
-      # @form = FrameworkSupportForm.from_framework_request(framework_request_id: params[:id], user: current_user)
-      # @form = FrameworkRequests::BaseForm.new(all_form_params)
       @back_url = edit_back_url
     end
 
@@ -48,50 +38,23 @@ module FrameworkRequests
     def all_form_params
       params.fetch(:framework_support_form, {}).permit(*%i[
         dsi
-        group
+        school_type
         org_confirm
+        special_requirements_choice
       ], *form_params).merge(id: framework_request_id, user: current_user)
     end
 
-    def validation
-      @validation ||= FrameworkSupportFormSchema.new.call(**all_form_params)
-    end
-
-    # @return [FrameworkRequestPresenter]
     def framework_request
       @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(framework_request_id))
     end
 
     def framework_request_id
-      return session[:framework_request_id] if session[:framework_request_id]
       return params[:id] if params[:id]
+      return session[:framework_request_id] if session[:framework_request_id]
 
       session[:framework_request_id] = FrameworkRequest.create!.id
       session[:framework_request_id]
     end
-
-    # @return [Hash]
-    def persisted_data
-      framework_request.attributes.symbolize_keys
-    end
-
-    def cached_search_result
-      return {} unless current_user.guest?
-
-      case params[:group]
-      when "true"
-        { group: params[:group], org_id: session[:faf_group] }
-      when "false"
-        { group: params[:group], org_id: session[:faf_school] }
-      else
-        {}
-      end
-    end
-
-    # def cached_orgs
-    #   @cached_group = session[:faf_group]
-    #   @cached_school = session[:faf_school]
-    # end
 
     def back_url; end
 
@@ -105,7 +68,9 @@ module FrameworkRequests
 
     def update_data; end
 
-    def step_description; end
+    def step_description
+      request.path
+    end
 
     def form_params; end
   end

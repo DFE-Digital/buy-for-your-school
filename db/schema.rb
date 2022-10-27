@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_27_064825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -597,7 +597,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
     t.string "referral_campaign"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "framework_request_id"
     t.index ["case_id"], name: "index_user_journeys_on_case_id"
+    t.index ["framework_request_id"], name: "index_user_journeys_on_framework_request_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -635,6 +637,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
   add_foreign_key "user_journey_steps", "user_journeys"
+  add_foreign_key "user_journeys", "framework_requests"
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
   create_view "support_establishment_searches", sql_definition: <<-SQL

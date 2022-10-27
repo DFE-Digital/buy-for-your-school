@@ -5,11 +5,16 @@ module FrameworkRequests
     attr_accessor(
       :id,
       :dsi,
-      :group,
+      :school_type,
       :user,
       :org_confirm,
       :special_requirements_choice,
     )
+
+    def initialize(attributes = {})
+      super
+      @user = UserPresenter.new(@user)
+    end
 
     def save!
       framework_request.update!(data)
@@ -20,7 +25,7 @@ module FrameworkRequests
     end
 
     def group?
-      ActiveModel::Type::Boolean.new.cast(@group)
+      @school_type == "group"
     end
 
     def org_confirm?
@@ -32,11 +37,13 @@ module FrameworkRequests
     end
 
     def data
-      to_h.except(:id, :dsi, :org_confirm, :special_requirements_choice, :user, :validation_context, :errors)
+      to_h.except(:id, :dsi, :school_type, :org_confirm, :special_requirements_choice, :user, :validation_context, :errors)
     end
 
     def common
-      to_h.slice(:dsi, :group, :org_confirm, :special_requirements_choice)
+      return {} unless @user.guest?
+
+      to_h.slice(:dsi, :school_type, :org_confirm, :special_requirements_choice)
     end
 
     def framework_request

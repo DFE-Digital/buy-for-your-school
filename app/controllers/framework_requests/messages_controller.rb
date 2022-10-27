@@ -21,7 +21,7 @@ module FrameworkRequests
     end
 
     def determine_back_path
-      return email_framework_requests_path(framework_support_form: form.common) unless form.dsi?
+      return email_framework_requests_path(framework_support_form: form.common) if form.user.guest?
 
       @current_user = UserPresenter.new(current_user)
       if @current_user.single_org?
@@ -29,10 +29,6 @@ module FrameworkRequests
       else
         select_organisation_framework_requests_path(framework_support_form: form.common)
       end
-    end
-
-    def step_description
-      I18n.t("faf.user_query.label")
     end
   end
 end

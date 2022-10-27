@@ -3,5 +3,5 @@ class UserJourneyStep < ApplicationRecord
 
   enum product_section: { faf: 0, ghbs_rfh: 1 }, _suffix: true
 
-  validates_uniqueness_of :step_description, scope: [:user_journey_id]
+  validate :step_description, uniqueness: { scope: :user_journey_id }
 end
