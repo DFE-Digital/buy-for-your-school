@@ -4,10 +4,8 @@ class FrameworkRequestsController < ApplicationController
   before_action :framework_request, only: %i[show]
 
   def index
-    session[:product_section] = :ghbs_rfh
     session[:faf_referrer] = referral_link
-    session[:journey_session_id] = session_id
-    create_user_journey
+    create_user_journey_step
   end
 
   def show
@@ -25,12 +23,10 @@ private
     params[:referred_by] ? Base64.decode64(params[:referred_by]) : request.referer || "direct"
   end
 
-  def session_id
-    params[:session_id] || SecureRandom.uuid
-  end
-
-  # @return [FrameworkRequestPresenter]
   def framework_request
     @framework_request = FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
   end
+
+  def product_section = :ghbs_rfh
+  def step_description = framework_requests_path
 end

@@ -63,23 +63,16 @@ protected
   end
 
   def create_user_journey
-    user_journey = UserJourneys::GetOrCreate.new(
-      session_id: session[:journey_session_id],
-      referral_campaign: session[:faf_referrer],
-    ).call
+    user_journey = UserJourney.find_or_create_new_in_progress_by(session_id: params[:session_id]) if params[:session_id].present?
+    user_journey ||= UserJourney.find_or_create_new_in_progress_by(id: session[:user_journey_id])
+    user_journey.update!(referral_campaign: params[:referral_campaign]) if params[:referral_campaign].present?
 
     session[:user_journey_id] = user_journey.id
+
     user_journey
   end
 
   def create_user_journey_step
-    create_user_journey unless session[:user_journey_id]
-
-    UserJourneys::CreateStep.new(
-      step_description:,
-      product_section: session[:product_section],
-      user_journey_id: session[:user_journey_id],
-      session_id: session[:journey_session_id],
-    ).call
+    create_user_journey.record_step(product_section:, step_description:)
   end
 end

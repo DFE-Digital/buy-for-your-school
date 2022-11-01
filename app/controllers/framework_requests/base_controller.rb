@@ -68,9 +68,9 @@ module FrameworkRequests
 
     def update_data; end
 
-    def step_description
-      request.path
-    end
+    def step_description = request.path
+
+    def product_section = :ghbs_rfh
 
     def form_params; end
   end
