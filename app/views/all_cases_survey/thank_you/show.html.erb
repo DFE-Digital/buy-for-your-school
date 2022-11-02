@@ -1,0 +1,17 @@
+<%= content_for :title, I18n.t("all_cases_survey.thank_you.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("all_cases_survey.thank_you.header") %>
+    </h1>
+
+    <p class="govuk-body">
+      <%= I18n.t("all_cases_survey.thank_you.text").html_safe %>
+    </p>
+
+    <p class="govuk-body">
+      <%= link_to I18n.t("all_cases_survey.thank_you.link"), "https://www.gov.uk/guidance/get-help-buying-for-schools", class: "govuk-link" %>
+    </p>
+  </div>
+</div>

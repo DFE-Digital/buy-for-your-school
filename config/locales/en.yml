@@ -221,6 +221,41 @@ en:
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you
     title: Get help buying for schools feedback
+  all_cases_survey:
+    start:
+      title: Start - Get help buying for schools feedback
+      header: Get help buying for schools feedback
+      body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.
+      privacy_policy: Privacy policy
+    satisfaction:
+      question_resolved_cases: How do you feel about the service you received?
+      question_opened_cases: How do you feel about the service you have received so far?
+      options:
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied nor dissatisfied
+        satisfied: Satisfied
+        very_dissatisfied: Very dissatisfied
+        very_satisfied: Very satisfied
+    satisfaction_reason:
+      question_resolved_cases: Tell us why you felt %{previous_response} with the service?
+      question_opened_cases: Tell us why you feel %{previous_response} with the service so far?
+    outcome_achieved:
+      question: I achieved the outcome I wanted as a result of the support I received from Get help buying for schools
+      options:
+        agree: Agree
+        disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
+        strongly_disagree: Strongly disagree
+    about_outcomes:
+      question: Tell us about the outcomes you were able to achieve because of the support you received
+    improvements:
+      question: Please tell us how we can improve this service?
+    thank_you:
+      link: Get help buying for schools
+      text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
+      title: Thank you - Get help buying for schools feedback
+      header: Thank you
   faf:
     check_answers:
       button:
@@ -1100,6 +1135,8 @@ en:
       message:
         created_flash: "%{type} added to case"
         exit_survey_sent: The exit survey email has been sent
+        all_cases_open_survey_sent: The survey for open cases email has been sent
+        all_cases_resolved_survey_sent: The survey for resolved cases email has been sent
       type:
         create_case: Case created
         email_from_school: Email from school

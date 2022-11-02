@@ -1,0 +1,19 @@
+<%= content_for :title, I18n.t("all_cases_survey.start.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("all_cases_survey.start.header") %>
+    </h1>
+
+    <p class="govuk-body">
+      <%= sanitize I18n.t("all_cases_survey.start.body", ref: @case_ref).html_safe %>
+    </p>
+
+    <%= link_to I18n.t("generic.button.next"), edit_all_cases_survey_satisfaction_path, class: "govuk-button", role: "button" %>
+
+    <p class="govuk-body">
+      <%= link_to I18n.t("all_cases_survey.start.privacy_policy"), "/privacy", class: "govuk-link" %>
+    </p>
+  </div>
+</div>

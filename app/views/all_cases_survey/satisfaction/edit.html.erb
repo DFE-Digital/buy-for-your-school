@@ -1,0 +1,17 @@
+<%= content_for :title, I18n.t("all_cases_survey.satisfaction.question_#{@case_state}_cases") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :satisfaction_form, url: all_cases_survey_satisfaction_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %> 
+            
+      <%= form.govuk_radio_buttons_fieldset :satisfaction_level, legend: { text: I18n.t("all_cases_survey.satisfaction.question_#{@case_state}_cases"), size: "l" } do %>
+        <% form.object.satisfaction_options.each do |option| %>
+          <%= form.govuk_radio_button :satisfaction_level, option, label: { text: I18n.t("all_cases_survey.satisfaction.options.#{option}") } %>
+        <% end %>
+      <% end %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
