@@ -250,6 +250,16 @@ Rails.application.routes.draw do
     resources :thank_you, only: %i[show]
   end
 
+  namespace :all_cases_survey do
+    resources :start, only: %i[show]
+    resources :satisfaction, only: %i[edit update]
+    resources :satisfaction_reason, only: %i[edit update]
+    resources :outcome_achieved, only: %i[edit update]
+    resources :about_outcomes, only: %i[edit update]
+    resources :improvements, only: %i[edit update]
+    resources :thank_you, only: %i[show]
+  end
+
   # Routes any/all Contentful Pages that are mirrored in t.pages
   # if a Page with :slug cannot be found, `errors/not_found` is rendered
   #
