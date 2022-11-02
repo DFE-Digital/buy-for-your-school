@@ -207,6 +207,7 @@ Rails.application.routes.draw do
       get "/", to: "base#index"
       resources :agents, only: %i[index update]
       resources :categories, only: %i[index update]
+      resources :all_cases_surveys, only: %i[index create]
     end
   end
 
