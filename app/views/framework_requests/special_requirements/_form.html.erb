@@ -1,13 +1,15 @@
 <%= content_for :title, I18n.t("request.special_requirements.heading") %>
 
-<%= form.hidden_field :dsi, value: form.object.dsi  %>
-<%= form.hidden_field :group, value: form.object.group %>
-<%= form.hidden_field :org_id, value: form.object.org_id %>
-<%= form.hidden_field :first_name, value: form.object.first_name %>
-<%= form.hidden_field :last_name, value: form.object.last_name %>
-<%= form.hidden_field :email, value: form.object.email %>
-<%= form.hidden_field :message_body, value: form.object.message_body %>
-<%= form.hidden_field :procurement_amount, value: form.object.procurement_amount %>
-<%= form.hidden_field :confidence_level, value: form.object.confidence_level %>
+<%= render "framework_requests/common_form_fields", form: form %>
 
-<%= render "requests/_form/special_requirements", form: form %>
+<%= form.govuk_radio_buttons_fieldset :special_requirements,
+      caption: { text: I18n.t("request.special_requirements.caption"), size: "l" },
+      legend: { text: I18n.t("request.special_requirements.heading"), size: "l" },
+      hint: { text: I18n.t("request.special_requirements.hint") } do %>
+        <%= form.govuk_radio_button :special_requirements_choice, :yes, label: { text: I18n.t("generic.yes") } do %>
+          <%= form.govuk_text_area :special_requirements, rows: 3, label: { text: I18n.t("request.special_requirements.requirements") } %>
+        <% end %>
+        <%= form.govuk_radio_button :special_requirements_choice, :no, label: { text: I18n.t("generic.no") } %>
+<% end %>
+
+<%= javascript_include_tag "request/special_requirements", type: "module" %>

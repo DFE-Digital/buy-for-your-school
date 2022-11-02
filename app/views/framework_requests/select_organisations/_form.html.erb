@@ -1,6 +1,5 @@
 <%= content_for :title, I18n.t("faf.user_organisation.header") %>
 
-<%= form.hidden_field :dsi, value: form.object.dsi  %>
 <%= form.hidden_field :group, value: form.object.group %>
 
 <%= form.govuk_radio_buttons_fieldset(:org_id,
@@ -12,13 +11,8 @@
     size: "l"
   }) do %>
     <% form.object.user.supported_orgs.each do |org| %>
-
-      <%# TODO: user presenter can unify school_urn and group_uid %>
-      <% if org.group %>
-        <%= form.govuk_radio_button :org_id, org.uid, label: { text: org.name }, group: org.group %>
-      <% else %>
-        <%= form.govuk_radio_button :org_id, org.urn, label: { text: org.name }, group: org.group %>
-      <% end %>
+      <% id = org.group ? org.uid : org.urn %>
+      <%= form.govuk_radio_button :org_id, id, label: { text: org.name }, group: org.group %>
     <% end %>
 <% end %>
 

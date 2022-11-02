@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_01_091838) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -581,6 +582,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
     t.index ["logged_in_as_id"], name: "index_user_feedback_on_logged_in_as_id"
   end
 
+  create_table "user_journey_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "product_section"
+    t.string "step_description"
+    t.uuid "user_journey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_journey_id"], name: "index_user_journey_steps_on_user_journey_id"
+  end
+
+  create_table "user_journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.uuid "case_id"
+    t.string "referral_campaign"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "framework_request_id"
+    t.string "session_id"
+    t.index ["case_id"], name: "index_user_journeys_on_case_id"
+    t.index ["framework_request_id"], name: "index_user_journeys_on_framework_request_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", null: false
@@ -615,49 +637,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
   add_foreign_key "support_categories", "support_towers"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
+  add_foreign_key "user_journey_steps", "user_journeys"
+  add_foreign_key "user_journeys", "framework_requests"
+  add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE (organisations.status <> 2)
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
-  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -759,6 +742,48 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_142314) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
+  SQL
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,

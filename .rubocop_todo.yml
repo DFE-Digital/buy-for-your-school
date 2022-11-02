@@ -19,8 +19,8 @@ Lint/AmbiguousBlockAssociation:
 Naming/MethodName:
   EnforcedStyle: snake_case
   Exclude:
-    - 'lib/microsoft_graph/microsoft_graph.rb'
-    - 'spec/support/given_when_then.rb'
+  - 'lib/microsoft_graph/microsoft_graph.rb'
+  - 'spec/support/given_when_then.rb'
 
 # Offense count: 20
 RSpec/AnyInstance:
@@ -36,17 +36,23 @@ RSpec/AnyInstance:
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
 
-# Offense count: 3
+# Offense count: 6
 RSpec/LetSetup:
   Exclude:
     - 'spec/features/support/case_attachments/agent_can_save_attachments_to_case_spec.rb'
+    - 'spec/features/support/towers/agent_can_view_tower_spec.rb'
     - 'spec/jobs/support/send_exit_survey_job_spec.rb'
     - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
-    - 'spec/features/support/towers/agent_can_view_tower_spec.rb'
 
-# Offense count: 1
+# Offense count: 3
+RSpec/MessageChain:
+  Exclude:
+    - 'spec/services/user_journeys/get_or_create_spec.rb'
+
+# Offense count: 4
 RSpec/SubjectStub:
   Exclude:
+    - 'spec/forms/framework_requests/special_requirements_form_spec.rb'
     - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
 
 # Offense count: 104
@@ -54,7 +60,7 @@ RSpec/SubjectStub:
 RSpec/VerifiedDoubles:
   Enabled: false
 
-# Offense count: 11
+# Offense count: 12
 # Configuration parameters: Database, Include.
 # SupportedDatabases: mysql, postgresql
 # Include: db/migrate/*.rb
@@ -69,13 +75,6 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220505103423_add_replying_to_id_to_support_emails.rb'
     - 'db/migrate/20220805130609_change_support_emails_in_reply_to_id.rb'
     - 'db/migrate/20221014140003_add_more_trust_fields_to_support_organisations.rb'
-
-# Offense count: 1
-# Configuration parameters: Include.
-# Include: app/controllers/**/*.rb, app/mailers/**/*.rb
-Rails/LexicallyScopedActionFilter:
-  Exclude:
-    - 'app/controllers/framework_requests/sign_in_controller.rb'
 
 # Offense count: 1
 # Configuration parameters: Include.
@@ -101,6 +100,13 @@ Rails/TimeZone:
   Exclude:
     - 'lib/microsoft_graph/application_authenticator.rb'
     - 'spec/lib/microsoft_graph/application_authenticator_spec.rb'
+
+# Offense count: 1
+# Configuration parameters: Include.
+# Include: app/models/**/*.rb
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/user_journey_step.rb'
 
 # Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).

@@ -4,16 +4,20 @@ module FrameworkRequests
 
   private
 
-    def update_data
-      { email: @form.email }
+    def form
+      @form ||= FrameworkRequests::EmailForm.new(all_form_params)
+    end
+
+    def form_params
+      [:email]
     end
 
     def create_redirect_path
-      message_framework_requests_path(framework_support_form: validation.to_h)
+      message_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url
-      @back_url = name_framework_requests_path(framework_support_form: validation.to_h)
+      @back_url = name_framework_requests_path(framework_support_form: form.common)
     end
   end
 end

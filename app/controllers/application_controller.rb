@@ -61,4 +61,18 @@ protected
   def cookie_policy
     CookiePolicy.new(cookies)
   end
+
+  def create_user_journey
+    user_journey = UserJourney.find_or_create_new_in_progress_by(session_id: params[:session_id]) if params[:session_id].present?
+    user_journey ||= UserJourney.find_or_create_new_in_progress_by(id: session[:user_journey_id])
+    user_journey.update!(referral_campaign: params[:referral_campaign]) if params[:referral_campaign].present?
+
+    session[:user_journey_id] = user_journey.id
+
+    user_journey
+  end
+
+  def create_user_journey_step
+    create_user_journey.record_step(product_section:, step_description:)
+  end
 end

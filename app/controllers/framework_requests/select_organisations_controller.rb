@@ -1,17 +1,17 @@
 module FrameworkRequests
   class SelectOrganisationsController < BaseController
-    def index
-      @form = form || FrameworkSupportForm.new(user: current_user)
-    end
-
   private
 
-    def update_data
-      { org_id: @form.org_id, group: @form.group }
+    def form
+      @form ||= FrameworkRequests::SelectOrganisationForm.new(all_form_params)
+    end
+
+    def form_params
+      %i[org_id group]
     end
 
     def create_redirect_path
-      message_framework_requests_path(framework_support_form: validation.to_h)
+      message_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url

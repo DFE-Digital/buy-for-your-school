@@ -38,6 +38,10 @@ class SubmitFrameworkRequest
       },
     ).call
 
+    UserJourney
+      .find_by(framework_request_id: request.id)
+      .update!(case: @kase, status: :case_created)
+
     # TODO: save case reference to the request
     request.update!(submitted: true)
   end

@@ -28,8 +28,8 @@
   <% text = I18n.t("faf.search_for_a_group.details.search_for_a_school_link") %>
 
   <% link =
-      if @framework_request&.persisted?
-        link_to text, edit_framework_request_search_for_organisation_path(@framework_request, group: false), class: "govuk-link"
+      if @edit_route
+        link_to text, edit_framework_request_search_for_organisation_path(@framework_request, form.object.find_other_type), class: "govuk-link"
       else
         link_to text, search_for_organisation_framework_requests_path(framework_support_form: form.object.find_other_type), class: "govuk-link"
       end
