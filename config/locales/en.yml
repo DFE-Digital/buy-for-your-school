@@ -1166,6 +1166,13 @@ en:
           tower: Tower
           type: Type
           user_type: User type
+      all_cases_surveys:
+        header: All Cases Survey
+        eligible_cases:
+          label: Eligible cases
+          hint: List of case references that will receive the survey
+          send: Send
+        notice: Jobs queued
       base:
         header: CMS Management
       categories:
