@@ -99,4 +99,11 @@ namespace :case_management do
       end
     end
   end
+
+  desc "Send the all cases survey email to case contacts"
+  task :send_all_cases_survey, %i[case_refs_csv] => :environment do |_task, args|
+    CSV.foreach(args.case_refs_csv, headers: true) do |row|
+      Support::SendAllCasesSurveyJob.perform_later(row["case_ref"])
+    end
+  end
 end
