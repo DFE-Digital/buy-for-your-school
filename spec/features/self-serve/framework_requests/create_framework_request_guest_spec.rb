@@ -69,13 +69,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     it "asks for school or group" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What type of organisation are you buying for?"
     end
-
-    it "validates a choice is made" do
-      click_continue
-
-      expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-      expect(page).to have_link "Select what type of organisation you're buying for", href: "#framework-support-form-group-field-error"
-    end
   end
 
   context "when selecting a single school", js: true do
@@ -143,7 +136,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         click_on "Back"
 
         expect(page).to have_current_path %r{/procurement-support/search_for_organisation}
-        expect(page).to have_current_path(/group%5D=false/)
 
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
         expect(find_field("framework-support-form-org-id-field").value).to eql "100254 - Greendale Academy for Bright Sparks"

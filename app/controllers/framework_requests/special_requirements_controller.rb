@@ -3,23 +3,33 @@ module FrameworkRequests
     skip_before_action :authenticate_user!
 
     def create
-      if validation.success?
+      if @form.valid?
+        @form.save!
         session.delete(:support_journey) unless current_user.guest?
-        request = FrameworkRequest.create!(@form.data)
-        redirect_to framework_request_path(request)
+        session.delete(:framework_request_id)
+        redirect_to framework_request_path(@form.framework_request)
       else
         render :index
       end
     end
 
+    def edit
+      super
+      @form.special_requirements_choice = framework_request.special_requirements == "-" ? "no" : "yes"
+    end
+
   private
 
-    def update_data
-      { special_requirements: @form.special_requirements }
+    def form
+      @form ||= FrameworkRequests::SpecialRequirementsForm.new(all_form_params)
+    end
+
+    def form_params
+      [:special_requirements]
     end
 
     def back_url
-      @back_url = procurement_confidence_framework_requests_path(framework_support_form: validation.to_h)
+      @back_url = procurement_confidence_framework_requests_path(framework_support_form: form.common)
     end
   end
 end

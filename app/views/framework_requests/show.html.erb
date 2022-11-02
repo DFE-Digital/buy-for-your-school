@@ -41,7 +41,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% if current_user.guest? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_search_for_organisation_path(@framework_request, group: @framework_request.group), class: "govuk-link", id: "edit-school" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_search_for_organisation_path(@framework_request), class: "govuk-link", id: "edit-school" %>
           <% elsif !current_user.single_org? %>
             <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_select_organisation_path(@framework_request), class: "govuk-link", id: "edit-school" %>
           <% end %>
