@@ -55,7 +55,7 @@ RSpec/SubjectStub:
     - 'spec/forms/framework_requests/special_requirements_form_spec.rb'
     - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
 
-# Offense count: 104
+# Offense count: 105
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
   Enabled: false
@@ -75,6 +75,14 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220505103423_add_replying_to_id_to_support_emails.rb'
     - 'db/migrate/20220805130609_change_support_emails_in_reply_to_id.rb'
     - 'db/migrate/20221014140003_add_more_trust_fields_to_support_organisations.rb'
+
+# Offense count: 3
+# Configuration parameters: Include.
+# Include: app/controllers/**/*.rb, app/mailers/**/*.rb
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/all_cases_survey/satisfaction_reason_controller.rb'
+    - 'app/controllers/framework_requests/sign_in_controller.rb'
 
 # Offense count: 1
 # Configuration parameters: Include.
