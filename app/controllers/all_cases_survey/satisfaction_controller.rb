@@ -26,6 +26,7 @@ module AllCasesSurvey
     def save_with_param
       @form.satisfaction_level = params[:satisfaction_level]
       if @form.valid?
+        @form.all_cases_survey_response.user_ip = request.remote_ip
         @form.all_cases_survey_response.start_survey!
         @form.save!
         redirect_to redirect_path

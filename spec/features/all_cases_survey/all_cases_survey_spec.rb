@@ -122,7 +122,7 @@ RSpec.feature "Completing the All Cases Survey" do
       visit "all_cases_survey/about_outcomes/#{all_cases_survey.id}/edit"
     end
 
-    it "asks if to tell more about the outcomes achieved" do
+    it "asks to tell more about the outcomes achieved" do
       expect(page).to have_text "Tell us about the outcomes you were able to achieve because of the support you received"
     end
 
@@ -147,10 +147,10 @@ RSpec.feature "Completing the All Cases Survey" do
       expect(page).to have_text "Please tell us how we can improve this service?"
     end
 
-    it "continues to the thank you page" do
+    it "continues to the accessibility research page" do
       fill_in "Please tell us how we can improve this service?", with: "improvements"
       click_continue
-      expect(page).to have_text "Thank you"
+      expect(page).to have_text "Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?"
     end
 
     context "when the linked case is resolved" do
@@ -169,6 +169,27 @@ RSpec.feature "Completing the All Cases Survey" do
         click_on "Back"
         expect(page).to have_text "Tell us why you feel satisfied with the service so far?"
       end
+    end
+  end
+
+  describe "accessibility research page" do
+    before do
+      visit "all_cases_survey/accessibility_research/#{all_cases_survey.id}/edit"
+    end
+
+    it "asks to partiticpate in accessibility UR" do
+      expect(page).to have_text "Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?"
+    end
+
+    it "links back to the improvements page" do
+      click_on "Back"
+      expect(page).to have_text "Please tell us how we can improve this service?"
+    end
+
+    it "continues to the thank you page" do
+      choose "Yes"
+      click_continue
+      expect(page).to have_text "Thank you"
     end
   end
 

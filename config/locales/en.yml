@@ -251,6 +251,21 @@ en:
       question: Tell us about the outcomes you were able to achieve because of the support you received
     improvements:
       question: Please tell us how we can improve this service?
+    accessibility_research:
+      question: Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?
+      question_info: We need to make sure our new service for school buyers is accessible for all users. If you have a disability or accessibility need, we would like you to take part in a research session. We'll pay you £50 for 45 to 60 minutes of your time.
+      question_examples_start: 'Examples of an accessibility need might be:'
+      question_examples:
+        - Cognitive, for example dyslexia, autism, ADHD, memory, speech
+        - Sight, for example colourblind, low vision, blind
+        - Hearing, for example Deaf or hard of hearing, users of British sign language (BSL)
+        - Mobility, for example fine motor impairment such as difficulty using your hands, speech, users of mobility aids, neurological
+        - Temporary, for example an injury
+      question_examples_end: Or you might be a user of assisted digital technology and software such as screen readers.
+      question_dates: The research session will be taking place in November and December 2022.
+      options:
+        'yes': 'Yes'
+        'no': 'No'
     thank_you:
       link: Get help buying for schools
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.

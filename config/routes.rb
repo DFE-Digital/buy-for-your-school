@@ -258,6 +258,7 @@ Rails.application.routes.draw do
     resources :outcome_achieved, only: %i[edit update]
     resources :about_outcomes, only: %i[edit update]
     resources :improvements, only: %i[edit update]
+    resources :accessibility_research, only: %i[edit update]
     resources :thank_you, only: %i[show]
   end
 
