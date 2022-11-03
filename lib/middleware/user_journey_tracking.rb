@@ -39,5 +39,5 @@ class UserJourneyTracking
     end
   end
 
-  def should_be_tracked?(request) = !request.is_crawler? && request.path.start_with?(@path_root)
+  def should_be_tracked?(request) = !request.is_crawler? && request.method == "GET" && request.path.start_with?(@path_root)
 end
