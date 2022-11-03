@@ -27,4 +27,11 @@ describe "Request for support: user journey tracking" do
       expect(UserJourney.first.referral_campaign).to eq("marketing")
     end
   end
+
+  context "when the request is a bot" do
+    it "does not track user" do
+      get "/procurement-support", headers: { "HTTP_USER_AGENT" => "bot" }
+      expect(UserJourney.count).to eq(0)
+    end
+  end
 end

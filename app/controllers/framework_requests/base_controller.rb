@@ -2,7 +2,7 @@ module FrameworkRequests
   class BaseController < ApplicationController
     before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
-    before_action :create_user_journey_step, only: %i[index]
+    before_action :create_user_journey_step, only: %i[index], unless: -> { request.is_crawler? }
     before_action :framework_request, only: %i[edit]
 
     def index; end

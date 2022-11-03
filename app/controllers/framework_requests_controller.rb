@@ -5,7 +5,7 @@ class FrameworkRequestsController < ApplicationController
 
   def index
     session[:faf_referrer] = referral_link
-    create_user_journey_step
+    create_user_journey_step unless request.is_crawler?
   end
 
   def show
