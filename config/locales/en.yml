@@ -268,7 +268,8 @@ en:
         'no': 'No'
       email: Please provide your email address. We will only use this to contact you about research.
     thank_you:
-      link: Get help buying for schools
+      link: Get help buying for schools service
+      contact_us: Contact us again and use the %{ghbs_link} if you need support with what you're buying next.
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you - Get help buying for schools feedback
       header: Thank you

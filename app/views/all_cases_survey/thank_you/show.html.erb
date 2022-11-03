@@ -11,7 +11,8 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to I18n.t("all_cases_survey.thank_you.link"), "https://www.gov.uk/guidance/get-help-buying-for-schools", class: "govuk-link" %>
+      <% link = link_to I18n.t("all_cases_survey.thank_you.link"), "https://www.gov.uk/guidance/get-help-buying-for-schools", class: "govuk-link" %>
+      <%= I18n.t("all_cases_survey.thank_you.contact_us", ghbs_link: link).html_safe %>
     </p>
   </div>
 </div>
