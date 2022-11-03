@@ -29,6 +29,7 @@ module Support
       survey = AllCasesSurveyResponse.create!(
         case: kase,
         status: :sent_out,
+        survey_sent_at: Time.zone.now,
       )
 
       email = get_email_type(kase)

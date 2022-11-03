@@ -1,6 +1,13 @@
 describe AllCasesSurvey::BaseForm, type: :model do
   subject(:form) { described_class.new(**data) }
 
+  let(:data) { {} }
+
+  it { is_expected.to delegate_method(:complete_survey!).to(:all_cases_survey_response) }
+  it { is_expected.to delegate_method(:case_state).to(:all_cases_survey_response) }
+  it { is_expected.to delegate_method(:case_ref).to(:all_cases_survey_response) }
+  it { is_expected.to delegate_method(:previous_satisfaction_response).to(:all_cases_survey_response) }
+
   describe "#to_h" do
     let(:data) { { id: "id" } }
 
@@ -35,6 +42,21 @@ describe AllCasesSurvey::BaseForm, type: :model do
       expect(form.all_cases_survey_response).to receive(:case_resolved?)
 
       form.show_outcome_questions?
+    end
+  end
+
+  describe "#start_survey!" do
+    let(:all_cases_survey_response) { create(:all_cases_survey_response) }
+    let(:data) { { id: all_cases_survey_response.id } }
+
+    it "sets the user ip" do
+      form.start_survey!("127.0.0.1")
+      expect(form.all_cases_survey_response.user_ip).to eq "127.0.0.1"
+    end
+
+    it "delegates to the ActiveRecord model" do
+      expect(form.all_cases_survey_response).to receive(:start_survey!)
+      form.start_survey!("")
     end
   end
 end

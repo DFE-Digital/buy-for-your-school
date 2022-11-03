@@ -4,6 +4,11 @@ module AllCasesSurvey
 
     attr_accessor :id
 
+    delegate :case_state, to: :all_cases_survey_response
+    delegate :case_ref, to: :all_cases_survey_response
+    delegate :previous_satisfaction_response, to: :all_cases_survey_response
+    delegate :complete_survey!, to: :all_cases_survey_response
+
     def save!
       all_cases_survey_response.update!(data)
     end
@@ -22,6 +27,11 @@ module AllCasesSurvey
 
     def show_outcome_questions?
       all_cases_survey_response.case_resolved?
+    end
+
+    def start_survey!(user_ip)
+      all_cases_survey_response.user_ip = user_ip
+      all_cases_survey_response.start_survey!
     end
   end
 end

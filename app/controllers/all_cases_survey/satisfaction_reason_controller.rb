@@ -4,11 +4,11 @@ module AllCasesSurvey
     before_action :previous_satisfaction_response, only: %i[edit]
 
     def case_state
-      @case_state ||= form.all_cases_survey_response.case_state
+      @case_state ||= form.case_state
     end
 
     def previous_satisfaction_response
-      @previous_satisfaction_response ||= form.all_cases_survey_response.previous_satisfaction_response
+      @previous_satisfaction_response ||= form.previous_satisfaction_response
     end
 
   private

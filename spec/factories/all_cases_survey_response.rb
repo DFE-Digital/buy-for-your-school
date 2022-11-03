@@ -6,6 +6,7 @@ FactoryBot.define do
     about_outcomes_text { "outcomes" }
     improve_text { "improvements" }
     accessibility_research_opt_in { false }
+    accessibility_research_email { "test@email.com" }
     status { "in_progress" }
 
     association :case, factory: :support_case

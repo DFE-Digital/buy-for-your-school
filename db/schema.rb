@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_02_140902) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_100733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -82,6 +82,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_140902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "accessibility_research_opt_in"
+    t.string "accessibility_research_email"
+    t.datetime "survey_sent_at", precision: nil
+    t.datetime "survey_completed_at", precision: nil
     t.index ["case_id"], name: "index_all_cases_survey_responses_on_case_id"
   end
 

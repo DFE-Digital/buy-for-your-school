@@ -5,7 +5,7 @@ module AllCasesSurvey
     def show; end
 
     def case_ref
-      @case_ref ||= form.all_cases_survey_response.case_ref
+      @case_ref ||= form.case_ref
     end
   end
 end

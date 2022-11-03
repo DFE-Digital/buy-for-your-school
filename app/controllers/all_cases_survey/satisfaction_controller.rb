@@ -8,8 +8,7 @@ module AllCasesSurvey
 
     def update
       if @form.valid?
-        @form.all_cases_survey_response.user_ip = request.remote_ip
-        @form.all_cases_survey_response.start_survey!
+        @form.start_survey!(request.remote_ip)
         @form.save!
         redirect_to redirect_path
       else
@@ -18,7 +17,7 @@ module AllCasesSurvey
     end
 
     def case_state
-      @case_state ||= form.all_cases_survey_response.case_state
+      @case_state ||= form.case_state
     end
 
   private
@@ -26,8 +25,7 @@ module AllCasesSurvey
     def save_with_param
       @form.satisfaction_level = params[:satisfaction_level]
       if @form.valid?
-        @form.all_cases_survey_response.user_ip = request.remote_ip
-        @form.all_cases_survey_response.start_survey!
+        @form.start_survey!(request.remote_ip)
         @form.save!
         redirect_to redirect_path
       else

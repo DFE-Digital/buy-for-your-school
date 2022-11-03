@@ -2,7 +2,7 @@ module AllCasesSurvey
   class AccessibilityResearchController < BaseController
     def update
       if @form.valid?
-        @form.all_cases_survey_response.completed_status!
+        @form.complete_survey!
         @form.save!
         redirect_to redirect_path
       else
@@ -18,7 +18,7 @@ module AllCasesSurvey
 
     def form_params
       super.merge(
-        params.fetch(:accessibility_research_form, {}).permit(:accessibility_research_opt_in),
+        params.fetch(:accessibility_research_form, {}).permit(:accessibility_research_opt_in, :accessibility_research_email),
       )
     end
 

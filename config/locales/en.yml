@@ -266,6 +266,7 @@ en:
       options:
         'yes': 'Yes'
         'no': 'No'
+      email: Please provide your email address. We will only use this to contact you about research.
     thank_you:
       link: Get help buying for schools
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.

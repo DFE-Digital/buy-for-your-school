@@ -3,13 +3,8 @@
 require "notify/email"
 
 class Emails::AllCasesSurvey < Notify::Email
-  # @see https://www.notifications.service.gov.uk/services/&ltUUID&gt/templates
-  # @!attribute [r] template
-  #   @return [String] Template by UUID
   option :template, Types::String
 
-  # @!attribute [r] survey_id
-  #   @return [String] ID of the exit survey to be filled out
   option :survey_id, Types::String
 
 private

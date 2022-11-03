@@ -21,7 +21,9 @@
           <p><%= I18n.t("all_cases_survey.accessibility_research.question_examples_end") %></p>
           <p><%= I18n.t("all_cases_survey.accessibility_research.question_dates") %></p>
         </div>
-        <%= form.govuk_radio_button :accessibility_research_opt_in, :true, label: { text: I18n.t("all_cases_survey.accessibility_research.options.yes") } %>
+        <%= form.govuk_radio_button :accessibility_research_opt_in, :true, label: { text: I18n.t("all_cases_survey.accessibility_research.options.yes") } do %>
+          <%= form.govuk_text_field :accessibility_research_email, label: { text: I18n.t("all_cases_survey.accessibility_research.email") }, class: "govuk-!-width-two-thirds" %>
+        <% end %>
         <%= form.govuk_radio_button :accessibility_research_opt_in, :false, label: { text: I18n.t("all_cases_survey.accessibility_research.options.no") } %>
       <% end %>
 
