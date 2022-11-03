@@ -2,7 +2,6 @@ module FrameworkRequests
   class BaseController < ApplicationController
     before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
-    before_action :create_user_journey_step, only: %i[index], unless: -> { request.is_crawler? }
     before_action :framework_request, only: %i[edit]
 
     def index; end
@@ -67,10 +66,6 @@ module FrameworkRequests
     def update_redirect_path; end
 
     def update_data; end
-
-    def step_description = request.path
-
-    def product_section = :ghbs_rfh
 
     def form_params; end
   end

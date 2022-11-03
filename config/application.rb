@@ -56,5 +56,8 @@ module BuyForYourSchool
 
     # detect bots in order to keep user journey data clean
     config.middleware.use Rack::CrawlerDetect
+
+    require "middleware/user_journey_tracking"
+    config.middleware.use UserJourneyTracking, "/procurement-support", :ghbs_rfh
   end
 end
