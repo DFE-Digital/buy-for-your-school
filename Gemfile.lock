@@ -140,6 +140,8 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    crawler_detect (1.2.1)
+      qonfig (~> 0.24)
     cssbundling-rails (1.1.1)
       railties (>= 6.0.0)
     database_cleaner (2.0.1)
@@ -381,6 +383,7 @@ GEM
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
+    qonfig (0.28.0)
     raabro (1.4.0)
     racc (1.6.0)
     rack (2.2.4)
@@ -617,6 +620,7 @@ DEPENDENCIES
   climate_control
   coffee-rails (~> 5.0)
   contentful (~> 2.16)
+  crawler_detect
   cssbundling-rails (~> 1.1)
   database_cleaner
   dotenv-rails

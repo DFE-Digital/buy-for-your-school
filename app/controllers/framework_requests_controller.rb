@@ -5,7 +5,6 @@ class FrameworkRequestsController < ApplicationController
 
   def index
     session[:faf_referrer] = referral_link
-    create_user_journey_step
   end
 
   def show
@@ -26,7 +25,4 @@ private
   def framework_request
     @framework_request = FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
   end
-
-  def product_section = :ghbs_rfh
-  def step_description = framework_requests_path
 end

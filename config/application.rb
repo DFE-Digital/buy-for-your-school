@@ -53,5 +53,11 @@ module BuyForYourSchool
 
     # Allows to enable new connection handling API
     config.active_record.legacy_connection_handling = false
+
+    # detect bots in order to keep user journey data clean
+    config.middleware.use Rack::CrawlerDetect
+
+    require "middleware/user_journey_tracking"
+    config.middleware.use UserJourneyTracking, "/procurement-support", :ghbs_rfh
   end
 end
