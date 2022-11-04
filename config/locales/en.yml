@@ -221,6 +221,58 @@ en:
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you
     title: Get help buying for schools feedback
+  all_cases_survey:
+    start:
+      title: Start - Get help buying for schools feedback
+      header: Get help buying for schools feedback
+      body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.
+      privacy_policy: Privacy policy
+    satisfaction:
+      question_resolved_cases: How do you feel about the service you received?
+      question_opened_cases: How do you feel about the service you have received so far?
+      options:
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied nor dissatisfied
+        satisfied: Satisfied
+        very_dissatisfied: Very dissatisfied
+        very_satisfied: Very satisfied
+    satisfaction_reason:
+      question_resolved_cases: Tell us why you felt %{previous_response} with the service?
+      question_opened_cases: Tell us why you feel %{previous_response} with the service so far?
+    outcome_achieved:
+      question: I achieved the outcome I wanted as a result of the support I received from Get help buying for schools
+      options:
+        agree: Agree
+        disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
+        strongly_disagree: Strongly disagree
+    about_outcomes:
+      question: Tell us about the outcomes you were able to achieve because of the support you received
+    improvements:
+      question: Please tell us how we can improve this service?
+    accessibility_research:
+      question: Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?
+      question_info: We need to make sure our new service for school buyers is accessible for all users. If you have a disability or accessibility need, we would like you to take part in a research session. We'll pay you £50 for 45 to 60 minutes of your time.
+      question_examples_start: 'Examples of an accessibility need might be:'
+      question_examples:
+        - Cognitive, for example dyslexia, autism, ADHD, memory, speech
+        - Sight, for example colourblind, low vision, blind
+        - Hearing, for example Deaf or hard of hearing, users of British sign language (BSL)
+        - Mobility, for example fine motor impairment such as difficulty using your hands, speech, users of mobility aids, neurological
+        - Temporary, for example an injury
+      question_examples_end: Or you might be a user of assisted digital technology and software such as screen readers.
+      question_dates: The research session will be taking place in November and December 2022.
+      options:
+        'yes': 'Yes'
+        'no': 'No'
+      email: Please provide your email address. We will only use this to contact you about research.
+    thank_you:
+      link: Get help buying for schools service
+      contact_us: Contact us again and use the %{ghbs_link} if you need support with what you're buying next.
+      text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
+      title: Thank you - Get help buying for schools feedback
+      header: Thank you
   faf:
     check_answers:
       button:
@@ -1100,6 +1152,8 @@ en:
       message:
         created_flash: "%{type} added to case"
         exit_survey_sent: The exit survey email has been sent
+        all_cases_open_survey_sent: The survey for open cases email has been sent
+        all_cases_resolved_survey_sent: The survey for resolved cases email has been sent
       type:
         create_case: Case created
         email_from_school: Email from school
@@ -1129,6 +1183,13 @@ en:
           tower: Tower
           type: Type
           user_type: User type
+      all_cases_surveys:
+        header: All Cases Survey
+        eligible_cases:
+          label: Eligible cases
+          hint: List of case references that will receive the survey
+          send: Send
+        notice: Jobs queued
       base:
         header: CMS Management
       categories:

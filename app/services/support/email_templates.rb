@@ -8,6 +8,8 @@ module Support
       social_value: "bb4e6925-3491-44b8-8747-bdbb31257403",
       user_research: "fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779",
       exit_survey: "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+      all_cases_survey_open: "76f6f7ba-26d1-4c00-addd-12dc9d8d49fc",
+      all_cases_survey_resolved: "a56e5c50-78d1-4b5f-a2ff-73df78b7ad99",
     }.freeze
 
     def self.label_for(id)

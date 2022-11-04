@@ -1,0 +1,33 @@
+<%= content_for :title, I18n.t("all_cases_survey.accessibility_research.question") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :accessibility_research_form, url: all_cases_survey_accessibility_research_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <%= I18n.t("all_cases_survey.accessibility_research.question") %>
+      </legend>
+            
+      <%= form.govuk_radio_buttons_fieldset :accessibility_research_opt_in, legend: nil do %>
+        <div id="accessibility-research-form-accessibility-research-opt-in-hint" class="govuk-hint">
+          <p><%= I18n.t("all_cases_survey.accessibility_research.question_info") %></p>
+          <p><%= I18n.t("all_cases_survey.accessibility_research.question_examples_start") %></p>
+          <ul>
+            <% for bullet in I18n.t("all_cases_survey.accessibility_research.question_examples") do %>
+              <li><%= bullet %></li>
+            <% end %>
+          </ul>
+          <p><%= I18n.t("all_cases_survey.accessibility_research.question_examples_end") %></p>
+          <p><%= I18n.t("all_cases_survey.accessibility_research.question_dates") %></p>
+        </div>
+        <%= form.govuk_radio_button :accessibility_research_opt_in, :true, label: { text: I18n.t("all_cases_survey.accessibility_research.options.yes") } do %>
+          <%= form.govuk_text_field :accessibility_research_email, label: { text: I18n.t("all_cases_survey.accessibility_research.email") }, class: "govuk-!-width-two-thirds" %>
+        <% end %>
+        <%= form.govuk_radio_button :accessibility_research_opt_in, :false, label: { text: I18n.t("all_cases_survey.accessibility_research.options.no") } %>
+      <% end %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

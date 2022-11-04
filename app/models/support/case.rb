@@ -43,7 +43,7 @@ module Support
     belongs_to :organisation, polymorphic: true, optional: true
     has_many :interactions, class_name: "Support::Interaction"
     has_many :emails, class_name: "Support::Email"
-    has_many :exit_survey_responses, class_name: "ExitSurveyResponses"
+    has_many :exit_survey_responses, class_name: "ExitSurveyResponse"
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy
     accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank

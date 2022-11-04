@@ -207,6 +207,7 @@ Rails.application.routes.draw do
       get "/", to: "base#index"
       resources :agents, only: %i[index update]
       resources :categories, only: %i[index update]
+      resources :all_cases_surveys, only: %i[index create]
     end
   end
 
@@ -247,6 +248,17 @@ Rails.application.routes.draw do
     resources :hear_about_service, only: %i[edit update]
     resources :opt_in, only: %i[edit update]
     resources :opt_in_detail, only: %i[edit update]
+    resources :thank_you, only: %i[show]
+  end
+
+  namespace :all_cases_survey do
+    resources :start, only: %i[show]
+    resources :satisfaction, only: %i[edit update]
+    resources :satisfaction_reason, only: %i[edit update]
+    resources :outcome_achieved, only: %i[edit update]
+    resources :about_outcomes, only: %i[edit update]
+    resources :improvements, only: %i[edit update]
+    resources :accessibility_research, only: %i[edit update]
     resources :thank_you, only: %i[show]
   end
 
