@@ -21,10 +21,7 @@ module FrameworkRequests
     end
 
     def org_id_validation
-      return if org_id.present?
-
-      org_type = @school_type
-      errors.add(:org_id, I18n.t("framework_request.errors.rules.org_id.#{org_type}"))
+      errors.add(:org_id, I18n.t("framework_request.errors.rules.org_id.#{@school_type}")) if org_id.blank? || !org_exists?(found_uid_or_urn, @school_type)
     end
 
     def find_other_type
@@ -42,6 +39,13 @@ module FrameworkRequests
 
       presenter = FrameworkRequestPresenter.new(framework_request)
       "#{presenter.org_id} - #{presenter.org_name}"
+    end
+
+    def org_exists?(id, org_type)
+      case org_type
+      when "group" then Support::EstablishmentGroup.find_by(uid: id).present?
+      when "school" then Support::Organisation.find_by(urn: id).present?
+      end
     end
   end
 end
