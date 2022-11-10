@@ -1196,6 +1196,9 @@ en:
           hint: List of case references that will receive the survey
           send: Send
         notice: Jobs queued
+      category_detection:
+        header: Category Detection
+        request_for_help_text: Request for help text
       base:
         header: CMS Management
       categories:

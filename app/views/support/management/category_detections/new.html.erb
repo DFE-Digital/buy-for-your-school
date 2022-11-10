@@ -1,0 +1,43 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.category_detection.header"), new_support_management_category_detection_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+  </ol>
+</div>
+
+<%= form_with model: @category_detection_form, scope: :category_detection, url: support_management_category_detection_path, method: :post do |form| %>
+  <%= form.govuk_text_area :request_text,
+    class: "govuk-textarea",
+    rows: 5,
+    label: { text: 'Request for help text', size: "m" }
+  %>
+  <%= form.submit "Detect category", class: "govuk-button" %>
+<% end %>
+
+<% if @category_results.present? %>
+  <table class="govuk-table" id="category-results">
+    <caption class="govuk-table__caption govuk-table__caption--l">Results</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Category</th>
+        <th scope="col" class="govuk-table__header">Tower</th>
+        <th scope="col" class="govuk-table__header">Similarity</th>
+        <th scope="col" class="govuk-table__header">Matching words</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @category_results.each_with_index do |result, i| %>
+        <tr class="govuk-table__row <%= ("top-category-detection-result" if i.zero?) %>">
+          <th scope="row" class="govuk-table__header"><%= result.category %></th>
+          <td class="govuk-table__cell"><%= result.tower %></td>
+          <td class="govuk-table__cell"><%= result.similarity %></td>
+          <td class="govuk-table__cell"><%= result.matching_words %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_03_100733) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_07_145634) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "citext"
+  enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -32,14 +33,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_100733) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
+    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
-    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -361,6 +362,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_100733) do
     t.uuid "parent_id"
     t.string "tower"
     t.uuid "support_tower_id"
+    t.string "weighted_keywords"
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["support_tower_id"], name: "index_support_categories_on_support_tower_id"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
@@ -570,6 +572,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_100733) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
+    t.string "weighted_keywords"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

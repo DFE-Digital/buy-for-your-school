@@ -6,11 +6,23 @@
   </ol>
 </div>
 
-
 <h1 class="govuk-heading-l"><%= I18n.t("support.management.base.header") %></h1>
+
+<h2 class="govuk-heading-m">Configuration</h2>
 
 <ul>
   <li><%= link_to I18n.t("support.management.agents.header"), support_management_agents_path, class: "govuk-link" %></li>
   <li><%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-link" %></li>
+</ul>
+
+<h2 class="govuk-heading-m">Tasks</h2>
+
+<ul>
   <li><%= link_to I18n.t("support.management.all_cases_surveys.header"), support_management_all_cases_surveys_path, class: "govuk-link" %></li>
+</ul>
+
+<h2 class="govuk-heading-m">Debug</h2>
+
+<ul>
+  <li><%= link_to I18n.t("support.management.category_detection.header"), new_support_management_category_detection_path, class: "govuk-link" %></li>
 </ul>

@@ -4,185 +4,258 @@
 #
 ---
 
-- title: ICT
-  description: Information and Communications Technology
-  slug: ict
-  tower: ICT
-  sub_categories:
-    - title: Peripherals
-      description: computer peripherals
-      slug: peripherals
-    - title: Laptops
-      description: Mobile computing
-      slug: laptops
-    - title: Broadband service
-      description:
-      slug: broadband_service
-    - title: Switches & Routers
-      description: networking hardware
-      slug: switches_routers
-    - title: Cyber services
-      description:
-      slug: cyber_services
-    - title: Cloud SaaS
-      description:
-      slug: cloud_saas
-    - title: AV Displays
-      description: TVs, projectors
-      slug: displays
-    - title: Hosting & Storage
-      description:
-      slug: hosting_and_storage
-    - title: MIS
-      description:
-      slug: mis
-    - title: VLEs
-      description: Virtual Learning Environments
-      slug: vle
-    - title: Curriculum Content
-      description:
-      slug: curriculum_content
-    - title: Server Configuration & Support
-      description:
-      slug: servers
-    - title: Broadband Infrastructure
-      description:
-      slug: broadband_infrastructure
-    - title: Safeguarding & Content
-      description:
-      slug: safeguarding
-    - title: OS Software
-      description:
-      slug: software
-    - title: Websites
-      description:
-      slug: websites
-    - title: Telecoms & Broadband
-      description:
-      slug: broadband
-    - title: MFD
-      slug: mfd
-      description:
+towers:
+  - title: ICT
+    keywords:
+      - it
+      - it department
+      - laptop
+      - upgrade
+      - broadband
+      - devices
+      - cloud
+      - machine
+      - telephone
+      - telephony
+      - ipad
+      - ipads
+      - photocopier
+      - printer
+      - software
+      - digital
+  - title: Energy & Utilities
+    keywords:
+      - energy
+      - gas
+      - electric
+      - electricity
+      - water
+      - contract
+      - fixed
+      - rate
+  - title: FM & Catering
+    keywords:
+      - catering
+      - cleaning
+      - furniture
+      - kitchen
+      - classroom
+      - grounds
+      - playground
+  - title: Services
+    keywords:
+      - vehicle
+      - payroll
+      - minibus
+      - bus
+      - consultant
+      - audit
+      - management
+      - hr
 
-- title: FM
-  description: Facilities Management
-  slug: facilities
-  tower: FM & Catering
-  sub_categories:
-    - title: Water, drains & sewerage
-      description:
-      slug: sewerage
-    - title: Fire Safety (Goods & Systems)
-      description:
-      slug:
-    - title: Security
-      description:
-      slug:
-    - title: Building maintenance & BMS
-      description:
-      slug:
-    - title: Mechanical & Electrical Systems
-      description:
-      slug:
-    - title: Statutory testing
-    - title: Roof Maintenance
-    - title: Cleaning Services
-    - title: Cleaning Products
-    - title: Waste management
-    - title: Grounds Maintenance
-    - title: Removal & relocation
-    - title: IPC (PPE & Uniform)
-    - title: MUGAs (Multi Use Games Area)
-    - title: Transport
-      tower: Services
+categories:
+  - title: ICT
+    description: Information and Communications Technology
+    slug: ict
+    tower: ICT
+    sub_categories:
+      - title: Peripherals
+        description: computer peripherals
+        slug: peripherals
+      - title: Laptops
+        description: Mobile computing
+        slug: laptops
+      - title: Broadband service
+        description:
+        slug: broadband_service
+      - title: Switches & Routers
+        description: networking hardware
+        slug: switches_routers
+      - title: Cyber services
+        description:
+        slug: cyber_services
+      - title: Cloud SaaS
+        description:
+        slug: cloud_saas
+      - title: AV Displays
+        description: TVs, projectors
+        slug: displays
+      - title: Hosting & Storage
+        description:
+        slug: hosting_and_storage
+      - title: MIS
+        description:
+        slug: mis
+      - title: VLEs
+        description: Virtual Learning Environments
+        slug: vle
+      - title: Curriculum Content
+        description:
+        slug: curriculum_content
+      - title: Server Configuration & Support
+        description:
+        slug: servers
+      - title: Broadband Infrastructure
+        description:
+        slug: broadband_infrastructure
+      - title: Safeguarding & Content
+        description:
+        slug: safeguarding
+      - title: OS Software
+        description:
+        slug: software
+      - title: Websites
+        description:
+        slug: websites
+      - title: Telecoms & Broadband
+        description:
+        slug: broadband
+      - title: MFD
+        slug: mfd
+        keywords:
+          - copier
+          - copiers
+        description:
 
-
-- title: Energy
-  description:
-  slug: energy
-  tower: Energy & Utilities
-  sub_categories:
-    - title: Electricity
-    - title: Gas
-    - title: Other fuels
-
-- title: Utilities
-  description:
-  slug: utilities
-  tower: Energy & Utilities
-  sub_categories:
-    - title: Water
-
-- title: Catering
-  description:
-  slug: catering
-  tower: FM & Catering
-  sub_categories:
-    - title: Equipment
-    - title: Catering Services
-
-- title: Furniture
-  description:
-  slug: furniture
-  tower: FM & Catering
-  sub_categories:
-    - title: Furniture
-
-- title: Books
-  description:
-  slug: books
-  tower: Services
-  sub_categories:
-    - title: Books
-
-- title: Business Services
-  description:
-  slug: business
-  sub_categories: []
-  tower: Services
-
-- title: Financial
-  description:
-  slug: financial
-  tower: Services
-  sub_categories:
-    - title: Audit
-    - title: Insurance
-    - title: Leasing
-    - title: Spend Analysis
-
-- title: Professional
-  description:
-  slug: professional
-  tower: Services
-  sub_categories:
-    - title: Legal Services
-    - title: Professional services Bloom
-    - title: Recruitment screening
-    - title: Supply Teachers & Agency workers
-    - title: Payroll
-    - title: HR
+  - title: FM
+    description: Facilities Management
+    slug: facilities
+    tower: FM & Catering
+    sub_categories:
+      - title: Water, drains & sewerage
+        description:
+        slug: sewerage
+      - title: Fire Safety (Goods & Systems)
+        description:
+        slug:
+      - title: Security
+        description:
+        slug:
+      - title: Building maintenance & BMS
+        description:
+        slug:
+      - title: Mechanical & Electrical Systems
+        description:
+        slug:
+      - title: Statutory testing
+      - title: Roof Maintenance
+      - title: Cleaning Services
+      - title: Cleaning Products
+      - title: Waste management
+      - title: Grounds Maintenance
+      - title: Removal & relocation
+      - title: IPC (PPE & Uniform)
+      - title: MUGAs (Multi Use Games Area)
+      - title: Transport
+        tower: Services
+        keywords:
+          - seat belt
+          - alarm system
+          - seats
+          - central locking
 
 
-- title: Office supplies
-  description:
-  slug: office_supplies
-  tower: Services
-  sub_categories:
-    - title: Stationery supply & office supplies
+  - title: Energy
+    description:
+    slug: energy
+    tower: Energy & Utilities
+    sub_categories:
+      - title: Electricity
+      - title: Gas
+      - title: Other fuels
 
-- title: Capital
-  description:
-  slug: capital
-  sub_categories:
-    - title: Boilers and plumbing services
-      tower: FM & Catering
-    - title: Solar
-      tower: Energy & Utilities
+  - title: Utilities
+    description:
+    slug: utilities
+    tower: Energy & Utilities
+    sub_categories:
+      - title: Water
 
-- title: Or
-  description:
-  slug: or
-  sub_categories:
-    - title: Not yet known
-    - title: Other
+  - title: Catering
+    description:
+    slug: catering
+    tower: FM & Catering
+    tower_keywords:
+      - catering
+      - cleaning
+      - furniture
+      - kitchen
+      - classroom
+    sub_categories:
+      - title: Equipment
+      - title: Catering Services
+
+  - title: Furniture
+    description:
+    slug: furniture
+    tower: FM & Catering
+    sub_categories:
+      - title: Furniture
+
+  - title: Books
+    description:
+    slug: books
+    tower: Services
+    sub_categories:
+      - title: Books
+
+  - title: Business Services
+    description:
+    slug: business
+    sub_categories: []
+    tower: Services
+    tower_keywords:
+      - vehicle
+      - payroll
+      - minibus
+      - bus
+      - consultant
+      - audit
+      - management
+      - hr
+
+  - title: Financial
+    description:
+    slug: financial
+    tower: Services
+    sub_categories:
+      - title: Audit
+      - title: Insurance
+      - title: Leasing
+      - title: Spend Analysis
+
+  - title: Professional
+    description:
+    slug: professional
+    tower: Services
+    sub_categories:
+      - title: Legal Services
+      - title: Professional services Bloom
+      - title: Recruitment screening
+      - title: Supply Teachers & Agency workers
+      - title: Payroll
+      - title: HR
+
+
+  - title: Office supplies
+    description:
+    slug: office_supplies
+    tower: Services
+    sub_categories:
+      - title: Stationery supply & office supplies
+
+  - title: Capital
+    description:
+    slug: capital
+    sub_categories:
+      - title: Boilers and plumbing services
+        tower: FM & Catering
+      - title: Solar
+        tower: Energy & Utilities
+
+  - title: Or
+    description:
+    slug: or
+    sub_categories:
+      - title: Not yet known
+      - title: Other
