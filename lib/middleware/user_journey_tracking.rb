@@ -5,15 +5,14 @@ class UserJourneyTracking
     @product_section = product_section
 
     Rack::Request::Helpers.module_eval do
-      def current_user_journey = env["rack.user_journey"]
+      def current_user_journey = UserJourney.find_by(id: session[:user_journey_id])
     end
   end
 
   def call(env)
     request = ActionDispatch::Request.new(env)
 
-    # store record in request for controller access
-    env["rack.user_journey"] = track(request) if should_be_tracked?(request)
+    track(request) if should_be_tracked?(request)
 
     @app.call(env)
   end
@@ -27,16 +26,14 @@ class UserJourneyTracking
       end,
     )
 
-    user_journey.tap do
-      # record any referral codes
-      user_journey.update!(referral_campaign: request.params[:referral_campaign]) if request.params[:referral_campaign].present?
+    # record any referral codes
+    user_journey.update!(referral_campaign: request.params[:referral_campaign]) if request.params[:referral_campaign].present?
 
-      # track step
-      user_journey.record_step(product_section: @product_section, step_description: request.path)
+    # track step
+    user_journey.record_step(product_section: @product_section, step_description: request.path)
 
-      # store record id for further requests
-      request.session[:user_journey_id] = user_journey.id
-    end
+    # store record id for further requests
+    request.session[:user_journey_id] = user_journey.id
   end
 
   def should_be_tracked?(request) = !request.is_crawler? && request.method == "GET" && request.path.start_with?(@path_root)
