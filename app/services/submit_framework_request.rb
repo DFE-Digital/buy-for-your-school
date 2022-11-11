@@ -72,6 +72,7 @@ private
       procurement_amount: request.__getobj__.procurement_amount,
       confidence_level: request.__getobj__.confidence_level,
       special_requirements: request.special_requirements.presence,
+      category_id: detected_category_id,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
@@ -89,5 +90,10 @@ private
     Support::CreateInteraction.new(@kase.id, "faf_support_request", nil, interaction_attrs).call
 
     @kase
+  end
+
+  def detected_category_id
+    results = Support::CategoryDetection.results_for(request.message_body, num_results: 1)
+    results.first.try(:category_id) if results.any?
   end
 end
