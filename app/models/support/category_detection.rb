@@ -3,9 +3,9 @@ module Support
     include ActiveModel::Model
     attr_accessor :category_id, :tower, :category, :similarity, :matching_words
 
-    STOP_WORDS = File.read(Rails.root.join('config/support/category_stop_words.txt')).freeze
+    STOP_WORDS = File.read(Rails.root.join("config/support/category_stop_words.txt")).freeze
 
-    QUERY = <<-SQL
+    QUERY = <<-SQL.freeze
       WITH main AS (
         SELECT
           query,
@@ -73,7 +73,7 @@ module Support
     SQL
 
     def self.results_for(request_text, num_results: 1)
-      ApplicationRecord.connection.exec_query(QUERY, 'SQL', [request_text, STOP_WORDS, num_results], prepare: true).rows.map do |row|
+      ApplicationRecord.connection.exec_query(QUERY, "SQL", [request_text, STOP_WORDS, num_results], prepare: true).rows.map do |row|
         new(category_id: row[0], tower: row[1], category: row[2], similarity: row[3], matching_words: row[4])
       end
     end

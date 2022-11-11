@@ -21,13 +21,13 @@ module Support
 
       yaml = YAML.load_file(data)
 
-      load_towers!(yaml['towers'])
-      load_categories!(yaml['categories'])
+      load_towers!(yaml["towers"])
+      load_categories!(yaml["categories"])
     end
 
     def load_towers!(towers)
       towers.each do |tower|
-        record = Tower.find_or_initialize_by(title: tower['title'])
+        record = Tower.find_or_initialize_by(title: tower["title"])
         record.save!
       end
     end

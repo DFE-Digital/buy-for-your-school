@@ -13,20 +13,20 @@
   <%= form.govuk_text_area :request_text,
     class: "govuk-textarea",
     rows: 5,
-    label: { text: 'Request for help text', size: "m" }
+    label: { text: I18n.t("support.management.category_detection.request_for_help_text"), size: "m" }
   %>
-  <%= form.submit "Detect category", class: "govuk-button" %>
+  <%= form.submit I18n.t("support.management.category_detection.submit"), class: "govuk-button" %>
 <% end %>
 
 <% if @category_results.present? %>
   <table class="govuk-table" id="category-results">
-    <caption class="govuk-table__caption govuk-table__caption--l">Results</caption>
+    <caption class="govuk-table__caption govuk-table__caption--l"><%= I18n.t("support.management.category_detection.results.header") %></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Category</th>
-        <th scope="col" class="govuk-table__header">Tower</th>
-        <th scope="col" class="govuk-table__header">Similarity</th>
-        <th scope="col" class="govuk-table__header">Matching words</th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.category") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.tower") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.similarity") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.matching_words") %></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">

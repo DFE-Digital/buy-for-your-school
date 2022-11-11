@@ -1199,8 +1199,19 @@ en:
       category_detection:
         header: Category Detection
         request_for_help_text: Request for help text
+        submit: Detect category
+        results:
+          category: Category
+          matching_words: Matching words
+          header: Results
+          tower: Tower
+          similarity: Similarity
+
       base:
+        configuration: Configuration
+        debug: Debug
         header: CMS Management
+        tasks: Tasks
       categories:
         header: Categories
         table:
