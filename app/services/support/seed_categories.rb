@@ -49,7 +49,7 @@ module Support
         record = category.sub_categories.find_or_initialize_by(title: sub_category["title"])
         record.description = sub_category["description"]
         record.slug = sub_category["slug"]
-        record.tower = category.tower || (Tower.find_by(title: sub_category["tower"]) if sub_category["tower"].present?)
+        record.tower = (Tower.find_by(title: sub_category["tower"]) if sub_category["tower"].present?) || category.tower
         record.save!
       end
     end

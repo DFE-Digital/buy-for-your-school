@@ -6,52 +6,9 @@
 
 towers:
   - title: ICT
-    keywords:
-      - it
-      - it department
-      - laptop
-      - upgrade
-      - broadband
-      - devices
-      - cloud
-      - machine
-      - telephone
-      - telephony
-      - ipad
-      - ipads
-      - photocopier
-      - printer
-      - software
-      - digital
   - title: Energy & Utilities
-    keywords:
-      - energy
-      - gas
-      - electric
-      - electricity
-      - water
-      - contract
-      - fixed
-      - rate
   - title: FM & Catering
-    keywords:
-      - catering
-      - cleaning
-      - furniture
-      - kitchen
-      - classroom
-      - grounds
-      - playground
   - title: Services
-    keywords:
-      - vehicle
-      - payroll
-      - minibus
-      - bus
-      - consultant
-      - audit
-      - management
-      - hr
 
 categories:
   - title: ICT
@@ -112,9 +69,6 @@ categories:
         slug: broadband
       - title: MFD
         slug: mfd
-        keywords:
-          - copier
-          - copiers
         description:
 
   - title: FM
@@ -148,12 +102,6 @@ categories:
       - title: MUGAs (Multi Use Games Area)
       - title: Transport
         tower: Services
-        keywords:
-          - seat belt
-          - alarm system
-          - seats
-          - central locking
-
 
   - title: Energy
     description:
@@ -175,12 +123,6 @@ categories:
     description:
     slug: catering
     tower: FM & Catering
-    tower_keywords:
-      - catering
-      - cleaning
-      - furniture
-      - kitchen
-      - classroom
     sub_categories:
       - title: Equipment
       - title: Catering Services
@@ -204,15 +146,6 @@ categories:
     slug: business
     sub_categories: []
     tower: Services
-    tower_keywords:
-      - vehicle
-      - payroll
-      - minibus
-      - bus
-      - consultant
-      - audit
-      - management
-      - hr
 
   - title: Financial
     description:
@@ -235,7 +168,6 @@ categories:
       - title: Supply Teachers & Agency workers
       - title: Payroll
       - title: HR
-
 
   - title: Office supplies
     description:
