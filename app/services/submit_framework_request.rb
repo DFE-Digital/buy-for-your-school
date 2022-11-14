@@ -85,6 +85,7 @@ private
         "email": user.email,
         "message": request.message_body,
         "referrer": referrer,
+        "detected_category_id": detected_category_id,
       },
     }
     Support::CreateInteraction.new(@kase.id, "faf_support_request", nil, interaction_attrs).call
@@ -93,7 +94,7 @@ private
   end
 
   def detected_category_id
-    results = Support::CategoryDetection.results_for(request.message_body, num_results: 1)
-    results.first.try(:category_id) if results.any?
+    @results ||= Support::CategoryDetection.results_for(request.message_body, num_results: 1)
+    @results.first.try(:category_id) if @results.any?
   end
 end

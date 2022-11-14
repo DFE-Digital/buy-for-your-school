@@ -162,6 +162,14 @@ module Support
       interactions.state_change.create!(body: "Case reopened due to receiving a new email.")
     end
 
+    def log_categorisation_change(from:, to:, type:)
+      interactions.case_categorisation_changed.create!(
+        additional_data: { from:, to:, type: },
+        agent_id:,
+        body: "Categorisation change",
+      )
+    end
+
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)
     # @return [String]
     def generate_ref

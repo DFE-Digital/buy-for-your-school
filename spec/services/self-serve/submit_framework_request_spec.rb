@@ -8,7 +8,7 @@ describe SubmitFrameworkRequest do
 
   before do
     allow(Emails::Confirmation).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation)
-    allow(Support::CategoryDetection).to receive(:results_for).with("An energy case", anything).and_return(category_d: category_detection_results)
+    allow(Support::CategoryDetection).to receive(:results_for).with("An energy case", anything).and_return(category_detection_results)
   end
 
   describe "#call" do

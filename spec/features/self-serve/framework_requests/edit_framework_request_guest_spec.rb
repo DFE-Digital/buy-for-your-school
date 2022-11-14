@@ -163,7 +163,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
       click_continue
       click_on "Back"
 
-      expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
+      expect(page).to have_title "Search for your school"
     end
 
     context "when confirmed" do

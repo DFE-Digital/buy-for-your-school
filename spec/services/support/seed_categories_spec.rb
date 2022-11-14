@@ -81,8 +81,8 @@ RSpec.describe Support::SeedCategories do
       it "sets the sub category tower to be its own defined tower" do
         service.call
 
-        water = Support::Category.find_by(title: "Transport")
-        expect(water.tower_title).to eq("Services")
+        transport = Support::Category.find_by(title: "Transport")
+        expect(transport.tower_title).to eq("Services")
       end
     end
   end

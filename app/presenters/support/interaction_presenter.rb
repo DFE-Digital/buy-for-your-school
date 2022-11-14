@@ -16,6 +16,8 @@ module Support
         case field
         when "category_id"
           formatted_hash["category_id"] = category(value).title if value.present?
+        when "detected_category_id"
+          formatted_hash["detected_category_id"] = value.present? ? category(value).title : "None"
         when "email_template"
           formatted_hash["email_template"] = EmailTemplates.label_for(value)
         else
@@ -35,7 +37,11 @@ module Support
 
     # @return [String]
     def body
-      super.strip.chomp if super
+      if case_categorisation_changed?
+        Support::CaseCategorisationChangePresenter.new(self).body
+      elsif super
+        super.strip.chomp
+      end
     end
 
     # @return [Array<OpenStruct>]
@@ -63,6 +69,19 @@ module Support
       event_type.in?(%w[email_from_school email_to_school]) && additional_data.key?("email_id")
     end
 
+    def custom_template
+      return "support_request_body"        if support_request?
+      return "case_categorisation_changed" if case_categorisation_changed?
+    end
+
+    def event_type
+      if case_categorisation_changed?
+        "case_categorisation_changed.#{additional_data['type']}"
+      else
+        super
+      end
+    end
+
   private
 
     # @return [String] 20 March 2021 12:00
@@ -76,7 +95,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed].include?(key)
       end
     end
 
