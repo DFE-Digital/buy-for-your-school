@@ -42,9 +42,11 @@ module Support
     end
 
     def case_request_details_form
-      form = fields_pre_filled_in_params? \
-        ? CaseRequestDetailsForm.from_validation(validation) \
-        : CaseRequestDetailsForm.from_case(@current_case)
+      form = if fields_pre_filled_in_params?
+               CaseRequestDetailsForm.from_validation(validation)
+             else
+               CaseRequestDetailsForm.from_case(@current_case)
+             end
       form.agent_id = current_agent.id
       form
     end
