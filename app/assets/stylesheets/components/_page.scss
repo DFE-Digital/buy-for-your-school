@@ -79,9 +79,6 @@
 .edit_answer {
   a {
     @extend .govuk-link;
-  }
-
-  a:visited {
-    color: inherit;
+    @extend .govuk-link--no-visited-state;
   }
 }
