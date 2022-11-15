@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_15_145634) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_15_145635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -342,6 +342,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_145634) do
     t.string "special_requirements"
     t.uuid "query_id"
     t.boolean "exit_survey_sent", default: false
+    t.uuid "detected_category_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"

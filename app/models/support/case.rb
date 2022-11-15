@@ -162,7 +162,7 @@ module Support
       interactions.state_change.create!(body: "Case reopened due to receiving a new email.")
     end
 
-    def log_categorisation_change(from:, to:, type:)
+    def log_categorisation_change(from:, to:, type:, agent_id:)
       interactions.case_categorisation_changed.create!(
         additional_data: { from:, to:, type: },
         agent_id:,

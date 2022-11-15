@@ -42,7 +42,7 @@ module Support
   private
 
     def log_categorisation_change(from:, to:, type:)
-      support_case.log_categorisation_change(from:, to:, type:)
+      support_case.log_categorisation_change(from:, to:, type:, agent_id:)
     end
   end
 end

@@ -73,6 +73,7 @@ private
       confidence_level: request.__getobj__.confidence_level,
       special_requirements: request.special_requirements.presence,
       category_id: detected_category_id,
+      detected_category_id:,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
