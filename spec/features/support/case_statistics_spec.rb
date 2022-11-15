@@ -48,8 +48,20 @@ RSpec.feature "Case statistics page" do
 
     describe "case statistics navigation" do
       it "links to a drilldown page for a particular tower" do
-        click_on "Services"
+        click_on("Services", match: :first)
         expect(page).to have_text "Services Statistics"
+      end
+
+      it "links to a drilldown page showing relevant cases" do
+        # 6 live cases in Energy & Utilities
+        within(".overview-by-tower") { click_on("6") }
+        expect(page).to have_text "Energy & Utilities cases"
+        expect(page).to have_text "000011"
+        expect(page).to have_text "000006"
+        expect(page).to have_text "000012"
+        expect(page).to have_text "000007"
+        expect(page).to have_text "000015"
+        expect(page).to have_text "000010"
       end
     end
 

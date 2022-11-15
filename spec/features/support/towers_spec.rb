@@ -29,20 +29,31 @@ RSpec.feature "Case statistics tower page" do
 
       context "when tower is not 'No Tower'" do
         it "links Live Cases to the tower page for this tower" do
-          expect(page).to have_link(href: support_tower_path(services_tower.id), text: "3\nLive cases")
+          expect(page).to have_link(href: support_tower_path(services_tower.id, filter_cases: { state: "live" }), text: "3\nLive cases")
         end
       end
 
       context "when tower is 'No Tower'" do
         it "links Live Cases to the tower page for No tower" do
           visit support_case_statistics_tower_path(id: "no-tower")
-          expect(page).to have_link(href: support_tower_path(id: "no-tower"), text: "1\nLive case")
+          expect(page).to have_link(href: support_tower_path(id: "no-tower", filter_cases: { state: "live" }), text: "1\nLive case")
         end
       end
 
       it "shows main sections" do
         expect(page).to have_content("Live cases by stage")
         expect(page).to have_content("Live cases by level")
+      end
+    end
+
+    describe "tower page navigation" do
+      it "links to a drilldown page showing relevant cases" do
+        # live Services cases in Need stage
+        click_on "Need"
+        expect(page).to have_text "Services cases"
+        expect(page).to have_text "000001"
+        expect(page).to have_text "000002"
+        expect(page).to have_text "000005"
       end
     end
   end
