@@ -587,6 +587,8 @@ en:
           state: Filter by status
           sub_category: Filter by sub-category
           tower: Filter by tower
+          stage: Filter by stage
+          level: Filter by level
       header:
         action: Actions
         case_attachments: Attachments
@@ -735,6 +737,7 @@ en:
           state_pipeline: Pipeline
           state_resolve: Resolved
           state_resolved: Resolved
+          state_live: Live
         status: Status
         sub_category: Sub-category
         support_level:
@@ -1057,16 +1060,16 @@ en:
       missing_data:
         header: Missing data
         no_level:
-          one: There is 1 live case with no level
-          other: There are %{count} live cases that have no level
+          one: There is <strong>1</strong> live case with no level
+          other: There are <strong>%{count}</strong> live cases that have no level
           zero: There are no live cases that have no level
         no_stage:
-          one: There is 1 live case with no stage
-          other: There are %{count} live cases that have no stage
+          one: There is <strong>1</strong> live case with no stage
+          other: There are <strong>%{count}</strong> live cases that have no stage
           zero: There are no live cases that have no stage
         no_value:
-          one: There is 1 live case with no value
-          other: There are %{count} live cases that have no value
+          one: There is <strong>1</strong> live case with no value
+          other: There are <strong>%{count}</strong> live cases that have no value
           zero: There are no live cases that have no value
       stages:
         contract_award: Contract award
@@ -1103,6 +1106,9 @@ en:
         live_cases_by_stage: Live cases by stage
         stage: Stage
         unspecified: Unspecified
+      value_presence:
+        true: Specified
+        false: Unspecified
     case_summary:
       edit:
         header: Update case summary

@@ -28,6 +28,7 @@ module Support
         SELECT
           support_tower_cases.tower_name AS name,
           support_tower_cases.tower_slug AS slug,
+          support_tower_cases.tower_id AS tower_id,
           SUM(CASE WHEN support_tower_cases.support_level = 0 THEN 1 ELSE 0 END) AS level_1_cases,
           SUM(CASE WHEN support_tower_cases.support_level = 1 THEN 1 ELSE 0 END) AS level_2_cases,
           SUM(CASE WHEN support_tower_cases.support_level = 2 THEN 1 ELSE 0 END) AS level_3_cases,
@@ -38,7 +39,8 @@ module Support
         FROM support_tower_cases
         GROUP BY
           support_tower_cases.tower_name,
-          support_tower_cases.tower_slug
+          support_tower_cases.tower_slug,
+          support_tower_cases.tower_id
         ORDER BY
           (CASE WHEN support_tower_cases.tower_name = 'No Tower' THEN 9999 ELSE 0 END),
           support_tower_cases.tower_name ASC
