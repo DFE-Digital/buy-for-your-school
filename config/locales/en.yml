@@ -939,6 +939,7 @@ en:
         query: Query
         query_details: Query details
         referrer: Referrer
+        referer: Referrer
         request_text: Summary
         school_name: Organisation name
         school_postcode: Organisation postcode
@@ -1204,7 +1205,7 @@ en:
         notice: Jobs queued
       category_detection:
         header: Category Detection
-        request_for_help_text: Request for help text
+        request_for_help_text: Test algorithm
         submit: Detect category
         results:
           category: Category

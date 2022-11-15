@@ -1,6 +1,7 @@
 module Support
   class Management::CategoryDetectionsController < ::Support::Management::BaseController
     before_action :build_form
+    before_action :set_stats
 
     def create
       @category_results = @category_detection_form.results
@@ -9,19 +10,10 @@ module Support
 
   private
 
-    def form_params
-      params.fetch(:category_detection, {}).permit(:request_text)
-    end
+    def form_params = params.fetch(:category_detection, {}).permit(:request_text)
 
-    def build_form
-      @category_detection_form = CategoryDetectionForm.new(**form_params)
-    end
+    def build_form = @category_detection_form = CategoryDetectionForm.new(**form_params)
 
-    class CategoryDetectionForm
-      include ActiveModel::Model
-      attr_accessor :request_text
-
-      def results = CategoryDetection.results_for(request_text, num_results: 10)
-    end
+    def set_stats = @stats = CategoryDetectionStats.new
   end
 end
