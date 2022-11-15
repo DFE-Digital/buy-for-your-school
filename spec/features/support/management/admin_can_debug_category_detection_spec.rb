@@ -29,7 +29,7 @@ protected
     click_button "Agent Login"
     visit support_management_path
     click_on "Category Detection"
-    fill_in "Request for help text", with: query
+    fill_in "Example results", with: query
     click_on "Detect category"
   end
 

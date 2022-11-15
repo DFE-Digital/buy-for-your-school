@@ -16,7 +16,7 @@ describe Support::CaseCategorisationChangeLogger do
 
       it "logs as category_to_query" do
         expect(support_case).to have_received(:log_categorisation_change)
-          .with(from: "Cat1", to: "Query1", type: :category_to_query)
+          .with(agent_id:, from: "Cat1", to: "Query1", type: :category_to_query)
       end
     end
 
@@ -25,7 +25,7 @@ describe Support::CaseCategorisationChangeLogger do
 
       it "logs as query_to_category" do
         expect(support_case).to have_received(:log_categorisation_change)
-          .with(from: "Query1", to: "Cat1", type: :query_to_category)
+          .with(agent_id:, from: "Query1", to: "Cat1", type: :query_to_category)
       end
     end
 
@@ -34,7 +34,7 @@ describe Support::CaseCategorisationChangeLogger do
 
       it "logs as query_to_category" do
         expect(support_case).to have_received(:log_categorisation_change)
-          .with(from: "Cat1", to: "Cat2", type: :category)
+          .with(agent_id:, from: "Cat1", to: "Cat2", type: :category)
       end
     end
 
@@ -43,7 +43,7 @@ describe Support::CaseCategorisationChangeLogger do
 
       it "logs as query_to_category" do
         expect(support_case).to have_received(:log_categorisation_change)
-          .with(from: "Query1", to: "Query2", type: :query)
+          .with(agent_id:, from: "Query1", to: "Query2", type: :query)
       end
     end
 
