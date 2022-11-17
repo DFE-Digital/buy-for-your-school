@@ -33,6 +33,12 @@
   ol {
     @extend .govuk-list;
     @extend .govuk-list--number;
+
+    ol {
+      @extend .govuk-list;
+      @extend .govuk-list--number;
+      list-style-type: lower-roman;
+    }
   }
 
   ul {
@@ -66,5 +72,13 @@
 
   a {
     @extend .govuk-link;
+  }
+}
+
+.new_answer,
+.edit_answer {
+  a {
+    @extend .govuk-link;
+    @extend .govuk-link--no-visited-state;
   }
 }
