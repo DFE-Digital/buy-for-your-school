@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_15_145635) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -363,6 +363,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_145635) do
     t.uuid "parent_id"
     t.string "tower"
     t.uuid "support_tower_id"
+    t.boolean "archived", default: false
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["support_tower_id"], name: "index_support_categories_on_support_tower_id"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true

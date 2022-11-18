@@ -35,8 +35,8 @@ module Support
 
     def categories
       @categories ||= (tower.present? ? Support::Category.where(support_tower_id: tower) : base_cases.joins(:category))
-        .select("support_categories.id, support_categories.title")
-        .order("support_categories.title")
+        .select("support_categories.id, CASE WHEN support_categories.archived THEN '(archived) '||support_categories.title ELSE support_categories.title END")
+        .order("support_categories.archived ASC, support_categories.title")
         .uniq
     end
 
@@ -55,3 +55,4 @@ module Support
     end
   end
 end
+

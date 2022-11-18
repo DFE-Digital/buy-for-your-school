@@ -36,6 +36,7 @@ module Support
           'ch' as result_source
         FROM support_categories
         JOIN words ON title ~* words.word AND NOT words.is_custom_stop_word
+        WHERE NOT archived
       )
       , rfh_history AS (
         SELECT
@@ -45,7 +46,7 @@ module Support
           'rfhh' as result_source
         FROM support_cases sc
         JOIN words ON request_text ~* words.word AND words.is_dict_word
-        INNER JOIN support_categories cat ON sc.category_id = cat.id
+        INNER JOIN support_categories cat ON sc.category_id = cat.id AND NOT cat.archived
         INNER JOIN support_towers tower ON cat.support_tower_id = tower.id
         WHERE request_text IS NOT NULL
       )

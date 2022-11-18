@@ -38,6 +38,7 @@ module Support
         record.description = category["description"]
         record.slug = category["slug"]
         record.tower = Tower.find_by(title: category["tower"]) if category["tower"].present?
+        record.archived = category["is_archived"] == true
         record.save!
 
         load_sub_categories!(category["sub_categories"], record)
@@ -50,6 +51,7 @@ module Support
         record.description = sub_category["description"]
         record.slug = sub_category["slug"]
         record.tower = (Tower.find_by(title: sub_category["tower"]) if sub_category["tower"].present?) || category.tower
+        record.archived = sub_category["is_archived"] == true
         record.save!
       end
     end

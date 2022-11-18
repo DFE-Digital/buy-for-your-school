@@ -23,7 +23,6 @@ module Support
         end
       end
 
-      # @return [Boolean]
       def request_type?
         instance_variable_get :@request_type
       end

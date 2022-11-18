@@ -20,6 +20,7 @@ module Support
     scope :sub_categories, -> { where.not(parent_id: nil) }
     scope :ordered_by_title, -> { order(title: :asc) }
     scope :except_for, ->(title) { where.not(title:) }
+    scope :active, -> { where(archived: false) }
 
     def self.other_category_id
       find_by(title: "Other")&.id
