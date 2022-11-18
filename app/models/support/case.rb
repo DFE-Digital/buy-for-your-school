@@ -61,10 +61,12 @@ module Support
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id:) }
-    scope :by_state, ->(state) { where(state:) }
+    scope :by_state, ->(state) { state == "live" ? where(state: %w[initial opened on_hold]) : where(state:) }
     scope :by_category, ->(category_id) { where(category_id:) }
     scope :by_tower, ->(support_tower_id) { joins(:category).where(support_categories: { support_tower_id: }) }
     scope :without_tower, -> { joins("JOIN support_tower_cases stc ON stc.id = support_cases.id").where(stc: { tower_slug: "no-tower" }) }
+    scope :by_stage, ->(stage) { joins(:procurement).where(procurement: { stage: }) }
+    scope :by_level, ->(support_level) { where(support_level:) }
 
     scope :priority_ordering, lambda {
       order(

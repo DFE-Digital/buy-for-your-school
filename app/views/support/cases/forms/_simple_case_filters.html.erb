@@ -46,6 +46,22 @@
                               label: { text: I18n.t("support.case.filter.labels.assignee") } %>
       </div>
     <% end %>
+
+    <div class="govuk-grid-column-one-quarter">
+      <%= f.govuk_select :stage,
+                            options_for_select(f.object.stages.map { |a| [a.title, a.id] },
+                                                f.object.stage),
+                            options: { include_blank: I18n.t("support.case.filter.labels.all") },
+                            label: { text: I18n.t("support.case.filter.labels.stage") } %>
+    </div>
+
+    <div class="govuk-grid-column-one-quarter">
+      <%= f.govuk_select :level,
+                            options_for_select(f.object.levels.map { |a| [a.title, a.id] },
+                                                f.object.level),
+                            options: { include_blank: I18n.t("support.case.filter.labels.all") },
+                            label: { text: I18n.t("support.case.filter.labels.level") } %>
+    </div>
   </div>
 
   <div class="govuk-grid-row">

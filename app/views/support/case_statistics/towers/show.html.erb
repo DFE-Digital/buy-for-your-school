@@ -1,3 +1,5 @@
+<% tower_id = @tower_statistics.tower_id || @tower_statistics.tower_slug %>
+
 <%= content_for :title, I18n.t("support.case_statistics.header") %>
 
 <div class="govuk-grid-row tower-overview">
@@ -9,7 +11,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third">
         <div class="govuk-panel govuk-panel--confirmation">
-          <%= link_to support_tower_path(@tower_statistics.tower_id || @tower_statistics.tower_slug), class: "govuk-link govuk-link--inverse" do %>
+          <%= link_to support_tower_path(tower_id, **filter_cases_params(state: "live")), class: "govuk-link govuk-link--inverse" do %>
 
           <h1 class="govuk-panel__title govuk-!-margin-bottom-0 no_of_live_cases">
             <%= @tower_statistics.live_cases %>
@@ -79,10 +81,10 @@
           <tbody class="govuk-table__body">
             <% @tower_statistics.breakdown_of_cases_by_stage.each do |stage| %>
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.stages.#{stage.stage}") %></th>
-                <td class="govuk-table__cell result-value"><%= stage.open_cases %></td>
-                <td class="govuk-table__cell result-value"><%= stage.on_hold_cases %></td>
-                <td class="govuk-table__cell result-value"><%= stage.new_cases %></td>
+                <th scope="row" class="govuk-table__header"><%= link_to I18n.t("support.case_statistics.stages.#{stage.stage}"), support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></th>
+                <td class="govuk-table__cell result-value"><%= link_to stage.open_cases, support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "opened")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to stage.on_hold_cases, support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "on_hold")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to stage.new_cases, support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "initial")), class: "govuk-link govuk-link--no-visited-state" %></td>
                 <%
 =begin%>
   # TODO: uncomment when ready to do case value work
@@ -114,10 +116,10 @@
           <tbody class="govuk-table__body">
             <% @tower_statistics.breakdown_of_cases_by_level.each do |level| %>
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><%= I18n.t("support.case_statistics.support_levels.#{level.support_level}") %></th>
-                <td class="govuk-table__cell result-value"><%= level.open_cases %></td>
-                <td class="govuk-table__cell result-value"><%= level.on_hold_cases %></td>
-                <td class="govuk-table__cell result-value"><%= level.new_cases %></td>
+                <th scope="row" class="govuk-table__header"><%= link_to I18n.t("support.case_statistics.support_levels.#{level.support_level}"), support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></th>
+                <td class="govuk-table__cell result-value"><%= link_to level.open_cases, support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "opened")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to level.on_hold_cases, support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "on_hold")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to level.new_cases, support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "initial")), class: "govuk-link govuk-link--no-visited-state" %></td>
                 <%
 =begin%>
 # TODO: uncomment when ready to do case value work
@@ -131,12 +133,13 @@
     </div>
   </div>
 </div>
+
+<h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.missing_data.header") %></h2>
 <%
 =begin%>
 # TODO: uncomment when ready to do case value work
-<h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.missing_data.header") %></h2>
- <p><%= link_to I18n.t("support.case_statistics.missing_data.no_value", count: @tower_statistics.missing_value_cases), "#", class: "govuk-link govuk-link--no-visited-state" %></p>
-<p><%= link_to I18n.t("support.case_statistics.missing_data.no_stage", count: @tower_statistics.missing_stage_cases), "#", class: "govuk-link govuk-link--no-visited-state" %></p>
-<p><%= link_to I18n.t("support.case_statistics.missing_data.no_level", count: @tower_statistics.missing_level_cases), "#", class: "govuk-link govuk-link--no-visited-state" %></p>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_value", count: @tower_statistics.missing_value_cases), "#", class: "govuk-link govuk-link--no-visited-state" %></p>
 <%
 =end%>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_stage", count: @tower_statistics.missing_stage_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(stage: :unspecified, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_level", count: @tower_statistics.missing_level_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(level: :unspecified, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>
