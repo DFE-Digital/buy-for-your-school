@@ -17,22 +17,42 @@ module Support
 
     def call
       Category.destroy_all if reset
+      Tower.destroy_all if reset
 
-      YAML.load_file(data).each do |group|
-        category = Support::Category.top_level.find_or_initialize_by(title: group["title"])
-        category.description = group["description"]
-        category.slug = group["slug"]
-        category.tower = Support::Tower.find_or_initialize_by(title: group["tower"]) if group["tower"].present?
-        category.save!
+      yaml = YAML.load_file(data)
 
-        group["sub_categories"].each do |sub_group|
-          sub_category = category.sub_categories.find_or_initialize_by(title: sub_group["title"])
-          sub_category.description = sub_group["description"]
-          sub_category.slug = sub_group["slug"]
-          tower = sub_group["tower"] || group["tower"]
-          sub_category.tower = Support::Tower.find_or_initialize_by(title: sub_group["tower"] || group["tower"]) if tower.present?
-          sub_category.save!
-        end
+      load_towers!(yaml["towers"])
+      load_categories!(yaml["categories"])
+    end
+
+    def load_towers!(towers)
+      towers.each do |tower|
+        record = Tower.find_or_initialize_by(title: tower["title"])
+        record.save!
+      end
+    end
+
+    def load_categories!(categories)
+      categories.each do |category|
+        record = Category.top_level.find_or_initialize_by(title: category["title"])
+        record.description = category["description"]
+        record.slug = category["slug"]
+        record.tower = Tower.find_by(title: category["tower"]) if category["tower"].present?
+        record.archived = category["is_archived"] == true
+        record.save!
+
+        load_sub_categories!(category["sub_categories"], record)
+      end
+    end
+
+    def load_sub_categories!(sub_categories, category)
+      sub_categories.each do |sub_category|
+        record = category.sub_categories.find_or_initialize_by(title: sub_category["title"])
+        record.description = sub_category["description"]
+        record.slug = sub_category["slug"]
+        record.tower = (Tower.find_by(title: sub_category["tower"]) if sub_category["tower"].present?) || category.tower
+        record.archived = sub_category["is_archived"] == true
+        record.save!
       end
     end
   end

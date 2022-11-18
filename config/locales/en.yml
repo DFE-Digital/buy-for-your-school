@@ -908,6 +908,7 @@ en:
         case_source: Case source
         case_type: Type of case
         category_id: Buying category
+        detected_category_id: Cateogry (system assigned)
         email: Contact email
         email_preview: Preview email
         email_subject: Subject
@@ -938,6 +939,7 @@ en:
         query: Query
         query_details: Query details
         referrer: Referrer
+        referer: Referrer
         request_text: Summary
         school_name: Organisation name
         school_postcode: Organisation postcode
@@ -1161,6 +1163,11 @@ en:
         all_cases_open_survey_sent: The survey for open cases email has been sent
         all_cases_resolved_survey_sent: The survey for resolved cases email has been sent
       type:
+        case_categorisation_changed:
+          category: Category changed
+          query: Query changed
+          category_to_query: Category changed to query
+          query_to_category: Query changed to category
         create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge
@@ -1196,8 +1203,22 @@ en:
           hint: List of case references that will receive the survey
           send: Send
         notice: Jobs queued
+      category_detection:
+        header: Category Detection
+        request_for_help_text: Test algorithm
+        submit: Detect category
+        results:
+          category: Category
+          matching_words: Matching words
+          header: Results
+          tower: Tower
+          similarity: Similarity
+
       base:
+        configuration: Configuration
+        debug: Debug
         header: CMS Management
+        tasks: Tasks
       categories:
         header: Categories
         table:

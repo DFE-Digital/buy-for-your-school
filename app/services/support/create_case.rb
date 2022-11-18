@@ -14,6 +14,7 @@ module Support
       kase = Case.create!(
         agent_id: @agent_id,
         category_id: @attrs[:category_id],
+        detected_category_id: @attrs[:detected_category_id],
         source: @attrs[:source],
         first_name: @attrs[:first_name],
         last_name: @attrs[:last_name],

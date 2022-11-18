@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo -e "\n\n****************************************"
+echo "Entering Preview - QA $1"
+echo -e "****************************************\n\n"
+
+cmd='cd /srv/app && PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails '
+cmd+="${@:2}"
+
+echo -e "Performing: $cmd\n\n"
+
+cf target -s sct-preview
+cf ssh buy-for-your-school-qa-$1 -t -c "$cmd"
+
+echo -e "\n\nReminder: you are still in sct-preview space..."

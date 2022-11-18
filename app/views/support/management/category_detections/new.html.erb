@@ -1,0 +1,77 @@
+<%= content_for :title, "CMS Management | #{I18n.t("support.management.category_detection.header")}" %>
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.category_detection.header"), new_support_management_category_detection_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+  </ol>
+</div>
+
+<h2 class="govuk-heading-l">Case Detection Statistics</h2>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <div class="govuk-panel__body">
+        Categories Detected<br />
+        <strong><%= @stats.categories_detected %></strong>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <div class="govuk-panel__body">
+        Categories Unchanged<br />
+        <strong><%= @stats.categories_unchanged %></strong>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <div class="govuk-panel__body">
+        Overall Accuracy<br />
+        <strong><%= number_to_percentage @stats.overall_accuracy, precision: 0 %></strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="govuk-!-margin-top-5"></div>
+<%= form_with model: @category_detection_form, scope: :category_detection, url: support_management_category_detection_path, method: :post do |form| %>
+  <%= form.govuk_text_area :request_text,
+    class: "govuk-textarea",
+    rows: 5,
+    label: { text: "Example results", size: "l" },
+    hint: { text: "Enter an example request for text to see which category would be detected" }
+  %>
+  <%= form.submit I18n.t("support.management.category_detection.submit"), class: "govuk-button" %>
+<% end %>
+
+<% if @category_results.present? %>
+  <table class="govuk-table" id="category-results">
+    <caption class="govuk-table__caption govuk-table__caption--l"><%= I18n.t("support.management.category_detection.results.header") %></caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.category") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.tower") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.similarity") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.category_detection.results.matching_words") %></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @category_results.each_with_index do |result, i| %>
+        <tr class="govuk-table__row <%= ("top-category-detection-result" if i.zero?) %>">
+          <th scope="row" class="govuk-table__header"><%= result.category %></th>
+          <td class="govuk-table__cell"><%= result.tower %></td>
+          <td class="govuk-table__cell"><%= result.similarity %></td>
+          <td class="govuk-table__cell"><%= result.matching_words %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
