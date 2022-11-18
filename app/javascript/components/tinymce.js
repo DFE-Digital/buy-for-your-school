@@ -58,7 +58,8 @@
       selector,
       menubar: false,
       statusbar: false,
-      contextmenu: false
+      contextmenu: false,
+      browser_spellcheck: true
     });
   }
 

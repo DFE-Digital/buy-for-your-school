@@ -50,6 +50,13 @@ RSpec.describe Support::SeedCategories do
     end
   end
 
+  it "saves archived status of categories" do
+    service.call
+    expect(Support::Category.find_by(title: "Broadband service")).to be_archived
+    expect(Support::Category.find_by(title: "Broadband Infrastructure")).to be_archived
+    expect(Support::Category.find_by(title: "Switches & Routers")).not_to be_archived
+  end
+
   context "when a sub category has the same name as the parent" do
     it "creates them both linking them as parent and sub category" do
       service.call
