@@ -14,6 +14,6 @@ module Support
 
     def build_form = @category_detection_form = CategoryDetectionForm.new(**form_params)
 
-    def set_stats = @stats = CategoryDetectionStats.new
+    def set_stats = @stats = CategoryDetectionStats.stats
   end
 end
