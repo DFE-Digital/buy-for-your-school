@@ -127,7 +127,7 @@ jobs:
             -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \
             -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
             -e CI=1 \
-            -v ${PWD}/coverage/coverage-${{ matrix.ci_node_index }}:/srv/app/coverage \
+            -v ${PWD}/all_coverages/coverage-${{ matrix.ci_node_index }}:/srv/app/coverage \
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "bundle exec rake knapsack:rspec || bundle exec rspec --only-failure"
 
