@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code_coverage
-          path: ${{ github.workspace }}/all_coverages
+          path: ${{ github.workspace }}/all_coverages/*
 
   coverage_report:
     name: Code Coverage Report
