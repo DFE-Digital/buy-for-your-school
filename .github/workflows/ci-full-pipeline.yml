@@ -151,7 +151,7 @@ jobs:
         id: results
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}/all_coverages:/srv/app \
+            -v ${{ github.workspace }}/all_coverages:/srv/app/all_coverages \
             -v ${{ github.workspace }}/coverage:/srv/app/coverage \
             ${{ needs.build_test.outputs.docker_image }} \
             bundle exec ruby lib/code_coverage_collate.rb
