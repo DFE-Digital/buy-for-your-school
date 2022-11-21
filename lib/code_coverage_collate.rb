@@ -1,5 +1,8 @@
-require "simplecov"
+require 'simplecov'
 
-SimpleCov.collate Dir["#{ENV['COVERAGE_DIR']}/**/.resultset.json"], "rails" do
-  formatter SimpleCov::Formatter::HTMLFormatter
+SimpleCov.collate Dir["coverage-*/.resultset.json"], 'rails' do
+  formatter SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::SimpleFormatter,
+    SimpleCov::Formatter::HTMLFormatter
+  ])
 end

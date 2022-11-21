@@ -41,25 +41,25 @@ jobs:
           ghcr_username: ${{ secrets.GHCR_USERNAME }}
           ghcr_password: ${{ secrets.GHCR_PASSWORD }}
 
-  brakeman:
-    name: Checks - Brakeman
-    needs: build_test
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+  # brakeman:
+  #   name: Checks - Brakeman
+  #   needs: build_test
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
 
-      - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec brakeman
+  #     - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec brakeman
 
-  rubocop:
-    name: Checks - Rubocop
-    needs: build_test
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+  # rubocop:
+  #   name: Checks - Rubocop
+  #   needs: build_test
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
 
-      - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
+  #     - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
 
   rspec:
     name: Checks - Rspec
@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code_coverage
-          path: ${{ github.workspace }}/coverage
+          path: ${{ github.workspace }}/all_coverages
 
   coverage_report:
     name: Code Coverage Report
@@ -151,8 +151,8 @@ jobs:
         id: results
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}/code_coverage:/srv/app/coverage \
-            -e COVERAGE_DIR \
+            -v ${{ github.workspace }}/all_coverages:/srv/app \
+            -v ${{ github.workspace }}/coverage:/srv/app/coverage \
             ${{ needs.build_test.outputs.docker_image }} \
             bundle exec ruby lib/code_coverage_collate.rb
 
@@ -161,111 +161,104 @@ jobs:
 
           echo "---------- REPORT --------------"
           echo "Line coverage is $line_coverage%"
-        env:
-          COVERAGE_DIR: /srv/app/coverage
 
       - name: Upload combined code coverage report
         uses: actions/upload-artifact@v3
         with:
-          name: code_coverage
-          path: |
-            ${{ github.workspace }}/code_coverage/.last_run.json
-            ${{ github.workspace }}/code_coverage/.resultset.json
-            ${{ github.workspace }}/code_coverage/.resultset.json.lock
-            ${{ github.workspace }}/code_coverage/assets
-            ${{ github.workspace }}/code_coverage/index.html
+          name: combined_coverage
+          path: ${{ github.workspace }}/coverage
 
-  release_qa:
-    name: Deploy release (QA)
-    runs-on: ubuntu-20.04
-    needs: build_release
-    environment: qa
+  # release_qa:
+  #   name: Deploy release (QA)
+  #   runs-on: ubuntu-20.04
+  #   needs: build_release
+  #   environment: qa
 
-    if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' && !contains(github.event.pull_request.labels.*.name, 'qa-skip') }}
+  #   if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' && !contains(github.event.pull_request.labels.*.name, 'qa-skip') }}
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v2
 
-      - uses: ./.github/workflows/actions/deploy
-        name: Deploy
-        id: deploy
-        with:
-          docker_image: ${{ needs.build_release.outputs.docker_image }}
-          deployment_environment: qa
-          pr_number: ${{ github.event.number }}
-          github_secrets_json: ${{ toJson(secrets) }}
-          cf_username: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          cf_app_name: buy-for-your-school-qa-${{ github.event.number }}
-          rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #     - uses: ./.github/workflows/actions/deploy
+  #       name: Deploy
+  #       id: deploy
+  #       with:
+  #         docker_image: ${{ needs.build_release.outputs.docker_image }}
+  #         deployment_environment: qa
+  #         pr_number: ${{ github.event.number }}
+  #         github_secrets_json: ${{ toJson(secrets) }}
+  #         cf_username: ${{ secrets.CF_USER }}
+  #         cf_password: ${{ secrets.CF_PASSWORD }}
+  #         cf_app_name: buy-for-your-school-qa-${{ github.event.number }}
+  #         rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Comment QA URL to PR
-        uses: mshick/add-pr-comment@v1
-        with:
-          message: |
-            QA application accessible at: ${{ steps.deploy.outputs.application_url }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Comment QA URL to PR
+  #       uses: mshick/add-pr-comment@v1
+  #       with:
+  #         message: |
+  #           QA application accessible at: ${{ steps.deploy.outputs.application_url }}
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: |
-            qa-${{ steps.deploy.outputs.qa_number }}
-            qa-deployed
+  #     - uses: actions-ecosystem/action-add-labels@v1
+  #       with:
+  #         labels: |
+  #           qa-${{ steps.deploy.outputs.qa_number }}
+  #           qa-deployed
 
-  seed_qa:
-    name: Seed environment (QA)
-    runs-on: ubuntu-20.04
-    needs: release_qa
+  # seed_qa:
+  #   name: Seed environment (QA)
+  #   runs-on: ubuntu-20.04
+  #   needs: release_qa
 
-    # Don't run with qa-seeded or dont-seed labels
-    if: ${{ !(contains(github.event.pull_request.labels.*.name, 'qa-seeded') || contains(github.event.pull_request.labels.*.name, 'dont-seed')) }}
+  #   # Don't run with qa-seeded or dont-seed labels
+  #   if: ${{ !(contains(github.event.pull_request.labels.*.name, 'qa-seeded') || contains(github.event.pull_request.labels.*.name, 'dont-seed')) }}
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v2
 
-      - name: Run seeding
-        run: |
-          script/install-cf
-          script/cf-login
-          script/qa/seed
-        env:
-          CF_USER: ${{ secrets.CF_USER }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-          CF_APP_NAME: buy-for-your-school-qa-${{ github.event.number }}
-          TF_VAR_cloudfoundry_space: sct-preview
+  #     - name: Run seeding
+  #       run: |
+  #         script/install-cf
+  #         script/cf-login
+  #         script/qa/seed
+  #       env:
+  #         CF_USER: ${{ secrets.CF_USER }}
+  #         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  #         CF_APP_NAME: buy-for-your-school-qa-${{ github.event.number }}
+  #         TF_VAR_cloudfoundry_space: sct-preview
 
-      - uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: qa-seeded
+  #     - uses: actions-ecosystem/action-add-labels@v1
+  #       with:
+  #         labels: qa-seeded
 
-  release_staging:
-    name: Deploy release (Staging)
-    runs-on: ubuntu-20.04
-    needs: build_release
-    environment: staging
+  # release_staging:
+  #   name: Deploy release (Staging)
+  #   runs-on: ubuntu-20.04
+  #   needs: build_release
+  #   environment: staging
 
-    if: github.ref == 'refs/heads/main'
+  #   if: github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v2
 
-      - uses: ./.github/workflows/actions/deploy
-        name: Deploy
-        id: deploy
-        with:
-          docker_image: ${{ needs.build_release.outputs.docker_image }}
-          deployment_environment: staging
-          pr_number: ${{ github.event.number }}
-          github_secrets_json: ${{ toJson(secrets) }}
-          cf_username: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #     - uses: ./.github/workflows/actions/deploy
+  #       name: Deploy
+  #       id: deploy
+  #       with:
+  #         docker_image: ${{ needs.build_release.outputs.docker_image }}
+  #         deployment_environment: staging
+  #         pr_number: ${{ github.event.number }}
+  #         github_secrets_json: ${{ toJson(secrets) }}
+  #         cf_username: ${{ secrets.CF_USER }}
+  #         cf_password: ${{ secrets.CF_PASSWORD }}
+  #         rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
