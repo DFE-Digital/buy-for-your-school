@@ -34,7 +34,7 @@ en:
                 blank: Select whether you want to tell us about any special requirements
           framework_requests/select_organisation_form:
             attributes:
-              org_id:
+              organisation_id:
                 blank: Select the school or group you want help buying for
           framework_requests/energy_request_form:
             attributes:
@@ -73,7 +73,7 @@ en:
   framework_request:
     errors:
       rules:
-        org_id:
+        organisation_id:
           school: Select the school you want help buying for
           group: Enter your academy trust or federation name, or UKPRN and select it from the list
         org_confirm:

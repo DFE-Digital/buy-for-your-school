@@ -43,19 +43,10 @@ private
     @user ||= FrameworkRequestPresenter.new(request).user
   end
 
-  # @return [Support::Organisation, Support::EstablishmentGroup]
-  def map_organisation
-    if request.group
-      Support::EstablishmentGroup.find_by(uid: request.org_id)
-    else
-      Support::Organisation.find_by(urn: request.org_id)
-    end
-  end
-
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
     kase_attrs = {
-      organisation: map_organisation,
+      organisation: request.organisation,
       source: "faf",
       first_name: user.first_name,
       last_name: user.last_name,

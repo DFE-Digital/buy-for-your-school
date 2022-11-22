@@ -7,6 +7,7 @@ RSpec.describe FrameworkRequest, type: :model do
   let(:energy_alternative) { nil }
 
   it { is_expected.to belong_to(:user).optional }
+  it { is_expected.to belong_to(:organisation).optional }
 
   describe "#allow_bill_upload?" do
     context "when feature :energy_bill_flow is not enabled" do

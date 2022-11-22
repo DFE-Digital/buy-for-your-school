@@ -22,14 +22,14 @@ module FrameworkRequests
     end
 
     def form_params
-      [:org_id]
+      %i[organisation_id organisation_type]
     end
 
     def create_redirect_path
       if @form.org_confirm?
         name_framework_requests_path(framework_support_form: @form.common)
       else
-        search_for_organisation_framework_requests_path(framework_support_form: form.common.except(:org_confirm))
+        search_for_organisation_framework_requests_path(framework_support_form: form.common.except(:org_confirm, :organisation_id, :organisation_type))
       end
     end
 

@@ -5,7 +5,7 @@ RSpec.describe FrameworkRequestPresenter do
 
   describe "#org_name" do
     it "returns the school name" do
-      create(:support_organisation, urn: "000001", name: "School #1")
+      framework_request.organisation = create(:support_organisation, urn: "000001", name: "School #1")
       expect(presenter.org_name).to eq "School #1"
     end
   end

@@ -7,7 +7,7 @@ module FrameworkRequests
     end
 
     def form_params
-      %i[org_id group]
+      %i[organisation_id group]
     end
 
     def create_redirect_path

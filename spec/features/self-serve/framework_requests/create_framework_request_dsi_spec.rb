@@ -61,7 +61,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         expect(page).to have_unchecked_field "New Academy Trust (MAT)"
       end
 
-      context "when the school or group needs to be changed" do
+      context "when the school or group needs to be changed", js: true do
         it "goes back so a different school or group can be selected" do
           # 1. select school
           choose "Greendale Academy for Bright Sparks"

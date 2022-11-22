@@ -19,7 +19,7 @@ module Support
         format.json do
           render json: results.as_json(
             only: %i[id urn name ukprn],
-            methods: %i[postcode formatted_name org_type],
+            methods: %i[postcode formatted_name org_type class],
           )
         end
       end

@@ -1,5 +1,6 @@
 RSpec.describe Support::Organisation, type: :model do
   it { is_expected.to belong_to(:establishment_type) }
+  it { is_expected.to have_many(:framework_requests) }
 
   describe "#postcode" do
     it "returns the value stored in address" do
@@ -14,10 +15,6 @@ RSpec.describe Support::Organisation, type: :model do
       type = create(:support_establishment_type, code: 1, name: "Community school", group_type:)
       create(:support_organisation, urn: "unique", establishment_type: type)
 
-      # persistence level
-      # expect { create(:support_organisation, urn: "unique") }.to raise_error ActiveRecord::RecordNotUnique
-
-      # ActiveRecord validation
       expect { create(:support_organisation, urn: "unique") }.to raise_error ActiveRecord::RecordInvalid
     end
   end
@@ -32,5 +29,23 @@ RSpec.describe Support::Organisation, type: :model do
 
   it "#mixed?" do
     expect(create(:support_organisation, gender: 3)).to be_mixed
+  end
+
+  describe "#self.find_by_gias_id" do
+    it "delegates to find_by" do
+      expected_org = create(:support_organisation, urn: "123")
+
+      result = described_class.find_by_gias_id("123")
+
+      expect(result).to eq(expected_org)
+    end
+  end
+
+  describe "#gias_id" do
+    let(:organisation) { create(:support_organisation, urn: "123") }
+
+    it "returns the uid" do
+      expect(organisation.gias_id).to eq organisation.urn
+    end
   end
 end

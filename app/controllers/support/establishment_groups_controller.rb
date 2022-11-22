@@ -16,7 +16,7 @@ module Support
             .where(query, q: "%#{params.fetch(:q)}%")
             .limit(50)
             .each { |g| g.ukprn = "N/A" if g.ukprn.nil? }
-            .as_json(only: %i[id uid name ukprn], methods: %i[formatted_name])
+            .as_json(only: %i[id uid name ukprn], methods: %i[formatted_name class])
         end
       end
     end

@@ -34,15 +34,15 @@ module FrameworkRequests
     end
 
     def form_params
-      [:org_id]
+      %i[organisation_id organisation_type]
     end
 
     def create_redirect_path
-      confirm_organisation_framework_requests_path(framework_support_form: @form.common.merge(org_id: all_form_params[:org_id]))
+      confirm_organisation_framework_requests_path(framework_support_form: @form.common.merge(organisation_id: all_form_params[:organisation_id], organisation_type: all_form_params[:organisation_type]))
     end
 
     def update_redirect_path
-      edit_framework_request_confirm_organisation_path(framework_support_form: @form.common.merge(org_id: all_form_params[:org_id]))
+      edit_framework_request_confirm_organisation_path(framework_support_form: @form.common.merge(organisation_id: all_form_params[:organisation_id], organisation_type: all_form_params[:organisation_type]))
     end
 
     def back_url

@@ -18,6 +18,7 @@ module Support
                class_name: "Support::EstablishmentType"
 
     has_many :cases, class_name: "Support::Case", as: :organisation
+    has_many :framework_requests, class_name: "FrameworkRequest", as: :organisation
 
     validates :urn, uniqueness: true
     validates :name, presence: true
@@ -47,6 +48,8 @@ module Support
       closing: 3,
       opening: 4,
     }
+
+    alias_attribute :gias_id, :urn
 
     def formatted_name
       "#{urn} - #{name}"

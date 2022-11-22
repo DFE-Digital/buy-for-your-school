@@ -2,7 +2,7 @@
 
 <%= form.hidden_field :group, value: form.object.group %>
 
-<%= form.govuk_radio_buttons_fieldset(:org_id,
+<%= form.govuk_radio_buttons_fieldset(:organisation_id,
   caption: {
     text: I18n.t("faf.which_school.caption"),
     size: "l" },
@@ -11,8 +11,7 @@
     size: "l"
   }) do %>
     <% form.object.user.supported_orgs.each do |org| %>
-      <% id = org.group ? org.uid : org.urn %>
-      <%= form.govuk_radio_button :org_id, id, label: { text: org.name }, group: org.group %>
+      <%= form.govuk_radio_button :organisation_id, org.gias_id, label: { text: org.name }, group: org.group %>
     <% end %>
 <% end %>
 

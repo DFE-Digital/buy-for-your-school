@@ -8,14 +8,18 @@
 </h1>
 
 <%= render "components/autocomplete",
-      default_value: form.object.org_id,
-      container_id: "framework-support-form-org-id-field",
-      element_id: "framework-support-form-org-id-field",
-      element_name: "framework_support_form[org_id]",
+      default_value: form.object.organisation_name,
+      container_id: "framework-support-form-organisation-name-field",
+      element_id: "framework-support-form-organisation-name-field",
+      element_name: "framework_support_form[organisation_name]",
       label_text: I18n.t("faf.search_for_a_school.hint"),
       label_class: "govuk-hint",
       template_suggestion: "{{urn}}, <strong>{{name}}</strong>, {{postcode}}",
       value_field: :formatted_name,
+      hidden_fields: {
+        'framework_support_form[organisation_id]' => [:id, form.object.organisation_id],
+        'framework_support_form[organisation_type]' => [:class, form.object.organisation_type]
+      },
       query_url: support_organisations_path(format: :json, q: "{{QUERY}}") %>
 
 <details class="govuk-details" data-module="govuk-details">

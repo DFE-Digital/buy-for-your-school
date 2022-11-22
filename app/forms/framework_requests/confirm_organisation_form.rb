@@ -2,14 +2,12 @@ module FrameworkRequests
   class ConfirmOrganisationForm < BaseForm
     validate :org_confirm_validation
 
-    attr_accessor :org_id
-
-    attr_reader :org_full_name
+    attr_accessor :organisation_id, :organisation_type
 
     def initialize(attributes = {})
       super
-      @org_full_name = @org_id
-      @org_id = found_uid_or_urn || framework_request.org_id
+      @organisation_id ||= framework_request.organisation_id
+      @organisation_type ||= framework_request.organisation_type
     end
 
     def save!
@@ -17,11 +15,11 @@ module FrameworkRequests
     end
 
     def data
-      super.merge(group: group?).except(:org_full_name)
+      super.merge(organisation:, group: group?).except(:organisation_id, :organisation_type)
     end
 
     def common
-      super.merge(org_id: @org_full_name)
+      super.merge(organisation_id: @organisation_id, organisation_type: @organisation_type)
     end
 
     def org_confirm_validation
@@ -32,13 +30,17 @@ module FrameworkRequests
     end
 
     def school_or_group
-      if group?
-        group = Support::EstablishmentGroup.find_by(uid: @org_id)
-        Support::EstablishmentGroupPresenter.new(group)
-      else
-        school = Support::Organisation.find_by(urn: @org_id)
-        Support::OrganisationPresenter.new(school)
-      end
+      presenter_type.new(organisation)
+    end
+
+  private
+
+    def presenter_type
+      "#{@organisation_type}Presenter".safe_constantize
+    end
+
+    def organisation
+      @organisation_type.safe_constantize.find(@organisation_id)
     end
   end
 end

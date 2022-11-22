@@ -60,11 +60,5 @@ module FrameworkRequests
     def framework_request
       FrameworkRequest.find(@id)
     end
-
-  private
-
-    def found_uid_or_urn
-      @org_id&.split(" - ")&.first
-    end
   end
 end

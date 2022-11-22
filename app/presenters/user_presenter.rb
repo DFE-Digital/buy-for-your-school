@@ -11,12 +11,12 @@ class UserPresenter < BasePresenter
 
   # @return [String, nil] inferred unique school identifier
   def school_urn
-    supported_orgs.first.urn if single_org? && !supported_orgs.first.group
+    supported_orgs.first.gias_id if single_org? && !supported_orgs.first.group
   end
 
   # @return [String, nil] inferred unique group identifier
   def group_uid
-    supported_orgs.first.uid if single_org? && supported_orgs.first.group
+    supported_orgs.first.gias_id if single_org? && supported_orgs.first.group
   end
 
   # @return [String, nil] inferred school name
@@ -32,7 +32,7 @@ class UserPresenter < BasePresenter
     orgs.map { |org|
       next unless org.dig("type", "id").to_i.in?(ORG_TYPE_IDS)
 
-      OpenStruct.new(name: org["name"], urn: org["urn"], group: false)
+      OpenStruct.new(name: org["name"], gias_id: org["urn"], group: false)
     }.compact
   end
 
@@ -43,7 +43,7 @@ class UserPresenter < BasePresenter
     orgs.map { |org|
       next unless org.dig("category", "id").to_i.in?(GROUP_CATEGORY_IDS)
 
-      OpenStruct.new(name: "#{org['name']} (MAT)", uid: org["uid"], group: true)
+      OpenStruct.new(name: "#{org['name']} (MAT)", gias_id: org["uid"], group: true)
     }.compact
   end
 

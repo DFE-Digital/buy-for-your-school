@@ -91,4 +91,16 @@ namespace :case_management do
       end
     end
   end
+
+  desc "Backfill organisation_id field on framework requests"
+  task backfill_framework_requests_organisation_id: :environment do
+    framework_requests = FrameworkRequest.where(organisation_id: nil).where.not(org_id: nil)
+    framework_requests.each do |request|
+      organisation_type = request.group ? Support::EstablishmentGroup : Support::Organisation
+      organisation = request.group ? organisation_type.find_by(uid: request.org_id) : organisation_type.find_by(urn: request.org_id)
+      request.organisation = organisation
+      request.organisation_type = organisation_type
+      request.save!
+    end
+  end
 end

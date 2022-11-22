@@ -1,5 +1,6 @@
 <%= render "framework_requests/common_form_fields", form: form %>
-<%= form.hidden_field :org_id, value: form.object.org_id %>
+<%= form.hidden_field :organisation_id, value: form.object.organisation_id %>
+<%= form.hidden_field :organisation_type, value: form.object.organisation_type %>
 
 <%=
   partial = form.object.school_type == "group" ? "confirm_group" : "confirm_school"

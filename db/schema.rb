@@ -33,10 +33,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
-    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -186,6 +186,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.integer "energy_request_about"
     t.boolean "have_energy_bill"
     t.integer "energy_alternative"
+    t.uuid "organisation_id"
+    t.string "organisation_type"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 

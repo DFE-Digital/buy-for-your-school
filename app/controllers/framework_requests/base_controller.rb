@@ -3,6 +3,7 @@ module FrameworkRequests
     before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
     before_action :framework_request, only: %i[edit]
+    before_action :set_edit_back_url, only: %i[edit update]
 
     def index; end
 
@@ -15,9 +16,7 @@ module FrameworkRequests
       end
     end
 
-    def edit
-      @back_url = edit_back_url
-    end
+    def edit; end
 
     def update
       if @form.valid?
@@ -59,6 +58,10 @@ module FrameworkRequests
 
     def edit_back_url
       framework_request_path(form.framework_request)
+    end
+
+    def set_edit_back_url
+      @back_url = edit_back_url
     end
 
     def back_link_param

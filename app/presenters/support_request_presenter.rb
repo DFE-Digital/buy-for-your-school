@@ -9,7 +9,7 @@ class SupportRequestPresenter < RequestPresenter
   #
   # @return [String] the name of the school
   def school_name
-    user.supported_schools.find { |school| school.urn == school_urn }&.name
+    user.supported_schools.find { |school| school.gias_id == school_urn }&.name
   end
 
   # return [JourneyPresenter, nil]

@@ -1,7 +1,7 @@
 RSpec.feature "Editing a 'Find a Framework' request as a user" do
   subject(:request) do
     # Specialist School for Testing
-    create(:framework_request, user:, org_id: "100253", group: false)
+    create(:framework_request, user:, organisation: foundation_school, group: false)
   end
 
   include_context "with schools and groups"

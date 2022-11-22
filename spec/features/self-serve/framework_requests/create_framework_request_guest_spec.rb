@@ -110,7 +110,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_current_path %r{/procurement-support/search_for_organisation}
 
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
-        expect(find_field("framework-support-form-org-id-field").value).to eql "100254 - Greendale Academy for Bright Sparks"
+        expect(find_field("framework-support-form-organisation-name-field").value).to eql "100254 - Greendale Academy for Bright Sparks"
       end
 
       it "has the correct attributes" do

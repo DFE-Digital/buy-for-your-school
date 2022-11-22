@@ -2,7 +2,7 @@
 
 <%= form.govuk_collection_radio_buttons :school_urn,
   form.object.user.supported_schools,
-  :urn,
+  :gias_id,
   :name,
   caption: { text: I18n.t("support_request.caption.school"), size: "l" },
   legend: { text: I18n.t("support_request.label.school"), size: "l" },

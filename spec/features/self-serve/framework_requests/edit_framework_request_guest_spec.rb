@@ -1,7 +1,7 @@
 RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   subject(:request) do
     # Specialist School for Testing
-    create(:framework_request, org_id: "100253", group: false)
+    create(:framework_request, organisation: foundation_school, group: false)
   end
 
   include_context "with schools and groups"
@@ -110,7 +110,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
       before do
         choose "An academy trust or federation"
         click_continue
-        fill_in "framework_support_form[org_id]", with: "2314"
+        fill_in "framework_support_form[organisation_name]", with: "2314"
         find(".autocomplete__option", text: "2314").click
         click_continue
       end
@@ -141,7 +141,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   describe "change organisation (same type)", js: true do
     before do
       click_link "edit-school"
-      fill_in "framework_support_form[org_id]", with: "100254"
+      fill_in "framework_support_form[organisation_name]", with: "100254"
       find(".autocomplete__option", text: "100254").click
     end
 

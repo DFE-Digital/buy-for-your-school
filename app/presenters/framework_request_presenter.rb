@@ -20,19 +20,14 @@ class FrameworkRequestPresenter < RequestPresenter
 
   # TODO: extract into a look-up service rather than access supported data directly
   def org_name
-    return I18n.t("support.case_categorisations.label.none") if org_id.blank?
+    return I18n.t("support.case_categorisations.label.none") unless organisation
 
-    if group
-      Support::EstablishmentGroup.find_by(uid: org_id)&.name
-    else
-      Support::Organisation.find_by(urn: org_id)&.name
-    end
+    organisation.name
   end
 
   # TODO: extract into a look-up service rather than access supported data directly
   def group_type
-    group_type_id = Support::EstablishmentGroup.find_by(uid: org_id)&.establishment_group_type_id
-    @group_type_name = Support::EstablishmentGroupType.where(id: group_type_id)&.first&.name
+    organisation&.establishment_group_type&.name
   end
 
   def bill_count
