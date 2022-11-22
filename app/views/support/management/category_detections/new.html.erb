@@ -11,7 +11,7 @@
   </ol>
 </div>
 
-<h2 class="govuk-heading-l">Case Detection Statistics</h2>
+<h2 class="govuk-heading-l">Category Detection Statistics</h2>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -29,9 +29,9 @@
       <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.attempted %></td>
       <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.detected_cats %></td>
       <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.unchanged_cats %></td>
-      <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.category_accuracy %></td>
+      <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.category_accuracy %>%</td>
       <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.unchanged_towers %></td>
-      <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.tower_accuracy %></td>
+      <td class="govuk-table__cell govuk-!-text-align-centre"><%= @stats.tower_accuracy %>%</td>
     </tr>
   </tbody>
 </table>
