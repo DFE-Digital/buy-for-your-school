@@ -38,6 +38,22 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         click_on "Yes, continue"
       end
 
+      describe "CYA page" do
+        before do
+          fill_in "framework_support_form[message_body]", with: "I have a problem"
+          click_continue
+          click_continue
+          choose "Confident"
+          click_continue
+          choose "No"
+          click_continue
+        end
+
+        it "shows the inferred organisation" do
+          expect(page).to have_text "Specialist School for Testing"
+        end
+      end
+
       describe "the message page" do
         it "goes back to the start page" do
           click_on "Back"

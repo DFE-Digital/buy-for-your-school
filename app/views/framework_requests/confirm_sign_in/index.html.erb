@@ -31,7 +31,7 @@
       </div>
     </dl>
 
-    <% if @current_user.supported_schools.any? %>
+    <% if @current_user.supported_orgs.any? %>
        <%= button_to "Yes, continue", confirm_sign_in_framework_requests_path, class: "govuk-button" %>
     <% else %>
       <p class="govuk-body">
