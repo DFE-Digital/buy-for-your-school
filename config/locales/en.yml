@@ -274,6 +274,11 @@ en:
       title: Thank you - Get help buying for schools feedback
       header: Thank you
   faf:
+    bill_uploads:
+      header:
+        initial: Upload your energy information
+        uploading: Your files are uploading
+        uploaded: Your files have been uploaded
     check_answers:
       button:
         send: Send request
