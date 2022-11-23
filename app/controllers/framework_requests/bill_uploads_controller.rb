@@ -13,7 +13,7 @@ module FrameworkRequests
     end
 
     def update_data
-      { }
+      {}
     end
 
     def create_redirect_path
