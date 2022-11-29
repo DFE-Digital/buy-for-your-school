@@ -1,0 +1,30 @@
+<%= content_for :title, I18n.t("faf.energy_request.header") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="framework-support-form-is-energy-request-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <span class="govuk-caption-l">
+        <%= I18n.t("faf.energy_request.subtitle") %>
+      </span>
+      <%= I18n.t("faf.energy_request.header") %>
+    </legend>
+
+    <div id="framework-support-form-is-energy-request-hint" class="govuk-hint">
+      <p class="govuk-body">
+        <%= I18n.t("faf.energy_request.body", guidance_link: link_to(I18n.t("faf.energy_request.guidance_link"), "https://www.gov.uk/guidance/buying-for-schools/energy", class: "govuk-link")).html_safe %>
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <% for bullet in I18n.t("faf.energy_request.body_bullets") do %>
+          <li><%= bullet %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="govuk-radios" data-module="govuk-radios">
+      <%= form.govuk_radio_button :is_energy_request, :true, label: { text: I18n.t("generic.yes") } %>
+      <%= form.govuk_radio_button :is_energy_request, :false, label: { text: I18n.t("generic.no") } %>
+    </div>
+  </fieldset>
+</div>

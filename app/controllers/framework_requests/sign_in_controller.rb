@@ -13,7 +13,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = framework_requests_path
+      @back_url = energy_request_framework_requests_path(framework_support_form: @form.common)
     end
   end
 end

@@ -332,6 +332,44 @@ en:
       label: We will only use this to contact you about your request.
       subtitle: About you
       title: What is your email address?
+    energy_alternative:
+      header: Would you like to provide us with your energy information in another way?
+      subtitle: About your request
+      body: "By uploading your energy information, we'll be able to deal with your request quicker. If you don't have them, we'll need to know:"
+      body_bullets:
+        - your current energy provider
+        - when your current contract ends
+        - how much energy you use
+        - what tariff you are on
+        - how many meters you have
+      options:
+        different_format: I can upload my energy information in a different format, such as in a document or a spreadsheet
+        email_later: I want to email my bills at a later date
+        no_bill: I've never had an energy bill before
+        no_thanks: No thank you
+      email_later_hint: We will email you instructions on how to do this
+    energy_bill:
+      header: Do you have a recent energy bill you can upload?
+      subtitle: About your request
+      body:
+        - Your recent energy bills give us the information we need to help you. You'll be able to upload more than one bill if you have them.
+        - We'll review your bills and use the information to suggest a suitable framework for buying energy. We won't share this information without your permission.
+    energy_request:
+      header: Is your request about energy?
+      subtitle: About your request
+      body: 'You can read our guidance about %{guidance_link}. It includes:'
+      guidance_link: buying energy for your school
+      body_bullets:
+        - whether you can get a reduced rate VAT
+        - how to choose between fixed, flexible or variable price contracts
+        - what to think about when choosing contract length
+    energy_request_about:
+      header: What's your energy request about?
+      subtitle: About your request
+      options:
+        energy_contract: An energy contract, for example, renewal
+        general_question: A general question about energy
+        something_else: Something else
     name:
       first_name:
         label: First Name

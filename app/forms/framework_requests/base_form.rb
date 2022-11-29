@@ -4,6 +4,10 @@ module FrameworkRequests
 
     attr_accessor(
       :id,
+      :is_energy_request,
+      :energy_request_about,
+      :have_energy_bill,
+      :energy_alternative,
       :dsi,
       :school_type,
       :user,
@@ -37,13 +41,26 @@ module FrameworkRequests
     end
 
     def data
-      to_h.except(:id, :dsi, :school_type, :org_confirm, :special_requirements_choice, :user, :validation_context, :errors)
+      to_h.except(
+        :id,
+        :is_energy_request,
+        :energy_request_about,
+        :have_energy_bill,
+        :energy_alternative,
+        :dsi,
+        :school_type,
+        :org_confirm,
+        :special_requirements_choice,
+        :user,
+        :validation_context,
+        :errors,
+      )
     end
 
     def common
       return {} unless @user.guest?
 
-      to_h.slice(:dsi, :school_type, :org_confirm, :special_requirements_choice)
+      to_h.slice(:dsi, :is_energy_request, :energy_request_about, :have_energy_bill, :energy_alternative, :school_type, :org_confirm, :special_requirements_choice)
     end
 
     def framework_request

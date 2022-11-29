@@ -55,6 +55,18 @@ Rails.application.routes.draw do
       collection do
         post "/start", to: "start#create"
 
+        get "/energy_request", to: "energy_request#index"
+        post "/energy_request", to: "energy_request#create"
+
+        get "/energy_request_about", to: "energy_request_about#index"
+        post "/energy_request_about", to: "energy_request_about#create"
+
+        get "/energy_bill", to: "energy_bill#index"
+        post "/energy_bill", to: "energy_bill#create"
+
+        get "/energy_alternative", to: "energy_alternative#index"
+        post "/energy_alternative", to: "energy_alternative#create"
+
         get "/sign_in", to: "sign_in#index"
         post "/sign_in", to: "sign_in#create"
 

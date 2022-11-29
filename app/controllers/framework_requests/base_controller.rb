@@ -37,6 +37,10 @@ module FrameworkRequests
     def all_form_params
       params.fetch(:framework_support_form, {}).permit(*%i[
         dsi
+        is_energy_request
+        energy_request_about
+        have_energy_bill
+        energy_alternative
         school_type
         org_confirm
         special_requirements_choice
@@ -59,6 +63,12 @@ module FrameworkRequests
 
     def edit_back_url
       framework_request_path(form.framework_request)
+    end
+
+    def back_link_param
+      return if params[:back_to].blank?
+
+      Base64.decode64(params[:back_to])
     end
 
     def create_redirect_path; end
