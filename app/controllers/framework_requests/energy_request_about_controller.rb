@@ -15,7 +15,7 @@ module FrameworkRequests
     def create_redirect_path
       case @form.energy_request_about
       when :energy_contract then energy_bill_framework_requests_path(framework_support_form: @form.common)
-      else sign_in_framework_requests_path(framework_support_form: @form.common)
+      else sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64)
       end
     end
 

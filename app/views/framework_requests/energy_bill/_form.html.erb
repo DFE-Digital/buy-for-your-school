@@ -2,24 +2,10 @@
 
 <%= render "framework_requests/common_form_fields", form: form %>
 
-<div class="govuk-form-group">
-  <fieldset class="govuk-fieldset" aria-describedby="framework-support-form-have-energy-bill-hint">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <span class="govuk-caption-l">
-        <%= I18n.t("faf.energy_bill.subtitle") %>
-      </span>
-      <%= I18n.t("faf.energy_bill.header") %>
-    </legend>
-
-    <div id="framework-support-form-have-energy-bill-hint" class="govuk-hint">
-      <% for p in I18n.t("faf.energy_bill.body") do %>
-        <p class="govuk-body"><%= p %></p>
-      <% end %>
-    </div>
-
-    <div class="govuk-radios" data-module="govuk-radios">
-      <%= form.govuk_radio_button :have_energy_bill, :true, label: { text: I18n.t("generic.yes") } %>
-      <%= form.govuk_radio_button :have_energy_bill, :false, label: { text: I18n.t("generic.no") } %>
-    </div>
-  </fieldset>
-</div>
+<%= form.govuk_radio_buttons_fieldset :have_energy_bill,
+  legend: { text: I18n.t("faf.energy_bill.header"), size: "l" },
+  caption: { text: I18n.t("faf.energy_bill.subtitle"), size: "l" },
+  hint: -> { render "form_hint" } do %>
+    <%= form.govuk_radio_button :have_energy_bill, :true, label: { text: I18n.t("generic.yes") } %>
+    <%= form.govuk_radio_button :have_energy_bill, :false, label: { text: I18n.t("generic.no") } %>
+<% end %>

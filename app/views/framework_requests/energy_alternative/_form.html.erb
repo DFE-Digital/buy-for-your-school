@@ -2,31 +2,12 @@
 
 <%= render "framework_requests/common_form_fields", form: form %>
 
-<div class="govuk-form-group">
-  <fieldset class="govuk-fieldset" aria-describedby="framework-support-form-energy-alternative-hint">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <span class="govuk-caption-l">
-        <%= I18n.t("faf.energy_alternative.subtitle") %>
-      </span>
-      <%= I18n.t("faf.energy_alternative.header") %>
-    </legend>
-
-    <div id="framework-support-form-energy-alternative-hint" class="govuk-hint">
-      <p class="govuk-body">
-        <%= I18n.t("faf.energy_alternative.body") %>
-      </p>
-      <ul class="govuk-list govuk-list--bullet">
-        <% for bullet in I18n.t("faf.energy_alternative.body_bullets") do %>
-          <li><%= bullet %></li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div class="govuk-radios" data-module="govuk-radios">
-      <% for option in form.object.energy_alternative_options do %>
-        <%= form.govuk_radio_button :energy_alternative, option, label: { text: I18n.t("faf.energy_alternative.options.#{option}") },
-            hint: { text: I18n.t("faf.energy_alternative.#{option}_hint", default: ""), size: "l" } %>
-      <% end %>
-    </div>
-  </fieldset>
-</div>
+<%= form.govuk_radio_buttons_fieldset :energy_alternative,
+  legend: { text: I18n.t("faf.energy_alternative.header"), size: "l" },
+  caption: { text: I18n.t("faf.energy_alternative.subtitle"), size: "l" },
+  hint: -> { render "form_hint" } do %>
+    <% for option in form.object.energy_alternative_options do %>
+      <%= form.govuk_radio_button :energy_alternative, option, label: { text: I18n.t("faf.energy_alternative.options.#{option}") },
+          hint: { text: I18n.t("faf.energy_alternative.#{option}_hint", default: ""), size: "l" } %>
+    <% end %>
+<% end %>

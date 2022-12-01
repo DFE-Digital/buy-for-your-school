@@ -425,7 +425,13 @@ en:
       header: Which school are you buying for?
     user_query:
       caption: About your request
-      hint: Briefly describe what advice or guidance you need in a few sentences.
+      hint: Briefly describe how we can help in a few sentences.
+      hint_list_start: "We'd like to know:"
+      hint_bullets:
+        - what you're buying
+        - the start and end dates of your current contract, if you have one
+        - when you need the new goods or services
+        - anything else about your procurement you think we should know
       label: How can we help?
     which_school:
       caption: About your school
@@ -433,9 +439,10 @@ en:
   faf_submissions:
     body:
       what_happens_next:
-      - The Get help buying for schools team will be in touch within %{days} working days.
-      - Please check to make sure you receive the email confirmation within the next 10 minutes. Check your junk folder if you do not see it.
-      - You will need to submit the request again if you do not receive an email from us because this is how we will be contacting you.
+      - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
+      - If you chose to email your bills, there will be instructions in the confirmation email telling you how to do this.
+      - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it. 
+      - You'll need to submit your request again if you do not receive an email from us because this is how we'll be contacting you.
     header:
       confirmation: Your request for support has been sent
       what_happens_next: What happens next
@@ -443,10 +450,12 @@ en:
     sub_header:
       confirmation: 'We have sent a confirmation email to:'
     what_you_can_do_next:
-      read_buying_procedures: "%{read_buying_procedures_link} to learn more about the buying process"
-      read_buying_procedures_link: read buying procedures and procurement law for schools
-      read_guides: "%{read_guides_link} that you're buying"
-      read_guides_link: read guides about goods and services
+      list_start: 'You can read our guidance about %{guidance_link}. It includes:'
+      guidance_link: buying energy for your school
+      bullets:
+        - whether you can get a reduced rate VAT
+        - how to choose between fixed, flexible or variable price contracts
+        - what to think about when choosing contract length
   feedback:
     confirmation_details:
       message: Thank you for opting in to take part in user research.

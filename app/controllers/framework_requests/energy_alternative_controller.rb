@@ -13,7 +13,7 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      sign_in_framework_requests_path(framework_support_form: @form.common)
+      sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64)
     end
 
     def back_url

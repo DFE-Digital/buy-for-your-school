@@ -262,7 +262,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(find("span.govuk-caption-l")).to have_text "About your request"
         expect(find("label.govuk-label--l")).to have_text "How can we help?"
 
-        expect(find("div.govuk-hint")).to have_text "Briefly describe what advice or guidance you need in a few sentences."
         expect(page).to have_field "framework_support_form[message_body]"
 
         expect(page).to have_button "Continue"

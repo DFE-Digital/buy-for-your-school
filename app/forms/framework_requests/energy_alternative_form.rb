@@ -4,12 +4,17 @@ module FrameworkRequests
 
     attr_writer :energy_alternative
 
+    def initialize(attributes = {})
+      super
+      @energy_alternative ||= framework_request.energy_alternative
+    end
+
     def energy_alternative
       @energy_alternative&.to_sym
     end
 
     def energy_alternative_options
-      %i[different_format email_later no_bill no_thanks]
+      FrameworkRequest.energy_alternatives.keys
     end
   end
 end

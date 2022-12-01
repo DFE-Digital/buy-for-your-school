@@ -16,7 +16,7 @@ module FrameworkRequests
       if @form.is_energy_request?
         energy_request_about_framework_requests_path(framework_support_form: @form.common)
       else
-        sign_in_framework_requests_path(framework_support_form: @form.common)
+        sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64)
       end
     end
 

@@ -1,6 +1,7 @@
 describe FrameworkRequests::EnergyRequestAboutForm, type: :model do
-  subject(:form) { described_class.new(energy_request_about:) }
+  subject(:form) { described_class.new(id: framework_request.id, energy_request_about:) }
 
+  let(:framework_request) { create(:framework_request) }
   let(:energy_request_about) { nil }
 
   describe "validation" do
@@ -16,6 +17,24 @@ describe FrameworkRequests::EnergyRequestAboutForm, type: :model do
     end
   end
 
+  describe "#data" do
+    context "when the request is about a contract" do
+      let(:energy_request_about) { :energy_contract }
+
+      it "returns the energy_request_about value" do
+        expect(form.data).to eq({ energy_request_about: :energy_contract })
+      end
+    end
+
+    context "when the request is not about a contract" do
+      let(:energy_request_about) { :general_question }
+
+      it "returns other energy fields nillified" do
+        expect(form.data).to eq({ energy_request_about: :general_question, have_energy_bill: nil, energy_alternative: nil })
+      end
+    end
+  end
+
   describe "#energy_request_about" do
     let(:energy_request_about) { "energy_contract" }
 
@@ -26,7 +45,7 @@ describe FrameworkRequests::EnergyRequestAboutForm, type: :model do
 
   describe "#energy_request_about_options" do
     it "returns the available options" do
-      expect(form.energy_request_about_options).to eq %i[energy_contract general_question something_else]
+      expect(form.energy_request_about_options).to eq %w[energy_contract general_question something_else]
     end
   end
 end

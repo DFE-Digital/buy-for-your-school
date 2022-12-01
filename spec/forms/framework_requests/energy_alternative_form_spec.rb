@@ -1,6 +1,7 @@
 describe FrameworkRequests::EnergyAlternativeForm, type: :model do
-  subject(:form) { described_class.new(energy_alternative:) }
+  subject(:form) { described_class.new(id: framework_request.id, energy_alternative:) }
 
+  let(:framework_request) { create(:framework_request) }
   let(:energy_alternative) { nil }
 
   describe "validation" do
@@ -26,7 +27,7 @@ describe FrameworkRequests::EnergyAlternativeForm, type: :model do
 
   describe "#energy_alternative_options" do
     it "returns the available options" do
-      expect(form.energy_alternative_options).to eq %i[different_format email_later no_bill no_thanks]
+      expect(form.energy_alternative_options).to eq %w[different_format email_later no_bill no_thanks]
     end
   end
 end

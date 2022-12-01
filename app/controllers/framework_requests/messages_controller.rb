@@ -13,7 +13,9 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      procurement_amount_framework_requests_path(framework_support_form: form.common)
+      return procurement_amount_framework_requests_path(framework_support_form: form.common) unless form.allow_bill_upload?
+
+      procurement_confidence_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url
