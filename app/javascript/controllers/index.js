@@ -9,6 +9,3 @@ application.register("energy-bill-upload", EnergyBillUploadController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
-
-import MultiFileUploadController from "./multi_file_upload_controller"
-application.register("multi-file-upload", MultiFileUploadController)
