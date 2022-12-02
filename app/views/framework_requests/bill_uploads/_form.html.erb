@@ -2,14 +2,13 @@
 
 <div
   data-controller="energy-bill-upload"
+  data-energy-bill-upload-dropzone-outlet=".drop-zone-container"
   data-energy-bill-upload-page-one-title-value="Upload your energy information"
   data-energy-bill-upload-page-one-continue-button-value="Continue to upload"
   data-energy-bill-upload-page-two-title-value="Your files are uploading"
   data-energy-bill-upload-page-two-continue-button-value="Continue to upload"
   data-energy-bill-upload-page-three-title-value="Your files have been uploaded"
-  data-energy-bill-upload-page-three-continue-button-value="Continue"
-  data-energy-bill-upload-add-file-url-value="/procurement-support/upload-your-bill/upload"
-  data-energy-bill-upload-remove-file-url-value="/procurement-support/upload-your-bill/remove">
+  data-energy-bill-upload-page-three-continue-button-value="Continue">
 
   <span class="govuk-caption-l">About your request</span>
   <h1 class="govuk-heading-l" data-energy-bill-upload-target="title" aria-live="polite">
@@ -18,7 +17,10 @@
 
   <p class="govuk-body" data-energy-bill-upload-target="lblHint">Please upload your most recent energy bill. You can upload multiple bills if you have more than one meter. You can also upload your energy information in another format, like a spreadsheet.</p>
 
-  <div class="drop-zone-container govuk-!-margin-bottom-5">
+  <div class="drop-zone-container govuk-!-margin-bottom-5"
+    data-controller="dropzone"
+    data-dropzone-add-file-url-value="/procurement-support/upload-your-bill/upload"
+    data-dropzone-remove-file-url-value="/procurement-support/upload-your-bill/remove">
     <div class="upload-preview-template govuk-!-display-none">
       <div class="upload-item">
         <div class="upload-row file-details">
@@ -39,7 +41,7 @@
       <p class="govuk-body">Drag and drop files here or</p>
 
       <span class="govuk-button govuk-button--secondary"
-        data-energy-bill-upload-target="btnDisplayFileDialog">
+        data-dropzone-target="btnDisplayFileDialog">
         Choose files
       </span>
     </div>
@@ -47,13 +49,13 @@
     <div class="file-previews">
       <div class="files-added-now govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m govuk-!-display-none"
-          data-energy-bill-upload-target="lblFilesAddedNow">
+          data-dropzone-target="lblFilesAddedNow">
           Files added
         </h2>
       </div>
 
       <div class="files-added-before govuk-!-margin-bottom-5 govuk-!-display-none"
-        data-energy-bill-upload-target="filesAddedBefore">
+        data-dropzone-target="filesAddedBefore">
         <h2 class="govuk-heading-m">
           Files already uploaded
         </h2>

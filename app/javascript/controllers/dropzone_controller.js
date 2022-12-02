@@ -1,0 +1,193 @@
+import { Controller } from "@hotwired/stimulus"
+import Dropzone from "dropzone"
+
+export default class extends Controller {
+  static targets = [
+    "btnDisplayFileDialog",
+    "lblFilesAddedNow",
+    "filesAddedBefore"
+  ]
+
+  static values = {
+    addFileUrl: String,
+    removeFileUrl: String
+  }
+
+  initialize() {
+    this.dropzone = undefined
+    this.fileUploadErrors = {}
+    this.filesToUpload = []
+    this.uploadedFiles = []
+    this.onQueueCompleteCallback = () => {}
+  }
+
+  connect() {
+    const previewsContainer = this.element.querySelector('.file-previews .files-added-now')
+    const previewTemplateContainer = this.element.querySelector('.upload-preview-template')
+    const previewTemplate = previewTemplateContainer.innerHTML
+    previewTemplateContainer.remove()
+
+    this.dropzone = new Dropzone(
+      this.element,
+      {
+        url: this.addFileUrlValue,
+        parallelUploads: 3,
+        previewTemplate,
+        previewsContainer,
+        autoProcessQueue: false,
+        clickable: this.btnDisplayFileDialogTarget,
+        maxFilesize: 200
+      }
+    )
+
+    const controller = this
+
+    this.dropzone.on('addedfile', function(file) {
+      controller.onFileAdded(file)
+    })
+
+    this.dropzone.on('error', function(file, error) {
+      controller.onFileError(file, error)
+    })
+
+    this.dropzone.on('removedfile', function(file) {
+      controller.onFileRemoved(file)
+    })
+
+    this.dropzone.on('uploadprogress', function(file, progress) {
+      controller.onUploadProgress(file, progress)
+    })
+
+    this.dropzone.on('complete', function(file) {
+      controller.onFileUploadComplete(file)
+    })
+
+    this.dropzone.on('queuecomplete', function() {
+      controller.onQueueComplete()
+    })
+  }
+
+  // Public methods
+
+  setupOnUploadFilesComplete(callback) {
+    this.onQueueCompleteCallback = callback
+  }
+
+  uploadFiles() {
+    this.dropzone.processQueue()
+  }
+
+  // File events
+
+  onFileError(file, error) {
+    this.display(file.previewElement.querySelector('.progress-status-container'), true)
+    this.fileUploadErrors[file] = error
+  }
+
+  onFileAdded(file) {
+    this.display(this.lblFilesAddedNowTarget, true)
+    this.filesToUpload.push(file)
+  }
+
+  onFileRemoved(file) {
+    if (this.fileHasBeenUploaded(file)) {
+      this.deleteFileFromServer(file)
+    } else {
+      this.deleteFileFromUi(file)
+    }
+  }
+
+  onUploadProgress(file, progress) {
+    const status = progress === 100 ? 'Complete' : 'Uploading'
+
+    const statusContainer = file.previewElement.querySelector('.progress-status')
+    statusContainer.classList.remove("uploading", "complete")
+    statusContainer.classList.add(status.toLowerCase())
+    statusContainer.innerHTML = status
+
+    file.previewElement.querySelector('[data-dz-uploadprogress]').style.width = progress
+
+    for (let hiddenElement of file.previewElement.querySelectorAll(".govuk-\\!-display-none")) {
+      this.display(hiddenElement, true)
+    }
+  }
+
+  onFileUploadComplete(file) {
+    if (file.status === "success") {
+      this.filesToUpload = this.filesToUpload.filter(f => f != file)
+
+      const { energy_bill_id } = JSON.parse(file.xhr.response)
+      file.energy_bill_id = energy_bill_id
+      this.uploadedFiles.push(file)
+    } else {
+      // TODO: handle file error!!
+    }
+  }
+
+  onQueueComplete() {
+    this.onQueueCompleteCallback()
+  }
+
+  // File actions
+
+  deleteFileFromServer(file) {
+    const body = new FormData()
+    body.append('id', file.energy_bill_id)
+
+    fetch(this.removeFileUrlValue, { method: 'DELETE', body })
+      .then(() => this.deleteFileFromUi(file))
+      .catch((error) => alert(error))
+  }
+
+  deleteFileFromUi(file) {
+    this.filesToUpload = this.filesToUpload.filter(pendingFile => pendingFile != file)
+    delete this.fileUploadErrors[file]
+
+    this.display(this.lblFilesAddedNowTarget, this.anyFilesQueuedForUpload())
+  }
+
+  // Presentation
+
+  display(element, isVisible) {
+    element.classList.remove('govuk-!-display-none')
+
+    if (!isVisible)
+      element.classList.add('govuk-!-display-none')
+  }
+
+  moveFilesFromAlreadyUploadedToAdded() {
+    const alreadyUploaded = this.element.querySelector('.files-added-before')
+    const filesAdded = this.element.querySelector('.files-added-now')
+
+    for (let uploadedFile of alreadyUploaded.querySelectorAll('.upload-item')) {
+      filesAdded.appendChild(uploadedFile)
+    }
+  }
+
+  moveFilesFromAddedToAlreadyUploaded() {
+    const alreadyUploaded = this.element.querySelector('.files-added-before')
+    const filesAdded = this.element.querySelector('.files-added-now')
+
+    for (let uploadedFile of filesAdded.querySelectorAll('.upload-item')) {
+      alreadyUploaded.appendChild(uploadedFile)
+    }
+  }
+
+  // Query methods
+
+  anyFilesQueuedForUpload() {
+    return this.filesToUpload.length > 0
+  }
+
+  anyFilesUploadedSuccessfully() {
+    return this.uploadedFiles.length > 0
+  }
+
+  anyFileUploadErrorsOccured() {
+    return Object.keys(this.fileUploadErrors).length > 0
+  }
+
+  fileHasBeenUploaded(file) {
+    return file.energy_bill_id !== undefined
+  }
+}

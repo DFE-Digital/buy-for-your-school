@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import DropzoneController from "./dropzone_controller"
+application.register("dropzone", DropzoneController)
+
 import EnergyBillUploadController from "./energy_bill_upload_controller"
 application.register("energy-bill-upload", EnergyBillUploadController)
 
