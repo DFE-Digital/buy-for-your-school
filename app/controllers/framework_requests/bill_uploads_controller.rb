@@ -5,7 +5,7 @@ module FrameworkRequests
     def upload
       EnergyBill.pending.create!(
         file: params[:file],
-        request_for_help_form: framework_request.__getobj__,
+        framework_request_id: framework_request.id,
         filename: params[:file].original_filename,
       )
       head :ok

@@ -43,8 +43,8 @@ describe SubmitFrameworkRequest do
     end
 
     context "when energy bills have been uploaded" do
-      let!(:bill_1) { create(:energy_bill, :pending, request_for_help_form: request) }
-      let!(:bill_2) { create(:energy_bill, :pending, request_for_help_form: request) }
+      let!(:bill_1) { create(:energy_bill, :pending, framework_request: request) }
+      let!(:bill_2) { create(:energy_bill, :pending, framework_request: request) }
 
       it "sets their status to submitted" do
         described_class.new(request:, referrer:).call
