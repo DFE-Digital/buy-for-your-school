@@ -34,4 +34,12 @@ class FrameworkRequestPresenter < RequestPresenter
     group_type_id = Support::EstablishmentGroup.find_by(uid: org_id)&.establishment_group_type_id
     @group_type_name = Support::EstablishmentGroupType.where(id: group_type_id)&.first&.name
   end
+
+  def bill_count
+    energy_bills.count
+  end
+
+  def bill_filenames
+    energy_bills.map(&:filename).join(", ")
+  end
 end
