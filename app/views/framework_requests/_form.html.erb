@@ -1,3 +1,5 @@
+<% hide_submit_button = defined?(hide_submit_button) ? hide_submit_button : false %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @form, scope: :framework_support_form, url: path, method: verb, id: "framework-support-form"  do |form| %>
@@ -5,7 +7,9 @@
 
       <%= render "framework_requests/#{route}/form", form: form %>
 
-      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+      <% unless hide_submit_button %>
+        <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+      <% end %>
     <% end %>
   </div>
 </div>
