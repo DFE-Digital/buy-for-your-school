@@ -8,7 +8,7 @@ module FrameworkRequests
         framework_request_id: framework_request.id,
         filename: params[:file].original_filename,
       )
-      render status: 201, json: { energy_bill_id: energy_bill.id }
+      render status: :created, json: { energy_bill_id: energy_bill.id }
     end
 
     def remove
