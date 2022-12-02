@@ -8,7 +8,7 @@ module FrameworkRequests
 
       request.current_user_journey.try(:update!, framework_request:)
 
-      redirect_to current_user.guest? ? sign_in_framework_requests_path : confirm_sign_in_framework_requests_path
+      redirect_to current_user.guest? ? energy_request_framework_requests_path : confirm_sign_in_framework_requests_path
     end
   end
 end

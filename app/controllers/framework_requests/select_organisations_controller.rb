@@ -11,6 +11,8 @@ module FrameworkRequests
     end
 
     def create_redirect_path
+      return upload_your_bill_framework_requests_path(framework_support_form: form.common) if form.allow_bill_upload?
+
       message_framework_requests_path(framework_support_form: form.common)
     end
 

@@ -1,0 +1,9 @@
+<p class="govuk-body">
+  <%= I18n.t("faf.energy_request.body", guidance_link: link_to(I18n.t("faf.energy_request.guidance_link"), "https://www.gov.uk/guidance/buying-for-schools/energy", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% for bullet in I18n.t("faf.energy_request.body_bullets") do %>
+    <li><%= bullet %></li>
+  <% end %>
+</ul>

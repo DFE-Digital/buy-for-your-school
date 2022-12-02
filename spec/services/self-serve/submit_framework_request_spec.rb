@@ -2,8 +2,10 @@ require "rails_helper"
 
 describe SubmitFrameworkRequest do
   let(:email_confirmation) { double(call: true) }
-  let(:request) { create(:framework_request, message_body: "An energy case") }
+  let(:request) { create(:framework_request, message_body: "An energy case", energy_alternative:) }
   let(:referrer) { nil }
+  let(:energy_alternative) { nil }
+  let(:category_detection_results) { [] }
   let(:email_confirmation_parameters) { anything }
 
   before do
@@ -28,6 +30,15 @@ describe SubmitFrameworkRequest do
       it "the case category remains nil" do
         described_class.new(request:, referrer:).call
         expect(Support::Case.last.category).to be_nil
+      end
+    end
+
+    context "when it's an energy request" do
+      let(:energy_alternative) { :email_later }
+
+      it "sends out the confirmation email for energy requests" do
+        allow(Emails::ConfirmationEnergy).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation)
+        described_class.new(request:, referrer:).call
       end
     end
   end

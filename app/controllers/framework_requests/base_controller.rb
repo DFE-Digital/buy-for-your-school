@@ -61,6 +61,12 @@ module FrameworkRequests
       framework_request_path(form.framework_request)
     end
 
+    def back_link_param
+      return if params[:back_to].blank?
+
+      "#{Base64.decode64(params[:back_to])}?#{{ framework_support_form: form.common }.to_query}"
+    end
+
     def create_redirect_path; end
 
     def update_redirect_path; end

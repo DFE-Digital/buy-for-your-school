@@ -17,7 +17,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = procurement_amount_framework_requests_path(framework_support_form: form.common)
+      @back_url = form.allow_bill_upload? ? message_framework_requests_path(framework_support_form: form.common) : procurement_amount_framework_requests_path(framework_support_form: form.common)
     end
   end
 end

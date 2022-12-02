@@ -26,6 +26,8 @@ RSpec.feature "Starting a 'Find a Framework' request" do
 
       visit "/procurement-support"
       click_on "Start now"
+      choose "No"
+      click_continue
       choose "Yes, use my DfE Sign-in"
       click_continue
     end

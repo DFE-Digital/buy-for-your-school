@@ -9,9 +9,9 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         expect(page).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
       end
 
-      it "has a back link to the start page" do
+      it "has a back link to the energy question" do
         click_on "Back"
-        expect(page).to have_current_path "/procurement-support"
+        expect(page).to have_current_path "/procurement-support/energy_request"
       end
 
       it "validates a choice is made" do

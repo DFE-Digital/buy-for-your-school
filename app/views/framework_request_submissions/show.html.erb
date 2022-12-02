@@ -24,26 +24,22 @@
       <p class="govuk-body">
         <%= I18n.t("faf_submissions.body.what_happens_next")[2] %>
       </p>  
+      <p class="govuk-body">
+        <%= I18n.t("faf_submissions.body.what_happens_next")[3] %>
+      </p>  
 
       <h1 class="govuk-heading-m">
         <%= I18n.t("faf_submissions.header.what_you_can_do_next") %>
       </h1>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>
-          <%=
-            I18n.t("faf_submissions.what_you_can_do_next.read_buying_procedures",
-              read_buying_procedures_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.read_buying_procedures_link"), "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link")
-            ).html_safe
-          %>
-        </li>
-        <li>
-          <%=
-            I18n.t("faf_submissions.what_you_can_do_next.read_guides",
-              read_guides_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.read_guides_link"), "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link")
-            ).html_safe
-          %>
-        </li>
-      </ul>
+      
+      <p class="govuk-body">
+        <%= I18n.t("faf_submissions.what_you_can_do_next.list_start", guidance_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.guidance_link"), "https://www.gov.uk/guidance/buying-for-schools/energy", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
+        <ul class="govuk-list govuk-list--bullet">
+          <% for bullet in I18n.t("faf_submissions.what_you_can_do_next.bullets") %>
+            <li><%= bullet %></li>
+          <% end %>
+        </ul>
+      </p>
     </div>
   </div>
 </div>

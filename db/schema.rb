@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_29_145525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -169,6 +169,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.integer "confidence_level"
     t.string "special_requirements"
+    t.boolean "is_energy_request"
+    t.integer "energy_request_about"
+    t.boolean "have_energy_bill"
+    t.integer "energy_alternative"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 

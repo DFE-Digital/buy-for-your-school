@@ -1,0 +1,11 @@
+<%= content_for :title, I18n.t("faf.energy_bill.header") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_radio_buttons_fieldset :have_energy_bill,
+  legend: { text: I18n.t("faf.energy_bill.header"), size: "l" },
+  caption: { text: I18n.t("faf.energy_bill.subtitle"), size: "l" },
+  hint: -> { render "form_hint" } do %>
+    <%= form.govuk_radio_button :have_energy_bill, :true, label: { text: I18n.t("generic.yes") } %>
+    <%= form.govuk_radio_button :have_energy_bill, :false, label: { text: I18n.t("generic.no") } %>
+<% end %>
