@@ -3,11 +3,17 @@ module FrameworkRequests
     skip_before_action :authenticate_user!
 
     def upload
-      EnergyBill.pending.create!(
+      energy_bill = EnergyBill.pending.create!(
         file: params[:file],
         framework_request_id: framework_request.id,
         filename: params[:file].original_filename,
       )
+      render status: 201, json: { energy_bill_id: energy_bill.id }
+    end
+
+    def remove
+      energy_bill = EnergyBill.find(params[:id])
+      energy_bill.destroy!
       head :ok
     end
 

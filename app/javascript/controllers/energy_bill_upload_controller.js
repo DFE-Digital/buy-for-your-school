@@ -21,7 +21,8 @@ export default class extends Controller {
     pageTwoContinueButton: String,
     pageThreeTitle: String,
     pageThreeContinueButton: String,
-    addFileUrl: String
+    addFileUrl: String,
+    removeFileUrl: String
   }
 
   connect() {
@@ -30,8 +31,9 @@ export default class extends Controller {
 
   initialize() {
     this.dropzone = undefined
-    this.fileUploadErrors = []
+    this.fileUploadErrors = {}
     this.filesToUpload = []
+    this.uploadedFiles = []
   }
 
   // Actions
@@ -40,10 +42,10 @@ export default class extends Controller {
     event.preventDefault()
     this.btnContinueTarget.blur()
 
-    if (this.filesToUpload.length === 0) {
-      alert('Please select a file to upload')
-    } else if (this.fileUploadErrors.length > 0) {
+    if (this.anyFileUploadErrorsOccured()) {
       alert('Please remove any invalid files marked in red')
+    } else if (!this.anyFilesQueuedForUpload() && !this.anyFilesUploadedSuccessfully()) {
+      alert('Please select a file to upload')
     } else {
       this.pageTwo()
       this.uploadFilesOrContinueToPageThree()
@@ -51,13 +53,16 @@ export default class extends Controller {
   }
 
   uploadFilesOrContinueToPageThree() {
-    if (this.dropzone.getQueuedFiles().length > 0)
+    if (this.anyFilesQueuedForUpload())
       this.dropzone.processQueue() // moves the page 3 when done
-    else if (this.fileUploadErrors.length === 0)
+    else
       this.continueToPageThree()
   }
 
   continueToPageThree() {
+    if (this.anyFileUploadErrorsOccured())
+      return
+
     this.moveFilesFromAlreadyUploadedToAdded()
     this.pageThree()
   }
@@ -155,6 +160,10 @@ export default class extends Controller {
       controller.onFileError(file, error)
     })
 
+    this.dropzone.on('removedfile', function(file) {
+      controller.onFileRemoved(file)
+    })
+
     this.dropzone.on('uploadprogress', function(file, progress) {
       controller.onUploadProgress(file, progress)
     })
@@ -171,13 +180,24 @@ export default class extends Controller {
   // Dropzone events
 
   onFileError(file, error) {
+    console.log("onFileError", file, error)
     this.display(file.previewElement.querySelector('.progress-status-container'), true)
-    this.fileUploadErrors.push(error)
+    this.fileUploadErrors[file] = error
   }
 
   onFileAdded(file) {
     this.display(this.lblFilesAddedNowTarget, true)
     this.filesToUpload.push(file)
+
+    console.log("onFileAdded", this.filesToUpload, file)
+  }
+
+  onFileRemoved(file) {
+    if (this.fileHasBeenUploaded(file)) {
+      this.deleteFileFromServer(file)
+    } else {
+      this.deleteFileFromUi(file)
+    }
   }
 
   onUploadProgress(file, progress) {
@@ -196,11 +216,39 @@ export default class extends Controller {
   }
 
   onFileUploadComplete(file) {
-    console.log(file)
+    console.log("onFileUploadComplete", file)
+
+    if (file.status === "success") {
+      this.filesToUpload = this.filesToUpload.filter(f => f != file)
+
+      const { energy_bill_id } = JSON.parse(file.xhr.response)
+      file.energy_bill_id = energy_bill_id
+      this.uploadedFiles.push(file)
+    } else {
+      // TODO: handle file error!!
+    }
   }
 
   onQueueComplete() {
     this.continueToPageThree()
+  }
+
+  // Event action helpers
+
+  deleteFileFromServer(file) {
+    const body = new FormData()
+    body.append('id', file.energy_bill_id)
+
+    fetch(this.removeFileUrlValue, { method: 'DELETE', body })
+      .then(() => this.deleteFileFromUi(file))
+      .catch((error) => alert(error))
+  }
+
+  deleteFileFromUi(file) {
+    this.filesToUpload = this.filesToUpload.filter(pendingFile => pendingFile != file)
+    delete this.fileUploadErrors[file]
+
+    this.display(this.lblFilesAddedNowTarget, this.anyFilesQueuedForUpload())
   }
 
   // Dropzone presentational
@@ -223,5 +271,23 @@ export default class extends Controller {
     for (let uploadedFile of filesAdded.querySelectorAll('.upload-item')) {
       alreadyUploaded.appendChild(uploadedFile)
     }
+  }
+
+  // Query methods
+
+  anyFilesQueuedForUpload() {
+    return this.filesToUpload.length > 0
+  }
+
+  anyFilesUploadedSuccessfully() {
+    return this.uploadedFiles.length > 0
+  }
+
+  anyFileUploadErrorsOccured() {
+    return Object.keys(this.fileUploadErrors).length > 0
+  }
+
+  fileHasBeenUploaded(file) {
+    return file.energy_bill_id !== undefined
   }
 }
