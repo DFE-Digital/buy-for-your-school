@@ -5,6 +5,7 @@ const mode = process.env.NODE_ENV === 'development' ? 'development' : 'productio
 
 module.exports = {
   mode,
+  devtool: mode == "development" ? 'source-map' : undefined,
   entry: {
     application: "./app/javascript/application.js",
   },
