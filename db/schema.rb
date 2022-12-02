@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_02_094419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -117,6 +117,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
+  end
+
+  create_table "energy_bills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "submission_status", default: 0
+    t.string "filename"
+    t.integer "filesize"
+    t.uuid "support_cases_id"
+    t.uuid "framework_requests_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["framework_requests_id"], name: "index_energy_bills_on_framework_requests_id"
+    t.index ["support_cases_id"], name: "index_energy_bills_on_support_cases_id"
   end
 
   create_table "exit_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
