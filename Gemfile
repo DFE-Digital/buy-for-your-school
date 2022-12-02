@@ -45,6 +45,7 @@ gem "scenic"
 gem "sidekiq", "~> 6.4"
 gem "sidekiq-cron", "~> 1.2"
 gem "sprockets-rails"
+gem "stimulus-rails"
 gem "thor"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
