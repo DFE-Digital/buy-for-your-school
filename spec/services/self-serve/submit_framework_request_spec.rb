@@ -41,5 +41,24 @@ describe SubmitFrameworkRequest do
         described_class.new(request:, referrer:).call
       end
     end
+
+    context "when energy bills have been uploaded" do
+      let!(:bill_1) { create(:energy_bill, :pending, request_for_help_form: request) }
+      let!(:bill_2) { create(:energy_bill, :pending, request_for_help_form: request) }
+
+      it "sets their status to submitted" do
+        described_class.new(request:, referrer:).call
+
+        expect(bill_1.reload).to be_submitted
+        expect(bill_2.reload).to be_submitted
+      end
+
+      it "connects them with the newly created case" do
+        described_class.new(request:, referrer:).call
+
+        expect(bill_1.reload.support_case).to eq(Support::Case.last)
+        expect(bill_2.reload.support_case).to eq(Support::Case.last)
+      end
+    end
   end
 end
