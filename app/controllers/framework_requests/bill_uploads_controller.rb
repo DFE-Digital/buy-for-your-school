@@ -3,12 +3,11 @@ module FrameworkRequests
     skip_before_action :authenticate_user!
 
     def upload
-      uploaded_io = params[:file]
-
-      File.open(Rails.root.join('tmp', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-        file.write(uploaded_io.read)
-      end
-
+      EnergyBill.pending.create!(
+        file: params[:file],
+        request_for_help_form: framework_request.__getobj__,
+        filename: params[:file].original_filename,
+      )
       head :ok
     end
 
