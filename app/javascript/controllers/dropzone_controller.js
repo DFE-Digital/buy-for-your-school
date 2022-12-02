@@ -116,8 +116,8 @@ export default class extends Controller {
     if (file.status === "success") {
       this.filesToUpload = this.filesToUpload.filter(f => f != file)
 
-      const { energy_bill_id } = JSON.parse(file.xhr.response)
-      file.energy_bill_id = energy_bill_id
+      const { file_id } = JSON.parse(file.xhr.response)
+      file.file_id = file_id
       this.uploadedFiles.push(file)
     } else {
       // TODO: handle file error!!
@@ -132,7 +132,7 @@ export default class extends Controller {
 
   deleteFileFromServer(file) {
     const body = new FormData()
-    body.append('id', file.energy_bill_id)
+    body.append('file_id', file.file_id)
 
     fetch(this.removeFileUrlValue, { method: 'DELETE', body })
       .then(() => this.deleteFileFromUi(file))
@@ -188,6 +188,6 @@ export default class extends Controller {
   }
 
   fileHasBeenUploaded(file) {
-    return file.energy_bill_id !== undefined
+    return file.file_id !== undefined
   }
 }

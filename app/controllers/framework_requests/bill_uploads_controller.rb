@@ -8,11 +8,11 @@ module FrameworkRequests
         framework_request_id: framework_request.id,
         filename: params[:file].original_filename,
       )
-      render status: :created, json: { energy_bill_id: energy_bill.id }
+      render status: :created, json: { file_id: energy_bill.id }
     end
 
     def remove
-      energy_bill = EnergyBill.find(params[:id])
+      energy_bill = EnergyBill.find(params[:file_id])
       energy_bill.destroy!
       head :ok
     end
