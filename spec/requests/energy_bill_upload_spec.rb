@@ -21,4 +21,19 @@ describe "Uploading energy bills" do
     delete upload_your_bill_remove_framework_requests_path, params: { file_id: energy_bill.id }
     expect(EnergyBill.find_by(id: energy_bill.id)).to be_nil
   end
+
+  context "when the uploaded file is infected" do
+    before { Rails.configuration.clamav_scanner = ClamavRest::MockScanner.new(is_safe: false) }
+
+    it "returns an error message" do
+      post upload_your_bill_upload_framework_requests_path, params: { file: fixture_file_upload("text-file.txt") }
+      expect(JSON.parse(response.body)["error"]).to eq("virus detected")
+      expect(response.status).to eq(422)
+    end
+
+    it "does not save the file" do
+      post upload_your_bill_upload_framework_requests_path, params: { file: fixture_file_upload("text-file.txt") }
+      expect(EnergyBill.count).to be_zero
+    end
+  end
 end
