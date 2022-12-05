@@ -963,7 +963,7 @@ en:
         case_source: Case source
         case_type: Type of case
         category_id: Buying category
-        detected_category_id: Cateogry (system assigned)
+        detected_category_id: Category (system assigned)
         email: Contact email
         email_preview: Preview email
         email_subject: Subject
