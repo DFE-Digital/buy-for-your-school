@@ -69,7 +69,7 @@ export default class extends Controller {
 
   // Public methods
 
-  setupOnUploadFilesComplete(callback) {
+  setupOnQueueComplete(callback) {
     this.onQueueCompleteCallback = callback
   }
 
@@ -90,11 +90,10 @@ export default class extends Controller {
   }
 
   onFileRemoved(file) {
-    if (this.fileHasBeenUploaded(file)) {
+    if (this.fileHasBeenUploaded(file))
       this.deleteFileFromServer(file)
-    } else {
+    else
       this.deleteFileFromUi(file)
-    }
   }
 
   onUploadProgress(file, progress) {
@@ -120,12 +119,15 @@ export default class extends Controller {
       file.file_id = file_id
       this.uploadedFiles.push(file)
     } else {
-      // TODO: handle file error!!
+      // NOTE: Errors appear automatically on the upload row if the response json has a "error" key
     }
   }
 
   onQueueComplete() {
-    this.onQueueCompleteCallback()
+    this.onQueueCompleteCallback({
+      totalEnqueuedFiles: this.totalEnqueuedFiles(),
+      totalUploadedFiles: this.totalUploadedFiles()
+    })
   }
 
   // File actions
@@ -175,12 +177,20 @@ export default class extends Controller {
 
   // Query methods
 
+  totalEnqueuedFiles() {
+    return this.filesToUpload.length
+  }
+
+  totalUploadedFiles() {
+    return this.uploadedFiles.length
+  }
+
   anyFilesQueuedForUpload() {
-    return this.filesToUpload.length > 0
+    return this.totalEnqueuedFiles() > 0
   }
 
   anyFilesUploadedSuccessfully() {
-    return this.uploadedFiles.length > 0
+    return this.totalUploadedFiles() > 0
   }
 
   anyFileUploadErrorsOccured() {

@@ -22,69 +22,88 @@ export default class extends Controller {
   static outlets = ["dropzone"]
 
   dropzoneOutletConnected(outlet) {
-    outlet.setupOnUploadFilesComplete(this.continueToPageThree.bind(this))
+    outlet.setupOnQueueComplete(this.onDropzoneQueueComplete.bind(this))
   }
 
-  // Actions
+  initialize() {
+    this.currentPage = 1
+  }
 
-  continueToUpload(event) {
+  // Button handlers
+
+  onContinueToUploadClicked(event) {
     event.preventDefault()
     this.btnContinueTarget.blur()
+    this.continueToPageTwo()
+  }
 
+  onAddMoreFilesClicked(event) {
+    event.preventDefault()
+    this.btnAddMoreFilesTarget.blur()
+    this.continueToPageOne()
+  }
+
+  onSubmitClicked() {
+    // noop, allow the form submit event to propogate
+  }
+
+  // Routing
+
+  continueToPageOne() {
+    if (this.currentPage !== 1)
+      this.moveFilesFromAddedToAlreadyUploaded()
+
+    this.pageOne()
+  }
+
+  continueToPageTwo() {
     if (this.anyFileUploadErrorsOccured()) {
       alert('Please remove any invalid files marked in red')
-    } else if (!this.anyFilesQueuedForUpload() && !this.anyFilesUploadedSuccessfully()) {
+    } else if (!(this.anyFilesQueuedForUpload() || this.anyFilesUploadedSuccessfully())) {
       alert('Please select a file to upload')
+    } else if (!this.anyFilesQueuedForUpload() && this.anyFilesUploadedSuccessfully()) {
+      this.continueToPageThree()
     } else {
+      this.uploadFiles()
       this.pageTwo()
-      this.uploadFilesOrContinueToPageThree()
     }
   }
 
-  uploadFilesOrContinueToPageThree() {
-    if (this.anyFilesQueuedForUpload())
-      this.uploadFiles() // move to page 3 when done
-    else
-      this.continueToPageThree()
-  }
-
   continueToPageThree() {
-    if (this.anyFileUploadErrorsOccured())
-      return
-
     this.moveFilesFromAlreadyUploadedToAdded()
     this.pageThree()
   }
 
-  addMoreFiles(event) {
-    event.preventDefault()
-    this.btnAddMoreFilesTarget.blur()
+  // Dropzone event handling
 
-    this.pageOne()
-    this.display(this.dropzoneOutlet.filesAddedBeforeTarget, true)
-    this.moveFilesFromAddedToAlreadyUploaded()
-  }
+  onDropzoneQueueComplete({ totalEnqueuedFiles, totalUploadedFiles }) {
+    // NOTE: the queue can only complete if an upload has been attempted first
+    // NOTE: if the queue has completed but there are still enqueued files then an error has occurred with one of the files
 
-  submit() {
-    // noop, allow the form submit event to propogate
+    if (totalUploadedFiles === 0 || totalEnqueuedFiles > 0)
+      this.continueToPageOne()
+    else
+      this.continueToPageThree()
   }
 
   // Presentation
 
   pageOne() {
+    this.currentPage = 1
     this.titleTarget.innerHTML = this.pageOneTitleValue
     this.btnContinueTarget.innerHTML = this.pageOneContinueButtonValue
 
     this.display(this.lblHintTarget, true)
     this.display(this.dropZoneTarget, true)
     this.display(this.dropzoneOutlet.lblFilesAddedNowTarget, false)
-    this.display(this.dropzoneOutlet.filesAddedBeforeTarget, false)
+    this.display(this.dropzoneOutlet.filesAddedBeforeTarget, this.anyFilesUploadedSuccessfully())
     this.display(this.btnContinueTarget, true)
     this.display(this.btnSubmitTarget, false)
     this.display(this.btnAddMoreFilesTarget, false)
   }
 
   pageTwo() {
+    this.currentPage = 2
     this.titleTarget.innerHTML = this.pageTwoTitleValue
 
     this.display(this.lblHintTarget, false)
@@ -97,6 +116,7 @@ export default class extends Controller {
   }
 
   pageThree() {
+    this.currentPage = 3
     this.titleTarget.innerHTML = this.pageThreeTitleValue
     this.btnContinueTarget.innerHTML = this.pageThreeContinueButtonValue
 
