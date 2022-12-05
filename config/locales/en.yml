@@ -289,6 +289,7 @@ en:
         school: Your school
         school_type: School type
         single: Single
+        bills_attached: Bills attached
       header: Send your request
       response_time: Once you send this request, we will review it and get in touch within 2 working days.
     confirm_group_or_trust:
@@ -958,10 +959,11 @@ en:
           source: Case source
         submit: Create case
       label:
+        bills: Uploaded bills
         case_source: Case source
         case_type: Type of case
         category_id: Buying category
-        detected_category_id: Cateogry (system assigned)
+        detected_category_id: Category (system assigned)
         email: Contact email
         email_preview: Preview email
         email_subject: Subject

@@ -46,6 +46,8 @@ describe SubmitFrameworkRequest do
       let!(:bill_1) { create(:energy_bill, :pending, framework_request: request) }
       let!(:bill_2) { create(:energy_bill, :pending, framework_request: request) }
 
+      before { allow(Emails::ConfirmationEnergy).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation) }
+
       it "sets their status to submitted" do
         described_class.new(request:, referrer:).call
 
