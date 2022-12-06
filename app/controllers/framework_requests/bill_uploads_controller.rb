@@ -9,9 +9,12 @@ module FrameworkRequests
           framework_request_id: framework_request.id,
           filename: params[:file].original_filename,
         )
+
         render status: :created, json: { file_id: energy_bill.id }
       else
         Rollbar.error("Infected file uploaded", framework_request_id: framework_request.id)
+
+        params[:file].tempfile.delete
 
         render status: 422, json: { error: 'virus detected' }
       end
