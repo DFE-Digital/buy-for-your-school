@@ -16,7 +16,7 @@ module FrameworkRequests
 
         params[:file].tempfile.delete
 
-        render status: 422, json: { error: 'virus detected' }
+        render status: :unprocessable_entity, json: { error: "virus detected" }
       end
     end
 
