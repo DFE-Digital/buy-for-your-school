@@ -117,7 +117,6 @@ RUN apt-get install -qq -y shellcheck wait-for-it iproute2
 
 COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
 COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml
-COPY Makefile ${APP_HOME}/Makefile
 COPY knapsack_rspec_report.json ${APP_HOME}/knapsack_rspec_report.json
 
 COPY .rspec ${APP_HOME}/.rspec

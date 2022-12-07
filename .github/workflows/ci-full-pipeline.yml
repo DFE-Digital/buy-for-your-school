@@ -63,12 +63,16 @@ jobs:
 
   jest:
     name: Checks - Jest
-    needs: build_test
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Run Jest JS tests
-        run: docker run --rm ${{ needs.build_test.outputs.docker_image }} bash -c "make test_js"
+      - uses: actions/checkout@v3
+
+      - name: Install node modules
+        run: yarn install
+
+      - name: Run tests
+        run: yarn jest
 
   rspec:
     name: Checks - Rspec
