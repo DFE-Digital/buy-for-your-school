@@ -12,9 +12,7 @@ module FrameworkRequests
       [:energy_alternative]
     end
 
-    def create_redirect_path
-      sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64)
-    end
+    def create_redirect_path = sign_in_path
 
     def back_url
       @back_url = energy_bill_framework_requests_path(framework_support_form: @form.common)
