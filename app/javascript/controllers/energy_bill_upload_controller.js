@@ -91,7 +91,6 @@ export default class extends Controller {
   pageOne() {
     this.currentPage = 1
     this.titleTarget.innerHTML = this.pageOneTitleValue
-    this.btnContinueTarget.innerHTML = this.pageOneContinueButtonValue
 
     this.display(this.lblHintTarget, true)
     this.display(this.dropZoneTarget, true)
@@ -118,7 +117,6 @@ export default class extends Controller {
   pageThree() {
     this.currentPage = 3
     this.titleTarget.innerHTML = this.pageThreeTitleValue
-    this.btnContinueTarget.innerHTML = this.pageThreeContinueButtonValue
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
