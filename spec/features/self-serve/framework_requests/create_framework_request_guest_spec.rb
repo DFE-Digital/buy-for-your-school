@@ -57,15 +57,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   end
 
   describe "the organisation type choice page" do
-    it "goes back to the login choice page" do
-      click_on "Back"
-
-      within("div.govuk-form-group") do
-        expect(find("span.govuk-caption-l")).to have_text "About your school"
-        expect(page).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
-      end
-    end
-
     it "asks for school or group" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What type of organisation are you buying for?"
     end
@@ -78,13 +69,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     end
 
     describe "the school search page" do
-      it "goes back to the organisation choice page" do
-        click_on "Back"
-
-        expect(page).to have_current_path %r{/procurement-support/organisation_type}
-        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What type of organisation are you buying for?"
-      end
-
       it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
@@ -117,13 +101,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(values[0]).to have_text "New Academy Trust,"
         expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
-      end
-
-      it "validates the selected school" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Select the school you want help buying for", href: "#framework-support-form-org-id-field-error"
       end
     end
 
@@ -167,32 +144,12 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_unchecked_field "No, I need to choose another school"
         expect(page).to have_button "Continue"
       end
-
-      it "choosing no goes back to the school search page" do
-        choose "No, I need to choose another school"
-        click_continue
-        expect(page).to have_current_path %r{/procurement-support/search_for_organisation}
-        expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
-      end
-
-      it "choosing yes continues to the name page" do
-        choose "Yes"
-        click_continue
-        expect(page).to have_current_path %r{/procurement-support/name}
-        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
-      end
     end
 
     describe "the name page" do
       before do
         autocomplete_school_step
         confirm_choice_step
-      end
-
-      it "goes back to the school confirmation page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/confirm_organisation}
-        expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
       end
 
       it "asks for their full name" do
@@ -204,14 +161,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(page).to have_button "Continue"
       end
-
-      it "validates their name" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter your first name", href: "#framework-support-form-first-name-field-error"
-        expect(page).to have_link "Enter your last name", href: "#framework-support-form-last-name-field-error"
-      end
     end
 
     describe "the email address page" do
@@ -221,12 +170,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_name_step
       end
 
-      it "goes back to the name page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/name}
-        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
-      end
-
       it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About you"
         expect(find("label.govuk-label--l")).to have_text "What is your email address?"
@@ -234,13 +177,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_field "We will only use this to contact you about your request."
 
         expect(page).to have_button "Continue"
-      end
-
-      it "validates their email" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter an email in the correct format. For example, 'someone@school.sch.uk'.", href: "#framework-support-form-email-field-error"
       end
     end
 
@@ -252,12 +188,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_email_step
       end
 
-      it "goes back to the email address page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/email}
-        expect(find("label.govuk-label--l")).to have_text "What is your email address?"
-      end
-
       it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About your request"
         expect(find("label.govuk-label--l")).to have_text "How can we help?"
@@ -265,13 +195,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_field "framework_support_form[message_body]"
 
         expect(page).to have_button "Continue"
-      end
-
-      it "validates the message is entered" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
       end
     end
 
@@ -282,12 +205,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_name_step
         complete_email_step
         complete_help_message_step
-      end
-
-      it "goes back to the message page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/message}
-        expect(page).to have_text "How can we help?"
       end
 
       it "has the correct attributes" do
@@ -309,12 +226,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_email_step
         complete_help_message_step
         complete_procurement_amount_step
-      end
-
-      it "goes back to the procurement amount page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/procurement_amount}
-        expect(page).to have_text "Approximately how much will the school be spending on this procurement in total?"
       end
 
       it "has the correct attributes" do
@@ -345,12 +256,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_confidence_level_step
       end
 
-      it "goes back to the confidence level page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/procurement_confidence}
-        expect(page).to have_text "How confident do you feel about running this procurement?"
-      end
-
       it "has the correct attributes" do
         expect(page).to have_text "Special requirements"
         expect(page).to have_text "Do you have any special requirements when you communicate or use technology and/or online services?"
@@ -373,12 +278,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     end
 
     describe "the search for a group page" do
-      it "goes back to the organisation choice page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{/procurement-support/organisation_type}
-        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What type of organisation are you buying for?"
-      end
-
       it "has the correct attributes" do
         expect(find("span.govuk-caption-l")).to have_text "About your school"
         expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
@@ -409,45 +308,11 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
       end
-
-      it "validates the selected group" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter your academy trust or federation name, or UKPRN and select it from the list", href: "#framework-support-form-org-id-field-error"
-      end
     end
 
     describe "the group confirmation page" do
       before do
         autocomplete_group_step
-      end
-
-      it "goes back to the group search page" do
-        click_on "Back"
-        expect(page).to have_current_path %r{procurement-support/search_for_organisation}
-        expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
-      end
-
-      it "validates the group is confirmed" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Select whether this is the Group or Trust you're buying for", href: "#framework-support-form-org-confirm-field-error"
-      end
-
-      it "choosing no goes back to the group search page" do
-        choose "No, I need to choose another academy trust or federation"
-        click_continue
-        expect(page).to have_current_path %r{procurement-support/search_for_organisation}
-        expect(page).to have_text "Search for an academy trust or federation"
-      end
-
-      it "choosing yes continues to the name page" do
-        choose "Yes"
-        click_continue
-        expect(page).to have_current_path %r{/procurement-support/name}
-        expect(find("h1.govuk-heading-l")).to have_text "What is your name?"
       end
 
       it "has the correct attributes" do

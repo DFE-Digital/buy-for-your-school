@@ -17,7 +17,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = framework_requests_path
+      @back_url = last_energy_path
     end
   end
 end

@@ -13,11 +13,9 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      if @form.have_energy_bill?
-        sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64)
-      else
-        energy_alternative_framework_requests_path(framework_support_form: @form.common)
-      end
+      return sign_in_path if @form.have_energy_bill?
+
+      energy_alternative_framework_requests_path(framework_support_form: @form.common)
     end
 
     def back_url

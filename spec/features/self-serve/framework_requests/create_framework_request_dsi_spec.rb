@@ -9,18 +9,6 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         expect(page).to have_text "Do you have a DfE Sign-in account linked to the school that your request is about?"
       end
 
-      it "has a back link to the energy question" do
-        click_on "Back"
-        expect(page).to have_current_path "/procurement-support/energy_request"
-      end
-
-      it "validates a choice is made" do
-        click_continue
-
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Select whether you want to use a DfE Sign-in account", href: "#framework-support-form-dsi-field-error"
-      end
-
       it "allows the use of DSI" do
         expect(find("label", text: "Yes, use my DfE Sign-in")).to be_present
       end
@@ -53,39 +41,6 @@ RSpec.feature "Creating a 'Find a Framework' request" do
           expect(page).to have_text "Specialist School for Testing"
         end
       end
-
-      describe "the message page" do
-        it "goes back to the start page" do
-          click_on "Back"
-          expect(page).to have_current_path "/procurement-support"
-        end
-
-        it "validates the message exists" do
-          click_continue
-
-          expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-          expect(page).to have_link "You must tell us how we can help", href: "#framework-support-form-message-body-field-error"
-        end
-      end
-
-      describe "the special requirements page" do
-        before do
-          fill_in "framework_support_form[message_body]", with: "I have a problem"
-          click_continue
-          click_continue
-          choose "Confident"
-          click_continue
-        end
-
-        it "is the last step" do
-          expect(page).to have_text "Special requirements"
-          choose "Yes"
-          fill_in "What are your requirements?", with: "My requirements"
-          click_continue
-          expect(page).to have_text "Send your request"
-          expect(FrameworkRequest.count).to eq(1)
-        end
-      end
     end
 
     context "and organisation cannot be inferred" do
@@ -106,19 +61,6 @@ RSpec.feature "Creating a 'Find a Framework' request" do
         expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
         expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
         expect(page).to have_unchecked_field "New Academy Trust (MAT)"
-      end
-
-      it "validates a group or school is selected" do
-        click_continue
-        within "div.govuk-error-summary" do
-          expect(page).to have_text "Select the school or group you want help buying for"
-        end
-      end
-
-      it "proceeds to the message page" do
-        choose "Greendale Academy for Bright Sparks"
-        click_continue
-        expect(find("span.govuk-caption-l")).to have_text "About your request"
       end
 
       context "when the school or group needs to be changed" do

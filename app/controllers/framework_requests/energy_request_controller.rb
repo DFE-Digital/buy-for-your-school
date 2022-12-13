@@ -13,11 +13,9 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      if @form.is_energy_request?
-        energy_request_about_framework_requests_path(framework_support_form: @form.common)
-      else
-        sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64)
-      end
+      return energy_request_about_framework_requests_path(framework_support_form: @form.common) if @form.is_energy_request?
+
+      sign_in_path
     end
 
     def back_url

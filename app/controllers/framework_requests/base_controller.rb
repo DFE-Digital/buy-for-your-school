@@ -67,6 +67,20 @@ module FrameworkRequests
       "#{Base64.decode64(params[:back_to])}?#{{ framework_support_form: form.common }.to_query}"
     end
 
+    def sign_in_path
+      return sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64) if current_user.guest?
+
+      confirm_sign_in_framework_requests_path
+    end
+
+    def last_energy_path
+      return energy_alternative_framework_requests_path(framework_support_form: form.common) if framework_request.energy_alternative.present?
+      return energy_bill_framework_requests_path(framework_support_form: form.common) if framework_request.have_energy_bill.present?
+      return energy_request_about_framework_requests_path(framework_support_form: form.common) if framework_request.energy_request_about.present?
+
+      energy_request_framework_requests_path(framework_support_form: form.common)
+    end
+
     def create_redirect_path; end
 
     def update_redirect_path; end

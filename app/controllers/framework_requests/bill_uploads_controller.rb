@@ -45,7 +45,15 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = email_framework_requests_path(framework_support_form: form.common)
+      @back_url = determine_back_path
+    end
+
+    def determine_back_path
+      @current_user = UserPresenter.new(current_user)
+      return email_framework_requests_path(framework_support_form: form.common) if @current_user.guest?
+      return last_energy_path if @current_user.single_org?
+
+      select_organisation_framework_requests_path(framework_support_form: form.common)
     end
   end
 end
