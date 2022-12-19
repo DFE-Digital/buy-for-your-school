@@ -94,7 +94,7 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, true)
     this.display(this.dropZoneTarget, true)
-    this.display(this.dropzoneOutlet.lblFilesAddedNowTarget, false)
+    this.display(this.dropzoneOutlet.filesAddedNowTarget, this.anyFilesQueuedForUpload())
     this.display(this.dropzoneOutlet.filesAddedBeforeTarget, this.anyFilesUploadedSuccessfully())
     this.display(this.btnContinueTarget, true)
     this.display(this.btnSubmitTarget, false)
@@ -107,7 +107,7 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
-    this.display(this.dropzoneOutlet.lblFilesAddedNowTarget, false)
+    this.display(this.dropzoneOutlet.filesAddedNowTarget, false)
     this.display(this.dropzoneOutlet.filesAddedBeforeTarget, false)
     this.display(this.btnContinueTarget, false)
     this.display(this.btnSubmitTarget, false)
@@ -120,7 +120,7 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
-    this.display(this.dropzoneOutlet.lblFilesAddedNowTarget, false)
+    this.display(this.dropzoneOutlet.filesAddedNowTarget, false)
     this.display(this.dropzoneOutlet.filesAddedBeforeTarget, false)
     this.display(this.btnContinueTarget, false)
     this.display(this.btnSubmitTarget, true)

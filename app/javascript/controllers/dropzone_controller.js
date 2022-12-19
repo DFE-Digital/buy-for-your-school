@@ -4,8 +4,9 @@ import Dropzone from "dropzone"
 export default class extends Controller {
   static targets = [
     "btnDisplayFileDialog",
-    "lblFilesAddedNow",
-    "filesAddedBefore"
+    "filesAddedNow",
+    "filesAddedBefore",
+    "previewTemplate"
   ]
 
   static values = {
@@ -22,7 +23,6 @@ export default class extends Controller {
   }
 
   connect() {
-    const previewsContainer = this.element.querySelector('.file-previews .files-added-now')
     const previewTemplateContainer = this.element.querySelector('.upload-preview-template')
     const previewTemplate = previewTemplateContainer.innerHTML
     previewTemplateContainer.remove()
@@ -33,7 +33,7 @@ export default class extends Controller {
         url: this.addFileUrlValue,
         parallelUploads: 3,
         previewTemplate,
-        previewsContainer,
+        previewsContainer: this.filesAddedNowTarget,
         autoProcessQueue: false,
         clickable: this.btnDisplayFileDialogTarget,
         maxFilesize: 200
@@ -85,7 +85,7 @@ export default class extends Controller {
   }
 
   onFileAdded(file) {
-    this.display(this.lblFilesAddedNowTarget, true)
+    this.display(this.filesAddedNowTarget, true)
     this.filesToUpload.push(file)
   }
 
@@ -145,7 +145,7 @@ export default class extends Controller {
     this.filesToUpload = this.filesToUpload.filter(pendingFile => pendingFile != file)
     delete this.fileUploadErrors[file]
 
-    this.display(this.lblFilesAddedNowTarget, this.anyFilesQueuedForUpload())
+    this.display(this.filesAddedNowTarget, this.anyFilesQueuedForUpload())
   }
 
   // Presentation
@@ -170,7 +170,7 @@ export default class extends Controller {
     const alreadyUploaded = this.element.querySelector('.files-added-before')
     const filesAdded = this.element.querySelector('.files-added-now')
 
-    for (let uploadedFile of filesAdded.querySelectorAll('.upload-item')) {
+    for (let uploadedFile of filesAdded.querySelectorAll('.upload-item:not(.dz-error)')) {
       alreadyUploaded.appendChild(uploadedFile)
     }
   }

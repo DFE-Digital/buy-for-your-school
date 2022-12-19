@@ -7,6 +7,18 @@
   data-energy-bill-upload-page-two-title-value="Your files are uploading"
   data-energy-bill-upload-page-three-title-value="Your files have been uploaded">
 
+  <div class="govuk-error-summary govuk-!-display-none"
+    data-module="govuk-error-summary"
+    data-energy-bill-upload-target="errorSummary">
+    <div role="alert">
+      <h2 class="govuk-error-summary__title">
+        There is a problem
+      </h2>
+      <div class="govuk-error-summary__body" data-energy-bill-upload-target="errorSummaryDetails">
+      </div>
+    </div>
+  </div>
+
   <span class="govuk-caption-l">About your request</span>
   <h1 class="govuk-heading-l" data-energy-bill-upload-target="title" aria-live="polite">
     Upload your energy information
@@ -18,7 +30,7 @@
     data-controller="dropzone"
     data-dropzone-add-file-url-value="/procurement-support/upload-your-bill/upload"
     data-dropzone-remove-file-url-value="/procurement-support/upload-your-bill/remove">
-    <div class="upload-preview-template govuk-!-display-none">
+    <div class="upload-preview-template govuk-!-display-none" data-dropzone-target="previewTemplate">
       <div class="upload-item">
         <div class="upload-row file-details">
           <h3 class="govuk-heading-s"><span data-dz-name></span> (<span data-dz-size></span>)</h3>
@@ -44,9 +56,9 @@
     </div>
 
     <div class="file-previews">
-      <div class="files-added-now govuk-!-margin-bottom-5">
-        <h2 class="govuk-heading-m govuk-!-display-none"
-          data-dropzone-target="lblFilesAddedNow">
+      <div class="files-added-now govuk-!-margin-bottom-5 govuk-!-display-none"
+        data-dropzone-target="filesAddedNow">
+        <h2 class="govuk-heading-m">
           Files added
         </h2>
       </div>
