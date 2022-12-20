@@ -33,7 +33,7 @@ export default class extends Controller {
       this.element,
       {
         url: this.addFileUrlValue,
-        parallelUploads: 3,
+        parallelUploads: 4,
         previewTemplate,
         previewsContainer: this.filePreviewTarget,
         autoProcessQueue: false,
@@ -69,7 +69,12 @@ export default class extends Controller {
   }
 
   uploadFiles() {
-    this.dropzone.processQueue()
+    const uploadFilesInterval = setInterval(() => {
+      if (this.anyFilesQueuedForUpload())
+        this.dropzone.processQueue()
+      else
+        clearInterval(uploadFilesInterval)
+    }, 150)
   }
 
   // File events
