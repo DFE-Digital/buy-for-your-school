@@ -22,6 +22,7 @@ export default class extends Controller {
     this.onQueueCompleteCallback = () => {}
     this.onFileErrorCallback = () => {}
     this.onFileRemovedCallback = () => {}
+    this.onFileAddedCallback = () => {}
   }
 
   connect() {
@@ -81,6 +82,10 @@ export default class extends Controller {
     this.onFileRemovedCallback = callback
   }
 
+  setupOnFileAdded(callback) {
+    this.onFileAddedCallback = callback
+  }
+
   uploadFiles() {
     this.dropzone.processQueue()
   }
@@ -96,6 +101,7 @@ export default class extends Controller {
   onFileAdded(file) {
     this.display(this.filesAddedNowTarget, true)
     this.filesToUpload.push(file)
+    this.onFileAddedCallback(file)
   }
 
   onFileRemoved(file) {

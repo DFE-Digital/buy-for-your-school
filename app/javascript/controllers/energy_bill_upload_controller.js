@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import ErrorMessage from "../misc/error_message"
 
 export default class extends Controller {
   static targets = [
@@ -25,6 +26,12 @@ export default class extends Controller {
     outlet.setupOnQueueComplete(this.onDropzoneQueueComplete.bind(this))
     outlet.setupOnFileError(this.onDropzoneFileError.bind(this))
     outlet.setupOnFileRemoved(this.onDropzoneFileRemoved.bind(this))
+    outlet.setupOnFileAdded(this.onDropzoneFileAdded.bind(this))
+  }
+
+  errorSummaryOutletConnected(outlet) {
+    this.errorInvalidFiles = new ErrorMessage(outlet, 'Please remove any invalid files marked in red')
+    this.errorSelectFiles = new ErrorMessage(outlet, 'Please select one or more files to upload')
   }
 
   initialize() {
@@ -62,10 +69,10 @@ export default class extends Controller {
   }
 
   continueToPageTwo() {
-    if (this.anyFileUploadErrorsOccured())
+    if (this.anyFileUploadErrorsOccured()) {
+      this.errorInvalidFiles.show()
       return
-
-    this.removeError('Please select one or more files to upload')
+    }
 
     if (this.anyFilesQueuedForUpload()) {
       this.uploadFiles()
@@ -73,7 +80,7 @@ export default class extends Controller {
     } else if (this.anyFilesUploadedSuccessfully()) {
       this.continueToPageThree()
     } else {
-      this.addError('Please select one or more files to upload')
+      this.errorSelectFiles.show()
     }
   }
 
@@ -94,17 +101,22 @@ export default class extends Controller {
       this.continueToPageThree()
   }
 
-  onDropzoneFileError(file, error) {
-    this.addError(error)
+  onDropzoneFileError() {
+    this.errorInvalidFiles.show()
   }
 
-  onDropzoneFileRemoved(file, error) {
-    this.removeError(error)
+  onDropzoneFileRemoved() {
+    if (!this.anyFileUploadErrorsOccured())
+      this.errorInvalidFiles.hide()
 
     if (this.currentPage === 3 && !this.anyFilesUploadedSuccessfully())
       this.continueToPageOne()
     else if (this.currentPage === 1)
       this.pageOne()
+  }
+
+  onDropzoneFileAdded() {
+    this.errorSelectFiles.hide()
   }
 
   // Presentation
@@ -172,14 +184,6 @@ export default class extends Controller {
 
   moveFilesFromAddedToAlreadyUploaded() {
     this.dropzoneOutlet.moveFilesFromAddedToAlreadyUploaded()
-  }
-
-  addError(errorMessage) {
-    this.errorSummaryOutlet.addError(errorMessage)
-  }
-
-  removeError(errorMessage) {
-    this.errorSummaryOutlet.removeError(errorMessage)
   }
 
   // Queries
