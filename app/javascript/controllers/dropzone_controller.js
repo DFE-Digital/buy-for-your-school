@@ -122,15 +122,15 @@ export default class extends Controller {
   }
 
   onUploadProgress(file, progress) {
-    const status = progress === 100 ? 'Complete' : 'Uploading'
-
     const statusContainer = file.previewElement.querySelector('.progress-status')
     statusContainer.classList.remove("uploading", "complete")
-    statusContainer.classList.add(status.toLowerCase())
-    statusContainer.innerHTML = status
+    statusContainer.classList.add(progress === 100 ? 'complete' : 'uploading')
+    statusContainer.innerHTML = progress === 100 ? 'Complete' : `${progress.toFixed(0)}% uploaded`
 
     const uploadProgressContainer = file.previewElement.querySelector('.upload-progress-container')
-    uploadProgressContainer.querySelector('[data-dz-uploadprogress]').style.width = progress
+    const progressElement = uploadProgressContainer.querySelector('.upload-progress')
+    progressElement.value = progress
+    progressElement.setAttribute('aria-valuenow', progress)
 
     this.display(statusContainer, true)
     this.display(uploadProgressContainer, true)
