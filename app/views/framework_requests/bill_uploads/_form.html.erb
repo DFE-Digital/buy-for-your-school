@@ -36,8 +36,8 @@
           <h3 class="govuk-heading-s"><span data-dz-name></span> (<span data-dz-size></span>)</h3>
           <a href="#" class="btn-remove govuk-link govuk-link--no-visited-state" data-dz-remove>Remove</a>
         </div>
-        <div class="upload-row progress-status-container govuk-!-display-none">
-          <p class="govuk-body-s progress-status" data-dz-errormessage></p>
+        <div class="upload-row progress-status-container">
+          <p class="govuk-body-s progress-status govuk-!-display-none" data-dz-errormessage></p>
 
           <div class="upload-progress-container govuk-!-display-none">
             <div data-dz-uploadprogress class="upload-progress"></div>
@@ -57,14 +57,15 @@
 
     <div class="file-previews">
       <div class="files-added-now govuk-!-margin-bottom-5 govuk-!-display-none"
-        data-dropzone-target="filesAddedNow">
+        data-energy-bill-upload-target="filesAddedNow"
+        data-dropzone-target="filePreview">
         <h2 class="govuk-heading-m">
           Files added
         </h2>
       </div>
 
       <div class="files-added-before govuk-!-margin-bottom-5 govuk-!-display-none"
-        data-dropzone-target="filesAddedBefore">
+        data-energy-bill-upload-target="filesAddedBefore">
         <h2 class="govuk-heading-m">
           Files already uploaded
         </h2>

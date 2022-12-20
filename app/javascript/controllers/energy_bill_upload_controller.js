@@ -6,6 +6,8 @@ export default class extends Controller {
     "title",
     "lblHint",
     "dropZone",
+    "filesAddedNow",
+    "filesAddedBefore",
     "btnContinue",
     "btnAddMoreFiles",
     "btnSubmit"
@@ -92,7 +94,7 @@ export default class extends Controller {
   // Dropzone event handling
 
   onDropzoneQueueComplete({ totalEnqueuedFiles, totalUploadedFiles }) {
-    // NOTE: the queue can only complete if an upload has been attempted first
+    // NOTE: this event fires when all uploads have occurred AND if not yet uploaded files have errors
     // NOTE: if the queue has completed but there are still enqueued files then an error has occurred with one of the files
 
     if (totalUploadedFiles === 0 || totalEnqueuedFiles > 0)
@@ -117,6 +119,9 @@ export default class extends Controller {
 
   onDropzoneFileAdded() {
     this.errorSelectFiles.hide()
+
+    if (this.currentPage === 1)
+      this.showFilePreviews(this.filesAddedNowTarget, true)
   }
 
   // Presentation
@@ -127,8 +132,8 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, true)
     this.display(this.dropZoneTarget, true)
-    this.showFilePreviews(this.dropzoneOutlet.filesAddedNowTarget, this.anyFilesQueuedForUpload())
-    this.showFilePreviews(this.dropzoneOutlet.filesAddedBeforeTarget, this.anyFilesUploadedSuccessfully())
+    this.showFilePreviews(this.filesAddedNowTarget, this.anyFilesQueuedForUpload())
+    this.showFilePreviews(this.filesAddedBeforeTarget, this.anyFilesUploadedSuccessfully())
     this.display(this.btnContinueTarget, true)
     this.display(this.btnSubmitTarget, false)
     this.display(this.btnAddMoreFilesTarget, false)
@@ -140,8 +145,8 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
-    this.showFilePreviews(this.dropzoneOutlet.filesAddedNowTarget, true, false)
-    this.showFilePreviews(this.dropzoneOutlet.filesAddedBeforeTarget, false)
+    this.showFilePreviews(this.filesAddedNowTarget, true, false)
+    this.showFilePreviews(this.filesAddedBeforeTarget, false)
     this.display(this.btnContinueTarget, false)
     this.display(this.btnSubmitTarget, false)
     this.display(this.btnAddMoreFilesTarget, false)
@@ -153,8 +158,8 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
-    this.showFilePreviews(this.dropzoneOutlet.filesAddedNowTarget, true, false)
-    this.showFilePreviews(this.dropzoneOutlet.filesAddedBeforeTarget, false)
+    this.showFilePreviews(this.filesAddedNowTarget, true, false)
+    this.showFilePreviews(this.filesAddedBeforeTarget, false)
     this.display(this.btnContinueTarget, false)
     this.display(this.btnSubmitTarget, true)
     this.display(this.btnAddMoreFilesTarget, true)
@@ -179,11 +184,15 @@ export default class extends Controller {
   }
 
   moveFilesFromAlreadyUploadedToAdded() {
-    this.dropzoneOutlet.moveFilesFromAlreadyUploadedToAdded()
+    for (let uploadedFile of this.filesAddedBeforeTarget.querySelectorAll('.upload-item')) {
+      this.filesAddedNowTarget.appendChild(uploadedFile)
+    }
   }
 
   moveFilesFromAddedToAlreadyUploaded() {
-    this.dropzoneOutlet.moveFilesFromAddedToAlreadyUploaded()
+    for (let uploadedFile of this.filesAddedNowTarget.querySelectorAll('.upload-item:not(.dz-error)')) {
+      this.filesAddedBeforeTarget.appendChild(uploadedFile)
+    }
   }
 
   // Queries

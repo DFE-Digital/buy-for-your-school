@@ -4,8 +4,7 @@ import Dropzone from "dropzone"
 export default class extends Controller {
   static targets = [
     "btnDisplayFileDialog",
-    "filesAddedNow",
-    "filesAddedBefore",
+    "filePreview",
     "previewTemplate"
   ]
 
@@ -36,7 +35,7 @@ export default class extends Controller {
         url: this.addFileUrlValue,
         parallelUploads: 3,
         previewTemplate,
-        previewsContainer: this.filesAddedNowTarget,
+        previewsContainer: this.filePreviewTarget,
         autoProcessQueue: false,
         clickable: this.btnDisplayFileDialogTarget,
         maxFilesize: 200
@@ -99,7 +98,6 @@ export default class extends Controller {
   }
 
   onFileAdded(file) {
-    this.display(this.filesAddedNowTarget, true)
     this.filesToUpload.push(file)
     this.onFileAddedCallback(file)
   }
@@ -131,11 +129,11 @@ export default class extends Controller {
     statusContainer.classList.add(status.toLowerCase())
     statusContainer.innerHTML = status
 
-    file.previewElement.querySelector('[data-dz-uploadprogress]').style.width = progress
+    const uploadProgressContainer = file.previewElement.querySelector('.upload-progress-container')
+    uploadProgressContainer.querySelector('[data-dz-uploadprogress]').style.width = progress
 
-    for (let hiddenElement of file.previewElement.querySelectorAll(".govuk-\\!-display-none")) {
-      this.display(hiddenElement, true)
-    }
+    this.display(statusContainer, true)
+    this.display(uploadProgressContainer, true)
   }
 
   onFileUploadComplete(file) {
@@ -173,24 +171,6 @@ export default class extends Controller {
 
     if (!isVisible)
       element.classList.add('govuk-!-display-none')
-  }
-
-  moveFilesFromAlreadyUploadedToAdded() {
-    const alreadyUploaded = this.element.querySelector('.files-added-before')
-    const filesAdded = this.element.querySelector('.files-added-now')
-
-    for (let uploadedFile of alreadyUploaded.querySelectorAll('.upload-item')) {
-      filesAdded.appendChild(uploadedFile)
-    }
-  }
-
-  moveFilesFromAddedToAlreadyUploaded() {
-    const alreadyUploaded = this.element.querySelector('.files-added-before')
-    const filesAdded = this.element.querySelector('.files-added-now')
-
-    for (let uploadedFile of filesAdded.querySelectorAll('.upload-item:not(.dz-error)')) {
-      alreadyUploaded.appendChild(uploadedFile)
-    }
   }
 
   // Query methods

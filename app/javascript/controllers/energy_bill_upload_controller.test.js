@@ -16,16 +16,11 @@ describe('EnergyBillUploadController', () => {
     anyFilesUploadedSuccessfully,
     anyFileUploadErrorsOccured
   } = {}) => {
-    const dropZone = new DummyDropzoneController(
+    return new DummyDropzoneController(
       anyFilesQueuedForUpload,
       anyFilesUploadedSuccessfully,
       anyFileUploadErrorsOccured
     )
-    dropZone.filesAddedNowTarget = createField('div', false)
-    dropZone.filesAddedNowTarget.appendChild(createField('h2'))
-    dropZone.filesAddedBeforeTarget = createField('div', false)
-    dropZone.filesAddedBeforeTarget.appendChild(createField('h2'))
-    return dropZone
   }
 
   const expectToBeShown = (element) => expect(element).not.toHaveClass('govuk-!-display-none')
@@ -62,6 +57,10 @@ describe('EnergyBillUploadController', () => {
     subject.btnContinueTarget     = createField('button')
     subject.btnSubmitTarget       = createField('button')
     subject.btnAddMoreFilesTarget = createField('button')
+    subject.filesAddedNowTarget = createField('div', false)
+    subject.filesAddedNowTarget.appendChild(createField('h2'))
+    subject.filesAddedBeforeTarget = createField('div', false)
+    subject.filesAddedBeforeTarget.appendChild(createField('h2'))
     subject.dropzoneOutlet        = createDropZone()
     subject.errorSummaryOutlet    = new DummyErrorSummaryController()
     subject.pageOneTitleValue     = 'Page 1 Title'
@@ -77,9 +76,9 @@ describe('EnergyBillUploadController', () => {
     it('sets title to be the pageOneTitleValue', () => expect(subject.titleTarget).toHaveTextContent('Page 1 Title'))
     it('shows lblHintTarget', () => expectToBeShown(subject.lblHintTarget))
     it('shows dropZoneTarget', () => expectToBeShown(subject.dropZoneTarget))
-    it('hides filesAddedNowTarget', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedNowTarget))
-    it('hides filesAddedNowTarget title', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedNowTarget.querySelector('h2')))
-    it('hides filesAddedBeforeTarget', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedBeforeTarget))
+    it('hides filesAddedNowTarget', () => expectToBeHidden(subject.filesAddedNowTarget))
+    it('hides filesAddedNowTarget title', () => expectToBeHidden(subject.filesAddedNowTarget.querySelector('h2')))
+    it('hides filesAddedBeforeTarget', () => expectToBeHidden(subject.filesAddedBeforeTarget))
     it('shows btnContinueTarget', () => expectToBeShown(subject.btnContinueTarget))
     it('hides btnSubmitTarget', () => expectToBeHidden(subject.btnSubmitTarget))
     it('hides btnAddMoreFilesTarget', () => expectToBeHidden(subject.btnAddMoreFilesTarget))
@@ -91,8 +90,8 @@ describe('EnergyBillUploadController', () => {
       subject.pageOne()
     })
 
-    it('shows filesAddedNowTarget', () => expectToBeShown(subject.dropzoneOutlet.filesAddedNowTarget))
-    it('shows filesAddedNowTarget title', () => expectToBeShown(subject.dropzoneOutlet.filesAddedNowTarget.querySelector('h2')))
+    it('shows filesAddedNowTarget', () => expectToBeShown(subject.filesAddedNowTarget))
+    it('shows filesAddedNowTarget title', () => expectToBeShown(subject.filesAddedNowTarget.querySelector('h2')))
   })
 
   describe('page one (with files uploaded already)', () => {
@@ -101,8 +100,8 @@ describe('EnergyBillUploadController', () => {
       subject.pageOne()
     })
 
-    it('shows filesAddedBeforeTarget', () => expectToBeShown(subject.dropzoneOutlet.filesAddedBeforeTarget))
-    it('shows filesAddedBeforeTarget title', () => expectToBeShown(subject.dropzoneOutlet.filesAddedBeforeTarget.querySelector('h2')))
+    it('shows filesAddedBeforeTarget', () => expectToBeShown(subject.filesAddedBeforeTarget))
+    it('shows filesAddedBeforeTarget title', () => expectToBeShown(subject.filesAddedBeforeTarget.querySelector('h2')))
   })
 
   describe('page two', () => {
@@ -111,9 +110,9 @@ describe('EnergyBillUploadController', () => {
     it('sets title to be the pageTwoTitleValue', () => expect(subject.titleTarget).toHaveTextContent('Page 2 Title'))
     it('hides lblHintTarget', () => expectToBeHidden(subject.lblHintTarget))
     it('hides dropZoneTarget', () => expectToBeHidden(subject.dropZoneTarget))
-    it('shows filesAddedNowTarget', () => expectToBeShown(subject.dropzoneOutlet.filesAddedNowTarget))
-    it('hides filesAddedNowTarget title', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedNowTarget.querySelector('h2')))
-    it('hides filesAddedBeforeTarget', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedBeforeTarget))
+    it('shows filesAddedNowTarget', () => expectToBeShown(subject.filesAddedNowTarget))
+    it('hides filesAddedNowTarget title', () => expectToBeHidden(subject.filesAddedNowTarget.querySelector('h2')))
+    it('hides filesAddedBeforeTarget', () => expectToBeHidden(subject.filesAddedBeforeTarget))
     it('hides btnContinueTarget', () => expectToBeHidden(subject.btnContinueTarget))
     it('hides btnSubmitTarget', () => expectToBeHidden(subject.btnSubmitTarget))
     it('hides btnAddMoreFilesTarget', () => expectToBeHidden(subject.btnAddMoreFilesTarget))
@@ -125,9 +124,9 @@ describe('EnergyBillUploadController', () => {
     it('sets title to be the pageThreeTitleValue', () => expect(subject.titleTarget).toHaveTextContent('Page 3 Title'))
     it('hides lblHintTarget', () => expectToBeHidden(subject.lblHintTarget))
     it('hides dropZoneTarget', () => expectToBeHidden(subject.dropZoneTarget))
-    it('shows filesAddedNowTarget', () => expectToBeShown(subject.dropzoneOutlet.filesAddedNowTarget))
-    it('hides filesAddedNowTarget title', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedNowTarget.querySelector('h2')))
-    it('hides filesAddedBeforeTarget', () => expectToBeHidden(subject.dropzoneOutlet.filesAddedBeforeTarget))
+    it('shows filesAddedNowTarget', () => expectToBeShown(subject.filesAddedNowTarget))
+    it('hides filesAddedNowTarget title', () => expectToBeHidden(subject.filesAddedNowTarget.querySelector('h2')))
+    it('hides filesAddedBeforeTarget', () => expectToBeHidden(subject.filesAddedBeforeTarget))
     it('hides btnContinueTarget', () => expectToBeHidden(subject.btnContinueTarget))
     it('shows btnSubmitTarget', () => expectToBeShown(subject.btnSubmitTarget))
     it('shows btnAddMoreFilesTarget', () => expectToBeShown(subject.btnAddMoreFilesTarget))

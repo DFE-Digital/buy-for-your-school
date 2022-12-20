@@ -16,8 +16,10 @@ export default class extends Controller {
   }
 
   addError(errorMessage) {
-    this.errorMessages.push(errorMessage)
-    this.render()
+    if (this.errorMessages.indexOf(errorMessage) === -1) {
+      this.errorMessages.push(errorMessage)
+      this.render()
+    }
   }
 
   removeError(errorMessage) {
