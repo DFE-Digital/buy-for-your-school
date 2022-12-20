@@ -3,18 +3,18 @@
 <div
   data-controller="energy-bill-upload"
   data-energy-bill-upload-dropzone-outlet=".drop-zone-container"
+  data-energy-bill-upload-error-summary-outlet=".govuk-error-summary"
   data-energy-bill-upload-page-one-title-value="Upload your energy information"
   data-energy-bill-upload-page-two-title-value="Your files are uploading"
   data-energy-bill-upload-page-three-title-value="Your files have been uploaded">
 
   <div class="govuk-error-summary govuk-!-display-none"
-    data-module="govuk-error-summary"
-    data-energy-bill-upload-target="errorSummary">
+    data-controller="error-summary">
     <div role="alert">
-      <h2 class="govuk-error-summary__title">
+      <h2 class="govuk-error-summary__title" data-error-summary-target="title">
         There is a problem
       </h2>
-      <div class="govuk-error-summary__body" data-energy-bill-upload-target="errorSummaryDetails">
+      <div class="govuk-error-summary__body" data-error-summary-target="body">
       </div>
     </div>
   </div>

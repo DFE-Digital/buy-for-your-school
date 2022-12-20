@@ -12,17 +12,19 @@ export default class extends Controller {
 
   static values = {
     pageOneTitle: String,
-    pageOneContinueButton: String,
     pageTwoTitle: String,
-    pageTwoContinueButton: String,
-    pageThreeTitle: String,
-    pageThreeContinueButton: String,
+    pageThreeTitle: String
   }
 
-  static outlets = ["dropzone"]
+  static outlets = [
+    "dropzone",
+    "error-summary"
+  ]
 
   dropzoneOutletConnected(outlet) {
     outlet.setupOnQueueComplete(this.onDropzoneQueueComplete.bind(this))
+    outlet.setupOnFileError(this.onDropzoneFileError.bind(this))
+    outlet.setupOnFileRemoved(this.onDropzoneFileRemoved.bind(this))
   }
 
   initialize() {
@@ -48,6 +50,9 @@ export default class extends Controller {
   }
 
   // Routing
+  // standard path: 1 -> 2 -> 3
+  // add more files: 3 -> 1 -> 2 -> 3
+  // add more files (not adding any more): 3 -> 1 -> 3
 
   continueToPageOne() {
     if (this.currentPage !== 1)
@@ -57,15 +62,18 @@ export default class extends Controller {
   }
 
   continueToPageTwo() {
-    if (this.anyFileUploadErrorsOccured()) {
-      alert('Please remove any invalid files marked in red')
-    } else if (!(this.anyFilesQueuedForUpload() || this.anyFilesUploadedSuccessfully())) {
-      alert('Please select a file to upload')
-    } else if (!this.anyFilesQueuedForUpload() && this.anyFilesUploadedSuccessfully()) {
-      this.continueToPageThree()
-    } else {
+    if (this.anyFileUploadErrorsOccured())
+      return
+
+    this.removeError('Please select one or more files to upload')
+
+    if (this.anyFilesQueuedForUpload()) {
       this.uploadFiles()
       this.pageTwo()
+    } else if (this.anyFilesUploadedSuccessfully()) {
+      this.continueToPageThree()
+    } else {
+      this.addError('Please select one or more files to upload')
     }
   }
 
@@ -86,6 +94,19 @@ export default class extends Controller {
       this.continueToPageThree()
   }
 
+  onDropzoneFileError(file, error) {
+    this.addError(error)
+  }
+
+  onDropzoneFileRemoved(file, error) {
+    this.removeError(error)
+
+    if (this.currentPage === 3 && !this.anyFilesUploadedSuccessfully())
+      this.continueToPageOne()
+    else if (this.currentPage === 1)
+      this.pageOne()
+  }
+
   // Presentation
 
   pageOne() {
@@ -94,8 +115,8 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, true)
     this.display(this.dropZoneTarget, true)
-    this.display(this.dropzoneOutlet.filesAddedNowTarget, this.anyFilesQueuedForUpload())
-    this.display(this.dropzoneOutlet.filesAddedBeforeTarget, this.anyFilesUploadedSuccessfully())
+    this.showFilePreviews(this.dropzoneOutlet.filesAddedNowTarget, this.anyFilesQueuedForUpload())
+    this.showFilePreviews(this.dropzoneOutlet.filesAddedBeforeTarget, this.anyFilesUploadedSuccessfully())
     this.display(this.btnContinueTarget, true)
     this.display(this.btnSubmitTarget, false)
     this.display(this.btnAddMoreFilesTarget, false)
@@ -107,8 +128,8 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
-    this.display(this.dropzoneOutlet.filesAddedNowTarget, false)
-    this.display(this.dropzoneOutlet.filesAddedBeforeTarget, false)
+    this.showFilePreviews(this.dropzoneOutlet.filesAddedNowTarget, true, false)
+    this.showFilePreviews(this.dropzoneOutlet.filesAddedBeforeTarget, false)
     this.display(this.btnContinueTarget, false)
     this.display(this.btnSubmitTarget, false)
     this.display(this.btnAddMoreFilesTarget, false)
@@ -120,8 +141,8 @@ export default class extends Controller {
 
     this.display(this.lblHintTarget, false)
     this.display(this.dropZoneTarget, false)
-    this.display(this.dropzoneOutlet.filesAddedNowTarget, false)
-    this.display(this.dropzoneOutlet.filesAddedBeforeTarget, false)
+    this.showFilePreviews(this.dropzoneOutlet.filesAddedNowTarget, true, false)
+    this.showFilePreviews(this.dropzoneOutlet.filesAddedBeforeTarget, false)
     this.display(this.btnContinueTarget, false)
     this.display(this.btnSubmitTarget, true)
     this.display(this.btnAddMoreFilesTarget, true)
@@ -133,6 +154,13 @@ export default class extends Controller {
     if (!isVisible)
       element.classList.add('govuk-!-display-none')
   }
+
+  showFilePreviews(element, elementIsVisible, titleIsVisible = undefined) {
+    this.display(element, elementIsVisible)
+    this.display(element.querySelector('h2'), titleIsVisible === undefined ? elementIsVisible : titleIsVisible)
+  }
+
+  // Commands
 
   uploadFiles() {
     this.dropzoneOutlet.uploadFiles()
@@ -146,7 +174,15 @@ export default class extends Controller {
     this.dropzoneOutlet.moveFilesFromAddedToAlreadyUploaded()
   }
 
-  // Query methods
+  addError(errorMessage) {
+    this.errorSummaryOutlet.addError(errorMessage)
+  }
+
+  removeError(errorMessage) {
+    this.errorSummaryOutlet.removeError(errorMessage)
+  }
+
+  // Queries
 
   anyFilesQueuedForUpload() {
     return this.dropzoneOutlet.anyFilesQueuedForUpload()

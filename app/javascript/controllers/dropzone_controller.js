@@ -20,6 +20,8 @@ export default class extends Controller {
     this.filesToUpload = []
     this.uploadedFiles = []
     this.onQueueCompleteCallback = () => {}
+    this.onFileErrorCallback = () => {}
+    this.onFileRemovedCallback = () => {}
   }
 
   connect() {
@@ -40,30 +42,28 @@ export default class extends Controller {
       }
     )
 
-    const controller = this
-
-    this.dropzone.on('addedfile', function(file) {
-      controller.onFileAdded(file)
+    this.dropzone.on('addedfile', (file) => {
+      this.onFileAdded(file)
     })
 
-    this.dropzone.on('error', function(file, error) {
-      controller.onFileError(file, error)
+    this.dropzone.on('error', (file, error) => {
+      this.onFileError(file, error)
     })
 
-    this.dropzone.on('removedfile', function(file) {
-      controller.onFileRemoved(file)
+    this.dropzone.on('removedfile', (file) => {
+      this.onFileRemoved(file)
     })
 
-    this.dropzone.on('uploadprogress', function(file, progress) {
-      controller.onUploadProgress(file, progress)
+    this.dropzone.on('uploadprogress', (file, progress) => {
+      this.onUploadProgress(file, progress)
     })
 
-    this.dropzone.on('complete', function(file) {
-      controller.onFileUploadComplete(file)
+    this.dropzone.on('complete', (file) => {
+      this.onFileUploadComplete(file)
     })
 
-    this.dropzone.on('queuecomplete', function() {
-      controller.onQueueComplete()
+    this.dropzone.on('queuecomplete', () => {
+      this.onQueueComplete()
     })
   }
 
@@ -71,6 +71,14 @@ export default class extends Controller {
 
   setupOnQueueComplete(callback) {
     this.onQueueCompleteCallback = callback
+  }
+
+  setupOnFileError(callback) {
+    this.onFileErrorCallback = callback
+  }
+
+  setupOnFileRemoved(callback) {
+    this.onFileRemovedCallback = callback
   }
 
   uploadFiles() {
@@ -82,6 +90,7 @@ export default class extends Controller {
   onFileError(file, error) {
     this.display(file.previewElement.querySelector('.progress-status-container'), true)
     this.fileUploadErrors[file] = error
+    this.onFileErrorCallback(file, error)
   }
 
   onFileAdded(file) {
@@ -90,10 +99,22 @@ export default class extends Controller {
   }
 
   onFileRemoved(file) {
-    if (this.fileHasBeenUploaded(file))
-      this.deleteFileFromServer(file)
-    else
-      this.deleteFileFromUi(file)
+    const potentiallyDeleteFileFromServer = new Promise((resolve, reject) => {
+      if (this.fileHasBeenUploaded(file))
+        this.deleteFileFromServer(file).then(resolve)
+      else
+        resolve()
+    })
+
+    potentiallyDeleteFileFromServer.then(() => {
+      this.filesToUpload = this.filesToUpload.filter(pendingFile => pendingFile != file)
+      this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile != file)
+
+      const existingErrorForFile = this.fileUploadErrors[file]
+      delete this.fileUploadErrors[file]
+
+      this.onFileRemovedCallback(file, existingErrorForFile)
+    })
   }
 
   onUploadProgress(file, progress) {
@@ -136,16 +157,7 @@ export default class extends Controller {
     const body = new FormData()
     body.append('file_id', file.file_id)
 
-    fetch(this.removeFileUrlValue, { method: 'DELETE', body })
-      .then(() => this.deleteFileFromUi(file))
-      .catch((error) => alert(error))
-  }
-
-  deleteFileFromUi(file) {
-    this.filesToUpload = this.filesToUpload.filter(pendingFile => pendingFile != file)
-    delete this.fileUploadErrors[file]
-
-    this.display(this.filesAddedNowTarget, this.anyFilesQueuedForUpload())
+    return fetch(this.removeFileUrlValue, { method: 'DELETE', body })
   }
 
   // Presentation

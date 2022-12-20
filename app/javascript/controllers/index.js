@@ -10,5 +10,8 @@ application.register("dropzone", DropzoneController)
 import EnergyBillUploadController from "./energy_bill_upload_controller"
 application.register("energy-bill-upload", EnergyBillUploadController)
 
+import ErrorSummaryController from "./error_summary_controller"
+application.register("error-summary", ErrorSummaryController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
