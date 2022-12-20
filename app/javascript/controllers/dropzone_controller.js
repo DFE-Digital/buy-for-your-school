@@ -42,29 +42,12 @@ export default class extends Controller {
       }
     )
 
-    this.dropzone.on('addedfile', (file) => {
-      this.onFileAdded(file)
-    })
-
-    this.dropzone.on('error', (file, error) => {
-      this.onFileError(file, error)
-    })
-
-    this.dropzone.on('removedfile', (file) => {
-      this.onFileRemoved(file)
-    })
-
-    this.dropzone.on('uploadprogress', (file, progress) => {
-      this.onUploadProgress(file, progress)
-    })
-
-    this.dropzone.on('complete', (file) => {
-      this.onFileUploadComplete(file)
-    })
-
-    this.dropzone.on('queuecomplete', () => {
-      this.onQueueComplete()
-    })
+    this.dropzone.on('addedfile', this.onFileAdded.bind(this))
+    this.dropzone.on('error', this.onFileError.bind(this))
+    this.dropzone.on('removedfile', this.onFileRemoved.bind(this))
+    this.dropzone.on('uploadprogress', this.onUploadProgress.bind(this))
+    this.dropzone.on('complete', this.onFileUploadComplete.bind(this))
+    this.dropzone.on('queuecomplete', this.onQueueComplete.bind(this))
   }
 
   // Public methods
