@@ -38,7 +38,10 @@ export default class extends Controller {
         previewsContainer: this.filePreviewTarget,
         autoProcessQueue: false,
         clickable: this.btnDisplayFileDialogTarget,
-        maxFilesize: 200
+        maxFilesize: 200,
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
       }
     )
 
