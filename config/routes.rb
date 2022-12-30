@@ -91,10 +91,11 @@ Rails.application.routes.draw do
         get "/email", to: "emails#index"
         post "/email", to: "emails#create"
 
-        get "/upload-your-bill", to: "bill_uploads#index"
-        post "/upload-your-bill", to: "bill_uploads#create"
-        post "/upload-your-bill/upload", to: "bill_uploads#upload"
-        delete "/upload-your-bill/remove", to: "bill_uploads#remove"
+        get "/bill_uploads", to: "bill_uploads#index"
+        post "/bill_uploads", to: "bill_uploads#create"
+        get "/bill_uploads/list", to: "bill_uploads#list"
+        post "/bill_uploads/upload", to: "bill_uploads#upload"
+        delete "/bill_uploads/remove", to: "bill_uploads#remove"
 
         get "/message", to: "messages#index"
         post "/message", to: "messages#create"
@@ -116,6 +117,7 @@ Rails.application.routes.draw do
         resource :name, only: %i[edit update], as: :framework_request_name
         resource :email, only: %i[edit update], as: :framework_request_email
         resource :bill_uploads, only: %i[edit update], as: :framework_request_bill_uploads do
+          get "/list", to: "bill_uploads#list"
           post "/upload", to: "bill_uploads#upload"
           delete "/remove", to: "bill_uploads#remove"
         end

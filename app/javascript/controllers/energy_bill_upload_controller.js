@@ -29,6 +29,7 @@ export default class extends Controller {
     outlet.setupOnFileError(this.onDropzoneFileError.bind(this))
     outlet.setupOnFileRemoved(this.onDropzoneFileRemoved.bind(this))
     outlet.setupOnFileAdded(this.onDropzoneFileAdded.bind(this))
+    this.getFilesFromServer()
   }
 
   errorSummaryOutletConnected(outlet) {
@@ -178,6 +179,10 @@ export default class extends Controller {
   }
 
   // Commands
+
+  getFilesFromServer() {
+    this.dropzoneOutlet.getFilesFromServer()
+  }
 
   uploadFiles() {
     this.dropzoneOutlet.uploadFiles()
