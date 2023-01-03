@@ -23,9 +23,6 @@ export default class extends Controller {
     this.onFileErrorCallback = () => {}
     this.onFileRemovedCallback = () => {}
     this.onFileAddedCallback = () => {}
-    this.listFilesUrlValue = this.currentPath() + this.listFilesUrlValue
-    this.addFileUrlValue = this.currentPath() + this.addFileUrlValue
-    this.removeFileUrlValue = this.currentPath() + this.removeFileUrlValue
   }
 
   connect() {
@@ -55,10 +52,6 @@ export default class extends Controller {
     this.dropzone.on('uploadprogress', this.onUploadProgress.bind(this))
     this.dropzone.on('complete', this.onFileUploadComplete.bind(this))
     this.dropzone.on('queuecomplete', this.onQueueComplete.bind(this))
-  }
-
-  currentPath() {
-    return window.location.pathname.replace("/edit", "")
   }
 
   // Public methods

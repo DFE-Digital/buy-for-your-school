@@ -11,34 +11,6 @@ describe('DropzoneController', () => {
     subject.removeFileUrlValue = "/delete"
   })
 
-  describe("initialize", () => {
-    let currentPath
-
-    beforeEach(() => {
-      currentPath = jest.spyOn(subject, "currentPath").mockReturnValue("current-path")
-    })
-
-    it("adds the current path to the values", () => {
-      subject.initialize()
-
-      expect(currentPath).toHaveBeenCalledTimes(3)
-      expect(subject.listFilesUrlValue).toEqual("current-path/list")
-      expect(subject.addFileUrlValue).toEqual("current-path/upload")
-      expect(subject.removeFileUrlValue).toEqual("current-path/delete")
-    })
-  })
-
-  describe("currentPath", () => {
-    beforeEach(() => {
-      delete window.location
-      window.location = new URL("https://www.example.com/resource/edit")
-    })
-
-    it("removes '/edit' from the path", () => {
-      expect(subject.currentPath()).toEqual("/resource")
-    })
-  })
-
   describe("getFilesFromServer", () => {
     const file = {}
     let files = []
