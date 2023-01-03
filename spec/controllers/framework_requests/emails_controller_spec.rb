@@ -8,7 +8,7 @@ describe FrameworkRequests::EmailsController, type: :controller do
 
     it "redirects to the bill upload page" do
       post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/upload-your-bill"
+      expect(response).to redirect_to "/procurement-support/bill_uploads"
     end
   end
 

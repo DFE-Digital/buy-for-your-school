@@ -28,8 +28,9 @@
 
   <div class="drop-zone-container govuk-!-margin-bottom-5"
     data-controller="dropzone"
-    data-dropzone-add-file-url-value="/procurement-support/upload-your-bill/upload"
-    data-dropzone-remove-file-url-value="/procurement-support/upload-your-bill/remove">
+    data-dropzone-list-files-url-value=<%= list_bill_uploads_framework_requests_url(@framework_request) %>
+    data-dropzone-add-file-url-value=<%= upload_bill_uploads_framework_requests_url(@framework_request) %>
+    data-dropzone-remove-file-url-value=<%= remove_bill_uploads_framework_requests_url(@framework_request) %>>
     <div class="upload-preview-template govuk-!-display-none" data-dropzone-target="previewTemplate">
       <div class="upload-item">
         <div class="upload-row file-details">

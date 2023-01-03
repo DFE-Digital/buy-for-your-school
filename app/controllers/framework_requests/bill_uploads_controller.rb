@@ -2,6 +2,18 @@ module FrameworkRequests
   class BillUploadsController < BaseController
     skip_before_action :authenticate_user!
 
+    def list
+      files = framework_request.energy_bills.map do |bill|
+        {
+          file_id: bill.id,
+          name: bill.filename,
+          size: bill.file.attachment.byte_size,
+          type: bill.file.attachment.content_type,
+        }
+      end
+      render status: :ok, json: files.to_json
+    end
+
     def upload
       if file_is_safe?
         energy_bill = EnergyBill.pending.create!(

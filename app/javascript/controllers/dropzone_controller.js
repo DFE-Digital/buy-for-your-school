@@ -9,6 +9,7 @@ export default class extends Controller {
   ]
 
   static values = {
+    listFilesUrl: String,
     addFileUrl: String,
     removeFileUrl: String
   }
@@ -71,6 +72,19 @@ export default class extends Controller {
     this.onFileAddedCallback = callback
   }
 
+  getFilesFromServer() {
+    fetch(this.listFilesUrlValue, { method: "get", headers: { "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content }})
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(file => {
+          this.dropzone.emit("addedfile", file)
+          file.status = "success"
+          this.dropzone.emit("complete", file)
+        })
+        if (data.length > 0) this.dropzone.emit("queuecomplete")
+      })
+  }
+
   uploadFiles() {
     const uploadFilesInterval = setInterval(() => {
       if (this.anyFilesQueuedForUpload())
@@ -131,8 +145,10 @@ export default class extends Controller {
     if (file.status === "success") {
       this.filesToUpload = this.filesToUpload.filter(f => f != file)
 
-      const { file_id } = JSON.parse(file.xhr.response)
-      file.file_id = file_id
+      if (!file.file_id) {
+        const { file_id } = JSON.parse(file.xhr.response)
+        file.file_id = file_id
+      }
       this.uploadedFiles.push(file)
     } else {
       // NOTE: Errors appear automatically on the upload row if the response json has a "error" key

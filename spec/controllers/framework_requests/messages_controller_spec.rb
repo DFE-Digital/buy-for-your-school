@@ -47,7 +47,7 @@ describe FrameworkRequests::MessagesController, type: :controller do
 
       it "goes back to the bill upload page" do
         get :index, session: { framework_request_id: framework_request.id }
-        expect(controller.view_assigns["back_url"]).to eq "/procurement-support/upload-your-bill"
+        expect(controller.view_assigns["back_url"]).to eq "/procurement-support/bill_uploads"
       end
     end
   end
