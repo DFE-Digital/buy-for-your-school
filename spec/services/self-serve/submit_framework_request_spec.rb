@@ -14,6 +14,10 @@ describe SubmitFrameworkRequest do
   end
 
   describe "#call" do
+    it "only creates one case" do
+      expect { described_class.new(request:, referrer:).call }.to change(Support::Case, :count).from(0).to(1)
+    end
+
     context "when a category can be detected for the given request text" do
       let(:electricity) { create(:support_category, title: "Electricity") }
       let(:category_detection_results) { [Support::CategoryDetection.new(category_id: electricity.id)] }
