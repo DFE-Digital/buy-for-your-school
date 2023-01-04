@@ -26,5 +26,13 @@ module Support
     def short_date_time
       "%d-%m-%Y %H:%M"
     end
+
+    def helpers
+      ActionController::Base.helpers
+    end
+
+    def routes
+      Rails.application.routes.url_helpers
+    end
   end
 end

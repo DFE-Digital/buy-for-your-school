@@ -16,7 +16,7 @@
               <%= I18n.t("support.case_hub_migration.label.#{key}", optional: nil) %>
             </dt>
             <dd class="govuk-summary-list__value">
-              <%= value&.humanize %>
+              <%= key == 'bills' ? value&.html_safe : value&.humanize %>
             </dd>
           </div>
         <% end %>
