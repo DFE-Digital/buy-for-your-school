@@ -1,7 +1,6 @@
 require "dry-initializer"
 require "dry-types"
 require "dry-transformer"
-require "dry/transformer/class"
 require "dry-inflector"
 require "httparty"
 require "active_support"
