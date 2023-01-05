@@ -1,0 +1,12 @@
+<%= content_for :title, I18n.t("faf.user_query.label") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_text_area :message_body,
+  autofocus: true,
+  class: "govuk-textarea",
+  rows: 5,
+  caption: { text: I18n.t("faf.user_query.caption"), size: "l" },
+  label: { text: I18n.t("faf.user_query.label"), size: "l" },
+  hint: { text: I18n.t("faf.user_query.hint") }
+%>

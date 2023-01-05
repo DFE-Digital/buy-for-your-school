@@ -1,0 +1,43 @@
+<%= content_for :title, I18n.t("faf.search_for_a_group.heading") %>
+
+<span class="govuk-caption-l">
+  <%= I18n.t("faf.search_for_a_group.caption") %>
+</span>
+<h1 class="govuk-heading-l">
+  <%= I18n.t("faf.search_for_a_group.heading") %>
+</h1>
+
+<%= render "components/autocomplete",
+      default_value: form.object.org_id,
+      container_id: "framework-support-form-org-id-field",
+      element_id: "framework-support-form-org-id-field",
+      element_name: "framework_support_form[org_id]",
+      label_text: I18n.t("faf.search_for_a_group.hint"),
+      label_class: "govuk-hint",
+      template_suggestion: "UID: {{uid}}, <strong>{{name}}</strong>, UKPRN: {{ukprn}}",
+      value_field: :formatted_name,
+      query_url: support_establishment_groups_path(format: :json, q: "{{QUERY}}") %>
+
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= I18n.t("faf.search_for_a_group.details.summary") %>
+    </span>
+  </summary>
+
+  <% text = I18n.t("faf.search_for_a_group.details.search_for_a_school_link") %>
+
+  <% link =
+      if @edit_route
+        link_to text, edit_framework_request_search_for_organisation_path(@framework_request, form.object.find_other_type), class: "govuk-link"
+      else
+        link_to text, search_for_organisation_framework_requests_path(framework_support_form: form.object.find_other_type), class: "govuk-link"
+      end
+  %>
+
+  <% I18n.t("faf.search_for_a_group.details.body", search_for_a_school_link: link).each do |body| %>
+    <div class="govuk-details__text">
+      <%= body.html_safe %>
+    </div>
+  <% end %>
+</details>

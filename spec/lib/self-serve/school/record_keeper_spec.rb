@@ -67,6 +67,7 @@ RSpec.describe School::RecordKeeper do
           code: 1,
           name: "Mixed",
         },
+        gor_name: "Old GOR NAME",
         age: {
           lower: "11",
           upper: "18",
@@ -84,6 +85,8 @@ RSpec.describe School::RecordKeeper do
           county: "Hertfordshire",
           postcode: "WD25 0UU",
         },
+        trust_name: "Legacy School Trust Name",
+        trust_code: "Legacy School Trust Code",
       },
     }
   end
@@ -152,6 +155,7 @@ RSpec.describe School::RecordKeeper do
           code: 1,
           name: "Mixed",
         },
+        gor_name: "New GOR NAME",
         age: {
           lower: "11",
           upper: "18",
@@ -169,6 +173,8 @@ RSpec.describe School::RecordKeeper do
           county: "Hertfordshire",
           postcode: "WD25 0UU",
         },
+        trust_name: "New School Trust Name",
+        trust_code: "New School Trust Code",
       },
     }
   end
@@ -180,13 +186,16 @@ RSpec.describe School::RecordKeeper do
         contact
         phase
         gender
+        gor_name
         status
         number
         rsc_region
         local_authority
         opened_date
         ukprn
-        telephone_number]
+        telephone_number
+        trust_name
+        trust_code]
   end
 
   describe "#call" do

@@ -1,6 +1,11 @@
 RSpec.describe Support::CreateCaseFormPresenter do
   subject(:presenter) { described_class.new(form) }
 
+  before do
+    allow(Support::Category).to receive(:other_category_id).and_return("OTHER_CATEGORY_ID")
+    allow(Support::Query).to receive(:other_query_id).and_return("OTHER_QUERY_ID")
+  end
+
   let(:category) { create(:support_category, title: "Catering") }
   let!(:organisation) { create(:support_organisation, name: "Hillside School", urn: "000001") }
 

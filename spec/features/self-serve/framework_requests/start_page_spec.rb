@@ -4,7 +4,6 @@ RSpec.feature "Starting a 'Find a Framework' request" do
   end
 
   it "loads without requiring authentication" do
-    expect(find("h1")).to have_text "Request advice and guidance for your procurement"
     expect(page).to have_current_path "/procurement-support"
   end
 
@@ -32,21 +31,8 @@ RSpec.feature "Starting a 'Find a Framework' request" do
     end
 
     it "shows their profile" do
-      expect(page).to have_current_path "/profile"
-      expect(find("a.govuk-button", text: "Yes, continue")).to be_present
-    end
-
-    it "resets the profile support button" do
-      click_on "Yes, continue"
-
-      expect(page).to have_current_path "/procurement-support/new"
-      expect(find("label.govuk-label--l")).to have_text "How can we help?"
-
-      fill_in "framework_support_form[message_body]", with: "I have a problem"
-      click_continue
-      visit "/profile"
-
-      expect(find("a.govuk-button")).to have_text "Request support"
+      expect(page).to have_current_path "/procurement-support/confirm_sign_in"
+      expect(page).to have_button "Yes, continue"
     end
 
     describe "when user signs out" do

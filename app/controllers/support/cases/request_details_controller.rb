@@ -42,18 +42,19 @@ module Support
     end
 
     def case_request_details_form
-      fields_pre_filled_in_params =
-        begin
-          case_request_details_form_params.present?
-        rescue ActionController::ParameterMissing
-          false
-        end
+      form = if fields_pre_filled_in_params?
+               CaseRequestDetailsForm.from_validation(validation)
+             else
+               CaseRequestDetailsForm.from_case(@current_case)
+             end
+      form.agent_id = current_agent.id
+      form
+    end
 
-      if fields_pre_filled_in_params
-        CaseRequestDetailsForm.from_validation(validation)
-      else
-        CaseRequestDetailsForm.from_case(@current_case)
-      end
+    def fields_pre_filled_in_params?
+      case_request_details_form_params.present?
+    rescue ActionController::ParameterMissing
+      false
     end
 
     def case_request_details_form_params

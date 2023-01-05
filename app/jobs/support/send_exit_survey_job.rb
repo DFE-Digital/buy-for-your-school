@@ -19,6 +19,8 @@ module Support
 
     def perform(case_ref)
       kase = Case.find_by_ref(case_ref)
+      return if kase.exit_survey_sent?
+
       survey = ExitSurveyResponse.create!(
         case: kase,
         status: :sent_out,

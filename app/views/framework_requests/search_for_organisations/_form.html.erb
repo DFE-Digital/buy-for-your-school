@@ -1,0 +1,9 @@
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%=
+  if form.object.school_type == "group"
+    render "find_group", form: form
+  else
+    render "find_school", form: form
+  end
+%>

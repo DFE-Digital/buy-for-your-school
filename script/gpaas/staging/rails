@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo -e "\n\n****************************************"
+echo "Entering Staging environment"
+echo -e "****************************************\n\n"
+
+cmd='cd /srv/app && PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails '
+cmd+=$@
+
+echo -e "Performing: $cmd\n\n"
+
+cf target -s sct-staging
+cf ssh buy-for-your-school-staging -t -c "$cmd"
+
+echo -e "\n\nReminder: you are still in sct-staging space..."

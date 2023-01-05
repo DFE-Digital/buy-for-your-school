@@ -1,0 +1,14 @@
+<%= content_for :title, I18n.t("faf.name.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<span class="govuk-caption-l">
+  <%= I18n.t("faf.name.subtitle") %>
+</span>
+
+<h1 class="govuk-heading-l">
+  <%= I18n.t("faf.name.title") %>
+</h1>
+
+<%= form.govuk_text_field :first_name, autofocus: true, label: { text: I18n.t("faf.name.first_name.label") } %>
+<%= form.govuk_text_field :last_name, label: { text: I18n.t("faf.name.last_name.label") } %>

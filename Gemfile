@@ -9,6 +9,7 @@ gem "aws-sdk-s3", require: false
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.16"
+gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.1"
 gem "dry-struct"
 gem "dry-transformer"
@@ -33,7 +34,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pandoc-ruby"
 gem "pg"
 gem "pg_search"
-gem "puma", "~> 5.6"
+gem "puma", "5.6.5"
 gem "rails", "~> 7.0.3"
 gem "rails_semantic_logger"
 gem "redis", "~> 4.5"

@@ -1,0 +1,42 @@
+<%= content_for :title, I18n.t("profile.heading") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= I18n.t("profile.caption") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("profile.heading") %></h1>
+    <p class="govuk-body"><%= I18n.t("profile.body") %></p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>log back in with the correct account</li>
+      <li><%= link_to I18n.t("profile.edit_dfe_sign_in"), dsi_url(subdomain: "profile", path: "/edit-details"), class: "govuk-link" %></li>
+    </ul>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("profile.label.full_name") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.full_name %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("profile.label.email") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_user.email %>
+        </dd>
+      </div>
+    </dl>
+
+    <% if @current_user.supported_orgs.any? %>
+       <%= button_to "Yes, continue", confirm_sign_in_framework_requests_path, class: "govuk-button" %>
+    <% else %>
+      <p class="govuk-body">
+        <%= I18n.t("support_request.unsupported_school") %>
+      </p>
+    <% end %>
+  </div>
+</div>

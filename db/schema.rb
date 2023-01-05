@@ -10,8 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -31,14 +33,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
+    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
-    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -66,6 +68,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.index ["contentful_task_id"], name: "index_activity_log_on_contentful_task_id"
     t.index ["journey_id"], name: "index_activity_log_on_journey_id"
     t.index ["user_id"], name: "index_activity_log_on_user_id"
+  end
+
+  create_table "all_cases_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "case_id"
+    t.integer "satisfaction_level"
+    t.text "satisfaction_text"
+    t.integer "outcome_achieved"
+    t.text "about_outcomes_text"
+    t.text "improve_text"
+    t.integer "status"
+    t.string "user_ip"
+    t.datetime "survey_started_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "accessibility_research_opt_in"
+    t.string "accessibility_research_email"
+    t.datetime "survey_sent_at", precision: nil
+    t.datetime "survey_completed_at", precision: nil
+    t.index ["case_id"], name: "index_all_cases_survey_responses_on_case_id"
   end
 
   create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -268,8 +289,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.string "dsi_uid", default: "", null: false
     t.string "email", default: "", null: false
     t.boolean "internal", default: false, null: false
+    t.uuid "support_tower_id"
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
+    t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"
   end
 
   create_table "support_case_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -319,6 +342,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.string "special_requirements"
     t.uuid "query_id"
     t.boolean "exit_survey_sent", default: false
+    t.uuid "detected_category_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -338,7 +362,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.string "description"
     t.uuid "parent_id"
     t.string "tower"
+    t.uuid "support_tower_id"
+    t.boolean "archived", default: false
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
+    t.index ["support_tower_id"], name: "index_support_categories_on_support_tower_id"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
   end
 
@@ -497,6 +524,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.datetime "opened_date", precision: nil
     t.string "number"
     t.string "rsc_region"
+    t.string "trust_name"
+    t.string "trust_code"
+    t.string "gor_name"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
@@ -539,6 +569,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
+  create_table "support_towers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+  end
+
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "section_id"
     t.string "title", null: false
@@ -568,6 +604,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.index ["logged_in_as_id"], name: "index_user_feedback_on_logged_in_as_id"
   end
 
+  create_table "user_journey_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "product_section"
+    t.string "step_description"
+    t.uuid "user_journey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_journey_id"], name: "index_user_journey_steps_on_user_journey_id"
+  end
+
+  create_table "user_journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.uuid "case_id"
+    t.string "referral_campaign"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "framework_request_id"
+    t.string "session_id"
+    t.index ["case_id"], name: "index_user_journeys_on_case_id"
+    t.index ["framework_request_id"], name: "index_user_journeys_on_framework_request_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "dfe_sign_in_uid", null: false
     t.datetime "created_at", null: false
@@ -578,6 +635,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
     t.string "full_name"
     t.jsonb "orgs"
     t.jsonb "roles"
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"
@@ -586,62 +644,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "all_cases_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
+  add_foreign_key "support_agents", "support_towers"
   add_foreign_key "support_case_attachments", "support_cases"
   add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
+  add_foreign_key "support_categories", "support_towers"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
+  add_foreign_key "user_journey_steps", "user_journeys"
+  add_foreign_key "user_journeys", "framework_requests"
+  add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE (organisations.status <> 2)
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
-  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -744,6 +766,48 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
@@ -759,21 +823,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_135119) do
            LIMIT 1) AS last_updated
      FROM support_emails se;
   SQL
-  create_view "support_towers", sql_definition: <<-SQL
-      SELECT cases.id,
-          CASE
-              WHEN ((cats.tower)::text = ANY ((ARRAY['Business Services'::character varying, 'Professional Services'::character varying])::text[])) THEN 'Services'::text
-              WHEN ((cats.tower)::text = ANY ((ARRAY['Catering'::character varying, 'FM'::character varying, 'Furniture'::character varying])::text[])) THEN 'FM and Catering'::text
-              WHEN ((cats.tower)::text = 'ICT'::text) THEN 'ICT'::text
-              WHEN ((cats.tower)::text = 'Energy & Utilities'::text) THEN 'Energy and Utilities'::text
-              ELSE NULL::text
-          END AS procops_tower,
-      procs.stage,
-      cases.state,
-      cases.support_level
-     FROM ((support_cases cases
-       LEFT JOIN support_procurements procs ON ((procs.id = cases.procurement_id)))
-       LEFT JOIN support_categories cats ON ((cases.category_id = cats.id)))
-    WHERE (cases.state = ANY (ARRAY[0, 1, 3]));
+  create_view "support_tower_cases", sql_definition: <<-SQL
+      SELECT sc.id,
+      sc.state,
+      sc.value,
+      sc.procurement_id,
+      COALESCE(sp.stage, 99) AS procurement_stage,
+      COALESCE(sc.support_level, 99) AS support_level,
+      COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
+      lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
+      tow.id AS tower_id,
+      sc.created_at,
+      sc.updated_at
+     FROM (((support_cases sc
+       JOIN support_procurements sp ON ((sp.id = sc.procurement_id)))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
+       LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
+    WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
 end

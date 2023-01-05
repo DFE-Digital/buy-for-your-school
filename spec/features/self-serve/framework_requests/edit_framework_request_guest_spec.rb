@@ -14,10 +14,10 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     visit "/procurement-support/#{request.id}"
   end
 
-  it "goes back to the message page" do
+  it "goes back to the special requirements page" do
     click_on "Back"
-    expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=7"
-    expect(find("label.govuk-label--l", text: "How can we help?")).to be_present
+    expect(page).to have_current_path "/procurement-support/#{request.id}/special_requirements/edit"
+    expect(page).to have_text "Special requirements"
   end
 
   it "has submission information" do
@@ -51,7 +51,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   it "edit name" do
     click_link "edit-name"
 
-    expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=5"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/name/edit"
 
     expect(find_field("framework-support-form-first-name-field").value).to eql "David"
     expect(find_field("framework-support-form-last-name-field").value).to eql "Georgiou"
@@ -68,7 +68,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   it "edit email" do
     click_link "edit-email"
 
-    expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=6"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/email/edit"
     expect(find_field("framework-support-form-email-field").value).to eql "email@example.com"
 
     fill_in "framework_support_form[email]", with: "john_smith@test.com"
@@ -82,7 +82,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   it "edit message" do
     click_link "edit-message"
 
-    expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=7"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/message/edit"
 
     expect(find_field("framework-support-form-message-body-field").value).to eql "please help!"
 
@@ -100,7 +100,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     end
 
     it "edit type" do
-      expect(page).to have_current_path "/procurement-support/#{request.id}/edit?step=2"
+      expect(page).to have_current_path "/procurement-support/#{request.id}/organisation_type/edit"
 
       expect(page).to have_checked_field "A single school"
       expect(page).to have_unchecked_field "An academy trust or federation"
@@ -146,7 +146,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     end
 
     it "goes to the school search page" do
-      expect(page).to have_current_path "/procurement-support/#{request.id}/edit?group=false&step=3"
+      expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit"
       expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
     end
 
@@ -154,7 +154,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
       find("span", text: "Can't find it?").click
       click_on "Search for an academy trust or federation instead."
 
-      expect(page).to have_current_path "/procurement-support/#{request.id}/edit?group=true&step=3"
+      expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit?school_type=group"
       expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
       expect(page).not_to have_text "There is a problem"
     end
@@ -163,14 +163,14 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
       click_continue
       click_on "Back"
 
-      expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
+      expect(page).to have_title "Search for your school"
     end
 
     context "when confirmed" do
       it "saves selected organisation" do
         click_continue
 
-        expect(page).to have_current_path "/procurement-support/#{request.id}"
+        expect(page).to have_current_path %r{procurement-support/#{request.id}/confirm_organisation/edit}
 
         expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
         expect(values[0]).to have_text "Greendale Academy for Bright Sparks"

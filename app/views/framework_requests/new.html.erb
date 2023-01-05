@@ -1,9 +1,0 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= render "framework_requests/steps/form", path: framework_requests_path, verb: :post %>
-  </div>
-</div>
-
-<% if Rails.env.development? %>
-  <%= render "framework_requests/steps/debug" %>
-<% end %>

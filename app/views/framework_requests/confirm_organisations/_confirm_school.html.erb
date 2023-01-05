@@ -1,0 +1,69 @@
+<%= content_for :title, I18n.t("faf.confirm_school.heading") %>
+
+<span class="govuk-caption-l"><%= I18n.t("faf.confirm_school.caption") %></span>
+<h1 class="govuk-heading-l"><%= I18n.t("faf.confirm_school.heading") %></h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_school.summary.name_and_address") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.name %>,<br>
+      <%= org.formatted_address %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_school.summary.local_authority") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.local_authority %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_school.summary.headteacher") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.contact %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_school.summary.phase") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.phase %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_school.summary.school_type") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.establishment_type.name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_school.summary.id") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= I18n.t("faf.confirm_school.summary.urn") %>: <%= org.urn %><br>
+      <%= I18n.t("faf.confirm_school.summary.dfe_number") %>: <%= org.number %><br>
+      <%= I18n.t("faf.confirm_school.summary.ukprn") %>: <%= org.ukprn %>
+    </dd>
+  </div>
+</dl>
+
+<%=
+  form.govuk_collection_radio_buttons :org_confirm,
+    [
+      OpenStruct.new(value: true, label: I18n.t("faf.confirm_school.choice.continue")),
+      OpenStruct.new(value: false, label: I18n.t("faf.confirm_school.choice.go_back")),
+    ],
+    :value,
+    :label,
+    legend: nil
+%>

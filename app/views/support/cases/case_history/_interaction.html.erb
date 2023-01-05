@@ -4,8 +4,8 @@
   </th>
 
   <td class="govuk-table__cell govuk-!-width-two-thirds">
-    <% if interaction.support_request? %>
-      <%= render "support/cases/case_history/support_request_body", interaction: interaction %>
+    <% if interaction.custom_template.present? %>
+      <%= render "support/cases/case_history/#{interaction.custom_template}", interaction: interaction %>
     <% else %>
       <%= interaction.body %>
 

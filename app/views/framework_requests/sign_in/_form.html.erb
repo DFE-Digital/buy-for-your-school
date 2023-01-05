@@ -1,0 +1,16 @@
+<%= content_for :title, I18n.t("faf.dsi_or_search.header") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_radio_buttons_fieldset :dsi,
+  legend: { text: I18n.t("faf.dsi_or_search.header"), size: "l" },
+  caption: { text: I18n.t("faf.dsi_or_search.subtitle"), size: "l" } do %>
+    <%= form.govuk_radio_button :dsi, :true, label: { text: I18n.t("faf.dsi_or_search.radios.dsi") } %>
+    <%= form.govuk_radio_button :dsi, :false, label: { text: I18n.t("faf.dsi_or_search.radios.no_dsi") } %>
+<% end %>
+
+<p class="govuk-body">
+  <%= link_to I18n.t("faf.dsi_or_search.link.text"), I18n.t("faf.dsi_or_search.link.url"), class: "govuk-link" %>
+</p>
+
+<%= javascript_include_tag "faf/faf_dsi_or_guest" %>

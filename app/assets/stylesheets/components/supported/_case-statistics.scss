@@ -9,3 +9,46 @@
 .border-left-colour-blue {
     border-left-color: govuk-colour("blue")
 }
+
+.overview-table {
+  .tower-name {
+    width: 50%;
+  }
+
+  .result-value {
+    width: calc(50% / 5);
+    text-align: center;
+  }
+
+  .result-money-value {
+    text-align: right;
+  }
+
+  th.result-money-value {
+    vertical-align: bottom;
+  }
+}
+
+.live-cases-table {
+  .row-header {
+    // width: 35%;
+    vertical-align: bottom;
+  }
+
+  .result-value {
+    // width: calc(65% / 4);
+    text-align: center;
+  }
+
+  .result-money-value {
+    text-align: right;
+  }
+
+  th.result-value {
+    vertical-align: bottom;
+  }
+
+  th.result-money-value {
+    vertical-align: bottom;
+  }
+}

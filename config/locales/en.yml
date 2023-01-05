@@ -221,6 +221,58 @@ en:
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you
     title: Get help buying for schools feedback
+  all_cases_survey:
+    start:
+      title: Start - Get help buying for schools feedback
+      header: Get help buying for schools feedback
+      body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.
+      privacy_policy: Privacy policy
+    satisfaction:
+      question_resolved_cases: How do you feel about the service you received?
+      question_opened_cases: How do you feel about the service you have received so far?
+      options:
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied nor dissatisfied
+        satisfied: Satisfied
+        very_dissatisfied: Very dissatisfied
+        very_satisfied: Very satisfied
+    satisfaction_reason:
+      question_resolved_cases: Tell us why you felt %{previous_response} with the service?
+      question_opened_cases: Tell us why you feel %{previous_response} with the service so far?
+    outcome_achieved:
+      question: I achieved the outcome I wanted as a result of the support I received from Get help buying for schools
+      options:
+        agree: Agree
+        disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
+        strongly_disagree: Strongly disagree
+    about_outcomes:
+      question: Tell us about the outcomes you were able to achieve because of the support you received
+    improvements:
+      question: Please tell us how we can improve this service?
+    accessibility_research:
+      question: Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?
+      question_info: We need to make sure our new service for school buyers is accessible for all users. If you have a disability or accessibility need, we would like you to take part in a research session. We'll pay you £50 for 45 to 60 minutes of your time.
+      question_examples_start: 'Examples of an accessibility need might be:'
+      question_examples:
+        - Cognitive, for example dyslexia, autism, ADHD, memory, speech
+        - Sight, for example colourblind, low vision, blind
+        - Hearing, for example Deaf or hard of hearing, users of British sign language (BSL)
+        - Mobility, for example fine motor impairment such as difficulty using your hands, speech, users of mobility aids, neurological
+        - Temporary, for example an injury
+      question_examples_end: Or you might be a user of assisted digital technology and software such as screen readers.
+      question_dates: The research session will be taking place in November and December 2022.
+      options:
+        'yes': 'Yes'
+        'no': 'No'
+      email: Please provide your email address. We will only use this to contact you about research.
+    thank_you:
+      link: Get help buying for schools service
+      contact_us: Contact us again and use the %{ghbs_link} if you need support with what you're buying next.
+      text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
+      title: Thank you - Get help buying for schools feedback
+      header: Thank you
   faf:
     check_answers:
       button:
@@ -246,7 +298,6 @@ en:
         id: ID
         uid: UID
         ukprn: UKPRN
-      title: Is this the academy trust or federation you're buying for? - Get help buying for schools - GOV.UK
     confirm_school:
       caption: About your school
       choice:
@@ -263,7 +314,6 @@ en:
         school_type: School type
         ukprn: UKPRN
         urn: URN
-      title: Is this the school you're buying for? - Get help buying for schools - GOV.UK
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school that your request is about?
       link:
@@ -304,7 +354,6 @@ en:
         summary: Can't find it?
       heading: Search for an academy trust or federation
       hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
-      title: Search for an academy trust or federation - Get help buying for schools - GOV.UK
     search_for_a_school:
       caption: About your school
       details:
@@ -316,17 +365,18 @@ en:
         summary: Can't find it?
       heading: Search for your school
       hint: Enter the name, postcode or unique reference number (URN) of your school
-      title: Search for your school - Get help buying for schools - GOV.UK
     start_page:
-      header: Request advice and guidance for your procurement
+      header: Request help and support for your procurement
       overview_category_list:
-      - general guidance on buying goods or services for schools
-      - specific advice on buying goods or services for your school using a DfE approved framework
+      - give you general guidance or specific advice on buying goods or services for your school
+      - give you support with buying goods or services for your school using a framework agreement
+      - buy on your behalf through a framework agreement
+      - buy on your behalf by getting quotes or bids for contract renewals or new procurements from an open supplier market
       overview_purpose: Use this service if you're a state funded school in England.
-      overview_response: The Get help buying for schools team will respond to you within 2 working days.
+      overview_response: The Get help buying for schools team aim to respond to you within 2 working days.
       subheading: Before you start
+      we_can: We can
       you_can: You can
-      you_can_ask_for: You can ask for
     user_organisation:
       header: Which school are you buying for?
     user_query:
@@ -537,6 +587,8 @@ en:
           state: Filter by status
           sub_category: Filter by sub-category
           tower: Filter by tower
+          stage: Filter by stage
+          level: Filter by level
       header:
         action: Actions
         case_attachments: Attachments
@@ -550,6 +602,7 @@ en:
         add_note: Add a case note
         additional_data:
           support_request:
+            category: Category
             email: Email address
             first_name: First name
             last_name: Last name
@@ -684,6 +737,7 @@ en:
           state_pipeline: Pipeline
           state_resolve: Resolved
           state_resolved: Resolved
+          state_live: Live
         status: Status
         sub_category: Sub-category
         support_level:
@@ -697,6 +751,7 @@ en:
         value:
           unspecified: Not specified
         view_resolved_cases: View all my resolved cases
+        view_tower_cases: View all cases in my tower
       link:
         change: change
         view_group_information: View group information (opens in a new tab)
@@ -853,6 +908,7 @@ en:
         case_source: Case source
         case_type: Type of case
         category_id: Buying category
+        detected_category_id: Cateogry (system assigned)
         email: Contact email
         email_preview: Preview email
         email_subject: Subject
@@ -883,6 +939,7 @@ en:
         query: Query
         query_details: Query details
         referrer: Referrer
+        referer: Referrer
         request_text: Summary
         school_name: Organisation name
         school_postcode: Organisation postcode
@@ -993,15 +1050,29 @@ en:
         header: Source
     case_statistics:
       body:
-        no_of_live_cases: Live cases
+        live_value: Live value
+        no_of_live_cases:
+          one: Live case
+          other: Live cases
+          zero: Live cases
       download:
         csv: Download CSV
       header: Case statistics
       header_link: Case Statistics
-      overview_by_tower:
-        header: Overview by tower
-        no_tower: No tower
-        tower: Tower
+      missing_data:
+        header: Missing data
+        no_level:
+          one: There is <strong>1</strong> live case with no level
+          other: There are <strong>%{count}</strong> live cases that have no level
+          zero: There are no live cases that have no level
+        no_stage:
+          one: There is <strong>1</strong> live case with no stage
+          other: There are <strong>%{count}</strong> live cases that have no stage
+          zero: There are no live cases that have no stage
+        no_value:
+          one: There is <strong>1</strong> live case with no value
+          other: There are <strong>%{count}</strong> live cases that have no value
+          zero: There are no live cases that have no value
       stages:
         contract_award: Contract award
         evaluation: Evaluation
@@ -1010,11 +1081,26 @@ en:
         market_analysis: Market analysis
         need: Need
         sourcing_options: Sourcing options
+        unspecified: Unspecified
       states:
         live: Live
         new: New
         on_hold: On hold
         open: Open
+      states_by_tower:
+        header: Overview by tower
+        tower: Tower
+        value: Value
+      support_levels:
+        L1: 1
+        L2: 2
+        L3: 3
+        L4: 4
+        L5: 5
+        unspecified: Unspecified
+      support_levels_by_tower:
+        header: Overview by case levels by tower
+        tower: Tower
       tower:
         header: "%{type} Statistics"
         level: Level
@@ -1022,6 +1108,9 @@ en:
         live_cases_by_stage: Live cases by stage
         stage: Stage
         unspecified: Unspecified
+      value_presence:
+        true: Specified
+        false: Unspecified
     case_summary:
       edit:
         header: Update case summary
@@ -1071,7 +1160,14 @@ en:
       message:
         created_flash: "%{type} added to case"
         exit_survey_sent: The exit survey email has been sent
+        all_cases_open_survey_sent: The survey for open cases email has been sent
+        all_cases_resolved_survey_sent: The survey for resolved cases email has been sent
       type:
+        case_categorisation_changed:
+          category: Category changed
+          query: Query changed
+          category_to_query: Category changed to query
+          query_to_category: Query changed to category
         create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge
@@ -1088,6 +1184,53 @@ en:
         savings_updated: Savings updated
         state_change: Status change
         support_request: Request for support
+    management:
+      agents:
+        header: Agents
+        table:
+          actions: Actions
+          admin: Admin
+          name: Name
+          no_tower_selected: "- No Tower Selected -"
+          save: Save
+          tower: Tower
+          type: Type
+          user_type: User type
+      all_cases_surveys:
+        header: All Cases Survey
+        eligible_cases:
+          label: Eligible cases
+          hint: List of case references that will receive the survey
+          send: Send
+        notice: Jobs queued
+      category_detection:
+        header: Category Detection
+        request_for_help_text: Test algorithm
+        submit: Detect category
+        results:
+          category: Category
+          matching_words: Matching words
+          header: Results
+          tower: Tower
+          similarity: Similarity
+
+      base:
+        configuration: Configuration
+        debug: Debug
+        header: CMS Management
+        tasks: Tasks
+      categories:
+        header: Categories
+        table:
+          actions: Actions
+          no_parent_selected: "- No Parent Selected -"
+          no_tower_selected: "- No Tower Selected -"
+          num_cases: "# Cases"
+          parent: Parent
+          parent_category: Parent Category
+          save: Save
+          title: Title
+          tower: Tower
     procurement_details:
       edit:
         ended_at:

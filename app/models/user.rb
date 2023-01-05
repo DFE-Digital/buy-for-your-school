@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
   # users who have the "analyst" role
   scope :analysts, -> { where("roles @> ?", %("analyst")) }
+  scope :admins, -> { where(admin: true) }
 
   # @return [false] distinguish from unauthenticated user
   #

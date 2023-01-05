@@ -2,7 +2,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
   context "when not signed in" do
     describe "the log in choice page" do
       before do
-        visit "/procurement-support/new"
+        visit "/procurement-support/sign_in"
       end
 
       it "asks if a DSI account is available" do
@@ -34,7 +34,24 @@ RSpec.feature "Creating a 'Find a Framework' request" do
       before do
         create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
         user_is_signed_in(user:)
-        visit "/procurement-support/new"
+        visit "/procurement-support/confirm_sign_in"
+        click_on "Yes, continue"
+      end
+
+      describe "CYA page" do
+        before do
+          fill_in "framework_support_form[message_body]", with: "I have a problem"
+          click_continue
+          click_continue
+          choose "Confident"
+          click_continue
+          choose "No"
+          click_continue
+        end
+
+        it "shows the inferred organisation" do
+          expect(page).to have_text "Specialist School for Testing"
+        end
       end
 
       describe "the message page" do
@@ -76,7 +93,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
       before do
         user_is_signed_in(user:)
-        visit "/procurement-support/new"
+        visit "/procurement-support/select_organisation"
       end
 
       it "lists all supported schools and groups" do

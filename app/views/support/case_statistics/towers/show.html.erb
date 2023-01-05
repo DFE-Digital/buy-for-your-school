@@ -1,0 +1,145 @@
+<% tower_id = @tower_statistics.tower_id || @tower_statistics.tower_slug %>
+
+<%= content_for :title, I18n.t("support.case_statistics.header") %>
+
+<div class="govuk-grid-row tower-overview">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("support.case_statistics.tower.header", type: @tower_statistics.name ) %>
+    </h1>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <%= link_to support_tower_path(tower_id, **filter_cases_params(state: "live")), class: "govuk-link govuk-link--inverse" do %>
+
+          <h1 class="govuk-panel__title govuk-!-margin-bottom-0 no_of_live_cases">
+            <%= @tower_statistics.live_cases %>
+          </h1>
+          <div class="govuk-panel__body">
+            <%= I18n.t("support.case_statistics.body.no_of_live_cases", count: @tower_statistics.live_cases) %>
+          </div>
+
+          <% end %>
+        </div>
+      </div>
+
+      <%
+=begin%>
+        # TODO: uncomment when ready to do case value work
+      <div class="govuk-grid-column-one-third">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title govuk-!-margin-bottom-0 live_value" title="<%= number_to_currency @tower_statistics.live_value, unit: '£' %>">
+            <%= number_to_currency number_to_human(@tower_statistics.live_value), unit: '£' %>
+          </h1>
+
+          <div class="govuk-panel__body">
+            <%= I18n.t("support.case_statistics.body.live_value") %>
+          </div>
+        </div>
+      </div>
+<%
+=end%>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-inset-text border-left-colour-green opened-live-cases">
+          <strong><%= @tower_statistics.open_cases %> </strong> <%= I18n.t("support.case.label.state.state_opened") %>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-inset-text border-left-colour-yellow on-hold-live-cases">
+          <strong><%= @tower_statistics.on_hold_cases %> </strong><%= I18n.t("support.case.label.state.state_on_hold") %>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-inset-text border-left-colour-blue initial-live-cases">
+          <strong><%= @tower_statistics.new_cases %> </strong><%= I18n.t("support.case.label.state.state_initial") %>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <table class="govuk-table overview-by-stage live-cases-table">
+          <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_statistics.tower.live_cases_by_stage") %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header row-header"><%= I18n.t("support.case_statistics.tower.stage") %></th>
+              <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states.open") %></th>
+              <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states.on_hold") %></th>
+              <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states.new") %></th>
+              <%
+=begin%>
+  # TODO: uncomment when ready to do case value work
+ <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states_by_tower.value") %></th>
+<%
+=end%>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @tower_statistics.breakdown_of_cases_by_stage.each do |stage| %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header"><%= link_to I18n.t("support.case_statistics.stages.#{stage.stage}"), support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></th>
+                <td class="govuk-table__cell result-value"><%= link_to stage.open_cases, support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "opened")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to stage.on_hold_cases, support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "on_hold")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to stage.new_cases, support_tower_path(tower_id, **filter_cases_params(stage: stage.stage, state: "initial")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <%
+=begin%>
+  # TODO: uncomment when ready to do case value work
+ <td class="govuk-table__cell result-money-value"><%= number_to_currency stage.live_value, unit: '£' %></td>
+<%
+=end%>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="govuk-grid-column-one-half">
+        <table class="govuk-table overview-by-level live-cases-table">
+          <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_statistics.tower.live_cases_by_level") %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header row-header"><%= I18n.t("support.case_statistics.tower.level") %></th>
+              <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states.open") %></th>
+              <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states.on_hold") %></th>
+              <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states.new") %></th>
+              <%
+=begin%>
+  # TODO: uncomment when ready to do case value work
+ <th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.states_by_tower.value") %></th>
+<%
+=end%>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @tower_statistics.breakdown_of_cases_by_level.each do |level| %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header"><%= link_to I18n.t("support.case_statistics.support_levels.#{level.support_level}"), support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></th>
+                <td class="govuk-table__cell result-value"><%= link_to level.open_cases, support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "opened")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to level.on_hold_cases, support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "on_hold")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to level.new_cases, support_tower_path(tower_id, **filter_cases_params(level: level.support_level, state: "initial")), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <%
+=begin%>
+# TODO: uncomment when ready to do case value work
+ <td class="govuk-table__cell result-money-value"><%= number_to_currency number_to_human(level.live_value, units: { thousand: 'k', million: 'M' }), unit: '£' %></td>
+<%
+=end%>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="govuk-heading-m"><%= I18n.t("support.case_statistics.missing_data.header") %></h2>
+<%
+=begin%>
+# TODO: uncomment when ready to do case value work
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_value", count: @tower_statistics.missing_value_cases), "#", class: "govuk-link govuk-link--no-visited-state" %></p>
+<%
+=end%>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_stage", count: @tower_statistics.missing_stage_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(stage: :unspecified, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_level", count: @tower_statistics.missing_level_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(level: :unspecified, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>

@@ -1,0 +1,12 @@
+<%= content_for :title, I18n.t("request.confidence_level.heading") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_radio_buttons_fieldset :confidence_level,
+      caption: { text: I18n.t("request.confidence_level.caption"), size: "l" },
+      legend: { text: I18n.t("request.confidence_level.heading"), size: "l" },
+      hint: { text: I18n.t("request.confidence_level.hint") } do %>
+        <% form.object.confidence_levels.each do |level| %>
+          <%= form.govuk_radio_button :confidence_level, level, label: { text: I18n.t("request.confidence_level.levels.#{level}") } %>
+        <% end %>
+<% end %>

@@ -43,7 +43,7 @@ module Support
     belongs_to :organisation, polymorphic: true, optional: true
     has_many :interactions, class_name: "Support::Interaction"
     has_many :emails, class_name: "Support::Email"
-    has_many :exit_survey_responses, class_name: "ExitSurveyResponses"
+    has_many :exit_survey_responses, class_name: "ExitSurveyResponse"
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy
     accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
@@ -61,22 +61,25 @@ module Support
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id:) }
-    scope :by_state, ->(state) { where(state:) }
+    scope :by_state, ->(state) { state == "live" ? where(state: %w[initial opened on_hold]) : where(state:) }
     scope :by_category, ->(category_id) { where(category_id:) }
-    scope :by_tower, ->(tower) { joins(:category).where(support_categories: { tower: }) }
+    scope :by_tower, ->(support_tower_id) { joins(:category).where(support_categories: { support_tower_id: }) }
+    scope :without_tower, -> { joins("JOIN support_tower_cases stc ON stc.id = support_cases.id").where(stc: { tower_slug: "no-tower" }) }
+    scope :by_stage, ->(stage) { joins(:procurement).where(procurement: { stage: }) }
+    scope :by_level, ->(support_level) { where(support_level:) }
 
     scope :priority_ordering, lambda {
       order(
         Arel.sql(
           <<-SQL,
             CASE
-              WHEN action_required = true THEN 20
-              WHEN state = 0 THEN 10
-              WHEN state = 1 THEN 9
-              WHEN state = 3 THEN 8
-              WHEN state = 2 THEN 7
+              WHEN support_cases.action_required = true THEN 20
+              WHEN support_cases.state = 0 THEN 10
+              WHEN support_cases.state = 1 THEN 9
+              WHEN support_cases.state = 3 THEN 8
+              WHEN support_cases.state = 2 THEN 7
               ELSE 1
-            END DESC, ref DESC
+            END DESC, support_cases.ref DESC
           SQL
         ),
       )
@@ -152,6 +155,19 @@ module Support
 
         find_each { |record| csv << record.attributes.values }
       end
+    end
+
+    def reopen_due_to_email
+      open!
+      interactions.state_change.create!(body: "Case reopened due to receiving a new email.")
+    end
+
+    def log_categorisation_change(from:, to:, type:, agent_id:)
+      interactions.case_categorisation_changed.create!(
+        additional_data: { from:, to:, type: },
+        agent_id:,
+        body: "Categorisation change",
+      )
     end
 
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)

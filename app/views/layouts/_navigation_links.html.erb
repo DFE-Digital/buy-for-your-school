@@ -13,6 +13,12 @@
           <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
         </li>
 
+        <% if current_user.admin? %>
+          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+            <%= link_to 'Management', support_management_path, class: "govuk-header__link" %>
+          </li>
+        <% end %>
+
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.cases.my_cases.header_link"), support_cases_path(anchor: 'my-cases'), class: "govuk-header__link" %>
         </li>

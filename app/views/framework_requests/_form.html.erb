@@ -1,0 +1,15 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :framework_support_form, url: path, method: verb, id: "framework-support-form"  do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <%= render "framework_requests/#{route}/form", form: form %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+    <% end %>
+  </div>
+</div>
+
+<% if Rails.env.development? %>
+  <%= render "framework_requests/debug" %>
+<% end %>

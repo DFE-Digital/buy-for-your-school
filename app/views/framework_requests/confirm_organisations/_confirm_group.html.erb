@@ -1,0 +1,53 @@
+<%= content_for :title, I18n.t("faf.confirm_group_or_trust.heading") %>
+
+<span class="govuk-caption-l"><%= I18n.t("faf.confirm_group_or_trust.caption") %></span>
+<h1 class="govuk-heading-l"><%= I18n.t("faf.confirm_group_or_trust.heading") %></h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_group_or_trust.summary.group_name") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.name %>,<br>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_group_or_trust.summary.address") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.formatted_address %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_group_or_trust.summary.group_type") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.group_type %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("faf.confirm_group_or_trust.summary.id") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= I18n.t("faf.confirm_group_or_trust.summary.uid") %>: <%= org.uid %><br>
+      <% if org.ukprn %>
+        <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= org.ukprn %>
+      <% end %>
+    </dd>
+  </div>
+</dl>
+
+<%=
+  form.govuk_collection_radio_buttons :org_confirm,
+    [
+      OpenStruct.new(value: true, label: I18n.t("faf.confirm_school.choice.continue")),
+      OpenStruct.new(value: false, label: I18n.t("faf.confirm_group_or_trust.choice.go_back")),
+    ],
+    :value,
+    :label,
+    legend: nil
+%>

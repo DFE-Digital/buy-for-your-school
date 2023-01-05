@@ -50,6 +50,13 @@ RSpec.describe Support::SeedCategories do
     end
   end
 
+  xit "saves archived status of categories" do
+    service.call
+    expect(Support::Category.find_by(title: "Broadband service")).to be_archived
+    expect(Support::Category.find_by(title: "Broadband Infrastructure")).to be_archived
+    expect(Support::Category.find_by(title: "Switches & Routers")).not_to be_archived
+  end
+
   context "when a sub category has the same name as the parent" do
     it "creates them both linking them as parent and sub category" do
       service.call
@@ -57,6 +64,33 @@ RSpec.describe Support::SeedCategories do
       expect(Support::Category.where(title: "Furniture").count).to be 2
       parent = Support::Category.find_by(title: "Furniture", parent_id: nil)
       expect(parent.sub_categories.pluck(:title)).to eq(%w[Furniture])
+    end
+  end
+
+  context "when the parent category has a tower" do
+    it "saves the tower to the parent category" do
+      service.call
+
+      catering = Support::Category.find_by(title: "Catering")
+      expect(catering.tower_title).to eq("FM & Catering")
+    end
+
+    context "and the sub category has not defined a tower" do
+      it "sets the sub category tower to be the tower defined on the parent" do
+        service.call
+
+        water = Support::Category.find_by(title: "Water, drains & sewerage")
+        expect(water.tower_title).to eq("FM & Catering")
+      end
+    end
+
+    context "and the sub category has defined a tower" do
+      it "sets the sub category tower to be its own defined tower" do
+        service.call
+
+        transport = Support::Category.find_by(title: "Transport")
+        expect(transport.tower_title).to eq("Services")
+      end
     end
   end
 end

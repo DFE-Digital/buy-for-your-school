@@ -1,16 +1,29 @@
-module Support
-  class TowersController < CaseStatisticsController
-    before_action :set_tower_view_fields, only: :show
+require "will_paginate/array"
 
-    def show; end
+module Support
+  class TowersController < ::Support::ApplicationController
+    def show
+      @back_url = request.referer || support_cases_path
+
+      @towers = Support::Tower.every_tower
+
+      @tower = tower
+
+      @filter_form = Support::CaseFilterForm.new(
+        **filter_cases_params.to_h.merge(base_cases: @tower.cases),
+      )
+
+      @cases = @filter_form.results.paginate(page: params[:page], per_page: 30)
+    end
 
   private
 
-    def set_tower_view_fields
-      @stages = Procurement.stages.to_h.keys
-      @levels = Case.support_levels.to_h.keys
-      @no_of_live_cases_by_tower_state_and_stage = Tower.group(:procops_tower, :state, :stage).count
-      @no_of_live_cases_by_tower_state_and_level = Tower.group(:procops_tower, :state, :support_level).count
+    def tower
+      params[:id] == "no-tower" ? Support::Tower.nil_tower : Support::Tower.find(params[:id])
+    end
+
+    def filter_cases_params
+      params.fetch(:filter_cases, {}).permit(:category, :agent, :state, :stage, :level)
     end
   end
 end
