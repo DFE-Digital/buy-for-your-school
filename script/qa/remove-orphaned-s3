@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# In order to delete an s3 bucket it needs to be empty
+# If for some reason the QA app has been deleted but the s3 remains
+# .. we need to use another QA app as "surrogate" to connecting to s3
+# .. and emptying it before we can destroy it proper.
+
+# usage:
+# ./script/qa/remove-orphaned-s3 1000 2000
+# Where 1000 refers to app named buy-for-your-school-qa-1000 which will be used to delete s3
+# And   2000 refers to service named qa-2000-s3 the s3 you need to delete
+
+# Make sure the QA you use is one you don't care much about as it will lose s3 until the script is done
+# It might be quicker to use the worker instance rather than web, but I haven't tested that.
+
+HOST=$1
+TARGET=$2
+CF_APP_NAME=buy-for-your-school-qa-$HOST
+
+# remove proper S3 from qa app so we don't wipe it
+cf unbind-service $CF_APP_NAME qa-$HOST-s3
+
+# bind the s3 we need to wipe
+cf bind-service $CF_APP_NAME qa-$TARGET-s3
+
+# restage to see results in console
+cf restage $CF_APP_NAME --strategy rolling
+
+# wipe s3
+cf ssh $CF_APP_NAME -c 'cd /srv/app; export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin; echo "Aws::S3::Resource.new.bucket(ENV[\"BUCKET_NAME\"]).objects.batch_delete!" | rails console'
+
+# unbind target from qa so we can delete it
+cf unbind-service $CF_APP_NAME qa-$TARGET-s3
+
+# re-bind proper s3 to qa so it can continue as normal after
+cf bind-service $CF_APP_NAME qa-$HOST-s3
+
+# restage qa to see results of rebidning
+cf restage $CF_APP_NAME --strategy rolling
+
+# delete the unwanted s3
+cf delete-service qa-$TARGET-s3
