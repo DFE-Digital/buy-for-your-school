@@ -9,7 +9,7 @@
   </h2>
 
   <div class="govuk-grid-row">
-    <% if tab == "all-cases" %>
+    <% if tab == "all-cases" || tab == "tower" %>
       <div class="govuk-grid-column-one-quarter">
         <%= f.govuk_select :state,
                               options_for_select(f.object.case_states.map { |s| [s.title, s.id] },
@@ -37,7 +37,7 @@
     </div>
     <% end %>
 
-    <% if tab == "all-cases" %>
+    <% if tab == "all-cases" || tab == "tower" %>
       <div class="govuk-grid-column-one-quarter">
         <%= f.govuk_select :agent,
                               options_for_select(f.object.agents.map { |a| [a.full_name, a.id] },

@@ -8,6 +8,11 @@
       </a>
     </li>
     <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#tower">
+        <%= I18n.t("support.case.list.tower") %>
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
       <a class="govuk-tabs__tab" href="#new-cases">
         <%= I18n.t("support.case.list.new_cases") %>
       </a>
@@ -69,6 +74,60 @@
         <%= link_to I18n.t("support.case.label.view_resolved_cases"), support_case_search_index_path(search_case_form: { search_term: current_agent.last_name.downcase, state: "resolved", agent: current_agent.id }), class: "govuk-link govuk-link--no-visited-state" %>
         <% if current_agent.support_tower.present? %>
           <br /><%= link_to I18n.t("support.case.label.view_tower_cases"), support_tower_path(current_agent.support_tower), class: "govuk-link govuk-link--no-visited-state" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-tabs__panel" id="tower">
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-tower" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
+    <h2 id="tower-name" class="govuk-heading-l"><%= current_agent.tower_name %></h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <%= render "support/cases/forms/filter_cases_form",
+                   form: @tower_cases_filter_form,
+                   scope: :filter_tower_form,
+                   filter_url: support_cases_path(anchor: "tower"),
+                   clear_url: support_cases_path(anchor: "tower"),
+                   tab: "tower",
+                   hide_towers: true %>
+        <% if @tower_cases.none? %>
+          <p class="govuk-body">
+            <%= I18n.t("support.case.list.not_found") %>
+          </p>
+        <% else %>
+          <table class="govuk-table" aria-describedby="tower-name">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">
+                  <%= I18n.t("support.case.label.case") %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= I18n.t("support.case.label.organisation") %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= I18n.t("support.case.label.sub_category") %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= I18n.t("support.case.label.status") %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= I18n.t("support.case.label.assigned_to") %>
+                </th>
+                <th class="govuk-table__header" scope="col">
+                  <%= I18n.t("support.case.label.last_updated") %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <% @tower_cases.each do |kase| %>
+                  <%= render "row", kase: kase, tab: :tower %>
+              <% end %>
+            </tbody>
+          </table>
+          <%= render "components/pagination", records: @tower_cases, page_param_name: 'tower_page', pagination_params: { anchor: "tower" } %>
         <% end %>
       </div>
     </div>
