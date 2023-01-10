@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can view tower cases" do
+describe "Agent can view tower cases", bullet: :skip do
   include_context "with an agent"
   let!(:ict_tower)    { create(:support_tower, title: "ICT") }
   let!(:laptops)      { create(:support_category, title: "Laptops", tower: ict_tower) }

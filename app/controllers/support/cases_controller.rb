@@ -25,6 +25,10 @@ module Support
           @my_cases = CasePresenter
             .wrap_collection(@my_cases_filter_form.results)
             .paginate(page: params[:my_cases_page])
+
+          @tower_cases = CasePresenter
+            .wrap_collection(@tower_cases_filter_form.results)
+            .paginate(page: params[:tower_page])
         end
       end
     end
@@ -120,12 +124,16 @@ module Support
       my_cases_form_params = filter_forms_params(:filter_my_cases_form)
         .merge(base_cases: Case.by_agent(current_agent.id).where.not(state: %i[closed resolved]))
 
+      tower_cases_form_params = filter_forms_params(:filter_tower_form)
+        .merge(base_cases: Case.by_tower(current_agent.support_tower_id))
+
       all_cases_form_params = filter_forms_params(:filter_all_cases_form)
 
       new_cases_form_params = filter_forms_params(:filter_new_cases_form)
         .merge(base_cases: Case.initial)
 
       @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
+      @tower_cases_filter_form = CaseFilterForm.new(**tower_cases_form_params)
       @new_cases_filter_form = CaseFilterForm.new(**new_cases_form_params)
       @all_cases_filter_form = CaseFilterForm.new(**all_cases_form_params)
     end

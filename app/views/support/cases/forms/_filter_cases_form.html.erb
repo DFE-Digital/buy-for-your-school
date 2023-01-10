@@ -1,3 +1,3 @@
 <div class="<%= toggle_visibility?(scope) %>" id="<%= "filter-#{tab}" %>">
-  <%= render 'support/cases/forms/simple_case_filters', form:, scope:, filter_url:, tab:, clear_url: %>
+  <%= render 'support/cases/forms/simple_case_filters', form:, scope:, filter_url:, tab:, clear_url:, hide_towers: defined?(hide_towers) ? hide_towers : false %>
 </div>

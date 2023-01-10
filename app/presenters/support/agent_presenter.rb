@@ -28,5 +28,9 @@ module Support
         "full_name" => full_name,
       })
     end
+
+    def tower_name
+      "#{support_tower&.title || 'No'} #{I18n.t('support.case.list.tower')}"
+    end
   end
 end

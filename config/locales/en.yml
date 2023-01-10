@@ -761,6 +761,7 @@ en:
         my_cases: My cases
         new_cases: New cases
         not_found: No cases found
+        tower: Tower
       new:
         request_text:
           header: Description of query
