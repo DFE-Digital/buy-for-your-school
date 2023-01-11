@@ -11,7 +11,7 @@ describe "Agent can view uploaded bills" do
       visit support_case_path(support_case)
 
       within "#case-attachments tr", text: "energy_bill_1.pdf" do
-        expect(page).to have_link("energy_bill_1.pdf", href: rails_blob_path(bill.file, disposition: "attachment"))
+        expect(page).to have_link("energy_bill_1.pdf", href: support_document_download_path(bill, type: bill.class))
       end
     end
   end
