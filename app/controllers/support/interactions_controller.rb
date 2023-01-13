@@ -19,7 +19,7 @@ module Support
       if @interaction.save
         record_action(case_id: @interaction.case.id, action: "add_interaction", data: { event_type: @interaction.event_type })
 
-        redirect_to logged_contacts_support_case_message_threads_path(@interaction.case),
+        redirect_to determine_redirect_path(@interaction.event_type),
                     notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize
       else
         render :new, locals: { option: safe_interaction }
@@ -39,6 +39,15 @@ module Support
 
     def current_case
       @current_case || Case.find(params[:case_id])
+    end
+
+    def determine_redirect_path(event_type)
+      case event_type
+      when "note"
+        support_case_path(current_case, anchor: "case-history")
+      else
+        logged_contacts_support_case_message_threads_path(current_case)
+      end
     end
   end
 end
