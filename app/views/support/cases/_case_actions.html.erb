@@ -28,6 +28,9 @@
 
      <% if @current_case.on_hold? %>
       <li>
+        <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
+      </li>
+      <li>
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
     <% end %>
