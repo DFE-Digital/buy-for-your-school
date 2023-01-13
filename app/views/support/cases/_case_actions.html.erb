@@ -1,12 +1,12 @@
 <h3 class="govuk-heading-m"><%= I18n.t("support.case.header.action") %></h3>
 
   <ul class="govuk-list case-actions">
+    <li>
+      <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
+    </li>
     <% if @current_case.opened? %>
       <li>
         <%= link_to I18n.t("support.case.label.change_owner"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
-      </li>
-      <li>
-        <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
       </li>
       <li>
         <%= link_to I18n.t("support.case.label.send_template_email"), support_case_email_templates_path(@current_case), class: "govuk-link" %>
@@ -27,9 +27,6 @@
     <% end %>
 
      <% if @current_case.on_hold? %>
-      <li>
-        <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
-      </li>
       <li>
         <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
