@@ -62,7 +62,7 @@ module Support
       def body_for_display(view_context, body_field: :unique_body)
         # Do initial removal of links, and replace images with inline attachments
         new_body = body_with_links_removed(
-          view_context, body_with_inline_attachments(view_context, send(body_field))
+          view_context, body_with_inline_attachments(view_context, String(send(body_field)))
         )
 
         # remove comments
