@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "3.1.2"
+ruby "3.2.0"
 
 gem "aasm"
 gem "aws-sdk-s3", require: false
@@ -34,7 +34,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pandoc-ruby"
 gem "pg"
 gem "pg_search"
-gem "puma", "5.6.5"
+gem "puma", "~> 6"
 gem "rails", "~> 7.0.3"
 gem "rails_semantic_logger"
 gem "redis", "~> 4.5"
@@ -42,8 +42,8 @@ gem "redis-namespace"
 gem "redis-rails"
 gem "rollbar"
 gem "scenic"
-gem "sidekiq", "~> 6.4"
-gem "sidekiq-cron", "~> 1.2"
+gem "sidekiq", "~> 7"
+gem "sidekiq-cron", "~> 1.9"
 gem "sprockets-rails"
 gem "thor"
 gem "turbolinks", "~> 5"
