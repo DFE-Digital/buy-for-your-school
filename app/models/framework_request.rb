@@ -1,6 +1,8 @@
 class FrameworkRequest < Request
   belongs_to :user, optional: true
 
+  has_many :energy_bills, class_name: "EnergyBill"
+
   enum energy_request_about: { energy_contract: 0, general_question: 1, something_else: 2 }, _suffix: true
   enum energy_alternative: { different_format: 0, email_later: 1, no_bill: 2, no_thanks: 3 }, _suffix: true
 
@@ -9,5 +11,7 @@ class FrameworkRequest < Request
       (have_energy_bill || energy_alternative == "different_format")
   end
 
-  def has_bills?; end
+  def has_bills?
+    energy_bills.any?
+  end
 end

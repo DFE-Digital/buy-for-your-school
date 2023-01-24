@@ -289,6 +289,7 @@ en:
         school: Your school
         school_type: School type
         single: Single
+        bills_attached: Bills attached
       header: Send your request
       response_time: Once you send this request, we will review it and get in touch within 2 working days.
     confirm_group_or_trust:
@@ -441,7 +442,7 @@ en:
       what_happens_next:
       - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
       - If you chose to email your bills, there will be instructions in the confirmation email telling you how to do this.
-      - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it. 
+      - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it.
       - You'll need to submit your request again if you do not receive an email from us because this is how we'll be contacting you.
     header:
       confirmation: Your request for support has been sent
@@ -672,6 +673,7 @@ en:
             attachment_name: Attachment name
             date_added: Date added
             description: Description
+            energy_bill: User submitted energy bill
         case: Case
         case_history:
           table:
@@ -959,10 +961,11 @@ en:
           source: Case source
         submit: Create case
       label:
+        bills: Uploaded bills
         case_source: Case source
         case_type: Type of case
         category_id: Buying category
-        detected_category_id: Cateogry (system assigned)
+        detected_category_id: Category (system assigned)
         email: Contact email
         email_preview: Preview email
         email_subject: Subject
