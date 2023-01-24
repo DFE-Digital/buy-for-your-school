@@ -61,6 +61,20 @@ jobs:
 
       - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
 
+  jest:
+    name: Checks - Jest
+    needs: build_test
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install node modules
+        run: yarn install
+
+      - name: Run tests
+        run: yarn jest
+
   rspec:
     name: Checks - Rspec
     needs: build_test
