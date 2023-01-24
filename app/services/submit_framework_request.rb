@@ -25,22 +25,14 @@ class SubmitFrameworkRequest
   def call
     return false unless open_case
 
-    # TODO: confirmation message body forms the first CM interaction
-    # email = Emails::Confirmation.new().call
-    # message = email.content["body"]
-    #
-    Emails::Confirmation.new(
-      recipient: request.user,
-      reference: @kase.ref,
-      template:,
-      variables: {
-        message: request.message_body,
-      },
-    ).call
+    send_confirmation_email
 
     UserJourney
       .find_by(framework_request_id: request.id)
       .try(:update!, case: @kase, status: :case_created)
+
+    EnergyBill.where(framework_request_id: request.id)
+      .update_all(submission_status: :submitted, support_case_id: @kase.id)
 
     request.update!(submitted: true)
   end
@@ -97,5 +89,26 @@ private
   def detected_category_id
     @results ||= Support::CategoryDetection.results_for(request.message_body, num_results: 1)
     @results.first.try(:category_id) if @results.any?
+  end
+
+  def send_confirmation_email
+    if request.has_bills? || request.energy_alternative == :email_later
+      Emails::ConfirmationEnergy.new(
+        recipient: request.user,
+        reference: @kase.ref,
+        variables: {
+          message: request.message_body,
+        },
+      ).call
+    else
+      Emails::Confirmation.new(
+        recipient: request.user,
+        reference: @kase.ref,
+        template:,
+        variables: {
+          message: request.message_body,
+        },
+      ).call
+    end
   end
 end

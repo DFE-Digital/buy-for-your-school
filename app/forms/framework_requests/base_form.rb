@@ -2,6 +2,8 @@ module FrameworkRequests
   class BaseForm
     include ActiveModel::Model
 
+    delegate :allow_bill_upload?, to: :framework_request
+
     attr_accessor(
       :id,
       :dsi,
@@ -37,7 +39,16 @@ module FrameworkRequests
     end
 
     def data
-      to_h.except(:id, :dsi, :school_type, :org_confirm, :special_requirements_choice, :user, :validation_context, :errors)
+      to_h.except(
+        :id,
+        :dsi,
+        :school_type,
+        :org_confirm,
+        :special_requirements_choice,
+        :user,
+        :validation_context,
+        :errors,
+      )
     end
 
     def common

@@ -17,7 +17,6 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      # byebug
       email_framework_requests_path(framework_support_form: form.common)
     end
 

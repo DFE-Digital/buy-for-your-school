@@ -10,6 +10,7 @@ module Support
       exit_survey: "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
       all_cases_survey_open: "76f6f7ba-26d1-4c00-addd-12dc9d8d49fc",
       all_cases_survey_resolved: "a56e5c50-78d1-4b5f-a2ff-73df78b7ad99",
+      confirmation_energy: "2a2b7b46-2034-4e7b-aaec-4c9bf0b76f3f",
     }.freeze
 
     def self.label_for(id)

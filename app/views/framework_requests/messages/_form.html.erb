@@ -8,5 +8,5 @@
   rows: 5,
   caption: { text: I18n.t("faf.user_query.caption"), size: "l" },
   label: { text: I18n.t("faf.user_query.label"), size: "l" },
-  hint: { text: I18n.t("faf.user_query.hint") }
+  hint: -> { render "form_hint" }
 %>

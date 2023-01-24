@@ -3,6 +3,8 @@ describe FrameworkRequests::BaseForm, type: :model do
 
   let(:data) { {} }
 
+  it { is_expected.to delegate_method(:allow_bill_upload?).to(:framework_request) }
+
   describe "#dsi?" do
     let(:data) { { dsi: "true" } }
 

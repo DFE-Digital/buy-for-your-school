@@ -13,11 +13,10 @@ module FrameworkRequests
 
     def create_redirect_path
       @current_user = UserPresenter.new(current_user)
-      if @current_user.single_org?
-        message_framework_requests_path(framework_support_form: form.data)
-      else
-        select_organisation_framework_requests_path
-      end
+      return select_organisation_framework_requests_path(framework_support_form: form.common) unless @current_user.single_org?
+      return bill_uploads_framework_requests_path(framework_support_form: form.common) if @form.allow_bill_upload?
+
+      message_framework_requests_path(framework_support_form: form.common)
     end
 
     def set_inferred_attrbutes
