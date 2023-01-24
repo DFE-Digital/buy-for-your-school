@@ -79,6 +79,7 @@ private
         "message": request.message_body,
         "referrer": referrer,
         "detected_category_id": detected_category_id,
+        "bills": request.bill_filenames,
       },
     }
     Support::CreateInteraction.new(@kase.id, "faf_support_request", nil, interaction_attrs).call

@@ -20,6 +20,8 @@ module Support
           formatted_hash["detected_category_id"] = value.present? ? category(value).title : "None"
         when "email_template"
           formatted_hash["email_template"] = EmailTemplates.label_for(value)
+        when "bills"
+          formatted_hash["bills"] = helpers.link_to("View bills in attachments tab &raquo;".html_safe, routes.support_case_path(id: self.case, anchor: "case-attachments"), class: "govuk-link")
         else
           formatted_hash[field] = value
         end

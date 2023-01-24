@@ -58,4 +58,20 @@ RSpec.describe FrameworkRequest, type: :model do
       end
     end
   end
+
+  describe "#has_bills?" do
+    context "when there are associated energy bills" do
+      before { create(:energy_bill, framework_request:) }
+
+      it "returns true" do
+        expect(framework_request.has_bills?).to eq true
+      end
+    end
+
+    context "when there are no associated energy bills" do
+      it "returns false" do
+        expect(framework_request.has_bills?).to eq false
+      end
+    end
+  end
 end

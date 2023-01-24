@@ -4,6 +4,8 @@ FactoryBot.define do
     filename { "MyString" }
     filesize { 1 }
 
+    association :framework_request, factory: :framework_request
+
     trait :pending do
       submission_status { :pending }
     end

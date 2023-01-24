@@ -58,6 +58,8 @@ module Support
 
     has_many :message_threads, class_name: "Support::MessageThread"
 
+    has_many :energy_bills, class_name: "EnergyBill", foreign_key: :support_case_id
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id:) }
