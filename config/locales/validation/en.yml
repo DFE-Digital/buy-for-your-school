@@ -40,6 +40,22 @@ en:
             attributes:
               org_id:
                 blank: Select the school or group you want help buying for
+          framework_requests/energy_request_form:
+            attributes:
+              is_energy_request:
+                blank: Select whether your request is about energy
+          framework_requests/energy_request_about_form:
+            attributes:
+              energy_request_about:
+                blank: Select what your energy request is about
+          framework_requests/energy_bill_form:
+            attributes:
+              have_energy_bill:
+                blank: Select whether you have a recent energy bill you can upload
+          framework_requests/energy_alternative_form:
+            attributes:
+              energy_alternative:
+                blank: Select how you would like to provide your energy information
 
   request:
     rules:

@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "citext"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -119,6 +118,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
   end
 
+  create_table "energy_bills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "submission_status", default: 0
+    t.string "filename"
+    t.integer "filesize"
+    t.uuid "support_case_id"
+    t.uuid "framework_request_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["framework_request_id"], name: "index_energy_bills_on_framework_request_id"
+    t.index ["support_case_id"], name: "index_energy_bills_on_support_case_id"
+  end
+
   create_table "exit_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "case_id"
     t.integer "satisfaction_level"
@@ -169,6 +180,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.integer "confidence_level"
     t.string "special_requirements"
+    t.boolean "is_energy_request"
+    t.integer "energy_request_about"
+    t.boolean "have_energy_bill"
+    t.integer "energy_alternative"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -691,6 +706,48 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
   add_foreign_key "user_journeys", "framework_requests"
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -792,48 +849,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
-  SQL
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE (organisations.status <> 2)
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,

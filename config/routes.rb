@@ -55,6 +55,18 @@ Rails.application.routes.draw do
       collection do
         post "/start", to: "start#create"
 
+        get "/energy_request", to: "energy_request#index"
+        post "/energy_request", to: "energy_request#create"
+
+        get "/energy_request_about", to: "energy_request_about#index"
+        post "/energy_request_about", to: "energy_request_about#create"
+
+        get "/energy_bill", to: "energy_bill#index"
+        post "/energy_bill", to: "energy_bill#create"
+
+        get "/energy_alternative", to: "energy_alternative#index"
+        post "/energy_alternative", to: "energy_alternative#create"
+
         get "/sign_in", to: "sign_in#index"
         post "/sign_in", to: "sign_in#create"
 
@@ -79,6 +91,12 @@ Rails.application.routes.draw do
         get "/email", to: "emails#index"
         post "/email", to: "emails#create"
 
+        get "/bill_uploads", to: "bill_uploads#index"
+        post "/bill_uploads", to: "bill_uploads#create"
+        get "(:id)/bill_uploads/list", to: "bill_uploads#list", as: "list_bill_uploads"
+        post "(:id)/bill_uploads/upload", to: "bill_uploads#upload", as: "upload_bill_uploads"
+        delete "(:id)/bill_uploads/remove", to: "bill_uploads#remove", as: "remove_bill_uploads"
+
         get "/message", to: "messages#index"
         post "/message", to: "messages#create"
 
@@ -98,6 +116,7 @@ Rails.application.routes.draw do
         resource :confirm_organisation, only: %i[edit update], as: :framework_request_confirm_organisation
         resource :name, only: %i[edit update], as: :framework_request_name
         resource :email, only: %i[edit update], as: :framework_request_email
+        resource :bill_uploads, only: %i[edit update], as: :framework_request_bill_uploads
         resource :message, only: %i[edit update], as: :framework_request_message
         resource :procurement_amount, only: %i[edit update], as: :framework_request_procurement_amount
         resource :procurement_confidence, only: %i[edit update], as: :framework_request_procurement_confidence

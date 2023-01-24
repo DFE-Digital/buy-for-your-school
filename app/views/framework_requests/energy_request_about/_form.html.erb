@@ -1,0 +1,11 @@
+<%= content_for :title, I18n.t("faf.energy_request_about.header") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_radio_buttons_fieldset :energy_request_about,
+    legend: { text: I18n.t("faf.energy_request_about.header"), size: "l" },
+    caption: { text: I18n.t("faf.energy_request_about.subtitle"), size: "l" } do %>
+    <% form.object.energy_request_about_options.each do |option| %>
+      <%= form.govuk_radio_button :energy_request_about, option, label: { text: I18n.t("faf.energy_request_about.options.#{option}") } %>
+    <% end %>
+<% end %>

@@ -40,6 +40,7 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SignInHelpers, type: :feature
   config.include SignInHelpers, type: :request
+  config.include SignInHelpers, type: :controller
   config.include TinymceHelpers, type: :feature
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

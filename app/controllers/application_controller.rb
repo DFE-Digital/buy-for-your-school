@@ -61,4 +61,8 @@ protected
   def cookie_policy
     CookiePolicy.new(cookies)
   end
+
+  def current_url_b64
+    Base64.encode64(request.fullpath)
+  end
 end

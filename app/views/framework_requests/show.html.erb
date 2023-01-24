@@ -76,19 +76,21 @@
         </dd>
       </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("request.label.procurement_amount") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @framework_request.procurement_amount %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <% unless @framework_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_procurement_amount_path(@framework_request), class: "govuk-link", id: "edit-procurement-amount" %>
-          <% end %>
-        </dd>
-      </div>
+      <% unless @framework_request.allow_bill_upload? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("request.label.procurement_amount") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @framework_request.procurement_amount %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <% unless @framework_request.submitted? %>
+              <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_procurement_amount_path(@framework_request), class: "govuk-link", id: "edit-procurement-amount" %>
+            <% end %>
+          </dd>
+        </div>
+      <% end %>
 
       <% if @framework_request.confidence_level %>
         <div class="govuk-summary-list__row">

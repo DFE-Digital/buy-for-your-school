@@ -1,0 +1,86 @@
+.upload-item {
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #b1b4b6;
+
+  display: flex;
+  flex-direction: column;
+
+  &.dz-error {
+    border-color: #d4351c;
+    border-width: 2px;
+
+    .progress-status {
+      color: #d4351c;
+      font-weight: bold;
+    }
+  }
+}
+
+.upload-item h3 {
+  margin-bottom: 0;
+}
+
+.upload-row.file-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.upload-row.pending {
+  display: none;
+}
+
+.upload-item .progress-status.complete {
+  font-weight: bold;
+}
+
+
+.progress-status {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.upload-progress-container {
+  background-color: #b1b4b6;
+  width: 100%;
+  height: 20px;
+
+  .upload-progress {
+    background-color: #356bb5;
+    height: 100%;
+    width: 0%;
+  }
+}
+
+.drop-zone-container {
+  margin-bottom: 30px;
+
+  &.dz-drag-hover {
+    .drop-zone {
+      background: #b1b4b6;
+      outline-color: #6f777b;
+    }
+  }
+
+  .drop-zone {
+    outline: 3px dashed #0b0c0c;
+    display: flex;
+    text-align: center;
+    padding: 60px 15px;
+    transition: outline-offset .1s ease-in-out,background-color .1s linear;
+
+    p {
+      margin-bottom: 0;
+      margin-right: 10px;
+      padding-top: 7px;
+    }
+
+    .govuk-button {
+      margin-bottom: 0;
+      display: inline-block;
+      width: auto;
+    }
+  }
+}
+

@@ -10,8 +10,8 @@ function changeFormAction(path) {
 }
 
 window.addEventListener("load", () => {
-  const dsiRadioButton = document.querySelectorAll("input[value=true]")[0];
-  const guestRadioButton = document.querySelectorAll("input[value=false]")[0];
+  const dsiRadioButton = document.querySelectorAll("input[value=true][type=radio]")[0];
+  const guestRadioButton = document.querySelectorAll("input[value=false][type=radio]")[0];
 
   dsiRadioButton.addEventListener("change", () => {
     if (dsiRadioButton.checked) {
