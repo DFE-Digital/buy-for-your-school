@@ -1,21 +1,16 @@
 window.addEventListener("load", () => {
+  // Query
   const querySelect = document.getElementById("select_request_details_query_id");
-
-  if (querySelect.options[querySelect.selectedIndex].text != 'Other') {
-    changeOtherQueryTextState("hidden")
-  }
-
   querySelect.addEventListener("change", toggleQueryOtherBoxVisibility);
+  toggleQueryOtherBoxVisibility.bind(querySelect)();
 
+  // Category
   const categorySelect = document.getElementById("select_request_details_category_id");
-
-  if (categorySelect.options[categorySelect.selectedIndex].text != "Other") {
-    changeOtherCategoryTextState("hidden")
-  }
   categorySelect.addEventListener("change", toggleCategoryOtherBoxVisibility);
+  toggleCategoryOtherBoxVisibility.bind(categorySelect)();
 
+  // Request type
   const requestTypeOptions = document.querySelectorAll(".request_type_option")
-
   requestTypeOptions.forEach(option => {option.addEventListener("click", removeValuesOnSelect)});
 });
 
@@ -92,9 +87,6 @@ function toggleQueryOtherBoxVisibility() {
 }
 
 function toggleCategoryOtherBoxVisibility() {
-  if (this.options[this.selectedIndex].text == 'Other') {
-    changeOtherCategoryTextState("visible");
-  } else {
-    changeOtherCategoryTextState("hidden")
-  }
+  const otherOrChosen = this.options[this.selectedIndex].text == 'Other (General)'
+  changeOtherCategoryTextState(otherOrChosen ? "visible" : "hidden")
 }

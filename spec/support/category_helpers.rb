@@ -12,7 +12,7 @@ module CategoryHelpers
     define_categories(
       "ICT" => %w[Peripherals Laptops Websites],
       "Energy" => %w[Electricity Gas Water],
-      "Or" => ["Not yet known", "No applicable category", "Other"],
+      "Or" => ["Not yet known", "No applicable category", "Other (General)"],
     )
   end
 

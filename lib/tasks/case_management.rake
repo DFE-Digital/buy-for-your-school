@@ -77,14 +77,6 @@ namespace :case_management do
     resync_email_ids.call
   end
 
-  desc "Move sub category to new parent"
-  task :change_sub_category_parent, %i[sub_category_title new_parent_category_title] => :environment do |_task, args|
-    sub_category = Support::Category.find_by(title: args.sub_category_title)
-    new_parent_category = Support::Category.find_by(title: args.new_parent_category_title)
-
-    sub_category.update!(parent: new_parent_category)
-  end
-
   desc "Backfill email uniqueBody field"
   task backfill_email_unique_body: :environment do
     messages = MicrosoftGraph.client.list_messages(SHARED_MAILBOX_USER_ID, query: [

@@ -66,7 +66,7 @@ RSpec.feature "Create case", js: true do
 
       click_on "Case details"
       within ".govuk-summary-list__row", text: "Category" do
-        expect(page).to have_content("Other - Other Category Details")
+        expect(page).to have_content("Other (General) - Other Category Details")
       end
       within ".govuk-summary-list__row", text: "Description of query" do
         expect(page).to have_content("This is a request")
@@ -80,7 +80,7 @@ RSpec.feature "Create case", js: true do
     fill_in "create_case_form[email]", with: "test@example.com"
     fill_in "create_case_form[phone_number]", with: "0778974653"
     choose "Procurement" # request type
-    select "Other", from: "select_request_details_category_id"
+    select "Other (General)", from: "select_request_details_category_id"
     find("#request_details_other_category_text").set("Other Category Details")
     select "North West (NW) Hub", from: "create_case_form[source]"
     fill_in "create_case_form[request_text]", with: "This is a request"
