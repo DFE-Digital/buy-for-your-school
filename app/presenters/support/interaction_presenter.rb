@@ -43,6 +43,8 @@ module Support
     def body
       if case_categorisation_changed?
         Support::CaseCategorisationChangePresenter.new(self).body
+      elsif case_source_changed?
+        Support::CaseSourceChangePresenter.new(self).body
       elsif super
         super.strip.chomp
       end
@@ -76,6 +78,7 @@ module Support
     def custom_template
       return "support_request_body"        if support_request?
       return "case_categorisation_changed" if case_categorisation_changed?
+      return "case_source_changed"         if case_source_changed?
     end
 
     def event_type
@@ -99,7 +102,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed].include?(key)
       end
     end
 

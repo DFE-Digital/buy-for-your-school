@@ -181,10 +181,13 @@ en:
   case_summary_form:
     rules:
       value: "" # Omitted
+      source: "" # Omitted
     errors:
       rules:
         value:
           decimal?: Enter a number
+        source:
+          missing: Select the source of the case
 
   message_reply_form:
     rules:

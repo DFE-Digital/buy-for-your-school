@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Agent can change case summary" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, support_level: nil, value: nil) }
+  let(:support_case) { create(:support_case, support_level: nil, value: nil, source: "nw_hub") }
 
   before do
     click_button "Agent Login"
@@ -29,5 +29,24 @@ describe "Agent can change case summary" do
     support_case.reload
 
     expect(support_case.value).to eq(123.32)
+  end
+
+  context "when the case source is updated" do
+    before do
+      select "Email", from: "Case source"
+      click_button "Continue"
+      click_button "Save"
+      support_case.reload
+    end
+
+    it "persists the changed case source" do
+      expect(support_case.source).to eq "incoming_email"
+    end
+
+    it "creates a source change interaction" do
+      interaction = Support::Interaction.first
+      expect(interaction.body).to eq "Source changed"
+      expect(interaction.additional_data).to eq({ "to" => "incoming_email", "from" => "nw_hub" })
+    end
   end
 end

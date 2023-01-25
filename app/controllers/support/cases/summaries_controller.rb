@@ -3,7 +3,7 @@ module Support
     before_action :set_back_url
 
     def edit
-      @case_summary_form = CaseSummaryForm.new(support_level: current_case.support_level, value: current_case.value)
+      @case_summary_form = CaseSummaryForm.new(source: current_case.source, support_level: current_case.support_level, value: current_case.value)
     end
 
     def update
@@ -27,7 +27,7 @@ module Support
     end
 
     def case_summary_form_params
-      params.require(:case_summary_form).permit(:value, :support_level)
+      params.require(:case_summary_form).permit(:source, :value, :support_level)
     end
   end
 end
