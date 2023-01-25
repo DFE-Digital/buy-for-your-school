@@ -26,4 +26,16 @@ RSpec.describe Support::Category, type: :model do
       end
     end
   end
+
+  describe ".change_sub_category_parent!" do
+    it "changes the given sub category's parent to the given parent category by title" do
+      office_supplies = create(:support_category, title: "Office Supplies")
+      books_parent = create(:support_category, title: "Books")
+      books_sub_category = create(:support_category, title: "Books", parent: books_parent)
+
+      described_class.change_sub_category_parent!(sub_category_title: "Books", new_parent_category_title: "Office Supplies")
+
+      expect(books_sub_category.reload.parent).to eq(office_supplies)
+    end
+  end
 end

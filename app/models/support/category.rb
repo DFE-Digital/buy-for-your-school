@@ -22,15 +22,19 @@ module Support
     scope :except_for, ->(title) { where.not(title:) }
     scope :active, -> { where(archived: false) }
 
+    delegate :title, to: :tower, prefix: true, allow_nil: true
+
     def self.other_category_id
       find_by(title: "Or")
         .sub_categories
-        .find_by(title: "Other")
+        .find_by(title: "Other (General)")
         .id
     end
 
-    def tower_title
-      tower&.title
+    def self.change_sub_category_parent!(sub_category_title:, new_parent_category_title:)
+      sub_category = sub_categories.find_by(title: sub_category_title)
+      new_parent_category = find_by(title: new_parent_category_title)
+      sub_category.update!(parent: new_parent_category)
     end
   end
 end

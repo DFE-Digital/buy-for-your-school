@@ -13,7 +13,7 @@ RSpec.describe Support::SeedCategories do
     service.call
 
     expect(parent_categories.count).to be 13
-    expect(sub_categories.count).to be 56
+    expect(sub_categories.count).to be 77
   end
 
   describe "resetting the data" do
@@ -50,7 +50,7 @@ RSpec.describe Support::SeedCategories do
     end
   end
 
-  xit "saves archived status of categories" do
+  it "saves archived status of categories" do
     service.call
     expect(Support::Category.find_by(title: "Broadband service")).to be_archived
     expect(Support::Category.find_by(title: "Broadband Infrastructure")).to be_archived
@@ -59,6 +59,7 @@ RSpec.describe Support::SeedCategories do
 
   context "when a sub category has the same name as the parent" do
     it "creates them both linking them as parent and sub category" do
+      service = described_class.new(data: Rails.root.join("spec/fixtures/support/categories.yml").to_s)
       service.call
 
       expect(Support::Category.where(title: "Furniture").count).to be 2
