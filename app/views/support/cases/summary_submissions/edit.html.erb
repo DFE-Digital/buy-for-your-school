@@ -4,6 +4,21 @@
 <dl class="govuk-summary-list govuk-!-margin-bottom-5">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.source.header") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <% if @case_summary_form.source.present? %>
+        <%= I18n.t("support.case.label.source.#{@case_summary_form.source}") %>
+      <% else %>
+        <%= I18n.t("support.case.label.source.unspecified") %>
+      <% end %>
+    </dd>
+    <dd class="govuk-summary-list__value">
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
       <%= I18n.t("support.case.label.support_level.header") %>
     </dt>
     <dd class="govuk-summary-list__value">
@@ -34,6 +49,7 @@
 </dl>
 
 <%= form_with model: @case_summary_form, scope: :case_summary_form, url: support_case_summary_submission_path(@current_case), method: :patch, class: "govuk-!-display-inline" do |form| %>
+  <%= form.hidden_field :source %>
   <%= form.hidden_field :support_level %>
   <%= form.hidden_field :value %>
 

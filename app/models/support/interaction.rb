@@ -57,6 +57,7 @@ module Support
       email_merge: 14,
       create_case: 15,
       case_categorisation_changed: 16,
+      case_source_changed: 17,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

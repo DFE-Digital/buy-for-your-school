@@ -1,6 +1,12 @@
 <h1 class="govuk-heading-l"><%= I18n.t("support.case_summary.edit.header") %></h1>
 
 <%= form_with model: @case_summary_form, scope: :case_summary_form, url: support_case_summary_path(@current_case), method: :patch, class: "govuk-!-display-inline" do |form| %>
+  <%= form.govuk_select :source,
+                              options_for_select(form.object.source_options.map { |s| [s.title, s.id] },
+                                                  form.object.source),
+                              options: { include_blank: I18n.t("support.case_summary.edit.source.blank") },
+                              label: { text: I18n.t("support.case_summary.edit.source.label"), size: "m" } %>
+
   <%= form.govuk_radio_buttons_fieldset :support_level, legend: { text: I18n.t("support.case_summary.edit.support_level.label") } do %>
 
     <div class="govuk-radios">

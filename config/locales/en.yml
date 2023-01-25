@@ -1176,6 +1176,9 @@ en:
           label: Case level (optional)
         value:
           label: Case value or estimated contract value (optional)
+        source:
+          blank: Please select
+          label: Case source
       flash:
         updated: Case summary successfully updated
     case_summary_submissions:
@@ -1225,6 +1228,7 @@ en:
           query: Query changed
           category_to_query: Category changed to query
           query_to_category: Query changed to category
+        case_source_changed: Source changed
         create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge

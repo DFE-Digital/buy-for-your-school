@@ -75,5 +75,10 @@ FactoryBot.define do
       event_type { 13 }
       body { "This is an example status update." }
     end
+
+    trait :case_source_changed do
+      event_type { 17 }
+      body { "This is an example case source update." }
+    end
   end
 end
