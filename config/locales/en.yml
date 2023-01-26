@@ -1228,7 +1228,8 @@ en:
           no_tower_selected: "- No Tower Selected -"
           num_cases: "# Cases"
           parent: Parent
-          parent_category: Parent Category
+          parent_category: Parent-category
+          sub_category: Sub-category
           save: Save
           title: Title
           tower: Tower
