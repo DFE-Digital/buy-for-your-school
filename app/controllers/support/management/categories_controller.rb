@@ -1,7 +1,7 @@
 module Support
   class Management::CategoriesController < ::Support::Management::BaseController
     def index
-      @top_level_categories = Support::Category.ordered_by_title.top_level.includes(sub_categories: [:cases])
+      @top_level_categories = Support::Category.top_level.includes(sub_categories: [:cases])
       @towers = Support::Tower.unique_towers
     end
 
