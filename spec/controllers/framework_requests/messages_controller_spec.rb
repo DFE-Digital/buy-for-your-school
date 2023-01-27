@@ -1,12 +1,23 @@
 require "./spec/support/shared/framework_request_controllers"
 
 describe FrameworkRequests::MessagesController, type: :controller do
+  context "when feature :energy_bill_flow is not enabled" do
+    let(:framework_request) { create(:framework_request) }
+
+    before { Flipper.disable(:energy_bill_flow) }
+
+    it "redirects to the procurement amount page" do
+      post :create, session: { framework_request_id: framework_request.id }
+      expect(response).to redirect_to "/procurement-support/procurement_amount"
+    end
+  end
+
   context "when the user has chosen to upload a bill" do
     let(:framework_request) { create(:framework_request, is_energy_request: true, energy_request_about: "energy_contract", have_energy_bill: true) }
 
-    it "redirects to the procurement confidence page" do
+    it "redirects to the special requirements page" do
       post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/procurement_confidence"
+      expect(response).to redirect_to "/procurement-support/special_requirements"
     end
   end
 
