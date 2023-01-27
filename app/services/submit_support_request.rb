@@ -104,7 +104,6 @@ private
       phone_number: request.phone_number,
       request_text: request.message_body,
       procurement_amount: request.procurement_amount,
-      confidence_level: request.confidence_level,
       special_requirements: request.special_requirements.presence,
     }
 

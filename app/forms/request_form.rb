@@ -1,13 +1,7 @@
 class RequestForm < Form
   option :procurement_amount, Types::DecimalField, optional: true
-  option :confidence_level, optional: true
   option :special_requirements_choice, optional: true
   option :special_requirements, optional: true
-
-  # @return [Array<String>] very_confident, confident, slightly_confident, somewhat_confident, not_at_all_confident, not_applicable
-  def confidence_levels
-    @confidence_levels ||= Request.confidence_levels.keys.reverse
-  end
 
   # @return [Hash] form params as request attributes
   def data

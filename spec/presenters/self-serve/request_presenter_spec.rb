@@ -21,24 +21,6 @@ RSpec.describe RequestPresenter do
     end
   end
 
-  describe "#confidence_level" do
-    context "when there is a confidence_level" do
-      let(:support_request) { build(:support_request, confidence_level: "somewhat_confident") }
-
-      it "returns the string value" do
-        expect(presenter.confidence_level).to eq "Somewhat confident"
-      end
-    end
-
-    context "when there is no confidence_level" do
-      let(:support_request) { build(:support_request, confidence_level: nil) }
-
-      it "returns nil" do
-        expect(presenter.confidence_level).to eq nil
-      end
-    end
-  end
-
   describe "#special_requirements" do
     context "when there are special_requirements" do
       let(:support_request) { build(:support_request, special_requirements: "These are special requirements") }

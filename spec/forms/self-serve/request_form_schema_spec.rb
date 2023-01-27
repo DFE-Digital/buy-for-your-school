@@ -37,33 +37,6 @@ RSpec.describe RequestFormSchema do
     end
   end
 
-  describe "validates confidence_level" do
-    context "when the confidence_level key is provided" do
-      context "and it is blank while the procurement_choice is not not_about_procurement, and we've not gone back in the form" do
-        subject(:schema) { described_class.new.call(confidence_level: "", procurement_choice: "yes", back: false) }
-
-        it "raises a validation error" do
-          expect(schema.errors.messages.size).to eq 1
-          expect(schema.errors.messages[0].to_s).to eq "Select how confident you feel about running this procurement"
-        end
-      end
-
-      context "and it is not blank while the procurement_choice is not not_about_procurement, and we've not gone back in the form" do
-        subject(:schema) { described_class.new.call(confidence_level: "confident", procurement_choice: "yes", back: false) }
-
-        it "does not raise a validation error" do
-          expect(schema.errors.messages.size).to eq 0
-        end
-      end
-    end
-
-    context "when the confidence_level key is not provided" do
-      it "does not raise a validation error" do
-        expect(schema.errors.messages.size).to eq 0
-      end
-    end
-  end
-
   describe "validates special_requirements_choice" do
     context "when the special_requirements_choice key is provided" do
       context "and it is blank" do
