@@ -104,7 +104,6 @@ private
       message_body
       school_urn
       procurement_amount
-      confidence_level
       special_requirements_choice
       special_requirements
       back

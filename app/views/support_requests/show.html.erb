@@ -124,22 +124,6 @@
         </dd>
       </div>
 
-      <% if @support_request.confidence_level %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("request.label.confidence_level") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= @support_request.confidence_level %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <% unless @support_request.submitted? %>
-              <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 7), class: "govuk-link", id: "edit-confidence-level" %>
-            <% end %>
-          </dd>
-        </div>
-      <% end %>
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("request.label.special_requirements") %>
@@ -149,7 +133,7 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <% unless @support_request.submitted? %>
-            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 8), class: "govuk-link", id: "edit-special-requirements" %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_request_path(@support_request, step: 7), class: "govuk-link", id: "edit-special-requirements" %>
           <% end %>
         </dd>
       </div>

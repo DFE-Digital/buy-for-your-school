@@ -247,9 +247,6 @@ RSpec.feature "Creating a 'Digital Support' request" do
 
       click_continue
 
-      choose "Not applicable"
-      click_continue
-
       choose "No"
       click_continue
     end

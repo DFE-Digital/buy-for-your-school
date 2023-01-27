@@ -285,29 +285,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     end
   end
 
-  describe "step 7: setting the confidence level" do
-    let(:support_request) do
-      create(:support_request,
-             user: journey.user,
-             journey:,
-             category: nil,
-             phone_number: nil,
-             school_urn: "123")
-    end
-
-    before do
-      click_link "edit-confidence-level"
-      choose "Not applicable"
-      click_continue
-    end
-
-    it "updates the confidence level" do
-      expect(answers[7]).to have_text "Not applicable"
-      expect(support_request.reload.confidence_level).to eq "not_applicable"
-    end
-  end
-
-  describe "step 8: providing special requirements", js: true do
+  describe "step 7: providing special requirements", js: true do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
@@ -326,7 +304,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
       end
 
       it "updates the special requirements" do
-        expect(answers[8]).to have_text "Updated special requirements"
+        expect(answers[7]).to have_text "Updated special requirements"
         expect(support_request.reload.special_requirements).to eq "Updated special requirements"
       end
     end
@@ -339,7 +317,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
       end
 
       it "updates the special requirements" do
-        expect(answers[8]).to have_text "-"
+        expect(answers[7]).to have_text "-"
         expect(support_request.reload.special_requirements).to eq ""
       end
     end
