@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+
+# Setup local env for CI
+
+mv -f .env.ci .env.test
+bundle exec rake db:prepare
+
+# Run test but don't fail if there are errors
+
+FIRST_SPEC_EXIT_CODE=0
+bundle exec rake knapsack:rspec || FIRST_SPEC_EXIT_CODE=$?
+# bundle exec rspec --seed 16715 spec/test_spec.rb || FIRST_SPEC_EXIT_CODE=$?
+
+if [ $FIRST_SPEC_EXIT_CODE -eq 0 ]; then
+  # tests passed fine, no need to carry on
+  exit 0
+fi
+
+mkdir -p combine-coverage
+mv coverage combine-coverage/coverage-1
+
+# Try again
+
+SECOND_SPEC_EXIT_CODE=0
+bundle exec rspec --only-failures || SECOND_SPEC_EXIT_CODE=$?
+mv coverage combine-coverage/coverage-2
+
+# Combine coverage of both attempts for full picture
+
+bundle exec ruby -rsimplecov -e 'SimpleCov.collate Dir["combine-coverage/coverage-*/.resultset.json"] { formatter SimpleCov::Formatter::HTMLFormatter }'
+
+exit $SECOND_SPEC_EXIT_CODE

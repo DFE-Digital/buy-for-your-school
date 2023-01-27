@@ -94,42 +94,14 @@ jobs:
       - name: Run Rspec tests
         id: run_rspec
         run: |
-          docker run --rm \
-            --network ${{ job.container.network }} \
-            -e RAILS_ENV=test \
-            -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
-            -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
-            -e DOCKER=true \
-            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
-            -e REDIS_URL=redis://redis:6379 \
-            -e APPLICATION_URL=http://localhost:3000 \
-            -e SECRET_KEY_BASE=test \
-            -e CONTENTFUL_SPACE=test \
-            -e CONTENTFUL_ENVIRONMENT=master \
-            -e CONTENTFUL_DELIVERY_TOKEN=123 \
-            -e CONTENTFUL_PREVIEW_TOKEN=123 \
-            -e CONTENTFUL_ENTRY_CACHING=false \
-            -e CONTENTFUL_WEBHOOK_API_KEY=test \
-            -e NOTIFY_API_KEY=development_team-12345678-1234-1234-1234-abcd12345678-12345678-1234-1234-1234-abcd12345678 \
-            -e MS_GRAPH_TENANT=test \
-            -e MS_GRAPH_CLIENT_ID=test \
-            -e MS_GRAPH_CLIENT_SECRET=test \
-            -e MS_GRAPH_SHARED_MAILBOX_USER_ID=test \
-            -e MS_GRAPH_SHARED_MAILBOX_NAME=mailbox \
-            -e MS_GRAPH_SHARED_MAILBOX_ADDRESS=test@mailbox.com \
-            -e CLAMAV_REST_SERVICE_URL=test \
-            -e DSI_ENV=test \
-            -e DFE_SIGN_IN_IDENTIFIER=service \
-            -e DFE_SIGN_IN_API_SECRET=secret \
-            -e PROC_OPS_TEAM=test \
-            -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
-            -e SUPPORT_EMAIL=email@example.gov.uk \
-            -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \
-            -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
-            -e CI=1 \
-            -v ${PWD}/coverage/coverage-${{ matrix.ci_node_index }}:/srv/app/coverage \
+          docker run --rm --network ${{ job.container.network }} \
+            -e CI_NODE_TOTAL -e CI_NODE_INDEX -e RAILS_ENV=test \
+            -v ${PWD}/coverage/coverage-${CI_NODE_INDEX}:/srv/app/coverage \
             ${{ needs.build_test.outputs.docker_image }} \
-            bash -c "bundle exec rake knapsack:rspec || bundle exec rspec --only-failure"
+            bash script/ci/rspec
+        env:
+          CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+          CI_NODE_INDEX: ${{ matrix.ci_node_index }}
 
       - name: Upload code coverage reports
         if: always()
