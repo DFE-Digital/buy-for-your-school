@@ -103,9 +103,6 @@ Rails.application.routes.draw do
         get "/procurement_amount", to: "procurement_amounts#index"
         post "/procurement_amount", to: "procurement_amounts#create"
 
-        get "/procurement_confidence", to: "procurement_confidences#index"
-        post "/procurement_confidence", to: "procurement_confidences#create"
-
         get "/special_requirements", to: "special_requirements#index"
         post "/special_requirements", to: "special_requirements#create"
       end
@@ -119,7 +116,6 @@ Rails.application.routes.draw do
         resource :bill_uploads, only: %i[edit update], as: :framework_request_bill_uploads
         resource :message, only: %i[edit update], as: :framework_request_message
         resource :procurement_amount, only: %i[edit update], as: :framework_request_procurement_amount
-        resource :procurement_confidence, only: %i[edit update], as: :framework_request_procurement_confidence
         resource :special_requirements, only: %i[edit update], as: :framework_request_special_requirements
       end
     end

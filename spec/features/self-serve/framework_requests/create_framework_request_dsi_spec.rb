@@ -31,8 +31,6 @@ RSpec.feature "Creating a 'Find a Framework' request" do
           fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
           click_continue
-          choose "Confident"
-          click_continue
           choose "No"
           click_continue
         end

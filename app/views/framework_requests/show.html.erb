@@ -108,22 +108,6 @@
         </div>
       <% end %>
 
-      <% if @framework_request.confidence_level %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("request.label.confidence_level") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= @framework_request.confidence_level %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <% unless @framework_request.submitted? %>
-              <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_procurement_confidence_path(@framework_request), class: "govuk-link", id: "edit-confidence-level" %>
-            <% end %>
-          </dd>
-        </div>
-      <% end %>
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("request.label.special_requirements") %>

@@ -22,10 +22,6 @@ en:
             attributes:
               school_type:
                 blank: Select what type of organisation you're buying for
-          framework_requests/procurement_confidence_form:
-            attributes:
-              confidence_level:
-                blank: Select how confident you feel about running this procurement
           framework_requests/sign_in_form:
             attributes:
               dsi:
@@ -60,7 +56,6 @@ en:
   request:
     rules:
       procurement_amount: "" # Omitted
-      confidence_level: "" # Omitted
       special_requirements_choice: "" # Omitted
       special_requirements: "" # Omitted
     
@@ -69,8 +64,6 @@ en:
         procurement_amount:
           invalid: Enter a valid number
           too_large: The amount cannot be larger than 9,999,999.99
-        confidence_level:
-          missing: Select how confident you feel about running this procurement
         special_requirements_choice:
           missing: Select whether you want to tell us about any special requirements
         special_requirements:
@@ -97,7 +90,6 @@ en:
       category_id: The type of procurement
       school_urn: "" # Omitted
       procurement_amount: "" # Omitted
-      confidence_level: "" # Omitted
       special_requirements_choice: "" # Omitted
       special_requirements: "" # Omitted
 
@@ -118,8 +110,6 @@ en:
         procurement_amount:
           invalid: Enter a valid number
           too_large: The amount cannot be larger than 9,999,999.99
-        confidence_level:
-          missing: Select how confident you feel about running this procurement
         special_requirements_choice:
           missing: Select whether you want to tell us about any special requirements
         special_requirements:
