@@ -24,7 +24,6 @@ module Support
         request_text: @attrs[:request_text],
         action_required: @attrs.fetch(:action_required, false),
         procurement_amount: @attrs[:procurement_amount],
-        confidence_level: @attrs[:confidence_level],
         special_requirements: @attrs[:special_requirements],
         new_contract: NewContract.create!,
         existing_contract: ExistingContract.create!,

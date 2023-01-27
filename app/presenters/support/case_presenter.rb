@@ -148,13 +148,6 @@ module Support
     end
 
     # return [String]
-    def confidence_level
-      return "-" unless super
-
-      super.humanize
-    end
-
-    # return [String]
     def special_requirements
       super || "-"
     end
