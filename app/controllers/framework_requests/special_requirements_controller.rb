@@ -29,7 +29,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = procurement_confidence_framework_requests_path(framework_support_form: form.common)
+      @back_url = procurement_amount_framework_requests_path(framework_support_form: form.common)
     end
   end
 end

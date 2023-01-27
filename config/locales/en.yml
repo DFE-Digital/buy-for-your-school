@@ -576,19 +576,7 @@ en:
       email: Your email address
       full_name: Your name
   request:
-    confidence_level:
-      caption: About your procurement
-      heading: How confident do you feel about running this procurement?
-      hint: This will help us to give you the right level of support.
-      levels:
-        confident: Confident
-        not_applicable: Not applicable
-        not_at_all_confident: Not at all confident
-        slightly_confident: Slightly confident
-        somewhat_confident: Somewhat confident
-        very_confident: Very confident
     label:
-      confidence_level: Confidence level
       procurement_amount: Procurement amount
       special_requirements: Special requirements
     procurement_amount:
@@ -684,7 +672,6 @@ en:
         case_value: Case value
         change_owner: Change case owner
         close: Close case
-        confidence_level: Confidence level
         contact_email: Contact email
         contact_extension_number: Contact extension
         contact_name: Contact name

@@ -62,7 +62,6 @@ private
       email: user.email,
       request_text: request.message_body,
       procurement_amount: request.__getobj__.procurement_amount,
-      confidence_level: request.__getobj__.confidence_level,
       special_requirements: request.special_requirements.presence,
       category_id: detected_category_id,
       detected_category_id:,

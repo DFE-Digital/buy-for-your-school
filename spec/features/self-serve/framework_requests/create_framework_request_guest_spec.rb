@@ -41,11 +41,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     click_continue
   end
 
-  def complete_confidence_level_step
-    choose "Very confident"
-    click_continue
-  end
-
   let(:keys) { all("dt.govuk-summary-list__key") }
   let(:values) { all("dd.govuk-summary-list__value") }
   let(:actions) { all("dd.govuk-summary-list__actions") }
@@ -225,33 +220,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "the confidence level page", js: true do
-      before do
-        autocomplete_school_step
-        confirm_choice_step
-        complete_name_step
-        complete_email_step
-        complete_help_message_step
-        complete_procurement_amount_step
-      end
-
-      it "has the correct attributes" do
-        expect(page).to have_text "About your procurement"
-        expect(page).to have_text "How confident do you feel about running this procurement?"
-
-        expect(page).to have_text "This will help us to give you the right level of support."
-
-        expect(page).to have_unchecked_field "Very confident"
-        expect(page).to have_unchecked_field "Confident"
-        expect(page).to have_unchecked_field "Slightly confident"
-        expect(page).to have_unchecked_field "Somewhat confident"
-        expect(page).to have_unchecked_field "Not at all confident"
-        expect(page).to have_unchecked_field "Not applicable"
-
-        expect(page).to have_button "Continue"
-      end
-    end
-
     describe "the special requirements page", js: true do
       before do
         autocomplete_school_step
@@ -260,7 +228,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_email_step
         complete_help_message_step
         complete_procurement_amount_step
-        complete_confidence_level_step
       end
 
       it "has the correct attributes" do
