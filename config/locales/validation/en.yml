@@ -6,7 +6,8 @@ en:
           framework_requests/email_form:
             attributes:
               email:
-                blank: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
+                blank: Enter an email address
+                invalid: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           framework_requests/message_form:
             attributes:
               message_body:

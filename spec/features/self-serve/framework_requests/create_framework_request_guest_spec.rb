@@ -240,7 +240,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         click_continue
 
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Enter an email in the correct format. For example, 'someone@school.sch.uk'.", href: "#framework-support-form-email-field-error"
+        expect(page).to have_link "Enter an email address", href: "#framework-support-form-email-field-error"
       end
     end
 
