@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -507,6 +507,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
     t.index ["event_type"], name: "index_support_interactions_on_event_type"
   end
 
+  create_table "support_notification_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_notification_id", null: false
+    t.uuid "assigned_by_id"
+    t.uuid "assigned_to_id", null: false
+    t.boolean "assigned_by_system", default: false
+    t.boolean "read", default: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assigned_by_id"], name: "index_support_notification_assignments_on_assigned_by_id"
+    t.index ["assigned_to_id"], name: "index_support_notification_assignments_on_assigned_to_id"
+    t.index ["support_notification_id"], name: "index_support_notification_assigns_on_support_notification_id"
+  end
+
+  create_table "support_notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "topic", default: 0
+    t.text "body"
+    t.uuid "support_case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_support_notifications_on_support_case_id"
+  end
+
   create_table "support_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "establishment_type_id"
     t.string "urn", null: false
@@ -658,6 +681,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_17_102647) do
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
   add_foreign_key "support_categories", "support_towers"
+  add_foreign_key "support_notification_assignments", "support_agents", column: "assigned_by_id"
+  add_foreign_key "support_notification_assignments", "support_agents", column: "assigned_to_id"
+  add_foreign_key "support_notification_assignments", "support_notifications"
+  add_foreign_key "support_notifications", "support_cases"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
   add_foreign_key "user_journey_steps", "user_journeys"
