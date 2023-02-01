@@ -5,7 +5,7 @@ describe FrameworkRequests::NamesController, type: :controller do
 
   it "redirects to the email page" do
     params = { framework_support_form: { first_name: "first", last_name: "last" } }
-    post :create, params: params
+    post(:create, params:)
     expect(response).to redirect_to "/procurement-support/email"
   end
 end
