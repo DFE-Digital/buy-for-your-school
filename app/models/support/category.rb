@@ -18,7 +18,7 @@ module Support
 
     scope :top_level, -> { where(parent_id: nil) }
     scope :sub_categories, -> { where.not(parent_id: nil) }
-    scope :ordered_by_title, -> { order(title: :asc) }
+    scope :ordered_by_title, -> { order(Arel.sql("case when support_categories.title = 'Or' then 1 else 0 end ASC, support_categories.title ASC")) }
     scope :except_for, ->(title) { where.not(title:) }
     scope :active, -> { where(archived: false) }
 

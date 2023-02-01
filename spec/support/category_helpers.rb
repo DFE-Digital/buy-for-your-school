@@ -11,8 +11,8 @@ module CategoryHelpers
   def define_basic_categories
     define_categories(
       "ICT" => %w[Peripherals Laptops Websites],
-      "Energy" => %w[Electricity Gas Water],
       "Or" => ["Not yet known", "No applicable category", "Other (General)"],
+      "Energy" => %w[Electricity Gas Water],
     )
   end
 
