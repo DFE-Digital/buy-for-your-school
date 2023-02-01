@@ -1,13 +1,17 @@
-<p class="govuk-body">
+<% if Flipper.enabled?(:energy_bill_flow) %>
+  <p class="govuk-body">
+    <%= I18n.t("faf.user_query.hint") %>
+  </p>
+
+  <p class="govuk-body">
+    <%= I18n.t("faf.user_query.hint_list_start") %>
+  </p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <% for bullet in I18n.t("faf.user_query.hint_bullets") %>
+      <li><%= bullet %></li>
+    <% end %>
+  </ul>
+<% else %>
   <%= I18n.t("faf.user_query.hint") %>
-</p>
-
-<p class="govuk-body">
-  <%= I18n.t("faf.user_query.hint_list_start") %>
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <% for bullet in I18n.t("faf.user_query.hint_bullets") %>
-    <li><%= bullet %></li>
-  <% end %>
-</ul>
+<% end %>
