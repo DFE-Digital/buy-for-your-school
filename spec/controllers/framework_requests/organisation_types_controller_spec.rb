@@ -5,7 +5,7 @@ describe FrameworkRequests::OrganisationTypesController, type: :controller do
 
   it "redirects to the search for organisation page" do
     params = { framework_support_form: { school_type: "school" } }
-    post :create, params: params
+    post(:create, params:)
     expect(response).to redirect_to "/procurement-support/search_for_organisation?#{params.to_query}"
   end
 end
