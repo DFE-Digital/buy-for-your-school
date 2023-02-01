@@ -34,7 +34,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
     expect(Page.count).to be_zero
 
     post "/api/contentful/pages",
-         params: params,
+         params:,
          as: :json
 
     expect(response).to have_http_status(:ok)
@@ -52,7 +52,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
       expect(Page.count).to eq 1
 
       post "/api/contentful/pages",
-           params: params,
+           params:,
            as: :json
 
       expect(response).to have_http_status(:ok)
