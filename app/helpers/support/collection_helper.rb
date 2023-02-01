@@ -3,7 +3,7 @@ module Support
     def procurement_category_grouped_options(selected_category_id: -1)
       category_to_select_option = ->(category) { [category_name(category), category.id, { selected: selected_category_id == category.id }] }
 
-      Support::Category.top_level.each_with_object([]) do |category, grouped_options|
+      Support::Category.top_level.ordered_by_title.each_with_object([]) do |category, grouped_options|
         sub_categories = category.sub_categories.except_for("No applicable category").to_a
 
         # Remove archived categories but leave one if it is already selected
