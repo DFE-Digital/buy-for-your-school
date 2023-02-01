@@ -16,7 +16,7 @@ RSpec.describe "Authenticate API User", type: :request do
     headers = { "AUTHORIZATION" => credentials }
 
     post "/api/contentful/auth",
-         headers: headers,
+         headers:,
          as: :json
 
     expect(response).to have_http_status(:ok)
@@ -32,8 +32,8 @@ RSpec.describe "Authenticate API User", type: :request do
                     .encode_credentials("an invalid key")
     headers = { "AUTHORIZATION" => credentials }
 
-    post "/api/contentful/auth",
-         headers: headers
+    post("/api/contentful/auth",
+         headers:)
 
     expect(response).to have_http_status(:unauthorized)
   end
