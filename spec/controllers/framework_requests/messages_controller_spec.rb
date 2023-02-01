@@ -29,6 +29,12 @@ describe FrameworkRequests::MessagesController, type: :controller do
         before { allow(controller).to receive(:last_energy_path).and_return("last_energy_path") }
 
         include_examples "back url", "last_energy_path"
+
+        context "when feature :energy_bill_flow is not enabled" do
+          before { Flipper.disable(:energy_bill_flow) }
+
+          include_examples "back url", "/procurement-support/select_organisation"
+        end
       end
 
       context "when the user belongs to multiple organisations" do

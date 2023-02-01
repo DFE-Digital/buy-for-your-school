@@ -19,6 +19,15 @@ describe FrameworkRequests::SignInController, type: :controller do
 
     context "when a back url is not provided" do
       include_examples "back url", "/procurement-support/energy_request"
+
+      context "when feature :energy_bill_flow is not enabled" do
+        before { Flipper.disable(:energy_bill_flow) }
+
+        it "goes back to the start" do
+          get :index
+          expect(controller.view_assigns["back_url"]).to eq "/procurement-support"
+        end
+      end
     end
   end
 end

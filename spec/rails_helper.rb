@@ -77,6 +77,11 @@ RSpec.configure do |config|
   config.after(:each, bullet: :skip) do
     Bullet.enable = true
   end
+
+  config.before do
+    # Configure feature flags for test here
+    Flipper.enable(:energy_bill_flow)
+  end
 end
 
 Shoulda::Matchers.configure do |config|

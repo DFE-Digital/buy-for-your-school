@@ -7,7 +7,7 @@ class FrameworkRequest < Request
   enum energy_alternative: { different_format: 0, email_later: 1, no_bill: 2, no_thanks: 3 }, _suffix: true
 
   def allow_bill_upload?
-    is_energy_request && energy_request_about == "energy_contract" &&
+    Flipper.enabled?(:energy_bill_flow) && is_energy_request && energy_request_about == "energy_contract" &&
       (have_energy_bill || energy_alternative == "different_format")
   end
 

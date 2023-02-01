@@ -21,7 +21,9 @@ module Support
         when "email_template"
           formatted_hash["email_template"] = EmailTemplates.label_for(value)
         when "bills"
-          formatted_hash["bills"] = helpers.link_to("View bills in attachments tab &raquo;".html_safe, routes.support_case_path(id: self.case, anchor: "case-attachments"), class: "govuk-link")
+          if value.present?
+            formatted_hash["bills"] = helpers.link_to("View bills in attachments tab &raquo;".html_safe, routes.support_case_path(id: self.case, anchor: "case-attachments"), class: "govuk-link")
+          end
         else
           formatted_hash[field] = value
         end
