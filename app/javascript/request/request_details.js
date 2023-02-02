@@ -87,6 +87,6 @@ function toggleQueryOtherBoxVisibility() {
 }
 
 function toggleCategoryOtherBoxVisibility() {
-  const otherOrChosen = this.options[this.selectedIndex].text == 'Other (General)'
+  const otherOrChosen = this.options[this.selectedIndex].text.startsWith("Other")
   changeOtherCategoryTextState(otherOrChosen ? "visible" : "hidden")
 }
