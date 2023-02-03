@@ -10,7 +10,7 @@ module Support
 
   private
 
-    def form_params = params.fetch(:category_detection, {}).permit(:request_text)
+    def form_params = params.fetch(:category_detection, {}).permit(:request_text, :simulate_energy_request)
 
     def build_form = @category_detection_form = CategoryDetectionForm.new(**form_params)
 

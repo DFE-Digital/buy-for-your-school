@@ -13,6 +13,12 @@ module Support
           tsvector_to_array(to_tsvector(query)) as vparts
         FROM (SELECT $1 AS query, $2 AS custom_stop_words) AS main_data
       )
+      , categories AS (
+        SELECT cat.*
+        FROM support_categories cat
+        JOIN support_towers tow ON cat.support_tower_id = tow.id
+        WHERE $4 IS false OR tow.title = 'Energy & Utilities'
+      )
       , words AS (
         SELECT
           main.query,
@@ -34,7 +40,7 @@ module Support
           similarity(title, words.word) as similarity,
           words.word as matching_word,
           'ch' as result_source
-        FROM support_categories
+        FROM categories
         JOIN words ON title ~* words.word AND NOT words.is_custom_stop_word
         WHERE NOT archived
       )
@@ -46,7 +52,7 @@ module Support
           'rfhh' as result_source
         FROM support_cases sc
         JOIN words ON request_text ~* words.word AND words.is_dict_word
-        INNER JOIN support_categories cat ON sc.category_id = cat.id AND NOT cat.archived
+        INNER JOIN categories cat ON sc.category_id = cat.id AND NOT cat.archived
         INNER JOIN support_towers tower ON cat.support_tower_id = tower.id
         WHERE request_text IS NOT NULL
       )
@@ -73,8 +79,9 @@ module Support
       LIMIT $3
     SQL
 
-    def self.results_for(request_text, num_results: 1)
-      ApplicationRecord.connection.exec_query(QUERY, "SQL", [request_text, STOP_WORDS, num_results], prepare: true).rows.map do |row|
+    def self.results_for(request_text, is_energy_request: false, num_results: 1)
+      query_binds = [request_text, STOP_WORDS, num_results, is_energy_request]
+      ApplicationRecord.connection.exec_query(QUERY, "SQL", query_binds, prepare: true).rows.map do |row|
         new(category_id: row[0], tower: row[1], category: row[2], similarity: row[3], matching_words: row[4])
       end
     end

@@ -28,6 +28,24 @@ describe SubmitFrameworkRequest do
       end
     end
 
+    context "when the request is an energy request" do
+      let(:request) { create(:framework_request, message_body: "An energy case", is_energy_request: true) }
+
+      it "limits detectable categories to Energy & Utility tower ones" do
+        described_class.new(request:, referrer:).call
+        expect(Support::CategoryDetection).to have_received(:results_for).with("An energy case", is_energy_request: true, num_results: 1)
+      end
+    end
+
+    context "when the request is not an energy request" do
+      let(:request) { create(:framework_request, message_body: "An energy case", is_energy_request: false) }
+
+      it "does not limit detectable categories to Energy & Utility tower ones" do
+        described_class.new(request:, referrer:).call
+        expect(Support::CategoryDetection).to have_received(:results_for).with("An energy case", is_energy_request: false, num_results: 1)
+      end
+    end
+
     context "when a category cannot be detected for the given request text" do
       let(:category_detection_results) { [] }
 
