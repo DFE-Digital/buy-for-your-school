@@ -27,10 +27,10 @@ describe FrameworkRequests::EnergyRequestAboutForm, type: :model do
     end
 
     context "when the request is not about a contract" do
-      let(:energy_request_about) { :general_question }
+      let(:energy_request_about) { :not_energy_contract }
 
       it "returns other energy fields nillified" do
-        expect(form.data).to eq({ energy_request_about: :general_question, have_energy_bill: nil, energy_alternative: nil })
+        expect(form.data).to eq({ energy_request_about: :not_energy_contract, have_energy_bill: nil, energy_alternative: nil })
       end
     end
   end
@@ -45,7 +45,7 @@ describe FrameworkRequests::EnergyRequestAboutForm, type: :model do
 
   describe "#energy_request_about_options" do
     it "returns the available options" do
-      expect(form.energy_request_about_options).to eq %w[energy_contract general_question something_else]
+      expect(form.energy_request_about_options).to eq %w[energy_contract not_energy_contract]
     end
   end
 end

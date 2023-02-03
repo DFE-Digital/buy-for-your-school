@@ -9,6 +9,15 @@ RSpec.describe FrameworkRequest, type: :model do
   it { is_expected.to belong_to(:user).optional }
 
   describe "#allow_bill_upload?" do
+    context "when feature :energy_bill_flow is not enabled" do
+      before { Flipper.disable(:energy_bill_flow) }
+
+      it "returns false" do
+        framework_request = described_class.new
+        expect(framework_request.allow_bill_upload?).to be(false)
+      end
+    end
+
     context "when it's an energy request about a contract and they have a bill to upload" do
       let(:is_energy_request) { true }
       let(:energy_request_about) { :energy_contract }
@@ -40,7 +49,7 @@ RSpec.describe FrameworkRequest, type: :model do
 
     context "when it's an energy request not about a contract" do
       let(:is_energy_request) { true }
-      let(:energy_request_about) { :general_question }
+      let(:energy_request_about) { :not_energy_contract }
 
       it "returns false" do
         expect(framework_request.allow_bill_upload?).to eq false

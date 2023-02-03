@@ -12,6 +12,10 @@
       <li><%= bullet %></li>
     <% end %>
   </ul>
+
+  <p class="govuk-body">
+    <%= I18n.t("faf.user_query.hint_list_end") %>
+  </p>
 <% else %>
   <%= I18n.t("faf.user_query.hint") %>
 <% end %>
