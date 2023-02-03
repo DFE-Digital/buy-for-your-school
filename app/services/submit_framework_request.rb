@@ -87,7 +87,7 @@ private
   end
 
   def detected_category_id
-    @results ||= Support::CategoryDetection.results_for(request.message_body, num_results: 1)
+    @results ||= Support::CategoryDetection.results_for(request.message_body, is_energy_request: request.is_energy_request, num_results: 1)
     @results.first.try(:category_id) if @results.any?
   end
 
