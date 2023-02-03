@@ -3,7 +3,7 @@ class FrameworkRequest < Request
 
   has_many :energy_bills, class_name: "EnergyBill"
 
-  enum energy_request_about: { energy_contract: 0, general_question: 1, something_else: 2 }, _suffix: true
+  enum energy_request_about: { energy_contract: 1, not_energy_contract: 0 }, _suffix: true
   enum energy_alternative: { different_format: 0, email_later: 1, no_bill: 2, no_thanks: 3 }, _suffix: true
 
   def allow_bill_upload?

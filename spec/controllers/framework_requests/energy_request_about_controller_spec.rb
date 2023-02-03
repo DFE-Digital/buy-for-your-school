@@ -11,11 +11,7 @@ describe FrameworkRequests::EnergyRequestAboutController, type: :controller do
     end
   end
 
-  context "when it is about a general question" do
-    include_examples "sign-in redirects", { framework_support_form: { energy_request_about: "general_question" } }
-  end
-
-  context "when it is about something else" do
-    include_examples "sign-in redirects", { framework_support_form: { energy_request_about: "something_else" } }
+  context "when it is not about an energy contract" do
+    include_examples "sign-in redirects", { framework_support_form: { energy_request_about: "not_energy_contract" } }
   end
 end

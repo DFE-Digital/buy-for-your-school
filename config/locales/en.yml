@@ -365,12 +365,11 @@ en:
         - how to choose between fixed, flexible or variable price contracts
         - what to think about when choosing contract length
     energy_request_about:
-      header: What's your energy request about?
+      header: Is your request about an energy contract, for example, a renewal?
       subtitle: About your request
       options:
-        energy_contract: An energy contract, for example, renewal
-        general_question: A general question about energy
-        something_else: Something else
+        energy_contract: "Yes"
+        not_energy_contract: "No"
     name:
       first_name:
         label: First Name
@@ -433,6 +432,7 @@ en:
         - the start and end dates of your current contract, if you have one
         - when you need the new goods or services
         - anything else about your procurement you think we should know
+      hint_list_end: Please provide as much information as you can. This will help us to answer your question.
       label: How can we help?
     which_school:
       caption: About your school
