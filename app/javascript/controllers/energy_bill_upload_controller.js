@@ -16,7 +16,9 @@ export default class extends Controller {
   static values = {
     pageOneTitle: String,
     pageTwoTitle: String,
-    pageThreeTitle: String
+    pageThreeTitle: String,
+    pageOneContinueButton: String,
+    pageThreeContinueButton: String
   }
 
   static outlets = [
