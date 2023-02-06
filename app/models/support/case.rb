@@ -69,6 +69,7 @@ module Support
     scope :without_tower, -> { joins("JOIN support_tower_cases stc ON stc.id = support_cases.id").where(stc: { tower_slug: "no-tower" }) }
     scope :by_stage, ->(stage) { joins(:procurement).where(procurement: { stage: }) }
     scope :by_level, ->(support_level) { where(support_level:) }
+    scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
 
     scope :priority_ordering, lambda {
       order(

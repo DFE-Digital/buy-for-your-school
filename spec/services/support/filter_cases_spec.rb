@@ -10,7 +10,7 @@ RSpec.describe Support::FilterCases, bullet: :skip do
 
   before do
     create_list(:support_case, 10)
-    create(:support_case, category: it_cat)
+    create(:support_case, category: it_cat, organisation: nil)
     create(:support_case, category: catering_cat, state: :closed, ref: "999888")
     create(:support_case, category: catering_cat, agent:)
   end
@@ -56,6 +56,17 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         end
 
         it "filters by tower" do
+          expect(service.new.filter(filtering_params).count).to be(1)
+          expect(service.new.filter(filtering_params).first.category.tower_title).to eql("ICT")
+        end
+      end
+
+      context "when filtered by has_org" do
+        let(:filtering_params) do
+          { has_org: false }
+        end
+
+        it "filters by has_org" do
           expect(service.new.filter(filtering_params).count).to be(1)
           expect(service.new.filter(filtering_params).first.category.tower_title).to eql("ICT")
         end

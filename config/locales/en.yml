@@ -1117,6 +1117,10 @@ en:
           one: There is <strong>1</strong> live case with no value
           other: There are <strong>%{count}</strong> live cases that have no value
           zero: There are no live cases that have no value
+        no_org:
+          one: There is <strong>1</strong> live case with no organisation
+          other: There are <strong>%{count}</strong> live cases that have no organisation
+          zero: There are no live cases that have no organisation
       stages:
         contract_award: Contract award
         evaluation: Evaluation

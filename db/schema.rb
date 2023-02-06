@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_03_151247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -871,6 +871,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_100815) do
       sc.state,
       sc.value,
       sc.procurement_id,
+      sc.organisation_id,
       COALESCE(sp.stage, 99) AS procurement_stage,
       COALESCE(sc.support_level, 99) AS support_level,
       COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,

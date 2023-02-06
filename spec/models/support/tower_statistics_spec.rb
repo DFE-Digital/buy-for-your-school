@@ -183,7 +183,7 @@ describe Support::TowerStatistics do
 
   describe "counts of missing data" do
     before do
-      create(:support_case, :opened, :stage_unspecified, support_level: :L1, value: 10.00, category: ict)
+      create(:support_case, :opened, :stage_unspecified, support_level: :L1, value: 10.00, category: ict, organisation: nil)
       create(:support_case, :on_hold, :stage_unspecified, support_level: nil, value: nil, category: ict)
       create(:support_case, :on_hold, :stage_need, support_level: :L1, value: nil, category: ict)
     end
@@ -191,5 +191,6 @@ describe Support::TowerStatistics do
     it { expect(report.missing_level_cases).to eq(1) }
     it { expect(report.missing_stage_cases).to eq(2) }
     it { expect(report.missing_value_cases).to eq(2) }
+    it { expect(report.missing_org_cases).to eq(1) }
   end
 end

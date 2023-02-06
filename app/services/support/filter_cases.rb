@@ -12,7 +12,7 @@ module Support
       return results if filtering_params.nil?
 
       filtering_params.each do |key, value|
-        results = results.public_send("by_#{key}", value) if value.present?
+        results = results.public_send("by_#{key}", value) if value.to_s.present?
       end
 
       results

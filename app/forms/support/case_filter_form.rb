@@ -11,6 +11,7 @@ module Support
     option :tower, optional: true
     option :stage, optional: true
     option :level, optional: true
+    option :has_org, Types::Params::Bool, optional: true
 
     # Potentially pre-scope results with as scope / query
     option :base_cases, optional: true, default: proc { Case.where(nil) }
@@ -20,7 +21,7 @@ module Support
       @base_cases = @base_cases.not_closed unless state == "closed"
 
       Support::FilterCases.new(base_cases:)
-        .filter(state:, category:, agent:, tower:, stage:, level:)
+        .filter(state:, category:, agent:, tower:, stage:, level:, has_org:)
         .priority_ordering
     end
 

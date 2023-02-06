@@ -23,7 +23,7 @@ module Support
     end
 
     def filter_cases_params
-      params.fetch(:filter_cases, {}).permit(:category, :agent, :state, :stage, :level)
+      params.fetch(:filter_cases, {}).permit(:category, :agent, :state, :stage, :level, :has_org)
     end
   end
 end
