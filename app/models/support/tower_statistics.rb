@@ -17,6 +17,7 @@ module Support
     def missing_level_cases = TowerCase.where(tower_slug:, support_level: TowerCase::UNSPECIFIED_VALUE).count
     def missing_stage_cases = TowerCase.where(tower_slug:, procurement_stage: TowerCase::UNSPECIFIED_VALUE).count
     def missing_value_cases = TowerCase.where(tower_slug:, value: nil).count
+    def missing_org_cases = TowerCase.where(tower_slug:, organisation_id: nil).count
 
     def breakdown_of_cases_by_stage
       sql = <<-SQL

@@ -143,3 +143,4 @@
 =end%>
 <p><%= link_to I18n.t("support.case_statistics.missing_data.no_stage", count: @tower_statistics.missing_stage_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(stage: :unspecified, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>
 <p><%= link_to I18n.t("support.case_statistics.missing_data.no_level", count: @tower_statistics.missing_level_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(level: :unspecified, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_org", count: @tower_statistics.missing_org_cases).html_safe, support_tower_path(tower_id, **filter_cases_params(has_org: :false, state: "live")), class: "govuk-link govuk-link--no-visited-state" %></p>
