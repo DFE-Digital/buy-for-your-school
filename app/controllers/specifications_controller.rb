@@ -2,6 +2,7 @@
 
 class SpecificationsController < ApplicationController
   before_action :check_user_belongs_to_journey?
+  before_action :next_steps_path, only: %i[show create]
   helper_method :current_journey, :form
 
   def new
@@ -14,7 +15,7 @@ class SpecificationsController < ApplicationController
         current_journey.finish!
         redirect_to(
           URI::HTTPS.build(
-            path: "/next-steps-catering",
+            path: @next_steps_path,
             query: { redirect_url: journey_specification_url(current_journey, format: :docx) }.to_query,
           ).request_uri,
         )
@@ -88,5 +89,9 @@ private
   # @return [String]
   def file_ext
     params[:format]
+  end
+
+  def next_steps_path
+    @next_steps_path = "/next-steps-#{current_journey.category_slug}"
   end
 end

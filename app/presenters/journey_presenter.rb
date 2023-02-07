@@ -1,4 +1,6 @@
 class JourneyPresenter < BasePresenter
+  delegate :slug, to: :category, prefix: :category
+
   # @return [Array<SectionPresenter>]
   def sections
     @sections ||= sections_with_tasks.map do |section|
