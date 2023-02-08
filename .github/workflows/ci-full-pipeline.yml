@@ -171,7 +171,7 @@ jobs:
             bundle exec ruby lib/code_coverage_collate.rb
 
           line_coverage=$(cat ${{ github.workspace }}/code_coverage/.last_run.json | jq .result.line)
-          echo "::set-output name=line::$line_coverage"
+          echo "line=$line_coverage" >> $GITHUB_OUTPUT
 
           echo "---------- REPORT --------------"
           echo "Line coverage is $line_coverage%"

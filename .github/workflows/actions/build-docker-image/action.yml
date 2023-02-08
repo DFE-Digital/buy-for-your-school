@@ -38,16 +38,16 @@ runs:
         BASE_IMAGE=ghcr.io/dfe-digital/buy-for-your-school
 
         if [ "${{ inputs.target }}" == "test" ]; then
-          echo ::set-output name=main_tag::${BASE_IMAGE}:${TAG}-test
-          echo ::set-output name=tags_to_push::${BASE_IMAGE}:${TAG}-test,${BASE_IMAGE}:latest-test
+          echo main_tag=${BASE_IMAGE}:${TAG}-test >> $GITHUB_OUTPUT
+          echo tags_to_push=${BASE_IMAGE}:${TAG}-test,${BASE_IMAGE}:latest-test >> $GITHUB_OUTPUT
 
         elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
-          echo ::set-output name=main_tag::${BASE_IMAGE}:${TAG}
-          echo ::set-output name=tags_to_push::${BASE_IMAGE}:${TAG},${BASE_IMAGE}:main
+          echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
+          echo tags_to_push=${BASE_IMAGE}:${TAG},${BASE_IMAGE}:main >> $GITHUB_OUTPUT
 
         else
-          echo ::set-output name=main_tag::${BASE_IMAGE}:${TAG}
-          echo ::set-output name=tags_to_push::${BASE_IMAGE}:${TAG}
+          echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
+          echo tags_to_push=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
         fi
 
     - name: Set up Docker Buildx

@@ -83,52 +83,52 @@ runs:
           # defined as env var to be picked up by ./scripts/deploy-terraform
           echo "TF_VAR_s3_bucket_name=$TF_VAR_s3_bucket_name" >> $GITHUB_ENV
 
-          echo ::set-output name=qa_number::$STATIC_ROUTE_NUMBER
-          echo ::set-output name=cf_app_name::${{ inputs.cf_app_name }}
-          echo ::set-output name=cf_space::sct-preview
-          echo ::set-output name=terraform_workspace::qa-${{ inputs.pr_number }}
-          echo ::set-output name=rollbar_env::qa-${STATIC_ROUTE_NUMBER}-gpaas
-          echo ::set-output name=application_url::https://${STATIC_ROUTE}.london.cloudapps.digital
-          echo ::set-output name=clamav_application_suffix::pre-prod
-          echo ::set-output name=clamav_application_space::sct-staging
-          echo ::set-output name=route_domain::london.cloudapps.digital
-          echo ::set-output name=route_hostname::$STATIC_ROUTE
+          echo qa_number=$STATIC_ROUTE_NUMBER >> $GITHUB_OUTPUT
+          echo cf_app_name=${{ inputs.cf_app_name }} >> $GITHUB_OUTPUT
+          echo cf_space=sct-preview >> $GITHUB_OUTPUT
+          echo terraform_workspace=qa-${{ inputs.pr_number }} >> $GITHUB_OUTPUT
+          echo rollbar_env=qa-${STATIC_ROUTE_NUMBER}-gpaas >> $GITHUB_OUTPUT
+          echo application_url=https://${STATIC_ROUTE}.london.cloudapps.digital >> $GITHUB_OUTPUT
+          echo clamav_application_suffix=pre-prod >> $GITHUB_OUTPUT
+          echo clamav_application_space=sct-staging >> $GITHUB_OUTPUT
+          echo route_domain=london.cloudapps.digital >> $GITHUB_OUTPUT
+          echo route_hostname=$STATIC_ROUTE >> $GITHUB_OUTPUT
 
         elif [ "${{ inputs.deployment_environment }}" == "research" ]; then
 
-          echo ::set-output name=cf_app_name::buy-for-your-school-research
-          echo ::set-output name=cf_space::sct-research
-          echo ::set-output name=terraform_workspace::research
-          echo ::set-output name=rollbar_env::research-gpaas
-          echo ::set-output name=application_url::https://buy-for-your-school-research.london.cloudapps.digital
-          echo ::set-output name=clamav_application_suffix::pre-prod
-          echo ::set-output name=clamav_application_space::sct-staging
-          echo ::set-output name=route_domain::london.cloudapps.digital
-          echo ::set-output name=route_hostname::buy-for-your-school-research
+          echo cf_app_name=buy-for-your-school-research >> $GITHUB_OUTPUT
+          echo cf_space=sct-research >> $GITHUB_OUTPUT
+          echo terraform_workspace=research >> $GITHUB_OUTPUT
+          echo rollbar_env=research-gpaas >> $GITHUB_OUTPUT
+          echo application_url=https://buy-for-your-school-research.london.cloudapps.digital >> $GITHUB_OUTPUT
+          echo clamav_application_suffix=pre-prod >> $GITHUB_OUTPUT
+          echo clamav_application_space=sct-staging >> $GITHUB_OUTPUT
+          echo route_domain=london.cloudapps.digital >> $GITHUB_OUTPUT
+          echo route_hostname=buy-for-your-school-research >> $GITHUB_OUTPUT
 
         elif [ "${{ inputs.deployment_environment }}" == "staging" ]; then
 
-          echo ::set-output name=cf_app_name::buy-for-your-school-staging
-          echo ::set-output name=cf_space::sct-staging
-          echo ::set-output name=terraform_workspace::staging
-          echo ::set-output name=rollbar_env::staging-gpaas
-          echo ::set-output name=application_url::https://staging-get-help-buying-for-schools.education.gov.uk
-          echo ::set-output name=clamav_application_suffix::pre-prod
-          echo ::set-output name=clamav_application_space::sct-staging
-          echo ::set-output name=route_domain::education.gov.uk
-          echo ::set-output name=route_hostname::staging-get-help-buying-for-schools
+          echo cf_app_name=buy-for-your-school-staging >> $GITHUB_OUTPUT
+          echo cf_space=sct-staging >> $GITHUB_OUTPUT
+          echo terraform_workspace=staging >> $GITHUB_OUTPUT
+          echo rollbar_env=staging-gpaas >> $GITHUB_OUTPUT
+          echo application_url=https://staging-get-help-buying-for-schools.education.gov.uk >> $GITHUB_OUTPUT
+          echo clamav_application_suffix=pre-prod >> $GITHUB_OUTPUT
+          echo clamav_application_space=sct-staging >> $GITHUB_OUTPUT
+          echo route_domain=education.gov.uk >> $GITHUB_OUTPUT
+          echo route_hostname=staging-get-help-buying-for-schools >> $GITHUB_OUTPUT
 
         elif [ "${{ inputs.deployment_environment }}" == "production" ]; then
 
-          echo ::set-output name=cf_app_name::buy-for-your-school-prod
-          echo ::set-output name=cf_space::sct-production
-          echo ::set-output name=terraform_workspace::prod
-          echo ::set-output name=rollbar_env::production-gpaas
-          echo ::set-output name=application_url::https://www.get-help-buying-for-schools.service.gov.uk
-          echo ::set-output name=clamav_application_suffix::prod
-          echo ::set-output name=clamav_application_space::sct-production
-          echo ::set-output name=route_domain::get-help-buying-for-schools.service.gov.uk
-          echo ::set-output name=route_hostname::www
+          echo cf_app_name=buy-for-your-school-prod >> $GITHUB_OUTPUT
+          echo cf_space=sct-production >> $GITHUB_OUTPUT
+          echo terraform_workspace=prod >> $GITHUB_OUTPUT
+          echo rollbar_env=production-gpaas >> $GITHUB_OUTPUT
+          echo application_url=https://www.get-help-buying-for-schools.service.gov.uk >> $GITHUB_OUTPUT
+          echo clamav_application_suffix=prod >> $GITHUB_OUTPUT
+          echo clamav_application_space=sct-production >> $GITHUB_OUTPUT
+          echo route_domain=get-help-buying-for-schools.service.gov.uk >> $GITHUB_OUTPUT
+          echo route_hostname=www >> $GITHUB_OUTPUT
 
         fi
 
