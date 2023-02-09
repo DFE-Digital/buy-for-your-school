@@ -25,7 +25,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "jest-environment-jsdom": "^29.3.1",
+    "jest-environment-jsdom": "^29.4.2",
     "webpack-dev-server": "^4.11.1"
   },
   "babel": {
