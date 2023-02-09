@@ -60,6 +60,7 @@ describe SubmitFrameworkRequest do
 
       it "sends out the confirmation email for energy requests" do
         allow(Emails::ConfirmationEnergy).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation)
+        expect(Emails::ConfirmationEnergy).to receive(:new).with(email_confirmation_parameters)
         described_class.new(request:, referrer:).call
       end
     end

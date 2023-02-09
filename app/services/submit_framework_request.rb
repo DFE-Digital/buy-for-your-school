@@ -92,7 +92,7 @@ private
   end
 
   def send_confirmation_email
-    if request.has_bills? || request.energy_alternative == :email_later
+    if request.has_bills? || request.energy_alternative == "email_later"
       Emails::ConfirmationEnergy.new(
         recipient: request.user,
         reference: @kase.ref,
