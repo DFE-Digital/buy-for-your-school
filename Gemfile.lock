@@ -291,7 +291,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.6.0)
+    jwt (2.7.0)
     knapsack (4.0.0)
       rake
     libv8-node (16.10.0.0-arm64-darwin)
