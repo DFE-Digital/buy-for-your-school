@@ -18,7 +18,11 @@ module Support
       @case_assignment_form = CaseAssignmentForm.from_validation(validation)
 
       if validation.success?
-        assign_agent_to_case
+        CaseManagement::AssignCaseToAgent.new.call(
+          support_case_id: current_case.id,
+          assigned_by_agent_id: current_agent.id,
+          assigned_to_agent_id: @case_assignment_form.agent_id,
+        )
 
         redirect_to support_case_path(current_case, anchor: "case-history"),
                     notice: I18n.t("support.case_assignment.flash.created")
@@ -28,20 +32,6 @@ module Support
     end
 
   private
-
-    def assign_agent_to_case
-      current_case.interactions.note.build(
-        body: "Case assigned: New assignee is #{@case_assignment_form.new_agent.full_name}",
-        agent_id: current_agent.id,
-      )
-
-      record_action(case_id: current_case.id, action: "open_case") if current_case.initial?
-      current_case.open if current_case.may_open?
-
-      current_case.update!(
-        agent_id: @case_assignment_form.agent_id,
-      )
-    end
 
     def validation
       CaseAssignmentFormSchema.new.call(**case_assignment_form_params)

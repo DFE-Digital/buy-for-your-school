@@ -58,6 +58,8 @@ module Support
       create_case: 15,
       case_categorisation_changed: 16,
       case_source_changed: 17,
+      case_assigned: 18,
+      case_opened: 19,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

@@ -1214,6 +1214,8 @@ en:
         all_cases_open_survey_sent: The survey for open cases email has been sent
         all_cases_resolved_survey_sent: The survey for resolved cases email has been sent
       type:
+        case_assigned: Case assigned
+        case_opened: Status change
         case_categorisation_changed:
           category: Category changed
           query: Query changed
