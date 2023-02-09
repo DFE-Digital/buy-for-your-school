@@ -62,6 +62,12 @@ module Support
       AgentPresenter.new(super) if super
     end
 
+    def assigned_to_agent
+      return if additional_data["assigned_to_agent_id"].blank?
+
+      AgentPresenter.new(Support::Agent.find(additional_data["assigned_to_agent_id"]))
+    end
+
     # @return [CasePresenter]
     def case
       CasePresenter.new(super)
@@ -76,9 +82,11 @@ module Support
     end
 
     def custom_template
-      return "support_request_body"        if support_request?
+      return "support_request_body" if support_request?
       return "case_categorisation_changed" if case_categorisation_changed?
-      return "case_source_changed"         if case_source_changed?
+      return "case_source_changed" if case_source_changed?
+      return "state_changes/case_assigned" if case_assigned?
+      return "state_changes/case_opened" if case_opened?
     end
 
     def event_type
@@ -102,7 +110,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed case_assigned case_opened].include?(key)
       end
     end
 

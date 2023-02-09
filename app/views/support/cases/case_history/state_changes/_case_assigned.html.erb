@@ -1,0 +1,5 @@
+<% if interaction.agent.id == interaction.assigned_to_agent.id %>
+  <%= interaction.assigned_to_agent.full_name %> assigned case to themselves
+<% else %>
+  <%= interaction.assigned_to_agent.full_name %> was assigned case by <%= interaction.agent.full_name %>
+<% end %>
