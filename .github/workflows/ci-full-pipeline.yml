@@ -14,7 +14,7 @@ jobs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -31,7 +31,7 @@ jobs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.3.0
 
       - name: Install node modules
         run: yarn install
@@ -199,7 +199,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
 
       - uses: ./.github/workflows/actions/deploy
         name: Deploy
@@ -240,7 +240,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
 
       - name: Run seeding
         run: |
@@ -267,7 +267,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
 
       - uses: ./.github/workflows/actions/deploy
         name: Deploy
