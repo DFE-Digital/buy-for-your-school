@@ -1,0 +1,17 @@
+<% content_for :title, "Buy for your school | Notifications" %>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--l">Notifications</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Notification</th>
+      <th scope="col" class="govuk-table__header notification-fixed-header">Received</th>
+      <th scope="col" class="govuk-table__header notification-fixed-header">Action</th>
+    </tr>
+  </thead>
+  <tbody id="support_notifications" class="govuk-table__body">
+    <%= render partial: "support/notifications/notification", collection: @notifications, as: :notification %>
+  </tbody>
+</table>
+
+<%= render "components/pagination", records: @notifications %>

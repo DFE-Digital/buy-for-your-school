@@ -15,6 +15,10 @@ describe "Assigning an agent to a case" do
     expect { assign_agent! }.to change { Support::Interaction.case_assigned.where(case_id: support_case.id).count }.from(0).to(1)
   end
 
+  it "notifies the assigned agent" do
+    expect { assign_agent! }.to change { Support::Notification.case_assigned.where(support_case_id: support_case.id, assigned_to_id: assigned_to_agent_id, assigned_by_id: assigned_by_agent_id).count }.from(0).to(1)
+  end
+
   context "when the case is new" do
     let(:support_case) { create(:support_case, :initial) }
 

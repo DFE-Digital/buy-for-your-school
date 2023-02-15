@@ -208,6 +208,10 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :notifications, only: :index do
+      resource :read, only: %i[create destroy], module: :notifications
+    end
+
     resources :messages do
       resource :save_attachments, only: %i[new create]
     end
