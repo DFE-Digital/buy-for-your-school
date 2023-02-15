@@ -75,6 +75,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220505103423_add_replying_to_id_to_support_emails.rb'
     - 'db/migrate/20220805130609_change_support_emails_in_reply_to_id.rb'
     - 'db/migrate/20221014140003_add_more_trust_fields_to_support_organisations.rb'
+    - 'db/migrate/20230210133230_refactor_notifications_into_one_table.rb'
 
 # Offense count: 3
 # Configuration parameters: Include.

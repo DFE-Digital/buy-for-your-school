@@ -4,7 +4,7 @@ module Support
 
   protected
 
-    helper_method :current_agent, :current_url_b64
+    helper_method :current_agent, :current_url_b64, :notifications_unread?
 
     # @return [Agent, nil]
     def current_agent
@@ -28,6 +28,12 @@ module Support
 
     def support?
       true
+    end
+
+    def notifications_unread?
+      return false if current_agent.nil?
+
+      Support::Notification.unread(assigned_to: current_agent).any?
     end
 
     def current_url_b64(tab = "")

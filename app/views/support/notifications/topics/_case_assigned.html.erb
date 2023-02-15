@@ -1,0 +1,14 @@
+<div class="notification-details">
+  <div class="major">
+    <span class="action">
+      <%= link_to notification.support_case, class: "govuk-link--no-visited-state" do %>
+        Assigned to case <%= notification.case_ref %>
+      <% end %>
+    </span>
+    <span class="by">by <%= notification.assigned_by_name %></span>
+  </div>
+
+  <div class="minor">
+    <strong>Case created:</strong> <%= notification.case_created.strftime("%d %b %Y at %H:%M") %>
+  </div>
+</div>

@@ -24,5 +24,7 @@ module Support
 
       caseworkers.where(sql, q: "#{query}%").limit(30)
     }
+
+    def full_name = "#{first_name} #{last_name}"
   end
 end

@@ -1,0 +1,21 @@
+<tr id="<%= dom_id(notification) %>" class="govuk-table__row notification <%= notification.read ? "read" : "unread" %>">
+  <td scope="row" class="govuk-table__cell">
+    <%= render "support/notifications/topics/#{notification.topic}", notification: %>
+  </td>
+
+  <td class="govuk-table__cell"><%= time_ago_in_words(notification.received_at) %> ago</td>
+
+  <td class="govuk-table__cell">
+    <div class="notification-actions">
+      <% if notification.read %>
+        Read
+      <% else %>
+        <%= link_to(support_notification_read_path(notification), method: :post, class: "govuk-link--no-visited-state") do %>
+          Mark as read
+        <% end %>
+
+        <span class="notification-unread-icon"></span>
+      <% end %>
+    </div>
+  </td>
+</tr>
