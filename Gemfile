@@ -47,7 +47,7 @@ gem "sidekiq-cron", "~> 1.9"
 gem "sprockets-rails"
 gem "stimulus-rails"
 gem "thor"
-gem "turbolinks", "~> 5"
+gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 gem "will_paginate", "~> 3.3.0"

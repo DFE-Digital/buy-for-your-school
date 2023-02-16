@@ -7,7 +7,10 @@ import Rails from "@rails/ujs"
 Rails.start()
 
 import { initAll } from "govuk-frontend/govuk/all"
-initAll()
+(() => { document.addEventListener('DOMContentLoaded', initAll); })();
+
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.session.drive = false
 
 // Application javascript resources
 
