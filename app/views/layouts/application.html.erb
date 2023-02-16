@@ -33,6 +33,11 @@
     <meta property="og:image" content="<%=image_path("images/govuk-opengraph-image.png")%>">
 
     <%= stylesheet_link_tag "application" %>
+
+    <% if support? %>
+      <%= javascript_include_tag "tinymce/tinymce.min" %>
+    <% end %>
+    <%= javascript_include_tag "application" %>
   </head>
 
   <body class="govuk-template__body ">
@@ -128,11 +133,6 @@
     </footer>
 
     <%= render partial: "layouts/redirect" %>
-
-    <% if support? %>
-      <%= javascript_include_tag "tinymce/tinymce.min", "data-turbo-track": "reload", defer: true %>
-    <% end %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </body>
 
 </html>
