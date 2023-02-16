@@ -1,0 +1,7 @@
+<%= turbo_stream.prepend("notifications") do %>
+  <%= render "support/notifications/notification", notification:, appear: true %>
+<% end %>
+
+<%= turbo_stream.replace("navbar_notifications_icon") do %>
+  <%= render "layouts/navigation_links_notifications", notifications_unread: %>
+<% end %>

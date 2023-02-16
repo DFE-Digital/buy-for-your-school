@@ -1,0 +1,7 @@
+<li id="navbar_notifications_icon" class="navbar-component__navigation-item--right govuk-header__navigation-item">
+  <%= link_to "Notifications", support_notifications_path, class: "govuk-header__link" %>
+
+  <% if notifications_unread %>
+    <span class="notification-unread-icon"></span>
+  <% end %>
+</li>

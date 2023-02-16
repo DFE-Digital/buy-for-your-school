@@ -11,6 +11,18 @@ module Support
     scope :unread, ->(assigned_to:) { where(assigned_to:, read: false) }
     scope :feed, ->(assigned_to:) { where(assigned_to:).order("created_at DESC") }
 
+    after_create_commit lambda { |notification|
+      broadcast_render_to(
+        [notification.assigned_to, "notifications"],
+        partial: "support/notifications/stream_events/notification_received",
+        locals: {
+          notifications_unread: true,
+          agent: notification.assigned_to,
+          notification:,
+        },
+      )
+    }
+
     def case_ref = support_case.ref
     def case_created = support_case.created_at
     def assigned_by_name = assigned_by.full_name

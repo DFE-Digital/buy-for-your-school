@@ -9,6 +9,11 @@
       </li>
 
       <% if support? %>
+        <% if Flipper.enabled?(:notifications) %>
+          <%= turbo_stream_from current_agent, "notifications" %>
+          <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
+        <% end %>
+        
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
         </li>
@@ -26,16 +31,6 @@
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case.search.heading"), new_support_case_search_path, class: "govuk-header__link" %>
         </li>
-
-        <% if Flipper.enabled?(:notifications) %>
-          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-            <%= link_to "Notifications", support_notifications_path, class: "govuk-header__link" %>
-
-            <% if notifications_unread? %>
-              <span class="notification-unread-icon"></span>
-            <% end %>
-          </li>
-        <% end %>
       <% end %>
 
       <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
