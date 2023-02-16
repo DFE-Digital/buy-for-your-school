@@ -292,6 +292,15 @@ en:
         bills_attached: Bills attached
       header: Send your request
       response_time: Once you send this request, we will review it and get in touch within 2 working days.
+      aria:
+        change_name: "Change your name"
+        change_email: "Change your email"
+        change_school: "Change your school"
+        change_school_type: "Change your school type"
+        change_message: "Change the description of your request"
+        change_procurement_amount: "Change procurement amount"
+        change_bills_attached: "Change bills attached"
+        change_special_requirements: "Change special requirements"
     confirm_group_or_trust:
       caption: About your school
       choice:
@@ -301,7 +310,7 @@ en:
         address: Address
         group_name: Group name
         group_type: Group type
-        id: ID
+        id: IDs
         uid: UID
         ukprn: UKPRN
     confirm_school:
@@ -313,7 +322,7 @@ en:
       summary:
         dfe_number: DfE number
         headteacher: Headteacher / Principal
-        id: ID
+        id: IDs
         local_authority: Local authority
         name_and_address: Name and Address
         phase: Phase of education
@@ -330,7 +339,7 @@ en:
         no_dsi: No, continue without a DfE Sign-in account
       subtitle: About your school
     email:
-      label: We will only use this to contact you about your request.
+      hint: We will only use this to contact you about your request.
       subtitle: About you
       title: What is your email address?
     energy_alternative:
@@ -438,6 +447,7 @@ en:
       caption: About your school
       legend: Which school are you buying for?
   faf_submissions:
+    title: Support Request Confirmed - Get help buying for schools
     body:
       what_happens_next:
       - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
@@ -508,6 +518,7 @@ en:
       what_is: What is %{label}?
     'no': 'No'
     'yes': 'Yes'
+    not_provided: Not provided
   journey:
     edit:
       name:
@@ -585,7 +596,6 @@ en:
       helper_content:
       - This is the approximate amount you'll be spending over the lifetime of the contract. Use the value of a previous or existing contract if you're unsure.
       - We only use this value as a guide to understand your procurement better. We know it can change.
-      not_known: Not known
     special_requirements:
       caption: Special requirements
       heading: Do you have any special requirements when you communicate or use technology and/or online services?

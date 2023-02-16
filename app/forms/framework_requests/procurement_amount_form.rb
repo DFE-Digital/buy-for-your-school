@@ -1,5 +1,8 @@
 module FrameworkRequests
   class ProcurementAmountForm < BaseForm
+    include ActiveModel::Validations::Callbacks
+
+    before_validation :format_amount
     validate :procurement_amount_validation
 
     attr_accessor :procurement_amount
@@ -7,6 +10,10 @@ module FrameworkRequests
     def initialize(attributes = {})
       super
       @procurement_amount ||= (sprintf("%.2f", framework_request.procurement_amount) if framework_request.procurement_amount.present?)
+    end
+
+    def format_amount
+      @procurement_amount = @procurement_amount&.gsub(/[£,]/, "")
     end
 
     def procurement_amount_validation

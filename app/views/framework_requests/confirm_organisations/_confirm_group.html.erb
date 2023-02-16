@@ -9,7 +9,7 @@
       <%= I18n.t("faf.confirm_group_or_trust.summary.group_name") %>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= org.name %>,<br>
+      <%= org.name %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -34,9 +34,7 @@
     </dt>
     <dd class="govuk-summary-list__value">
       <%= I18n.t("faf.confirm_group_or_trust.summary.uid") %>: <%= org.uid %><br>
-      <% if org.ukprn %>
-        <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= org.ukprn %>
-      <% end %>
+      <%= I18n.t("faf.confirm_group_or_trust.summary.ukprn") %>: <%= org.ukprn %>
     </dd>
   </div>
 </dl>

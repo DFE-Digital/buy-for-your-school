@@ -9,26 +9,33 @@ module Support
     def formatted_address
       [address["street"], address["locality"], address["postcode"]]
         .reject(&:blank?)
-        .to_sentence(last_word_connector: ", ")
+        .to_sentence(last_word_connector: ", ", two_words_connector: ", ")
+        .presence || I18n.t("generic.not_provided")
     end
 
     def postcode
       address["postcode"]
     end
 
-    # @return [String, nil]
+    # @return [String]
     def local_authority
-      super["name"] if super
+      return I18n.t("generic.not_provided") unless super
+
+      super["name"]
     end
 
     # @return [String]
     def contact
-      "#{super['title']} #{super['first_name']} #{super['last_name']}" if super
+      return I18n.t("generic.not_provided") unless super
+
+      "#{super['title']} #{super['first_name']} #{super['last_name']}"
     end
 
     # @return [String, nil]
     def phase
-      super.to_s.humanize if super
+      return I18n.t("generic.not_provided") unless super
+
+      super.to_s.humanize
     end
 
     def establishment_type_name
@@ -43,6 +50,10 @@ module Support
 
     def gias_label
       I18n.t("support.case.link.view_school_information")
+    end
+
+    def ukprn
+      super.presence || I18n.t("generic.not_provided")
     end
   end
 end

@@ -13,7 +13,7 @@ module Support
       results = Organisation
         .includes([:establishment_type])
         .where(query, q: "%#{params.fetch(:q)}%")
-        .limit(25)
+        .limit(50)
 
       respond_to do |format|
         format.json do
