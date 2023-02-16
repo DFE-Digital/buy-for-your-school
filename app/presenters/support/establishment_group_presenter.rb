@@ -16,7 +16,8 @@ module Support
     def formatted_address
       [address["street"], address["locality"], address["postcode"]]
         .reject(&:blank?)
-        .to_sentence(last_word_connector: ", ")
+        .to_sentence(last_word_connector: ", ", two_words_connector: ", ")
+        .presence || I18n.t("generic.not_provided")
     end
 
     def postcode
@@ -46,6 +47,10 @@ module Support
 
       group_type_id = Support::EstablishmentGroup.find_by(uid:).establishment_group_type_id
       @group_type_name = Support::EstablishmentGroupType.where(id: group_type_id).first.name
+    end
+
+    def ukprn
+      super.presence || I18n.t("generic.not_provided")
     end
   end
 end

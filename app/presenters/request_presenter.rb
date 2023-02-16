@@ -3,7 +3,7 @@ class RequestPresenter < BasePresenter
 
   # return [String]
   def procurement_amount
-    return I18n.t("request.procurement_amount.not_known") if super.nil?
+    return I18n.t("generic.not_provided") if super.nil?
 
     number_to_currency(super, unit: "£", precision: 2)
   end

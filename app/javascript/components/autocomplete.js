@@ -116,7 +116,8 @@ import _ from "lodash";
           suggestion: i => formatSuggestion(i, suggestionTemplate)
         },
         source: _.throttle(doQueryLookup),
-        onConfirm: setHiddenFields
+        onConfirm: setHiddenFields,
+        tStatusNoResults: () => "No results found"
       }
 
       setupFormGroupAndLabel();

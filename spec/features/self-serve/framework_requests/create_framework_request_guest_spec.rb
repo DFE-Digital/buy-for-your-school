@@ -94,7 +94,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
 
-        expect(values[0]).to have_text "New Academy Trust,"
+        expect(values[0]).to have_text "New Academy Trust"
         expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
       end
     end
@@ -166,10 +166,10 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       it "has the correct attributes" do
-        expect(find("span.govuk-caption-l")).to have_text "About you"
-        expect(find("label.govuk-label--l")).to have_text "What is your email address?"
+        expect(page).to have_text "About you"
+        expect(page).to have_text "What is your email address?"
 
-        expect(page).to have_field "We will only use this to contact you about your request."
+        expect(page).to have_text "We will only use this to contact you about your request."
 
         expect(page).to have_button "Continue"
       end
@@ -294,7 +294,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
 
         expect(keys[0]).to have_text "Group name"
-        expect(values[0]).to have_text "New Academy Trust,"
+        expect(values[0]).to have_text "New Academy Trust"
 
         expect(keys[1]).to have_text "Address"
         expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"

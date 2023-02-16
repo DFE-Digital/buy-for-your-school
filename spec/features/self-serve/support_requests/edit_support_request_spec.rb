@@ -279,7 +279,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
       end
 
       it "removes the procurement amount" do
-        expect(answers[6]).to have_text "Not known"
+        expect(answers[6]).to have_text "Not provided"
         expect(support_request.reload.procurement_amount).to be_nil
       end
     end

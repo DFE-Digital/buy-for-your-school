@@ -1,1 +1,5 @@
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
+
+.autocomplete__option--no-results {
+  @include govuk-font($size: 19)
+}

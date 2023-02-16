@@ -6,10 +6,4 @@
   <%= I18n.t("faf.email.subtitle") %>
 </span>
 
-<h1 class="govuk-label-wrapper">
-  <label class="govuk-label govuk-label--l" for="email-address">
-    <%= I18n.t("faf.email.title") %>
-  </label>
-</h1>
-
-<%= form.govuk_text_field :email, autofocus: true, label: { text: I18n.t("faf.email.label"), class: "govuk-hint" } %>
+<%= form.govuk_text_field :email, autofocus: true, label: { text: I18n.t("faf.email.title"), tag: :h1, size: "l" }, hint: { text: I18n.t("faf.email.hint") } %>

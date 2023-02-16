@@ -15,8 +15,8 @@ RSpec.describe RequestPresenter do
     context "when there is no procurement_amount" do
       let(:support_request) { build(:support_request, procurement_amount: nil) }
 
-      it "returns 'Not known'" do
-        expect(presenter.procurement_amount).to eq "Not known"
+      it "returns 'Not provided'" do
+        expect(presenter.procurement_amount).to eq "Not provided"
       end
     end
   end

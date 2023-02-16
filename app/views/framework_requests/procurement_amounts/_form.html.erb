@@ -3,9 +3,8 @@
 <%= render "framework_requests/common_form_fields", form: form %>
 
 <span class="govuk-caption-l"><%= I18n.t("request.procurement_amount.caption") %></span>
-<h1 class="govuk-heading-l"><%= I18n.t("request.procurement_amount.heading") %></h1>
-<% for content in I18n.t("request.procurement_amount.helper_content") do %>
-  <p class="govuk-hint"><%= content %></p>
-<% end %>
 
-<%= form.govuk_text_field :procurement_amount, width: 5, label: nil, prefix_text: "£" %>
+<%= form.govuk_text_field :procurement_amount, width: 5,
+    label: { text: I18n.t("request.procurement_amount.heading"), tag: :h1, class: "govuk-label--l" },
+    hint: -> { render "form_hint" },
+    prefix_text: "£" %>

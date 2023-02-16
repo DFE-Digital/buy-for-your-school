@@ -15,8 +15,8 @@ RSpec.describe Support::OrganisationPresenter do
     let(:organisation) { create(:support_organisation) }
 
     describe "#formatted_address" do
-      it "returns a correctly address formatted" do
-        expect(presenter.formatted_address).to eq ""
+      it "returns 'not provided'" do
+        expect(presenter.formatted_address).to eq "Not provided"
       end
     end
   end
@@ -35,8 +35,8 @@ RSpec.describe Support::OrganisationPresenter do
     let(:organisation) { create(:support_organisation, local_authority: nil) }
 
     describe "#local_authority" do
-      it "returns nil" do
-        expect(presenter.local_authority).to be_nil
+      it "returns 'not provided'" do
+        expect(presenter.local_authority).to eq "Not provided"
       end
     end
   end
@@ -75,8 +75,26 @@ RSpec.describe Support::OrganisationPresenter do
     let(:organisation) { create(:support_organisation, phase: nil) }
 
     describe "#phase" do
-      it "returns nil" do
-        expect(presenter.phase).to be_nil
+      it "returns 'not provided'" do
+        expect(presenter.phase).to eq "Not provided"
+      end
+    end
+  end
+
+  describe "#ukprn" do
+    context "when available" do
+      let(:organisation) { create(:support_organisation, ukprn: "123") }
+
+      it "returns the UKPRN" do
+        expect(presenter.ukprn).to eq "123"
+      end
+    end
+
+    context "when not available" do
+      let(:organisation) { create(:support_organisation, ukprn: nil) }
+
+      it "returns 'Not provided'" do
+        expect(presenter.ukprn).to eq "Not provided"
       end
     end
   end
