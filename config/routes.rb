@@ -209,7 +209,13 @@ Rails.application.routes.draw do
     end
 
     resources :notifications, only: :index do
-      resource :read, only: %i[create destroy], module: :notifications
+      scope module: :notifications do
+        resource :read, only: %i[create destroy]
+
+        collection do
+          resource :mark_all_read, only: %i[create], as: :notifications_mark_all_read
+        end
+      end
     end
 
     resources :messages do

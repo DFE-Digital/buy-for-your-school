@@ -8,6 +8,12 @@
   width: 191px;
 }
 
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-content: end;
+}
+
 .notification {
   &.appear {
     animation: fadeInAnimation ease 3s;

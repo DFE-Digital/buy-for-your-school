@@ -16,7 +16,7 @@ describe Notifications::HandleCaseStateChanges do
     context "when agent assigns themselves to the case" do
       it "does not send a notification at all" do
         payload = { support_case_id:, assigned_by_agent_id: assigned_to_agent_id, assigned_to_agent_id: }
-        expect { handler.agent_assigned_to_case(payload) }.not_to change { Support::Notification.count }
+        expect { handler.agent_assigned_to_case(payload) }.not_to change(Support::Notification, :count)
       end
     end
   end
