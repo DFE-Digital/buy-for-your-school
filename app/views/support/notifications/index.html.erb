@@ -2,9 +2,14 @@
 
 <%= turbo_stream_from current_agent, "notifications" %>
 
+<div class="notifications-header">
+  <h1 class="govuk-heading-l">Notifications</h1>
+  <div><%= link_to "Mark all as read", support_notifications_mark_all_read_path, method: :post, class: "govuk-link govuk-link--no-visited-state" %></div>
+</div>
+
 <%= turbo_frame_tag "notifications-table" do %>
   <table class="govuk-table">
-    <caption class="govuk-table__caption govuk-table__caption--l">Notifications</caption>
+    <caption class="govuk-!-display-none">Notifications</caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Notification</th>
