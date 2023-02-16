@@ -44,7 +44,7 @@ module Support
     end
 
     def notify_client
-      Notifications::Client.new(ENV["NOTIFY_API_KEY"])
+      ::Notifications::Client.new(ENV["NOTIFY_API_KEY"])
     end
   end
 end
