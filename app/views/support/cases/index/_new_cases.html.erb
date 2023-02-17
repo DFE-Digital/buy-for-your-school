@@ -1,0 +1,49 @@
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="new-cases">
+  <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-new-cases" data-component="toggle-panel-visibility">
+    <%= I18n.t("support.case.filter.filter_results") %>
+  </button>
+  <h2 class="govuk-heading-l"><%= I18n.t("support.case.list.new_cases") %></h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= render "support/cases/forms/filter_cases_form",
+                  form: @new_cases_filter_form,
+                  scope: :filter_new_cases_form,
+                  filter_url: support_cases_path(anchor: "new-cases"),
+                  clear_url: support_cases_path(anchor: "new-cases"),
+                  tab: "new-cases" %>
+      <% if @new_cases.none? %>
+        <p class="govuk-body">
+          <%= I18n.t("support.case.list.not_found") %>
+        </p>
+      <% else %>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col">
+                <%= I18n.t("support.case.label.case") %>
+              </th>
+              <th class="govuk-table__header" scope="col">
+                <%= I18n.t("support.case.label.organisation") %>
+              </th>
+              <th class="govuk-table__header" scope="col">
+                <%= I18n.t("support.case.label.sub_category") %>
+              </th>
+              <th class="govuk-table__header" scope="col">
+                <%= I18n.t("support.case.label.status") %>
+              </th>
+              <th class="govuk-table__header" scope="col">
+                <%= I18n.t("support.case.label.date_received") %>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @new_cases.each do |kase| %>
+              <%= render "row", kase: kase, tab: :new_cases %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= render "components/pagination", records: @new_cases, page_param_name: 'new_cases_page', pagination_params: { anchor: "new-cases" } %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,56 +1,6 @@
-<% content_for :title do %>
-  Buy for your school | Case <%= @current_case.ref %>
+<%= render "support/cases/show/tabs" do %>
+  <%= render "support/cases/show/school_details", current_case: @current_case %>
+  <%= render "support/cases/show/case_details", current_case: @current_case %>
+  <%= render "support/cases/show/case_history", interactions: @current_case.case_history_interactions, current_case: @current_case %>
+  <%= render "support/cases/show/case_attachments", current_case: @current_case %>
 <% end %>
-
-<h1 class="govuk-heading-l">
-  <%= @current_case.organisation_name %>
-</h1>
-<div class="govuk-!-margin-bottom-7">
-  <%= render "status_badge", kase: @current_case %>
-</div>
-<p class="govuk-body" id="case-ref">
-  <strong><%= @current_case.ref %></strong>
-  <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
-</p>
-
-<div class="govuk-tabs" data-module="govuk-tabs">
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <a class="govuk-tabs__tab" href="#school-details">
-        <%= I18n.t("support.case.header.school_detail") %>
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#case-details">
-        <%= I18n.t("support.case.header.case_detail") %>
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case, back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#case-history">
-        <%= I18n.t("support.case.header.case_history") %>
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#case-attachments">
-        <%= I18n.t("support.case.header.case_attachments") %>
-      </a>
-    </li>
-  </ul>
-  <div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
-    <%= render "school_details", current_case: @current_case %>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
-    <%= render "case_details", current_case: @current_case %>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
-    <%= render "case_history", interactions: @current_case.case_history_interactions, current_case: @current_case %>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-attachments">
-    <%= render "case_attachments", current_case: @current_case %>
-  </div>
-</div>
-
-<%= render "case_actions" unless @current_case.closed?  %>

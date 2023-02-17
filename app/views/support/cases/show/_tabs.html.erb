@@ -1,0 +1,50 @@
+<% tab = defined?(tab) ? tab : nil %>
+<% tab_url = ->(anchor) { tab == "messages" ? support_case_path(@current_case, anchor:) : "##{anchor}" } %>
+
+<% content_for :title do %>
+  Buy for your school | Case <%= @current_case.ref %>
+<% end %>
+
+<h1 class="govuk-heading-l">
+  <%= @current_case.organisation_name %>
+</h1>
+
+<div class="govuk-!-margin-bottom-7">
+  <%= render "support/cases/status_badge", kase: @current_case %>
+</div>
+
+<p class="govuk-body" id="case-ref">
+  <strong><%= @current_case.ref %></strong>
+  <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
+</p>
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "school_detail" %>">
+      <%= link_to I18n.t("support.case.header.school_detail"), tab_url["school-details"], class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_detail" %>">
+      <%= link_to I18n.t("support.case.header.case_detail"), tab_url["case-details"], class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "messages" %>">
+      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case, back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+    </li>
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_history" %>">
+      <%= link_to I18n.t("support.case.header.case_history"), tab_url["case-history"], class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_attachments" %>">
+      <%= link_to I18n.t("support.case.header.case_attachments"), tab_url["case-attachments"], class: "govuk-tabs__tab" %>
+    </li>
+  </ul>
+
+  <%= yield %>
+</div>
+
+<%= render "support/cases/show/case_actions" unless @current_case.closed? %>
+
+<% unless tab == "messages" %>
+  <%= javascript_tag nonce: true do %>
+    // prevent #anchor scrolling down the page on switch from messages to other tab
+    document.addEventListener("DOMContentLoaded", () => setTimeout(() => window.scrollTo(0,0)));
+  <% end %>
+<% end %>
