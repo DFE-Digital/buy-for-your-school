@@ -298,7 +298,7 @@ GEM
     libv8-node (16.10.0.0-x86_64-darwin)
     libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.4.0)
-    listen (3.7.1)
+    listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loaf (0.10.0)
@@ -648,7 +648,7 @@ DEPENDENCIES
   jwt
   knapsack
   liquid
-  listen (>= 3.0.5, < 3.8)
+  listen (>= 3.0.5, < 3.9)
   loaf
   mini_racer
   mock_redis
