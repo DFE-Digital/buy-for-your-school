@@ -1,0 +1,15 @@
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-history">
+  <table class="govuk-table" id="case-history-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header"><%= I18n.t("support.case.label.case_history.table.type") %></th>
+        <th class="govuk-table__header"><%= I18n.t("support.case.label.case_history.table.note") %></th>
+        <th class="govuk-table__header"><%= I18n.t("support.case.label.case_history.table.date") %></th>
+      </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+      <%= render partial: "support/cases/case_history/interaction", collection: interactions, as: :interaction %>
+    </tbody>
+  </table>
+</div>

@@ -1,9 +1,11 @@
-<%= render layout: "support/layouts/case", locals: { tab: "messages" } do %>
-  <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+<%= render "support/cases/show/tabs", tab: "messages" do %>
+  <div class="govuk-tabs__panel" id="messages" role="tabpanel" aria-labelledby="tab_messages">
+    <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
 
-  <h1 class="govuk-heading-m"><%= I18n.t("support.case.label.message_threads.new_thread") %></h1>
+    <h1 class="govuk-heading-m"><%= I18n.t("support.case.label.message_threads.new_thread") %></h1>
 
-  <div class="govuk-details__text">
+    <div class="govuk-details__text">
       <%= render "support/cases/messages/replies/form", reply: false %>
+    </div>
   </div>
 <% end %>
