@@ -1,45 +1,24 @@
-<h1 class="govuk-heading-l">
-  <%= @tower.title %> cases
-</h1>
+<% tower_id = "#{@tower.title.parameterize}-tower" %>
 
-<%= render "support/cases/forms/simple_case_filters", form: @filter_form, clear_url: support_tower_path(id: @tower.id), hide_towers: true %>
+<%= turbo_frame_tag "#{tower_id}-frame" do %>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="<%= tower_id %>">
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-<%= tower_id %>" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
 
-<table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="col">
-        <%= I18n.t("support.case.label.case") %>
-      </th>
-      <th class="govuk-table__header" scope="col">
-        <%= I18n.t("support.case.label.organisation") %>
-      </th>
-      <th class="govuk-table__header" scope="col">
-        <%= I18n.t("support.case.label.sub_category") %>
-      </th>
-      <th class="govuk-table__header" scope="col">
-        <%= I18n.t("support.case.label.status") %>
-      </th>
-      <th class="govuk-table__header" scope="col">
-        <%= I18n.t("support.case.label.assigned_to") %>
-      </th>
-      <th class="govuk-table__header" scope="col">
-        <%= I18n.t("support.case.label.last_updated") %>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @cases.each do |kase| %>
-      <%= render "support/cases/row", tab: :all_cases, kase: Support::CasePresenter.new(kase) %>
-    <% end %>
-  </tbody>
-</table>
+    <h1 class="govuk-heading-l">
+      <%= @tower.title %> Tower
+    </h1>
 
-<%= render "components/pagination", records: @cases %>
+    <%= render "support/cases/forms/filter_cases_form",
+          form: @filter_form,
+          scope: :filter_cases,
+          filter_url: support_tower_path(@tower),
+          clear_url: support_tower_path(@tower),
+          tab: tower_id,
+          hide_towers: true %>
 
-<h3 class="govuk-heading-m govuk-!-margin-top-5">Other towers</h3>
-
-<ul class="govuk-list case-actions">
-  <% @towers.each do |tower| %>
-    <li><%= link_to "View #{tower.title} cases", support_tower_path(id: tower.id), class: "govuk-link govuk-link--no-visited-state" %></li>
-  <% end %>
-</ul>
+    <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@cases) %>
+    <%= render "components/pagination", records: @cases %>
+  </div>
+<% end %>

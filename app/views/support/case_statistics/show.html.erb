@@ -74,11 +74,10 @@
         <th scope="row" class="govuk-table__header tower-name">
           <%= link_to tower.name, support_case_statistics_tower_path(id: tower.slug), class: "govuk-link govuk-link--no-visited-state" %>
         </th>
-        <% tower_id = tower.tower_id || tower.slug %>
-        <td class="govuk-table__cell result-value"><%= link_to tower.live_cases, support_tower_path(tower_id, **filter_cases_params(state: "live")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.open_cases, support_tower_path(tower_id, **filter_cases_params(state: "opened")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.on_hold_cases, support_tower_path(tower_id, **filter_cases_params(state: "on_hold")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.new_cases, support_tower_path(tower_id, **filter_cases_params(state: "initial")), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.live_cases, filtered_tower_path(tower.support_tower, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.open_cases, filtered_tower_path(tower.support_tower, state: "opened"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.on_hold_cases, filtered_tower_path(tower.support_tower, state: "on_hold"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.new_cases, filtered_tower_path(tower.support_tower, state: "initial"), class: "govuk-link govuk-link--no-visited-state" %></td>
         <%
 =begin%>
 # TODO: uncomment when ready to do case value work
@@ -108,12 +107,11 @@
         <th scope="row" class="govuk-table__header tower-name">
           <%= link_to tower.name, support_case_statistics_tower_path(id: tower.slug), class: "govuk-link govuk-link--no-visited-state" %>
         </th>
-        <% tower_id = tower.tower_id || tower.slug %>
-        <td class="govuk-table__cell result-value"><%= link_to tower.level_1_cases, support_tower_path(tower_id, **filter_cases_params(level: "L1")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.level_2_cases, support_tower_path(tower_id, **filter_cases_params(level: "L2")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.level_3_cases, support_tower_path(tower_id, **filter_cases_params(level: "L3")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.level_4_cases, support_tower_path(tower_id, **filter_cases_params(level: "L4")), class: "govuk-link govuk-link--no-visited-state" %></td>
-        <td class="govuk-table__cell result-value"><%= link_to tower.level_5_cases, support_tower_path(tower_id, **filter_cases_params(level: "L5")), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.level_1_cases, filtered_tower_path(tower.support_tower, level: "L1"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.level_2_cases, filtered_tower_path(tower.support_tower, level: "L2"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.level_3_cases, filtered_tower_path(tower.support_tower, level: "L3"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.level_4_cases, filtered_tower_path(tower.support_tower, level: "L4"), class: "govuk-link govuk-link--no-visited-state" %></td>
+        <td class="govuk-table__cell result-value"><%= link_to tower.level_5_cases, filtered_tower_path(tower.support_tower, level: "L5"), class: "govuk-link govuk-link--no-visited-state" %></td>
       </tr>
     <% end %>
   </tbody>

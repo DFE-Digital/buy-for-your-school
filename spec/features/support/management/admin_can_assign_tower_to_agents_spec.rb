@@ -2,7 +2,6 @@ require "rails_helper"
 
 describe "Admin can assign Support Agents to a Tower" do
   include_context "with an agent"
-  let!(:ict_tower) { create(:support_tower, title: "ICT") }
   let!(:support_agent) { create(:support_agent, first_name: "Test", last_name: "User") }
 
   scenario "Admin assigns tower to Agent" do
@@ -43,7 +42,7 @@ protected
   end
 
   def_Then :"that tower appears next to the support agent" do
-    expect(support_agent.reload.support_tower).to eq(ict_tower)
+    expect(support_agent.reload.support_tower.title).to eq("ICT")
   end
 
   def_Then :"I am not able to manage agents" do

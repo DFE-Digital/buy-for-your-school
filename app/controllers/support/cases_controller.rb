@@ -5,6 +5,8 @@ module Support
     before_action :reply_form, only: %i[show]
     before_action :current_case, only: %i[show edit]
 
+    helper_method :tower_tab_params
+
     include Concerns::HasInteraction
 
     def index
@@ -14,21 +16,9 @@ module Support
         end
 
         format.html do
-          @cases = CasePresenter
-            .wrap_collection(@all_cases_filter_form.results)
-            .paginate(page: params[:cases_page])
-
-          @new_cases = CasePresenter
-            .wrap_collection(@new_cases_filter_form.results)
-            .paginate(page: params[:new_cases_page])
-
-          @my_cases = CasePresenter
-            .wrap_collection(@my_cases_filter_form.results)
-            .paginate(page: params[:my_cases_page])
-
-          @tower_cases = CasePresenter
-            .wrap_collection(@tower_cases_filter_form.results)
-            .paginate(page: params[:tower_page])
+          @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page])
+          @new_cases = @new_cases_filter_form.results.paginate(page: params[:new_cases_page])
+          @my_cases = @my_cases_filter_form.results.paginate(page: params[:my_cases_page])
         end
       end
     end
@@ -121,11 +111,9 @@ module Support
     end
 
     def filter_forms
-      my_cases_form_params = filter_forms_params(:filter_my_cases_form)
-        .merge(base_cases: Case.by_agent(current_agent.id).where.not(state: %i[closed resolved]))
-
-      tower_cases_form_params = filter_forms_params(:filter_tower_form)
-        .merge(base_cases: Case.by_tower(current_agent.support_tower_id))
+      # allow my-cases to conditionally show closed / resolved cases if not by default
+      my_cases_form_params = { state: "live" }.merge(filter_forms_params(:filter_my_cases_form))
+        .merge(base_cases: Case.by_agent(current_agent.id))
 
       all_cases_form_params = filter_forms_params(:filter_all_cases_form)
 
@@ -133,7 +121,6 @@ module Support
         .merge(base_cases: Case.initial)
 
       @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
-      @tower_cases_filter_form = CaseFilterForm.new(**tower_cases_form_params)
       @new_cases_filter_form = CaseFilterForm.new(**new_cases_form_params)
       @all_cases_filter_form = CaseFilterForm.new(**all_cases_form_params)
     end
@@ -144,6 +131,11 @@ module Support
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)
+    end
+
+    def tower_tab_params(tab)
+      tab_params = params.fetch(:tower, {})
+      tab_params.fetch(tab, {}).permit!
     end
   end
 end

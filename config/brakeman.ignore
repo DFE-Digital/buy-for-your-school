@@ -1,34 +1,26 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "9591bbe675c084eadcbba48cc46c8a27f79fa0676c64f749e61dd335d2935bf7",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped parameter value",
-      "file": "app/views/support/emails/show.html.erb",
-      "line": 62,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "EmailPresenter.new(Support::Email.find(params[:id])).body_for_display(self)",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Support::EmailsController",
-          "method": "show",
-          "line": 11,
-          "file": "app/controllers/support/emails_controller.rb",
-          "rendered": {
-            "name": "support/emails/show",
-            "file": "app/views/support/emails/show.html.erb"
-          }
-        }
-      ],
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "a944ba5fddc3c3d99d17d4c8d3b60697668963b05d9846b9c27c39ecc0b56c51",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/controllers/support/cases_controller.rb",
+      "line": 153,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
+      "render_path": null,
       "location": {
-        "type": "template",
-        "template": "support/emails/show"
+        "type": "method",
+        "class": "Support::CasesController",
+        "method": "tower_tab_params"
       },
-      "user_input": "params[:id]",
-      "confidence": "Weak",
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
       "note": ""
     },
     {
@@ -46,7 +38,7 @@
           "type": "controller",
           "class": "Support::InteractionsController",
           "method": "show",
-          "line": 9,
+          "line": 10,
           "file": "app/controllers/support/interactions_controller.rb",
           "rendered": {
             "name": "support/interactions/show",
@@ -60,6 +52,9 @@
       },
       "user_input": "params[:id]",
       "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
       "note": ""
     },
     {
@@ -91,9 +86,12 @@
       },
       "user_input": "params[:id]",
       "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
       "note": ""
     }
   ],
-  "updated": "2022-03-22 11:16:27 +0000",
-  "brakeman_version": "5.2.1"
+  "updated": "2023-02-22 12:07:44 +0000",
+  "brakeman_version": "5.4.0"
 }

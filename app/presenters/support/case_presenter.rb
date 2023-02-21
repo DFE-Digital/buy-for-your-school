@@ -178,6 +178,16 @@ module Support
       logged_contacts.first.__getobj__.created_at.strftime("%d %B %Y %H:%M")
     end
 
+    def last_case_note
+      __getobj__.interactions.note.first
+    end
+
+    delegate :body, to: :last_case_note, prefix: true
+
+    def last_case_note_date
+      last_case_note.created_at.strftime("%d %b %y")
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

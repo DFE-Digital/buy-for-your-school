@@ -1,12 +1,17 @@
-window.addEventListener("DOMContentLoaded", () => {
+const firstSelectableTabId = () => {
+  const firstTabLink = document.querySelector('.govuk-tabs__list-item a');
+  return firstTabLink.getAttribute("href");
+}
+
+const selectTab = () => {
   const selectTabList = document.querySelector('[data-component="select-tab"] ul');
 
   if (selectTabList != null) {
-    const selectedTabId = selectTabList.getAttribute("selected");
-    const selectedTab = document.getElementById(selectedTabId);
-    const selectedTabLink = selectedTab.querySelector("a");
-    selectedTab.classList.add("govuk-tabs__list-item--selected");
-    selectedTabLink.setAttribute("aria-selected", "true");
-    selectedTabLink.setAttribute("tabindex", "0");
+    const selectedTabId = selectTabList.getAttribute("selected") || window.location.hash || firstSelectableTabId();
+    const selectedTabLink = document.querySelector(`a[href="${selectedTabId}"]`);
+    selectedTabLink.click();
   }
-});
+};
+
+window.addEventListener("DOMContentLoaded", selectTab);
+window.addEventListener("turbo:frame-load", selectTab);

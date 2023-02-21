@@ -5,5 +5,12 @@
 
   <%= render "support/interactions/forms/#{option}", form: form %>
   <%= hidden_field_tag :option, option %>
-  <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
+
+  <div class="govuk-button-group">
+    <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
+
+    <% if option == "note" %>
+      <%= link_to "Exit without saving", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+    <% end %>
+  </div>
 <% end %>

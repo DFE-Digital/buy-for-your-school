@@ -24,7 +24,7 @@
 RSpec.feature "New case event" do
   include_context "with an agent"
 
-  let(:support_case) { create(:support_case, state: "opened") }
+  let(:support_case) { create(:support_case, state: "opened", ref: "987654") }
 
   before do
     click_button "Agent Login"
@@ -43,7 +43,7 @@ RSpec.feature "New case event" do
     end
 
     it "shows add note heading" do
-      expect(find("label.govuk-label")).to have_text "Add case note"
+      expect(find("label.govuk-label")).to have_text "Add a note to case 987654"
     end
 
     it "logs note in case history" do

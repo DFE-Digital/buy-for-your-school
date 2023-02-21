@@ -42,7 +42,7 @@ module Support
     end
 
     def towers
-      @towers ||= Support::Tower.unique_towers
+      @towers ||= (Support::Tower.unique_towers << Support::Tower.nil_tower)
     end
 
     def stages

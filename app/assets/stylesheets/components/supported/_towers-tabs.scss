@@ -1,0 +1,43 @@
+.tower-top-row {
+  .govuk-table__cell {
+    border: none;
+    padding-bottom: 0px;
+  }
+}
+
+.tower-bottom-row {
+  .tower-note {
+    span {
+      display: inline-block;
+      width: 650px;
+    }
+  }
+}
+
+.col-ref {
+  width: 70px;
+}
+
+.col-organisation {
+  width: 280px;
+}
+
+.col-sub-category {
+  width: 150px
+}
+
+.col-status {
+  width: 88px;
+}
+
+.col-assigned {
+  width: 100px;
+}
+
+.col-updated {
+  width: 150px;
+}
+
+.col-actions {
+  width: 50px;
+}

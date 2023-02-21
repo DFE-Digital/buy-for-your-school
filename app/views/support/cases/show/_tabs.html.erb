@@ -20,7 +20,7 @@
 
 <div class="govuk-tabs" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "school_detail" %>">
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "school_detail" || tab.nil? %>">
       <%= link_to I18n.t("support.case.header.school_detail"), tab_url["school-details"], class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_detail" %>">
