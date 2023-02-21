@@ -4,7 +4,7 @@ module Support
 
   protected
 
-    helper_method :current_agent, :current_url_b64, :notifications_unread?
+    helper_method :current_agent, :current_url_b64, :url_b64, :notifications_unread?
 
     # @return [Agent, nil]
     def current_agent
@@ -38,6 +38,16 @@ module Support
 
     def current_url_b64(tab = "")
       Base64.encode64("#{request.fullpath}##{tab.to_s.dasherize}")
+    end
+
+    def url_b64(url)
+      Base64.encode64(url)
+    end
+
+    def back_link_param(back_to = params[:back_to])
+      return if back_to.blank?
+
+      Base64.decode64(back_to)
     end
   end
 end

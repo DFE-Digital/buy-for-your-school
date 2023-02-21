@@ -16,6 +16,13 @@ module CategoryHelpers
     )
   end
 
+  def define_basic_towers
+    categories_yaml = YAML.load(File.open(Rails.root.join("config/support/categories.yml")))
+    categories_yaml["towers"].each do |tower|
+      create(:support_tower, title: tower["title"])
+    end
+  end
+
   def gas_category
     Support::Category.find_by(title: "Gas")
   end

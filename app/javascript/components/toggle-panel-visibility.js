@@ -14,13 +14,16 @@ function toggleElementDisplay(element) {
   }
 }
 
-window.addEventListener("load", () => {
-  const panelToggleVisibility = document.querySelectorAll('[data-component="toggle-panel-visibility"]');
+const initializeAllTogglers = (rootElement) => {
+  const panelToggleVisibility = rootElement.querySelectorAll('[data-component="toggle-panel-visibility"]');
 
-  panelToggleVisibility.forEach(button => {
+  panelToggleVisibility.forEach((button) => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
       toggleElementDisplay(button.dataset.panel);
     });
   });
-});
+}
+
+window.addEventListener("load", () => initializeAllTogglers(document));
+window.addEventListener("turbo:frame-load", (event) => initializeAllTogglers(event.target));

@@ -1,0 +1,46 @@
+<% if cases.none? %>
+  <p class="govuk-body">
+    <%= I18n.t("support.case.list.not_found") %>
+  </p>
+<% else %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="col">
+          <%= I18n.t("support.case.label.case") %>
+        </th>
+        <th class="govuk-table__header" scope="col">
+          <%= I18n.t("support.case.label.organisation") %>
+        </th>
+        <th class="govuk-table__header" scope="col">
+          <%= I18n.t("support.case.label.sub_category") %>
+        </th>
+        <th class="govuk-table__header" scope="col">
+          <%= I18n.t("support.case.label.status") %>
+        </th>
+
+        <% case tab %>
+        <% when :all_cases %>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.assigned_to") %>
+          </th>
+
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.last_updated") %>
+          </th>
+        <% when :my_cases %>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.last_updated") %>
+          </th>
+        <% when :new_cases %>
+          <th class="govuk-table__header" scope="col">
+            <%= I18n.t("support.case.label.date_received") %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <%= render partial: "support/cases/index/simple_case", collection: cases, as: :kase, locals: { tab: } %>
+    </tbody>
+  </table>
+<% end %>

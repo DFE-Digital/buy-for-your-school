@@ -1,0 +1,20 @@
+<% if cases.none? %>
+  <p class="govuk-body"><%= I18n.t("support.case.list.not_found") %></p>
+<% else %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header col-ref" scope="col"><%= I18n.t("support.case.label.case") %></th>
+        <th class="govuk-table__header col-organisation" scope="col"><%= I18n.t("support.case.label.organisation") %></th>
+        <th class="govuk-table__header col-sub-category" scope="col"><%= I18n.t("support.case.label.sub_category") %></th>
+        <th class="govuk-table__header col-status" scope="col"><%= I18n.t("support.case.label.status") %></th>
+        <th class="govuk-table__header col-assigned" scope="col"><%= I18n.t("support.case.label.assigned") %></th>
+        <th class="govuk-table__header col-updated" scope="col"><%= I18n.t("support.case.label.updated") %></th>
+        <th class="govuk-table__header col-actions" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <%= render partial: "support/cases/index/detailed_case", collection: cases, as: :kase %>
+    </tbody>
+  </table>
+<% end %>

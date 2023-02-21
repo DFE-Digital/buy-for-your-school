@@ -1,23 +1,62 @@
-<%= link_to I18n.t("support.case.label.create"), new_support_case_path, class: "govuk-button", "role" => "button" %>
+<%= link_to I18n.t("support.case.label.create"), new_support_case_path, class: "govuk-button", role: "button" %>
 
-<div class="govuk-tabs" data-module="govuk-tabs">
+<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <a class="govuk-tabs__tab" href="#my-cases"><%= I18n.t("support.case.list.my_cases") %></a>
+      <%= link_to I18n.t("support.case.list.my_cases"), "#my-cases", class: "govuk-tabs__tab" %>
     </li>
+
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#tower"><%= I18n.t("support.case.list.tower") %></a>
+      <%= link_to "FM", "#fm-catering-tower", title: "Facilities Management and Catering tower", class: "govuk-tabs__tab" %>
     </li>
+
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#new-cases"><%= I18n.t("support.case.list.new_cases") %></a>
+      <%= link_to "ICT", "#ict-tower", title: "I.C.T. tower", class: "govuk-tabs__tab" %>
     </li>
+
     <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#all-cases"><%= I18n.t("support.case.list.all_cases") %></a>
+      <%= link_to "Energy", "#energy-utilities-tower", title: "Energy and utilities tower", class: "govuk-tabs__tab" %>
+    </li>
+
+    <li class="govuk-tabs__list-item">
+      <%= link_to "Services", "#services-tower", title: "Services tower", class: "govuk-tabs__tab" %>
+    </li>
+
+    <li class="govuk-tabs__list-item">
+      <%= link_to "New cases", "#new-cases", class: "govuk-tabs__tab" %>
+    </li>
+
+    <li class="govuk-tabs__list-item">
+      <%= link_to "All cases", "#all-cases", class: "govuk-tabs__tab" %>
     </li>
   </ul>
 
-  <%= render "support/cases/index/my_cases" %>
-  <%= render "support/cases/index/tower" %>
-  <%= render "support/cases/index/new_cases" %>
-  <%= render "support/cases/index/all_cases" %>
+  <%= render "support/cases/index/tab_my_cases" %>
+
+  <%= turbo_frame_tag "fm-catering-tower-frame", src: support_tower_path(id: "FM & Catering", **tower_tab_params("fm-catering-tower")) do %>
+    <div id="fm-catering-tower" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "ict-tower-frame", src: support_tower_path(id: "ICT", **tower_tab_params("ict-tower")) do %>
+    <div id="ict-tower" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "energy-utilities-tower-frame", src: support_tower_path(id: "Energy & Utilities", **tower_tab_params("energy-utilities-tower")) do %>
+    <div id="energy-utilities-tower" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "services-tower-frame", src: support_tower_path(id: "Services", **tower_tab_params("services-tower")) do %>
+    <div id="services-tower" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+
+  <%= render "support/cases/index/tab_new_cases" %>
+  <%= render "support/cases/index/tab_all_cases" %>
 </div>

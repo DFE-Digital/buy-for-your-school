@@ -84,6 +84,10 @@ RSpec.configure do |config|
     Flipper.enable(:energy_bill_flow)
     Flipper.enable(:notifications)
   end
+
+  config.before(:each, type: :feature) do
+    define_basic_towers
+  end
 end
 
 Shoulda::Matchers.configure do |config|

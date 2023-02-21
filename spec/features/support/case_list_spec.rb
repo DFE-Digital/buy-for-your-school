@@ -40,8 +40,8 @@ RSpec.feature "Case management dashboard" do
 
     it "shows my cases" do
       within "#my-cases" do
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(1)
-        row = all(".govuk-table__body .govuk-table__row")
+        expect(all(".govuk-table__body .govuk-table__row.tower-top-row").count).to eq(1)
+        row = all(".govuk-table__body .govuk-table__row.tower-top-row")
         expect(row[0]).to have_text new_case.ref
       end
     end
@@ -61,13 +61,14 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[1]).to have_text "Organisation"
         expect(table_headers[2]).to have_text "Sub-category"
         expect(table_headers[3]).to have_text "Status"
-        expect(table_headers[4]).to have_text "Last updated"
+        expect(table_headers[4]).to have_text "Assigned"
+        expect(table_headers[5]).to have_text "Updated"
+        expect(table_headers[6]).to have_text ""
       end
     end
 
     it "displays a link to view all the agent's resolved cases" do
-      url = "/support/cases/find-a-case?search_case_form%5Bagent%5D=#{agent.id}&search_case_form%5Bsearch_term%5D=#{agent.last_name.downcase}&search_case_form%5Bstate%5D=resolved"
-      expect(page).to have_link("View all my resolved cases", href: url)
+      expect(page).to have_link("View all my resolved cases", href: support_cases_path(anchor: "my-cases", filter_my_cases_form: { state: "resolved" }))
     end
   end
 

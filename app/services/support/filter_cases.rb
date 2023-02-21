@@ -12,7 +12,11 @@ module Support
       return results if filtering_params.nil?
 
       filtering_params.each do |key, value|
-        results = results.public_send("by_#{key}", value) if value.to_s.present?
+        if key == :tower && value == "no-tower"
+          results = results.without_tower
+        elsif value.to_s.present?
+          results = results.public_send("by_#{key}", value)
+        end
       end
 
       results

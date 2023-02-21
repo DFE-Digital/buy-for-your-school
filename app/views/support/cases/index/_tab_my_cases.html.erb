@@ -1,0 +1,21 @@
+<div class="govuk-tabs__panel" id="my-cases">
+  <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-my-cases" data-component="toggle-panel-visibility">
+    <%= I18n.t("support.case.filter.filter_results") %>
+  </button>
+
+  <h2 class="govuk-heading-l">
+    <%= I18n.t("support.case.list.my_cases") %>
+  </h2>
+
+  <%= render "support/cases/forms/filter_cases_form",
+              form: @my_cases_filter_form,
+              scope: :filter_my_cases_form,
+              filter_url: support_cases_path(anchor: "my-cases"),
+              clear_url: support_cases_path(anchor: "my-cases"),
+              tab: "my-cases" %>
+
+  <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@my_cases) %>
+  <%= render "components/pagination", records: @my_cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
+
+  <br /><%= link_to I18n.t("support.case.label.view_resolved_cases"), support_cases_path(anchor: "my-cases", filter_my_cases_form: { state: "resolved" }), class: "govuk-link govuk-link--no-visited-state" %>
+</div>

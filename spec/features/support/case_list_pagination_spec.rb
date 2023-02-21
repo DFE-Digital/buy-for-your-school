@@ -16,7 +16,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
 
     it "shows the pagination info" do
       within "#my-cases" do
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(10)
+        expect(all(".govuk-table__body .govuk-table__row.tower-top-row").count).to eq(10)
         expect(page).to have_text "Showing 1 to 10 of 15 results"
       end
     end

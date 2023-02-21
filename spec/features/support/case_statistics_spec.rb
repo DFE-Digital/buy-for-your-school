@@ -52,10 +52,10 @@ RSpec.feature "Case statistics page" do
         expect(page).to have_text "Services Statistics"
       end
 
-      it "links to a drilldown page showing relevant cases" do
+      it "links to a drilldown page showing relevant cases", js: true do
         # 6 live cases in Energy & Utilities
         within(".overview-by-tower") { click_on("6") }
-        expect(page).to have_text "Energy & Utilities cases"
+        expect(page).to have_text "Energy & Utilities Tower"
         expect(page).to have_text "000011"
         expect(page).to have_text "000006"
         expect(page).to have_text "000012"
