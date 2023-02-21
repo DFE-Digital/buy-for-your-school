@@ -1,7 +1,5 @@
 RSpec.describe Support::CreateCase do
-  subject(:service) do
-    described_class
-  end
+  subject(:service) { described_class }
 
   let(:category) { create(:support_category, title: "Catering") }
   let(:organisation) { create(:support_organisation, name: "Hillside School") }
@@ -18,6 +16,7 @@ RSpec.describe Support::CreateCase do
         email: "test@example.com",
         phone_number: "00000000000",
         extension_number: "2121",
+        procurement_amount: 234.55,
       }
     end
 
@@ -33,6 +32,9 @@ RSpec.describe Support::CreateCase do
       expect(result.existing_contract).not_to be_nil
       expect(result.procurement).not_to be_nil
       expect(result.extension_number).to eq "2121"
+      expect(result.procurement.stage).to eq "need"
+      expect(result.support_level).to eq "L1"
+      expect(result.value).to eq 234.55
       expect(Support::Case.count).to be 1
     end
 

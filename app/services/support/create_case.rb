@@ -27,11 +27,13 @@ module Support
         special_requirements: @attrs[:special_requirements],
         new_contract: NewContract.create!,
         existing_contract: ExistingContract.create!,
-        procurement: Procurement.create!,
+        procurement: Procurement.create!(stage: :need),
         **organisation_attributes,
         other_category: @attrs[:other_category],
         other_query: @attrs[:other_query],
         query_id: @attrs[:query_id],
+        support_level: :L1,
+        value: @attrs[:procurement_amount],
       )
 
       Support::RecordAction.new(
