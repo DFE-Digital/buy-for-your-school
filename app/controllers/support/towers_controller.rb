@@ -16,7 +16,7 @@ module Support
   private
 
     def filter_cases_params
-      params.fetch(:filter_cases, {}).permit(:category, :agent, :state, :stage, :level, :has_org).tap do |fc|
+      params.fetch(:filter_cases, {}).permit(:category, :agent, :state, :stage, :level, :has_org, :user_submitted).tap do |fc|
         fc[:state] = "live" if fc[:state].blank?
       end
     end

@@ -107,7 +107,7 @@ module Support
     end
 
     def filter_forms_params(scope)
-      params.fetch(scope, {}).permit(:state, :agent, :tower, :category, :stage, :level).to_h.symbolize_keys
+      params.fetch(scope, {}).permit(:state, :agent, :tower, :category, :stage, :level, :user_submitted).to_h.symbolize_keys
     end
 
     def filter_forms

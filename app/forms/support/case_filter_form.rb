@@ -12,6 +12,7 @@ module Support
     option :stage, optional: true
     option :level, optional: true
     option :has_org, Types::Params::Bool, optional: true
+    option :user_submitted, optional: true, default: proc { false }
 
     # Potentially pre-scope results with as scope / query
     option :base_cases, optional: true, default: proc { Case.where(nil) }
@@ -23,6 +24,10 @@ module Support
       Support::FilterCases.new(base_cases:)
         .filter(state:, category:, agent:, tower:, stage:, level:, has_org:)
         .priority_ordering
+    end
+
+    def user_submitted?
+      user_submitted != false
     end
 
     def case_states
