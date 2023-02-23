@@ -22,6 +22,10 @@
   </td>
 
   <td class="govuk-table__cell">
+    <%= kase.support_level %>
+  </td>
+
+  <td class="govuk-table__cell">
     <span title="<%= kase.last_updated_at %>"><%= simple_distance_of_time_in_words(kase.last_updated_at, Time.zone.now, scope: "support.towers.last_updated_steps.datetime.distance_in_words") %> ago</span>
   </td>
 
@@ -31,7 +35,7 @@
 </tr>
 
 <tr class="govuk-table__row tower-bottom-row">
-  <td class="govuk-table__cell tower-note" colspan="7">
+  <td class="govuk-table__cell tower-note" colspan="8">
     <% if kase.last_case_note.present? %>
       <span><%= simple_format("Note: #{kase.last_case_note_date} - " + kase.last_case_note_body) %></span>
     <% end %>

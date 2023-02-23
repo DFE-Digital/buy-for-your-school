@@ -1,0 +1,23 @@
+.govuk-width-container {
+  &.wide-container {
+    max-width: 1200px;
+  }
+
+  @media (min-width: 1920px) {
+    &.wide-container {
+      max-width: 1250px;
+    }
+  }
+}
+
+.case-filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  flex-wrap: wrap;
+
+  .case-filter-item {
+    flex: 0 0 100px;
+    gap: 10px;
+  }
+}

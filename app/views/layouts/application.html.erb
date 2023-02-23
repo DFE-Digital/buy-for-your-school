@@ -40,7 +40,7 @@
     <%= javascript_include_tag "application" %>
   </head>
 
-  <body class="govuk-template__body ">
+  <body class="govuk-template__body">
     <% if Rails.env.production? && cookie_policy.accepted? %>
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXQDGR"
@@ -59,7 +59,7 @@
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
     <header class="govuk-header" role="banner" data-module="govuk-header">
-      <div class="govuk-header__container govuk-width-container">
+      <div class="govuk-header__container govuk-width-container <%= 'wide-container' if support? %>">
         <div class="govuk-header__logo">
           <a href="https://www.gov.uk" class="govuk-header__link govuk-header__link--homepage">
             <span class="govuk-header__logotype">
@@ -82,7 +82,7 @@
       </div>
     </header>
 
-    <div class="govuk-width-container ">
+    <div class="govuk-width-container <%= 'wide-container' if support? %>">
       <div class="govuk-phase-banner">
         <p class="govuk-phase-banner__content">
           <strong class="govuk-tag govuk-phase-banner__content__tag">

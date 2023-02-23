@@ -8,9 +8,9 @@
     <%= I18n.t("support.case.filter.filter_results") %>
   </h2>
 
-  <div class="govuk-grid-row">
+  <div class="case-filter-row">
     <% if tab == "all-cases" || tab.ends_with?("tower") || tab == "my-cases" %>
-      <div class="govuk-grid-column-one-quarter">
+      <div class="case-filter-item">
         <%= f.govuk_select :state,
                               options_for_select(f.object.case_states.map { |s| [s.title, s.id] },
                                                   f.object.state),
@@ -19,7 +19,7 @@
       </div>
     <% end %>
 
-    <div class="govuk-grid-column-one-quarter">
+    <div class="case-filter-item">
       <%= f.govuk_select :category,
                             options_for_select(f.object.categories.map { |a| [a.title, a.id] },
                                                 f.object.category),
@@ -28,7 +28,7 @@
     </div>
 
     <% unless hide_towers %>
-    <div class="govuk-grid-column-one-quarter">
+    <div class="case-filter-item">
       <%= f.govuk_select :tower,
                             options_for_select(f.object.towers.map { |a| [a.title, a.id] },
                                                 f.object.tower),
@@ -38,7 +38,7 @@
     <% end %>
 
     <% if tab == "all-cases" || tab.ends_with?("tower") %>
-      <div class="govuk-grid-column-one-quarter">
+      <div class="case-filter-item">
         <%= f.govuk_select :agent,
                               options_for_select(f.object.agents.map { |a| [a.full_name, a.id] },
                                                   f.object.agent),
@@ -47,7 +47,7 @@
       </div>
     <% end %>
 
-    <div class="govuk-grid-column-one-quarter">
+    <div class="case-filter-item">
       <%= f.govuk_select :stage,
                             options_for_select(f.object.stages.map { |a| [a.title, a.id] },
                                                 f.object.stage),
@@ -55,7 +55,7 @@
                             label: { text: I18n.t("support.case.filter.labels.stage") } %>
     </div>
 
-    <div class="govuk-grid-column-one-quarter">
+    <div class="case-filter-item">
       <%= f.govuk_select :level,
                             options_for_select(f.object.levels.map { |a| [a.title, a.id] },
                                                 f.object.level),
