@@ -1,5 +1,9 @@
 <%= render "support/cases/show/tabs", tab: "messages" do %>
   <div class="govuk-tabs__panel" id="messages" role="tabpanel" aria-labelledby="tab_messages">
+    <h2 class="govuk-heading-l">
+      <%= I18n.t("support.case.header.messages") %>
+    </h2>
+
     <table class="govuk-table messages-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
