@@ -15,7 +15,7 @@ RSpec.describe "Case problem description" do
 
     it "allows a user to update the problem description" do
       within("div#case-details") do
-        within "h2", text: "Request - change" do
+        within "h3", text: "Request - change" do
           click_on "change"
         end
       end

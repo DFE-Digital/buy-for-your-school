@@ -1,9 +1,13 @@
 <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-details">
+  <h2 class="govuk-heading-l">
+    <%= I18n.t("support.case.header.case_detail") %>
+  </h2>
+
   <div role="tabpanel" aria-labelledby="tab_case-details" id="case_details_sections">
-    <h2 class="govuk-heading-m">
+    <h3 class="govuk-heading-m">
       <%= I18n.t("support.case.case_details.case_summary.heading") %>
       - <%= link_to I18n.t("support.case.link.change"), edit_support_case_summary_path(current_case), class: "govuk-link govuk-link--no-visited-state" %>
-    </h2>
+    </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -48,10 +52,10 @@
       </div>
     </dl>
 
-    <h2 class="govuk-heading-m">
+    <h3 class="govuk-heading-m">
       <%= I18n.t("support.case.case_details.request.heading") %>
       - <%= link_to I18n.t("support.case.link.change"), edit_support_case_request_details_path(current_case), class: "govuk-link govuk-link--no-visited-state" %>
-    </h2>
+    </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -134,12 +138,12 @@
       </div>
     </dl>
 
-    <h2 id="procurement-details-procurement" class="govuk-heading-m">
+    <h3 id="procurement-details-procurement" class="govuk-heading-m">
       <%= I18n.t("support.case.header.procurement_detail") %>
       <% if current_case.procurement %>
         - <%= link_to I18n.t("support.case.link.change"), edit_support_case_procurement_details_path(current_case), class: "govuk-link govuk-link--no-visited-state"%>
       <% end %>
-    </h2>
+    </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -204,10 +208,10 @@
       </div>
     </dl>
 
-    <h2 id="pd-existing-contract" class="govuk-heading-m">
+    <h3 id="pd-existing-contract" class="govuk-heading-m">
       Existing contract details -
       <%= link_to I18n.t("support.case.link.change"), edit_support_case_contract_path(current_case, current_case.existing_contract), class: "govuk-link govuk-link--no-visited-state" %>
-    </h2>
+    </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9" id="pd-existing-contract-details">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -247,10 +251,10 @@
       </div>
     </dl>
 
-    <h2 id="pd-new-contract" class="govuk-heading-m">
+    <h3 id="pd-new-contract" class="govuk-heading-m">
       New contract details -
       <%= link_to I18n.t("support.case.link.change"), edit_support_case_contract_path(current_case, current_case.new_contract_id), class: "govuk-link govuk-link--no-visited-state"%>
-    </h2>
+    </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9" id="pd-new-contract-details">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -290,9 +294,9 @@
       </div>
     </dl>
 
-    <h2 id="pd-savings" class="govuk-heading-m">
+    <h3 id="pd-savings" class="govuk-heading-m">
       <%= I18n.t("support.case_savings.show.header") %> - <%= link_to I18n.t("support.case_savings.show.link"), edit_support_case_savings_path(current_case), class: "govuk-link"%>
-    </h2>
+    </h3>
     <dl class="govuk-summary-list" id="pd-savings-details">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">

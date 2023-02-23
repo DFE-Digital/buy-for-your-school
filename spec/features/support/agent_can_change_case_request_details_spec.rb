@@ -12,7 +12,7 @@ describe "Agent can change case request details", js: true do
     click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Case details"
-    within "h2", text: "Request - change" do
+    within "h3", text: "Request - change" do
       click_link "change"
     end
   end

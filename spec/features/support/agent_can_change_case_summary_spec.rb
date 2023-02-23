@@ -8,7 +8,7 @@ describe "Agent can change case summary" do
   before do
     click_button "Agent Login"
     visit support_case_path(support_case)
-    within "h2", text: "Case summary - change" do
+    within "h3", text: "Case summary - change" do
       click_link "change"
     end
   end

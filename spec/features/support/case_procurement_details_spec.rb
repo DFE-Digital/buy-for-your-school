@@ -13,8 +13,8 @@ RSpec.feature "Case procurement details" do
   context "when there are no procurement details" do
     it "does not have a change link" do
       within("div#case-details") do
-        expect(all("h2.govuk-heading-m")[2]).to have_text "Procurement details"
-        expect(all("h2.govuk-heading-m")[2]).not_to have_link "change"
+        expect(all("h3.govuk-heading-m")[2]).to have_text "Procurement details"
+        expect(all("h3.govuk-heading-m")[2]).not_to have_link "change"
       end
     end
   end
@@ -25,8 +25,8 @@ RSpec.feature "Case procurement details" do
 
       it "has a change link" do
         within("div#case-details") do
-          expect(all("h2.govuk-heading-m")[2]).to have_text "Procurement details"
-          expect(all("h2.govuk-heading-m")[2]).to have_link "change", href: "/support/cases/#{support_case.id}/procurement_details/edit", class: "govuk-link"
+          expect(all("h3.govuk-heading-m")[2]).to have_text "Procurement details"
+          expect(all("h3.govuk-heading-m")[2]).to have_link "change", href: "/support/cases/#{support_case.id}/procurement_details/edit", class: "govuk-link"
         end
       end
     end
@@ -36,8 +36,8 @@ RSpec.feature "Case procurement details" do
 
       it "has a change link" do
         within("div#case-details") do
-          expect(all("h2.govuk-heading-m")[2]).to have_text "Procurement details"
-          expect(all("h2.govuk-heading-m")[2]).to have_link "change", href: "/support/cases/#{support_case.id}/procurement_details/edit", class: "govuk-link"
+          expect(all("h3.govuk-heading-m")[2]).to have_text "Procurement details"
+          expect(all("h3.govuk-heading-m")[2]).to have_link "change", href: "/support/cases/#{support_case.id}/procurement_details/edit", class: "govuk-link"
         end
       end
 
