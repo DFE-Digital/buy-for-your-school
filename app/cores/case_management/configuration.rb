@@ -2,6 +2,7 @@ module CaseManagement
   class Configuration
     def call
       Wisper.subscribe(self)
+      Wisper.subscribe(CaseManagement::HandleMessages.new)
     end
 
     def agent_assigned_to_case(payload)

@@ -59,6 +59,10 @@ describe "Outlook emails integration" do
         expect(Support::Email.first.subject).to eq("Test Message 1")
         expect(Support::Email.first.folder).to eq("inbox")
       end
+
+      it "sets action required to true on the case" do
+        expect { run_sync_inbox_emails! }.to change{ Support::Email.first&.case&.action_required }.from(nil).to(true)
+      end
     end
 
     context "when message is in the sent items" do

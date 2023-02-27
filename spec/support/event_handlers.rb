@@ -1,7 +1,10 @@
 module EventHandlers
   def with_event_handler(listening_to:)
     handler = double("handler")
-    allow(handler).to receive(listening_to)
+
+    Array(listening_to).each do |event|
+      allow(handler).to receive(event)
+    end
 
     Wisper.subscribe(handler) do
       yield handler
