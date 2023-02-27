@@ -14,6 +14,10 @@
   align-content: end;
 }
 
+.notification-icon-header {
+  width: 15px;
+}
+
 .notification {
   &.appear {
     animation: fadeInAnimation ease 3s;

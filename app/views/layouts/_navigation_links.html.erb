@@ -9,11 +9,9 @@
       </li>
 
       <% if support? %>
-        <% if Flipper.enabled?(:notifications) %>
-          <%= turbo_stream_from current_agent, "notifications" %>
-          <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
-        <% end %>
-        
+        <%= turbo_stream_from current_agent, "notifications" %>
+        <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
+
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
         </li>
