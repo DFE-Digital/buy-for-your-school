@@ -11,6 +11,9 @@ module Support
           organisation_type
           organisation_urn
           organisation_id
+          email_id
+          trigger_by
+          format_version
         ])
 
         case field

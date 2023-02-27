@@ -1,7 +1,7 @@
 <div class="notification-details">
   <div class="major">
     <span class="action">
-      <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case)), method: :post, class: "govuk-link--no-visited-state") do %>
+      <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case, back_to: Base64.encode64(support_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
         Assigned to case <%= notification.case_ref %>
       <% end %>
     </span>
