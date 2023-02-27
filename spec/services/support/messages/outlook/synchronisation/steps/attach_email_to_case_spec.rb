@@ -18,6 +18,34 @@ describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase d
       expect(email.reload.case).to eq(detected_case)
     end
 
+    context "with incoming email" do
+      it "broadcasts an event to indicate the incoming email has been assigned to a case" do
+        with_event_handler(listening_to: :received_email_attached_to_case) do |handler|
+          described_class.call(message, email)
+
+          expect(handler).to have_received(:received_email_attached_to_case).with({
+            support_email_id: email.id,
+            support_case_id: email.reload.case_id
+          })
+        end
+      end
+    end
+
+    context "with outgoing email" do
+      let(:message) { double(inbox?: false) }
+
+      it "broadcasts an event to indicate the outgoing email has been assigned to a case" do
+        with_event_handler(listening_to: :sent_email_attached_to_case) do |handler|
+          described_class.call(message, email)
+
+          expect(handler).to have_received(:sent_email_attached_to_case).with({
+            support_email_id: email.id,
+            support_case_id: email.reload.case_id
+          })
+        end
+      end
+    end
+
     context "when detected case is resolved" do
       let(:detected_case) { create(:support_case, :resolved) }
 
@@ -59,6 +87,15 @@ describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase d
 
   context "when the email is already attached to a case" do
     let(:assigned_case) { create(:support_case) }
+
+    it "does not broadcast an event" do
+      with_event_handler(listening_to: [:received_email_attached_to_case, :sent_email_attached_to_case]) do |handler|
+        described_class.call(message, email)
+
+        expect(handler).not_to have_received(:received_email_attached_to_case)
+        expect(handler).not_to have_received(:sent_email_attached_to_case)
+      end
+    end
 
     it "keeps the existing case assigned" do
       described_class.call(message, email)
