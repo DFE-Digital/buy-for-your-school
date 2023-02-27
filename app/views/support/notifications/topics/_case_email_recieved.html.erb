@@ -1,0 +1,10 @@
+<div class="notification-details">
+  <div class="major">
+    <span class="action">
+      <%= link_to(support_notification_read_path(notification, redirect_to: support_case_message_thread_path(notification.support_case, notification.subject.outlook_conversation_id)), method: :post, class: "govuk-link--no-visited-state") do %>
+        Email received - <%= notification.subject.subject %>
+      <% end %>
+    </span>
+    <span class="by">from <%= notification.subject.sender["address"] %></span>
+  </div>
+</div>

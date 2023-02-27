@@ -25,7 +25,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase d
 
           expect(handler).to have_received(:received_email_attached_to_case).with({
             support_email_id: email.id,
-            support_case_id: email.reload.case_id
+            support_case_id: email.reload.case_id,
           })
         end
       end
@@ -40,7 +40,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase d
 
           expect(handler).to have_received(:sent_email_attached_to_case).with({
             support_email_id: email.id,
-            support_case_id: email.reload.case_id
+            support_case_id: email.reload.case_id,
           })
         end
       end
@@ -89,7 +89,7 @@ describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase d
     let(:assigned_case) { create(:support_case) }
 
     it "does not broadcast an event" do
-      with_event_handler(listening_to: [:received_email_attached_to_case, :sent_email_attached_to_case]) do |handler|
+      with_event_handler(listening_to: %i[received_email_attached_to_case sent_email_attached_to_case]) do |handler|
         described_class.call(message, email)
 
         expect(handler).not_to have_received(:received_email_attached_to_case)
@@ -103,22 +103,11 @@ describe Support::Messages::Outlook::Synchronisation::Steps::AttachEmailToCase d
       expect(email.reload.case).to eq(assigned_case)
     end
 
-    context "when assigned case is resolved" do
-      let(:assigned_case) { create(:support_case, :resolved) }
-
-      it "re-opens the case" do
-        described_class.call(message, email)
-
-        expect(email.reload.case).to eq(assigned_case)
-        expect(email.case.reload).to be_opened
-      end
-    end
-
     context "when assigned case is closed" do
       let(:assigned_case) { create(:support_case, :closed) }
 
       it "creates a new case and assigns the email to that" do
-        newly_created_case = build(:support_case)
+        newly_created_case = create(:support_case)
 
         allow_any_instance_of(Support::Messages::Outlook::Synchronisation::MessageCaseDetection)
           .to receive(:new_case).and_return(newly_created_case)

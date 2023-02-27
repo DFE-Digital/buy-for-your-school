@@ -23,5 +23,15 @@ module CaseHistory
         },
       )
     end
+
+    def case_reopened_due_to_received_email(payload)
+      Support::Interaction.state_change.create!(
+        body: "Case reopened due to receiving new email",
+        case_id: payload[:support_case_id],
+        additional_data: {
+          email_id: payload[:support_email_id],
+        },
+      )
+    end
   end
 end

@@ -5,7 +5,7 @@
 }
 
 .notification-fixed-header {
-  width: 191px;
+  width: 160px;
 }
 
 .notifications-header {
@@ -42,15 +42,6 @@
     }
   }
 
-  .notification-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .notification-unread-icon {
-      margin-right: 15px;
-    }
-  }
 }
 
 .notification-unread-icon {
@@ -59,6 +50,10 @@
   background-color: #f04848;
   border-radius: 50%;
   display: inline-block;
+}
+
+.notification.read .notification-unread-icon {
+  display: none;
 }
 
 .govuk-header__navigation-item {
