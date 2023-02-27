@@ -1,4 +1,6 @@
 <tr id="<%= dom_id(notification) %>" class="govuk-table__row notification <%= (defined?(appear) && appear) ? "appear" : "" %> <%= notification.read ? "read" : "unread" %>">
+  <td class="govuk-table__cell"><span class="notification-unread-icon"></span></td>
+
   <td scope="row" class="govuk-table__cell">
     <%= render "support/notifications/topics/#{notification.topic}", notification: %>
   </td>
@@ -6,16 +8,14 @@
   <td class="govuk-table__cell"><%= time_ago_in_words(notification.received_at) %> ago</td>
 
   <td class="govuk-table__cell">
-    <div class="notification-actions">
-      <% if notification.read %>
-        Read
-      <% else %>
-        <%= link_to(support_notification_read_path(notification), data: { turbo_method: :post }, class: "govuk-link--no-visited-state") do %>
-          Mark as read
-        <% end %>
-
-        <span class="notification-unread-icon"></span>
+    <% if notification.read %>
+      <%= link_to(support_notification_read_path(notification, mark_as: "unread"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to unread") do %>
+        Mark as unread
       <% end %>
-    </div>
+    <% else %>
+      <%= link_to(support_notification_read_path(notification, mark_as: "read"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to read") do %>
+        Mark as read
+      <% end %>
+    <% end %>
   </td>
 </tr>

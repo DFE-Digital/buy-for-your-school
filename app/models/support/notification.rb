@@ -1,11 +1,13 @@
 module Support
   class Notification < ApplicationRecord
     belongs_to :support_case, class_name: "Support::Case", optional: true
+    belongs_to :subject, polymorphic: true, optional: true
     belongs_to :assigned_to, class_name: "Support::Agent"
     belongs_to :assigned_by, class_name: "Support::Agent", optional: true
 
     enum :topic, {
       case_assigned: 0,
+      case_email_recieved: 1,
     }
 
     scope :unread, ->(assigned_to:) { where(assigned_to:, read: false) }

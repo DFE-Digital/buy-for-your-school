@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_10_133230) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_27_154121) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -533,8 +533,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_10_133230) do
     t.datetime "updated_at", null: false
     t.uuid "support_case_id"
     t.integer "topic"
+    t.string "subject_type"
+    t.uuid "subject_id"
     t.index ["assigned_by_id"], name: "index_support_notifications_on_assigned_by_id"
     t.index ["assigned_to_id"], name: "index_support_notifications_on_assigned_to_id"
+    t.index ["subject_type", "subject_id"], name: "index_support_notifications_on_subject"
   end
 
   create_table "support_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

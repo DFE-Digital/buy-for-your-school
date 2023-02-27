@@ -61,7 +61,7 @@ describe "Outlook emails integration" do
       end
 
       it "sets action required to true on the case" do
-        expect { run_sync_inbox_emails! }.to change{ Support::Email.first&.case&.action_required }.from(nil).to(true)
+        expect { run_sync_inbox_emails! }.to change { Support::Email.first&.case&.action_required }.from(nil).to(true)
       end
     end
 
