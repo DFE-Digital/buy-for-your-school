@@ -3,27 +3,25 @@
 module Support
   class Cases::SearchesController < Cases::ApplicationController
     require "will_paginate/array"
-    before_action :back_url
 
     def new
       @form = CaseSearchForm.new
+      @back_url = support_cases_path
     end
 
     def index
       @form = CaseSearchForm.from_validation(validation)
       if validation.success?
         @results = SearchCases.results(form_params).map { |c| CaseSearchPresenter.new(c) }.paginate(page: params[:my_cases_page])
+        @back_url = new_support_case_search_path
         render :index
       else
+        @back_url = support_cases_path
         render :new
       end
     end
 
   private
-
-    def back_url
-      @back_url = support_cases_path
-    end
 
     def form_params
       params.require(:search_case_form).permit(:search_term, :state, :category, :agent).each_value { |value| value.try(:strip!) }
