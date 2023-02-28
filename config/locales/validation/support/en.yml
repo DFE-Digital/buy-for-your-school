@@ -1,5 +1,13 @@
 # config/validation/en.yml
 en:
+  activerecord:
+    errors:
+      models:
+        interaction:
+          attributes:
+            body:
+              blank: Please enter a case note
+
   forms:
     rules:
       notes: "" # Omitted
