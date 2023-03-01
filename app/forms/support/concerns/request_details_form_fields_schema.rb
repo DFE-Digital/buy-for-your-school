@@ -23,10 +23,6 @@ module Support
         rule(:other_query) do
           key.failure(:missing) if values[:query_id] == other_query_id && value.blank?
         end
-
-        rule(:request_text) do
-          key(:request_text).failure(:missing) if value.blank?
-        end
       end
 
       def other_category_id
