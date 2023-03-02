@@ -9,7 +9,7 @@ module Support
       results = results.merge(Support::Case.by_category(search_params[:category])) if search_params[:category].present?
       results = results.merge(Support::Case.by_state(search_params[:state])) if search_params[:state].present?
       results = results.merge(Support::Case.by_agent(search_params[:agent])) if search_params[:agent].present?
-      results
+      results.map(&:case)
     end
 
     def self.search_results(search_term)

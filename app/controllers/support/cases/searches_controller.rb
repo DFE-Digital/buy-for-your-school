@@ -12,7 +12,7 @@ module Support
     def index
       @form = CaseSearchForm.from_validation(validation)
       if validation.success?
-        @results = SearchCases.results(form_params).map { |c| CaseSearchPresenter.new(c) }.paginate(page: params[:my_cases_page])
+        @results = SearchCases.results(form_params).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         @back_url = new_support_case_search_path
         render :index
       else

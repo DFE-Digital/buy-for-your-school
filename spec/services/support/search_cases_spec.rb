@@ -24,7 +24,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
-          expect(service.results(search_params).first.case.organisation.urn).to eq("12345678")
+          expect(service.results(search_params).first.organisation.urn).to eq("12345678")
         end
       end
 
@@ -33,7 +33,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
-          expect(service.results(search_params).first.case.organisation.urn).to eq("12345678")
+          expect(service.results(search_params).first.organisation.urn).to eq("12345678")
         end
       end
 
@@ -42,7 +42,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
-          expect(service.results(search_params).first.case.organisation.name).to eq("Example School")
+          expect(service.results(search_params).first.organisation.name).to eq("Example School")
         end
       end
 
@@ -51,7 +51,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
-          expect(service.results(search_params).first.case.organisation.name).to eq("Example School")
+          expect(service.results(search_params).first.organisation.name).to eq("Example School")
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe Support::SearchCases, bullet: :skip do
 
         it "returns correct result" do
           expect(service.results(search_params).count).to be(1)
-          expect(service.results(search_params).first.case.ref).to eq("000999")
+          expect(service.results(search_params).first.ref).to eq("000999")
         end
       end
     end
