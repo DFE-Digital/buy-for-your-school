@@ -1,18 +1,18 @@
 <tr class="govuk-table__row case-row">
   <td class="govuk-table__cell">
-    <%= link_to result.case.ref, support_case_path(result.case.id, back_to: current_url_b64), class: "govuk-link--no-visited-state" %>
+    <%= link_to result.ref, support_case_path(result.id, back_to: current_url_b64), class: "govuk-link--no-visited-state" %>
   </td>
 
   <td class="govuk-table__cell">
     <div class="ellipsis-overflow col-350px">
-      <%= link_to result.organisation_name, support_case_path(result.case.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", title: result.organisation_name %>
+      <%= link_to result.organisation_name, support_case_path(result.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", title: result.organisation_name %>
     </div>
   </td>
 
-  <td class="govuk-table__cell"><%= result.category_title %></td>
+  <td class="govuk-table__cell"><%= result.category.title %></td>
 
   <td class="govuk-table__cell case-status">
-    <%= render "support/cases/status_badge", kase: result.case %>
+    <%= render "support/cases/status_badge", kase: result %>
   </td>
 
   <td class="govuk-table__cell">
