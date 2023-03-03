@@ -18,7 +18,7 @@
   <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
 </p>
 
-<div class="govuk-tabs" data-module="govuk-tabs">
+<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "school_detail" || tab.nil? %>">
       <%= link_to I18n.t("support.case.header.school_detail"), tab_url["school-details"], class: "govuk-tabs__tab" %>
@@ -27,7 +27,7 @@
       <%= link_to I18n.t("support.case.header.case_detail"), tab_url["case-details"], class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "messages" %>">
-      <%= link_to I18n.t("support.case.header.messages"), support_case_message_threads_path(@current_case, back_to: Base64.encode64(@back_url)), class: "govuk-tabs__tab_custom" %>
+      <%= link_to I18n.t("support.case.header.messages"), tab_url["messages"], class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_history" %>">
       <%= link_to I18n.t("support.case.header.case_history"), tab_url["case-history"], class: "govuk-tabs__tab" %>
@@ -42,9 +42,3 @@
 
 <%= render "support/cases/show/case_actions" unless @current_case.closed? %>
 
-<% unless tab == "messages" %>
-  <%= javascript_tag nonce: true do %>
-    // prevent #anchor scrolling down the page on switch from messages to other tab
-    document.addEventListener("DOMContentLoaded", () => setTimeout(() => window.scrollTo(0,0)));
-  <% end %>
-<% end %>

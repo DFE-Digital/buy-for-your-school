@@ -32,7 +32,7 @@ describe "Agent can reply to incoming emails", js: true do
     describe "allows agent to send a reply" do
       before do
         click_link "Messages"
-        click_link "View"
+        within("#messages-frame") { click_link "View" }
 
         find("span", text: "Reply to message").click
         fill_in_editor "Your message", with: "This is a test reply"
@@ -40,7 +40,6 @@ describe "Agent can reply to incoming emails", js: true do
       end
 
       it "shows the reply" do
-        # sleep 50
         within("#messages") do
           expect(page).to have_text "Caseworker"
           expect(page).to have_text "This is a test reply"
@@ -52,9 +51,10 @@ describe "Agent can reply to incoming emails", js: true do
   describe "a caseworker must enter a reply body" do
     before do
       click_link "Messages"
-      click_link "View"
+      within("#messages-frame") { click_link "View" }
 
       find("span", text: "Reply to message").click
+      sleep 0.2
       fill_in_editor "Your message", with: ""
       click_button "Send reply"
     end
@@ -70,7 +70,7 @@ describe "Agent can reply to incoming emails", js: true do
 
     before do
       click_link "Messages"
-      click_link "View"
+      within("#messages-frame") { click_link "View" }
     end
 
     it "does not show the reply form" do

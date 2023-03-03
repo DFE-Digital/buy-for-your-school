@@ -11,6 +11,8 @@ describe "support/save_attachments/new" do
 
       assign(:save_attachments_form, Support::SaveAttachmentsForm.from_email(email))
       assign(:email, email)
+      assign(:subject, email.subject)
+      assign(:back_url, "#")
     end
 
     context "with an excluded file type saved as an email attachment" do

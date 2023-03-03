@@ -714,6 +714,7 @@ en:
           using_template: 'Template: "%{template}"'
           view: View
         messages:
+          back_to_subject: Back to %{subject}
           reply:
             add_attachments: Add attachments
             attachments_added: Attachments added
@@ -724,6 +725,7 @@ en:
             summary_text: Reply to message
             warning: Warning
             warning_body: You must upload your attachments again
+            back: Back to message thread
           table:
             added_by: Added by
             caseworker: Caseworker

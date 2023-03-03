@@ -1,11 +1,9 @@
-<%= render "support/cases/show/tabs", tab: "messages" do %>
-  <div class="govuk-tabs__panel" id="messages" role="tabpanel" aria-labelledby="tab_messages">
-    <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+<%= turbo_frame_tag "messages-frame" do %>
+  <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
 
-    <h3 class="govuk-heading-m"><%= I18n.t("support.case.label.message_threads.logged_contacts") %></h3>
+  <h3 class="govuk-heading-m"><%= I18n.t("support.case.label.message_threads.logged_contacts") %></h3>
 
-    <% @current_case.logged_contacts.each do |message|%>
-      <%= render "support/cases/message_threads/message", truncated_message: false, message: message, current_case: @current_case, show_recap: false %>
-    <% end %>
-  </div>
+  <% @current_case.logged_contacts.each do |message|%>
+    <%= render "support/cases/message_threads/message", truncated_message: false, message: message, current_case: @current_case, show_recap: false %>
+  <% end %>
 <% end %>

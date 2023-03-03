@@ -13,14 +13,14 @@
     </thead>
 
     <tbody class="govuk-table__body">
-      <% current_case.case_attachments.each do |attachment| %>
+      <% @current_case.case_attachments.each do |attachment| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__cell" scope="row"><%= link_to attachment.name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link" %></th>
           <td class="govuk-table__cell"><%= attachment.description %></td>
           <td class="govuk-table__cell"><%= attachment.created_at.strftime("%d %B %Y %H:%M") %></td>
         </tr>
       <% end %>
-      <% current_case.energy_bills.each do |energy_bill| %>
+      <% @current_case.energy_bills.each do |energy_bill| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__cell" scope="row"><%= link_to energy_bill.filename, support_document_download_path(energy_bill, type: energy_bill.class), class: "govuk-link" %></th>
           <td class="govuk-table__cell"><%= I18n.t("support.case.label.attachments.table.energy_bill") %></td>

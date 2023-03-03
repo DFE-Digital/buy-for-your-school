@@ -95,12 +95,13 @@ function clickAddButtonToAddRecipient(addButton) {
   addButton.addEventListener("click", () => addRecipient(addButton.dataset.inputField));
 }
 
-(() => {
-  window.addEventListener("DOMContentLoaded", () => {
-    getRecipientsButtons().forEach(b => {
-      showTables(b.dataset.inputField);
-      pressEnterInInputBoxToAddRecipient(b);
-      clickAddButtonToAddRecipient(b);
-    });
+const addRecipients = () => {
+  getRecipientsButtons().forEach(b => {
+    showTables(b.dataset.inputField);
+    pressEnterInInputBoxToAddRecipient(b);
+    clickAddButtonToAddRecipient(b);
   });
-})();
+};
+
+window.addEventListener("DOMContentLoaded", addRecipients);
+window.addEventListener("turbo:frame-load", addRecipients);

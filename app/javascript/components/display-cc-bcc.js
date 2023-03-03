@@ -8,12 +8,13 @@ function getDisplayButtons() {
   return document.querySelectorAll('[data-component="display-cc-bcc"]');
 }
 
-(() => {
-  window.addEventListener("DOMContentLoaded", () => {
-    getDisplayButtons().forEach(b => {
-      b.addEventListener("click", () => {
-        toggleCcBccDisplay(b);
-      });
+const displayCcBcc = () => {
+  getDisplayButtons().forEach(b => {
+    b.addEventListener("click", () => {
+      toggleCcBccDisplay(b);
     });
   });
-})();
+};
+
+window.addEventListener("DOMContentLoaded", displayCcBcc);
+window.addEventListener("turbo:frame-load", displayCcBcc);

@@ -70,14 +70,13 @@ function displayEmailAttachments(fileInput) {
   Array.from(attachments).forEach(a => tableBody.appendChild(createAttachmentRow(a, fileInput)));
 }
 
-(() => {
-
-  window.addEventListener("DOMContentLoaded", () => {
-    getFileInputs().forEach(function (el, i) {
-      el.addEventListener("change", function () {
-        displayEmailAttachments(el)
-      });
-    })
+const displayAttachments = () => {
+  getFileInputs().forEach(function (el, i) {
+    el.addEventListener("change", function () {
+      displayEmailAttachments(el)
+    });
   });
+};
 
-})();
+window.addEventListener("DOMContentLoaded", displayAttachments);
+window.addEventListener("turbo:frame-load", displayAttachments);

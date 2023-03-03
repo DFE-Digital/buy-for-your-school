@@ -1,4 +1,4 @@
-describe "Agent can send new emails" do
+describe "Agent can send new emails", js: true do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, email: "contact@email.com") }

@@ -1,13 +1,17 @@
-<h1 class="govuk-heading-l"><%= I18n.t("support.case.label.messages.reply.edit_header") %></h1>
+<%= turbo_frame_tag "messages-frame" do %>
+  <%= link_to I18n.t("support.case.label.message_threads.back"), @back_url, class: "govuk-back-link pull-up" %>
 
-<% if @show_attachment_warning %>
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive"><%= I18n.t("support.case.label.messages.reply.warning") %></span>
-      <%= I18n.t("support.case.label.messages.reply.warning_body") %>
-    </strong>
-  </div>
+  <h1 class="govuk-heading-l"><%= I18n.t("support.case.label.messages.reply.edit_header") %></h1>
+
+  <% if @show_attachment_warning %>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive"><%= I18n.t("support.case.label.messages.reply.warning") %></span>
+        <%= I18n.t("support.case.label.messages.reply.warning_body") %>
+      </strong>
+    </div>
+  <% end %>
+
+  <%= render "support/cases/messages/replies/form", reply: false %>
 <% end %>
-
-<%= render "support/cases/messages/replies/form", reply: false %>

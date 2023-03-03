@@ -10,9 +10,17 @@ module Support
         policy.style_src_attr :unsafe_inline
       end
 
-      def index; end
+      def index
+        @message_threads = @current_case.message_threads
+        @templated_messages = @current_case.templated_messages
+        @logged_contacts = @current_case.logged_contacts
+      end
 
-      def show; end
+      def show
+        @subject = @current_thread.subject
+        @messages = @current_thread.messages
+        @last_received_reply = @current_thread.last_received_reply
+      end
 
       def new
         @to_recipients = Array(current_case.email).to_json
@@ -25,7 +33,7 @@ module Support
     private
 
       def current_case
-        @current_case ||= CasePresenter.new(Case.find_by(id: params[:case_id]))
+        @current_case ||= CasePresenter.new(super)
       end
 
       def current_thread

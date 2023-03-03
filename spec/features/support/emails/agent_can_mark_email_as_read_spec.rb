@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent sees emails in messages" do
+describe "Agent sees emails in messages", js: true do
   include_context "with an agent"
 
   let(:is_read) { true }
@@ -16,7 +16,7 @@ describe "Agent sees emails in messages" do
     click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Messages"
-    click_link "View"
+    within("#messages-frame") { click_link "View" }
   end
 
   context "when email is unread" do
@@ -30,6 +30,7 @@ describe "Agent sees emails in messages" do
 
     it "allows to mark the email as read" do
       click_link "Mark as read"
+      sleep 0.1
       expect(email.reload.is_read).to be(true)
     end
   end
@@ -43,6 +44,7 @@ describe "Agent sees emails in messages" do
 
     it "allows to mark the email as unread" do
       click_link "Mark as unread"
+      sleep 0.1
       expect(email.reload.is_read).to be(false)
     end
   end

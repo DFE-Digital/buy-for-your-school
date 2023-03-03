@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent sees email threads", bullet: :skip do
+describe "Agent sees email threads", js: true, bullet: :skip do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case) }
