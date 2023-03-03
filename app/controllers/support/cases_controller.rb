@@ -9,6 +9,10 @@ module Support
 
     include Concerns::HasInteraction
 
+    content_security_policy do |policy|
+      policy.style_src_attr :unsafe_inline
+    end
+
     def index
       respond_to do |format|
         format.json do

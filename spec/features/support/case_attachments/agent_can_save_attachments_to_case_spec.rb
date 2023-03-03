@@ -19,7 +19,7 @@ describe "Agent can save attachments from an email to the case", js: true do
 
         visit support_case_path(support_case)
         click_link "Messages"
-        click_link "View"
+        within("#messages-frame") { click_link "View" }
 
         within ".message-details" do
           click_link "Save attachments"
@@ -40,12 +40,14 @@ describe "Agent can save attachments from an email to the case", js: true do
       it "displays the created case attachments with file extensions automatically added" do
         expect(page).to have_content("Attachments saved")
 
-        within "tr", text: "MyNewFileName.txt" do
-          expect(page).to have_content("Neat description")
-        end
+        within("#messages-frame") do
+          within "tr", text: "MyNewFileName.txt" do
+            expect(page).to have_content("Neat description")
+          end
 
-        within "tr", text: "MyOtherFileName.txt" do
-          expect(page).to have_content("Pretty good description")
+          within "tr", text: "MyOtherFileName.txt" do
+            expect(page).to have_content("Pretty good description")
+          end
         end
       end
     end

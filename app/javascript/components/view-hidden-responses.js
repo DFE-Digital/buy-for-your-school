@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+const viewHiddenResponses = () => {
   const viewHiddenResponsesInstances = document.querySelectorAll('[data-component="view-hidden-responses"]');
 
   viewHiddenResponsesInstances.forEach(element => {
@@ -10,5 +10,7 @@ window.addEventListener("load", () => {
       responses.classList.remove("govuk-!-display-none");
     });
   });
-});
+};
 
+window.addEventListener("DOMContentLoaded", viewHiddenResponses);
+window.addEventListener("turbo:frame-load", viewHiddenResponses);

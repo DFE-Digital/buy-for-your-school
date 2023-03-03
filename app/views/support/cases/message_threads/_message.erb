@@ -1,6 +1,6 @@
 <% truncated_message = defined?(truncated_message) ? truncated_message : false %>
 
-<div class="message">
+<div id="<%= dom_id(message) %>" class="message">
   <div class="message-details">
     <div>
       <%= message.sent_by_name %>
@@ -42,6 +42,6 @@
       <% end %>
     </div>
   </div>
-</div>
 
-<hr class="govuk-!-margin-bottom-6" />
+  <hr class="govuk-!-margin-bottom-6" />
+</div>

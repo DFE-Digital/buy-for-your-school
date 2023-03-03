@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+const toggleTruncate = () => {
   const toggleTruncateInstances = document.querySelectorAll('[data-component="toggle-truncate"]');
 
   toggleTruncateInstances.forEach(element => {
@@ -11,4 +11,7 @@ window.addEventListener("load", () => {
       element.classList.remove('truncated-view')
     });
   });
-});
+};
+
+window.addEventListener("DOMContentLoaded", toggleTruncate);
+window.addEventListener("turbo:frame-load", toggleTruncate);

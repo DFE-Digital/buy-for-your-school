@@ -1,6 +1,13 @@
 <%= render "support/cases/show/tabs" do %>
   <%= render "support/cases/show/school_details", current_case: @current_case %>
   <%= render "support/cases/show/case_details", current_case: @current_case %>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages" role="tabpanel" aria-labelledby="tab_messages" aria-live="polite">
+    <%= turbo_frame_tag "messages-frame", src: support_case_message_threads_path(@current_case) do %>
+      <p class="govuk-body">Loading...</p>
+    <% end %>
+  </div>
+
   <%= render "support/cases/show/case_history", interactions: @current_case.case_history_interactions, current_case: @current_case %>
   <%= render "support/cases/show/case_attachments", current_case: @current_case %>
 <% end %>

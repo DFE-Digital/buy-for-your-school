@@ -27,9 +27,9 @@ describe "Agent can add attachments to replies", js: true do
       allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
 
       click_on "Messages"
-      click_on "View"
 
-      within("#messages") do
+      within("#messages-frame") do
+        click_on "View"
         find("span", text: "Reply to message").click
         fill_in_editor "Your message", with: "This is a test reply"
       end

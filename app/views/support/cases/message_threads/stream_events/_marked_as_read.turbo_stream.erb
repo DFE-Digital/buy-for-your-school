@@ -1,0 +1,7 @@
+<%= turbo_stream.replace(dom_id(message)) do %>
+  <%= render "support/cases/message_threads/message", message: %>
+<% end %>
+
+<%= turbo_stream.replace("case_status_badge") do %>
+  <%= render "support/cases/status_badge", kase: %>
+<% end %>
