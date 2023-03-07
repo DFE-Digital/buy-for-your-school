@@ -26,11 +26,6 @@
       "data-component" => "display-attachments",
       "data-display-attachments-id" => unique_id
     %>
-    <% if !reply %>
-      <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-cc-bcc" type="button">
-        <%= I18n.t("support.case.label.message_threads.new.hide_cc_bcc") %>
-      </button>
-    <% end %>
   </div>
 
   <div class="govuk-grid-row">

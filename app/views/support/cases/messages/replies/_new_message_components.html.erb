@@ -17,10 +17,10 @@
           data-component="add-recipients"
           data-input-field=<%= "message_reply_form_#{unique_id}[to]" %>
           type="button">
-    <%= I18n.t("support.case.label.message_threads.new.add") %>
+    <%= I18n.t("support.case.label.message_threads.new.add_to") %>
   </button>
 </span>
-<div id="cc-and-bcc">
+<div id="cc" hidden="true">
   <span class="recipient-input-group">
     <%= form.govuk_text_field :cc,
           label: nil,
@@ -33,9 +33,12 @@
             data-component="add-recipients"
             data-input-field=<%= "message_reply_form_#{unique_id}[cc]" %>
             type="button">
-      <%= I18n.t("support.case.label.message_threads.new.add") %>
+      <%= I18n.t("support.case.label.message_threads.new.add_cc") %>
     </button>
   </span>
+</div>
+
+<div id="bcc" hidden="true">
   <span class="recipient-input-group">
     <%= form.govuk_text_field :bcc,
           label: nil,
@@ -48,9 +51,18 @@
             data-component="add-recipients"
             data-input-field=<%= "message_reply_form_#{unique_id}[bcc]" %>
             type="button">
-      <%= I18n.t("support.case.label.message_threads.new.add") %>
+      <%= I18n.t("support.case.label.message_threads.new.add_bcc") %>
     </button>
   </span>
+</div>
+
+<div class="govuk-button-group">
+  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-cc" type="button">
+    <%= I18n.t("support.case.label.message_threads.new.show_cc") %>
+  </button>
+  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-bcc" type="button">
+    <%= I18n.t("support.case.label.message_threads.new.show_bcc") %>
+  </button>
 </div>
 
 <div class="govuk-grid-row">
