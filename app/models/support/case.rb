@@ -43,6 +43,7 @@ module Support
     belongs_to :organisation, polymorphic: true, optional: true
     has_many :interactions, class_name: "Support::Interaction"
     has_many :emails, class_name: "Support::Email"
+    has_many :email_attachments, class_name: "Support::EmailAttachment", through: :emails
     has_many :exit_survey_responses, class_name: "ExitSurveyResponse"
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy
