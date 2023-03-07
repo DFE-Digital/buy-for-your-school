@@ -6,7 +6,7 @@
     <%= I18n.t("support.case.label.message_threads.templated_messages") %>
   </td>
   <td class="govuk-table__cell">
-    <%= @current_case.templated_messages_last_updated %>
+    <%= simple_distance_of_time_in_words(@current_case.templated_messages_last_updated, Time.zone.now) %> ago
   </td>
   <td class="govuk-table__cell">
     <%= link_to I18n.t("support.case.label.message_threads.view"), templated_messages_support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-link" %>

@@ -29,7 +29,7 @@ RSpec.feature "Support request case history", bullet: :skip do
     it "displays request for support as first time in the case history" do
       within "#case-history #case-history-table tbody:last-child" do
         expect(page).to have_text "Request for support"
-        expect(page).to have_text "20 March 2021 12:00"
+        expect(page).to have_text "almost 2 years ago"
       end
     end
 

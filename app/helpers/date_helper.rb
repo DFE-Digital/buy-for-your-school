@@ -5,6 +5,7 @@
 # @see AnswersController#date_params
 #
 module DateHelper
+  include ActionView::Helpers::DateHelper
   # Convert a hash with `day`, `month` and `year` values into a Date.
   #
   # @param params [Hash<Symbol, String>]
@@ -61,5 +62,13 @@ module DateHelper
         distance_of_time_in_words(orig_from_time, orig_to_time, options)
       end
     end
+  end
+
+  def short_date_format(date, show_time: true, always_show_year: false)
+    date = normalize_distance_of_time_argument_to_time(date)
+    year_directive = always_show_year || date.year != Time.zone.now.year ? " %Y" : ""
+    time_directive = show_time ? " %H:%M" : ""
+
+    date.strftime("%d %b#{year_directive}#{time_directive}")
   end
 end

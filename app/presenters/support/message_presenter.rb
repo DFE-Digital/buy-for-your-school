@@ -1,5 +1,7 @@
 module Support
   class MessagePresenter < ::Support::BasePresenter
+    include DateHelper
+
     def self.presenter_for(message_interaction)
       if message_interaction.email.present?
         Support::Messages::OutlookMessagePresenter.new(message_interaction.email)
@@ -9,16 +11,10 @@ module Support
     end
 
     def sent_at_formatted
-      message_sent_at_date.strftime(sent_at_date_format)
-    end
+      return message_sent_at_date.strftime("Yesterday at %H:%M") if message_sent_at_date.yesterday?
+      return message_sent_at_date.strftime("Today at %H:%M") if message_sent_at_date.today?
 
-  private
-
-    def sent_at_date_format
-      return "Yesterday at %H:%M" if message_sent_at_date.yesterday?
-      return "Today at %H:%M" if message_sent_at_date.today?
-
-      "%d %b %H:%M"
+      short_date_format(message_sent_at_date)
     end
   end
 end
