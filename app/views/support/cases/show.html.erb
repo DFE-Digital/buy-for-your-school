@@ -3,7 +3,7 @@
   <%= render "support/cases/show/case_details", current_case: @current_case %>
 
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages" role="tabpanel" aria-labelledby="tab_messages" aria-live="polite">
-    <%= turbo_frame_tag "messages-frame", src: support_case_message_threads_path(@current_case) do %>
+    <%= turbo_frame_tag "messages-frame", src: params[:messages_tab_url].presence || support_case_message_threads_path(@current_case) do %>
       <p class="govuk-body">Loading...</p>
     <% end %>
   </div>
