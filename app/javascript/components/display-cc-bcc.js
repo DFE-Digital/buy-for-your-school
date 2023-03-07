@@ -1,18 +1,30 @@
-function toggleCcBccDisplay(button) {
-  const ccBccInputs = document.getElementById("cc-and-bcc");
-  ccBccInputs.hidden = !ccBccInputs.hidden;
-  button.innerText = ccBccInputs.hidden === true ? "Show CC / BCC" : "Hide CC / BCC";
+function toggleCcDisplay(button) {
+  const ccInputs = document.getElementById("cc");
+  ccInputs.hidden = !ccInputs.hidden;
+  button.innerText = ccInputs.hidden === true ? "Show CC" : "Hide CC";
 }
 
-function getDisplayButtons() {
-  return document.querySelectorAll('[data-component="display-cc-bcc"]');
+function toggleBccDisplay(button) {
+  const bccInputs = document.getElementById("bcc");
+  bccInputs.hidden = !bccInputs.hidden;
+  button.innerText = bccInputs.hidden === true ? "Show BCC" : "Hide BCC";
+}
+
+function getDisplayCcButtons() {
+  return document.querySelectorAll('[data-component="display-cc"]');
+}
+
+function getDisplayBccButtons() {
+  return document.querySelectorAll('[data-component="display-bcc"]');
 }
 
 const displayCcBcc = () => {
-  getDisplayButtons().forEach(b => {
-    b.addEventListener("click", () => {
-      toggleCcBccDisplay(b);
-    });
+  getDisplayCcButtons().forEach(b => {
+    b.addEventListener("click", () => toggleCcDisplay(b));
+  });
+
+  getDisplayBccButtons().forEach(b => {
+    b.addEventListener("click", () => toggleBccDisplay(b));
   });
 };
 

@@ -16,6 +16,8 @@ describe "Agent can send new emails", js: true do
   describe "creating a new thread", js: true do
     before do
       click_link "Create a new message thread"
+      click_on "Show CC"
+      click_on "Show BCC"
 
       to_input = find("input[name$='[to]']")
       to_input.fill_in with: "to@email.com"
