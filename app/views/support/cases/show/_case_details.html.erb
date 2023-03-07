@@ -42,11 +42,7 @@
           <%= I18n.t("support.case.label.case_value") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <% if current_case.value.present? %>
-            &#163;<%= current_case.value %>
-          <% else %>
-            <%= I18n.t("support.case.label.value.unspecified") %>
-          <% end %>
+          <%= current_case.value %>
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>

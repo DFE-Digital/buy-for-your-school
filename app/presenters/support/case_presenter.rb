@@ -188,6 +188,12 @@ module Support
       last_case_note.created_at.strftime("%d %b %y")
     end
 
+    def value
+      return I18n.t("support.case.label.value.unspecified") unless super
+
+      number_to_currency(super, unit: "£", precision: 2)
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
