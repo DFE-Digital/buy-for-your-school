@@ -4,6 +4,7 @@ RSpec.describe Support::CasePresenter do
   let(:agent) { create(:support_agent) }
   let(:organisation) { create(:support_organisation, urn: "000000", name: "Example Org") }
   let(:procurement) { create(:support_procurement) }
+  let(:value) { nil }
   let(:support_case_created_at) { Time.zone.local(2020, 5, 30, 12, 0, 0) }
   let(:support_case_updated_at) { Time.zone.local(2020, 5, 30, 12, 0, 0) }
   let(:support_case) do
@@ -11,6 +12,7 @@ RSpec.describe Support::CasePresenter do
            agent:,
            organisation:,
            procurement:,
+           value:,
            created_at: support_case_created_at,
            updated_at: support_case_updated_at)
   end
@@ -233,6 +235,22 @@ RSpec.describe Support::CasePresenter do
 
     it "returns the creation date of the latest logged contact" do
       expect(presenter.logged_contacts_last_updated).to eq "01 January 2022 11:22"
+    end
+  end
+
+  describe "#value" do
+    context "when the value is available" do
+      let(:value) { 12_564.0 }
+
+      it "returns the formatted value" do
+        expect(presenter.value).to eq "£12,564.00"
+      end
+    end
+
+    context "when the value is unavailable" do
+      it "returns 'Not specified'" do
+        expect(presenter.value).to eq "Not specified"
+      end
     end
   end
 end

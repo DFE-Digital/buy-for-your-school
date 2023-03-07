@@ -38,7 +38,7 @@
     </dt>
     <dd class="govuk-summary-list__value">
       <% if @case_summary_form.value.present? %>
-        &#163;<%= @case_summary_form.value %>
+        <%= number_to_currency(@case_summary_form.value, unit: "£", precision: 2) %>
       <% else %>
         <%= I18n.t("support.case.label.value.unspecified") %>
       <% end %>
