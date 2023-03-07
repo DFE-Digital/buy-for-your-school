@@ -36,7 +36,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
       # check fields are populated
       within "#pd-new-contract-details" do
         details = all(".govuk-summary-list__value")
-        expect(details[0]).to have_text "1 January 2000"
+        expect(details[0]).to have_text "1 Jan 2000"
         expect(details[1]).to have_text "6 months"
         expect(details[2]).to have_text "£500.00"
         expect(details[3]).to have_text "ACME"
@@ -67,7 +67,7 @@ RSpec.feature "Editing new contract details in procurement tab section" do
       # check fields are blank
       within "#pd-new-contract-details" do
         details = all(".govuk-summary-list__value")
-        expect(details[0]).to have_text "1 January 2020"
+        expect(details[0]).to have_text "1 Jan 2020"
         expect(details[1]).to have_text "1 year"
         expect(details[2]).to have_text "£9.99"
         expect(details[3]).to have_text "ACME Corp"

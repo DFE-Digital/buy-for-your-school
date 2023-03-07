@@ -58,7 +58,7 @@
           <%= I18n.t("support.case.label.received_at") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= current_case.received_at %>
+          <%= short_date_format(current_case.received_at) %>
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>

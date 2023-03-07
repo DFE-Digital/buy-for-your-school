@@ -3,6 +3,7 @@
 module Support
   class ContractPresenter < BasePresenter
     include ActionView::Helpers::NumberHelper
+    include DateHelper
 
     # @return [String]
     def spend
@@ -23,12 +24,12 @@ module Support
 
     # @return [String] "26 November 2021" or "-"
     def started_at
-      super ? super.strftime(date_format) : "-"
+      super ? short_date_format(super, show_time: false, always_show_year: true) : "-"
     end
 
     # @return [String] "26 November 2021" or "-"
     def ended_at
-      super ? super.strftime(date_format) : "-"
+      super ? short_date_format(super, show_time: false, always_show_year: true) : "-"
     end
   end
 end

@@ -18,10 +18,8 @@
   <% case tab %>
   <% when :all_cases %>
     <td class="govuk-table__cell"><%= kase.agent_name %></td>
-    <td class="govuk-table__cell"><%= kase.last_updated_at %></td>
-  <% when :my_cases %>
-    <td class="govuk-table__cell"><%= kase.last_updated_at %></td>
+    <td class="govuk-table__cell"><%= short_date_format(kase.last_updated_at) %></td>
   <% when :new_cases %>
-    <td class="govuk-table__cell"><%= kase.received_at %></td>
+    <td class="govuk-table__cell"><%= simple_distance_of_time_in_words(kase.received_at, Time.zone.now) %> ago</td>
   <% end %>
 </tr>

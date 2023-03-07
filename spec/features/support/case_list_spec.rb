@@ -91,7 +91,7 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[1]).to have_text "Organisation"
         expect(table_headers[2]).to have_text "Sub-category"
         expect(table_headers[3]).to have_text "Status"
-        expect(table_headers[4]).to have_text "Date received"
+        expect(table_headers[4]).to have_text "Received"
       end
     end
   end
