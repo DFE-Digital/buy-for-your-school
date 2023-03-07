@@ -10,7 +10,7 @@ describe "Agent can view attachments on a case" do
     let!(:attachment_1) { create(:support_case_attachment, case: support_case, name: "Classroom.pdf", description: "Classroom Layout Design") }
     let!(:attachment_2) { create(:support_case_attachment, case: support_case, name: "Meeting Recording.wav", description: "Meeting recording from dictaphone") }
 
-    it "displays them within the Attachments tab" do
+    it "displays them within the Attachments tab", js: true do
       visit support_case_path(support_case)
 
       within "#case-attachments tr", text: "Classroom.pdf" do
