@@ -1,6 +1,7 @@
 module Support
   module Cases
     class MessageThreadsController < Cases::ApplicationController
+      before_action :redirect_to_case_tab, unless: :turbo_frame_request?, only: :show
       before_action :current_thread, only: %i[show]
       before_action :reply_form, only: %i[index show new]
       before_action :back_url, only: %i[index show new templated_messages logged_contacts]
@@ -50,6 +51,10 @@ module Support
 
       def default_subject_line
         @default_subject_line ||= "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
+      end
+
+      def redirect_to_case_tab
+        redirect_to support_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url)
       end
     end
   end
