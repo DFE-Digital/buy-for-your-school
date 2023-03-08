@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_27_154121) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_07_132717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_154121) do
     t.uuid "framework_request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "hidden", default: false
     t.index ["framework_request_id"], name: "index_energy_bills_on_framework_request_id"
     t.index ["support_case_id"], name: "index_energy_bills_on_support_case_id"
   end
@@ -318,6 +319,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_154121) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "hidden", default: false
     t.index ["support_case_id"], name: "index_support_case_attachments_on_support_case_id"
     t.index ["support_email_attachment_id"], name: "index_support_case_attachments_on_support_email_attachment_id"
   end
@@ -415,6 +417,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_154121) do
     t.boolean "is_inline", default: false
     t.string "content_id"
     t.string "outlook_id"
+    t.string "custom_name"
+    t.string "description"
+    t.boolean "hidden", default: false
   end
 
   create_table "support_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -31,4 +31,19 @@ RSpec.describe Support::EmailAttachment, type: :model do
       expect(results).not_to include(attachment_to_hide)
     end
   end
+
+  describe ".unique_files_for_case" do
+    it "removes repeating duplicate files from emails" do
+      support_case = create(:support_case)
+      attachment_1 = create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), email: create(:support_email, case: support_case))
+      attachment_2 = create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), email: create(:support_email, case: support_case))
+      attachment_3 = create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain"), email: create(:support_email, case: support_case))
+
+      results = described_class.unique_files_for_case(case_id: support_case.id).to_a
+
+      expect(results).to include(attachment_1)
+      expect(results).not_to include(attachment_2) # duplicate
+      expect(results).to include(attachment_3)
+    end
+  end
 end
