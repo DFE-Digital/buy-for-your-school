@@ -10,9 +10,3 @@
       class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
   </span>
 <% end %>
-
-<% if message.can_save_attachments? %>
-  <span class="govuk-!-margin-left-2">
-    <%= link_to I18n.t("support.case.label.messages.table.save_attachments"), new_support_message_save_attachments_path(message_id: message.id), class: "govuk-link govuk-link--no-underline govuk-link--no-visited-state govuk-!-font-weight-bold" %>
-  </span>
-<% end %>
