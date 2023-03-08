@@ -1,7 +1,14 @@
 .attachment-date-added-header {
-  width: 170px;
+  width: 125px;
 }
 
 .attachment-actions-header {
-  width: 100px;
+  width: 125px;
+  text-align: center;
+}
+
+.attachment-actions {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
 }

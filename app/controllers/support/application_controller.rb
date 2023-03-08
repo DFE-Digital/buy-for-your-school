@@ -33,7 +33,7 @@ module Support
     def notifications_unread?
       return false if current_agent.nil?
 
-      Support::Notification.unread(assigned_to: current_agent).any?
+      ::Notifications::NotificationsForAgent.new(agent_id: current_agent.id).any_unread?
     end
 
     def current_url_b64(tab = "")

@@ -7,6 +7,13 @@ module Support
         .paginate(page: params[:page], per_page: 20)
     end
 
+    def destroy
+      @case_file = Support::CaseAttachment.find(params[:id])
+      @case_file.destroy!
+
+      redirect_to_files_tab
+    end
+
   private
 
     def redirect_to_files_tab
