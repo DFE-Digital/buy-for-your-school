@@ -692,6 +692,7 @@ en:
         case_attachments: Attachments
         case_detail: Case details
         case_history: Case history
+        case_files: Files
         messages: Messages
         procurement_detail: Procurement details
         school_detail: School details

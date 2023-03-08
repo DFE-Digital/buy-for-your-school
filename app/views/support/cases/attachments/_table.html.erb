@@ -1,0 +1,34 @@
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header attachment-name-header"><%= I18n.t("support.case.label.attachments.table.attachment_name") %></th>
+      <th class="govuk-table__header attachment-date-added-header"><%= I18n.t("support.case.label.attachments.table.date_added") %></th>
+      <%
+=begin%>
+ <th class="govuk-table__header attachment-actions-header">Actions</th>
+<%
+=end%>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% attachments.each do |attachment| %>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__cell" scope="row">
+          <strong><%= link_to attachment.name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link" %></strong>
+          <% if attachment.description.present? %>
+            - <span class="govuk-!-font-weight-regular"><%= attachment.description %></span>
+          <% end %>
+        </th>
+        <td class="govuk-table__cell"><%= attachment.created_at.strftime("%d %b %Y %H:%M") %></td>
+        <%
+=begin%>
+ <td class="govuk-table__cell">
+          <%= link_to "Hide", "#", class: "govuk-link govuk-link--no-visited-state" %>
+        </td>
+<%
+=end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

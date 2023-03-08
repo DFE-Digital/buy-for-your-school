@@ -1,5 +1,5 @@
 <% tab = defined?(tab) ? tab : nil %>
-<% tab_url = ->(anchor) { tab == "messages" ? support_case_path(@current_case, anchor:) : "##{anchor}" } %>
+<% tab_url = ->(anchor) { "##{anchor}" } %>
 
 <% content_for :title do %>
   Buy for your school | Case <%= @current_case.ref %>
@@ -21,19 +21,22 @@
 <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "school_detail" || tab.nil? %>">
-      <%= link_to I18n.t("support.case.header.school_detail"), tab_url["school-details"], class: "govuk-tabs__tab" %>
+      <%= link_to I18n.t("support.case.header.school_detail"), "#school-details", class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_detail" %>">
-      <%= link_to I18n.t("support.case.header.case_detail"), tab_url["case-details"], class: "govuk-tabs__tab" %>
+      <%= link_to I18n.t("support.case.header.case_detail"), "#case-details", class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "messages" %>">
-      <%= link_to I18n.t("support.case.header.messages"), tab_url["messages"], class: "govuk-tabs__tab" %>
+      <%= link_to I18n.t("support.case.header.messages"), "#messages", class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_history" %>">
-      <%= link_to I18n.t("support.case.header.case_history"), tab_url["case-history"], class: "govuk-tabs__tab" %>
+      <%= link_to I18n.t("support.case.header.case_history"), "#case-history", class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_attachments" %>">
-      <%= link_to I18n.t("support.case.header.case_attachments"), tab_url["case-attachments"], class: "govuk-tabs__tab" %>
+    <%= link_to I18n.t("support.case.header.case_attachments"), "#case-attachments", class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_files" %>">
+      <%= link_to I18n.t("support.case.header.case_files"), "#case-files", class: "govuk-tabs__tab" %>
     </li>
   </ul>
 
