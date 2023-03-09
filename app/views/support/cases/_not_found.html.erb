@@ -1,0 +1,7 @@
+<p class="govuk-body govuk-!-font-weight-bold"><%= I18n.t("support.case.list.not_found") %></p>
+<p class="govuk-body"><%= I18n.t("support.case.list.improve_results") %></p>
+<ul class="govuk-list govuk-list--bullet">
+  <% I18n.t("support.case.list.improve_results_list").each do |item| %>
+    <li><%= item %></li>
+  <% end %>
+</ul>
