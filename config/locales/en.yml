@@ -743,6 +743,7 @@ en:
           back: Back to message list
           last_update: Last update
           logged_contacts: Logged contacts
+          status: Status
           new:
             add_to: "Add To: recipient"
             add_cc: "Add Cc: recipient"

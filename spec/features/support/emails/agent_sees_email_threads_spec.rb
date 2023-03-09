@@ -32,6 +32,11 @@ describe "Agent sees email threads", js: true, bullet: :skip do
       end
     end
 
+    it "displays the unread badge when a message is unread" do
+      within("tr", text: "Email thread 1") { expect(page).to have_css(".govuk-tag", text: "Unread") }
+      within("tr", text: "Email thread 2") { expect(page).to have_css(".govuk-tag", text: "Read") }
+    end
+
     describe "within a thread" do
       it "displays each message" do
         within "tr", text: "Email thread 2" do
