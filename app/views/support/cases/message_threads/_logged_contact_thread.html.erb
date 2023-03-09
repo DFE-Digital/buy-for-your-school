@@ -9,6 +9,9 @@
     <%= simple_distance_of_time_in_words(@current_case.logged_contacts_last_updated, Time.zone.now) %> ago
   </td>
   <td class="govuk-table__cell">
+    N/A
+  </td>
+  <td class="govuk-table__cell">
     <%= link_to I18n.t("support.case.label.message_threads.view"), logged_contacts_support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-link" %>
   </td>
 </tr>
