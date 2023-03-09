@@ -52,4 +52,29 @@ RSpec.describe DateHelper, type: :helper do
       expect(helper.short_date_format("2023-01-20 02:13", always_show_year: true)).to eq "20 Jan 2023 02:13"
     end
   end
+
+  describe "#relative_date_format" do
+    before { travel_to Time.zone.local(2023, 3, 7, 0, 0) }
+    after { travel_back }
+
+    context "when the date is less than a year ago" do
+      it "calls simple_distance_of_time_in_words" do
+        allow(helper).to receive(:simple_distance_of_time_in_words).with(Time.zone.parse("2023-02-25 15:58"), Time.zone.now)
+
+        helper.relative_date_format("2023-02-25 15:58")
+
+        expect(helper).to have_received(:simple_distance_of_time_in_words).with(Time.zone.parse("2023-02-25 15:58"), Time.zone.now).once
+      end
+    end
+
+    context "when the date is more than a year ago" do
+      it "calls short_date_format" do
+        allow(helper).to receive(:short_date_format).with(Time.zone.parse("2022-02-25 15:58"), show_time: false)
+
+        helper.relative_date_format("2022-02-25 15:58")
+
+        expect(helper).to have_received(:short_date_format).with(Time.zone.parse("2022-02-25 15:58"), show_time: false).once
+      end
+    end
+  end
 end

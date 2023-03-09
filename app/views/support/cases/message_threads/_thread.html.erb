@@ -6,7 +6,9 @@
     <%= thread.subject %>
   </td>
   <td class="govuk-table__cell">
-    <%= simple_distance_of_time_in_words(thread.last_updated, Time.zone.now) %> ago
+    <span title="<%= thread.last_updated %>">
+      <%= relative_date_format(thread.last_updated) %>
+    </span>
   </td>
   <td class="govuk-table__cell">
     <%= render "support/cases/emails/#{thread.unread_messages? ? "unread_badge" : "read_badge"}" %>

@@ -64,6 +64,13 @@ module DateHelper
     end
   end
 
+  def relative_date_format(date)
+    date = normalize_distance_of_time_argument_to_time(date)
+    return short_date_format(date, show_time: false) if date < 1.year.ago
+
+    "#{simple_distance_of_time_in_words(date, Time.zone.now)} ago"
+  end
+
   def short_date_format(date, show_time: true, always_show_year: false)
     date = normalize_distance_of_time_argument_to_time(date)
     year_directive = always_show_year || date.year != Time.zone.now.year ? " %Y" : ""

@@ -6,7 +6,9 @@
     <%= I18n.t("support.case.label.message_threads.templated_messages") %>
   </td>
   <td class="govuk-table__cell">
-    <%= simple_distance_of_time_in_words(@current_case.templated_messages_last_updated, Time.zone.now) %> ago
+    <span title="<%= @current_case.templated_messages_last_updated %>">
+      <%= relative_date_format(@current_case.templated_messages_last_updated) %>
+    </span>
   </td>
   <td class="govuk-table__cell">
     N/A
