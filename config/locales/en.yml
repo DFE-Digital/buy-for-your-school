@@ -867,8 +867,12 @@ en:
         all_cases: All cases
         my_cases: My cases
         new_cases: New cases
-        not_found: No cases found
+        not_found: No cases found.
         tower: Tower
+        improve_results: "Improve your results by:"
+        improve_results_list:
+          - removing filters
+          - choosing different filters
       new:
         request_text:
           header: Description of query
