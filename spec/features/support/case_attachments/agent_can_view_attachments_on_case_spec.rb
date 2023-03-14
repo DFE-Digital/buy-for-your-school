@@ -7,8 +7,8 @@ describe "Agent can view attachments on a case" do
 
   context "when there are attachments on the case" do
     let(:support_case)  { create(:support_case) }
-    let!(:attachment_1) { create(:support_case_attachment, case: support_case, name: "Classroom.pdf", description: "Classroom Layout Design") }
-    let!(:attachment_2) { create(:support_case_attachment, case: support_case, name: "Meeting Recording.wav", description: "Meeting recording from dictaphone") }
+    let!(:attachment_1) { create(:support_case_attachment, case: support_case, custom_name: "Classroom.pdf", description: "Classroom Layout Design") }
+    let!(:attachment_2) { create(:support_case_attachment, case: support_case, custom_name: "Meeting Recording.wav", description: "Meeting recording from dictaphone") }
 
     it "displays them within the Files tab", js: true do
       visit support_case_path(support_case)

@@ -1,9 +1,12 @@
 <%= turbo_frame_tag "case-files-frame" do %>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-files">
+    <h2 class="govuk-heading-l">Case files</h2>
+
     <% if @case_files.any? %>
-      <h2 class="govuk-heading-l">Case files</h2>
       <%= render "support/cases/files/table", attachments: @case_files, current_case: @current_case %>
       <%= render "components/pagination", records: @case_files, pagination_params: { anchor: "case-files" } %>
+    <% else %>
+      <p class="govuk-body govuk-!-font-weight-bold">No case files found.</p>
     <% end %>
   </div>
 <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_07_132717) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -320,6 +320,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_132717) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "hidden", default: false
+    t.uuid "attachable_id"
+    t.string "attachable_type"
+    t.string "custom_name"
     t.index ["support_case_id"], name: "index_support_case_attachments_on_support_case_id"
     t.index ["support_email_attachment_id"], name: "index_support_case_attachments_on_support_email_attachment_id"
   end

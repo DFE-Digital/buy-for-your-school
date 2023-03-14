@@ -170,8 +170,8 @@ Rails.application.routes.draw do
           resource :preview, only: %i[new create], as: :create_case_preview
           resources :searches, only: %i[new index], as: :case_search, path: "find-a-case"
         end
-        resources :attachments, only: %i[index destroy]
-        resources :files, only: %i[index destroy]
+        resources :attachments, only: %i[index edit update destroy]
+        resources :files, only: %i[index edit update destroy]
         resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
