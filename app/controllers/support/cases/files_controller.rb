@@ -3,8 +3,29 @@ module Support
     before_action :redirect_to_files_tab, unless: :turbo_frame_request?, only: :index
 
     def index
-      @case_files = (current_case.energy_bills + current_case.case_attachments)
+      @case_files = current_case.case_attachments
         .paginate(page: params[:page], per_page: 20)
+    end
+
+    def edit
+      @case_file = Support::CaseAttachment.find(params[:id])
+      @edit_file_form = Support::EditCaseAttachableForm.from(@case_file)
+    end
+
+    def update
+      @case_file = Support::CaseAttachment.find(params[:id])
+      @edit_file_form = Support::EditCaseAttachableForm.new(
+        update_action: CaseFiles::RenameFile.new(@case_file),
+        **edit_file_form_params,
+      )
+
+      if @edit_file_form.valid?
+        @edit_file_form.update!
+
+        redirect_to support_case_files_path(@current_case, page: params[:redirect_page])
+      else
+        render :edit
+      end
     end
 
     def destroy
@@ -15,6 +36,10 @@ module Support
     end
 
   private
+
+    def edit_file_form_params
+      params.require(:edit_file).permit(:custom_name, :description)
+    end
 
     def redirect_to_files_tab
       redirect_to support_case_path(id: params[:case_id], anchor: "case-files")

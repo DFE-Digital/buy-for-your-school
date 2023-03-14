@@ -34,4 +34,30 @@ namespace :data_migrations do
 
     Rake::Task["case_management:seed_categories"].invoke
   end
+
+  desc "Populate case attachments#attachable with existing email atts and energy bills"
+  task populate_case_attachments_attachables: :environment do
+    # Migrate email attachment ids to be attachable ids
+    Support::CaseAttachment
+      .where("support_email_attachment_id IS NOT null")
+      .update_all("
+        attachable_id = support_email_attachment_id,
+        attachable_type = 'Support::EmailAttachment',
+        custom_name = name")
+
+    # Copy over energy bills to appear as case attachments
+    EnergyBill.find_each do |energy_bill|
+      Support::CaseAttachment
+        .find_or_create_by!(
+          attachable: energy_bill,
+          case: energy_bill.support_case,
+        )
+        .update(
+          custom_name: energy_bill.file_name,
+          description: "User uploaded energy bill",
+          created_at: energy_bill.created_at,
+          updated_at: energy_bill.updated_at,
+        )
+    end
+  end
 end

@@ -11,19 +11,20 @@
     <% attachments.each do |attachment| %>
       <tr class="govuk-table__row">
         <th class="govuk-table__cell" scope="row">
-          <strong><%= link_to attachment.name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link" %></strong>
+          <strong><%= link_to attachment.custom_name, support_document_download_path(attachment, type: attachment.class), class: "govuk-link" %></strong>
           <% if attachment.description.present? %>
             <br> <span class="govuk-!-font-weight-regular"><%= attachment.description %></span>
           <% end %>
         </th>
         <td class="govuk-table__cell">
           <span title="<%= attachment.created_at.strftime("%d %b %Y %H:%M") %>">
-            <%= simple_distance_of_time_in_words(attachment.created_at, Time.zone.now) %> ago
+            <%= relative_date_format(attachment.created_at) %>
           <span>
         </td>
         <td class="govuk-table__cell">
           <div class="attachment-actions">
             <% unless attachment.is_a?(EnergyBill) %>
+              <%= link_to "Edit", edit_support_case_file_path(current_case, attachment, redirect_page: params[:page]), class: "govuk-link govuk-link--no-visited-state" %>
               <%= link_to "Delete", support_case_file_path(current_case, attachment), method: :delete, data: { confirm: "Are you sure you wish to delete this file forever?" }, class: "govuk-link govuk-link--no-visited-state" %>
             <% end %>
           </div>

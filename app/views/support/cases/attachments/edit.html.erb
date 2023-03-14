@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "case-attachments-frame" do %>
+  <div id="case-attachments" class="govuk-tabs__panel <%= "govuk-tabs__panel--hidden" unless @show_tab.present? %>">
+    <%= link_to "Back to attachments list", support_case_attachments_path(@current_case, page: params[:redirect_page]), class: "govuk-back-link pull-up" %>
+
+    <h2 class="govuk-heading-l">Edit email attachment</h2>
+
+    <%= form_for @edit_attachment_form, as: :edit_attachment, url: support_case_attachment_path(@current_case, @email_attachment, redirect_page: params[:redirect_page]), method: :patch do |f| %>
+      <%= f.govuk_text_field :custom_name, label: { text: "File name" } %>
+      <%= f.govuk_text_field :description %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit "Save" %>
+        <%= link_to "Exit without saving", support_case_attachments_path(@current_case, page: params[:redirect_page]), class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

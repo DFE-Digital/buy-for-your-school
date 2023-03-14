@@ -32,18 +32,27 @@ RSpec.describe Support::EmailAttachment, type: :model do
     end
   end
 
-  describe ".unique_files_for_case" do
-    it "removes repeating duplicate files from emails" do
-      support_case = create(:support_case)
-      attachment_1 = create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), email: create(:support_email, case: support_case))
-      attachment_2 = create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), email: create(:support_email, case: support_case))
-      attachment_3 = create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain"), email: create(:support_email, case: support_case))
+  describe ".unique_files" do
+    let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")) }
+    let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")) }
+    let!(:attachment_3) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
 
-      results = described_class.unique_files_for_case(case_id: support_case.id).to_a
+    it "removes repeating duplicate files" do
+      results = described_class.unique_files.to_a
 
-      expect(results).to include(attachment_1)
-      expect(results).not_to include(attachment_2) # duplicate
+      expect(results).not_to include(attachment_1) # older duplicate
+      expect(results).to include(attachment_2)
       expect(results).to include(attachment_3)
+    end
+
+    context "when first_instance_only is false" do
+      it "provides repeating duplicate files, so they can be hidden" do
+        results = described_class.unique_files(first_instance_only: false).to_a
+
+        expect(results).to include(attachment_1)
+        expect(results).to include(attachment_2)
+        expect(results).to include(attachment_3)
+      end
     end
   end
 end

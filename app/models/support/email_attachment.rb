@@ -40,7 +40,8 @@ module Support
     end
 
     delegate :case, :case_id, to: :email
-    def name = custom_name.presence || file_name
+
+    def custom_name = super.presence || file_name
     def checksum = file.attachment.blob.checksum
 
   private

@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "case-files-frame" do %>
+  <div id="case-files" class="govuk-tabs__panel <%= "govuk-tabs__panel--hidden" unless @show_tab.present? %>">
+    <%= link_to "Back to case files list", support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-back-link pull-up" %>
+
+    <h2 class="govuk-heading-l">Edit case file</h2>
+
+    <%= form_for @edit_file_form, as: :edit_file, url: support_case_file_path(@current_case, @case_file, redirect_page: params[:redirect_page]), method: :patch do |f| %>
+      <%= f.govuk_text_field :custom_name, label: { text: "File name" } %>
+      <%= f.govuk_text_field :description %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit "Save" %>
+        <%= link_to "Exit without saving", support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
