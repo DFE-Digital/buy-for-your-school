@@ -673,7 +673,7 @@ en:
           heading: Case summary
         request:
           heading: Request
-      date_format: "%d %B %Y at %H:%M"
+      date_format: "%d %B %Y %H:%M"
       filter:
         buttons:
           apply: Apply filter

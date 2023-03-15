@@ -37,7 +37,7 @@ RSpec.describe Support::CasePresenter do
 
   describe "#received_at" do
     it "returns the formatted date on which the case was received" do
-      expect(presenter.received_at).to eq("30 May 2020 at 12:00")
+      expect(presenter.received_at).to eq("30 May 2020 12:00")
     end
   end
 
@@ -57,7 +57,7 @@ RSpec.describe Support::CasePresenter do
       end
 
       it "returns the formatted date on which the case was last updated" do
-        expect(presenter.last_updated_at).to eq("31 January 2021 at 12:00")
+        expect(presenter.last_updated_at).to eq("31 January 2021 12:00")
       end
     end
 
