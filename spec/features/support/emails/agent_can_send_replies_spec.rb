@@ -35,11 +35,19 @@ describe "Agent can reply to incoming emails", js: true do
         within("#messages-frame") { click_link "View" }
 
         find("span", text: "Reply to message").click
-        fill_in_editor "Your message", with: "This is a test reply"
-        click_button "Send reply"
       end
 
-      it "shows the reply" do
+      it "shows the recipients" do
+        within("#recipient-table") do
+          expect(page).to have_text "CC"
+          expect(page).to have_text "sender1@email.com"
+        end
+      end
+
+      it "shows the sent reply" do
+        fill_in_editor "Your message", with: "This is a test reply"
+        click_button "Send reply"
+
         within("#messages") do
           expect(page).to have_text "Caseworker"
           expect(page).to have_text "This is a test reply"

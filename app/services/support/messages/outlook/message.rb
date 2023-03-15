@@ -26,9 +26,18 @@ module Support
           { address: from.email_address.address, name: from.email_address.name }
         end
 
-        def recipients
-          all_recipients = to_recipients + cc_recipients + bcc_recipients
-          all_recipients.map(&:email_address).map do |email_address|
+        def recipients = to_recipients + cc_recipients + bcc_recipients
+
+        def to_recipients = map_recipients(super)
+
+        def cc_recipients = map_recipients(super)
+
+        def bcc_recipients = map_recipients(super)
+
+      private
+
+        def map_recipients(recipients_to_map)
+          recipients_to_map.map(&:email_address).map do |email_address|
             { address: email_address.address, name: email_address.name }
           end
         end

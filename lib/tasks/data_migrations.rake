@@ -60,4 +60,25 @@ namespace :data_migrations do
         )
     end
   end
+
+  desc "Backfill email recipients"
+  task backfill_email_recipients: :environment do
+    messages = MicrosoftGraph.client.list_messages(SHARED_MAILBOX_USER_ID, query: [
+      "$select=internetMessageId,toRecipients,ccRecipients,bccRecipients",
+      "$orderby=lastModifiedDateTime desc",
+    ])
+
+    map_recipients = ->(recipients) { recipients.map(&:values).flatten if recipients.present? }
+
+    messages.each do |message|
+      email = Support::Email.find_by(outlook_internet_message_id: message["internetMessageId"])
+      next if email.blank?
+
+      email.update!(
+        to_recipients: map_recipients.call(message["toRecipients"]),
+        cc_recipients: map_recipients.call(message["ccRecipients"]),
+        bcc_recipients: map_recipients.call(message["bccRecipients"]),
+      )
+    end
+  end
 end

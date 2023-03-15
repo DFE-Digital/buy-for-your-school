@@ -23,7 +23,7 @@ module Support
         attr_reader :ms_graph_client, :reply_to_email, :reply_text, :sender, :file_attachments
 
         def create_draft_reply
-          draft_reply = ms_graph_client.create_reply_message(
+          draft_reply = ms_graph_client.create_reply_all_message(
             user_id: SHARED_MAILBOX_USER_ID,
             reply_to_id: reply_to_email.outlook_id,
             http_headers: { "Prefer" => 'IdType="ImmutableId"' },

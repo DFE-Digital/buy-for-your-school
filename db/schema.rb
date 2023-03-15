@@ -447,6 +447,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.string "outlook_internet_message_id"
     t.string "in_reply_to_id"
     t.text "unique_body"
+    t.jsonb "to_recipients"
+    t.jsonb "cc_recipients"
+    t.jsonb "bcc_recipients"
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
   end
 

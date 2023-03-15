@@ -101,6 +101,12 @@ module Support
         view_context.render("support/cases/message_threads/outlook/details", message: self)
       end
 
+      def to_recipients = extract_recipient_addresses([sender] + super)
+
+      def cc_recipients = extract_recipient_addresses(super)
+
+      def bcc_recipients = extract_recipient_addresses(super)
+
     private
 
       def body_with_links_removed(_view_context, cleaned_body)
@@ -133,6 +139,12 @@ module Support
 
       def message_sent_at_date
         sent_at
+      end
+
+      def extract_recipient_addresses(recipients)
+        return if recipients.blank?
+
+        recipients.pluck("address").uniq.filter { |r| r != ENV["MS_GRAPH_SHARED_MAILBOX_ADDRESS"] }.join(", ")
       end
     end
   end

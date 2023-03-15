@@ -13,6 +13,7 @@
         </span>
       </summary>
       <div class="govuk-details__text">
+        <%= render "recipient_table", email: @last_received_reply %>
         <%= render "support/cases/messages/replies/form", reply: true, email: @last_received_reply %>
       </div>
     </details>

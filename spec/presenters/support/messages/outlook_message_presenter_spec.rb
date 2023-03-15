@@ -264,4 +264,34 @@ describe Support::Messages::OutlookMessagePresenter do
       end
     end
   end
+
+  describe "#cc_recipients" do
+    context "when there are no recipients" do
+      let(:email) { create(:support_email, cc_recipients: nil) }
+
+      it "returns nil" do
+        expect(presenter.cc_recipients).to be_nil
+      end
+    end
+
+    context "when there are recipients" do
+      let(:email) { create(:support_email, cc_recipients:) }
+      let(:cc_recipients) do
+        [
+          { "name" => "Test User 1", "address" => "test1@email.com" },
+          { "name" => "Test User 2", "address" => "test2@email.com" },
+          { "name" => "Test User 2", "address" => "test2@email.com" },
+          { "name" => "Shared Mailbox", "address" => "shared@mailbox.com" },
+        ]
+      end
+
+      around do |example|
+        ClimateControl.modify(MS_GRAPH_SHARED_MAILBOX_ADDRESS: "shared@mailbox.com") { example.run }
+      end
+
+      it "returns unique addresses without the shared mailbox" do
+        expect(presenter.cc_recipients).to eq "test1@email.com, test2@email.com"
+      end
+    end
+  end
 end

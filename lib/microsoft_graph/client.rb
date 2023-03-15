@@ -79,6 +79,12 @@ module MicrosoftGraph
       Transformer::UpdateMessage.transform(response, into: Resource::Message)
     end
 
+    # https://learn.microsoft.com/en-us/graph/api/message-createreplyall?view=graph-rest-1.0&tabs=http
+    def create_reply_all_message(user_id:, reply_to_id:, http_headers: {})
+      response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReplyAll", nil, http_headers)
+      Transformer::UpdateMessage.transform(response, into: Resource::Message)
+    end
+
     # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
     def create_message(user_id:, request_body: {}, http_headers: {})
       response = client_session.graph_api_post(
