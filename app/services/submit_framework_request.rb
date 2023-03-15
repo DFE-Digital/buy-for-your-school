@@ -31,8 +31,8 @@ class SubmitFrameworkRequest
       .find_by(framework_request_id: request.id)
       .try(:update!, case: @kase, status: :case_created)
 
-    EnergyBill.where(framework_request_id: request.id)
-      .update_all(submission_status: :submitted, support_case_id: @kase.id)
+    CaseFiles::SubmitEnergyBills.new
+      .call(framework_request_id: request.id, support_case_id: @kase.id)
 
     request.update!(submitted: true)
   end
