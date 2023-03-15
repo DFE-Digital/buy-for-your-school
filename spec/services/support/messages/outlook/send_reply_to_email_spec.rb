@@ -18,13 +18,13 @@ describe Support::Messages::Outlook::SendReplyToEmail do
   let(:attachment1)                   { double("attachment1") }
   let(:attachment2)                   { double("attachment2") }
 
-  let(:create_reply_message_repsonse) { double("create_reply_message_repsonse", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "Previous content here")) }
+  let(:create_reply_all_message_repsonse) { double("create_reply_all_message_repsonse", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "Previous content here")) }
   let(:update_message_response)       { double("update_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "My Reply - Previous content here")) }
   let(:send_message_response)         { nil }
   let(:get_message_response)          { double("get_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "My Reply - Previous content here")) }
 
   before do
-    allow(ms_graph_client).to receive(:create_reply_message).and_return(create_reply_message_repsonse)
+    allow(ms_graph_client).to receive(:create_reply_all_message).and_return(create_reply_all_message_repsonse)
     allow(ms_graph_client).to receive(:update_message).and_return(update_message_response)
     allow(ms_graph_client).to receive(:send_message).and_return(send_message_response)
     allow(ms_graph_client).to receive(:get_message).and_return(get_message_response)
@@ -36,7 +36,7 @@ describe Support::Messages::Outlook::SendReplyToEmail do
   it "creates a draft message in outlook" do
     send_reply.call
 
-    expect(ms_graph_client).to have_received(:create_reply_message)
+    expect(ms_graph_client).to have_received(:create_reply_all_message)
       .with(
         user_id: SHARED_MAILBOX_USER_ID,
         reply_to_id: "REPLY-OUTLOOK-ID",

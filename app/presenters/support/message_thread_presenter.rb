@@ -41,6 +41,10 @@ module Support
       messages.any? { |message| message.can_mark_as_read? && !message.is_read? }
     end
 
+    def last_received_reply
+      Support::Messages::OutlookMessagePresenter.new(super) if super.present?
+    end
+
   private
 
     def date_format

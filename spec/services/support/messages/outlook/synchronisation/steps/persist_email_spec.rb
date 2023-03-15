@@ -20,6 +20,9 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
       has_attachments: true,
       case_reference_from_headers: "000888",
       in_reply_to_id: "IMID-2",
+      to_recipients: [{ name: "To Recipient", address: "to_recipient@email.com" }],
+      cc_recipients: [{ name: "CC Recipient 1", address: "cc_recipient1@email.com" }, { name: "CC Recipient 2", address: "cc_recipient2@email.com" }],
+      bcc_recipients: [{ name: "BCC Recipient", address: "bcc_recipient@email.com" }],
     )
   end
 
@@ -41,6 +44,9 @@ describe Support::Messages::Outlook::Synchronisation::Steps::PersistEmail do
     expect(email.in_reply_to_id).to eq("IMID-2")
     expect(email.body).to eq("Unique Body, Reply Body")
     expect(email.unique_body).to eq("Unique Body")
+    expect(email.to_recipients).to eq([{ "name" => "To Recipient", "address" => "to_recipient@email.com" }])
+    expect(email.cc_recipients).to eq([{ "name" => "CC Recipient 1", "address" => "cc_recipient1@email.com" }, { "name" => "CC Recipient 2", "address" => "cc_recipient2@email.com" }])
+    expect(email.bcc_recipients).to eq([{ "name" => "BCC Recipient", "address" => "bcc_recipient@email.com" }])
   end
 
   context "when message is coming from the inbox mail folder" do
