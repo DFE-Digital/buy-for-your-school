@@ -1,7 +1,0 @@
-<%= turbo_stream.replace("case-attachments") do %>
-  <%= render "support/cases/show/case_attachments", current_case: %>
-<% end %>
-
-<%= turbo_stream.replace("messages-frame") do %>
-  <%= render "support/save_attachments/create", current_case: %>
-<% end %>

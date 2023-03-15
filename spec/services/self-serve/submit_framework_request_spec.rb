@@ -84,6 +84,13 @@ describe SubmitFrameworkRequest do
         expect(bill_1.reload.support_case).to eq(Support::Case.last)
         expect(bill_2.reload.support_case).to eq(Support::Case.last)
       end
+
+      it "creates CaseAttachment records for each bill" do
+        described_class.new(request:, referrer:).call
+
+        expect(Support::CaseAttachment.find_by(attachable: bill_1).case).to eq(Support::Case.last)
+        expect(Support::CaseAttachment.find_by(attachable: bill_2).case).to eq(Support::Case.last)
+      end
     end
   end
 end
