@@ -1,6 +1,12 @@
 .flex-align-center {
   display: flex;
-  align-items: center
+  align-items: center;
+}
+
+.spread-out {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .ellipsis-overflow {

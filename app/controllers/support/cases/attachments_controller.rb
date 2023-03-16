@@ -1,6 +1,7 @@
 module Support
   class Cases::AttachmentsController < Cases::ApplicationController
     before_action :redirect_to_attachments_tab, unless: :turbo_frame_request?, only: :index
+    before_action :set_filter_form, only: :index
     before_action :set_email_attachments, only: :index
 
     def index; end
@@ -38,13 +39,26 @@ module Support
       params.require(:edit_attachment).permit(:custom_name, :description)
     end
 
+    def filter_form_params
+      params.fetch(:filter_form, {}).permit(:sent_received)
+    end
+
+    def set_filter_form
+      @filter_form = FilterAttachmentsForm.new({ sent_received: :received }.merge(filter_form_params))
+    end
+
     def set_email_attachments
-      @email_attachments = CaseFiles::UniqueAttachmentsForCase.new(case_id: current_case.id)
+      @email_attachments = CaseFiles::UniqueAttachmentsForCase.new(case_id: current_case.id, filter_results: @filter_form.sent_received)
         .paginate(page: params[:page], per_page: 20)
     end
 
     def redirect_to_attachments_tab
       redirect_to support_case_path(id: params[:case_id], anchor: "case-attachments")
     end
+  end
+
+  class FilterAttachmentsForm
+    include ActiveModel::Model
+    attr_accessor :sent_received
   end
 end

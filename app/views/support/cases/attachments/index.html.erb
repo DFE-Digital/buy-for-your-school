@@ -2,6 +2,8 @@
   <div id="case-attachments" class="govuk-tabs__panel <%= "govuk-tabs__panel--hidden" unless @show_tab.present? %>">
     <h2 class="govuk-heading-l">Email attachments</h2>
 
+    <%= render "support/cases/attachments/filter" %>
+
     <% if @email_attachments.any? %>
       <%= render "support/cases/attachments/table", attachments: @email_attachments, current_case: @current_case %>
       <%= render "components/pagination", records: @email_attachments, pagination_params: { anchor: "case-attachments" } %>

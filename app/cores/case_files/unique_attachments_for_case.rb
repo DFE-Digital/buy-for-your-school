@@ -2,8 +2,9 @@ module CaseFiles
   class UniqueAttachmentsForCase
     include Enumerable
 
-    def initialize(case_id:)
+    def initialize(case_id:, filter_results: "all")
       @case_id = case_id
+      @filter_results = filter_results
     end
 
     delegate :paginate, to: :query
@@ -16,11 +17,22 @@ module CaseFiles
 
   private
 
+    def filter_to_apply
+      case @filter_results
+      when "received"
+        { email: { folder: :inbox } }
+      when "sent"
+        { email: { folder: :sent } }
+      else
+        {}
+      end
+    end
+
     def query
       Support::EmailAttachment
         .unique_files
         .for_case(case_id: @case_id)
-        .where(hidden: false)
+        .where(hidden: false, **filter_to_apply)
         .order(is_inline: :asc, created_at: :desc)
     end
   end
