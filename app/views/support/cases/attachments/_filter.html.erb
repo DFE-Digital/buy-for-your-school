@@ -3,6 +3,6 @@
   <div class="spread-out">
     <% options = [[:received, "Received files"], [:sent, "Sent files"], [:all, "All files"]] %>
     <%= f.govuk_collection_radio_buttons :sent_received, options, :first, :last, inline: true, small: true, legend: { text: 'Filter results' } %>
-    <%= f.submit "Filter results", disable_with: 'Loading...', class: "govuk-button govuk-button--secondary" %>
+    <%= f.submit "Apply filter", disable_with: 'Loading...', class: "govuk-button govuk-button--secondary" %>
   </div>
 <% end %>
