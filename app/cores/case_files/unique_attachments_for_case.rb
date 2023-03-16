@@ -22,7 +22,7 @@ module CaseFiles
       when "received"
         { email: { folder: :inbox } }
       when "sent"
-        { email: { folder: :sent } }
+        { email: { folder: :sent_items } }
       else
         {}
       end
