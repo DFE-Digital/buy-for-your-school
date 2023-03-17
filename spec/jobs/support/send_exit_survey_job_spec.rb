@@ -27,7 +27,7 @@ describe Support::SendExitSurveyJob do
   end
 
   describe "#perform" do
-    let!(:kase) { create(:support_case, ref: "000001") }
+    let!(:kase) { create(:support_case, :resolved, ref: "000001") }
     let(:exit_survey_service) { double("exit_survey_service", call: nil) }
 
     before do
@@ -42,6 +42,14 @@ describe Support::SendExitSurveyJob do
 
     context "when the email has already been sent out" do
       let!(:kase) { create(:support_case, ref: "000001", exit_survey_sent: true) }
+
+      it "does not send the email again" do
+        expect(exit_survey_service).not_to have_received(:call)
+      end
+    end
+
+    context "when the case is not resolved" do
+      let!(:kase) { create(:support_case, :opened, ref: "000001", exit_survey_sent: false) }
 
       it "does not send the email again" do
         expect(exit_survey_service).not_to have_received(:call)

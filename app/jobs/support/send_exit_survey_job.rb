@@ -19,7 +19,7 @@ module Support
 
     def perform(case_ref)
       kase = Case.find_by_ref(case_ref)
-      return if kase.exit_survey_sent?
+      return if kase.exit_survey_sent? || !kase.resolved?
 
       survey = ExitSurveyResponse.create!(
         case: kase,
