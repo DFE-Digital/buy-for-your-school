@@ -530,6 +530,10 @@ GEM
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
+    sidekiq_alive (2.2.0)
+      rack (< 3)
+      sidekiq (>= 5, < 8)
+      webrick (>= 1, < 2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -678,6 +682,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq (~> 6.4)
   sidekiq-cron (~> 1.9)
+  sidekiq_alive (~> 2.2)
   simplecov
   spring
   spring-commands-rspec

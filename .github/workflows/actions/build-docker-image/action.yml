@@ -5,6 +5,9 @@ inputs:
   target:
     description: The docker stage to target
     required: true
+  tag_prefix:
+    description: A prefix for the docker tag
+    required: false
   ghcr_username:
     description: The username of the GHCR docker repo
     required: true
@@ -34,7 +37,7 @@ runs:
       id: prep
       shell: bash
       run: |
-        TAG=$(echo $GITHUB_SHA | head -c7)
+        TAG=${{ inputs.tag_prefix }}$(echo $GITHUB_SHA | head -c7)
         BASE_IMAGE=ghcr.io/dfe-digital/buy-for-your-school
 
         if [ "${{ inputs.target }}" == "test" ]; then
