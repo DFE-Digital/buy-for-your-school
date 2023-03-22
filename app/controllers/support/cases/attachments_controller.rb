@@ -45,7 +45,7 @@ module Support
     end
 
     def set_filter_form
-      @filter_form = FilterAttachmentsForm.new({ sent_received: :received }.merge(filter_form_params))
+      @filter_form = FilterAttachmentsForm.new({ sent_received: "received" }.merge(filter_form_params))
     end
 
     def set_email_attachments
