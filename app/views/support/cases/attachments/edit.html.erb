@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "case-attachments-frame" do %>
   <div id="case-attachments" class="govuk-tabs__panel <%= "govuk-tabs__panel--hidden" unless @show_tab.present? %>">
-    <%= link_to "Back to attachments list", support_case_attachments_path(@current_case, page: params[:redirect_page]), class: "govuk-back-link pull-up" %>
+    <%= link_to "Back to attachments list", @back_url, class: "govuk-back-link pull-up" %>
 
     <h2 class="govuk-heading-l">Edit email attachment</h2>
 
@@ -10,7 +10,7 @@
 
       <div class="govuk-button-group">
         <%= f.govuk_submit "Save" %>
-        <%= link_to "Exit without saving", support_case_attachments_path(@current_case, page: params[:redirect_page]), class: "govuk-link govuk-link--no-visited-state" %>
+        <%= link_to "Exit without saving", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
       </div>
     <% end %>
   </div>

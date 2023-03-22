@@ -9,6 +9,7 @@ module Support
     def edit
       @email_attachment = Support::EmailAttachment.find(params[:id])
       @edit_attachment_form = Support::EditCaseAttachableForm.from(@email_attachment)
+      @back_url = url_from(back_link_param) || support_case_attachments_path(@current_case, page: params[:redirect_page])
     end
 
     def update

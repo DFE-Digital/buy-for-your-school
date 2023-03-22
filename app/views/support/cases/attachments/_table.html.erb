@@ -23,7 +23,7 @@
         </td>
         <td class="govuk-table__cell">
           <div class="attachment-actions">
-            <%= link_to "Edit", edit_support_case_attachment_path(current_case, attachment, redirect_page: params[:page]), class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to "Edit", edit_support_case_attachment_path(current_case, attachment, redirect_page: params[:page], back_to: current_url_b64), class: "govuk-link govuk-link--no-visited-state" %>
             <%= link_to "Delete", support_case_attachment_path(current_case, attachment), data: { turbo_method: :delete, turbo_confirm: "Are you sure you wish to remove this file from view?" }, class: "govuk-link govuk-link--no-visited-state" %>
           </div>
         </td>
