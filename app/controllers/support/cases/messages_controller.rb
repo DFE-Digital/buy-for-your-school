@@ -6,7 +6,7 @@ module Support
       @reply_form = Messages::ReplyForm.from_validation(validation)
 
       if validation.success?
-        @reply_form.create_new_message(current_agent)
+        @reply_form.create_new_message(current_case, current_agent)
 
         redirect_to support_case_message_threads_path(case_id: current_case.id)
       else

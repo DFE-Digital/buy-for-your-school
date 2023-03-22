@@ -53,6 +53,13 @@ describe "Agent can reply to incoming emails", js: true do
           expect(page).to have_text "This is a test reply"
         end
       end
+
+      it "transitions the case to on-hold" do
+        fill_in_editor "Your message", with: "This is a test reply"
+        click_button "Send reply"
+
+        expect(page).to have_text "On Hold"
+      end
     end
   end
 

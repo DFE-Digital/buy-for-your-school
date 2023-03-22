@@ -12,7 +12,7 @@
   <td class="govuk-table__cell"><%= kase.category.title %></td>
 
   <td class="govuk-table__cell case-status">
-    <%= render "support/cases/status_badge", kase: %>
+    <%= render "support/cases/status_badge", state: kase.state %>
   </td>
 
   <% case tab %>

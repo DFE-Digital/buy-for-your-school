@@ -9,8 +9,11 @@
   <%= @current_case.organisation_name %>
 </h1>
 
-<div class="govuk-!-margin-bottom-7">
-  <%= render "support/cases/status_badge", kase: @current_case %>
+<%= turbo_stream_from "case_status_updates" %>
+
+<div class="flex-gap-5px govuk-!-margin-bottom-7">
+  <%= render "support/cases/status_badge", state: @current_case.state %>
+  <%= render "support/cases/action_flag", badge: true if @current_case.action_required? && !@current_case.closed? %>
 </div>
 
 <p class="govuk-body" id="case-ref">

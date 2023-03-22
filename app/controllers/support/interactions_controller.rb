@@ -18,8 +18,8 @@ module Support
     def create
       @interaction = InteractionPresenter.new(Interaction.new(interaction_params))
 
-      if @interaction.save
-        record_action(case_id: @interaction.case.id, action: "add_interaction", data: { event_type: @interaction.event_type })
+      if @interaction.valid?
+        create_interaction
 
         redirect_to determine_redirect_path(@interaction.event_type),
                     notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize
@@ -59,6 +59,16 @@ module Support
       else
         logged_contacts_support_case_message_threads_path(current_case)
       end
+    end
+
+    def create_interaction
+      interaction_type = @interaction.contact? ? ::Messages::LogContact : ::CaseManagement::CreateInteraction
+      interaction_type.new.call(
+        support_case_id: @interaction.case.id,
+        agent_id: @interaction.agent.id,
+        event_type: @interaction.event_type,
+        body: @interaction.body,
+      )
     end
   end
 end

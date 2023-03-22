@@ -14,7 +14,7 @@ module Support
       state :initial, initial: true
       state :opened, :resolved, :on_hold, :closed, :pipeline, :no_response
 
-      after_all_transitions :record_state_change
+      after_all_transitions :record_state_change, :broadcast_state_change
 
       event :resolve do
         transitions from: :initial, to: :resolved
@@ -29,6 +29,7 @@ module Support
 
       event :hold do
         transitions from: :opened, to: :on_hold
+        transitions from: :initial, to: :on_hold
       end
 
       event :close do
@@ -189,6 +190,10 @@ module Support
 
     def record_state_change
       RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
+    end
+
+    def broadcast_state_change
+      broadcast_replace_to "case_status_updates", partial: "support/cases/status_badge", locals: { state: aasm.to_state }, target: "case_status_badge"
     end
   end
 end

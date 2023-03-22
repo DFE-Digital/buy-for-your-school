@@ -75,6 +75,10 @@ describe "Agent can send new emails", js: true do
           expect(page).to have_text "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
         end
       end
+
+      it "transitions the case to on-hold" do
+        expect(page).to have_text "On Hold"
+      end
     end
   end
 end

@@ -7,7 +7,7 @@ module Support
       @reply_form = Messages::ReplyForm.from_validation(validation)
 
       if validation.success?
-        @reply_form.reply_to_email(@current_email, current_agent)
+        @reply_form.reply_to_email(@current_email, current_case, current_agent)
 
         redirect_to support_case_message_thread_path(id: @current_email.outlook_conversation_id, case_id: current_case.id)
       else

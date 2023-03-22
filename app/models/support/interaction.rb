@@ -79,5 +79,7 @@ module Support
 
       Support::Email.find(additional_data["email_id"])
     end
+
+    def contact? = event_type.in? %w[email_from_school email_to_school phone_call]
   end
 end
