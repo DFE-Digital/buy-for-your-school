@@ -22,16 +22,8 @@ describe "Assigning an agent to a case" do
   context "when the case is new" do
     let(:support_case) { create(:support_case, :initial) }
 
-    it "opens the case" do
-      expect { assign_agent! }.to change { support_case.reload.state }.to("opened")
-    end
-
-    it "records the opening as an activity log item" do
-      expect { assign_agent! }.to change { Support::ActivityLogItem.where(support_case_id: support_case.id, action: "open_case").count }.from(0).to(1)
-    end
-
-    it "records the opening as a case history log item" do
-      expect { assign_agent! }.to change { Support::Interaction.case_opened.where(case_id: support_case.id).count }.from(0).to(1)
+    it "does not open the case" do
+      expect { assign_agent! }.not_to(change { support_case.reload.state })
     end
   end
 end
