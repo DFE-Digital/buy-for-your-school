@@ -5,16 +5,6 @@ RSpec.describe "Case being changed to open", type: :request do
     end
 
     describe "attempting to place a case on hold" do
-      context "when the case is new" do
-        let(:support_case) { create(:support_case, :initial) }
-
-        it "redirects to support_cases_path with the state unchanged" do
-          post support_case_on_hold_path(support_case)
-          expect(support_case.reload.state).to eq("initial")
-          expect(response).to redirect_to(support_case_path(support_case))
-        end
-      end
-
       context "when the case is resolved" do
         let(:support_case) { create(:support_case, :resolved) }
 

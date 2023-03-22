@@ -1,7 +1,7 @@
 module Support
   module Cases
     class MessageThreadsController < Cases::ApplicationController
-      before_action :redirect_to_messages_tab, unless: :turbo_frame_request?, only: :show
+      before_action :redirect_to_messages_tab, unless: :turbo_frame_request?, only: %i[show templated_messages logged_contacts]
       before_action :current_thread, only: %i[show]
       before_action :reply_form, only: %i[index show new]
       before_action :back_url, only: %i[index show new templated_messages logged_contacts]

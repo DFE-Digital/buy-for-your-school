@@ -1,5 +1,7 @@
 RSpec.describe Support::Interaction, type: :model do
-  subject(:interaction) { create(:support_interaction) }
+  subject(:interaction) { create(:support_interaction, trait) }
+
+  let(:trait) { :note }
 
   it { is_expected.to belong_to :case }
 
@@ -65,6 +67,32 @@ RSpec.describe Support::Interaction, type: :model do
     it "returns email and phone interactions with no additional data" do
       expect(described_class.logged_contacts.size).to eq 3
       expect(described_class.logged_contacts.map(&:additional_data)).to all(eq({}))
+    end
+  end
+
+  describe "#contact?" do
+    context "when the event type is email_from_school" do
+      let(:trait) { :email_from_school }
+
+      it "returns true" do
+        expect(interaction.contact?).to eq(true)
+      end
+    end
+
+    context "when the event type is email_to_school" do
+      let(:trait) { :email_to_school }
+
+      it "returns true" do
+        expect(interaction.contact?).to eq(true)
+      end
+    end
+
+    context "when the event type is phone_call" do
+      let(:trait) { :phone_call }
+
+      it "returns true" do
+        expect(interaction.contact?).to eq(true)
+      end
     end
   end
 end

@@ -10,19 +10,19 @@ module Support
     option :subject, Types::Params::String, optional: true
     option :attachments, optional: true
 
-    def reply_to_email(email, agent)
-      reply = Support::Messages::Outlook::SendReplyToEmail.new(
+    def reply_to_email(email, kase, agent)
+      reply_options = {
         reply_to_email: email,
         reply_text: body,
         sender: agent,
         file_attachments:,
-      )
+      }
 
-      reply.call
+      ::Messages::ReplyToMessage.new.call(support_case_id: kase.id, reply_options:)
     end
 
-    def create_new_message(agent)
-      message = Support::Messages::Outlook::SendNewMessage.new(
+    def create_new_message(kase, agent)
+      message_options = {
         to_recipients:,
         cc_recipients:,
         bcc_recipients:,
@@ -30,9 +30,9 @@ module Support
         sender: agent,
         file_attachments:,
         subject:,
-      )
+      }
 
-      message.call
+      ::Messages::SendNewMessage.new.call(support_case_id: kase.id, message_options:)
     end
 
   private

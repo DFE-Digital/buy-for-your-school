@@ -33,5 +33,12 @@ module CaseHistory
         },
       )
     end
+
+    def case_held_by_system(payload)
+      Support::Interaction.state_change.create!(
+        body: "Case placed on hold due to #{payload[:reason]}",
+        case_id: payload[:support_case_id],
+      )
+    end
   end
 end
