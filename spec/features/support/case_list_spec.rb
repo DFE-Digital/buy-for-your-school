@@ -23,9 +23,9 @@ RSpec.feature "Case management dashboard" do
       visit "/support/cases"
     end
 
-    it "displays the status 'Action'" do
+    it "displays the action flag" do
       within "#all-cases .case-row", text: "009999" do
-        expect(page).to have_css(".case-status", text: "Action")
+        expect(page).to have_css(".case-action-required-icon")
       end
     end
   end
@@ -57,13 +57,14 @@ RSpec.feature "Case management dashboard" do
     it "shows correct table headers" do
       within "#my-cases" do
         table_headers = all(".govuk-table__header")
-        expect(table_headers[0]).to have_text "Case"
-        expect(table_headers[1]).to have_text "Organisation"
-        expect(table_headers[2]).to have_text "Sub-category"
-        expect(table_headers[3]).to have_text "Status"
-        expect(table_headers[4]).to have_text "Assigned"
-        expect(table_headers[5]).to have_text "Updated"
-        expect(table_headers[6]).to have_text ""
+        expect(table_headers[0]).to have_text ""
+        expect(table_headers[1]).to have_text "Case"
+        expect(table_headers[2]).to have_text "Organisation"
+        expect(table_headers[3]).to have_text "Sub-category"
+        expect(table_headers[4]).to have_text "Status"
+        expect(table_headers[5]).to have_text "Assigned"
+        expect(table_headers[6]).to have_text "Updated"
+        expect(table_headers[7]).to have_text ""
       end
     end
 
@@ -87,11 +88,12 @@ RSpec.feature "Case management dashboard" do
     it "shows correct table headers" do
       within "#new-cases" do
         table_headers = all(".govuk-table__header")
-        expect(table_headers[0]).to have_text "Case"
-        expect(table_headers[1]).to have_text "Organisation"
-        expect(table_headers[2]).to have_text "Sub-category"
-        expect(table_headers[3]).to have_text "Status"
-        expect(table_headers[4]).to have_text "Received"
+        expect(table_headers[0]).to have_text ""
+        expect(table_headers[1]).to have_text "Case"
+        expect(table_headers[2]).to have_text "Organisation"
+        expect(table_headers[3]).to have_text "Sub-category"
+        expect(table_headers[4]).to have_text "Status"
+        expect(table_headers[5]).to have_text "Received"
       end
     end
   end
@@ -128,12 +130,13 @@ RSpec.feature "Case management dashboard" do
     it "shows correct table headers" do
       within "#all-cases" do
         table_headers = all(".govuk-table__header")
-        expect(table_headers[0]).to have_text "Case"
-        expect(table_headers[1]).to have_text "Organisation"
-        expect(table_headers[2]).to have_text "Sub-category"
-        expect(table_headers[3]).to have_text "Status"
-        expect(table_headers[4]).to have_text "Assigned to"
-        expect(table_headers[5]).to have_text "Last updated"
+        expect(table_headers[0]).to have_text ""
+        expect(table_headers[1]).to have_text "Case"
+        expect(table_headers[2]).to have_text "Organisation"
+        expect(table_headers[3]).to have_text "Sub-category"
+        expect(table_headers[4]).to have_text "Status"
+        expect(table_headers[5]).to have_text "Assigned to"
+        expect(table_headers[6]).to have_text "Last updated"
       end
     end
   end

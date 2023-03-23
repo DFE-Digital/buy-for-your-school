@@ -2,6 +2,6 @@
   <%= render "support/cases/message_threads/message", message: %>
 <% end %>
 
-<%= turbo_stream.replace("case_status_badge") do %>
-  <%= render "support/cases/status_badge", kase: %>
+<%= turbo_stream.replace("action-flag") do %>
+  <%= render "support/cases/action_flag", badge: true if kase.action_required? && !kase.closed? %>
 <% end %>

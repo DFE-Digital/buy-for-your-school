@@ -1,0 +1,11 @@
+<% badge = defined?(badge) ? badge : false %>
+
+<div id="action-flag">
+  <% if badge == true %>
+    <strong class="govuk-tag govuk-tag--red case-status-badge">
+      <%= I18n.t("support.case.label.state.state_action_required") %>
+    </strong>
+  <% else %>
+    <span class="case-action-required-icon" title="Unread email" role="img"></span>
+  <% end %>
+</div>
