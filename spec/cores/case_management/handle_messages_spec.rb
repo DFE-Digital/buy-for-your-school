@@ -32,7 +32,7 @@ describe CaseManagement::HandleMessages do
   end
 
   describe "#contact_to_school_made" do
-    context "when the case can be put on hold" do
+    context "when the case is initial and can be put on hold" do
       it "puts the case on hold" do
         payload = { support_case_id: support_case.id, contact_type: "logged phone call" }
         expect { handler.contact_to_school_made(payload) }.to change { support_case.reload.state }.from("initial").to("on_hold")

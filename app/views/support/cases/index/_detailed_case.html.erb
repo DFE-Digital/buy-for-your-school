@@ -1,5 +1,9 @@
 <tr class="govuk-table__row case-row tower-top-row">
   <td class="govuk-table__cell">
+    <%= render "support/cases/action_flag" if kase.action_required? && !kase.closed? %>
+  </td>
+
+  <td class="govuk-table__cell">
     <%= link_to kase.ref, support_case_path(kase.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", "target" => "_top" %>
   </td>
 
@@ -31,6 +35,7 @@
 </tr>
 
 <tr class="govuk-table__row tower-bottom-row">
+  <td class="govuk-table__cell" aria-hidden="true"></td>
   <td class="govuk-table__cell tower-note" colspan="7">
     <% if kase.last_case_note.present? %>
       <span><%= simple_format("Note: #{kase.last_case_note_date} #{kase.last_case_note_author&.initials} - " + kase.last_case_note_body) %></span>
