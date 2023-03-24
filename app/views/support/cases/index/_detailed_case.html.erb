@@ -33,7 +33,7 @@
 <tr class="govuk-table__row tower-bottom-row">
   <td class="govuk-table__cell tower-note" colspan="7">
     <% if kase.last_case_note.present? %>
-      <span><%= simple_format("Note: #{kase.last_case_note_date} - " + kase.last_case_note_body) %></span>
+      <span><%= simple_format("Note: #{kase.last_case_note_date} #{kase.last_case_note_author&.initials} - " + kase.last_case_note_body) %></span>
     <% end %>
   </td>
 </tr>

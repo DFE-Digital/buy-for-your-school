@@ -47,4 +47,12 @@ RSpec.describe Support::Agent, type: :model do
       expect(agents[1].last_name).to eq "Gelon"
     end
   end
+
+  describe "#initials" do
+    subject(:agent) { create(:support_agent, first_name: "Sidney", last_name: "Prescott") }
+
+    it "returns the agent's initials" do
+      expect(agent.initials).to eq("SP")
+    end
+  end
 end

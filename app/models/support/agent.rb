@@ -26,5 +26,7 @@ module Support
     }
 
     def full_name = "#{first_name} #{last_name}"
+
+    def initials = "#{first_name.first}#{last_name.first}"
   end
 end

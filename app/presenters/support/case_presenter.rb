@@ -188,6 +188,10 @@ module Support
       last_case_note.created_at.strftime("%d %b %y")
     end
 
+    def last_case_note_author
+      last_case_note.agent
+    end
+
     def value
       return I18n.t("support.case.label.value.unspecified") unless super
 
