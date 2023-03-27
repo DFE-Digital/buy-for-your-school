@@ -29,8 +29,8 @@ module DateHelper
     orig_from_time = from_time
     orig_to_time   = to_time
 
-    from_time = normalize_distance_of_time_argument_to_time(from_time).in_time_zone
-    to_time = normalize_distance_of_time_argument_to_time(to_time).in_time_zone
+    from_time = normalize_distance_of_time_argument_to_time(from_time)
+    to_time = normalize_distance_of_time_argument_to_time(to_time)
     from_time, to_time = to_time, from_time if from_time > to_time
     distance_in_minutes = ((to_time - from_time) / 60.0).round
     distance_in_seconds = (to_time - from_time).round
@@ -65,14 +65,14 @@ module DateHelper
   end
 
   def relative_date_format(date)
-    date = normalize_distance_of_time_argument_to_time(date).in_time_zone
+    date = normalize_distance_of_time_argument_to_time(date)
     return short_date_format(date, show_time: false) if date < 1.year.ago
 
     "#{simple_distance_of_time_in_words(date, Time.zone.now)} ago"
   end
 
   def short_date_format(date, show_time: true, always_show_year: false)
-    date = normalize_distance_of_time_argument_to_time(date).in_time_zone
+    date = normalize_distance_of_time_argument_to_time(date)
     year_directive = always_show_year || date.year != Time.zone.now.year ? " %Y" : ""
     time_directive = show_time ? " %H:%M" : ""
 
