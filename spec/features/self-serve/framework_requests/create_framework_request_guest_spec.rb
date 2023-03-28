@@ -75,7 +75,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
           expect(page).to have_text "This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. Search for an academy trust or federation instead."
           expect(page).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
-          expect(page).to have_text "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+          expect(page).to have_text "Private, voluntary-aided and independent early years providers, and institutions which only have pupils aged 16 years and above, are not eligible for this service."
 
           expect(page).to have_link "Search for an academy trust or federation instead."
         end
@@ -262,7 +262,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
           expect(find("span.govuk-details__summary-text")).to have_text "Can't find it?"
           expect(page).to have_text "This search lists academy trusts and federations. Search for a single school instead."
           expect(page).to have_text "This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old."
-          expect(page).to have_text "Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service."
+          expect(page).to have_text "Private, voluntary-aided and independent early years providers, and institutions which only have pupils aged 16 years and above, are not eligible for this service."
 
           expect(page).to have_link "Search for a single school instead."
         end

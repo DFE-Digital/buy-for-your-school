@@ -1,7 +1,7 @@
 <%= content_for :title, I18n.t("faf.search_for_a_group.heading") %>
 
 <span class="govuk-caption-l">
-  <%= I18n.t("faf.search_for_a_group.caption") %>
+  <%= I18n.t("faf.search_for_org.caption") %>
 </span>
 <h1 class="govuk-heading-l">
   <%= I18n.t("faf.search_for_a_group.heading") %>
@@ -21,13 +21,13 @@
 <details class="govuk-details" data-module="govuk-details">
   <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
-      <%= I18n.t("faf.search_for_a_group.details.summary") %>
+      <%= I18n.t("faf.search_for_org.details.summary") %>
     </span>
   </summary>
 
   <% text = I18n.t("faf.search_for_a_group.details.search_for_a_school_link") %>
 
-  <% link =
+  <% school_search_link =
       if @edit_route
         link_to text, edit_framework_request_search_for_organisation_path(@framework_request, form.object.find_other_type), class: "govuk-link"
       else
@@ -35,9 +35,17 @@
       end
   %>
 
-  <% I18n.t("faf.search_for_a_group.details.body", search_for_a_school_link: link).each do |body| %>
-    <div class="govuk-details__text">
-      <%= body.html_safe %>
-    </div>
-  <% end %>
+  <% gias_link = link_to I18n.t("faf.search_for_org.details.gias_link"), "https://www.get-information-schools.service.gov.uk/", class: "govuk-link" %>
+
+  <div class="govuk-details__text"><%= I18n.t("faf.search_for_a_group.details.body.p1", search_for_a_school_link: school_search_link).html_safe %></div>
+  <div class="govuk-details__text">
+    <p class="govuk-body"><%= I18n.t("faf.search_for_org.details.body.p2.body", gias_link: gias_link).html_safe %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% I18n.t("faf.search_for_a_group.details.body.p2.list").each do |item| %>
+        <li><%= item %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="govuk-details__text"><%= I18n.t("faf.search_for_org.details.body.p3") %></div>
+  <div class="govuk-details__text"><%= I18n.t("faf.search_for_org.details.body.p4") %></div>
 </details>
