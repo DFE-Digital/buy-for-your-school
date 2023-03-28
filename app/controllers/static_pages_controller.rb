@@ -2,7 +2,6 @@ class StaticPagesController < ApplicationController
   skip_before_action :authenticate_user!
 
   STATIC_PAGES = %w[
-    energy-bill-relief-scheme
     rising-energy-prices
   ].freeze
 
