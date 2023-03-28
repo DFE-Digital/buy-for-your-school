@@ -442,25 +442,35 @@ en:
           hint: A local authority maintained school or an academy in a single or multi-academy trust
           label: A single school
     search_for_a_group:
-      caption: About your school
       details:
         body:
-        - This search lists academy trusts and federations. %{search_for_a_school_link}
-        - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
-        - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
+          p1: This search lists academy trusts and federations. %{search_for_a_school_link}
+          p2:
+            list:
+            - you want to find your academy trust or federation’s UID or UKPRN to help with the search
+            - you cannot find your academy trust or federation in the search and want to check that the DfE has the correct details
         search_for_a_school_link: Search for a single school instead.
-        summary: Can't find it?
       heading: Search for an academy trust or federation
       hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
-    search_for_a_school:
+    search_for_org:
       caption: About your school
       details:
         body:
-        - This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}
-        - This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
-        - Private, voluntary-aided and independent early years providers and institutions with pupils aged 16 years and above are not eligible for this service.
-        search_for_a_group_link: Search for an academy trust or federation instead.
+          p2:
+            body: "You can use the %{gias_link} service if:"
+          p3: This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          p4: Private, voluntary-aided and independent early years providers, and institutions which only have pupils aged 16 years and above, are not eligible for this service.
         summary: Can't find it?
+        gias_link: Get information about schools
+    search_for_a_school:
+      details:
+        body:
+          p1: This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}
+          p2:
+            list:
+            - you want to find your school’s URN to help with the search
+            - you cannot find your school in the search and want to check that the DfE has the correct details
+        search_for_a_group_link: Search for an academy trust or federation instead.
       heading: Search for your school
       hint: Enter the name, postcode or unique reference number (URN) of your school
     start_page:
