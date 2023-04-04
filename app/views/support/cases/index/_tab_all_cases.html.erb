@@ -14,6 +14,6 @@
               clear_url: support_cases_path(anchor: "all-cases"),
               tab: "all-cases" %>
 
-  <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@cases), tab: :all_cases %>
+  <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@cases), tab: :all_cases, sort_scope: :filter_all_cases_form, sort_form: @all_cases_filter_form %>
   <%= render "components/pagination", records: @cases, page_param_name: 'cases_page', pagination_params: { anchor: "all-cases" } %>
 </div>

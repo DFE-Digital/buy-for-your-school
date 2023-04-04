@@ -1,5 +1,7 @@
 RSpec.describe Support::CaseFilterForm, type: :model do
-  subject(:form) { described_class.new }
+  subject(:form) { described_class.new(**form_fields) }
+
+  let(:form_fields) { {} }
 
   describe "#results" do
     let!(:closed_case) { create(:support_case, :closed) }
@@ -63,6 +65,32 @@ RSpec.describe Support::CaseFilterForm, type: :model do
     it "returns only categories that have cases attached" do
       expect(form.categories.count).to be(1)
       expect(form.categories.first.title).to eql("Fixed Category")
+    end
+  end
+
+  describe "#filters_selected?" do
+    context "when only default fields are set" do
+      let(:form_fields) { { stage: "need", defaults: { stage: "need" } } }
+
+      it "returns false" do
+        expect(form.filters_selected?).to eq false
+      end
+    end
+
+    context "when no fields are set" do
+      let(:form_fields) { {} }
+
+      it "returns false" do
+        expect(form.filters_selected?).to eq false
+      end
+    end
+
+    context "when more than default fields are set" do
+      let(:form_fields) { { level: "L1", stage: "need", defaults: { stage: "need" } } }
+
+      it "returns true" do
+        expect(form.filters_selected?).to eq true
+      end
     end
   end
 end

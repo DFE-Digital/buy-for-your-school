@@ -4,33 +4,18 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="col" aria-hidden="true"></th>
-        <th class="govuk-table__header" scope="col">
-          <%= I18n.t("support.case.label.case") %>
-        </th>
-        <th class="govuk-table__header" scope="col">
-          <%= I18n.t("support.case.label.organisation") %>
-        </th>
-        <th class="govuk-table__header" scope="col">
-          <%= I18n.t("support.case.label.sub_category") %>
-        </th>
-        <th class="govuk-table__header" scope="col">
-          <%= I18n.t("support.case.label.status") %>
-        </th>
+        <%= sortable_th :action, I18n.t("support.case.label.flag"), sort_scope, sort_form, sort_order: :desc_asc %>
+        <%= sortable_th :ref, I18n.t("support.case.label.case"), sort_scope, sort_form %>
+        <%= sortable_th :organisation_name, I18n.t("support.case.label.organisation"), sort_scope, sort_form %>
+        <%= sortable_th :subcategory, I18n.t("support.case.label.category"), sort_scope, sort_form, th_attributes: { title: I18n.t("support.case.label.sub_category") } %>
+        <%= sortable_th :state, I18n.t("support.case.label.status"), sort_scope, sort_form %>
 
         <% case tab %>
         <% when :all_cases %>
-          <th class="govuk-table__header" scope="col">
-            <%= I18n.t("support.case.label.assigned_to") %>
-          </th>
-
-          <th class="govuk-table__header" scope="col">
-            <%= I18n.t("support.case.label.last_updated") %>
-          </th>
+          <%= sortable_th :agent, I18n.t("support.case.label.assigned"), sort_scope, sort_form %>
+          <%= sortable_th :last_updated, I18n.t("support.case.label.updated"), sort_scope, sort_form, sort_order: :desc_asc %>
         <% when :new_cases %>
-          <th class="govuk-table__header" scope="col">
-            <%= I18n.t("support.case.label.received") %>
-          </th>
+          <%= sortable_th :received, I18n.t("support.case.label.received"), sort_scope, sort_form, sort_order: :desc_asc %>
         <% end %>
       </tr>
     </thead>

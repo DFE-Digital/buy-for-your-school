@@ -111,12 +111,14 @@ module Support
     end
 
     def filter_forms_params(scope)
-      params.fetch(scope, {}).permit(:state, :agent, :tower, :category, :stage, :level, :user_submitted).to_h.symbolize_keys
+      params.fetch(scope, {}).permit(:state, :agent, :tower, :category, :stage, :level, :user_submitted, sort: sort_params).to_h.symbolize_keys
     end
+
+    def sort_params = %i[ref organisation_name subcategory state agent last_updated received action]
 
     def filter_forms
       # allow my-cases to conditionally show closed / resolved cases if not by default
-      my_cases_form_params = { state: "live" }.merge(filter_forms_params(:filter_my_cases_form))
+      my_cases_form_params = { defaults: { state: "live" } }.merge(filter_forms_params(:filter_my_cases_form))
         .merge(base_cases: Case.by_agent(current_agent.id))
 
       all_cases_form_params = filter_forms_params(:filter_all_cases_form)

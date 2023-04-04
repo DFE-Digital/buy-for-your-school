@@ -3,7 +3,7 @@
 <% tab ||= 'all-cases' %>
 <% hide_towers = defined?(hide_towers) ? hide_towers : false %>
 
-<%= form_with model: form, scope: scope, url: filter_url, method: :get, class: "filter-case-form" do |f| %>
+<%= form_with id: scope, model: form, scope: scope, url: filter_url, method: :get, class: "filter-case-form" do |f| %>
   <h2 class="govuk-heading-m">
     <%= I18n.t("support.case.filter.filter_results") %>
   </h2>

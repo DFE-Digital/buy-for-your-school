@@ -738,6 +738,7 @@ en:
             note: Note
             type: Type
         case_value: Case value
+        category: Category
         change_owner: Change case owner
         close: Close case
         contact_email: Contact email
@@ -746,6 +747,7 @@ en:
         contact_phone: Contact phone
         create: Create a new case
         date_received: Date received
+        flag: Flag
         last_updated: Last updated
         updated: Updated
         received: Received

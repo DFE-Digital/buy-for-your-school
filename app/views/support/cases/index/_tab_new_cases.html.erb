@@ -14,6 +14,6 @@
               clear_url: support_cases_path(anchor: "new-cases"),
               tab: "new-cases" %>
 
-  <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@new_cases), tab: :new_cases %>
+  <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@new_cases), tab: :new_cases, sort_scope: :filter_new_cases_form, sort_form: @new_cases_filter_form %>
   <%= render "components/pagination", records: @new_cases, page_param_name: 'new_cases_page', pagination_params: { anchor: "new-cases" } %>
 </div>

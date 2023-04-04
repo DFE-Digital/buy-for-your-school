@@ -2,7 +2,7 @@
 
 module Support
   class CaseFilterForm
-    extend Dry::Initializer
+    extend Dry::Initializer[undefined: false]
     include Concerns::ValidatableForm
 
     option :state, optional: true
@@ -13,21 +13,34 @@ module Support
     option :level, optional: true
     option :has_org, Types::Params::Bool, optional: true
     option :user_submitted, optional: true, default: proc { false }
+    option :sort, ->(value) { value.compact_blank! }, optional: true, default: proc { { "action" => "descending" } }
+    option :defaults, optional: true, default: proc { {} }
 
     # Potentially pre-scope results with as scope / query
     option :base_cases, optional: true, default: proc { Case.where(nil) }
+
+    def initialize(**args)
+      super(**args)
+      set_defaults
+    end
 
     def results
       # Default to not showing closed cases but allow explicit selection of it
       @base_cases = @base_cases.not_closed unless state == "closed"
 
-      Support::FilterCases.new(base_cases:)
-        .filter(state:, category:, agent:, tower:, stage:, level:, has_org:)
-        .priority_ordering
+      filtered_cases = Support::FilterCases.new(base_cases:).filter(state:, category:, agent:, tower:, stage:, level:, has_org:)
+      Support::SortCases.new(filtered_cases).sort(sort)
     end
 
     def user_submitted?
       user_submitted != false
+    end
+
+    def filters_selected?
+      filter_fields = self.class.dry_initializer.attributes(self).except(:base_cases, :messages, :sort, :user_submitted, :defaults).compact_blank
+      return false if filter_fields.blank?
+
+      filter_fields != defaults.symbolize_keys
     end
 
     def case_states
@@ -59,5 +72,9 @@ module Support
       @levels ||= TowerCase.support_levels.keys
         .map { |key| OpenStruct.new(title: I18n.t("support.case_statistics.support_levels.#{key}"), id: key) }
     end
+
+  private
+
+    def set_defaults = defaults.each { |k, v| instance_variable_set("@#{k}", v) unless instance_variable_get("@#{k}") }
   end
 end
