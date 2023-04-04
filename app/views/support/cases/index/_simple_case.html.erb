@@ -1,5 +1,5 @@
 <tr class="govuk-table__row case-row">
-  <td class="govuk-table__cell">
+  <td class="govuk-table__cell govuk-!-text-align-centre">
     <%= render "support/cases/action_flag" if kase.action_required? && !kase.closed? %>
   </td>
   <td class="govuk-table__cell">
@@ -7,7 +7,7 @@
   </td>
 
   <td class="govuk-table__cell">
-    <div class="ellipsis-overflow col-350px">
+    <div class="ellipsis-overflow col-300px">
       <%= link_to kase.organisation_name, support_case_path(kase.id, back_to: current_url_b64(tab)), class: "govuk-link--no-visited-state", title: kase.organisation_name %>
     </div>
   </td>

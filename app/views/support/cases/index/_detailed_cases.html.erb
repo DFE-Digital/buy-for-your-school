@@ -4,13 +4,13 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="col" aria-hidden="true"></th>
-        <th class="govuk-table__header col-ref" scope="col"><%= I18n.t("support.case.label.case") %></th>
-        <th class="govuk-table__header col-organisation" scope="col"><%= I18n.t("support.case.label.organisation") %></th>
-        <th class="govuk-table__header col-sub-category" scope="col"><%= I18n.t("support.case.label.sub_category") %></th>
-        <th class="govuk-table__header col-status" scope="col"><%= I18n.t("support.case.label.status") %></th>
-        <th class="govuk-table__header col-assigned" scope="col"><%= I18n.t("support.case.label.assigned") %></th>
-        <th class="govuk-table__header col-updated" scope="col"><%= I18n.t("support.case.label.updated") %></th>
+        <%= sortable_th :action, I18n.t("support.case.label.flag"), sort_scope, sort_form, sort_order: :desc_asc %>
+        <%= sortable_th :ref, I18n.t("support.case.label.case"), sort_scope, sort_form, th_classes: "col-ref" %>
+        <%= sortable_th :organisation_name, I18n.t("support.case.label.organisation"), sort_scope, sort_form, th_classes: "col-organisation" %>
+        <%= sortable_th :subcategory, I18n.t("support.case.label.category"), sort_scope, sort_form, th_classes: "col-sub-category", th_attributes: { title: I18n.t("support.case.label.sub_category") } %>
+        <%= sortable_th :state, I18n.t("support.case.label.status"), sort_scope, sort_form, th_classes: "col-status" %>
+        <%= sortable_th :agent, I18n.t("support.case.label.assigned"), sort_scope, sort_form, th_classes: "col-assigned" %>
+        <%= sortable_th :last_updated, I18n.t("support.case.label.updated"), sort_scope, sort_form, sort_order: :desc_asc, th_classes: "col-updated" %>
         <th class="govuk-table__header col-actions" scope="col" aria-hidden="true"></th>
       </tr>
     </thead>

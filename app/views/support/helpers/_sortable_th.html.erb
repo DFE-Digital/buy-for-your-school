@@ -1,0 +1,11 @@
+<th class="<%= "govuk-table__header #{th_classes}" %>"
+    scope="col"
+    aria-sort=<%= sort.presence || "none" %>
+    data-component="sortable-th"
+    data-sort-order=<%= sort_order %>
+    <%= tag.attributes **th_attributes if th_attributes.present? %>>
+  <%= fields_for "#{scope}[sort]", sort do |f|%>
+    <%= f.hidden_field(param, form: scope, value: f.object) %>
+    <%= f.button(title, type: "submit", name: nil, form: scope) %>
+  <% end %>
+</th>

@@ -73,18 +73,66 @@ module Support
     scope :by_level, ->(support_level) { where(support_level:) }
     scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
 
-    scope :priority_ordering, lambda {
+    scope :order_by_received, ->(sort_direction = "ASC") { order("created_at #{sort_direction}") }
+    scope :order_by_ref, ->(sort_direction = "ASC") { order("ref #{sort_direction}") }
+    scope :order_by_subcategory, ->(sort_direction = "ASC") { includes(:category).order("support_categories.title #{sort_direction}, support_cases.ref DESC") }
+    scope :order_by_agent, ->(sort_direction = "ASC") { includes(:agent).order("support_agents.first_name #{sort_direction}, support_agents.last_name #{sort_direction}, support_cases.ref DESC") }
+    scope :order_by_organisation_name, lambda { |sort_direction = "ASC"|
+      joins(
+        Arel.sql(
+          <<-SQL,
+            LEFT JOIN support_organisations ON support_cases.organisation_id = support_organisations.id AND support_cases.organisation_type = \'#{Support::Organisation.name}\'
+            LEFT JOIN support_establishment_groups ON support_cases.organisation_id = support_establishment_groups.id AND support_cases.organisation_type = \'#{Support::EstablishmentGroup.name}\'
+          SQL
+        ),
+      ).order(
+        Arel.sql(
+          <<-SQL,
+            COALESCE(support_organisations.name, support_establishment_groups.name) #{sort_direction}, support_cases.ref DESC
+          SQL
+        ),
+      )
+    }
+    scope :order_by_last_updated, lambda { |sort_direction = "ASC"|
+      select(
+        Arel.sql(
+          <<-SQL,
+            support_cases.*,
+            COALESCE(
+              (SELECT MAX(created_at) FROM support_interactions WHERE case_id = support_cases.id),
+              support_cases.updated_at
+            ) AS last_updated_at
+          SQL
+        ),
+      ).order("last_updated_at #{sort_direction}")
+    }
+    scope :order_by_action, lambda { |sort_direction = "DESC"|
       order(
         Arel.sql(
           <<-SQL,
+            support_cases.action_required #{sort_direction},
             CASE
-              WHEN support_cases.action_required = true THEN 20
               WHEN support_cases.state = 0 THEN 10
               WHEN support_cases.state = 1 THEN 9
               WHEN support_cases.state = 3 THEN 8
               WHEN support_cases.state = 2 THEN 7
               ELSE 1
             END DESC, support_cases.ref DESC
+          SQL
+        ),
+      )
+    }
+    scope :order_by_state, lambda { |sort_direction = "DESC"|
+      order(
+        Arel.sql(
+          <<-SQL,
+            CASE
+              WHEN support_cases.state = 0 THEN 10
+              WHEN support_cases.state = 1 THEN 9
+              WHEN support_cases.state = 3 THEN 8
+              WHEN support_cases.state = 2 THEN 7
+              ELSE 1
+            END #{sort_direction}, support_cases.ref DESC
           SQL
         ),
       )

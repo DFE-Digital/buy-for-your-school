@@ -14,7 +14,7 @@
               clear_url: support_cases_path(anchor: "my-cases"),
               tab: "my-cases" %>
 
-  <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@my_cases) %>
+  <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@my_cases), sort_scope: :filter_my_cases_form, sort_form: @my_cases_filter_form %>
   <%= render "components/pagination", records: @my_cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
 
   <br /><%= link_to I18n.t("support.case.label.view_resolved_cases"), support_cases_path(anchor: "my-cases", filter_my_cases_form: { state: "resolved" }), class: "govuk-link govuk-link--no-visited-state" %>
