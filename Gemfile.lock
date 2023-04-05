@@ -74,8 +74,8 @@ GEM
     ast (2.4.2)
     attr_required (1.0.1)
     aws-eventstream (1.2.0)
-    aws-partitions (1.727.0)
-    aws-sdk-core (3.170.0)
+    aws-partitions (1.741.0)
+    aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
@@ -83,7 +83,7 @@ GEM
     aws-sdk-kms (1.63.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.119.1)
+    aws-sdk-s3 (1.120.0)
       aws-sdk-core (~> 3, >= 3.165.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
@@ -298,7 +298,7 @@ GEM
     libv8-node (16.10.0.0-x86_64-darwin)
     libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.4.0)
-    listen (3.7.1)
+    listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loaf (0.10.0)
@@ -514,7 +514,7 @@ GEM
     scenic (1.7.0)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
-    selenium-webdriver (4.8.1)
+    selenium-webdriver (4.8.6)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -594,7 +594,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (3.3.1)
-    wisper (2.0.0)
+    wisper (2.0.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.28)
@@ -649,7 +649,7 @@ DEPENDENCIES
   jwt
   knapsack
   liquid
-  listen (>= 3.0.5, < 3.8)
+  listen (>= 3.8, < 3.9)
   loaf
   mini_racer
   mock_redis
@@ -666,7 +666,7 @@ DEPENDENCIES
   rails (~> 7.0.3)
   rails_layout
   rails_semantic_logger
-  redis (~> 4.5)
+  redis (~> 4.8)
   redis-namespace
   redis-rails
   rollbar
@@ -690,7 +690,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webmock
   will_paginate (~> 3.3.0)
-  wisper (= 2.0.0)
+  wisper (= 2.0.1)
   yard-junk
 
 RUBY VERSION
