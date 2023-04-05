@@ -37,7 +37,7 @@ gem "pg_search"
 gem "puma", "~> 6"
 gem "rails", "~> 7.0.3"
 gem "rails_semantic_logger"
-gem "redis", "~> 4.5"
+gem "redis", "~> 4.8"
 gem "redis-namespace"
 gem "redis-rails"
 gem "rollbar"
@@ -51,7 +51,7 @@ gem "thor"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "will_paginate", "~> 3.3.0"
-gem "wisper", "2.0.0"
+gem "wisper", "2.0.1"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -68,7 +68,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "foreman"
-  gem "listen", ">= 3.0.5", "< 3.8"
+  gem "listen", ">= 3.8", "< 3.9"
   gem "rails_layout"
   gem "spring"
   gem "spring-commands-rspec"
