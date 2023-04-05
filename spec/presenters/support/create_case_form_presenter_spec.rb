@@ -8,6 +8,7 @@ RSpec.describe Support::CreateCaseFormPresenter do
 
   let(:category) { create(:support_category, title: "Catering") }
   let!(:organisation) { create(:support_organisation, name: "Hillside School", urn: "000001") }
+  let(:procurement_amount) { nil }
 
   let(:form_hash) do
     {
@@ -20,6 +21,7 @@ RSpec.describe Support::CreateCaseFormPresenter do
       organisation_id: organisation.id,
       organisation_name: organisation.name,
       organisation_type: organisation.class.to_s,
+      procurement_amount:,
     }
   end
 
@@ -64,6 +66,24 @@ RSpec.describe Support::CreateCaseFormPresenter do
 
     it "return schools name" do
       expect(presenter.organisation.name).to eq "Hillside School"
+    end
+  end
+
+  describe "#procurement_amount" do
+    context "when the value is blank" do
+      let(:procurement_amount) { nil }
+
+      it "returns an empty string" do
+        expect(presenter.procurement_amount).to eq ""
+      end
+    end
+
+    context "when the value is present" do
+      let(:procurement_amount) { "3,450.2" }
+
+      it "returns a formatted currency value" do
+        expect(presenter.procurement_amount).to eq "£3,450.20"
+      end
     end
   end
 end

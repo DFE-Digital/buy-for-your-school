@@ -44,6 +44,10 @@
 
   <%= render "support/cases/request_details/form_fields", form: form, show_request_text: false %>
 
+  <%= form.govuk_text_field :procurement_amount, width: 5,
+    label: { text: I18n.t("support.case.label.procurement_value"), size: "m" },
+    prefix_text: "£" %>
+
   <h2 class="govuk-heading-m">
     <%= I18n.t("support.case_source.header") %>
   </h2>

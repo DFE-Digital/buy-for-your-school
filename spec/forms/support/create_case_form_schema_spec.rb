@@ -46,4 +46,44 @@ describe Support::CreateCaseFormSchema do
       end
     end
   end
+
+  describe "procurement_amount" do
+    let(:validator) { double("validator") }
+
+    before do
+      allow(Support::Forms::ValidateProcurementAmount).to receive(:new).and_return(validator)
+    end
+
+    context "when the amount is invalid" do
+      let(:values) { { procurement_amount: "abc" } }
+
+      before do
+        allow(validator).to receive(:invalid_number?).and_return(true)
+        allow(validator).to receive(:too_large?).and_return(false)
+      end
+
+      it "gives a validation error for procurement_amount" do
+        error_message = schema.errors.messages.find { |x| x.path == [:procurement_amount] }
+
+        expect(error_message.text).to eq("Enter a valid number")
+        expect(validator).to have_received(:invalid_number?).once
+      end
+    end
+
+    context "when the amount is too large" do
+      let(:values) { { procurement_amount: "10000000" } }
+
+      before do
+        allow(validator).to receive(:invalid_number?).and_return(false)
+        allow(validator).to receive(:too_large?).and_return(true)
+      end
+
+      it "gives a validation error for procurement_amount" do
+        error_message = schema.errors.messages.find { |x| x.path == [:procurement_amount] }
+
+        expect(error_message.text).to eq("The amount cannot be larger than 9,999,999.99")
+        expect(validator).to have_received(:too_large?).once
+      end
+    end
+  end
 end

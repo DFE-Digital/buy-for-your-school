@@ -17,6 +17,7 @@ module Support
       optional(:organisation_urn).value(:string)
       optional(:phone_number).value(:string)
       optional(:extension_number).value(:string)
+      optional(:procurement_amount).value(:string)
 
       # request_details fields
       optional(:request_text).value(:string)
@@ -53,6 +54,12 @@ module Support
 
     rule(:source) do
       key(:source).failure(:missing) if value.blank?
+    end
+
+    rule(:procurement_amount) do
+      validator = Support::Forms::ValidateProcurementAmount.new(value)
+      key(:procurement_amount).failure(:invalid) if validator.invalid_number?
+      key(:procurement_amount).failure(:too_large) if validator.too_large?
     end
   end
 end

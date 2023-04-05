@@ -16,6 +16,7 @@ module Support
     option :phone_number, optional: true
     option :extension_number, optional: true
     option :source, optional: true
+    option :procurement_amount, ->(value) { value&.gsub(/[£,]/, "") }, optional: true
 
     # @return [Hash] form parms
     def to_h
