@@ -71,6 +71,12 @@ RSpec.feature "Create case", js: true do
       within ".govuk-summary-list__row", text: "Description of query" do
         expect(page).to have_content("This is a request")
       end
+      within ".govuk-summary-list__row", text: "Case value" do
+        expect(page).to have_content("£45.22")
+      end
+      within ".govuk-summary-list__row", text: "Procurement amount" do
+        expect(page).to have_content("£45.22")
+      end
     end
   end
 
@@ -84,6 +90,7 @@ RSpec.feature "Create case", js: true do
     find("#request_details_other_category_text").set("Other Category Details")
     select "North West (NW) Hub", from: "create_case_form[source]"
     fill_in "create_case_form[request_text]", with: "This is a request"
+    fill_in "create_case_form[procurement_amount]", with: "45.22"
   end
 
   def valid_form_data

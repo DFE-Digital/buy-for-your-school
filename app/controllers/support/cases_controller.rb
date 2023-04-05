@@ -107,6 +107,7 @@ module Support
         :request_text,
         :other_category,
         :other_query,
+        :procurement_amount,
       )
     end
 

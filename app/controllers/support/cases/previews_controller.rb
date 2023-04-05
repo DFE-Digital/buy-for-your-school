@@ -38,6 +38,7 @@ module Support
         :request_type,
         :source,
         :request_text,
+        :procurement_amount,
       )
     end
   end

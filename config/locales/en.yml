@@ -810,6 +810,7 @@ en:
         place_on_hold: Place on hold
         problem_description: Description of query
         procurement_amount: Procurement amount
+        procurement_value: Procurement value
         procurement_details:
           contract_duration: Contract duration
           contract_spend: Contract spend
@@ -1028,6 +1029,7 @@ en:
           establishment: Organisation details
           request_text: Description of query
           source: Case source
+          case_details: Case details
         submit: Create case
       label:
         bills: Uploaded bills
@@ -1074,6 +1076,7 @@ en:
         source: Source
         sub_category: Procurement sub-category
         type: Type
+        procurement_value: Procurement value
       request_type:
         legend: Request type
       submit: Save and continue

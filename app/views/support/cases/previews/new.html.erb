@@ -200,6 +200,24 @@
         </div>
       </dl>
 
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.case_details") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.procurement_value") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form.procurement_amount %>
+          </dd>
+          <dd id="changeRequestText" class="govuk-summary-list__list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+
       <p class="govuk-body">
         <%= I18n.t("support.case_hub_migration.edit.label.confirm") %>
       </p>

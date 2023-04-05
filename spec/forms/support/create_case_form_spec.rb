@@ -15,6 +15,7 @@ RSpec.describe Support::CreateCaseForm, type: :model do
         category_id: "987",
         request_type: "true",
         source: "sw_hub",
+        procurement_amount: "10",
       )
     end
 
@@ -30,6 +31,7 @@ RSpec.describe Support::CreateCaseForm, type: :model do
         phone_number: "5554321",
         category_id: "987",
         source: "sw_hub",
+        procurement_amount: "10",
       })
     end
   end
