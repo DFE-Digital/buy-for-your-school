@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import AutoFilterController from "./auto_filter_controller"
+application.register("auto-filter", AutoFilterController)
+
 import DropzoneController from "./dropzone_controller"
 application.register("dropzone", DropzoneController)
 
