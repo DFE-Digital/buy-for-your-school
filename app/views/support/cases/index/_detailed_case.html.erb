@@ -1,15 +1,17 @@
+<% tab = defined?(tab) ? tab : nil %>
+
 <tr class="govuk-table__row case-row tower-top-row">
   <td class="govuk-table__cell govuk-!-text-align-centre">
     <%= render "support/cases/action_flag" if kase.action_required? && !kase.closed? %>
   </td>
 
   <td class="govuk-table__cell">
-    <%= link_to kase.ref, support_case_path(kase.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", "target" => "_top" %>
+    <%= link_to kase.ref, support_case_path(kase.id, back_to: current_url_b64(tab)), class: "govuk-link--no-visited-state", "target" => "_top" %>
   </td>
 
   <td class="govuk-table__cell">
     <div class="ellipsis-overflow col-organisation">
-      <%= link_to kase.organisation_name, support_case_path(kase.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", title: kase.organisation_name, "target" => "_top" %>
+      <%= link_to kase.organisation_name, support_case_path(kase.id, back_to: current_url_b64(tab)), class: "govuk-link--no-visited-state", title: kase.organisation_name, "target" => "_top" %>
     </div>
   </td>
 
@@ -30,7 +32,7 @@
   </td>
 
   <td class="govuk-table__cell">
-    <%= link_to "Add note", new_support_case_interaction_path(kase, option: :note, back_to: current_url_b64), class: "govuk-link--no-visited-state", "target" => "_top" %>
+    <%= link_to "Add note", new_support_case_interaction_path(kase, option: :note, back_to: current_url_b64(tab)), class: "govuk-link--no-visited-state", "target" => "_top" %>
   </td>
 </tr>
 
