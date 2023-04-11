@@ -107,7 +107,7 @@ RSpec.feature "Case management dashboard" do
 
     it "shows all valid cases" do
       within "#all-cases" do
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(4)
+        expect(all(".govuk-table__body .govuk-table__row").count).to eq(8)
       end
     end
 

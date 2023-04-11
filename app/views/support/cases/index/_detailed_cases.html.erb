@@ -1,3 +1,5 @@
+<% tab = defined?(tab) ? tab : nil %>
+
 <% if cases.none? %>
   <%= render partial: "support/cases/not_found" %>
 <% else %>
@@ -15,7 +17,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <%= render partial: "support/cases/index/detailed_case", collection: cases, as: :kase %>
+      <%= render partial: "support/cases/index/detailed_case", collection: cases, as: :kase, locals: { tab: } %>
     </tbody>
   </table>
 <% end %>
