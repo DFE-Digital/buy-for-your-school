@@ -18,16 +18,16 @@
     "govuk-frontend": "^4.3.1",
     "jest": "^29.5.0",
     "lodash": "^4.17.21",
-    "sass": "^1.61.0",
+    "sass": "^1.62.0",
     "tinymce": "^6.4.1",
-    "webpack": "^5.77.0",
+    "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "jest-environment-jsdom": "^29.5.0",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^4.13.2"
   },
   "babel": {
     "presets": [
