@@ -58,6 +58,8 @@ module BuyForYourSchool
     config.middleware.use Rack::CrawlerDetect
 
     require "middleware/user_journey_tracking"
+    config.middleware.use UserJourneyTracking, "/referrals", :govuk, step_description_source: ->(_request, route_params) { route_params[:referral_path] }
     config.middleware.use UserJourneyTracking, "/procurement-support", :ghbs_rfh
+    config.middleware.use UserJourneyTracking, "/", :ghbs_specify, path_root_strict: true
   end
 end
