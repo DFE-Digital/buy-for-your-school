@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Referrals
+  namespace :referrals do
+    get "/rfh/:referral_path", to: "referrals#rfh"
+    get "/specify/:referral_path", to: "referrals#specify"
+    get "/faf/:referral_path", to: "referrals#faf"
+  end
+
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
   get "/auth/dfe/signout", to: "sessions#destroy", as: :issuer_redirect

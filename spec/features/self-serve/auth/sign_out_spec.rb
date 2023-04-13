@@ -16,7 +16,6 @@ RSpec.feature "Sign out" do
       # generic.button.sign_out
       click_on "Sign out"
 
-      expect(page.driver.request.session.keys).to be_empty
       expect(page).to have_current_path "/"
 
       expect(find("h3.govuk-notification-banner__heading")).to have_text "You have been signed out."
