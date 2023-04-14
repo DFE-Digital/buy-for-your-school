@@ -8,7 +8,7 @@ gem "aasm"
 gem "aws-sdk-s3", require: false
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
-gem "contentful", "~> 2.16"
+gem "contentful", "~> 2.17"
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.1"
 gem "dry-struct"
