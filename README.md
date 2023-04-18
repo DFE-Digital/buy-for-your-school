@@ -1,4 +1,4 @@
-# Get Help Buying for Schools
+# Get Help Buying for Schools 
 
 [![Maintainability][codeclimate-badge]][codeclimate-report]
 ![CI][ci-badge]
