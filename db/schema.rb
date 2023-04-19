@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_18_151950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -149,6 +149,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.integer "status"
     t.string "user_ip"
     t.datetime "survey_started_at"
+    t.datetime "survey_sent_at", precision: nil
+    t.datetime "survey_completed_at", precision: nil
     t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 

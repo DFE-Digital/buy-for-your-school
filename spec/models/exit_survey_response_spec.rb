@@ -22,4 +22,24 @@ describe ExitSurveyResponse do
       end
     end
   end
+
+  describe "Completing a survey" do
+    it "records the completed_at date" do
+      response.complete_survey!
+      expect(response.reload.survey_completed_at).to be_within(1.second).of(Time.zone.now)
+    end
+
+    it "sets the status to be completed" do
+      response.complete_survey!
+      expect(response.reload).to be_completed_status
+    end
+
+    context "when the completed date has already been recorded" do
+      before { response.update(survey_completed_at: 2.days.ago) }
+
+      it "does not update the date again" do
+        expect { response.complete_survey! }.not_to change(response, :survey_completed_at)
+      end
+    end
+  end
 end

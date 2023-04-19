@@ -24,6 +24,7 @@ module Support
       survey = ExitSurveyResponse.create!(
         case: kase,
         status: :sent_out,
+        survey_sent_at: Time.zone.now,
       )
 
       ::Emails::ExitSurvey.new(

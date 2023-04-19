@@ -4,6 +4,8 @@ class ExitSurvey::SatisfactionController < ApplicationController
   before_action :form, only: %i[update]
 
   def edit
+    update if form_params.present?
+
     @form = ExitSurvey::SatisfactionForm.new(**exit_survey_response.to_h.compact)
     @back_url = exit_survey_start_path
   end
@@ -34,9 +36,7 @@ private
   end
 
   def form_params
-    params.require(:satisfaction_form).permit(*%i[
-      satisfaction_level
-    ])
+    params.fetch(:satisfaction_form, {}).permit(:satisfaction_level)
   end
 
   # @return [SatisfactionFormSchema] validated form input
