@@ -36,10 +36,13 @@ class Emails::ExitSurvey < Notify::Email
 private
 
   def template_params
-    super.merge(exit_survey_link:)
+    super.merge(satisfaction_level_links)
   end
 
-  def exit_survey_link
-    Rails.application.routes.url_helpers.exit_survey_start_url(@survey_id)
+  def satisfaction_level_links
+    links = {}
+    satisfaction_levels = ExitSurveyResponse.satisfaction_levels.dup
+    satisfaction_levels.each { |k, _v| links["#{k}_link"] = Rails.application.routes.url_helpers.edit_exit_survey_satisfaction_url(@survey_id, satisfaction_form: { satisfaction_level: k.to_s }) }
+    links.symbolize_keys
   end
 end
