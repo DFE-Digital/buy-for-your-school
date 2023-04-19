@@ -69,4 +69,9 @@ class ExitSurveyResponse < ApplicationRecord
     self.survey_started_at = Time.zone.now if survey_started_at.blank?
     in_progress_status!
   end
+
+  def complete_survey!
+    self.survey_completed_at = Time.zone.now if survey_completed_at.blank?
+    completed_status!
+  end
 end
