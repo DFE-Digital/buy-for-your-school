@@ -1,0 +1,66 @@
+<% submit_text = edit ? I18n.t("support.management.email_templates.edit.save") : I18n.t("support.management.email_templates.new.create") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= form_with model: @form, scope: :email_template_form, method:, url:,
+        html: { "data-controller" => "email-templates-edit", "data-email-templates-edit-subgroup-url-value" => subgroups_support_management_email_template_groups_path } do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= form.govuk_select :group_id,
+              options_for_select(form.object.group_options, form.object.group_id),
+              options: { include_blank: I18n.t("support.management.email_templates.new.select_group") },
+              label: { text: I18n.t("support.management.email_templates.new.group"), size: "m" },
+              "data-action" => "email-templates-edit#populateSubgroups" %>
+
+          <% hide_class = form.object.subgroup_options.blank? ? "govuk-!-display-none" : nil %>
+          <div class="<%= hide_class %>" data-email-templates-edit-target="subgroupWrapper">
+            <%= form.govuk_select :subgroup_id,
+                options_for_select(form.object.subgroup_options, form.object.subgroup_id),
+                options: { include_blank: I18n.t("support.management.email_templates.new.select_subgroup") },
+                label: { text: I18n.t("support.management.email_templates.new.subgroup"), size: "m" },
+                "data-email-templates-edit-target" => "subgroupSelect" %>
+          </div>
+
+          <%= form.govuk_select :stage,
+              options_for_select(form.object.stage_options, form.object.stage),
+              options: { include_blank: I18n.t("support.management.email_templates.new.select_stage") },
+              label: { text: I18n.t("support.management.email_templates.new.stage"), size: "m" } %>
+
+          <%= form.govuk_text_field :title,
+              label: { text: I18n.t("support.management.email_templates.new.title"), size: "m" } %>
+
+          <%= form.govuk_text_area :description,
+              rows: 6,
+              label: { text: I18n.t("support.management.email_templates.new.description"), size: "m" } %>
+          
+          <%= form.govuk_text_field :subject,
+              label: { text: I18n.t("support.management.email_templates.new.subject"), size: "m" } %>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%= render "support/management/email_templates/form/variable_warning" %>
+          <%= form.govuk_text_area :body,
+              value: form.object.body || (render "support/cases/messages/reply_form_template"),
+              label: nil,
+              class: "template-body-box",
+              rows: 8,
+              "data-component" => "tinymce",
+              "data-tinymce-profile" => "basic",
+              "data-tinymce-selector" => ".template-body-box",
+              "data-tinymce-init-event" => "tinymce-init",
+              "data-tinymce-key-up-event" => "tinymce-keyup",
+              "data-action" => "tinymce-init->email-templates-edit#findVariables tinymce-keyup->email-templates-edit#findVariables" %>
+          
+          <div class="govuk-button-group flex-align-center">
+            <%= form.submit submit_text, class: "govuk-button", role: "button" %>
+            <%= link_to I18n.t("support.management.email_templates.new.cancel"), support_management_email_templates_path, class: "govuk-link govuk-link--no-visited-state" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

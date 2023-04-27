@@ -1,0 +1,6 @@
+<div class="template-manager__templates">
+  <%= render "support/management/email_templates/template_manager/templates/action_bar" %>
+  <ul>
+    <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template %>
+  </ul>
+</div>

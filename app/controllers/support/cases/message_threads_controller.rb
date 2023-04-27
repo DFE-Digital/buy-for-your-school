@@ -6,6 +6,7 @@ module Support
       before_action :reply_form, only: %i[index show new]
       before_action :back_url, only: %i[index show new templated_messages logged_contacts]
       before_action :default_subject_line, only: %i[new]
+      before_action :default_template, only: %i[new show]
 
       content_security_policy do |policy|
         policy.style_src_attr :unsafe_inline
@@ -51,6 +52,10 @@ module Support
 
       def default_subject_line
         @default_subject_line ||= "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
+      end
+
+      def default_template
+        @default_template = Support::Emails::Templates::Parser.new(agent: current_agent).parse(render_to_string(partial: "support/cases/messages/reply_form_template")).html_safe
       end
 
       def redirect_to_messages_tab

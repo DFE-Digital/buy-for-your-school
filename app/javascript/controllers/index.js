@@ -10,6 +10,9 @@ application.register("auto-filter", AutoFilterController)
 import DropzoneController from "./dropzone_controller"
 application.register("dropzone", DropzoneController)
 
+import EmailTemplatesEditController from "./email_templates_edit_controller"
+application.register("email-templates-edit", EmailTemplatesEditController)
+
 import EnergyBillUploadController from "./energy_bill_upload_controller"
 application.register("energy-bill-upload", EnergyBillUploadController)
 

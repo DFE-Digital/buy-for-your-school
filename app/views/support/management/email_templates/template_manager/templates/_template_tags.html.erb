@@ -1,0 +1,18 @@
+<div class="template-manager__template-tags">
+  <ul>
+    <% template.groups.each do |group| %>
+      <li>
+        <strong class="govuk-tag govuk-tag--blue">
+          <%= group.title %>
+        </strong>
+      </li>
+    <% end %>
+    <% if template.stage.present? %>
+      <li>
+        <strong class="govuk-tag govuk-tag--grey">
+          <%= template.stage %>
+        </strong>
+      </li>
+    <% end %>
+  </ul>
+</div>

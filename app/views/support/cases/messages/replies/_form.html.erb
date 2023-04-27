@@ -10,7 +10,7 @@
   <% end %>
 
   <%= form.govuk_text_area :body, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
-    value: @body || (render "support/cases/messages/reply_form_template"),
+    value: @body || @default_template,
     "data-component" => "tinymce",
     "data-tinymce-profile" => "basic",
     "data-tinymce-selector" => ".message-reply-box"

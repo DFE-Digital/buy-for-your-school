@@ -15,6 +15,9 @@
 <ul>
   <li><%= link_to I18n.t("support.management.agents.header"), support_management_agents_path, class: "govuk-link" %></li>
   <li><%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-link" %></li>
+  <% if Flipper.enabled?(:email_templates) %>
+    <li><%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-link" %></li>
+  <% end %>
 </ul>
 
 <h2 class="govuk-heading-m"><%= I18n.t("support.management.base.tasks") %></h2>

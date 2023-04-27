@@ -1,0 +1,31 @@
+groups:
+  - title: Energy
+    sub_groups:
+      - title: Gas & Electricity
+      - title: Solar
+      - title: Audit
+
+  - title: FM
+    sub_groups:
+      - title: Catering
+      - title: Cleaning
+      - title: Uniform
+  
+  - title: ICT
+    sub_groups:
+      - title: Contract management
+      - title: MFD
+      - title: MIS
+      - title: Cloud based
+
+  - title: Services
+    sub_groups:
+      - title: Transport
+      - title: Vehicle Purchase
+      - title: Audit
+  
+  - title: General
+    sub_groups: []
+
+  - title: Approvals
+    sub_groups: []
