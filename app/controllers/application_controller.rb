@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
+  add_flash_types :success
+
   def health_check
     render json: { rails: "OK" }, status: :ok
   end

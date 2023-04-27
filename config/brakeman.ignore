@@ -116,6 +116,59 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "60e826a1a47702235c7c1d4b7d104b6fe7f3805f58a5510f26769ddcb93c938a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb",
+      "line": 48,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "(Unresolved Model).new.body_parsed",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "support/management/email_templates/index",
+          "line": 18,
+          "file": "app/views/support/management/email_templates/index.html.erb",
+          "rendered": {
+            "name": "support/management/email_templates/template_manager/_template_manager",
+            "file": "app/views/support/management/email_templates/template_manager/_template_manager.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "support/management/email_templates/template_manager/_template_manager",
+          "line": 6,
+          "file": "app/views/support/management/email_templates/template_manager/_template_manager.html.erb",
+          "rendered": {
+            "name": "support/management/email_templates/template_manager/_templates",
+            "file": "app/views/support/management/email_templates/template_manager/_templates.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "support/management/email_templates/template_manager/_templates",
+          "line": 4,
+          "file": "app/views/support/management/email_templates/template_manager/_templates.erb",
+          "rendered": {
+            "name": "support/management/email_templates/template_manager/templates/_template",
+            "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "support/management/email_templates/template_manager/templates/_template"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "88e424dd33254be241c2cddf274122814e800d46c5f87eb7fec96054eda5d59c",
@@ -276,6 +329,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-04-06 17:17:16 +0100",
+  "updated": "2023-05-11 10:47:54 +0100",
   "brakeman_version": "5.4.1"
 }

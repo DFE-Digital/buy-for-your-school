@@ -1,0 +1,42 @@
+.template-manager__filters-panel {
+  @include govuk-responsive-margin(0, "bottom");
+  padding: govuk-spacing(4);
+  border: 1px solid $govuk-border-colour;
+}
+
+.template-manager__action-bar {
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
+.template-manager__templates > ul {
+  padding: 0;
+  list-style-type: none;
+  margin-top: 0;
+}
+
+.template-manager__templates > ul > li {
+  border-bottom: 1px solid $govuk-border-colour;
+  padding-top: govuk-spacing(4);
+}
+
+.template-manager__template-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  float: right;
+  padding-bottom: govuk-spacing(3);
+}
+
+.template-manager__template-tags > ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.template-manager__template-tags > ul > li {
+  @include govuk-responsive-margin(1, "right");
+  display: inline;
+}
+
+.template-manager__templates .govuk-grid-row:last-of-type .template-manager__template-tags {
+  margin-bottom: govuk-spacing(4);
+}
