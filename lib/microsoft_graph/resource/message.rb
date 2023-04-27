@@ -5,19 +5,19 @@ module MicrosoftGraph
       extend Dry::Initializer
 
       option :body, Types.DryConstructor(ItemBody)
-      option :body_preview, Types::String
-      option :conversation_id, Types::String
+      option :body_preview
+      option :conversation_id
       option :from, Types.DryConstructor(Recipient)
       option :has_attachments, Types::Bool
-      option :id, Types::String
-      option :internet_message_id, Types::String
-      option :importance, Types::String
+      option :id
+      option :internet_message_id
+      option :importance
       option :is_draft, Types::Bool
       option :is_read, Types::Bool
       option :received_date_time, Types.Instance(DateTime)
       option :sent_date_time, Types.Instance(DateTime)
       option :single_value_extended_properties, Types.Array(Types.DryConstructor(SingleValueExtendedProperty)) | Types::Nil, optional: true
-      option :subject, Types::String
+      option :subject
       option :to_recipients, Types.Array(Types.DryConstructor(Recipient))
       option :cc_recipients, Types.Array(Types.DryConstructor(Recipient)), optional: true
       option :bcc_recipients, Types.Array(Types.DryConstructor(Recipient)), optional: true
