@@ -23,6 +23,6 @@ ORG_TYPE_IDS = [
 ].freeze
 
 GROUP_CATEGORY_IDS = [
-  6,   # Multi-academy Trust
-  10,  # Single-academy Trust
+  10,  # Multi-academy Trust
+  13,  # Single-academy Trust
 ].freeze
