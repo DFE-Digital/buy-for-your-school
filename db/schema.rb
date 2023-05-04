@@ -742,6 +742,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_133137) do
     t.jsonb "orgs"
     t.jsonb "roles"
     t.boolean "admin", default: false
+    t.string "app_roles", default: [], array: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"

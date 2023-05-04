@@ -1,0 +1,6 @@
+subscription_id      = "<subscription_id>"
+resource_group_name  = "<resource_group_name>"
+storage_account_name = "<storage_account_name>"
+container_name       = "<container_name>"
+key                  = "terraform.tstate"
+access_key           = "<blob access key>"

@@ -154,3 +154,5 @@ yarn-debug.log*
 !/app/assets/builds/.keep
 
 specification*.docx
+
+*.env
