@@ -1,4 +1,5 @@
 <% tab = defined?(tab) ? tab : nil %>
+<% show_assigned = defined?(show_assigned) ? show_assigned : true %>
 
 <% if cases.none? %>
   <%= render partial: "support/cases/not_found" %>
@@ -11,13 +12,15 @@
         <%= sortable_th :organisation_name, I18n.t("support.case.label.organisation"), sort_scope, sort_form, th_classes: "col-organisation" %>
         <%= sortable_th :subcategory, I18n.t("support.case.label.category"), sort_scope, sort_form, th_classes: "col-sub-category", th_attributes: { title: I18n.t("support.case.label.sub_category") } %>
         <%= sortable_th :state, I18n.t("support.case.label.status"), sort_scope, sort_form, th_classes: "col-status" %>
+        <% if show_assigned %>
         <%= sortable_th :agent, I18n.t("support.case.label.assigned"), sort_scope, sort_form, th_classes: "col-assigned" %>
+        <% end %>
         <%= sortable_th :last_updated, I18n.t("support.case.label.updated"), sort_scope, sort_form, sort_order: :desc_asc, th_classes: "col-updated" %>
         <th class="govuk-table__header col-actions" scope="col" aria-hidden="true"></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <%= render partial: "support/cases/index/detailed_case", collection: cases, as: :kase, locals: { tab: } %>
+      <%= render partial: "support/cases/index/detailed_case", collection: cases, as: :kase, locals: { tab:, show_assigned: } %>
     </tbody>
   </table>
 <% end %>
