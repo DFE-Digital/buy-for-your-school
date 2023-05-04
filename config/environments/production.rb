@@ -44,9 +44,6 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
-
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
@@ -57,12 +54,12 @@ Rails.application.configure do
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
+  config.log_format = ENV["RAILS_LOG_FORMAT"].present? ? ENV["RAILS_LOG_FORMAT"].to_sym : :json
 
-  config.log_format = :json # For parsing in Logit
   config.active_record.logger = nil # Don't log SQL
 
   # Use a different cache store in production.
@@ -130,5 +127,31 @@ Rails.application.configure do
   }
 
   # Set active storage location
-  config.active_storage.service = ENV["BUCKET_NAME"].blank? ? :local : :amazon
+  config.active_storage.service = if ENV["AZURE_STORAGE_ACCOUNT_NAME"].present?
+                                    :azure
+                                  elsif ENV["BUCKET_NAME"].present?
+                                    :amazon
+                                  else
+                                    :local
+                                  end
+
+  # Application insights
+  application_insights_key = ENV["ApplicationInsights__InstrumentationKey"]
+  if application_insights_key.present?
+    require "application_insights"
+    config.middleware.use ApplicationInsights::Rack::TrackRequest, application_insights_key
+    # send unhandled exceptions
+    ApplicationInsights::UnhandledException.collect(application_insights_key)
+  end
+
+  # hosts setup
+  [
+    ENV["APPLICATION_URL"],
+    ENV["CONTAINER_APP_HOSTNAME"],
+  ].each do |hostname|
+    config.hosts << hostname.split("://").last if hostname.present?
+  end
+  config.hosts.concat(ENV["ALLOWED_HOSTS"].split(","))      if ENV["ALLOWED_HOSTS"].present?
+  config.hosts << IPAddr.new(ENV["CONTAINER_VNET_CIDR"])    if ENV["CONTAINER_VNET_CIDR"].present?
+  config.hosts << ".#{ENV['CONTAINER_APP_ENV_DNS_SUFFIX']}" if ENV["CONTAINER_APP_ENV_DNS_SUFFIX"].present?
 end

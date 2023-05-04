@@ -5,7 +5,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.2.1"
 
 gem "aasm"
+gem "application_insights"
 gem "aws-sdk-s3", require: false
+#
+# awaiting PR merge here: https://github.com/Azure/azure-storage-ruby/pull/228 due to need for faraday 2
+# gem "azure-storage-blob", "~> 2.0", require: false
+gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby", ref: "patch-1", require: false
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.17"

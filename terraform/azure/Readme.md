@@ -1,0 +1,187 @@
+# Terraform for Azure CIP Infrastructure
+
+## Prerequisites
+
+### 1, Get your environments tfvars file
+
+Only certain people can access this file, your Azure AD service principle must be added to the keyvault's access policies in order to download it.
+
+```
+$ az keyvault secret download --file ./envname.tfvars --encoding base64 --vault-name <vault name> --name <secret name>
+```
+
+Vault name is constructed like: `<env><project>-tfvars`
+
+Secret name is like: `<env><project>-tfvars`
+
+### 2, Get your `backend.tfvars`
+
+This file will need to be securely shared with you prior to running any terraform commands.
+
+## Running terraform
+
+### 1, Init the modules
+
+```
+$ terraform init -backend-config=backend.tfvars
+```
+
+### 2, Select your workspace
+
+```
+$ terraform workspace list
+$ terraform workspace select xyz
+$ terraform state list
+```
+
+### 3, Run your command
+
+**NOTE: ALWAYS RUN PLAN FIRST!**
+
+```
+$ terraform plan -var-file=envname-i-downloaded-before.tfvars
+```
+
+## Creating a new environment
+
+1. Create a new `.tfvars` file for your new environment and fill out the appropriate fields
+2. Create the resource group manually in Azure CIP
+3. Ensure you have requested for privilidges to be able to create a new public IP
+4. Create and switch to a new terraform workspace
+5. Run terraform apply with your new environment's `.tfvars` file
+
+## Register providers on Azure
+
+On some environments I had to run the following:
+
+```
+$ az provider register --namespace 'Microsoft.DBforPostgreSQL'
+$ az provider register --namespace 'Microsoft.OperationalInsights'
+$ az provider register --namespace 'Microsoft.Cdn'
+$ az provider register --namespace 'Microsoft.App'
+$ az provider register --namespace 'Microsoft.Cache'
+$ az provider register --namespace 'Microsoft.ContainerService'
+```
+
+<br />
+
+# Terraform Documentation
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.62.1 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm.prod"></a> [azurerm.prod](#provider\_azurerm.prod) | 3.62.1 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.62.1 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_azure_container_apps_hosting"></a> [azure\_container\_apps\_hosting](#module\_azure\_container\_apps\_hosting) | github.com/ryantk/terraform-azurerm-container-apps-hosting | ryans-changes |
+| <a name="module_azurerm_key_vault_tfvars"></a> [azurerm\_key\_vault\_tfvars](#module\_azurerm\_key\_vault\_tfvars) | github.com/DFE-Digital/terraform-azurerm-key-vault-tfvars | v0.1.3 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_dns_ns_record.parent_child_dns_zone_connection](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dns_ns_record) | resource |
+| [azurerm_resource_group.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_dns_zone.get_help_buying_for_schools__service__gov__uk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/dns_zone) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_production_subscription_id"></a> [production\_subscription\_id](#input\_production\_subscription\_id) | ID of the production subscription, used for linking child and parent DNS zones. | `string` | n/a | yes |
+| <a name="input_app_subscription_id"></a> [app\_subscription\_id](#input\_app\_subscription\_id) | ID of the subscription to deploy the app into | `string` | n/a | yes |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment name. Will be used along with `project_name` as a prefix for all resources. | `string` | n/a | yes |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name. Will be used along with `environment` as a prefix for all resources. | `string` | n/a | yes |
+| <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | Resource group name. Resources will be created within this resource group. | `string` | n/a | yes |
+| <a name="input_resource_group_location"></a> [resource\_group\_location](#input\_resource\_group\_location) | Resource group location. Location of the resource group | `string` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to be applied to all resources and resource group | `map(string)` | `{}` | no |
+| <a name="input_custom_container_apps"></a> [custom\_container\_apps](#input\_custom\_container\_apps) | Custom container apps, by default deployed within the container app environment | <pre>map(object({<br>    response_export_values = optional(list(string), [])<br>    body = object({<br>      properties = object({<br>        managedEnvironmentId = optional(string, "")<br>        configuration = object({<br>          activeRevisionsMode = optional(string, "single")<br>          secrets             = optional(list(map(string)), [])<br>          ingress             = optional(any, {})<br>          registries          = optional(list(map(any)), [])<br>          dapr                = optional(map(string), {})<br>        })<br>        template = object({<br>          revisionSuffix = string<br>          containers     = list(any)<br>          scale          = map(any)<br>          volumes        = list(map(string))<br>        })<br>      })<br>    })<br>  }))</pre> | `{}` | no |
+| <a name="input_application_env"></a> [application\_env](#input\_application\_env) | Application environment variables, which are defined as `secrets` within the container app configuration. This is to help reduce the risk of accidentally exposing secrets. | `map(string)` | `{}` | no |
+| <a name="input_enable_container_registry"></a> [enable\_container\_registry](#input\_enable\_container\_registry) | Set to true to create a container registry | `bool` | n/a | yes |
+| <a name="input_docker_registry_password"></a> [docker\_registry\_password](#input\_docker\_registry\_password) | Container registry password (required if `enable_container_registry` is false) | `string` | `""` | no |
+| <a name="input_docker_registry_username"></a> [docker\_registry\_username](#input\_docker\_registry\_username) | Container registry username (required if `enable_container_registry` is false) | `string` | `""` | no |
+| <a name="input_docker_image_registry"></a> [docker\_image\_registry](#input\_docker\_image\_registry) | Container registry server (required if `enable_container_registry` is false) | `string` | `"ghcr.io"` | no |
+| <a name="input_docker_image"></a> [docker\_image](#input\_docker\_image) | Docker image name, the application will run this image | `string` | n/a | yes |
+| <a name="input_docker_image_tag"></a> [docker\_image\_tag](#input\_docker\_image\_tag) | Docker image tag, the application will run this tag | `string` | n/a | yes |
+| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port, which port to expose traffic to | `number` | `80` | no |
+| <a name="input_container_command"></a> [container\_command](#input\_container\_command) | Container command, the command to be run on the container | `list(any)` | <pre>[<br>  "/bin/bash",<br>  "-c",<br>  "bundle exec rails db:prepare && bundle exec rails s -p 80 -b '0.0.0.0'"<br>]</pre> | no |
+| <a name="input_container_cpu"></a> [container\_cpu](#input\_container\_cpu) | Number of container CPU cores | `number` | `1` | no |
+| <a name="input_container_memory"></a> [container\_memory](#input\_container\_memory) | Container memory in GB | `number` | `2` | no |
+| <a name="input_container_scale_rule_concurrent_request_count"></a> [container\_scale\_rule\_concurrent\_request\_count](#input\_container\_scale\_rule\_concurrent\_request\_count) | Maximum number of concurrent HTTP requests before a new replica is created | `number` | `10` | no |
+| <a name="input_container_min_replicas"></a> [container\_min\_replicas](#input\_container\_min\_replicas) | Container min replicas | `number` | `1` | no |
+| <a name="input_container_max_replicas"></a> [container\_max\_replicas](#input\_container\_max\_replicas) | Container max replicas | `number` | `2` | no |
+| <a name="input_enable_worker_container"></a> [enable\_worker\_container](#input\_enable\_worker\_container) | Conditionally launch a worker container. This container uses the same image and environment variables as the default container app, but allows a different container command to be run. The worker container does not expose any ports. | `bool` | `false` | no |
+| <a name="input_worker_container_command"></a> [worker\_container\_command](#input\_worker\_container\_command) | Container command for the Worker container. `enable_worker_container` must be set to true for this to have any effect. | `list(string)` | `[]` | no |
+| <a name="input_worker_container_min_replicas"></a> [worker\_container\_min\_replicas](#input\_worker\_container\_min\_replicas) | Worker container min replicas | `number` | `1` | no |
+| <a name="input_worker_container_max_replicas"></a> [worker\_container\_max\_replicas](#input\_worker\_container\_max\_replicas) | Worker ontainer max replicas | `number` | `2` | no |
+| <a name="input_enable_container_health_probe"></a> [enable\_container\_health\_probe](#input\_enable\_container\_health\_probe) | Enable liveness probes for the Container | `bool` | `true` | no |
+| <a name="input_container_health_probe_interval"></a> [container\_health\_probe\_interval](#input\_container\_health\_probe\_interval) | How often in seconds to poll the Container to determine liveness | `number` | `30` | no |
+| <a name="input_container_health_probe_path"></a> [container\_health\_probe\_path](#input\_container\_health\_probe\_path) | Specifies the path that is used to determine the liveness of the Container | `string` | `"/"` | no |
+| <a name="input_container_health_probe_protocol"></a> [container\_health\_probe\_protocol](#input\_container\_health\_probe\_protocol) | Use HTTPS or a TCP connection for the Container liveness probe | `string` | `"https"` | no |
+| <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Create an App Insights instance and notification group for the Container App | `bool` | `false` | no |
+| <a name="input_monitoring_endpoint_healthcheck"></a> [monitoring\_endpoint\_healthcheck](#input\_monitoring\_endpoint\_healthcheck) | Specify a route that should be monitored for a 200 OK status | `string` | `"/"` | no |
+| <a name="input_monitoring_alarm_cpu_threshold_percentage"></a> [monitoring\_alarm\_cpu\_threshold\_percentage](#input\_monitoring\_alarm\_cpu\_threshold\_percentage) | Specify a number (%) which should be set as a threshold for a CPU usage monitoring alarm | `number` | `80` | no |
+| <a name="input_monitoring_alarm_memory_threshold_percentage"></a> [monitoring\_alarm\_memory\_threshold\_percentage](#input\_monitoring\_alarm\_memory\_threshold\_percentage) | Specify a number (%) which should be set as a threshold for a memory usage monitoring alarm | `number` | `80` | no |
+| <a name="input_monitoring_alarm_latency_threshold_ms"></a> [monitoring\_alarm\_latency\_threshold\_ms](#input\_monitoring\_alarm\_latency\_threshold\_ms) | Specify a number in milliseconds which should be set as a threshold for a request latency monitoring alarm | `number` | `1000` | no |
+| <a name="input_enable_dns_zone"></a> [enable\_dns\_zone](#input\_enable\_dns\_zone) | Conditionally create a DNS zone | `bool` | `false` | no |
+| <a name="input_dns_zone_domain_name"></a> [dns\_zone\_domain\_name](#input\_dns\_zone\_domain\_name) | DNS zone domain name. If created, records will automatically be created to point to the CDN. | `string` | `""` | no |
+| <a name="input_cdn_frontdoor_custom_domains"></a> [cdn\_frontdoor\_custom\_domains](#input\_cdn\_frontdoor\_custom\_domains) | Azure CDN Front Door custom domains | `list(string)` | `[]` | no |
+| <a name="input_connect_dns_to_parent_zone"></a> [connect\_dns\_to\_parent\_zone](#input\_connect\_dns\_to\_parent\_zone) | Should the created DNS zone be added automatically to the parent DNS zone? | `bool` | n/a | yes |
+| <a name="input_parent_dns_zone_record_name"></a> [parent\_dns\_zone\_record\_name](#input\_parent\_dns\_zone\_record\_name) | Name given to the NS record created within the parent DNS zone (when enabling connect\_dns\_to\_parent\_zone) | `string` | n/a | yes |
+| <a name="input_parent_dns_zone_resource_group_name"></a> [parent\_dns\_zone\_resource\_group\_name](#input\_parent\_dns\_zone\_resource\_group\_name) | Name of the resource group which holds the parent DNS zone | `string` | n/a | yes |
+| <a name="input_monitoring_email_receivers"></a> [monitoring\_email\_receivers](#input\_monitoring\_email\_receivers) | A list of email addresses that should be notified by monitoring alerts | `list(string)` | `[]` | no |
+| <a name="input_monitoring_enable_slack_webhook"></a> [monitoring\_enable\_slack\_webhook](#input\_monitoring\_enable\_slack\_webhook) | Enable slack webhooks to send monitoring notifications to a channel. Has no effect if you have defined `existing_logic_app_workflow` | `bool` | `false` | no |
+| <a name="input_monitoring_slack_webhook_receiver"></a> [monitoring\_slack\_webhook\_receiver](#input\_monitoring\_slack\_webhook\_receiver) | A Slack App webhook URL. Has no effect if you have defined `existing_logic_app_workflow` | `string` | `""` | no |
+| <a name="input_monitoring_slack_channel"></a> [monitoring\_slack\_channel](#input\_monitoring\_slack\_channel) | Slack channel name/id to send messages to. Has no effect if you have defined `existing_logic_app_workflow` | `string` | `""` | no |
+| <a name="input_enable_cdn_frontdoor"></a> [enable\_cdn\_frontdoor](#input\_enable\_cdn\_frontdoor) | Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin. | `bool` | `false` | no |
+| <a name="input_restrict_container_apps_to_cdn_inbound_only"></a> [restrict\_container\_apps\_to\_cdn\_inbound\_only](#input\_restrict\_container\_apps\_to\_cdn\_inbound\_only) | Restricts access to the Container Apps by creating a network security group that only allows 'AzureFrontDoor.Backend' inbound, and attaches it to the subnet of the container app environment. | `bool` | `true` | no |
+| <a name="input_enable_cdn_frontdoor_health_probe"></a> [enable\_cdn\_frontdoor\_health\_probe](#input\_enable\_cdn\_frontdoor\_health\_probe) | Enable CDN Front Door health probe | `bool` | `true` | no |
+| <a name="input_cdn_frontdoor_health_probe_interval"></a> [cdn\_frontdoor\_health\_probe\_interval](#input\_cdn\_frontdoor\_health\_probe\_interval) | Specifies the number of seconds between health probes. | `number` | `120` | no |
+| <a name="input_cdn_frontdoor_health_probe_path"></a> [cdn\_frontdoor\_health\_probe\_path](#input\_cdn\_frontdoor\_health\_probe\_path) | Specifies the path relative to the origin that is used to determine the health of the origin. | `string` | `"/"` | no |
+| <a name="input_cdn_frontdoor_health_probe_request_type"></a> [cdn\_frontdoor\_health\_probe\_request\_type](#input\_cdn\_frontdoor\_health\_probe\_request\_type) | Specifies the type of health probe request that is made. | `string` | `"GET"` | no |
+| <a name="input_cdn_frontdoor_origin_host_header_override"></a> [cdn\_frontdoor\_origin\_host\_header\_override](#input\_cdn\_frontdoor\_origin\_host\_header\_override) | Manually specify the host header that the CDN sends to the target. Defaults to the recieved host header. Set to null to set it to the host\_name (`cdn_frontdoor_origin_fqdn_override`) | `string` | `""` | no |
+| <a name="input_enable_redis_cache"></a> [enable\_redis\_cache](#input\_enable\_redis\_cache) | Set to true to create an Azure Redis Cache, with a private endpoint within the virtual network | `bool` | `false` | no |
+| <a name="input_redis_cache_version"></a> [redis\_cache\_version](#input\_redis\_cache\_version) | Redis Cache version | `number` | `6` | no |
+| <a name="input_redis_cache_family"></a> [redis\_cache\_family](#input\_redis\_cache\_family) | Redis Cache family | `string` | `"C"` | no |
+| <a name="input_redis_cache_sku"></a> [redis\_cache\_sku](#input\_redis\_cache\_sku) | Redis Cache SKU | `string` | `"Basic"` | no |
+| <a name="input_redis_cache_capacity"></a> [redis\_cache\_capacity](#input\_redis\_cache\_capacity) | Redis Cache Capacity | `number` | `0` | no |
+| <a name="input_redis_cache_patch_schedule_day"></a> [redis\_cache\_patch\_schedule\_day](#input\_redis\_cache\_patch\_schedule\_day) | Redis Cache patch schedule day | `string` | `"Sunday"` | no |
+| <a name="input_redis_cache_patch_schedule_hour"></a> [redis\_cache\_patch\_schedule\_hour](#input\_redis\_cache\_patch\_schedule\_hour) | Redis Cache patch schedule hour | `number` | `18` | no |
+| <a name="input_redis_cache_firewall_ipv4_allow_list"></a> [redis\_cache\_firewall\_ipv4\_allow\_list](#input\_redis\_cache\_firewall\_ipv4\_allow\_list) | A list of IPv4 address that require remote access to the Redis server | `list(string)` | `[]` | no |
+| <a name="input_enable_postgresql_database"></a> [enable\_postgresql\_database](#input\_enable\_postgresql\_database) | Set to true to create an Azure Postgres server/database, with a private endpoint within the virtual network | `bool` | `false` | no |
+| <a name="input_postgresql_server_version"></a> [postgresql\_server\_version](#input\_postgresql\_server\_version) | Specify the version of postgres server to run (either 11,12,13 or 14) | `string` | `""` | no |
+| <a name="input_postgresql_administrator_login"></a> [postgresql\_administrator\_login](#input\_postgresql\_administrator\_login) | Specify a login that will be assigned to the administrator when creating the Postgres server | `string` | `""` | no |
+| <a name="input_postgresql_administrator_password"></a> [postgresql\_administrator\_password](#input\_postgresql\_administrator\_password) | Specify a password that will be assigned to the administrator when creating the Postgres server | `string` | `""` | no |
+| <a name="input_postgresql_availability_zone"></a> [postgresql\_availability\_zone](#input\_postgresql\_availability\_zone) | Specify the availibility zone in which the Postgres server should be located | `string` | `"1"` | no |
+| <a name="input_postgresql_max_storage_mb"></a> [postgresql\_max\_storage\_mb](#input\_postgresql\_max\_storage\_mb) | Specify the max amount of storage allowed for the Postgres server | `number` | `32768` | no |
+| <a name="input_postgresql_sku_name"></a> [postgresql\_sku\_name](#input\_postgresql\_sku\_name) | Specify the SKU to be used for the Postgres server | `string` | `"B_Standard_B1ms"` | no |
+| <a name="input_postgresql_collation"></a> [postgresql\_collation](#input\_postgresql\_collation) | Specify the collation to be used for the Postgres database | `string` | `"en_US.utf8"` | no |
+| <a name="input_postgresql_charset"></a> [postgresql\_charset](#input\_postgresql\_charset) | Specify the charset to be used for the Postgres database | `string` | `"utf8"` | no |
+| <a name="input_postgresql_enabled_extensions"></a> [postgresql\_enabled\_extensions](#input\_postgresql\_enabled\_extensions) | Specify a comma seperated list of Postgres extensions to enable. See https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions#postgres-14-extensions | `string` | `""` | no |
+| <a name="input_postgresql_network_connectivity_method"></a> [postgresql\_network\_connectivity\_method](#input\_postgresql\_network\_connectivity\_method) | Specify postgresql networking method, public or private. See https://learn.microsoft.com/en-gb/azure/postgresql/flexible-server/concepts-networking | `string` | `"private"` | no |
+| <a name="input_postgresql_firewall_ipv4_allow"></a> [postgresql\_firewall\_ipv4\_allow](#input\_postgresql\_firewall\_ipv4\_allow) | Map of IP address ranges to add into the postgres firewall. Note: only applicable if postgresql\_network\_connectivity\_method is set to public. | <pre>map(object({<br>    start_ip_address = string<br>    end_ip_address   = string<br>  }))</pre> | `{}` | no |
+| <a name="input_enable_container_app_blob_storage"></a> [enable\_container\_app\_blob\_storage](#input\_enable\_container\_app\_blob\_storage) | Create an Azure Storage Account and Storage Container to be used for this app | `bool` | `false` | no |
+| <a name="input_container_app_blob_storage_public_access_enabled"></a> [container\_app\_blob\_storage\_public\_access\_enabled](#input\_container\_app\_blob\_storage\_public\_access\_enabled) | Should the Azure Storage Account have Public visibility? | `bool` | `false` | no |
+| <a name="input_container_app_blob_storage_ipv4_allow_list"></a> [container\_app\_blob\_storage\_ipv4\_allow\_list](#input\_container\_app\_blob\_storage\_ipv4\_allow\_list) | A list of public IPv4 address to grant access to the Blob Storage Account | `list(string)` | `[]` | no |
+| <a name="input_enable_key_vault_tfvars"></a> [enable\_key\_vault\_tfvars](#input\_enable\_key\_vault\_tfvars) | Enable keyvault tfvars backup | `bool` | `false` | no |
+| <a name="input_key_vault_access_users"></a> [key\_vault\_access\_users](#input\_key\_vault\_access\_users) | List of users that require access to the Key Vault. This should be a list of User Principle Names (Found in Active Directory) that need to run terraform | `list(string)` | n/a | yes |
+| <a name="input_key_vault_access_ipv4"></a> [key\_vault\_access\_ipv4](#input\_key\_vault\_access\_ipv4) | List of IPv4 Addresses that are permitted to access the Key Vault | `list(string)` | n/a | yes |
+| <a name="input_key_vault_tfvars_filename"></a> [key\_vault\_tfvars\_filename](#input\_key\_vault\_tfvars\_filename) | tfvars filename. This file is uploaded and stored encrupted within Key Vault, to ensure that the latest tfvars are stored in a shared place. | `string` | n/a | yes |
+| <a name="input_key_vault_enable_diagnostic_setting"></a> [key\_vault\_enable\_diagnostic\_setting](#input\_key\_vault\_enable\_diagnostic\_setting) | Enable Azure Diagnostics setting for the Key Vault | `bool` | `true` | no |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
