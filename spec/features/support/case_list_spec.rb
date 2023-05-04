@@ -62,9 +62,8 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[2]).to have_text "Organisation"
         expect(table_headers[3]).to have_text "Category"
         expect(table_headers[4]).to have_text "Status"
-        expect(table_headers[5]).to have_text "Assigned"
-        expect(table_headers[6]).to have_text "Updated"
-        expect(table_headers[7]).to have_text ""
+        expect(table_headers[5]).to have_text "Updated"
+        expect(table_headers[6]).to have_text ""
       end
     end
 
@@ -93,7 +92,8 @@ RSpec.feature "Case management dashboard" do
         expect(table_headers[2]).to have_text "Organisation"
         expect(table_headers[3]).to have_text "Category"
         expect(table_headers[4]).to have_text "Status"
-        expect(table_headers[5]).to have_text "Received"
+        expect(table_headers[5]).to have_text "Assigned"
+        expect(table_headers[6]).to have_text "Received"
       end
     end
   end

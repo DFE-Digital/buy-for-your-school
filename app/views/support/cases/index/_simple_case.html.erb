@@ -18,9 +18,10 @@
     <%= render "support/cases/status_badge", state: kase.state %>
   </td>
 
+  <td class="govuk-table__cell"><%= kase.agent_name %></td>
+
   <% case tab %>
   <% when :all_cases %>
-    <td class="govuk-table__cell"><%= kase.agent_name %></td>
     <td class="govuk-table__cell">
       <span title="<%= kase.last_updated_at %>">
         <%= relative_date_format(kase.last_updated_at) %>

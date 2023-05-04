@@ -19,7 +19,7 @@
           tab: tower_id,
           hide_towers: true %>
 
-    <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@cases), sort_scope: "filter_#{scope}_cases", sort_form: @filter_form %>
+    <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@cases), sort_scope: "filter_#{scope}_cases", sort_form: @filter_form, show_assigned: true %>
     <%= render "components/pagination", records: @cases %>
   </div>
 <% end %>
