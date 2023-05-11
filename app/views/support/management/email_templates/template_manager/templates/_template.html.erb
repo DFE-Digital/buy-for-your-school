@@ -16,9 +16,7 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <p class="govuk-body">
-          <%= template.description %>
-        </p>
+        <%= simple_format(template.description, wrapper_tag: "p", class: "govuk-body") %>
       </div>
     </div>
 
