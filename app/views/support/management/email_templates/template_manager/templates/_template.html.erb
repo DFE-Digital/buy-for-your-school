@@ -1,0 +1,50 @@
+<li>
+  <div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <p class="govuk-body govuk-!-font-weight-bold">
+          <%= template.title %>
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <div class="template-manager__template-actions">
+          <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.edit"), edit_support_management_email_template_path(template), class: "govuk-link govuk-link--no-visited-state" %>
+          <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.delete"), support_management_email_template_path(template), method: :delete, data: { confirm: I18n.t("support.management.email_templates.index.template_manager.templates.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <%= simple_format(template.description, wrapper_tag: "p", class: "govuk-body") %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <%= render "support/management/email_templates/template_manager/templates/template_tags", template: %>
+      </div>
+    </div>
+
+    <% if template.subject.present? %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <p class="govuk-hint">
+            <%= I18n.t("support.management.email_templates.index.template_manager.templates.subject", subject: template.subject) %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= I18n.t("support.management.email_templates.index.template_manager.templates.preview") %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <%= template.body_parsed.html_safe %>
+      </div>
+    </details>
+  </div>
+</li>

@@ -1371,6 +1371,47 @@ en:
           save: Save
           title: Title
           tower: Tower
+      email_templates:
+        header: Email templates
+        common:
+          stage: Stage
+          variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
+        index:
+          new: Create new template
+          template_manager:
+            filters:
+              header: Filters
+            templates:
+              count:
+                one: 1 template
+                other: "%{count} templates"
+                zero: 0 templates
+              edit: Edit
+              delete: Delete
+              subject: "Subject line: %{subject}"
+              preview: Preview template
+              delete_confirmation: Are you sure you want to delete this template?
+        new:
+          header: Create a template
+          group: Template group
+          select_group: Select group
+          subgroup: Subgroup (optional)
+          select_subgroup: Select subgroup
+          stage: Stage (optional)
+          select_stage: Select stage
+          title: Template name
+          description: Template guidance
+          subject: Subject line for email (optional)
+          create: Create template
+          cancel: Cancel
+        edit:
+          save: Save updates
+        create:
+          notice: Your template has been saved
+        update:
+          notice: Updates to your template have been saved
+        destroy:
+          notice: Your template has been deleted
     procurement_details:
       edit:
         ended_at:

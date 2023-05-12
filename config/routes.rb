@@ -241,6 +241,10 @@ Rails.application.routes.draw do
       get "/", to: "base#index"
       resources :agents, only: %i[index update]
       resources :categories, only: %i[index update]
+      resources :email_templates, constraints: ->(_request) { Flipper.enabled?(:email_templates) }
+      resources :email_template_groups, only: [], constraints: ->(_request) { Flipper.enabled?(:email_templates) } do
+        get "subgroups/(:group_id)", to: "email_template_groups#subgroups", as: :subgroups, on: :collection
+      end
       resource :category_detection, only: %i[new create]
       resources :all_cases_surveys, only: %i[index create]
     end

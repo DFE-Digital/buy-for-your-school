@@ -1,6 +1,8 @@
 require "rails_helper"
 
-describe Support::Email do
+describe Support::Email, type: :model do
+  it { is_expected.to belong_to(:template).class_name("Support::EmailTemplate").optional }
+
   describe "#has_unattachable_files_attached?" do
     let(:email) { create(:support_email) }
 

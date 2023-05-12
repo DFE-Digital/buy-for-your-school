@@ -41,7 +41,9 @@ const initializeTinymce = editorElement => {
     tinymceSelector: selector,
     tinymcePlugins,
     tinymceToolbar,
-    tinymceProfile
+    tinymceProfile,
+    tinymceKeyUpEvent,
+    tinymceInitEvent
   } = editorElement.dataset;
 
   const customProfile = {
@@ -57,7 +59,16 @@ const initializeTinymce = editorElement => {
     menubar: false,
     statusbar: false,
     contextmenu: false,
-    browser_spellcheck: true
+    browser_spellcheck: true,
+    setup: (editor) => {
+      if (tinymceKeyUpEvent) {
+        editor.on("keyup", (e) => editorElement.dispatchEvent(new CustomEvent(tinymceKeyUpEvent)));
+      }
+
+      if (tinymceInitEvent) {
+        editor.on("init", (e) => editorElement.dispatchEvent(new CustomEvent(tinymceInitEvent)));
+      }
+    },
   });
 }
 

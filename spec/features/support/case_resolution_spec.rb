@@ -18,7 +18,11 @@ describe "Resolving a case" do
           "first_name": "School",
           "last_name": "Contact",
           "email": "school@email.co.uk",
-          "exit_survey_link": %r{/exit_survey/start/},
+          "very_satisfied_link": %r{very_satisfied$},
+          "satisfied_link": %r{satisfied$},
+          "neither_link": %r{neither$},
+          "dissatisfied_link": %r{dissatisfied$},
+          "very_dissatisfied_link": %r{very_dissatisfied$},
         },
       })
       .to_return(body: {}.to_json, status: 200, headers: {})

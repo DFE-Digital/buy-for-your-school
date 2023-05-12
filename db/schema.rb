@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -149,6 +149,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.integer "status"
     t.string "user_ip"
     t.datetime "survey_started_at"
+    t.datetime "survey_sent_at", precision: nil
+    t.datetime "survey_completed_at", precision: nil
     t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
@@ -425,6 +427,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.boolean "hidden", default: false
   end
 
+  create_table "support_email_template_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.uuid "parent_id"
+    t.boolean "archived", default: false, null: false
+    t.datetime "archived_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_support_email_template_groups_on_parent_id"
+  end
+
+  create_table "support_email_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.uuid "template_group_id", null: false
+    t.integer "stage"
+    t.string "subject"
+    t.text "body", null: false
+    t.boolean "archived", default: false, null: false
+    t.datetime "archived_at"
+    t.uuid "created_by_id"
+    t.uuid "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_support_email_templates_on_created_by_id"
+    t.index ["template_group_id"], name: "index_support_email_templates_on_template_group_id"
+    t.index ["updated_by_id"], name: "index_support_email_templates_on_updated_by_id"
+  end
+
   create_table "support_emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "subject"
     t.text "body"
@@ -450,7 +480,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
     t.jsonb "to_recipients"
     t.jsonb "cc_recipients"
     t.jsonb "bcc_recipients"
+    t.uuid "template_id"
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
+    t.index ["template_id"], name: "index_support_emails_on_template_id"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -702,6 +734,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_085421) do
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
   add_foreign_key "support_categories", "support_towers"
+  add_foreign_key "support_email_template_groups", "support_email_template_groups", column: "parent_id"
+  add_foreign_key "support_email_templates", "support_agents", column: "created_by_id"
+  add_foreign_key "support_email_templates", "support_agents", column: "updated_by_id"
+  add_foreign_key "support_email_templates", "support_email_template_groups", column: "template_group_id"
+  add_foreign_key "support_emails", "support_email_templates", column: "template_id"
   add_foreign_key "support_notifications", "support_agents", column: "assigned_by_id"
   add_foreign_key "support_notifications", "support_agents", column: "assigned_to_id"
   add_foreign_key "support_notifications", "support_cases"

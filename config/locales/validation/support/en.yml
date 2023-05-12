@@ -7,6 +7,20 @@ en:
           attributes:
             body:
               blank: Please enter a case note
+  
+  activemodel:
+    errors:
+      models:
+        support/management/email_template_form:
+          attributes:
+            group_id:
+              blank: Select a template group
+            title:
+              blank: Enter a template name
+            description:
+              blank: Enter template guidance
+            body:
+              blank: Enter a template body
 
   forms:
     rules:

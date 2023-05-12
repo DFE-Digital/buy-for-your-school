@@ -1,0 +1,16 @@
+<%= content_for :title, "#{I18n.t("support.management.base.header")} | #{I18n.t("support.management.email_templates.header")} | #{@template_title}" %>
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+  </ol>
+</div>
+
+<h1 class="govuk-heading-l"><%= @template_title %></h1>
+
+<%= render partial: "support/management/email_templates/form/form", locals: { method: :patch, url: support_management_email_template_path, edit: true } %>
