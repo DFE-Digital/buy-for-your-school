@@ -16,13 +16,12 @@
     "data-tinymce-selector" => ".message-reply-box"
   %>
 
-  <div class="govuk-button-group flex-align-center">
+  <div class="govuk-button-group">
     <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
     <%= form.govuk_file_field :attachments,
       multiple: true,
       hidden: true,
       label: { text: I18n.t("support.case.label.messages.reply.add_attachments"), class: "govuk-button govuk-button--secondary" },
-      form_group: { class: "not-form-group-to-flex-align" },
       "data-component" => "display-attachments",
       "data-display-attachments-id" => unique_id
     %>
