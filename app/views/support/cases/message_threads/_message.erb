@@ -11,6 +11,19 @@
     <div><%= message.sent_at_formatted %></div>
   </div>
 
+  <details class="govuk-details govuk-!-margin-top-0 govuk-!-margin-bottom-1" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        Display recipients
+      </span>
+    </summary>
+    <div class="govuk-details__text">
+      <div>From: <%= message.sent_by_email %></div>
+      <div>To: <%= message.recipient_addresses || "none" %></div>
+      <div>CC: <%= message.cc_recipients || "none" %></div>
+    </div>
+  </details>
+
   <div <% if truncated_message %>class="message-preview govuk-body truncated-view" data-component="toggle-truncate"<% else %>class="message-preview govuk-body"<% end %>>
     <% if truncated_message %>
       <div class="truncated">
