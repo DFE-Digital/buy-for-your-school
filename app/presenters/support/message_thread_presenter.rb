@@ -3,10 +3,10 @@ module Support
     # The recipients for all emails in a thread combined into one array
     #
     # @return [String]
-    def recipients
+    def recipient_names
       # group by email address in case there are multiple recipients with the same address
       # and prefer the one that has a proper name (rather than an email address for a name)
-      grouped = Array(super)
+      grouped = Array(recipients)
         .group_by { |r| r["address"].downcase }
         .map { |_k, v|
           if v.size > 1
@@ -18,6 +18,18 @@ module Support
       resolve_name_from_case(grouped)
       # remove the shared mailbox name
       grouped.pluck("name").filter { |name| name != ENV["MS_GRAPH_SHARED_MAILBOX_NAME"] }.join(", ")
+    end
+
+    def recipient_emails
+      emails = Array(recipients)
+        .group_by { |r| r["address"].downcase }
+        .map { |_k, v| v }.flatten
+
+      emails
+        .pluck("address")
+        .filter { |address| address != ENV["MS_GRAPH_SHARED_MAILBOX_ADDRESS"] }
+        .uniq
+        .join(", ")
     end
 
     # @return [String]

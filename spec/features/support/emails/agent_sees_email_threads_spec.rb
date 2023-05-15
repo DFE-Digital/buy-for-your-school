@@ -18,10 +18,10 @@ describe "Agent sees email threads", js: true, bullet: :skip do
 
     it "displays each thread within the case messages tab" do
       within "tr", text: "Email thread 1" do
-        expect(page).to have_content("Test 1")
+        expect(page).to have_content("test1@email.com")
       end
       within "tr", text: "Email thread 2" do
-        expect(page).to have_content("Test 2")
+        expect(page).to have_content("test2@email.com")
       end
     end
 

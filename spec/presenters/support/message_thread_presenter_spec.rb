@@ -11,7 +11,7 @@ describe Support::MessageThreadPresenter do
 
   let(:thread) { Support::MessageThread.find_by(conversation_id: "MyString") }
 
-  describe "#recipients" do
+  describe "#recipient_names" do
     around do |example|
       ClimateControl.modify(MS_GRAPH_SHARED_MAILBOX_NAME: "sharedMailbox") do
         example.run
@@ -19,7 +19,19 @@ describe Support::MessageThreadPresenter do
     end
 
     it "lists all the recipients except for the shared mailbox" do
-      expect(presenter.recipients).to eq "recipient 1, School Contact"
+      expect(presenter.recipient_names).to eq "recipient 1, School Contact"
+    end
+  end
+
+  describe "#recipient_emails" do
+    around do |example|
+      ClimateControl.modify(MS_GRAPH_SHARED_MAILBOX_ADDRESS: "sharedMailbox@email.com") do
+        example.run
+      end
+    end
+
+    it "lists all the recipient emails except for the shared mailbox address" do
+      expect(presenter.recipient_emails).to eq "recipient1@email.com, school@email.co.uk"
     end
   end
 
