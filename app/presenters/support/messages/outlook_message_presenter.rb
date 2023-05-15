@@ -107,6 +107,12 @@ module Support
 
       def bcc_recipients = extract_recipient_addresses(super)
 
+      def recipient_addresses
+        return if recipients.blank?
+
+        recipients.pluck("address").uniq.join(", ")
+      end
+
     private
 
       def body_with_links_removed(_view_context, cleaned_body)
