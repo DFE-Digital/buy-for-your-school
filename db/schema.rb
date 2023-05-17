@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_17_094626) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -309,6 +309,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
     t.string "email", default: "", null: false
     t.boolean "internal", default: false, null: false
     t.uuid "support_tower_id"
+    t.string "roles", default: [], array: true
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
     t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"
@@ -712,6 +713,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
     t.jsonb "orgs"
     t.jsonb "roles"
     t.boolean "admin", default: false
+    t.string "app_roles", default: [], array: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"
