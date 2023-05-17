@@ -9,11 +9,9 @@ module Support
     has_many :cases, class_name: "Support::Case"
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
-    accepts_nested_attributes_for :user
 
-    # agents that are not internal team members (genuine caseworkers)
-    scope :caseworkers, -> { where(internal: false) }
-    scope :internal, -> { where(internal: true) }
+    scope :caseworkers, -> { where("'procops' = ANY(roles)") }
+    scope :internal, -> { where("'internal' = ANY(roles)") }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
 
     scope :omnisearch, lambda { |query|

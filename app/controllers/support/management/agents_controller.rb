@@ -2,7 +2,11 @@ module Support
   class Management::AgentsController < ::Support::Management::BaseController
     def index
       @agents = with_presenters(Support::Agent.by_first_name.includes(:user))
-      @towers = Support::Tower.unique_towers
+    end
+
+    def edit
+      @agent = Support::Agent.find(params[:id])
+      @back_url = support_management_agents_path
     end
 
     def update
@@ -21,7 +25,9 @@ module Support
     end
 
     def agent_form_params
-      params.require(:agent).permit(:support_tower_id, :internal, user_attributes: %i[admin id])
+      params.require(:agent).permit(:support_tower_id, roles: []).tap do |p|
+        p[:roles].reject!(&:blank?)
+      end
     end
 
     def audit_message

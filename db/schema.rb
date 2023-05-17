@@ -327,6 +327,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_145503) do
     t.string "email", default: "", null: false
     t.boolean "internal", default: false, null: false
     t.uuid "support_tower_id"
+    t.string "roles", default: [], array: true
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email"
     t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"
