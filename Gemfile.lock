@@ -384,6 +384,8 @@ GEM
     public_suffix (5.0.1)
     puma (6.2.2)
       nio4r (~> 2.0)
+    pundit (2.3.0)
+      activesupport (>= 3.0.0)
     qonfig (0.28.0)
     raabro (1.4.0)
     racc (1.6.2)
@@ -670,6 +672,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma (~> 6)
+  pundit
   rails (~> 7.0.3)
   rails_layout
   rails_semantic_logger
