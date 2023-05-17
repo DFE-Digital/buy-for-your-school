@@ -1,6 +1,7 @@
 <%= content_for :title, "CMS Management | #{I18n.t("support.management.agents.header")}" %>
 
 <% user_type_options = [OpenStruct.new(id: true, name: "Internal"), OpenStruct.new(id: false, name: "Proc-Ops")] %>
+<% role_options = [OpenStruct.new(id: "procops", name: "Proc-Ops"), OpenStruct.new(id: "e_and_o", name: "E & O"), OpenStruct.new(id: "admin", name: "Admin"), OpenStruct.new(id: "internal", name: "Internal")] %>
 
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
@@ -17,38 +18,22 @@
   <caption class="govuk-table__caption govuk-table__caption--l"><%= I18n.t("support.management.agents.header") %></caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.agents.table.name") %></th>
-      <th scope="col" class="govuk-table__header "><%= I18n.t("support.management.agents.table.tower") %></th>
-      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.agents.table.type") %></th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"><%= I18n.t("support.management.agents.table.admin") %></th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-third"><%= I18n.t("support.management.agents.table.name") %></th>
+      <th scope="col" class="govuk-table__header govuk-!-width-two-thirds">Roles</th>
       <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.agents.table.actions") %></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
     <% @agents.each do |agent| %>
-      <%= form_with(model: agent, url: support_management_agent_path(agent), method: :patch, scope: :agent) do |form| %>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><%= agent.full_name %></th>
-          <td class="govuk-table__cell">
-            <%= form.govuk_collection_select :support_tower_id, @towers, :id, :title, options: { include_blank: I18n.t("support.management.agents.table.no_tower_selected") }, label: { text: I18n.t("support.management.agents.table.name"), class: "govuk-!-display-none" } %>
-          </td>
-          <td class="govuk-table__cell">
-            <%= form.govuk_collection_radio_buttons :internal, user_type_options, :id, :name, inline: true, small: true, legend: { text: I18n.t("support.management.agents.table.user_type"), class: "govuk-!-display-none" } %>
-
-
-          </td>
-          <td class="govuk-table__cell">
-          <%= form.fields_for :user do |user_form| %>
-              <%= user_form.govuk_check_boxes_fieldset :terms_and_conditions_agreed, multiple: false,small: true, legend: { text: I18n.t("support.management.agents.table.admin"), size: 'l', class: "govuk-!-display-none" } do %>
-                <%= user_form.govuk_check_box :admin, 1, 0, multiple: false, small: true, link_errors: true, label: { text: I18n.t("support.management.agents.table.admin") } %>
-              <% end %>
-            <% end %>
-          </td>
-          <td class="govuk-table__cell">
-            <%= form.submit I18n.t("support.management.agents.table.save"), class: "govuk-button" %>
-          </td>
-        </tr>
-      <% end %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><%= agent.full_name %></th>
+        <td class="govuk-table__cell">
+          <%= agent.roles.join(",") %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to "Edit", edit_support_management_agent_path(agent), class: "govuk-link govuk-link--no-visited-state" %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>
