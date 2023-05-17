@@ -8,7 +8,6 @@ describe "Agent can rename attachments on a case" do
 
   before do
     create(:support_email_attachment, file:, email: create(:support_email, :inbox, case: support_case))
-    click_button "Agent Login"
   end
 
   it "adds a custom name and description to the attachment", js: true do

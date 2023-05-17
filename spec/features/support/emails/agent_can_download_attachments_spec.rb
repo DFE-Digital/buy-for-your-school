@@ -7,7 +7,6 @@ describe "Agent can download attachments", js: true do
   before do
     create(:support_email_attachment, email:)
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Messages"
     within("#messages-frame") { click_link "View" }

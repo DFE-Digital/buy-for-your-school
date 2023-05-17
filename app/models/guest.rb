@@ -9,6 +9,10 @@ class Guest < Dry::Struct
     false
   end
 
+  def internal?
+    false
+  end
+
   # @return [nil]
   def id
     nil

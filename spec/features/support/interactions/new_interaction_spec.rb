@@ -27,7 +27,6 @@ RSpec.feature "New case event" do
   let(:support_case) { create(:support_case, state: "opened", ref: "987654") }
 
   before do
-    click_button "Agent Login"
     visit "/support/cases/#{support_case.id}"
   end
 

@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
+  include Pundit::Authorization
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
@@ -17,7 +18,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :support?, :cookie_policy
+  helper_method :current_user, :support?, :cookie_policy, :record_ga?, :engagement?
 
   # @return [User, Guest]
   #
@@ -58,6 +59,14 @@ protected
   # Is the user currently on the support side?
   def support?
     false
+  end
+
+  def engagement?
+    false
+  end
+
+  def record_ga?
+    true
   end
 
   def cookie_policy

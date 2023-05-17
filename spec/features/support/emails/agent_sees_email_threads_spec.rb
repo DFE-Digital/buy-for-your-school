@@ -11,7 +11,6 @@ describe "Agent sees email threads", js: true, bullet: :skip do
       create(:support_email, :inbox, case: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2", "address" => "test2@email.com" }], unique_body: "Email 2", is_read: true)
       create(:support_email, case: support_case, outlook_conversation_id: "OCID2", subject: "Re: Email thread 2", unique_body: "Email 3")
 
-      click_button "Agent Login"
       visit support_case_path(support_case)
       click_link "Messages"
     end
@@ -55,7 +54,6 @@ describe "Agent sees email threads", js: true, bullet: :skip do
       create(:support_interaction, :email_to_school, body: "templated message 1", case: support_case, additional_data: { email_template: "f4696e59-8d89-4ac5-84ca-17293b79c337" })
       create(:support_interaction, :email_to_school, body: "templated message 2", case: support_case, additional_data: { email_template: "f4696e59-8d89-4ac5-84ca-17293b79c337" })
 
-      click_button "Agent Login"
       visit support_case_path(support_case)
       click_link "Messages"
     end
@@ -84,7 +82,6 @@ describe "Agent sees email threads", js: true, bullet: :skip do
       create(:support_interaction, :phone_call, body: "contact by phone", case: support_case)
       create(:support_interaction, :email_from_school, body: "logged email", case: support_case)
 
-      click_button "Agent Login"
       visit support_case_path(support_case)
       click_link "Messages"
     end

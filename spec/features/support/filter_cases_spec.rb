@@ -3,7 +3,6 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
 
   let(:catering_cat) { create(:support_category, title: "Catering") }
   let(:mfd_cat) { create(:support_category, title: "MFD") }
-  let(:agent) { create(:support_agent, first_name: "Example Support Agent") }
 
   before do
     create_list(:support_case, 10)
@@ -12,7 +11,7 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
     create(:support_case, category: mfd_cat, state: :opened)
     create(:support_case, agent:)
     create(:support_case, state: :closed)
-    click_button "Agent Login"
+    visit support_root_path
   end
 
   describe "case filtering" do
@@ -32,11 +31,11 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
       click_link "All cases"
       within "#all-cases" do
         click_button "Filter results"
-        find("#filter-all-cases-form-agent-field").find(:option, "Example Support Agent").select_option
+        find("#filter-all-cases-form-agent-field").find(:option, agent.first_name).select_option
         click_button "Apply filter"
         expect(all(".govuk-table__body .govuk-table__row .borderless").count).to eq(1)
         row = all(".govuk-table__body .govuk-table__row .borderless")
-        expect(row[0]).to have_text "Assigned to: Example Support Agent"
+        expect(row[0]).to have_text agent.first_name
       end
     end
 

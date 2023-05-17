@@ -1,8 +1,6 @@
 describe "Agent can view uploaded bills" do
   include_context "with an agent"
 
-  before { click_button "Agent Login" }
-
   context "when there are bills on the case" do
     let(:support_case) { create(:support_case) }
     let(:bill) { create(:energy_bill, file: Rack::Test::UploadedFile.new("spec/fixtures/files/text-file.txt", "text/plain")) }

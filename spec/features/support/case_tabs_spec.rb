@@ -2,8 +2,6 @@ RSpec.feature "Case summary" do
   include_context "with an agent"
 
   before do
-    click_button "Agent Login"
-    # TODO: use case ref in the address path
     visit "/support/cases/#{support_case.id}"
   end
 

@@ -17,6 +17,8 @@ module Support
 
   private
 
+    def authorize_agent_scope = [super, :access_proc_ops_portal?]
+
     def category_form_params
       params.require(:category).permit(:support_tower_id, :parent_id)
     end

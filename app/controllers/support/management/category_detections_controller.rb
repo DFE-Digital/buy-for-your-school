@@ -10,6 +10,8 @@ module Support
 
   private
 
+    def authorize_agent_scope = [super, :access_proc_ops_portal?]
+
     def form_params = params.fetch(:category_detection, {}).permit(:request_text, :simulate_energy_request)
 
     def build_form = @category_detection_form = CategoryDetectionForm.new(**form_params)

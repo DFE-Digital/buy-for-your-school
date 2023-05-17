@@ -9,6 +9,8 @@ module Support
 
   private
 
+    def authorize_agent_scope = [super, :access_proc_ops_portal?]
+
     def form_params
       params.require(:eligible_cases_form).permit(:eligible_cases)
     end

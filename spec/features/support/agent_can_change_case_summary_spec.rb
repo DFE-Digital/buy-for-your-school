@@ -6,7 +6,6 @@ describe "Agent can change case summary" do
   let(:support_case) { create(:support_case, support_level: nil, value: nil, source: "nw_hub") }
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     within "h3", text: "Case summary - change" do
       click_link "change"

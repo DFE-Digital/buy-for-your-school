@@ -27,7 +27,6 @@ describe "Support agent sends a templated email" do
     .with(body: preview_email)
     .to_return(body: api_preview_response.to_json, status: 200, headers: {})
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Send template email"
   end

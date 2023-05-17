@@ -5,7 +5,6 @@ RSpec.feature "Edit case procurement details" do
   let(:support_procurement) { create(:support_procurement, :blank) }
 
   before do
-    click_button "Agent Login"
     visit edit_support_case_procurement_details_path(support_case)
   end
 

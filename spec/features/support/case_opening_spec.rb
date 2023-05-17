@@ -2,7 +2,6 @@ RSpec.feature "Case worker can open a case" do
   include_context "with an agent"
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Reopen case"
   end

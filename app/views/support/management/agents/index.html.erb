@@ -1,8 +1,5 @@
 <%= content_for :title, "CMS Management | #{I18n.t("support.management.agents.header")}" %>
 
-<% user_type_options = [OpenStruct.new(id: true, name: "Internal"), OpenStruct.new(id: false, name: "Proc-Ops")] %>
-<% role_options = [OpenStruct.new(id: "procops", name: "Proc-Ops"), OpenStruct.new(id: "e_and_o", name: "E & O"), OpenStruct.new(id: "admin", name: "Admin"), OpenStruct.new(id: "internal", name: "Internal")] %>
-
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
@@ -28,7 +25,7 @@
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header"><%= agent.full_name %></th>
         <td class="govuk-table__cell">
-          <%= agent.roles.join(",") %>
+          <%= agent.labelled_roles.join("<br />").html_safe %>
         </td>
         <td class="govuk-table__cell">
           <%= link_to "Edit", edit_support_management_agent_path(agent), class: "govuk-link govuk-link--no-visited-state" %>

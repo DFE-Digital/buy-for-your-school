@@ -6,12 +6,21 @@ module Support
   # referred to as "worker", "case worker" or "proc ops worker" within the business.
   #
   class Agent < ApplicationRecord
+    ROLES = {
+      global_admin: "Global Administrator",
+      procops_admin: "Procurement Operations Admin",
+      procops: "Procurement Operations Staff Member",
+      e_and_o_admin: "Engagement and Outreach Admin",
+      e_and_o: "Engagement and Outreach Staff Member",
+      internal: "Digital Team Staff Member",
+      analyst: "Data Analyst",
+    }.freeze
+
     has_many :cases, class_name: "Support::Case"
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
-    scope :caseworkers, -> { where("'procops' = ANY(roles)") }
-    scope :internal, -> { where("'internal' = ANY(roles)") }
+    scope :caseworkers, -> { where("ARRAY['procops', 'procops_admin'] && roles::text[]") }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
 
     scope :omnisearch, lambda { |query|
@@ -23,8 +32,18 @@ module Support
       caseworkers.where(sql, q: "#{query}%").limit(30)
     }
 
+    def self.find_or_create_by_user(user)
+      find_or_create_by!(dsi_uid: user.dfe_sign_in_uid) do |agent|
+        agent.email = user.email
+        agent.first_name = user.first_name
+        agent.last_name = user.last_name
+      end
+    end
+
     def full_name = "#{first_name} #{last_name}"
 
     def initials = "#{first_name.first}#{last_name.first}"
+
+    def labelled_roles = roles.map { |role| ROLES[role.to_sym] }
   end
 end

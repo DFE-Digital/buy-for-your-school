@@ -157,11 +157,19 @@ Rails.application.routes.draw do
   end
 
   #
+  # CMS entrypoints ------------------------------------------------------------------
+  #
+  get "cms", to: "cms_entry_points#start", as: :cms_entrypoint
+  get "cms/no_roles_assigned", to: "cms_entry_points#no_roles_assigned", as: :cms_no_roles_assigned
+  get "cms/not_authorized", to: "cms_entry_points#not_authorized", as: :cms_not_authorized
+
+  #
   # Supported ------------------------------------------------------------------
   #
-  get "support", to: "support/pages#start_page", as: :support_root
-
+  # Proc-Ops Portal
   namespace :support do
+    root to: "cases#index"
+
     resources :document_downloads, only: %i[show]
     resources :agents, only: %i[create]
     resources :email_read_status, only: %i[update], param: :email_id
@@ -248,6 +256,11 @@ Rails.application.routes.draw do
       resource :category_detection, only: %i[new create]
       resources :all_cases_surveys, only: %i[index create]
     end
+  end
+
+  # E&O Portal
+  namespace :engagement do
+    root to: "cases#index"
   end
 
   if Rails.env.development?

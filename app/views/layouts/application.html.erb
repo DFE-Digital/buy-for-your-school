@@ -2,7 +2,7 @@
 <html lang="en" class="govuk-template ">
 
   <head>
-    <% if Rails.env.production? && !support? %>
+    <% if Rails.env.production? && record_ga? %>
       <%= javascript_include_tag "google-tag-manager/include" %>
 
       <% if cookie_policy.accepted? %>
@@ -11,9 +11,7 @@
     <% end %>
 
     <meta charset="utf-8">
-    <title>
-      <%= content_for?(:title) ? yield(:title) : "Buy for your school" %>
-    </title>
+    <title><%= content_for?(:title) ? yield(:title) : "Buy for your school" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
 
@@ -41,7 +39,7 @@
   </head>
 
   <body class="govuk-template__body ">
-    <% if Rails.env.production? && cookie_policy.accepted? %>
+    <% if Rails.env.production? && record_ga? && cookie_policy.accepted? %>
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXQDGR"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -52,7 +50,7 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
 
-    <% unless support? %>
+    <% if record_ga? %>
       <%= render "cookie_preferences/banner" %>
     <% end %>
 

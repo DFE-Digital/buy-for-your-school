@@ -3,7 +3,6 @@ RSpec.feature "Search cases", bullet: :skip do
 
   before do
     create_list(:support_case, 10)
-    click_button "Agent Login"
     visit "/support/cases/find-a-case/new"
   end
 
