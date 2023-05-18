@@ -1279,6 +1279,9 @@ en:
       link:
         opens_in_new_tab: "(opens in new tab)"
       search: Search
+    helpers:
+      tag_bar:
+        remove_tag: "Remove tag %{tag}"
     interaction:
       header:
         add_case_note: "Add a note to case %{ref}"
@@ -1381,6 +1384,16 @@ en:
           template_manager:
             filters:
               header: Filters
+              select_group: Select group
+              all_groups: All groups
+              subgroups: Subgroups
+              stages: Stages
+              about: About
+              all_subgroups: All subgroups
+              no_subgroups: No subgroup
+              all_stages: All stages
+              no_stage: No stage
+              selected: "%{count} selected"
             templates:
               count:
                 one: 1 template

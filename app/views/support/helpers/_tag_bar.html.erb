@@ -1,0 +1,13 @@
+<div <%= tag.attributes class: "tag-bar #{'govuk-!-display-none' if tags.empty?}" %>>
+  <div class="tag-bar__group">
+    <span class="tag-bar__preposition"><%= preposition %></span>
+    <div class="tag-bar__wrapper">
+      <% tags.each do |_tag| %>
+        <span class="tag-bar__tag">
+          <span class="tag-bar__text"><%= _tag.title %></span>
+          <%= tag.button "✕", name: "#{form_id}[remove_#{_tag.type}]", value: _tag.id, class: "tag-bar__remove", form: form_id, aria: { label: I18n.t("support.helpers.tag_bar.remove_tag", tag: _tag.title) } %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>

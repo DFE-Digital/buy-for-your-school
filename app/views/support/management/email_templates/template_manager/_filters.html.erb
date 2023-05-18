@@ -1,3 +1,32 @@
 <div class="template-manager__filters-panel">
   <h2 class="govuk-heading-m"><%= I18n.t("support.management.email_templates.index.template_manager.filters.header") %></h2>
+
+  <%= form_with model: @filter_form, scope: :email_template_filters, id: :email_template_filters, method: :get, url: support_management_email_templates_path, html: { "data-controller" => "email-template-filters" } do |form| %>
+    <%= form.govuk_select :group_id,
+        options_for_select(form.object.group_options, form.object.group_id),
+        options: { include_blank: I18n.t("support.management.email_templates.index.template_manager.filters.all_groups") },
+        label: { text: I18n.t("support.management.email_templates.index.template_manager.filters.select_group"), size: "s" },
+        "data-action" => "email-template-filters#onFilterChange" %>
+    
+    <%= expander title: I18n.t("support.management.email_templates.index.template_manager.filters.subgroups"),
+                 subtitle: form.object.has_subgroups? ? I18n.t("support.management.email_templates.index.template_manager.filters.selected", count: form.object.subgroup_ids.length) : nil,
+                 expanded: form.object.has_subgroups?,
+                 disabled: !form.object.has_subgroups? do %>
+      <%= form.govuk_check_boxes_fieldset :subgroup_ids, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% form.object.subgroup_options.each do |subgroup| %>
+          <%= form.govuk_check_box :subgroup_ids, subgroup.id, exclusive: subgroup.exclusive, label: { text: subgroup.title } %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= expander title: I18n.t("support.management.email_templates.index.template_manager.filters.stages"),
+                 subtitle: I18n.t("support.management.email_templates.index.template_manager.filters.selected", count: form.object.stages.length),
+                 expanded: true do %>
+      <%= form.govuk_check_boxes_fieldset :stages, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% form.object.stage_options.each do |stage| %>
+          <%= form.govuk_check_box :stages, stage.id, exclusive: stage.exclusive, label: { text: stage.title } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>
