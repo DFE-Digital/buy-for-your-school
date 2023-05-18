@@ -1,0 +1,14 @@
+<div class="expander" data-controller="expander" data-expander-target="expander" data-expander-expanded-value=<%= expanded %> <%= "disabled" if disabled %> <%= tag.attributes html if html %>>
+  <h3 class="expander__heading">
+    <button class="expander__title" type="button" data-action="expander#toggleContent"><%= title %></button>
+    <% if subtitle %>
+      <div class="expander__subtitle"><%= subtitle %></div>
+    <%end%>
+    <span class="expander__chevron" data-expander-target="chevron"></span>
+  </h3>
+  <div class="expander__content" data-expander-target="content">
+    <div class="expander__content-inner">
+      <%= content %>
+    </div>
+  </div>
+</div>

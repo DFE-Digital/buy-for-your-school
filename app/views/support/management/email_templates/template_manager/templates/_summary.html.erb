@@ -1,0 +1,6 @@
+<div class="template-manager__templates-summary">
+  <p class="govuk-body govuk-!-font-weight-bold">
+    <%= I18n.t("support.management.email_templates.index.template_manager.templates.count", count: @templates.size) %>
+  </p>
+  <%= tag_bar @filter_form.tags, :email_template_filters, preposition: I18n.t("support.management.email_templates.index.template_manager.filters.about") %>
+</div>

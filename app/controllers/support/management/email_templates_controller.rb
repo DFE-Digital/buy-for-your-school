@@ -5,7 +5,8 @@ module Support
 
       def index
         parser = Support::Emails::Templates::Parser.new(agent: current_agent)
-        @templates = Support::EmailTemplate.active.map { |e| Support::EmailTemplatePresenter.new(e, parser) }.paginate(page: params[:page])
+        @filter_form = Support::Management::EmailTemplateFilterForm.new(**filter_params)
+        @templates = @filter_form.results.map { |e| Support::EmailTemplatePresenter.new(e, parser) }.paginate(page: params[:page])
       end
 
       def new
@@ -48,6 +49,10 @@ module Support
         params.require(:email_template_form).permit(*%i[
           group_id subgroup_id stage title description subject body
         ]).merge(id: params[:id], agent: current_agent)
+      end
+
+      def filter_params
+        params.fetch(:email_template_filters, {}).permit(:group_id, :remove_group, :remove_subgroup, :remove_stage, subgroup_ids: [], stages: [])
       end
     end
   end

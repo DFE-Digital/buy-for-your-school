@@ -22,7 +22,8 @@ export default class extends Controller {
         } else {
           this.clearSubgroups();
         }
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   subgroupSource(groupId) {

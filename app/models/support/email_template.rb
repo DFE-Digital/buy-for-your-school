@@ -12,6 +12,9 @@ module Support
     default_scope { order(:title) }
 
     scope :active, -> { where(archived: false) }
+    scope :by_groups, ->(template_group_ids) { where(template_group_id: template_group_ids) }
+    scope :by_stages, ->(stages, include_null: false) { include_null ? where(stage: stages).or(where(stage: nil)) : where(stage: stages) }
+    scope :without_stage, -> { where(stage: nil) }
 
     def self.stages = STAGE_VALUES
 
