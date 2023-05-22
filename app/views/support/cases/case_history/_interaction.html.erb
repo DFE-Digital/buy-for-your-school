@@ -7,8 +7,9 @@
     <% if interaction.custom_template.present? %>
       <%= render "support/cases/case_history/#{interaction.custom_template}", interaction: interaction %>
     <% else %>
-      <%= interaction.body %>
+      <%= simple_format interaction.body %>
 
+      <% if interaction.additional_data.any? %>
       <dl class="govuk-summary-list">
         <% interaction.additional_data.each do |key, value|  %>
           <div class="govuk-summary-list__row">
@@ -21,6 +22,7 @@
           </div>
         <% end %>
       </dl>
+      <% end %>
     <% end %>
   </td>
 

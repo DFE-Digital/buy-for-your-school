@@ -3,3 +3,13 @@ $govuk-images-path: "/assets/images/";
 $govuk-fonts-path: "/assets/fonts/";
 
 @import "govuk-frontend/govuk/all";
+
+.govuk-table__row.borderless .govuk-table__cell,
+.borderless {
+   border: 0 !important;
+}
+
+td.govuk-table__cell :first-child {
+   margin-top: 0;
+ }
+ 

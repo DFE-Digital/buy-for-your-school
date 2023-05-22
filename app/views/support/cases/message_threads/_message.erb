@@ -35,7 +35,7 @@
     <% end %>
 
     <div class="full-view <% if truncated_message %>govuk-!-display-none<% end %>">
-      <%= message.body_for_display(self) %>
+      <%= simple_format message.body_for_display(self) %>
 
       <%= render "support/cases/messages/attachments", email: message %>
 
