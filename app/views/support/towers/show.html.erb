@@ -2,7 +2,7 @@
 <% scope = "#{@tower.title.parameterize(separator: '_')}" %>
 
 <%= turbo_frame_tag "#{tower_id}-frame" do %>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="<%= tower_id %>">
+  <div class="govuk-tabs__panel borderless govuk-tabs__panel--hidden" id="<%= tower_id %>">
     <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-<%= tower_id %>" data-component="toggle-panel-visibility">
       <%= I18n.t("support.case.filter.filter_results") %>
     </button>

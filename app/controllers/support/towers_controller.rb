@@ -21,7 +21,7 @@ module Support
 
     def filter_scope = "filter_#{@tower.title.parameterize(separator: '_')}_cases"
 
-    def sort_params = %i[ref organisation_name subcategory state agent last_updated action]
+    def sort_params = %i[ref support_level organisation_name subcategory state agent last_updated action]
 
     def find_tower
       # filter form still uses id

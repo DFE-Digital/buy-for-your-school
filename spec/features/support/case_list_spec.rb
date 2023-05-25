@@ -57,13 +57,7 @@ RSpec.feature "Case management dashboard" do
     it "shows correct table headers" do
       within "#my-cases" do
         table_headers = all(".govuk-table__header")
-        expect(table_headers[0]).to have_text ""
-        expect(table_headers[1]).to have_text "Case"
-        expect(table_headers[2]).to have_text "Organisation"
-        expect(table_headers[3]).to have_text "Category"
-        expect(table_headers[4]).to have_text "Status"
-        expect(table_headers[5]).to have_text "Updated"
-        expect(table_headers[6]).to have_text ""
+        confirm_header_order(table_headers, ["", "Case", "Level", "Organisation", "Category", "Status", "Updated", ""])
       end
     end
 
@@ -80,20 +74,14 @@ RSpec.feature "Case management dashboard" do
 
     it "shows new cases" do
       within "#new-cases" do
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(3)
+        expect(all(".govuk-table__body .govuk-table__row.borderless").count).to eq(3)
       end
     end
 
     it "shows correct table headers" do
       within "#new-cases" do
         table_headers = all(".govuk-table__header")
-        expect(table_headers[0]).to have_text ""
-        expect(table_headers[1]).to have_text "Case"
-        expect(table_headers[2]).to have_text "Organisation"
-        expect(table_headers[3]).to have_text "Category"
-        expect(table_headers[4]).to have_text "Status"
-        expect(table_headers[5]).to have_text "Assigned"
-        expect(table_headers[6]).to have_text "Received"
+        confirm_header_order(table_headers, ["", "Case", "Organisation", "Category", "Status", "Received"])
       end
     end
   end
@@ -107,7 +95,7 @@ RSpec.feature "Case management dashboard" do
 
     it "shows all valid cases" do
       within "#all-cases" do
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(8)
+        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(8)
       end
     end
 
@@ -130,14 +118,16 @@ RSpec.feature "Case management dashboard" do
     it "shows correct table headers" do
       within "#all-cases" do
         table_headers = all(".govuk-table__header")
-        expect(table_headers[0]).to have_text ""
-        expect(table_headers[1]).to have_text "Case"
-        expect(table_headers[2]).to have_text "Organisation"
-        expect(table_headers[3]).to have_text "Category"
-        expect(table_headers[4]).to have_text "Status"
-        expect(table_headers[5]).to have_text "Assigned"
-        expect(table_headers[6]).to have_text "Updated"
+        confirm_header_order(table_headers, ["", "Case", "Level", "Organisation", "Category", "Status", "Updated"])
       end
+    end
+  end
+
+private
+
+  def confirm_header_order(headers, expected)
+    expected.each_with_index do |header, index|
+      expect(headers[index]).to have_text header
     end
   end
 end
