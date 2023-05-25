@@ -645,7 +645,7 @@ en:
   request:
     label:
       procurement_amount: Procurement amount
-      special_requirements: Special requirements
+      special_requirements: Accessibility
     procurement_amount:
       caption: About your procurement
       heading: Approximately how much will the school be spending on this procurement in total?
@@ -653,10 +653,11 @@ en:
       - This is the approximate amount you'll be spending over the lifetime of the contract. Use the value of a previous or existing contract if you're unsure.
       - We only use this value as a guide to understand your procurement better. We know it can change.
     special_requirements:
-      caption: Special requirements
-      heading: Do you have any special requirements when you communicate or use technology and/or online services?
-      hint: We will be contacting you by email or video call. Tell us about any adjustments we can make, so that we can help and interact with you in the best way possible.
-      requirements: What are your requirements?
+      caption: Accessibility
+      heading: Do you have any access needs that we need to be aware of when we contact you?
+      hint: We’ll contact you by email first. If we need more information we’ll arrange a video call with you later. Let us know if either of these need to be made accessible to you and how you’d like us to do that.
+      requirements: Tell us about your access needs
+      requirements_hint: For example, I have difficulty hearing so I cannot do video calls
   specifying:
     start_page:
       before_you_start_body:
@@ -844,7 +845,7 @@ en:
           schools_commercial_team: Schools Commercial Team (SCT)
           sw_hub: South West (SW) Hub
           unspecified: "-"
-        special_requirements: Special requirements
+        special_requirements: Accessibility
         state:
           state_action_required: Action
           state_close: Closed

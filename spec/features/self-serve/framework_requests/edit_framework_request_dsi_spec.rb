@@ -18,7 +18,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
   it "goes back to the special requirements page" do
     click_on "Back"
     expect(page).to have_current_path "/procurement-support/#{request.id}/special_requirements/edit"
-    expect(page).to have_text "Special requirements"
+    expect(page).to have_text "Accessibility"
   end
 
   it "has submission information" do

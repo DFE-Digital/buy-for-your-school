@@ -152,6 +152,10 @@ module Support
       super || "-"
     end
 
+    def has_special_requirements?
+      special_requirements != "-"
+    end
+
     # @return [Array<MessageThreadPresenter>]
     def message_threads
       # there are occassional emails with no conversation_id?
