@@ -750,6 +750,7 @@ en:
         date_received: Date received
         flag: Flag
         last_updated: Last updated
+        level: Level
         updated: Updated
         received: Received
         message_threads:

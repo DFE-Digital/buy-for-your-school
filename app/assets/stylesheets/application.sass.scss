@@ -24,3 +24,17 @@
 @import "./components/supported/template-manager";
 @import "./components/expander";
 @import "./components/tag-bar";
+
+// Panel overrides
+.govuk-tabs__panel.borderless,
+.govuk-table__cell.borderless {
+   border: 0 !important;
+}
+
+.govuk-table__cell.vertical_middle {
+   vertical-align: middle;
+}
+
+.case-status-badge {
+   white-space: nowrap !important;
+}

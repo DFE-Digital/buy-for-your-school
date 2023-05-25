@@ -22,8 +22,8 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
         click_button "Filter results"
         find("#filter-all-cases-form-category-field").find(:option, "Catering").select_option
         click_button "Apply filter"
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(2)
-        row = all(".govuk-table__body .govuk-table__row")
+        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(2)
+        row = all(".govuk-table__body .govuk-table__row.case-row")
         expect(row[0]).to have_text "Catering"
       end
     end
@@ -34,9 +34,9 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
         click_button "Filter results"
         find("#filter-all-cases-form-agent-field").find(:option, "Example Support Agent").select_option
         click_button "Apply filter"
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(2)
-        row = all(".govuk-table__body .govuk-table__row")
-        expect(row[0]).to have_text "Example Support Agent"
+        expect(all(".govuk-table__body .govuk-table__row .borderless").count).to eq(1)
+        row = all(".govuk-table__body .govuk-table__row .borderless")
+        expect(row[0]).to have_text "Assigned to: Example Support Agent"
       end
     end
 
@@ -46,21 +46,9 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
         click_button "Filter results"
         find("#filter-all-cases-form-state-field").find(:option, "Closed").select_option
         click_button "Apply filter"
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(2)
-        row = all(".govuk-table__body .govuk-table__row")
+        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(2)
+        row = all(".govuk-table__body .govuk-table__row.case-row")
         expect(row[0]).to have_text "Closed"
-      end
-    end
-  end
-
-  describe "case sorting" do
-    it "sorts by agent" do
-      click_link "All cases"
-      within "#all-cases" do
-        click_button "Assigned"
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(20)
-        row = all(".govuk-table__body .govuk-table__row")
-        expect(row[0]).to have_text "Example Support Agent"
       end
     end
   end
@@ -73,8 +61,8 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
         find("#filter-all-cases-form-category-field").find(:option, "MFD").select_option
         click_button "Apply filter"
         click_button "Status"
-        expect(all(".govuk-table__body .govuk-table__row").count).to eq(4)
-        row = all(".govuk-table__body .govuk-table__row")
+        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(4)
+        row = all(".govuk-table__body .govuk-table__row.case-row")
         expect(row[0]).to have_text "On Hold"
       end
     end

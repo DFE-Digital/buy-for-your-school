@@ -73,6 +73,7 @@ module Support
     scope :by_level, ->(support_level) { where(support_level:) }
     scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
 
+    scope :order_by_support_level, ->(sort_direction = "ASC") { order("support_level #{sort_direction}") }
     scope :order_by_received, ->(sort_direction = "ASC") { order("created_at #{sort_direction}") }
     scope :order_by_ref, ->(sort_direction = "ASC") { order("ref #{sort_direction}") }
     scope :order_by_subcategory, ->(sort_direction = "ASC") { includes(:category).order("support_categories.title #{sort_direction}, support_cases.ref DESC") }

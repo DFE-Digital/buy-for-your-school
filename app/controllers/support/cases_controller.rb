@@ -115,7 +115,7 @@ module Support
       params.fetch(scope, {}).permit(:state, :agent, :tower, :category, :stage, :level, :user_submitted, sort: sort_params).to_h.symbolize_keys
     end
 
-    def sort_params = %i[ref organisation_name subcategory state agent last_updated received action]
+    def sort_params = %i[ref support_level organisation_name subcategory state agent last_updated received action]
 
     def filter_forms
       # allow my-cases to conditionally show closed / resolved cases if not by default

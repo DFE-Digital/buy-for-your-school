@@ -1,4 +1,4 @@
-<tr class="govuk-table__row case-row">
+<tr class="govuk-table__row case-row borderless">
   <td class="govuk-table__cell govuk-!-text-align-centre">
     <%= render "support/cases/action_flag" if kase.action_required? && !kase.closed? %>
   </td>
@@ -18,8 +18,6 @@
     <%= render "support/cases/status_badge", state: kase.state %>
   </td>
 
-  <td class="govuk-table__cell"><%= kase.agent_name %></td>
-
   <% case tab %>
   <% when :all_cases %>
     <td class="govuk-table__cell">
@@ -34,4 +32,8 @@
       </span>
     </td>
   <% end %>
+</tr>
+<tr class="govuk-table__row case-row">
+  <td class="govuk-table__cell"></td>
+  <td class="govuk-table__cell" colspan="7">Assigned to: <%= kase.agent_name %></td>
 </tr>
