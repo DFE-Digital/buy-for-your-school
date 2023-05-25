@@ -29,9 +29,9 @@ en:
           framework_requests/special_requirements_form:
             attributes:
               special_requirements:
-                blank: Enter what your requirements are
+                blank: Enter your access needs
               special_requirements_choice:
-                blank: Select whether you want to tell us about any special requirements
+                blank: Select yes if you have access needs
           framework_requests/select_organisation_form:
             attributes:
               org_id:
@@ -111,9 +111,9 @@ en:
           invalid: Enter a valid number
           too_large: The amount cannot be larger than 9,999,999.99
         special_requirements_choice:
-          missing: Select whether you want to tell us about any special requirements
+          missing: Select yes if you have access needs
         special_requirements:
-          missing: Enter what your requirements are
+          missing: Enter your access needs
 
   # Find a Framework support request form
   download_specification:

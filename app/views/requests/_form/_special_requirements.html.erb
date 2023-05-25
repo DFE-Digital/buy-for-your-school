@@ -1,11 +1,11 @@
 <%= form.hidden_field :special_requirements_choice, value: form.object.special_requirements_choice %>
 
-<%= form.govuk_radio_buttons_fieldset :special_requirements,
+<%= form.govuk_radio_buttons_fieldset :special_requirements_choice,
       caption: { text: I18n.t("request.special_requirements.caption"), size: "l" },
       legend: { text: I18n.t("request.special_requirements.heading"), size: "l" },
       hint: { text: I18n.t("request.special_requirements.hint") } do %>
         <%= form.govuk_radio_button :special_requirements_choice, :yes, label: { text: I18n.t("generic.yes") } do %>
-          <%= form.govuk_text_area :special_requirements, rows: 3, label: { text: I18n.t("request.special_requirements.requirements") } %>
+          <%= form.govuk_text_area :special_requirements, rows: 3, label: { text: I18n.t("request.special_requirements.requirements") }, hint: { text: I18n.t("request.special_requirements.requirements_hint") } %>
         <% end %>
         <%= form.govuk_radio_button :special_requirements_choice, :no, label: { text: I18n.t("generic.no") } %>
 <% end %>

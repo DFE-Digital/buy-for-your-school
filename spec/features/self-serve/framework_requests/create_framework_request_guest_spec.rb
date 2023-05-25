@@ -231,13 +231,13 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       it "has the correct attributes" do
-        expect(page).to have_text "Special requirements"
-        expect(page).to have_text "Do you have any special requirements when you communicate or use technology and/or online services?"
+        expect(page).to have_text "Accessibility"
+        expect(page).to have_text "Do you have any access needs that we need to be aware of when we contact you?"
 
-        expect(page).to have_text "We will be contacting you by email or video call. Tell us about any adjustments we can make, so that we can help and interact with you in the best way possible."
+        expect(page).to have_text "We’ll contact you by email first. If we need more information we’ll arrange a video call with you later. Let us know if either of these need to be made accessible to you and how you’d like us to do that."
 
         expect(page).to have_unchecked_field "Yes"
-        expect(page).to have_field "What are your requirements?"
+        expect(page).to have_field "Tell us about your access needs"
         expect(page).to have_unchecked_field "No"
 
         expect(page).to have_button "Continue"

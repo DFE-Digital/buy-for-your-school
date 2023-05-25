@@ -10,7 +10,7 @@ describe FrameworkRequests::SpecialRequirementsForm, type: :model do
       context "when validation fails" do
         it "gives an error message" do
           expect(form).not_to be_valid
-          expect(form.errors.messages[:special_requirements_choice]).to eq ["Select whether you want to tell us about any special requirements"]
+          expect(form.errors.messages[:special_requirements_choice]).to eq ["Select yes if you have access needs"]
         end
       end
     end
@@ -33,7 +33,7 @@ describe FrameworkRequests::SpecialRequirementsForm, type: :model do
 
         it "gives an error message" do
           expect(form).not_to be_valid
-          expect(form.errors.messages[:special_requirements]).to eq ["Enter what your requirements are"]
+          expect(form.errors.messages[:special_requirements]).to eq ["Enter your access needs"]
         end
       end
     end
