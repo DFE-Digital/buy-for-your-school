@@ -40,5 +40,40 @@ module CaseHistory
         case_id: payload[:support_case_id],
       )
     end
+
+    def case_organisation_changed(payload)
+      record_state_change("Case organisation changed", payload)
+    end
+
+    def case_contact_details_changed(payload)
+      record_state_change("Case contact details changed", payload)
+    end
+
+    def case_source_changed(payload)
+      record_state_change("Source changed", payload)
+    end
+
+    def case_support_level_changed(payload)
+      record_state_change("Case support level changed", payload)
+    end
+
+    def case_value_changed(payload)
+      record_state_change("Case value changed", payload)
+    end
+
+  private
+
+    def record_state_change(reason, payload)
+      Support::Interaction.state_change.create!(
+        body: reason,
+        case_id: payload[:case_id],
+        agent_id: payload[:agent_id],
+        additional_data: additional_data_from(payload),
+      )
+    end
+
+    def additional_data_from(payload)
+      payload.except(:case_id, :agent_id).merge({ format_version: "2" })
+    end
   end
 end

@@ -60,6 +60,9 @@ module Support
       case_source_changed: 17,
       case_assigned: 18,
       case_opened: 19,
+      case_organisation_changed: 20,
+      case_contact_changed: 21,
+      case_level_changed: 22,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

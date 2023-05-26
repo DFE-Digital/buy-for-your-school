@@ -13,22 +13,50 @@ describe "Agent can change case summary" do
     end
   end
 
-  it "persists the changed support_level" do
-    choose "1 - General guidance"
-    click_button "Continue"
-    click_button "Save"
-    support_case.reload
+  context "when the support level is updated" do
+    before do
+      choose "1 - General guidance"
+      click_button "Continue"
+      click_button "Save"
+      support_case.reload
+    end
 
-    expect(support_case.support_level).to eq "L1"
+    it "persists the changed support_level" do
+      expect(support_case.support_level).to eq "L1"
+    end
+
+    it "creates a support level changed interaction" do
+      interaction = Support::Interaction.first
+
+      expect(interaction.body).to eq "Case support level changed"
+      expect(interaction.additional_data).to eq({
+        "format_version" => "2",
+        "support_level" => "L1",
+      })
+    end
   end
 
-  it "persists the changed case value" do
-    fill_in "Case value or estimated contract value (optional)", with: "123.32"
-    click_button "Continue"
-    click_button "Save"
-    support_case.reload
+  context "when the case value is updated" do
+    before do
+      fill_in "Case value or estimated contract value (optional)", with: "123.32"
+      click_button "Continue"
+      click_button "Save"
+      support_case.reload
+    end
 
-    expect(support_case.value).to eq(123.32)
+    it "persists the changed case value" do
+      expect(support_case.value).to eq(123.32)
+    end
+
+    it "creates a value change interaction" do
+      interaction = Support::Interaction.first
+
+      expect(interaction.body).to eq "Case value changed"
+      expect(interaction.additional_data).to eq({
+        "format_version" => "2",
+        "procurement_value" => "123.32",
+      })
+    end
   end
 
   context "when the case source is updated" do
@@ -46,7 +74,10 @@ describe "Agent can change case summary" do
     it "creates a source change interaction" do
       interaction = Support::Interaction.first
       expect(interaction.body).to eq "Source changed"
-      expect(interaction.additional_data).to eq({ "to" => "incoming_email", "from" => "nw_hub" })
+      expect(interaction.additional_data).to eq({
+        "format_version" => "2",
+        "source" => "incoming_email",
+      })
     end
   end
 end
