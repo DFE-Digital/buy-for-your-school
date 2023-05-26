@@ -1,6 +1,6 @@
 <%
   tab = defined?(tab) ? tab : nil
-  support_level = 1 + kase.read_attribute_before_type_cast(:support_level)
+  support_level = kase.support_level.nil? ? "Not set" : 1 + kase.read_attribute_before_type_cast(:support_level)
   bottom_row_span = 7 + (show_assigned ? 1 : 0)
 %>
 
