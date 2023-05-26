@@ -10,7 +10,7 @@ module Support
     def update
       @case_organisation_form = CaseOrganisationForm.from_validation(validation)
 
-      if validation.success? && @case_organisation_form.assign_organisation_to_case(current_case)
+      if validation.success? && @case_organisation_form.assign_organisation_to_case(current_case, current_agent.id)
         redirect_to support_case_path(current_case, anchor: "school-details"),
                     notice: I18n.t("support.case_organisation.flash.updated")
       else

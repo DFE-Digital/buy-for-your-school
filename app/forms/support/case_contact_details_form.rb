@@ -13,11 +13,13 @@ module Support
       new(first_name: kase.first_name, last_name: kase.last_name, email: kase.email, phone: kase.phone_number, extension_number: kase.extension_number)
     end
 
-    def update_contact_details(kase)
-      kase.update(
+    def update_contact_details(kase, agent_id)
+      CaseManagement::UpdateCaseContactDetails.new.call(
+        support_case_id: kase.id,
+        agent_id:,
         first_name:,
         last_name:,
-        phone_number: phone,
+        phone:,
         email:,
         extension_number:,
       )

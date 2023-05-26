@@ -35,6 +35,9 @@ RSpec.describe Support::Interaction, type: :model do
       case_source_changed
       case_assigned
       case_opened
+      case_organisation_changed
+      case_contact_changed
+      case_level_changed
     ])
   end
 

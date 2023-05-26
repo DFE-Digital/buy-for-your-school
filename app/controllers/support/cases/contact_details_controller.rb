@@ -7,7 +7,7 @@ module Support
     def update
       @case_contact_details_form = CaseContactDetailsForm.from_validation(validation)
 
-      if validation.success? && @case_contact_details_form.update_contact_details(current_case)
+      if validation.success? && @case_contact_details_form.update_contact_details(current_case, current_agent.id)
         redirect_to support_case_path(current_case, anchor: "school-details"),
                     notice: I18n.t("support.case_contact_details.flash.updated")
       else
