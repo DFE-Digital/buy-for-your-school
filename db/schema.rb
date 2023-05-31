@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_130609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -188,6 +188,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
     t.integer "energy_request_about"
     t.boolean "have_energy_bill"
     t.integer "energy_alternative"
+    t.uuid "category_id"
+    t.text "category_other"
+    t.index ["category_id"], name: "index_framework_requests_on_category_id"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -241,6 +244,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
     t.datetime "updated_at", null: false
     t.jsonb "further_information"
     t.index ["step_id"], name: "index_radio_answers_on_step_id"
+  end
+
+  create_table "request_for_help_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.string "slug"
+    t.uuid "parent_id"
+    t.uuid "support_category_id"
+    t.boolean "archived", default: false, null: false
+    t.datetime "archived_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_request_for_help_categories_on_parent_id"
+    t.index ["slug"], name: "index_request_for_help_categories_on_slug"
+    t.index ["support_category_id"], name: "index_request_for_help_categories_on_support_category_id"
   end
 
   create_table "sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -722,9 +740,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_105021) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "all_cases_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
+  add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
   add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
+  add_foreign_key "request_for_help_categories", "request_for_help_categories", column: "parent_id"
+  add_foreign_key "request_for_help_categories", "support_categories"
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
   add_foreign_key "support_agents", "support_towers"
   add_foreign_key "support_case_attachments", "support_cases"

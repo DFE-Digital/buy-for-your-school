@@ -8,7 +8,10 @@ module Support
     belongs_to :tower, class_name: "Support::Tower", foreign_key: "support_tower_id", optional: true
     has_many :cases, class_name: "Support::Case"
     belongs_to :parent, class_name: "Support::Category", optional: true
-    has_many :sub_categories, class_name: "Support::Category", foreign_key: "parent_id"
+    has_many :sub_categories,
+             -> { order(Arel.sql("CASE WHEN support_categories.title = 'Not yet known' THEN 2 WHEN support_categories.title LIKE 'Other (%' THEN 1 ELSE 0 END ASC, support_categories.title ASC")) },
+             class_name: "Support::Category",
+             foreign_key: "parent_id"
 
     # Disabled due to https://github.com/rubocop/rubocop-rails/issues/231
     validates :title, presence: true, uniqueness: { scope: :parent_id }

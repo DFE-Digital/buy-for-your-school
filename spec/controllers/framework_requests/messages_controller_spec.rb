@@ -6,9 +6,9 @@ describe FrameworkRequests::MessagesController, type: :controller do
 
     before { Flipper.disable(:energy_bill_flow) }
 
-    it "redirects to the procurement amount page" do
+    it "redirects to the category page" do
       post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/procurement_amount"
+      expect(response).to redirect_to "/procurement-support/categories"
     end
   end
 
@@ -24,9 +24,9 @@ describe FrameworkRequests::MessagesController, type: :controller do
   context "when the user has chosen not to upload a bill" do
     let(:framework_request) { create(:framework_request, is_energy_request: false) }
 
-    it "redirects to the procurement amount page" do
+    it "redirects to the category page" do
       post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/procurement_amount"
+      expect(response).to redirect_to "/procurement-support/categories"
     end
   end
 

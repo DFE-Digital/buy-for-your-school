@@ -17,7 +17,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = message_framework_requests_path(framework_support_form: form.common)
+      @back_url = categories_framework_requests_path(category_path: framework_request.category&.ancestors_slug, framework_support_form: @form.common)
     end
   end
 end

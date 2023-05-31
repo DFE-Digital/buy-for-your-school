@@ -1,0 +1,20 @@
+<%= content_for :title, @page_title %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<span class="govuk-caption-l">
+  <%= I18n.t("faf.categories.subtitle") %>
+</span>
+
+<%= form.govuk_radio_buttons_fieldset(:category_slug, legend: { text: @page_title, tag: :h1, size: "l" }) do %>
+  <% form.object.category_options.each_with_index do |category, index| %>
+    <% conditional_content = category.enable_conditional_content ? ->{ form.govuk_text_area :category_other, rows: 5, label: { text: I18n.t("faf.categories.please_specify") } } : nil %>
+    <%= form.govuk_radio_button :category_slug, category.slug, label: { text: category.title }, hint: { text: category.description }, link_errors: index == 0, &conditional_content %>
+  <% end %>
+  <% if form.object.enable_divider %>
+    <%= form.govuk_radio_divider %>
+    <% form.object.category_divider_options.each do |option| %>
+      <%= form.govuk_radio_button :category_slug, option.slug, label: { text: option.title }, hint: { text: option.description } %>
+    <% end %>
+  <% end %>
+<% end %>

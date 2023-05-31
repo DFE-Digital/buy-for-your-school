@@ -51,6 +51,7 @@ categories:
         slug: vle
       - title: Safeguarding & Content
         slug: safeguarding
+        is_archived: true
       - title: Server Configuration & Support
         slug: servers
       - title: Switches & Routers
@@ -72,6 +73,7 @@ categories:
       - title: Cleaning Products
       - title: Cleaning Services
       - title: Construction
+        is_archived: true
       - title: Fire Safety (Goods & Systems)
       - title: Furniture
       - title: Grounds & Winter Maintenance
@@ -79,10 +81,12 @@ categories:
         is_archived: true
       - title: Mechanical & Electrical Systems
       - title: Modular Buildings
+        is_archived: true
       - title: MUGAs
       - title: PPE
       - title: Removal & relocation
       - title: Roof Maintenance
+        is_archived: true
       - title: Security & CCTV
       - title: Statutory testing & FM Compliance
       - title: Uniform
@@ -135,16 +139,19 @@ categories:
     slug: business
     tower: Services
     sub_categories:
+      - title: Vehicle hire & purchase
       - title: Audit Accessibility (buildings and digital)
       - title: Audit Financial
       - title: Audit Safeguarding
       - title: Books
       - title: Insurance
       - title: Leasing
+      - title: Passenger transport
       - title: Property leasing agents
       - title: Spend Analysis
       - title: Stationery supply & office supplies
       - title: Transport
+        is_archived: true
       - title: Other (BS)
 
   - title: Financial
