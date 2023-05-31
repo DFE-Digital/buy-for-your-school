@@ -325,6 +325,18 @@ en:
         initial: Upload your energy information
         uploading: Your files are uploading
         uploaded: Your files have been uploaded
+    categories:
+      title: What type of goods or service do you need?
+      category_title: What do you need in %{category}?
+      subtitle: Type of goods or service
+      please_specify: Please specify
+      multiple:
+        title: I'm buying more than one thing
+        paragraphs:
+          - We support procurements for individual categories of goods or services, for example catering, energy, furniture and so on.
+          - This is because separate procurements need to be run for each.
+          - If you're buying more than one category of goods or services, you will need to make a separate request for each one.
+        button: Choose category
     check_answers:
       button:
         send: Send request
@@ -336,6 +348,7 @@ en:
         school_type: School type
         single: Single
         bills_attached: Bills attached
+        category: Type of goods or service
       header: Send your request
       response_time: Once you send this request, we will review it and get in touch within 2 working days.
       aria:
@@ -347,6 +360,7 @@ en:
         change_procurement_amount: "Change procurement amount"
         change_bills_attached: "Change bills attached"
         change_special_requirements: "Change special requirements"
+        change_category: "Change type of goods or service"
     confirm_group_or_trust:
       caption: About your school
       choice:

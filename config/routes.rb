@@ -107,6 +107,9 @@ Rails.application.routes.draw do
         get "/message", to: "messages#index"
         post "/message", to: "messages#create"
 
+        get "/categories/(*category_path)", to: "categories#index", as: "categories"
+        post "/categories/(*category_path)", to: "categories#create"
+
         get "/procurement_amount", to: "procurement_amounts#index"
         post "/procurement_amount", to: "procurement_amounts#create"
 
@@ -122,6 +125,10 @@ Rails.application.routes.draw do
         resource :email, only: %i[edit update], as: :framework_request_email
         resource :bill_uploads, only: %i[edit update], as: :framework_request_bill_uploads
         resource :message, only: %i[edit update], as: :framework_request_message
+        resource :category, only: [], as: :framework_request_category do
+          get "edit/(*category_path)", to: "categories#edit", as: "edit"
+          patch "(*category_path)", to: "categories#update", as: ""
+        end
         resource :procurement_amount, only: %i[edit update], as: :framework_request_procurement_amount
         resource :special_requirements, only: %i[edit update], as: :framework_request_special_requirements
       end

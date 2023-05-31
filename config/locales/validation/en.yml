@@ -8,6 +8,12 @@ en:
               email:
                 blank: Enter an email address
                 invalid: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
+          framework_requests/category_form:
+            attributes:
+              category_slug:
+                blank: Select the type of goods or service you need
+              category_other:
+                blank: Specify the type of goods or service you need
           framework_requests/message_form:
             attributes:
               message_body:

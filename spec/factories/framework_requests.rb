@@ -14,5 +14,7 @@ FactoryBot.define do
     energy_request_about {}
     have_energy_bill {}
     energy_alternative {}
+    category {}
+    category_other {}
   end
 end

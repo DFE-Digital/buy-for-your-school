@@ -1,16 +1,22 @@
 RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   subject(:request) do
     # Specialist School for Testing
-    create(:framework_request, org_id: "100253", group: false)
+    create(:framework_request, org_id: "100253", group: false, category: catering_category)
   end
 
   include_context "with schools and groups"
+
+  let(:fm_category) { create(:request_for_help_category, title: "FM", slug: "fm") }
+  let(:catering_category) { create(:request_for_help_category, title: "Catering", slug: "catering", parent: fm_category) }
+  let(:ict_category) { create(:request_for_help_category, title: "ICT", slug: "ict") }
 
   let(:keys) { all("dt.govuk-summary-list__key") }
   let(:values) { all("dd.govuk-summary-list__value") }
   let(:actions) { all("dd.govuk-summary-list__actions") }
 
   before do
+    create(:request_for_help_category, title: "Hardware", slug: "hardware", parent: ict_category)
+
     visit "/procurement-support/#{request.id}"
   end
 
@@ -46,6 +52,10 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     expect(keys[4]).to have_text "Description of request"
     expect(values[4]).to have_text "please help!"
     expect(actions[4]).to have_link "Change"
+
+    expect(keys[5]).to have_text "Type of goods or service"
+    expect(values[5]).to have_text "Catering"
+    expect(actions[5]).to have_link "Change"
   end
 
   it "edit name" do
@@ -189,6 +199,20 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
         click_continue
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
       end
+    end
+  end
+
+  describe "when changing the category" do
+    before do
+      click_link "edit-category"
+      choose "ICT"
+      click_continue
+      choose "Hardware"
+      click_continue
+    end
+
+    it "changes the category" do
+      expect(page).to have_text "Hardware"
     end
   end
 end

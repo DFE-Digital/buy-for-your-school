@@ -63,8 +63,8 @@ private
       request_text: request.message_body,
       procurement_amount: request.__getobj__.procurement_amount,
       special_requirements: request.special_requirements.presence,
-      category_id: detected_category_id,
-      detected_category_id:,
+      category_id: request.category.support_category&.id,
+      other_category: request.category_other,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
@@ -77,18 +77,12 @@ private
         "email": user.email,
         "message": request.message_body,
         "referrer": referrer,
-        "detected_category_id": detected_category_id,
         "bills": request.bill_filenames,
       },
     }
     Support::CreateInteraction.new(@kase.id, "faf_support_request", nil, interaction_attrs).call
 
     @kase
-  end
-
-  def detected_category_id
-    @results ||= Support::CategoryDetection.results_for(request.message_body, is_energy_request: request.is_energy_request, num_results: 1)
-    @results.first.try(:category_id) if @results.any?
   end
 
   def send_confirmation_email

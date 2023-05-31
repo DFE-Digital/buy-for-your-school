@@ -2,15 +2,16 @@ require "rails_helper"
 
 describe SubmitFrameworkRequest do
   let(:email_confirmation) { double(call: true) }
-  let(:request) { create(:framework_request, message_body: "An energy case", energy_alternative:) }
+  let(:request) { create(:framework_request, message_body: "An energy case", energy_alternative:, category: rfh_category, category_other:) }
   let(:referrer) { nil }
   let(:energy_alternative) { nil }
-  let(:category_detection_results) { [] }
   let(:email_confirmation_parameters) { anything }
+  let(:support_category) { create(:support_category, title: "Other (Energy)", slug: "other-energy") }
+  let(:rfh_category) { create(:request_for_help_category, title: "Other", slug: "other", support_category:) }
+  let(:category_other) { "other energy requirements" }
 
   before do
     allow(Emails::Confirmation).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation)
-    allow(Support::CategoryDetection).to receive(:results_for).with("An energy case", anything).and_return(category_detection_results)
   end
 
   describe "#call" do
@@ -18,41 +19,11 @@ describe SubmitFrameworkRequest do
       expect { described_class.new(request:, referrer:).call }.to change(Support::Case, :count).from(0).to(1)
     end
 
-    context "when a category can be detected for the given request text" do
-      let(:electricity) { create(:support_category, title: "Electricity") }
-      let(:category_detection_results) { [Support::CategoryDetection.new(category_id: electricity.id)] }
+    it "sets the right category on the case" do
+      described_class.new(request:, referrer:).call
 
-      it "sets that category on the new case" do
-        described_class.new(request:, referrer:).call
-        expect(Support::Case.last.category).to eq(electricity)
-      end
-    end
-
-    context "when the request is an energy request" do
-      let(:request) { create(:framework_request, message_body: "An energy case", is_energy_request: true) }
-
-      it "limits detectable categories to Energy & Utility tower ones" do
-        described_class.new(request:, referrer:).call
-        expect(Support::CategoryDetection).to have_received(:results_for).with("An energy case", is_energy_request: true, num_results: 1)
-      end
-    end
-
-    context "when the request is not an energy request" do
-      let(:request) { create(:framework_request, message_body: "An energy case", is_energy_request: false) }
-
-      it "does not limit detectable categories to Energy & Utility tower ones" do
-        described_class.new(request:, referrer:).call
-        expect(Support::CategoryDetection).to have_received(:results_for).with("An energy case", is_energy_request: false, num_results: 1)
-      end
-    end
-
-    context "when a category cannot be detected for the given request text" do
-      let(:category_detection_results) { [] }
-
-      it "the case category remains nil" do
-        described_class.new(request:, referrer:).call
-        expect(Support::Case.last.category).to be_nil
-      end
+      expect(Support::Case.last.category).to eq support_category
+      expect(Support::Case.last.other_category).to eq category_other
     end
 
     context "when it's an energy request" do

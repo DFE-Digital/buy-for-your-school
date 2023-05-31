@@ -16,7 +16,7 @@ module FrameworkRequests
       if form.allow_bill_upload?
         special_requirements_framework_requests_path(framework_support_form: form.common)
       else
-        procurement_amount_framework_requests_path(framework_support_form: form.common)
+        categories_framework_requests_path(framework_support_form: form.common)
       end
     end
 

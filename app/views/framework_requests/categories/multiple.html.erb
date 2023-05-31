@@ -1,0 +1,17 @@
+<%= content_for :title, I18n.t("faf.categories.multiple.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">
+      <%= I18n.t("faf.categories.subtitle") %>
+    </span>
+
+    <h1 class="govuk-heading-l"><%= I18n.t("faf.categories.multiple.title") %></h1>
+
+    <% I18n.t("faf.categories.multiple.paragraphs").each do |p| %>
+      <p class="govuk-body"><%= p %></p>
+    <% end %>
+
+    <%= link_to I18n.t("faf.categories.multiple.button"), @back_url, class: "govuk-button", role: "button" %>
+  </div>
+</div>

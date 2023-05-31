@@ -75,6 +75,21 @@
           <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_message_path(@framework_request), class: "govuk-link", id: "edit-message", "aria-label": I18n.t("faf.check_answers.aria.change_message")  %>
         </dd>
       </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.category") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.category&.title %>
+          <% if @framework_request.category&.other? %>
+            <br><br>
+            <%= @framework_request.category_other %>
+          <% end %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_category_path(@framework_request), class: "govuk-link", id: "edit-category", "aria-label": I18n.t("faf.check_answers.aria.change_category")  %>
+        </dd>
+      </div>
 
       <% unless @framework_request.allow_bill_upload? %>
         <div class="govuk-summary-list__row">

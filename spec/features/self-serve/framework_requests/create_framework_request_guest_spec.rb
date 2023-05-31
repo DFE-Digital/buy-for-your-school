@@ -36,6 +36,11 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     click_continue
   end
 
+  def complete_category_step
+    choose "A category"
+    click_continue
+  end
+
   def complete_procurement_amount_step
     fill_in "framework_support_form[procurement_amount]", with: "120.32"
     click_continue
@@ -46,6 +51,8 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   let(:actions) { all("dd.govuk-summary-list__actions") }
 
   before do
+    create(:request_for_help_category, title: "A category", slug: "a")
+
     visit "/procurement-support/sign_in"
     choose "No, continue without a DfE Sign-in account"
     click_continue
@@ -207,6 +214,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_name_step
         complete_email_step
         complete_help_message_step
+        complete_category_step
       end
 
       it "has the correct attributes" do
@@ -227,6 +235,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         complete_name_step
         complete_email_step
         complete_help_message_step
+        complete_category_step
         complete_procurement_amount_step
       end
 
