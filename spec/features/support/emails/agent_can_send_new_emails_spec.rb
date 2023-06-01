@@ -16,21 +16,22 @@ describe "Agent can send new emails", js: true do
   describe "creating a new thread", js: true do
     before do
       click_link "Create a new message thread"
-      click_on "Show CC"
-      click_on "Show BCC"
-
       to_input = find("input[name$='[to]']")
       to_input.fill_in with: "to@email.com"
       to_add_button = find("button[data-input-field$='[to]']")
       to_add_button.click
-      cc_input = find("input[name$='[cc]']")
-      cc_input.fill_in with: "cc@email.com"
-      cc_add_button = find("button[data-input-field$='[cc]']")
-      cc_add_button.click
+
+      click_on "Show BCC"
       bcc_input = find("input[name$='[bcc]']")
       bcc_input.fill_in with: "bcc@email.com"
       bcc_add_button = find("button[data-input-field$='[bcc]']")
       bcc_add_button.click
+
+      click_on "Show CC"
+      cc_input = find("input[name$='[cc]']")
+      cc_input.fill_in with: "cc@email.com"
+      cc_add_button = find("button[data-input-field$='[cc]']")
+      cc_add_button.click
     end
 
     it "pre-fills the default subject line" do
