@@ -94,7 +94,6 @@ RSpec.feature "Case summary" do
       within "ul.govuk-list" do
         expect(page).to have_link "Change case owner", href: "/support/cases/#{support_case.id}/assignments/new", class: "govuk-link"
         expect(page).to have_link "Add a case note", href: "/support/cases/#{support_case.id}/interactions/new?option=note", class: "govuk-link"
-        expect(page).to have_link "Send template email", href: "/support/cases/#{support_case.id}/email/templates", class: "govuk-link"
         expect(page).to have_link "Log contact with school", href: "/support/cases/#{support_case.id}/interactions/new?option=contact", class: "govuk-link"
       end
     end
