@@ -15,7 +15,7 @@
           form: @filter_form,
           scope: "filter_#{scope}_cases",
           filter_url: support_tower_path(@tower),
-          clear_url: support_tower_path(@tower),
+          clear_url: support_tower_path(@tower, clear: true),
           tab: tower_id,
           hide_towers: true %>
 
