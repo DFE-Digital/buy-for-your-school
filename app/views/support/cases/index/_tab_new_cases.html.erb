@@ -11,7 +11,7 @@
               form: @new_cases_filter_form,
               scope: :filter_new_cases_form,
               filter_url: support_cases_path(anchor: "new-cases"),
-              clear_url: support_cases_path(anchor: "new-cases"),
+              clear_url: support_cases_path(anchor: "new-cases", clear: true),
               tab: "new-cases" %>
 
   <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@new_cases), tab: :new_cases, sort_scope: :filter_new_cases_form, sort_form: @new_cases_filter_form %>

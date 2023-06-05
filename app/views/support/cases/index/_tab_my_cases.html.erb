@@ -11,7 +11,7 @@
               form: @my_cases_filter_form,
               scope: :filter_my_cases_form,
               filter_url: support_cases_path(anchor: "my-cases"),
-              clear_url: support_cases_path(anchor: "my-cases"),
+              clear_url: support_cases_path(anchor: "my-cases", clear: true),
               tab: "my-cases" %>
 
   <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@my_cases), sort_scope: :filter_my_cases_form, sort_form: @my_cases_filter_form, show_assigned: false %>
