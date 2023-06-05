@@ -205,7 +205,7 @@ Rails.application.routes.draw do
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template
-            resources :templates, only: %i[index], param: :template
+            # resources :templates, only: %i[index], param: :template
           end
         end
         resources :message_threads, only: %i[index show new] do

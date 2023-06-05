@@ -849,7 +849,6 @@ en:
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
-        send_template_email: Send template email
         source:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
