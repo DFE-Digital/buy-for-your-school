@@ -62,6 +62,6 @@ RSpec.feature "Admin page" do
   end
 
 private
-  
+
   def date_formatted_for_ui(date) = date.strftime(I18n.t("date.formats.presenter")).strip
 end
