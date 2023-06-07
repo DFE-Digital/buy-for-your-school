@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Agents::AssignRoles do
   it "updates the roles of an agent to those specified" do
-    cms_policy = double("cms_policy", grantable_roles: %w[admin tester other])
+    cms_policy = double("cms_policy", grantable_roles: %i[admin tester other])
     support_agent = create(:support_agent, roles: [])
     support_agent_id = support_agent.id
     new_roles = %w[admin tester]
@@ -12,7 +12,7 @@ describe Agents::AssignRoles do
   end
 
   it "does not override roles I am not eligible to change" do
-    cms_policy = double("cms_policy", grantable_roles: %w[admin tester])
+    cms_policy = double("cms_policy", grantable_roles: %i[admin tester])
     support_agent = create(:support_agent, roles: %w[dont_change tester])
     support_agent_id = support_agent.id
     new_roles = %w[admin]

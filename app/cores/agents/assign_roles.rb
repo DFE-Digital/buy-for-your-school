@@ -9,10 +9,10 @@ module Agents
 
     def safe_assign_new_roles(existing_roles:, new_roles:, cms_policy:)
       # find the roles current agent is ineligible to edit
-      existing_roles_minus_those_eligible_to_grant = existing_roles.reject { |role| role.in?(cms_policy.grantable_roles) }
+      existing_roles_minus_those_eligible_to_grant = existing_roles.reject { |role| role.to_sym.in?(cms_policy.grantable_roles) }
 
       # of the roles to change, find the ones the current agent is eligible to grant
-      new_roles_eligible_to_grant = new_roles.select { |role| role.in?(cms_policy.grantable_roles) }
+      new_roles_eligible_to_grant = new_roles.select { |role| role.to_sym.in?(cms_policy.grantable_roles) }
 
       # combine
       existing_roles_minus_those_eligible_to_grant + new_roles_eligible_to_grant
