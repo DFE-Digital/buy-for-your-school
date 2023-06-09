@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_130609) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_31_145503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -445,6 +445,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_130609) do
     t.boolean "hidden", default: false
   end
 
+  create_table "support_email_template_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "template_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["template_id"], name: "index_support_email_template_attachments_on_template_id"
+  end
+
   create_table "support_email_template_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.uuid "parent_id"
@@ -755,6 +765,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_130609) do
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
   add_foreign_key "support_categories", "support_towers"
+  add_foreign_key "support_email_template_attachments", "support_email_templates", column: "template_id"
   add_foreign_key "support_email_template_groups", "support_email_template_groups", column: "parent_id"
   add_foreign_key "support_email_templates", "support_agents", column: "created_by_id"
   add_foreign_key "support_email_templates", "support_agents", column: "updated_by_id"

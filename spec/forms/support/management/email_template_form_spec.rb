@@ -85,11 +85,13 @@ describe Support::Management::EmailTemplateForm, type: :model do
   end
 
   describe "#save!" do
+    let(:agent) { create(:support_agent) }
+    let(:group) { create(:support_email_template_group, parent: nil) }
+
     context "when saving a new template" do
-      let(:agent) { create(:support_agent) }
-      let(:group) { create(:support_email_template_group, parent: nil) }
+      let(:attachments) { [fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")] }
       let(:params) do
-        { group_id: group.id, stage: 2, title: "New template", description: "New template description", subject: "New subject", body: "New body", agent: }
+        { group_id: group.id, stage: 2, title: "New template", description: "New template description", subject: "New subject", body: "New body", agent:, attachments: }
       end
 
       it "persists all given attributes" do
@@ -103,17 +105,19 @@ describe Support::Management::EmailTemplateForm, type: :model do
         expect(saved_template.body).to eq("New body")
         expect(saved_template.created_by).to eq(agent)
         expect(saved_template.updated_by).to eq(agent)
+        expect(saved_template.attachments.size).to eq(1)
+        expect(saved_template.attachments.first.file_name).to eq("text-file.txt")
       end
     end
 
     context "when updating an existing template" do
       let(:old_agent) { create(:support_agent) }
       let(:new_agent) { create(:support_agent) }
-      let(:group) { create(:support_email_template_group, parent: nil) }
       let(:subgroup) { create(:support_email_template_group, parent: group) }
-      let!(:email_template) { create(:support_email_template, group:, title: "Old template", created_by: old_agent, updated_by: old_agent) }
+      let(:attachments) { [fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")] }
+      let!(:email_template) { create(:support_email_template, group:, title: "Old template", created_by: old_agent, updated_by: old_agent, attachments: [create(:support_email_template_attachment)]) }
       let(:params) do
-        { id: email_template.id, group_id: group.id, subgroup_id: subgroup.id, stage: 4, title: "New template", description: "New template description", body: "New body", agent: new_agent }
+        { id: email_template.id, group_id: group.id, subgroup_id: subgroup.id, stage: 4, title: "New template", description: "New template description", body: "New body", agent: new_agent, attachments: }
       end
 
       it "updates all given attributes" do
@@ -125,8 +129,20 @@ describe Support::Management::EmailTemplateForm, type: :model do
           .and(change { email_template.reload.description }.from("This is a test email template").to("New template description"))
           .and(change { email_template.reload.body }.from("Test email template body").to("New body"))
           .and(change { email_template.reload.updated_by }.from(old_agent).to(new_agent))
+          .and(change { email_template.reload.attachments.size }.from(1).to(2))
           .and(not_change { email_template.reload.created_by }),
         )
+      end
+    end
+
+    context "when there are attachments to remove" do
+      let!(:email_template) { create(:support_email_template, group:, title: "Test template", created_by: agent, updated_by: agent) }
+      let!(:attachment_1) { create(:support_email_template_attachment, template: email_template) }
+      let!(:attachment_2) { create(:support_email_template_attachment, template: email_template) }
+      let(:params) { { id: email_template.id, group_id: group.id, remove_attachments: [attachment_1.id, attachment_2.id].to_json, agent: } }
+
+      it "removes given attachments" do
+        expect { form.save! }.to change(Support::EmailTemplateAttachment, :count).by(-2)
       end
     end
   end
@@ -187,6 +203,50 @@ describe Support::Management::EmailTemplateForm, type: :model do
     context "when no ID is provided" do
       it "returns a new email template" do
         expect(form.email_template.id).to be_nil
+      end
+    end
+  end
+
+  describe "#files_safe" do
+    let(:text_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
+    let(:js_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "text/javascript") }
+
+    context "when there are no attachments" do
+      let(:params) { { attachments: [] } }
+
+      before { form.files_safe }
+
+      it "does not create a validation error" do
+        expect(form.errors.messages[:attachments]).to be_empty
+      end
+    end
+
+    context "when the attachments do not contain infected files" do
+      let(:params) { { attachments: [text_file, js_file] } }
+
+      before do
+        allow(Support::VirusScanner).to receive(:uploaded_file_safe?).and_return(true)
+
+        form.files_safe
+      end
+
+      it "does not create a validation error" do
+        expect(form.errors.messages[:attachments]).to be_empty
+      end
+    end
+
+    context "when the attachments contain infected files" do
+      let(:params) { { attachments: [text_file, js_file] } }
+
+      before do
+        allow(Support::VirusScanner).to receive(:uploaded_file_safe?).with(text_file).and_return(true)
+        allow(Support::VirusScanner).to receive(:uploaded_file_safe?).with(js_file).and_return(false)
+
+        form.files_safe
+      end
+
+      it "creates a validation error" do
+        expect(form.errors.messages[:attachments]).to eq ["One or more attachments contain a virus"]
       end
     end
   end

@@ -5,6 +5,7 @@ describe Support::EmailTemplate, type: :model do
   it { is_expected.to belong_to(:created_by).class_name("Support::Agent") }
   it { is_expected.to belong_to(:updated_by).class_name("Support::Agent").optional }
   it { is_expected.to have_many(:emails).class_name("Support::Email").with_foreign_key("template_id") }
+  it { is_expected.to have_many(:attachments).class_name("Support::EmailTemplateAttachment").with_foreign_key("template_id") }
   it { is_expected.to validate_inclusion_of(:stage).in_array([0, 1, 2, 3, 4]).allow_nil }
 
   describe "default ordering" do

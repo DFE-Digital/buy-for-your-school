@@ -43,12 +43,23 @@ module Support
         redirect_to support_management_email_templates_path, success: I18n.t("support.management.email_templates.destroy.notice")
       end
 
+      def attachment_list
+        files = Support::EmailTemplate.find(params[:id]).attachments&.map do |attachment|
+          {
+            file_id: attachment.id,
+            name: attachment.file_name,
+            url: support_document_download_path(attachment, type: attachment.class),
+          }
+        end
+        render status: :ok, json: files.to_json
+      end
+
     private
 
       def form_params
-        params.require(:email_template_form).permit(*%i[
-          group_id subgroup_id stage title description subject body
-        ]).merge(id: params[:id], agent: current_agent)
+        params.require(:email_template_form).permit(
+          :group_id, :subgroup_id, :stage, :title, :description, :subject, :body, :remove_attachments, attachments: []
+        ).merge(id: params[:id], agent: current_agent)
       end
 
       def filter_params

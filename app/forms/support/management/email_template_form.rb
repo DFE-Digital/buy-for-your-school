@@ -7,6 +7,7 @@ module Support
       validates :title, presence: true
       validates :description, presence: true
       validates :body, presence: true
+      validate :files_safe
 
       attr_accessor(
         :id,
@@ -17,6 +18,8 @@ module Support
         :description,
         :subject,
         :body,
+        :attachments,
+        :remove_attachments,
         :created_by,
         :updated_by,
         :agent,
@@ -49,9 +52,20 @@ module Support
         @subgroup = Support::EmailTemplateGroup.find(@subgroup_id) if @subgroup_id.present?
         @created_by = @agent if @agent.present? && @id.blank?
         @updated_by = @agent if @agent.present?
+        @files = @attachments
+        @attachments = @files&.map { |file| Support::EmailTemplateAttachment.new(file:) } || nil
+        @remove_attachments = @remove_attachments.present? ? JSON.parse(@remove_attachments) : nil
+      end
+
+      def files_safe
+        return if @files.blank?
+
+        results = @files.map { |file| Support::VirusScanner.uploaded_file_safe?(file) }
+        errors.add(:attachments, I18n.t("support.management.email_templates.common.unsafe_attachments")) unless results.all?
       end
 
       def save!
+        Support::EmailTemplateAttachment.destroy(@remove_attachments) if @remove_attachments.present?
         email_template.update!(email_template_attributes)
       end
 
@@ -77,8 +91,13 @@ module Support
 
       def email_template_attributes
         instance_values.slice(*Support::EmailTemplate.attribute_names, "created_by", "updated_by")
-          .merge(group: @subgroup.presence || @group, subject: @subject.presence)
+          .merge(
+            group: @subgroup.presence || @group,
+            subject: @subject.presence,
+            attachments: [email_template.attachments, @attachments].compact.reduce([], :|),
+          )
           .except("created_at", "updated_at")
+          .compact
       end
     end
   end

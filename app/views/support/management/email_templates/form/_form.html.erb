@@ -3,7 +3,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= form_with model: @form, scope: :email_template_form, method:, url:,
-        html: { "data-controller" => "email-templates-edit", "data-email-templates-edit-subgroup-url-value" => subgroups_support_management_email_template_groups_path } do |form| %>
+        html: {
+          "data-controller" => "email-templates-edit",
+          "data-email-templates-edit-subgroup-url-value" => subgroups_support_management_email_template_groups_path,
+          "data-email-templates-edit-attachment-list-url-value" => edit ? attachment_list_support_management_email_template_path : nil
+        } do |form| %>
       <%= form.govuk_error_summary %>
 
       <div class="govuk-grid-row">
@@ -53,11 +57,44 @@
               "data-tinymce-selector" => ".template-body-box",
               "data-tinymce-init-event" => "tinymce-init",
               "data-tinymce-key-up-event" => "tinymce-keyup",
-              "data-action" => "tinymce-init->email-templates-edit#findVariables tinymce-keyup->email-templates-edit#findVariables" %>
-          
-          <div class="govuk-button-group flex-align-center">
-            <%= form.submit submit_text, class: "govuk-button", role: "button" %>
+              "data-action" => "tinymce-init->email-templates-edit#displayVariablesWarning tinymce-keyup->email-templates-edit#displayVariablesWarning" %>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <div class="govuk-button-group">
+            <%= form.submit submit_text, class: "govuk-button", role: "button", "data-action" => "email-templates-edit#submit" %>
+            <span class="govuk-button govuk-button--secondary" role="button"
+              data-email-templates-edit-target="btnDisplayFileDialog">
+              <%= I18n.t("support.case.label.messages.reply.add_attachments") %>
+            </span>
             <%= link_to I18n.t("support.management.email_templates.new.cancel"), support_management_email_templates_path, class: "govuk-link govuk-link--no-visited-state" %>
+          </div>
+          <%= form.govuk_file_field :attachments, multiple: true, class: "govuk-!-display-none", "data-email-templates-edit-target" => "attachmentsField", form_group: { class: "govuk-!-display-none" } %>
+          <%= form.hidden_field :remove_attachments, "data-email-templates-edit-target" => "removeAttachmentsField" %>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-!-display-none" data-email-templates-edit-target="attachmentList">
+            <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.management.email_templates.common.attachments_added") %></h2>
+            <div data-email-templates-edit-target="attachmentPreview">
+              <div data-email-templates-edit-target="previewTemplate">
+                <div class="template-edit__attachment">
+                  <span class="template-edit__attachment-name" data-dz-name></span>
+                  <div class="template-edit__attachment-actions">
+                    <span class="template-edit__attachment-download govuk-!-display-none">
+                      <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-url><%= I18n.t("support.management.email_templates.edit.download") %></a>
+                    </span>
+                    <span class="template-edit__attachment-remove">
+                      <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.management.email_templates.edit.remove") %></a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

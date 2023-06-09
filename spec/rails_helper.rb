@@ -88,6 +88,14 @@ RSpec.configure do |config|
   config.before(:each, type: :feature) do
     define_basic_towers
   end
+
+  config.before(:each, :with_csrf_protection) do
+    ActionController::Base.allow_forgery_protection = true
+  end
+
+  config.after(:each, :with_csrf_protection) do
+    ActionController::Base.allow_forgery_protection = false
+  end
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

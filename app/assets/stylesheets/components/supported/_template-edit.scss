@@ -1,0 +1,25 @@
+.template-edit__attachment {
+  display: flex;
+  justify-content: space-between;
+  padding-top: govuk-spacing(2);
+  padding-bottom: govuk-spacing(2);
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
+.template-edit__attachment-name {
+  @include govuk-font($size: 19);
+}
+
+.template-edit__attachment-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: govuk-spacing(2);
+}
+
+.template-edit__attachment-download {
+  @include govuk-font($size: 19);
+}
+
+.template-edit__attachment-remove {
+  @include govuk-font($size: 19);
+}

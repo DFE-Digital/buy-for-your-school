@@ -1400,6 +1400,8 @@ en:
         common:
           stage: Stage
           variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
+          attachments_added: Attachments added
+          unsafe_attachments: One or more attachments contain a virus
         index:
           new: Create new template
           template_manager:
@@ -1439,6 +1441,8 @@ en:
           create: Create template
           cancel: Cancel
         edit:
+          download: Download
+          remove: Remove
           save: Save updates
         create:
           notice: Your template has been saved
