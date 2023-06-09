@@ -44,6 +44,14 @@
       </summary>
       <div class="govuk-details__text">
         <%= template.body_parsed.html_safe %>
+        <% unless template.attachments.empty? %>
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.management.email_templates.common.attachments_added") %></h2>
+          <% template.attachments.each do |attachment| %>
+            <div class="template-manager__attachment">
+              <span class="template-manager__attachment-name"><%= attachment.file_name %></span>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </details>
   </div>

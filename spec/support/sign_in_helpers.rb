@@ -39,8 +39,8 @@ module SignInHelpers
     allow_any_instance_of(::CurrentUser).to receive(:call).with(anything).and_return(user)
   end
 
-  def agent_is_signed_in(agent: nil)
-    user = create(:user, :caseworker)
+  def agent_is_signed_in(agent: nil, admin: false)
+    user = create(:user, :caseworker, admin:)
     agent ||= create(:support_agent, dsi_uid: user.dfe_sign_in_uid)
     user_is_signed_in(user:)
     allow_any_instance_of(Support::ApplicationController).to receive(:current_agent).and_return(Support::AgentPresenter.new(agent))
