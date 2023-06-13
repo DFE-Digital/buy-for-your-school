@@ -15,9 +15,9 @@ describe FrameworkRequests::MessagesController, type: :controller do
   context "when the user has chosen to upload a bill" do
     let(:framework_request) { create(:framework_request, is_energy_request: true, energy_request_about: "energy_contract", have_energy_bill: true) }
 
-    it "redirects to the special requirements page" do
+    it "redirects to the category page" do
       post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/special_requirements"
+      expect(response).to redirect_to "/procurement-support/categories"
     end
   end
 

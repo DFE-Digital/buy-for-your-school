@@ -13,11 +13,7 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      if form.allow_bill_upload?
-        special_requirements_framework_requests_path(framework_support_form: form.common)
-      else
-        categories_framework_requests_path(framework_support_form: form.common)
-      end
+      categories_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url

@@ -63,7 +63,7 @@ private
       request_text: request.message_body,
       procurement_amount: request.__getobj__.procurement_amount,
       special_requirements: request.special_requirements.presence,
-      category_id: request.category.support_category&.id,
+      category_id: request.category&.support_category&.id,
       other_category: request.category_other,
     }
 

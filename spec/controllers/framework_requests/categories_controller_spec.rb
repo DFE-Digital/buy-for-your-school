@@ -1,8 +1,11 @@
 require "./spec/support/shared/framework_request_controllers"
 
 describe FrameworkRequests::CategoriesController, type: :controller do
-  let(:framework_request) { create(:framework_request, category:) }
+  let(:framework_request) { create(:framework_request, category:, is_energy_request:, energy_request_about:, have_energy_bill:) }
   let(:category) { nil }
+  let(:is_energy_request) { false }
+  let(:energy_request_about) { nil }
+  let(:have_energy_bill) { false }
 
   let(:a) { create(:request_for_help_category, slug: "a") }
   let(:b) { create(:request_for_help_category, slug: "b", parent: a) }
@@ -91,8 +94,24 @@ describe FrameworkRequests::CategoriesController, type: :controller do
     context "when the user has chosen a final category" do
       before { post :create, params: { category_path: "a/b", framework_support_form: { category_slug: "c" } }, session: { framework_request_id: framework_request.id } }
 
-      it "redirects to the procurement amount page" do
-        expect(response).to redirect_to("/procurement-support/procurement_amount")
+      context "and they have chosen to upload a bill" do
+        let(:is_energy_request) { true }
+        let(:energy_request_about) { "energy_contract" }
+        let(:have_energy_bill) { true }
+
+        it "redirects to the accessibility page" do
+          expect(response).to redirect_to("/procurement-support/special_requirements")
+        end
+      end
+
+      context "and they have chosen not to upload a bill" do
+        let(:is_energy_request) { false }
+        let(:energy_request_about) { nil }
+        let(:have_energy_bill) { false }
+
+        it "redirects to the procurement amount page" do
+          expect(response).to redirect_to("/procurement-support/procurement_amount")
+        end
       end
     end
   end

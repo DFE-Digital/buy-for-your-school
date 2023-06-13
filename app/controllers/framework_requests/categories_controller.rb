@@ -22,11 +22,7 @@ module FrameworkRequests
 
       @form.save! if @form.new_path?
 
-      if @form.final_category?
-        redirect_to procurement_amount_framework_requests_path(framework_support_form: @form.common)
-      else
-        redirect_to categories_framework_requests_path(**@form.slugs, framework_support_form: @form.common)
-      end
+      redirect_to create_redirect_path
     end
 
     def update
@@ -43,6 +39,18 @@ module FrameworkRequests
   private
 
     def back_url = @back_url = determine_back_path
+
+    def create_redirect_path
+      if @form.final_category?
+        if @form.allow_bill_upload?
+          special_requirements_framework_requests_path(framework_support_form: @form.common)
+        else
+          procurement_amount_framework_requests_path(framework_support_form: @form.common)
+        end
+      else
+        categories_framework_requests_path(**@form.slugs, framework_support_form: @form.common)
+      end
+    end
 
     def edit_back_url
       return edit_framework_request_category_path(framework_support_form: @form.common.merge(category_slug: "multiple")) if category_path == "multiple"
