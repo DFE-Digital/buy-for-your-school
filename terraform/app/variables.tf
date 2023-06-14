@@ -67,6 +67,7 @@ variable "postgres_json_params" {
     enable_extensions = [
       "pgcrypto",
       "plpgsql",
+      "pg_trgm",
     ]
   }
   type = map(any)
