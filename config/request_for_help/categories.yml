@@ -39,7 +39,7 @@ categories:
     slug: leasing
     sub_categories:
       - title: Leasing
-        slug: leasing
+        slug: leasing-sub
         support_category: Leasing
       - title: LEDs (light-emitting diode)
         slug: leds
