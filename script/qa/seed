@@ -3,6 +3,6 @@
 # Seed the QA environment
 
 cf ssh $CF_APP_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails case_management:seed_shared_inbox_emails' # quicker
-cf ssh $CF_APP_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails request_for_help:seed'
 cf ssh $CF_APP_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails self_serve:populate_categories'
 cf ssh $CF_APP_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails case_management:seed' # slower
+cf ssh $CF_APP_NAME -c 'cd /srv/app; PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin rails request_for_help:seed'
