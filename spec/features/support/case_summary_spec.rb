@@ -2,7 +2,6 @@ RSpec.feature "Case summary details" do
   include_context "with an agent"
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_on "Case details"
   end

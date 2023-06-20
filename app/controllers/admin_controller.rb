@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class AdminController < ApplicationController
-  before_action :user_analyst
+  include SupportAgents
+
   before_action :set_view_fields, only: :show
 
   def show
@@ -33,9 +34,7 @@ class AdminController < ApplicationController
 
 private
 
-  def user_analyst
-    render "errors/missing_role" unless current_user.analyst?
-  end
+  def authorize_agent_scope = :access_legacy_admin?
 
   def set_view_fields
     @no_of_users = User.count

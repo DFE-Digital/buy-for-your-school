@@ -1,11 +1,9 @@
 require "rails_helper"
 
 describe "Admin can filter templates", js: true, bullet: :skip do
-  include_context "with an agent"
+  include_context "with an agent", roles: %w[global_admin]
 
   before do
-    user.update!(admin: true)
-
     group_energy = create(:support_email_template_group, title: "Energy")
     subgroup_energy_solar = create(:support_email_template_group, title: "Solar", parent: group_energy)
     group_fm = create(:support_email_template_group, title: "FM")
@@ -18,7 +16,6 @@ describe "Admin can filter templates", js: true, bullet: :skip do
     create(:support_email_template, group: subgroup_fm_catering, title: "Catering template", stage: 4)
     create(:support_email_template, group: subgroup_fm_cleaning, title: "Cleaning template", stage: nil)
 
-    click_button "Agent Login"
     visit support_management_email_templates_path
   end
 

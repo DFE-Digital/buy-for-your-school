@@ -1,15 +1,9 @@
 <%= content_for :title, "CMS Management | Edit Agent" %>
-<% role_options = [
-  OpenStruct.new(id: "procops", name: "Proc-Ops"),
-  OpenStruct.new(id: "e_and_o", name: "E & O"),
-  OpenStruct.new(id: "admin", name: "Admin"),
-  OpenStruct.new(id: "internal", name: "Internal")
-] %>
 
 <h2 class="govuk-heading-l">Edit <%= @agent.full_name %></h2>
 
 <%= form_with(model: @agent, url: support_management_agent_path(@agent), method: :patch, scope: :agent) do |form| %>
-  <%= form.govuk_collection_check_boxes :roles, role_options, :id, :name, legend: { text: "Roles" } %>
+  <%= form.govuk_collection_check_boxes :roles, grantable_agent_role_options, :id, :label, legend: { text: "Roles" } %>
 
   <div class="govuk-button-group flex-align-center">
     <%= form.submit I18n.t("support.management.agents.table.save"), class: "govuk-button" %>

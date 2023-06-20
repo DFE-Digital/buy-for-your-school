@@ -3,8 +3,6 @@ require "rails_helper"
 describe "Agent can view attachments on a case" do
   include_context "with an agent"
 
-  before { click_button "Agent Login" }
-
   context "when there are attachments on the case" do
     let(:support_case)  { create(:support_case) }
     let!(:attachment_1) { create(:support_case_attachment, case: support_case, custom_name: "Classroom.pdf", description: "Classroom Layout Design") }

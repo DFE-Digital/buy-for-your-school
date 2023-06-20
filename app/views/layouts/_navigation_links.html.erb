@@ -16,7 +16,7 @@
           <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
         </li>
 
-        <% if current_user.admin? %>
+        <% if policy(:cms_portal).access_admin_settings? %>
           <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
             <%= link_to 'Management', support_management_path, class: "govuk-header__link" %>
           </li>
@@ -28,6 +28,12 @@
 
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case.search.heading"), new_support_case_search_path, class: "govuk-header__link" %>
+        </li>
+      <% end %>
+
+      <% if engagement? %>
+        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+          <%= link_to "Cases", engagement_root_path, class: "govuk-header__link" %>
         </li>
       <% end %>
 

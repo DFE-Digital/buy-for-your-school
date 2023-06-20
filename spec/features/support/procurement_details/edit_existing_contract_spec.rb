@@ -4,7 +4,6 @@ RSpec.feature "Editing existing contract details in procurement tab section" do
   let(:support_case) { create(:support_case, :opened, existing_contract:) }
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Case details"
   end

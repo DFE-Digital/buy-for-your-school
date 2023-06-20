@@ -21,10 +21,9 @@ RSpec.feature "Case statistics page" do
   end
 
   context "when the user is an admin" do
-    include_context "with an agent"
+    include_context "with an agent", roles: %w[global_admin]
 
     before do
-      click_button "Agent Login"
       visit support_case_statistics_path
     end
 
@@ -75,33 +74,6 @@ RSpec.feature "Case statistics page" do
         expect(page.response_headers["Content-Type"]).to eq "text/csv"
         expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
         expect(page.response_headers["Content-Disposition"]).to match(/filename="case_data.csv"/)
-      end
-    end
-  end
-
-  context "when the user is not an admin" do
-    before do
-      user_exists_in_dfe_sign_in(user:)
-      visit "/"
-      click_start
-      visit support_case_statistics_path
-    end
-
-    context "and the user is an analyst" do
-      let(:user) { create(:user, :analyst, created_at: Time.zone.parse("2021-12-20")) }
-
-      it "shows the page content" do
-        expect(page).to have_title "Case statistics"
-      end
-    end
-
-    context "and the user is not an analyst" do
-      let(:user) { create(:user) }
-
-      it "shows a missing role error" do
-        expect(page).to have_title "Missing user role"
-        expect(find("h1.govuk-heading-l")).to have_text "Missing user role"
-        expect(find("p.govuk-body")).to have_text "You do not have the required role to access this page."
       end
     end
   end

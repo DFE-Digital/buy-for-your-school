@@ -80,40 +80,6 @@ RSpec.feature "User authentication filter" do
     end
   end
 
-  context "when the user is a caseworker" do
-    around do |example|
-      ClimateControl.modify(PROC_OPS_TEAM: "DSI Caseworkers") do
-        example.run
-      end
-    end
-
-    before do
-      visit "/"
-      click_start
-    end
-
-    context "when they new to the service" do
-      let(:user) { build(:user, :caseworker) }
-
-      it "takes them to the agent login page" do
-        expect(page).to have_title "Supported Buying Case Management"
-        expect(page).to have_current_path "/support"
-      end
-    end
-
-    xcontext "when they have logged in before" do
-      let(:user) { create(:user, :caseworker) }
-
-      before do
-        create(:support_agent, dsi_uid: user.dfe_sign_in_uid)
-      end
-
-      it "takes them to the case management dashboard" do
-        expect(page).to have_current_path "/support/cases"
-      end
-    end
-  end
-
   context "when the user belongs to a group", js: true do
     let(:user) { build(:user, :one_supported_group) }
 

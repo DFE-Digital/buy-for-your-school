@@ -4,7 +4,6 @@ describe "Agent can send new emails", js: true do
   let(:support_case) { create(:support_case, email: "contact@email.com") }
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_on "Messages"
   end

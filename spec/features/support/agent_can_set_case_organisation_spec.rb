@@ -10,7 +10,6 @@ describe "Agent can set a case's establishment", js: true do
     create(:support_establishment_group, name: "Federated group of schools", ukprn: "789456")
     create(:support_establishment_group, name: "Other group", ukprn: "1234567")
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
   end
 

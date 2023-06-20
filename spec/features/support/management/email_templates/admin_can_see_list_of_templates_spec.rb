@@ -1,10 +1,9 @@
 require "rails_helper"
 
 describe "Admin can see a list of email templates", bullet: :skip do
-  include_context "with an agent"
+  include_context "with an agent", roles: %w[global_admin]
 
   before do
-    user.update!(admin: true)
     create(:support_email_template, title: "MFD template")
     create(:support_email_template, title: "FM template")
     create(:support_email_template, title: "Archived template", archived: true)
@@ -12,7 +11,6 @@ describe "Admin can see a list of email templates", bullet: :skip do
 
   describe "Admin viewing email templates page sees all templates listed" do
     before do
-      click_button "Agent Login"
       visit support_management_email_templates_path
     end
 

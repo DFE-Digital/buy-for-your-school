@@ -7,7 +7,6 @@ describe "Agent can rename case files" do
 
   before do
     create(:support_case_attachment, case: support_case, custom_name: "text-file.txt")
-    click_button "Agent Login"
   end
 
   it "adds a custom name and description to the file", js: true do

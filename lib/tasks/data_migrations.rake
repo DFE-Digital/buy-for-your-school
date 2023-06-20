@@ -85,8 +85,10 @@ namespace :data_migrations do
   desc "Initialize Support::Agent roles from flags"
   task initialize_agent_roles: :environment do
     Support::Agent.find_each do |agent|
+      agent.roles = []
       agent.roles << agent.internal ? "internal" : "procops"
-      agent.roles << "admin" if agent.user.admin?
+      agent.roles << "procops_admin" if agent.user.admin?
+      agent.roles << "analyst" if agent.user.analyst?
       agent.save!
     end
   end

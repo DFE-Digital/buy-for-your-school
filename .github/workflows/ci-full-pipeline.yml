@@ -135,7 +135,7 @@ jobs:
             -e DSI_ENV=test \
             -e DFE_SIGN_IN_IDENTIFIER=service \
             -e DFE_SIGN_IN_API_SECRET=secret \
-            -e PROC_OPS_TEAM=test \
+            -e PROC_OPS_TEAM="DSI Caseworkers" \
             -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
             -e SUPPORT_EMAIL=email@example.gov.uk \
             -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \

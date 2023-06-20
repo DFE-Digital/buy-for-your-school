@@ -1,10 +1,6 @@
 RSpec.describe "Case problem description" do
   include_context "with an agent"
 
-  before do
-    click_button "Agent Login"
-  end
-
   context "when a case is created via 'create a case'" do
     let(:support_case) { create(:support_case, category: gas_category) }
 

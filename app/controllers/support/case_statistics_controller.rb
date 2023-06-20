@@ -1,8 +1,5 @@
 module Support
   class CaseStatisticsController < ApplicationController
-    skip_before_action :authenticate_agent!
-    before_action :authenticate_agent_or_analyst!
-
     def show
       respond_to do |format|
         format.html do
@@ -18,11 +15,6 @@ module Support
 
   private
 
-    def authenticate_agent_or_analyst!
-      # CMS users (agents) allowed
-      return if current_agent
-      # Other users must have analyst role
-      return render "errors/missing_role" unless current_user.analyst?
-    end
+    def authorize_agent_scope = :access_statistics?
   end
 end

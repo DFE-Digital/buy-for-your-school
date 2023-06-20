@@ -8,7 +8,6 @@ RSpec.feature "Create case", js: true do
     create(:support_category, :with_sub_category)
     create(:support_organisation, name: "Hillside School", urn: "000001")
 
-    click_button "Agent Login"
     visit "/support/cases/new"
   end
 
