@@ -13,7 +13,6 @@ describe "Agent can reply to incoming emails", js: true do
            additional_data:,
            case: support_case)
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
   end
 

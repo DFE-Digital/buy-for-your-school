@@ -1,5 +1,5 @@
 describe Support::Management::EmailTemplatesController, type: :controller do
-  before { agent_is_signed_in(admin: true) }
+  before { agent_is_signed_in(admin: true, roles: %w[procops_admin]) }
 
   describe "attachment_list" do
     let!(:email_template) { create(:support_email_template) }

@@ -5,7 +5,6 @@ RSpec.feature "Case worker assignment", js: true, bullet: :skip do
     let(:support_case) { create(:support_case, :opened) }
 
     before do
-      click_button "Agent Login"
       visit support_case_path(support_case)
       click_link "Change case owner"
       select_agent "Procurement Specialist"

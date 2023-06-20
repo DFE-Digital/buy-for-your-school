@@ -3,8 +3,7 @@ RSpec.feature "Case management dashboard" do
 
   before do
     create_list(:support_case, 3)
-    click_button "Agent Login"
-    # visit "/support/cases"
+    visit support_root_path
   end
 
   it "is signed in as correct agent" do

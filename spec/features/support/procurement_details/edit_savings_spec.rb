@@ -4,7 +4,6 @@ RSpec.feature "Editing procurement savings details" do
   let(:support_case) { create(:support_case, :opened) }
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Case details"
   end

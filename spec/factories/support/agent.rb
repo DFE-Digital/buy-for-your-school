@@ -6,6 +6,23 @@ FactoryBot.define do
     first_name  { "first_name" }
     last_name   { "last_name" }
     internal    { false }
+    roles       { %w[procops] }
+
+    trait :admin do
+      roles { %w[admin] }
+    end
+
+    trait :internal do
+      roles { %w[internal] }
+    end
+
+    trait :proc_ops do
+      roles { %w[procops] }
+    end
+
+    trait :e_and_o do
+      roles { %w[e_and_o] }
+    end
 
     after(:create) do |agent|
       if agent.user.blank?

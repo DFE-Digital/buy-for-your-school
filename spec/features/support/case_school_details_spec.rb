@@ -4,7 +4,6 @@ describe "Case school details" do
   let(:support_organisation) { create(:support_organisation, urn: "12345", name: "School #1") }
 
   before do
-    click_button "Agent Login"
     visit "/support/cases/#{support_case.id}#school-details"
   end
 

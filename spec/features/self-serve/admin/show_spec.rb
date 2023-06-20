@@ -1,13 +1,9 @@
 RSpec.feature "Admin page" do
-  before do
-    user_exists_in_dfe_sign_in(user:)
-    visit "/"
-    click_start
-    visit "/admin"
-  end
-
+  # Rollbar shows this feature is not used... phasing out
   context "when the user is an analyst" do
-    let(:user) { create(:user, :analyst, created_at: Time.zone.parse("2021-12-20")) }
+    include_context "with an agent", roles: %w[analyst]
+
+    before { visit "/admin" }
 
     it "shows the page content" do
       expect(page).to have_title "User activity data"
@@ -17,7 +13,7 @@ RSpec.feature "Admin page" do
       expect(all("th.govuk-table__header")[1]).to have_text "Total number of specifications"
       expect(all("td.govuk-table__cell")[1]).to have_text "0"
       expect(all("th.govuk-table__header")[2]).to have_text "Last user registration date"
-      expect(all("td.govuk-table__cell")[2]).to have_text "20 December 2021"
+      expect(all("td.govuk-table__cell")[2]).to have_text user.created_at.strftime("%d %B %Y")
       expect(all("h1.govuk-heading-m")[0]).to have_text "Activity log"
       expect(page).to have_link "Download (.csv)", class: "govuk-button", href: "/admin/download/user_activity.csv"
       expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin/download/user_activity.json"
@@ -56,12 +52,12 @@ RSpec.feature "Admin page" do
   end
 
   context "when the user is not an analyst" do
-    let(:user) { create(:user) }
+    include_context "with an agent"
 
-    it "shows a missing role error" do
-      expect(page).to have_title "Missing user role"
-      expect(page).to have_title "Missing user role"
-      expect(page).to have_content "You do not have the required role to access this page."
+    before { visit "/admin" }
+
+    it "shows not authorised error" do
+      expect(page).to have_current_path(cms_not_authorized_path, ignore_query: true)
     end
   end
 end

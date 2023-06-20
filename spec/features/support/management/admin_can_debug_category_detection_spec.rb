@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Admin can debug category detection algorithm" do
-  include_context "with an agent"
+  include_context "with an agent", roles: %w[global_admin]
 
   let(:query) { "I need a new Gas tariff" }
   let(:query_results) do
@@ -22,11 +22,9 @@ describe "Admin can debug category detection algorithm" do
 protected
 
   def_Given :"I am an admin" do
-    user.update!(admin: true)
   end
 
   def_When :"I enter query into the category detection algorithm" do
-    click_button "Agent Login"
     visit support_management_path
     click_on "Category Detection"
     fill_in "Manually detect categories", with: query

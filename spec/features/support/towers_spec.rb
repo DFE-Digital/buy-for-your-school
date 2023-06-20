@@ -15,7 +15,6 @@ RSpec.feature "Case statistics tower page" do
     include_context "with an agent"
 
     before do
-      click_button "Agent Login"
       visit support_case_statistics_tower_path(id: "services")
     end
 

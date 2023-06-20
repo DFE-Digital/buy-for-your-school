@@ -5,7 +5,6 @@ RSpec.feature "Case procurement details" do
   let(:support_procurement) { nil }
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_on "Case details"
   end

@@ -1,7 +1,8 @@
 module Support
   class EstablishmentGroupsController < ApplicationController
     skip_before_action :authenticate_user!
-    skip_before_action :authenticate_agent!, raise: false
+    skip_before_action :authorize_agent!
+    skip_before_action :redirect_non_internal_users!
 
     def index
       query = <<-SQL

@@ -4,7 +4,7 @@ RSpec.feature "Case list navigation", bullet: :skip do
   before do
     category = create(:support_category, :fixed_title)
     create_list(:support_case, 13, category:)
-    click_button "Agent Login"
+    visit support_root_path
   end
 
   context "when navigating to a case with pagination and filters applied" do

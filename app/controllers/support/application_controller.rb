@@ -1,22 +1,10 @@
 module Support
   class ApplicationController < ::ApplicationController
-    before_action :authenticate_agent!
+    include SupportAgents
 
   protected
 
-    helper_method :current_agent, :current_url_b64, :url_b64, :notifications_unread?
-
-    # @return [Agent, nil]
-    def current_agent
-      ::Support::Agent.find_by(dsi_uid: session[:dfe_sign_in_uid])
-    end
-
-    # @return [nil]
-    def authenticate_agent!
-      return if current_agent
-
-      redirect_to support_root_path, notice: "You are not a recognised case worker"
-    end
+    helper_method :current_url_b64, :url_b64, :notifications_unread?
 
     def record_action(case_id:, action:, data: {})
       Support::RecordAction.new(
@@ -26,9 +14,8 @@ module Support
       ).call
     end
 
-    def support?
-      true
-    end
+    def support? = true
+    def record_ga? = false
 
     def notifications_unread?
       return false if current_agent.nil?
@@ -49,5 +36,8 @@ module Support
 
       Base64.decode64(back_to)
     end
+
+    def pundit_user = current_agent
+    def authorize_agent_scope = :access_proc_ops_portal?
   end
 end

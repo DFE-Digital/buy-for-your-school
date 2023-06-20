@@ -36,11 +36,16 @@ RSpec/AnyInstance:
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
 
+RSpec/DescribedClass:
+  Exclude:
+    - 'spec/controllers/support_agents_spec.rb'
+
 # Offense count: 3
 RSpec/LetSetup:
   Exclude:
     - 'spec/jobs/support/send_exit_survey_job_spec.rb'
     - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
+    - 'spec/support/shared/support_agent.rb'
 
 # Offense count: 4
 RSpec/SubjectStub:

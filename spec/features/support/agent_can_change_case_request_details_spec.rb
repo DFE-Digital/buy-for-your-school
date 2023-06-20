@@ -9,7 +9,6 @@ describe "Agent can change case request details", js: true do
     define_basic_categories
     define_basic_queries
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Case details"
     within "h3", text: "Request - change" do

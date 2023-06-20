@@ -14,20 +14,24 @@
 
 <ul>
   <li><%= link_to I18n.t("support.management.agents.header"), support_management_agents_path, class: "govuk-link" %></li>
-  <li><%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-link" %></li>
-  <% if Flipper.enabled?(:email_templates) %>
-    <li><%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-link" %></li>
+  <% if policy(:cms_portal).access_proc_ops_portal? %>
+    <li><%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-link" %></li>
+    <% if Flipper.enabled?(:email_templates) %>
+      <li><%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-link" %></li>
+    <% end %>
   <% end %>
 </ul>
 
-<h2 class="govuk-heading-m"><%= I18n.t("support.management.base.tasks") %></h2>
+<% if policy(:cms_portal).access_proc_ops_portal? %>
+  <h2 class="govuk-heading-m"><%= I18n.t("support.management.base.tasks") %></h2>
 
-<ul>
-  <li><%= link_to I18n.t("support.management.all_cases_surveys.header"), support_management_all_cases_surveys_path, class: "govuk-link" %></li>
-</ul>
+  <ul>
+    <li><%= link_to I18n.t("support.management.all_cases_surveys.header"), support_management_all_cases_surveys_path, class: "govuk-link" %></li>
+  </ul>
 
-<h2 class="govuk-heading-m"><%= I18n.t("support.management.base.debug") %></h2>
+  <h2 class="govuk-heading-m"><%= I18n.t("support.management.base.debug") %></h2>
 
-<ul>
-  <li><%= link_to I18n.t("support.management.category_detection.header"), new_support_management_category_detection_path, class: "govuk-link" %></li>
-</ul>
+  <ul>
+    <li><%= link_to I18n.t("support.management.category_detection.header"), new_support_management_category_detection_path, class: "govuk-link" %></li>
+  </ul>
+<% end %>

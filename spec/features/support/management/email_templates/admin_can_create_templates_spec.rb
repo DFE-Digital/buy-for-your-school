@@ -1,18 +1,15 @@
 require "rails_helper"
 
 describe "Admin can create email templates", :with_csrf_protection, js: true do
-  include_context "with an agent"
+  include_context "with an agent", roles: %w[global_admin]
 
   before do
-    user.update!(admin: true)
-
     energy = create(:support_email_template_group, title: "Energy")
     create(:support_email_template_group, title: "Solar", parent: energy)
   end
 
   describe "Admin viewing email templates selects to create a new template" do
     before do
-      click_button "Agent Login"
       visit support_management_email_templates_path
       click_on "Create new template"
 

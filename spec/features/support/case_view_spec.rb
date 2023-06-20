@@ -5,8 +5,6 @@ describe "Case view" do
 
   let(:support_case) { create(:support_case) }
 
-  before { click_button "Agent Login" }
-
   context "when case has an action required" do
     let(:support_case) { create(:support_case, :action_required) }
 

@@ -56,6 +56,8 @@ module Support
 
     private
 
+      def authorize_agent_scope = [super, :access_proc_ops_portal?]
+
       def form_params
         params.require(:email_template_form).permit(
           :group_id, :subgroup_id, :stage, :title, :description, :subject, :body, :remove_attachments, attachments: []

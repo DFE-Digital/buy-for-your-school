@@ -27,7 +27,6 @@ describe "Resolving a case" do
       })
       .to_return(body: {}.to_json, status: 200, headers: {})
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Resolve case"
   end

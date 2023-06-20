@@ -7,7 +7,6 @@ RSpec.feature "Case worker can place an open case on hold" do
   let(:now) { Time.zone.now.to_formatted_s(:short) }
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
     click_link "Place on hold"
   end

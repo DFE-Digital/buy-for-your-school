@@ -10,7 +10,6 @@ describe "Agent can add attachments to replies", js: true do
            additional_data: { email_id: email.id },
            case: support_case)
 
-    click_button "Agent Login"
     visit support_case_path(support_case)
   end
 

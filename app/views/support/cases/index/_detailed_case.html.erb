@@ -40,15 +40,15 @@
     <%= link_to raw("Add&nbsp;note"), new_support_case_interaction_path(kase, option: :note, back_to: current_url_b64(tab)), class: "govuk-link--no-visited-state", "target" => "_top" %>
   </td>
 </tr>
-<% if show_assigned %>
-<tr class="govuk-table__row case-row">
-  <td aria-hidden="true"></td>
-  <td class="govuk-table__cell borderless" colspan="7">
-    Assigned to: <%= kase.agent_name %>
-  </td>
-</tr>
-<% end %>
 
+<% if show_assigned %>
+  <tr class="govuk-table__row case-row">
+    <td aria-hidden="true"></td>
+    <td class="govuk-table__cell borderless" colspan="7">
+      Assigned to: <%= kase.agent_name %>
+    </td>
+  </tr>
+<% end %>
 
 <tr class="govuk-table__row tower-bottom-row">
   <td class="govuk-table__cell" aria-hidden="true"></td>

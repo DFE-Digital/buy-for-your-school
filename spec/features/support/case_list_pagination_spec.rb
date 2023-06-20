@@ -4,10 +4,6 @@
 RSpec.feature "Case management dashboard pagination", bullet: :skip do
   include_context "with an agent"
 
-  before do
-    click_button "Agent Login"
-  end
-
   describe "#my-cases" do
     before do
       create_list(:support_case, 15, agent:)

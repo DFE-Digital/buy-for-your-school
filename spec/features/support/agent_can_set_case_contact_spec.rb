@@ -12,7 +12,6 @@ describe "Agent can set case contact details" do
   end
 
   before do
-    click_button "Agent Login"
     visit support_case_path(support_case)
   end
 
