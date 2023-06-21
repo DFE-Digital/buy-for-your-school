@@ -45,3 +45,4 @@ We use ADRs to document architectural decisions managed with [adr-tools][adr].
 [deploy-badge]: https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/deploy.yml/badge.svg
 [dsi]: https://services.signin.education.gov.uk/
 [keep-a-changelog]: https://keepachangelog.com/en/1.0.0/
+.
