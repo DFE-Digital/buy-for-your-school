@@ -65,6 +65,8 @@ private
       special_requirements: request.special_requirements.presence,
       category_id: request.category&.support_category&.id,
       other_category: request.category_other,
+      user_selected_category:,
+      detected_category_id: request.category&.support_category&.id,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
@@ -104,5 +106,13 @@ private
         },
       ).call
     end
+  end
+
+  def user_selected_category
+    return if request.category.nil?
+
+    result = request.category.hierarchy.map(&:title).join("/")
+    result = "#{result} - #{request.category_other}" if request.category_other.present?
+    result
   end
 end

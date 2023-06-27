@@ -17,6 +17,7 @@ RSpec.describe Support::CreateCase do
         phone_number: "00000000000",
         extension_number: "2121",
         procurement_amount: 234.55,
+        user_selected_category: "Catering sub-category",
       }
     end
 
@@ -35,6 +36,7 @@ RSpec.describe Support::CreateCase do
       expect(result.procurement.stage).to eq "need"
       expect(result.support_level).to eq "L1"
       expect(result.value).to eq 234.55
+      expect(result.user_selected_category).to eq "Catering sub-category"
       expect(Support::Case.count).to be 1
     end
 

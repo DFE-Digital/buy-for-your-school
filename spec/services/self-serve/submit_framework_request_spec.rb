@@ -7,7 +7,8 @@ describe SubmitFrameworkRequest do
   let(:energy_alternative) { nil }
   let(:email_confirmation_parameters) { anything }
   let(:support_category) { create(:support_category, title: "Other (Energy)", slug: "other-energy") }
-  let(:rfh_category) { create(:request_for_help_category, title: "Other", slug: "other", support_category:) }
+  let(:parent_rfh_category) { create(:request_for_help_category, title: "Energy and utilities", slug: "energy-and-utilities") }
+  let(:rfh_category) { create(:request_for_help_category, title: "Other", slug: "other", support_category:, parent: parent_rfh_category) }
   let(:category_other) { "other energy requirements" }
 
   before do
@@ -24,6 +25,18 @@ describe SubmitFrameworkRequest do
 
       expect(Support::Case.last.category).to eq support_category
       expect(Support::Case.last.other_category).to eq category_other
+    end
+
+    it "sets the user selected category path on the case" do
+      described_class.new(request:, referrer:).call
+
+      expect(Support::Case.last.user_selected_category).to eq "Energy and utilities/Other - other energy requirements"
+    end
+
+    it "sets the detected category (same as the category) on the case" do
+      described_class.new(request:, referrer:).call
+
+      expect(Support::Case.last.detected_category).to eq support_category
     end
 
     context "when it's an energy request" do
