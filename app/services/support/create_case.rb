@@ -30,6 +30,7 @@ module Support
         procurement: Procurement.create!(stage: :need),
         **organisation_attributes,
         other_category: @attrs[:other_category],
+        user_selected_category: @attrs[:user_selected_category],
         other_query: @attrs[:other_query],
         query_id: @attrs[:query_id],
         support_level: :L1,

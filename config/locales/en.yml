@@ -884,6 +884,10 @@ en:
           L5: 5 - DfE buying by getting quotes or bids
           header: Case level
           unspecified: Not specified
+        user_selected_category: User selected options
+        auto_assigned_category: Auto-assigned sub-category
+        unassigned_category: Unassigned
+        unavailable_category: Unavailable
         value:
           unspecified: Not specified
         view_resolved_cases: View all my resolved cases

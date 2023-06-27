@@ -75,6 +75,26 @@
         </div>
       <% end %>
 
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.user_selected_category") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.user_selected_category || I18n.t("support.case.label.unavailable_category") %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.auto_assigned_category") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.detected_category&.title || I18n.t("support.case.label.unassigned_category") %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+
       <% if current_case.query.present? %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
