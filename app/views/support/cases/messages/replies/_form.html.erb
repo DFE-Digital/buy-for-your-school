@@ -1,42 +1,49 @@
 <% unique_id = "A#{SecureRandom.uuid}" %>
 <% url = reply ? support_case_message_replies_path(@current_case, email, unique_id: unique_id) : support_case_messages_path(@current_case, unique_id: unique_id) %>
 <% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
+<% delete_redirect = reply ? support_case_message_thread_path(id: email.outlook_conversation_id, case_id: @current_case.id) : support_case_message_threads_path(case_id: @current_case.id) %>
 
-<%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post  do |form| %>
+<%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
+    html: {
+      "data-controller" => "email-attachment",
+      "data-email-attachment-attachment-list-url-value" => @reply_form.template.present? ? attachment_list_support_management_email_template_path(@reply_form.template.id) : nil
+    } do |form| %>
   <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :template_id if Flipper.enabled?(:email_templates) %>
+
+  <% if Flipper.enabled?(:email_templates) && @reply_form.template.present? %>
+    <div class="govuk-inset-text">
+      <%= I18n.t("support.case.label.message_threads.using_template", template: @reply_form.template.title) %>
+    </div>
+  <% end %>
+
+  <%= render "support/cases/message_threads/recipient_table", email: email if reply %>
 
   <% unless reply %>
     <%= render "support/cases/messages/replies/new_message_components", form: form, unique_id: unique_id %>
   <% end %>
 
   <%= form.govuk_text_area :body, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
-    value: @body || @default_template,
     "data-component" => "tinymce",
     "data-tinymce-profile" => "basic",
     "data-tinymce-selector" => ".message-reply-box"
   %>
 
   <div class="govuk-button-group">
-    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
-    <%= form.govuk_file_field :attachments,
-      multiple: true,
-      hidden: true,
-      label: { text: I18n.t("support.case.label.messages.reply.add_attachments"), class: "govuk-button govuk-button--secondary" },
-      "data-component" => "display-attachments",
-      "data-display-attachments-id" => unique_id
-    %>
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-action" => "email-attachment#submit" %>
+    <span class="govuk-button govuk-button--secondary" role="button"
+      data-email-attachment-target="btnDisplayFileDialog">
+      <%= I18n.t("support.case.label.messages.reply.add_attachments") %>
+    </span>
+    <%= form.govuk_file_field :file_attachments, multiple: true, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
+    <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
+    <%= link_to I18n.t("support.case.label.messages.reply.delete"), delete_redirect, data: { confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" if Flipper.enabled?(:email_templates) %>
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div id="<%= unique_id %>" hidden="true">
-        <table class="govuk-table added_attachments_table">
-          <caption class="govuk-table__caption govuk-table__caption--s govuk-!-padding-bottom-2"><%= I18n.t("support.case.label.messages.reply.attachments_added") %></caption>
-          <tbody class="govuk-table__body">
-            <% # to be populated by javascript %>
-          </tbody>
-        </table>
-      </div>
+      <%= email_attachment_container %>
     </div>
   </div>
 <% end %>

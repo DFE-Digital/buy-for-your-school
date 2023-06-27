@@ -41,6 +41,10 @@
     }
   }
 
+  .message-template {
+    @extend .govuk-body;
+  }
+
   .message-actions {
     margin-top: -15px;
     margin-bottom: 20px;

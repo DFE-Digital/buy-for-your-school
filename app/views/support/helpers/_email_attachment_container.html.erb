@@ -1,0 +1,18 @@
+<div class="govuk-!-display-none" data-email-attachment-target="attachmentList">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attachments_added") %></h2>
+  <div data-email-attachment-target="attachmentPreview">
+    <div data-email-attachment-target="previewTemplate">
+      <div class="template-edit__attachment">
+        <span class="template-edit__attachment-name" data-dz-name></span>
+        <div class="template-edit__attachment-actions">
+          <span class="template-edit__attachment-download govuk-!-display-none">
+            <a class="govuk-link govuk-link--no-visited-state" href="#" target="_top" data-dz-url><%= I18n.t("support.emails.attachments.download") %></a>
+          </span>
+          <span class="template-edit__attachment-remove">
+            <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.emails.attachments.remove") %></a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

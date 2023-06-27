@@ -2,14 +2,11 @@ module Support
   module Messages
     module Outlook
       module Reply
-        class FileAttachment
-          def self.from_uploaded_file(http_uploaded_file)
-            new(file: http_uploaded_file.tempfile, name: http_uploaded_file.original_filename)
-          end
-
+        class UploadedFileAttachment < Attachment
           attr_reader :file, :name
 
           def initialize(file:, name:)
+            super()
             @file = file
             @name = name
           end

@@ -770,6 +770,10 @@ en:
         message_threads:
           action: Action
           back: Back to message list
+          email_templates:
+            header: Select a template
+            signatory_template: Use signatory template
+            use_template: Use selected template
           last_update: Last update
           logged_contacts: Logged contacts
           status: Status
@@ -791,13 +795,14 @@ en:
           recipients: Recipients
           subject: Subject
           templated_messages: Templated messages
-          using_template: 'Template: "%{template}"'
+          using_template: "Template: %{template}"
           view: View
+          reply_with_template: Reply with an email template
+          reply_using_signatory_template: Reply using a signatory template
         messages:
           back_to_subject: Back to %{subject}
           reply:
             add_attachments: Add attachments
-            attachments_added: Attachments added
             body: Your message
             edit_header: Edit reply
             send_message: Send message
@@ -806,6 +811,8 @@ en:
             warning: Warning
             warning_body: You must upload your attachments again
             back: Back to message thread
+            delete: Delete
+            delete_confirmation: Are you sure you want to delete this message?
           table:
             added_by: Added by
             caseworker: Caseworker
@@ -1294,6 +1301,10 @@ en:
       show:
         sender: Sender
         subject: Subject
+      attachments:
+        attachments_added: Attachments added
+        download: Download
+        remove: Remove
     generic:
       cancel: Cancel
       continue: Continue
@@ -1405,7 +1416,6 @@ en:
         common:
           stage: Stage
           variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
-          attachments_added: Attachments added
           unsafe_attachments: One or more attachments contain a virus
         index:
           new: Create new template
@@ -1446,8 +1456,6 @@ en:
           create: Create template
           cancel: Cancel
         edit:
-          download: Download
-          remove: Remove
           save: Save updates
         create:
           notice: Your template has been saved

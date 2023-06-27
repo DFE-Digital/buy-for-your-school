@@ -2,7 +2,6 @@ module Support
   class CasesController < Cases::ApplicationController
     require "will_paginate/array"
     before_action :filter_forms, only: %i[index]
-    before_action :reply_form, only: %i[show]
     before_action :current_case, only: %i[show edit]
 
     helper_method :tower_tab_params
@@ -135,10 +134,6 @@ module Support
       @new_cases_filter_form = CaseFilterForm.new(**new_cases_form_params)
       @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
       @all_cases_filter_form = CaseFilterForm.new(**all_cases_form_params)
-    end
-
-    def reply_form
-      @reply_form = Messages::ReplyForm.new
     end
 
     def edit_form_params

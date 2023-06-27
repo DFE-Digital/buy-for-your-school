@@ -8,6 +8,7 @@ describe Support::Messages::Outlook::SendReplyToEmail do
       reply_text: "<p>My Reply</p>",
       sender: agent,
       file_attachments: [attachment1, attachment2],
+      template_id:,
     )
   end
 
@@ -17,6 +18,7 @@ describe Support::Messages::Outlook::SendReplyToEmail do
   let(:support_case)                  { create(:support_case, ref: "000987", email: "school@contact.com") }
   let(:attachment1)                   { double("attachment1") }
   let(:attachment2)                   { double("attachment2") }
+  let(:template_id)                   { "template-1" }
 
   let(:create_reply_all_message_repsonse) { double("create_reply_all_message_repsonse", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "Previous content here")) }
   let(:update_message_response)       { double("update_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "My Reply - Previous content here")) }
@@ -91,6 +93,6 @@ describe Support::Messages::Outlook::SendReplyToEmail do
     send_reply.call
 
     expect(Support::Messages::Outlook::SynchroniseMessage).to have_received(:call)
-      .with(Support::Messages::Outlook::Message.new(get_message_response))
+      .with(Support::Messages::Outlook::Message.new(get_message_response), { template_id: })
   end
 end

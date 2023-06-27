@@ -1,8 +1,17 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
-    <%= render "support/management/email_templates/template_manager/filters" %>
+    <%= render "support/management/email_templates/template_manager/filters", filter_url: %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <%= render "support/management/email_templates/template_manager/templates" %>
+    <% if mode == :select %>
+      <%= form_with url: use_url, method: :get, html: { "data-controller" => "email-templates-select" } do |form| %>
+        <% hidden_fields_hash.each do |k, v| %>
+          <%= form.hidden_field k.to_sym, value: v %>
+        <% end %>
+        <%= render "support/management/email_templates/template_manager/templates", mode:, form: %>
+      <% end %>
+    <% else %>
+      <%= render "support/management/email_templates/template_manager/templates", mode: %>
+    <% end %>
   </div>
 </div>

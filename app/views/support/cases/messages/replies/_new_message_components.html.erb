@@ -2,7 +2,7 @@
 <%= form.hidden_field :cc_recipients, value: @cc_recipients || nil  %>
 <%= form.hidden_field :bcc_recipients, value: @bcc_recipients || nil  %>
 
-<%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input", value: @subject || @default_subject_line %>
+<%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input" %>
 
 <p class="govuk-label govuk-label--m"><%= I18n.t("support.case.label.message_threads.new.add_recipients") %></p>
 <span class="recipient-input-group">

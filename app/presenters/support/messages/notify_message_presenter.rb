@@ -65,6 +65,8 @@ module Support
         end
       end
 
+      def template = nil
+
     private
 
       def message_sent_at_date

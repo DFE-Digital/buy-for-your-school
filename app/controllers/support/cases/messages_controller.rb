@@ -28,7 +28,7 @@ module Support
     end
 
     def form_params
-      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:body, :subject, :to_recipients, :cc_recipients, :bcc_recipients, attachments: [])
+      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:body, :subject, :to_recipients, :cc_recipients, :bcc_recipients, :template_id, :blob_attachments, file_attachments: [])
     end
 
     def current_email

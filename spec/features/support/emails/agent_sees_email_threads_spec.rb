@@ -72,7 +72,7 @@ describe "Agent sees email threads", js: true, bullet: :skip do
 
         expect(page).to have_content("templated message 1")
         expect(page).to have_content("templated message 2")
-        expect(page).to have_content("Template: \"What is a framework?\"")
+        expect(page).to have_content("Template: What is a framework?")
       end
     end
   end

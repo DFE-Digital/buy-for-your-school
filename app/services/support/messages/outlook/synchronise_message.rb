@@ -2,8 +2,9 @@ module Support
   module Messages
     module Outlook
       class SynchroniseMessage
-        def self.call(message)
+        def self.call(message, template_id: nil)
           email = Support::Email.find_or_initialize_by(outlook_internet_message_id: message.internet_message_id)
+          email.template_id = template_id if email.template_id.blank?
 
           sync_process = sync_process_for(email)
 

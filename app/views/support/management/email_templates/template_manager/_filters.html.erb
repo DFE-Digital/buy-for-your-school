@@ -1,7 +1,7 @@
 <div class="template-manager__filters-panel">
   <h2 class="govuk-heading-m"><%= I18n.t("support.management.email_templates.index.template_manager.filters.header") %></h2>
 
-  <%= form_with model: @filter_form, scope: :email_template_filters, id: :email_template_filters, method: :get, url: support_management_email_templates_path, html: { "data-controller" => "email-template-filters" } do |form| %>
+  <%= form_with model: @filter_form, scope: :email_template_filters, id: :email_template_filters, method: :get, url: filter_url, html: { "data-controller" => "email-template-filters" } do |form| %>
     <%= form.govuk_select :group_id,
         options_for_select(form.object.group_options, form.object.group_id),
         options: { include_blank: I18n.t("support.management.email_templates.index.template_manager.filters.all_groups") },

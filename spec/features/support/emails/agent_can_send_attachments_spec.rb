@@ -1,4 +1,4 @@
-describe "Agent can add attachments to replies", js: true do
+describe "Agent can add attachments to replies", :with_csrf_protection, js: true do
   include_context "with an agent"
 
   let(:email) { create(:support_email, :inbox, case: support_case) }
@@ -29,14 +29,16 @@ describe "Agent can add attachments to replies", js: true do
 
       within("#messages-frame") do
         click_on "View"
-        find("span", text: "Reply to message").click
+        click_on "Reply using a signatory template"
         fill_in_editor "Your message", with: "This is a test reply"
       end
     end
 
     describe "allows agent to add attachments" do
       before do
-        attach_file("Add attachments", Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"))
+        attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt")) do
+          find("span.govuk-button.govuk-button--secondary.dz-clickable").click
+        end
       end
 
       it "shows the attached file" do

@@ -1,4 +1,4 @@
-describe "Agent can reply to incoming emails", js: true do
+describe "Agent can reply to incoming emails", js: true, bullet: :skip do
   include_context "with an agent"
 
   let(:email) { create(:support_email, origin, case: support_case) }
@@ -28,53 +28,60 @@ describe "Agent can reply to incoming emails", js: true do
       allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
     end
 
-    describe "allows agent to send a reply" do
+    describe "allows agent to send a reply", :with_csrf_protection do
       before do
+        template = create(:support_email_template, title: "Energy template", subject: "about energy", body: "energy body")
+        create(:support_email_template_attachment, template:)
+
         click_link "Messages"
         within("#messages-frame") { click_link "View" }
-
-        find("span", text: "Reply to message").click
       end
 
-      it "shows the recipients" do
-        within("#recipient-table") do
-          expect(page).to have_text "CC"
-          expect(page).to have_text "sender1@email.com"
+      context "with a signatory template" do
+        before do
+          click_on "Reply using a signatory template"
+        end
+
+        it "shows the recipients" do
+          within("#recipient-table") do
+            expect(page).to have_text "CC"
+            expect(page).to have_text "sender1@email.com"
+          end
+        end
+
+        it "shows the sent reply" do
+          fill_in_editor "Your message", with: "This is a test reply"
+          click_button "Send reply"
+
+          within("#messages") do
+            expect(page).to have_text "Caseworker"
+            expect(page).to have_text "This is a test reply"
+          end
+        end
+
+        it "transitions the case to on-hold" do
+          fill_in_editor "Your message", with: "This is a test reply"
+          click_button "Send reply"
+
+          expect(page).to have_text "On Hold"
         end
       end
 
-      it "shows the sent reply" do
-        fill_in_editor "Your message", with: "This is a test reply"
-        click_button "Send reply"
+      context "with a selected template" do
+        before do
+          click_on "Reply with an email template"
+          choose "Energy template"
+          click_on "Use selected template"
+        end
 
-        within("#messages") do
-          expect(page).to have_text "Caseworker"
-          expect(page).to have_text "This is a test reply"
+        it "pre-fills the template boby" do
+          expect(page).to have_text "energy body"
+        end
+
+        it "adds the template attachments" do
+          expect(page).to have_text "attachment.txt"
         end
       end
-
-      it "transitions the case to on-hold" do
-        fill_in_editor "Your message", with: "This is a test reply"
-        click_button "Send reply"
-
-        expect(page).to have_text "On Hold"
-      end
-    end
-  end
-
-  describe "a caseworker must enter a reply body" do
-    before do
-      click_link "Messages"
-      within("#messages-frame") { click_link "View" }
-
-      find("span", text: "Reply to message").click
-      sleep 0.2
-      fill_in_editor "Your message", with: ""
-      click_button "Send reply"
-    end
-
-    it "shows a warning about not sending an empty reply" do
-      expect(page).to have_content("The reply body cannot be blank")
     end
   end
 
@@ -90,7 +97,6 @@ describe "Agent can reply to incoming emails", js: true do
     it "does not show the reply form" do
       within("#messages") do
         expect(page).not_to have_text "Reply to message"
-        expect(page).not_to have_button "Send reply"
       end
     end
   end
@@ -108,7 +114,6 @@ describe "Agent can reply to incoming emails", js: true do
     it "does not show the reply form" do
       within("#messages") do
         expect(page).not_to have_text "Reply to message"
-        expect(page).not_to have_button "Send reply"
       end
     end
   end

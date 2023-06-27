@@ -6,15 +6,24 @@
   <%= render "support/cases/message_threads/#{@messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @messages, current_case: @current_case %>
 
   <% if @last_received_reply&.inbox? %>
-    <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details">
+    <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details" open="true">
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
           Reply to message
         </span>
       </summary>
       <div class="govuk-details__text">
-        <%= render "recipient_table", email: @last_received_reply %>
-        <%= render "support/cases/messages/replies/form", reply: true, email: @last_received_reply %>
+        <% if Flipper.enabled?(:email_templates) %>
+          <%= turbo_frame_tag "reply-frame", src: @reply_frame_url.presence do %>
+            <div class="govuk-button-group">
+              <%= link_to I18n.t("support.case.label.message_threads.reply_with_template"), support_case_email_templates_path(thread_id: @current_thread.id, message_id: @last_received_reply, back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", data: { turbo_frame: "messages-frame" }, role: "button" %>
+              <%= link_to I18n.t("support.case.label.message_threads.reply_using_signatory_template"), new_support_case_message_reply_path(message_id: @last_received_reply), class: "govuk-button govuk-button--secondary", role: "button" %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= render "recipient_table", email: @last_received_reply %>
+          <%= render "support/cases/messages/replies/form", reply: true, email: @last_received_reply %>
+        <% end %>
       </div>
     </details>
   <% end %>

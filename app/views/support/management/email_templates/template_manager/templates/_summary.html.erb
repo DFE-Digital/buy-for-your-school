@@ -1,6 +1,13 @@
+<% form = defined?(form) ? form : nil %>
+
 <div class="template-manager__templates-summary">
-  <p class="govuk-body govuk-!-font-weight-bold">
-    <%= I18n.t("support.management.email_templates.index.template_manager.templates.count", count: @templates.size) %>
-  </p>
+  <div class="template-manager__top-bar">
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-display-inline-block govuk-!-margin-bottom-0">
+      <%= I18n.t("support.management.email_templates.index.template_manager.templates.count", count: @templates.size) %>
+    </p>
+    <% if form.present? && mode == :select %>
+      <%= form.submit I18n.t("support.case.label.message_threads.email_templates.use_template"), class: "govuk-button govuk-!-margin-bottom-0", disabled: true, "data-email-templates-select-target" => "btnUseTemplate" %>
+    <% end %>
+  </div>
   <%= tag_bar @filter_form.tags, :email_template_filters, preposition: I18n.t("support.management.email_templates.index.template_manager.filters.about") %>
 </div>

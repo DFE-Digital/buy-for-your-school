@@ -226,9 +226,10 @@ Rails.application.routes.draw do
         end
         resources :messages, only: %i[create] do
           scope module: :messages do
-            resources :replies, only: %i[create]
+            resources :replies, only: %i[new create]
           end
         end
+        resources :email_templates, only: %i[index], constraints: ->(_request) { Flipper.enabled?(:email_templates) }
       end
     end
 

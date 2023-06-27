@@ -2,7 +2,7 @@ module Support
   module Messages
     module Outlook
       class SendNewMessage
-        def initialize(message_text:, to_recipients:, cc_recipients:, bcc_recipients:, subject:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
+        def initialize(message_text:, to_recipients:, cc_recipients:, bcc_recipients:, subject:, sender:, template_id:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
           @ms_graph_client = ms_graph_client
           @message_text = message_text
           @to_recipients = to_recipients
@@ -10,6 +10,7 @@ module Support
           @bcc_recipients = bcc_recipients
           @subject = subject
           @sender = sender
+          @template_id = template_id
           @file_attachments = file_attachments
         end
 
@@ -18,7 +19,7 @@ module Support
           update_message_with_file_attachments(draft_message)
           send_message(draft_message)
           full_message = get_full_message_details(draft_message)
-          SynchroniseMessage.call(full_message)
+          SynchroniseMessage.call(full_message, template_id: @template_id)
         end
 
       private

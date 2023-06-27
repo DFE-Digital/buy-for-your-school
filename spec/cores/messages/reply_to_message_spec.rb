@@ -11,6 +11,7 @@ describe Messages::ReplyToMessage do
       reply_text: "this is a reply",
       sender: build(:support_agent),
       file_attachments: [{ name: "attachment" }],
+      template_id: nil,
     }
   end
 

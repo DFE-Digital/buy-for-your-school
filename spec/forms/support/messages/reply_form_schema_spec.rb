@@ -11,10 +11,10 @@ RSpec.describe Support::Messages::ReplyFormSchema do
   end
 
   context "when files have been attached" do
-    subject(:schema) { described_class.new.call(body: "Filled in", attachments:) }
+    subject(:schema) { described_class.new.call(body: "Filled in", file_attachments:) }
 
     let(:infected_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
-    let(:attachments) { [infected_file, ok_file] }
+    let(:file_attachments) { [infected_file, ok_file] }
     let(:ok_file)              { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
     let(:wrong_file_type_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "text/javascript") }
 
@@ -28,7 +28,7 @@ RSpec.describe Support::Messages::ReplyFormSchema do
     end
 
     context "when a file format is not allowed" do
-      let(:attachments) { [ok_file, wrong_file_type_file] }
+      let(:file_attachments) { [ok_file, wrong_file_type_file] }
 
       it "raises a validation error" do
         expect(schema.errors.messages.size).to eq 1
