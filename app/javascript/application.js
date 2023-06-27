@@ -13,6 +13,12 @@ import { initAll } from "govuk-frontend/govuk/all"
 })();
 
 import { Turbo } from "@hotwired/turbo-rails"
+Turbo.StreamActions.redirect = function () {
+    const url = this.getAttribute("url");
+    const frameId = this.getAttribute("frame_id");
+    const frame = document.querySelector(`turbo-frame#${frameId}`);
+    frame.src = url;
+};
 Turbo.session.drive = false
 
 // Application javascript resources

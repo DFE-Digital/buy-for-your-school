@@ -1,6 +1,14 @@
+<% form = defined?(form) ? form : nil %>
+
 <div class="template-manager__templates">
-  <%= render "support/management/email_templates/template_manager/templates/summary" %>
+  <%= render "support/management/email_templates/template_manager/templates/summary", mode:, form: %>
   <ul>
-    <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template %>
+    <% if form.present? && mode == :select %>
+      <%= form.govuk_radio_buttons_fieldset(:template_id, legend: nil) do %>
+        <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode:, form: } %>
+      <% end %>
+    <% else %>
+      <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode:, form: } %>
+    <% end %>
   </ul>
 </div>

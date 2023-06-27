@@ -2,11 +2,12 @@ module Support
   module Messages
     module Outlook
       class SendReplyToEmail
-        def initialize(reply_to_email:, reply_text:, sender:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
+        def initialize(reply_to_email:, reply_text:, sender:, template_id:, ms_graph_client: MicrosoftGraph.client, file_attachments: [])
           @ms_graph_client = ms_graph_client
           @reply_to_email = reply_to_email
           @reply_text = reply_text
           @sender = sender
+          @template_id = template_id
           @file_attachments = file_attachments
         end
 
@@ -15,7 +16,7 @@ module Support
           update_message_with_file_attachments(draft_reply)
           send_message(draft_reply)
           full_message = get_full_message_details(draft_reply)
-          SynchroniseMessage.call(full_message)
+          SynchroniseMessage.call(full_message, template_id: @template_id)
         end
 
       private

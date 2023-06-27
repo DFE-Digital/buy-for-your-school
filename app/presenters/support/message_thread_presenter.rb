@@ -38,7 +38,7 @@ module Support
     end
 
     def messages
-      super.includes([:in_reply_to]).map { |message| Support::Messages::OutlookMessagePresenter.new(message) }
+      super.includes(%i[in_reply_to template]).map { |message| Support::Messages::OutlookMessagePresenter.new(message) }
     end
 
     def subject

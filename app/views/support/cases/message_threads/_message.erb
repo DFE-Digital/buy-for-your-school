@@ -12,6 +12,12 @@
     <div><%= message.sent_at_formatted %></div>
   </div>
 
+  <% if Flipper.enabled?(:email_templates) && message.template.present? %>
+    <div class="message-template">
+      Template used: <%= message.template.title %>
+    </div>
+  <% end %>
+
   <% if has_recipients %>
   <details class="govuk-details govuk-!-margin-top-0 govuk-!-margin-bottom-1" data-module="govuk-details">
     <summary class="govuk-details__summary">

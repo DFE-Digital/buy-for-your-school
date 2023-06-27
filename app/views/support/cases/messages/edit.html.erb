@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "messages-frame" do %>
-  <%= link_to I18n.t("support.case.label.message_threads.back"), @back_url, class: "govuk-back-link pull-up" %>
+  <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_path(id: @current_case.id, anchor: "messages"), target: "_top", class: "govuk-back-link pull-up" %>
 
   <h1 class="govuk-heading-l"><%= I18n.t("support.case.label.messages.reply.edit_header") %></h1>
 

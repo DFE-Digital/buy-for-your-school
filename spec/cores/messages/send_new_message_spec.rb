@@ -14,6 +14,7 @@ describe Messages::SendNewMessage do
       bcc_recipients: ["bcc@email.com"],
       message_text: "this is a message",
       subject: "subject",
+      template_id: nil,
     }
   end
 

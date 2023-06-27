@@ -15,6 +15,6 @@
 
 <%= link_to I18n.t("support.management.email_templates.index.new"), new_support_management_email_template_path, class: "govuk-button", role: "button" %>
 
-<%= render partial: "support/management/email_templates/template_manager/template_manager" %>
+<%= email_template_manager_editor(filter_url: support_management_email_templates_path) %>
 
 <%= render "components/pagination", records: @templates %>

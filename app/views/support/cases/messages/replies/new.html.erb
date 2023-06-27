@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "reply-frame" do %>
+  <%= render "support/cases/messages/replies/form", reply: true, email: @last_received_reply %>
+<% end %>

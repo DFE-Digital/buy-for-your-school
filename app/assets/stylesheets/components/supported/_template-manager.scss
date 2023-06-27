@@ -19,6 +19,10 @@
   padding-top: govuk-spacing(4);
 }
 
+.template-manager__templates > ul > div > fieldset > div > li {
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
 .template-manager__template-actions {
   display: flex;
   flex-direction: row;
@@ -51,4 +55,15 @@
 
 .template-manager__attachment-name {
   @include govuk-font($size: 19);
+}
+
+.template-manager__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: govuk-spacing(4);
+}
+
+.template-manager__template-attributes-select {
+  margin-left: 56px;
 }

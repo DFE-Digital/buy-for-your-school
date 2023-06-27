@@ -3,10 +3,8 @@ module Support
     class MessageThreadsController < Cases::ApplicationController
       before_action :redirect_to_messages_tab, unless: :turbo_frame_request?, only: %i[show templated_messages logged_contacts]
       before_action :current_thread, only: %i[show]
-      before_action :reply_form, only: %i[index show new]
+      before_action :reply_form, only: %i[new]
       before_action :back_url, only: %i[index show new templated_messages logged_contacts]
-      before_action :default_subject_line, only: %i[new]
-      before_action :default_template, only: %i[new show]
 
       content_security_policy do |policy|
         policy.style_src_attr :unsafe_inline
@@ -19,9 +17,11 @@ module Support
       end
 
       def show
+        reply_form unless Flipper.enabled?(:email_templates)
         @subject = @current_thread.subject
         @messages = @current_thread.messages
         @last_received_reply = @current_thread.last_received_reply
+        set_reply_frame_url
       end
 
       def new
@@ -43,23 +43,35 @@ module Support
       end
 
       def reply_form
-        @reply_form = Support::Messages::ReplyForm.new
+        @reply_form = Support::Messages::ReplyForm.new(
+          default_template:,
+          default_subject:,
+          template_id: params[:template_id],
+          parser: Support::Emails::Templates::Parser.new(agent: current_agent),
+          case_ref: current_case.ref,
+        )
       end
 
       def back_url
         @back_url ||= url_from(back_link_param) || support_cases_path
       end
 
-      def default_subject_line
-        @default_subject_line ||= "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
-      end
+      def default_subject = "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
 
-      def default_template
-        @default_template = Support::Emails::Templates::Parser.new(agent: current_agent).parse(render_to_string(partial: "support/cases/messages/reply_form_template")).html_safe
-      end
+      def default_template = render_to_string(partial: "support/cases/messages/reply_form_template")
 
       def redirect_to_messages_tab
         redirect_to support_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url)
+      end
+
+      def set_reply_frame_url
+        return if params[:reply_frame_url].blank?
+
+        url = Addressable::URI.parse(url_for(params[:reply_frame_url]))
+        url.query_values = (url.query_values || {}).merge({
+          template_id: params[:template_id],
+        })
+        @reply_frame_url = url.to_s
       end
     end
   end

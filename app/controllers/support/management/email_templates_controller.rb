@@ -48,6 +48,7 @@ module Support
           {
             file_id: attachment.id,
             name: attachment.file_name,
+            type: Support::Emails::Attachments.get_type(attachment.class),
             url: support_document_download_path(attachment, type: attachment.class),
           }
         end
@@ -60,7 +61,7 @@ module Support
 
       def form_params
         params.require(:email_template_form).permit(
-          :group_id, :subgroup_id, :stage, :title, :description, :subject, :body, :remove_attachments, attachments: []
+          :group_id, :subgroup_id, :stage, :title, :description, :subject, :body, :blob_attachments, file_attachments: []
         ).merge(id: params[:id], agent: current_agent)
       end
 

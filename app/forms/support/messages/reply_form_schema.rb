@@ -8,8 +8,10 @@ module Support
       optional(:to_recipients)
       optional(:cc_recipients)
       optional(:bcc_recipients)
-      optional(:attachments)
+      optional(:file_attachments)
+      optional(:blob_attachments)
       optional(:case_ref)
+      optional(:template_id)
     end
 
     rule(:body) do
@@ -28,13 +30,13 @@ module Support
       base.failure(:no_ref, case_ref: values[:case_ref]) if (key?(:subject) && values[:subject].present? && values[:subject].match(/([0-9]{6,6})/).to_a.last.blank?) && (key?(:body) && values[:body].present? && values[:body].match(/Your reference number is: ([0-9]{6,6})\./).to_a.last.blank?)
     end
 
-    rule(:attachments) do
+    rule(:file_attachments) do
       if value.present?
         all_files_safe = Array(value).all? { |upload_file| Support::VirusScanner.uploaded_file_safe?(upload_file) }
-        key(:attachments).failure(:infected) unless all_files_safe
+        key(:file_attachments).failure(:infected) unless all_files_safe
 
         all_files_allowed_type = Array(value).all? { |upload_file| upload_file.content_type.in?(OUTLOOK_MESSAGE_FILE_TYPE_ALLOW_LIST) }
-        key(:attachments).failure(:incorrect_file_type) unless all_files_allowed_type
+        key(:file_attachments).failure(:incorrect_file_type) unless all_files_allowed_type
       end
     end
 

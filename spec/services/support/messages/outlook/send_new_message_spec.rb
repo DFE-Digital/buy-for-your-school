@@ -11,6 +11,7 @@ describe Support::Messages::Outlook::SendNewMessage do
       message_text: "<p>Message</p>",
       sender: agent,
       file_attachments: [attachment1, attachment2],
+      template_id:,
     )
   end
 
@@ -19,6 +20,7 @@ describe Support::Messages::Outlook::SendNewMessage do
   let(:support_case)                  { create(:support_case, ref: "000987", email: "school@contact.com") }
   let(:attachment1)                   { double("attachment1") }
   let(:attachment2)                   { double("attachment2") }
+  let(:template_id)                   { "template-1" }
 
   let(:create_message_response)       { "DRAFT-OUTLOOK-ID" }
   let(:update_message_response)       { double("update_message_response", id: "DRAFT-OUTLOOK-ID", internet_message_id: "IMID1", body: double(content: "<p>Message</p>")) }
@@ -120,6 +122,6 @@ describe Support::Messages::Outlook::SendNewMessage do
     send_message.call
 
     expect(Support::Messages::Outlook::SynchroniseMessage).to have_received(:call)
-      .with(Support::Messages::Outlook::Message.new(get_message_response))
+      .with(Support::Messages::Outlook::Message.new(get_message_response), { template_id: })
   end
 end

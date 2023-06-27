@@ -1,8 +1,4 @@
-<%= turbo_frame_tag "messages-frame" do %>
-  <%= link_to I18n.t("support.case.label.messages.reply.back"), @back_url, class: "govuk-back-link pull-up" %>
-
-  <h1 class="govuk-heading-l"><%= I18n.t("support.case.label.messages.reply.edit_header") %></h1>
-
+<%= turbo_frame_tag "reply-frame" do %>
   <% if @show_attachment_warning %>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
