@@ -896,6 +896,7 @@ en:
         all_cases: All cases
         my_cases: My cases
         new_cases: New cases
+        triage_cases: Triage cases
         not_found: No cases found.
         tower: Tower
         improve_results: "Improve your results by:"

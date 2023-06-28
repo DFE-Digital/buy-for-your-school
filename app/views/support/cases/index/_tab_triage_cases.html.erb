@@ -1,0 +1,19 @@
+<div class="govuk-tabs__panel borderless govuk-tabs__panel--hidden" id="triage-cases">
+  <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-triage-cases" data-component="toggle-panel-visibility">
+    <%= I18n.t("support.case.filter.filter_results") %>
+  </button>
+
+  <h1 class="govuk-heading-l">
+    <%= I18n.t("support.case.list.triage_cases") %>
+  </h1>
+
+  <%= render "support/cases/forms/filter_cases_form",
+              form: @triage_cases_filter_form,
+              scope: :filter_triage_cases_form,
+              filter_url: support_cases_path(anchor: "triage-cases"),
+              clear_url: support_cases_path(anchor: "triage-cases", clear: true),
+              tab: "triage-cases" %>
+
+  <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@triage_cases), tab: :triage_cases, sort_scope: :filter_triage_cases_form, sort_form: @triage_cases_filter_form, show_assigned: true %>
+  <%= render "components/pagination", records: @triage_cases, page_param_name: 'triage_cases_page', pagination_params: { anchor: "triage-cases" } %>
+</div>

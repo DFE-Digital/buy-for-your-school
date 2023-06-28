@@ -6,7 +6,8 @@ module Support
         support_cases_path(anchor: "all-cases", filter_all_cases_form: filter_attributes.merge(tower: "no-tower"))
       else
         tower_tab_id = "#{tower.title.parameterize}-tower"
-        support_cases_path(anchor: tower_tab_id, tower: { tower_tab_id => { filter_cases: filter_attributes } })
+        filter_param_key = "filter_#{tower.title.parameterize(separator: '_')}_cases"
+        support_cases_path(anchor: tower_tab_id, tower: { tower_tab_id => { filter_param_key => filter_attributes.merge(override: true) } })
       end
     end
 

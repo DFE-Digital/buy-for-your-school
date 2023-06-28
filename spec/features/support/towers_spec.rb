@@ -28,7 +28,7 @@ RSpec.feature "Case statistics tower page" do
 
       context "when tower is not 'No Tower'" do
         it "links Live Cases to the tower page for this tower" do
-          expect(page).to have_link(href: support_cases_path(anchor: "services-tower", tower: { "services-tower" => { filter_cases: { state: "live" } } }), text: "3\nLive cases")
+          expect(page).to have_link(href: support_cases_path(anchor: "services-tower", tower: { "services-tower" => { filter_services_cases: { state: "live", override: "true" } } }), text: "3\nLive cases")
         end
       end
 

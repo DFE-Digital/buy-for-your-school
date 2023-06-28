@@ -8,8 +8,16 @@ module Support
     include Support::Concerns::FilterParameters
 
     def show
+      override_filter = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"
+      filter_params = filter_params_for(filter_scope, persist: !override_filter)
+      base_cases = if Flipper.enabled?(:cms_triage_view)
+                     # filter on all tower cases if override == true (e.g. when coming in from case statistics)
+                     override_filter ? @tower.cases : @tower.high_level_cases
+                   else
+                     @tower.cases
+                   end
       @filter_form = Support::CaseFilterForm.new(
-        **filter_params_for(filter_scope).to_h.merge(base_cases: @tower.cases, defaults: { state: "live" }),
+        **filter_params.to_h.merge(base_cases:, defaults: { state: "live" }),
       )
 
       @cases = @filter_form.results.paginate(page: params[:page])

@@ -85,6 +85,19 @@ RSpec.feature "Case management dashboard" do
     end
   end
 
+  context "when triage cases tab" do
+    before do
+      create(:support_case, state: :closed)
+      visit "/support/cases"
+    end
+
+    it "shows triage cases" do
+      within "#triage-cases" do
+        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(6)
+      end
+    end
+  end
+
   context "when all cases tab" do
     before do
       create(:support_case, state: :resolved)

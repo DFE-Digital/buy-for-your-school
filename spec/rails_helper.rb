@@ -85,6 +85,7 @@ RSpec.configure do |config|
     # Configure feature flags for test here
     Flipper.enable(:energy_bill_flow)
     Flipper.enable(:email_templates)
+    Flipper.enable(:cms_triage_view)
   end
 
   config.before(:each, type: :feature) do

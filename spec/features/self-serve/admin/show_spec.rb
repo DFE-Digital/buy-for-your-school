@@ -13,7 +13,7 @@ RSpec.feature "Admin page" do
       expect(all("th.govuk-table__header")[1]).to have_text "Total number of specifications"
       expect(all("td.govuk-table__cell")[1]).to have_text "0"
       expect(all("th.govuk-table__header")[2]).to have_text "Last user registration date"
-      expect(all("td.govuk-table__cell")[2]).to have_text user.created_at.strftime("%d %B %Y")
+      expect(all("td.govuk-table__cell")[2]).to have_text user.created_at.strftime("%-d %B %Y")
       expect(all("h1.govuk-heading-m")[0]).to have_text "Activity log"
       expect(page).to have_link "Download (.csv)", class: "govuk-button", href: "/admin/download/user_activity.csv"
       expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin/download/user_activity.json"
