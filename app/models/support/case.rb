@@ -72,6 +72,8 @@ module Support
     scope :by_stage, ->(stage) { joins(:procurement).where(procurement: { stage: }) }
     scope :by_level, ->(support_level) { where(support_level:) }
     scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
+    scope :triage, -> { by_level([0, 1, 2]) }
+    scope :high_level, -> { by_level([2, 3, 4]) }
 
     scope :order_by_support_level, ->(sort_direction = "ASC") { order("support_level #{sort_direction}") }
     scope :order_by_received, ->(sort_direction = "ASC") { order("created_at #{sort_direction}") }

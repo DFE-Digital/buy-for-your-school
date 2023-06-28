@@ -24,6 +24,7 @@ module Support
 
         format.html do
           @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page])
+          @triage_cases = @triage_cases_filter_form.results.paginate(page: params[:triage_cases_page]) if Flipper.enabled?(:cms_triage_view)
           @new_cases = @new_cases_filter_form.results.paginate(page: params[:new_cases_page])
           @my_cases = @my_cases_filter_form.results.paginate(page: params[:my_cases_page])
         end
@@ -125,8 +126,14 @@ module Support
       new_cases_form_params = filter_params_for(:filter_new_cases_form)
         .merge(base_cases: Case.initial)
 
-      @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
+      if Flipper.enabled?(:cms_triage_view)
+        triage_cases_form_params = filter_params_for(:filter_triage_cases_form)
+          .merge(base_cases: Case.triage)
+
+        @triage_cases_filter_form = CaseFilterForm.new(**triage_cases_form_params)
+      end
       @new_cases_filter_form = CaseFilterForm.new(**new_cases_form_params)
+      @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
       @all_cases_filter_form = CaseFilterForm.new(**all_cases_form_params)
     end
 

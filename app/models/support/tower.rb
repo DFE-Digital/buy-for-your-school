@@ -19,5 +19,7 @@ module Support
         cases: Support::Case.without_tower,
       )
     end
+
+    def high_level_cases = cases.high_level
   end
 end

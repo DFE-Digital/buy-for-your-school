@@ -78,6 +78,34 @@ RSpec.describe Support::Case, type: :model do
     end
   end
 
+  describe ".triage" do
+    before do
+      create(:support_case, support_level: :L1)
+      create(:support_case, support_level: :L2)
+      create(:support_case, support_level: :L3)
+      create(:support_case, support_level: :L4)
+      create(:support_case, support_level: :L5)
+    end
+
+    it "returns level 1, 2 and 3 cases" do
+      expect(described_class.triage.map(&:support_level)).to match_array(%w[L1 L2 L3])
+    end
+  end
+
+  describe ".high_level" do
+    before do
+      create(:support_case, support_level: :L1)
+      create(:support_case, support_level: :L2)
+      create(:support_case, support_level: :L3)
+      create(:support_case, support_level: :L4)
+      create(:support_case, support_level: :L5)
+    end
+
+    it "returns level 3, 4 and 5 cases" do
+      expect(described_class.high_level.map(&:support_level)).to match_array(%w[L3 L4 L5])
+    end
+  end
+
   describe "ordering" do
     before do
       cat_e = create(:support_category, title: "E-cat")
