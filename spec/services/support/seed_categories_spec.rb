@@ -52,8 +52,6 @@ RSpec.describe Support::SeedCategories do
 
   it "saves archived status of categories" do
     service.call
-    expect(Support::Category.find_by(title: "Broadband service")).to be_archived
-    expect(Support::Category.find_by(title: "Broadband Infrastructure")).to be_archived
     expect(Support::Category.find_by(title: "Switches & Routers")).not_to be_archived
   end
 

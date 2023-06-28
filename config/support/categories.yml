@@ -21,10 +21,8 @@ categories:
         slug: displays
       - title: Broadband Infrastructure
         slug: broadband_infrastructure
-        is_archived: true
       - title: Broadband service
         slug: broadband_service
-        is_archived: true
       - title: Cloud SaaS
         slug: cloud_saas
       - title: Curriculum Content
