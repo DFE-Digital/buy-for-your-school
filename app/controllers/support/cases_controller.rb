@@ -127,7 +127,7 @@ module Support
 
       if Flipper.enabled?(:cms_triage_view)
         triage_cases_form_params = filter_params_for(:filter_triage_cases_form)
-          .merge(base_cases: Case.triage)
+          .merge(base_cases: Case.triage, defaults: { state: "live" })
 
         @triage_cases_filter_form = CaseFilterForm.new(**triage_cases_form_params)
       end
