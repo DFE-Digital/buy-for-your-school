@@ -115,7 +115,7 @@ describe Support::Management::EmailTemplateForm, type: :model do
       let(:new_agent) { create(:support_agent) }
       let(:subgroup) { create(:support_email_template_group, parent: group) }
       let(:file_attachments) { [fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")] }
-      let(:original_attachments) { [create(:support_email_template_attachment)] }
+      let(:original_attachments) { create_list(:support_email_template_attachment, 1) }
       let!(:email_template) { create(:support_email_template, group:, title: "Old template", created_by: old_agent, updated_by: old_agent, attachments: original_attachments) }
       let(:params) do
         { id: email_template.id, group_id: group.id, subgroup_id: subgroup.id, stage: 4, title: "New template", description: "New template description", body: "New body", agent: new_agent, file_attachments: }
