@@ -1,0 +1,48 @@
+name: Deploy container app
+description: Deploy docker image to an azure container app
+
+inputs:
+  az_credentials:
+    description: The service principal credentails for logging into azure
+    required: true
+  docker_image_and_tag:
+    description: The docker image and tag that will be deployed
+    required: true
+  container_app_name:
+    description: The name of the container app to be deployed to
+    required: true
+  resource_group_name:
+    description: The name of the resource group that contains the container app
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ inputs.az_credentials }}
+
+    - name: Update Azure Container Apps Revision
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.40.0
+        inlineScript: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az containerapp update \
+            --name ${{ inputs.container_app_name }} \
+            --resource-group ${{ inputs.resource_group_name }} \
+            --image ${{ inputs.docker_image_and_tag }} \
+            --output none
+
+    - name: Update Azure Container Apps Worker Revision
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.40.0
+        inlineScript: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az containerapp update \
+            --name ${{ inputs.container_app_name }}-worker \
+            --resource-group ${{ inputs.resource_group_name }} \
+            --image ${{ inputs.docker_image_and_tag }} \
+            --output none

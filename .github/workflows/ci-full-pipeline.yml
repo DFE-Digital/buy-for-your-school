@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+      - development
+      - production
 
 jobs:
   build_test:
@@ -106,7 +108,6 @@ jobs:
 
     steps:
       - name: Run Rspec tests
-        id: run_rspec
         run: |
           docker run --rm \
             --network ${{ job.container.network }} \
@@ -145,141 +146,53 @@ jobs:
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "bundle exec rake knapsack:rspec || bundle exec rspec --only-failure"
 
-      - name: Upload code coverage reports
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: code_coverage
-          path: ${{ github.workspace }}/coverage
-
-  coverage_report:
-    name: Code Coverage Report
-    runs-on: ubuntu-20.04
-    needs: [build_test, rspec]
-
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-
-      - name: Combine Coverage Reports
-        id: results
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/code_coverage:/srv/app/coverage \
-            -e COVERAGE_DIR \
-            ${{ needs.build_test.outputs.docker_image }} \
-            bundle exec ruby lib/code_coverage_collate.rb
-
-          line_coverage=$(cat ${{ github.workspace }}/code_coverage/.last_run.json | jq .result.line)
-          echo "line=$line_coverage" >> $GITHUB_OUTPUT
-
-          echo "---------- REPORT --------------"
-          echo "Line coverage is $line_coverage%"
-        env:
-          COVERAGE_DIR: /srv/app/coverage
-
-      - name: Upload combined code coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: code_coverage
-          path: |
-            ${{ github.workspace }}/code_coverage/.last_run.json
-            ${{ github.workspace }}/code_coverage/.resultset.json
-            ${{ github.workspace }}/code_coverage/.resultset.json.lock
-            ${{ github.workspace }}/code_coverage/assets
-            ${{ github.workspace }}/code_coverage/index.html
-
-  release_qa:
-    name: Deploy release (QA)
+  release_dev:
+    name: Deploy release (Dev)
     runs-on: ubuntu-20.04
     needs: build_release
-    environment: qa
+    environment: az-dev
 
-    if: ${{ github.ref != 'refs/heads/main' && github.actor != 'dependabot[bot]' && !contains(github.event.pull_request.labels.*.name, 'qa-skip') }}
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3.3.0
-
-      - uses: ./.github/workflows/actions/deploy
-        name: Deploy
-        id: deploy
-        with:
-          docker_image: ${{ needs.build_release.outputs.docker_image }}
-          deployment_environment: qa
-          pr_number: ${{ github.event.number }}
-          github_secrets_json: ${{ toJson(secrets) }}
-          cf_username: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          cf_app_name: buy-for-your-school-qa-${{ github.event.number }}
-          rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Comment QA URL to PR
-        uses: mshick/add-pr-comment@v1
-        with:
-          message: |
-            QA application accessible at: ${{ steps.deploy.outputs.application_url }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: |
-            qa-${{ steps.deploy.outputs.qa_number }}
-            qa-deployed
-
-  seed_qa:
-    name: Seed environment (QA)
-    runs-on: ubuntu-20.04
-    needs: release_qa
-
-    # Don't run with qa-seeded or dont-seed labels
-    if: ${{ !(contains(github.event.pull_request.labels.*.name, 'qa-seeded') || contains(github.event.pull_request.labels.*.name, 'dont-seed')) }}
+    if: github.ref == 'refs/heads/development'
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3.3.0
-
-      - name: Run seeding
-        run: |
-          script/install-cf
-          script/cf-login
-          script/qa/seed
-        env:
-          CF_USER: ${{ secrets.CF_USER }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-          CF_APP_NAME: buy-for-your-school-qa-${{ github.event.number }}
-          TF_VAR_cloudfoundry_space: sct-preview
-
-      - uses: actions-ecosystem/action-add-labels@v1
+      - uses: actions/checkout@v3.3.0
+      - uses: ./.github/workflows/actions/deploy-az
         with:
-          labels: qa-seeded
+          docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
+          az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
+          container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
+          resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
 
   release_staging:
     name: Deploy release (Staging)
     runs-on: ubuntu-20.04
     needs: build_release
-    environment: staging
+    environment: az-staging
 
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3.3.0
-
-      - uses: ./.github/workflows/actions/deploy
-        name: Deploy
-        id: deploy
+      - uses: actions/checkout@v3.3.0
+      - uses: ./.github/workflows/actions/deploy-az
         with:
-          docker_image: ${{ needs.build_release.outputs.docker_image }}
-          deployment_environment: staging
-          pr_number: ${{ github.event.number }}
-          github_secrets_json: ${{ toJson(secrets) }}
-          cf_username: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          rollbar_access_token: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
+          az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
+          container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
+          resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+
+  release_production:
+    name: Deploy release (Production)
+    runs-on: ubuntu-20.04
+    needs: build_release
+    environment: az-production
+
+    if: github.ref == 'refs/heads/production'
+
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - uses: ./.github/workflows/actions/deploy-az
+        with:
+          docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
+          az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
+          container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
+          resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
