@@ -1,0 +1,16 @@
+<div class="govuk-tabs__panel borderless govuk-tabs__panel--hidden" id="all-cases">
+  <h1 class="govuk-heading-l">
+    <%= I18n.t("support.case.list.all_cases") %>
+  </h1>
+
+  <%= form_with id: :filter_all_cases_form,
+    model: @all_cases_filter_form,
+    scope: :filter_all_cases_form,
+    url: request.path,
+    method: :get,
+    class: "filter-case-form" do |f| %>
+  <% end %>
+
+  <%= render "engagement/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@cases), tab: :all_cases, sort_scope: :filter_all_cases_form, sort_form: @all_cases_filter_form, show_assigned: true %>
+  <%= render "components/pagination", records: @cases, page_param_name: 'cases_page', pagination_params: { anchor: "all-cases" } %>
+</div>

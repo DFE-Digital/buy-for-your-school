@@ -9,10 +9,10 @@ Capybara.register_driver :headless_chrome do |app|
 
   if ENV["SELENIUM_HUB_URL"]
     # use remote chrome (docker default)
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV["SELENIUM_HUB_URL"], capabilities: [chrome_options])
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV["SELENIUM_HUB_URL"], options: chrome_options)
   else
     # use chromedriver (local setup - ensure your chrome, chromedriver and selenium-webdriver gem versions all match)
-    Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [chrome_options])
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
   end
 end
 

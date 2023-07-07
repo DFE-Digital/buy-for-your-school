@@ -1,0 +1,22 @@
+<% tab = defined?(tab) ? tab : nil %>
+<% show_assigned = defined?(show_assigned) ? show_assigned : true %>
+
+<% if cases.none? %>
+  <%= render partial: "support/cases/not_found" %>
+<% else %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <%= sortable_th :ref, I18n.t("support.case.label.case"), sort_scope, sort_form, th_classes: "col-ref" %>
+      <%= sortable_th :support_level, I18n.t("support.case.label.level"), sort_scope, sort_form, th_classes: "govuk-!-text-align-centre" %>
+      <%= sortable_th :organisation_name, I18n.t("support.case.label.organisation"), sort_scope, sort_form, th_classes: "col-organisation" %>
+      <%= sortable_th :subcategory, I18n.t("support.case.label.category"), sort_scope, sort_form, th_classes: "col-sub-category", th_attributes: { title: I18n.t("support.case.label.sub_category") } %>
+      <%= sortable_th :created_by, I18n.t("support.case.label.created_by"), sort_scope, sort_form %>
+      <%= sortable_th :created, I18n.t("support.case.label.created"), sort_scope, sort_form, sort_order: :desc_asc %>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <%= render partial: "engagement/cases/index/detailed_case", collection: cases, as: :kase, locals: { tab:, show_assigned: } %>
+    </tbody>
+  </table>
+<% end %>

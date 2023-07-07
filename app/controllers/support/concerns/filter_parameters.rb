@@ -16,7 +16,7 @@ module Support
         request_filter.presence || cached_filter.presence || {}
       end
 
-      def sort_params = %i[ref support_level organisation_name subcategory state agent last_updated received action]
+      def sort_params = %i[ref support_level organisation_name subcategory state agent last_updated received action created_by created]
     end
   end
 end

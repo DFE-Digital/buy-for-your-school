@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_133137) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_150515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -385,6 +385,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_133137) do
     t.uuid "query_id"
     t.boolean "exit_survey_sent", default: false
     t.uuid "detected_category_id"
+    t.integer "creation_source"
+    t.uuid "created_by_id"
     t.text "user_selected_category"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
@@ -742,7 +744,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_133137) do
     t.jsonb "orgs"
     t.jsonb "roles"
     t.boolean "admin", default: false
-    t.string "app_roles", default: [], array: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["first_name"], name: "index_users_on_first_name"
     t.index ["full_name"], name: "index_users_on_full_name"

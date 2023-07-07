@@ -7,7 +7,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 76,
+      "line": 85,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "order(\"support_level #{sort_direction}\")",
       "render_path": null,
@@ -30,7 +30,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 114,
+      "line": 123,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"            support_cases.action_required #{sort_direction},\\n            CASE\\n              WHEN support_cases.state = 0 THEN 10\\n              WHEN support_cases.state = 1 THEN 9\\n              WHEN support_cases.state = 3 THEN 8\\n              WHEN support_cases.state = 2 THEN 7\\n              ELSE 1\\n            END DESC, support_cases.ref DESC\\n\")",
       "render_path": null,
@@ -53,7 +53,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 77,
+      "line": 86,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "order(\"created_at #{sort_direction}\")",
       "render_path": null,
@@ -76,7 +76,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 80,
+      "line": 89,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "includes(:agent).order(\"support_agents.first_name #{sort_direction}, support_agents.last_name #{sort_direction}, support_cases.ref DESC\")",
       "render_path": null,
@@ -99,7 +99,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 79,
+      "line": 88,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "includes(:category).order(\"support_categories.title #{sort_direction}, support_cases.ref DESC\")",
       "render_path": null,
@@ -122,7 +122,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 92,
+      "line": 101,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"            COALESCE(support_organisations.name, support_establishment_groups.name) #{sort_direction}, support_cases.ref DESC\\n\")",
       "render_path": null,
@@ -145,24 +145,14 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb",
-      "line": 46,
+      "line": 53,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "(Unresolved Model).new.body_parsed",
       "render_path": [
         {
           "type": "template",
-          "name": "support/management/email_templates/index",
-          "line": 18,
-          "file": "app/views/support/management/email_templates/index.html.erb",
-          "rendered": {
-            "name": "support/management/email_templates/template_manager/_template_manager",
-            "file": "app/views/support/management/email_templates/template_manager/_template_manager.html.erb"
-          }
-        },
-        {
-          "type": "template",
           "name": "support/management/email_templates/template_manager/_template_manager",
-          "line": 6,
+          "line": 11,
           "file": "app/views/support/management/email_templates/template_manager/_template_manager.html.erb",
           "rendered": {
             "name": "support/management/email_templates/template_manager/_templates",
@@ -172,7 +162,7 @@
         {
           "type": "template",
           "name": "support/management/email_templates/template_manager/_templates",
-          "line": 4,
+          "line": 8,
           "file": "app/views/support/management/email_templates/template_manager/_templates.erb",
           "rendered": {
             "name": "support/management/email_templates/template_manager/templates/_template",
@@ -198,7 +188,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 136,
+      "line": 145,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"            CASE\\n              WHEN support_cases.state = 0 THEN 10\\n              WHEN support_cases.state = 1 THEN 9\\n              WHEN support_cases.state = 3 THEN 8\\n              WHEN support_cases.state = 2 THEN 7\\n              ELSE 1\\n            END #{sort_direction}, support_cases.ref DESC\\n\")",
       "render_path": null,
@@ -206,6 +196,29 @@
         "type": "method",
         "class": "Case",
         "method": null
+      },
+      "user_input": "sort_direction",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "9799536c441e51f6bd3ba446b208575e56200aa4c2a6129419d9ba7b7b5be95d",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/support/case.rb",
+      "line": 83,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "order(\"created_at #{sort_direction}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Support::Case",
+        "method": "order_by_created"
       },
       "user_input": "sort_direction",
       "confidence": "Medium",
@@ -272,6 +285,29 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c2a9a6c8060e1b5ca05c78496bedb463cc59b63184fe2d311f8754e1aa1b108e",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/support/case.rb",
+      "line": 84,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "includes(:created_by).order(\"support_agents.first_name #{sort_direction}, support_agents.last_name #{sort_direction}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Support::Case",
+        "method": "order_by_created_by"
+      },
+      "user_input": "sort_direction",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "d3456c155dedafeca54754530611334bcde4c8cc1091b1acde3bd473184c091f",
@@ -312,7 +348,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 78,
+      "line": 87,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "order(\"ref #{sort_direction}\")",
       "render_path": null,
@@ -335,7 +371,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case.rb",
-      "line": 108,
+      "line": 117,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "select(Arel.sql(\"            support_cases.*,\\n            COALESCE(\\n              (SELECT MAX(created_at) FROM support_interactions WHERE case_id = support_cases.id),\\n              support_cases.updated_at\\n            ) AS last_updated_at\\n\")).order(\"last_updated_at #{sort_direction}\")",
       "render_path": null,
@@ -352,6 +388,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-05-25 14:47:06 +0100",
-  "brakeman_version": "5.4.1"
+  "updated": "2023-07-07 11:07:56 +0100",
+  "brakeman_version": "6.0.0"
 }

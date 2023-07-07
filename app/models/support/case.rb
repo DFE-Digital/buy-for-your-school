@@ -54,6 +54,8 @@ module Support
 
     has_one :hub_transition, class_name: "Support::HubTransition", dependent: :destroy
 
+    belongs_to :created_by, class_name: "Support::Agent", optional: true
+
     belongs_to :existing_contract, class_name: "Support::ExistingContract", optional: true
     belongs_to :new_contract, class_name: "Support::NewContract", optional: true
     belongs_to :procurement, class_name: "Support::Procurement", optional: true
@@ -76,7 +78,10 @@ module Support
     scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
     scope :triage, -> { by_level([0, 1, 2]) }
     scope :high_level, -> { by_level([2, 3, 4]) }
+    scope :created_by_e_and_o, -> { where(creation_source: :engagement_and_outreach_team) }
 
+    scope :order_by_created, ->(sort_direction = "ASC") { order("created_at #{sort_direction}") }
+    scope :order_by_created_by, ->(sort_direction = "ASC") { includes(:created_by).order("support_agents.first_name #{sort_direction}, support_agents.last_name #{sort_direction}") }
     scope :order_by_support_level, ->(sort_direction = "ASC") { order("support_level #{sort_direction}") }
     scope :order_by_received, ->(sort_direction = "ASC") { order("created_at #{sort_direction}") }
     scope :order_by_ref, ->(sort_direction = "ASC") { order("ref #{sort_direction}") }
@@ -180,6 +185,12 @@ module Support
     #   incoming_email  -
     #   faf             - find a framework
     enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6 }
+
+    # Creation Source
+    #
+    #   default                 - created by a member of the ProcOps team
+    #   engagement_and_outreach - created by a member of the E&O team
+    enum creation_source: { default: 0, engagement_and_outreach_team: 5 }
 
     # Savings status
     #

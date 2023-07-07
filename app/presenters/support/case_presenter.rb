@@ -13,6 +13,7 @@ module Support
   class CasePresenter < BasePresenter
     include ActionView::Helpers::NumberHelper
     include Support::Concerns::HasOrganisation
+    include Support::Concerns::HasCreator
 
     # @return [String]
     def state
@@ -49,16 +50,16 @@ module Support
     # @return [Array<InteractionPresenter>]
     def interactions
       @interactions ||= super.not_support_request
-        .order("created_at ASC")
-        .map { |i| InteractionPresenter.new(i) }
+                             .order("created_at ASC")
+                             .map { |i| InteractionPresenter.new(i) }
     end
 
     # return case history interactions
     # @return [Array<InteractionPresenter>]
     def case_history_interactions
       @case_history_interactions ||= __getobj__.interactions.case_history
-        .order("created_at ASC")
-        .map { |i| InteractionPresenter.new(i) }
+                                               .order("created_at ASC")
+                                               .map { |i| InteractionPresenter.new(i) }
     end
 
     # return single interaction of support_request event_type
@@ -200,6 +201,12 @@ module Support
       return I18n.t("support.case.label.value.unspecified") unless super
 
       number_to_currency(super, unit: "£", precision: 2)
+    end
+
+    def creator_full_name
+      return "Not set" unless creator
+
+      creator.full_name
     end
 
   private
