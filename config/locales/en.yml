@@ -1465,6 +1465,12 @@ en:
           notice: Updates to your template have been saved
         destroy:
           notice: Your template has been deleted
+      sync_frameworks:
+        header: Synchronise frameworks
+        body:
+          - Frameworks are fetched from Find a Framework and saved automatically every midnight and midday.
+          - Click <strong>Synchronise</strong> to trigger the task manually.
+        sync: Synchronise
     procurement_details:
       edit:
         ended_at:
