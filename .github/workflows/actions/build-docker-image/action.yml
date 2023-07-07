@@ -45,6 +45,14 @@ runs:
           echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
           echo tags_to_push=${BASE_IMAGE}:${TAG},${BASE_IMAGE}:main >> $GITHUB_OUTPUT
 
+        elif [ "${{ github.ref }}" == 'refs/heads/development' ]; then
+          echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
+          echo tags_to_push=${BASE_IMAGE}:${TAG},${BASE_IMAGE}:development >> $GITHUB_OUTPUT
+
+        elif [ "${{ github.ref }}" == 'refs/heads/production' ]; then
+          echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
+          echo tags_to_push=${BASE_IMAGE}:${TAG},${BASE_IMAGE}:production >> $GITHUB_OUTPUT
+
         else
           echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
           echo tags_to_push=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
