@@ -26,6 +26,8 @@ module Support
       optional(:query_id).value(:string)
       optional(:other_category).value(:string)
       optional(:other_query).value(:string)
+
+      optional(:creation_source).value(:string)
     end
 
     rule(:organisation_name) do

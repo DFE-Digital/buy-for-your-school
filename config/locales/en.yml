@@ -767,6 +767,8 @@ en:
         level: Level
         updated: Updated
         received: Received
+        created_by: Created by
+        created: Date created
         message_threads:
           action: Action
           back: Back to message list

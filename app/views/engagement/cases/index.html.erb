@@ -1,3 +1,11 @@
-<h1 class="govuk-heading-xl">
-  E&O Cases Here
-</h1>
+<%= link_to I18n.t("support.case.label.create"), new_engagement_case_path, class: "govuk-button", role: "button" %>
+
+<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item">
+      <%= link_to "All cases", "#all-cases", class: "govuk-tabs__tab" %>
+    </li>
+  </ul>
+
+  <%= render "engagement/cases/index/tab_all_cases" %>
+</div>

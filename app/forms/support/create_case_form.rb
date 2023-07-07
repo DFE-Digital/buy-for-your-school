@@ -6,6 +6,8 @@ module Support
     include Concerns::ValidatableForm
     include Concerns::RequestDetailsFormFields
 
+    attr_writer :creator
+
     option :organisation_id, optional: true
     option :organisation_type, optional: true
     option :organisation_name, optional: true
@@ -16,7 +18,9 @@ module Support
     option :phone_number, optional: true
     option :extension_number, optional: true
     option :source, optional: true
+    option :creation_source, optional: true
     option :procurement_amount, ->(value) { value&.gsub(/[£,]/, "") }, optional: true
+    option :creator, optional: true
 
     # @return [Hash] form parms
     def to_h

@@ -4,10 +4,12 @@ module Support
   class FilterCases
     attr_reader :base_cases
 
+    attr_accessor :included_associations
+
     def initialize(base_cases: nil) = @base_cases = base_cases || Case
 
     def filter(filtering_params)
-      results = base_cases.preload(:organisation).includes(%i[agent category])
+      results = base_cases.preload(:organisation).includes(associations)
 
       return results if filtering_params.nil?
 
@@ -20,6 +22,12 @@ module Support
       end
 
       results
+    end
+
+  private
+
+    def associations
+      @included_associations || %i[agent category]
     end
   end
 end

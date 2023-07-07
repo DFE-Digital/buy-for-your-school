@@ -35,7 +35,10 @@ module Support
         query_id: @attrs[:query_id],
         support_level: :L1,
         value: @attrs[:procurement_amount],
+        creation_source: @attrs[:creation_source],
       )
+
+      kase.update!(created_by_id: @attrs[:creator].id) if @attrs[:creator]
 
       Support::RecordAction.new(
         case_id: kase.id,

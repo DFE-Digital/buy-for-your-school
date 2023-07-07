@@ -271,6 +271,13 @@ Rails.application.routes.draw do
   # E&O Portal
   namespace :engagement do
     root to: "cases#index"
+    resources :cases, only: %i[index show edit update new create] do
+      scope module: :cases do
+        collection do
+          resource :preview, only: %i[new create], as: :create_case_preview
+        end
+      end
+    end
   end
 
   if Rails.env.development?
