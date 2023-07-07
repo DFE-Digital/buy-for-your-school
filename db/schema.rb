@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_29_150515) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_133414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -559,7 +559,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_150515) do
     t.date "expires_at"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "ref"
     t.index ["name", "supplier"], name: "index_support_frameworks_on_name_and_supplier", unique: true
+    t.index ["ref"], name: "index_support_frameworks_on_ref", unique: true
   end
 
   create_table "support_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

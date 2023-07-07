@@ -92,4 +92,30 @@ namespace :data_migrations do
       agent.save!
     end
   end
+
+  desc "Populate Support::Framework refs"
+  task populate_framework_refs: :environment do
+    uri = URI.parse(ENV["FAF_FRAMEWORK_ENDPOINT"])
+    response =
+      Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+        request = Net::HTTP::Get.new(uri)
+        http.request(request)
+      end
+
+    if response.code == "200"
+      frameworks = JSON.parse(response.body)
+      prepared_frameworks = frameworks.map do |framework|
+        {
+          name: framework["title"],
+          supplier: framework["provider"]["initials"],
+          ref: framework["ref"],
+        }
+      end
+
+      Support::Framework.all.each do |framework|
+        match = prepared_frameworks.select { |p| p[:name] == framework.name && p[:supplier] == framework.supplier }
+        framework.update!(ref: match.first[:ref]) if match.present?
+      end
+    end
+  end
 end

@@ -46,3 +46,8 @@ refresh_establishment_groups:
   cron: 0 4 1 * * # At 04:00 on day-of-month 1.
   class: Support::RefreshEstablishmentGroupsJob
   description: Update internal EstablishmentGroup records using public data from GIAS.
+
+sync_frameworks:
+  cron: "0 0,12 * * *" # every midnight and midday
+  class: Support::SyncFrameworksJob
+  description: Fetch and persist frameworks from FaF
