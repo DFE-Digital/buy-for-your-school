@@ -33,9 +33,6 @@ module Support
       end
 
       render :new
-    rescue MergeCaseEmails::CaseNotNewError
-      clear_session
-      redirect_to support_case_path(@current_case), notice: I18n.t("support.case_merge_emails.flash.case_not_new")
     end
 
     def show; end
