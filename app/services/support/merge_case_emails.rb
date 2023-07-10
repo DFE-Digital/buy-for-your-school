@@ -12,8 +12,6 @@ module Support
   #      original case (e.g. original_case_id).
   #
   class MergeCaseEmails
-    class CaseNotNewError < StandardError; end
-
     extend Dry::Initializer
 
     # @!attribute from_case
@@ -38,8 +36,6 @@ module Support
 
     def from!
       from_case.transaction do
-        raise CaseNotNewError unless from_case.initial?
-
         # move emails and interactions over to the to_case
         from_case.interactions&.update_all(case_id: to_case.id)
         from_case.emails&.update_all(case_id: to_case.id)
