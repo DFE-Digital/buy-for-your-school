@@ -82,7 +82,7 @@ module Engagement
         :request_text,
         :procurement_amount,
       ).merge({
-        source: :engagement_and_outreach.to_s,
+        source: :engagement_and_outreach_cms.to_s,
         creation_source: :engagement_and_outreach_team.to_s,
       })
     end
