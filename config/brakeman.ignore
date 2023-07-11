@@ -251,6 +251,29 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c243bd8831e9f51e2220e604cdeb80cd1d041462f2ee1255d329987266eda992",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/support/case.rb",
+      "line": 150,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "order(\"value #{sort_direction}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Support::Case",
+        "method": "order_by_value"
+      },
+      "user_input": "sort_direction",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "c289d69486facd757683d592de98ac021bb2d3537200167ec9d82813f22dcd8d",
@@ -388,6 +411,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-07-07 11:07:56 +0100",
+  "updated": "2023-07-11 17:05:33 +0100",
   "brakeman_version": "6.0.0"
 }

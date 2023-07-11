@@ -83,6 +83,10 @@ RSpec.feature "Create case", js: true do
       end
 
       within table_cell(1, 6) do
+        expect(page).to have_content("45.22")
+      end
+
+      within table_cell(1, 7) do
         expect(page).to have_content(Time.zone.now.strftime("%d %b %Y"))
       end
     end

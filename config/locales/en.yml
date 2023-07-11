@@ -753,6 +753,7 @@ en:
             note: Note
             type: Type
         case_value: Case value
+        case_value_short: Value
         category: Category
         change_owner: Change case owner
         close: Close case
@@ -861,6 +862,7 @@ en:
         source:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
+          engagement_and_outreach_cms: E&O CMS
           faf: Find a Framework
           header: Source
           incoming_email: Email
