@@ -25,11 +25,10 @@ class CreateUser
     return :invalid unless user_id
 
     update_user! if current_user
+    update_support_agent! if current_support_agent.present?
 
-    if supported? || internal?
-      create_user! unless current_user
-
-      current_user
+    if member_of_a_supported_establishment? || internal_staff_member?
+      current_user || create_user!
     elsif orgs.none?
       Rollbar.info "User #{user_id} is not in a supported organisation"
       :no_organisation
@@ -49,7 +48,7 @@ private
   end
 
   # @return [Boolean] user is affiliated to a "supported establishment"
-  def supported?
+  def member_of_a_supported_establishment?
     valid_school? || valid_trust?
   end
 
@@ -64,8 +63,16 @@ private
   end
 
   # @return [Boolean] user is a GHBFS or ProcOps team member
-  def internal?
-    orgs.any? { |org| org["name"] == ENV["PROC_OPS_TEAM"] }
+  def internal_staff_member?
+    current_support_agent.present? || orgs.any? { |org| org["name"] == ENV["PROC_OPS_TEAM"] }
+  end
+
+  def current_support_agent
+    Support::Agent.find_by(email:)
+  end
+
+  def update_support_agent!
+    current_support_agent.update!(dsi_uid: user_id)
   end
 
   # @return [User, nil]
@@ -102,6 +109,7 @@ private
       # roles: roles,
     )
     Rollbar.info "Created account for #{user_id}"
+    update_support_agent! if current_support_agent
     user
   end
 
