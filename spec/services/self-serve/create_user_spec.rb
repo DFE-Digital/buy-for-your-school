@@ -119,6 +119,31 @@ RSpec.describe CreateUser do
       end
     end
 
+    context "when they already have a support agent record" do
+      let(:dfe_sign_in_uid) { "something-else-4caa-9ff2-07faff7351d2" }
+      let!(:existing_user) { create(:user, dfe_sign_in_uid:, email:) }
+      let!(:support_agent) { create(:support_agent, email:) }
+      let(:orgs) { [] }
+
+      context "when the user already exists (regardless of org)" do
+        it "returns the existing user" do
+          expect(result).to eq existing_user
+        end
+      end
+
+      context "when user does not exist already" do
+        let(:dfe_sign_in_uid) { "something-else-again-ok-07faff7351d2" }
+
+        it "creates a new user record" do
+          expect(result).to eq User.find_by(dfe_sign_in_uid:)
+        end
+
+        it "updates the agent to have the dsi uid of the user" do
+          expect { service.call }.to change { support_agent.reload.dsi_uid }.to(dfe_sign_in_uid)
+        end
+      end
+    end
+
     context "when there's an existing user" do
       context "and they are not affiliated to any organisation" do
         let(:orgs) { [] }
