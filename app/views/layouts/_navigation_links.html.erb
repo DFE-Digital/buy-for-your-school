@@ -35,6 +35,12 @@
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to "Cases", engagement_root_path, class: "govuk-header__link" %>
         </li>
+
+        <% if policy(:cms_portal).access_admin_settings? %>
+          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+            <%= link_to 'Management', engagement_management_path, class: "govuk-header__link" %>
+          </li>
+        <% end %>
       <% end %>
 
       <li class="navbar-component__navigation-item--right govuk-header__navigation-item">

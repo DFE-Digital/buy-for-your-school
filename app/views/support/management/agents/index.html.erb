@@ -3,10 +3,10 @@
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
+      <%= link_to I18n.t("support.management.base.header"), portal_management_path, class: "govuk-breadcrumbs__link" %>
     </li>
     <li class="govuk-breadcrumbs__list-item">
-      <%= link_to I18n.t("support.management.agents.header"), support_management_agents_path, class: "govuk-breadcrumbs__link" %>
+      <%= link_to I18n.t("support.management.agents.header"), portal_management_agents_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
 </div>
@@ -28,7 +28,7 @@
           <%= agent.labelled_roles.join("<br />").html_safe %>
         </td>
         <td class="govuk-table__cell">
-          <%= link_to "Edit", edit_support_management_agent_path(agent), class: "govuk-link govuk-link--no-visited-state" %>
+          <%= link_to "Edit", portal_edit_management_agent_path(agent), class: "govuk-link govuk-link--no-visited-state" %>
         </td>
       </tr>
     <% end %>
@@ -37,5 +37,5 @@
 
 <h3 class="govuk-heading-m">Actions</h3>
 <ul class="govuk-list">
-  <li><%= link_to "New Agent", new_support_management_agent_path, class: "govuk-link" %></li>
+  <li><%= link_to "New Agent", portal_new_management_agent_path , class: "govuk-link" %></li>
 </ul>
