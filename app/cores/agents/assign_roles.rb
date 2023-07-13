@@ -1,8 +1,12 @@
 module Agents
   class AssignRoles
+    include Wisper::Publisher
+
     def call(support_agent_id:, new_roles:, cms_policy:)
       agent = Support::Agent.find(support_agent_id)
       agent.update!(roles: safe_assign_new_roles(existing_roles: agent.roles, new_roles:, cms_policy:))
+
+      broadcast(:agent_roles_assigned, { support_agent_id: agent.id, roles: agent.roles })
     end
 
   private
