@@ -255,7 +255,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update]
+      resources :agents, only: %i[index edit update new create]
       resources :categories, only: %i[index update]
       resources :email_templates, constraints: ->(_request) { Flipper.enabled?(:email_templates) } do
         get "/attachment-list", to: "email_templates#attachment_list", on: :member

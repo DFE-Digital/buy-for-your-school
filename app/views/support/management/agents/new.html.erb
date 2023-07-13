@@ -1,0 +1,5 @@
+<%= content_for :title, "CMS Management | New Agent" %>
+
+<h2 class="govuk-heading-l">Add new agent</h2>
+
+<%= render "support/management/agents/form", form: @form, url: support_management_agents_path, method: :post, disable_email_field: false %>
