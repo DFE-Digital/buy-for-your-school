@@ -279,6 +279,11 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    namespace :management do
+      get "/", to: "base#index"
+      resources :agents, only: %i[index edit update new create]
+    end
   end
 
   if Rails.env.development?
