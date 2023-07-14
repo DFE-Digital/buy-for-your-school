@@ -255,7 +255,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    govuk_design_system_formbuilder (4.0.0)
+    govuk_design_system_formbuilder (4.1.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -356,11 +356,11 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.2-arm64-darwin)
+    nokogiri (1.15.3-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.2-x86_64-darwin)
+    nokogiri (1.15.3-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.2-x86_64-linux)
+    nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
@@ -682,7 +682,7 @@ DEPENDENCIES
   flipper-active_record
   flipper-ui
   foreman
-  govuk_design_system_formbuilder (~> 4.0)
+  govuk_design_system_formbuilder (~> 4.1)
   httparty
   httpclient
   i18n-tasks
