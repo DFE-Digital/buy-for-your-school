@@ -7,12 +7,14 @@ RSpec.describe Support::CasePresenter do
   let(:value) { nil }
   let(:support_case_created_at) { Time.zone.local(2020, 5, 30, 12, 0, 0) }
   let(:support_case_updated_at) { Time.zone.local(2020, 5, 30, 12, 0, 0) }
+  let(:procurement_stage) { nil }
   let(:support_case) do
     create(:support_case,
            agent:,
            organisation:,
            procurement:,
            value:,
+           procurement_stage:,
            created_at: support_case_created_at,
            updated_at: support_case_updated_at)
   end
@@ -250,6 +252,24 @@ RSpec.describe Support::CasePresenter do
     context "when the value is unavailable" do
       it "returns 'Not specified'" do
         expect(presenter.value).to eq "Not specified"
+      end
+    end
+  end
+
+  describe "#procurement_stage" do
+    context "when available" do
+      let(:procurement_stage) { create(:support_procurement_stage) }
+
+      it "is wrapped in a presenter" do
+        expect(presenter.procurement_stage).to be_a Support::ProcurementStagePresenter
+      end
+    end
+
+    context "when unavailable" do
+      let(:procurement_stage) { nil }
+
+      it "is nil" do
+        expect(presenter.procurement_stage).to be_nil
       end
     end
   end

@@ -1,9 +1,0 @@
-<h1 class="govuk-heading-l">
-  <%= I18n.t("support.case_request_details.edit.title") %>
-</h1>
-
-<%= form_with model: @case_request_details_form, scope: :case_request_details_form, url: support_case_request_details_path(@current_case), method: :patch do |form| %>
-  <%= form.govuk_error_summary %>
-  <%= render "support/cases/request_details/form_fields", form: form %>
-  <%= form.button I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button", value: "confirm" %>
-<% end %>

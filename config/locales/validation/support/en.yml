@@ -207,10 +207,29 @@ en:
 
   case_summary_form:
     rules:
+      request_text: "" # Omitted
+      request_type: "" # Omitted
+      category_id: "" # Omitted
+      query_id: ""  # Omitted
+      other_category: "" # Omitted
+      other_query: "" # Omitted
       value: "" # Omitted
       source: "" # Omitted
     errors:
       rules:
+        request_text:
+          missing: Enter a description of the query
+        request_type:
+          bool?: Select whether the request is related to a procurement category
+          missing: Select whether the request is related to a procurement category
+        category_id:
+          missing: Please select a procurement category
+        query_id:
+          missing: Please select a query category
+        other_category:
+          missing: Enter the procurement category
+        other_query:
+          missing: Enter the type of query
         value:
           decimal?: Enter a number
         source:

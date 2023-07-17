@@ -61,8 +61,8 @@ RSpec.describe Support::ProcurementPresenter do
     context "when nil" do
       let(:procurement) { build(:support_procurement, stage: nil) }
 
-      it "returns a hyphen" do
-        expect(presenter.stage).to eq "-"
+      it "returns nil" do
+        expect(presenter.stage).to be_nil
       end
     end
   end

@@ -25,7 +25,7 @@ module Support
 
     # @return [String]
     def stage
-      return "-" unless super
+      return unless super
 
       I18n.t("support.procurement_details.stages.#{super}")
     end

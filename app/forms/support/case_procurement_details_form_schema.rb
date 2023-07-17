@@ -7,7 +7,6 @@ module Support
       optional(:route_to_market).value(:symbol)
       optional(:reason_for_route_to_market).value(:symbol)
       optional(:framework_id).value(:string)
-      optional(:stage).value(:symbol)
       optional(:started_at).value(:hash)
       optional(:ended_at).value(:hash)
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_07_133414) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_104448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -388,10 +388,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_133414) do
     t.integer "creation_source"
     t.uuid "created_by_id"
     t.text "user_selected_category"
+    t.uuid "procurement_stage_id"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
     t.index ["procurement_id"], name: "index_support_cases_on_procurement_id"
+    t.index ["procurement_stage_id"], name: "index_support_cases_on_procurement_stage_id"
     t.index ["query_id"], name: "index_support_cases_on_query_id"
     t.index ["ref"], name: "index_support_cases_on_ref", unique: true
     t.index ["state"], name: "index_support_cases_on_state"
@@ -641,6 +643,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_133414) do
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
 
+  create_table "support_procurement_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.string "key", null: false
+    t.integer "stage", null: false
+    t.boolean "archived", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_support_procurement_stages_on_key", unique: true
+  end
+
   create_table "support_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "required_agreement_type"
     t.integer "route_to_market"
@@ -768,6 +780,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_133414) do
   add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
+  add_foreign_key "support_cases", "support_procurement_stages", column: "procurement_stage_id"
   add_foreign_key "support_cases", "support_procurements", column: "procurement_id"
   add_foreign_key "support_cases", "support_queries", column: "query_id"
   add_foreign_key "support_categories", "support_towers"

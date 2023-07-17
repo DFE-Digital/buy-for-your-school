@@ -4,6 +4,8 @@ RSpec.describe Support::CreateCase do
   let(:category) { create(:support_category, title: "Catering") }
   let(:organisation) { create(:support_organisation, name: "Hillside School") }
 
+  before { create(:support_procurement_stage, title: "Need", key: "need") }
+
   # we may want to create a case and assign agent straight away - i.e. the agent filling in the migration form
   context "without an agent" do
     let(:case_params) do
@@ -33,10 +35,10 @@ RSpec.describe Support::CreateCase do
       expect(result.existing_contract).not_to be_nil
       expect(result.procurement).not_to be_nil
       expect(result.extension_number).to eq "2121"
-      expect(result.procurement.stage).to eq "need"
       expect(result.support_level).to eq "L1"
       expect(result.value).to eq 234.55
       expect(result.user_selected_category).to eq "Catering sub-category"
+      expect(result.procurement_stage.title).to eq "Need"
       expect(Support::Case.count).to be 1
     end
 

@@ -53,12 +53,38 @@ module CaseHistory
       record_state_change("Source changed", payload)
     end
 
-    def case_support_level_changed(payload)
-      record_state_change("Case support level changed", payload)
-    end
-
     def case_value_changed(payload)
       record_state_change("Case value changed", payload)
+    end
+
+    def case_support_level_changed(payload)
+      from, to = payload[:support_level]
+      Support::Interaction.case_level_changed.create!(
+        case_id: payload[:case_id],
+        additional_data: { from:, to: },
+        agent_id: payload[:agent_id],
+        body: "Support level change",
+      )
+    end
+
+    def case_procurement_stage_changed(payload)
+      from, to = payload[:procurement_stage_id]
+      Support::Interaction.case_procurement_stage_changed.create!(
+        case_id: payload[:case_id],
+        additional_data: { from:, to: },
+        agent_id: payload[:agent_id],
+        body: "Procurement stage change",
+      )
+    end
+
+    def case_categorisation_changed(payload)
+      if payload[:category_id].present? && payload[:query_id].present?
+        record_change_of_category_and_query(payload)
+      elsif payload[:category_id].present?
+        record_change_of_category(payload)
+      elsif payload[:query_id].present?
+        record_change_of_query(payload)
+      end
     end
 
   private
@@ -74,6 +100,36 @@ module CaseHistory
 
     def additional_data_from(payload)
       payload.except(:case_id, :agent_id).merge({ format_version: "2" })
+    end
+
+    def record_change_of_category(payload)
+      from, to = payload[:category_id]
+      record_categorisation_change(from:, to:, type: :category, case_id: payload[:case_id], agent_id: payload[:agent_id])
+    end
+
+    def record_change_of_query(payload)
+      from, to = payload[:query_id]
+      record_categorisation_change(from:, to:, type: :query, case_id: payload[:case_id], agent_id: payload[:agent_id])
+    end
+
+    def record_change_of_category_and_query(payload)
+      category_from, category_to = payload[:category_id]
+      query_from, query_to       = payload[:query_id]
+
+      if category_from.present? && category_to.nil? && query_to.present?
+        record_categorisation_change(from: category_from, to: query_to, type: :category_to_query, case_id: payload[:case_id], agent_id: payload[:agent_id])
+      elsif query_from.present? && query_to.nil? && category_to.present?
+        record_categorisation_change(from: query_from, to: category_to, type: :query_to_category, case_id: payload[:case_id], agent_id: payload[:agent_id])
+      end
+    end
+
+    def record_categorisation_change(from:, to:, type:, case_id:, agent_id:)
+      Support::Interaction.case_categorisation_changed.create!(
+        case_id:,
+        additional_data: { from:, to:, type: },
+        agent_id:,
+        body: "Categorisation change",
+      )
     end
   end
 end

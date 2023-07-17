@@ -38,6 +38,7 @@ RSpec.describe Support::Interaction, type: :model do
       case_organisation_changed
       case_contact_changed
       case_level_changed
+      case_procurement_stage_changed
     ])
   end
 

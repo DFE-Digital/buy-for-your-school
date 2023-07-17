@@ -20,6 +20,5 @@ RSpec.describe Support::CaseProcurementDetailsForm, type: :model do
     expect(form.framework_name).to be_nil
     expect(form.started_at).to be_nil
     expect(form.ended_at).to be_nil
-    expect(form.stage).to be_nil
   end
 end

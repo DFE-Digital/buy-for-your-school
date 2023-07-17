@@ -31,7 +31,7 @@ RSpec.feature "Case procurement details" do
     end
 
     context "and they are populated" do
-      let(:support_procurement) { create(:support_procurement) }
+      let(:support_procurement) { create(:support_procurement, stage: :market_analysis) }
 
       it "has a change link" do
         within("div#case-details") do
@@ -66,8 +66,8 @@ RSpec.feature "Case procurement details" do
             expect(page).to have_content("1 December 2021")
           end
 
-          within ".govuk-summary-list__row", text: "Procurement stage" do
-            expect(page).to have_content("Need")
+          within ".govuk-summary-list__row", text: "Legacy procurement stage" do
+            expect(page).to have_content("Market Analysis")
           end
         end
       end

@@ -64,19 +64,6 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
-  it "shows procurement stage options" do
-    within(all("fieldset.govuk-fieldset")[5]) do
-      expect(find("legend.govuk-fieldset__legend")).to have_text "Procurement stage"
-      expect(page).to have_field "Need"
-      expect(page).to have_field "Market Analysis"
-      expect(page).to have_field "Sourcing Options"
-      expect(page).to have_field "Go to Market"
-      expect(page).to have_field "Evaluation"
-      expect(page).to have_field "Contract Award"
-      expect(page).to have_field "Handover"
-    end
-  end
-
   it "shows continue button" do
     expect(page).to have_button "Continue"
   end

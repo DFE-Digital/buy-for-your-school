@@ -68,6 +68,8 @@ module Support
 
     belongs_to :detected_category, class_name: "Support::Category", optional: true
 
+    belongs_to :procurement_stage, class_name: "Support::ProcurementStage", optional: true
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     scope :by_agent, ->(agent_id) { where(agent_id:) }
@@ -232,14 +234,6 @@ module Support
     def reopen_due_to_email
       open!
       interactions.state_change.create!(body: "Case reopened due to receiving a new email.")
-    end
-
-    def log_categorisation_change(from:, to:, type:, agent_id:)
-      interactions.case_categorisation_changed.create!(
-        additional_data: { from:, to:, type: },
-        agent_id:,
-        body: "Categorisation change",
-      )
     end
 
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)

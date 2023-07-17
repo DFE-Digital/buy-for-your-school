@@ -2,6 +2,7 @@ RSpec.describe Support::Case, type: :model do
   subject(:support_case) { create(:support_case) }
 
   it { is_expected.to belong_to(:detected_category).class_name("Support::Category").optional }
+  it { is_expected.to belong_to(:procurement_stage).class_name("Support::ProcurementStage").optional }
 
   it "belongs to a category" do
     expect(support_case.category).not_to be_nil
@@ -75,7 +76,7 @@ RSpec.describe Support::Case, type: :model do
   describe "#to_csv" do
     it "includes headers" do
       expect(described_class.to_csv).to eql(
-        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id,existing_contract_id,new_contract_id,procurement_id,savings_status,savings_estimate_method,savings_actual_method,savings_estimate,savings_actual,action_required,organisation_type,value,closure_reason,extension_number,other_category,other_query,procurement_amount,confidence_level,special_requirements,query_id,exit_survey_sent,detected_category_id,creation_source,created_by_id,user_selected_category\n",
+        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id,existing_contract_id,new_contract_id,procurement_id,savings_status,savings_estimate_method,savings_actual_method,savings_estimate,savings_actual,action_required,organisation_type,value,closure_reason,extension_number,other_category,other_query,procurement_amount,confidence_level,special_requirements,query_id,exit_survey_sent,detected_category_id,creation_source,created_by_id,user_selected_category,procurement_stage_id\n",
       )
     end
   end
