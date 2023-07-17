@@ -1,0 +1,44 @@
+procurement_stages:
+  0:
+    - title: Need
+      key: need
+
+  1:
+    - title: Information gathering
+      key: information_gathering
+    - title: Market analysis
+      key: market_analysis
+    - title: Sign Participation agreement
+      key: sign_participation_agreement
+    - title: Stage 1 Approval
+      key: stage_1_approval
+  
+  2:
+    - title: Tender preparation
+      key: tender_preparation
+    - title: School sign-off of tender pack
+      key: school_sign_off_of_tender_pack
+    - title: Out to Tender
+      key: out_to_tender
+    - title: Response compliance check
+      key: response_compliance_check
+    - title: Stage 2 Approval
+      key: stage_2_approval
+
+  3:
+    - title: Stage 3 Evaluation
+      key: stage_3_evaluation
+    - title: Moderation
+      key: moderation
+    - title: School sign-off of moderation & award decision
+      key: school_sign_off_of_moderation_and_award_decision
+    - title: Stage 3 Approval
+      key: stage_3_approval
+
+  4:
+    - title: Award & standstill
+      key: award_and_standstill
+    - title: Handover
+      key: handover
+    - title: Procurement complete
+      key: procurement_complete

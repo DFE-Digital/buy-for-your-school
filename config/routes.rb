@@ -197,7 +197,6 @@ Rails.application.routes.draw do
         resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
         resource :contact_details, only: %i[edit update]
-        resource :request_details, only: %i[edit update]
         resource :closures, only: %i[edit update]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
@@ -208,7 +207,6 @@ Rails.application.routes.draw do
         resource :closure, only: %i[new create]
         resource :on_hold, only: %i[create]
         resource :summary, only: %i[edit update]
-        resource :summary_submission, only: %i[edit update]
         resources :contracts, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do

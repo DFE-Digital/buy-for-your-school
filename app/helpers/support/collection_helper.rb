@@ -27,5 +27,11 @@ module Support
         category.title
       end
     end
+
+    def procurement_stage_grouped_options(selected_procurement_stage_id: -1)
+      Support::ProcurementStage.stages.map do |stage|
+        ["STAGE #{stage}", Support::ProcurementStage.where(stage:).map { |sub_stage| [sub_stage.title, sub_stage.id, { selected: selected_procurement_stage_id == sub_stage.id }] }]
+      end
+    end
   end
 end

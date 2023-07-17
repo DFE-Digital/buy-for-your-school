@@ -842,8 +842,8 @@ en:
           contract_spend: Contract spend
           end_date: End date
           framework_name: Framework name
+          legacy_procurement_stage: Legacy procurement stage
           procurement_end_date: Procurement end date
-          procurement_stage: Procurement stage
           procurement_start_date: Procurement start date
           reason_for_route_to_market: Reason for route to market
           required_agreement_type: Required agreement type
@@ -855,6 +855,7 @@ en:
           savings_status: Status
           start_date: Start date
           supplier: Supplier
+        procurement_stage: Procurement stage
         query: Query
         received_at: Received
         reopen: Reopen case
@@ -1283,7 +1284,7 @@ en:
         header: Update case summary
         submit: Continue
         support_level:
-          label: Case level (optional)
+          label: Case level
         value:
           label: Case value or estimated contract value (optional)
         source:
@@ -1350,6 +1351,7 @@ en:
         case_source_changed: Source changed
         case_level_changed: Support level changed
         case_organisation_changed: Organisation changed
+        case_procurement_stage_changed: Procurement stage changed
         case_contact_changed: Contact changed
         create_case: Case created
         email_from_school: Email from school

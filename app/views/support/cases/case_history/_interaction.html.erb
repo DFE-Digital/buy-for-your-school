@@ -9,7 +9,7 @@
     <% else %>
       <%= simple_format interaction.body %>
 
-      <% if interaction.additional_data.any? %>
+      <% if interaction.additional_data.any? && interaction.show_additional_data? %>
       <dl class="govuk-summary-list">
         <% interaction.additional_data.each do |key, value|  %>
           <div class="govuk-summary-list__row">

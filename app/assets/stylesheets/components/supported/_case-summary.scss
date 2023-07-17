@@ -1,0 +1,30 @@
+.case-summary__procurement-stages {
+  optgroup {
+    color: white;
+  }
+
+  optgroup[label="STAGE 0"] {
+    background-color: #d53880;
+  }
+
+  optgroup[label="STAGE 1"] {
+    background-color: #f47738;
+  }
+
+  optgroup[label="STAGE 2"] {
+    background-color: #28a197;
+  }
+
+  optgroup[label="STAGE 3"] {
+    background-color: #6f72af;
+  }
+
+  optgroup[label="STAGE 4"] {
+    background-color: #85994b;
+  }
+
+  option {
+    background-color: white;
+    color: black;
+  }
+}

@@ -22,7 +22,6 @@ describe "Updating case procurement details" do
           "ended_at(3i)" => "2",
           "ended_at(2i)" => "12",
           "ended_at(1i)" => "2021",
-          stage: "need",
         },
       }
     end
@@ -39,7 +38,6 @@ describe "Updating case procurement details" do
       expect(support_procurement.framework.name).to match(/Test framework \d+/)
       expect(support_procurement.started_at).to eq Date.parse("2020-12-3")
       expect(support_procurement.ended_at).to eq Date.parse("2021-12-2")
-      expect(support_procurement.stage).to eq "need"
     end
   end
 

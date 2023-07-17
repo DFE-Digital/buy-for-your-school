@@ -209,6 +209,10 @@ module Support
       creator.full_name
     end
 
+    def procurement_stage
+      Support::ProcurementStagePresenter.new(super) if super
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

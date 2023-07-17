@@ -27,7 +27,7 @@ module Support
         special_requirements: @attrs[:special_requirements],
         new_contract: NewContract.create!,
         existing_contract: ExistingContract.create!,
-        procurement: Procurement.create!(stage: :need),
+        procurement: Procurement.create!,
         **organisation_attributes,
         other_category: @attrs[:other_category],
         user_selected_category: @attrs[:user_selected_category],
@@ -36,6 +36,7 @@ module Support
         support_level: :L1,
         value: @attrs[:procurement_amount],
         creation_source: @attrs[:creation_source],
+        procurement_stage: ProcurementStage.find_by(key: "need"),
       )
 
       kase.update!(created_by_id: @attrs[:creator].id) if @attrs[:creator]

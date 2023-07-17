@@ -7,6 +7,9 @@ import { application } from "./application"
 import AutoFilterController from "./auto_filter_controller"
 application.register("auto-filter", AutoFilterController)
 
+import CaseProcurementController from "./case_procurement_controller"
+application.register("case-procurement", CaseProcurementController)
+
 import DropzoneController from "./dropzone_controller"
 application.register("dropzone", DropzoneController)
 

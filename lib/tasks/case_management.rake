@@ -8,6 +8,7 @@ namespace :case_management do
     Support::SeedEstablishmentGroups.new.call
     Support::SeedQueries.new.call
     Support::Emails::Templates::SeedGroups.new.call
+    Support::SeedProcurementStages.new.call
   end
 
   desc "Populate the categories and sub_categories tables"
@@ -44,6 +45,11 @@ namespace :case_management do
   desc "Populate the email template groups and sub-groups"
   task seed_email_template_groups: :environment do
     Support::Emails::Templates::SeedGroups.new.call
+  end
+
+  desc "Populate procurement stages"
+  task seed_procurement_stages: :environment do
+    Support::SeedProcurementStages.new.call
   end
 
   desc "Backfill case procurement details"

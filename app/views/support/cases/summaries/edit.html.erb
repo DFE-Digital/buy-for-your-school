@@ -1,22 +1,38 @@
-<h1 class="govuk-heading-l"><%= I18n.t("support.case_summary.edit.header") %></h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= I18n.t("support.case_summary.edit.header") %></h1>
 
-<%= form_with model: @case_summary_form, scope: :case_summary_form, url: support_case_summary_path(@current_case), method: :patch, class: "govuk-!-display-inline" do |form| %>
-  <%= form.govuk_select :source,
-                              options_for_select(form.object.source_options.map { |s| [s.title, s.id] },
-                                                  form.object.source),
-                              options: { include_blank: I18n.t("support.case_summary.edit.source.blank") },
-                              label: { text: I18n.t("support.case_summary.edit.source.label"), size: "m" } %>
+    <%= form_with model: @case_summary_form, scope: :case_summary_form, url: support_case_summary_path(@current_case), method: :patch, class: "govuk-!-display-inline", html: { "data-controller" => "case-procurement" } do |form| %>
+      <%= form.govuk_error_summary %>
 
-  <%= form.govuk_radio_buttons_fieldset :support_level, legend: { text: I18n.t("support.case_summary.edit.support_level.label") } do %>
+      <%= render "support/cases/request_details/request_type", form: form %>
 
-    <div class="govuk-radios">
-      <% Support::Case.support_levels.each do |level| %>
-        <%= form.govuk_radio_button :support_level, level.first, label: { text: I18n.t("support.case.label.support_level.#{level.first}") } %>
+      <%= form.govuk_radio_buttons_fieldset :support_level, legend: { text: I18n.t("support.case_summary.edit.support_level.label") } do %>
+        <div class="govuk-radios">
+          <% Support::Case.support_levels.each do |level| %>
+            <%= form.govuk_radio_button :support_level, level.first, label: { text: I18n.t("support.case.label.support_level.#{level.first}") }, "data-action": "case-procurement#toggleProcurementStageEnabled" %>
+          <% end %>
+          <%= form.govuk_radio_button :support_level, "", label: { text: I18n.t("support.case.label.support_level.unspecified") }, "data-action": "case-procurement#toggleProcurementStageEnabled" %>
+        </div>
       <% end %>
-      <%= form.govuk_radio_button :support_level, "", label: { text: I18n.t("support.case.label.support_level.unspecified") } %>
-    </div>
-  <% end %>
 
-  <%= form.govuk_text_field :value, width: 5, label: { text: I18n.t("support.case_summary.edit.value.label"), size: 'm' }, prefix_text: '£' %>
-  <%= form.submit I18n.t("support.case_summary.edit.submit"), class: "govuk-button", role: "button" %>
-<% end %>
+      <%= form.govuk_select :procurement_stage_id,
+                            grouped_options_for_select(procurement_stage_grouped_options(selected_procurement_stage_id: form.object.procurement_stage_id)),
+                            class: "case-summary__procurement-stages",
+                            label: { text: I18n.t("support.case.label.procurement_stage"), size: "m" },
+                            "data-case-procurement-target": "procurementStage",
+                            form_group: { "data-case-procurement-target" => "procurementStageWrapper" },
+                            disabled: !form.object.support_level.in?(%w[L4 L5]) %>
+
+      <%= form.govuk_text_field :value, width: 5, label: { text: I18n.t("support.case_summary.edit.value.label"), size: 'm' }, prefix_text: '£' %>
+
+      <%= form.govuk_select :source,
+                                  options_for_select(form.object.source_options.map { |s| [s.title, s.id] },
+                                                      form.object.source),
+                                  options: { include_blank: I18n.t("support.case_summary.edit.source.blank") },
+                                  label: { text: I18n.t("support.case_summary.edit.source.label"), size: "m" } %>
+
+      <%= form.button I18n.t("support.case_summary.edit.submit"), class: "govuk-button", role: "button", value: "confirm", "data-action": "case-procurement#submit" %>
+    <% end %>
+  </div>
+</div>

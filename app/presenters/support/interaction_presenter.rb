@@ -48,6 +48,10 @@ module Support
         Support::CaseCategorisationChangePresenter.new(self).body
       elsif case_source_changed?
         Support::CaseSourceChangePresenter.new(self).body
+      elsif case_procurement_stage_changed?
+        Support::CaseProcurementStageChangePresenter.new(self).body
+      elsif case_level_changed?
+        Support::CaseLevelChangePresenter.new(self).body
       elsif super
         super.strip.chomp
       end
@@ -100,6 +104,16 @@ module Support
       end
     end
 
+    def show_additional_data?
+      if case_procurement_stage_changed?
+        Support::CaseProcurementStageChangePresenter.new(self).show_additional_data?
+      elsif case_level_changed?
+        Support::CaseLevelChangePresenter.new(self).show_additional_data?
+      else
+        true
+      end
+    end
+
   private
 
     # @return [String] 20 March 2021 12:00
@@ -113,7 +127,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed case_assigned case_opened].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed case_assigned case_opened case_procurement_stage_changed].include?(key)
       end
     end
 

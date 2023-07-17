@@ -48,23 +48,6 @@
 
       <%= form.govuk_date_field :ended_at, legend: { text: I18n.t("support.procurement_details.edit.ended_at.header") } %>
 
-      <%= form.govuk_radio_buttons_fieldset :stage, legend: { text: I18n.t("support.procurement_details.edit.stage.header") } do %>
-        <div class="govuk-radios">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
-              <% @stages.first(4).each do |reason| %>
-                <%= form.govuk_radio_button :stage, reason, label: { text: I18n.t("support.procurement_details.stages.#{reason}") } %>
-              <% end %>
-            </div>
-            <div class="govuk-grid-column-one-half">
-              <% @stages.last(3).each do |reason| %>
-                <%= form.govuk_radio_button :stage, reason, label: { text: I18n.t("support.procurement_details.stages.#{reason}") } %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-
       <%= form.submit I18n.t("support.procurement_details.edit.submit"), class: "govuk-button", role: "button" %>
     <% end %>
   </div>

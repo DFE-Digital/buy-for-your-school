@@ -23,8 +23,5 @@ module Support
     # @!attribute [r] ended_at
     #   @return [Date, nil]
     option :ended_at, Types::DateField, optional: true
-    # @!attribute [r] stage
-    #   @return [Symbol, nil]
-    option :stage, optional: true
   end
 end
