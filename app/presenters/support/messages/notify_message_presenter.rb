@@ -1,6 +1,8 @@
 module Support
   module Messages
     class NotifyMessagePresenter < ::Support::MessagePresenter
+      include ActionView::Helpers::TextHelper
+
       def sent_by_email
         "Email"
       end
@@ -10,7 +12,7 @@ module Support
       end
 
       def body_for_display(_)
-        body.html_safe
+        simple_format(body.html_safe, class: "govuk-body")
       end
 
       def truncated_body_for_display(_view_context)
