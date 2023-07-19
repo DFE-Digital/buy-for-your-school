@@ -138,8 +138,8 @@ Rails.application.configure do
   # Application insights
   application_insights_key = ENV["ApplicationInsights__InstrumentationKey"]
   if application_insights_key.present?
-    require "application_insights"
-    config.middleware.use ApplicationInsights::Rack::TrackRequest, application_insights_key
+    require "middleware/application_insights_track_request_conditionally"
+    config.middleware.use ApplicationInsightsTrackRequestConditionally, instrumentation_key: application_insights_key, ignore_paths: ["/cable"]
     # send unhandled exceptions
     ApplicationInsights::UnhandledException.collect(application_insights_key)
   end
