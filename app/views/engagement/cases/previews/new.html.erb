@@ -189,7 +189,7 @@
             <%= I18n.t("support.case_hub_migration.label.request_text") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @form.request_text %>
+            <%= simple_format(@form.request_text, class: "govuk-body") %>
           </dd>
           <dd id="changeRequestText" class="govuk-summary-list__list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>

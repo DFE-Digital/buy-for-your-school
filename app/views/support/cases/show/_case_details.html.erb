@@ -141,7 +141,7 @@
           <%= I18n.t("support.case.label.problem_description") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= current_case.request_text %>
+          <%= simple_format(current_case.request_text, class: "govuk-body") %>
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>
