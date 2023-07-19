@@ -7,20 +7,6 @@ warm_contentful_entry_cache:
     service is used infrequently by real users, we automatically update the
     cache.
 
-flag_stale_journeys:
-  cron: 0 2 * * *
-  class: FlagStaleJourneysJob
-  description: Change the state of a Journey to stale when it has not had any
-    steps completed and has not been edited for a number of days. A stale Journey
-    is one believed to be abandoned and cluttering the database.
-
-delete_stale_journeys:
-  cron: 0 2 * * *
-  class: DeleteStaleJourneysJob
-  description: Automatically delete a stale Journey and associated child records
-    after 30 days. This grace period gives a user the opportunity to prevent the
-    deletion.
-
 
 # Supported ---------------
 
