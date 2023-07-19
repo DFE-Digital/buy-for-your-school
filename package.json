@@ -20,7 +20,7 @@
     "lodash": "^4.17.21",
     "sass": "^1.63.6",
     "tinymce": "^6.5.1",
-    "webpack": "^5.88.1",
+    "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
