@@ -12,15 +12,6 @@ describe Support::SyncFrameworks do
   end
 
   describe "#call" do
-    context "when the request is not authorized" do
-      let(:http_response) { Net::HTTPUnauthorized.new(1.0, "401", "Unauthorized") }
-
-      it "logs error to Rollbar" do
-        expect(Rollbar).to receive(:error).with("Could not fetch frameworks", uri: ENV["FAF_FRAMEWORK_ENDPOINT"], status: "401")
-        service.call
-      end
-    end
-
     context "when the request is authorized" do
       let(:http_response) { Net::HTTPSuccess.new(1.0, "200", "OK") }
       let(:body) do

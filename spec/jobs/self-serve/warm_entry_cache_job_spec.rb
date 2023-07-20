@@ -67,10 +67,6 @@ RSpec.describe WarmEntryCacheJob, type: :job do
           .to receive(:call)
           .and_raise(GetStepsFromTask::RepeatEntryDetected)
 
-        expect(Rollbar).to receive(:error)
-          .with("Cache warming task failed. The old cached data was extended by 24 hours.")
-          .and_call_original
-
         described_class.perform_later
         perform_enqueued_jobs
       end

@@ -7,7 +7,7 @@ module Support
         end
 
         format.csv do
-          Rollbar.info("Case data downloaded.")
+          track_event("CaseStatistics/CsvDownloaded")
           send_data CaseDatum.to_csv, filename: "case_data.csv", type: "text/csv"
         end
       end

@@ -14,16 +14,8 @@ RSpec.describe GetEntry do
     context "when the Contentful entry cannot be found" do
       let(:entry_id) { "345vsdf7" }
 
-      it "raises an error and logs a rollbar event" do
+      it "raises an error" do
         allow(stub_client).to receive(:by_id).with(entry_id).and_return(nil)
-
-        expect(Rollbar).to receive(:warning)
-          .with("The following Contentful entry identifier could not be found.",
-                contentful_url: "contentful api_url",
-                contentful_space_id: "contentful space",
-                contentful_environment: "contentful environment",
-                contentful_entry_id: "345vsdf7")
-          .and_call_original
 
         expect { service.call }.to raise_error(GetEntry::EntryNotFound, "345vsdf7")
       end

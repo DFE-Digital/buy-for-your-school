@@ -23,9 +23,4 @@ require "notify/email"
 #   ).call
 #
 class Emails::Confirmation < Notify::Email
-  def call
-    Rollbar.info "Sending confirmation email"
-
-    super
-  end
 end

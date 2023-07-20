@@ -27,12 +27,6 @@ class Emails::ExitSurvey < Notify::Email
   #   @return [String] ID of the exit survey to be filled out
   option :survey_id, Types::String
 
-  def call
-    Rollbar.info("Sending exit survey email")
-
-    super
-  end
-
 private
 
   def template_params

@@ -23,8 +23,6 @@ RSpec.describe Support::RefreshSchoolsJob, type: :job do
     it "creates and updates schools periodically" do
       expect(Support::Organisation.count).to be_zero
 
-      expect(Rollbar).to receive(:info).with("GIAS data has been refreshed")
-
       described_class.perform_later
       perform_enqueued_jobs
 

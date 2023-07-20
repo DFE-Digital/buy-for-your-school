@@ -3,5 +3,6 @@
 # TODO: Remove nocov block if this scaffold is extended upon
 # :nocov:
 class ApplicationJob < ActiveJob::Base
+  include InsightsTrackable
 end
 # :nocov:

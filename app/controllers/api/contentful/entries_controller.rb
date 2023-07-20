@@ -2,7 +2,7 @@
 
 class Api::Contentful::EntriesController < Api::Contentful::BaseController
   def changed
-    Rollbar.info("Accepted request to cache bust Contentful Entry", cache_key:)
+    track_event("Contentful/Entries/Changed", cache_key:)
 
     Cache.delete(key: cache_key)
     render json: { status: "OK" }, status: :ok

@@ -9,16 +9,8 @@ RSpec.describe GetCategory do
     end
 
     context "when the category entry cannot be found" do
-      it "sends a message to rollbar" do
+      it "raises EntryNotFound" do
         allow(stub_client).to receive(:by_id).with(anything).and_return(nil)
-
-        expect(Rollbar).to receive(:error)
-          .with("A Contentful category entry was not found",
-                contentful_url: "contentful api_url",
-                contentful_space_id: "contentful space",
-                contentful_environment: "contentful environment",
-                contentful_entry_id: "a-category-id-that-does-not-exist")
-          .and_call_original
 
         expect {
           described_class.new(category_entry_id: "a-category-id-that-does-not-exist").call
@@ -29,21 +21,6 @@ RSpec.describe GetCategory do
     context "when the Liquid contents are invalid (using the gems own parser)" do
       it "raises an error" do
         stub_contentful_category(fixture_filename: "category-with-invalid-liquid-template.json")
-
-        expect {
-          described_class.new(category_entry_id: "contentful-category-entry").call
-        }.to raise_error(GetCategory::InvalidLiquidSyntax)
-      end
-
-      it "sends an error to rollbar" do
-        stub_contentful_category(fixture_filename: "category-with-invalid-liquid-template.json")
-
-        expect(Rollbar).to receive(:error)
-          .with("A user couldn't start a journey because of an invalid Specification",
-                contentful_url: "contentful api_url",
-                contentful_space_id: "contentful space",
-                contentful_environment: "contentful environment",
-                contentful_entry_id: "contentful-category-entry").and_call_original
 
         expect {
           described_class.new(category_entry_id: "contentful-category-entry").call

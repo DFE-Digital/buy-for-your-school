@@ -2,6 +2,7 @@
 #
 class Content::Page::Build
   extend Dry::Initializer
+  include InsightsTrackable
 
   # @!attribute [r] contentful_page
   #   @return [Contentful::Entry] Contentful "Page" entity
@@ -23,7 +24,7 @@ class Content::Page::Build
       returning: %w[title contentful_id slug],
     )
 
-    Rollbar.info("Built Contentful page", **page.first) if page
+    track_event("Contentful/Page/Built", slug: contentful_page.fields[:slug]) if page
     ::Page.find_by(contentful_id: contentful_page.id)
   end
 end

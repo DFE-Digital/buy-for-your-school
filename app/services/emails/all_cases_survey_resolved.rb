@@ -8,10 +8,4 @@ class Emails::AllCasesSurveyResolved < Emails::AllCasesSurvey
   option :template, Types::String, default: proc { Support::EmailTemplates::IDS[:all_cases_survey_resolved] }
 
   option :survey_id, Types::String
-
-  def call
-    Rollbar.info("Sending all resolved cases survey email")
-
-    super
-  end
 end

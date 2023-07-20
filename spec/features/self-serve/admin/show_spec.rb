@@ -21,13 +21,7 @@ RSpec.feature "Admin page" do
       expect(page).to have_link "Download (.json)", class: "govuk-button", href: "/admin/download/users.json"
     end
 
-    it "reports access to Rollbar" do
-      expect(Rollbar).to receive(:info).with("User role has been granted access.", role: "analyst", path: "/admin")
-      visit "/admin"
-    end
-
     it "provides an activity log CSV download" do
-      expect(Rollbar).to receive(:info).with("User activity data downloaded.")
       click_on "Download (.csv)"
       expect(page.response_headers["Content-Type"]).to eq "text/csv"
       expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
@@ -35,7 +29,6 @@ RSpec.feature "Admin page" do
     end
 
     it "provides an activity log JSON download" do
-      expect(Rollbar).to receive(:info).with("User activity data downloaded.")
       click_link "Download (.json)", href: "/admin/download/user_activity.json"
       expect(page.response_headers["Content-Type"]).to eq "application/json"
       expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
@@ -43,7 +36,6 @@ RSpec.feature "Admin page" do
     end
 
     it "provides a users JSON download" do
-      expect(Rollbar).to receive(:info).with("User data downloaded.")
       click_link "Download (.json)", href: "/admin/download/users.json"
       expect(page.response_headers["Content-Type"]).to eq "application/json"
       expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)

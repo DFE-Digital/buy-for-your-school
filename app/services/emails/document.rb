@@ -14,10 +14,4 @@ class Emails::Document < Notify::Email
   # @!attribute [r] attachment
   # @return [String] Override making this a required param
   option :attachment, Types::String
-
-  def call
-    Rollbar.info "Sending email"
-
-    super
-  end
 end

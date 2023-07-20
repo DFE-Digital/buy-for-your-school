@@ -8,7 +8,7 @@ module Support
     def perform
       SeedEstablishmentGroups.new.call
 
-      Rollbar.info "EstablishmentGroup data has been refreshed"
+      track_event("Jobs/RefreshEstablishmentGroupsJob/Completed")
     end
   end
 end

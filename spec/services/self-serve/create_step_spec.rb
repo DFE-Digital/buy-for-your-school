@@ -161,40 +161,12 @@ RSpec.describe CreateStep do
       it "raises an error" do
         expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulModel)
       end
-
-      it "raises a rollbar event" do
-        expect(Rollbar).to receive(:warning)
-          .with("An unexpected Contentful type was found",
-                contentful_space_id: "jspwts36h1os",
-                contentful_environment: "master",
-                contentful_entry_id: "unexpected-contentful-type",
-                content_model: "telepathy",
-                step_type: "radios",
-                allowed_content_models: "question, statement",
-                allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
-          .and_call_original
-        expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulModel)
-      end
     end
 
     context "when the new step has an unexpected step type" do
       let(:fixture) { "unexpected-contentful-question-type" }
 
       it "raises an error" do
-        expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
-      end
-
-      it "raises a rollbar event" do
-        expect(Rollbar).to receive(:warning)
-          .with("An unexpected Contentful type was found",
-                contentful_space_id: "jspwts36h1os",
-                contentful_environment: "master",
-                contentful_entry_id: "unexpected-contentful-question-type",
-                content_model: "question",
-                step_type: "telepathy",
-                allowed_content_models: "question, statement",
-                allowed_step_types: "long_text, short_text, checkboxes, radios, currency, number, single_date, markdown")
-          .and_call_original
         expect { service.call }.to raise_error(CreateStep::UnexpectedContentfulStepType)
       end
     end

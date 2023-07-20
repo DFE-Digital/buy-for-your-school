@@ -5,8 +5,8 @@ class AssociateExistingJourneys < ActiveRecord::Migration[6.1]
     # transition from single to multi-category
     return if Journey.where(category_id: nil).none? && Category.one?
 
-    journeys_total = Journey.count
-    journeys_updated = Journey.where(category_id: nil).count
+    Journey.count
+    Journey.where(category_id: nil).count
 
     catering_entry = Content::Client.new.by_slug(:category, "catering")
     contentful_category = GetCategory.new(category_entry_id: catering_entry.id).call
@@ -23,12 +23,6 @@ class AssociateExistingJourneys < ActiveRecord::Migration[6.1]
     Journey.where(category_id: nil).update_all(category_id: catering.id)
 
     Category.reset_counters(catering.id, :journeys)
-
-    Rollbar.info("Migration: Journeys associated to a category",
-                 journeys_total:,
-                 journeys_updated:,
-                 contentful_category_id: catering_entry.id,
-                 contentful_category_title: catering_entry.title)
   end
 
   def down; end

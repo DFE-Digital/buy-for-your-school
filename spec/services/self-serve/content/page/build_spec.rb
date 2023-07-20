@@ -32,13 +32,6 @@ RSpec.describe Content::Page::Build do
         expect(page.slug).to eq "/test-page"
         expect(page.sidebar).to eq "Test page link"
       end
-
-      it "sends a message to Rollbar" do
-        expect(Rollbar).to receive(:info)
-          .with("Built Contentful page", rollbar_info)
-          .and_call_original
-        expect(service.call).not_to be_nil
-      end
     end
 
     context "when the page exists" do
@@ -53,13 +46,6 @@ RSpec.describe Content::Page::Build do
         expect(page.contentful_id).to eq "123"
         expect(page.slug).to eq "/test-page"
         expect(page.sidebar).to eq "Test page link"
-      end
-
-      it "sends a message to Rollbar" do
-        expect(Rollbar).to receive(:info)
-          .with("Built Contentful page", rollbar_info)
-          .and_call_original
-        expect(service.call).not_to be_nil
       end
     end
   end

@@ -39,5 +39,7 @@ module Support
 
     def pundit_user = current_agent
     def authorize_agent_scope = :access_proc_ops_portal?
+
+    def tracking_base_properties = super.merge(agent_id: current_agent.id)
   end
 end

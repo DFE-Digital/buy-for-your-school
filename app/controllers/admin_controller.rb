@@ -5,14 +5,13 @@ class AdminController < ApplicationController
 
   before_action :set_view_fields, only: :show
 
-  def show
-    Rollbar.info("User role has been granted access.", role: "analyst", path: request.path)
-  end
+  def show; end
 
   def download_user_activity
+    track_event("LegacyAdmin/UserActivityDataDownloaded")
+    data = download_data(params[:format], ActivityLogItem)
+
     respond_to do |format|
-      Rollbar.info("User activity data downloaded.")
-      data = download_data(params[:format], ActivityLogItem)
       format.csv do
         send_data data, filename: "user_activity_data.csv", type: "text/csv"
       end
@@ -23,9 +22,10 @@ class AdminController < ApplicationController
   end
 
   def download_users
+    track_event("LegacyAdmin/UserDataDownloaded")
+    data = download_data(params[:format], User)
+
     respond_to do |format|
-      Rollbar.info("User data downloaded.")
-      data = download_data(params[:format], User)
       format.json do
         send_data data, filename: "user_data.json", type: "application/json"
       end

@@ -22,8 +22,6 @@ RSpec.describe Support::RefreshEstablishmentGroupsJob, type: :job do
     it "creates and updates schools periodically" do
       expect(Support::EstablishmentGroup.count).to be_zero
 
-      expect(Rollbar).to receive(:info).with("EstablishmentGroup data has been refreshed")
-
       described_class.perform_later
       perform_enqueued_jobs
 

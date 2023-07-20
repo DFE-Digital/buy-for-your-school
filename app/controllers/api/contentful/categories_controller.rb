@@ -17,8 +17,9 @@ class Api::Contentful::CategoriesController < Api::Contentful::BaseController
     )
 
     if category.first
+      track_event("Contentful/Categories/Changed", slug: contentful_category.slug)
+
       render json: { status: "OK" }, status: :ok
-      Rollbar.info("Processed published webhook event for Contentful Category", **category.first)
     end
   end
 

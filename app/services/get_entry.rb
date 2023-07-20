@@ -2,6 +2,8 @@
 #
 class GetEntry
   class EntryNotFound < StandardError; end
+
+  include InsightsTrackable
   include CacheableEntry
 
   # @param entry_id [String] Contentful Entry ID
@@ -29,7 +31,7 @@ class GetEntry
     end
 
     if entry.nil?
-      send_rollbar_warning
+      track_error("GetEntry/EntryNotFound")
       raise EntryNotFound, @entry_id
     end
 
@@ -43,9 +45,8 @@ private
     "#{Cache::ENTRY_CACHE_KEY_PREFIX}:#{@entry_id}"
   end
 
-  def send_rollbar_warning
-    Rollbar.warning(
-      "The following Contentful entry identifier could not be found.",
+  def tracking_base_properties
+    super.merge(
       contentful_entry_id: @entry_id,
       contentful_space_id: @client.space,
       contentful_environment: @client.environment,

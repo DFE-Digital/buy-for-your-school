@@ -6,10 +6,4 @@ require "notify/email"
 #
 class Emails::ConfirmationEnergy < Notify::Email
   option :template, Types::String, default: proc { Support::EmailTemplates::IDS[:confirmation_energy] }
-
-  def call
-    Rollbar.info "Sending confirmation email (energy)"
-
-    super
-  end
 end
