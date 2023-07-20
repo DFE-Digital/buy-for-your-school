@@ -6,6 +6,8 @@ end
 # Fetch and cache a Contentful category then concatenate and validate the Liquid template
 #
 class GetCategory
+  include InsightsTrackable
+
   class InvalidLiquidSyntax < StandardError; end
 
   # @param category_entry_id [String] Contentful Entry ID
@@ -21,7 +23,7 @@ class GetCategory
     category = begin
       GetEntry.new(entry_id: @category_entry_id, client: @client).call
     rescue GetEntry::EntryNotFound
-      send_rollbar_error(message: "A Contentful category entry was not found")
+      track_error("GetCategory/ContentfulCategoryNotFound")
       raise
     end
 
@@ -32,7 +34,7 @@ class GetCategory
     begin
       validate_liquid(template: category.combined_specification_template)
     rescue Liquid::SyntaxError => e
-      send_rollbar_error(message: "A user couldn't start a journey because of an invalid Specification")
+      track_error("GetCategory/InvalidSpecification")
       raise InvalidLiquidSyntax.new(message: e.message)
     end
 
@@ -40,16 +42,6 @@ class GetCategory
   end
 
 private
-
-  def send_rollbar_error(message:)
-    Rollbar.error(
-      message,
-      contentful_space_id: @client.space,
-      contentful_environment: @client.environment,
-      contentful_url: @client.api_url,
-      contentful_entry_id: @category_entry_id,
-    )
-  end
 
   def validate_liquid(template:)
     Liquid::Template.parse(template, error_mode: :strict)
@@ -71,5 +63,14 @@ private
     end
 
     specification_template_array.compact.join("\n")
+  end
+
+  def tracking_base_properties
+    super.merge(
+      contentful_space_id: @client.space,
+      contentful_environment: @client.environment,
+      contentful_url: @client.api_url,
+      contentful_entry_id: @category_entry_id,
+    )
   end
 end

@@ -8,7 +8,7 @@ module Support
     def perform
       SeedSchools.new.call
 
-      Rollbar.info "GIAS data has been refreshed"
+      track_event("Jobs/RefreshSchoolsJob/Completed")
     end
   end
 end

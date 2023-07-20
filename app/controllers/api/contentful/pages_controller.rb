@@ -3,11 +3,9 @@
 class Api::Contentful::PagesController < Api::Contentful::BaseController
   def create
     if page
+      track_event("Contentful/Pages/Create", slug: page.slug)
+
       render json: { status: "OK" }, status: :ok
-      Rollbar.info(
-        "Processed published webhook event for Contentful Page",
-        page.slice(:title, :slug, :contentful_id),
-      )
     end
   end
 

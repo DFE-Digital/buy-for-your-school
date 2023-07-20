@@ -12,16 +12,8 @@ RSpec.describe Content::Page::Get do
     end
 
     context "when the page entry cannot be found" do
-      it "sends a message to Rollbar" do
+      it "returns :not_found" do
         allow(client).to receive(:by_id).with(entry_id).and_return(nil)
-
-        expect(Rollbar).to receive(:error)
-          .with("A Contentful page entry was not found",
-                contentful_url: "contentful api_url",
-                contentful_space_id: "contentful space",
-                contentful_environment: "contentful environment",
-                contentful_entry_id: "entry_id")
-          .and_call_original
 
         expect(service.call).to eq :not_found
       end

@@ -20,7 +20,7 @@ module Support
     queue_as :support
 
     discard_on(UnsupportedCaseStateError) do |_job, error|
-      Rollbar.error(error)
+      track_error("Jobs/SendAllCasesSurveyJob/Failed", error:)
     end
 
     def perform(case_ref)

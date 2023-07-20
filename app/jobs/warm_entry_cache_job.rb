@@ -26,13 +26,13 @@ class WarmEntryCacheJob < ApplicationJob
         tasks.flat_map { |task| GetStepsFromTask.new(task:).call }
       rescue GetStepsFromTask::RepeatEntryDetected
         restore_old_cache
-        Rollbar.error("Cache warming task failed. The old cached data was extended by 24 hours.")
+        track_error("Jobs/WarmEntryCacheJob/Failed")
 
         return false
       end
     end
 
-    Rollbar.info("Cache warming task complete.")
+    track_event("Jobs/WarmEntryCacheJob/Completed")
   end
 
 private

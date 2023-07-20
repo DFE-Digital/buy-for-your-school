@@ -23,14 +23,6 @@ RSpec.describe GetStepsFromTask do
       let(:fixture) { "repeat-entries-task" }
 
       it "returns an error message" do
-        expect(Rollbar).to receive(:error)
-          .with("A repeated Contentful entry was found in the same task",
-                contentful_url: "contentful api_url",
-                contentful_space_id: "contentful space",
-                contentful_environment: "contentful environment",
-                contentful_entry_id: "radio-question")
-          .and_call_original
-
         expect { service.call }.to raise_error GetStepsFromTask::RepeatEntryDetected, "radio-question"
       end
     end

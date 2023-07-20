@@ -9,6 +9,7 @@ require "types"
 #
 class CreateUser
   extend Dry::Initializer
+  include InsightsTrackable
 
   # @!attribute [r] auth
   # @return [Hash] OmniAuth response
@@ -18,7 +19,7 @@ class CreateUser
   # @return [Dsi::Client] DfE Sign In API (defaults to new instance)
   option :client, default: proc { ::Dsi::Client.new }
 
-  # Create or Update the User and report to Rollbar
+  # Create or Update the User
   #
   # @return [User, Symbol]
   def call
@@ -30,10 +31,10 @@ class CreateUser
     if member_of_a_supported_establishment? || internal_staff_member?
       current_user || create_user!
     elsif orgs.none?
-      Rollbar.info "User #{user_id} is not in a supported organisation"
+      track_event("CreateUser/UserNotInASupportedOrganisation", reason: "NoOrganisations")
       :no_organisation
     else
-      Rollbar.info "User #{user_id} is not in a supported organisation"
+      track_event("CreateUser/UserNotInASupportedOrganisation", reason: "NoSupportedOrganisations")
       :unsupported
     end
   end
@@ -73,6 +74,7 @@ private
 
   def update_support_agent!
     current_support_agent.update!(dsi_uid: user_id)
+    track_event("CreateUser/AgentUpdated", agent_id: current_support_agent.id)
   end
 
   # @return [User, nil]
@@ -91,7 +93,7 @@ private
       # when we are pulling the roles over from DSI
       # roles: roles,
     )
-    Rollbar.info "Updated account for #{user_id}"
+    track_event("CreateUser/UserUpdated")
     current_user
   end
 
@@ -108,7 +110,7 @@ private
       # when we are pulling the roles over from DSI
       # roles: roles,
     )
-    Rollbar.info "Created account for #{user_id}"
+    track_event("CreateUser/UserCreated")
     update_support_agent! if current_support_agent
     user
   end
@@ -149,15 +151,17 @@ private
   def roles
     #   client.roles(user_id: user_id, org_id: org_id)
     # rescue ::Dsi::Client::ApiError
-    #   Rollbar.info "User #{user_id} has no roles"
     []
   end
 
   # @return [Array] User's affliated organisations from DSI API
   def orgs
-    client.orgs(user_id:)
-  rescue ::Dsi::Client::ApiError
-    Rollbar.info "User #{user_id} has no organisation"
-    []
+    @orgs ||= begin
+      client.orgs(user_id:)
+    rescue ::Dsi::Client::ApiError
+      []
+    end
   end
+
+  def tracking_base_properties = { dsi_uid: user_id }
 end

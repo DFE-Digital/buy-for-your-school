@@ -2,6 +2,7 @@
 #
 class Content::Page::Get
   extend Dry::Initializer
+  include InsightsTrackable
 
   # @!attribute [r] entry_id
   #   @return [String]
@@ -15,7 +16,7 @@ class Content::Page::Get
     page = client.by_id(entry_id)
 
     if page.nil?
-      send_rollbar_error(message: "A Contentful page entry was not found")
+      track_error("Content/Page/Get/ContentfulPageNotFound")
       return :not_found
     end
 
@@ -24,9 +25,8 @@ class Content::Page::Get
 
 private
 
-  def send_rollbar_error(message:)
-    Rollbar.error(
-      message,
+  def tracking_base_properties
+    super.merge(
       contentful_space_id: client.space,
       contentful_environment: client.environment,
       contentful_url: client.api_url,

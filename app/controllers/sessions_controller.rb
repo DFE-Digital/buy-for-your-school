@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
 
   def failure
     # DSI: report the DSI user uid in the session if it exists
-    Rollbar.error("Sign in failed unexpectedly", dfe_sign_in_uid: session[:dfe_sign_in_uid])
+    track_event("Sessions/Failure", dfe_sign_in_uid: session[:dfe_sign_in_uid])
 
     # DSI: users would need to signout manually to proceed otherwise
     if session.destroy

@@ -18,6 +18,7 @@ require "types"
 module Notify
   class Email
     extend Dry::Initializer
+    include InsightsTrackable
 
     # @!attribute [r] recipient
     #   @return [Mixed] Person with name(s) and email address
@@ -56,7 +57,11 @@ module Notify
     # @return [Notifications::Client::ResponseNotification, String] email or error message
     #
     def call
-      send_message
+      message = send_message
+
+      track_event("EmailSent\#{self.class.to_s}")
+
+      message
     rescue ::ArgumentError,
            ::Notifications::Client::AuthError,
            ::Notifications::Client::BadRequestError => e

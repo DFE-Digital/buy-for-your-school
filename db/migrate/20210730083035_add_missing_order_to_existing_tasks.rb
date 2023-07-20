@@ -2,9 +2,9 @@ class AddMissingOrderToExistingTasks < ActiveRecord::Migration[6.1]
   def up
     return if Task.where(order: nil).none?
 
-    tasks_total = Task.count
+    Task.count
     tasks_unordered = Task.where(order: nil)
-    tasks_updated = tasks_unordered.count
+    tasks_unordered.count
 
     section_contentful_ids = tasks_unordered.map(&:section).map(&:contentful_id).uniq
 
@@ -20,10 +20,6 @@ class AddMissingOrderToExistingTasks < ActiveRecord::Migration[6.1]
           end
         end
       end
-
-      Rollbar.info("Migration: Tasks with missing order",
-                   tasks_total:,
-                   tasks_updated:)
     end
   end
 

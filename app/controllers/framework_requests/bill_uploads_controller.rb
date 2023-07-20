@@ -24,7 +24,7 @@ module FrameworkRequests
 
         render status: :created, json: { file_id: energy_bill.id }
       else
-        Rollbar.error("Infected file uploaded", framework_request_id: framework_request.id)
+        track_event("Rfh/BillUploads/Upload/VirusDetected", framework_request_id: framework_request.id)
 
         params[:file].tempfile.delete
 

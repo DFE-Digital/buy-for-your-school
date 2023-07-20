@@ -43,7 +43,6 @@ RSpec.describe CreateUser do
   describe "#call" do
     context "when a person with that DSI UUID already exists in the database" do
       it "returns the existing user record" do
-        expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
         expect(result).to eq user
       end
     end
@@ -54,7 +53,6 @@ RSpec.describe CreateUser do
       let(:email) { "unknown@example.com" }
 
       it "creates a new user record" do
-        expect(Rollbar).to receive(:info).with("Created account for unknown-uuid").and_call_original
         expect(result).to eq User.find_by(dfe_sign_in_uid: "unknown-uuid")
       end
     end
@@ -72,8 +70,6 @@ RSpec.describe CreateUser do
       end
 
       it "updates the user record" do
-        expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
-
         expect(result.first_name).to eq "New First"
         expect(result.last_name).to eq "New Last"
       end
@@ -114,7 +110,6 @@ RSpec.describe CreateUser do
       end
 
       it "creates a new user record" do
-        expect(Rollbar).to receive(:info).with("Created account for caseworker").and_call_original
         expect(result).to eq User.find_by(dfe_sign_in_uid: "caseworker")
       end
     end
@@ -149,8 +144,6 @@ RSpec.describe CreateUser do
         let(:orgs) { [] }
 
         it "is tagged :no_organisation" do
-          expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
-          expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 is not in a supported organisation").and_call_original
           expect(result).to be :no_organisation
         end
       end
@@ -164,8 +157,6 @@ RSpec.describe CreateUser do
         end
 
         it "is tagged :unsupported" do
-          expect(Rollbar).to receive(:info).with("Updated account for 03f98d51-5a93-4caa-9ff2-07faff7351d2").and_call_original
-          expect(Rollbar).to receive(:info).with("User 03f98d51-5a93-4caa-9ff2-07faff7351d2 is not in a supported organisation").and_call_original
           expect(result).to be :unsupported
         end
       end
@@ -178,7 +169,6 @@ RSpec.describe CreateUser do
         let(:orgs) { [] }
 
         it "is tagged :no_organisation" do
-          expect(Rollbar).to receive(:info).with("User new_user is not in a supported organisation").and_call_original
           expect(result).to be :no_organisation
         end
       end
@@ -192,7 +182,6 @@ RSpec.describe CreateUser do
         end
 
         it "is tagged :unsupported" do
-          expect(Rollbar).to receive(:info).with("User new_user is not in a supported organisation").and_call_original
           expect(result).to be :unsupported
         end
       end

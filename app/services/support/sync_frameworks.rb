@@ -1,5 +1,7 @@
 module Support
   class SyncFrameworks
+    include InsightsTrackable
+
     def initialize(endpoint: ENV["FAF_FRAMEWORK_ENDPOINT"])
       @endpoint = endpoint
     end
@@ -22,7 +24,7 @@ module Support
       if response.code == "200"
         @frameworks = JSON.parse(response.body)
       else
-        Rollbar.error("Could not fetch frameworks", uri: @endpoint, status: response.code)
+        track_error("SyncFrameworks/CouldNotFetchFrameworks", uri: @endpoint, status: response.code)
       end
     end
 

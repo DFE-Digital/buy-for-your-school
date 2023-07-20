@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
   include Pundit::Authorization
+  include InsightsTrackable
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
@@ -76,4 +77,6 @@ protected
   def current_url_b64
     Base64.encode64(request.fullpath)
   end
+
+  def tracking_base_properties = { user_id: current_user.id }
 end

@@ -2,8 +2,6 @@
 #
 # @see ActivityLogItem
 class RecordAction
-  class UnexpectedActionType < StandardError; end
-
   ACTION_TYPES = %w[
     begin_journey
     view_journey
@@ -63,11 +61,6 @@ class RecordAction
   #
   # @return [ActivityLogItem]
   def call
-    if invalid_action?
-      send_rollbar_warning
-      raise UnexpectedActionType
-    end
-
     ActivityLogItem.create!(
       action: @action_type,
       journey_id: @journey_id,
@@ -81,35 +74,6 @@ class RecordAction
       contentful_step_id: @contentful_step_id,
       contentful_step: @contentful_step,
       data: @data,
-    )
-  end
-
-private
-
-  def valid_action?
-    ACTION_TYPES.include?(@action_type)
-  end
-
-  def invalid_action?
-    !valid_action?
-  end
-
-  def send_rollbar_warning
-    Rollbar.warning(
-      "An attempt was made to log an action with an invalid type",
-      action: @action_type,
-      journey_id: @journey_id,
-      user_id: @user_id,
-      contentful_category_id: @contentful_category_id,
-      contentful_category: @contentful_category,
-      contentful_section_id: @contentful_section_id,
-      contentful_section: @contentful_section,
-      contentful_task_id: @contentful_task_id,
-      contentful_task: @contentful_task,
-      contentful_step_id: @contentful_step_id,
-      contentful_step: @contentful_step,
-      data: @data,
-      allowed_action_types: ACTION_TYPES.join(", "),
     )
   end
 end

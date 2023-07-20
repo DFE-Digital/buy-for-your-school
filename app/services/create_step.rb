@@ -2,6 +2,8 @@
 # Steps may have different fields available depending on their type.
 #
 class CreateStep
+  include InsightsTrackable
+
   class UnexpectedContentfulModel < StandardError; end
 
   class UnexpectedContentfulStepType < StandardError; end
@@ -51,12 +53,12 @@ class CreateStep
   # @return [Step]
   def call
     if unexpected_contentful_model?
-      send_rollbar_warning
+      track_error("CreateStep/UnexpectedContentfulModel")
       raise UnexpectedContentfulModel, content_model
     end
 
     if unexpected_step_type?
-      send_rollbar_warning
+      track_error("CreateStep/UnexpectedContentfulStepType")
       raise UnexpectedContentfulStepType, step_type
     end
 
@@ -221,9 +223,8 @@ private
     @contentful_step.raw
   end
 
-  def send_rollbar_warning
-    Rollbar.warning(
-      "An unexpected Contentful type was found",
+  def tracking_base_properties
+    super.merge(
       contentful_space_id: @contentful_step.space.id,
       contentful_environment: @contentful_step.environment.id,
       contentful_entry_id: content_entry_id,
