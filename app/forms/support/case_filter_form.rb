@@ -29,7 +29,7 @@ module Support
       @base_cases = @base_cases.not_closed unless state == "closed"
 
       filtered_cases = Support::FilterCases.new(base_cases:).filter(state:, category:, agent:, tower:, stage:, level:, has_org:)
-      Support::SortCases.new(filtered_cases).sort(sort)
+      filtered_cases.sorted_by(sort)
     end
 
     def user_submitted?

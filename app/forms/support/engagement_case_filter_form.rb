@@ -11,7 +11,10 @@ module Support
 
       filtered_cases = Support::FilterCases.new(base_cases:)
       filtered_cases.included_associations = %i[category created_by]
-      Support::SortCases.new(filtered_cases.filter(state:, category:, agent:, tower:, stage:, level:, has_org:)).sort(sort)
+
+      filtered_cases
+        .filter(state:, category:, agent:, tower:, stage:, level:, has_org:)
+        .sorted_by(sort)
     end
   end
 end
