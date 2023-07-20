@@ -9,7 +9,10 @@ module Support
   #
   class Case < ApplicationRecord
     include AASM
+    include Filterable
     include Sortable
+    include Searchable
+    include TabScopable
 
     aasm(column: :state, enum: true) do
       state :initial, initial: true
@@ -72,18 +75,6 @@ module Support
     belongs_to :procurement_stage, class_name: "Support::ProcurementStage", optional: true
 
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
-
-    scope :by_agent, ->(agent_id) { where(agent_id:) }
-    scope :by_state, ->(state) { state == "live" ? where(state: %w[initial opened on_hold]) : where(state:) }
-    scope :by_category, ->(category_id) { where(category_id:) }
-    scope :by_tower, ->(support_tower_id) { joins(:category).where(support_categories: { support_tower_id: }) }
-    scope :without_tower, -> { joins("JOIN support_tower_cases stc ON stc.id = support_cases.id").where(stc: { tower_slug: "no-tower" }) }
-    scope :by_stage, ->(stage) { joins(:procurement).where(procurement: { stage: }) }
-    scope :by_level, ->(support_level) { where(support_level:) }
-    scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
-    scope :triage, -> { by_level([0, 1, 2]) }
-    scope :high_level, -> { by_level([2, 3, 4]) }
-    scope :created_by_e_and_o, -> { where(creation_source: :engagement_and_outreach_team) }
 
     # Support level
     #
@@ -161,11 +152,6 @@ module Support
 
         find_each { |record| csv << record.attributes.values }
       end
-    end
-
-    def reopen_due_to_email
-      open!
-      interactions.state_change.create!(body: "Case reopened due to receiving a new email.")
     end
 
     # Called before validation to assign 6 digit incremental number (from last case or the default 000000)

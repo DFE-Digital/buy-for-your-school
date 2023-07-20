@@ -42,13 +42,13 @@ module Support::Case::Sortable
       select(Arel.sql(select_sql)).order("last_updated_at #{direction}")
     }
 
-    scope :sort_by_created, ->(direction = "ASC") { order("created_at #{direction}") }
+    scope :sort_by_created, ->(direction = "ASC") { order("support_cases.created_at #{direction}") }
 
     scope :sort_by_created_by, ->(direction = "ASC") { includes(:created_by).order("support_agents.first_name, support_agents.last_name #{direction}") }
 
     scope :sort_by_support_level, ->(direction = "ASC") { order("support_level #{direction}") }
 
-    scope :sort_by_received, ->(direction = "ASC") { order("created_at #{direction}") }
+    scope :sort_by_received, ->(direction = "ASC") { order("support_cases.created_at #{direction}") }
 
     scope :sort_by_ref, ->(direction = "ASC") { order("ref #{direction}") }
 
@@ -74,7 +74,9 @@ module Support::Case::Sortable
 
   class_methods do
     def sorted_by(sorting_params)
-      field, direction = sorting_params.first
+      return sort_by_action if sorting_params.nil? || sorting_params.values.all?(&:blank?)
+
+      field, direction = sorting_params.find { |_, value| value.present? }
 
       public_send("sort_by_#{field}", direction == "descending" ? "DESC" : "ASC")
     end

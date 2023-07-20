@@ -8,24 +8,26 @@ module Support
     include Support::Concerns::FilterParameters
 
     def show
-      override_filter = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"
-      filter_params = filter_params_for(filter_scope, persist: !override_filter)
-      base_cases = if Flipper.enabled?(:cms_triage_view)
-                     # filter on all tower cases if override == true (e.g. when coming in from case statistics)
-                     override_filter ? @tower.cases : @tower.high_level_cases
-                   else
-                     @tower.cases
-                   end
-      @filter_form = Support::CaseFilterForm.new(
-        **filter_params.to_h.merge(base_cases:, defaults: { state: "live" }),
-      )
-
-      @cases = @filter_form.results.paginate(page: params[:page])
+      @filter_form = Support::Case::Filtering.new(filter_params)
+      @cases = tower_cases.filtered_by(@filter_form).paginate(page: params[:page])
     end
 
   private
 
+    def tower_cases
+      if Flipper.enabled?(:cms_triage_view)
+        # filter on all tower cases if override == true (e.g. when coming in from case statistics)
+        override_filter ? @tower.cases : @tower.high_level_cases
+      else
+        @tower.cases
+      end
+    end
+
     def filter_scope = "filter_#{@tower.title.parameterize(separator: '_')}_cases"
+
+    def filter_params = filter_params_for("filter_#{@tower.title.parameterize(separator: '_')}_cases", defaults: { state: "live" }, persist: !override_filter).except(:override)
+
+    def override_filter = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"
 
     def find_tower
       # filter form still uses id
