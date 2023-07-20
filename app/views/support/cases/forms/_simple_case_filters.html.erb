@@ -12,7 +12,7 @@
     <% if tab.in?(["all-cases", "my-cases", "triage-cases"]) || tab.ends_with?("tower") %>
       <div class="govuk-grid-column-one-quarter">
         <%= f.govuk_select :state,
-                              options_for_select(f.object.case_states.map { |s| [s.title, s.id] },
+                              options_for_select(available_states.map { |s| [s.title, s.id] },
                                                   f.object.state),
                               options: { include_blank: I18n.t("support.case.filter.labels.all") },
                               label: { text: I18n.t("support.case.filter.labels.state") } %>
@@ -21,7 +21,7 @@
 
     <div class="govuk-grid-column-one-quarter">
       <%= f.govuk_select :category,
-                            options_for_select(f.object.categories.map { |a| [a.title, a.id] },
+                            options_for_select(available_categories(f.object.tower).map { |a| [a.title, a.id] },
                                                 f.object.category),
                             options: { include_blank: I18n.t("support.case.filter.labels.all") },
                             label: { text: I18n.t("support.case.filter.labels.sub_category") } %>
@@ -30,7 +30,7 @@
     <% unless hide_towers %>
     <div class="govuk-grid-column-one-quarter">
       <%= f.govuk_select :tower,
-                            options_for_select(f.object.towers.map { |a| [a.title, a.id] },
+                            options_for_select(available_towers.map { |a| [a.title, a.id] },
                                                 f.object.tower),
                             options: { include_blank: I18n.t("support.case.filter.labels.all") },
                             label: { text: I18n.t("support.case.filter.labels.tower") } %>
@@ -40,7 +40,7 @@
     <% if tab == "all-cases" || tab.ends_with?("tower") %>
       <div class="govuk-grid-column-one-quarter">
         <%= f.govuk_select :agent,
-                              options_for_select(f.object.agents.map { |a| [a.full_name, a.id] },
+                              options_for_select(available_agents.map { |a| [a.full_name, a.id] },
                                                   f.object.agent),
                               options: { include_blank: I18n.t("support.case.filter.labels.all") },
                               label: { text: I18n.t("support.case.filter.labels.assignee") } %>
@@ -49,7 +49,7 @@
 
     <div class="govuk-grid-column-one-quarter">
       <%= f.govuk_select :stage,
-                            options_for_select(f.object.stages.map { |a| [a.title, a.id] },
+                            options_for_select(available_stages.map { |a| [a.title, a.id] },
                                                 f.object.stage),
                             options: { include_blank: I18n.t("support.case.filter.labels.all") },
                             label: { text: I18n.t("support.case.filter.labels.stage") } %>
@@ -57,7 +57,7 @@
 
     <div class="govuk-grid-column-one-quarter">
       <%= f.govuk_select :level,
-                            options_for_select(f.object.levels.map { |a| [a.title, a.id] },
+                            options_for_select(available_levels.map { |a| [a.title, a.id] },
                                                 f.object.level),
                             options: { include_blank: I18n.t("support.case.filter.labels.all") },
                             label: { text: I18n.t("support.case.filter.labels.level") } %>
@@ -68,7 +68,6 @@
     <div class="govuk-grid-column-three-quarters">
       <div class="govuk-button-group">
         <%= f.hidden_field :search_term, value: f.object.try(:search_term) %>
-        <%= f.hidden_field :user_submitted, value: true %>
         <%= f.submit I18n.t("support.case.filter.buttons.apply"), class: "govuk-button govuk-button--secondary", role: "button" %>
         <%= link_to I18n.t("support.case.filter.buttons.clear"), clear_url, class: "govuk-button govuk-button--secondary", role: "button" %>
       </div>

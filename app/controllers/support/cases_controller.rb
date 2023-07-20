@@ -22,10 +22,13 @@ module Support
         end
 
         format.html do
-          @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page])
-          @triage_cases = @triage_cases_filter_form.results.paginate(page: params[:triage_cases_page]) if Flipper.enabled?(:cms_triage_view)
-          @new_cases = @new_cases_filter_form.results.paginate(page: params[:new_cases_page])
-          @my_cases = @my_cases_filter_form.results.paginate(page: params[:my_cases_page])
+          @cases = Case.all_cases_tab(@all_cases_filter_form).paginate(page: params[:cases_page]).load_async
+          @new_cases = Case.new_cases_tab(@new_cases_filter_form).paginate(page: params[:new_cases_page]).load_async
+          @my_cases = Case.my_cases_tab(current_agent, @my_cases_filter_form).paginate(page: params[:my_cases_page]).load_async
+
+          if Flipper.enabled?(:cms_triage_view)
+            @triage_cases = Case.triage_cases_tab(@triage_cases_filter_form).paginate(page: params[:triage_cases_page]).load_async
+          end
         end
       end
     end
@@ -116,24 +119,13 @@ module Support
     end
 
     def filter_forms
-      # allow my-cases to conditionally show closed / resolved cases if not by default
-      my_cases_form_params = { defaults: { state: "live" } }.merge(filter_params_for(:filter_my_cases_form))
-        .merge(base_cases: Case.by_agent(current_agent.id))
-
-      all_cases_form_params = filter_params_for(:filter_all_cases_form)
-
-      new_cases_form_params = filter_params_for(:filter_new_cases_form)
-        .merge(base_cases: Case.initial)
+      @all_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_all_cases_form))
+      @new_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_new_cases_form))
+      @my_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_my_cases_form, defaults: { state: "live" }))
 
       if Flipper.enabled?(:cms_triage_view)
-        triage_cases_form_params = filter_params_for(:filter_triage_cases_form)
-          .merge(base_cases: Case.triage, defaults: { state: "live" })
-
-        @triage_cases_filter_form = CaseFilterForm.new(**triage_cases_form_params)
+        @triage_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_triage_cases_form, defaults: { state: "live" }))
       end
-      @new_cases_filter_form = CaseFilterForm.new(**new_cases_form_params)
-      @my_cases_filter_form = CaseFilterForm.new(**my_cases_form_params)
-      @all_cases_filter_form = CaseFilterForm.new(**all_cases_form_params)
     end
 
     def edit_form_params

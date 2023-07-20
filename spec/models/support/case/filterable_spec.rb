@@ -1,7 +1,5 @@
-RSpec.describe Support::FilterCases, bullet: :skip do
-  subject(:service) do
-    described_class
-  end
+describe Support::Case::Filterable, bullet: :skip do
+  subject(:filterable) { Support::Case }
 
   let(:ict_tower) { create(:support_tower, title: "ICT") }
   let(:catering_cat) { create(:support_category, title: "Catering") }
@@ -15,7 +13,7 @@ RSpec.describe Support::FilterCases, bullet: :skip do
     create(:support_case, category: catering_cat, agent:)
   end
 
-  describe "#filter" do
+  describe ".filtered_by" do
     context "with filter params" do
       context "when filtered by category" do
         let(:filtering_params) do
@@ -23,8 +21,8 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         end
 
         it "filters by category" do
-          expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.category.title).to eql("IT")
+          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).first.category.title).to eql("IT")
         end
       end
 
@@ -34,8 +32,8 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         end
 
         it "filters by state" do
-          expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.state).to eql("closed")
+          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).first.state).to eql("closed")
         end
       end
 
@@ -45,8 +43,8 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         end
 
         it "filters by agent" do
-          expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.agent.first_name).to eql("Example Support Agent")
+          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).first.agent.first_name).to eql("Example Support Agent")
         end
       end
 
@@ -56,8 +54,8 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         end
 
         it "filters by tower" do
-          expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.category.tower_title).to eql("ICT")
+          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).first.category.tower_title).to eql("ICT")
         end
       end
 
@@ -67,8 +65,8 @@ RSpec.describe Support::FilterCases, bullet: :skip do
         end
 
         it "filters by has_org" do
-          expect(service.new.filter(filtering_params).count).to be(1)
-          expect(service.new.filter(filtering_params).first.category.tower_title).to eql("ICT")
+          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).first.category.tower_title).to eql("ICT")
         end
       end
     end

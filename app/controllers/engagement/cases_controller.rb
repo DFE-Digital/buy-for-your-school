@@ -15,7 +15,7 @@ module Engagement
         end
 
         format.html do
-          @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page])
+          @cases = Support::Case.created_by_e_and_o.filtered_by(@all_cases_filter_form).paginate(page: params[:cases_page])
         end
       end
     end
@@ -52,8 +52,7 @@ module Engagement
     end
 
     def filter_forms
-      all_cases_form_params = filter_params_for(:filter_all_cases_form)
-      @all_cases_filter_form = Support::EngagementCaseFilterForm.new(**all_cases_form_params)
+      @all_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_all_cases_form))
     end
 
     def validation
