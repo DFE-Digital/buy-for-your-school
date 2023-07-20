@@ -24,7 +24,7 @@
     "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "jest-environment-jsdom": "^29.6.1",
     "webpack-dev-server": "^4.15.1"
