@@ -835,6 +835,7 @@ en:
         organisation_type: Organisation type
         place_on_hold: Place on hold
         problem_description: Description of query
+        initial_problem_description: Initial description of query
         procurement_amount: Procurement amount
         procurement_value: Procurement value
         procurement_details:

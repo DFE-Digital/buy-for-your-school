@@ -4,6 +4,7 @@ module Support
     include Concerns::RequestDetailsFormFieldsSchema
 
     params do
+      optional(:request_text).value(:string)
       optional(:request_type).value(:bool)
       optional(:category_id).value(:string)
       optional(:query_id).value(:string)

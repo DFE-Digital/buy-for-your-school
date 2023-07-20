@@ -22,6 +22,18 @@
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.new.request_text.header") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @case_summary_form.request_text %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.support_level.header") %>
       </dt>
       <dd class="govuk-summary-list__value">

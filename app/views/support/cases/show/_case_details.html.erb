@@ -70,6 +70,16 @@
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.problem_description") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= simple_format(current_case.request_text, class: "govuk-body") %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
     </dl>
 
     <h3 class="govuk-heading-m">
@@ -138,10 +148,10 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.problem_description") %>
+          <%= I18n.t("support.case.label.initial_problem_description") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= simple_format(current_case.request_text, class: "govuk-body") %>
+          <%= simple_format(current_case.initial_request_text, class: "govuk-body") %>
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>

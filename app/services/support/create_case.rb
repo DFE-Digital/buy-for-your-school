@@ -37,6 +37,7 @@ module Support
         value: @attrs[:procurement_amount],
         creation_source: @attrs[:creation_source],
         procurement_stage: ProcurementStage.find_by(key: "need"),
+        initial_request_text: @attrs[:request_text],
       )
 
       kase.update!(created_by_id: @attrs[:creator].id) if @attrs[:creator]

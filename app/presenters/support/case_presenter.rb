@@ -30,6 +30,12 @@ module Support
       String(super).strip.chomp
     end
 
+    def initial_request_text
+      return "-" unless super
+
+      String(super).strip.chomp
+    end
+
     # @return [String] 30 January 2000 at 12:00
     def received_at
       created_at

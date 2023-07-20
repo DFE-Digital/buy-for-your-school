@@ -44,13 +44,14 @@ RSpec.feature "Case summary" do
         expect(all(".govuk-summary-list__row")[1]).to have_text "Case level"
         expect(all(".govuk-summary-list__row")[2]).to have_text "Case value"
         expect(all(".govuk-summary-list__row")[3]).to have_text "Source"
-        expect(all(".govuk-summary-list__row")[4]).to have_text "Received"
-        expect(all(".govuk-summary-list__row")[5]).to have_text "User selected options"
-        expect(all(".govuk-summary-list__row")[6]).to have_text "Auto-assigned sub-category"
-        expect(all(".govuk-summary-list__row")[7]).to have_text "Procurement amount"
-        expect(all(".govuk-summary-list__row")[8]).to have_text "Accessibility"
-        expect(all(".govuk-summary-list__row")[9]).to have_text "Description of query"
-        expect(all(".govuk-summary-list__row")[10]).to have_text "Attached specification"
+        expect(all(".govuk-summary-list__row")[4]).to have_text "Description of query"
+        expect(all(".govuk-summary-list__row")[5]).to have_text "Received"
+        expect(all(".govuk-summary-list__row")[6]).to have_text "User selected options"
+        expect(all(".govuk-summary-list__row")[7]).to have_text "Auto-assigned sub-category"
+        expect(all(".govuk-summary-list__row")[8]).to have_text "Procurement amount"
+        expect(all(".govuk-summary-list__row")[9]).to have_text "Accessibility"
+        expect(all(".govuk-summary-list__row")[10]).to have_text "Initial description of query"
+        expect(all(".govuk-summary-list__row")[11]).to have_text "Attached specification"
       end
     end
 
