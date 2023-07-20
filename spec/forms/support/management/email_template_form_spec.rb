@@ -199,7 +199,7 @@ describe Support::Management::EmailTemplateForm, type: :model do
 
   describe "#files_safe" do
     let(:text_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
-    let(:js_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "text/javascript") }
+    let(:js_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "application/javascript") }
 
     context "when there are no attachments" do
       let(:params) { { file_attachments: [] } }

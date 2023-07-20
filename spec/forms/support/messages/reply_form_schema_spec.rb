@@ -16,7 +16,7 @@ RSpec.describe Support::Messages::ReplyFormSchema do
     let(:infected_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
     let(:file_attachments) { [infected_file, ok_file] }
     let(:ok_file)              { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
-    let(:wrong_file_type_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "text/javascript") }
+    let(:wrong_file_type_file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/javascript-file.js"), "application/javascript") }
 
     context "when a file is infected with a virus" do
       before { allow(Support::VirusScanner).to receive(:uploaded_file_safe?).with(infected_file).and_return(false) }

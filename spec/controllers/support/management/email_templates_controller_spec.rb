@@ -4,7 +4,7 @@ describe Support::Management::EmailTemplatesController, type: :controller do
   describe "attachment_list" do
     let!(:email_template) { create(:support_email_template) }
     let!(:attachment_1) { create(:support_email_template_attachment, template: email_template, file: Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")) }
-    let!(:attachment_2) { create(:support_email_template_attachment, template: email_template, file: Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/support/javascript-file.js"), "text/javascript")) }
+    let!(:attachment_2) { create(:support_email_template_attachment, template: email_template, file: Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/support/javascript-file.js"), "application/javascript")) }
 
     it "returns all attachments for given email template" do
       get :attachment_list, params: { id: email_template.id }
