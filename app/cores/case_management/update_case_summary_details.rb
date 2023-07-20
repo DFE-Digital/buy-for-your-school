@@ -2,13 +2,14 @@ module CaseManagement
   class UpdateCaseSummaryDetails
     include Wisper::Publisher
 
-    def call(case_id:, agent_id:, category_id:, query_id:, other_category:, other_query:, source:, support_level:, value:, procurement_stage_id:)
+    def call(case_id:, agent_id:, category_id:, query_id:, other_category:, other_query:, request_text:, source:, support_level:, value:, procurement_stage_id:)
       support_case = Support::Case.find(case_id)
       support_case.update!(
         category_id:,
         query_id:,
         other_category:,
         other_query:,
+        request_text:,
         source:,
         support_level:,
         value:,
