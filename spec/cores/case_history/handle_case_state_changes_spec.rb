@@ -3,6 +3,8 @@ require "rails_helper"
 describe CaseHistory::HandleCaseStateChanges do
   subject(:handler) { described_class.new }
 
+  before { define_basic_procurement_stages }
+
   describe "#agent_assigned_to_case" do
     let(:support_case_id) { create(:support_case).id }
     let(:assigned_by_agent_id) { create(:support_agent).id }
@@ -46,40 +48,6 @@ describe CaseHistory::HandleCaseStateChanges do
       expect(interaction.event_type).to eq("state_change")
       expect(interaction.case_id).to eq(support_case_id)
       expect(interaction.body).to eq("Case placed on hold due to reason to be held")
-    end
-  end
-
-  describe "#case_support_level_changed" do
-    let!(:support_case_id) { create(:support_case).id }
-    let!(:agent_id) { create(:support_agent).id }
-    let(:payload) { { case_id: support_case_id, agent_id:, support_level: %w[L1 L2] } }
-
-    it "creates a case note about the change in level" do
-      expect { handler.case_support_level_changed(payload) }.to change(Support::Interaction, :count).from(0).to(1)
-      interaction = Support::Interaction.last
-      expect(interaction.event_type).to eq("case_level_changed")
-      expect(interaction.case_id).to eq(support_case_id)
-      expect(interaction.agent_id).to eq(agent_id)
-      expect(interaction.additional_data).to eq({ "from" => "L1", "to" => "L2" })
-      expect(interaction.body).to eq("Support level change")
-    end
-  end
-
-  describe "#case_procurement_stage_changed" do
-    let!(:need_stage) { create(:support_procurement_stage, title: "Need", stage: 0, key: "need") }
-    let!(:tender_prep_stage) { create(:support_procurement_stage, title: "Tender preparation", stage: 2, key: "tender_preparation") }
-    let!(:support_case_id) { create(:support_case, procurement_stage: need_stage).id }
-    let!(:agent_id) { create(:support_agent).id }
-    let(:payload) { { case_id: support_case_id, agent_id:, procurement_stage_id: [need_stage.id, tender_prep_stage.id] } }
-
-    it "creates a case note about the change in procurement stage" do
-      expect { handler.case_procurement_stage_changed(payload) }.to change(Support::Interaction, :count).from(0).to(1)
-      interaction = Support::Interaction.last
-      expect(interaction.event_type).to eq("case_procurement_stage_changed")
-      expect(interaction.case_id).to eq(support_case_id)
-      expect(interaction.agent_id).to eq(agent_id)
-      expect(interaction.additional_data).to eq({ "from" => need_stage.id, "to" => tender_prep_stage.id })
-      expect(interaction.body).to eq("Procurement stage change")
     end
   end
 

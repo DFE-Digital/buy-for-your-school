@@ -1,13 +1,13 @@
-import CaseProcurementController from "./case_procurement_controller";
+import CaseStageController from "./case_stage_controller";
 
-describe("CaseProcurementController", () => {
-  let subject;
+describe("CaseStageController", () => {
   const utilities = jest.requireActual("../misc/utilities");
+  let subject;
+  let displaySpy;
+  let enableSpy;
 
   beforeEach(() => {
-    subject = new CaseProcurementController();
-    subject.procurementRadioTarget = document.createElement("input");
-    subject.nonProcurementRadioTarget = document.createElement("input");
+    subject = new CaseStageController();
     subject.procurementStageTarget = document.createElement("select");
     const optionNeed = document.createElement("option");
     optionNeed.textContent = "Need";
@@ -15,47 +15,16 @@ describe("CaseProcurementController", () => {
     optionOther.textContent = "Other";
     subject.procurementStageTarget.replaceChildren(optionNeed, optionOther);
     subject.procurementStageWrapperTarget = document.createElement("div");
+
+    displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
+    enableSpy = jest.spyOn(utilities, "enable").mockImplementation(() => {});
   });
 
-  describe("connect", () => {
-    describe("when the procurement radio button is checked", () => {
-      let showProcurementStageSpy;
-
-      beforeEach(() => {
-        subject.procurementRadioTarget.checked = true;
-        showProcurementStageSpy = jest.spyOn(subject, "showProcurementStage").mockImplementation(() => {});
-
-        subject.connect();
-      });
-
-      it("calls showProcurementStage", () => {
-        expect(showProcurementStageSpy).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe("when the procurement radio button is not checked", () => {
-      let hideProcurementStageSpy;
-
-      beforeEach(() => {
-        subject.procurementRadioTarget.checked = false;
-        hideProcurementStageSpy = jest.spyOn(subject, "hideProcurementStage").mockImplementation(() => {});
-
-        subject.connect();
-      });
-
-      it("calls hideProcurementStage", () => {
-        expect(hideProcurementStageSpy).toHaveBeenCalledTimes(1);
-      });
-    });
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe("showProcurementStage", () => {
-    let displaySpy;
-
-    beforeEach(() => {
-      displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
-    });
-
     it("calls display with true", () => {
       subject.showProcurementStage();
       expect(displaySpy).toHaveBeenCalledWith(subject.procurementStageWrapperTarget, true);
@@ -74,11 +43,7 @@ describe("CaseProcurementController", () => {
   });
 
   describe("hideProcurementStage", () => {
-    let displaySpy;
-
     beforeEach(() => {
-      displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
-
       subject.hideProcurementStage();
     });
 
@@ -102,8 +67,8 @@ describe("CaseProcurementController", () => {
         subject.toggleProcurementStageEnabled(e);
       });
 
-      it("removes the disabled attribute from the procurement stage", () => {
-        expect(subject.procurementStageTarget.hasAttribute("disabled")).toEqual(false);
+      it("calls enable with true", () => {
+        expect(enableSpy).toHaveBeenCalledWith(subject.procurementStageTarget, true);
       });
     });
 
@@ -116,8 +81,8 @@ describe("CaseProcurementController", () => {
         subject.toggleProcurementStageEnabled(e);
       });
 
-      it("removes the disabled attribute from the procurement stage", () => {
-        expect(subject.procurementStageTarget.hasAttribute("disabled")).toEqual(false);
+      it("calls enable with true", () => {
+        expect(enableSpy).toHaveBeenCalledWith(subject.procurementStageTarget, true);
       });
     });
 
@@ -130,8 +95,8 @@ describe("CaseProcurementController", () => {
         subject.toggleProcurementStageEnabled(e);
       });
 
-      it("sets the disabled attribute on the procurement stage", () => {
-        expect(subject.procurementStageTarget.hasAttribute("disabled")).toEqual(true);
+      it("calls enable with false", () => {
+        expect(enableSpy).toHaveBeenCalledWith(subject.procurementStageTarget, false);
       });
 
       it("selects the first option", () => {
@@ -140,15 +105,13 @@ describe("CaseProcurementController", () => {
     });
   });
 
-  describe("submit", () => {
+  describe("enableProcurementStageElement", () => {
     beforeEach(() => {
-      subject.procurementStageTarget.setAttribute("disabled", true);
-
-      subject.submit();
+      subject.enableProcurementStageElement();
     });
 
-    it("removes the disabled attribute from the procurement stage", () => {
-      expect(subject.procurementStageTarget.hasAttribute("disabled")).toEqual(false);
+    it("calls enable with true", () => {
+      expect(enableSpy).toHaveBeenCalledWith(subject.procurementStageTarget, true);
     });
   });
 });

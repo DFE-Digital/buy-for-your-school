@@ -1,0 +1,18 @@
+<div class="case-stage-fields" data-controller="case-stage">
+  <%= form.govuk_radio_buttons_fieldset :support_level, legend: { text: I18n.t("support.case_summary.edit.support_level.label") } do %>
+    <div class="govuk-radios">
+      <% Support::Case.support_levels.each do |level| %>
+        <%= form.govuk_radio_button :support_level, level.first, label: { text: I18n.t("support.case.label.support_level.#{level.first}") }, "data-action": "case-stage#toggleProcurementStageEnabled" %>
+      <% end %>
+      <%= form.govuk_radio_button :support_level, "", label: { text: I18n.t("support.case.label.support_level.unspecified") }, "data-action": "case-stage#toggleProcurementStageEnabled" %>
+    </div>
+  <% end %>
+
+  <%= form.govuk_select :procurement_stage_id,
+                        grouped_options_for_select(procurement_stage_grouped_options(selected_procurement_stage_id: form.object.procurement_stage_id)),
+                        class: "case-summary__procurement-stages",
+                        label: { text: I18n.t("support.case.label.procurement_stage"), size: "m" },
+                        "data-case-stage-target": "procurementStage",
+                        form_group: { "data-case-stage-target" => "procurementStageWrapper" },
+                        disabled: !form.object.support_level.in?(%w[L4 L5]) %>
+</div>

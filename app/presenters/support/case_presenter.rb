@@ -189,18 +189,14 @@ module Support
       logged_contacts.first.__getobj__.created_at.strftime("%d %B %Y %H:%M")
     end
 
-    def last_case_note
-      __getobj__.interactions.note.first
+    delegate :body, to: :latest_note, prefix: true
+
+    def latest_note_date
+      latest_note.created_at.strftime("%d %b %y")
     end
 
-    delegate :body, to: :last_case_note, prefix: true
-
-    def last_case_note_date
-      last_case_note.created_at.strftime("%d %b %y")
-    end
-
-    def last_case_note_author
-      last_case_note.agent
+    def latest_note_author
+      latest_note.agent
     end
 
     def value

@@ -3,14 +3,12 @@ require "rails_helper"
 describe "Agent can change case summary", js: true do
   include_context "with an agent"
 
-  let!(:need_stage) { create(:support_procurement_stage, title: "Need", stage: 0, key: "need") }
-  let!(:tender_prep_stage) { create(:support_procurement_stage, title: "Tender preparation", stage: 2, key: "tender_preparation") }
-
   let(:support_case) { create(:support_case, support_level: :L1, value: nil, source: "nw_hub", category: gas_category, procurement_stage: need_stage) }
 
   before do
     define_basic_categories
     define_basic_queries
+    define_basic_procurement_stages
 
     visit support_case_path(support_case)
     click_on "Case details"
@@ -32,7 +30,7 @@ describe "Agent can change case summary", js: true do
     end
 
     it "creates a support level changed interaction" do
-      interaction = Support::Interaction.first
+      interaction = Support::Interaction.case_level_changed.first
 
       expect(interaction.body).to eq "Support level change"
       expect(interaction.additional_data).to eq({
@@ -55,7 +53,7 @@ describe "Agent can change case summary", js: true do
     end
 
     it "creates a procurement stage changed interaction" do
-      interaction = Support::Interaction.first
+      interaction = Support::Interaction.case_procurement_stage_changed.first
 
       expect(interaction.body).to eq "Procurement stage change"
       expect(interaction.additional_data).to eq({

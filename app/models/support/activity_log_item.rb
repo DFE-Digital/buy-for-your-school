@@ -10,6 +10,8 @@ module Support
 
     validates :support_case_id, :action, presence: true
 
+    belongs_to :support_case, class_name: "Support::Case"
+
     # @return [String]
     def self.to_csv
       CSV.generate(headers: true) do |csv|

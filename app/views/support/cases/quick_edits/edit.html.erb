@@ -1,0 +1,22 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @case_quick_edit,
+      scope: :case_quick_edit,
+      url: support_case_quick_edit_path,
+      method: :patch,
+      html: { "data-controller" => "case-quick-edit",
+              "data-case-quick-edit-show-procurement-stage-value" => @case_quick_edit.procurement_case?,
+              "data-case-quick-edit-case-stage-outlet" => ".case-stage-fields" } do |form| %>
+        <%= form.hidden_field :back_to, value: back_to_param %>
+
+        <%= form.govuk_text_area :note, rows: 5, label: { text: I18n.t("support.interaction.header.add_case_note", ref: @current_case.ref), size: "l" } %>
+
+        <%= render "support/cases/components/level_and_stage", form: form %>
+
+        <div class="govuk-button-group">
+          <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button", "data-action": "case-quick-edit#submit" %>
+          <%= link_to "Exit without saving", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+        </div>
+    <% end %>
+  </div>
+</div>

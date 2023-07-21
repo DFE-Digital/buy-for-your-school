@@ -1,4 +1,4 @@
-import { display } from "./utilities";
+import { display, enable } from "./utilities";
 
 describe("Utilities", () => {
   describe("display", () => {
@@ -27,6 +27,36 @@ describe("Utilities", () => {
 
       it("adds the govuk-!-display-none class", () => {
         expect(element.classList.contains("govuk-!-display-none")).toEqual(true);
+      });
+    });
+  });
+
+  describe("enable", () => {
+    let element;
+
+    beforeEach(() => {
+      element = document.createElement("input");
+    });
+
+    describe("when isEnabled is true", () => {
+      beforeEach(() => {
+        element.setAttribute("disabled", true);
+
+        enable(element, true);
+      });
+
+      it("removes the disabled attribute", () => {
+        expect(element.hasAttribute("disabled")).toEqual(false);
+      });
+    });
+
+    describe("when isEnabled is false", () => {
+      beforeEach(() => {
+        enable(element, false);
+      });
+
+      it("sets the disabled attribute", () => {
+        expect(element.hasAttribute("disabled")).toEqual(true);
       });
     });
   });
