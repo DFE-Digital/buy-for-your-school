@@ -1,17 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
-import { display } from "../misc/utilities"
+import { display, enable } from "../misc/utilities"
 
-// Connects to data-controller="case-procurement"
+// Connects to data-controller="case-stage"
 export default class extends Controller {
-  static targets = ["procurementRadio", "nonProcurementRadio", "procurementStage", "procurementStageWrapper"];
-
-  connect() {
-    if (this.procurementRadioTarget.checked) {
-      this.showProcurementStage();
-    } else {
-      this.hideProcurementStage();
-    }
-  }
+  static targets = ["procurementStage", "procurementStageWrapper"];
 
   showProcurementStage() {
     if (!this.procurementStageTarget.value) {
@@ -30,15 +22,15 @@ export default class extends Controller {
     switch (supportLevel) {
       case "L4":
       case "L5":
-        this.procurementStageTarget.removeAttribute("disabled");
+        enable(this.procurementStageTarget, true);
         break;
       default:
-        this.procurementStageTarget.setAttribute("disabled", true);
+        enable(this.procurementStageTarget, false);
         this.procurementStageTarget.selectedIndex = 0;
     }
   }
 
-  submit() {
-    this.procurementStageTarget.removeAttribute("disabled");
+  enableProcurementStageElement() {
+    enable(this.procurementStageTarget, true);
   }
 }

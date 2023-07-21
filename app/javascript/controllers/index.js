@@ -7,8 +7,14 @@ import { application } from "./application"
 import AutoFilterController from "./auto_filter_controller"
 application.register("auto-filter", AutoFilterController)
 
-import CaseProcurementController from "./case_procurement_controller"
-application.register("case-procurement", CaseProcurementController)
+import CaseQuickEditController from "./case_quick_edit_controller"
+application.register("case-quick-edit", CaseQuickEditController)
+
+import CaseStageController from "./case_stage_controller"
+application.register("case-stage", CaseStageController)
+
+import CaseSummaryController from "./case_summary_controller"
+application.register("case-summary", CaseSummaryController)
 
 import DropzoneController from "./dropzone_controller"
 application.register("dropzone", DropzoneController)
@@ -36,3 +42,6 @@ application.register("expander", ExpanderController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import RequestTypeController from "./request_type_controller"
+application.register("request-type", RequestTypeController)

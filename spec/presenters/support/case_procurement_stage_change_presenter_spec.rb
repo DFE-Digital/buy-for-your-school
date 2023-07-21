@@ -2,9 +2,9 @@ describe Support::CaseProcurementStageChangePresenter do
   subject(:presenter) { described_class.new(interaction) }
 
   let(:agent) { create(:support_agent, first_name: "CMS", last_name: "User") }
-  let!(:need_stage) { create(:support_procurement_stage, title: "Need", stage: 0, key: "need") }
-  let!(:tender_prep_stage) { create(:support_procurement_stage, title: "Tender preparation", stage: 2, key: "tender_preparation") }
   let(:interaction) { create(:support_interaction, :case_procurement_stage_changed, agent:, additional_data: { from: need_stage.id, to: tender_prep_stage.id }) }
+
+  before { define_basic_procurement_stages }
 
   describe "#body" do
     it "tells what the procurement stage changed from and to and who made the change" do

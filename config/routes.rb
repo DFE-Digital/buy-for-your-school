@@ -224,6 +224,7 @@ Rails.application.routes.draw do
           end
         end
         resources :email_templates, only: %i[index], constraints: ->(_request) { Flipper.enabled?(:email_templates) }
+        resource :quick_edit, only: %i[edit update]
       end
     end
 

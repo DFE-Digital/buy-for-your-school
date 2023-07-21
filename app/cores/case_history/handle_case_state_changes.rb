@@ -57,26 +57,6 @@ module CaseHistory
       record_state_change("Case value changed", payload)
     end
 
-    def case_support_level_changed(payload)
-      from, to = payload[:support_level]
-      Support::Interaction.case_level_changed.create!(
-        case_id: payload[:case_id],
-        additional_data: { from:, to: },
-        agent_id: payload[:agent_id],
-        body: "Support level change",
-      )
-    end
-
-    def case_procurement_stage_changed(payload)
-      from, to = payload[:procurement_stage_id]
-      Support::Interaction.case_procurement_stage_changed.create!(
-        case_id: payload[:case_id],
-        additional_data: { from:, to: },
-        agent_id: payload[:agent_id],
-        body: "Procurement stage change",
-      )
-    end
-
     def case_categorisation_changed(payload)
       if payload[:category_id].present? && payload[:query_id].present?
         record_change_of_category_and_query(payload)

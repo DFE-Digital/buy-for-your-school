@@ -6,8 +6,13 @@ module SupportAgents
 
     before_action :redirect_non_internal_users!
     before_action :authorize_agent!
+    before_action :set_current_agent
 
     helper_method :current_agent
+  end
+
+  def set_current_agent
+    Current.agent = @current_agent
   end
 
   def current_agent

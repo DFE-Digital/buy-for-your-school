@@ -43,6 +43,7 @@ RSpec.configure do |config|
   config.include SignInHelpers, type: :request
   config.include SignInHelpers, type: :controller
   config.include TinymceHelpers, type: :feature
+  config.include ProcurementStageHelpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"

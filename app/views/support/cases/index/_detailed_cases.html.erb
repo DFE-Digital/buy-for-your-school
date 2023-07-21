@@ -14,7 +14,7 @@
         <%= sortable_th :subcategory, I18n.t("support.case.label.category"), sort_scope, sort_form, th_classes: "col-sub-category", th_attributes: { title: I18n.t("support.case.label.sub_category") } %>
         <%= sortable_th :state, I18n.t("support.case.label.status"), sort_scope, sort_form, th_classes: "col-status" %>
         <%= sortable_th :last_updated, I18n.t("support.case.label.updated"), sort_scope, sort_form, sort_order: :desc_asc, th_classes: "col-updated" %>
-        <th class="govuk-table__header col-actions" scope="col" aria-hidden="true"></th>
+        <th class="govuk-table__header" scope="col" aria-hidden="true"></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">

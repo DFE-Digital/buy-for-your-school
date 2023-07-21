@@ -10,8 +10,8 @@
 	end
 %>
 
-<%= form.govuk_radio_buttons_fieldset :request_type, legend: { size: 'm', text: I18n.t("support.case_hub_migration.request_type.legend") } do %>
-	<%= form.govuk_radio_button :request_type, true, class: "request_type_option", label: { text: I18n.t("support.case_hub_migration.label.procurement") }, "data-case-procurement-target": "procurementRadio", "data-action": "case-procurement#showProcurementStage" do %>
+<%= form.govuk_radio_buttons_fieldset :request_type, class: "request-type-radios", legend: { size: 'm', text: I18n.t("support.case_hub_migration.request_type.legend") }, "data-controller": "request-type" do %>
+	<%= form.govuk_radio_button :request_type, true, class: "request_type_option", label: { text: I18n.t("support.case_hub_migration.label.procurement") }, "data-request-type-target": "procurementRadio", "data-action": "request-type#procurementSelected" do %>
 		<%= form.govuk_select :category_id,
 					grouped_options_for_select(procurement_category_grouped_options(selected_category_id: form.object.category_id)),
 					id: "select_request_details_category_id",
@@ -24,7 +24,7 @@
 					label: { text: I18n.t("support.case_hub_migration.label.other_category"), class: "govuk-label #{other_category_hidden}" } %>
 	<% end %>
 
-	<%= form.govuk_radio_button :request_type, false, class: "request_type_option", label: { text: I18n.t("support.case_hub_migration.label.non_procurement") }, "data-case-procurement-target": "nonProcurementRadio", "data-action": "case-procurement#hideProcurementStage" do %>
+	<%= form.govuk_radio_button :request_type, false, class: "request_type_option", label: { text: I18n.t("support.case_hub_migration.label.non_procurement") }, "data-action": "request-type#nonProcurementSelected" do %>
 		<%= form.govuk_select :query_id,
 					options_for_select(non_procurement_query_options(selected_query_id: form.object.query_id)),
 					id: "select_request_details_query_id",
