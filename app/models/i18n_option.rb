@@ -6,7 +6,7 @@ class I18nOption
   attr_reader :title, :id
 
   def initialize(i18ntpath, id)
-    @title = I18n.t(i18ntpath.gsub("%%key%%", id.downcase))
+    @title = I18n.t(i18ntpath.gsub("%%key%%", id))
     @id = id
   end
 end
