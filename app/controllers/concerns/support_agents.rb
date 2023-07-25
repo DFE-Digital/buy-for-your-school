@@ -10,7 +10,9 @@ module SupportAgents
     helper_method :current_agent
   end
 
-  def current_agent = @current_agent ||= Support::Agent.find_or_create_by_user(current_user)
+  def current_agent
+    @current_agent ||= Support::Agent.find_or_create_by_user(current_user)
+  end
 
   def pundit_user = current_agent
 
