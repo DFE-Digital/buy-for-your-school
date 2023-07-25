@@ -29,7 +29,11 @@ class User < ApplicationRecord
   #
   # @return [Boolean] user is an internal team member (or case worker)
   def internal?
-    support_agent.present? || self.class.internal.include?(self)
+    support_agent.present? || proc_ops?
+  end
+
+  def proc_ops?
+    self.class.internal.include?(self)
   end
 
   # @return [Boolean] user is an analyst

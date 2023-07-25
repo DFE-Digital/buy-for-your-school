@@ -5,6 +5,14 @@ class Guest < Dry::Struct
     true
   end
 
+  def dfe_sign_in_uid
+    nil
+  end
+
+  def proc_ops?
+    false
+  end
+
   def agent?
     false
   end

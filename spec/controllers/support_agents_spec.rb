@@ -94,8 +94,18 @@ describe SupportAgents, type: :controller do
     end
 
     context "when agent does not exist" do
-      it "creates one based on the user" do
-        expect { controller.current_agent }.to change { Support::Agent.where(dsi_uid: 12_345).count }.from(0).to(1)
+      context "when the current_user is in proc ops organisation" do
+        it "creates one based on the user" do
+          expect { controller.current_agent }.to change { Support::Agent.where(dsi_uid: 12_345).count }.from(0).to(1)
+        end
+      end
+
+      context "when the current_user is not in proc ops organisation" do
+        before { User.find_by(dfe_sign_in_uid: 12_345).update(orgs: []) }
+
+        it "does not create an agent as that would then class them as internal" do
+          expect { controller.current_agent }.not_to change { Support::Agent.where(dsi_uid: 12_345).count }.from(0)
+        end
       end
     end
 

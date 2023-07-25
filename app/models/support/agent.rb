@@ -33,10 +33,14 @@ module Support
     }
 
     def self.find_or_create_by_user(user)
-      find_or_create_by!(dsi_uid: user.dfe_sign_in_uid) do |agent|
-        agent.email = user.email
-        agent.first_name = user.first_name
-        agent.last_name = user.last_name
+      agent = find_by(dsi_uid: user.dfe_sign_in_uid)
+
+      return agent unless agent.nil? && user.proc_ops?
+
+      find_or_create_by!(dsi_uid: user.dfe_sign_in_uid) do |new_agent|
+        new_agent.email = user.email
+        new_agent.first_name = user.first_name
+        new_agent.last_name = user.last_name
       end
     end
 
