@@ -217,6 +217,9 @@ GEM
     erubi (1.12.0)
     et-orbi (1.2.7)
       tzinfo
+    exception_notification (4.5.0)
+      actionmailer (>= 5.2, < 8)
+      activesupport (>= 5.2, < 8)
     execjs (2.8.1)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -576,6 +579,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    slack-notifier (2.4.0)
     smart_properties (1.17.0)
     spring (4.1.1)
     spring-commands-rspec (1.0.4)
@@ -676,6 +680,7 @@ DEPENDENCIES
   dry-struct
   dry-transformer
   dry-validation
+  exception_notification
   factory_bot_rails
   faker
   flipper
@@ -724,6 +729,7 @@ DEPENDENCIES
   sidekiq (~> 6.4)
   sidekiq-cron (~> 1.10)
   simplecov
+  slack-notifier
   spring
   spring-commands-rspec
   sprockets-rails
