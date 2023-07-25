@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
   include Pundit::Authorization
   include InsightsTrackable
+  include ExceptionDataPrepareable
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
