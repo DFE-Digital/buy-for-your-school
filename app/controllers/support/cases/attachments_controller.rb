@@ -3,17 +3,16 @@ module Support
     before_action :redirect_to_attachments_tab, unless: :turbo_frame_request?, only: :index
     before_action :set_filter_form, only: :index
     before_action :set_email_attachments, only: :index
+    before_action :find_email_attachment, only: %i[edit update destroy]
 
     def index; end
 
     def edit
-      @email_attachment = Support::EmailAttachment.find(params[:id])
       @edit_attachment_form = Support::EditCaseAttachableForm.from(@email_attachment)
       @back_url = url_from(back_link_param) || support_case_attachments_path(@current_case, page: params[:redirect_page])
     end
 
     def update
-      @email_attachment = Support::EmailAttachment.find(params[:id])
       @edit_attachment_form = Support::EditCaseAttachableForm.new(
         update_action: CaseFiles::RenameFile.new(@email_attachment),
         **edit_attachment_form_params,
@@ -29,7 +28,7 @@ module Support
     end
 
     def destroy
-      CaseFiles::HideAttachment.new.call(attachment_id: params[:id])
+      @email_attachment.hide
 
       redirect_to support_case_attachments_path(@current_case)
     end
@@ -46,6 +45,10 @@ module Support
 
     def set_filter_form
       @filter_form = FilterAttachmentsForm.new({ sent_received: "all" }.merge(filter_form_params))
+    end
+
+    def find_email_attachment
+      @email_attachment = Support::EmailAttachment.find(params[:id])
     end
 
     def set_email_attachments
