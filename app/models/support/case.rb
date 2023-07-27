@@ -8,41 +8,11 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
-    include AASM
     include Filterable
+    include StateChangeable
     include Sortable
     include Searchable
     include TabScopable
-
-    aasm(column: :state, enum: true) do
-      state :initial, initial: true
-      state :opened, :resolved, :on_hold, :closed, :pipeline, :no_response
-
-      after_all_transitions :record_state_change, :broadcast_state_change
-
-      event :resolve do
-        transitions from: :initial, to: :resolved
-        transitions from: :opened, to: :resolved
-      end
-
-      event :open do
-        transitions from: :initial, to: :opened
-        transitions from: :resolved, to: :opened
-        transitions from: :on_hold, to: :opened
-      end
-
-      event :hold do
-        transitions from: :opened, to: :on_hold
-        transitions from: :initial, to: :on_hold
-      end
-
-      event :close do
-        transitions from: :initial, to: :closed
-        transitions from: :opened, to: :closed
-        transitions from: :on_hold, to: :closed
-        transitions from: :resolved, to: :closed
-      end
-    end
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true
@@ -84,17 +54,6 @@ module Support
     #   L4       - Run framework on behalf of school
     #   L5       - Run bespoke procurement
     enum support_level: { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4 }
-
-    # State
-    #
-    #   initial (default)
-    #   open
-    #   resolved
-    #   pending
-    #   closed
-    #   pipeline
-    #   no_response
-    enum state: { initial: 0, opened: 1, resolved: 2, on_hold: 3, closed: 4, pipeline: 5, no_response: 6 }
 
     # Closure reason
     #
@@ -165,14 +124,6 @@ module Support
     # @return [Array, Support::Interaction]
     def support_request
       interactions&.support_request&.first
-    end
-
-    def record_state_change
-      RecordAction.new(case_id: id, action: "change_state", data: { old_state: aasm.from_state, new_state: aasm.to_state }).call
-    end
-
-    def broadcast_state_change
-      broadcast_replace_to "case_status_updates", partial: "support/cases/status_badge", locals: { state: aasm.to_state }, target: "case_status_badge"
     end
   end
 end
