@@ -25,13 +25,13 @@ Naming/MethodName:
 # Offense count: 20
 RSpec/AnyInstance:
   Exclude:
-    - 'spec/jobs/self-serve/warm_entry_cache_job_spec.rb'
-    - 'spec/requests/self-serve/api/contentful/pages_controller_spec.rb'
-    - 'spec/requests/self-serve/authentication_spec.rb'
-    - 'spec/requests/self-serve/contentful_caching_spec.rb'
-    - 'spec/services/self-serve/create_task_spec.rb'
-    - 'spec/services/self-serve/get_answers_for_steps_spec.rb'
-    - 'spec/services/self-serve/save_answer_spec.rb'
+    - 'spec/jobs/specify/warm_entry_cache_job_spec.rb'
+    - 'spec/requests/specify/api/contentful/pages_controller_spec.rb'
+    - 'spec/requests/specify/authentication_spec.rb'
+    - 'spec/requests/specify/contentful_caching_spec.rb'
+    - 'spec/services/specify/create_task_spec.rb'
+    - 'spec/services/specify/get_answers_for_steps_spec.rb'
+    - 'spec/services/specify/save_answer_spec.rb'
     - 'spec/services/support/messages/outlook/synchronisation/steps/attach_email_to_case_spec.rb'
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'

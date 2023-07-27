@@ -1,12 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Referrals
-  namespace :referrals do
-    get "/rfh/:referral_path", to: "referrals#rfh"
-    get "/specify/:referral_path", to: "referrals#specify"
-    get "/faf/:referral_path", to: "referrals#faf"
-  end
+  root to: "specify/home#show"
+
+  # Misc
+  get "health_check" => "application#health_check"
+  resource :cookie_preferences, only: %i[show edit update]
+  resources :design, only: %i[index show]
+  get "/pages/:page", to: "static_pages#show"
+
+  # CMS entrypoints
+  get "cms", to: "cms_entry_points#start", as: :cms_entrypoint
+  get "cms/no_roles_assigned", to: "cms_entry_points#no_roles_assigned", as: :cms_no_roles_assigned
+  get "cms/not_authorized", to: "cms_entry_points#not_authorized", as: :cms_not_authorized
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -20,15 +26,21 @@ Rails.application.routes.draw do
   get "/422", to: "errors#unacceptable"
   get "/500", to: "errors#internal_server_error"
 
-  #
-  # Self-Serve -----------------------------------------------------------------
-  #
-  root to: "home#show"
+  # "Legacy" admin
+  scope "/admin", as: "admin" do
+    get "/", to: "admin#show"
+    scope "/download", as: "download" do
+      get "user_activity", to: "admin#download_user_activity", as: "user_activity"
+      get "users", to: "admin#download_users", as: "users"
+    end
+  end
 
-  get "dashboard", to: "dashboard#show"
-  get "profile", to: "profile#show"
-
-  resource :cookie_preferences, only: %i[show edit update]
+  # Referrals
+  namespace :referrals do
+    get "/rfh/:referral_path", to: "referrals#rfh"
+    get "/specify/:referral_path", to: "referrals#specify"
+    get "/faf/:referral_path", to: "referrals#faf"
+  end
 
   # Contentful
   namespace :api do
@@ -48,15 +60,35 @@ Rails.application.routes.draw do
     end
   end
 
-  # NB: guard against use of back button after form validation errors
-  get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
+  # Specify
+  scope module: :specify do
+    get "dashboard", to: "dashboard#show"
 
-  resources :design, only: %i[index show]
-  resources :feedback, only: %i[new show create edit update]
+    resources :feedback, only: %i[new show create edit update]
+    get "profile", to: "profile#show"
 
-  #
-  # Framework Requests ---------------------------------------------------------
-  #
+    resources :support_requests, except: %i[destroy], path: "support-requests"
+    resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
+    post "/submit", to: "api/support/requests#create", as: :submit_request
+
+    # NB: guard against use of back button after form validation errors
+    get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
+    resources :journeys, only: %i[new show create destroy edit update] do
+      resource :specification, only: %i[create show] do
+        get :download, to: "specifications#new"
+      end
+      resources :steps, only: %i[new show edit update] do
+        resources :answers, only: %i[create update]
+      end
+      resources :tasks, only: [:show]
+    end
+
+    namespace :preview do
+      resources :entries, only: [:show]
+    end
+  end
+
+  # Request for help
   resources :framework_requests, only: %i[index show], path: "procurement-support" do
     scope module: "framework_requests" do
       collection do
@@ -136,43 +168,6 @@ Rails.application.routes.draw do
   end
   resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
 
-  #
-  # Situational Content ---------------------------------------------------------
-  #
-
-  get "/pages/:page", to: "static_pages#show"
-
-  #
-  # General Support Requests ---------------------------------------------------
-  #
-  resources :support_requests, except: %i[destroy], path: "support-requests"
-  resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
-  post "/submit", to: "api/support/requests#create", as: :submit_request
-
-  resources :journeys, only: %i[new show create destroy edit update] do
-    resource :specification, only: %i[create show] do
-      get :download, to: "specifications#new"
-    end
-    resources :steps, only: %i[new show edit update] do
-      resources :answers, only: %i[create update]
-    end
-    resources :tasks, only: [:show]
-  end
-
-  namespace :preview do
-    resources :entries, only: [:show]
-  end
-
-  #
-  # CMS entrypoints ------------------------------------------------------------------
-  #
-  get "cms", to: "cms_entry_points#start", as: :cms_entrypoint
-  get "cms/no_roles_assigned", to: "cms_entry_points#no_roles_assigned", as: :cms_no_roles_assigned
-  get "cms/not_authorized", to: "cms_entry_points#not_authorized", as: :cms_not_authorized
-
-  #
-  # Supported ------------------------------------------------------------------
-  #
   # Proc-Ops Portal
   namespace :support do
     root to: "cases#index"
@@ -284,33 +279,6 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.development?
-    require "sidekiq/web"
-    mount Sidekiq::Web, at: "/sidekiq"
-  end
-
-  flipper_app = Flipper::UI.app do |builder|
-    if Rails.env.production?
-      builder.use Rack::Auth::Basic do |username, password|
-        username == ENV["FLIPPER_USERNAME"] && password == ENV["FLIPPER_PASSWORD"]
-      end
-    end
-  end
-  mount flipper_app, at: "/flipper"
-
-  #
-  # Common ---------------------------------------------------------------------
-  #
-  get "health_check" => "application#health_check"
-
-  scope "/admin", as: "admin" do
-    get "/", to: "admin#show"
-    scope "/download", as: "download" do
-      get "user_activity", to: "admin#download_user_activity", as: "user_activity"
-      get "users", to: "admin#download_users", as: "users"
-    end
-  end
-
   namespace :exit_survey do
     resources :start, only: %i[show]
     resources :satisfaction, only: %i[edit update]
@@ -334,6 +302,20 @@ Rails.application.routes.draw do
     resources :accessibility_research, only: %i[edit update]
     resources :thank_you, only: %i[show]
   end
+
+  if Rails.env.development?
+    require "sidekiq/web"
+    mount Sidekiq::Web, at: "/sidekiq"
+  end
+
+  flipper_app = Flipper::UI.app do |builder|
+    if Rails.env.production?
+      builder.use Rack::Auth::Basic do |username, password|
+        username == ENV["FLIPPER_USERNAME"] && password == ENV["FLIPPER_PASSWORD"]
+      end
+    end
+  end
+  mount flipper_app, at: "/flipper"
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
   # if a Page with :slug cannot be found, `errors/not_found` is rendered
