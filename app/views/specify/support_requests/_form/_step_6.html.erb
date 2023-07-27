@@ -1,0 +1,7 @@
+<%= form.hidden_field :phone_number, value: form.object.phone_number %>
+<%= form.hidden_field :school_urn, value: form.object.school_urn %>
+<%= form.hidden_field :journey_id, value: form.object.journey_id %>
+<%= form.hidden_field :category_id, value: form.object.category_id %>
+<%= form.hidden_field :message_body, value: form.object.message_body %>
+
+<%= render "specify/requests/_form/procurement_amount", form: form %>
