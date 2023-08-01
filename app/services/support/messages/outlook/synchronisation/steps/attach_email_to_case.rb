@@ -16,7 +16,7 @@ module Support
               email.update!(case: support_case)
 
               if email.previous_changes.key?("case_id")
-                event = :"#{message.inbox? ? "received" : "sent"}_email_attached_to_case"
+                event = :"#{message.inbox? ? 'received' : 'sent'}_email_attached_to_case"
                 broadcast(event, { support_case_id: support_case.id, support_email_id: email.id })
               end
             end
