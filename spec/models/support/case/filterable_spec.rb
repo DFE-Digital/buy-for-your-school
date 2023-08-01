@@ -10,7 +10,7 @@ describe Support::Case::Filterable, bullet: :skip do
     create_list(:support_case, 10)
     create(:support_case, category: it_cat, organisation: nil)
     create(:support_case, category: catering_cat, state: :closed, ref: "999888")
-    create(:support_case, category: catering_cat, agent:)
+    create(:support_case, category: catering_cat, state: :on_hold, agent:)
   end
 
   describe ".filtered_by" do
@@ -28,12 +28,13 @@ describe Support::Case::Filterable, bullet: :skip do
 
       context "when filtered by state" do
         let(:filtering_params) do
-          { state: :closed }
+          { state: %i[closed on_hold] }
         end
 
         it "filters by state" do
-          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).count).to be(2)
           expect(filterable.filtered_by(filtering_params).first.state).to eql("closed")
+          expect(filterable.filtered_by(filtering_params).last.state).to eql("on_hold")
         end
       end
 

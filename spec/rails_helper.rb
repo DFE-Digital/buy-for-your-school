@@ -87,6 +87,7 @@ RSpec.configure do |config|
     Flipper.enable(:energy_bill_flow)
     Flipper.enable(:email_templates)
     Flipper.enable(:cms_triage_view)
+    Flipper.enable(:cms_panel_view)
   end
 
   config.before(:each, type: :feature) do

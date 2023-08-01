@@ -50,15 +50,16 @@ describe Support::FilterHelper do
 
     context "when a tower is provided" do
       it "only returns the categories in that tower" do
-        expect(available_categories(tower).pluck(:title)).to match_array([
-          "Tower Cat 1", "Tower Cat 2"
+        expect(available_categories(tower).map(&:title)).to match_array([
+          "All", "Tower Cat 1", "Tower Cat 2"
         ])
       end
     end
 
     context "when no tower is provided" do
       it "returns all categories" do
-        expect(available_categories.pluck(:title)).to match_array([
+        expect(available_categories.map(&:title)).to match_array([
+          "All",
           "Tower Cat 1",
           "Tower Cat 2",
           "Non-Tower Cat 1",

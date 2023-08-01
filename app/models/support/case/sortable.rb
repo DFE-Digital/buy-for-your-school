@@ -76,9 +76,14 @@ module Support::Case::Sortable
     def sorted_by(sorting_params)
       return sort_by_action if sorting_params.nil? || sorting_params.values.all?(&:blank?)
 
-      field, direction = sorting_params.find { |_, value| value.present? }
+      if sorting_params[:sort].present?
+        field, order = sorting_params[:sort].find { |_, value| value.present? }
+      else
+        field = sorting_params[:sort_by]
+        order = sorting_params[:sort_order]
+      end
 
-      public_send("sort_by_#{field}", direction == "descending" ? "DESC" : "ASC")
+      public_send("sort_by_#{field}", order == "descending" ? "DESC" : "ASC")
     end
   end
 end

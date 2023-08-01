@@ -1,0 +1,32 @@
+<li aria-label="<%= "Case #{kase.ref}" %>">
+  <div class="case-panel">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <%= render partial: "support/cases/case_list/case_panel/top_left_pane", locals: { tab:, kase: } %>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <%= render partial: "support/cases/case_list/case_panel/top_right_pane", locals: { kase: } %>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <div class="quick-edit-row">
+              <p class="govuk-body">
+                <%= link_to "Quick edit", edit_support_case_quick_edit_path(kase, option: :note, back_to: current_url_b64(tab)), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <%= render partial: "support/cases/case_list/case_panel/bottom_left_pane", locals: { kase: } %>
+          </div>
+          <div class="govuk-grid-column-one-half">
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</li>

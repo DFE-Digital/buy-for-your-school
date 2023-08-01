@@ -13,7 +13,7 @@
       <%= sortable_th :subcategory, I18n.t("support.case.label.category"), sort_scope, sort_form, th_classes: "col-sub-category", th_attributes: { title: I18n.t("support.case.label.sub_category") } %>
       <%= sortable_th :created_by, I18n.t("support.case.label.created_by"), sort_scope, sort_form %>
       <%= sortable_th :value, I18n.t("support.case.label.case_value_short"), sort_scope, sort_form %>
-      <%= sortable_th :created, I18n.t("support.case.label.created"), sort_scope, sort_form, sort_order: :desc_asc %>
+      <%= sortable_th :created, I18n.t("support.case.label.created"), sort_scope, sort_form, sort_config: :desc_asc %>
     </tr>
     </thead>
     <tbody class="govuk-table__body">

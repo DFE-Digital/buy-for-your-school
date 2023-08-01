@@ -1,19 +1,35 @@
-<div class="govuk-tabs__panel borderless govuk-tabs__panel--hidden" id="new-cases">
-  <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-new-cases" data-component="toggle-panel-visibility">
-    <%= I18n.t("support.case.filter.filter_results") %>
-  </button>
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="new-cases">
+  <% if Flipper.enabled?(:cms_panel_view) %>
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("support.case.list.new_cases") %>
+    </h1>
+    <%= render partial: "support/cases/case_list/case_list",
+          locals: {
+            tab: "new-cases",
+            cases: @new_cases,
+            page_param_name: "new_cases_page",
+            filter_form: @new_cases_filter_form,
+            filter_form_scope: :filter_new_cases_form,
+            filter_url: support_cases_path(anchor: "new-cases"),
+            clear_url: support_cases_path(anchor: "new-cases", clear: true),
+          } %>
+  <% else %>
+    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-new-cases" data-component="toggle-panel-visibility">
+      <%= I18n.t("support.case.filter.filter_results") %>
+    </button>
 
-  <h1 class="govuk-heading-l">
-    <%= I18n.t("support.case.list.new_cases") %>
-  </h1>
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("support.case.list.new_cases") %>
+    </h1>
 
-  <%= render "support/cases/forms/filter_cases_form",
-              form: @new_cases_filter_form,
-              scope: :filter_new_cases_form,
-              filter_url: support_cases_path(anchor: "new-cases"),
-              clear_url: support_cases_path(anchor: "new-cases", clear: true),
-              tab: "new-cases" %>
+    <%= render "support/cases/forms/filter_cases_form",
+                form: @new_cases_filter_form,
+                scope: :filter_new_cases_form,
+                filter_url: support_cases_path(anchor: "new-cases"),
+                clear_url: support_cases_path(anchor: "new-cases", clear: true),
+                tab: "new-cases" %>
 
-  <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@new_cases), tab: :new_cases, sort_scope: :filter_new_cases_form, sort_form: @new_cases_filter_form %>
-  <%= render "components/pagination", records: @new_cases, page_param_name: 'new_cases_page', pagination_params: { anchor: "new-cases" } %>
+    <%= render "support/cases/index/simple_cases", cases: Support::CasePresenter.wrap_collection(@new_cases), tab: :new_cases, sort_scope: :filter_new_cases_form, sort_form: @new_cases_filter_form %>
+    <%= render "components/pagination", records: @new_cases, page_param_name: 'new_cases_page', pagination_params: { anchor: "new-cases" } %>
+  <% end %>
 </div>

@@ -4,23 +4,23 @@
   }
 
   optgroup[label="STAGE 0"] {
-    background-color: #d53880;
+    background-color: $stage-0-colour;
   }
 
   optgroup[label="STAGE 1"] {
-    background-color: #f47738;
+    background-color: $stage-1-colour;
   }
 
   optgroup[label="STAGE 2"] {
-    background-color: #28a197;
+    background-color: $stage-2-colour;
   }
 
   optgroup[label="STAGE 3"] {
-    background-color: #6f72af;
+    background-color: $stage-3-colour;
   }
 
   optgroup[label="STAGE 4"] {
-    background-color: #85994b;
+    background-color: $stage-4-colour;
   }
 
   option {

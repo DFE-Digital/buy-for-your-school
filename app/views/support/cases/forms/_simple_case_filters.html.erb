@@ -14,7 +14,6 @@
         <%= f.govuk_select :state,
                               options_for_select(available_states.map { |s| [s.title, s.id] },
                                                   f.object.state),
-                              options: { include_blank: I18n.t("support.case.filter.labels.all") },
                               label: { text: I18n.t("support.case.filter.labels.state") } %>
       </div>
     <% end %>
@@ -23,7 +22,6 @@
       <%= f.govuk_select :category,
                             options_for_select(available_categories(f.object.tower).map { |a| [a.title, a.id] },
                                                 f.object.category),
-                            options: { include_blank: I18n.t("support.case.filter.labels.all") },
                             label: { text: I18n.t("support.case.filter.labels.sub_category") } %>
     </div>
 
@@ -40,18 +38,16 @@
     <% if tab == "all-cases" || tab.ends_with?("tower") %>
       <div class="govuk-grid-column-one-quarter">
         <%= f.govuk_select :agent,
-                              options_for_select(available_agents.map { |a| [a.full_name, a.id] },
+                              options_for_select(available_agents.map { |a| [a.title, a.id] },
                                                   f.object.agent),
-                              options: { include_blank: I18n.t("support.case.filter.labels.all") },
                               label: { text: I18n.t("support.case.filter.labels.assignee") } %>
       </div>
     <% end %>
 
     <div class="govuk-grid-column-one-quarter">
-      <%= f.govuk_select :stage,
-                            options_for_select(available_stages.map { |a| [a.title, a.id] },
-                                                f.object.stage),
-                            options: { include_blank: I18n.t("support.case.filter.labels.all") },
+      <%= f.govuk_select :procurement_stage,
+                            options_for_select(available_procurement_stages.map { |a| [a.title, a.id] },
+                                                f.object.procurement_stage),
                             label: { text: I18n.t("support.case.filter.labels.stage") } %>
     </div>
 
@@ -59,7 +55,6 @@
       <%= f.govuk_select :level,
                             options_for_select(available_levels.map { |a| [a.title, a.id] },
                                                 f.object.level),
-                            options: { include_blank: I18n.t("support.case.filter.labels.all") },
                             label: { text: I18n.t("support.case.filter.labels.level") } %>
     </div>
   </div>
