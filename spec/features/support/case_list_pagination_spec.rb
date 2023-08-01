@@ -12,7 +12,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
 
     it "shows the pagination info" do
       within "#my-cases" do
-        expect(all(".govuk-table__body .govuk-table__row.tower-top-row").count).to eq(10)
+        expect(all(".case-list li").count).to eq(10)
         expect(page).to have_text "Showing 1 to 10 of 15 results"
       end
     end
@@ -34,7 +34,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
 
     it "shows the pagination info" do
       within "#all-cases" do
-        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(20)
+        expect(all(".case-list li").count).to eq(10)
         expect(page).to have_text "Showing 1 to 10 of 35 results"
       end
     end
@@ -56,7 +56,7 @@ RSpec.feature "Case management dashboard pagination", bullet: :skip do
 
     it "shows the pagination info" do
       within "#new-cases" do
-        expect(all(".govuk-table__body .govuk-table__row.borderless").count).to eq(10)
+        expect(all(".case-list li").count).to eq(10)
         expect(page).to have_text "Showing 1 to 10 of 35 results"
       end
     end

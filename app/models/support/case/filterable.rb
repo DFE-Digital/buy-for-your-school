@@ -2,13 +2,21 @@ module Support::Case::Filterable
   extend ActiveSupport::Concern
 
   included do
-    scope :by_agent, ->(agent_id) { where(agent_id:) }
+    scope :by_agent, ->(agent_ids) { by_filter(:agent_id, agent_ids) }
 
-    scope :by_state, ->(state) { state == "live" ? live : where(state:) }
+    scope :by_state, lambda { |states|
+      states = Array(states)
+      if states.include?("all")
+        all
+      else
+        base = where(state: states.excluding("live", "all"))
+        states.include?("live") ? base.merge(live) : base
+      end
+    }
 
     scope :live, -> { where(state: %w[initial opened on_hold]) }
 
-    scope :by_category, ->(category_id) { where(category_id:) }
+    scope :by_category, ->(category_ids) { by_filter(:category_id, category_ids) }
 
     scope :by_tower, ->(support_tower_id) { support_tower_id == "no-tower" ? without_tower : joins(:category).where(support_categories: { support_tower_id: }) }
 
@@ -16,9 +24,11 @@ module Support::Case::Filterable
 
     scope :by_stage, ->(stage) { joins(:procurement).where(procurement: { stage: }) }
 
-    scope :by_level, ->(support_level) { where(support_level:) }
+    scope :by_level, ->(support_levels) { by_filter(:support_level, support_levels) }
 
     scope :by_has_org, ->(has_org) { has_org ? where.not(organisation_id: nil) : where(organisation_id: nil) }
+
+    scope :by_procurement_stage, ->(procurement_stage_ids) { by_filter(:procurement_stage_id, procurement_stage_ids) }
 
     scope :triage, -> { by_level([0, 1, 2]) }
 
@@ -44,7 +54,19 @@ module Support::Case::Filterable
 
         Array(criteria)
           .select { |criterion| criterion.present? || criterion == false }
-          .each   { |criterion| valid_scopes[potential_scope] = criterion }
+          .each   { |criterion| field.in?(%i[has_org search_term]) ? valid_scopes[potential_scope] = criterion : (valid_scopes[potential_scope] ||= []) << criterion }
+      end
+    end
+
+    def by_filter(attribute, values)
+      values = Array(values)
+
+      if values.include?("all")
+        all
+      elsif values.include?("unspecified")
+        where(attribute => nil)
+      else
+        where(attribute => values)
       end
     end
   end

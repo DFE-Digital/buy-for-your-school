@@ -702,16 +702,18 @@ en:
       filter:
         buttons:
           apply: Apply filter
-          clear: Clear filter
+          clear: Clear filters
         filter_results: Filter results
         labels:
           all: All
           assignee: Filter by assignee
+          none: None
           state: Filter by status
           sub_category: Filter by sub-category
           tower: Filter by tower
           stage: Filter by stage
           level: Filter by level
+          selected: "%{count} selected"
       header:
         action: Actions
         case_attachments: Attachments
@@ -734,9 +736,11 @@ en:
             phone_number: Phone number
             sub_category: Sub-category
             support_request_id: Support request ID
+        ascending: Ascending
         assign_to_agent: Assign to case worker
         assigned: Assigned
         assigned_to: Assigned to
+        assignee: Assignee
         attached_specification: Attached specification
         attached_specification_none: None
         attachments:
@@ -763,6 +767,8 @@ en:
         contact_phone: Contact phone
         create: Create a new case
         date_received: Date received
+        descending: Descending
+        filters: Filters
         flag: Flag
         last_updated: Last updated
         level: Level
@@ -830,6 +836,7 @@ en:
             save_attachments: Save attachments
             using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
+        note: Note
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
@@ -861,6 +868,7 @@ en:
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
+        sort_by: Sort by
         source:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
@@ -873,6 +881,7 @@ en:
           sw_hub: South West (SW) Hub
           unspecified: "-"
         special_requirements: Accessibility
+        stage: Stage
         state:
           state_action_required: Action
           state_close: Closed
@@ -916,6 +925,8 @@ en:
         triage_cases: Triage cases
         not_found: No cases found.
         tower: Tower
+        no_cases: No cases found
+        no_cases_advice: Try clearing or changing your filters.
         improve_results: "Improve your results by:"
         improve_results_list:
           - removing filters
@@ -1318,6 +1329,7 @@ en:
         optional: "(optional)"
       link:
         opens_in_new_tab: "(opens in new tab)"
+      not_specified: Not specified
       search: Search
     helpers:
       tag_bar:

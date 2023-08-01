@@ -18,11 +18,9 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
     it "filters by category" do
       click_link "All cases"
       within "#all-cases" do
-        click_button "Filter results"
-        find("#filter-all-cases-form-category-field").find(:option, "Catering").select_option
-        click_button "Apply filter"
-        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(2)
-        row = all(".govuk-table__body .govuk-table__row.case-row")
+        check "Catering"
+        expect(all(".case-list li").count).to eq(1)
+        row = all(".case-list li")
         expect(row[0]).to have_text "Catering"
       end
     end
@@ -30,11 +28,9 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
     it "filters by agent" do
       click_link "All cases"
       within "#all-cases" do
-        click_button "Filter results"
-        find("#filter-all-cases-form-agent-field").find(:option, agent.first_name).select_option
-        click_button "Apply filter"
-        expect(all(".govuk-table__body .govuk-table__row .borderless").count).to eq(1)
-        row = all(".govuk-table__body .govuk-table__row .borderless")
+        check agent.first_name
+        expect(all(".case-list li").count).to eq(1)
+        row = all(".case-list li")
         expect(row[0]).to have_text agent.first_name
       end
     end
@@ -42,11 +38,9 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
     it "filters by state" do
       click_link "All cases"
       within "#all-cases" do
-        click_button "Filter results"
-        find("#filter-all-cases-form-state-field").find(:option, "Closed").select_option
-        click_button "Apply filter"
-        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(2)
-        row = all(".govuk-table__body .govuk-table__row.case-row")
+        check "Closed"
+        expect(all(".case-list li").count).to eq(1)
+        row = all(".case-list li")
         expect(row[0]).to have_text "Closed"
       end
     end
@@ -56,12 +50,11 @@ RSpec.feature "Filter cases", bullet: :skip, js: true do
     it "filters by category and sorts by state" do
       click_link "All cases"
       within "#all-cases" do
-        click_button "Filter results"
-        find("#filter-all-cases-form-category-field").find(:option, "MFD").select_option
-        click_button "Apply filter"
-        click_button "Status"
-        expect(all(".govuk-table__body .govuk-table__row.case-row").count).to eq(4)
-        row = all(".govuk-table__body .govuk-table__row.case-row")
+        check "MFD"
+        select "Status", from: "Sort by"
+        choose "Ascending"
+        expect(all(".case-list li").count).to eq(2)
+        row = all(".case-list li")
         expect(row[0]).to have_text "On Hold"
       end
     end

@@ -9,8 +9,10 @@ describe Support::Case::Sortable do
       allow(Support::Case).to receive(:sort_by_last_updated).with("ASC").and_return(ascending_result)
       allow(Support::Case).to receive(:sort_by_last_updated).with("DESC").and_return(descending_result)
 
-      expect(Support::Case.sorted_by(last_updated: "ascending")).to eq(ascending_result)
-      expect(Support::Case.sorted_by(last_updated: "descending")).to eq(descending_result)
+      expect(Support::Case.sorted_by(sort: { last_updated: "ascending" })).to eq(ascending_result)
+      expect(Support::Case.sorted_by(sort: { last_updated: "descending" })).to eq(descending_result)
+      expect(Support::Case.sorted_by(sort_by: "last_updated", sort_order: "ascending")).to eq(ascending_result)
+      expect(Support::Case.sorted_by(sort_by: "last_updated", sort_order: "descending")).to eq(descending_result)
     end
   end
 

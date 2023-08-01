@@ -1,3 +1,5 @@
+<% cases_index = current_page?(support_cases_path) || current_page?("/support") %>
+
 <!DOCTYPE html>
 <html lang="en" class="govuk-template ">
 
@@ -56,7 +58,7 @@
     <%= javascript_include_tag "application" %>
   </head>
 
-  <body class="govuk-template__body ">
+  <body class="govuk-template__body">
     <% if Rails.env.production? && record_ga? && cookie_policy.accepted? %>
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXQDGR"
@@ -75,7 +77,7 @@
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
     <header class="govuk-header" role="banner" data-module="govuk-header">
-      <div class="govuk-header__container govuk-width-container">
+      <div class="govuk-header__container govuk-width-container <%= 'wide-container' if cases_index && Flipper.enabled?(:cms_panel_view) %>">
         <div class="govuk-header__logo">
           <a href="https://www.gov.uk" class="govuk-header__link govuk-header__link--homepage">
             <span class="govuk-header__logotype">
@@ -98,7 +100,7 @@
       </div>
     </header>
 
-    <div class="govuk-width-container ">
+    <div class="govuk-width-container <%= 'wide-container' if cases_index && Flipper.enabled?(:cms_panel_view) %>">
       <div class="govuk-phase-banner">
         <p class="govuk-phase-banner__content">
           <strong class="govuk-tag govuk-phase-banner__content__tag">
@@ -117,7 +119,7 @@
     </div>
 
     <footer class="govuk-footer " role="contentinfo">
-      <div class="govuk-width-container ">
+      <div class="govuk-width-container <%= 'wide-container' if cases_index && Flipper.enabled?(:cms_panel_view) %>">
         <div class="govuk-footer__meta">
           <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
 

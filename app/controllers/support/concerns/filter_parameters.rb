@@ -14,6 +14,8 @@ module Support
 
         cached_params = Hash(cached_filter_params_for(scope))
         submitted_params = Hash(user_submitted_filter_params(scope))
+                            .delete_if { |_k, v| Array(v).all? { |e| e.to_s.strip.empty? } }
+                            .each { |_k, v| Array(v).reject!(&:blank?) }
 
         unless submitted_params.empty? || submitted_params == defaults || persist == false
           set_filter_params_cache(scope, submitted_params)
@@ -28,13 +30,35 @@ module Support
 
     private
 
+      def permitted_params
+        [
+          :has_org,
+          :user_submitted,
+          :override,
+          :search_term,
+          :category,
+          :agent,
+          :state,
+          :tower,
+          :stage,
+          :level,
+          :sort_by,
+          :sort_order,
+          {
+            category: [],
+            agent: [],
+            tower: [],
+            procurement_stage: [],
+            level: [],
+            state: [],
+          },
+        ]
+      end
+
       def user_submitted_filter_params(scope)
         params
           .fetch(scope, {})
-          .permit(:category, :agent, :state,
-                  :tower, :stage, :level, :has_org,
-                  :user_submitted, :override, :search_term,
-                  sort: sort_params)
+          .permit(*permitted_params)
           .to_h
           .symbolize_keys
       end
@@ -45,23 +69,6 @@ module Support
 
       def set_filter_params_cache(scope, new_value)
         session[scope] = new_value
-      end
-
-      def sort_params
-        %i[
-          ref
-          support_level
-          organisation_name
-          subcategory
-          state
-          agent
-          last_updated
-          received
-          action
-          created_by
-          created
-          value
-        ]
       end
     end
   end

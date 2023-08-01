@@ -1,0 +1,43 @@
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.stage") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <% if kase.procurement_stage.present? %>
+        <div class="stage">
+          <span class="stage-indicator" title="<%= kase.procurement_stage.stage_label %>">
+            <%= kase.procurement_stage.stage_indicator %>
+          </span>
+          <%= kase.procurement_stage.title %>
+        </div>
+      <% else %>
+        <%= I18n.t("support.generic.not_specified") %>
+      <% end %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.status") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= render "support/cases/status_badge", state: kase.state %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.assignee") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.agent_name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.updated") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <span title="<%= kase.last_updated_at %>"><%= relative_date_format(kase.last_updated_at) %></span>
+    </dd>
+  </div>
+</dl>

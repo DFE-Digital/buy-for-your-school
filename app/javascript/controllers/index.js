@@ -16,6 +16,9 @@ application.register("case-stage", CaseStageController)
 import CaseSummaryController from "./case_summary_controller"
 application.register("case-summary", CaseSummaryController)
 
+import CaseFiltersController from "./case_filters_controller"
+application.register("case-filters", CaseFiltersController)
+
 import DropzoneController from "./dropzone_controller"
 application.register("dropzone", DropzoneController)
 

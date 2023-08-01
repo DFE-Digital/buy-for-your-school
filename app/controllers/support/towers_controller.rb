@@ -25,7 +25,10 @@ module Support
 
     def filter_scope = "filter_#{@tower.title.parameterize(separator: '_')}_cases"
 
-    def filter_params = filter_params_for("filter_#{@tower.title.parameterize(separator: '_')}_cases", defaults: { state: "live" }, persist: !override_filter).except(:override)
+    def filter_params
+      defaults = { state: %w[live], category: %w[all], agent: %w[all], procurement_stage: %w[all], level: %w[all], tower: @tower, sort_by: "action", sort_order: "descending" }
+      filter_params_for("filter_#{@tower.title.parameterize(separator: '_')}_cases", defaults:, persist: !override_filter).except(:override)
+    end
 
     def override_filter = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"
 

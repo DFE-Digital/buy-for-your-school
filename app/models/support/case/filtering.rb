@@ -11,7 +11,9 @@ class Support::Case::Filtering
     :level,
     :has_org,
     :search_term,
-    :sort,
+    :procurement_stage,
+    :sort_by,
+    :sort_order,
   )
 
   validates :search_term,
@@ -22,17 +24,21 @@ class Support::Case::Filtering
   def apply_to(cases)
     closed_cases_hidden_by_default(cases)
       .filtered_by(filtering_criteria)
-      .sorted_by(sort)
+      .sorted_by(sorting_criteria)
   end
 
   def filtering_criteria
-    { state:, category:, agent:, tower:, stage:, level:, has_org:, search_term: }
+    { state:, category:, agent:, tower:, stage:, level:, has_org:, search_term:, procurement_stage: }
+  end
+
+  def sorting_criteria
+    { sort_by:, sort_order: }
   end
 
 private
 
   def closed_cases_hidden_by_default(cases)
-    return cases.not_closed unless state == "closed"
+    return cases.not_closed unless Array(state).include?("closed") || search_term.present?
 
     cases
   end

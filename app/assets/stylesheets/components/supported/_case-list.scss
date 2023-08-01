@@ -1,0 +1,74 @@
+.case-list {
+  ul {
+    padding: 0;
+    list-style-type: none;
+    margin-top: 0;
+  }
+
+  .case-panel {
+    border-bottom: 1px solid $govuk-border-colour;
+    margin-bottom: 15px;
+
+    .case-label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .stage {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .stage-indicator {
+      @extend .govuk-\!-font-weight-bold;
+      color: white;
+      border-radius: 50%;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      flex-shrink: 0;
+    }
+
+    .stage-indicator[title="Stage 0"] {
+      background-color: $stage-0-colour;
+    }
+
+    .stage-indicator[title="Stage 1"] {
+      background-color: $stage-1-colour;
+    }
+
+    .stage-indicator[title="Stage 2"] {
+      background-color: $stage-2-colour;
+    }
+
+    .stage-indicator[title="Stage 3"] {
+      background-color: $stage-3-colour;
+    }
+
+    .stage-indicator[title="Stage 4"] {
+      background-color: $stage-4-colour;
+    }
+
+    .quick-edit-row {
+      margin: 15px 0;
+    }
+
+    .govuk-summary-list {
+      margin-bottom: 0;
+    }
+
+    .govuk-summary-list__row {
+      border-bottom: none;
+    }
+  }
+
+  .filters-panel {
+    @include govuk-responsive-margin(0, "bottom");
+    padding: govuk-spacing(4);
+    border: 1px solid $govuk-border-colour;
+  }
+}

@@ -15,7 +15,7 @@ module Engagement
         end
 
         format.html do
-          @cases = Support::Case.created_by_e_and_o.filtered_by(@all_cases_filter_form).paginate(page: params[:cases_page])
+          @cases = @all_cases_filter_form.apply_to(Support::Case.created_by_e_and_o).paginate(page: params[:cases_page])
         end
       end
     end
