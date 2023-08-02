@@ -2,6 +2,7 @@ name: "CI/CD - Full Pipeline"
 
 on:
   pull_request:
+    types: [synchronize, opened, reopened, labeled, unlabeled]
   push:
     branches:
       - main
@@ -34,6 +35,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.3.0
+        name: (If dev tagged) Checkout main for merging PRs
+        if: contains(github.event.*.labels.*.name, 'dev-environment')
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/checkout@v3.3.0
+        if: ${{ !contains(github.event.*.labels.*.name, 'dev-environment') }}
+        name: (If not dev tagged) Checkout current branch
+
+      - uses: ryantk/combine-pull-requests@3078e766d22a2e8c754e5b280d71e5bcbd97537d
+        if: contains(github.event.*.labels.*.name, 'dev-environment')
+        with:
+          label: dev-environment
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -153,7 +169,7 @@ jobs:
     needs: build_release
     environment: az-dev
 
-    if: github.ref == 'refs/heads/development'
+    if: ${{ github.ref == 'refs/heads/development' || contains(github.event.*.labels.*.name, 'dev-environment') }}
 
     steps:
       - uses: actions/checkout@v3.3.0
