@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  before_action :authenticate_user!, except: :health_check
+  before_action :authenticate_user!, except: %i[health_check maintenance]
 
   protect_from_forgery
 
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
 
   def health_check
     render json: { rails: "OK" }, status: :ok
+  end
+
+  def maintenance
+    redirect_to root_path unless Flipper.enabled?(:maintenance_mode)
   end
 
 protected
