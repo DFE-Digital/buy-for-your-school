@@ -914,6 +914,7 @@ en:
           unspecified: Not specified
         view_resolved_cases: View all my resolved cases
         view_tower_cases: View all cases in my tower
+        with_school: with school
       link:
         change: change
         view_group_information: View group information (opens in a new tab)
@@ -935,6 +936,8 @@ en:
         request_text:
           header: Description of query
           hint: Enter a summary of the query
+      quick_edit:
+        waiting_for_response: Are you waiting for a response from the school?
       search:
         button: Start a new search
         count: "%{count} cases found containing '%{term}'"
@@ -1331,6 +1334,8 @@ en:
         opens_in_new_tab: "(opens in new tab)"
       not_specified: Not specified
       search: Search
+      "yes": "Yes"
+      "no": "No"
     helpers:
       tag_bar:
         remove_tag: "Remove tag %{tag}"
@@ -1366,6 +1371,7 @@ en:
         case_organisation_changed: Organisation changed
         case_procurement_stage_changed: Procurement stage changed
         case_contact_changed: Contact changed
+        case_with_school_changed: "'With School' flag changed"
         create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge

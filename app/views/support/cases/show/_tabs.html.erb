@@ -13,6 +13,7 @@
 
 <div class="flex-gap-5px govuk-!-margin-bottom-7">
   <%= render "support/cases/status_badge", state: @current_case.state %>
+  <%= render "support/cases/with_school_badge" if @current_case.with_school %>
   <%= render "support/cases/accessibility_flag" if @current_case.has_special_requirements? %>
   <%= render "support/cases/action_flag", badge: true if @current_case.action_required? && !@current_case.closed? %>
 </div>

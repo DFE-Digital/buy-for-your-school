@@ -1,7 +1,7 @@
 module Support::Case::QuickEditable
   extend ActiveSupport::Concern
 
-  def quick_editor(params = { note: latest_note&.body, support_level:, procurement_stage_id: })
+  def quick_editor(params = { note: latest_note&.body, support_level:, procurement_stage_id:, with_school: })
     Support::Case::QuickEditor.new(support_case: self, **params)
   end
 

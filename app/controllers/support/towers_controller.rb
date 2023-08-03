@@ -8,8 +8,8 @@ module Support
     include Support::Concerns::FilterParameters
 
     def show
-      @filter_form = Support::Case::Filtering.new(filter_params)
-      @cases = tower_cases.filtered_by(@filter_form).paginate(page: params[:page])
+      @filter_form = tower_cases.filtering(filter_params)
+      @cases = @filter_form.results.paginate(page: params[:page])
     end
 
   private

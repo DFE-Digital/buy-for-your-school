@@ -6,10 +6,4 @@ module Support::Case::Searchable
 
     scope :by_search_term, ->(terms) { joins(:support_case_searches).merge(Support::CaseSearch.find_a_case(terms)) }
   end
-
-  class_methods do
-    def search(filtering)
-      filtering.apply_to(all)
-    end
-  end
 end

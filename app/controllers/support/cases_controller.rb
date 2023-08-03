@@ -22,12 +22,12 @@ module Support
         end
 
         format.html do
-          @cases = Case.all_cases_tab(@all_cases_filter_form).paginate(page: params[:cases_page]).load_async
-          @new_cases = Case.new_cases_tab(@new_cases_filter_form).paginate(page: params[:new_cases_page]).load_async
-          @my_cases = Case.my_cases_tab(current_agent, @my_cases_filter_form).paginate(page: params[:my_cases_page]).load_async
+          @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page]).load_async
+          @new_cases = @new_cases_filter_form.results.paginate(page: params[:new_cases_page]).load_async
+          @my_cases = @my_cases_filter_form.results.paginate(page: params[:my_cases_page]).load_async
 
           if Flipper.enabled?(:cms_triage_view)
-            @triage_cases = Case.triage_cases_tab(@triage_cases_filter_form).paginate(page: params[:triage_cases_page]).load_async
+            @triage_cases = @triage_cases_filter_form.results.paginate(page: params[:triage_cases_page]).load_async
           end
         end
       end
@@ -120,12 +120,12 @@ module Support
 
     def filter_forms
       defaults = { state: %w[all], category: %w[all], agent: %w[all], procurement_stage: %w[all], level: %w[all], sort_by: "action", sort_order: "descending" }
-      @all_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_all_cases_form, defaults:))
-      @new_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_new_cases_form, defaults:))
-      @my_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_my_cases_form, defaults: defaults.merge({ state: %w[live] })))
+      @all_cases_filter_form = Case.filtering(filter_params_for(:filter_all_cases_form, defaults:))
+      @new_cases_filter_form = Case.initial.filtering(filter_params_for(:filter_new_cases_form, defaults:))
+      @my_cases_filter_form = Case.by_agent(current_agent.id).filtering(filter_params_for(:filter_my_cases_form, defaults: defaults.merge({ state: %w[live] })))
 
       if Flipper.enabled?(:cms_triage_view)
-        @triage_cases_filter_form = Support::Case::Filtering.new(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] })))
+        @triage_cases_filter_form = Case.triage.filtering(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] })))
       end
     end
 

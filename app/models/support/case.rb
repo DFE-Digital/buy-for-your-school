@@ -12,7 +12,6 @@ module Support
     include StateChangeable
     include Sortable
     include Searchable
-    include TabScopable
     include ActivityLoggable
     include Historyable
     include QuickEditable
