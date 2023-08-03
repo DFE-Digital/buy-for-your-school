@@ -52,6 +52,8 @@ module Support
         Support::CaseProcurementStageChangePresenter.new(self).body
       elsif case_level_changed?
         Support::CaseLevelChangePresenter.new(self).body
+      elsif case_with_school_changed?
+        Support::CaseWithSchoolChangePresenter.new(self).body
       elsif super
         super.strip.chomp
       end
@@ -109,6 +111,8 @@ module Support
         Support::CaseProcurementStageChangePresenter.new(self).show_additional_data?
       elsif case_level_changed?
         Support::CaseLevelChangePresenter.new(self).show_additional_data?
+      elsif case_with_school_changed?
+        Support::CaseWithSchoolChangePresenter.new(self).show_additional_data?
       else
         true
       end

@@ -7,15 +7,15 @@ module Support
     include Support::Concerns::FilterParameters
 
     def new
-      @form = Support::Case::Filtering.new
+      @form = Support::Case.filtering
       @back_url = support_cases_path
     end
 
     def index
-      @form = Support::Case::Filtering.new(filter_params_for(:search_case_form))
+      @form = Support::Case.filtering(filter_params_for(:search_case_form))
 
       if @form.valid?(:searching)
-        @results = Support::Case.search(@form).map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
+        @results = @form.results.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
         @back_url = new_support_case_search_path
         render :index
       else

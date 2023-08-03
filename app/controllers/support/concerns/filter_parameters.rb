@@ -40,7 +40,6 @@ module Support
           :agent,
           :state,
           :tower,
-          :stage,
           :level,
           :sort_by,
           :sort_order,

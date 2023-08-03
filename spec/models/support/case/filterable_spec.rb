@@ -15,9 +15,18 @@ describe Support::Case::Filterable, bullet: :skip do
 
   describe ".filtered_by" do
     context "with filter params" do
+      let(:filtering_params) do
+        { category: [catering_cat.id] }
+      end
+
+      it "does not return closes cases by default" do
+        expect(filterable.filtered_by(filtering_params).count).to be(1)
+        expect(filterable.filtered_by(filtering_params).first.state).to eql("on_hold")
+      end
+
       context "when filtered by category" do
         let(:filtering_params) do
-          { category: it_cat.id }
+          { category: [it_cat.id] }
         end
 
         it "filters by category" do
@@ -32,15 +41,16 @@ describe Support::Case::Filterable, bullet: :skip do
         end
 
         it "filters by state" do
-          expect(filterable.filtered_by(filtering_params).count).to be(2)
-          expect(filterable.filtered_by(filtering_params).first.state).to eql("closed")
-          expect(filterable.filtered_by(filtering_params).last.state).to eql("on_hold")
+          results = filterable.filtered_by(filtering_params)
+
+          expect(results.count).to be(2)
+          expect(results.pluck(:state)).to match_array(%w[closed on_hold])
         end
       end
 
       context "when filtered by agent" do
         let(:filtering_params) do
-          { agent: agent.id }
+          { agent: [agent.id] }
         end
 
         it "filters by agent" do
@@ -51,7 +61,7 @@ describe Support::Case::Filterable, bullet: :skip do
 
       context "when filtered by tower" do
         let(:filtering_params) do
-          { tower: ict_tower.id }
+          { tower: [ict_tower.id] }
         end
 
         it "filters by tower" do
@@ -68,6 +78,17 @@ describe Support::Case::Filterable, bullet: :skip do
         it "filters by has_org" do
           expect(filterable.filtered_by(filtering_params).count).to be(1)
           expect(filterable.filtered_by(filtering_params).first.category.tower_title).to eql("ICT")
+        end
+      end
+
+      context "when search_term is provided" do
+        let(:filtering_params) do
+          { search_term: "999888" }
+        end
+
+        it "returns closed cases metching the criteria" do
+          expect(filterable.filtered_by(filtering_params).count).to be(1)
+          expect(filterable.filtered_by(filtering_params).first.state).to eql("closed")
         end
       end
     end

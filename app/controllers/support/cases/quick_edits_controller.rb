@@ -34,7 +34,7 @@ module Support
       end
 
       def form_params
-        params.require(:case_quick_edit).permit(:note, :support_level, :procurement_stage_id)
+        params.require(:case_quick_edit).permit(:note, :support_level, :procurement_stage_id, :with_school)
       end
     end
   end

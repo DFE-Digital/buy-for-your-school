@@ -20,8 +20,9 @@
     <dt class="govuk-summary-list__key">
       <%= I18n.t("support.case.label.status") %>
     </dt>
-    <dd class="govuk-summary-list__value">
+    <dd class="govuk-summary-list__value flex-gap-5px">
       <%= render "support/cases/status_badge", state: kase.state %>
+      <%= render "support/cases/with_school_badge" if kase.with_school %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">

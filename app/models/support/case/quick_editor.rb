@@ -7,11 +7,12 @@ class Support::Case::QuickEditor
     :note,
     :support_level,
     :procurement_stage_id,
+    :with_school,
   )
 
   def procurement_case? = support_case.category.present?
 
   def save!
-    support_case.quick_edit(note:, support_level:, procurement_stage_id:)
+    support_case.quick_edit(note:, support_level:, procurement_stage_id:, with_school:)
   end
 end

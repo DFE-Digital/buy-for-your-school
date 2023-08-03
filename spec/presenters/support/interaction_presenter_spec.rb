@@ -39,6 +39,7 @@ RSpec.describe Support::InteractionPresenter do
         have_attributes(id: "case_organisation_changed", label: "Case organisation changed"),
         have_attributes(id: "case_contact_changed", label: "Case contact changed"),
         have_attributes(id: "case_level_changed", label: "Case level changed"),
+        have_attributes(id: "case_with_school_changed", label: "Case with school changed"),
       ])
     end
   end

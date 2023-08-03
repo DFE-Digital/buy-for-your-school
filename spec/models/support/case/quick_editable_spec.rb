@@ -39,6 +39,15 @@ describe Support::Case::QuickEditable do
               raise_error(StandardError)
       end
     end
+
+    context "when the case note has not changed" do
+      before { quick_editable.interactions.note.create!(body: "existing note") }
+
+      it "does not create it" do
+        expect { quick_editable.quick_edit(note: "existing note") }.to \
+          (not_change { quick_editable.reload.interactions.note.where(body: "existing note").count })
+      end
+    end
   end
 
   context "when the case note has not changed" do

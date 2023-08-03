@@ -13,6 +13,17 @@
 
         <%= render "support/cases/components/level_and_stage", form: form %>
 
+        <%=
+          form.govuk_collection_radio_buttons :with_school,
+            [
+              OpenStruct.new(value: true, label: I18n.t("support.generic.yes")),
+              OpenStruct.new(value: false, label: I18n.t("support.generic.no")),
+            ],
+            :value,
+            :label,
+            legend: { text: I18n.t("support.case.quick_edit.waiting_for_response") }
+        %>
+
         <div class="govuk-button-group">
           <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button", "data-action": "case-quick-edit#submit" %>
           <%= link_to "Exit without saving", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
