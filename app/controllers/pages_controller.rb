@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :redirect_non_page_requests
   before_action :set_breadcrumbs, only: :show
 
   def show
-    render "errors/not_found" if page.blank?
     @page = PagePresenter.new(page)
   end
 
@@ -13,6 +13,10 @@ class PagesController < ApplicationController
   end
 
 private
+
+  def redirect_non_page_requests
+    redirect_to "/404" if page.blank?
+  end
 
   def page
     @page ||= Page.find_by(slug: params[:slug])
