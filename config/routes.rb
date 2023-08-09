@@ -320,12 +320,5 @@ Rails.application.routes.draw do
   mount flipper_app, at: "/flipper"
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
-  # if a Page with :slug cannot be found, `errors/not_found` is rendered
-  #
-  # 1. Keep at the bottom of routes
-  # 2. If Contentful designers need to nest static pages, a second route can be defined to
-  #    simulate "directory" e.g:
-  #    `get ":slug_one/:slug_two", to: "pages#show"`
-  #
   get ":slug", to: "pages#show"
 end
