@@ -342,8 +342,7 @@ GEM
     mini_racer (0.8.0)
       libv8-node (~> 18.16.0.0)
     minitest (5.19.0)
-    mock_redis (0.36.0)
-      ruby2_keywords
+    mock_redis (0.37.0)
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
