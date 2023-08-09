@@ -26,21 +26,16 @@ runs:
     - name: Update Azure Container Apps Revision
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.40.0
+        azcliversion: 2.51.0
         inlineScript: |
           az config set extension.use_dynamic_install=yes_without_prompt
+
           az containerapp update \
             --name ${{ inputs.container_app_name }} \
             --resource-group ${{ inputs.resource_group_name }} \
             --image ${{ inputs.docker_image_and_tag }} \
             --output none
 
-    - name: Update Azure Container Apps Worker Revision
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.40.0
-        inlineScript: |
-          az config set extension.use_dynamic_install=yes_without_prompt
           az containerapp update \
             --name ${{ inputs.container_app_name }}-worker \
             --resource-group ${{ inputs.resource_group_name }} \
