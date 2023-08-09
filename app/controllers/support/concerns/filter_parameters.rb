@@ -33,7 +33,6 @@ module Support
       def permitted_params
         [
           :has_org,
-          :user_submitted,
           :override,
           :search_term,
           :category,
