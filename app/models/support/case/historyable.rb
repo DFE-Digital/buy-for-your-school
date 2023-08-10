@@ -7,6 +7,10 @@ module Support::Case::Historyable
     after_update :log_with_school_changed_in_history, if: :saved_change_to_with_school?
     after_update :log_support_level_changed_in_history, if: :saved_change_to_support_level?
     after_update :log_procurement_stage_changed_in_history, if: :saved_change_to_procurement_stage_id?
+    after_update :log_source_changed_in_history, if: :saved_change_to_source?
+    after_update :log_value_changed_in_history, if: :saved_change_to_value?
+    after_update :log_next_key_date_changed_in_history, if: -> { saved_change_to_next_key_date? || saved_change_to_next_key_date_description? }
+    after_update :log_categorisation_changed_in_history, if: -> { saved_change_to_category_id? || saved_change_to_query_id? }
   end
 
   def add_note(body)
@@ -16,6 +20,32 @@ module Support::Case::Historyable
   def latest_note = interactions.note.first
 
 protected
+
+  def log_categorisation_changed_in_history
+    if saved_change_to_category_id? && saved_change_to_query_id?
+      log_change_of_category_and_query
+    elsif saved_change_to_category_id?
+      log_change_of_category
+    elsif saved_change_to_query_id?
+      log_change_of_query
+    end
+  end
+
+  def log_source_changed_in_history
+    interactions.state_change.create!(
+      additional_data: { source:, format_version: "2" },
+      agent: Current.agent,
+      body: "Source changed",
+    )
+  end
+
+  def log_value_changed_in_history
+    interactions.state_change.create!(
+      additional_data: { procurement_value: value, format_version: "2" },
+      agent: Current.agent,
+      body: "Case value changed",
+    )
+  end
 
   def log_support_level_changed_in_history
     interactions.case_level_changed.create!(
@@ -41,10 +71,48 @@ protected
     )
   end
 
+  def log_next_key_date_changed_in_history
+    interactions.case_next_key_date_changed.create!(
+      additional_data: {
+        next_key_date:,
+        next_key_date_description:,
+      },
+      agent: Current.agent,
+      body: "Next key date change",
+    )
+  end
+
 private
 
   def additional_data_from_changes_to(field)
     changes = saved_changes[field]
     { from: changes.first, to: changes.last }
+  end
+
+  def log_change_of_category
+    log_categorisation_change(**additional_data_from_changes_to(:category_id), type: :category)
+  end
+
+  def log_change_of_query
+    log_categorisation_change(**additional_data_from_changes_to(:query_id), type: :query)
+  end
+
+  def log_change_of_category_and_query
+    category_from, category_to = additional_data_from_changes_to(:category_id).values
+    query_from, query_to       = additional_data_from_changes_to(:query_id).values
+
+    if category_from.present? && category_to.nil? && query_to.present?
+      log_categorisation_change(from: category_from, to: query_to, type: :category_to_query)
+    elsif query_from.present? && query_to.nil? && category_to.present?
+      log_categorisation_change(from: query_from, to: category_to, type: :query_to_category)
+    end
+  end
+
+  def log_categorisation_change(from:, to:, type:)
+    interactions.case_categorisation_changed.create!(
+      additional_data: { from:, to:, type: },
+      agent: Current.agent,
+      body: "Categorisation change",
+    )
   end
 end

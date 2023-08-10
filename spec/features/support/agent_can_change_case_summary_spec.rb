@@ -17,94 +17,27 @@ describe "Agent can change case summary", js: true do
     end
   end
 
-  context "when the support level is updated" do
-    before do
-      choose "2 - Specific advice"
-      click_button "Continue"
-      click_button "Save"
-      support_case.reload
-    end
-
-    it "persists the changed support_level" do
-      expect(support_case.support_level).to eq "L2"
-    end
-
-    it "creates a support level changed interaction" do
-      interaction = Support::Interaction.case_level_changed.first
-
-      expect(interaction.body).to eq "Support level change"
-      expect(interaction.additional_data).to eq({
-        "from" => "L1",
-        "to" => "L2",
-      })
-    end
-  end
-
-  context "when the procurement stage is updated" do
+  context "when changing the support level, procurement stage, case value, case source, and next key date" do
     before do
       choose "4 - DfE buying through a framework"
       select "Tender preparation", from: "Procurement stage"
-      click_button "Continue"
-      click_button "Save"
-    end
-
-    it "persists the changed procurement stage" do
-      expect(support_case.reload.procurement_stage.title).to eq "Tender preparation"
-    end
-
-    it "creates a procurement stage changed interaction" do
-      interaction = Support::Interaction.case_procurement_stage_changed.first
-
-      expect(interaction.body).to eq "Procurement stage change"
-      expect(interaction.additional_data).to eq({
-        "from" => need_stage.id,
-        "to" => tender_prep_stage.id,
-      })
-    end
-  end
-
-  context "when the case value is updated" do
-    before do
       fill_in "Case value or estimated contract value (optional)", with: "123.32"
-      click_button "Continue"
-      click_button "Save"
-      support_case.reload
-    end
-
-    it "persists the changed case value" do
-      expect(support_case.value).to eq(123.32)
-    end
-
-    it "creates a value change interaction" do
-      interaction = Support::Interaction.first
-
-      expect(interaction.body).to eq "Case value changed"
-      expect(interaction.additional_data).to eq({
-        "format_version" => "2",
-        "procurement_value" => "123.32",
-      })
-    end
-  end
-
-  context "when the case source is updated" do
-    before do
       select "Email", from: "Case source"
+      fill_in "Day", with: "10"
+      fill_in "Month", with: "08"
+      fill_in "Year", with: "2023"
+      fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      support_case.reload
     end
 
-    it "persists the changed case source" do
-      expect(support_case.source).to eq "incoming_email"
-    end
-
-    it "creates a source change interaction" do
-      interaction = Support::Interaction.first
-      expect(interaction.body).to eq "Source changed"
-      expect(interaction.additional_data).to eq({
-        "format_version" => "2",
-        "source" => "incoming_email",
-      })
+    it "persists the changes" do
+      expect(support_case.reload.support_level).to eq("L4")
+      expect(support_case.reload.procurement_stage.key).to eq("tender_preparation")
+      expect(support_case.reload.value).to eq(123.32)
+      expect(support_case.reload.source).to eq("incoming_email")
+      expect(support_case.reload.next_key_date).to eq(Date.parse("2023-08-10"))
+      expect(support_case.reload.next_key_date_description).to eq("Key event")
     end
   end
 

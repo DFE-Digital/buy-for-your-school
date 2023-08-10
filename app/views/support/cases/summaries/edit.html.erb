@@ -2,8 +2,8 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= I18n.t("support.case_summary.edit.header") %></h1>
 
-    <%= form_with model: @case_summary_form,
-      scope: :case_summary_form,
+    <%= form_with model: @case_summary,
+      scope: :case_summary,
       url: support_case_summary_path(@current_case),
       method: :patch, class: "govuk-!-display-inline",
       html: { "data-controller" => "case-summary", "data-case-summary-case-stage-outlet" => ".case-stage-fields", "data-case-summary-request-type-outlet" => ".request-type-radios" } do |form| %>
@@ -16,10 +16,12 @@
         <%= form.govuk_text_field :value, width: 5, label: { text: I18n.t("support.case_summary.edit.value.label"), size: 'm' }, prefix_text: '£' %>
 
         <%= form.govuk_select :source,
-                                    options_for_select(form.object.source_options.map { |s| [s.title, s.id] },
+                                    options_for_select(available_sources.map { |s| [s.title, s.id] },
                                                         form.object.source),
                                     options: { include_blank: I18n.t("support.case_summary.edit.source.blank") },
                                     label: { text: I18n.t("support.case_summary.edit.source.label"), size: "m" } %>
+
+        <%= render "support/cases/components/next_key_date", form: form %>
 
         <%= form.button I18n.t("support.case_summary.edit.submit"), class: "govuk-button", role: "button", value: "confirm", "data-action": "case-summary#submit" %>
     <% end %>

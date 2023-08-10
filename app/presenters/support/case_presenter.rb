@@ -12,6 +12,7 @@ require_relative "concerns/has_organisation"
 module Support
   class CasePresenter < BasePresenter
     include ActionView::Helpers::NumberHelper
+    include ActionView::Helpers::TextHelper
     include Support::Concerns::HasOrganisation
     include Support::Concerns::HasCreator
 
@@ -213,6 +214,16 @@ module Support
 
     def procurement_stage
       Support::ProcurementStagePresenter.new(super) if super
+    end
+
+    def next_key_date_formatted
+      return "Not set" if next_key_date.blank?
+
+      next_key_date.strftime("%d/%m/%Y")
+    end
+
+    def next_key_date_description_formatted
+      simple_format(next_key_date_description, class: "govuk-body")
     end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_134951) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_134450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -391,6 +391,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_134951) do
     t.uuid "procurement_stage_id"
     t.string "initial_request_text"
     t.boolean "with_school", default: false, null: false
+    t.date "next_key_date"
+    t.string "next_key_date_description"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
