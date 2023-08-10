@@ -1,6 +1,8 @@
 module Support
   module Cases
     class QuickEditsController < Cases::ApplicationController
+      include Concerns::HasDateParams
+
       before_action :back_url, only: %i[edit update]
       helper_method :back_to_param
 
@@ -9,7 +11,7 @@ module Support
       end
 
       def update
-        @case_quick_edit = current_case.quick_editor(form_params)
+        @case_quick_edit = current_case.quick_editor(quick_edit_params)
 
         if @case_quick_edit.valid?
           @case_quick_edit.save!
@@ -33,8 +35,15 @@ module Support
         params[:back_to] || params.dig(:case_quick_edit, :back_to)
       end
 
+      def quick_edit_params
+        form_params
+          .except("next_key_date(3i)", "next_key_date(2i)", "next_key_date(1i)")
+          .merge(next_key_date: date_param(:case_quick_edit, :next_key_date).compact_blank)
+          .compact_blank
+      end
+
       def form_params
-        params.require(:case_quick_edit).permit(:note, :support_level, :procurement_stage_id, :with_school)
+        params.require(:case_quick_edit).permit(:note, :support_level, :procurement_stage_id, :with_school, :next_key_date, :next_key_date_description)
       end
     end
   end

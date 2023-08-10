@@ -7,11 +7,15 @@
       html: { "data-controller" => "case-quick-edit",
               "data-case-quick-edit-show-procurement-stage-value" => @case_quick_edit.procurement_case?,
               "data-case-quick-edit-case-stage-outlet" => ".case-stage-fields" } do |form| %>
+        <%= form.govuk_error_summary %>
+
         <%= form.hidden_field :back_to, value: back_to_param %>
 
         <%= form.govuk_text_area :note, rows: 5, label: { text: I18n.t("support.interaction.header.add_case_note", ref: @current_case.ref), size: "l" } %>
 
         <%= render "support/cases/components/level_and_stage", form: form %>
+
+        <%= render "support/cases/components/next_key_date", form: form %>
 
         <%=
           form.govuk_collection_radio_buttons :with_school,

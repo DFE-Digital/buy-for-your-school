@@ -9,6 +9,7 @@ module Support
         [I18n.t("support.case.label.category"), "subcategory"],
         [I18n.t("support.case.label.status"), "state"],
         [I18n.t("support.case.label.updated"), "last_updated"],
+        [I18n.t("support.case.label.key_action_date"), "next_key_date"],
       ]
     end
 

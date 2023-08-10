@@ -54,6 +54,8 @@ module Support
         Support::CaseLevelChangePresenter.new(self).body
       elsif case_with_school_changed?
         Support::CaseWithSchoolChangePresenter.new(self).body
+      elsif case_next_key_date_changed?
+        Support::CaseNextKeyDateChangePresenter.new(self).body
       elsif super
         super.strip.chomp
       end
@@ -113,6 +115,8 @@ module Support
         Support::CaseLevelChangePresenter.new(self).show_additional_data?
       elsif case_with_school_changed?
         Support::CaseWithSchoolChangePresenter.new(self).show_additional_data?
+      elsif case_next_key_date_changed?
+        Support::CaseNextKeyDateChangePresenter.new(self).show_additional_data?
       else
         true
       end
@@ -131,7 +135,7 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed case_assigned case_opened case_procurement_stage_changed].include?(key)
+        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed case_assigned case_opened case_procurement_stage_changed case_next_key_date_changed].include?(key)
       end
     end
 

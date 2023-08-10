@@ -6,6 +6,7 @@ RSpec.describe "Case problem description" do
 
     before do
       define_basic_categories
+      define_basic_queries
       visit "/support/cases/#{support_case.id}"
     end
 

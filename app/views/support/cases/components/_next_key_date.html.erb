@@ -1,0 +1,5 @@
+<%= form.govuk_date_field :next_key_date, legend: { text: I18n.t("support.case.label.next_key_date.label_optional") }, hint: { text: I18n.t("support.case.label.next_key_date.hint") } %>
+<%= form.govuk_text_area :next_key_date_description,
+      rows: 5,
+      label: { text: I18n.t("support.case.label.next_key_date.description"), size: "s" }
+%>

@@ -837,6 +837,14 @@ en:
             using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
         note: Note
+        key_action_date: Key action date
+        next_key_date:
+          description: Description of next key date
+          description2: Key date description
+          full_label: Next key date and description
+          hint: For example, 12 11 2007
+          label: Next key date
+          label_optional: Next key date (optional)
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
@@ -1307,6 +1315,7 @@ en:
           label: Case source
       flash:
         updated: Case summary successfully updated
+      invalid_date: Provide a valid date
     case_summary_submissions:
       edit:
         header: Check your answers before updating case summary
@@ -1372,6 +1381,7 @@ en:
         case_procurement_stage_changed: Procurement stage changed
         case_contact_changed: Contact changed
         case_with_school_changed: "'With School' flag changed"
+        case_next_key_date_changed: Next key date changed
         create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge

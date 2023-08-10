@@ -27,6 +27,10 @@ module CategoryHelpers
     Support::Category.find_by(title: "Gas")
   end
 
+  def legal_query
+    Support::Query.find_by(title: "Legal")
+  end
+
   def define_basic_queries
     ["Legal", "PPNs", "Playbook", "E&O Queries", "Other"].each do |query|
       create(:support_query, title: query)

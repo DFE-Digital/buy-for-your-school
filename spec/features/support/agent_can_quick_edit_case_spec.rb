@@ -14,11 +14,15 @@ describe "Agent can quick edit a case", js: true do
     within("#my-cases") { click_link "Quick edit" }
   end
 
-  context "when changing the note, support level, stage, and 'with school' flag" do
+  context "when changing the note, support level, stage, next key date, and 'with school' flag" do
     before do
       fill_in "Add a note to case 000001", with: "New note"
       choose "5 - DfE buying by getting quotes or bids"
       select "Tender preparation", from: "Procurement stage"
+      fill_in "Day", with: "10"
+      fill_in "Month", with: "08"
+      fill_in "Year", with: "2023"
+      fill_in "Description of next key date", with: "Key event"
       choose "Yes"
       click_button "Save"
     end
@@ -27,6 +31,8 @@ describe "Agent can quick edit a case", js: true do
       expect(support_case.reload.interactions.note.first.body).to eq("New note")
       expect(support_case.reload.support_level).to eq("L5")
       expect(support_case.reload.procurement_stage.key).to eq("tender_preparation")
+      expect(support_case.reload.next_key_date).to eq(Date.parse("2023-08-10"))
+      expect(support_case.reload.next_key_date_description).to eq("Key event")
       expect(support_case.reload.with_school).to eq(true)
     end
   end

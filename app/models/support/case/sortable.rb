@@ -70,6 +70,7 @@ module Support::Case::Sortable
     }
 
     scope :sort_by_value, ->(direction = "ASC") { order("value #{direction}") }
+    scope :sort_by_next_key_date, ->(direction = "ASC") { order("next_key_date #{direction}") }
   end
 
   class_methods do

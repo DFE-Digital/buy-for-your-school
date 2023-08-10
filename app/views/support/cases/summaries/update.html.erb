@@ -2,18 +2,18 @@
   <%= I18n.t("support.case_summary_submissions.edit.header") %>
 </h2>
 
-<%= form_with model: @case_summary_form, scope: :case_summary_form, url: support_case_summary_path(@current_case, confirm: true), method: :patch, class: "govuk-!-display-inline" do |form| %>
-  <% params[:case_summary_form].each do |key, value| %>
+<%= form_with model: @case_summary, scope: :case_summary, url: support_case_summary_path(@current_case, confirm: true), method: :patch, class: "govuk-!-display-inline" do |form| %>
+  <% params[:case_summary].each do |key, value| %>
     <%= form.hidden_field key, value: value %>
   <% end %>
 
   <dl class="govuk-summary-list govuk-!-margin-bottom-5">
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case_request_details.check_answers.#{@case_summary_form.request_type ? "sub_category" : "query"}") %>
+        <%= I18n.t("support.case_request_details.check_answers.#{@case_summary.request_type ? "sub_category" : "query"}") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @case_summary_form.send(@case_summary_form.request_type ? "category_name" : "query_name") %>
+        <%= @case_summary.send(@case_summary.request_type ? "category_name" : "query_name") %>
       </dd>
       <dd class="govuk-summary-list__actions">
         <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
@@ -25,7 +25,7 @@
         <%= I18n.t("support.case.new.request_text.header") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @case_summary_form.request_text %>
+        <%= @case_summary.request_text %>
       </dd>
       <dd class="govuk-summary-list__actions">
         <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
@@ -37,8 +37,8 @@
         <%= I18n.t("support.case.label.support_level.header") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <% if @case_summary_form.support_level.present? %>
-          <%= I18n.t("support.case.label.support_level.#{@case_summary_form.support_level}") %>
+        <% if @case_summary.support_level.present? %>
+          <%= I18n.t("support.case.label.support_level.#{@case_summary.support_level}") %>
         <% else %>
           <%= I18n.t("support.case.label.support_level.unspecified") %>
         <% end %>
@@ -48,13 +48,13 @@
       </dd>
     </div>
 
-    <% if @case_summary_form.procurement_stage.present? %>
+    <% if @case_summary.procurement_stage.present? %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_stage") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @case_summary_form.procurement_stage.detailed_title %>
+          <%= @case_summary.procurement_stage.detailed_title %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
@@ -67,8 +67,8 @@
         <%= I18n.t("support.case.label.case_value") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <% if @case_summary_form.value.present? %>
-          <%= number_to_currency(@case_summary_form.value, unit: "£", precision: 2) %>
+        <% if @case_summary.value.present? %>
+          <%= number_to_currency(@case_summary.value, unit: "£", precision: 2) %>
         <% else %>
           <%= I18n.t("support.case.label.value.unspecified") %>
         <% end %>
@@ -83,11 +83,35 @@
         <%= I18n.t("support.case.label.source.header") %>
       </dt>
       <dd class="govuk-summary-list__value">
-        <% if @case_summary_form.source.present? %>
-          <%= I18n.t("support.case.label.source.#{@case_summary_form.source}") %>
+        <% if @case_summary.source.present? %>
+          <%= I18n.t("support.case.label.source.#{@case_summary.source}") %>
         <% else %>
           <%= I18n.t("support.case.label.source.unspecified") %>
         <% end %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.next_key_date.label") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @case_summary.next_key_date_formatted %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.next_key_date.description") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @case_summary.next_key_date_description_formatted %>
       </dd>
       <dd class="govuk-summary-list__actions">
         <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
