@@ -9,6 +9,20 @@ class UserPresenter < BasePresenter
     supported_orgs.one?
   end
 
+  def belongs_to_trust_or_federation?
+    group_uid && (org.federation? || org.mat_or_trust?)
+  end
+
+  def org
+    return unless single_org?
+
+    if school_urn
+      Support::Organisation.find_by(urn: school_urn)
+    else
+      Support::EstablishmentGroup.find_by(uid: group_uid)
+    end
+  end
+
   # @return [String, nil] inferred unique school identifier
   def school_urn
     supported_orgs.first.urn if single_org? && !supported_orgs.first.group
@@ -43,7 +57,7 @@ class UserPresenter < BasePresenter
     orgs.map { |org|
       next unless org.dig("category", "id").to_i.in?(GROUP_CATEGORY_IDS)
 
-      OpenStruct.new(name: "#{org['name']} (MAT)", uid: org["uid"], group: true)
+      OpenStruct.new(name: org["name"], uid: org["uid"], group: true)
     }.compact
   end
 

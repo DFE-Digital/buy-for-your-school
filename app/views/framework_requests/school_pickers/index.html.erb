@@ -1,0 +1,13 @@
+<% side = show_school_picker_filters?(@all_schools) ? "filters" : nil %>
+
+<%= content_for :title, I18n.t("faf.school_picker.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= I18n.t("faf.school_picker.caption") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("faf.school_picker.title") %></h1>
+    <p class="govuk-body"><%= I18n.t("faf.school_picker.subtitle") %></p>
+  </div>
+</div>
+
+<%= render "framework_requests/form", route: "school_pickers", verb: :post, side:, path: school_picker_framework_requests_path %>

@@ -21,7 +21,7 @@ module FrameworkRequests
     end
 
     def back_url
-      @back_url = confirm_organisation_framework_requests_path(framework_support_form: form.common)
+      @back_url = framework_request.school_urns.present? ? confirm_schools_framework_requests_path(framework_support_form: form.common) : confirm_organisation_framework_requests_path(framework_support_form: form.common)
     end
   end
 end

@@ -1,6 +1,12 @@
 <% hide_submit_button = defined?(hide_submit_button) ? hide_submit_button : false %>
+<% side = defined?(side) ? side : nil %>
 
 <div class="govuk-grid-row">
+  <% if side.present? %>
+    <div class="govuk-grid-column-one-third">
+      <%= render("framework_requests/#{route}/#{side}", edit: verb == :patch) %>
+    </div>
+  <% end %>
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @form, scope: :framework_support_form, url: path, method: verb, id: "framework-support-form"  do |form| %>
       <%= form.govuk_error_summary %>

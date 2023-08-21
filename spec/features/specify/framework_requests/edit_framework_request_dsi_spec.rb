@@ -73,10 +73,10 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
       expect(page).to have_checked_field "Specialist School for Testing"
 
       expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
-      expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
-      expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+      expect(page).to have_unchecked_field "Testing Multi Academy Trust"
+      expect(page).to have_unchecked_field "New Academy Trust"
 
-      choose "Testing Multi Academy Trust (MAT)"
+      choose "Testing Multi Academy Trust"
       click_continue
 
       expect(page).to have_current_path "/procurement-support/#{request.id}"
@@ -85,11 +85,11 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
 
       click_link "edit-school"
 
-      expect(page).to have_checked_field "Testing Multi Academy Trust (MAT)"
+      expect(page).to have_checked_field "Testing Multi Academy Trust"
 
       expect(page).to have_unchecked_field "Specialist School for Testing"
       expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
-      expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+      expect(page).to have_unchecked_field "New Academy Trust"
     end
   end
 

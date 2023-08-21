@@ -27,7 +27,12 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   def autocomplete_group_step
     # missing last digit
     fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
-    find(".autocomplete__option", text: "New Academy Trust").click
+    find(".autocomplete__option", text: "Testing Multi Academy Trust").click
+    click_continue
+  end
+
+  def complete_confirm_group_step
+    choose "Yes"
     click_continue
   end
 
@@ -101,7 +106,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
 
-        expect(values[0]).to have_text "New Academy Trust"
+        expect(values[0]).to have_text "Testing Multi Academy Trust"
         expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
       end
     end
@@ -303,20 +308,42 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
 
         expect(keys[0]).to have_text "Group name"
-        expect(values[0]).to have_text "New Academy Trust"
+        expect(values[0]).to have_text "Testing Multi Academy Trust"
 
         expect(keys[1]).to have_text "Address"
         expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
 
         expect(keys[2]).to have_text "Group type"
-        expect(values[2]).to have_text "Single-academy Trust"
+        expect(values[2]).to have_text "Multi-academy Trust"
 
         expect(keys[3]).to have_text "ID"
-        expect(values[3]).to have_text "UID: 2315 UKPRN: 1010010"
+        expect(values[3]).to have_text "UID: 2314 UKPRN: 1010010"
 
         expect(page).to have_unchecked_field "Yes"
         expect(page).to have_unchecked_field "No, I need to choose another academy trust or federation"
         expect(page).to have_button "Continue"
+      end
+    end
+
+    describe "multischool picker" do
+      before do
+        autocomplete_group_step
+        complete_confirm_group_step
+      end
+
+      describe "allows to select and confirm schools in the group" do
+        before do
+          check "Specialist School for Testing"
+          check "Greendale Academy for Bright Sparks"
+          click_continue
+
+          choose "Yes"
+          click_continue
+        end
+
+        it "saves selected schools" do
+          expect(FrameworkRequest.first.school_urns).to match_array(%w[100253 100254])
+        end
       end
     end
   end
