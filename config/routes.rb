@@ -125,6 +125,12 @@ Rails.application.routes.draw do
         get "/confirm_organisation", to: "confirm_organisations#index"
         post "/confirm_organisation", to: "confirm_organisations#create"
 
+        get "/school_picker", to: "school_pickers#index"
+        post "/school_picker", to: "school_pickers#create"
+
+        get "/confirm_schools", to: "confirm_schools#index"
+        post "/confirm_schools", to: "confirm_schools#create"
+
         get "/name", to: "names#index"
         post "/name", to: "names#create"
 
@@ -154,6 +160,8 @@ Rails.application.routes.draw do
         resource :organisation_type, only: %i[edit update], as: :framework_request_organisation_type
         resource :search_for_organisation, only: %i[edit update], as: :framework_request_search_for_organisation
         resource :confirm_organisation, only: %i[edit update], as: :framework_request_confirm_organisation
+        resource :school_picker, only: %i[edit update], as: :framework_request_school_picker
+        resource :confirm_schools, only: %i[edit update], as: :framework_request_confirm_schools
         resource :name, only: %i[edit update], as: :framework_request_name
         resource :email, only: %i[edit update], as: :framework_request_email
         resource :bill_uploads, only: %i[edit update], as: :framework_request_bill_uploads

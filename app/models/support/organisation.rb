@@ -13,6 +13,8 @@ module Support
   # may be required to accurately model the structure.
   #
   class Organisation < ApplicationRecord
+    include Filterable
+
     belongs_to :establishment_type,
                counter_cache: true,
                class_name: "Support::EstablishmentType"
@@ -58,6 +60,12 @@ module Support
 
     def org_type
       establishment_type&.name
+    end
+
+    def local_authority
+      return unless super
+
+      super.transform_values(&:to_s)
     end
   end
 end

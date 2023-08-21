@@ -141,8 +141,8 @@ RSpec.describe UserPresenter do
         results = described_class.new(user).supported_groups
 
         expect(results.map(&:name)).to match_array([
-          "Supported Group 1 (MAT)",
-          "Supported Group 2 (MAT)",
+          "Supported Group 1",
+          "Supported Group 2",
         ])
       end
     end
@@ -183,9 +183,9 @@ RSpec.describe UserPresenter do
       results = described_class.new(user).supported_orgs
 
       expect(results.map(&:name)).to match_array([
-        "A-Supported Group 1 (MAT)",
+        "A-Supported Group 1",
         "B-Supported School 2",
-        "C-Supported Group 2 (MAT)",
+        "C-Supported Group 2",
         "D-Supported School 1",
       ])
     end

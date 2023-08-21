@@ -6,7 +6,11 @@ module FrameworkRequests
       if @form.valid?
         if @form.org_confirm?
           @form.save!
-          redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
+          if @form.eligible_for_school_picker?
+            redirect_to edit_framework_request_school_picker_path(framework_request)
+          else
+            redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
+          end
         else
           redirect_to edit_framework_request_search_for_organisation_path(framework_request, school_type: @form.school_type)
         end
@@ -27,7 +31,11 @@ module FrameworkRequests
 
     def create_redirect_path
       if @form.org_confirm?
-        name_framework_requests_path(framework_support_form: @form.common)
+        if @form.eligible_for_school_picker?
+          school_picker_framework_requests_path(framework_support_form: @form.common)
+        else
+          name_framework_requests_path(framework_support_form: @form.common)
+        end
       else
         search_for_organisation_framework_requests_path(framework_support_form: form.common.except(:org_confirm))
       end

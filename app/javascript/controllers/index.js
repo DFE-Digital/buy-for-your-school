@@ -51,3 +51,9 @@ application.register("hello", HelloController)
 
 import RequestTypeController from "./request_type_controller"
 application.register("request-type", RequestTypeController)
+
+import SchoolPickerController from "./school_picker_controller"
+application.register("school-picker", SchoolPickerController)
+
+import SchoolPickerFiltersController from "./school_picker_filters_controller"
+application.register("school-picker-filters", SchoolPickerFiltersController)

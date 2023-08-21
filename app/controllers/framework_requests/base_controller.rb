@@ -40,6 +40,7 @@ module FrameworkRequests
         school_type
         org_confirm
         special_requirements_choice
+        source
       ], *form_params).merge(id: framework_request_id, user: current_user)
     end
 

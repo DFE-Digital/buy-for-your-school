@@ -89,7 +89,9 @@ describe FrameworkRequests::SearchForOrganisationForm, type: :model do
     context "when chanigng from group to single school" do
       subject(:form) { described_class.new(id: framework_request.id, school_type: "school") }
 
-      let(:framework_request) { create(:framework_request, group: true) }
+      let(:framework_request) { create(:framework_request, group: true, org_id: "123") }
+
+      before { create(:support_establishment_group, uid: "123", name: "Test Group") }
 
       it "returns true" do
         expect(form.changing_school_types?).to eq true

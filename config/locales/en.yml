@@ -346,6 +346,8 @@ en:
         problem: Description of request
         school: Your school
         school_type: School type
+        schools_buying_for: Schools you're buying for
+        school_number: "%{selected} of %{total} schools"
         single: Single
         bills_attached: Bills attached
         category: Type of goods or service
@@ -356,6 +358,7 @@ en:
         change_email: "Change your email"
         change_school: "Change your school"
         change_school_type: "Change your school type"
+        change_school_picker: "Change the schools you're buying for"
         change_message: "Change the description of your request"
         change_procurement_amount: "Change procurement amount"
         change_bills_attached: "Change bills attached"
@@ -389,6 +392,12 @@ en:
         school_type: School type
         ukprn: UKPRN
         urn: URN
+    confirm_schools:
+      caption: About your school
+      title: Are these the schools you're buying for?
+      'no': No, I need to change my selection
+      table:
+        school_name: School name
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school that your request is about?
       link:
@@ -439,6 +448,27 @@ en:
       options:
         energy_contract: "Yes"
         not_energy_contract: "No"
+    school_picker:
+      title: Which schools in your academy trust or federation will be involved in this procurement?
+      caption: About your school
+      subtitle: Select all that apply
+      filters:
+        phase: Filter by learning stage
+        local_authority: Filter by local authority
+        clear: Clear filters
+      table:
+        school_name: <b>School name</b> (select all)
+        address: Address
+        phase: Phase of education
+        local_authority: Local authority
+        selected: "of <b>%{total} schools selected</b> from %{group_name}"
+      phases:
+        no_phase: No phase
+        primary: Primary
+        middle: Middle
+        secondary: Secondary
+        all_through: All-through
+        sixteen_plus: 16-plus
     name:
       first_name:
         label: First Name

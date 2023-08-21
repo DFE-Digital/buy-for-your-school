@@ -1,7 +1,8 @@
-class Support::Case::Filtering::Filter
-  def initialize(value, scope:, multiple: true)
-    @values = Array(value)
+class Support::Concerns::ScopeFilter
+  def initialize(value, scope:, mapping: {}, multiple: true)
+    @values = Array(value).map { |v| mapping[v] || v }.flatten
     @scope = scope
+    @mapping = mapping
     @multiple = multiple
   end
 
@@ -30,5 +31,5 @@ class Support::Case::Filtering::Filter
 
 private
 
-  attr_reader :scope, :values, :multiple
+  attr_reader :scope, :values, :mapping, :multiple
 end

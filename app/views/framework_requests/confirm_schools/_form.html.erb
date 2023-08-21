@@ -1,0 +1,42 @@
+<%= content_for :title, I18n.t("faf.confirm_schools.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+<%= form.hidden_field :source %>
+<% form.object.school_urns.each do |urn| %>
+  <%= form.hidden_field :school_urns, value: urn, multiple: true %>
+<% end %>
+
+<span class="govuk-caption-l"><%= I18n.t("faf.confirm_schools.caption") %></span>
+<h1 class="govuk-heading-l"><%= I18n.t("faf.confirm_schools.title") %></h1>
+
+<table class="govuk-table" aria-label="Schools to confirm">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"><%= I18n.t("faf.confirm_schools.table.school_name") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("faf.school_picker.table.address") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("faf.school_picker.table.phase") %></th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("faf.school_picker.table.local_authority") %></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body" data-school-picker-target="schoolTableBody">
+    <% @schools.each do |school| %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><%= school.name %></td>
+        <td class="govuk-table__cell"><%= school.formatted_address %></td>
+        <td class="govuk-table__cell"><%= school.phase %></td>
+        <td class="govuk-table__cell"><%= school.local_authority %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%=
+  form.govuk_collection_radio_buttons :school_urns_confirmed,
+    [
+      OpenStruct.new(value: true, label: I18n.t("generic.yes")),
+      OpenStruct.new(value: false, label: I18n.t("faf.confirm_schools.no")),
+    ],
+    :value,
+    :label,
+    legend: nil
+%>
