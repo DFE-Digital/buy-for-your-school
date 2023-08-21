@@ -60,8 +60,8 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
         expect(page).to have_unchecked_field "Specialist School for Testing"
         expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
-        expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
-        expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+        expect(page).to have_unchecked_field "Testing Multi Academy Trust"
+        expect(page).to have_unchecked_field "New Academy Trust"
       end
 
       context "when the school or group needs to be changed" do
@@ -73,18 +73,18 @@ RSpec.feature "Creating a 'Find a Framework' request" do
           expect(page).to have_checked_field "Greendale Academy for Bright Sparks"
 
           expect(page).to have_unchecked_field "Specialist School for Testing"
-          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
-          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust"
+          expect(page).to have_unchecked_field "New Academy Trust"
 
           # 2. select group
-          choose "New Academy Trust (MAT)"
+          choose "New Academy Trust"
           click_continue
           click_on "Back"
-          expect(page).to have_checked_field "New Academy Trust (MAT)"
+          expect(page).to have_checked_field "New Academy Trust"
 
           expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
           expect(page).to have_unchecked_field "Specialist School for Testing"
-          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust"
 
           # 3. select different school
           choose "Specialist School for Testing"
@@ -94,8 +94,8 @@ RSpec.feature "Creating a 'Find a Framework' request" do
           expect(page).to have_checked_field "Specialist School for Testing"
 
           expect(page).to have_unchecked_field "Greendale Academy for Bright Sparks"
-          expect(page).to have_unchecked_field "Testing Multi Academy Trust (MAT)"
-          expect(page).to have_unchecked_field "New Academy Trust (MAT)"
+          expect(page).to have_unchecked_field "Testing Multi Academy Trust"
+          expect(page).to have_unchecked_field "New Academy Trust"
         end
       end
     end

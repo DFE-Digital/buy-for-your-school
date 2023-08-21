@@ -1,5 +1,6 @@
 <%= content_for :title, I18n.t("faf.user_organisation.header") %>
 
+<%= render "framework_requests/common_form_fields", form: form %>
 <%= form.hidden_field :group, value: form.object.group %>
 
 <%= form.govuk_radio_buttons_fieldset(:org_id,

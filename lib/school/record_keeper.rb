@@ -37,6 +37,8 @@ module School
             org.telephone_number = record[:school][:telephone_number]
             org.trust_name = record[:school][:trust_name].presence
             org.trust_code = record[:school][:trust_code].presence
+            org.federation_name = record[:federation][:name].presence
+            org.federation_code = record[:federation][:code].presence
             org.save!
           end
         end

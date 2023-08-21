@@ -58,6 +58,14 @@ en:
             attributes:
               energy_alternative:
                 blank: Select how you would like to provide your energy information
+          framework_requests/school_picker_form:
+            attributes:
+              school_urns:
+                blank: Select the schools involved in this procurement
+          framework_requests/confirm_schools_form:
+            attributes:
+              school_urns_confirmed:
+                blank: Select whether these are the schools you're buying for
 
   request:
     rules:

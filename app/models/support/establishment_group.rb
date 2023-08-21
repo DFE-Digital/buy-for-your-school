@@ -4,7 +4,18 @@ class Support::EstablishmentGroup < ApplicationRecord
 
   enum status: { proposed_to_open: 0, open: 1, closed: 2, proposed_to_close: 3 }
 
+  delegate :federation?, to: :establishment_group_type
+  delegate :sat?, to: :establishment_group_type
+
   def formatted_name
     "#{uid} - #{name}"
   end
+
+  def organisations
+    return Support::Organisation.where(federation_code: uid) if federation?
+
+    Support::Organisation.where(trust_code: uid)
+  end
+
+  def mat_or_trust? = establishment_group_type.mat? || establishment_group_type.trust?
 end

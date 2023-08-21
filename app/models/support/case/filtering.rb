@@ -38,14 +38,14 @@ private
   def filters
     @filters ||=
       {
-        state: Filter.new(state, scope: :by_state),
-        category: Filter.new(category, scope: :by_category),
-        agent: Filter.new(agent, scope: :by_agent),
-        tower: Filter.new(tower, scope: :by_tower),
-        level: Filter.new(level, scope: :by_level),
-        procurement_stage: Filter.new(procurement_stage, scope: :by_procurement_stage),
-        has_org: Filter.new(has_org, scope: :by_has_org, multiple: false),
-        search_term: Filter.new(search_term, scope: :by_search_term, multiple: false),
+        state: Support::Concerns::ScopeFilter.new(state, scope: :by_state),
+        category: Support::Concerns::ScopeFilter.new(category, scope: :by_category),
+        agent: Support::Concerns::ScopeFilter.new(agent, scope: :by_agent),
+        tower: Support::Concerns::ScopeFilter.new(tower, scope: :by_tower),
+        level: Support::Concerns::ScopeFilter.new(level, scope: :by_level),
+        procurement_stage: Support::Concerns::ScopeFilter.new(procurement_stage, scope: :by_procurement_stage),
+        has_org: Support::Concerns::ScopeFilter.new(has_org, scope: :by_has_org, multiple: false),
+        search_term: Support::Concerns::ScopeFilter.new(search_term, scope: :by_search_term, multiple: false),
       }
   end
 

@@ -11,6 +11,7 @@ module FrameworkRequests
       :user,
       :org_confirm,
       :special_requirements_choice,
+      :source,
     )
 
     def initialize(attributes = {})
@@ -27,7 +28,7 @@ module FrameworkRequests
     end
 
     def group?
-      @school_type == "group"
+      @school_type.present? ? @school_type == "group" : framework_request.group
     end
 
     def org_confirm?
@@ -45,6 +46,7 @@ module FrameworkRequests
         :school_type,
         :org_confirm,
         :special_requirements_choice,
+        :source,
         :user,
         :validation_context,
         :errors,
@@ -52,14 +54,20 @@ module FrameworkRequests
     end
 
     def common
-      return {} unless @user.guest?
+      return to_h.slice(:source) unless @user.guest?
 
-      to_h.slice(:dsi, :school_type, :org_confirm, :special_requirements_choice)
+      to_h.slice(:dsi, :school_type, :org_confirm, :special_requirements_choice, :source)
     end
 
     def framework_request
       FrameworkRequest.find(@id)
     end
+
+    def school_or_group
+      framework_request.organisation
+    end
+
+    def eligible_for_school_picker? = group? && (school_or_group.federation? || school_or_group.mat_or_trust?) && school_or_group.organisations.present?
 
   private
 

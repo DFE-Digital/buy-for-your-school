@@ -133,6 +133,12 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
           choose "Yes"
           click_continue
 
+          check "School name (select all)"
+          click_continue
+
+          choose "Yes"
+          click_continue
+
           expect(all("dd.govuk-summary-list__value")[2]).to have_text "Testing Multi Academy Trust"
         end
       end

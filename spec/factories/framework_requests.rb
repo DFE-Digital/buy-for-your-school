@@ -16,5 +16,11 @@ FactoryBot.define do
     energy_alternative {}
     category {}
     category_other {}
+
+    trait :energy_request do
+      is_energy_request { true }
+      energy_request_about { "energy_contract" }
+      have_energy_bill { true }
+    end
   end
 end

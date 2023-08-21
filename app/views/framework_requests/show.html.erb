@@ -64,6 +64,19 @@
           <% end %>
         </dd>
       </div>
+      <% if @framework_request.multischool? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("faf.check_answers.details.schools_buying_for") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= I18n.t("faf.check_answers.details.school_number", selected: @framework_request.school_urns.count, total: @framework_request.available_schools.length ) %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_school_picker_path(@framework_request, framework_support_form: { source: :change_link }), class: "govuk-link", id: "edit-school-picker", "aria-label": I18n.t("faf.check_answers.aria.change_school_picker")  %>
+          </dd>
+        </div>
+      <% end %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("faf.check_answers.details.problem") %>

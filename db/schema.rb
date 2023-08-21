@@ -200,6 +200,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_143352) do
     t.integer "energy_alternative"
     t.uuid "category_id"
     t.text "category_other"
+    t.string "school_urns", default: [], array: true
     t.index ["category_id"], name: "index_framework_requests_on_category_id"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
@@ -653,6 +654,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_143352) do
     t.string "trust_name"
     t.string "trust_code"
     t.string "gor_name"
+    t.string "federation_name"
+    t.string "federation_code"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
