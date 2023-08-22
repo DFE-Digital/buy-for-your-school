@@ -15,6 +15,18 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
 
+      <% if @current_case.created_by.present? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.created_by") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @current_case.created_by.email %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+      <% end %>
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.user_selected_category") %>
