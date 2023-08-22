@@ -14,6 +14,7 @@ module Support
       e_and_o: "Engagement and Outreach Staff Member",
       internal: "Digital Team Staff Member",
       analyst: "Data Analyst",
+      framework_evaluator: "Framework Evaluator",
     }.freeze
 
     has_many :cases, class_name: "Support::Case"

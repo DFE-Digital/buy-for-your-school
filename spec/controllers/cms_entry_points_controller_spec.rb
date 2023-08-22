@@ -44,6 +44,7 @@ describe CmsEntryPointsController do
           "e_and_o" => :engagement_root_path,
           "internal" => :support_root_path,
           "analyst" => :support_case_statistics_path,
+          "framework_evaluator" => :frameworks_root_path
         }
 
         home_paths.each do |role, home_path|
