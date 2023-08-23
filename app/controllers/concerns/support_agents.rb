@@ -34,4 +34,6 @@ module SupportAgents
   def on_not_authorized_error = redirect_to on_not_authorized_error_redirect_path
 
   def on_not_authorized_error_redirect_path = current_agent.roles.any? ? cms_not_authorized_path : cms_no_roles_assigned_path
+
+  def tracking_base_properties = super.merge(agent_id: current_agent.id)
 end

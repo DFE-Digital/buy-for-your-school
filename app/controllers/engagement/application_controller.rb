@@ -18,13 +18,7 @@ module Engagement
 
   private
 
-    def record_ga? = false
-
-    def support? = false
-
-    def engagement? = true
-
-    def pundit_user = current_agent
+    def portal_namespace = :engagement
 
     def authorize_agent_scope = :access_e_and_o_portal?
   end

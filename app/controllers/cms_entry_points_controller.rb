@@ -15,6 +15,7 @@ private
     return support_root_path if policy.access_proc_ops_portal?
     return engagement_root_path if policy.access_e_and_o_portal?
     return support_case_statistics_path if policy.access_statistics?
+    return frameworks_root_path if policy.access_frameworks_portal?
 
     cms_no_roles_assigned_path
   end

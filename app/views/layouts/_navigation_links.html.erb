@@ -4,11 +4,10 @@
   <ul id="navigation" class="govuk-header__navigation-list" aria-label="Top level navigation">
     <% unless current_user.guest? %>
       <li id="userInfo" class="navbar-component__navigation-item--right govuk-header__navigation-item">
-        <%# TODO: Use UserDecorator for full_name %>
         Signed in as <%= current_user.first_name %> <%= current_user.last_name %>
       </li>
 
-      <% if support? %>
+      <% if support_portal? %>
         <%= turbo_stream_from current_agent, "notifications" %>
         <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
 
@@ -29,9 +28,15 @@
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case.search.heading"), new_support_case_search_path, class: "govuk-header__link" %>
         </li>
+
+        <% if policy(:cms_portal).access_frameworks_portal? %>
+          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+            <%= link_to 'Frameworks', frameworks_root_path, class: "govuk-header__link" %>
+          </li>
+        <% end %>
       <% end %>
 
-      <% if engagement? %>
+      <% if engagement_portal? %>
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to "Cases", engagement_root_path, class: "govuk-header__link" %>
         </li>
@@ -39,6 +44,14 @@
         <% if policy(:cms_portal).access_admin_settings? %>
           <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
             <%= link_to 'Management', engagement_management_path, class: "govuk-header__link" %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <% if frameworks_portal? %>
+        <% if policy(:cms_portal).access_proc_ops_portal? %>
+          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+            <%= link_to 'Case Management', support_root_path, class: "govuk-header__link" %>
           </li>
         <% end %>
       <% end %>
