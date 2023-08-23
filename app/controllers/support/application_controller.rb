@@ -14,8 +14,7 @@ module Support
       ).call
     end
 
-    def support? = true
-    def record_ga? = false
+    def portal_namespace = :support
 
     def notifications_unread?
       return false if current_agent.nil?

@@ -70,10 +70,10 @@ module ManageSupportAgents
 
 private
 
-  def portal_edit_management_agent_path(agent) = send("edit_#{portal_scope}_management_agent_path", agent)
-  def portal_new_management_agent_path = send("new_#{portal_scope}_management_agent_path")
-  def portal_management_agents_path = send("#{portal_scope}_management_agents_path")
-  def portal_management_path = send("#{portal_scope}_management_path")
+  def portal_edit_management_agent_path(agent) = send("edit_#{portal_namespace}_management_agent_path", agent)
+  def portal_new_management_agent_path = send("new_#{portal_namespace}_management_agent_path")
+  def portal_management_agents_path = send("#{portal_namespace}_management_agents_path")
+  def portal_management_path = send("#{portal_namespace}_management_path")
 
   def agent_form_params
     params.require(:agent).permit(:email, :first_name, :last_name, roles: []).tap do |p|

@@ -13,4 +13,15 @@ module ApplicationHelper
   def dsi_url(**args)
     ::Dsi::Uri.new(**args).call.to_s
   end
+
+  def container_width_class
+    enable_wide_container? ? "wide-container" : ""
+  end
+
+  def enable_wide_container?
+    on_cases_index = current_page?(support_cases_path) || current_page?("/support")
+    on_frameworks = request.path.starts_with?("/frameworks")
+
+    (on_cases_index && Flipper.enabled?(:cms_panel_view)) || on_frameworks
+  end
 end

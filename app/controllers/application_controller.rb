@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :support?, :cookie_policy, :record_ga?, :engagement?
+  helper_method :current_user, :cookie_policy, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?
 
   # @return [User, Guest]
   #
@@ -62,17 +62,24 @@ protected
     render "errors/not_found", status: :not_found
   end
 
-  # Is the user currently on the support side?
-  def support?
-    false
+  def support_portal?
+    portal_namespace.to_s.inquiry.support?
   end
 
-  def engagement?
-    false
+  def engagement_portal?
+    portal_namespace.to_s.inquiry.engagement?
+  end
+
+  def frameworks_portal?
+    portal_namespace.to_s.inquiry.frameworks?
+  end
+
+  def portal_namespace
+    :none
   end
 
   def record_ga?
-    true
+    !(support_portal? || engagement_portal? || frameworks_portal?)
   end
 
   def cookie_policy

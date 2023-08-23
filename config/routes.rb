@@ -281,6 +281,11 @@ Rails.application.routes.draw do
     end
   end
 
+  # Frameworks portal
+  namespace :frameworks do
+    root to: "dashboards#index"
+  end
+
   namespace :exit_survey do
     resources :start, only: %i[show]
     resources :satisfaction, only: %i[edit update]
