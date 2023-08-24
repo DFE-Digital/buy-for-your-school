@@ -8,7 +8,11 @@ module Support
 
     def call
       fetch_frameworks
-      upsert_frameworks if @frameworks.present?
+
+      if @frameworks.present?
+        upsert_frameworks
+        import_to_framework_register
+      end
     end
 
   private
@@ -34,6 +38,20 @@ module Support
         prepared_frameworks,
         unique_by: %i[ref],
       )
+    end
+
+    def import_to_framework_register
+      @frameworks.each do |raw_framework|
+        framework = OpenStruct.new(
+          name: raw_framework["title"],
+          provider_reference: raw_framework["ref"],
+          provider_name: raw_framework["provider"].try(:[], "title"),
+          provider_url: raw_framework["url"],
+          ends_at: raw_framework["expiry"],
+          description: raw_framework["descr"],
+        )
+        Frameworks::Framework.import_from_faf(framework)
+      end
     end
 
     def prepare_frameworks(frameworks)
