@@ -40,6 +40,8 @@ module Support
         initial_request_text: @attrs[:request_text],
       )
 
+      @attrs[:participating_schools].each { |organisation| CaseOrganisation.create!(case: kase, organisation:) } if @attrs[:participating_schools]
+
       kase.update!(created_by_id: @attrs[:creator].id) if @attrs[:creator]
 
       Support::RecordAction.new(

@@ -42,6 +42,10 @@ module Support
 
     has_many :energy_bills, class_name: "EnergyBill", foreign_key: :support_case_id
 
+    has_many :case_organisations, class_name: "Support::CaseOrganisation", foreign_key: :support_case_id
+
+    has_many :participating_schools, through: :case_organisations, source: :organisation
+
     belongs_to :detected_category, class_name: "Support::Category", optional: true
 
     belongs_to :procurement_stage, class_name: "Support::ProcurementStage", optional: true

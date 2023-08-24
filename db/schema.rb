@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_143352) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_24_102420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -357,6 +357,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_143352) do
     t.string "custom_name"
     t.index ["support_case_id"], name: "index_support_case_attachments_on_support_case_id"
     t.index ["support_email_attachment_id"], name: "index_support_case_attachments_on_support_email_attachment_id"
+  end
+
+  create_table "support_case_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id", null: false
+    t.uuid "support_organisation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_support_case_organisations_on_support_case_id"
+    t.index ["support_organisation_id"], name: "index_support_case_organisations_on_support_organisation_id"
   end
 
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -795,6 +804,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_143352) do
   add_foreign_key "support_agents", "support_towers"
   add_foreign_key "support_case_attachments", "support_cases"
   add_foreign_key "support_case_attachments", "support_email_attachments"
+  add_foreign_key "support_case_organisations", "support_cases"
+  add_foreign_key "support_case_organisations", "support_organisations"
   add_foreign_key "support_cases", "support_contracts", column: "existing_contract_id"
   add_foreign_key "support_cases", "support_contracts", column: "new_contract_id"
   add_foreign_key "support_cases", "support_procurement_stages", column: "procurement_stage_id"

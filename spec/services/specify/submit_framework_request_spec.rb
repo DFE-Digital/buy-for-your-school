@@ -13,6 +13,10 @@ describe SubmitFrameworkRequest do
 
   before do
     allow(Emails::Confirmation).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation)
+
+    create(:support_organisation, urn: "1")
+    create(:support_organisation, urn: "2")
+    request.update!(school_urns: %w[1 2])
   end
 
   describe "#call" do
@@ -37,6 +41,12 @@ describe SubmitFrameworkRequest do
       described_class.new(request:, referrer:).call
 
       expect(Support::Case.last.detected_category).to eq support_category
+    end
+
+    it "sets the selected schools on the case" do
+      described_class.new(request:, referrer:).call
+
+      expect(Support::Case.last.organisations.pluck(:urn)).to match_array(%w[1 2])
     end
 
     context "when it's an energy request" do

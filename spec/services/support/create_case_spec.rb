@@ -3,6 +3,12 @@ RSpec.describe Support::CreateCase do
 
   let(:category) { create(:support_category, title: "Catering") }
   let(:organisation) { create(:support_organisation, name: "Hillside School") }
+  let(:participating_schools) do
+    [
+      create(:support_organisation, name: "School 1"),
+      create(:support_organisation, name: "School 2"),
+    ]
+  end
 
   before { create(:support_procurement_stage, title: "Need", key: "need") }
 
@@ -20,6 +26,7 @@ RSpec.describe Support::CreateCase do
         extension_number: "2121",
         procurement_amount: 234.55,
         user_selected_category: "Catering sub-category",
+        participating_schools:,
       }
     end
 
@@ -39,6 +46,7 @@ RSpec.describe Support::CreateCase do
       expect(result.value).to eq 234.55
       expect(result.user_selected_category).to eq "Catering sub-category"
       expect(result.procurement_stage.title).to eq "Need"
+      expect(result.participating_schools.pluck(:name)).to match_array(["School 1", "School 2"])
       expect(Support::Case.count).to be 1
     end
 
