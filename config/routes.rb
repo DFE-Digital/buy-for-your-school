@@ -271,6 +271,10 @@ Rails.application.routes.draw do
       scope module: :cases do
         collection do
           resource :preview, only: %i[new create], as: :create_case_preview
+
+          post "uploads/(:upload_reference)/add", to: "uploads#upload", as: "add_uploads"
+          delete "uploads/(:upload_reference)/remove", to: "uploads#remove", as: "remove_uploads"
+          get "uploads/(:upload_reference)/list", to: "uploads#list", as: "list_uploads"
         end
       end
     end

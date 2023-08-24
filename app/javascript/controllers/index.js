@@ -25,6 +25,9 @@ application.register("dropzone", DropzoneController)
 import EmailAttachmentController from "./email_attachment_controller"
 application.register("email-attachment", EmailAttachmentController)
 
+import CaseAttachmentController from "./case_attachment_controller"
+application.register("case-attachment", CaseAttachmentController)
+
 import EmailTemplateFiltersController from "./email_template_filters_controller"
 application.register("email-template-filters", EmailTemplateFiltersController)
 

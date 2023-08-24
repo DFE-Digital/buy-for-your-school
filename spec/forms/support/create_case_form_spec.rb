@@ -16,6 +16,7 @@ RSpec.describe Support::CreateCaseForm, type: :model do
         request_type: "true",
         source: "sw_hub",
         procurement_amount: "10",
+        upload_reference: "test-value",
       )
     end
 
@@ -32,6 +33,8 @@ RSpec.describe Support::CreateCaseForm, type: :model do
         category_id: "987",
         source: "sw_hub",
         procurement_amount: "10",
+        file_attachments: [],
+        upload_reference: "test-value",
       })
     end
   end
