@@ -26,8 +26,10 @@ module Support
       optional(:query_id).value(:string)
       optional(:other_category).value(:string)
       optional(:other_query).value(:string)
-
+      optional(:upload_reference).value(:string)
       optional(:creation_source).value(:string)
+      optional(:file_attachments)
+      optional(:blob_attachments)
     end
 
     rule(:organisation_name) do
@@ -62,6 +64,16 @@ module Support
       validator = Support::Forms::ValidateProcurementAmount.new(value)
       key(:procurement_amount).failure(:invalid) if validator.invalid_number?
       key(:procurement_amount).failure(:too_large) if validator.too_large?
+    end
+
+    rule(:file_attachments) do
+      if value.present?
+        all_files_safe = Array(value).all? { |upload_file| Support::VirusScanner.uploaded_file_safe?(upload_file) }
+        key(:file_attachments).failure(:infected) unless all_files_safe
+
+        all_files_allowed_type = Array(value).all? { |upload_file| upload_file.content_type.in?(OUTLOOK_MESSAGE_FILE_TYPE_ALLOW_LIST) }
+        key(:file_attachments).failure(:incorrect_file_type) unless all_files_allowed_type
+      end
     end
   end
 end

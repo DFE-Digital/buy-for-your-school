@@ -21,6 +21,9 @@ module Support
     option :creation_source, optional: true
     option :procurement_amount, ->(value) { value&.gsub(/[£,]/, "") }, optional: true
     option :creator, optional: true
+    option :blob_attachments, optional: true
+    option :file_attachments, optional: true, default: proc { [] }
+    option :upload_reference, optional: true, default: proc { SecureRandom.hex }
 
     # @return [Hash] form parms
     def to_h

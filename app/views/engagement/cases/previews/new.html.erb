@@ -1,6 +1,5 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
     <%= form_with url: engagement_cases_path, scope: :create_case_form, method: :post, class: "new-case-form" do |form| %>
 
       <% params[:create_case_form].each do |key, value| %>
@@ -132,7 +131,7 @@
           <dd class="govuk-summary-list__value">
             <%= @form.type %>
           </dd>
-          <dd id="changeRequestType" class="govuk-summary-list__list__actions">
+          <dd id="changeRequestType" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -145,7 +144,7 @@
             <dd class="govuk-summary-list__value">
               <%= @form.category_name %>
             </dd>
-            <dd id="changeCategory" class="govuk-summary-list__list__actions">
+            <dd id="changeCategory" class="govuk-summary-list__actions">
               <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
             </dd>
           </div>
@@ -157,7 +156,7 @@
             <dd class="govuk-summary-list__value">
               <%= @form.query_name %>
             </dd>
-            <dd id="changeQuery" class="govuk-summary-list__list__actions">
+            <dd id="changeQuery" class="govuk-summary-list__actions">
               <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
             </dd>
           </div>
@@ -191,7 +190,7 @@
           <dd class="govuk-summary-list__value">
             <%= simple_format(@form.request_text, class: "govuk-body") %>
           </dd>
-          <dd id="changeRequestText" class="govuk-summary-list__list__actions">
+          <dd id="changeRequestText" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
@@ -209,10 +208,33 @@
           <dd class="govuk-summary-list__value">
             <%= @form.procurement_amount %>
           </dd>
-          <dd id="changeRequestText" class="govuk-summary-list__list__actions">
+          <dd id="changeRequestText" class="govuk-summary-list__actions">
             <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
           </dd>
         </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.attached_files") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <% if @files.present? %>
+          <% @files.each do |f| %>
+            <div class="govuk-summary-list__row">
+              <dd class="govuk-summary-list__value">
+                <%= f.filename %>
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+              </dd>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="govuk-summary-list__row">
+            <p>None</p>
+          </div>
+        <% end %>
       </dl>
 
       <p class="govuk-body">
@@ -220,7 +242,6 @@
       </p>
 
       <%= form.button I18n.t("support.case_hub_migration.edit.submit"), class: "govuk-button", value: "create" %>
-
     <% end %>
   </div>
 </div>

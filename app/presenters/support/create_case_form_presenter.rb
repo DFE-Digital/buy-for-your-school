@@ -7,6 +7,10 @@ module Support
     include Support::Concerns::HasOrganisation
     include ActionView::Helpers::NumberHelper
 
+    def attachments
+      file_attachments
+    end
+
     # @return [String]
     def full_name
       "#{first_name} #{last_name}"

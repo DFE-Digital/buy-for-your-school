@@ -766,6 +766,7 @@ en:
         contact_name: Contact name
         contact_phone: Contact phone
         create: Create a new case
+        files: Attach files
         date_received: Date received
         descending: Descending
         filters: Filters
@@ -1085,6 +1086,7 @@ en:
           request_text: Description of query
           source: Case source
           case_details: Case details
+          attached_files: Attached files
         submit: Create case
       label:
         bills: Uploaded bills

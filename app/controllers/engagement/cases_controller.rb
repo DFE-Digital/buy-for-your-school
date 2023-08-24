@@ -32,6 +32,8 @@ module Engagement
       if validation.success? && params[:button] == "create"
         kase = @form.create_case
 
+        CaseFiles::SubmitCaseUpload.new.call(upload_reference: @form.upload_reference, support_case_id: kase.id)
+
         create_interaction(kase.id, "create_case", "Case created", @form.to_h.slice(:source, :category))
 
         redirect_to engagement_cases_path
@@ -80,6 +82,9 @@ module Engagement
         :request_type,
         :request_text,
         :procurement_amount,
+        :upload_reference,
+        :blob_attachments,
+        file_attachments: [],
       ).merge({
         source: :engagement_and_outreach_cms.to_s,
         creation_source: :engagement_and_outreach_team.to_s,

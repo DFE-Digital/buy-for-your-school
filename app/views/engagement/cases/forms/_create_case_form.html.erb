@@ -1,24 +1,31 @@
-<%= form_with model: @form, scope: :create_case_form, url: engagement_create_case_preview_path do |form| %>
+<%= form_with id: "message-form", model: @form, scope: :create_case_form, url: engagement_create_case_preview_path, method: :post, html: {
+  "data-controller" => "case-attachment",
+  "data-action" => "submit->case-attachment#onFormSubmitted",
+  "data-case-attachment-target" => "form",
+  "data-case-attachment-dropzone-outlet" => ".drop-zone-container",
+  "data-case-attachment-error-summary-outlet" => ".govuk-error-summary",
+  "data-case-attachment-reference-value" => @form.upload_reference
+} do |form| %>
   <%= form.govuk_error_summary %>
 
   <h1 class="govuk-heading-l">
     <%= I18n.t("support.case.label.create") %>
   </h1>
   <%= render "components/autocomplete",
-             container_id: "create-case-form-school-urn-field",
-             label_text: I18n.t("support.case_hub_migration.label.school_name"),
-             label_class: "govuk-hint",
-             element_id: "school-urn-autocomplete",
-             element_name: "create_case_form[organisation_name]",
-             template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
-             value_field: :name,
-             default_value: @form.organisation_name,
-             hidden_fields: {
-               'create_case_form[organisation_id]' => [:id, @form.organisation_id],
-               'create_case_form[organisation_type]' => [:source, @form.organisation_type],
-               'create_case_form[organisation_urn]' => [:urn, @form.organisation_urn],
-             },
-             query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
+    container_id: "create-case-form-school-urn-field",
+    label_text: I18n.t("support.case_hub_migration.label.school_name"),
+    label_class: "govuk-hint",
+    element_id: "school-urn-autocomplete",
+    element_name: "create_case_form[organisation_name]",
+    template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
+    value_field: :name,
+    default_value: @form.organisation_name,
+    hidden_fields: {
+      'create_case_form[organisation_id]' => [:id, @form.organisation_id],
+      'create_case_form[organisation_type]' => [:source, @form.organisation_type],
+      'create_case_form[organisation_urn]' => [:urn, @form.organisation_urn],
+    },
+    query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
   <%= form.govuk_text_field :first_name, label: { text: I18n.t("support.case_hub_migration.label.first_name") } %>
   <%= form.govuk_text_field :last_name, label: { text: I18n.t("support.case_hub_migration.label.last_name") } %>
@@ -32,6 +39,60 @@
     label: { text: I18n.t("support.case.label.procurement_value"), size: "m" },
     prefix_text: "£" %>
 
-  <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
+  <h2 class="govuk-heading-m">
+    <%= I18n.t("support.case.label.files") %>
+  </h2>
+  <div class="drop-zone-container govuk-!-margin-bottom-5"
+       data-controller="dropzone"
+       data-dropzone-list-files-url-value="<%= list_uploads_engagement_cases_url(@form.upload_reference) %>"
+       data-dropzone-add-file-url-value="<%= add_uploads_engagement_cases_url(@form.upload_reference) %>"
+       data-dropzone-remove-file-url-value="<%= remove_uploads_engagement_cases_url(@form.upload_reference) %>">
+    <div class="upload-preview-template govuk-!-display-none" data-dropzone-target="previewTemplate">
+      <div class="upload-item">
+        <div class="upload-row file-details">
+          <h3 class="govuk-heading-s"><span data-dz-name></span> (<span data-dz-size></span>)</h3>
+          <a href="#" class="btn-remove govuk-link govuk-link--no-visited-state" data-dz-remove>Remove</a>
+        </div>
+        <div class="upload-row progress-status-container">
+          <p class="govuk-body-s progress-status govuk-!-display-none" data-dz-errormessage></p>
+
+          <div class="upload-progress-container govuk-!-display-none">
+            <div data-dz-uploadprogress class="upload-progress" aria-valuenow="0"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-zone govuk-!-margin-bottom-5" data-case-attachment-target="dropZone">
+      <p class="govuk-body">Drag and drop files here or</p>
+
+      <span class="govuk-button govuk-button--secondary"
+            data-dropzone-target="btnDisplayFileDialog">
+        Choose files
+      </span>
+    </div>
+
+    <div class="file-previews">
+      <div class="files-added-now govuk-!-margin-bottom-5 govuk-!-display-none"
+           data-case-attachment-target="filesAddedNow"
+           data-dropzone-target="filePreview">
+        <h2 class="govuk-heading-m">
+          Files added
+        </h2>
+      </div>
+
+      <div class="files-added-before govuk-!-margin-bottom-5 govuk-!-display-none"
+           data-case-attachment-target="filesAddedBefore">
+        <h2 class="govuk-heading-m">
+          Files already uploaded
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-button-group">
+    <%= form.hidden_field :upload_reference, :value => @form.upload_reference %>
+    <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-case-attachment-target" => "btnSubmit" %>
+  </div>
 <% end %>
 
