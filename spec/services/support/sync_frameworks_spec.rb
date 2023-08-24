@@ -70,6 +70,10 @@ describe Support::SyncFrameworks do
           .and(not_change { existing_framework2.reload.expires_at })
         end
       end
+
+      it "converts the support frameworks into the framework register records" do
+        expect { service.call }.to change(Frameworks::Framework, :count).from(0).to(2)
+      end
     end
   end
 end

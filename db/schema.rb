@@ -207,6 +207,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_101049) do
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
+  create_table "frameworks_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status", default: 0
+    t.string "provider_url"
+    t.string "provider_reference"
+    t.string "name"
+    t.string "short_name"
+    t.string "description"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean "published_on_faf"
+    t.uuid "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "frameworks_providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "journeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -408,8 +429,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_101049) do
     t.boolean "exit_survey_sent", default: false
     t.uuid "detected_category_id"
     t.integer "creation_source"
-    t.uuid "created_by_id"
     t.text "user_selected_category"
+    t.uuid "created_by_id"
     t.uuid "procurement_stage_id"
     t.string "initial_request_text"
     t.boolean "with_school", default: false, null: false
