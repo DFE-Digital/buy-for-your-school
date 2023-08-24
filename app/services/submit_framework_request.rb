@@ -52,6 +52,10 @@ private
     end
   end
 
+  def map_urns_to_orgs(urns)
+    urns.map { |urn| Support::Organisation.find_by(urn:) }
+  end
+
   # @return [Support::Case] TODO: Move into inbound API
   def open_case
     kase_attrs = {
@@ -67,6 +71,7 @@ private
       other_category: request.category_other,
       user_selected_category:,
       detected_category_id: request.category&.support_category&.id,
+      organisations: map_urns_to_orgs(request.school_urns),
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
