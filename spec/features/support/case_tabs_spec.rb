@@ -17,8 +17,8 @@ RSpec.feature "Case summary" do
     expect(find("p#case-ref")).to have_text "000001"
   end
 
-  it "has 6 visible tabs" do
-    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(6)
+  it "has 7 visible tabs" do
+    expect(all(".govuk-tabs__list-item", visible: true).count).to eq(7)
   end
 
   it "defaults to the 'School details' tab" do
@@ -46,13 +46,6 @@ RSpec.feature "Case summary" do
         expect(all(".govuk-summary-list__row")[3]).to have_text "Source"
         expect(all(".govuk-summary-list__row")[4]).to have_text "Description of query"
         expect(all(".govuk-summary-list__row")[5]).to have_text "Next key date and description"
-        expect(all(".govuk-summary-list__row")[6]).to have_text "Received"
-        expect(all(".govuk-summary-list__row")[7]).to have_text "User selected options"
-        expect(all(".govuk-summary-list__row")[8]).to have_text "Auto-assigned sub-category"
-        expect(all(".govuk-summary-list__row")[9]).to have_text "Procurement amount"
-        expect(all(".govuk-summary-list__row")[10]).to have_text "Accessibility"
-        expect(all(".govuk-summary-list__row")[11]).to have_text "Initial description of query"
-        expect(all(".govuk-summary-list__row")[12]).to have_text "Attached specification"
       end
     end
 
@@ -63,12 +56,6 @@ RSpec.feature "Case summary" do
         expect(find("#pd-new-contract")).to have_text "New contract details"
         expect(find("#pd-savings")).to have_text "Savings details"
       end
-    end
-
-    it "lists specifications for viewing" do
-      document = support_case.documents.first
-
-      expect(page).to have_link "specification-1 (opens in new tab)", href: support_case_document_path(support_case, document)
     end
   end
 
