@@ -31,6 +31,9 @@
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "case_detail" %>">
       <%= link_to I18n.t("support.case.header.case_detail"), "#case-details", class: "govuk-tabs__tab" %>
     </li>
+    <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "request_details" %>">
+      <%= link_to I18n.t("support.case.header.request"), "#request-details", class: "govuk-tabs__tab" %>
+    </li>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "messages" %>">
       <%= link_to I18n.t("support.case.header.messages"), "#messages", class: "govuk-tabs__tab" %>
     </li>

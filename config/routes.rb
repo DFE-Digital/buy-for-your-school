@@ -233,6 +233,11 @@ Rails.application.routes.draw do
         end
         resources :email_templates, only: %i[index], constraints: ->(_request) { Flipper.enabled?(:email_templates) }
         resource :quick_edit, only: %i[edit update]
+        resource :request, only: %i[show] do
+          scope module: :requests do
+            resource :participating_schools, only: %i[show]
+          end
+        end
       end
     end
 
