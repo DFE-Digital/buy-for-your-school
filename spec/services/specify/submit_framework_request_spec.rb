@@ -46,7 +46,13 @@ describe SubmitFrameworkRequest do
     it "sets the selected schools on the case" do
       described_class.new(request:, referrer:).call
 
-      expect(Support::Case.last.organisations.pluck(:urn)).to match_array(%w[1 2])
+      expect(Support::Case.last.participating_schools.pluck(:urn)).to match_array(%w[1 2])
+    end
+
+    it "sets the created case on the request" do
+      described_class.new(request:, referrer:).call
+
+      expect(request.support_case).to eq(Support::Case.last)
     end
 
     context "when it's an energy request" do

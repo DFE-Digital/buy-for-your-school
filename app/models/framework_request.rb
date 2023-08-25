@@ -1,6 +1,7 @@
 class FrameworkRequest < Request
   belongs_to :user, optional: true
   belongs_to :category, class_name: "RequestForHelpCategory", optional: true
+  belongs_to :support_case, class_name: "Support::Case", optional: true
 
   has_many :energy_bills, class_name: "EnergyBill"
 
