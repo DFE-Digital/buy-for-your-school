@@ -50,6 +50,8 @@ module Support
 
     belongs_to :procurement_stage, class_name: "Support::ProcurementStage", optional: true
 
+    has_one :framework_request, class_name: "FrameworkRequest", foreign_key: :support_case_id
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     # Support level

@@ -49,6 +49,12 @@ describe SubmitFrameworkRequest do
       expect(Support::Case.last.organisations.pluck(:urn)).to match_array(%w[1 2])
     end
 
+    it "sets the created case on the request" do
+      described_class.new(request:, referrer:).call
+
+      expect(request.support_case).to eq(Support::Case.last)
+    end
+
     context "when it's an energy request" do
       let(:energy_alternative) { :email_later }
 

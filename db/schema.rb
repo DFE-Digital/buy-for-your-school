@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_24_102420) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_25_101049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -191,7 +191,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_102420) do
     t.uuid "category_id"
     t.text "category_other"
     t.string "school_urns", default: [], array: true
+    t.uuid "support_case_id"
     t.index ["category_id"], name: "index_framework_requests_on_category_id"
+    t.index ["support_case_id"], name: "index_framework_requests_on_support_case_id"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
@@ -785,6 +787,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_102420) do
   add_foreign_key "all_cases_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
+  add_foreign_key "framework_requests", "support_cases"
   add_foreign_key "framework_requests", "users"
   add_foreign_key "long_text_answers", "steps", on_delete: :cascade
   add_foreign_key "radio_answers", "steps", on_delete: :cascade
@@ -818,106 +821,106 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_102420) do
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
   create_view "support_case_data", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      GREATEST(sc.updated_at, si.created_at) AS last_modified_at,
-      sc.source AS case_source,
-      sc.state AS case_state,
-      sc.closure_reason AS case_closure_reason,
-      cat.title AS sub_category_title,
-      sc.savings_actual,
-      sc.savings_actual_method,
-      sc.savings_estimate,
-      sc.savings_estimate_method,
-      sc.savings_status,
-      sc.support_level AS case_support_level,
-      sc.value AS case_value,
-      se.name AS organisation_name,
-      se.urn AS organisation_urn,
-      se.ukprn AS organisation_ukprn,
-      se.rsc_region AS organisation_rsc_region,
-      se.local_authority_name AS organisation_local_authority_name,
-      se.local_authority_code AS organisation_local_authority_code,
-      se.uid AS organisation_uid,
-      se.phase AS organisation_phase,
-      se.organisation_status,
-      se.egroup_status AS establishment_group_status,
-      se.establishment_type,
-      sf.name AS framework_name,
-      sp.reason_for_route_to_market,
-      sp.required_agreement_type,
-      sp.route_to_market,
-      sp.stage AS procurement_stage,
-      sp.started_at AS procurement_started_at,
-      sp.ended_at AS procurement_ended_at,
-      ec.started_at AS previous_contract_started_at,
-      ec.ended_at AS previous_contract_ended_at,
-      ec.duration AS previous_contract_duration,
-      ec.spend AS previous_contract_spend,
-      ec.supplier AS previous_contract_supplier,
-      nc.started_at AS new_contract_started_at,
-      nc.ended_at AS new_contract_ended_at,
-      nc.duration AS new_contract_duration,
-      nc.spend AS new_contract_spend,
-      nc.supplier AS new_contract_supplier,
-      ps.created_at AS participation_survey_date,
-      es.created_at AS exit_survey_date,
-      sir.referrer
-     FROM ((((((((((support_cases sc
-       LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
-             FROM support_interactions i
-            WHERE (i.case_id = sc.id)
-            ORDER BY i.created_at
-           LIMIT 1))))
-       LEFT JOIN ( SELECT organisations.id,
-              organisations.name,
-              organisations.rsc_region,
-              (organisations.local_authority ->> 'name'::text) AS local_authority_name,
-              (organisations.local_authority ->> 'code'::text) AS local_authority_code,
-              organisations.urn,
-              organisations.ukprn,
-              organisations.status AS organisation_status,
-              NULL::integer AS egroup_status,
-              NULL::character varying AS uid,
-              organisations.phase,
-              etypes.name AS establishment_type,
-              'Support::Organisation'::text AS source
-             FROM (support_organisations organisations
-               JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-          UNION ALL
-           SELECT egroups.id,
-              egroups.name,
-              NULL::character varying AS rsc_region,
-              NULL::text AS local_authority_name,
-              NULL::text AS local_authority_code,
-              NULL::character varying AS urn,
-              egroups.ukprn,
-              NULL::integer AS organisation_status,
-              egroups.status AS egroup_status,
-              egroups.uid,
-              NULL::integer AS phase,
-              egtypes.name AS establishment_type,
-              'Support::EstablishmentGroup'::text AS source
-             FROM (support_establishment_groups egroups
-               JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))) se ON (((sc.organisation_id = se.id) AND ((sc.organisation_type)::text = se.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
-       LEFT JOIN support_procurements sp ON ((sc.procurement_id = sp.id)))
-       LEFT JOIN support_frameworks sf ON ((sp.framework_id = sf.id)))
-       LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
-       LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)))
-       LEFT JOIN ( SELECT si_1.created_at,
-              si_1.case_id
-             FROM support_interactions si_1
-            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = 'fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779'::text))) ps ON ((si.case_id = ps.case_id)))
-       LEFT JOIN ( SELECT si_1.created_at,
-              si_1.case_id
-             FROM support_interactions si_1
-            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)))
-       LEFT JOIN ( SELECT (si_1.additional_data ->> 'referrer'::text) AS referrer,
-              si_1.case_id
-             FROM support_interactions si_1
-            WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
+    SELECT sc.id AS case_id,
+    sc.ref AS case_ref,
+    sc.created_at,
+    GREATEST(sc.updated_at, si.created_at) AS last_modified_at,
+    sc.source AS case_source,
+    sc.state AS case_state,
+    sc.closure_reason AS case_closure_reason,
+    cat.title AS sub_category_title,
+    sc.savings_actual,
+    sc.savings_actual_method,
+    sc.savings_estimate,
+    sc.savings_estimate_method,
+    sc.savings_status,
+    sc.support_level AS case_support_level,
+    sc.value AS case_value,
+    se.name AS organisation_name,
+    se.urn AS organisation_urn,
+    se.ukprn AS organisation_ukprn,
+    se.rsc_region AS organisation_rsc_region,
+    se.local_authority_name AS organisation_local_authority_name,
+    se.local_authority_code AS organisation_local_authority_code,
+    se.uid AS organisation_uid,
+    se.phase AS organisation_phase,
+    se.organisation_status,
+    se.egroup_status AS establishment_group_status,
+    se.establishment_type,
+    sf.name AS framework_name,
+    sp.reason_for_route_to_market,
+    sp.required_agreement_type,
+    sp.route_to_market,
+    sp.stage AS procurement_stage,
+    sp.started_at AS procurement_started_at,
+    sp.ended_at AS procurement_ended_at,
+    ec.started_at AS previous_contract_started_at,
+    ec.ended_at AS previous_contract_ended_at,
+    ec.duration AS previous_contract_duration,
+    ec.spend AS previous_contract_spend,
+    ec.supplier AS previous_contract_supplier,
+    nc.started_at AS new_contract_started_at,
+    nc.ended_at AS new_contract_ended_at,
+    nc.duration AS new_contract_duration,
+    nc.spend AS new_contract_spend,
+    nc.supplier AS new_contract_supplier,
+    ps.created_at AS participation_survey_date,
+    es.created_at AS exit_survey_date,
+    sir.referrer
+    FROM ((((((((((support_cases sc
+      LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
+            FROM support_interactions i
+          WHERE (i.case_id = sc.id)
+          ORDER BY i.created_at
+          LIMIT 1))))
+      LEFT JOIN ( SELECT organisations.id,
+            organisations.name,
+            organisations.rsc_region,
+            (organisations.local_authority ->> 'name'::text) AS local_authority_name,
+            (organisations.local_authority ->> 'code'::text) AS local_authority_code,
+            organisations.urn,
+            organisations.ukprn,
+            organisations.status AS organisation_status,
+            NULL::integer AS egroup_status,
+            NULL::character varying AS uid,
+            organisations.phase,
+            etypes.name AS establishment_type,
+            'Support::Organisation'::text AS source
+            FROM (support_organisations organisations
+              JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+        UNION ALL
+          SELECT egroups.id,
+            egroups.name,
+            NULL::character varying AS rsc_region,
+            NULL::text AS local_authority_name,
+            NULL::text AS local_authority_code,
+            NULL::character varying AS urn,
+            egroups.ukprn,
+            NULL::integer AS organisation_status,
+            egroups.status AS egroup_status,
+            egroups.uid,
+            NULL::integer AS phase,
+            egtypes.name AS establishment_type,
+            'Support::EstablishmentGroup'::text AS source
+            FROM (support_establishment_groups egroups
+              JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))) se ON (((sc.organisation_id = se.id) AND ((sc.organisation_type)::text = se.source))))
+      LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
+      LEFT JOIN support_procurements sp ON ((sc.procurement_id = sp.id)))
+      LEFT JOIN support_frameworks sf ON ((sp.framework_id = sf.id)))
+      LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
+      LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)))
+      LEFT JOIN ( SELECT si_1.created_at,
+            si_1.case_id
+            FROM support_interactions si_1
+          WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = 'fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779'::text))) ps ON ((si.case_id = ps.case_id)))
+      LEFT JOIN ( SELECT si_1.created_at,
+            si_1.case_id
+            FROM support_interactions si_1
+          WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)))
+      LEFT JOIN ( SELECT (si_1.additional_data ->> 'referrer'::text) AS referrer,
+            si_1.case_id
+            FROM support_interactions si_1
+          WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
   create_view "support_establishment_searches", sql_definition: <<-SQL
       SELECT organisations.id,
