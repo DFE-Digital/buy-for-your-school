@@ -726,8 +726,6 @@ en:
       case_details:
         case_summary:
           heading: Case summary
-        request:
-          heading: Request
       date_format: "%d %B %Y %H:%M"
       filter:
         buttons:
@@ -752,6 +750,8 @@ en:
         case_files: Files
         messages: Messages
         procurement_detail: Procurement details
+        request: Request
+        request_details: Request details
         school_detail: School details
       label:
         add_interaction: Log contact with school
@@ -882,6 +882,7 @@ en:
         place_on_hold: Place on hold
         problem_description: Description of query
         initial_problem_description: Initial description of query
+        participating_schools: Participating schools
         procurement_amount: Procurement amount
         procurement_value: Procurement value
         procurement_details:
@@ -907,6 +908,14 @@ en:
         received_at: Received
         reopen: Reopen case
         resolve: Resolve case
+        request_details:
+          back: Back to request details
+          participating_schools:
+            table:
+              school_name: School name
+              address: Address
+              phase: Phase of education
+              local_authority: Local authority
         sort_by: Sort by
         source:
           digital: Specify case
@@ -1377,6 +1386,7 @@ en:
       search: Search
       "yes": "Yes"
       "no": "No"
+      view: View
     helpers:
       tag_bar:
         remove_tag: "Remove tag %{tag}"
