@@ -76,6 +76,8 @@ private
 
     @kase = Support::CreateCase.new(kase_attrs).call
 
+    request.update!(support_case: @kase)
+
     interaction_attrs = {
       additional_data: {
         "support_request_id": request.id,
