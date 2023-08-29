@@ -118,6 +118,24 @@
           </dd>
         </div>
       <% end %>
+
+      <% if @current_case.case_attachments.present? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.request_details.uploaded_files") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <ul class="govuk-list">
+              <% @current_case.case_attachments.pluck(:custom_name).each do |custom_name| %>
+                <li><%= custom_name %></li>
+              <% end %>
+            </ul>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("support.generic.view"), support_case_path(@current_case, anchor: "case-files"), target: "_top", class: "govuk-link" %>
+          </dd>
+        </div>
+      <% end %>
     </dl>
   </div>
 <% end %>
