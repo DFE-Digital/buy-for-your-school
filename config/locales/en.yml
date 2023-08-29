@@ -928,6 +928,7 @@ en:
               address: Address
               phase: Phase of education
               local_authority: Local authority
+          uploaded_files: Uploaded files
         sort_by: Sort by
         source:
           digital: Specify case
