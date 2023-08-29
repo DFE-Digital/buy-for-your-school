@@ -51,6 +51,8 @@ private
   end
 
   def auto_assign_sat_school
+    return if organisation.organisations.empty?
+
     self.school_urns = [organisation.organisations.first.urn]
   end
 end
