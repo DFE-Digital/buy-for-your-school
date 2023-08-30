@@ -36,10 +36,6 @@ module Support
         )
     end
 
-    def available_stages
-      I18nOption.from("support.case_statistics.stages.%%key%%", Support::TowerCase.stages.keys)
-    end
-
     def available_procurement_stages
       CheckboxOption
         .from(

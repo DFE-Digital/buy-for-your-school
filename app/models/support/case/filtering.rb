@@ -12,6 +12,7 @@ class Support::Case::Filtering
   attribute :has_org, default: -> { "" }
   attribute :search_term, default: -> { "" }
   attribute :procurement_stage, default: -> { [] }
+  attribute :legacy_stage, default: -> { [] }
   attribute :sort_by
   attribute :sort_order
 
@@ -44,8 +45,9 @@ private
         tower: Support::Concerns::ScopeFilter.new(tower, scope: :by_tower),
         level: Support::Concerns::ScopeFilter.new(level, scope: :by_level),
         procurement_stage: Support::Concerns::ScopeFilter.new(procurement_stage, scope: :by_procurement_stage),
-        has_org: Support::Concerns::ScopeFilter.new(has_org, scope: :by_has_org, multiple: false),
+        has_org: Support::Concerns::ScopeFilter.new(ActiveModel::Type::Boolean.new.cast(has_org), scope: :by_has_org, multiple: false),
         search_term: Support::Concerns::ScopeFilter.new(search_term, scope: :by_search_term, multiple: false),
+        legacy_stage: Support::Concerns::ScopeFilter.new(legacy_stage, scope: :by_legacy_stage),
       }
   end
 

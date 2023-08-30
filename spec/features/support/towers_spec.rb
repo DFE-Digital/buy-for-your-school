@@ -1,13 +1,14 @@
 RSpec.feature "Case statistics tower page" do
   let(:services_tower) { create(:support_tower, title: "Services") }
   let(:category) { create(:support_category, title: "Books", tower: services_tower) }
+  let(:need_stage) { create(:support_procurement_stage, title: "Need") }
 
   before do
-    create(:support_case, :initial, category:)
-    create(:support_case, :opened, category:)
+    create(:support_case, :initial, category:, procurement_stage: need_stage)
+    create(:support_case, :opened, category:, procurement_stage: need_stage)
     create(:support_case, :resolved, category:)
     create(:support_case, :closed, category:)
-    create(:support_case, :on_hold, category:)
+    create(:support_case, :on_hold, category:, procurement_stage: need_stage)
     create(:support_case, :initial, category: nil) # no tower
   end
 
@@ -35,7 +36,7 @@ RSpec.feature "Case statistics tower page" do
       context "when tower is 'No Tower'" do
         it "links Live Cases to the tower page for No tower" do
           visit support_case_statistics_tower_path(id: "no-tower")
-          expect(page).to have_link(href: support_cases_path(anchor: "all-cases", filter_all_cases_form: { state: "live", tower: "no-tower" }), text: "1\nLive case")
+          expect(page).to have_link(href: support_cases_path(anchor: "all-cases", filter_all_cases_form: { state: "live", tower: "no-tower", override: "true" }), text: "1\nLive case")
         end
       end
 

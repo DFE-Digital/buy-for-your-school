@@ -3,7 +3,7 @@ module Support
     def filtered_tower_path(tower, filter_attributes = {})
       if tower.nil?
         # no-tower
-        support_cases_path(anchor: "all-cases", filter_all_cases_form: filter_attributes.merge(tower: "no-tower"))
+        support_cases_path(anchor: "all-cases", filter_all_cases_form: filter_attributes.merge(tower: "no-tower", override: true))
       else
         tower_tab_id = "#{tower.title.parameterize}-tower"
         filter_param_key = "filter_#{tower.title.parameterize(separator: '_')}_cases"

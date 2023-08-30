@@ -25,79 +25,155 @@ describe Support::TowerStatistics do
     subject(:results) { report.breakdown_of_cases_by_stage }
 
     before do
-      create(:support_case, :opened, :stage_need, value: 10.00, category: ict)
-      create(:support_case, :on_hold, :stage_need, value: 5.00, category: ict)
-      create(:support_case, :on_hold, :stage_need, value: 1.00, category: ict)
+      Support::SeedProcurementStages.new.call
 
-      create(:support_case, :opened, :stage_go_to_market, value: 10.00, category: ict)
-      create(:support_case, :opened, :stage_go_to_market, value: 5.00, category: ict)
-      create(:support_case, :initial, :stage_go_to_market, value: 1.00, category: ict)
-      create(:support_case, :initial, :stage_go_to_market, value: 1.00, category: ict)
+      need_stage = Support::ProcurementStage.find_by(key: "need")
+      out_to_tender_stage = Support::ProcurementStage.find_by(key: "out_to_tender")
+      handover_stage = Support::ProcurementStage.find_by(key: "handover")
 
-      create(:support_case, :on_hold, :stage_handover, value: 2.00, category: ict)
-      create(:support_case, :on_hold, :stage_handover, value: 3.00, category: ict)
-      create(:support_case, :initial, :stage_handover, value: 4.00, category: ict)
-      create(:support_case, :initial, :stage_handover, value: 2.00, category: ict)
+      create(:support_case, :opened, value: 10.00, category: ict, procurement_stage: need_stage)
+      create(:support_case, :on_hold, value: 5.00, category: ict, procurement_stage: need_stage)
+      create(:support_case, :on_hold, value: 1.00, category: ict, procurement_stage: need_stage)
 
-      create(:support_case, :opened, :stage_unspecified, value: 2.00, category: ict)
-      create(:support_case, :on_hold, :stage_unspecified, value: 2.00, category: ict)
-      create(:support_case, :initial, :stage_unspecified, value: 2.00, category: ict)
+      create(:support_case, :opened, value: 10.00, category: ict, procurement_stage: out_to_tender_stage)
+      create(:support_case, :opened, value: 5.00, category: ict, procurement_stage: out_to_tender_stage)
+      create(:support_case, :initial, value: 1.00, category: ict, procurement_stage: out_to_tender_stage)
+      create(:support_case, :initial, value: 1.00, category: ict, procurement_stage: out_to_tender_stage)
+
+      create(:support_case, :on_hold, value: 2.00, category: ict, procurement_stage: handover_stage)
+      create(:support_case, :on_hold, value: 3.00, category: ict, procurement_stage: handover_stage)
+      create(:support_case, :initial, value: 4.00, category: ict, procurement_stage: handover_stage)
+      create(:support_case, :initial, value: 2.00, category: ict, procurement_stage: handover_stage)
+
+      create(:support_case, :opened, value: 2.00, category: ict)
+      create(:support_case, :on_hold, value: 2.00, category: ict)
+      create(:support_case, :initial, value: 2.00, category: ict)
     end
 
     it "overview of each case stage in order with unspecified last" do
-      expect(results.to_a.length).to eq(8) # 7 stages + unspecified
+      expect(results.to_a.length).to eq(18) # 17 stages + unspecified
 
       need_row = results[0]
-      expect(need_row.stage).to eq("need")
+      expect(need_row.procurement_stage_title).to eq("Need")
       expect(need_row.open_cases).to eq(1)
       expect(need_row.on_hold_cases).to eq(2)
       expect(need_row.new_cases).to eq(0)
       expect(need_row.live_value).to eq(16.00)
 
-      market_analysis_row = results[1]
-      expect(market_analysis_row.stage).to eq("market_analysis")
+      information_gathering_row = results[1]
+      expect(information_gathering_row.procurement_stage_title).to eq("Information gathering")
+      expect(information_gathering_row.open_cases).to eq(0)
+      expect(information_gathering_row.on_hold_cases).to eq(0)
+      expect(information_gathering_row.new_cases).to eq(0)
+      expect(information_gathering_row.live_value).to eq(0.00)
+
+      market_analysis_row = results[2]
+      expect(market_analysis_row.procurement_stage_title).to eq("Market analysis")
       expect(market_analysis_row.open_cases).to eq(0)
       expect(market_analysis_row.on_hold_cases).to eq(0)
       expect(market_analysis_row.new_cases).to eq(0)
       expect(market_analysis_row.live_value).to eq(0.00)
 
-      sourcing_options_row = results[2]
-      expect(sourcing_options_row.stage).to eq("sourcing_options")
-      expect(sourcing_options_row.open_cases).to eq(0)
-      expect(sourcing_options_row.on_hold_cases).to eq(0)
-      expect(sourcing_options_row.new_cases).to eq(0)
-      expect(sourcing_options_row.live_value).to eq(0.00)
+      sign_participation_agreement_row = results[3]
+      expect(sign_participation_agreement_row.procurement_stage_title).to eq("Sign Participation agreement")
+      expect(sign_participation_agreement_row.open_cases).to eq(0)
+      expect(sign_participation_agreement_row.on_hold_cases).to eq(0)
+      expect(sign_participation_agreement_row.new_cases).to eq(0)
+      expect(sign_participation_agreement_row.live_value).to eq(0.00)
 
-      go_to_market_row = results[3]
-      expect(go_to_market_row.stage).to eq("go_to_market")
-      expect(go_to_market_row.open_cases).to eq(2)
-      expect(go_to_market_row.on_hold_cases).to eq(0)
-      expect(go_to_market_row.new_cases).to eq(2)
-      expect(go_to_market_row.live_value).to eq(17.00)
+      stage_1_approval_row = results[4]
+      expect(stage_1_approval_row.procurement_stage_title).to eq("Stage 1 Approval")
+      expect(stage_1_approval_row.open_cases).to eq(0)
+      expect(stage_1_approval_row.on_hold_cases).to eq(0)
+      expect(stage_1_approval_row.new_cases).to eq(0)
+      expect(stage_1_approval_row.live_value).to eq(0.00)
 
-      evaluation_row = results[4]
-      expect(evaluation_row.stage).to eq("evaluation")
-      expect(evaluation_row.open_cases).to eq(0)
-      expect(evaluation_row.on_hold_cases).to eq(0)
-      expect(evaluation_row.new_cases).to eq(0)
-      expect(evaluation_row.live_value).to eq(0.00)
+      tender_preparation_row = results[5]
+      expect(tender_preparation_row.procurement_stage_title).to eq("Tender preparation")
+      expect(tender_preparation_row.open_cases).to eq(0)
+      expect(tender_preparation_row.on_hold_cases).to eq(0)
+      expect(tender_preparation_row.new_cases).to eq(0)
+      expect(tender_preparation_row.live_value).to eq(0.00)
 
-      contract_award_row = results[5]
-      expect(contract_award_row.stage).to eq("contract_award")
-      expect(contract_award_row.open_cases).to eq(0)
-      expect(contract_award_row.on_hold_cases).to eq(0)
-      expect(contract_award_row.new_cases).to eq(0)
-      expect(contract_award_row.live_value).to eq(0.00)
+      school_sign_off_of_tender_pack_row = results[6]
+      expect(school_sign_off_of_tender_pack_row.procurement_stage_title).to eq("School sign-off of tender pack")
+      expect(school_sign_off_of_tender_pack_row.open_cases).to eq(0)
+      expect(school_sign_off_of_tender_pack_row.on_hold_cases).to eq(0)
+      expect(school_sign_off_of_tender_pack_row.new_cases).to eq(0)
+      expect(school_sign_off_of_tender_pack_row.live_value).to eq(0.00)
 
-      handover_row = results[6]
-      expect(handover_row.stage).to eq("handover")
+      out_to_tender_row = results[7]
+      expect(out_to_tender_row.procurement_stage_title).to eq("Out to Tender")
+      expect(out_to_tender_row.open_cases).to eq(2)
+      expect(out_to_tender_row.on_hold_cases).to eq(0)
+      expect(out_to_tender_row.new_cases).to eq(2)
+      expect(out_to_tender_row.live_value).to eq(17.00)
+
+      response_compliance_check_row = results[8]
+      expect(response_compliance_check_row.procurement_stage_title).to eq("Response compliance check")
+      expect(response_compliance_check_row.open_cases).to eq(0)
+      expect(response_compliance_check_row.on_hold_cases).to eq(0)
+      expect(response_compliance_check_row.new_cases).to eq(0)
+      expect(response_compliance_check_row.live_value).to eq(0.00)
+
+      stage_2_approval_row = results[9]
+      expect(stage_2_approval_row.procurement_stage_title).to eq("Stage 2 Approval")
+      expect(stage_2_approval_row.open_cases).to eq(0)
+      expect(stage_2_approval_row.on_hold_cases).to eq(0)
+      expect(stage_2_approval_row.new_cases).to eq(0)
+      expect(stage_2_approval_row.live_value).to eq(0.00)
+
+      stage_3_evaluation_row = results[10]
+      expect(stage_3_evaluation_row.procurement_stage_title).to eq("Stage 3 Evaluation")
+      expect(stage_3_evaluation_row.open_cases).to eq(0)
+      expect(stage_3_evaluation_row.on_hold_cases).to eq(0)
+      expect(stage_3_evaluation_row.new_cases).to eq(0)
+      expect(stage_3_evaluation_row.live_value).to eq(0.00)
+
+      moderation_row = results[11]
+      expect(moderation_row.procurement_stage_title).to eq("Moderation")
+      expect(moderation_row.open_cases).to eq(0)
+      expect(moderation_row.on_hold_cases).to eq(0)
+      expect(moderation_row.new_cases).to eq(0)
+      expect(moderation_row.live_value).to eq(0.00)
+
+      school_sign_off_of_moderation_and_award_decision_row = results[12]
+      expect(school_sign_off_of_moderation_and_award_decision_row.procurement_stage_title).to eq("School sign-off of moderation & award decision")
+      expect(school_sign_off_of_moderation_and_award_decision_row.open_cases).to eq(0)
+      expect(school_sign_off_of_moderation_and_award_decision_row.on_hold_cases).to eq(0)
+      expect(school_sign_off_of_moderation_and_award_decision_row.new_cases).to eq(0)
+      expect(school_sign_off_of_moderation_and_award_decision_row.live_value).to eq(0.00)
+
+      stage_3_approval_row = results[13]
+      expect(stage_3_approval_row.procurement_stage_title).to eq("Stage 3 Approval")
+      expect(stage_3_approval_row.open_cases).to eq(0)
+      expect(stage_3_approval_row.on_hold_cases).to eq(0)
+      expect(stage_3_approval_row.new_cases).to eq(0)
+      expect(stage_3_approval_row.live_value).to eq(0.00)
+
+      award_and_standstill_row = results[14]
+      expect(award_and_standstill_row.procurement_stage_title).to eq("Award & standstill")
+      expect(award_and_standstill_row.open_cases).to eq(0)
+      expect(award_and_standstill_row.on_hold_cases).to eq(0)
+      expect(award_and_standstill_row.new_cases).to eq(0)
+      expect(award_and_standstill_row.live_value).to eq(0.00)
+
+      handover_row = results[15]
+      expect(handover_row.procurement_stage_title).to eq("Handover")
       expect(handover_row.open_cases).to eq(0)
       expect(handover_row.on_hold_cases).to eq(2)
       expect(handover_row.new_cases).to eq(2)
       expect(handover_row.live_value).to eq(11.00)
 
-      unspecified_row = results[7]
-      expect(unspecified_row.stage).to eq("unspecified")
+      procurement_complete_row = results[16]
+      expect(procurement_complete_row.procurement_stage_title).to eq("Procurement complete")
+      expect(procurement_complete_row.open_cases).to eq(0)
+      expect(procurement_complete_row.on_hold_cases).to eq(0)
+      expect(procurement_complete_row.new_cases).to eq(0)
+      expect(procurement_complete_row.live_value).to eq(0.00)
+
+      unspecified_row = results[17]
+      expect(unspecified_row.procurement_stage_title).to eq("Unspecified")
       expect(unspecified_row.open_cases).to eq(1)
       expect(unspecified_row.on_hold_cases).to eq(1)
       expect(unspecified_row.new_cases).to eq(1)
@@ -183,9 +259,9 @@ describe Support::TowerStatistics do
 
   describe "counts of missing data" do
     before do
-      create(:support_case, :opened, :stage_unspecified, support_level: :L1, value: 10.00, category: ict, organisation: nil)
-      create(:support_case, :on_hold, :stage_unspecified, support_level: nil, value: nil, category: ict)
-      create(:support_case, :on_hold, :stage_need, support_level: :L1, value: nil, category: ict)
+      create(:support_case, :opened, support_level: :L1, value: 10.00, category: ict, organisation: nil, procurement: create(:support_procurement, stage: nil))
+      create(:support_case, :on_hold, support_level: nil, value: nil, category: ict, procurement: create(:support_procurement, stage: nil))
+      create(:support_case, :on_hold, support_level: :L1, value: nil, category: ict, procurement_stage: create(:support_procurement_stage))
     end
 
     it { expect(report.missing_level_cases).to eq(1) }
