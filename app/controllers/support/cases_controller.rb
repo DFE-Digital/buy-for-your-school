@@ -120,7 +120,7 @@ module Support
 
     def filter_forms
       defaults = { state: %w[all], category: %w[all], agent: %w[all], procurement_stage: %w[all], level: %w[all], sort_by: "action", sort_order: "descending" }
-      @all_cases_filter_form = Case.filtering(filter_params_for(:filter_all_cases_form, defaults:))
+      @all_cases_filter_form = Case.filtering(filter_params_for(:filter_all_cases_form, defaults:, persist: !override_filter(:filter_all_cases_form)).except(:override))
       @new_cases_filter_form = Case.initial.filtering(filter_params_for(:filter_new_cases_form, defaults:))
       @my_cases_filter_form = Case.by_agent(current_agent.id).filtering(filter_params_for(:filter_my_cases_form, defaults: defaults.merge({ state: %w[live] })))
 
@@ -128,6 +128,8 @@ module Support
         @triage_cases_filter_form = Case.triage.filtering(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] })))
       end
     end
+
+    def override_filter(filter_scope) = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"
 
     def edit_form_params
       params.require(:edit_case_form).permit(:request_text)

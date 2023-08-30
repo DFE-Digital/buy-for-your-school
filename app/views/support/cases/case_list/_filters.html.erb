@@ -17,7 +17,7 @@
     
     <% unless tab == "new-cases" %>
       <%= expander title: I18n.t("support.case.label.status"),
-                  subtitle: I18n.t("support.case.filter.labels.selected", count: form.object.state.length),
+                  subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.state).length),
                   expanded: true do %>
         <%= form.govuk_check_boxes_fieldset :state, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
           <% available_states.each do |state| %>
@@ -28,7 +28,7 @@
     <% end %>
 
     <%= expander title: I18n.t("support.case.label.sub_category"),
-                 subtitle: I18n.t("support.case.filter.labels.selected", count: form.object.category&.length),
+                 subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.category).length),
                  expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :category, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% available_categories(form.object.tower).each do |category| %>
@@ -39,7 +39,7 @@
 
     <% unless tab == "my-cases" %>
       <%= expander title: I18n.t("support.case.label.assignee"),
-                  subtitle: I18n.t("support.case.filter.labels.selected", count: form.object.agent&.length),
+                  subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.agent).length),
                   expanded: true do %>
         <%= form.govuk_check_boxes_fieldset :agent, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
           <% available_agents.each do |agent| %>
@@ -50,7 +50,7 @@
     <% end %>
 
     <%= expander title: I18n.t("support.case.label.stage"),
-                 subtitle: I18n.t("support.case.filter.labels.selected", count: form.object.procurement_stage&.length),
+                 subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.procurement_stage).length),
                  expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :procurement_stage, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% available_procurement_stages.each do |stage| %>
@@ -60,7 +60,7 @@
     <% end %>
 
     <%= expander title: I18n.t("support.case.label.level"),
-                 subtitle: I18n.t("support.case.filter.labels.selected", count: form.object.level&.length),
+                 subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.level).length),
                  expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :level, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% available_levels.each do |level| %>

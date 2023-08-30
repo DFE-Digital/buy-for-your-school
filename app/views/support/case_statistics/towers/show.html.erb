@@ -77,10 +77,10 @@
           <tbody class="govuk-table__body">
             <% @tower_statistics.breakdown_of_cases_by_stage.each do |stage| %>
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><%= link_to I18n.t("support.case_statistics.stages.#{stage.stage}"), filtered_tower_path(@tower, stage: stage.stage, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></th>
-                <td class="govuk-table__cell result-value"><%= link_to stage.open_cases, filtered_tower_path(@tower, stage: stage.stage, state: "opened"), class: "govuk-link govuk-link--no-visited-state" %></td>
-                <td class="govuk-table__cell result-value"><%= link_to stage.on_hold_cases, filtered_tower_path(@tower, stage: stage.stage, state: "on_hold"), class: "govuk-link govuk-link--no-visited-state" %></td>
-                <td class="govuk-table__cell result-value"><%= link_to stage.new_cases, filtered_tower_path(@tower, stage: stage.stage, state: "initial"), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <th scope="row" class="govuk-table__header"><%= link_to stage.procurement_stage_title, filtered_tower_path(@tower, procurement_stage: stage.procurement_stage_id, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></th>
+                <td class="govuk-table__cell result-value"><%= link_to stage.open_cases, filtered_tower_path(@tower, procurement_stage: stage.procurement_stage_id, state: "opened"), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to stage.on_hold_cases, filtered_tower_path(@tower, procurement_stage: stage.procurement_stage_id, state: "on_hold"), class: "govuk-link govuk-link--no-visited-state" %></td>
+                <td class="govuk-table__cell result-value"><%= link_to stage.new_cases, filtered_tower_path(@tower, procurement_stage: stage.procurement_stage_id, state: "initial"), class: "govuk-link govuk-link--no-visited-state" %></td>
                 <%
 =begin%>
   # TODO: uncomment when ready to do case value work
@@ -137,6 +137,6 @@
 <p><%= link_to I18n.t("support.case_statistics.missing_data.no_value", count: @tower_statistics.missing_value_cases), "#", class: "govuk-link govuk-link--no-visited-state" %></p>
 <%
 =end%>
-<p><%= link_to I18n.t("support.case_statistics.missing_data.no_stage", count: @tower_statistics.missing_stage_cases).html_safe, filtered_tower_path(@tower, stage: :unspecified, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></p>
+<p><%= link_to I18n.t("support.case_statistics.missing_data.no_stage", count: @tower_statistics.missing_stage_cases).html_safe, filtered_tower_path(@tower, procurement_stage: :unspecified, legacy_stage: :unspecified, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></p>
 <p><%= link_to I18n.t("support.case_statistics.missing_data.no_level", count: @tower_statistics.missing_level_cases).html_safe, filtered_tower_path(@tower, level: :unspecified, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></p>
 <p><%= link_to I18n.t("support.case_statistics.missing_data.no_org", count: @tower_statistics.missing_org_cases).html_safe, filtered_tower_path(@tower, has_org: :false, state: "live"), class: "govuk-link govuk-link--no-visited-state" %></p>

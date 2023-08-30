@@ -1057,15 +1057,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_100110) do
       sc.value,
       sc.procurement_id,
       sc.organisation_id,
-      COALESCE(sp.stage, 99) AS procurement_stage,
+      (sc.procurement_stage_id)::text AS procurement_stage_id,
       COALESCE(sc.support_level, 99) AS support_level,
       COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
       lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
       tow.id AS tower_id,
       sc.created_at,
       sc.updated_at
-     FROM (((support_cases sc
-       JOIN support_procurements sp ON ((sp.id = sc.procurement_id)))
+     FROM ((support_cases sc
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
        LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));

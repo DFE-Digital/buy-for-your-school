@@ -17,7 +17,7 @@ module Support::Case::Filterable
 
     scope :by_category_unspecified, -> { where(category: nil) }
 
-    scope :by_tower, ->(support_tower_id) { support_tower_id == "no-tower" ? without_tower : joins(:category).where(support_categories: { support_tower_id: }) }
+    scope :by_tower, ->(support_tower_id) { support_tower_id.include?("no-tower") ? without_tower : joins(:category).where(support_categories: { support_tower_id: }) }
 
     scope :without_tower, -> { joins("JOIN support_tower_cases stc ON stc.id = support_cases.id").where(stc: { tower_slug: "no-tower" }) }
 
@@ -32,6 +32,8 @@ module Support::Case::Filterable
     scope :by_procurement_stage, ->(procurement_stage_ids) { where(procurement_stage_id: procurement_stage_ids) }
 
     scope :by_procurement_stage_unspecified, -> { where(procurement_stage_id: nil) }
+
+    scope :by_legacy_stage_unspecified, -> { joins(:procurement).where(procurement: { stage: nil }) }
 
     scope :triage, -> { by_level([0, 1, 2]) }
 
