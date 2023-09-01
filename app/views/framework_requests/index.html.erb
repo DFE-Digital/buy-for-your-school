@@ -4,32 +4,21 @@
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl"><%= I18n.t("faf.start_page.header") %></h1>
 
-    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          Information and advice
-        </h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">
-          <a class="govuk-notification-banner__link" href="pages/rising-energy-prices">What you can do to reduce energy costs</a>
-        </p>
-        <p class="govuk-notification-content">Last updated 1 April 2023</p>
-      </div>
-    </div>
-
     <p class="govuk-body"><%= I18n.t("faf.start_page.overview_purpose") %></p>
-    <p class="govuk-body"><%= I18n.t("faf.start_page.we_can") %>:</p>
 
+    <p class="govuk-body"><%= I18n.t("faf.start_page.we_can_offer") %></p>
     <ul class="govuk-list govuk-list--bullet">
-      <% I18n.t("faf.start_page.overview_category_list").each do |list_item| %>
+      <% I18n.t("faf.start_page.we_can_offer_points").each do |list_item| %>
         <li><%= list_item %></li>
       <% end %>
     </ul>
 
-    <p class="govuk-body">
-      <%= I18n.t("faf.start_page.overview_response") %>
-    </p>
+    <p class="govuk-body"><%= I18n.t("faf.start_page.our_specialists") %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% I18n.t("faf.start_page.our_specialists_points").each do |list_item| %>
+        <li><%= list_item.html_safe %></li>
+      <% end %>
+    </ul>
 
     <%= button_to start_framework_requests_path, class: "govuk-button govuk-!-margin-top-2 govuk-!-margin-bottom-8 govuk-button--start" do %>
       <%= I18n.t("generic.button.start") %>
@@ -38,17 +27,15 @@
       </svg>
     <% end %>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("faf.start_page.subheading") %></h2>
+    <h2 class="govuk-heading-m"><%= I18n.t("faf.start_page.tools_and_guidance") %></h2>
 
     <p class="govuk-body">
-      <%= I18n.t("faf.start_page.you_can") %>:
+      <%= I18n.t("faf.start_page.tools_and_guidance_also") %>
     </p>
-
     <ul class="govuk-list govuk-list--bullet">
-      <li>read <%= link_to "about frameworks", "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy", target: "_blank", class: "govuk-link" %></li>
-      <li>find out more about <%= link_to "planning for what you're buying", "https://www.gov.uk/guidance/buying-for-schools", target: "_blank", class: "govuk-link" %></li>
-      <li>read information on <%= link_to "finding the right way to buy", "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", target: "_blank", class: "govuk-link" %> for your school.</li>
-      <li><%= link_to "create a specification", root_path, class: "govuk-link" %> if you don't have one yet</li>
+      <% I18n.t("faf.start_page.tools_and_guidance_points").each do |list_item| %>
+        <li><%= list_item.html_safe %></li>
+      <% end %>
     </ul>
 
 

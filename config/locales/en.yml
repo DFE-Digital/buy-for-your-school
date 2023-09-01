@@ -519,17 +519,29 @@ en:
       hint: Enter the name, postcode or unique reference number (URN) of your school
     start_page:
       header: Request help and support for your procurement
-      overview_category_list:
-      - give you general guidance or specific advice on buying goods or services for your school
-      - give you support with buying goods or services for your school using a framework agreement
-      - buy on your behalf through a framework agreement
-      - buy on your behalf by getting quotes or bids for contract renewals or new procurements from an open supplier market
-      - help you buy energy - we'll ask you to upload your recent energy bill to give us the information we need to support you
-      overview_purpose: Use this service if you're a state funded school in England.
-      overview_response: The Get help buying for schools team will respond to you within 2 working days.
-      subheading: Before you start
-      we_can: We can
-      you_can: You can
+      overview_purpose: Use this service if you’re a state-funded school in England and need free help with your school procurement.
+      our_specialists: 'Our specialists may also offer to help run more complex or high value procurements. Some of the reasons they may offer to do this are:'
+      our_specialists_points:
+      - when contracts are long term or multi-year
+      - you’re buying for multiple schools
+      - 'the value is above the <a class="govuk-link" href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy#when-to-run-a-pcr-compliant-buying-process">public contracts regulations (PCR) threshold</a>'
+      - the procurement requires inclusion of transferring personnel contracts under the Transfer of Undertakings (Protection of Employment) regulations (TUPE)
+      - you're new or not experienced in running these types of procurements
+      - there are problems with supply or prices change regularly, for example energy costs
+      - it's challenging to find suppliers
+      tools_and_guidance: Tools and guidance
+      tools_and_guidance_also: 'You can also:'
+      tools_and_guidance_points:
+      - 'read information on <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools" class="govuk-link">finding the right route to buy what you need</a> for your school'
+      - 'read about <a href="https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start" class="govuk-link">what to consider for specific goods and services</a>'
+      - 'read about <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">framework agreements</a>'
+      - "<a href=\"/\" class=\"govuk-link\">create a specification</a> for catering or multi-functional devices if you don't have one yet"
+      we_can_offer: 'Our team of procurement specialists can offer:'
+      we_can_offer_points:
+      - offer advice and guidance to make sure you’re buying compliantly at any point, even if your procurement process is already in progress.
+      - review your documents to make sure they're complete and compliant. This includes advice on specification documents, tender documents and evaluation criteria
+      - support you on choosing or using a framework agreement for your procurement
+      - advise when you need to seek legal advice
     user_organisation:
       header: Which school are you buying for?
     user_query:

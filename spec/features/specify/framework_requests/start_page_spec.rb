@@ -7,15 +7,6 @@ RSpec.feature "Starting a 'Find a Framework' request" do
     expect(page).to have_current_path "/procurement-support"
   end
 
-  it "links to external resources in a new tab" do
-    expect(page).to have_link_to_open_in_new_tab "about frameworks",
-                                                 href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy"
-    expect(page).to have_link_to_open_in_new_tab "planning for what you're buying",
-                                                 href: "https://www.gov.uk/guidance/buying-for-schools"
-    expect(page).to have_link_to_open_in_new_tab "finding the right way to buy",
-                                                 href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools"
-  end
-
   it "links to the homepage" do
     expect(page).to have_link "create a specification", href: "/", class: "govuk-link"
   end
