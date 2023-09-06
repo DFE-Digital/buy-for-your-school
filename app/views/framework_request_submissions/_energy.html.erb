@@ -1,0 +1,28 @@
+<h1 class="govuk-heading-m">
+  <%= I18n.t("faf_submissions.header.what_happens_next") %>
+</h1>
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.energy", days: 2)[0] %>
+</p>  
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.energy")[1] %>
+</p>  
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.common")[0] %>
+</p>  
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.common")[1] %>
+</p>  
+
+<h1 class="govuk-heading-m">
+  <%= I18n.t("faf_submissions.header.what_you_can_do_next") %>
+</h1>
+
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.what_you_can_do_next.energy.list_start", guidance_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.energy.guidance_link"), "https://www.gov.uk/guidance/buying-for-schools/energy", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
+  <ul class="govuk-list govuk-list--bullet">
+    <% for bullet in I18n.t("faf_submissions.what_you_can_do_next.energy.bullets") %>
+      <li><%= bullet %></li>
+    <% end %>
+  </ul>
+</p>

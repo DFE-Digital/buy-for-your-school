@@ -562,10 +562,14 @@ en:
     title: Support Request Confirmed - Get help buying for schools
     body:
       what_happens_next:
-      - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
-      - If you chose to email your bills, there will be instructions in the confirmation email telling you how to do this.
-      - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it.
-      - You'll need to submit your request again if you do not receive an email from us because this is how we'll be contacting you.
+        default:
+          - The Get help buying for schools team will review your request. We'll be in touch within %{days} working days.
+        energy:
+          - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
+          - If you chose to email your bills, there will be instructions in the confirmation email telling you how to do this.
+        common:
+          - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it.
+          - You'll need to submit your request again if you do not receive an email from us because this is how we'll be contacting you.
     header:
       confirmation: Your request for support has been sent
       what_happens_next: What happens next
@@ -573,12 +577,22 @@ en:
     sub_header:
       confirmation: 'We have sent a confirmation email to:'
     what_you_can_do_next:
-      list_start: 'You can read our guidance about %{guidance_link}. It includes:'
-      guidance_link: buying energy for your school
-      bullets:
-        - whether you can get a reduced rate VAT
-        - how to choose between fixed, flexible or variable price contracts
-        - what to think about when choosing contract length
+      default:
+        list_start: 'Read guidance about:'
+        how_to_buy_what_you_need_link: how to buy what you need
+        what_to_consider_link: what to consider before buying specific goods and services
+        agreements_and_faf_link: framework agreements and the find a framework tool
+        bullets:
+          how_to_buy_what_you_need: "%{how_to_buy_what_you_need_link} to learn more about the buying process"
+          what_to_consider: "%{what_to_consider_link}"
+          agreements_and_faf: "%{agreements_and_faf_link}"
+      energy:
+        list_start: 'You can read our guidance about %{guidance_link}. It includes:'
+        guidance_link: buying energy for your school
+        bullets:
+          - whether you can get a reduced rate VAT
+          - how to choose between fixed, flexible or variable price contracts
+          - what to think about when choosing contract length
   feedback:
     confirmation_details:
       message: Thank you for opting in to take part in user research.
