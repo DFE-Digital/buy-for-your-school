@@ -1,0 +1,31 @@
+<h1 class="govuk-heading-m">
+  <%= I18n.t("faf_submissions.header.what_happens_next") %>
+</h1>
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.default", days: 2)[0] %>
+</p>  
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.common")[0] %>
+</p>  
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.body.what_happens_next.common")[1] %>
+</p>  
+
+<h1 class="govuk-heading-m">
+  <%= I18n.t("faf_submissions.header.what_you_can_do_next") %>
+</h1>
+
+<p class="govuk-body">
+  <%= I18n.t("faf_submissions.what_you_can_do_next.default.list_start") %>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>
+      <%= I18n.t("faf_submissions.what_you_can_do_next.default.bullets.how_to_buy_what_you_need", how_to_buy_what_you_need_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.default.how_to_buy_what_you_need_link"), "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
+    </li>
+    <li>
+      <%= I18n.t("faf_submissions.what_you_can_do_next.default.bullets.what_to_consider", what_to_consider_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.default.what_to_consider_link"), "https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
+    </li>
+    <li>
+      <%= I18n.t("faf_submissions.what_you_can_do_next.default.bullets.agreements_and_faf", agreements_and_faf_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.default.agreements_and_faf_link"), "https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
+    </li>
+  </ul>
+</p>
