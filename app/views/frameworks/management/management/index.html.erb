@@ -1,0 +1,11 @@
+<h1 class="govuk-heading-l">Frameworks Portal Management</h1>
+
+<ul>
+  <% if policy(:cms_portal).manage_frameworks_activity_log? %>
+    <li><%= link_to "Activity Log", frameworks_management_activity_log_path, class: "govuk-link" %></li>
+  <% end %>
+
+  <% if policy(:cms_portal).manage_frameworks_register_upload? %>
+    <li><%= link_to "Upload Frameworks Register xlsx", new_frameworks_management_register_upload_path, class: "govuk-link" %></li>
+  <% end %>
+</ul>

@@ -1,6 +1,50 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "0100f43cff244a9642eb012b25ddde1dca8d0dfd7b9192b50575c0843c4ee7da",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/frameworks/frameworks/show/_framework_details.html.erb",
+      "line": 5,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(Frameworks::Framework.find(params[:id]).url, Frameworks::Framework.find(params[:id]).url, :target => \"_blank\", :class => \"govuk-link\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::FrameworksController",
+          "method": "show",
+          "line": 15,
+          "file": "app/controllers/frameworks/frameworks_controller.rb",
+          "rendered": {
+            "name": "frameworks/frameworks/show",
+            "file": "app/views/frameworks/frameworks/show.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "frameworks/frameworks/show",
+          "line": 23,
+          "file": "app/views/frameworks/frameworks/show.html.erb",
+          "rendered": {
+            "name": "frameworks/frameworks/show/_framework_details",
+            "file": "app/views/frameworks/frameworks/show/_framework_details.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/frameworks/show/_framework_details"
+      },
+      "user_input": "Frameworks::Framework.find(params[:id]).url",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "026523acf8ab2c1d1771baf9186aa62b4cd4960b63e14946c372a5ae80cd6b05",
@@ -20,6 +64,74 @@
       "confidence": "Medium",
       "cwe_id": [
         89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "3e64491e5beaa655ce36e95350fc20f5ed306e08b75d4909885aca7784df1d18",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/frameworks/index.html.erb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Frameworks::Framework.filtering(filter_form_params).results.paginate(:page => params[:frameworks_page]), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::FrameworksController",
+          "method": "index",
+          "line": 10,
+          "file": "app/controllers/frameworks/frameworks_controller.rb",
+          "rendered": {
+            "name": "frameworks/frameworks/index",
+            "file": "app/views/frameworks/frameworks/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/frameworks/index"
+      },
+      "user_input": "params[:frameworks_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "432d3e56c9b36c14892853ecc585ba8356f02654b83ef979338e3619f3569b4e",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/provider_contacts/index.html.erb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Frameworks::ProviderContact.filtering(filter_form_params).results.paginate(:page => params[:provider_contacts_page]), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::ProviderContactsController",
+          "method": "index",
+          "line": 8,
+          "file": "app/controllers/frameworks/provider_contacts_controller.rb",
+          "rendered": {
+            "name": "frameworks/provider_contacts/index",
+            "file": "app/views/frameworks/provider_contacts/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/provider_contacts/index"
+      },
+      "user_input": "params[:provider_contacts_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
       ],
       "note": ""
     },
@@ -119,7 +231,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/support/cases_controller.rb",
-      "line": 145,
+      "line": 138,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
       "render_path": null,
@@ -204,6 +316,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-07-20 15:35:53 +0100",
-  "brakeman_version": "6.0.0"
+  "updated": "2023-09-12 15:08:09 +0100",
+  "brakeman_version": "6.0.1"
 }

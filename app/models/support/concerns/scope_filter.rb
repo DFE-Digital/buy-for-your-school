@@ -6,11 +6,11 @@ class Support::Concerns::ScopeFilter
     @multiple = multiple
   end
 
-  def filter(cases)
-    return cases if selected_all? || !entered?
-    return cases.send("#{scope}_unspecified") if selected_unspecified?
+  def filter(records)
+    return records if selected_all? || !entered?
+    return records.send("#{scope}_unspecified") if selected_unspecified?
 
-    cases.send(scope, multiple ? values : values.first)
+    records.send(scope, multiple ? values : values.first)
   end
 
   def selected?(*checked_for_values)

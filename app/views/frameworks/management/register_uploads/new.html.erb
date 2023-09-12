@@ -1,0 +1,8 @@
+<h1 class="govuk-heading-l">Upload Frameworks Register xlsx</h1>
+
+<%= form_with url: frameworks_management_register_upload_path, method: :post, scope: :register_upload do |f| %>
+  <%= f.govuk_file_field :spreadsheet,
+    label: { text: 'Register Spreadsheet (.xlsx)' } %>
+
+  <%= f.govuk_submit "Upload" %>
+<% end %>

@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :authenticate_user!, except: %i[health_check maintenance]
+  before_action :set_current_request_id
 
   protect_from_forgery
 
@@ -24,7 +25,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :cookie_policy, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?
+  helper_method :current_user, :cookie_policy, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :current_url_b64
 
   # @return [User, Guest]
   #
@@ -86,9 +87,17 @@ protected
     CookiePolicy.new(cookies)
   end
 
-  def current_url_b64
-    Base64.encode64(request.fullpath)
+  def current_url_b64(tab = nil)
+    Base64.encode64("#{request.fullpath}#{"##{tab.to_s.dasherize}" if tab.present?}")
+  end
+
+  def back_link_param(back_to = params[:back_to])
+    return if back_to.blank?
+
+    Base64.decode64(back_to)
   end
 
   def tracking_base_properties = { user_id: current_user.id }
+
+  def set_current_request_id = Current.request_id = request.request_id
 end

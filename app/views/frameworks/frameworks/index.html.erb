@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "frameworks-register-frame" do %>
+  <div id="frameworks-register" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+    <div class="case-list govuk-grid-row">
+      <div class="govuk-grid-column-one-quarter">
+        <%= render "index_filters" %>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters">
+        <%= render @frameworks %>
+
+        <% unless @frameworks.any? %>
+          <h2 class="govuk-heading-m">No frameworks found</h2>
+          <p class="govuk-body">Try clearing or changing your filters.</p>
+        <% end %>
+
+        <%= render "components/pagination", records: @frameworks, page_param_name: :frameworks_page, pagination_params: { anchor: "frameworks-register" } %>
+      </div>
+    </div>
+  </div>
+<% end %>
