@@ -1,1 +1,25 @@
-<h1 class="govuk-header-l">Frameworks Portal</h1>
+<%= content_for :title, "GHBS | Frameworks" %>
+
+<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <%= link_to "Frameworks Register", "#frameworks-register", class: "govuk-tabs__tab" %>
+    </li>
+
+    <li class="govuk-tabs__list-item">
+      <%= link_to "Provider Contacts", "#provider-contacts", class: "govuk-tabs__tab" %>
+    </li>
+  </ul>
+
+  <%= turbo_frame_tag "frameworks-register-frame", src: frameworks_frameworks_path(**request.params.except(:controller, :action)) do %>
+    <div id="frameworks-register" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "provider-contacts-frame", src: frameworks_provider_contacts_path(**request.params.except(:controller, :action)) do %>
+    <div id="provider-contacts" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+</div>

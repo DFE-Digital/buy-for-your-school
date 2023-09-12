@@ -1,0 +1,1 @@
+SimpleXlsxReader.configuration.catch_cell_load_errors = true

@@ -1,0 +1,25 @@
+<div class="govuk-grid-row case-panel">
+  <div class="govuk-grid-column-one-half govuk-!-margin-bottom-3">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Name</dt>
+        <dd class="govuk-summary-list__value"><%= link_to provider_contact.name, frameworks_provider_contact_path(provider_contact, back_to: current_url_b64(:provider_contacts)), class: "govuk-link", "data-turbo" => false %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Email</dt>
+        <dd class="govuk-summary-list__value"><%= provider_contact.email %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Phone</dt>
+        <dd class="govuk-summary-list__value"><%= provider_contact.phone %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Provider</dt>
+        <dd class="govuk-summary-list__value"><%= provider_contact.provider_name %></dd>
+      </div>
+    </dl>
+  </div>
+</div>

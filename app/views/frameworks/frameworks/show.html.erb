@@ -1,0 +1,38 @@
+<%= content_for :title, "GHBS | Frameworks | #{@framework.name}" %>
+
+<span class="govuk-caption-l"><%= @framework.reference_and_short_name %></span>
+<h1 class="govuk-heading-l"><%= @framework.name %></h1>
+
+<p class="pull-up-10 govuk-!-margin-bottom-8"><%= @framework.display_status %></p>
+
+<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <%= link_to "Framework Details", "#framework-details", class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <%= link_to "Provider", "#framework-provider", class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <%= link_to "History", "#framework-activity", class: "govuk-tabs__tab" %>
+    </li>
+  </ul>
+
+  <%= turbo_frame_tag "framework-details-frame" do %>
+    <div id="framework-details" class="govuk-tabs__panel">
+      <%= render "frameworks/frameworks/show/framework_details" %>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "framework-provider-frame" do %>
+    <div id="framework-provider" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <%= render "frameworks/frameworks/show/framework_provider" %>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "framework-activity-frame" do %>
+    <div id="framework-activity" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <%= render "frameworks/frameworks/show/framework_activity" %>
+    </div>
+  <% end %>
+</div>

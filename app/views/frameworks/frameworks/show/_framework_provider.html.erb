@@ -1,0 +1,26 @@
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-width-one-third">Provider</dt>
+    <dd class="govuk-summary-list__value"><%= @framework.provider_name %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">SCT Provider Lead</dt>
+    <dd class="govuk-summary-list__value"><%= @framework.sct_framework_provider_lead %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Framework Owner</dt>
+    <dd class="govuk-summary-list__value"><%= @framework.provider_framework_owner_name %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Email</dt>
+    <dd class="govuk-summary-list__value"><%= @framework.provider_framework_owner_email %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Phone</dt>
+    <dd class="govuk-summary-list__value"><%= @framework.provider_framework_owner_phone %></dd>
+  </div>
+</dl>

@@ -4,9 +4,10 @@ module Frameworks::Framework::StatusChangeable
   included do
     enum status: {
       pending_evaluation: 0,
-      not_approved: 1,
-      dfe_approved: 2,
-      cab_approved: 3,
+      evaluating: 1,
+      not_approved: 2,
+      dfe_approved: 3,
+      cab_approved: 4,
     }
   end
 end

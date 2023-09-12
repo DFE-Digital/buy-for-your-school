@@ -9,13 +9,18 @@ class CmsPortalPolicy
   def access_statistics? = allow_any_of(%w[global_admin internal procops_admin procops analyst])
   def access_proc_ops_portal? = allow_any_of(%w[global_admin internal procops_admin procops])
   def access_e_and_o_portal? = allow_any_of(%w[global_admin internal e_and_o_admin e_and_o])
-  def access_admin_settings? = allow_any_of(%w[global_admin procops_admin e_and_o_admin])
+  def access_admin_settings? = allow_any_of(%w[global_admin procops_admin e_and_o_admin framework_evaluator_admin])
   def access_establishment_search? = access_proc_ops_portal? || access_e_and_o_portal?
-  def access_frameworks_portal? = allow_any_of(%w[global_admin framework_evaluator])
+  def access_frameworks_portal? = allow_any_of(%w[global_admin framework_evaluator_admin framework_evaluator])
 
   # Agent management
 
   def manage_agents? = allow_any_of(%w[global_admin procops_admin e_and_o_admin])
+
+  # Frameworks management
+
+  def manage_frameworks_register_upload? = allow_any_of(%w[global_admin framework_evaluator_admin])
+  def manage_frameworks_activity_log? = allow_any_of(%w[global_admin framework_evaluator_admin])
 
   # Role management
 
@@ -28,7 +33,8 @@ class CmsPortalPolicy
   def grant_e_and_o_role? = allow_any_of(%w[global_admin e_and_o_admin])
   def grant_internal_role? = allow_any_of(%w[global_admin])
   def grant_analyst_role? = allow_any_of(%w[global_admin])
-  def grant_framework_evaluator_role? = allow_any_of(%w[global_admin framework_evaluator])
+  def grant_framework_evaluator_admin_role? = allow_any_of(%w[global_admin])
+  def grant_framework_evaluator_role? = allow_any_of(%w[global_admin framework_evaluator_admin])
 
 private
 

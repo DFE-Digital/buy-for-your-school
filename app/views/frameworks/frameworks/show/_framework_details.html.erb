@@ -1,0 +1,47 @@
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Url</dt>
+        <dd class="govuk-summary-list__value"><%= link_to @framework.url, @framework.url, target: "_blank", class: "govuk-link" if @framework.url.present? %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Category</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.category_name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">SCT Framework Owner</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.sct_framework_owner %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Procurement Operations Lead</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.proc_ops_lead_name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Engagement and Outreach Lead</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.e_and_o_lead_name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Provider start date</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.provider_start_date %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Provider End Date</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.provider_end_date %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">DfE Start Date</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.display_dfe_start_date %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">DfE End Date</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.display_dfe_end_date %></dd>
+      </div>
+    </dl>
