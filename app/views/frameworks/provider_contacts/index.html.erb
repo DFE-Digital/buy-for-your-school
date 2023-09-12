@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "provider-contacts-frame" do %>
+  <div id="provider-contacts" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+    <div class="case-list govuk-grid-row">
+      <div class="govuk-grid-column-one-quarter">
+        <%= render "index_filters" %>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters">
+        <%= render @provider_contacts %>
+
+        <% unless @provider_contacts.any? %>
+          <h2 class="govuk-heading-m">No contacts found</h2>
+          <p class="govuk-body">Try clearing or changing your filters.</p>
+        <% end %>
+
+        <%= render "components/pagination", records: @provider_contacts, page_param_name: :provider_contacts_page, pagination_params: { anchor: "provider-contacts" } %>
+      </div>
+    </div>
+  </div>
+<% end %>

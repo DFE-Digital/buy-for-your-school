@@ -301,6 +301,14 @@ Rails.application.routes.draw do
   # Frameworks portal
   namespace :frameworks do
     root to: "dashboards#index"
+    resources :frameworks, only: %i[index show new]
+    resources :provider_contacts, only: %i[index show edit update]
+
+    namespace :management do
+      get "/", to: "management#index"
+      resource :register_upload, only: %i[new create]
+      resource :activity_log, only: %i[show]
+    end
   end
 
   namespace :exit_survey do

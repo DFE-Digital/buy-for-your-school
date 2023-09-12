@@ -21,3 +21,7 @@ RSpec.shared_context "with an agent" do |roles: %w[procops]|
     click_start
   end
 end
+
+RSpec.shared_context "with a framework evaluation agent" do
+  include_context "with an agent", roles: [:framework_evaluator]
+end

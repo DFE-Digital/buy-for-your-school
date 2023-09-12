@@ -15,6 +15,7 @@ module Support
       internal: "Digital Team Staff Member",
       analyst: "Data Analyst",
       framework_evaluator: "Framework Evaluator",
+      framework_evaluator_admin: "Framework Evaluator Admin",
     }.freeze
 
     has_many :cases, class_name: "Support::Case"
@@ -32,6 +33,14 @@ module Support
 
       caseworkers.where(sql, q: "#{query}%").limit(30)
     }
+
+    def self.find_or_create_by_full_name(full_name)
+      first_name, last_name = String(full_name).split(" ")
+
+      return nil if first_name.blank? || last_name.blank?
+
+      find_or_create_by!(first_name:, last_name:)
+    end
 
     def self.find_or_create_by_user(user)
       agent = find_by(dsi_uid: user.dfe_sign_in_uid)

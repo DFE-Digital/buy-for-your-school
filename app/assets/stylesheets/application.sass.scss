@@ -2,6 +2,7 @@
 
 @import "./base/frontend";
 @import "./base/misc";
+@import "./components/activity-log";
 @import "./components/supported/procurement-stage-colours";
 @import "./components/govuk-radios-small";
 @import "./components/autocomplete";
@@ -47,7 +48,7 @@
   &.wide-container {
     max-width: 2000px;
   }
-   
+
   @media (min-width: 1020px) {
     &.wide-container {
       margin-left: 30px;
@@ -55,4 +56,3 @@
     }
   }
  }
- 

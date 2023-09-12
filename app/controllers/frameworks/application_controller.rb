@@ -1,5 +1,6 @@
 class Frameworks::ApplicationController < ApplicationController
   include SupportAgents
+  before_action { Current.actor = current_agent }
 
 private
 
