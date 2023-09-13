@@ -4,37 +4,40 @@
   <span class="govuk-caption-l">Framework Provider Contact</span>
   <h1 class="govuk-heading-l"><%= @provider_contact.name %></h2>
 
-  <h2 class="govuk-heading-m">Details</h2>
-  <dl class="govuk-summary-list govuk-!-width-two-thirds">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Name</dt>
-      <dd class="govuk-summary-list__value"><%= @provider_contact.name %></dd>
-    </div>
+  <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <%= link_to "Details", "#provider-contact-details", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "Frameworks", "#frameworks-register", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "History", "#provider-contact-activity", class: "govuk-tabs__tab" %>
+      </li>
+    </ul>
 
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Email</dt>
-      <dd class="govuk-summary-list__value"><%= @provider_contact.email %></dd>
-    </div>
+    <%= turbo_frame_tag "provider-contact-details-frame" do %>
+      <div id="provider-contact-details" class="govuk-tabs__panel">
+        <%= render "frameworks/provider_contacts/show/details" %>
+      </div>
+    <% end %>
 
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Phone</dt>
-      <dd class="govuk-summary-list__value"><%= @provider_contact.phone %></dd>
-    </div>
+    <%= turbo_frame_tag "frameworks-register-frame", src: frameworks_frameworks_path(**{ viewing_from_entity: true, frameworks_filter: { provider_contact: [@provider_contact.id] } }.merge(request.params.except(:controller, :action))) do %>
+      <div id="frameworks-register" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <p class="govuk-body">Loading...</p>
+      </div>
+    <% end %>
 
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Provider</dt>
-      <dd class="govuk-summary-list__value"><%= @provider_contact.provider_name %></dd>
-    </div>
-  </dl>
+    <%= turbo_frame_tag "framework-contact-activity-frame" do %>
+      <div id="provider-contact-activity" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <%= render "frameworks/provider_contacts/show/history" %>
+      </div>
+    <% end %>
+  </div>
 
   <h2 class="govuk-heading-m">Actions</h2>
   <ul class="govuk-list">
     <li><%= link_to "Edit Contact", edit_frameworks_provider_contact_path(@provider_contact), class: "govuk-link" %></li>
-    <li><%= link_to "View Owned Frameworks", frameworks_frameworks_path(frameworks_filter: { provider_contact: [@provider_contact.id] }), class: "govuk-link", "data-turbo" => false %></li>
   </ul>
-
-  <h2 class="govuk-heading-m">History</h2>
-  <div class="govuk-!-width-two-thirds">
-    <%= render "frameworks/activity_log_items/list", activity_log_items: @provider_contact.activity_log_items %>
-  </div>
 <% end %>

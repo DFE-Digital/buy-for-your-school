@@ -9,6 +9,7 @@ class Frameworks::ProviderContactsController < Frameworks::ApplicationController
 
   def show
     @provider_contact = Frameworks::ProviderContact.find(params[:id])
+    @activity_log_items = @provider_contact.activity_log_items.paginate(page: params[:activities_page])
   end
 
   def edit
@@ -26,10 +27,6 @@ class Frameworks::ProviderContactsController < Frameworks::ApplicationController
   end
 
 private
-
-  def set_back_url
-    @back_url = back_link_param
-  end
 
   def filter_form_params
     params.fetch(:provider_contacts_filter, {}).permit(:sort_by, :sort_order, provider: [])

@@ -1,7 +1,7 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key govuk-!-width-one-third">Provider</dt>
-    <dd class="govuk-summary-list__value"><%= @framework.provider_name %></dd>
+    <dd class="govuk-summary-list__value"><%= link_to @framework.provider_name, frameworks_provider_path(@framework.provider, back_to: current_url_b64(:framework_provider)), class: "govuk-link", "data-turbo" => false %></dd>
   </div>
 
   <div class="govuk-summary-list__row">
@@ -11,7 +11,7 @@
 
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Framework Owner</dt>
-    <dd class="govuk-summary-list__value"><%= @framework.provider_framework_owner_name %></dd>
+    <dd class="govuk-summary-list__value"><%= link_to @framework.provider_framework_owner_name, frameworks_provider_contact_path(@framework.provider_contact, back_to: current_url_b64(:framework_provider)), class: "govuk-link", "data-turbo" => false %></dd>
   </div>
 
   <div class="govuk-summary-list__row">

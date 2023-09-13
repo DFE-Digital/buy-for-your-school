@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "providers-frame" do %>
+  <div id="providers" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+    <div class="case-list govuk-grid-row">
+      <div class="govuk-grid-column-one-quarter">
+        <%= render "index_filters" %>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters">
+        <%= render @providers %>
+
+        <% unless @providers.any? %>
+          <h2 class="govuk-heading-m">No providers found</h2>
+          <p class="govuk-body">Try clearing or changing your filters.</p>
+        <% end %>
+
+        <%= render "components/pagination", records: @providers, page_param_name: :providers_page, pagination_params: { anchor: "providers" } %>
+      </div>
+    </div>
+  </div>
+<% end %>
