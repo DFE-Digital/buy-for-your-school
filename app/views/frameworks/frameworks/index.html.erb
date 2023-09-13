@@ -2,6 +2,8 @@
   <div id="frameworks-register" class="govuk-tabs__panel govuk-tabs__panel--hidden">
     <div class="case-list govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
+        <%= link_to "Add Framework", new_frameworks_framework_path(back_to: current_url_b64(:frameworks_register)), class: "govuk-button", "data-turbo" => false %>
+
         <%= render "index_filters" %>
       </div>
 
