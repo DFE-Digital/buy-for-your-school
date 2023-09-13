@@ -53,10 +53,6 @@ private
     )
   end
 
-  def set_back_url
-    @back_url = back_link_param
-  end
-
   def redirect_to_register_tab
     redirect_to frameworks_root_path(anchor: "frameworks-register", **request.params.except(:controller, :action))
   end

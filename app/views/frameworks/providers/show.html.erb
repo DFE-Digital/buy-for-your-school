@@ -1,0 +1,47 @@
+<%= content_for :title, "GHBS | Provider | #{@provider.display_name}" %>
+
+<%= turbo_frame_tag dom_id(@provider) do %>
+  <span class="govuk-caption-l">Framework Provider</span>
+  <h1 class="govuk-heading-l"><%= @provider.display_name %></h2>
+
+  <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <%= link_to "Details", "#provider-details", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "Contacts", "#provider-contacts", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "Frameworks", "#frameworks-register", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "History", "#provider-activity", class: "govuk-tabs__tab" %>
+      </li>
+    </ul>
+
+    <%= turbo_frame_tag "provider-details-frame" do %>
+      <div id="provider-details" class="govuk-tabs__panel">
+        <%= render "frameworks/providers/show/details" %>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag "provider-contacts-frame", src: frameworks_provider_contacts_path(**{ viewing_from_entity: true, provider_contacts_filter: { provider: [@provider.id] }}.merge(request.params.except(:controller, :action))) do %>
+      <div id="provider-contacts" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <p class="govuk-body">Loading...</p>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag "frameworks-register-frame", src: frameworks_frameworks_path(**{ viewing_from_entity: true, frameworks_filter: { provider: [@provider.id] }}.merge(request.params.except(:controller, :action))) do %>
+      <div id="frameworks-register" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <p class="govuk-body">Loading...</p>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag "framework-activity-frame" do %>
+      <div id="provider-activity" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <%= render "frameworks/providers/show/history" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

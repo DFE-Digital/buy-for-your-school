@@ -303,6 +303,7 @@ Rails.application.routes.draw do
     root to: "dashboards#index"
     resources :frameworks, only: %i[index show new create]
     resources :provider_contacts, only: %i[index show edit update]
+    resources :providers
 
     namespace :management do
       get "/", to: "management#index"
