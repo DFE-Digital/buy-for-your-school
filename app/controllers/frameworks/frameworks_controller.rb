@@ -1,8 +1,11 @@
 class Frameworks::FrameworksController < Frameworks::ApplicationController
   before_action :redirect_to_register_tab, unless: :turbo_frame_request?, only: :index
   before_action :set_back_url, only: %i[new show]
+  before_action :load_form_options, only: %i[new create]
 
-  def new; end
+  def new
+    @framework = Frameworks::Framework.new
+  end
 
   def index
     @filtering = Frameworks::Framework.filtering(filter_form_params)
@@ -14,7 +17,22 @@ class Frameworks::FrameworksController < Frameworks::ApplicationController
     @activity_log_items = @framework.activity_log_items.paginate(page: params[:activities_page])
   end
 
+  def create
+    @framework = Frameworks::Framework.new(framework_params)
+
+    if @framework.save(context: :creation_form)
+      redirect_to frameworks_framework_path(@framework)
+    else
+      render :new
+    end
+  end
+
 private
+
+  def load_form_options
+    @providers = Frameworks::Provider.all
+    @provider_contacts = Frameworks::ProviderContact.all
+  end
 
   def filter_form_params
     params.fetch(:frameworks_filter, {}).permit(
@@ -22,6 +40,16 @@ private
       status: [], provider: [],
       e_and_o_lead: [], proc_ops_lead: [],
       category: [], provider_contact: []
+    )
+  end
+
+  def framework_params
+    params.require(:frameworks_framework).permit(
+      :name, :short_name, :url, :reference,
+      :dfe_start_date, :dfe_end_date, :provider_start_date, :provider_end_date,
+      :dps, :lot,
+      :provider_id, :provider_contact_id,
+      :status
     )
   end
 

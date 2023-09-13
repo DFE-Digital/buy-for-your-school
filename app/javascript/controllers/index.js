@@ -57,3 +57,6 @@ application.register("school-picker", SchoolPickerController)
 
 import SchoolPickerFiltersController from "./school_picker_filters_controller"
 application.register("school-picker-filters", SchoolPickerFiltersController)
+
+import SelectOptionFilterController from "./select_option_filter_controller"
+application.register("select-option-filter", SelectOptionFilterController)
