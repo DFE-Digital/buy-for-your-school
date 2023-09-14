@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "Frameworks::FrameworksController",
           "method": "show",
-          "line": 15,
+          "line": 21,
           "file": "app/controllers/frameworks/frameworks_controller.rb",
           "rendered": {
             "name": "frameworks/frameworks/show",
@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "frameworks/frameworks/show",
-          "line": 23,
+          "line": 25,
           "file": "app/views/frameworks/frameworks/show.html.erb",
           "rendered": {
             "name": "frameworks/frameworks/show/_framework_details",
@@ -70,11 +70,45 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
+      "fingerprint": "188c6c6b5b31525ba4c9508067846c8542e28b3f2b6a1850c158f6662c532303",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/providers/index.html.erb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Frameworks::Provider.filtering(filter_form_params).results.paginate(:page => params[:providers_page]), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::ProvidersController",
+          "method": "index",
+          "line": 7,
+          "file": "app/controllers/frameworks/providers_controller.rb",
+          "rendered": {
+            "name": "frameworks/providers/index",
+            "file": "app/views/frameworks/providers/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/providers/index"
+      },
+      "user_input": "params[:providers_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
       "fingerprint": "3e64491e5beaa655ce36e95350fc20f5ed306e08b75d4909885aca7784df1d18",
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/frameworks/frameworks/index.html.erb",
-      "line": 9,
+      "line": 13,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => Frameworks::Framework.filtering(filter_form_params).results.paginate(:page => params[:frameworks_page]), {})",
       "render_path": [
@@ -82,7 +116,7 @@
           "type": "controller",
           "class": "Frameworks::FrameworksController",
           "method": "index",
-          "line": 10,
+          "line": 16,
           "file": "app/controllers/frameworks/frameworks_controller.rb",
           "rendered": {
             "name": "frameworks/frameworks/index",
@@ -108,7 +142,7 @@
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/frameworks/provider_contacts/index.html.erb",
-      "line": 9,
+      "line": 13,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => Frameworks::ProviderContact.filtering(filter_form_params).results.paginate(:page => params[:provider_contacts_page]), {})",
       "render_path": [
@@ -231,7 +265,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/support/cases_controller.rb",
-      "line": 138,
+      "line": 140,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
       "render_path": null,
@@ -316,6 +350,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-09-12 15:08:09 +0100",
+  "updated": "2023-09-14 15:05:19 +0100",
   "brakeman_version": "6.0.1"
 }

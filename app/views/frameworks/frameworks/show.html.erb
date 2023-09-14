@@ -1,5 +1,7 @@
 <%= content_for :title, "GHBS | Frameworks | #{@framework.name}" %>
 
+<%= turbo_frame_tag dom_id(@framework) do %>
+
 <span class="govuk-caption-l"><%= @framework.reference_and_short_name %></span>
 <h1 class="govuk-heading-l"><%= @framework.name %></h1>
 
@@ -36,3 +38,10 @@
     </div>
   <% end %>
 </div>
+
+<h2 class="govuk-heading-m">Actions</h2>
+<ul class="govuk-list">
+  <li><%= link_to "Edit Framework", edit_frameworks_framework_path(@framework), class: "govuk-link" %></li>
+</ul>
+
+<% end %>

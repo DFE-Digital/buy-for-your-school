@@ -1,0 +1,9 @@
+<%= content_for :title, "GHBS | Provider Contacts | New Contact" %>
+
+<h1 class="govuk-heading-l">New Provider Contact</h1>
+
+<div class="govuk-!-width-two-thirds">
+  <%= form_for @provider_contact do |f| %>
+    <%= render "frameworks/provider_contacts/form", f:, submit: "Create contact" %>
+  <% end %>
+</div>

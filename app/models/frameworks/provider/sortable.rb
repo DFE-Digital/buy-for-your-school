@@ -14,7 +14,7 @@ module Frameworks::Provider::Sortable
 
     def available_sort_options
       [
-        ["Short Name", "short_name"]
+        ["Short Name", "short_name"],
       ]
     end
 

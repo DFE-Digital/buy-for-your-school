@@ -1,6 +1,6 @@
 class Frameworks::ProviderContactsController < Frameworks::ApplicationController
   before_action :redirect_to_register_tab, unless: :turbo_frame_request?, only: :index
-  before_action :set_back_url, only: %i[show edit]
+  before_action :load_form_options, only: %i[new edit update create]
 
   def index
     @filtering = Frameworks::ProviderContact.filtering(filter_form_params)
@@ -12,8 +12,22 @@ class Frameworks::ProviderContactsController < Frameworks::ApplicationController
     @activity_log_items = @provider_contact.activity_log_items.paginate(page: params[:activities_page])
   end
 
+  def new
+    @provider_contact = Frameworks::ProviderContact.new
+  end
+
   def edit
     @provider_contact = Frameworks::ProviderContact.find(params[:id])
+  end
+
+  def create
+    @provider_contact = Frameworks::ProviderContact.new(provider_contact_params)
+
+    if @provider_contact.save
+      redirect_to frameworks_provider_contact_path(@provider_contact)
+    else
+      render :new
+    end
   end
 
   def update
@@ -28,12 +42,16 @@ class Frameworks::ProviderContactsController < Frameworks::ApplicationController
 
 private
 
+  def load_form_options
+    @providers = Frameworks::Provider.all
+  end
+
   def filter_form_params
     params.fetch(:provider_contacts_filter, {}).permit(:sort_by, :sort_order, provider: [])
   end
 
   def provider_contact_params
-    params.require(:frameworks_provider_contact).permit(:name, :email, :phone)
+    params.require(:frameworks_provider_contact).permit(:name, :email, :phone, :provider_id)
   end
 
   def redirect_to_register_tab

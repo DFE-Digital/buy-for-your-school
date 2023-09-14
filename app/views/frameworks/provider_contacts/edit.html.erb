@@ -8,14 +8,7 @@
 
   <div class="govuk-!-width-two-thirds">
     <%= form_for @provider_contact do |f| %>
-      <%= f.govuk_text_field :name %>
-      <%= f.govuk_text_field :email %>
-      <%= f.govuk_text_field :phone %>
-
-      <div class="govuk-button-group flex-align-center">
-        <%= f.govuk_submit "Save changes" %>
-        <%= link_to "Cancel", @provider_contact, class: "govuk-link govuk-link--no-visited-state" %>
-      </div>
+      <%= render "frameworks/provider_contacts/form", f:, submit: "Save changes" %>
     <% end %>
   </div>
 <% end %>

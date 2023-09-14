@@ -1,0 +1,7 @@
+<%= f.govuk_text_field :name %>
+<%= f.govuk_text_field :short_name, label: { text: "Short name" } %>
+
+<div class="govuk-button-group flex-align-center">
+  <%= f.govuk_submit submit %>
+  <%= link_to "Cancel", @provider, class: "govuk-link govuk-link--no-visited-state" %>
+</div>

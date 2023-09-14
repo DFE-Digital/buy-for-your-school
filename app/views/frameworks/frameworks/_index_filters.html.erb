@@ -2,6 +2,8 @@
   <h2 class="govuk-heading-m"><%= I18n.t("support.case.label.filters") %></h2>
 
   <%= form_with model: @filtering, scope: :frameworks_filter, method: :get, url: frameworks_frameworks_path, html: { "data-controller" => "case-filters" } do |form| %>
+    <input type="hidden" name="viewing_from_entity" value="<%= params[:viewing_from_entity] %>">
+
     <%= link_to I18n.t("support.case.filter.buttons.clear"), frameworks_frameworks_path(viewing_from_entity: params[:viewing_from_entity]), class: "govuk-button govuk-button--secondary", role: "button" %>
 
     <%= form.govuk_select :sort_by,

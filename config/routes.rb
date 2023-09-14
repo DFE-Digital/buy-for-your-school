@@ -301,8 +301,8 @@ Rails.application.routes.draw do
   # Frameworks portal
   namespace :frameworks do
     root to: "dashboards#index"
-    resources :frameworks, only: %i[index show new create]
-    resources :provider_contacts, only: %i[index show edit update]
+    resources :frameworks
+    resources :provider_contacts
     resources :providers
 
     namespace :management do

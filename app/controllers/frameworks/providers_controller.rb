@@ -1,6 +1,5 @@
 class Frameworks::ProvidersController < Frameworks::ApplicationController
   before_action :redirect_to_register_tab, unless: :turbo_frame_request?, only: :index
-  before_action :set_back_url, only: %i[new show]
 
   def index
     @filtering = Frameworks::Provider.filtering(filter_form_params)
@@ -12,7 +11,39 @@ class Frameworks::ProvidersController < Frameworks::ApplicationController
     @activity_log_items = @provider.activity_log_items.paginate(page: params[:activities_page])
   end
 
+  def new
+    @provider = Frameworks::Provider.new
+  end
+
+  def edit
+    @provider = Frameworks::Provider.find(params[:id])
+  end
+
+  def create
+    @provider = Frameworks::Provider.new(provider_params)
+
+    if @provider.save
+      redirect_to frameworks_provider_path(@provider)
+    else
+      render :new
+    end
+  end
+
+  def update
+    @provider = Frameworks::Provider.find(params[:id])
+
+    if @provider.update(provider_params)
+      redirect_to frameworks_provider_path(@provider)
+    else
+      render :edit
+    end
+  end
+
 private
+
+  def provider_params
+    params.require(:frameworks_provider).permit(:name, :short_name)
+  end
 
   def filter_form_params
     params.fetch(:providers_filter, {}).permit(
