@@ -2,6 +2,10 @@
   <div id="providers" class="govuk-tabs__panel govuk-tabs__panel--hidden">
     <div class="case-list govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
+        <% unless params[:viewing_from_entity] == "true" %>
+          <%= link_to "Add Provider", new_frameworks_provider_path(back_to: current_url_b64(:providers)), class: "govuk-button", "data-turbo" => false %>
+        <% end %>
+
         <%= render "index_filters" %>
       </div>
 

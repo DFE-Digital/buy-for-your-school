@@ -1,0 +1,14 @@
+<%= content_for :title, "GHBS | Providers | Edit #{@provider.display_name}" %>
+
+<%= turbo_frame_tag dom_id(@provider) do %>
+  <span class="govuk-caption-l">Edit Framework Provider</span>
+  <h1 class="govuk-heading-l"><%= @provider.display_name %></h2>
+
+  <h2 class="govuk-heading-m">Details</h2>
+
+  <div class="govuk-!-width-two-thirds">
+    <%= form_for @provider do |f| %>
+      <%= render "frameworks/providers/form", f:, submit: "Save changes" %>
+    <% end %>
+  </div>
+<% end %>

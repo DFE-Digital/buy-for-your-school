@@ -10,4 +10,5 @@ class Frameworks::ProviderContact < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true
+  validates :provider_id, presence: true
 end

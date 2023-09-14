@@ -1,0 +1,14 @@
+<%= content_for :title, "GHBS | Frameworks | Edit Framework" %>
+
+<%= turbo_frame_tag dom_id(@framework) do %>
+
+<span class="govuk-caption-l">Edit Framework</span>
+<h1 class="govuk-heading-l"><%= @framework.name %></h2>
+
+<div class="govuk-!-width-two-thirds">
+  <%= form_for @framework do |f| %>
+    <%= render "frameworks/frameworks/form", f:, submit: "Save changes" %>
+  <% end %>
+</div>
+
+<% end %>

@@ -1,0 +1,12 @@
+<%= f.govuk_text_field :name %>
+<%= f.govuk_text_field :email %>
+<%= f.govuk_text_field :phone %>
+
+<%= f.govuk_select :provider_id, @providers.map {|provider| [provider.short_name, provider.id] },
+                  options: { include_blank: "Select a provider" },
+                  label: { text: "Provider" } %>
+
+<div class="govuk-button-group flex-align-center">
+  <%= f.govuk_submit submit %>
+  <%= link_to "Cancel", @provider_contact, class: "govuk-link govuk-link--no-visited-state" %>
+</div>

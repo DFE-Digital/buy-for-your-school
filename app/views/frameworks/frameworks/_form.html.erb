@@ -1,0 +1,53 @@
+<%= f.govuk_fieldset legend: { text: 'Basic Details' } do %>
+  <%= f.govuk_text_field :name %>
+  <%= f.govuk_text_field :short_name, width: "one-third", label: { text: "Abbreviated name" } %>
+  <%= f.govuk_text_field :url, label: { text: "Providers URL" } %>
+  <%= f.govuk_text_field :reference, width: "one-third", label: { text: "Providers reference" } %>
+<% end %>
+
+<div data-controller="select-option-filter" data-select-option-filter-param-name-value="providerId">
+  <%= f.govuk_select :provider_id, @providers.map {|provider| [provider.short_name, provider.id] },
+                      "data-select-option-filter-target" => "input",
+                      options: { include_blank: "Select a provider" },
+                      label: { text: "Provider" } %>
+
+  <%= f.govuk_select :provider_contact_id, @provider_contacts.map {|contact| [contact.display_name, contact.id, { "data-provider-id" => contact.provider_id }] },
+                      "data-select-option-filter-target" => "output",
+                      options: { include_blank: "Select a contact" },
+                      label: { text: "Provider contact" } %>
+</div>
+
+<%= f.govuk_fieldset legend: { text: 'Availability' } do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half" id="dfe-start-date">
+      <%= f.govuk_date_field :dfe_start_date, legend: { size: "s", text: "DfE start date", class: "" } %>
+    </div>
+    <div class="govuk-grid-column-one-half" id="dfe-end-date">
+      <%= f.govuk_date_field :dfe_end_date, legend: { size: "s", text: "DfE end date", class: "" } %>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half" id="provider-start-date">
+      <%= f.govuk_date_field :provider_start_date, legend: { size: "s", text: "Provider start date" } %>
+    </div>
+    <div class="govuk-grid-column-one-half" id="provider-end-date">
+      <%= f.govuk_date_field :provider_end_date, legend: { size: "s", text: "Provider end date" } %>
+    </div>
+  </div>
+<% end %>
+
+<%= f.govuk_fieldset legend: { text: 'Other' } do %>
+  <% dps_options = [[true, 'Yes'], [false, 'No']] %>
+  <%= f.govuk_collection_radio_buttons :dps, dps_options, :first, :last, inline: true, legend: { size: 's', text: 'Is this framework a DPS (Dynamic purchasing system)?' } %>
+
+  <% lot_options = [['single', 'Single-lot'], ['multi', 'Multi-lot']] %>
+  <%= f.govuk_collection_radio_buttons :lot, lot_options, :first, :last, inline: true, legend: { size: 's', text: 'Is this framework a single or multi lot?' } %>
+
+  <% status_options = Frameworks::Framework.statuses.map {|status, id| [status, status.humanize] } %>
+  <%= f.govuk_collection_radio_buttons :status, status_options, :first, :last, legend: { size: 's', text: 'Approval Status' } %>
+<% end %>
+
+<div class="govuk-button-group flex-align-center">
+  <%= f.govuk_submit submit %>
+  <%= link_to "Cancel", @framework, class: "govuk-link govuk-link--no-visited-state" %>
+</div>

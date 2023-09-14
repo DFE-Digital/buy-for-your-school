@@ -1,10 +1,13 @@
 class Frameworks::FrameworksController < Frameworks::ApplicationController
   before_action :redirect_to_register_tab, unless: :turbo_frame_request?, only: :index
-  before_action :set_back_url, only: %i[new show]
-  before_action :load_form_options, only: %i[new create]
+  before_action :load_form_options, only: %i[new edit create update]
 
   def new
     @framework = Frameworks::Framework.new
+  end
+
+  def edit
+    @framework = Frameworks::Framework.find(params[:id])
   end
 
   def index
@@ -24,6 +27,16 @@ class Frameworks::FrameworksController < Frameworks::ApplicationController
       redirect_to frameworks_framework_path(@framework)
     else
       render :new
+    end
+  end
+
+  def update
+    @framework = Frameworks::Framework.find(params[:id])
+
+    if @framework.update(framework_params)
+      redirect_to frameworks_framework_path(@framework)
+    else
+      render :edit
     end
   end
 
