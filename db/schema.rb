@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_13_084703) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_110928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -207,6 +207,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_084703) do
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
   end
 
+  create_table "frameworks_activity_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "event"
+    t.jsonb "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "frameworks_activity_log_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "actor_id"
     t.string "actor_type"
@@ -219,10 +226,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_084703) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "frameworks_framework_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_category_id", null: false
+    t.uuid "framework_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "frameworks_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "source", default: 0
     t.integer "status", default: 0
-    t.uuid "support_category_id"
     t.string "name"
     t.string "short_name"
     t.string "url"

@@ -22,8 +22,7 @@ class Frameworks::Framework::Filtering
   end
 
   def available_category_options
-    Support::Category.order("title ASC").where(id: Frameworks::Framework.pluck(:support_category_id))
-      .map { |category| [category.title, category.id] }
+    Support::Category.order("title ASC").where(id: Frameworks::FrameworkCategory.pluck(:support_category_id)).pluck(:title, :id)
   end
 
   def available_provider_filter_options

@@ -14,11 +14,11 @@ describe Frameworks::Framework::Filterable do
     let(:proc_ops_lead) { create(:support_agent) }
 
     before do
-      create(:frameworks_framework, name: "DfE Approved - Provider 1", status: :dfe_approved, provider: provider_1, support_category: category_1)
-      create(:frameworks_framework, name: "Not Approved - Provider 2", status: :not_approved, provider: provider_2, support_category: category_2)
-      create(:frameworks_framework, name: "Cab Approved - Provider 1", status: :cab_approved, provider: provider_1, support_category: category_1)
-      create(:frameworks_framework, name: "Evaluating - Provider 1", status: :evaluating, provider: provider_1, support_category: category_2, proc_ops_lead:)
-      create(:frameworks_framework, name: "Evaluating - Provider 2", status: :evaluating, provider: provider_2, support_category: category_1, e_and_o_lead:)
+      create(:frameworks_framework, name: "DfE Approved - Provider 1", status: :dfe_approved, provider: provider_1, support_category_ids: [category_1.id])
+      create(:frameworks_framework, name: "Not Approved - Provider 2", status: :not_approved, provider: provider_2, support_category_ids: [category_2.id])
+      create(:frameworks_framework, name: "Cab Approved - Provider 1", status: :cab_approved, provider: provider_1, support_category_ids: [category_1.id])
+      create(:frameworks_framework, name: "Evaluating - Provider 1", status: :evaluating, provider: provider_1, support_category_ids: [category_2.id], proc_ops_lead:)
+      create(:frameworks_framework, name: "Evaluating - Provider 2", status: :evaluating, provider: provider_2, support_category_ids: [category_1.id], e_and_o_lead:)
     end
 
     describe "filtering by status" do

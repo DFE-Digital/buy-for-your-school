@@ -1,0 +1,22 @@
+<%= content_for :title, "GHBS | Frameworks | Edit Framework Categories" %>
+
+<span class="govuk-caption-l">Edit Framework Categories</span>
+<h1 class="govuk-heading-l"><%= @framework.name %></h2>
+
+<%= form_for @framework, url: frameworks_framework_categorisations_path(@framework), method: :put do |f| %>
+
+  <% procurement_category_grouped_options.each do |group, options| %>
+    <% next if group == "Or" %>
+
+    <%= f.govuk_check_boxes_fieldset :support_category_ids, legend: { text: group, size: "s" } do %>
+      <% options.each do |category| %>
+        <%= f.govuk_check_box :support_category_ids, category[1], label: { text: category[0] } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <div class="govuk-button-group flex-align-center">
+    <%= f.govuk_submit "Save changes" %>
+    <%= link_to "Cancel", @framework, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+<% end %>

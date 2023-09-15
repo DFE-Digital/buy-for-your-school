@@ -7,8 +7,7 @@ describe Frameworks::ActivityLoggable do
 
       expect { provider.save! }.to change(Frameworks::ActivityLogItem, :count).from(0).to(1)
 
-      activity_log_item = Frameworks::ActivityLogItem.first
-      expect(activity_log_item.subject).to eq(provider)
+      activity_log_item = Frameworks::ActivityLogItem.where(subject: provider).reorder("created_at ASC").first
       expect(provider.versions.count).to eq(1)
       expect(activity_log_item.activity).to eq(provider.versions.last)
     end
@@ -20,8 +19,7 @@ describe Frameworks::ActivityLoggable do
 
       expect { provider.update(short_name: "TestProvider") }.to change(Frameworks::ActivityLogItem, :count).from(1).to(2)
 
-      activity_log_item = Frameworks::ActivityLogItem.last
-      expect(activity_log_item.subject).to eq(provider)
+      activity_log_item = Frameworks::ActivityLogItem.where(subject: provider).reorder("created_at ASC").last
       expect(provider.versions.count).to eq(2)
       expect(activity_log_item.activity).to eq(provider.versions.last)
     end
