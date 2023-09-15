@@ -14,6 +14,12 @@ module Frameworks::ActivityLoggable
 private
 
   def log_latest_version_in_activity_log
+    return unless previous_changes.any?
+
     Frameworks::ActivityLogItem.create!(subject: self, activity: versions.last, activity_type: "Frameworks::ActivityLoggableVersion")
+  end
+
+  def log_activity_event(event, data = {})
+    Frameworks::ActivityLogItem.create!(subject: self, activity: Frameworks::ActivityEvent.new(event:, data:))
   end
 end

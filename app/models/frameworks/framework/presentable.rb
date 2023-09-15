@@ -21,8 +21,8 @@ module Frameworks::Framework::Presentable
     provider_contact&.email
   end
 
-  def category_name
-    support_category&.title
+  def category_names
+    support_categories.pluck(:title).join(", ")
   end
 
   def proc_ops_lead_name

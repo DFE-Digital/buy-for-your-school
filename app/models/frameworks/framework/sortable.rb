@@ -2,7 +2,7 @@ module Frameworks::Framework::Sortable
   extend ActiveSupport::Concern
 
   included do
-    scope :sort_by_updated, ->(direction = "descending") { order("updated_at #{safe_direction(direction)}") }
+    scope :sort_by_updated, ->(direction = "descending") { order("frameworks_frameworks.updated_at #{safe_direction(direction)}") }
     scope :sort_by_dfe_start_date, ->(direction = "descending") { order("dfe_start_date #{safe_direction(direction)}") }
     scope :sort_by_dfe_end_date, ->(direction = "descending") { order("dfe_end_date #{safe_direction(direction)}") }
     scope :sort_by_provider_start_date, ->(direction = "descending") { order("provider_start_date #{safe_direction(direction)}") }
