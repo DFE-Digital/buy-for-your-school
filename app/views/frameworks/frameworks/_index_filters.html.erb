@@ -19,7 +19,7 @@
 
     <%= expander title: "Status", subtitle: "#{@filtering.number_of_selected(:statuses)} selected", expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :status, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
-        <% @filtering.available_status_filter_options.each do |status| %>
+        <% @filtering.available_status_options.each do |status| %>
           <%= form.govuk_check_box :status, status.last, exclusive: false, label: { text: status.first } %>
         <% end %>
       <% end %>
@@ -35,7 +35,7 @@
 
     <%= expander title: "Provider", subtitle: "#{@filtering.number_of_selected(:providers)} selected", expanded: @filtering.number_of_selected(:providers).positive? do %>
       <%= form.govuk_check_boxes_fieldset :provider, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
-        <% @filtering.available_provider_filter_options.each do |option| %>
+        <% @filtering.available_provider_options.each do |option| %>
           <%= form.govuk_check_box :provider, option.last, exclusive: false, label: { text: option.first } %>
         <% end %>
       <% end %>

@@ -19,7 +19,7 @@
 
     <%= expander title: "Provider", subtitle: "#{@filtering.number_of_selected(:providers)} selected", expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :provider, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
-        <% @filtering.available_provider_filter_options.each do |option| %>
+        <% @filtering.available_provider_options.each do |option| %>
           <%= form.govuk_check_box :provider, option.last, exclusive: false, label: { text: option.first } %>
         <% end %>
       <% end %>
