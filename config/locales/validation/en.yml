@@ -66,6 +66,38 @@ en:
             attributes:
               school_urns_confirmed:
                 blank: Select whether these are the schools you're buying for
+          framework_requests/contract_length_form:
+            attributes:
+              contract_length:
+                blank: Select the amount of time you want the contract for including any extensions. Choose 'not sure' if you do not know.
+          framework_requests/contract_start_date_form:
+            attributes:
+              contract_start_date_known:
+                blank: Select if you know when the contract should start
+              contract_start_date:
+                blank: Enter the date you want the contract to start
+          framework_requests/same_supplier_form:
+            attributes:
+              same_supplier_used:
+                blank: Select if all schools are currently using the same supplier
+          framework_requests/documents_form:
+            attributes:
+              document_types:
+                blank: Select the documents that you want to upload or 'I do not have any to upload at this time' if there are none to share right now.
+              document_type_other:
+                blank: Specify the type of documents that you want to upload
+          framework_requests/procurement_amount_form:
+            attributes:
+              procurement_amount:
+                blank: Enter how much the school will be spending. The number must be greater than 0.
+                greater_than: The number must be greater than 0
+                not_a_number: Enter a valid number
+          framework_requests/origin_form:
+            attributes:
+              origin:
+                blank: Select where you heard about the service
+              origin_other:
+                blank: Specify where you heard about the service
 
   request:
     rules:

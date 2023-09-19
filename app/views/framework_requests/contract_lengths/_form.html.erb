@@ -1,0 +1,8 @@
+<%= content_for :title, I18n.t("faf.contract_length.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_collection_radio_buttons :contract_length, available_contract_lengths, :id, :title,
+      caption: { text: I18n.t("faf.contract_length.caption"), size: "l" },
+      legend: { text: I18n.t("faf.contract_length.title"), size: "l" },
+      hint: { text: I18n.t("faf.contract_length.hint") } %>

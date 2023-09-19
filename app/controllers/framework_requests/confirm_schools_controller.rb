@@ -21,7 +21,7 @@ module FrameworkRequests
       if @form.valid?
         if @form.school_urns_confirmed?
           @form.save!
-          redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
+          update_redirect_path
         else
           redirect_to edit_framework_request_school_picker_path(framework_request)
         end
@@ -45,12 +45,18 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      if @form.allow_bill_upload?
-        bill_uploads_framework_requests_path(framework_support_form: @form.common)
-      elsif current_user.guest?
+      if current_user.guest?
         name_framework_requests_path(framework_support_form: @form.common)
       else
-        message_framework_requests_path(framework_support_form: @form.common)
+        categories_framework_requests_path(framework_support_form: @form.common)
+      end
+    end
+
+    def update_redirect_path
+      if flow.unfinished?
+        redirect_to edit_framework_request_same_supplier_path(framework_request)
+      else
+        redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
       end
     end
 

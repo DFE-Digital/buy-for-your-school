@@ -8,6 +8,8 @@ class RequestForHelpCategory < ApplicationRecord
   scope :top_level, -> { where(parent_id: nil) }
   scope :active, -> { where(archived: false) }
 
+  enum :flow, { services: 0, goods: 1, energy: 2, not_fully_supported: 3 }, suffix: true
+
   def self.find_by_path(path)
     slugs = path.split("/")
     parent = nil
@@ -56,4 +58,8 @@ class RequestForHelpCategory < ApplicationRecord
   def ancestors_slug = ancestors.map(&:slug).join("/")
 
   def other? = slug == "other"
+
+  def gas? = slug == "gas"
+
+  def electricity? = slug == "electricity"
 end

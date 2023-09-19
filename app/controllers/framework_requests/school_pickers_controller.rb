@@ -59,7 +59,7 @@ module FrameworkRequests
 
     def edit_back_url
       @back_url =
-        if @form.source == "change_link"
+        if @form.source.change_link?
           framework_request_path
         else
           edit_framework_request_confirm_organisation_path(framework_support_form: @form.common.merge(school_type: "group", org_confirm: true))

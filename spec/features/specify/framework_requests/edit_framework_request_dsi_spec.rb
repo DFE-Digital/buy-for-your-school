@@ -1,7 +1,8 @@
 RSpec.feature "Editing a 'Find a Framework' request as a user" do
   subject(:request) do
     # Specialist School for Testing
-    create(:framework_request, user:, org_id: "100253", group: false)
+    category = create(:request_for_help_category, title: "A category", slug: "a", flow: :goods)
+    create(:framework_request, user:, org_id: "100253", group: false, procurement_amount: "10.99", category:)
   end
 
   include_context "with schools and groups"
@@ -15,10 +16,9 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
     visit "/procurement-support/#{request.id}"
   end
 
-  it "goes back to the special requirements page" do
+  it "goes back to the origin page" do
     click_on "Back"
-    expect(page).to have_current_path "/procurement-support/#{request.id}/special_requirements/edit"
-    expect(page).to have_text "Accessibility"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/origin/edit"
   end
 
   it "has submission information" do
@@ -44,9 +44,25 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
     expect(values[3]).to have_text "Single"
     expect(actions[3]).not_to have_link "Change"
 
-    expect(keys[4]).to have_text "Description of request"
-    expect(values[4]).to have_text "please help!"
+    expect(keys[4]).to have_text "Type of goods or service"
+    expect(values[4]).to have_text "A category"
     expect(actions[4]).to have_link "Change"
+
+    expect(keys[5]).to have_text "Procurement amount"
+    expect(values[5]).to have_text "£10.99"
+    expect(actions[5]).to have_link "Change"
+
+    expect(keys[6]).to have_text "Description of request"
+    expect(values[6]).to have_text "please help!"
+    expect(actions[6]).to have_link "Change"
+
+    expect(keys[7]).to have_text "Accessibility"
+    expect(values[7]).to have_text "special_requirements"
+    expect(actions[7]).to have_link "Change"
+
+    expect(keys[8]).to have_text "Origin"
+    expect(values[8]).to have_text "Recommendation"
+    expect(actions[8]).to have_link "Change"
   end
 
   it "edit message" do
@@ -60,7 +76,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
 
     expect(page).to have_current_path "/procurement-support/#{request.id}"
 
-    expect(values[4]).to have_text "I have a problem"
+    expect(values[6]).to have_text "I have a problem"
   end
 
   context "with many supported schools and groups", js: true do

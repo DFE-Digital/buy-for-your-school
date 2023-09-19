@@ -21,7 +21,7 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
       before do
         create(:support_organisation, urn: "100253", name: "Specialist School for Testing")
-        create(:request_for_help_category, title: "A category", slug: "a")
+        create(:request_for_help_category, title: "A category", slug: "a", flow: :goods)
         user_is_signed_in(user:)
         visit "/procurement-support/confirm_sign_in"
         click_on "Yes, continue"
@@ -29,12 +29,15 @@ RSpec.feature "Creating a 'Find a Framework' request" do
 
       describe "CYA page" do
         before do
-          fill_in "framework_support_form[message_body]", with: "I have a problem"
-          click_continue
           choose "A category"
           click_continue
+          fill_in "Approximately how much will the school be spending on this procurement in total?", with: "10.99"
+          click_continue
+          fill_in "framework_support_form[message_body]", with: "I have a problem"
           click_continue
           choose "No"
+          click_continue
+          choose "Recommendation"
           click_continue
         end
 

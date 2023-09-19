@@ -8,7 +8,8 @@ describe SubmitFrameworkRequest do
   let(:email_confirmation_parameters) { anything }
   let(:support_category) { create(:support_category, title: "Other (Energy)", slug: "other-energy") }
   let(:parent_rfh_category) { create(:request_for_help_category, title: "Energy and utilities", slug: "energy-and-utilities") }
-  let(:rfh_category) { create(:request_for_help_category, title: "Other", slug: "other", support_category:, parent: parent_rfh_category) }
+  let(:rfh_category) { create(:request_for_help_category, title: "Other", slug: "other", support_category:, parent: parent_rfh_category, flow:) }
+  let(:flow) { :services }
   let(:category_other) { "other energy requirements" }
 
   before do
@@ -56,7 +57,7 @@ describe SubmitFrameworkRequest do
     end
 
     context "when it's an energy request" do
-      let(:energy_alternative) { :email_later }
+      let(:flow) { :energy }
 
       it "sends out the confirmation email for energy requests" do
         allow(Emails::ConfirmationEnergy).to receive(:new).with(email_confirmation_parameters).and_return(email_confirmation)
@@ -90,6 +91,32 @@ describe SubmitFrameworkRequest do
 
         expect(Support::CaseAttachment.find_by(attachable: bill_1).case).to eq(Support::Case.last)
         expect(Support::CaseAttachment.find_by(attachable: bill_2).case).to eq(Support::Case.last)
+      end
+    end
+
+    context "when documents have been uploaded" do
+      let!(:doc_1) { create(:document, :pending, framework_request: request) }
+      let!(:doc_2) { create(:document, :pending, framework_request: request) }
+
+      it "sets their status to submitted" do
+        described_class.new(request:, referrer:).call
+
+        expect(doc_1.reload).to be_submitted
+        expect(doc_2.reload).to be_submitted
+      end
+
+      it "connects them with the newly created case" do
+        described_class.new(request:, referrer:).call
+
+        expect(doc_1.reload.support_case).to eq(Support::Case.last)
+        expect(doc_2.reload.support_case).to eq(Support::Case.last)
+      end
+
+      it "creates CaseAttachment records for each bill" do
+        described_class.new(request:, referrer:).call
+
+        expect(Support::CaseAttachment.find_by(attachable: doc_1).case).to eq(Support::Case.last)
+        expect(Support::CaseAttachment.find_by(attachable: doc_2).case).to eq(Support::Case.last)
       end
     end
   end

@@ -13,11 +13,20 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      special_requirements_framework_requests_path(framework_support_form: form.common)
+      message_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url
-      @back_url = categories_framework_requests_path(category_path: framework_request.category&.ancestors_slug, framework_support_form: @form.common)
+      @back_url =
+        if flow.energy? || flow.services?
+          if framework_request.multischool_with_multiple_selections?
+            same_supplier_framework_requests_path(framework_support_form: @form.common)
+          else
+            contract_start_date_framework_requests_path(framework_support_form: @form.common)
+          end
+        else
+          categories_framework_requests_path(category_path: framework_request.category&.ancestors_slug, framework_support_form: @form.common)
+        end
     end
   end
 end

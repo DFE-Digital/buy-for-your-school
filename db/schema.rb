@@ -121,6 +121,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_144709) do
     t.index ["step_id"], name: "index_currency_answers_on_step_id"
   end
 
+  create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "submission_status", default: 0
+    t.string "filename"
+    t.integer "filesize"
+    t.uuid "support_case_id"
+    t.uuid "framework_request_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["framework_request_id"], name: "index_documents_on_framework_request_id"
+    t.index ["support_case_id"], name: "index_documents_on_support_case_id"
+  end
+
   create_table "energy_bills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "submission_status", default: 0
     t.string "filename"
@@ -204,6 +216,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_144709) do
     t.text "category_other"
     t.string "school_urns", default: [], array: true
     t.uuid "support_case_id"
+    t.integer "contract_length"
+    t.boolean "contract_start_date_known"
+    t.date "contract_start_date"
+    t.integer "same_supplier_used"
+    t.string "document_types", default: [], array: true
+    t.text "document_type_other"
+    t.integer "origin"
+    t.text "origin_other"
     t.index ["category_id"], name: "index_framework_requests_on_category_id"
     t.index ["support_case_id"], name: "index_framework_requests_on_support_case_id"
     t.index ["user_id"], name: "index_framework_requests_on_user_id"
@@ -348,6 +368,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_144709) do
     t.datetime "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "flow"
     t.index ["parent_id"], name: "index_request_for_help_categories_on_parent_id"
     t.index ["slug"], name: "index_request_for_help_categories_on_slug"
     t.index ["support_category_id"], name: "index_request_for_help_categories_on_support_category_id"
@@ -887,6 +908,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_144709) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "all_cases_survey_responses", "support_cases", column: "case_id"
+  add_foreign_key "documents", "framework_requests"
+  add_foreign_key "documents", "support_cases"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
   add_foreign_key "framework_requests", "support_cases"

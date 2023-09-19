@@ -13,15 +13,13 @@ module FrameworkRequests
     def create_redirect_path
       if form.eligible_for_school_picker?
         school_picker_framework_requests_path(framework_support_form: form.common)
-      elsif form.allow_bill_upload?
-        bill_uploads_framework_requests_path(framework_support_form: form.common)
       else
-        message_framework_requests_path(framework_support_form: form.common)
+        categories_framework_requests_path(framework_support_form: form.common)
       end
     end
 
     def back_url
-      @back_url = last_energy_path
+      @back_url = confirm_sign_in_framework_requests_path
     end
   end
 end

@@ -11,7 +11,7 @@ module Support
       #
       # @return [Hash]
       def date_param(form_param, date_field)
-        date = params.require(form_param).permit(date_field)
+        date = params.fetch(form_param, {}).permit(date_field)
         { day: date["#{date_field}(3i)"], month: date["#{date_field}(2i)"], year: date["#{date_field}(1i)"] }
       end
     end

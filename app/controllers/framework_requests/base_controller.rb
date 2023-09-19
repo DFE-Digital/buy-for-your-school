@@ -74,12 +74,8 @@ module FrameworkRequests
       confirm_sign_in_framework_requests_path
     end
 
-    def last_energy_path
-      return energy_alternative_framework_requests_path(framework_support_form: form.common) if framework_request.energy_alternative.present?
-      return energy_bill_framework_requests_path(framework_support_form: form.common) if framework_request.have_energy_bill.present?
-      return energy_request_about_framework_requests_path(framework_support_form: form.common) if framework_request.energy_request_about.present?
-
-      energy_request_framework_requests_path(framework_support_form: form.common)
+    def flow
+      framework_request.reload.flow
     end
 
     def create_redirect_path; end

@@ -16,6 +16,7 @@ FactoryBot.define do
     energy_alternative {}
     category {}
     category_other {}
+    origin { :recommendation }
 
     trait :energy_request do
       is_energy_request { true }

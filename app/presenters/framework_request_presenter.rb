@@ -42,4 +42,33 @@ class FrameworkRequestPresenter < RequestPresenter
   def bill_filenames
     energy_bills.map(&:filename).join(", ")
   end
+
+  def document_count
+    documents.count
+  end
+
+  def contract_length
+    return if super.nil?
+
+    I18n.t("faf.contract_length.options.#{super}")
+  end
+
+  def contract_start_date
+    return if super.nil?
+
+    super.strftime(date_format)
+  end
+
+  def same_supplier_used
+    return if super.nil?
+
+    I18n.t("faf.same_supplier.options.#{super}")
+  end
+
+  def origin
+    return if super.nil?
+    return origin_other if origin_other?
+
+    I18n.t("faf.origin.options.#{super}")
+  end
 end

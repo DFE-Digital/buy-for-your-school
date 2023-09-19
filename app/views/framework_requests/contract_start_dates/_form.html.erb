@@ -1,0 +1,12 @@
+<%= content_for :title, I18n.t("faf.contract_start_date.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_radio_buttons_fieldset :contract_start_date_known,
+    legend: { text: I18n.t("faf.contract_start_date.title"), size: "l" },
+    caption: { text: I18n.t("faf.contract_start_date.caption"), size: "l" } do %>
+  <%= form.govuk_radio_button :contract_start_date_known, true, label: { text: I18n.t("faf.contract_start_date.options.yes") } do %>
+    <%= form.govuk_date_field :contract_start_date, legend: { text: I18n.t("faf.contract_start_date.date.label"), size: "s", class: "govuk-!-font-weight-regular" }, hint: { text: I18n.t("faf.contract_start_date.date.hint") } %>
+  <% end %>
+  <%= form.govuk_radio_button :contract_start_date_known, false, label: { text: I18n.t("faf.contract_start_date.options.no") } %>
+<% end %>
