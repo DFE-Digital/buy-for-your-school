@@ -6,18 +6,23 @@ categories:
         slug: accessibility-audits
         description: for building or digital
         support_category: Audit Accessibility (buildings and digital)
+        flow: services
       - title: Decarbonisation energy audits
         slug: decarbonisation-energy-audits
         support_category: Decarbonisation
+        flow: services
       - title: Financial audit
         slug: financial-audit
         support_category: Audit Financial
+        flow: services
       - title: Safeguarding audit
         slug: safeguarding-audit
         support_category: Audit Safeguarding
+        flow: services
       - title: Other
         slug: other
         support_category: Other (BS)
+        flow: services
 
   - title: Financial services
     slug: financial-services
@@ -25,15 +30,19 @@ categories:
       - title: Financial audit
         slug: financial-audit
         support_category: Audit Financial
+        flow: services
       - title: Insurance
         slug: insurance
         support_category: Insurance
+        flow: services
       - title: Spend analysis
         slug: spend-analysis
         support_category: Spend Analysis
+        flow: services
       - title: Other
         slug: other
         support_category: Other (BS)
+        flow: services
 
   - title: Leasing
     slug: leasing
@@ -41,18 +50,23 @@ categories:
       - title: Leasing
         slug: leasing-sub
         support_category: Leasing
+        flow: services
       - title: LEDs (light-emitting diode)
         slug: leds
         support_category: Decarbonisation
+        flow: services
       - title: Property leasing agents
         slug: property-leasing-agents
         support_category: Property leasing agents
+        flow: services
       - title: Solar
         slug: solar
         support_category: Solar
+        flow: services
       - title: Other
         slug: other
         support_category: Other (BS)
+        flow: services
 
   - title: School and education supplies
     slug: school-and-education-supplies
@@ -60,19 +74,24 @@ categories:
       - title: Books
         slug: books
         support_category: Books
+        flow: goods
       - title: Stationery and office supplies
         slug: stationery-and-office-supplies
         support_category: Stationery supply & office supplies
+        flow: goods
       - title: Uniform
         slug: uniform
         description: for staff or pupils
         support_category: Uniform
+        flow: not_fully_supported
       - title: Vending machine
         slug: vending-machine
         support_category: Vending Machine
+        flow: services
       - title: Other
         slug: other
         support_category: Other (FM)
+        flow: services
 
   - title: Transport
     slug: transport
@@ -80,12 +99,15 @@ categories:
       - title: Passenger transport
         slug: passenger-transport
         support_category: Passenger transport
+        flow: services
       - title: Vehicle hire or purchase
         slug: vehicle-hire-or-purchase
         support_category: Vehicle hire & purchase
+        flow: services
       - title: Other
         slug: other
         support_category: Other (BS)
+        flow: services
 
   - title: Food and catering
     slug: food-and-catering
@@ -93,22 +115,28 @@ categories:
       - title: Breakfast club
         slug: breakfast-club
         support_category: Breakfast Club
+        flow: services
       - title: Catering equipment
         slug: catering-equipment
         support_category: Catering Equipment
+        flow: goods
       - title: Catering services
         slug: catering-services
         support_category: Catering Services
+        flow: services
       - title: Uniform
         slug: uniform
         description: for staff or pupils
         support_category: Uniform
+        flow: not_fully_supported
       - title: Vending machine
         slug: vending-machine
         support_category: Vending Machine
+        flow: services
       - title: Other
         slug: other
         support_category: Other (FM)
+        flow: services
 
   - title: Energy and utilities
     slug: energy-and-utilities
@@ -116,30 +144,39 @@ categories:
       - title: Decarbonisation and energy efficiency
         slug: decarbonisation-and-energy-efficiency
         support_category: Decarbonisation
+        flow: energy
       - title: Electricity
         slug: electricity
         support_category: Electricity
+        flow: energy
       - title: Gas
         slug: gas
         support_category: Gas
+        flow: energy
       - title: Heat pumps
         slug: heat-pumps
         support_category: Decarbonisation
+        flow: energy
       - title: LEDs (light-emitting diode)
         slug: leds
         support_category: Decarbonisation
+        flow: energy
       - title: Other fuels
         slug: other-fuels
         support_category: Other fuels
+        flow: energy
       - title: Solar
         slug: solar
         support_category: Solar
+        flow: services
       - title: Water
         slug: water
         support_category: Water
+        flow: energy
       - title: Other
         slug: other
         support_category: Other (Energy)
+        flow: energy
 
   - title: Cleaning
     slug: cleaning
@@ -147,15 +184,19 @@ categories:
       - title: Cleaning products
         slug: cleaning-products
         support_category: Cleaning Products
+        flow: goods
       - title: Cleaning services
         slug: cleaning-services
         support_category: Cleaning Services
+        flow: services
       - title: Personal protection equipment (PPE)
         slug: ppe
         support_category: PPE
+        flow: goods
       - title: Other
         slug: other
         support_category: Other (FM)
+        flow: services
 
   - title: Buildings and site maintenance
     slug: buildings-and-site-maintenance
@@ -163,44 +204,56 @@ categories:
       - title: Boilers and plumbing services
         slug: boilers-and-plumbing-services
         support_category: Boilers and plumbing services
+        flow: services
       - title: Building maintenance and building management system
         slug: building-maintenance-and-bms
         support_category: Building maintenance & BMS
+        flow: services
       - title: Cleaning
         slug: cleaning
         sub_categories: *cleaning_subcategories
       - title: Grounds and winter maintenance
         slug: grounds-and-winter-maintenance
         support_category: Grounds & Winter Maintenance
+        flow: services
       - title: Mechanical and electrical systems
         slug: mechanical-and-electrical-systems
         support_category: Mechanical & Electrical Systems
+        flow: not_fully_supported
       - title: Multi-use games area
         slug: mugas
         support_category: MUGAs
+        flow: services
       - title: Personal protection equipment (PPE)
         slug: ppe
         support_category: PPE
+        flow: goods
       - title: Removal and relocation
         slug: removal-and-relocation
         description: such as furniture, classroom, moving sites
         support_category: Removal & relocation
+        flow: services
       - title: Security and CCTV
         slug: security-and-cctv
         support_category: Security & CCTV
+        flow: services
       - title: Water, drains and sewerage
         slug: water-drains-and-sewerage
         support_category: Water, drains & sewerage
+        flow: energy
       - title: Waste management
         slug: waste-management
         support_category: Waste management
+        flow: services
       - title: Other
         slug: other
         support_category: Other (FM)
+        flow: services
 
   - title: Furniture
     slug: furniture
     support_category: Furniture
+    flow: goods
 
   - title: Health and safety
     slug: health-and-safety
@@ -209,19 +262,24 @@ categories:
         slug: fire-safety
         description: goods and systems
         support_category: Fire Safety (Goods & Systems)
+        flow: goods
       - title: Personal protection equipment (PPE)
         slug: ppe
         description: such as masks, protective clothing and helmets
         support_category: PPE
+        flow: goods
       - title: Security and CCTV
         slug: security-and-cctv
         support_category: Security & CCTV
+        flow: services
       - title: Statutory testing and facilities management compliance
         slug: statutory-testing-and-fm-compliance
         support_category: Statutory testing & FM Compliance
+        flow: services
       - title: Other
         slug: other
         support_category: Other (FM)
+        flow: services
 
   - title: ICT
     slug: ict
@@ -232,86 +290,111 @@ categories:
           - title: Audio visual displays
             slug: av-displays
             support_category: AV Displays
+            flow: services
           - title: Laptops
             slug: laptops
             support_category: Laptops
+            flow: goods
           - title: Multi-functional devices (MFD)
             slug: mfds
             description: devices that can copy, print, scan or fax
             support_category: MFD
+            flow: services
           - title: Peripherals
             slug: peripherals
             description: such as keyboards or hard drives
             support_category: Peripherals
+            flow: goods
           - title: Server configuration and support
             slug: server-configuration-and-support
             support_category: Server Configuration & Support
+            flow: services
           - title: Switches and routers
             slug: switches and routers
             support_category: Switches & Routers
+            flow: goods
           - title: Other
             slug: other
             support_category: Other (ICT)
+            flow: services
       - title: ICT funding
         slug: ict-funding
         support_category: Funding - non procurement requests
+        is_archived: true
+        flow: services
       - title: Online platforms and services
         slug: online-platforms-and-services
         sub_categories:
           - title: Cloud SaaS (software-as-a-service)
             slug: cloud-saas
             support_category: Cloud SaaS
+            flow: services
           - title: Cyber services
             slug: cyber-services
             support_category: Cyber services
+            flow: services
           - title: Hosting and storage
             slug: hosting-and-storage
             support_category: Hosting & Storage
+            flow: services
           - title: Server configuration and support
             slug: server-configuration-and-support
             support_category: Server Configuration & Support
+            flow: services
           - title: Virtual learning environment platforms
             slug: vle-platforms
             support_category: Platforms (VLEs)
+            flow: services
           - title: Websites
             slug: websites
             support_category: Websites
+            flow: services
           - title: Other
             slug: other
             support_category: Other (ICT)
+            flow: services
       - title: Software
         slug: software
         sub_categories:
           - title: Curriculum content
             slug: curriculum-content
             support_category: Curriculum Content
+            flow: services
           - title: Management information system (MIS)
             slug: mis
             support_category: MIS
+            flow: services
           - title: Operating system software
             slug: os-software
             support_category: OS Software
+            flow: services
           - title: Server configuration and support
             slug: server-configuration-and-support
             support_category: Server Configuration & Support
+            flow: services
           - title: Other
             slug: other
             support_category: Other (ICT)
+            flow: services
       - title: Telecoms and broadband
         slug: telecoms-and-broadband
         sub_categories:
           - title: Broadband infrastructure
             slug: broadband-infrastructure
             support_category: Broadband Infrastructure
+            flow: services
           - title: Broadband service
             slug: broadband-service
             support_category: Broadband service
+            flow: services
           - title: Telecoms
             slug: telecoms
             support_category: Telecoms & Broadband
+            flow: services
           - title: Other
             slug: other
             support_category: Other (ICT)
+            flow: services
 
   - title: Consultancy
     slug: consultancy
@@ -320,13 +403,16 @@ categories:
         slug: consultancy-direct
         description: direct contract with a consultant
         support_category: Consultancy
+        flow: services
       - title: Managed consultancy
         slug: managed-consultancy
         description: consultants managed through a service
         support_category: Specialist professional services
+        flow: services
       - title: Other
         slug: other
         support_category: Other (PS)
+        flow: services
 
   - title: Human resources and payroll
     slug: human-resources-and-payroll
@@ -334,22 +420,29 @@ categories:
       - title: Human resources
         slug: hr
         support_category: HR
+        flow: services
       - title: Payroll
         slug: payroll
         support_category: Payroll
+        flow: services
       - title: Recruitment of other staff
         slug: recruitment-of-other-staff
         support_category: Recruitment of other staff
+        flow: services
       - title: Recruitment screening
         slug: recruitment-screening
         support_category: Recruitment screening
+        flow: services
       - title: Supply teachers and agency workers
         slug: supply-teachers-and-agency-workers
         support_category: Supply Teachers & Agency workers
+        flow: services
       - title: Other
         slug: other
         support_category: Other (PS)
+        flow: services
 
   - title: Legal Services
     slug: legal-services
     support_category: Legal Services
+    flow: services

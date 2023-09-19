@@ -15,9 +15,8 @@ module FrameworkRequests
       @current_user = UserPresenter.new(current_user)
       return select_organisation_framework_requests_path(framework_support_form: form.common) unless @current_user.single_org?
       return school_picker_framework_requests_path(framework_support_form: form.common) if @current_user.belongs_to_trust_or_federation? && @current_user.org.organisations.present?
-      return bill_uploads_framework_requests_path(framework_support_form: form.common) if @form.allow_bill_upload?
 
-      message_framework_requests_path(framework_support_form: form.common)
+      categories_framework_requests_path(framework_support_form: form.common)
     end
 
     def set_inferred_attrbutes

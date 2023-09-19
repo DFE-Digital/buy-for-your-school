@@ -344,15 +344,21 @@ en:
         email: Your email address
         name: Your name
         problem: Description of request
+        contract_length: Contract length
+        contract_start_date: Contract start date
+        same_supplier_used: Same supplier used
         school: Your school
         school_type: School type
         schools_buying_for: Schools you're buying for
         school_number: "%{selected} of %{total} schools"
         single: Single
         bills_attached: Bills attached
+        documents_attached: Documents attached
         category: Type of goods or service
+        origin: Origin
       header: Send your request
       response_time: Once you send this request, we will review it and get in touch within 2 working days.
+      not_known: Not known
       aria:
         change_name: "Change your name"
         change_email: "Change your email"
@@ -360,10 +366,15 @@ en:
         change_school_type: "Change your school type"
         change_school_picker: "Change the schools you're buying for"
         change_message: "Change the description of your request"
+        change_contract_length: "Change the length of your contract"
+        change_contract_start_date: "Change the start date of your contract"
+        change_same_supplier_used: "Change whether the same supplier is used for all your schools"
         change_procurement_amount: "Change procurement amount"
         change_bills_attached: "Change bills attached"
+        change_documents_attached: "Change documents attached"
         change_special_requirements: "Change special requirements"
         change_category: "Change type of goods or service"
+        change_origin: "Change the origin of your request"
     confirm_group_or_trust:
       caption: About your school
       choice:
@@ -398,6 +409,47 @@ en:
       'no': No, I need to change my selection
       table:
         school_name: School name
+    contract_length:
+      caption: About your procurement
+      title: How long do you want the contract for including any extensions?
+      hint: Tell us how long you want the contract for at this time. We know this can change. We do not recommend contracts that are shorter than one year.
+      options:
+        one_year: 1 year
+        two_years: 2 years
+        three_years: 3 years
+        four_years: 4 years
+        five_years: 5 years
+        not_sure: Not sure
+    contract_start_date:
+      caption: About your procurement
+      title: Do you know when you want the contract to start?
+      options:
+        'yes': "Yes"
+        'no': "No"
+      date:
+        label: Enter the date
+        hint: For example, 27 3 2007
+        invalid: Provide a valid date
+    documents:
+      caption: About your request
+      title: Are there any documents that you would like to upload and share with us?
+      hint:
+        - This may help us to answer your query. We can still help if you cannot upload any documents right now.
+        - You'll also be able to share documents with us at a later date.
+        - Select all that apply.
+      options:
+        current_contract: Current contract
+        communications_with_supplier: Communications with your supplier, such as an email
+        floor_plans: Floor plans or site maps
+        quotes: Quotes
+        specifications: Specifications
+        other: Other, please specify
+        none: I do not have anything to upload right now
+    document_upload:
+      caption: About your request
+      title: Upload your documents
+      body: You can upload any type of document smaller than 30MB. Upload as many documents as you want.
+      hint: "Upload the documents you told us about. These were:"
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school that your request is about?
       link:
@@ -433,21 +485,27 @@ en:
       body:
         - Your recent energy bills give us the information we need to help you. You'll be able to upload more than one bill if you have them.
         - We'll review your bills and use the information to suggest a suitable framework for buying energy. We won't share this information without your permission.
-    energy_request:
-      header: Is your request about energy?
-      subtitle: About your request
-      body: 'You can %{guidance_link}. It includes:'
-      guidance_link: read our guidance about buying energy for your school
-      body_bullets:
-        - whether you can get a reduced rate VAT
-        - how to choose between fixed, flexible or variable price contracts
-        - what to think about when choosing contract length
-    energy_request_about:
-      header: Is your request about an energy contract, for example, a renewal?
-      subtitle: About your request
+    origin:
+      caption: About your procurement
+      title: How did you first find out about this service?
       options:
-        energy_contract: "Yes"
-        not_energy_contract: "No"
+        used_before: I've used this service before
+        meeting_or_event: Meeting or event
+        dfe_publication: DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
+        non_dfe_publication: Non-DfE newsletter
+        recommendation: Recommendation
+        search_engine: Search engine, such as Google
+        social_media: Social media, such as LinkedIn, Facebook, X (formerly Twitter)
+        website: Website, such as GOV.UK
+        other: Other
+      please_specify: Please specify
+    same_supplier:
+      caption: About your procurement
+      title: Do all the schools currently use the same supplier?
+      options:
+        'yes': "Yes"
+        'no': "No"
+        not_sure: We're not sure
     school_picker:
       title: Which schools in your academy trust or federation will be involved in this procurement?
       caption: About your school
@@ -546,12 +604,11 @@ en:
       header: Which school are you buying for?
     user_query:
       caption: About your request
-      hint: Briefly describe how we can help in a few sentences.
+      hint: Describe how we can help in a few sentences.
       hint_list_start: "We'd like to know:"
       hint_bullets:
-        - what you're buying
         - the start and end dates of your current contract, if you have one
-        - when you need the new goods or services
+        - if you're buying goods, when you need them
         - anything else about your procurement you think we should know
       hint_list_end: Please provide as much information as you can. This will help us to answer your question.
       label: How can we help?
@@ -821,6 +878,8 @@ en:
         contact_extension_number: Contact extension
         contact_name: Contact name
         contact_phone: Contact phone
+        contract_length: Contract length
+        contract_start_date: Contract start date
         create: Create a new case
         files: Attach files
         date_received: Date received
@@ -902,9 +961,11 @@ en:
           hint: For example, 12 11 2007
           label: Next key date
           label_optional: Next key date (optional)
+        not_known: Not known
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
+        origin: Origin
         place_on_hold: Place on hold
         problem_description: Description of query
         initial_problem_description: Initial description of query
@@ -943,6 +1004,7 @@ en:
               phase: Phase of education
               local_authority: Local authority
           uploaded_files: Uploaded files
+        same_supplier_used: Same supplier used
         sort_by: Sort by
         source:
           digital: Specify case

@@ -1,0 +1,15 @@
+<%= content_for :title, I18n.t("faf.origin.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_radio_buttons_fieldset :origin,
+      caption: { text: I18n.t("faf.origin.caption"), size: "l" },
+      legend: { text: I18n.t("faf.origin.title"), size: "l" } do %>
+        <% available_origins.each do |origin| %>
+          <%= form.govuk_radio_button :origin, origin.id, label: { text: origin.title } do %>
+            <% if origin.id == "other" %>
+              <%= form.govuk_text_field :origin_other, label: { text: I18n.t("faf.origin.please_specify") } %>
+            <% end %>
+          <% end %>
+        <% end %>
+<% end %>

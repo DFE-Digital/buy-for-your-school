@@ -30,7 +30,11 @@ module FrameworkRequests
 
       if @form.final_category?
         @form.save!
-        redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
+        if flow.unfinished?
+          redirect_to edit_framework_request_contract_length_path(framework_request)
+        else
+          redirect_to framework_request_path(framework_request), notice: I18n.t("support_request.flash.updated")
+        end
       else
         redirect_to edit_framework_request_category_path(framework_request, **@form.slugs)
       end
@@ -42,8 +46,8 @@ module FrameworkRequests
 
     def create_redirect_path
       if @form.final_category?
-        if @form.allow_bill_upload?
-          special_requirements_framework_requests_path(framework_support_form: @form.common)
+        if flow.energy_or_services?
+          contract_length_framework_requests_path(framework_support_form: @form.common)
         else
           procurement_amount_framework_requests_path(framework_support_form: @form.common)
         end
@@ -60,10 +64,23 @@ module FrameworkRequests
     end
 
     def determine_back_path
-      return categories_framework_requests_path(framework_support_form: @form.common.merge(category_slug: "multiple")) if category_path == "multiple"
-      return message_framework_requests_path(framework_support_form: @form.common) if category_path.nil?
+      @current_user = UserPresenter.new(current_user)
 
-      categories_framework_requests_path(category_path: @form.parent_category_path, framework_support_form: @form.common)
+      if category_path == "multiple"
+        categories_framework_requests_path(framework_support_form: @form.common.merge(category_slug: "multiple"))
+      elsif category_path.nil?
+        if @current_user.guest?
+          email_framework_requests_path(framework_support_form: @form.common)
+        elsif form.eligible_for_school_picker?
+          confirm_schools_framework_requests_path(framework_support_form: @form.common)
+        elsif @current_user.single_org?
+          confirm_sign_in_framework_requests_path(framework_support_form: @form.common)
+        else
+          select_organisation_framework_requests_path(framework_support_form: @form.common)
+        end
+      else
+        categories_framework_requests_path(category_path: @form.parent_category_path, framework_support_form: @form.common)
+      end
     end
 
     def form_params = %i[category_slug category_other]

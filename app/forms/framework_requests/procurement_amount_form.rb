@@ -3,6 +3,7 @@ module FrameworkRequests
     include ActiveModel::Validations::Callbacks
 
     before_validation :format_amount
+    validates :procurement_amount, presence: true, numericality: { greater_than: 0.99 }
     validate :procurement_amount_validation
 
     attr_accessor :procurement_amount
@@ -18,7 +19,6 @@ module FrameworkRequests
 
     def procurement_amount_validation
       validator = Support::Forms::ValidateProcurementAmount.new(@procurement_amount)
-      errors.add(:procurement_amount, I18n.t("framework_request.errors.rules.procurement_amount.invalid")) if validator.invalid_number?
       errors.add(:procurement_amount, I18n.t("framework_request.errors.rules.procurement_amount.too_large")) if validator.too_large?
     end
   end

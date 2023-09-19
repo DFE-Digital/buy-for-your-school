@@ -79,17 +79,6 @@
       <% end %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("faf.check_answers.details.problem") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @framework_request.message_body %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_message_path(@framework_request), class: "govuk-link", id: "edit-message", "aria-label": I18n.t("faf.check_answers.aria.change_message")  %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
           <%= I18n.t("faf.check_answers.details.category") %>
         </dt>
         <dd class="govuk-summary-list__value">
@@ -103,24 +92,70 @@
           <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_category_path(@framework_request), class: "govuk-link", id: "edit-category", "aria-label": I18n.t("faf.check_answers.aria.change_category")  %>
         </dd>
       </div>
-
-      <% unless @framework_request.allow_bill_upload? %>
+      <% if @framework_request.contract_length.present? %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("request.label.procurement_amount") %>
+            <%= I18n.t("faf.check_answers.details.contract_length") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @framework_request.procurement_amount %>
+            <%= @framework_request.contract_length %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <% unless @framework_request.submitted? %>
-              <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_procurement_amount_path(@framework_request), class: "govuk-link", id: "edit-procurement-amount", "aria-label": I18n.t("faf.check_answers.aria.change_procurement_amount")  %>
-            <% end %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_contract_length_path(@framework_request), class: "govuk-link", id: "edit-contract-length", "aria-label": I18n.t("faf.check_answers.aria.change_contract_length")  %>
           </dd>
         </div>
       <% end %>
-
-      <% if @framework_request.allow_bill_upload? %>
+      <% if @framework_request.flow.energy_or_services? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("faf.check_answers.details.contract_start_date") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @framework_request.contract_start_date || I18n.t("faf.check_answers.not_known") %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_contract_start_date_path(@framework_request), class: "govuk-link", id: "edit-contract-start-date", "aria-label": I18n.t("faf.check_answers.aria.change_contract_start_date")  %>
+          </dd>
+        </div>
+      <% end %>
+      <% if @framework_request.same_supplier_used.present? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("faf.check_answers.details.same_supplier_used") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @framework_request.same_supplier_used %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_same_supplier_path(@framework_request, framework_support_form: { source: :change_link }), class: "govuk-link", id: "edit-same-supplier", "aria-label": I18n.t("faf.check_answers.aria.change_same_supplier_used")  %>
+          </dd>
+        </div>
+      <% end %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("request.label.procurement_amount") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.procurement_amount %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <% unless @framework_request.submitted? %>
+            <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_procurement_amount_path(@framework_request), class: "govuk-link", id: "edit-procurement-amount", "aria-label": I18n.t("faf.check_answers.aria.change_procurement_amount")  %>
+          <% end %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.problem") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.message_body %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_message_path(@framework_request), class: "govuk-link", id: "edit-message", "aria-label": I18n.t("faf.check_answers.aria.change_message")  %>
+        </dd>
+      </div>
+      <% if @framework_request.has_bills? %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             <%= I18n.t("faf.check_answers.details.bills_attached") %>
@@ -130,12 +165,26 @@
           </dd>
           <dd class="govuk-summary-list__actions">
             <% unless @framework_request.submitted? %>
-              <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_bill_uploads_path(@framework_request), class: "govuk-link", id: "edit-bill-uploads", "aria-label": I18n.t("faf.check_answers.aria.change_bills_attached")  %>
+              <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_bill_uploads_path(@framework_request, framework_support_form: { source: :change_link }), class: "govuk-link", id: "edit-bill-uploads", "aria-label": I18n.t("faf.check_answers.aria.change_bills_attached")  %>
             <% end %>
           </dd>
         </div>
       <% end %>
-
+      <% if @framework_request.has_documents? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("faf.check_answers.details.documents_attached") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @framework_request.document_count %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <% unless @framework_request.submitted? %>
+              <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_document_uploads_path(@framework_request, framework_support_form: { source: :change_link }), class: "govuk-link", id: "edit-document-uploads", "aria-label": I18n.t("faf.check_answers.aria.change_documents_attached")  %>
+            <% end %>
+          </dd>
+        </div>
+      <% end %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("request.label.special_requirements") %>
@@ -147,6 +196,17 @@
           <% unless @framework_request.submitted? %>
             <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_special_requirements_path(@framework_request), class: "govuk-link", id: "edit-special-requirements", "aria-label": I18n.t("faf.check_answers.aria.change_special_requirements")  %>
           <% end %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("faf.check_answers.details.origin") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @framework_request.origin %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("generic.button.change_answer"), edit_framework_request_origin_path(@framework_request), class: "govuk-link", id: "edit-origin", "aria-label": I18n.t("faf.check_answers.aria.change_origin")  %>
         </dd>
       </div>
     </dl>

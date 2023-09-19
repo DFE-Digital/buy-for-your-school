@@ -1,5 +1,5 @@
 RSpec.describe FrameworkRequest, type: :model do
-  subject(:framework_request) { build(:framework_request, group:, org_id:, is_energy_request:, energy_request_about:, have_energy_bill:, energy_alternative:, school_urns:) }
+  subject(:framework_request) { create(:framework_request, group:, org_id:, is_energy_request:, energy_request_about:, have_energy_bill:, energy_alternative:, school_urns:, category:, contract_length:, contract_start_date_known:, contract_start_date:, same_supplier_used:, document_type_other:) }
 
   let(:is_energy_request) { false }
   let(:energy_request_about) { nil }
@@ -8,69 +8,15 @@ RSpec.describe FrameworkRequest, type: :model do
   let(:school_urns) { [] }
   let(:group) { false }
   let(:org_id) { nil }
+  let(:category) { nil }
+  let(:contract_length) { nil }
+  let(:contract_start_date_known) { nil }
+  let(:contract_start_date) { nil }
+  let(:same_supplier_used) { nil }
+  let(:document_type_other) { nil }
 
   it { is_expected.to belong_to(:user).optional }
   it { is_expected.to belong_to(:category).class_name("RequestForHelpCategory").optional }
-
-  describe "#allow_bill_upload?" do
-    context "when feature :energy_bill_flow is not enabled" do
-      before { Flipper.disable(:energy_bill_flow) }
-
-      it "returns false" do
-        framework_request = described_class.new
-        expect(framework_request.allow_bill_upload?).to be(false)
-      end
-    end
-
-    context "when it's an energy request about a contract and they have a bill to upload" do
-      let(:is_energy_request) { true }
-      let(:energy_request_about) { :energy_contract }
-      let(:have_energy_bill) { true }
-
-      it "returns true" do
-        expect(framework_request.allow_bill_upload?).to eq true
-      end
-    end
-
-    context "when it's an energy request about a contract and they have a bill in a different format" do
-      let(:is_energy_request) { true }
-      let(:energy_request_about) { :energy_contract }
-      let(:have_energy_bill) { false }
-      let(:energy_alternative) { :different_format }
-
-      it "returns true" do
-        expect(framework_request.allow_bill_upload?).to eq true
-      end
-    end
-
-    context "when it's not an energy request" do
-      let(:is_energy_request) { false }
-
-      it "returns false" do
-        expect(framework_request.allow_bill_upload?).to eq false
-      end
-    end
-
-    context "when it's an energy request not about a contract" do
-      let(:is_energy_request) { true }
-      let(:energy_request_about) { :not_energy_contract }
-
-      it "returns false" do
-        expect(framework_request.allow_bill_upload?).to eq false
-      end
-    end
-
-    context "when it's an energy request about a contract but they don't have a bill in a different format" do
-      let(:is_energy_request) { true }
-      let(:energy_request_about) { :energy_contract }
-      let(:have_energy_bill) { false }
-      let(:energy_alternative) { :no_bill }
-
-      it "returns false" do
-        expect(framework_request.allow_bill_upload?).to eq false
-      end
-    end
-  end
 
   describe "#has_bills?" do
     context "when there are associated energy bills" do
@@ -116,6 +62,151 @@ RSpec.describe FrameworkRequest, type: :model do
       framework_request.save!
 
       expect(framework_request.school_urns).to match_array(%w[456])
+    end
+  end
+
+  describe "changes to the request category" do
+    context "when changed to the 'Goods' flow" do
+      let(:category) { create(:request_for_help_category, flow: :services) }
+      let(:contract_length) { :three_years }
+      let(:contract_start_date_known) { true }
+      let(:contract_start_date) { Date.parse("2023-09-20") }
+      let(:same_supplier_used) { :yes }
+      let(:document_types) { %w[other quotes] }
+      let(:document_type_other) { "other" }
+      let(:update) { { category: create(:request_for_help_category, flow: :goods) } }
+
+      before do
+        framework_request.update!(document_types:)
+        create(:energy_bill, framework_request:)
+        create(:document, framework_request:)
+      end
+
+      it "clears the contract length" do
+        expect { framework_request.update!(update) }.to change(framework_request, :contract_length).from(contract_length.to_s).to(nil)
+      end
+
+      it "clears the contract start date known" do
+        expect { framework_request.update!(update) }.to change(framework_request, :contract_start_date_known).from(contract_start_date_known).to(nil)
+      end
+
+      it "clears the contract start date" do
+        expect { framework_request.update!(update) }.to change(framework_request, :contract_start_date).from(contract_start_date).to(nil)
+      end
+
+      it "clears the 'same supplier used' value" do
+        expect { framework_request.update!(update) }.to change(framework_request, :same_supplier_used).from(same_supplier_used.to_s).to(nil)
+      end
+
+      it "clears the document types" do
+        expect { framework_request.update!(update) }.to change(framework_request, :document_types).from(document_types).to([])
+      end
+
+      it "clears the document type other" do
+        expect { framework_request.update!(update) }.to change(framework_request, :document_type_other).from(document_type_other).to(nil)
+      end
+
+      it "removes all bills" do
+        expect { framework_request.update!(update) }.to change { framework_request.reload.energy_bills.count }.from(1).to(0)
+      end
+
+      it "removes all documents" do
+        expect { framework_request.update!(update) }.to change { framework_request.reload.documents.count }.from(1).to(0)
+      end
+    end
+
+    context "when changed to the 'Not fully supported' flow" do
+      let(:category) { create(:request_for_help_category, flow: nil) }
+      let(:contract_length) { :two_years }
+      let(:contract_start_date_known) { true }
+      let(:contract_start_date) { Date.parse("2025-02-10") }
+      let(:same_supplier_used) { :not_sure }
+      let(:document_types) { %w[other quotes] }
+      let(:document_type_other) { "other" }
+      let(:update) { { category: create(:request_for_help_category, flow: :not_fully_supported) } }
+
+      before do
+        framework_request.update!(document_types:)
+        create_list(:energy_bill, 2, framework_request:)
+        create(:document, framework_request:)
+      end
+
+      it "clears the contract length" do
+        expect { framework_request.update!(update) }.to change(framework_request, :contract_length).from(contract_length.to_s).to(nil)
+      end
+
+      it "clears the contract start date known" do
+        expect { framework_request.update!(update) }.to change(framework_request, :contract_start_date_known).from(contract_start_date_known).to(nil)
+      end
+
+      it "clears the contract start date" do
+        expect { framework_request.update!(update) }.to change(framework_request, :contract_start_date).from(contract_start_date).to(nil)
+      end
+
+      it "clears the 'same supplier used' value" do
+        expect { framework_request.update!(update) }.to change(framework_request, :same_supplier_used).from(same_supplier_used.to_s).to(nil)
+      end
+
+      it "clears the document types" do
+        expect { framework_request.update!(update) }.to change(framework_request, :document_types).from(document_types).to([])
+      end
+
+      it "clears the document type other" do
+        expect { framework_request.update!(update) }.to change(framework_request, :document_type_other).from(document_type_other).to(nil)
+      end
+
+      it "removes all bills" do
+        expect { framework_request.update!(update) }.to change { framework_request.energy_bills.count }.from(2).to(0)
+      end
+
+      it "removes all documents" do
+        expect { framework_request.update!(update) }.to change { framework_request.reload.documents.count }.from(1).to(0)
+      end
+    end
+
+    context "when changed to the 'Services' flow" do
+      let(:category) { create(:request_for_help_category, flow: :energy) }
+      let(:have_energy_bill) { true }
+      let(:energy_alternative) { :different_format }
+      let(:update) { { category: create(:request_for_help_category, flow: :services) } }
+
+      before { create_list(:energy_bill, 2, framework_request:) }
+
+      it "clears the have energy bill value" do
+        expect { framework_request.update!(update) }.to change(framework_request, :have_energy_bill).from(have_energy_bill).to(nil)
+      end
+
+      it "clears the energy alternative" do
+        expect { framework_request.update!(update) }.to change(framework_request, :energy_alternative).from(energy_alternative.to_s).to(nil)
+      end
+
+      it "removes all bills" do
+        expect { framework_request.update!(update) }.to change { framework_request.energy_bills.count }.from(2).to(0)
+      end
+    end
+
+    context "when changed to the 'Energy' flow" do
+      let(:category) { create(:request_for_help_category, flow: :services) }
+      let(:document_types) { %w[other quotes] }
+      let(:document_type_other) { "other" }
+      let(:update) { { category: create(:request_for_help_category, flow: :energy) } }
+
+      before do
+        framework_request.update!(document_types:)
+        create_list(:document, 2, framework_request:)
+      end
+
+      it "clears the document types" do
+        expect { framework_request.update!(update) }.to change(framework_request, :document_types).from(document_types).to([])
+      end
+
+      it "clears the document type other" do
+        expect { framework_request.update!(update) }.to change(framework_request, :document_type_other).from(document_type_other).to(nil)
+      end
+
+      it "removes all documents" do
+        expect { framework_request.update!(update) }.to change { framework_request.documents.count }.from(2).to(0)
+      end
     end
   end
 end

@@ -1,71 +1,70 @@
 require "./spec/support/shared/framework_request_controllers"
 
 describe FrameworkRequests::MessagesController, type: :controller do
-  context "when feature :energy_bill_flow is not enabled" do
-    let(:framework_request) { create(:framework_request) }
+  let(:framework_request) { create(:framework_request, category:) }
+  let(:category) { nil }
 
-    before { Flipper.disable(:energy_bill_flow) }
+  include_examples "back url", "/procurement-support/procurement_amount"
 
-    it "redirects to the category page" do
-      post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/categories"
-    end
-  end
+  context "when the request is in the energy flow" do
+    context "and about electricity" do
+      let(:category) { create(:request_for_help_category, slug: "electricity", flow: :energy) }
 
-  context "when the user has chosen to upload a bill" do
-    let(:framework_request) { create(:framework_request, is_energy_request: true, energy_request_about: "energy_contract", have_energy_bill: true) }
+      before { post :create, session: { framework_request_id: framework_request.id } }
 
-    it "redirects to the category page" do
-      post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/categories"
-    end
-  end
-
-  context "when the user has chosen not to upload a bill" do
-    let(:framework_request) { create(:framework_request, is_energy_request: false) }
-
-    it "redirects to the category page" do
-      post :create, session: { framework_request_id: framework_request.id }
-      expect(response).to redirect_to "/procurement-support/categories"
-    end
-  end
-
-  describe "back url" do
-    context "when the user is signed in" do
-      before { user_is_signed_in(user:) }
-
-      context "when the user belongs to one organisation" do
-        let(:user) { build(:user, :one_supported_school) }
-
-        before { allow(controller).to receive(:last_energy_path).and_return("last_energy_path") }
-
-        include_examples "back url", "last_energy_path"
-
-        context "when feature :energy_bill_flow is not enabled" do
-          before { Flipper.disable(:energy_bill_flow) }
-
-          include_examples "back url", "/procurement-support/select_organisation"
-        end
-      end
-
-      context "when the user belongs to multiple organisations" do
-        let(:user) { build(:user, :many_supported_schools) }
-
-        include_examples "back url", "/procurement-support/select_organisation"
+      it "redirects to the energy bill page" do
+        expect(response).to redirect_to "/procurement-support/energy_bill"
       end
     end
 
-    context "when the user is not signed in" do
-      include_examples "back url", "/procurement-support/email"
+    context "and about gas" do
+      let(:category) { create(:request_for_help_category, slug: "gas", flow: :energy) }
+
+      before { post :create, session: { framework_request_id: framework_request.id } }
+
+      it "redirects to the energy bill page" do
+        expect(response).to redirect_to "/procurement-support/energy_bill"
+      end
     end
 
-    context "when the user has chosen to upload a bill" do
-      let(:framework_request) { create(:framework_request, is_energy_request: true, energy_request_about: "energy_contract", have_energy_bill: true) }
+    context "and about anything else" do
+      let(:category) { create(:request_for_help_category, slug: "water", flow: :energy) }
 
-      it "goes back to the bill upload page" do
-        get :index, session: { framework_request_id: framework_request.id }
-        expect(controller.view_assigns["back_url"]).to eq "/procurement-support/bill_uploads"
+      before { post :create, session: { framework_request_id: framework_request.id } }
+
+      it "redirects to the documents page" do
+        expect(response).to redirect_to "/procurement-support/documents"
       end
+    end
+  end
+
+  context "when the request is in the services flow" do
+    let(:category) { create(:request_for_help_category, slug: "catering-services", flow: :services) }
+
+    before { post :create, session: { framework_request_id: framework_request.id } }
+
+    it "redirects to the documents page" do
+      expect(response).to redirect_to "/procurement-support/documents"
+    end
+  end
+
+  context "when the request is in the goods flow" do
+    let(:category) { create(:request_for_help_category, slug: "books", flow: :goods) }
+
+    before { post :create, session: { framework_request_id: framework_request.id } }
+
+    it "redirects to the accessibility needs page" do
+      expect(response).to redirect_to "/procurement-support/special_requirements"
+    end
+  end
+
+  context "when the request is in the not-fully-supported flow" do
+    let(:category) { create(:request_for_help_category, slug: "uniform", flow: :not_fully_supported) }
+
+    before { post :create, session: { framework_request_id: framework_request.id } }
+
+    it "redirects to the accessibility needs page" do
+      expect(response).to redirect_to "/procurement-support/special_requirements"
     end
   end
 end

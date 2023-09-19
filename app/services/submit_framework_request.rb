@@ -34,6 +34,8 @@ class SubmitFrameworkRequest
     CaseFiles::SubmitEnergyBills.new
       .call(framework_request_id: request.id, support_case_id: @kase.id)
 
+    request.submit_documents
+
     request.update!(submitted: true)
   end
 
@@ -72,6 +74,8 @@ private
       user_selected_category:,
       detected_category_id: request.category&.support_category&.id,
       participating_schools: map_urns_to_orgs(request.school_urns),
+      discovery_method: request.__getobj__.origin,
+      discovery_method_other_text: request.origin_other,
     }
 
     @kase = Support::CreateCase.new(kase_attrs).call
@@ -95,7 +99,7 @@ private
   end
 
   def send_confirmation_email
-    if request.has_bills? || request.energy_alternative == "email_later"
+    if request.flow.energy?
       Emails::ConfirmationEnergy.new(
         recipient: request.user,
         reference: @kase.ref,

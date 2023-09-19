@@ -1,0 +1,110 @@
+<%= content_for :title, I18n.t("faf.document_upload.title") %>
+
+<div
+  data-controller="energy-bill-upload"
+  data-energy-bill-upload-dropzone-outlet=".drop-zone-container"
+  data-energy-bill-upload-error-summary-outlet=".govuk-error-summary"
+  data-energy-bill-upload-page-one-title-value="<%= I18n.t("faf.document_upload.title") %>"
+  data-energy-bill-upload-page-one-continue-button-value="Continue to upload"
+  data-energy-bill-upload-page-two-title-value="Your files are uploading"
+  data-energy-bill-upload-page-two-continue-button-value="Continue to upload"
+  data-energy-bill-upload-page-three-title-value="Your files have been uploaded"
+  data-energy-bill-upload-page-three-continue-button-value="Continue">
+
+  <div class="govuk-error-summary govuk-!-display-none"
+    data-controller="error-summary">
+    <div role="alert">
+      <h2 class="govuk-error-summary__title" data-error-summary-target="title">
+        There is a problem
+      </h2>
+      <div class="govuk-error-summary__body" data-error-summary-target="body" aria-live="polite">
+      </div>
+    </div>
+  </div>
+
+  <span class="govuk-caption-l"><%= I18n.t("faf.document_upload.caption") %></span>
+  <h1 class="govuk-heading-l" data-energy-bill-upload-target="title" aria-live="polite">
+    <%= I18n.t("faf.document_upload.title") %>
+  </h1>
+
+  <div data-energy-bill-upload-target="lblHint">
+    <p class="govuk-hint"><%= I18n.t("faf.document_upload.hint") %></p>
+    <ul class="govuk-list govuk-list--bullet govuk-hint">
+      <% selected_document_types(@document_types, @other).each do |document_type| %>
+        <li><%= document_type %></li>
+      <% end %>
+    </ul>
+    <p class="govuk-body"><%= I18n.t("faf.document_upload.body") %></p>
+  </div>
+
+  <div class="drop-zone-container govuk-!-margin-bottom-5"
+    data-controller="dropzone"
+    data-dropzone-list-files-url-value=<%= list_document_uploads_framework_requests_url(@framework_request) %>
+    data-dropzone-add-file-url-value=<%= upload_document_uploads_framework_requests_url(@framework_request) %>
+    data-dropzone-remove-file-url-value=<%= remove_document_uploads_framework_requests_url(@framework_request) %>>
+    <div class="upload-preview-template govuk-!-display-none" data-dropzone-target="previewTemplate">
+      <div class="upload-item">
+        <div class="upload-row file-details">
+          <h3 class="govuk-heading-s"><span data-dz-name></span> (<span data-dz-size></span>)</h3>
+          <a href="#" class="btn-remove govuk-link govuk-link--no-visited-state" data-dz-remove>Remove</a>
+        </div>
+        <div class="upload-row progress-status-container">
+          <p class="govuk-body-s progress-status govuk-!-display-none" data-dz-errormessage></p>
+
+          <div class="upload-progress-container govuk-!-display-none">
+            <div data-dz-uploadprogress class="upload-progress" aria-valuenow="0"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-zone govuk-!-margin-bottom-5" data-energy-bill-upload-target="dropZone">
+      <p class="govuk-body">Drag and drop files here or</p>
+
+      <span class="govuk-button govuk-button--secondary"
+        data-dropzone-target="btnDisplayFileDialog">
+        Choose files
+      </span>
+    </div>
+
+    <div class="file-previews">
+      <div class="files-added-now govuk-!-margin-bottom-5 govuk-!-display-none"
+        data-energy-bill-upload-target="filesAddedNow"
+        data-dropzone-target="filePreview">
+        <h2 class="govuk-heading-m">
+          Files added
+        </h2>
+      </div>
+
+      <div class="files-added-before govuk-!-margin-bottom-5 govuk-!-display-none"
+        data-energy-bill-upload-target="filesAddedBefore">
+        <h2 class="govuk-heading-m">
+          Files already uploaded
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <button id="btn-continue"
+    class="govuk-button"
+    data-action="click->energy-bill-upload#onContinueToUploadClicked"
+    data-energy-bill-upload-target="btnContinue">
+    Continue to upload
+  </button>
+
+  <button id="btn-submit"
+    class="govuk-button govuk-!-display-none"
+    data-action="click->energy-bill-upload#onSubmitClicked"
+    data-energy-bill-upload-target="btnSubmit">
+    Continue
+  </button>
+
+  <button id="btn-add-more-files"
+    class="govuk-button govuk-button--secondary govuk-!-display-none"
+    data-action="click->energy-bill-upload#onAddMoreFilesClicked"
+    data-energy-bill-upload-target="btnAddMoreFiles">
+    Add more files
+  </button>
+</div>
+
+<%= render "framework_requests/common_form_fields", form: form %>

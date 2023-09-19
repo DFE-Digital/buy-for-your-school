@@ -1,10 +1,11 @@
 require "./spec/support/shared/framework_request_controllers"
 
 describe FrameworkRequests::ConfirmSchoolsController, type: :controller do
-  let(:framework_request) { create(:framework_request) }
+  let(:framework_request) { create(:framework_request, category:) }
   let(:school_urns_confirmed) { false }
   let(:school_urns) { %w[1 2] }
   let(:framework_support_form) { { framework_support_form: { school_urns:, school_urns_confirmed: } } }
+  let(:category) { nil }
   let(:params) { framework_support_form }
 
   describe "create" do
@@ -13,21 +14,12 @@ describe FrameworkRequests::ConfirmSchoolsController, type: :controller do
     context "when the schools are confirmed" do
       let(:school_urns_confirmed) { true }
 
-      context "and it is an energy request" do
-        let(:framework_request) { create(:framework_request, :energy_request) }
-
-        it "redirects to the bill upload page" do
-          post(:create, params:, session:)
-          expect(response).to redirect_to "/procurement-support/bill_uploads"
-        end
-      end
-
       context "and the user is signed in" do
         before { user_is_signed_in }
 
-        it "redirects to the message page" do
+        it "redirects to the categories page" do
           post(:create, params:, session:)
-          expect(response).to redirect_to "/procurement-support/message"
+          expect(response).to redirect_to "/procurement-support/categories"
         end
       end
 
@@ -55,9 +47,35 @@ describe FrameworkRequests::ConfirmSchoolsController, type: :controller do
     context "when the schools are confirmed" do
       let(:school_urns_confirmed) { true }
 
-      it "redirects to the request" do
-        patch(:update, params:)
-        expect(response).to redirect_to "/procurement-support/#{framework_request.id}"
+      context "and a single school has been selected" do
+        let(:school_urns) { %w[1] }
+
+        it "redirects to the request" do
+          patch(:update, params:)
+          expect(response).to redirect_to "/procurement-support/#{framework_request.id}"
+        end
+      end
+
+      context "and multiple schools have been selected" do
+        let(:school_urns) { %w[1 2] }
+
+        context "and the user is in the services flow" do
+          let(:category) { create(:request_for_help_category, flow: :services) }
+
+          it "redirects to the same supplier page" do
+            patch(:update, params:)
+            expect(response).to redirect_to "/procurement-support/#{framework_request.id}/same_supplier/edit"
+          end
+        end
+
+        context "and the user is in the energy flow" do
+          let(:category) { create(:request_for_help_category, flow: :energy) }
+
+          it "redirects to the same supplier page" do
+            patch(:update, params:)
+            expect(response).to redirect_to "/procurement-support/#{framework_request.id}/same_supplier/edit"
+          end
+        end
       end
     end
 

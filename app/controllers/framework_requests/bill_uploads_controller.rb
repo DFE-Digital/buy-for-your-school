@@ -2,6 +2,8 @@ module FrameworkRequests
   class BillUploadsController < BaseController
     skip_before_action :authenticate_user!
 
+    before_action :edit_back_url, only: %i[update]
+
     def list
       files = framework_request.energy_bills.map do |bill|
         {
@@ -53,7 +55,7 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      message_framework_requests_path(framework_support_form: form.common)
+      special_requirements_framework_requests_path(framework_support_form: form.common)
     end
 
     def back_url
@@ -61,11 +63,20 @@ module FrameworkRequests
     end
 
     def determine_back_path
-      @current_user = UserPresenter.new(current_user)
-      return email_framework_requests_path(framework_support_form: form.common) if @current_user.guest?
-      return last_energy_path if @current_user.single_org?
+      return energy_alternative_framework_requests_path(framework_support_form: form.common) if framework_request.energy_alternative.present?
 
-      select_organisation_framework_requests_path(framework_support_form: form.common)
+      energy_bill_framework_requests_path(framework_support_form: form.common)
+    end
+
+    def edit_back_url
+      @back_url =
+        if @form.source.change_link?
+          framework_request_path
+        elsif framework_request.energy_alternative.nil?
+          edit_framework_request_energy_bill_path(framework_request)
+        else
+          edit_framework_request_energy_alternative_path(framework_request)
+        end
     end
   end
 end

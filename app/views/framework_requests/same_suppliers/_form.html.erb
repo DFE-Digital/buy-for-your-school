@@ -1,0 +1,7 @@
+<%= content_for :title, I18n.t("faf.same_supplier.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_collection_radio_buttons :same_supplier_used, available_same_supplier_options, :id, :title,
+      caption: { text: I18n.t("faf.same_supplier.caption"), size: "l" },
+      legend: { text: I18n.t("faf.same_supplier.title"), size: "l" } %>

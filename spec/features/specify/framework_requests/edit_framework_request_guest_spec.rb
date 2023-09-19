@@ -7,7 +7,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
   include_context "with schools and groups"
 
   let(:fm_category) { create(:request_for_help_category, title: "FM", slug: "fm") }
-  let(:catering_category) { create(:request_for_help_category, title: "Catering", slug: "catering", parent: fm_category) }
+  let(:catering_category) { create(:request_for_help_category, title: "Catering", slug: "catering", parent: fm_category, flow: :goods) }
   let(:ict_category) { create(:request_for_help_category, title: "ICT", slug: "ict") }
 
   let(:keys) { all("dt.govuk-summary-list__key") }
@@ -20,10 +20,9 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     visit "/procurement-support/#{request.id}"
   end
 
-  it "goes back to the special requirements page" do
+  it "goes back to the origin page" do
     click_on "Back"
-    expect(page).to have_current_path "/procurement-support/#{request.id}/special_requirements/edit"
-    expect(page).to have_text "Accessibility"
+    expect(page).to have_current_path "/procurement-support/#{request.id}/origin/edit"
   end
 
   it "has submission information" do
@@ -49,13 +48,25 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     expect(values[3]).to have_text "Single"
     expect(actions[3]).to have_link "Change"
 
-    expect(keys[4]).to have_text "Description of request"
-    expect(values[4]).to have_text "please help!"
+    expect(keys[4]).to have_text "Type of goods or service"
+    expect(values[4]).to have_text "Catering"
     expect(actions[4]).to have_link "Change"
 
-    expect(keys[5]).to have_text "Type of goods or service"
-    expect(values[5]).to have_text "Catering"
+    expect(keys[5]).to have_text "Procurement amount"
+    expect(values[5]).to have_text "£10.50"
     expect(actions[5]).to have_link "Change"
+
+    expect(keys[6]).to have_text "Description of request"
+    expect(values[6]).to have_text "please help!"
+    expect(actions[6]).to have_link "Change"
+
+    expect(keys[7]).to have_text "Accessibility"
+    expect(values[7]).to have_text "special_requirements"
+    expect(actions[7]).to have_link "Change"
+
+    expect(keys[8]).to have_text "Origin"
+    expect(values[8]).to have_text "Recommendation"
+    expect(actions[8]).to have_link "Change"
   end
 
   it "edit name" do
@@ -101,7 +112,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     click_continue
 
     expect(page).to have_current_path "/procurement-support/#{request.id}"
-    expect(values[4]).to have_text "I have a problem"
+    expect(values[6]).to have_text "I have a problem"
   end
 
   describe "change organisation type and reselect", js: true do

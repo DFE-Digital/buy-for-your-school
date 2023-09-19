@@ -86,8 +86,6 @@ RSpec.feature "User authentication filter" do
     before do
       visit "/procurement-support"
       click_on "Start now"
-      choose "No"
-      click_continue
       choose "Yes, use my DfE Sign-in"
       click_continue
     end

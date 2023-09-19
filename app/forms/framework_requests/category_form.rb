@@ -17,7 +17,7 @@ module FrameworkRequests
     def category_options
       return if multiple_categories?
 
-      categories = @category_path.blank? ? RequestForHelpCategory.top_level.active : @current_category&.sub_categories
+      categories = @category_path.blank? ? RequestForHelpCategory.top_level.active : @current_category&.sub_categories&.active
 
       categories.map do |category|
         OpenStruct.new(

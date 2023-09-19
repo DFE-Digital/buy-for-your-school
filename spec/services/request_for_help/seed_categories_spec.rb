@@ -36,4 +36,15 @@ describe RequestForHelp::SeedCategories do
       expect(passenger_transport.support_category).to eq(support_category)
     end
   end
+
+  context "when a category is archived" do
+    before { service.call }
+
+    it "persists it as archived with an archive date" do
+      ict_funding = RequestForHelpCategory.find_by(title: "ICT funding")
+
+      expect(ict_funding.archived).to eq(true)
+      expect(ict_funding.archived_at).to be_within(1.second).of(Time.zone.now)
+    end
+  end
 end

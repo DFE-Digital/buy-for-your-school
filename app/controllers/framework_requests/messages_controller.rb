@@ -13,21 +13,17 @@ module FrameworkRequests
     end
 
     def create_redirect_path
-      categories_framework_requests_path(framework_support_form: form.common)
+      if framework_request.energy_category?
+        energy_bill_framework_requests_path(framework_support_form: form.common)
+      elsif flow.goods? || flow.not_fully_supported?
+        special_requirements_framework_requests_path(framework_support_form: form.common)
+      else
+        documents_framework_requests_path(framework_support_form: form.common)
+      end
     end
 
     def back_url
-      @back_url = determine_back_path
-    end
-
-    def determine_back_path
-      @current_user = UserPresenter.new(current_user)
-      return confirm_schools_framework_requests_path(framework_support_form: form.common) if form.eligible_for_school_picker?
-      return bill_uploads_framework_requests_path(framework_support_form: form.common) if form.allow_bill_upload?
-      return email_framework_requests_path(framework_support_form: form.common) if @current_user.guest?
-      return last_energy_path if Flipper.enabled?(:energy_bill_flow) && @current_user.single_org?
-
-      select_organisation_framework_requests_path(framework_support_form: form.common)
+      @back_url = procurement_amount_framework_requests_path(framework_support_form: form.common)
     end
   end
 end

@@ -22,14 +22,14 @@ describe FrameworkRequests::ProcurementAmountForm, type: :model do
       subject(:form) { described_class.new(procurement_amount: "abc") }
 
       before do
-        allow(validator).to receive(:invalid_number?).and_return(true)
+        # allow(validator).to receive(:invalid_number?).and_return(true)
         allow(validator).to receive(:too_large?).and_return(false)
       end
 
       it "returns the right error message" do
         expect(form).not_to be_valid
         expect(form.errors.messages[:procurement_amount]).to eq ["Enter a valid number"]
-        expect(validator).to have_received(:invalid_number?).once
+        # expect(validator).to have_received(:invalid_number?).once
       end
     end
 
@@ -37,7 +37,7 @@ describe FrameworkRequests::ProcurementAmountForm, type: :model do
       subject(:form) { described_class.new(procurement_amount: "10000000") }
 
       before do
-        allow(validator).to receive(:invalid_number?).and_return(false)
+        # allow(validator).to receive(:invalid_number?).and_return(false)
         allow(validator).to receive(:too_large?).and_return(true)
       end
 

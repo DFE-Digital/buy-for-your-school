@@ -56,7 +56,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   let(:actions) { all("dd.govuk-summary-list__actions") }
 
   before do
-    create(:request_for_help_category, title: "A category", slug: "a")
+    create(:request_for_help_category, title: "A category", slug: "a", flow: :goods)
 
     visit "/procurement-support/sign_in"
     choose "No, continue without a DfE Sign-in account"
@@ -217,13 +217,26 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         fill_in "framework_support_form[email]", with: "test@sky.learnmat.uk"
         click_continue
 
-        expect(page).to have_text "How can we help?"
+        expect(page).to have_text "What type of goods or service do you need?"
 
         click_link "Back"
         fill_in "framework_support_form[email]", with: "test@sch.uk"
         click_continue
 
-        expect(page).to have_text "How can we help?"
+        expect(page).to have_text "What type of goods or service do you need?"
+      end
+    end
+
+    describe "the categories page" do
+      before do
+        autocomplete_school_step
+        confirm_choice_step
+        complete_name_step
+        complete_email_step
+      end
+
+      it "has the correct attributes" do
+        expect(page).to have_title "What type of goods or service do you need?"
       end
     end
 
@@ -233,6 +246,8 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         confirm_choice_step
         complete_name_step
         complete_email_step
+        complete_category_step
+        complete_procurement_amount_step
       end
 
       it "has the correct attributes" do
@@ -251,7 +266,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         confirm_choice_step
         complete_name_step
         complete_email_step
-        complete_help_message_step
         complete_category_step
       end
 
@@ -272,9 +286,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         confirm_choice_step
         complete_name_step
         complete_email_step
-        complete_help_message_step
         complete_category_step
         complete_procurement_amount_step
+        complete_help_message_step
       end
 
       it "has the correct attributes" do

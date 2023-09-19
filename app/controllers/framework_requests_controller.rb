@@ -9,7 +9,7 @@ class FrameworkRequestsController < ApplicationController
 
   def show
     @current_user = UserPresenter.new(current_user)
-    @back_url = edit_framework_request_special_requirements_path
+    @back_url = edit_framework_request_origin_path
 
     if framework_request.submitted?
       redirect_to framework_request_submission_path(framework_request)

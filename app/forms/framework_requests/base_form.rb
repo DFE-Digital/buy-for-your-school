@@ -2,8 +2,6 @@ module FrameworkRequests
   class BaseForm
     include ActiveModel::Model
 
-    delegate :allow_bill_upload?, to: :framework_request
-
     attr_accessor(
       :id,
       :dsi,
@@ -11,8 +9,9 @@ module FrameworkRequests
       :user,
       :org_confirm,
       :special_requirements_choice,
-      :source,
     )
+
+    attr_writer :source
 
     def initialize(attributes = {})
       super
@@ -68,6 +67,10 @@ module FrameworkRequests
     end
 
     def eligible_for_school_picker? = group? && (school_or_group.federation? || school_or_group.mat_or_trust?) && school_or_group.organisations.present?
+
+    def source
+      (@source || "").inquiry
+    end
 
   private
 

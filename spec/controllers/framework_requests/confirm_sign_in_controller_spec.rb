@@ -13,21 +13,23 @@ describe FrameworkRequests::ConfirmSignInController, type: :controller do
   context "when the user belongs to one organisation" do
     let(:user) { build(:user, :one_supported_school) }
 
-    context "when the user has chosen not to upload a bill" do
-      let(:framework_request) { create(:framework_request, is_energy_request: false) }
-
-      it "redirects to the message page" do
-        post :create, session: { framework_request_id: framework_request.id }
-        expect(response).to redirect_to "/procurement-support/message"
-      end
+    it "redirects to the categories page" do
+      post :create
+      expect(response).to redirect_to "/procurement-support/categories"
     end
 
-    context "when the user has chosen to upload a bill" do
-      let(:framework_request) { create(:framework_request, is_energy_request: true, energy_request_about: "energy_contract", have_energy_bill: true) }
+    context "and the organisation is a MAT or federation with multiple schools" do
+      let(:user) { build(:user, :one_supported_group) }
 
-      it "redirects to the bill upload page" do
-        post :create, session: { framework_request_id: framework_request.id }
-        expect(response).to redirect_to "/procurement-support/bill_uploads"
+      before do
+        establishment_group_type = create(:support_establishment_group_type, code: 6)
+        create(:support_establishment_group, name: "Testing Multi Academy Trust", uid: "2314", establishment_group_type:)
+        create_list(:support_organisation, 2, trust_code: "2314")
+      end
+
+      it "redirects to the school picker page" do
+        post :create
+        expect(response).to redirect_to "/procurement-support/school_picker"
       end
     end
   end

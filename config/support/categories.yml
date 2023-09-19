@@ -30,6 +30,7 @@ categories:
       - title: Cyber services
         slug: cyber_services
       - title: Funding - non procurement requests
+        is_archived: true
       - title: Hosting & Storage
         slug: hosting_and_storage
       - title: Laptops

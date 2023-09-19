@@ -2,7 +2,7 @@ module Support
   module Cases
     class RequestsController < Cases::ApplicationController
       def show
-        @request = @current_case.framework_request
+        @request = FrameworkRequestPresenter.new(@current_case.framework_request)
       end
 
     private

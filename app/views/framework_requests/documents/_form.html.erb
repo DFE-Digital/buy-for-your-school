@@ -1,0 +1,16 @@
+<%= content_for :title, I18n.t("faf.documents.title") %>
+
+<%= render "framework_requests/common_form_fields", form: form %>
+
+<%= form.govuk_check_boxes_fieldset :document_types,
+      caption: { text: I18n.t("faf.documents.caption"), size: "l" },
+      legend: { text: I18n.t("faf.documents.title"), size: "l" },
+      hint: -> { render "form_hint" } do %>
+        <% available_document_types.each do |document_type| %>
+          <%= form.govuk_check_box :document_types, document_type.id, label: { text: document_type.title }, exclusive: document_type.exclusive do %>
+            <% if document_type.id == "other" %>
+              <%= form.govuk_text_field :document_type_other, label: nil %>
+            <% end %>
+          <% end %>
+        <% end %>
+<% end %>

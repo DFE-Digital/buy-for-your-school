@@ -95,17 +95,11 @@ Rails.application.routes.draw do
       collection do
         post "/start", to: "start#create"
 
-        get "/energy_request", to: "energy_request#index"
-        post "/energy_request", to: "energy_request#create"
+        get "/energy_bill", to: "energy_bills#index"
+        post "/energy_bill", to: "energy_bills#create"
 
-        get "/energy_request_about", to: "energy_request_about#index"
-        post "/energy_request_about", to: "energy_request_about#create"
-
-        get "/energy_bill", to: "energy_bill#index"
-        post "/energy_bill", to: "energy_bill#create"
-
-        get "/energy_alternative", to: "energy_alternative#index"
-        post "/energy_alternative", to: "energy_alternative#create"
+        get "/energy_alternative", to: "energy_alternatives#index"
+        post "/energy_alternative", to: "energy_alternatives#create"
 
         get "/sign_in", to: "sign_in#index"
         post "/sign_in", to: "sign_in#create"
@@ -149,11 +143,32 @@ Rails.application.routes.draw do
         get "/categories/(*category_path)", to: "categories#index", as: "categories"
         post "/categories/(*category_path)", to: "categories#create"
 
+        get "/contract_length", to: "contract_lengths#index"
+        post "/contract_length", to: "contract_lengths#create"
+
+        get "/contract_start_date", to: "contract_start_dates#index"
+        post "/contract_start_date", to: "contract_start_dates#create"
+
+        get "/same_supplier", to: "same_suppliers#index"
+        post "/same_supplier", to: "same_suppliers#create"
+
         get "/procurement_amount", to: "procurement_amounts#index"
         post "/procurement_amount", to: "procurement_amounts#create"
 
+        get "/documents", to: "documents#index"
+        post "/documents", to: "documents#create"
+
+        get "/document_uploads", to: "document_uploads#index"
+        post "/document_uploads", to: "document_uploads#create"
+        get "(:id)/document_uploads/list", to: "document_uploads#list", as: "list_document_uploads"
+        post "(:id)/document_uploads/upload", to: "document_uploads#upload", as: "upload_document_uploads"
+        delete "(:id)/document_uploads/remove", to: "document_uploads#remove", as: "remove_document_uploads"
+
         get "/special_requirements", to: "special_requirements#index"
         post "/special_requirements", to: "special_requirements#create"
+
+        get "/origin", to: "origins#index"
+        post "/origin", to: "origins#create"
       end
       member do
         resource :select_organisation, only: %i[edit update], as: :framework_request_select_organisation
@@ -164,14 +179,22 @@ Rails.application.routes.draw do
         resource :confirm_schools, only: %i[edit update], as: :framework_request_confirm_schools
         resource :name, only: %i[edit update], as: :framework_request_name
         resource :email, only: %i[edit update], as: :framework_request_email
+        resource :energy_bill, only: %i[edit update], as: :framework_request_energy_bill
+        resource :energy_alternative, only: %i[edit update], as: :framework_request_energy_alternative
         resource :bill_uploads, only: %i[edit update], as: :framework_request_bill_uploads
         resource :message, only: %i[edit update], as: :framework_request_message
         resource :category, only: [], as: :framework_request_category do
           get "edit/(*category_path)", to: "categories#edit", as: "edit"
           patch "(*category_path)", to: "categories#update", as: ""
         end
+        resource :contract_length, only: %i[edit update], as: :framework_request_contract_length
+        resource :contract_start_date, only: %i[edit update], as: :framework_request_contract_start_date
+        resource :same_supplier, only: %i[edit update], as: :framework_request_same_supplier
         resource :procurement_amount, only: %i[edit update], as: :framework_request_procurement_amount
+        resource :documents, only: %i[edit update], as: :framework_request_documents
+        resource :document_uploads, only: %i[edit update], as: :framework_request_document_uploads
         resource :special_requirements, only: %i[edit update], as: :framework_request_special_requirements
+        resource :origin, only: %i[edit update], as: :framework_request_origin
       end
     end
   end
