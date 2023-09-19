@@ -71,6 +71,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20220805130609_change_support_emails_in_reply_to_id.rb'
     - 'db/migrate/20221014140003_add_more_trust_fields_to_support_organisations.rb'
     - 'db/migrate/20230210133230_refactor_notifications_into_one_table.rb'
+    - 'db/migrate/20230919092926_update_lot_frameworks_framework.rb'
 
 # Offense count: 2
 # Configuration parameters: Include.
@@ -94,6 +95,7 @@ Rails/ReversibleMigration:
     - 'db/migrate/20201112123028_remove_answer_table.rb'
     - 'db/migrate/20210118110545_change_options_to_jsonb.rb'
     - 'db/migrate/20210125171840_remove_next_entry_id.rb'
+    - 'db/migrate/20230919092926_update_lot_frameworks_framework.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

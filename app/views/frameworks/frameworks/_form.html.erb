@@ -20,10 +20,10 @@
 <%= f.govuk_fieldset legend: { text: 'Availability' } do %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half" id="dfe-start-date">
-      <%= f.govuk_date_field :dfe_start_date, legend: { size: "s", text: "DfE start date", class: "" } %>
+      <%= f.govuk_date_field :dfe_start_date, legend: { size: "s", text: "DfE start date" } %>
     </div>
     <div class="govuk-grid-column-one-half" id="dfe-end-date">
-      <%= f.govuk_date_field :dfe_end_date, legend: { size: "s", text: "DfE end date", class: "" } %>
+      <%= f.govuk_date_field :dfe_end_date, legend: { size: "s", text: "DfE end date" } %>
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -40,7 +40,7 @@
   <% dps_options = [[true, 'Yes'], [false, 'No']] %>
   <%= f.govuk_collection_radio_buttons :dps, dps_options, :first, :last, inline: true, legend: { size: 's', text: 'Is this framework a DPS (Dynamic purchasing system)?' } %>
 
-  <% lot_options = [['single', 'Single-lot'], ['multi', 'Multi-lot']] %>
+  <% lot_options = Frameworks::Framework.lots.map {|status, id| [status, status.humanize + "-lot"] } %>
   <%= f.govuk_collection_radio_buttons :lot, lot_options, :first, :last, inline: true, legend: { size: 's', text: 'Is this framework a single or multi lot?' } %>
 
   <% status_options = Frameworks::Framework.statuses.map {|status, id| [status, status.humanize] } %>
