@@ -12,6 +12,16 @@
       </div>
 
       <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Single / Multi-lot</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.lot.humanize %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">DPS?</dt>
+        <dd class="govuk-summary-list__value"><%= @framework.dps? ? "Yes" : "No" %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">SCT Framework Owner</dt>
         <dd class="govuk-summary-list__value"><%= @framework.sct_framework_owner %></dd>
       </div>
