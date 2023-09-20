@@ -408,7 +408,7 @@ en:
         no_dsi: No, continue without a DfE Sign-in account
       subtitle: About your school
     email:
-      hint: We will only use this to contact you about your request.
+      hint: Use your school email address. We will only use this to contact you about your request.
       subtitle: About you
       title: What is your email address?
     energy_alternative:

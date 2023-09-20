@@ -181,7 +181,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(page).to have_text "About you"
         expect(page).to have_text "What is your email address?"
 
-        expect(page).to have_text "We will only use this to contact you about your request."
+        expect(page).to have_text "Use your school email address. We will only use this to contact you about your request."
 
         expect(page).to have_button "Continue"
       end
@@ -191,6 +191,39 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
         expect(page).to have_link "Enter an email address", href: "#framework-support-form-email-field-error"
+      end
+
+      it "doesn't allow non-school email addresses" do
+        fill_in "framework_support_form[email]", with: "test@gmail.com"
+        click_continue
+
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Enter a school email address in the correct format, like name@example.sch.uk. You cannot use a personal email address such as @gmail.com", href: "#framework-support-form-email-field-error"
+
+        fill_in "framework_support_form[email]", with: "test@Gmail.com"
+        click_continue
+
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Enter a school email address in the correct format, like name@example.sch.uk. You cannot use a personal email address such as @Gmail.com", href: "#framework-support-form-email-field-error"
+
+        fill_in "framework_support_form[email]", with: "test@sky.example"
+        click_continue
+
+        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
+        expect(page).to have_link "Enter a school email address in the correct format, like name@example.sch.uk. You cannot use a personal email address such as @sky.example", href: "#framework-support-form-email-field-error"
+      end
+
+      it "allows school email addresses" do
+        fill_in "framework_support_form[email]", with: "test@sky.learning.mat"
+        click_continue
+
+        expect(page).to have_text "How can we help?"
+
+        click_link "Back"
+        fill_in "framework_support_form[email]", with: "test@sch.uk"
+        click_continue
+
+        expect(page).to have_text "How can we help?"
       end
     end
 
