@@ -81,6 +81,18 @@ module Support
     #   faf             - find a framework
     enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
 
+    # Discovery Method
+    #
+    #   used_before         - I've used this service before
+    #   meeting_or_event    - Meeting or event
+    #   newsletter          - Newsletter
+    #   recommendation      - Recommendation
+    #   search_engine       - Search engine, such as Google
+    #   social_media        - Social media, such as Twitter
+    #   website             - Website, such as GOV.UK
+    #   other               - Other
+    enum discovery_method: { used_before: 0, meeting_or_event: 1, newsletter: 2, recommendation: 3, search_engine: 4, social_media: 5, website: 6, other: 7 }
+
     # Creation Source
     #
     #   default                 - created by a member of the ProcOps team

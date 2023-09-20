@@ -33,6 +33,8 @@
   <%= form.govuk_phone_field :phone_number, label: { text: I18n.t("support.case_hub_migration.label.phone_number", optional: I18n.t("support.generic.form.optional")) } %>
   <%= form.govuk_phone_field :extension_number, label: { text: I18n.t("support.case_hub_migration.label.extension_number", optional: I18n.t("support.generic.form.optional")) } %>
 
+	<%= render "support/cases/discovery_method/discovery_method", form: form %>
+
   <%= render "support/cases/request_details/form_fields", form: form, show_request_text: false %>
 
   <%= form.govuk_text_field :procurement_amount, width: 5,

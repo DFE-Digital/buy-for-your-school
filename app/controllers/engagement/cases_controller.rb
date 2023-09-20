@@ -72,6 +72,8 @@ module Engagement
         :email,
         :phone_number,
         :extension_number,
+        :discovery_method,
+        :discovery_method_other_text,
         :category_id,
         :query_id,
         :other_category,

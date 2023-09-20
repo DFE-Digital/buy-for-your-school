@@ -17,6 +17,8 @@ module Support
     option :email, optional: true
     option :phone_number, optional: true
     option :extension_number, optional: true
+    option :discovery_method, optional: true
+    option :discovery_method_other_text, optional: true
     option :source, optional: true
     option :creation_source, optional: true
     option :procurement_amount, ->(value) { value&.gsub(/[£,]/, "") }, optional: true

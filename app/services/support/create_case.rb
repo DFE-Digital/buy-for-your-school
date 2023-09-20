@@ -21,6 +21,8 @@ module Support
         email: @attrs[:email],
         phone_number: @attrs[:phone_number],
         extension_number: @attrs[:extension_number],
+        discovery_method: @attrs[:discovery_method],
+        discovery_method_other_text: @attrs[:discovery_method_other_text],
         request_text: @attrs[:request_text],
         action_required: @attrs.fetch(:action_required, false),
         procurement_amount: @attrs[:procurement_amount],
