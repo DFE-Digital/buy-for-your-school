@@ -955,6 +955,19 @@ en:
           schools_commercial_team: Schools Commercial Team (SCT)
           sw_hub: South West (SW) Hub
           unspecified: "-"
+        discovery_method:
+          legend: Case origin
+          field: Origin
+          please_select: Please select
+          other_text_field: Please specify origin
+          used_before: Used this service before
+          meeting_or_event: Meeting or event
+          newsletter: Newsletter
+          recommendation: Recommendation
+          search_engine: Search engine, such as Google
+          social_media: Social media, such as Twitter
+          website: Website, such as GOV.UK
+          other: Other
         special_requirements: Accessibility
         stage: Stage
         state:

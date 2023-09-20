@@ -118,6 +118,44 @@
           </dd>
         </div>
       </dl>
+			
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case.label.discovery_method.legend") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.discovery_method.field") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+						<%= I18n.t("support.case.label.discovery_method.#{Support::Case::discovery_methods.keys[@form.discovery_method]}") %>
+						<%= if @form.discovery_method == Support::Case::discovery_methods[:other] && !@form.discovery_method_other_text.empty? then "- #{@form.discovery_method_other_text}" end %>
+          </dd>
+          <dd id="changeDiscoveryMethod" class="govuk-summary-list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_hub_migration.edit.section.source") %>
+      </h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.case_source") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= I18n.t("support.case.label.source.#{@form.source}") %>
+          </dd>
+          <dd id="changeSource" class="govuk-summary-list__list__actions">
+            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
+          </dd>
+        </div>
+      </dl>
+			
 
       <h2 class="govuk-heading-m">
         <%= I18n.t("support.case_hub_migration.edit.section.case") %>
@@ -163,25 +201,7 @@
           </div>
         <% end %>
       </dl>
-
-      <h2 class="govuk-heading-m">
-        <%= I18n.t("support.case_hub_migration.edit.section.source") %>
-      </h2>
-
-      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case_hub_migration.label.case_source") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= I18n.t("support.case.label.source.#{@form.source}") %>
-          </dd>
-          <dd id="changeSource" class="govuk-summary-list__list__actions">
-            <%= form.button I18n.t("generic.button.change_answer"), class: "govuk-link", value: "change" %>
-          </dd>
-        </div>
-      </dl>
-
+			
       <h2 class="govuk-heading-m">
         <%= I18n.t("support.case_hub_migration.edit.section.request_text") %>
       </h2>

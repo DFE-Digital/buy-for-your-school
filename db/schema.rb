@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "citext"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -84,8 +83,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.datetime "updated_at", null: false
     t.boolean "accessibility_research_opt_in"
     t.string "accessibility_research_email"
-    t.datetime "survey_sent_at", precision: nil
-    t.datetime "survey_completed_at", precision: nil
+    t.datetime "survey_sent_at"
+    t.datetime "survey_completed_at"
     t.index ["case_id"], name: "index_all_cases_survey_responses_on_case_id"
   end
 
@@ -159,8 +158,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.integer "status"
     t.string "user_ip"
     t.datetime "survey_started_at"
-    t.datetime "survey_sent_at", precision: nil
-    t.datetime "survey_completed_at", precision: nil
+    t.datetime "survey_sent_at"
+    t.datetime "survey_completed_at"
     t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
@@ -307,8 +306,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id"
     t.text "sidebar"
     t.string "breadcrumbs", default: [], array: true
@@ -481,6 +480,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.boolean "with_school", default: false, null: false
     t.date "next_key_date"
     t.string "next_key_date_description"
+    t.integer "discovery_method"
+    t.string "discovery_method_other_text"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -725,7 +726,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.string "ukprn"
     t.string "telephone_number"
     t.jsonb "local_authority"
-    t.datetime "opened_date", precision: nil
+    t.datetime "opened_date"
     t.string "number"
     t.string "rsc_region"
     t.string "trust_name"
@@ -907,6 +908,48 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
   add_foreign_key "user_journeys", "framework_requests"
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE (organisations.status <> 2)
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE (egroups.status <> 2);
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -1008,48 +1051,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
-  SQL
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE (organisations.status <> 2)
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,

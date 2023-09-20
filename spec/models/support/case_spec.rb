@@ -59,7 +59,7 @@ RSpec.describe Support::Case, type: :model do
   describe "#to_csv" do
     it "includes headers" do
       expect(described_class.to_csv).to eql(
-        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id,existing_contract_id,new_contract_id,procurement_id,savings_status,savings_estimate_method,savings_actual_method,savings_estimate,savings_actual,action_required,organisation_type,value,closure_reason,extension_number,other_category,other_query,procurement_amount,confidence_level,special_requirements,query_id,exit_survey_sent,detected_category_id,creation_source,user_selected_category,created_by_id,procurement_stage_id,initial_request_text,with_school,next_key_date,next_key_date_description\n",
+        "id,ref,category_id,request_text,support_level,status,state,created_at,updated_at,agent_id,first_name,last_name,email,phone_number,source,organisation_id,existing_contract_id,new_contract_id,procurement_id,savings_status,savings_estimate_method,savings_actual_method,savings_estimate,savings_actual,action_required,organisation_type,value,closure_reason,extension_number,other_category,other_query,procurement_amount,confidence_level,special_requirements,query_id,exit_survey_sent,detected_category_id,creation_source,user_selected_category,created_by_id,procurement_stage_id,initial_request_text,with_school,next_key_date,next_key_date_description,discovery_method,discovery_method_other_text\n",
       )
     end
   end

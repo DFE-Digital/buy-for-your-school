@@ -59,6 +59,21 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.discovery_method.field") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+					<% if current_case.discovery_method.present? %>
+            <%= I18n.t("support.case.label.discovery_method.#{current_case.discovery_method}") %>
+						<%= if current_case.other? && !current_case.discovery_method_other_text.empty? then "- #{current_case.discovery_method_other_text}" end %>
+					<% else %>
+						<%= "Unknown" %>
+					<% end %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.source.header") %>
         </dt>
         <dd class="govuk-summary-list__value">

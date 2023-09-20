@@ -11,6 +11,10 @@ module Support
       required(:last_name).value(:string)
       required(:email).value(:string)
       required(:source).value(:string)
+
+      required(:discovery_method).value(:integer)
+      required(:discovery_method_other_text).value(:str?)
+
       optional(:organisation_id).value(:string)
       optional(:organisation_type).value(:string)
       optional(:organisation_name).value(:string)
@@ -58,6 +62,15 @@ module Support
 
     rule(:source) do
       key(:source).failure(:missing) if value.blank?
+    end
+
+    rule(:discovery_method) do
+      key.failure(:invalid) if
+        value < (Support::Case.discovery_methods.values.min) || value > (Support::Case.discovery_methods.values.max)
+    end
+
+    rule(:discovery_method_other_text) do
+      key(:discovery_method_other_text).failure(:missing) if value.blank? && values[:discovery_method].eql?(Support::Case.discovery_methods.keys.index("other"))
     end
 
     rule(:procurement_amount) do

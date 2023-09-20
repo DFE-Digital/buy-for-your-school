@@ -117,6 +117,8 @@ en:
       last_name: "" # Omitted
       email: "" # Omitted
       phone_number: Phone number
+      discovery_method: Case origin # Omitted
+      discovery_method_other_text: "" # Omitted
       estimated_procurement_completion_date: Estimated procurement date
       organisation_id: "" # Omitted
       organisation_name: "" # Omitted
@@ -147,6 +149,12 @@ en:
           format?: must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
           # value in schema set to 13 as includes the + in +44
           max_size?: "can not have more than 12 digits"
+
+        discovery_method:
+          missing: Select how you heard about this service
+          invalid: unknown selection
+        discovery_method_other_text:
+          missing: Explain how you heard about this service
 
         estimated_procurement_completion_date:
           format?: must follow the format of DD/MM/YYYY

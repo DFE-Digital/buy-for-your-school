@@ -99,6 +99,7 @@ RSpec.feature "Create case", js: true do
     fill_in "create_case_form[last_name]", with: "last_name"
     fill_in "create_case_form[email]", with: "test@example.com"
     fill_in "create_case_form[phone_number]", with: "0778974653"
+    choose "Newsletter" # case origin
     choose "Procurement" # request type
     select "Other (General)", from: "select_request_details_category_id"
     find("#request_details_other_category_text").set("Other Category Details")

@@ -42,6 +42,8 @@
                              label: { text: I18n.t("support.case_hub_migration.label.extension_number", optional: I18n.t("support.generic.form.optional")) }
   %>
 
+	<%= render "support/cases/discovery_method/discovery_method", form: form %>
+
   <%= render "support/cases/request_details/form_fields", form: form, show_request_text: false %>
 
   <%= form.govuk_text_field :procurement_amount, width: 5,
@@ -55,8 +57,6 @@
   <%= form.govuk_select(:source,
                         [
                           ["Please select", ""],
-                          [I18n.t("support.case.label.source.nw_hub"), "nw_hub"],
-                          [I18n.t("support.case.label.source.sw_hub"), "sw_hub"],
                           [I18n.t("support.case.label.source.engagement_and_outreach"), "engagement_and_outreach"],
                           [I18n.t("support.case.label.source.schools_commercial_team"), "schools_commercial_team"]
                         ],
