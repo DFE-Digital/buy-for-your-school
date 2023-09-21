@@ -1,7 +1,0 @@
-#!/bin/bash
-# call: ./script/create-network-policy prod buy-for-your-school-x sct-production
-# make sure to log into CF first ./script/cf-login
-
-app_name="buy-for-your-school-clamav-rest-$1"
-
-cf add-network-policy $2 $app_name --protocol tcp --port 9000 -s $3

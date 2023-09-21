@@ -1,8 +1,0 @@
-#!/bin/bash
-
-coverage=$(cat coverage/.last_run.json | jq .result.line)
-
-if [ $(echo "$coverage > 99.00" | bc) != 1 ]; then
-  echo "Coverage check failed"
-  exit 1
-fi

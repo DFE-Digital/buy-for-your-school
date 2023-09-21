@@ -1,3 +1,0 @@
-#!/bin/bash
-
-./script/gpaas/production/rails c
