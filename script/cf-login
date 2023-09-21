@@ -1,3 +1,0 @@
-#!/bin/bash
-
-cf login -u $CF_USER -p $CF_PASSWORD -a https://api.london.cloud.service.gov.uk -s $TF_VAR_cloudfoundry_space
