@@ -1,51 +1,13 @@
 # Console access
 
-We may need a way to access live environments for debugging or incident management purposes in future.
+NOTE: you will need Azure access to do this
 
-If we do need to open a rails console on production we should pair through the commands we execute to mitigate the risk of data loss.
+Please read [this documentation on console access](https://learn.microsoft.com/en-us/azure/container-apps/container-console?tabs=bash#azure-portal) for more information on connecting to a container app console.
 
-## Prerequisites
+## Console access links
 
-You must have an account that has been invited to the Government Platform as a Service (GPaaS) account. DfE PaaS organisation administrators should be able to invite you if you [request in DfE's #digital-tools-support Slack channel](https://ukgovernmentdfe.slack.com/archives/CMS9V0JQL).
-
-You must have have been given 'Space developer' access to the intended space, for example "sct-prod". Note 'Space manager' is a separate role and does not include all `Space developer` permissions.
-
-[You can sign in to check your account and permissions here](https://admin.london.cloud.service.gov.uk).
-
-## Access
-
-1. From a local terminal login to Cloud Foundry and select the intended space
-    ```
-    $ cf login -a api.london.cloud.service.gov.uk -u REDACTED@digital.education.gov.uk
-    ```
-1. See all available spaces
-    ```
-    $ cf spaces
-    ```
-1. Change space
-    ```
-    $ cf target -s <space name>
-    ```
-1. View available services
-    ```
-    $ cf apps
-    ```
-1. Connect to the environment (in this case production)
-    ```
-    $ cf ssh <service name>
-    ```
-1. Navigate to the application
-    ```
-    $ cd /srv/app
-    ```
-1. Run the intended commands
-    ```
-    $ export PATH="$PATH:/usr/local/bin"
-    $ /usr/local/bin/ruby bin/rails c
-    ```
-
-    or
-
-    ```
-    $ /usr/local/bin/ruby bin/rake db:seed
-    ```
+|Enviroment|Console Link|
+|--|--|
+|Development|[Console](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/cb3dd736-2dc8-4296-9894-16d3ecabe85d/resourceGroups/s174d01-ghbs-app/providers/Microsoft.App/containerApps/devghbs-buyforyourschool/console)|
+|Staging|[Console](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/bc55c4cf-d75d-42d1-9017-a457b6b2cfc8/resourceGroups/s174t01-ghbs-app/providers/Microsoft.App/containerApps/stagghbs-buyforyourschool/console)|
+|Production|[Console](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/1871efd3-900d-4908-bf66-1b268ab28f10/resourceGroups/s174p01-ghbs-app/providers/Microsoft.App/containerApps/prodghbs-buyforyourschool/console)|
