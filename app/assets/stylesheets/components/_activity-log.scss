@@ -18,3 +18,29 @@
     margin-right: 5px;
   }
 }
+
+.activity-log-table-advanced {
+  font-size: 15px;
+
+  table {
+    font-size: 15px;
+  }
+
+  .activity-log-request {
+    width: 330px;
+  }
+
+  .activity-log-date {
+    width: 140px;
+  }
+
+  .activity-log-person {
+    width: 200px;
+  }
+
+  .activity-log-change-arrow {
+    color: #a2a2a2;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}

@@ -6,7 +6,11 @@ module Frameworks::ActivityLoggable::ActivityLogPresentable
   end
 
   def activity_log_display_name
-    try(:full_name) || try(:short_name) || try(:name)
+    try(:full_name) || try(:short_name) || try(:name) || try(:reference)
+  end
+
+  def activity_log_display_short_name
+    try(:short_name) || try(:reference)
   end
 
   def activity_log_display_type
