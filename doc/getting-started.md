@@ -1,165 +1,63 @@
 # Getting started
 
-Using [Docker](https://docs.docker.com/docker-for-mac/install) has high parity,
-you don't have to install any dependencies to run the app, as the project is run
-in an isolated container, but it takes longer to run.
+Take the following steps to getting started:
 
-The preferred option is to work with Docker (option 1).
+- [Setup your development environment](getting-started/development-environment.md)
+- [Getting your DfE Sign In Accounts](dfe-sign-in.md)
+- [Getting commit access to the repo](#getting-commit-access)
+- [Starting the application](#starting-the-application)
+- [Grant yourself roles](roles-and-portals.md)
+- [Seed your local environment](#seed-your-local-environment)
 
-## Environment Variables
 
-- Obtain environment variable secrets from another member of the development team
-- Copy `/.env.example` to `/.env.development.local` and populate
+## Getting Commit Access
 
-## Utility Scripts
+Ask a developer with github access to add your github handle as a "Collaborator", this will allow you to create pull requests.
 
-Within `/scripts`, there are a number of convenience scripts for running processes in containers.
+In order to deploy to the `development` environment you need to be allowed to push to the `development` branch, so ask for your github handle to be added within the branch protections.
 
----
+## Starting the application
 
-## 1. Using Docker
-
-`$ script/build` will build and tag the container images used in docker compose.
-
-### Development
-
-`$ script/server` will launch the rails development server
-
-    NB: run script/build if the image ghbs:dev does not exist locally
-    -----------------------------------------------------------------
-    [+] Running 8/8
-    ⠿ Network ghbs_default
-    ⠿ Network ghbs_ghbs
-    ⠿ Volume "ghbs_db_dev"
-    ⠿ Volume "ghbs_cache_dev"
-    ⠿ Container ghbs_db
-    ⠿ Container ghbs_cache
-    ⠿ Container ghbs_worker
-    ⠿ Container ghbs_dev
-
-The project uses [Pry](https://github.com/pry/pry) with [Byebug](https://github.com/deivid-rodriguez/byebug)
-in place of [IRB](https://guides.rubyonrails.org/command_line.html#bin-rails-console)
-
-`$ script/console` will enter a rails console
-
-### Test
-
-`$ script/spec` will run the whole test suite, but can accept an optional spec path, which it will output in documentation format.
-
-    NB: run script/build if the image ghbs:test does not exist locally
-    -----------------------------------------------------------------
-    [+] Running 6/6
-     ⠿ Network ghbs_ghbs         Created
-     ⠿ Volume "ghbs_cache_test"  Created
-     ⠿ Volume "ghbs_db_test"     Created
-     ⠿ Container ghbs_db         Created
-     ⠿ Container ghbs_cache      Created
-     ⠿ Container ghbs_chrome     Created
-    [+] Running 3/3
-     ⠿ Container ghbs_cache   Started
-     ⠿ Container ghbs_chrome  Started
-     ⠿ Container ghbs_db      Started
-
-### CICD
-
-Please note that in the pipeline the script `script/test` is run, which is responsible
-for chaining together dependency updates, migrations, testing, linting and security checks.
-
----
-
-## 2. Without Docker (local installation)
-
-### Dependencies
-
-**OSX**
-
-- Install [Homebrew](https://brew.sh)
-- Copy `/Brewfile.example` to `/Brewfile` and uncomment any required dependencies like `pandoc` and `basictex`
-- Run `$ brew bundle` to install any missing dependencies
-
-### Development
-
-- The assets need to be pre-compiled by running `$ rake webpack:compile`
-- Run the server using `$ bundle exec rails server` if you are bypassing DfE Sign In,
-otherwise [click here](dfe-sign-in.md) for more information.
-- Start the console `$ bundle exec rails console`
-
-### Test
-
-- Run test suite `$ bundle exec rspec` or `bundle exec rake spec`
-- Run lint check `$ bundle exec rubocop` or `bundle exec rake rubocop`
-- Run test suite and lint check `bundle exec rake`
-
-### Services
-
-ASDF can also be used to manage multiple runtime versions. Example step-by-step guide using [ASDF](https://asdf-vm.com) for dependencies.
-
-Postgres
+To start up the application with all processes (See Procfile.dev):
 
 ```
-$ asdf plugin add postgres
-$ POSTGRES_EXTRA_CONFIGURE_OPTIONS=--with-uuid=e2fs asdf install postgres latest
-$ pg_ctl start
-$ createuser postgres --super
-$ createdb postgres
+$ ./bin/dev
 ```
 
-Redis
+To start up the application only (no sidekiq or asset compilation):
 
 ```
-$ asdf plugin add redis
-$ asdf install redis latest
-$ redis-server
+$ bundle exec rails server -b 'ssl://0.0.0.0:3000?key=localhost.key&cert=localhost.crt'
 ```
 
-Node
+### Manually starting asset watching and compilation
+
+NOTE: `./bin/dev` will do this for you automatically.
+
+To watch and compile javascript:
 
 ```
-$ asdf plugin add nodejs
-$ asdf install nodejs latest
+$ yarn build --watch
 ```
 
-[Ruby](https://gds-way.cloudapps.digital/manuals/programming-languages/ruby.html#conventional-tooling) - alternative package managers like [Rbenv](https://github.com/rbenv/rbenv), [RVM](https://github.com/rvm/rvm), [Chruby](https://github.com/postmodern/chruby) can also be used
+To watch and compile css:
 
 ```
-$ asdf plugin add ruby
-$ asdf install ruby <VERSION>
+$ yarn build:css --watch
 ```
 
-Rubygems
+## Seed your local environment
+
+Run the following seeds:
 
 ```
-$ gem install bundle
-$ bundle
+$ rails self_serve:populate_categories
+$ rails case_management:seed
+$ rails request_for_help:seed
 ```
 
-Additional install configuration (if required)
+If you have valid MS Graph credentials you can also seed the local emails:
 
 ```
-$ gem install pg -- --with-pg-config=$(asdf which pg_config)
-```
-
-Prepare the databases
-
-```
-$ rake db:prepare
-$ RAILS_ENV=test rake db:prepare
-```
-
-## Annotations
-
-`rails notes` are used to provide WIP information for developers.
-
-## Security
-
-Run [Brakeman](https://brakemanscanner.org/) to highlight any security vulnerabilities:
-
-```
-$ brakeman
-```
-
-To pipe the results to a file:
-
-```
-$ brakeman -o report.text
+$ rails case_management:seed_shared_inbox_emails
 ```

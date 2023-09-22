@@ -1,52 +1,13 @@
 # Logging
 
-## Logit
+NOTE: you will need azure log access to do this
 
-Logs for all live environments are aggregated in the [Logit serivce](https://dashboard.logit.io).
+## Azure Logs
 
-An existing developer should be able to invite you.
+Read more about Log Analytics [here](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview)
 
-Environment variables are used to tell the infrastructure which log stream URL to send logs to. These can be changed in GitHub Secrets within the repository:
-
-```
-PROD_TF_VAR_SYSLOG_DRAIN_URL=
-STAGING_TF_VAR_SYSLOG_DRAIN_URL=
-RESEARCH_TF_VAR_SYSLOG_DRAIN_URL=
-```
-
-For help putting together the drain URL, there is a [service-specific guide in
-the CloudFoundry
-documentation](https://docs.cloudfoundry.org/devguide/services/log-management-thirdparty-svc.html)
-which includes LogIt. We use the TCP-SSL port with the `syslog-tls://` URL
-scheme.
-
-Remember to deploy the application again to propagate environment variable changes.
-
-## GPaaS
-
-If Logit isn't working you can ask GPaaS to view the logs for individual apps using the Cloud Foundry CLI.
-
-Log in:
-
-```
-$ cf login -a api.london.cloud.service.gov.uk -u REDACTED@digital.education.gov.uk
-```
-
-Select the intended space:
-
-```
-$ cf spaces
-$ cf target -s sct-staging
-```
-
-Find the app name for the process you want to see logs for:
-
-```
-$ cf apps
-```
-
-Ask for the logs:
-
-```
-$ cf logs buy-for-your-school-research
-```
+|Environment|Log Link|
+|-|-|
+|Development|[Log](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/1871efd3-900d-4908-bf66-1b268ab28f10/resourceGroups/s174p01-ghbs-app/providers/Microsoft.OperationalInsights/workspaces/prodghbscontainerapp/logs)|
+|Staging|[Log](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/bc55c4cf-d75d-42d1-9017-a457b6b2cfc8/resourceGroups/s174t01-ghbs-app/providers/Microsoft.OperationalInsights/workspaces/stagghbscontainerapp/logs)|
+|Production|[Log](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/cb3dd736-2dc8-4296-9894-16d3ecabe85d/resourceGroups/s174d01-ghbs-app/providers/Microsoft.OperationalInsights/workspaces/devghbscontainerapp/logs)|
