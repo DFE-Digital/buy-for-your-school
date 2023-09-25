@@ -12,7 +12,7 @@ module FrameworkRequests
 
     def email_is_not_personal
       return unless email
-      return if email.downcase.include?("@sky.learning.mat")
+      return if email.downcase.include?("@sky.learnmat.uk")
 
       invalid_emails = ["@gmail.",
                         "@yahoo.",

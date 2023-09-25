@@ -214,7 +214,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       it "allows school email addresses" do
-        fill_in "framework_support_form[email]", with: "test@sky.learning.mat"
+        fill_in "framework_support_form[email]", with: "test@sky.learnmat.uk"
         click_continue
 
         expect(page).to have_text "How can we help?"
