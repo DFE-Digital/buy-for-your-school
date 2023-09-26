@@ -962,10 +962,11 @@ en:
           other_text_field: Please specify origin
           used_before: Used this service before
           meeting_or_event: Meeting or event
-          newsletter: Newsletter
+          dfe_publication: DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
+          non_dfe_publication: Non-DfE newsletter
           recommendation: Recommendation
           search_engine: Search engine, such as Google
-          social_media: Social media, such as Twitter
+          social_media: Social media, such as LinkedIn, Facebook, X (formerly Twitter)
           website: Website, such as GOV.UK
           other: Other
         special_requirements: Accessibility

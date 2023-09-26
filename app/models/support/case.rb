@@ -85,13 +85,14 @@ module Support
     #
     #   used_before         - I've used this service before
     #   meeting_or_event    - Meeting or event
-    #   newsletter          - Newsletter
+    #   dfe_publication     - DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
+    #   non_dfe_publication - Non-DfE newsletter
     #   recommendation      - Recommendation
     #   search_engine       - Search engine, such as Google
-    #   social_media        - Social media, such as Twitter
+    #   social_media        - Social media, such as LinkedIn, Facebook, X (formerly Twitter)
     #   website             - Website, such as GOV.UK
     #   other               - Other
-    enum discovery_method: { used_before: 0, meeting_or_event: 1, newsletter: 2, recommendation: 3, search_engine: 4, social_media: 5, website: 6, other: 7 }
+    enum discovery_method: { used_before: 0, meeting_or_event: 1, dfe_publication: 2, non_dfe_publication: 3, recommendation: 4, search_engine: 5, social_media: 6, website: 7, other: 8 }
 
     # Creation Source
     #

@@ -2,16 +2,17 @@
 
 		<%= form.govuk_radio_button :discovery_method, '0', label: { text: I18n.t("support.case.label.discovery_method.used_before") }, link_errors: true %>
 		<%= form.govuk_radio_button :discovery_method, '1', label: { text: I18n.t("support.case.label.discovery_method.meeting_or_event") } %>
-		<%= form.govuk_radio_button :discovery_method, '2', label: { text: I18n.t("support.case.label.discovery_method.newsletter") } %>
-		<%= form.govuk_radio_button :discovery_method, '3', label: { text: I18n.t("support.case.label.discovery_method.recommendation") } %>
-		<%= form.govuk_radio_button :discovery_method, '4', label: { text: I18n.t("support.case.label.discovery_method.search_engine") } %>
-		<%= form.govuk_radio_button :discovery_method, '5', label: { text: I18n.t("support.case.label.discovery_method.social_media") } %>
-		<%= form.govuk_radio_button :discovery_method, '6', label: { text: I18n.t("support.case.label.discovery_method.website") } %>
-		<%= form.govuk_radio_button :discovery_method, '7', label: { text: I18n.t("support.case.label.discovery_method.other") } do %>
+		<%= form.govuk_radio_button :discovery_method, '2', label: { text: I18n.t("support.case.label.discovery_method.dfe_publication") } %>
+		<%= form.govuk_radio_button :discovery_method, '3', label: { text: I18n.t("support.case.label.discovery_method.non_dfe_publication") } %>
+		<%= form.govuk_radio_button :discovery_method, '4', label: { text: I18n.t("support.case.label.discovery_method.recommendation") } %>
+		<%= form.govuk_radio_button :discovery_method, '5', label: { text: I18n.t("support.case.label.discovery_method.search_engine") } %>
+		<%= form.govuk_radio_button :discovery_method, '6', label: { text: I18n.t("support.case.label.discovery_method.social_media") } %>
+		<%= form.govuk_radio_button :discovery_method, '7', label: { text: I18n.t("support.case.label.discovery_method.website") } %>
+		<%= form.govuk_radio_button :discovery_method, '8', label: { text: I18n.t("support.case.label.discovery_method.other") } do %>
 			<%= form.govuk_text_field :discovery_method_other_text,
 						id: "discovery_method_other_text",
 						label: { text: I18n.t("support.case.label.discovery_method.other_text_field") },
 						link_errors: true
 			%>
-		<% end %>		
+		<% end %>
 <% end %>

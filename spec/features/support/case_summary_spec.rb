@@ -26,7 +26,7 @@ RSpec.feature "Case summary details" do
   end
 
   context "when value and support levels have been populated" do
-    let(:support_case) { create(:support_case, :with_fixed_category, :opened, value: 123.32, support_level: "L2", source: :incoming_email, discovery_method: :newsletter) }
+    let(:support_case) { create(:support_case, :with_fixed_category, :opened, value: 123.32, support_level: "L2", source: :incoming_email, discovery_method: :non_dfe_publication) }
 
     it "shows fields with details" do
       within("div#case-details") do
@@ -37,7 +37,7 @@ RSpec.feature "Case summary details" do
         expect(all("dt.govuk-summary-list__key")[2]).to have_text "Case value"
         expect(all("dd.govuk-summary-list__value")[2]).to have_text "£123.32"
         expect(all("dt.govuk-summary-list__key")[3]).to have_text "Origin"
-        expect(all("dd.govuk-summary-list__value")[3]).to have_text "Newsletter"
+        expect(all("dd.govuk-summary-list__value")[3]).to have_text "Non-DfE newsletter"
         expect(all("dt.govuk-summary-list__key")[4]).to have_text "Source"
         expect(all("dd.govuk-summary-list__value")[4]).to have_text "Email"
       end
