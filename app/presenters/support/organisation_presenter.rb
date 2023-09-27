@@ -55,5 +55,9 @@ module Support
     def ukprn
       super.presence || I18n.t("generic.not_provided")
     end
+
+    def eligible_for_school_picker?
+      false
+    end
   end
 end

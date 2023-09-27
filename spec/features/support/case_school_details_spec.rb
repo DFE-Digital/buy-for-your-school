@@ -1,4 +1,4 @@
-describe "Case school details" do
+describe "Case school details", js: true do
   include_context "with an agent"
 
   let(:support_organisation) { create(:support_organisation, urn: "12345", name: "School #1") }

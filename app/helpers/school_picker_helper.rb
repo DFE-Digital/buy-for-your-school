@@ -1,4 +1,4 @@
-module FrameworkRequestHelper
+module SchoolPickerHelper
   def school_picker_la_filter_options(organisations)
     CheckboxOption
       .from(
@@ -10,7 +10,7 @@ module FrameworkRequestHelper
 
   def school_picker_phase_filter_options(organisations)
     phases = organisations.pluck(:phase).uniq.map { |phase| %w[middle_primary middle_secondary].include?(phase) ? "middle" : phase }.uniq
-    CheckboxOption.from(I18nOption.from("faf.school_picker.phases.%%key%%", phases))
+    CheckboxOption.from(I18nOption.from("components.school_picker.phases.%%key%%", phases))
   end
 
   def show_school_picker_phase_filters?(organisations)

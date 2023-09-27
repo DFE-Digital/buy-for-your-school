@@ -3,13 +3,4 @@
   url = edit ? edit_framework_request_school_picker_path : school_picker_framework_requests_path
 %>
 
-<div class="filters-panel">
-  <%= form_with model: @form, scope: :framework_support_form, method: :get, url:, html: { "data-controller" => "school-picker-filters", "data-school-picker-filters-school-picker-outlet" => ".school-picker" } do |form| %>
-    <%= form.submit I18n.t("faf.school_picker.filters.clear"), class: "govuk-button govuk-button--secondary", name: :clear, data: { action: "school-picker-filters#setSchoolUrns" } %>
-
-    <%= form.fields :filters, model: @form.filters do |f| %>
-      <%= f.govuk_collection_check_boxes :phases, school_picker_phase_filter_options(@all_schools), :id, :title, small: true, legend:  { text: I18n.t("faf.school_picker.filters.phase"), size: "s" } if show_school_picker_phase_filters?(@all_schools) %>
-      <%= f.govuk_collection_check_boxes :local_authorities, school_picker_la_filter_options(@all_schools), :id, :title, small: true, legend: { text: I18n.t("faf.school_picker.filters.local_authority"), size: "s" } if show_school_picker_la_filters?(@all_schools) %>
-    <% end %>
-  <% end %>
-</div>
+<%= render "components/school_picker/school_picker_filters", model: @form.filters, url:, scope: :framework_support_form %>

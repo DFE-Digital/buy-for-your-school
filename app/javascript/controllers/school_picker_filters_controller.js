@@ -4,6 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["schoolUrns"]
   static outlets = ["school-picker"]
+  static values = { scope: String };
 
   connect() {
     this.assignCheckboxHandlers(this.element);
@@ -23,7 +24,7 @@ export default class extends Controller {
     this.schoolPickerOutlet.getSchoolUrns().forEach(urn => {
       const input = document.createElement("input");
       input.setAttribute("type", "hidden");
-      input.setAttribute("name", "framework_support_form[school_urns][]");
+      input.setAttribute("name", `${this.scopeValue}[school_urns][]`);
       input.setAttribute("value", urn);
       this.element.appendChild(input);
     });

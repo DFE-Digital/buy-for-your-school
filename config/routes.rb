@@ -223,6 +223,7 @@ Rails.application.routes.draw do
         resources :files, only: %i[index edit update destroy]
         resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
+        resources :confirm_organisation, only: %i[show update]
         resource :contact_details, only: %i[edit update]
         resource :closures, only: %i[edit update]
         resource :savings, only: %i[edit update]
@@ -256,6 +257,11 @@ Rails.application.routes.draw do
         end
         resources :email_templates, only: %i[index], constraints: ->(_request) { Flipper.enabled?(:email_templates) }
         resource :quick_edit, only: %i[edit update]
+        resource :school_details, only: %i[show] do
+          scope module: :school_details do
+            resource :participating_schools, only: %i[show edit update]
+          end
+        end
         resource :request, only: %i[show] do
           scope module: :requests do
             resource :participating_schools, only: %i[show]

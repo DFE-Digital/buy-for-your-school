@@ -1,4 +1,4 @@
-RSpec.feature "Case summary" do
+RSpec.feature "Case summary", js: true do
   include_context "with an agent"
 
   before do

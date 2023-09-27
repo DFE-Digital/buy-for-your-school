@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "school-details-frame" do %>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="school-details">
+    <%= link_to I18n.t("support.case.label.school_details.participating_schools.edit.back"), @back_url, class: "govuk-back-link pull-up" %>
+
+    <%= render "components/school_picker/school_picker",
+        results_model: @case_school_picker,
+        filters_model: @filters,
+        scope: :participating_schools,
+        update_url: support_case_school_details_participating_schools_path,
+        filters_url: edit_support_case_school_details_participating_schools_path,
+        method: :patch %>
+  </div>
+<% end %>

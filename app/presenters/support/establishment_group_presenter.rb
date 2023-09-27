@@ -52,5 +52,9 @@ module Support
     def ukprn
       super.presence || I18n.t("generic.not_provided")
     end
+
+    def eligible_for_school_picker?
+      (mat_or_trust? || federation?) && organisations.count > 1
+    end
   end
 end

@@ -59,6 +59,12 @@ module Support
 
         "#{organisation_type}Presenter".safe_constantize.new(organisation)
       end
+
+      def eligible_for_school_picker?
+        return false unless organisation
+
+        decorated_organisation.eligible_for_school_picker?
+      end
     end
   end
 end

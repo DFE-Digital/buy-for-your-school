@@ -1,35 +1,4 @@
 <%= render "framework_requests/common_form_fields", form: form %>
 <%= form.hidden_field :source %>
 
-<div class="school-picker" data-controller="school-picker">
-  <p class="govuk-body">
-    <b data-school-picker-target="selectedCount"></b>
-    <%= I18n.t("faf.school_picker.table.selected", total: @all_schools.count, group_name: @group.name).html_safe %>
-  </p>
-  <%= form.govuk_check_boxes_fieldset :school_urns, legend: nil do %>
-    <table class="govuk-table" aria-label="Available schools">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">
-            <%= form.govuk_check_box :school_urns, :all, label: { text: I18n.t("faf.school_picker.table.school_name").html_safe }, "data-school-picker-target": "selectAll", "data-action": "school-picker#toggleSelectAll" %>
-          </th>
-          <th scope="col" class="govuk-table__header"><%= I18n.t("faf.school_picker.table.address") %></th>
-          <th scope="col" class="govuk-table__header"><%= I18n.t("faf.school_picker.table.phase") %></th>
-          <th scope="col" class="govuk-table__header"><%= I18n.t("faf.school_picker.table.local_authority") %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body" data-school-picker-target="schoolTableBody">
-        <% @filtered_schools.each do |school| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-              <%= form.govuk_check_box :school_urns, school.urn, label: { text: school.name }, "data-action": "school-picker#toggleSelection" %>
-            </td>
-            <td class="govuk-table__cell"><%= school.formatted_address %></td>
-            <td class="govuk-table__cell"><%= school.phase %></td>
-            <td class="govuk-table__cell"><%= school.local_authority %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-</div>
+<%= render "components/school_picker/school_picker_results", form: form, scope: :framework_support_form %>
