@@ -16,6 +16,7 @@ module Support
     include Historyable
     include QuickEditable
     include Summarisable
+    include SchoolPickable
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true

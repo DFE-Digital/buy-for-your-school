@@ -1,4 +1,4 @@
-describe "Case organisation details" do
+describe "Case organisation details", js: true do
   subject(:support_case) do
     create(:support_case, :opened, organisation: school)
   end

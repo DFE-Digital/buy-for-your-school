@@ -1,0 +1,44 @@
+<%= content_for :title, I18n.t("support.case_confirm_organisation.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= I18n.t("support.case_confirm_organisation.title") %></h1>
+    <p class="govuk-body">
+      <%= I18n.t("support.case_confirm_organisation.body", ref: @current_case.ref) %>
+    </p>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case_confirm_organisation.from") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_case.organisation.name %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case_confirm_organisation.to") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @new_organisation.name %>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        <%= I18n.t("support.case_confirm_organisation.warning") %>
+      </strong>
+    </div>
+
+    <div class="govuk-button-group flex-align-center">
+      <%= button_to I18n.t("support.generic.confirm"), support_case_confirm_organisation_path,
+              method: :patch,
+              params: { type: @new_organisation.class },
+              class: "govuk-button" %>
+      <%= link_to "Cancel", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+    </div>
+  </div>
+</div>

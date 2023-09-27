@@ -68,6 +68,25 @@ en:
       destroy: You have been signed out.
       failure: Sign in failed unexpectedly, please try again.
       visitor: You must sign in.
+  components:
+    school_picker:
+      filters:
+        phase: Filter by learning stage
+        local_authority: Filter by local authority
+        clear: Clear filters
+      table:
+        school_name: <b>School name</b> (select all)
+        address: Address
+        phase: Phase of education
+        local_authority: Local authority
+        selected: "of <b>%{total} schools selected</b> from %{group_name}"
+      phases:
+        no_phase: No phase
+        primary: Primary
+        middle: Middle
+        secondary: Secondary
+        all_through: All-through
+        sixteen_plus: 16-plus
   cookies:
     banner:
       accepted:
@@ -510,23 +529,6 @@ en:
       title: Which schools in your academy trust or federation will be involved in this procurement?
       caption: About your school
       subtitle: Select all that apply
-      filters:
-        phase: Filter by learning stage
-        local_authority: Filter by local authority
-        clear: Clear filters
-      table:
-        school_name: <b>School name</b> (select all)
-        address: Address
-        phase: Phase of education
-        local_authority: Local authority
-        selected: "of <b>%{total} schools selected</b> from %{group_name}"
-      phases:
-        no_phase: No phase
-        primary: Primary
-        middle: Middle
-        secondary: Secondary
-        all_through: All-through
-        sixteen_plus: 16-plus
     name:
       first_name:
         label: First Name
@@ -1004,6 +1006,16 @@ en:
               phase: Phase of education
               local_authority: Local authority
           uploaded_files: Uploaded files
+        school_details:
+          back: Back to school details
+          participating_schools:
+            edit:
+              back: Back to participating schools
+            table:
+              school_name: School name
+              address: Address
+              phase: Phase of education
+              local_authority: Local authority
         same_supplier_used: Same supplier used
         sort_by: Sort by
         source:
@@ -1134,6 +1146,12 @@ en:
           last_updated: Last updated
           organisation: Organisation
           sub_category: Sub-category
+    case_confirm_organisation:
+      title: Confirm organisation update
+      body: You are about to update the organisation for case %{ref}.
+      from: From
+      to: To
+      warning: This will remove all existing participating schools on the case.
     case_contact_details:
       flash:
         updated: Contact details updated successfully
@@ -1490,6 +1508,7 @@ en:
       "yes": "Yes"
       "no": "No"
       view: View
+      confirm: Confirm
     helpers:
       tag_bar:
         remove_tag: "Remove tag %{tag}"

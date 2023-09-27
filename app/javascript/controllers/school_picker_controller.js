@@ -7,12 +7,13 @@ export default class extends Controller {
     "selectAll",
     "schoolTableBody",
   ];
+  static values = { scope: String };
 
   initialize() {
     this.getPreviouslySelectedSchoolUrns().forEach(urn => {
       const input = document.createElement("input");
       input.setAttribute("type", "hidden");
-      input.setAttribute("name", "framework_support_form[school_urns][]");
+      input.setAttribute("name", `${this.scopeValue}[school_urns][]`);
       input.setAttribute("value", urn);
       this.getForm().appendChild(input);
     });
@@ -58,12 +59,12 @@ export default class extends Controller {
   }
 
   getSchoolUrnsFromForm() {
-    return new FormData(this.getForm()).getAll("framework_support_form[school_urns][]").filter(urn => urn && urn !== "all");
+    return new FormData(this.getForm()).getAll(`${this.scopeValue}[school_urns][]`).filter(urn => urn && urn !== "all");
   }
 
   getSchoolUrnsFromParams() {
     const params = new URLSearchParams(window.location.search);
-    return params.getAll("framework_support_form[school_urns][]");
+    return params.getAll(`${this.scopeValue}[school_urns][]`);
   }
 
   getForm() {

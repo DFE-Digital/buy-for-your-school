@@ -1,0 +1,14 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <%= render "components/school_picker/school_picker_filters", model: filters_model, url: filters_url, scope: %>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: results_model, scope:, url: update_url, method: do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <%= render "components/school_picker/school_picker_results", form: form, scope: %>
+
+      <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
+    <% end %>
+  </div>
+</div>
