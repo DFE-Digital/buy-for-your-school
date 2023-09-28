@@ -587,8 +587,8 @@ en:
           what_to_consider: "%{what_to_consider_link}"
           agreements_and_faf: "%{agreements_and_faf_link}"
       energy:
-        list_start: 'You can read our guidance about %{guidance_link}. It includes:'
-        guidance_link: buying energy for your school
+        list_start: 'You can  %{guidance_link}. It includes:'
+        guidance_link: read our guidance about buying energy for your school
         bullets:
           - whether you can get a reduced rate VAT
           - how to choose between fixed, flexible or variable price contracts
