@@ -436,8 +436,8 @@ en:
     energy_request:
       header: Is your request about energy?
       subtitle: About your request
-      body: 'You can read our guidance about %{guidance_link}. It includes:'
-      guidance_link: buying energy for your school
+      body: 'You can %{guidance_link}. It includes:'
+      guidance_link: read our guidance about buying energy for your school
       body_bullets:
         - whether you can get a reduced rate VAT
         - how to choose between fixed, flexible or variable price contracts
@@ -575,7 +575,7 @@ en:
       what_happens_next: What happens next
       what_you_can_do_next: What you can do next
     sub_header:
-      confirmation: 'We have sent a confirmation email to:'
+      confirmation: 'We have sent a confirmation email to'
     what_you_can_do_next:
       default:
         list_start: 'Read guidance about:'
@@ -1670,7 +1670,7 @@ en:
         We will not receive any new changes you make.
     intro:
     - Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
-    - DfE's supported buying team will respond to you within 2 working days.
+    - The Get help buying for schools team will respond to you within 2 working days.
     label:
       category: What are you buying?
       message: How can we help?
@@ -1688,23 +1688,22 @@ en:
   support_request_submissions:
     back_button: Back to your dashboard
     body:
-      what_happens_next: The DfE's supported buying team will be in touch within %{days} working days to discuss how we can support you.
+      what_happens_next: The Get help buying for schools team will be in touch within %{days} working days to discuss how we can support you.
       what_you_can_do_next: "%{continue_link} if you can (but we won't receive these new changes), or %{start_new_link} if you haven't done so yet."
     header:
       confirmation: Your request for support has been sent
       what_happens_next: What happens next
       what_you_can_do_next: What you can do next
-      you_can_also: You can also
+      you_can_also: 'You can also:'
     sub_header:
-      confirmation: 'We have sent a confirmation to:'
+      confirmation: 'We have sent a confirmation to'
     what_you_can_do_next:
       continue_link: Continue with your specification
-      start_new_link: start a new specification
+      start_new_link: Start a new specification
     you_can_also:
-      read_guides_link: read guides about goods and services
-      read_procs_link: read buying procedures and procurement law for schools
+      read_guides_link: read guides about what to consider before buying specific goods and services
+      read_procs_link: read about how to buy what you need
       step_one: "%{read_procs_link} to learn more about the buying process"
-      step_two: "%{read_guides_link} that you're buying"
   task:
     button:
       back: Return to task list
