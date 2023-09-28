@@ -4,7 +4,6 @@ class Frameworks::Framework::Filtering
   get_agents = ->(type_id) { Support::Agent.by_first_name.where(id: Frameworks::Framework.pluck(type_id)) }
 
   initial_scope -> { Frameworks::Framework }
-  sort_options -> { Frameworks::Framework.available_sort_options }
 
   filter_by :status,           options: -> { Frameworks::Framework.statuses.map { |label, _id| [label.humanize, label] } }
   filter_by :provider,         options: -> { Frameworks::Provider.order("short_name ASC").pluck(:short_name, :id) }

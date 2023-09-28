@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "frameworks/frameworks/show",
-          "line": 25,
+          "line": 28,
           "file": "app/views/frameworks/frameworks/show.html.erb",
           "rendered": {
             "name": "frameworks/frameworks/show/_framework_details",
@@ -64,6 +64,40 @@
       "confidence": "Medium",
       "cwe_id": [
         89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "0bb9d316930182410224e235ece8dd8591c92966fb97a1f3520c82420bf7a066",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/evaluations/index.html.erb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Frameworks::Evaluation.filtering(filter_form_params).results.paginate(:page => params[:evaluations_page]), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::EvaluationsController",
+          "method": "index",
+          "line": 8,
+          "file": "app/controllers/frameworks/evaluations_controller.rb",
+          "rendered": {
+            "name": "frameworks/evaluations/index",
+            "file": "app/views/frameworks/evaluations/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/evaluations/index"
+      },
+      "user_input": "params[:evaluations_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
       ],
       "note": ""
     },
@@ -265,7 +299,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/support/cases_controller.rb",
-      "line": 140,
+      "line": 142,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
       "render_path": null,
@@ -350,6 +384,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-09-14 15:05:19 +0100",
+  "updated": "2023-09-28 11:18:30 +0100",
   "brakeman_version": "6.0.1"
 }

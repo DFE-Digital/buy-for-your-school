@@ -1,0 +1,12 @@
+<%# Required local: either literal status or a evaluation record %>
+<% the_status = (defined?(status) ? status : evaluation.status).inquiry %>
+
+<strong class="govuk-tag
+  <%= "govuk-tag--yellow" if the_status.draft? %>
+  <%= "govuk-tag--purple" if the_status.evaluating? %>
+  <%= "govuk-tag--grey" if the_status.not_approved? %>
+  <%= "govuk-tag--green" if the_status.approved? %>
+  <%= "govuk-tag--red" if the_status.cancelled? %>
+">
+  <%= the_status.humanize %>
+</strong>

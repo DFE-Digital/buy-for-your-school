@@ -33,6 +33,10 @@ private
       define_method :scoped_records do
         proc.call
       end
+
+      define_method :available_sort_options do
+        proc.call.available_sort_options
+      end
     end
 
     def sort_options(proc)

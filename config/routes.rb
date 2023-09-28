@@ -301,11 +301,15 @@ Rails.application.routes.draw do
   # Frameworks portal
   namespace :frameworks do
     root to: "dashboards#index"
-    resources :frameworks do
-      resource :categorisations, only: %w[edit update]
+
+    resources :evaluations do
+      resource :contacts, only: %i[edit update], controller: :evaluation_contacts
     end
-    resources :provider_contacts
+    resources :frameworks do
+      resource :categorisations, only: %i[edit update], controller: :framework_categorisations
+    end
     resources :providers
+    resources :provider_contacts
 
     namespace :management do
       get "/", to: "management#index"

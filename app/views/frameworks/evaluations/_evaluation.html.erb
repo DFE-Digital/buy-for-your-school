@@ -1,0 +1,44 @@
+<div class="govuk-grid-row case-panel">
+  <div class="govuk-grid-column-one-half govuk-!-margin-bottom-3">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Case ID</dt>
+        <dd class="govuk-summary-list__value"><%= link_to evaluation.reference, frameworks_evaluation_path(evaluation, back_to: current_url_b64(:evaluations)), class: "govuk-link", "data-turbo" => false %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Framework Name</dt>
+        <dd class="govuk-summary-list__value"><%= evaluation.framework_name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Framework Provider</dt>
+        <dd class="govuk-summary-list__value"><%= evaluation.framework_provider_name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Categories</dt>
+        <dd class="govuk-summary-list__value"><%= evaluation.framework_category_names %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Status</dt>
+        <dd class="govuk-summary-list__value"><%= evaluation.display_status %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Assignee</dt>
+        <dd class="govuk-summary-list__value"><%= evaluation.display_assignee %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Updated</dt>
+        <dd class="govuk-summary-list__value"><%= evaluation.display_last_updated %></dd>
+      </div>
+    </dl>
+  </div>
+</div>

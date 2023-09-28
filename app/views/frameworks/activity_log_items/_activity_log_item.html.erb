@@ -1,4 +1,4 @@
-<%= render "frameworks/activity_log_items/activity/#{activity_log_item.activity_type.demodulize.underscore}",
+<%= render "frameworks/activity_log_items/activity/#{activity_log_item.activity_type_identifier}",
   activity_log_item:,
   activity: activity_log_item.activity,
   subject: activity_log_item.subject %>

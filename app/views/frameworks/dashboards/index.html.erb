@@ -7,6 +7,10 @@
     </li>
 
     <li class="govuk-tabs__list-item">
+      <%= link_to "Framework Evaluations", "#evaluations", class: "govuk-tabs__tab" %>
+    </li>
+
+    <li class="govuk-tabs__list-item">
       <%= link_to "Provider Contacts", "#provider-contacts", class: "govuk-tabs__tab" %>
     </li>
 
@@ -17,6 +21,12 @@
 
   <%= turbo_frame_tag "frameworks-register-frame", src: frameworks_frameworks_path(**request.params.except(:controller, :action)) do %>
     <div id="frameworks-register" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <p class="govuk-body">Loading...</p>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "evaluations-frame", src: frameworks_evaluations_path(**request.params.except(:controller, :action)) do %>
+    <div id="evaluations" class="govuk-tabs__panel govuk-tabs__panel--hidden">
       <p class="govuk-body">Loading...</p>
     </div>
   <% end %>

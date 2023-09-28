@@ -1,20 +1,5 @@
-<%= activity.event.humanize %>d <%= activity.item.activity_log_display_type %>
-<%= link_to "[+]", "#", title: "See changes", class: "govuk-link", "data-component" => "toggle-panel-visibility", "data-panel" => activity_log_item.id %>
+<% resolved_template = (activity.specific_change_template.present? \
+    ? "frameworks/activity_log_items/activity/activity_loggable_version/#{activity.specific_change_template}"
+    : "frameworks/activity_log_items/activity/activity_loggable_version/presentable_changes") %>
 
-<div class="govuk-!-display-none govuk-!-margin-top-5" id="<%= activity_log_item.id %>">
-  <table class="govuk-table">
-    <tbody class="govuk-table__body">
-      <% activity.presentable_changes.each do |changes| %>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header govuk-!-width-one-quarter"><%= changes.field.humanize %></th>
-          <td class="govuk-table__cell">
-            <%= changes.from.presence || "empty" %>
-            <span class="activity-log-change-arrow">➔</span>
-            <%= changes.to.presence || "empty" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
+<%= render resolved_template, activity_log_item:, activity:, subject: %>

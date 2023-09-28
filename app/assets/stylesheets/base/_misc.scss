@@ -1,6 +1,11 @@
 .flex-align-center {
   display: flex;
   align-items: center;
+  gap: 10px;
+
+  .govuk-body {
+    margin-bottom: 0;
+  }
 }
 
 .pull-up-10 {

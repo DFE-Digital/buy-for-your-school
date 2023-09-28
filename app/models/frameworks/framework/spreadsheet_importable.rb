@@ -16,7 +16,7 @@ module Frameworks::Framework::SpreadsheetImportable
     end
 
     def import_from_spreadsheet_row(row_mapping)
-      framework = find_or_initialize_by(provider: row_mapping.provider, reference: row_mapping.reference)
+      framework = find_or_initialize_by(provider: row_mapping.provider, provider_reference: row_mapping.provider_reference)
       framework.source = :spreadsheet_import
       framework.attributes = row_mapping.attributes
       framework.save!

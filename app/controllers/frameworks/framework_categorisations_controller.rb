@@ -1,4 +1,4 @@
-class Frameworks::CategorisationsController < Frameworks::ApplicationController
+class Frameworks::FrameworkCategorisationsController < Frameworks::ApplicationController
   def edit
     @framework = Frameworks::Framework.find(params[:framework_id])
   end
@@ -8,7 +8,7 @@ class Frameworks::CategorisationsController < Frameworks::ApplicationController
 
     @framework.update!(category_params)
 
-    redirect_to @framework
+    redirect_to frameworks_framework_path(@framework, back_to: params[:back_to])
   end
 
 private

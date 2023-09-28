@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_144709) do
+  create_sequence "evaluation_refs"
+  create_sequence "framework_refs"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -225,6 +228,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "frameworks_evaluations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "reference", default: -> { "('FE'::text || nextval('evaluation_refs'::regclass))" }
+    t.uuid "framework_id"
+    t.uuid "assignee_id"
+    t.uuid "contact_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "frameworks_framework_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "support_category_id", null: false
     t.uuid "framework_id", null: false
@@ -238,7 +251,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.string "name"
     t.string "short_name"
     t.string "url"
-    t.string "reference"
+    t.string "reference", default: -> { "('F'::text || nextval('framework_refs'::regclass))" }
     t.string "description"
     t.uuid "provider_id", null: false
     t.uuid "provider_contact_id"
@@ -254,6 +267,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_092926) do
     t.datetime "updated_at", null: false
     t.boolean "dps", default: true
     t.integer "lot", default: 0
+    t.string "provider_reference"
   end
 
   create_table "frameworks_provider_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
