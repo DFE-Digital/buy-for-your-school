@@ -72,6 +72,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20221014140003_add_more_trust_fields_to_support_organisations.rb'
     - 'db/migrate/20230210133230_refactor_notifications_into_one_table.rb'
     - 'db/migrate/20230919092926_update_lot_frameworks_framework.rb'
+    - 'db/migrate/20230919144709_add_reference_sequence_to_frameworks_framework.rb'
 
 # Offense count: 2
 # Configuration parameters: Include.

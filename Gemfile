@@ -6,6 +6,7 @@ ruby "3.2.1"
 
 gem "aasm"
 gem "application_insights"
+gem "ar-sequence"
 gem "aws-sdk-s3", require: false
 #
 # awaiting PR merge here: https://github.com/Azure/azure-storage-ruby/pull/228 due to need for faraday 2

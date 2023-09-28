@@ -5,6 +5,10 @@ module Frameworks::ActivityLoggable::ActivityLogPresentable
     delegate :version_at, to: :paper_trail
   end
 
+  def specific_change_template_for(_activity_loggable_version)
+    nil
+  end
+
   def activity_log_display_name
     try(:full_name) || try(:short_name) || try(:name) || try(:reference)
   end

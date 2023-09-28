@@ -7,7 +7,7 @@ class Frameworks::Framework::SpreadsheetImportable::RowMapping
 
   def provider = Frameworks::Provider.find_or_create_by!(short_name: row["FWK Provider"])
 
-  def reference = row["Framework Reference "]
+  def provider_reference = row["Framework Reference "]
 
   def attributes
     {
@@ -16,7 +16,7 @@ class Frameworks::Framework::SpreadsheetImportable::RowMapping
       status:,
       name:,
       url:,
-      reference:,
+      provider_reference:,
       dfe_start_date:,
       dfe_end_date:,
       sct_framework_provider_lead:,

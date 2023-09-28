@@ -2,7 +2,7 @@
 
 <%= turbo_frame_tag dom_id(@framework) do %>
 
-<span class="govuk-caption-l"><%= @framework.reference_and_short_name %></span>
+<span class="govuk-caption-l">[<%= @framework.reference %>] Framework</span>
 <h1 class="govuk-heading-l"><%= @framework.name %></h1>
 
 <p class="pull-up-10 govuk-!-margin-bottom-8"><%= @framework.display_status %></p>
@@ -15,8 +15,11 @@
     <li class="govuk-tabs__list-item">
       <%= link_to "Provider", "#framework-provider", class: "govuk-tabs__tab" %>
     </li>
+     <li class="govuk-tabs__list-item">
+      <%= link_to "Evaluations", "#framework-evaluations", class: "govuk-tabs__tab" %>
+    </li>
     <li class="govuk-tabs__list-item">
-      <%= link_to "History", "#framework-activity", class: "govuk-tabs__tab" %>
+      <%= link_to "History", "#history", class: "govuk-tabs__tab" %>
     </li>
   </ul>
 
@@ -32,9 +35,15 @@
     </div>
   <% end %>
 
-  <%= turbo_frame_tag "framework-activity-frame" do %>
-    <div id="framework-activity" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-      <%= render "frameworks/frameworks/show/framework_activity" %>
+  <%= turbo_frame_tag "framework-evaluations-frame" do %>
+    <div id="framework-evaluations" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <%= render "frameworks/frameworks/show/framework_evaluations" %>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "history-frame" do %>
+    <div id="history" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+      <%= render "frameworks/frameworks/show/framework_history" %>
     </div>
   <% end %>
 </div>

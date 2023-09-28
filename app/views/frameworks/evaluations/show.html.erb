@@ -1,0 +1,58 @@
+<%= content_for :title, "GHBS | Frameworks | Evaluation #{@evaluation.reference}" %>
+
+<%= turbo_frame_tag dom_id(@evaluation) do %>
+
+  <span class="govuk-caption-l">[<%= @evaluation.reference %>] Framework Evaluation</span>
+  <h1 class="govuk-heading-l"><%= @evaluation.framework_name %></h1>
+
+  <div class="pull-up-10 govuk-!-margin-bottom-8 flex-align-center">
+    <span><%= @evaluation.display_status %></span>
+    <span class="govuk-body">Case Owner: <%= @evaluation.display_assignee %></span>
+  </div>
+
+  <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <%= link_to "Framework", "#framework", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "Messages", "#messages", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "History", "#history", class: "govuk-tabs__tab" %>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <%= link_to "Attachments", "#attachments", class: "govuk-tabs__tab" %>
+      </li>
+    </ul>
+
+    <%= turbo_frame_tag "framework-frame" do %>
+      <div id="framework" class="govuk-tabs__panel">
+        <%= render "frameworks/evaluations/show/framework" %>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag "messages-frame" do %>
+      <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <%= render "frameworks/evaluations/show/messages" %>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag "history-frame" do %>
+      <div id="history" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <%= render "frameworks/evaluations/show/history" %>
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag "attachments-frame" do %>
+      <div id="attachments" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+        <%= render "frameworks/evaluations/show/attachments" %>
+      </div>
+    <% end %>
+  </div>
+
+  <h2 class="govuk-heading-m">Actions</h2>
+  <ul class="govuk-list">
+    <li></li>
+  </ul>
+<% end %>

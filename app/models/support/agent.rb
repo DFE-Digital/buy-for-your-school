@@ -22,8 +22,18 @@ module Support
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
-    scope :caseworkers, -> { where("ARRAY['procops', 'procops_admin'] && roles::text[]") }
+    scope :caseworkers, -> { by_role(%w[procops procops_admin]) }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
+    scope :by_role, ->(roles) { where("ARRAY[?] && roles::text[]", Array(roles)) }
+
+    scope :framework_evaluators, lambda {
+      by_role(%w[
+        procops_admin
+        procops
+        framework_evaluator
+        framework_evaluator_admin
+      ])
+    }
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL

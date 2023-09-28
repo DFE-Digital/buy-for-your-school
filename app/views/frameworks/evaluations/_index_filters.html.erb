@@ -1,0 +1,28 @@
+<div class="filters-panel">
+  <h2 class="govuk-heading-m"><%= I18n.t("support.case.label.filters") %></h2>
+
+  <%= form_with model: @filtering, scope: :evaluations_filter, method: :get, url: frameworks_evaluations_path, html: { "data-controller" => "case-filters" } do |form| %>
+    <input type="hidden" name="viewing_from_entity" value="<%= params[:viewing_from_entity] %>">
+
+    <%= link_to I18n.t("support.case.filter.buttons.clear"), frameworks_evaluations_path(viewing_from_entity: params[:viewing_from_entity]), class: "govuk-button govuk-button--secondary", role: "button" %>
+
+    <%= form.govuk_select :sort_by,
+        options_for_select(@filtering.available_sort_options, @filtering.sort_by),
+        label: { text: I18n.t("support.case.label.sort_by"), size: "s" } %>
+
+    <%= form.govuk_collection_radio_buttons :sort_order,
+        available_sort_orders,
+        :id,
+        :title,
+        legend: nil,
+        small: true %>
+
+    <%= expander title: "Status", subtitle: "#{@filtering.number_of_selected(:statuses)} selected", expanded: true do %>
+      <%= form.govuk_check_boxes_fieldset :status, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% @filtering.available_status_options.each do |status| %>
+          <%= form.govuk_check_box :status, status.last, exclusive: false, label: { text: status.first } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

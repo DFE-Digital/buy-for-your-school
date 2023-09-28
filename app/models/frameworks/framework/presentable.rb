@@ -5,6 +5,10 @@ module Frameworks::Framework::Presentable
     provider.name || provider.short_name
   end
 
+  def reference_and_name
+    [reference, name.presence || short_name].compact.join(" - ")
+  end
+
   def reference_and_short_name
     [reference, short_name].compact.join(" - ")
   end

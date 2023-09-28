@@ -3,7 +3,7 @@
 <span class="govuk-caption-l">Edit Framework Categories</span>
 <h1 class="govuk-heading-l"><%= @framework.name %></h2>
 
-<%= form_for @framework, url: frameworks_framework_categorisations_path(@framework), method: :put do |f| %>
+<%= form_for @framework, url: frameworks_framework_categorisations_path(@framework, back_to: params[:back_to]), method: :put do |f| %>
 
   <% procurement_category_grouped_options.each do |group, options| %>
     <% next if group == "Or" %>
