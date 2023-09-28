@@ -15,7 +15,7 @@ RSpec.feature "Starting a 'Digital Support' request" do
 
     it "explains the form to the user" do
       expect(find("div.govuk-grid-column-two-thirds", text: "Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.")).to be_present
-      expect(find("div.govuk-grid-column-two-thirds", text: "DfE's supported buying team will respond to you within 2 working days.")).to be_present
+      expect(find("div.govuk-grid-column-two-thirds", text: "The Get help buying for schools team will respond to you within 2 working days.")).to be_present
     end
 
     it "links to more information" do
@@ -23,11 +23,11 @@ RSpec.feature "Starting a 'Digital Support' request" do
                                 href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/writing-a-specification",
                                 class: "govuk-link"
 
-      expect(page).to have_link "planning for what you're buying",
-                                href: "https://www.gov.uk/guidance/buying-for-schools",
+      expect(page).to have_link "read guides about what to consider before buying specific goods and services",
+                                href: "https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start",
                                 class: "govuk-link"
 
-      expect(page).to have_link "information on finding the right way to buy",
+      expect(page).to have_link "read about how to buy what you need",
                                 href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools",
                                 class: "govuk-link"
 

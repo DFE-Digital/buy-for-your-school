@@ -49,9 +49,7 @@
         </li>
         <li>
           <%=
-            I18n.t("support_request_submissions.you_can_also.step_two",
-              read_guides_link: link_to(I18n.t("support_request_submissions.you_can_also.read_guides_link"), "https://www.gov.uk/guidance/buying-for-schools", class: "govuk-link")
-            ).html_safe
+            link_to(I18n.t("support_request_submissions.you_can_also.read_guides_link"), "https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start", class: "govuk-link").html_safe
           %>
         </li>
       </ul>

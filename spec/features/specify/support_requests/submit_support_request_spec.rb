@@ -89,17 +89,17 @@ RSpec.feature "Submitting a 'Digital Support' request" do
       # support_request_submissions.confirmation.header
       expect(find("h1.govuk-panel__title")).to have_text "Your request for support has been sent"
       # support_request_submissions.sub_header.confirmation
-      expect(find("div.govuk-panel__body")).to have_text "We have sent a confirmation to: test@test"
+      expect(find("div.govuk-panel__body")).to have_text "We have sent a confirmation to test@test"
     end
 
     it "links to the dashboard" do
-      expect(page).to have_link "start a new specification", href: "/dashboard"
+      expect(page).to have_link "Start a new specification", href: "/dashboard"
     end
 
     it "links to further information" do
       within "ul.govuk-list--bullet" do
-        expect(page).to have_link "read buying procedures and procurement law for schools", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools"
-        expect(page).to have_link "read guides about goods and services", href: "https://www.gov.uk/guidance/buying-for-schools"
+        expect(page).to have_link "read about how to buy what you need", href: "https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools"
+        expect(page).to have_link "read guides about what to consider before buying specific goods and services", href: "https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start"
       end
     end
 
