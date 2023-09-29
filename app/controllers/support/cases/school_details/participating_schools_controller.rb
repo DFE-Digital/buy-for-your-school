@@ -17,7 +17,7 @@ module Support
         end
 
         def update
-          @case_school_picker = current_case.school_picker(school_urns: form_params[:school_urns].compact_blank)
+          @case_school_picker = current_case.school_picker(school_urns: form_params[:school_urns].compact_blank.excluding("all"))
           @case_school_picker.save!
           redirect_to support_case_school_details_participating_schools_path
         end

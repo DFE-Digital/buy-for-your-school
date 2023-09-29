@@ -11,6 +11,10 @@ class Support::EstablishmentGroup < ApplicationRecord
     "#{uid} - #{name}"
   end
 
+  def postcode
+    address["postcode"]
+  end
+
   def organisations
     return Support::Organisation.where(federation_code: uid) if federation?
 

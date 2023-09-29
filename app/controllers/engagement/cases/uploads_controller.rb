@@ -7,13 +7,13 @@ module Engagement
         if file_is_safe?
           upload = EngagementCaseUpload.pending.create!(
             file: params[:file],
-            upload_reference: params[:upload_reference],
+            case_request_id: params[:upload_reference],
             filename: params[:file].original_filename,
             filesize: File.size(params[:file].tempfile.path),
           )
           render status: :ok, json: { file_id: upload.id }.to_json
         else
-          Rollbar.error("Infected file uploaded", upload_reference: params[:upload_reference])
+          Rollbar.error("Infected file uploaded", case_request_id: params[:upload_reference])
 
           params[:file].tempfile.delete
 
@@ -29,7 +29,7 @@ module Engagement
 
       def list
         reference = params[:upload_reference]
-        files = EngagementCaseUpload.where(upload_reference: reference)
+        files = EngagementCaseUpload.where(case_request_id: reference)
         result = files.map do |f|
           {
             file_id: f.id,

@@ -1,9 +1,15 @@
 class CaseRequest < ApplicationRecord
+  include SchoolPickable
+  include Presentable
+  include CaseCreatable
+
   belongs_to :category, class_name: "Support::Category", optional: true
   belongs_to :query, class_name: "Support::Query", optional: true
   belongs_to :organisation, polymorphic: true, optional: true
   belongs_to :created_by, class_name: "Support::Agent", optional: true
   belongs_to :support_case, class_name: "Support::Case", optional: true
+
+  has_many :engagement_case_uploads, class_name: "EngagementCaseUpload"
 
   enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
   enum creation_source: { default: 0, engagement_and_outreach_team: 5 }
@@ -18,32 +24,12 @@ class CaseRequest < ApplicationRecord
   validates :other_category, presence: true, if: -> { category_id == Support::Category.other_category_id }
   validates :other_query, presence: true, if: -> { query_id == Support::Query.other_query_id }
 
-  def organisation_name
-    return nil unless organisation
+  attribute :creation_source, default: :default
 
-    organisation.name
-  end
-
-  def organisation_urn
-    return nil unless organisation
-
-    organisation.urn
-  end
-
-  def request_type
-    return nil unless category.present? || query.present?
-
-    category.present?
-  end
-
-  def eligible_for_school_picker?
-    return false unless organisation.is_a?(Support::EstablishmentGroup)
-
-    organisation.eligible_for_school_picker?
-  end
-
-  def create_case
-    CreateCase.new(attributes).call
+  def completed?
+    result = valid?
+    errors.clear
+    result
   end
 
 private

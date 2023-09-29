@@ -299,7 +299,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/support/cases_controller.rb",
-      "line": 142,
+      "line": 69,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
       "render_path": null,
@@ -382,8 +382,62 @@
         79
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "e09a55726782a4df4a1d7a66771b0b700c06cb19214d3b3b628b34840106ba5e",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/components/school_picker/_school_picker_results.html.erb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "I18n.t(\"components.school_picker.table.selected\", :total => CaseRequest.find_by(:id => params[:id]).organisation.organisations.order(:name).count, :group_name => CaseRequest.find_by(:id => params[:id]).organisation.name)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Engagement::CaseRequests::SchoolPickersController",
+          "method": "edit",
+          "line": 13,
+          "file": "app/controllers/engagement/case_requests/school_pickers_controller.rb",
+          "rendered": {
+            "name": "engagement/case_requests/school_pickers/edit",
+            "file": "app/views/engagement/case_requests/school_pickers/edit.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "engagement/case_requests/school_pickers/edit",
+          "line": 3,
+          "file": "app/views/engagement/case_requests/school_pickers/edit.html.erb",
+          "rendered": {
+            "name": "components/school_picker/_school_picker",
+            "file": "app/views/components/school_picker/_school_picker.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "components/school_picker/_school_picker",
+          "line": 9,
+          "file": "app/views/components/school_picker/_school_picker.html.erb",
+          "rendered": {
+            "name": "components/school_picker/_school_picker_results",
+            "file": "app/views/components/school_picker/_school_picker_results.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "components/school_picker/_school_picker_results"
+      },
+      "user_input": "CaseRequest.find_by(:id => params[:id]).organisation",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
     }
   ],
-  "updated": "2023-09-28 11:18:30 +0100",
+  "updated": "2023-10-13 15:06:40 +0100",
   "brakeman_version": "6.0.1"
 }

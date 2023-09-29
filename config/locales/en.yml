@@ -1239,6 +1239,8 @@ en:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
     case_hub_migration:
+      school_picker:
+        title: Which schools in the academy trust or federation will be involved in this procurement?
       edit:
         header: Check your answers before creating a new case
         label:
@@ -1291,12 +1293,15 @@ en:
         referer: Referrer
         request_text: Summary
         school_name: Organisation name
+        school_number: "%{selected} of %{total} schools"
         school_postcode: Organisation postcode
         school_ukprn: Organisation UKPRN
         school_urn: Organisation URN
+        school_uid: Organisation UID
         source: Source
         sub_category: Procurement sub-category
         type: Type
+        participating_schools: Participating schools
         procurement_value: Procurement value
         support_level: Support level
         old: Old
