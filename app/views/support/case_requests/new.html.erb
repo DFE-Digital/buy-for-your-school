@@ -1,0 +1,22 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @case_request, scope: :case_request, url: support_case_requests_path do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <%= render "components/new_case_request_components", form: %>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case_source.header") %>
+      </h2>
+      <%= form.govuk_select(:source,
+                            [
+                              ["Please select", ""],
+                              [I18n.t("support.case.label.source.engagement_and_outreach"), "engagement_and_outreach"],
+                              [I18n.t("support.case.label.source.schools_commercial_team"), "schools_commercial_team"]
+                            ],
+                            label: { text: I18n.t("support.case_source.select.header") })
+      %>
+      <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button" %>
+    <% end %>
+  </div>
+</div>

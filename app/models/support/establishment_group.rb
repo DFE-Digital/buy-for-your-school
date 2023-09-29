@@ -18,4 +18,8 @@ class Support::EstablishmentGroup < ApplicationRecord
   end
 
   def mat_or_trust? = establishment_group_type.mat? || establishment_group_type.trust?
+
+  def eligible_for_school_picker?
+    (mat_or_trust? || federation?) && organisations.count > 1
+  end
 end

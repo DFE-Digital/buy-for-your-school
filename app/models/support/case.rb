@@ -52,6 +52,7 @@ module Support
     belongs_to :procurement_stage, class_name: "Support::ProcurementStage", optional: true
 
     has_one :framework_request, class_name: "FrameworkRequest", foreign_key: :support_case_id
+    has_one :case_request, class_name: "CaseRequest", foreign_key: :support_case_id
 
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
@@ -146,6 +147,10 @@ module Support
     # @return [Array, Support::Interaction]
     def support_request
       interactions&.support_request&.first
+    end
+
+    def request
+      framework_request || case_request
     end
   end
 end

@@ -99,6 +99,35 @@ en:
               origin_other:
                 blank: Specify where you heard about the service
 
+  activerecord:
+    errors:
+      models:
+        case_request:
+          attributes:
+            first_name:
+              blank: Enter the first name of the contact
+            last_name:
+              blank: Enter the last name of the contact
+            email:
+              blank: Enter an email in the correct format. For example, 'someone@school.sch.uk'
+            phone_number:
+              too_long: Phone number cannot have more than 12 digits
+              invalid: Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
+            discovery_method:
+              blank: Case origin is missing
+            discovery_method_other_text:
+              blank: Explain how you heard about this service
+            source:
+              blank: Select the source of the case
+            procurement_amount:
+              blank: Enter how much the school will be spending. The number must be greater than 0.
+              greater_than: The number must be greater than 0
+              not_a_number: Enter a valid number
+            other_category:
+              blank: Enter the procurement category
+            other_query:
+              blank: Enter the type of query
+
   request:
     rules:
       procurement_amount: "" # Omitted

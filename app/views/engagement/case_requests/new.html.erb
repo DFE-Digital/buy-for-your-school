@@ -1,0 +1,72 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @case_request, scope: :case_request, url: engagement_case_requests_path, html: {
+        "data-controller" => "case-attachment",
+        "data-action" => "submit->case-attachment#onFormSubmitted",
+        "data-case-attachment-target" => "form",
+        "data-case-attachment-dropzone-outlet" => ".drop-zone-container",
+        "data-case-attachment-error-summary-outlet" => ".govuk-error-summary",
+        "data-case-attachment-reference-value" => @upload_reference
+      } do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <%= render "components/new_case_request_components", form: %>
+
+      <h2 class="govuk-heading-m">
+        <%= I18n.t("support.case.label.files") %>
+      </h2>
+      <div class="drop-zone-container govuk-!-margin-bottom-5"
+          data-controller="dropzone"
+          data-dropzone-list-files-url-value="<%= list_uploads_engagement_cases_url(@upload_reference) %>"
+          data-dropzone-add-file-url-value="<%= add_uploads_engagement_cases_url(@upload_reference) %>"
+          data-dropzone-remove-file-url-value="<%= remove_uploads_engagement_cases_url(@upload_reference) %>">
+        <div class="upload-preview-template govuk-!-display-none" data-dropzone-target="previewTemplate">
+          <div class="upload-item">
+            <div class="upload-row file-details">
+              <h3 class="govuk-heading-s"><span data-dz-name></span> (<span data-dz-size></span>)</h3>
+              <a href="#" class="btn-remove govuk-link govuk-link--no-visited-state" data-dz-remove>Remove</a>
+            </div>
+            <div class="upload-row progress-status-container">
+              <p class="govuk-body-s progress-status govuk-!-display-none" data-dz-errormessage></p>
+
+              <div class="upload-progress-container govuk-!-display-none">
+                <div data-dz-uploadprogress class="upload-progress" aria-valuenow="0"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="drop-zone govuk-!-margin-bottom-5" data-case-attachment-target="dropZone">
+          <p class="govuk-body">Drag and drop files here or</p>
+
+          <span class="govuk-button govuk-button--secondary"
+                data-dropzone-target="btnDisplayFileDialog">
+            Choose files
+          </span>
+        </div>
+
+        <div class="file-previews">
+          <div class="files-added-now govuk-!-margin-bottom-5 govuk-!-display-none"
+              data-case-attachment-target="filesAddedNow"
+              data-dropzone-target="filePreview">
+            <h2 class="govuk-heading-m">
+              Files added
+            </h2>
+          </div>
+
+          <div class="files-added-before govuk-!-margin-bottom-5 govuk-!-display-none"
+              data-case-attachment-target="filesAddedBefore">
+            <h2 class="govuk-heading-m">
+              Files already uploaded
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-button-group">
+        <%= form.hidden_field :upload_reference, :value => @upload_reference %>
+        <%= form.submit I18n.t("support.case_hub_migration.submit"), class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-case-attachment-target" => "btnSubmit" %>
+      </div>
+    <% end %>
+  </div>
+</div>
