@@ -117,7 +117,7 @@
             <dd class="govuk-summary-list__actions"></dd>
           </div>
         <% end %>
-        <% if @request.flow.energy_or_services? %>
+        <% if @request.flow.present? && @request.flow.energy_or_services? %>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               <%= I18n.t("support.case.label.contract_start_date") %>
@@ -137,7 +137,7 @@
               <%= @request.school_urns.count %>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <%= link_to I18n.t("support.generic.view"), support_case_request_participating_schools_path, class: "govuk-link" %>
+              <%= link_to I18n.t("support.generic.view"), support_case_request_details_participating_schools_path, class: "govuk-link" %>
             </dd>
           </div>
         <% end %>

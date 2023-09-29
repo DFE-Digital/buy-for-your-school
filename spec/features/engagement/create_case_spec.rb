@@ -8,7 +8,8 @@ RSpec.feature "Create case", js: true do
     create(:support_category, :with_sub_category)
     create(:support_organisation, name: "Hillside School", urn: "000001")
 
-    visit "/engagement/cases/new"
+    visit "/engagement/cases"
+    click_button "Create a new case"
   end
 
   describe "Back link" do
@@ -27,7 +28,6 @@ RSpec.feature "Create case", js: true do
 
       click_on "Save and continue"
 
-      expect(page).to have_current_path "/engagement/cases/preview"
       expect(find("h1.govuk-heading-l")).to have_text "Check your answers before creating a new case"
     end
 
@@ -35,10 +35,10 @@ RSpec.feature "Create case", js: true do
       complete_valid_form
 
       within "#changeSchool" do
-        click_button "Change"
+        click_link "Change"
       end
 
-      fill_in "create_case_form[first_name]", with: "new_first_name"
+      fill_in "case_request[first_name]", with: "new_first_name"
       click_on "Save and continue"
 
       within "#fullName" do
@@ -46,14 +46,24 @@ RSpec.feature "Create case", js: true do
       end
     end
 
-    context "when selecting a group" do
-      it "sets the group as the case organisation" do
-        group = create(:support_establishment_group, name: "Group 1")
+    context "when selecting a MAT" do
+      let(:group_type) { create(:support_establishment_group_type, code: 6) }
+      let(:group) { create(:support_establishment_group, name: "Group 1", establishment_group_type: group_type, uid: "123") }
+
+      before do
+        create_list(:support_organisation, 3, trust_code: group.uid)
+      end
+
+      it "sets the group as the case organisation and participating schools" do
         select_organisation "Group 1"
         valid_form_data_without_organisation
         click_on "Save and continue"
+        check "School #1"
+        check "School #2"
+        click_on "Save"
         click_on "Create case"
         expect(Support::Case.last.organisation).to eq(group)
+        expect(Support::Case.last.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
       end
     end
 
@@ -95,16 +105,16 @@ RSpec.feature "Create case", js: true do
   end
 
   def valid_form_data_without_organisation
-    fill_in "create_case_form[first_name]", with: "first_name"
-    fill_in "create_case_form[last_name]", with: "last_name"
-    fill_in "create_case_form[email]", with: "test@example.com"
-    fill_in "create_case_form[phone_number]", with: "0778974653"
+    fill_in "case_request[first_name]", with: "first_name"
+    fill_in "case_request[last_name]", with: "last_name"
+    fill_in "case_request[email]", with: "test@example.com"
+    fill_in "case_request[phone_number]", with: "0778974653"
     choose "Non-DfE newsletter" # case origin
     choose "Procurement" # request type
     select "Other (General)", from: "select_request_details_category_id"
     find("#request_details_other_category_text").set("Other Category Details")
-    fill_in "create_case_form[request_text]", with: "This is a request"
-    fill_in "create_case_form[procurement_amount]", with: "45.22"
+    fill_in "case_request[request_text]", with: "This is a request"
+    fill_in "case_request[procurement_amount]", with: "45.22"
   end
 
   def valid_form_data

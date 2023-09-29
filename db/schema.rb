@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -184,6 +184,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "support_case_id"
+    t.uuid "case_request_id"
+    t.index ["case_request_id"], name: "index_engagement_case_uploads_on_case_request_id"
   end
 
   create_table "exit_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -938,12 +940,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "all_cases_survey_responses", "support_cases", column: "case_id"
-  add_foreign_key "documents", "framework_requests"
-  add_foreign_key "documents", "support_cases"
   add_foreign_key "case_requests", "support_agents", column: "created_by_id"
   add_foreign_key "case_requests", "support_cases"
   add_foreign_key "case_requests", "support_categories", column: "category_id"
   add_foreign_key "case_requests", "support_queries", column: "query_id"
+  add_foreign_key "documents", "framework_requests"
+  add_foreign_key "documents", "support_cases"
+  add_foreign_key "engagement_case_uploads", "case_requests"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
   add_foreign_key "framework_requests", "support_cases"

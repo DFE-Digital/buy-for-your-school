@@ -1,34 +1,41 @@
 module Engagement
   class CaseRequestsController < ApplicationController
-    before_action -> { @back_url = engagement_cases_path }, only: %i[new create]
-
-    def new
-      @case_request = CaseRequest.new
-      @upload_reference = SecureRandom.hex
-    end
+    before_action :case_request, only: %i[show edit update submit]
 
     def create
-      @case_request = CaseRequest.new(form_params.except(:upload_reference))
-      @case_request.created_by = current_agent
+      @case_request = CaseRequest.new(source: :engagement_and_outreach_cms, creation_source: :engagement_and_outreach_team, created_by: current_agent)
+      @case_request.save!(validate: false)
+      redirect_to edit_engagement_case_request_path(@case_request)
+    end
+
+    def show; end
+
+    def edit
+      @back_url = @case_request.completed? ? engagement_case_request_path(@case_request) : engagement_cases_path
+    end
+
+    def update
+      @back_url = @case_request.completed? ? engagement_case_request_path(@case_request) : engagement_cases_path
+      @case_request.assign_attributes(form_params)
 
       if @case_request.valid?
         @case_request.save!
-        # kase = @case_request.create_case
-
-        # CaseFiles::SubmitCaseUpload.new.call(upload_reference: form_params[:upload_reference], support_case_id: kase.id)
-
-        # create_interaction(kase.id, "create_case", "Case created", @case_request.attributes.slice(:source, :category))
-
-        redirect_to @case_request.eligible_for_school_picker? ? edit_support_case_request_school_picker_path(@case_request) : engagement_case_request_path(@case_request)
+        redirect_to(@case_request.eligible_for_school_picker? && @case_request.school_urns.empty? ? edit_engagement_case_request_school_picker_path(@case_request) : engagement_case_request_path(@case_request))
       else
-        render :new
+        render :edit
       end
     end
 
     def submit
+      @case_request.create_case
+      redirect_to engagement_cases_path
     end
 
   private
+
+    def case_request
+      @case_request = CaseRequest.find_by(id: params[:id])
+    end
 
     def form_params
       params.require(:case_request).permit(
@@ -47,11 +54,7 @@ module Engagement
         :other_category,
         :other_query,
         :procurement_amount,
-        :upload_reference,
-      ).merge({
-        source: :engagement_and_outreach_cms.to_s,
-        creation_source: :engagement_and_outreach_team.to_s,
-      })
+      )
     end
   end
 end

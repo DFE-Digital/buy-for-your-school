@@ -1,31 +1,41 @@
 module Support
   class CaseRequestsController < ApplicationController
-    before_action -> { @back_url = support_cases_path }, only: %i[new create]
-
-    def new
-      @case_request = CaseRequest.new
-    end
+    before_action :case_request, only: %i[show edit update submit]
 
     def create
-      @case_request = CaseRequest.new(form_params.except(:upload_reference))
-      @case_request.created_by = current_agent
+      @case_request = CaseRequest.new(created_by: current_agent)
+      @case_request.save!(validate: false)
+      redirect_to edit_support_case_request_path(@case_request)
+    end
+
+    def show; end
+
+    def edit
+      @back_url = @case_request.completed? ? support_case_request_path(@case_request) : support_cases_path
+    end
+
+    def update
+      @back_url = @case_request.completed? ? support_case_request_path(@case_request) : support_cases_path
+      @case_request.assign_attributes(form_params)
 
       if @case_request.valid?
         @case_request.save!
-        # kase = @case_request.create_case
-
-        # create_interaction(kase.id, "create_case", "Case created", @case_request.attributes.slice(:source, :category))
-
         redirect_to support_case_request_path(@case_request)
       else
-        render :new
+        render :edit
       end
     end
 
     def submit
+      kase = @case_request.create_case
+      redirect_to support_case_path(kase)
     end
 
   private
+
+    def case_request
+      @case_request = CaseRequest.find_by(id: params[:id])
+    end
 
     def form_params
       params.require(:case_request).permit(

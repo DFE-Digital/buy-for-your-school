@@ -1,8 +1,8 @@
 module Support
   module Cases
-    class RequestsController < Cases::ApplicationController
+    class RequestDetailsController < Cases::ApplicationController
       def show
-        @request = FrameworkRequestPresenter.new(@current_case.framework_request)
+        @request = FrameworkRequestPresenter.new(@current_case.request)
       end
 
     private

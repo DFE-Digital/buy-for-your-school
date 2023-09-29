@@ -212,19 +212,10 @@ Rails.application.routes.draw do
     resources :establishment_groups, only: %i[index]
     resources :frameworks, only: %i[index]
     resources :towers, only: [:show]
-    resources :case_requests, only: %i[new create edit update show] do
-      scope module: "case_requests" do
-        member do
-          post "/submit", to: "case_requests#submit"
-          resource :school_picker, only: %i[edit update], as: :case_request_school_picker
-        end
-      end
-    end
-    resources :cases, only: %i[index show edit update new create] do
+    resources :cases, only: %i[index show] do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
         collection do
-          resource :preview, only: %i[new create], as: :create_case_preview
           resources :searches, only: %i[new index], as: :case_search, path: "find-a-case"
         end
         resources :attachments, only: %i[index edit update destroy]
@@ -270,10 +261,20 @@ Rails.application.routes.draw do
             resource :participating_schools, only: %i[show edit update]
           end
         end
-        resource :request, only: %i[show] do
-          scope module: :requests do
+        resource :request_details, only: %i[show] do
+          scope module: :request_details do
             resource :participating_schools, only: %i[show]
           end
+        end
+      end
+    end
+
+    resources :case_requests, only: %i[create edit update show] do
+      post "/submit", to: "case_requests#submit", on: :member
+
+      scope module: "case_requests" do
+        member do
+          resource :school_picker, only: %i[edit update], as: :case_request_school_picker
         end
       end
     end
@@ -317,15 +318,22 @@ Rails.application.routes.draw do
   # E&O Portal
   namespace :engagement do
     root to: "cases#index"
-    resources :case_requests, only: %i[new create edit update show]
-    resources :cases, only: %i[index show edit update new create] do
+    resources :cases, only: %i[index show] do
       scope module: :cases do
         collection do
-          resource :preview, only: %i[new create], as: :create_case_preview
-
           post "uploads/(:upload_reference)/add", to: "uploads#upload", as: "add_uploads"
           delete "uploads/(:upload_reference)/remove", to: "uploads#remove", as: "remove_uploads"
           get "uploads/(:upload_reference)/list", to: "uploads#list", as: "list_uploads"
+        end
+      end
+    end
+
+    resources :case_requests, only: %i[create edit update show] do
+      post "/submit", to: "case_requests#submit", on: :member
+
+      scope module: "case_requests" do
+        member do
+          resource :school_picker, only: %i[edit update], as: :case_request_school_picker
         end
       end
     end

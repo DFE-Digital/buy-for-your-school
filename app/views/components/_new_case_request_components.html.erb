@@ -9,11 +9,10 @@
             element_name: "case_request[organisation_name]",
             template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
             value_field: :name,
-            default_value: form.object.organisation_name,
+            default_value: form.object.organisation&.name,
             hidden_fields: {
-              'case_request[organisation_id]' => [:id, form.object.organisation_id],
-              'case_request[organisation_type]' => [:source, form.object.organisation_type],
-              'case_request[organisation_urn]' => [:urn, form.object.organisation_urn],
+              'case_request[organisation_id]' => [:id, form.object.organisation&.id],
+              'case_request[organisation_type]' => [:source, form.object.organisation.class&.name],
             },
             query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
