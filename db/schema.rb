@@ -91,6 +91,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
     t.index ["case_id"], name: "index_all_cases_survey_responses_on_case_id"
   end
 
+  create_table "case_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone_number"
+    t.string "extension_number"
+    t.text "request_text"
+    t.boolean "submitted", default: false
+    t.uuid "created_by_id"
+    t.uuid "organisation_id"
+    t.string "organisation_type"
+    t.uuid "category_id"
+    t.uuid "query_id"
+    t.string "other_category"
+    t.string "other_query"
+    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.string "school_urns", default: [], array: true
+    t.integer "discovery_method"
+    t.string "discovery_method_other_text"
+    t.integer "source"
+    t.integer "creation_source"
+    t.uuid "support_case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_case_requests_on_category_id"
+    t.index ["created_by_id"], name: "index_case_requests_on_created_by_id"
+    t.index ["query_id"], name: "index_case_requests_on_query_id"
+    t.index ["support_case_id"], name: "index_case_requests_on_support_case_id"
+  end
+
   create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.string "description", null: false
@@ -910,6 +940,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
   add_foreign_key "all_cases_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "documents", "framework_requests"
   add_foreign_key "documents", "support_cases"
+  add_foreign_key "case_requests", "support_agents", column: "created_by_id"
+  add_foreign_key "case_requests", "support_cases"
+  add_foreign_key "case_requests", "support_categories", column: "category_id"
+  add_foreign_key "case_requests", "support_queries", column: "query_id"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
   add_foreign_key "framework_requests", "support_cases"

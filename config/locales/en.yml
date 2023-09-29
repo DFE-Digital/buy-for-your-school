@@ -87,6 +87,10 @@ en:
         secondary: Secondary
         all_through: All-through
         sixteen_plus: 16-plus
+  case_requests:
+    validation:
+      request_type: Select whether the request is related to a procurement category
+      discovery_method: Case origin is missing
   cookies:
     banner:
       accepted:

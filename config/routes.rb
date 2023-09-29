@@ -212,6 +212,14 @@ Rails.application.routes.draw do
     resources :establishment_groups, only: %i[index]
     resources :frameworks, only: %i[index]
     resources :towers, only: [:show]
+    resources :case_requests, only: %i[new create edit update show] do
+      scope module: "case_requests" do
+        member do
+          post "/submit", to: "case_requests#submit"
+          resource :school_picker, only: %i[edit update], as: :case_request_school_picker
+        end
+      end
+    end
     resources :cases, only: %i[index show edit update new create] do
       resources :interactions, only: %i[new create show]
       scope module: :cases do
@@ -309,6 +317,7 @@ Rails.application.routes.draw do
   # E&O Portal
   namespace :engagement do
     root to: "cases#index"
+    resources :case_requests, only: %i[new create edit update show]
     resources :cases, only: %i[index show edit update new create] do
       scope module: :cases do
         collection do
