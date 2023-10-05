@@ -571,7 +571,7 @@ GEM
       concurrent-ruby (~> 1.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.9)
+    sidekiq (6.5.10)
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
@@ -737,7 +737,7 @@ DEPENDENCIES
   scenic
   selenium-webdriver
   shoulda-matchers
-  sidekiq (~> 6.4)
+  sidekiq (~> 6.5)
   sidekiq-cron (~> 1.10)
   simple_xlsx_reader
   simplecov
