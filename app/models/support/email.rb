@@ -1,5 +1,6 @@
 module Support
   class Email < ApplicationRecord
+    belongs_to :ticket, polymorphic: true
     belongs_to :case, class_name: "Support::Case", optional: true
     belongs_to :template, class_name: "Support::EmailTemplate", optional: true
     belongs_to :thread, class_name: "Support::MessageThread", primary_key: :conversation_id, foreign_key: :outlook_conversation_id, optional: true
