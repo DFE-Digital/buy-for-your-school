@@ -33,8 +33,8 @@ RSpec.describe Support::EmailAttachment, type: :model do
   end
 
   describe ".unique_files" do
-    let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")) }
-    let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain")) }
+    let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
+    let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
     let!(:attachment_3) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
 
     it "removes repeating duplicate files" do
@@ -44,15 +44,22 @@ RSpec.describe Support::EmailAttachment, type: :model do
       expect(results).to include(attachment_2)
       expect(results).to include(attachment_3)
     end
+  end
 
-    context "when first_instance_only is false" do
-      it "provides repeating duplicate files, so they can be hidden" do
-        results = described_class.unique_files(first_instance_only: false).to_a
+  describe ".all_instances" do
+    let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
+    let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
+    let!(:attachment_3) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
 
-        expect(results).to include(attachment_1)
-        expect(results).to include(attachment_2)
-        expect(results).to include(attachment_3)
-      end
+    it "provides repeating duplicate files, so they can be hidden" do
+      results = described_class.all_instances(attachment_1).to_a
+      expect(results).to include(attachment_1)
+      expect(results).to include(attachment_2)
+      results = described_class.all_instances(attachment_2).to_a
+      expect(results).to include(attachment_1)
+      expect(results).to include(attachment_2)
+      results = described_class.all_instances(attachment_3).to_a
+      expect(results).to include(attachment_3)
     end
   end
 end
