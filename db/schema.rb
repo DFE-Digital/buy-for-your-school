@@ -340,8 +340,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id"
     t.text "sidebar"
     t.string "breadcrumbs", default: [], array: true
@@ -761,7 +761,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
     t.string "ukprn"
     t.string "telephone_number"
     t.jsonb "local_authority"
-    t.datetime "opened_date"
+    t.datetime "opened_date", precision: nil
     t.string "number"
     t.string "rsc_region"
     t.string "trust_name"

@@ -30,10 +30,10 @@ module CaseFiles
 
     def query
       Support::EmailAttachment
-        .unique_files
         .for_case(case_id: @case_id)
         .where(hidden: false, **filter_to_apply)
-        .order(is_inline: :asc, created_at: :desc)
+        .unique_files
+        .reorder(is_inline: :asc, created_at: :desc)
     end
   end
 end
