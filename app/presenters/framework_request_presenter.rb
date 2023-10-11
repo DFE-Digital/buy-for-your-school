@@ -29,6 +29,16 @@ class FrameworkRequestPresenter < RequestPresenter
     end
   end
 
+  def org_name_or_number
+    return I18n.t("support.case_categorisations.label.none") if org_id.blank?
+
+    if group && school_urns.present?
+      "#{school_urns.count} out of #{organisation.organisations.count} schools"
+    else
+      org_name
+    end
+  end
+
   # TODO: extract into a look-up service rather than access supported data directly
   def group_type
     group_type_id = Support::EstablishmentGroup.find_by(uid: org_id)&.establishment_group_type_id
@@ -40,11 +50,19 @@ class FrameworkRequestPresenter < RequestPresenter
   end
 
   def bill_filenames
+    return if energy_bills.empty?
+
     energy_bills.map(&:filename).join(", ")
   end
 
   def document_count
     documents.count
+  end
+
+  def document_filenames
+    return if documents.empty?
+
+    documents.map(&:filename).join(", ")
   end
 
   def contract_length
