@@ -1,5 +1,5 @@
-<%= turbo_frame_tag "school-details-frame", src: support_case_school_details_path(@current_case) do %>
-  <div id="school-details" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+<div id="school-details" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+  <%= turbo_frame_tag "school-details-frame", src: support_case_school_details_path(@current_case) do %>
     <p class="govuk-body">Loading...</p>
-  </div>
-<% end %>
+  <% end %>
+</div>

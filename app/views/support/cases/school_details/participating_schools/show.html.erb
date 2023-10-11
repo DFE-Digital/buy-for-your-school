@@ -1,29 +1,27 @@
 <%= turbo_frame_tag "school-details-frame" do %>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="school-details">
-    <%= link_to I18n.t("support.case.label.school_details.back"), @back_url, class: "govuk-back-link pull-up" %>
-    <h2 class="govuk-heading-l">
-      <%= I18n.t("support.case.label.participating_schools") %> - <%= link_to I18n.t("support.case.link.change"), edit_support_case_school_details_participating_schools_path, class: "govuk-link govuk-link--no-visited-state" %>
-    </h2>
+  <%= link_to I18n.t("support.case.label.school_details.back"), @back_url, class: "govuk-back-link pull-up" %>
+  <h2 class="govuk-heading-l">
+    <%= I18n.t("support.case.label.participating_schools") %> - <%= link_to I18n.t("support.case.link.change"), edit_support_case_school_details_participating_schools_path, class: "govuk-link govuk-link--no-visited-state" %>
+  </h2>
 
-    <table class="govuk-table" aria-label="Participating schools">
-      <thead class="govuk-table__head">
+  <table class="govuk-table" aria-label="Participating schools">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.school_name") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.address") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.phase") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.local_authority") %></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @participating_schools.each do |school| %>
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.school_name") %></th>
-          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.address") %></th>
-          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.phase") %></th>
-          <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.participating_schools.table.local_authority") %></th>
+          <th scope="row" class="govuk-table__header"><%= school.name %></th>
+          <td class="govuk-table__cell"><%= school.formatted_address %></td>
+          <td class="govuk-table__cell"><%= school.phase %></td>
+          <td class="govuk-table__cell"><%= school.local_authority %></td>
         </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @participating_schools.each do |school| %>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><%= school.name %></th>
-            <td class="govuk-table__cell"><%= school.formatted_address %></td>
-            <td class="govuk-table__cell"><%= school.phase %></td>
-            <td class="govuk-table__cell"><%= school.local_authority %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
