@@ -1,114 +1,112 @@
 <%= turbo_frame_tag "school-details-frame" do %>
-  <div class="govuk-tabs__panel" id="school-details" role="tabpanel" aria-labelledby="tab_school-details">
-    <h2 class="govuk-heading-l">
-      <%= I18n.t("support.case.header.school_detail") %>
-    </h2>
+  <h2 class="govuk-heading-l">
+    <%= I18n.t("support.case.header.school_detail") %>
+  </h2>
 
-    <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+  <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.contact_name") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.full_name %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <% unless @current_case.closed? %>
+          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.contact_phone") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.phone_number %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <% unless @current_case.closed? %>
+          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.contact_extension_number") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.extension_number %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <% unless @current_case.closed? %>
+          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.contact_email") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.email %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <% unless @current_case.closed? %>
+          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.organisation_name") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.organisation_name if @current_case.organisation.present? %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <% unless @current_case.closed? %>
+          <%= link_to @current_case.organisation.present? ? "Change" : "Add",
+            edit_support_case_organisation_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.organisation_type") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.organisation_type_name %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+      </dd>
+    </div>
+
+    <% if @current_case.eligible_for_school_picker? %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.contact_name") %>
+          <%= I18n.t("support.case.label.participating_schools") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @current_case.full_name %>
+          <%= @current_case.participating_schools.count %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <% unless @current_case.closed? %>
-            <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
-          <% end %>
+          <%= link_to I18n.t("support.generic.view"), support_case_school_details_participating_schools_path(@current_case), class: "govuk-link" %>
         </dd>
       </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.contact_phone") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @current_case.phone_number %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <% unless @current_case.closed? %>
-            <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
-          <% end %>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.contact_extension_number") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @current_case.extension_number %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <% unless @current_case.closed? %>
-            <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
-          <% end %>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.contact_email") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @current_case.email %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <% unless @current_case.closed? %>
-            <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
-          <% end %>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.organisation_name") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @current_case.organisation_name if @current_case.organisation.present? %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <% unless @current_case.closed? %>
-            <%= link_to @current_case.organisation.present? ? "Change" : "Add",
-              edit_support_case_organisation_path(@current_case), class: "govuk-link", target: "_top" %>
-          <% end %>
-        </dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.organisation_type") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @current_case.organisation_type_name %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-
-      <% if @current_case.eligible_for_school_picker? %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case.label.participating_schools") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= @current_case.participating_schools.count %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to I18n.t("support.generic.view"), support_case_school_details_participating_schools_path(@current_case), class: "govuk-link" %>
-          </dd>
-        </div>
-      <% end %>
-    </dl>
-
-    <% if @current_case.organisation.present? %>
-      <p class="govuk-body">
-        <%= link_to @current_case.organisation_gias_label,
-            @current_case.organisation_gias_url,
-            class: "govuk-link", target: "_blank", rel: "noreferrer noopener"
-        %>
-      </p>
     <% end %>
-  </div>
+  </dl>
+
+  <% if @current_case.organisation.present? %>
+    <p class="govuk-body">
+      <%= link_to @current_case.organisation_gias_label,
+          @current_case.organisation_gias_url,
+          class: "govuk-link", target: "_blank", rel: "noreferrer noopener"
+      %>
+    </p>
+  <% end %>
 <% end %>
