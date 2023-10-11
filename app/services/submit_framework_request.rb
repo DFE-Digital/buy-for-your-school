@@ -13,7 +13,7 @@ class SubmitFrameworkRequest
 
   # @!attribute template
   #   @return [String] Template UUID
-  option :template, Types::String, default: proc { "621a9fe9-018c-425e-ae6e-709c6718fe8d" }
+  option :template, Types::String, default: proc { "f07f24e6-e0b8-4887-910a-8bf22e0575cd" }
 
   # @!attribute referrer
   #   @return [String]
@@ -104,7 +104,13 @@ private
         recipient: request.user,
         reference: @kase.ref,
         variables: {
+          no_of_schools: request.org_name_or_number,
+          selected_category: request.category.title,
+          contract_length: request.contract_length || "NA",
+          contract_start: request.contract_start_date || "NA",
+          total_spend: request.procurement_amount || "NA",
           message: request.message_body,
+          files_uploaded: request.bill_filenames || "NA",
         },
       ).call
     else
@@ -113,7 +119,13 @@ private
         reference: @kase.ref,
         template:,
         variables: {
+          no_of_schools: request.org_name_or_number,
+          selected_category: request.category.title,
+          contract_length: request.contract_length || "NA",
+          contract_start: request.contract_start_date || "NA",
+          total_spend: request.procurement_amount || "NA",
           message: request.message_body,
+          files_uploaded: request.document_filenames || "NA",
         },
       ).call
     end
