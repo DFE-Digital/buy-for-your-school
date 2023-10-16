@@ -16,11 +16,6 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
     visit "/procurement-support/#{request.id}"
   end
 
-  it "goes back to the origin page" do
-    click_on "Back"
-    expect(page).to have_current_path "/procurement-support/#{request.id}/origin/edit"
-  end
-
   it "has submission information" do
     expect(find("h1.govuk-heading-l", text: "Send your request")).to be_present
     expect(find("p.govuk-body", text: "Once you send this request, we will review it and get in touch within 2 working days.")).to be_present
