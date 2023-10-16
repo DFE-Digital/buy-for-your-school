@@ -72,6 +72,20 @@
           <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
         </dd>
       </div>
+
+      <% if @case_request.multischool? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.participating_schools") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= I18n.t("support.case_hub_migration.label.school_number", selected: @case_request.school_urns.count, total: @case_request.organisation.organisations.length ) %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_school_picker_path(source: :change_link), class: "govuk-link govuk-link--no-visited-state" %>
+          </dd>
+        </div>
+      <% end %>
     </dl>
 
     <h2 class="govuk-heading-m">

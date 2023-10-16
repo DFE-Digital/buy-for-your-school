@@ -20,7 +20,7 @@ module Support
 
       if @case_request.valid?
         @case_request.save!
-        redirect_to support_case_request_path(@case_request)
+        redirect_to(@case_request.eligible_for_school_picker? && @case_request.school_urns.empty? ? edit_support_case_request_school_picker_path(@case_request) : support_case_request_path(@case_request))
       else
         render :edit
       end

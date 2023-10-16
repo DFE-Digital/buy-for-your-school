@@ -1,0 +1,9 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_hub_migration.school_picker.title") %></h1>
+
+<%= render "components/school_picker/school_picker",
+  results_model: @school_picker,
+  filters_model: @filters,
+  scope: :case_request,
+  update_url: support_case_request_school_picker_path(@case_request),
+  filters_url: edit_support_case_request_school_picker_path(@case_request),
+  method: :patch %>
