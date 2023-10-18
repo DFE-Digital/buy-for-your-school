@@ -5,7 +5,7 @@ describe Support::Case::EmailTicketable do
     context "when email already has a ticket assigned (just sent as a draft message)" do
       it "remains attached to that ticket" do
         support_case = create(:support_case, :initial)
-        email = create(:support_email, ticket: support_case)
+        email = create(:email, ticket: support_case)
 
         Support::Case.on_email_cached(email)
 

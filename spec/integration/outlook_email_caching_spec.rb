@@ -56,24 +56,24 @@ describe "Outlook emails integration" do
       context "when message is in the inbox" do
         let(:inbox_messages) { [stub_message(subject: "Test Message 1")] }
 
-        it "is saved as a Support::Email in the inbox folder" do
-          expect { run_sync_inbox_emails! }.to change(Support::Email, :count).from(0).to(1)
-          expect(Support::Email.first.subject).to eq("Test Message 1")
-          expect(Support::Email.first.folder).to eq("inbox")
+        it "is saved as a Email in the inbox folder" do
+          expect { run_sync_inbox_emails! }.to change(Email, :count).from(0).to(1)
+          expect(Email.first.subject).to eq("Test Message 1")
+          expect(Email.first.folder).to eq("inbox")
         end
 
         it "sets action required to true on the case" do
-          expect { run_sync_inbox_emails! }.to change { Support::Email.first&.case&.action_required }.from(nil).to(true)
+          expect { run_sync_inbox_emails! }.to change { Email.first&.ticket&.action_required }.from(nil).to(true)
         end
       end
 
       context "when message is in the sent items" do
         let(:sent_items_messages) { [stub_message(subject: "Test Message 1")] }
 
-        it "is saved as a Support::Email in the inbox folder" do
-          expect { run_sync_sent_items_emails! }.to change(Support::Email, :count).from(0).to(1)
-          expect(Support::Email.first.subject).to eq("Test Message 1")
-          expect(Support::Email.first.folder).to eq("sent_items")
+        it "is saved as a Email in the inbox folder" do
+          expect { run_sync_sent_items_emails! }.to change(Email, :count).from(0).to(1)
+          expect(Email.first.subject).to eq("Test Message 1")
+          expect(Email.first.folder).to eq("sent_items")
         end
       end
     end
@@ -153,21 +153,53 @@ describe "Outlook emails integration" do
       end
     end
 
+    describe "framework evaluations" do
+      context "when message is in the inbox" do
+        let(:inbox_messages) { [stub_message(subject: "[FE1234] - Help me Obi Wan")] }
+
+        context "when message can be assigned to an existing case" do
+          let!(:existing_evaluation) { create(:frameworks_evaluation, reference: "FE1234") }
+
+          it "assigns it to the existing evaluation" do
+            expect { run_sync_inbox_emails! }.to change { existing_evaluation.reload.emails.count }.from(0).to(1)
+            expect(existing_evaluation.emails.first.subject).to eq("[FE1234] - Help me Obi Wan")
+          end
+
+          it "sets the evaluation to action required" do
+            expect { run_sync_inbox_emails! }.to change { existing_evaluation.reload.action_required }.from(false).to(true)
+          end
+        end
+      end
+
+      context "when message is in sent items" do
+        let(:sent_items_messages) { [stub_message(subject: "[FE1234] - Help me Obi Wan")] }
+
+        context "when message can be assigned to an existing case" do
+          let!(:existing_evaluation) { create(:frameworks_evaluation, reference: "FE1234") }
+
+          it "assigns it to the existing evaluation" do
+            expect { run_sync_sent_items_emails! }.to change { existing_evaluation.reload.emails.count }.from(0).to(1)
+            expect(existing_evaluation.emails.first.subject).to eq("[FE1234] - Help me Obi Wan")
+          end
+        end
+      end
+    end
+
     describe "email attachments" do
       let(:file_attachments) { { "EMAIL_1" => [stub_attachment(id: "AtA"), stub_attachment(id: "AtB")] } }
       let(:inbox_messages) { [stub_message(id: "EMAIL_1")] }
 
       it "attaches each email attachment of the message to the persisted email" do
-        expect { run_sync_inbox_emails! }.to change(Support::EmailAttachment, :count).from(0).to(2)
-        expect(Support::Email.first.attachments.pluck(:outlook_id)).to match_array(%w[AtA AtB])
+        expect { run_sync_inbox_emails! }.to change(EmailAttachment, :count).from(0).to(2)
+        expect(Email.first.attachments.pluck(:outlook_id)).to match_array(%w[AtA AtB])
       end
 
       it "can be downloaded by the user", type: :request do
         run_sync_inbox_emails!
         agent_is_signed_in
 
-        support_email_attachment = Support::Email.first.attachments.first
-        get support_document_download_path(support_email_attachment, type: "Support::EmailAttachment")
+        support_email_attachment = Email.first.attachments.first
+        get support_document_download_path(support_email_attachment, type: "EmailAttachment")
         expect(response.body).to eq(support_email_attachment.file.download)
 
         email_attachment = Email.first.attachments.first

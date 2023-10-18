@@ -182,8 +182,8 @@ RSpec.describe Support::CasePresenter do
 
   describe "#message_threads" do
     before do
-      create(:support_email, case: support_case)
-      create(:support_email, case: support_case)
+      create(:support_email, ticket: support_case)
+      create(:support_email, ticket: support_case)
     end
 
     it "returns all the message threads wrapped in a presenter" do

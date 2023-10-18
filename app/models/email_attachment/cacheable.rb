@@ -16,7 +16,7 @@ module EmailAttachment::Cacheable
         email_attachment.is_inline = attachment.is_inline
         email_attachment.content_id = attachment.content_id
         email_attachment.file.attach(
-          io: StringIO.new(attachment.content_bytes),
+          io: StringIO.new(Base64.decode64(attachment.content_bytes)),
           filename: attachment.name,
           content_type: attachment.content_type,
         )

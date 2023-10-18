@@ -144,7 +144,7 @@ module MicrosoftGraph
     end
 
     def create_and_send_new_reply(mailbox:, draft:)
-      draft_message = microsoft_graph.create_reply_all_message(user_id:, reply_to_id: draft.reply_to_email.outlook_id, http_headers: DEFAULT_EMAIL_HEADERS)
+      draft_message = create_reply_all_message(user_id: mailbox.user_id, reply_to_id: draft.reply_to_id, http_headers: DEFAULT_EMAIL_HEADERS)
 
       add_content_and_send_message(draft, user_id: mailbox.user_id, message_id: draft_message.id, details: details_for_reply(draft, draft_message))
     end
@@ -152,14 +152,14 @@ module MicrosoftGraph
   private
 
     def add_content_and_send_message(draft, user_id:, message_id:, details:)
-      microsoft_graph.update_message(user_id:, message_id:, details:)
+      update_message(user_id:, message_id:, details:)
 
       draft.attachments.each do |file_attachment|
-        microsoft_graph.add_file_attachment_to_message(user_id:, file_attachment:, message_id:)
+        add_file_attachment_to_message(user_id:, file_attachment:, message_id:)
       end
 
-      microsoft_graph.send_message(user_id:, message_id:)
-      microsoft_graph.get_message(user_id:, message_id:)
+      send_message(user_id:, message_id:)
+      get_message(user_id:, message_id:)
     end
 
     def details_for_new_message(draft, mailbox)
