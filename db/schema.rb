@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_19_085509) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -288,6 +288,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "action_required", default: false
   end
 
   create_table "frameworks_framework_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1027,23 +1028,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
        LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
-  create_view "support_message_threads", sql_definition: <<-SQL
-      SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
-      se.case_id,
-      se.ticket_id,
-      se.ticket_type,
-      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
-             FROM support_emails se2,
-              LATERAL jsonb_array_elements(se2.recipients) elems(value)
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
-      se.subject,
-      ( SELECT se2.sent_at
-             FROM support_emails se2
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
-            ORDER BY se2.sent_at DESC
-           LIMIT 1) AS last_updated
-     FROM support_emails se;
-  SQL
   create_view "support_tower_cases", sql_definition: <<-SQL
       SELECT sc.id,
       sc.state,
@@ -1061,6 +1045,23 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
        LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
+  SQL
+  create_view "support_message_threads", sql_definition: <<-SQL
+      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
+      se.case_id,
+      se.ticket_id,
+      se.ticket_type,
+      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
+             FROM support_emails se2,
+              LATERAL jsonb_array_elements(se2.recipients) elems(value)
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
+      se.subject,
+      ( SELECT se2.sent_at
+             FROM support_emails se2
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
+            ORDER BY se2.sent_at DESC
+           LIMIT 1) AS last_updated
+     FROM support_emails se;
   SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,

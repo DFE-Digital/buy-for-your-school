@@ -7,7 +7,7 @@ describe "Agent can rename attachments on a case" do
   let(:file) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
 
   before do
-    create(:support_email_attachment, file:, email: create(:support_email, :inbox, case: support_case))
+    create(:support_email_attachment, file:, email: create(:support_email, :inbox, ticket: support_case))
   end
 
   it "adds a custom name and description to the attachment", js: true do

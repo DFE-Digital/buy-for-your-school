@@ -1,5 +1,5 @@
-describe Support::EmailAttachment::DeDupable do
-  subject(:de_dupable) { Support::EmailAttachment }
+describe EmailAttachment::DeDupable do
+  subject(:de_dupable) { EmailAttachment }
 
   include_context "with duplicated email attachments"
 

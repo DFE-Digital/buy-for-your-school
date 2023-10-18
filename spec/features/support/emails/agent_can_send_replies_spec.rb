@@ -1,7 +1,7 @@
 describe "Agent can reply to incoming emails", js: true, bullet: :skip do
   include_context "with an agent"
 
-  let(:email) { create(:support_email, origin, case: support_case) }
+  let(:email) { create(:support_email, origin, ticket: support_case) }
   let(:support_case) { create(:support_case) }
   let(:origin) { :inbox }
   let(:interaction_type) { :email_from_school }

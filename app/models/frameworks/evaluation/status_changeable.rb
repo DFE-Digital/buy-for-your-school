@@ -10,9 +10,9 @@ module Frameworks::Evaluation::StatusChangeable
       approved: 2,
       not_approved: 3,
       cancelled: 4,
-    }, _scopes: false
+    }
 
-    aasm column: :status do
+    aasm column: :status, enum: true do
       Frameworks::Evaluation.statuses.each { |status, _| state status.to_sym }
 
       event :start do
