@@ -1,4 +1,4 @@
-describe Support::EmailAttachment::Hideable do
+describe EmailAttachment::Hideable do
   include_context "with duplicated email attachments"
 
   describe "#hide" do

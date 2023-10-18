@@ -23,10 +23,10 @@ synchronize_shared_inbox:
   class: CacheMessagesJob
   description: Persist emails from the shared inbox into the database
 
-# resync_email_ids:
-#   cron: "* * * * *" # every minute
-#   class: Support::ResyncEmailIdsJob
-#   description: Get new outlook ids for emails moved between folders
+resync_email_ids:
+  cron: "* * * * *" # every minute
+  class: ResyncCachedMessagesOutlookIdsJob
+  description: Get new outlook ids for emails moved between folders
 
 refresh_establishment_groups:
   cron: 0 4 1 * * # At 04:00 on day-of-month 1.

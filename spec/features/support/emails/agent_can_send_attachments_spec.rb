@@ -1,7 +1,7 @@
 describe "Agent can add attachments to replies", :with_csrf_protection, js: true do
   include_context "with an agent"
 
-  let(:email) { create(:support_email, :inbox, case: support_case) }
+  let(:email) { create(:support_email, :inbox, ticket: support_case) }
   let(:support_case) { create(:support_case) }
 
   before do

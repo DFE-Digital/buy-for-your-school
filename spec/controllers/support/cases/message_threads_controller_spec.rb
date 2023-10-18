@@ -6,9 +6,9 @@ describe Support::Cases::MessageThreadsController, type: :controller do
 
     context "when the request is not from a turbo frame" do
       it "redirects to the case with a message tab URL" do
-        get :show, params: { id: email.outlook_conversation_id, case_id: email.case.id }
+        get :show, params: { id: email.outlook_conversation_id, case_id: email.ticket_id }
 
-        expect(response).to redirect_to "/support/cases/#{email.case.id}?messages_tab_url=#{CGI.escape(request.url)}#messages"
+        expect(response).to redirect_to "/support/cases/#{email.ticket_id}?messages_tab_url=#{CGI.escape(request.url)}#messages"
       end
     end
 
@@ -16,7 +16,7 @@ describe Support::Cases::MessageThreadsController, type: :controller do
       before { request.headers["Turbo-Frame"] = "1" }
 
       context "when a URL for the reply frame is provided" do
-        let(:case_id) { email.case.id }
+        let(:case_id) { email.ticket_id }
         let(:message_id) { email.id }
         let(:template_id) { "template-1" }
         let(:reply_frame_url) { new_support_case_message_reply_path(case_id:, message_id: email.id) }
