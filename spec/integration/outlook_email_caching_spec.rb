@@ -153,6 +153,38 @@ describe "Outlook emails integration" do
       end
     end
 
+    describe "framework evaluations" do
+      context "when message is in the inbox" do
+        let(:inbox_messages) { [stub_message(subject: "[FE1234] - Help me Obi Wan")] }
+
+        context "when message can be assigned to an existing case" do
+          let!(:existing_evaluation) { create(:frameworks_evaluation, reference: "FE1234") }
+
+          it "assigns it to the existing evaluation" do
+            expect { run_sync_inbox_emails! }.to change { existing_evaluation.reload.emails.count }.from(0).to(1)
+            expect(existing_evaluation.emails.first.subject).to eq("[FE1234] - Help me Obi Wan")
+          end
+
+          it "sets the evaluation to action required" do
+            expect { run_sync_inbox_emails! }.to change { existing_evaluation.reload.action_required }.from(false).to(true)
+          end
+        end
+      end
+
+      context "when message is in sent items" do
+        let(:sent_items_messages) { [stub_message(subject: "[FE1234] - Help me Obi Wan")] }
+
+        context "when message can be assigned to an existing case" do
+          let!(:existing_evaluation) { create(:frameworks_evaluation, reference: "FE1234") }
+
+          it "assigns it to the existing evaluation" do
+            expect { run_sync_sent_items_emails! }.to change { existing_evaluation.reload.emails.count }.from(0).to(1)
+            expect(existing_evaluation.emails.first.subject).to eq("[FE1234] - Help me Obi Wan")
+          end
+        end
+      end
+    end
+
     describe "email attachments" do
       let(:file_attachments) { { "EMAIL_1" => [stub_attachment(id: "AtA"), stub_attachment(id: "AtB")] } }
       let(:inbox_messages) { [stub_message(id: "EMAIL_1")] }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_105547) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -256,6 +256,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "action_required", default: false
   end
 
   create_table "frameworks_framework_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

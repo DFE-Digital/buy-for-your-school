@@ -12,7 +12,7 @@ class Support::Case::EmailTicketable::ExistingCase
     new(email:).existing_case
   end
 
-  def self.find_or_create_by(email)
+  def self.find_or_create_by!(email)
     find_by(email) || create_by(email)
   end
 
