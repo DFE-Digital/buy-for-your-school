@@ -38,7 +38,7 @@ module Support
       from_case.transaction do
         # move emails and interactions over to the to_case
         from_case.interactions&.update_all(case_id: to_case.id)
-        from_case.emails&.update_all(case_id: to_case.id)
+        from_case.emails&.update_all(ticket_id: to_case.id)
 
         # create a email_merge interaction record
         from_case.interactions.email_merge.build(
