@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_151247) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -288,6 +288,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "action_required", default: false
   end
 
   create_table "frameworks_framework_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -675,6 +676,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
     t.jsonb "cc_recipients"
     t.jsonb "bcc_recipients"
     t.uuid "template_id"
+    t.string "ticket_type"
+    t.uuid "ticket_id"
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
     t.index ["template_id"], name: "index_support_emails_on_template_id"
   end
@@ -1024,15 +1027,67 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
        LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
+  create_view "support_tower_cases", sql_definition: <<-SQL
+      SELECT sc.id,
+      sc.state,
+      sc.value,
+      sc.procurement_id,
+      sc.organisation_id,
+      (sc.procurement_stage_id)::text AS procurement_stage_id,
+      COALESCE(sc.support_level, 99) AS support_level,
+      COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
+      lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
+      tow.id AS tower_id,
+      sc.created_at,
+      sc.updated_at
+     FROM ((support_cases sc
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
+       LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
+    WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
+  SQL
+  create_view "support_message_threads", sql_definition: <<-SQL
+      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
+      se.case_id,
+      se.ticket_id,
+      se.ticket_type,
+      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
+             FROM support_emails se2,
+              LATERAL jsonb_array_elements(se2.recipients) elems(value)
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
+      se.subject,
+      ( SELECT se2.sent_at
+             FROM support_emails se2
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
+            ORDER BY se2.sent_at DESC
+           LIMIT 1) AS last_updated
+     FROM support_emails se;
+  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
       sc.created_at,
+      (sc.created_at)::date AS created_date,
+      to_char(((sc.created_at)::date)::timestamp with time zone, 'yyyy'::text) AS created_year,
+      to_char(((sc.created_at)::date)::timestamp with time zone, 'mm'::text) AS created_month,
+          CASE
+              WHEN (date_part('month'::text, sc.created_at) >= (4)::double precision) THEN concat('FY', to_char(((sc.created_at)::date)::timestamp with time zone, 'yy'::text), '/', to_char((((sc.created_at + 'P1Y'::interval))::date)::timestamp with time zone, 'yy'::text))
+              WHEN (date_part('month'::text, sc.created_at) < (4)::double precision) THEN concat('FY', to_char((((sc.created_at - 'P1Y'::interval))::date)::timestamp with time zone, 'yy'::text), '/', to_char(((sc.created_at)::date)::timestamp with time zone, 'yy'::text))
+              ELSE NULL::text
+          END AS created_financial_year,
       GREATEST(sc.updated_at, si.created_at) AS last_modified_at,
+      (GREATEST(sc.updated_at, si.created_at))::date AS last_modified_date,
+      to_char(((GREATEST(sc.updated_at, si.created_at))::date)::timestamp with time zone, 'yyyy'::text) AS last_modified_year,
+      to_char(((GREATEST(sc.updated_at, si.created_at))::date)::timestamp with time zone, 'mm'::text) AS last_modified_month,
+      (first_resolved.created_at)::date AS first_resolved_date,
+      (last_resolved.created_at)::date AS last_resolved_date,
       sc.source AS case_source,
+      sc.creation_source AS case_creation_source,
       sc.state AS case_state,
       sc.closure_reason AS case_closure_reason,
       cat.title AS sub_category_title,
+      sc.other_category AS category_other,
+      stc.tower_name,
+      concat(sa.first_name, ' ', sa.last_name) AS agent_name,
       sc.savings_actual,
       sc.savings_actual_method,
       sc.savings_estimate,
@@ -1040,6 +1095,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
       sc.savings_status,
       sc.support_level AS case_support_level,
       sc.value AS case_value,
+      sc.with_school AS with_school_flag,
+      sc.next_key_date,
+      sc.next_key_date_description,
+      sc.email AS organisation_contact_email,
       se.name AS organisation_name,
       se.urn AS organisation_urn,
       se.ukprn AS organisation_ukprn,
@@ -1051,11 +1110,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
       se.organisation_status,
       se.egroup_status AS establishment_group_status,
       se.establishment_type,
+      array_length(fr.school_urns, 1) AS request_num_schools,
+      replace(TRIM(BOTH '{}"'::text FROM (fr.school_urns)::text), ','::text, ', '::text) AS request_school_urns,
+      array_length(cr.school_urns, 1) AS case_num_schools,
+      replace(TRIM(BOTH '{}"'::text FROM (cr.school_urns)::text), ','::text, ', '::text) AS case_school_urns,
       sf.name AS framework_name,
       sp.reason_for_route_to_market,
       sp.required_agreement_type,
       sp.route_to_market,
-      sp.stage AS procurement_stage,
+      sp.stage AS procurement_stage_old,
+      sps.stage AS procurement_stage,
+      sps.key AS procurement_stage_key,
       sp.started_at AS procurement_started_at,
       sp.ended_at AS procurement_ended_at,
       ec.started_at AS previous_contract_started_at,
@@ -1071,7 +1136,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
       ps.created_at AS participation_survey_date,
       es.created_at AS exit_survey_date,
       sir.referrer
-     FROM ((((((((((support_cases sc
+     FROM (((((((((((((((((support_cases sc
+       LEFT JOIN ( SELECT sa_1.id,
+              sa_1.first_name,
+              sa_1.last_name
+             FROM support_agents sa_1) sa ON ((sc.agent_id = sa.id)))
+       LEFT JOIN ( SELECT stc_1.id,
+              stc_1.procurement_id,
+              stc_1.tower_name
+             FROM support_tower_cases stc_1) stc ON ((sc.procurement_id = stc.procurement_id)))
+       LEFT JOIN support_activity_log_items first_resolved ON ((first_resolved.id = ( SELECT first_resolved_1.id
+             FROM support_activity_log_items first_resolved_1
+            WHERE (((sc.id)::text = (first_resolved_1.support_case_id)::text) AND ((first_resolved_1.action)::text = 'resolve_case'::text))
+            ORDER BY first_resolved_1.created_at
+           LIMIT 1))))
+       LEFT JOIN support_activity_log_items last_resolved ON ((last_resolved.id = ( SELECT last_resolved_1.id
+             FROM support_activity_log_items last_resolved_1
+            WHERE (((sc.id)::text = (last_resolved_1.support_case_id)::text) AND ((last_resolved_1.action)::text = 'resolve_case'::text))
+            ORDER BY last_resolved_1.created_at DESC
+           LIMIT 1))))
+       LEFT JOIN ( SELECT fr_1.id,
+              fr_1.support_case_id,
+              fr_1.school_urns
+             FROM framework_requests fr_1) fr ON ((sc.id = fr.support_case_id)))
+       LEFT JOIN ( SELECT cr_1.id,
+              cr_1.support_case_id,
+              cr_1.school_urns
+             FROM case_requests cr_1) cr ON ((sc.id = cr.support_case_id)))
        LEFT JOIN support_interactions si ON ((si.id = ( SELECT i.id
              FROM support_interactions i
             WHERE (i.case_id = sc.id)
@@ -1110,9 +1201,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
                JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))) se ON (((sc.organisation_id = se.id) AND ((sc.organisation_type)::text = se.source))))
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
        LEFT JOIN support_procurements sp ON ((sc.procurement_id = sp.id)))
+       LEFT JOIN support_procurement_stages sps ON ((sc.procurement_stage_id = sps.id)))
        LEFT JOIN support_frameworks sf ON ((sp.framework_id = sf.id)))
        LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
-       LEFT JOIN support_contracts nc ON ((sc.existing_contract_id = nc.id)))
+       LEFT JOIN support_contracts nc ON ((sc.new_contract_id = nc.id)))
        LEFT JOIN ( SELECT si_1.created_at,
               si_1.case_id
              FROM support_interactions si_1
@@ -1125,38 +1217,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
-  SQL
-  create_view "support_message_threads", sql_definition: <<-SQL
-      SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
-      se.case_id,
-      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
-             FROM support_emails se2,
-              LATERAL jsonb_array_elements(se2.recipients) elems(value)
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
-      se.subject,
-      ( SELECT se2.sent_at
-             FROM support_emails se2
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
-            ORDER BY se2.sent_at DESC
-           LIMIT 1) AS last_updated
-     FROM support_emails se;
-  SQL
-  create_view "support_tower_cases", sql_definition: <<-SQL
-      SELECT sc.id,
-      sc.state,
-      sc.value,
-      sc.procurement_id,
-      sc.organisation_id,
-      (sc.procurement_stage_id)::text AS procurement_stage_id,
-      COALESCE(sc.support_level, 99) AS support_level,
-      COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
-      lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
-      tow.id AS tower_id,
-      sc.created_at,
-      sc.updated_at
-     FROM ((support_cases sc
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
-       LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
-    WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
 end
