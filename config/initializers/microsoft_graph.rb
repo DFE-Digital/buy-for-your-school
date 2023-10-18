@@ -18,4 +18,15 @@ if ENV["MS_GRAPH_CLIENT_ID"].present?
   SHARED_MAILBOX_USER_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_USER_ID")
   SHARED_MAILBOX_NAME = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_NAME")
   SHARED_MAILBOX_ADDRESS = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_ADDRESS")
+
+  Rails.configuration.to_prepare do
+    Email.set_default_mailbox(
+      user_id: ENV.fetch("MS_GRAPH_SHARED_MAILBOX_USER_ID"),
+      name: ENV.fetch("MS_GRAPH_SHARED_MAILBOX_NAME"),
+      email_address: ENV.fetch("MS_GRAPH_SHARED_MAILBOX_ADDRESS"),
+    )
+
+    Email.on_new_message_cached_handlers.add ->(email) { EmailAttachment.cache_attachments_for_email(email) }
+    Email.on_new_message_cached_handlers.add ->(email) { Support::Case.on_email_cached(email) }
+  end
 end

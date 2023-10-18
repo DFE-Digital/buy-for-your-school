@@ -38,7 +38,7 @@ module Support
     end
 
     def messages
-      super.includes(%i[in_reply_to template]).map { |message| Support::Messages::OutlookMessagePresenter.new(message) }
+      super.map { |message| Support::Messages::OutlookMessagePresenter.new(message) }
     end
 
     def subject
@@ -46,7 +46,7 @@ module Support
     end
 
     def case
-      Support::CasePresenter.new(super)
+      Support::CasePresenter.new(ticket)
     end
 
     def unread_messages?

@@ -11,7 +11,7 @@ describe Support::Messages::OutlookMessagePresenter do
     include Rails.application.routes.url_helpers
 
     def expected_url(attachment)
-      support_document_download_path(attachment.id, type: "Support::EmailAttachment")
+      support_document_download_path(attachment.id, type: "EmailAttachment")
     end
 
     context "when there are link tags in the email body" do
@@ -201,19 +201,6 @@ describe Support::Messages::OutlookMessagePresenter do
       it "returns false" do
         expect(presenter.can_mark_as_read?).to eq false
       end
-    end
-  end
-
-  describe "#attachments_for_display" do
-    let!(:attachment1) { create(:support_email_attachment, email:) }
-    let!(:attachment2) { create(:support_email_attachment, email:) }
-    let!(:attachment3) { create(:support_email_attachment, is_inline: true, email:) }
-
-    it "returns all non-inline attachments" do
-      expect(presenter.attachments_for_display.size).to eq 2
-      expect(presenter.attachments_for_display[0]).to eq attachment1
-      expect(presenter.attachments_for_display[1]).to eq attachment2
-      expect(presenter.attachments_for_display).not_to include attachment3
     end
   end
 

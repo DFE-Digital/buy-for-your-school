@@ -7,7 +7,7 @@ RSpec.describe Support::MergeCaseEmails do
 
   context "when from_case has emails attached" do
     before do
-      create_list(:support_email, 2, case_id: from_case.id)
+      create_list(:support_email, 2, ticket_id: from_case.id)
     end
 
     it "moves emails from the from_case to the to_case" do

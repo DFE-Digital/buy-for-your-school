@@ -10,24 +10,25 @@
     } do |form| %>
   <%= form.govuk_error_summary %>
 
-  <%= form.hidden_field :template_id if Flipper.enabled?(:email_templates) %>
+  <%= form.hidden_field :template_id %>
 
-  <% if Flipper.enabled?(:email_templates) && @reply_form.template.present? %>
+  <% if @reply_form.template.present? %>
     <div class="govuk-inset-text">
       <%= I18n.t("support.case.label.message_threads.using_template", template: @reply_form.template.title) %>
     </div>
   <% end %>
 
-  <%= render "support/cases/message_threads/recipient_table", email: email if reply %>
-
-  <% unless reply %>
-    <%= render "support/cases/messages/replies/new_message_components", form: form, unique_id: unique_id %>
+  <% if reply %>
+    <%= render "support/cases/message_threads/recipient_table", email: %>
+  <% else %>
+    <%= render "support/cases/messages/replies/new_message_components", form:, unique_id: %>
   <% end %>
 
-  <%= form.govuk_text_area :body, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
+  <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
     "data-component" => "tinymce",
     "data-tinymce-profile" => "basic",
-    "data-tinymce-selector" => ".message-reply-box"
+    "data-tinymce-selector" => ".message-reply-box",
+    value: form.object.body
   %>
 
   <div class="govuk-button-group">
@@ -38,7 +39,7 @@
     </span>
     <%= form.govuk_file_field :file_attachments, multiple: true, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
     <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
-    <%= link_to I18n.t("support.case.label.messages.reply.delete"), delete_redirect, data: { confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" if Flipper.enabled?(:email_templates) %>
+    <%= link_to I18n.t("support.case.label.messages.reply.delete"), delete_redirect, data: { confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
   </div>
 
   <div class="govuk-grid-row">

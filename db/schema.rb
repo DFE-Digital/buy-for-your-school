@@ -643,6 +643,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
     t.jsonb "cc_recipients"
     t.jsonb "bcc_recipients"
     t.uuid "template_id"
+    t.string "ticket_type"
+    t.uuid "ticket_id"
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
     t.index ["template_id"], name: "index_support_emails_on_template_id"
   end
@@ -1089,21 +1091,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
-  create_view "support_message_threads", sql_definition: <<-SQL
-      SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
-      se.case_id,
-      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
-             FROM support_emails se2,
-              LATERAL jsonb_array_elements(se2.recipients) elems(value)
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
-      se.subject,
-      ( SELECT se2.sent_at
-             FROM support_emails se2
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
-            ORDER BY se2.sent_at DESC
-           LIMIT 1) AS last_updated
-     FROM support_emails se;
-  SQL
   create_view "support_tower_cases", sql_definition: <<-SQL
       SELECT sc.id,
       sc.state,
@@ -1121,5 +1108,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_122627) do
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
        LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
+  SQL
+  create_view "support_message_threads", sql_definition: <<-SQL
+      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
+      se.case_id,
+      se.ticket_id,
+      se.ticket_type,
+      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
+             FROM support_emails se2,
+              LATERAL jsonb_array_elements(se2.recipients) elems(value)
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
+      se.subject,
+      ( SELECT se2.sent_at
+             FROM support_emails se2
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
+            ORDER BY se2.sent_at DESC
+           LIMIT 1) AS last_updated
+     FROM support_emails se;
   SQL
 end

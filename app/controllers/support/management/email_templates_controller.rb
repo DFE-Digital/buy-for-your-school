@@ -4,7 +4,7 @@ module Support
       require "will_paginate/array"
 
       def index
-        parser = Support::Emails::Templates::Parser.new(agent: current_agent)
+        parser = Email::TemplateParser.new
         @filter_form = Support::Management::EmailTemplateFilterForm.new(**filter_params)
         @templates = @filter_form.results.map { |e| Support::EmailTemplatePresenter.new(e, parser) }.paginate(page: params[:page])
       end
@@ -48,7 +48,7 @@ module Support
           {
             file_id: attachment.id,
             name: attachment.file_name,
-            type: Support::Emails::Attachments.get_type(attachment.class),
+            type: attachment.class,
             url: support_document_download_path(attachment, type: attachment.class),
           }
         end

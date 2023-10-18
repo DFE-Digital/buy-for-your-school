@@ -4,6 +4,7 @@ module Support
 
     SUPPORTED_TYPES = [
       "Support::EmailAttachment",
+      "EmailAttachment",
       "Support::CaseAttachment",
       "EnergyBill",
       "Support::EmailTemplateAttachment",

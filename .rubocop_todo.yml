@@ -82,6 +82,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20230210133230_refactor_notifications_into_one_table.rb'
     - 'db/migrate/20230919092926_update_lot_frameworks_framework.rb'
     - 'db/migrate/20230919144709_add_reference_sequence_to_frameworks_framework.rb'
+    - 'db/migrate/20230929134307_make_support_email_polymorphic.rb'
 
 # Offense count: 5
 # Configuration parameters: Include.
