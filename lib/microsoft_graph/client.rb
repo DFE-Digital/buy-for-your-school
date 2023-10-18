@@ -3,6 +3,8 @@ module MicrosoftGraph
   class Client
     attr_reader :client_session
 
+    DEFAULT_EMAIL_HEADERS = { "Prefer" => 'IdType="ImmutableId"' }.freeze
+
     MESSAGE_SELECT_FIELDS = %w[
       internetMessageHeaders
       internetMessageId
@@ -34,10 +36,15 @@ module MicrosoftGraph
     end
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
-    def list_messages_in_folder(user_id, mail_folder, query: [])
+    def list_messages_in_folder(user_id, mail_folder, query: [], messages_after: nil)
       query = Array(query)
         .push("$select=#{MESSAGE_SELECT_FIELDS.join(',')}")
         .push("$expand=singleValueExtendedProperties($filter=id eq '#{Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')")
+
+      if messages_after
+        query.push("$filter=sentDateTime ge #{messages_after.utc.iso8601}")
+        query.push("$orderby=sentDateTime asc")
+      end
 
       results = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
 
@@ -130,7 +137,64 @@ module MicrosoftGraph
       client_session.graph_api_post("users/#{user_id}/messages/#{message_id}/send", nil, http_headers)
     end
 
+    def create_and_send_new_message(mailbox:, draft:)
+      message_id = create_message(user_id: mailbox.user_id, http_headers: DEFAULT_EMAIL_HEADERS)
+
+      add_content_and_send_message(draft, user_id: mailbox.user_id, message_id:, details: details_for_new_message(draft, mailbox))
+    end
+
+    def create_and_send_new_reply(mailbox:, draft:)
+      draft_message = microsoft_graph.create_reply_all_message(user_id:, reply_to_id: draft.reply_to_email.outlook_id, http_headers: DEFAULT_EMAIL_HEADERS)
+
+      add_content_and_send_message(draft, user_id: mailbox.user_id, message_id: draft_message.id, details: details_for_reply(draft, draft_message))
+    end
+
   private
+
+    def add_content_and_send_message(draft, user_id:, message_id:, details:)
+      microsoft_graph.update_message(user_id:, message_id:, details:)
+
+      draft.attachments.each do |file_attachment|
+        microsoft_graph.add_file_attachment_to_message(user_id:, file_attachment:, message_id:)
+      end
+
+      microsoft_graph.send_message(user_id:, message_id:)
+      microsoft_graph.get_message(user_id:, message_id:)
+    end
+
+    def details_for_new_message(draft, mailbox)
+      email_addresses = lambda do |recipients|
+        recipients.map { |email| { "emailAddress" => { "address" => email } } }
+      end
+
+      {
+        subject: draft.subject,
+        body: {
+          "ContentType" => "HTML",
+          "content" => draft.body,
+        },
+        from: {
+          "emailAddress": {
+            "name" => mailbox.name,
+            "address" => mailbox.email_address,
+          },
+        },
+        toRecipients: email_addresses[draft.to_recipients],
+        ccRecipients: email_addresses[draft.cc_recipients],
+        bccRecipients: email_addresses[draft.bcc_recipients],
+      }
+    end
+
+    def details_for_reply(draft, draft_message)
+      {
+        body: {
+          "ContentType" => "HTML",
+          # draft_message.body contains the previous email chain we need to preserve in new message
+          # for it to appear under a "fold" in the email client
+          "content" => "<html><body>#{draft.body}</body></html>#{draft_message.body.content}",
+        },
+      }
+    end
 
     def format_query(query_parts)
       query_parts.any? ? "?".concat(query_parts.join("&")) : ""

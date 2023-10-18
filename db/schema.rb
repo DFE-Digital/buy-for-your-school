@@ -676,6 +676,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
     t.jsonb "cc_recipients"
     t.jsonb "bcc_recipients"
     t.uuid "template_id"
+    t.string "ticket_type"
+    t.uuid "ticket_id"
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
     t.index ["template_id"], name: "index_support_emails_on_template_id"
   end
@@ -1028,6 +1030,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.case_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
+      se.ticket_id,
+      se.ticket_type,
       ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
              FROM support_emails se2,
               LATERAL jsonb_array_elements(se2.recipients) elems(value)

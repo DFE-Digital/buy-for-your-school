@@ -17,7 +17,7 @@ module Support
       end
 
       def show
-        reply_form unless Flipper.enabled?(:email_templates)
+        reply_form
         @subject = @current_thread.subject
         @messages = @current_thread.messages
         @last_received_reply = @current_thread.last_received_reply
@@ -43,12 +43,11 @@ module Support
       end
 
       def reply_form
-        @reply_form = Support::Messages::ReplyForm.new(
-          default_template:,
+        @reply_form = Email::Draft.new(
+          default_content: default_template,
           default_subject:,
           template_id: params[:template_id],
-          parser: Support::Emails::Templates::Parser.new(agent: current_agent),
-          case_ref: current_case.ref,
+          ticket: current_case,
         )
       end
 
