@@ -11,7 +11,7 @@ module Support
           @message = Support::Messages::OutlookMessagePresenter.new(@email)
           @current_case = @email.case
         end
-        format.html { redirect_to support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.case_id) }
+        format.html { redirect_to support_case_message_thread_path(id: @email.outlook_conversation_id, case_id: @email.ticket_id) }
       end
     end
 
