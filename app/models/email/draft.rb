@@ -12,13 +12,13 @@ class Email::Draft
 
   attribute :default_subject
   attribute :subject
-  attribute :to_recipients, default: -> { [] }
-  attribute :cc_recipients, default: -> { [] }
-  attribute :bcc_recipients, default: -> { [] }
+  attribute :to_recipients, :json_array, default: -> { "[]" }
+  attribute :cc_recipients, :json_array, default: -> { "[]" }
+  attribute :bcc_recipients, :json_array, default: -> { "[]" }
   attribute :default_content
   attribute :html_content
   attribute :file_attachments, default: -> { [] }
-  attribute :blob_attachments, default: -> { "[]" }
+  attribute :blob_attachments, :json_array, default: -> { "[]" }
 
   validates :html_content, presence: { message: "The email body cannot be blank" }
   validates :subject, presence: { message: "The subject cannot be blank" }, on: :new_message
@@ -66,7 +66,7 @@ private
   end
 
   def attachable_template_attachments
-    Attachable.get_from_blobs(JSON.parse(blob_attachments))
+    Attachable.get_from_blobs(blob_attachments)
   end
 
   def cache_message(message)

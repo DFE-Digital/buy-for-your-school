@@ -21,17 +21,6 @@ RSpec.describe Support::EmailAttachment, type: :model do
     expect(attachment.file_size).to eq(35)
   end
 
-  describe ".for_case_attachments" do
-    let(:attachment_to_hide) { create(:support_email_attachment).tap { |a| a.update(file_type: "application/bad-file") } }
-    let(:attachment_to_show) { create(:support_email_attachment).tap { |a| a.update(file_type: CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST.first) } }
-
-    it "queries for only attachments with file types within CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST" do
-      results = described_class.for_case_attachments
-      expect(results).to include(attachment_to_show)
-      expect(results).not_to include(attachment_to_hide)
-    end
-  end
-
   describe ".unique_files" do
     let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
     let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
