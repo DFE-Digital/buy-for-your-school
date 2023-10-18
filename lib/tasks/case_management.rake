@@ -70,11 +70,9 @@ namespace :case_management do
 
   desc "Populate shared inbox emails"
   task :seed_shared_inbox_emails, [:messages_after] => :environment do |_t, args|
-    include Support::Messages::Outlook
-
     messages_after = Time.zone.parse(args.fetch(:emails_since_date, "01/10/2021 00:00:00"))
-    SynchroniseMailFolder.call(MailFolder.new(messages_after:, folder: :inbox))
-    SynchroniseMailFolder.call(MailFolder.new(messages_after:, folder: :sent_items))
+    Email.cache_messages_in_folder("Inbox", messages_after:)
+    Email.cache_messages_in_folder("SentItems", messages_after:)
   end
 
   desc "Populate frameworks"

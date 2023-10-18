@@ -1,7 +1,7 @@
 describe "Agent can download attachments", js: true do
   include_context "with an agent"
 
-  let(:email) { create(:support_email, :inbox, case: support_case, unique_body: "Catering requirements") }
+  let(:email) { create(:support_email, :inbox, ticket: support_case, unique_body: "Catering requirements") }
   let(:support_case) { create(:support_case) }
 
   before do

@@ -4,7 +4,7 @@ describe "Agent sees emails in messages", js: true do
   include_context "with an agent"
 
   let(:is_read) { true }
-  let(:email) { create(:support_email, :inbox, case: support_case, subject: "Catering requirements", is_read:) }
+  let(:email) { create(:support_email, :inbox, ticket: support_case, subject: "Catering requirements", is_read:) }
   let(:support_case) { create(:support_case) }
 
   before do

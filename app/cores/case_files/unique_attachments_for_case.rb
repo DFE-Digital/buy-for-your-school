@@ -29,8 +29,8 @@ module CaseFiles
     end
 
     def query
-      Support::EmailAttachment
-        .for_case(case_id: @case_id)
+      EmailAttachment
+        .for_ticket(ticket_id: @case_id)
         .where(hidden: false, **filter_to_apply)
         .unique_files
         .reorder(is_inline: :asc, created_at: :desc)

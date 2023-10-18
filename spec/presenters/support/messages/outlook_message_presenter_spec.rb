@@ -81,7 +81,7 @@ describe Support::Messages::OutlookMessagePresenter do
 
   describe "#case_reference" do
     context "when there is no case" do
-      let(:email) { create(:support_email, case: nil) }
+      let(:email) { create(:support_email, ticket: nil) }
 
       it "returns nil" do
         expect(presenter.case_reference).to be_nil
@@ -89,7 +89,7 @@ describe Support::Messages::OutlookMessagePresenter do
     end
 
     context "when there is a case" do
-      let(:email) { create(:support_email, case: create(:support_case, ref: "000001")) }
+      let(:email) { create(:support_email, ticket: create(:support_case, ref: "000001")) }
 
       it "returns the case reference" do
         expect(presenter.case_reference).to eq "000001"
@@ -99,7 +99,7 @@ describe Support::Messages::OutlookMessagePresenter do
 
   describe "#case_org_name" do
     context "when there is no case" do
-      let(:email) { create(:support_email, case: nil) }
+      let(:email) { create(:support_email, ticket: nil) }
 
       it "returns nil" do
         expect(presenter.case_org_name).to be_nil
@@ -107,7 +107,7 @@ describe Support::Messages::OutlookMessagePresenter do
     end
 
     context "when there is a case" do
-      let(:email) { create(:support_email, case: create(:support_case, organisation: create(:support_organisation, name: "School"))) }
+      let(:email) { create(:support_email, ticket: create(:support_case, organisation: create(:support_organisation, name: "School"))) }
 
       it "returns the organisation name" do
         expect(presenter.case_org_name).to eq "School"

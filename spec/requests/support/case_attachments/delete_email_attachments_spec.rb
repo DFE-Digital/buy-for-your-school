@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Deleting email attachments" do
   before { agent_is_signed_in }
 
-  let(:attachment) { create(:support_email_attachment, hidden: false, email: create(:support_email, case: support_case)) }
+  let(:attachment) { create(:support_email_attachment, hidden: false, email: create(:support_email, ticket: support_case)) }
   let(:support_case) { create(:support_case) }
 
   it "redirects back to attachments with the attachment now hidden from view" do

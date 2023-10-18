@@ -112,6 +112,14 @@ describe "Outlook emails delivery integration" do
         expect(draft_email.subject).to eq("Case 000999 - Subject line from the template")
       end
 
+      context "and the ticket is a framework evaluation" do
+        let(:ticket) { create(:frameworks_evaluation, reference: "FE999") }
+
+        it "uses the subject from the template prefixed with the ticket email prefix" do
+          expect(draft_email.subject).to eq("[FE999] - Subject line from the template")
+        end
+      end
+
       context "and the template subject contains variables" do
         let(:template_id) { create(:support_email_template, subject: "Subject line from the template FIO: {{caseworker_full_name}}").id }
 

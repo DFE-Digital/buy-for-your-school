@@ -12,7 +12,7 @@ module Support
     end
 
     def create
-      @reply_form = Email::Draft.new(form_params)
+      @reply_form = Email::Draft.new(**form_params, reply_to_email: current_email)
 
       if @reply_form.valid?
         @reply_form.delivery_as_reply
