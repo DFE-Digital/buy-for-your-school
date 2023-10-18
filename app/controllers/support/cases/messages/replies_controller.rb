@@ -4,19 +4,18 @@ module Support
     before_action :back_url
 
     def new
-      @reply_form = Support::Messages::ReplyForm.new(
-        default_template:,
+      @reply_form = Email::Draft.new(
+        default_content: default_template,
         template_id: params[:template_id],
-        parser: Support::Emails::Templates::Parser.new(agent: current_agent),
       )
       @last_received_reply = Support::Messages::OutlookMessagePresenter.new(Support::Email.find(params[:message_id]))
     end
 
     def create
-      @reply_form = Messages::ReplyForm.from_validation(validation)
+      @reply_form = Email::Draft.new(form_params)
 
-      if validation.success?
-        @reply_form.reply_to_email(@current_email, current_case, current_agent)
+      if @reply_form.valid?
+        @reply_form.delivery_as_reply
 
         respond_to do |format|
           format.turbo_stream do
@@ -36,12 +35,8 @@ module Support
 
     def default_template = render_to_string(partial: "support/cases/messages/reply_form_template")
 
-    def validation
-      @validation ||= Messages::ReplyFormSchema.new.call(**form_params)
-    end
-
     def form_params
-      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:body, :template_id, :blob_attachments, file_attachments: [])
+      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:html_content, :template_id, :blob_attachments, file_attachments: [])
     end
 
     def current_email

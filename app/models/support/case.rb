@@ -8,6 +8,7 @@ module Support
   # A case is opened from a "support enquiry" dealing with a "category of spend"
   #
   class Case < ApplicationRecord
+    include EmailTicketable
     include Filterable
     include StateChangeable
     include Sortable
@@ -22,8 +23,7 @@ module Support
     belongs_to :query, class_name: "Support::Query", optional: true
     belongs_to :agent, class_name: "Support::Agent", optional: true
     belongs_to :organisation, polymorphic: true, optional: true
-    has_many :emails, class_name: "Support::Email"
-    has_many :email_attachments, class_name: "Support::EmailAttachment", through: :emails, source: :attachments
+
     has_many :exit_survey_responses, class_name: "ExitSurveyResponse"
 
     has_many :documents, class_name: "Support::Document", dependent: :destroy
@@ -38,8 +38,6 @@ module Support
     belongs_to :existing_contract, class_name: "Support::ExistingContract", optional: true
     belongs_to :new_contract, class_name: "Support::NewContract", optional: true
     belongs_to :procurement, class_name: "Support::Procurement", optional: true
-
-    has_many :message_threads, class_name: "Support::MessageThread"
 
     has_many :energy_bills, class_name: "EnergyBill", foreign_key: :support_case_id
 
@@ -125,6 +123,10 @@ module Support
 
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
+
+    def email_prefix
+      "Case #{ref}"
+    end
 
     # @return [String]
     def self.to_csv

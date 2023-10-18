@@ -4,7 +4,7 @@ module Support
       require "will_paginate/array"
 
       def index
-        parser = Support::Emails::Templates::Parser.new(agent: current_agent)
+        parser = Email::TemplateParser.new
         @filter_form = Support::Management::EmailTemplateFilterForm.new(**filter_params)
         @templates = @filter_form.results.map { |e| Support::EmailTemplatePresenter.new(e, parser) }.paginate(page: params[:page])
       end

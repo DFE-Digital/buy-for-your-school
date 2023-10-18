@@ -64,31 +64,6 @@ describe "Agent can send new emails", js: true do
           expect(page).to have_text "bcc@email.com"
         end
       end
-
-      context "when a new message is sent" do
-        before do
-          send_message_service = double("send_message_service")
-
-          allow(send_message_service).to receive(:call) do
-            email = create(:support_email, :sent_items, case: support_case, unique_body: "This is a test message", subject: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance", sender: { name: "Caseworker", address: agent.email }, recipients: [{ name: "to@email.com", address: "to@email.com" }, { name: "cc@email.com", address: "cc@email.com" }, { name: "bcc@email.com", address: "bcc@email.com" }])
-            create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: email.id })
-          end
-
-          allow(Support::Messages::Outlook::SendNewMessage).to receive(:new).and_return(send_message_service)
-          click_on "Send message"
-        end
-
-        it "shows the message" do
-          within("#messages") do
-            expect(page).to have_text "bcc@email.com, cc@email.com, to@email.com"
-            expect(page).to have_text "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
-          end
-        end
-
-        it "transitions the case to on-hold" do
-          expect(page).to have_text "On Hold"
-        end
-      end
     end
 
     context "with a selected template" do

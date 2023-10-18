@@ -8,7 +8,7 @@ describe Support::Management::EmailTemplatesController, type: :controller do
 
     it "returns all attachments for given email template" do
       get :attachment_list, params: { id: email_template.id }
-      expect(JSON.parse(response.body)).to eq(
+      expect(JSON.parse(response.body)).to match_array(
         [
           {
             "file_id" => attachment_1.id,

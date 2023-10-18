@@ -15,8 +15,7 @@ module Support::EmailAttachment::DeDupable
             ) AS rank
           FROM support_email_attachments
           JOIN active_storage_attachments
-            ON active_storage_attachments.record_type = 'Support::EmailAttachment'
-            AND active_storage_attachments.record_id = support_email_attachments.id
+            ON active_storage_attachments.record_id = support_email_attachments.id
           JOIN active_storage_blobs
             ON active_storage_blobs.id = active_storage_attachments.blob_id
         ) attachment_files
@@ -30,7 +29,7 @@ module Support::EmailAttachment::DeDupable
   class_methods do
     def find_duplicates_of(email_attachment)
       unique_files(first_instance_only: false)
-        .for_case(case_id: email_attachment.case_id)
+        .for_ticket(ticket_id: email_attachment.ticket_id)
         .where(attachment_files: { checksum: email_attachment.checksum },
                file_name: email_attachment.file_name)
     end
