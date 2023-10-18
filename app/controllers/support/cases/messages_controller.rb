@@ -3,10 +3,10 @@ module Support
     before_action :current_email
 
     def create
-      @reply_form = Messages::ReplyForm.from_validation(validation)
+      @reply_form = Email::Draft.new(form_params)
 
-      if validation.success?
-        @reply_form.create_new_message(current_case, current_agent)
+      if @reply_form.valid?(context: :new_message)
+        @reply_form.deliver_as_new_message
 
         redirect_to support_case_message_threads_path(case_id: current_case.id)
       else
@@ -23,12 +23,8 @@ module Support
 
   private
 
-    def validation
-      @validation ||= Messages::ReplyFormSchema.new.call(**form_params.merge(case_ref: current_case.ref))
-    end
-
     def form_params
-      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:body, :subject, :to_recipients, :cc_recipients, :bcc_recipients, :template_id, :blob_attachments, file_attachments: [])
+      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:html_content, :subject, :to_recipients, :cc_recipients, :bcc_recipients, :template_id, :blob_attachments, file_attachments: [])
     end
 
     def current_email

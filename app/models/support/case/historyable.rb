@@ -4,6 +4,8 @@ module Support::Case::Historyable
   included do
     has_many :interactions, class_name: "Support::Interaction"
 
+    after_create_commit :log_created_due_to_incoming_email, if: :incoming_email?
+
     after_update :log_with_school_changed_in_history, if: :saved_change_to_with_school?
     after_update :log_support_level_changed_in_history, if: :saved_change_to_support_level?
     after_update :log_procurement_stage_changed_in_history, if: :saved_change_to_procurement_stage_id?
@@ -20,6 +22,18 @@ module Support::Case::Historyable
   def latest_note = interactions.note.first
 
 protected
+
+  def log_held_due_to_contact_with_school
+    interactions.state_change.create!(body: "Case placed on hold due to making contact with school")
+  end
+
+  def log_created_due_to_incoming_email
+    interactions.create_case.create!(body: "Case created due to receiving email that could not be attached to a currently open case")
+  end
+
+  def log_reopened_due_to_incoming_email
+    interactions.state_change.create!(body: "Case reopened due to receiving new email")
+  end
 
   def log_categorisation_changed_in_history
     if saved_change_to_category_id? && saved_change_to_query_id?

@@ -62,8 +62,7 @@ module Support
     end
 
     def create_interaction
-      interaction_type = @interaction.contact? ? ::Messages::LogContact : ::CaseManagement::CreateInteraction
-      interaction_type.new.call(
+      CaseManagement::CreateInteraction.new.call(
         support_case_id: @interaction.case.id,
         agent_id: @interaction.agent.id,
         event_type: @interaction.event_type,

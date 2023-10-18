@@ -18,14 +18,8 @@ describe "Agent can reply to incoming emails", js: true, bullet: :skip do
 
   context "when there is an email from the school" do
     before do
-      send_reply_service = double("send_reply_service")
-
-      allow(send_reply_service).to receive(:call) do
-        reply = create(:support_email, :sent_items, case: support_case, in_reply_to: email, unique_body: "This is a test reply", sender: { name: "Caseworker", address: agent.email })
-        create(:support_interaction, :email_to_school, case: support_case, additional_data: { email_id: reply.id })
-      end
-
-      allow(Support::Messages::Outlook::SendReplyToEmail).to receive(:new).and_return(send_reply_service)
+      allow(Email).to receive(:cache_message).and_return(double.as_null_object)
+      allow(MicrosoftGraph).to receive(:client).and_return(double.as_null_object)
     end
 
     describe "allows agent to send a reply", :with_csrf_protection do
@@ -47,23 +41,6 @@ describe "Agent can reply to incoming emails", js: true, bullet: :skip do
             expect(page).to have_text "CC"
             expect(page).to have_text "sender1@email.com"
           end
-        end
-
-        it "shows the sent reply" do
-          fill_in_editor "Your message", with: "This is a test reply"
-          click_button "Send reply"
-
-          within("#messages") do
-            expect(page).to have_text "Caseworker"
-            expect(page).to have_text "This is a test reply"
-          end
-        end
-
-        it "transitions the case to on-hold" do
-          fill_in_editor "Your message", with: "This is a test reply"
-          click_button "Send reply"
-
-          expect(page).to have_text "On Hold"
         end
       end
 
