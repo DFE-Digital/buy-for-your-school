@@ -32,15 +32,15 @@ module Support
       ].freeze
 
       def case_reference
-        return nil if self.case.nil?
+        return nil if ticket.nil?
 
-        Support::CasePresenter.new(self.case).ref
+        Support::CasePresenter.new(ticket).ref
       end
 
       def case_org_name
-        return nil if self.case.nil?
+        return nil if ticket.nil?
 
-        Support::CasePresenter.new(self.case).organisation_name
+        Support::CasePresenter.new(ticket).organisation_name
       end
 
       def sent_by_email
