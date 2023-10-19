@@ -2,9 +2,8 @@ class EmailAttachment < ApplicationRecord
   self.table_name = "support_email_attachments"
 
   include Cacheable
-  # TODO: move these files
-  include Support::EmailAttachment::DeDupable
-  include Support::EmailAttachment::Hideable
+  include DeDupable
+  include Hideable
 
   has_one_attached :file
   belongs_to :email
@@ -14,6 +13,7 @@ class EmailAttachment < ApplicationRecord
   scope :for_ticket, ->(ticket_id:) { joins(:email).where(email: { ticket_id: }) }
 
   delegate :checksum, to: :file
+  delegate :ticket, :ticket_id, to: :email
 
   def custom_name = super.presence || file_name
 end

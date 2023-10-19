@@ -13,4 +13,6 @@ class Email < ApplicationRecord
   has_many   :attachments, class_name: "EmailAttachment"
 
   enum folder: { inbox: 0, sent_items: 1 }
+
+  scope :display_order, -> { order("sent_at DESC") }
 end
