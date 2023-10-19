@@ -2,6 +2,9 @@ class EmailAttachment < ApplicationRecord
   self.table_name = "support_email_attachments"
 
   include Cacheable
+  # TODO: move these files
+  include Support::EmailAttachment::DeDupable
+  include Support::EmailAttachment::Hideable
 
   has_one_attached :file
   belongs_to :email
