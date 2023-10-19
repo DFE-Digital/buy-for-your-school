@@ -13,5 +13,7 @@ class EmailAttachment < ApplicationRecord
   scope :non_inline, -> { where(is_inline: false) }
   scope :for_ticket, ->(ticket_id:) { joins(:email).where(email: { ticket_id: }) }
 
+  delegate :checksum, to: :file
+
   def custom_name = super.presence || file_name
 end
