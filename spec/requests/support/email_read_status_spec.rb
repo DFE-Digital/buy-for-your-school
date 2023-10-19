@@ -5,7 +5,7 @@ describe "Updating email read status" do
 
   context "when marking an email as read" do
     let(:support_case) { create(:support_case) }
-    let!(:email) { create(:support_email, case: support_case) }
+    let!(:email) { create(:support_email, ticket: support_case) }
 
     it "marks the email as read" do
       patch support_email_read_status_path(email, status: "read")
@@ -49,7 +49,7 @@ describe "Updating email read status" do
 
   context "when marking an email as unread" do
     let(:support_case) { create(:support_case) }
-    let!(:email) { create(:support_email, case: support_case) }
+    let!(:email) { create(:support_email, ticket: support_case) }
 
     it "marks the email as unread" do
       patch support_email_read_status_path(email, status: "unread")
