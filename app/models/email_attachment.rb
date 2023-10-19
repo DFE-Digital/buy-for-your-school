@@ -14,5 +14,4 @@ class EmailAttachment < ApplicationRecord
   scope :for_ticket, ->(ticket_id:) { joins(:email).where(email: { ticket_id: }) }
 
   def custom_name = super.presence || file_name
-  def checksum = file.attachment.blob.checksum
 end
