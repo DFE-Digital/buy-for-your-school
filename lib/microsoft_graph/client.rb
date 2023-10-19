@@ -152,14 +152,14 @@ module MicrosoftGraph
   private
 
     def add_content_and_send_message(draft, user_id:, message_id:, details:)
-     update_message(user_id:, message_id:, details:)
+      update_message(user_id:, message_id:, details:)
 
       draft.attachments.each do |file_attachment|
-       add_file_attachment_to_message(user_id:, file_attachment:, message_id:)
+        add_file_attachment_to_message(user_id:, file_attachment:, message_id:)
       end
 
-     send_message(user_id:, message_id:)
-     get_message(user_id:, message_id:)
+      send_message(user_id:, message_id:)
+      get_message(user_id:, message_id:)
     end
 
     def details_for_new_message(draft, mailbox)
