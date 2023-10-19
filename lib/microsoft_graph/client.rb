@@ -144,7 +144,7 @@ module MicrosoftGraph
     end
 
     def create_and_send_new_reply(mailbox:, draft:)
-      draft_message = create_reply_all_message(user_id: mailbox.user_id, reply_to_id: draft.reply_to_email.outlook_id, http_headers: DEFAULT_EMAIL_HEADERS)
+      draft_message = create_reply_all_message(user_id: mailbox.user_id, reply_to_id: draft.reply_to_id, http_headers: DEFAULT_EMAIL_HEADERS)
 
       add_content_and_send_message(draft, user_id: mailbox.user_id, message_id: draft_message.id, details: details_for_reply(draft, draft_message))
     end

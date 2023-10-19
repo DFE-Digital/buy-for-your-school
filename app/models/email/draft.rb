@@ -51,6 +51,10 @@ class Email::Draft
     Support::EmailTemplate.find(template_id) if template_id.present?
   end
 
+  def reply_to_id
+    reply_to_email.outlook_id
+  end
+
 private
 
   def template_subject
