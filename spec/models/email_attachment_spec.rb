@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe Support::EmailAttachment, type: :model do
-  subject(:attachment) { build(:support_email_attachment) }
+describe EmailAttachment do
+  subject(:attachment) { build(:email_attachment) }
 
   it "updates the file_name attribute to match the file name" do
     attachment.save!
@@ -22,9 +22,9 @@ RSpec.describe Support::EmailAttachment, type: :model do
   end
 
   describe ".unique_files" do
-    let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
-    let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
-    let!(:attachment_3) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
+    let!(:attachment_1) { create(:email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
+    let!(:attachment_2) { create(:email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
+    let!(:attachment_3) { create(:email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
 
     it "removes repeating duplicate files" do
       results = described_class.unique_files.to_a
@@ -36,9 +36,9 @@ RSpec.describe Support::EmailAttachment, type: :model do
   end
 
   describe ".all_instances" do
-    let!(:attachment_1) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
-    let!(:attachment_2) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
-    let!(:attachment_3) { create(:support_email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
+    let!(:attachment_1) { create(:email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.week.ago) }
+    let!(:attachment_2) { create(:email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain"), created_at: 1.day.ago) }
+    let!(:attachment_3) { create(:email_attachment, file: fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain")) }
 
     it "provides repeating duplicate files, so they can be hidden" do
       results = described_class.all_instances(attachment_1).to_a
