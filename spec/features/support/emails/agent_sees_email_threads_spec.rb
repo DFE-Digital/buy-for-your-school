@@ -7,8 +7,8 @@ describe "Agent sees email threads", js: true, bullet: :skip do
 
   context "when messages accross multiple threads exist" do
     before do
-      create(:support_email, :inbox, case: support_case, outlook_conversation_id: "OCID1", subject: "Email thread 1", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1", is_read: false)
-      create(:support_email, :inbox, case: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2", "address" => "test2@email.com" }], unique_body: "Email 2", is_read: true)
+      create(:support_email, :inbox, ticket: support_case, outlook_conversation_id: "OCID1", subject: "Email thread 1", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1", is_read: false)
+      create(:support_email, :inbox, ticket: support_case, outlook_conversation_id: "OCID2", subject: "Email thread 2", recipients: [{ "name" => "Test 2", "address" => "test2@email.com" }], unique_body: "Email 2", is_read: true)
       create(:support_email, ticket: support_case, outlook_conversation_id: "OCID2", subject: "Re: Email thread 2", unique_body: "Email 3")
 
       visit support_case_path(support_case)
