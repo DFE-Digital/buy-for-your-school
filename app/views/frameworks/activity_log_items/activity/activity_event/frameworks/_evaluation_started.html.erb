@@ -1,1 +1,7 @@
-Framework Evaluation started - <%= link_to "View #{activity.loaded_data.evaluation.reference}", activity.loaded_data.evaluation, class: "govuk-link", "data-turbo" => false %>
+<% content_for :"#{activity.id}_subject" do %>
+  Evaluation started
+<% end %>
+
+<% content_for :"#{activity.id}_description" do %>
+  <%= link_to "View Evalutaion #{activity.loaded_data.evaluation.reference}", activity.loaded_data.evaluation, class: "govuk-link", "data-turbo" => false %>
+<% end %>

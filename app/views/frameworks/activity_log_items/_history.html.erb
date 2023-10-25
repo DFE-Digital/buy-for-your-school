@@ -1,0 +1,32 @@
+<div class="hods-timeline">
+  <% activity_log_items.each do |activity_log_item| %>
+    <% render "frameworks/activity_log_items/activity/#{activity_log_item.activity_type_identifier}",
+      activity_log_item:,
+      activity: activity_log_item.activity,
+      subject: activity_log_item.subject %>
+
+    <div class="hods-timeline__item">
+      <h2 class="hods-timeline__title">
+        <%= yield :"#{activity_log_item.activity_id}_subject" %>
+      </h2>
+      <p class="hods-timeline__by">
+        by
+        <%= content_for?(:"#{activity_log_item.activity_id}_actor") \
+          ? yield(:"#{activity_log_item.activity_id}_actor")
+          : activity_log_item.display_actor %>
+      </p>
+
+      <p class="hods-timeline__date">
+        <time class="hods-date-time" datetime="<%= activity_log_item.accessible_date %>">
+          <%= activity_log_item.display_created_at %>
+        </time>
+      </p>
+
+      <% if content_for?(:"#{activity_log_item.activity_id}_description") %>
+        <p class="hods-timeline__description">
+          <%= yield :"#{activity_log_item.activity_id}_description" %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
