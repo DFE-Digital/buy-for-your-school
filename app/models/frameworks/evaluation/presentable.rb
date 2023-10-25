@@ -26,7 +26,7 @@ module Frameworks::Evaluation::Presentable
   end
 
   def display_last_updated
-    "- TODO -"
+    updated_at.strftime("%d %B %Y at %H:%M:%S")
   end
 
   def contact_name

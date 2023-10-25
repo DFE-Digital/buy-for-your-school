@@ -14,7 +14,11 @@ module Frameworks::ActivityLogItem::Presentable
   end
 
   def display_created_at
-    created_at.strftime("%d/%m/%Y %H:%M:%S")
+    created_at.strftime("%d %B %Y at %H:%M:%S")
+  end
+
+  def accessible_date
+    created_at.utc.iso8601
   end
 
   def display_actor

@@ -1048,6 +1048,45 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
+"@hods/date-display@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@hods/date-display/-/date-display-0.3.7.tgz#21a63e5a9dcb59c92ca5eaa6b1ef2807ddcd256b"
+  integrity sha512-cZzRdHlXP0KlGgXJrtdlP3gZnBYNrQYhvzN9HUBYjD9IZMhkKlx27iTBAGCh5bbbuPXVpDOqg6UBiXfX0wO0ug==
+  dependencies:
+    "@not-govuk/component-helpers" "^0.5.9"
+
+"@hods/date-time@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@hods/date-time/-/date-time-0.3.7.tgz#f2d9eb6bdf628044807181ad551875979b87ba47"
+  integrity sha512-bHmGlV9CANNOe+c9oegLaCQ7EZbQP9NAK0nhEfYozGTVMYw9AEsxyeAHC5ZIDfKMOiZta6WOXHF8VU/tm2c+DA==
+  dependencies:
+    "@hods/date-display" "^0.3.7"
+    "@hods/time" "^0.3.7"
+    "@not-govuk/component-helpers" "^0.5.9"
+
+"@hods/sass-base@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@hods/sass-base/-/sass-base-0.3.7.tgz#93e4afaf8791c5fe4f1ca0b6799fc0c33025301d"
+  integrity sha512-INj3T4h1zQy4WQDBykWhXnq55D/3zMtfN+0UORlwK8i3dzV/DGdP9wwA5niKFvGRE3xsi5mdGjDlVdTXMenXBQ==
+  dependencies:
+    "@not-govuk/sass-base" "^0.5.9"
+
+"@hods/time@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@hods/time/-/time-0.3.7.tgz#11386dc53d7f4504f7e935ddf5231b411432b735"
+  integrity sha512-sxmUP8bpAOLAqOkxL+aE2M9oMyDbrS3JKMNAtcRCtDCTpbPtcby1rMYlNi9yARFoD/KPZwv1akEhEkEvcUDKpQ==
+  dependencies:
+    "@not-govuk/component-helpers" "^0.5.9"
+
+"@hods/timeline@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@hods/timeline/-/timeline-0.3.7.tgz#b587cc9d42f9c9027d38e52da15baf2b1537a08c"
+  integrity sha512-vR1UH8AeimKYD0FYJAMsTw6flEi3d7fLRDz7OokhfexNFepvowEexXwiaIOxblUU8uhfVns7+XHttBexi8jiMA==
+  dependencies:
+    "@hods/date-time" "^0.3.7"
+    "@hods/sass-base" "^0.3.7"
+    "@not-govuk/component-helpers" "^0.5.9"
+
 "@hotwired/stimulus@^3.2.1":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
@@ -1359,6 +1398,18 @@
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
+
+"@not-govuk/component-helpers@^0.5.9":
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/@not-govuk/component-helpers/-/component-helpers-0.5.9.tgz#8d946296c9a65c8e2b9897ddd5293a0ad6438767"
+  integrity sha512-QiR1oXiuRnzJpD+2es9rbb0SyAuy+pFIxM+hV1QgXYPRLnNSnufA9YWKCnC1tu/36yzCF728iBTPJtdM/YZ9Cw==
+
+"@not-govuk/sass-base@^0.5.9":
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/@not-govuk/sass-base/-/sass-base-0.5.9.tgz#ed822b41c80b95c2370220a76275af8d37e148da"
+  integrity sha512-ZGcpMh7QFPItJZdNcCmwivzMlHEu1j3YL+IL8GeWX/Nz/n1mw28QqdHq62OkexzPkfuzJ3BvISm5YM1XNQzw8Q==
+  dependencies:
+    govuk-frontend "3.11.0"
 
 "@rails/actioncable@^7.0":
   version "7.0.6"
@@ -2980,6 +3031,11 @@ globals@^11.1.0:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
+
+govuk-frontend@3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.11.0.tgz#5bc38629ec8b290220c2c389dcd664114a045db1"
+  integrity sha512-1hW/3etYBtKPM+PNdWVOijvWVI3mpYL8eb7WLTtlh/Qxf2mCp6LkCsZk9I034n4EJBYQ5jlUWsUlTOOIypftpg==
 
 govuk-frontend@^4.7.0:
   version "4.7.0"
