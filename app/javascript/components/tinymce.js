@@ -60,6 +60,8 @@ const initializeTinymce = editorElement => {
     statusbar: false,
     contextmenu: false,
     browser_spellcheck: true,
+    relative_urls: false,
+    remove_script_host: false,
     setup: (editor) => {
       if (tinymceKeyUpEvent) {
         editor.on("keyup", (e) => editorElement.dispatchEvent(new CustomEvent(tinymceKeyUpEvent)));
