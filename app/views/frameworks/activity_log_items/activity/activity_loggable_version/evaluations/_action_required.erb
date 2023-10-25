@@ -1,0 +1,7 @@
+<% content_for :"#{activity.id}_subject" do %>
+  Action Required flag <%= activity.field_changes["action_required"].last ? "set" : "removed" %>
+<% end %>
+
+<% content_for :"#{activity.id}_actor" do %>
+  Incoming email
+<% end %>
