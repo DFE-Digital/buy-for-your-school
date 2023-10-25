@@ -1,1 +1,3 @@
-Added category "<%= activity.loaded_data.support_category.title %>" to framework
+% content_for :"#{activity.id}_subject" do %>
+  Added category "<%= activity.loaded_data.support_category.title %>"
+<% end %>

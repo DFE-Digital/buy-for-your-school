@@ -1,4 +1,6 @@
-Status changed from
-<%= render "frameworks/frameworks/framework_status", status: activity.field_changes["status"].first %>
-to
-<%= render "frameworks/frameworks/framework_status", status: activity.field_changes["status"].last %>
+<% content_for :"#{activity.id}_subject" do %>
+  Status moved from
+  <%= render "frameworks/frameworks/framework_status", status: activity.field_changes["status"].first %>
+  to
+  <%= render "frameworks/frameworks/framework_status", status: activity.field_changes["status"].last %>
+<% end %>
