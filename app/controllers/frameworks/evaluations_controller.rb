@@ -9,7 +9,7 @@ class Frameworks::EvaluationsController < Frameworks::ApplicationController
 
   def show
     @evaluation = Frameworks::Evaluation.find(params[:id])
-    @activity_log_items = @evaluation.activity_log_items.paginate(page: params[:history_page])
+    @activity_log_items = @evaluation.activity_log_items.order("created_at DESC").paginate(page: params[:activity_log_page])
   end
 
   def new

@@ -7,50 +7,49 @@
 
 <p class="pull-up-10 govuk-!-margin-bottom-8"><%= @framework.display_status %></p>
 
-<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <%= link_to "Framework Details", "#framework-details", class: "govuk-tabs__tab" %>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <%= link_to "Provider", "#framework-provider", class: "govuk-tabs__tab" %>
-    </li>
-     <li class="govuk-tabs__list-item">
-      <%= link_to "Evaluations", "#framework-evaluations", class: "govuk-tabs__tab" %>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <%= link_to "History", "#history", class: "govuk-tabs__tab" %>
-    </li>
-  </ul>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <%= link_to "Framework Details", "#framework-details", class: "govuk-tabs__tab" %>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <%= link_to "Provider", "#framework-provider", class: "govuk-tabs__tab" %>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <%= link_to "Evaluations", "#framework-evaluations", class: "govuk-tabs__tab" %>
+        </li>
+      </ul>
 
-  <%= turbo_frame_tag "framework-details-frame" do %>
-    <div id="framework-details" class="govuk-tabs__panel">
-      <%= render "frameworks/frameworks/show/framework_details" %>
-    </div>
-  <% end %>
+      <%= turbo_frame_tag "framework-details-frame" do %>
+        <div id="framework-details" class="govuk-tabs__panel">
+          <%= render "frameworks/frameworks/show/framework_details" %>
+        </div>
+      <% end %>
 
-  <%= turbo_frame_tag "framework-provider-frame" do %>
-    <div id="framework-provider" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-      <%= render "frameworks/frameworks/show/framework_provider" %>
-    </div>
-  <% end %>
+      <%= turbo_frame_tag "framework-provider-frame" do %>
+        <div id="framework-provider" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+          <%= render "frameworks/frameworks/show/framework_provider" %>
+        </div>
+      <% end %>
 
-  <%= turbo_frame_tag "framework-evaluations-frame" do %>
-    <div id="framework-evaluations" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-      <%= render "frameworks/frameworks/show/framework_evaluations" %>
+      <%= turbo_frame_tag "framework-evaluations-frame" do %>
+        <div id="framework-evaluations" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+          <%= render "frameworks/frameworks/show/framework_evaluations" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
 
-  <%= turbo_frame_tag "history-frame" do %>
-    <div id="history" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-      <%= render "frameworks/frameworks/show/framework_history" %>
-    </div>
-  <% end %>
+    <h2 class="govuk-heading-m">Actions</h2>
+    <ul class="govuk-list">
+      <li><%= link_to "Edit Framework", edit_frameworks_framework_path(@framework), class: "govuk-link" %></li>
+    </ul>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">Activity</h2>
+    <%= render "frameworks/frameworks/show/framework_history" %>
+  </div>
 </div>
-
-<h2 class="govuk-heading-m">Actions</h2>
-<ul class="govuk-list">
-  <li><%= link_to "Edit Framework", edit_frameworks_framework_path(@framework), class: "govuk-link" %></li>
-</ul>
 
 <% end %>

@@ -1,1 +1,3 @@
-Removed category "<%= activity.loaded_data.support_category.title %>" from framework
+<% content_for :"#{activity.id}_subject" do %>
+  Removed category "<%= activity.loaded_data.support_category.title %>"
+<% end %>

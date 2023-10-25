@@ -10,49 +10,55 @@
     <span class="govuk-body">Case Owner: <%= @evaluation.display_assignee %></span>
   </div>
 
-  <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
-    <ul class="govuk-tabs__list">
-      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-        <%= link_to "Framework", "#framework", class: "govuk-tabs__tab" %>
-      </li>
-      <li class="govuk-tabs__list-item">
-        <%= link_to "Messages", "#messages", class: "govuk-tabs__tab" %>
-      </li>
-      <li class="govuk-tabs__list-item">
-        <%= link_to "History", "#history", class: "govuk-tabs__tab" %>
-      </li>
-      <li class="govuk-tabs__list-item">
-        <%= link_to "Attachments", "#attachments", class: "govuk-tabs__tab" %>
-      </li>
-    </ul>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <%= link_to "Framework", "#framework", class: "govuk-tabs__tab" %>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <%= link_to "Messages", "#messages", class: "govuk-tabs__tab" %>
+          </li>
 
-    <%= turbo_frame_tag "framework-frame" do %>
-      <div id="framework" class="govuk-tabs__panel">
-        <%= render "frameworks/evaluations/show/framework" %>
+          <li class="govuk-tabs__list-item">
+            <%= link_to "Attachments", "#attachments", class: "govuk-tabs__tab" %>
+          </li>
+        </ul>
+
+        <%= turbo_frame_tag "framework-frame" do %>
+          <div id="framework" class="govuk-tabs__panel">
+            <%= render "frameworks/evaluations/show/framework" %>
+          </div>
+        <% end %>
+
+        <%= turbo_frame_tag "messages-frame", src: message_threads_path(ticket_type: @evaluation.class, ticket_id: @evaluation.id, back_to: current_url_b64(:messages)) do %>
+          <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+            <p class="govuk-body">Loading...</p>
+          </div>
+        <% end %>
+
+        <%= turbo_frame_tag "attachments-frame" do %>
+          <div id="attachments" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+            <%= render "frameworks/evaluations/show/attachments" %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
 
-    <%= turbo_frame_tag "messages-frame" do %>
-      <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-        <%= render "frameworks/evaluations/show/messages" %>
-      </div>
-    <% end %>
+      <h2 class="govuk-heading-m">Actions</h2>
+      <ul class="govuk-list">
+        <li>Blah</li>
+      </ul>
+    </div>
 
-    <%= turbo_frame_tag "history-frame" do %>
-      <div id="history" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Activity</h2>
+
+      <%= turbo_frame_tag "activity-log-frame" do %>
         <%= render "frameworks/evaluations/show/history" %>
-      </div>
-    <% end %>
-
-    <%= turbo_frame_tag "attachments-frame" do %>
-      <div id="attachments" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-        <%= render "frameworks/evaluations/show/attachments" %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <h2 class="govuk-heading-m">Actions</h2>
-  <ul class="govuk-list">
-    <li></li>
-  </ul>
+
 <% end %>
