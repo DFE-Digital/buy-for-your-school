@@ -14,6 +14,6 @@
     <%= render "support/cases/emails/#{thread.unread_messages? ? "unread_badge" : "read_badge"}" %>
   </td>
   <td class="govuk-table__cell">
-    <%= link_to I18n.t("support.case.label.message_threads.view"), message_thread_path(ticket_type: thread.ticket_type, ticket_id: thread.ticket_id, id: thread.id, back_to: current_url_b64(:messages)), class: "govuk-link" %>
+    <%= link_to I18n.t("support.case.label.message_threads.view"), message_thread_path(thread.ticket, thread, ticket_type: thread.ticket_type, back_to: current_url_b64(:messages)), class: "govuk-link" %>
   </td>
 </tr>

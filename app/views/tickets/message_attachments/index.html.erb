@@ -1,0 +1,27 @@
+<%= turbo_frame_tag "attachments-frame" do %>
+  <div id="attachments" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+    <h2 class="govuk-heading-l">Email attachments</h2>
+
+    <%= render "support/cases/attachments/filter" %>
+
+    <% if @email_attachments.any? %>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header attachment-name-header"><%= I18n.t("support.case.label.attachments.table.attachment_name") %></th>
+            <th class="govuk-table__header attachment-date-added-header"><%= I18n.t("support.case.label.attachments.table.added") %></th>
+            <th class="govuk-table__header attachment-actions-header">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <%= render partial: "attachment", collection: @email_attachments, as: :attachment %>
+        </tbody>
+      </table>
+
+      <%= render "components/pagination", records: @email_attachments, pagination_params: { anchor: "attachments" } %>
+    <% else %>
+      <p class="govuk-body govuk-!-font-weight-bold">No attachments found.</p>
+    <% end %>
+  </div>
+<% end %>

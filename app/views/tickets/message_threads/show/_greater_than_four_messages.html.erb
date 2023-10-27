@@ -1,0 +1,4 @@
+<%= render "tickets/messages/message", truncated_message: true,  message: messages.first %>
+<%= render "tickets/message_threads/show/view_more_responses", messages: messages[1...-2] %>
+<%= render "tickets/messages/message", truncated_message: true,  message: messages.second_to_last %>
+<%= render "tickets/messages/message", truncated_message: false, message: messages.last %>
