@@ -1,0 +1,4 @@
+<%= render "shared/messages/message", truncated_message: true,  message: messages.first %>
+<%= render "shared/message_threads/show/view_more_responses", messages: messages[1...-2] %>
+<%= render "shared/messages/message", truncated_message: true,  message: messages.second_to_last %>
+<%= render "shared/messages/message", truncated_message: false, message: messages.last %>

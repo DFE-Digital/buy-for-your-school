@@ -1,0 +1,19 @@
+<tr class="govuk-table__row <%= thread.unread_messages? ? "unread-thread" : "" %>">
+  <td class="govuk-table__cell">
+    <%= thread.recipient_emails %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= thread.subject %>
+  </td>
+  <td class="govuk-table__cell">
+    <span title="<%= thread.last_updated %>">
+      <%= relative_date_format(thread.last_updated) %>
+    </span>
+  </td>
+  <td class="govuk-table__cell">
+    <%= render "support/cases/emails/#{thread.unread_messages? ? "unread_badge" : "read_badge"}" %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= link_to I18n.t("support.case.label.message_threads.view"), message_thread_path(ticket_type: thread.ticket_type, ticket_id: thread.ticket_id, id: thread.id, back_to: current_url_b64(:messages)), class: "govuk-link" %>
+  </td>
+</tr>

@@ -1,6 +1,5 @@
 class Frameworks::ApplicationController < ApplicationController
   include SupportAgents
-  before_action { Current.actor = current_agent }
   before_action :set_back_url
 
 private

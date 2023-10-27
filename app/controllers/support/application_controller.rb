@@ -2,8 +2,6 @@ module Support
   class ApplicationController < ::ApplicationController
     include SupportAgents
 
-    before_action { Current.actor = current_agent }
-
   protected
 
     helper_method :current_url_b64, :url_b64, :notifications_unread?
