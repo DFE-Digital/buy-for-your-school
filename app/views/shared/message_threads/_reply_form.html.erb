@@ -1,0 +1,36 @@
+<% unique_id = "A#{SecureRandom.uuid}" %>
+<% url = message_replies_path(message_id: email.id, unique_id:, back_to: params[:back_to]) %>
+<% submit_text = I18n.t("support.case.label.messages.reply.send_reply") %>
+
+<%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
+    html: {
+      "data-controller" => "email-attachment",
+      "data-email-attachment-attachment-list-url-value" => nil
+    } do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= render "support/cases/message_threads/recipient_table", email: %>
+
+  <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
+    "data-component" => "tinymce",
+    "data-tinymce-profile" => "basic",
+    "data-tinymce-selector" => ".message-reply-box",
+    value: form.object.body
+  %>
+
+  <div class="govuk-button-group">
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-action" => "email-attachment#submit" %>
+    <span class="govuk-button govuk-button--secondary" role="button"
+      data-email-attachment-target="btnDisplayFileDialog">
+      <%= I18n.t("support.case.label.messages.reply.add_attachments") %>
+    </span>
+    <%= form.govuk_file_field :file_attachments, multiple: true, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
+    <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= email_attachment_container %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "messages-frame" do %>
+  <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+    <h2 class="govuk-heading-l"><%= I18n.t("support.case.header.messages") %></h2>
+
+    <table class="govuk-table messages-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header name-column"><%= I18n.t("support.case.label.message_threads.recipients") %></th>
+          <th class="govuk-table__header"><%= I18n.t("support.case.label.message_threads.subject") %></th>
+          <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.last_update") %></th>
+          <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.status") %></th>
+          <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.action") %></th>
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <%= render partial: "message_thread", collection: @threads, as: :thread %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
