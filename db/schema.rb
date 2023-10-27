@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_135128) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -372,8 +372,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id"
     t.text "sidebar"
     t.string "breadcrumbs", default: [], array: true
@@ -549,6 +549,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
     t.string "next_key_date_description"
     t.integer "discovery_method"
     t.string "discovery_method_other_text"
+    t.string "project"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -793,7 +794,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_094226) do
     t.string "ukprn"
     t.string "telephone_number"
     t.jsonb "local_authority"
-    t.datetime "opened_date", precision: nil
+    t.datetime "opened_date"
     t.string "number"
     t.string "rsc_region"
     t.string "trust_name"

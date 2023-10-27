@@ -60,6 +60,7 @@ module Support
         :query_id,
         :other_query,
         :source,
+        :project,
         :value,
         :support_level,
         :procurement_stage_id,

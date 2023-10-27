@@ -95,6 +95,22 @@
     </div>
 
     <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.project.header") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <% if @case_summary.project.present? %>
+        <%= @case_summary.project %>
+      <% else %>
+        <%= I18n.t("support.case.label.project.unspecified") %>
+      <% end %>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <%= form.button I18n.t("support.case_request_details.check_answers.change"), class: "govuk-link link-styled-button", value: "change" %>
+    </dd>
+  </div>
+
+    <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.next_key_date.label") %>
       </dt>

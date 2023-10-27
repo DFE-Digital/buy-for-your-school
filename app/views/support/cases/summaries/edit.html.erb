@@ -1,3 +1,4 @@
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= I18n.t("support.case_summary.edit.header") %></h1>
@@ -7,6 +8,7 @@
       url: support_case_summary_path(@current_case),
       method: :patch, class: "govuk-!-display-inline",
       html: { "data-controller" => "case-summary", "data-case-summary-case-stage-outlet" => ".case-stage-fields", "data-case-summary-request-type-outlet" => ".request-type-radios" } do |form| %>
+
         <%= form.govuk_error_summary %>
 
         <%= render "support/cases/request_details/form_fields", form: form %>
@@ -19,11 +21,28 @@
                                     options_for_select(available_sources.map { |s| [s.title, s.id] },
                                                         form.object.source),
                                     options: { include_blank: I18n.t("support.case_summary.edit.source.blank") },
-                                    label: { text: I18n.t("support.case_summary.edit.source.label"), size: "m" } %>
+                                    label: { text: I18n.t("support.case_summary.edit.source.label"), size: "m" },
+                                    disabled: true %>
+
+        <%= form.hidden_field :source, value: form.object.source %>           
+
+        <div data-controller="select-option-text-field" data-select-option-text-field-show-if-value="Add new project" >
+          <%= form.govuk_select :project,
+                                      grouped_options_for_select(project_grouped_options, form.object.project),
+                                      "data-select-option-text-field-target" => "input", 
+                                      "data-select-option-text-field-action" => "change->select-option-text-field#toggle",
+                                      options: { include_blank: I18n.t("support.case_summary.edit.project.blank") },
+                                      label: { text: I18n.t("support.case_summary.edit.project.label"), size: "m" } %>                  
+            <%= form.govuk_text_field :project,
+                                        id: "new_project_text",
+                                        "data-select-option-text-field-target" => "output",
+                                        label: { text: I18n.t("support.case_summary.edit.project.new_project"), size: "s", for: "new_project_text" } %>
+        </div>
 
         <%= render "support/cases/components/next_key_date", form: form %>
 
         <%= form.button I18n.t("support.case_summary.edit.submit"), class: "govuk-button", role: "button", value: "confirm", "data-action": "case-summary#submit" %>
     <% end %>
+    </div>
   </div>
-</div>
+  

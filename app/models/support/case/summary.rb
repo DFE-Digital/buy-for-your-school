@@ -15,6 +15,7 @@ class Support::Case::Summary
   attribute :procurement_stage_id
   attribute :value
   attribute :source
+  attribute :project
   attribute :next_key_date
   attribute :next_key_date_description
 
@@ -42,6 +43,7 @@ class Support::Case::Summary
       procurement_stage_id:,
       value:,
       source:,
+      project:,
       next_key_date:,
       next_key_date_description:,
     )
