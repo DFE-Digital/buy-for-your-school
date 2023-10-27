@@ -13,6 +13,10 @@ module Frameworks::Evaluation::EmailTicketable
     "[#{reference}]"
   end
 
+  def unique_attachments(folder: "all")
+    UniqueAttachments.new(ticket: self, folder:)
+  end
+
   class_methods do
     def on_email_cached(email)
       return if email.ticket.present?

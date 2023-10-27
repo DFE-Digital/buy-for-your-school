@@ -1,5 +1,5 @@
 <% unique_id = "A#{SecureRandom.uuid}" %>
-<% url = message_replies_path(message_id: email.id, unique_id:, back_to: params[:back_to]) %>
+<% url = message_replies_path(email, unique_id:, back_to: params[:back_to]) %>
 <% submit_text = I18n.t("support.case.label.messages.reply.send_reply") %>
 
 <%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,

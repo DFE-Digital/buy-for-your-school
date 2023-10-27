@@ -1,7 +1,0 @@
-<% if messages.count > 1 %>
-  <% messages[0...-1].each do |message| %>
-    <%= render "shared/messages/message", truncated_message: true, message: %>
-  <% end %>
-<% end %>
-
-<%= render "shared/messages/message", message: messages.last %>
