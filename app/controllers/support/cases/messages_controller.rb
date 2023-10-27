@@ -10,7 +10,7 @@ module Support
 
         redirect_to support_case_message_threads_path(case_id: current_case.id)
       else
-        @body = form_params[:body]
+        @body = form_params[:html_content]
         @subject = form_params[:subject]
         @to_recipients = form_params[:to_recipients]
         @cc_recipients = form_params[:cc_recipients]
