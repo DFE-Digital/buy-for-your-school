@@ -1,4 +1,4 @@
-class Shared::MessageThreadsController < ApplicationController
+class Tickets::MessageThreadsController < ApplicationController
   include SupportAgents
 
   ACCEPTABLE_TICKET_TYPES = [
@@ -36,7 +36,7 @@ class Shared::MessageThreadsController < ApplicationController
   end
 
   def set_back_url
-    @back_url = params[:back_to]
+    @back_url = back_link_param
   end
 
   def redirect_to_portal

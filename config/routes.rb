@@ -332,7 +332,9 @@ Rails.application.routes.draw do
     root to: "dashboards#index"
 
     resources :evaluations do
-      resource :contacts, only: %i[edit update], controller: :evaluation_contacts
+      scope module: :evaluations do
+        resource :contacts, only: %i[edit update]
+      end
     end
     resources :frameworks do
       resource :categorisations, only: %i[edit update], controller: :framework_categorisations
@@ -345,6 +347,12 @@ Rails.application.routes.draw do
       resource :register_upload, only: %i[new create]
       resource :activity_log, only: %i[show]
     end
+  end
+
+  scope module: :tickets do
+    resource :message_replies, path: "/messages/:message_id/replies", only: [:create]
+    resources :message_threads, path: "/tickets/:ticket_id/threads", only: [:index, :show]
+    resources :message_attachments, path: "/tickets/:ticket_id/attachments", only: [:index, :edit, :update, :destroy]
   end
 
   namespace :exit_survey do
