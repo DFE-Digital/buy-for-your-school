@@ -2,6 +2,10 @@ class Frameworks::EvaluationsController < Frameworks::ApplicationController
   before_action :redirect_to_register_tab, unless: :turbo_frame_request?, only: :index
   before_action :set_form_options, only: %i[new create]
 
+  content_security_policy do |policy|
+    policy.style_src_attr :unsafe_inline
+  end
+
   def index
     @filtering = Frameworks::Evaluation.filtering(filter_form_params)
     @evaluations = @filtering.results.paginate(page: params[:evaluations_page])
