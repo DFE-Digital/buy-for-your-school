@@ -45,8 +45,9 @@ RSpec.feature "Case summary", js: true do
         expect(all(".govuk-summary-list__row")[2]).to have_text "Case value"
         expect(all(".govuk-summary-list__row")[3]).to have_text "Origin"
         expect(all(".govuk-summary-list__row")[4]).to have_text "Source"
-        expect(all(".govuk-summary-list__row")[5]).to have_text "Description of query"
-        expect(all(".govuk-summary-list__row")[6]).to have_text "Next key date and description"
+        expect(all(".govuk-summary-list__row")[5]).to have_text "Project"
+        expect(all(".govuk-summary-list__row")[6]).to have_text "Description of query"
+        expect(all(".govuk-summary-list__row")[7]).to have_text "Next key date and description"
       end
     end
 

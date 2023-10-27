@@ -60,3 +60,6 @@ application.register("school-picker-filters", SchoolPickerFiltersController)
 
 import SelectOptionFilterController from "./select_option_filter_controller"
 application.register("select-option-filter", SelectOptionFilterController)
+
+import SelectOptionTextFieldController from "./select_option_text_field_controller"
+application.register("select-option-text-field", SelectOptionTextFieldController)

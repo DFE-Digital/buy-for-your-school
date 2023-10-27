@@ -1033,6 +1033,9 @@ en:
           schools_commercial_team: Schools Commercial Team (SCT)
           sw_hub: South West (SW) Hub
           unspecified: "-"
+        project:
+          header: "Project"
+          unspecified: "-"  
         discovery_method:
           legend: Case origin
           field: Origin
@@ -1484,6 +1487,11 @@ en:
         source:
           blank: Please select
           label: Case source
+        project:
+          add_new_project: Add new project
+          blank: Please select
+          label: Case project
+          new_project: New project  
       flash:
         updated: Case summary successfully updated
       invalid_date: Provide a valid date

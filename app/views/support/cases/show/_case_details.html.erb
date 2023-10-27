@@ -87,6 +87,20 @@
       </div>
 
       <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.project.header") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <% if current_case.project.present? %>
+          <%= current_case.project %>
+        <% else %>
+          <%= I18n.t("support.case.label.project.unspecified") %>
+        <% end %>
+      </dd>
+      <dd class="govuk-summary-list__actions"></dd>
+    </div>
+
+      <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.problem_description") %>
         </dt>

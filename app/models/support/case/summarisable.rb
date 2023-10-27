@@ -23,6 +23,7 @@ private
       procurement_stage_id:,
       value:,
       source:,
+      project:,
       next_key_date:,
       next_key_date_description:,
     }
