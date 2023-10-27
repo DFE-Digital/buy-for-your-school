@@ -3,5 +3,5 @@
 <% end %>
 
 <% content_for :"#{activity.id}_actor" do %>
-  Incoming email
+  <%= activity_log_item.display_actor || "Incoming email" %>
 <% end %>

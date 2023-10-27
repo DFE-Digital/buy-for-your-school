@@ -12,7 +12,7 @@ module SupportAgents
   end
 
   def set_current_agent
-    Current.agent = @current_agent
+    Current.actor = Current.agent = @current_agent
   end
 
   def current_agent

@@ -50,7 +50,7 @@
 
     <%= stylesheet_link_tag "application" %>
 
-    <% if support_portal? %>
+    <% if support_portal? || frameworks_portal? %>
       <%= javascript_include_tag "tinymce/tinymce.min" %>
     <% end %>
     <%= javascript_include_tag "application" %>
