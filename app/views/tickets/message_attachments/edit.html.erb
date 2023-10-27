@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "attachments-frame" do %>
+  <div id="attachments" class="govuk-tabs__panel">
+    <%= link_to "Back to attachments list", @back_url, class: "govuk-back-link pull-up" %>
+
+    <h2 class="govuk-heading-l">Edit email attachment</h2>
+
+    <%= form_for @attachment, url: message_attachment_path(@attachment.ticket, @attachment, ticket_type: @ticket.class, redirect_page: params[:redirect_page]), method: :patch do |f| %>
+      <%= f.govuk_text_field :custom_name, label: { text: "File name" } %>
+      <%= f.govuk_text_field :description %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit "Save" %>
+        <%= link_to "Exit without saving", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

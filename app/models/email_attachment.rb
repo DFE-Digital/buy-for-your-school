@@ -2,6 +2,7 @@ class EmailAttachment < ApplicationRecord
   self.table_name = "support_email_attachments"
 
   include Cacheable
+  include CustomNameable
   include DeDupable
   include Hideable
 
@@ -13,7 +14,7 @@ class EmailAttachment < ApplicationRecord
   scope :for_ticket, ->(ticket_id:) { joins(:email).where(email: { ticket_id: }) }
 
   delegate :checksum, to: :file
-  delegate :ticket, :ticket_id, to: :email
+  delegate :ticket, :ticket_id, :ticket_type, to: :email
 
   def custom_name = super.presence || file_name
 end

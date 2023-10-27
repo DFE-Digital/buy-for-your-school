@@ -1,4 +1,4 @@
-class Shared::MessageRepliesController < ApplicationController
+class Tickets::MessageRepliesController < ApplicationController
   include SupportAgents
 
   before_action :redirect_to_portal, unless: -> { turbo_frame_request? }
@@ -26,7 +26,7 @@ class Shared::MessageRepliesController < ApplicationController
   end
 
   def set_back_url
-    @back_url = params[:back_to]
+    @back_url = back_link_param
   end
 
   def redirect_to_portal

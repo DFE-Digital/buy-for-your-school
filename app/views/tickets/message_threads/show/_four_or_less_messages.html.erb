@@ -1,0 +1,7 @@
+<% if messages.count > 1 %>
+  <% messages[0...-1].each do |message| %>
+    <%= render "tickets/messages/message", truncated_message: true, message: %>
+  <% end %>
+<% end %>
+
+<%= render "tickets/messages/message", message: messages.last %>

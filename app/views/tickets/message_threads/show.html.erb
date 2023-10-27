@@ -4,7 +4,7 @@
 
     <h3 class="govuk-heading-m"><%= @thread.subject %></h3>
 
-    <%= render "shared/message_threads/show/#{@thread.messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @thread.messages %>
+    <%= render "tickets/message_threads/show/#{@thread.messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @thread.messages %>
 
     <% if @thread.last_received_reply&.inbox? %>
       <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details" open="true">
