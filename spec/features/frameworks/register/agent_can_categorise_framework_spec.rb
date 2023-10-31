@@ -17,8 +17,7 @@ describe "Agent can categorise framework", js: true do
     click_on "Save changes"
 
     expect(page).to have_summary("Categories", "Laptops, Electricity")
-    click_on "History"
-    expect(page).to have_content('Added category "Laptops" to framework')
-    expect(page).to have_content('Added category "Electricity" to framework')
+    expect(page).to have_content('Category "Laptops" added')
+    expect(page).to have_content('Category "Electricity" added')
   end
 end

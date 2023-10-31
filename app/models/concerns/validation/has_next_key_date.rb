@@ -1,4 +1,4 @@
-module Support::Case::Validation::HasNextKeyDate
+module Validation::HasNextKeyDate
   extend ActiveSupport::Concern
 
   included do

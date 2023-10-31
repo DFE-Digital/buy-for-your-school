@@ -1,0 +1,22 @@
+<%= content_for :title, "GHBS | Frameworks | Evaluation #{@evaluation.reference} | Quick edit" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <h1 class="govuk-heading-l"><%= I18n.t("frameworks.evaluation.quick_edit.header", reference: @evaluation.reference) %></h1>
+    <%= form_with model: @quick_edit,
+      scope: :quick_edit,
+      url: frameworks_evaluation_quick_edit_path(back_to: Base64.encode64(@back_url), redirect_back: params[:redirect_back]),
+      method: :patch do |form| %>
+        <%= form.govuk_error_summary %>
+
+        <%= form.govuk_text_area :note, rows: 5, label: { text: I18n.t("frameworks.evaluation.quick_edit.add_note"), size: "m" } %>
+
+        <%= render "support/cases/components/next_key_date", form: form %>
+
+        <div class="govuk-button-group">
+          <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
+          <%= link_to "Exit without saving", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+        </div>
+    <% end %>
+  </div>
+</div>

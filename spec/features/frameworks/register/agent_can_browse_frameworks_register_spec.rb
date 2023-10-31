@@ -22,7 +22,6 @@ describe "Agent can browse frameworks register", js: true do
 
   it "can view the details of a framework" do
     visit frameworks_root_path
-    puts Frameworks::ActivityLogItem.pluck :activity_type
     click_on "books"
     expect(page).to have_title("Books & Stationary")
   end

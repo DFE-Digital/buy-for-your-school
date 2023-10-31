@@ -2,7 +2,7 @@ module Support
   class Cases::ContractsController < Cases::ApplicationController
     before_action :set_back_url, only: %i[edit update]
 
-    include Concerns::HasDateParams
+    include HasDateParams
     include Concerns::HasInteraction
 
     def edit

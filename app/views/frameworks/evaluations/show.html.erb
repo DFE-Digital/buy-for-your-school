@@ -10,7 +10,7 @@
       <span><strong class="govuk-tag govuk-tag--red">ACTION</strong></span>
     <% end %>
     <span><%= @evaluation.display_status %></span>
-    <span class="govuk-body">Case Owner: <%= @evaluation.display_assignee %></span>
+    <span class="govuk-body">Case Owner: <%= @evaluation.display_assignee %> (<%= link_to "Change", edit_frameworks_evaluation_path(@evaluation, back_to: current_url_b64, redirect_back: current_url_b64), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %>)</span>
   </div>
 
   <div class="govuk-grid-row">
@@ -50,7 +50,7 @@
 
       <h2 class="govuk-heading-m">Actions</h2>
       <ul class="govuk-list">
-        <li>Blah</li>
+        <li><%= link_to "Quick edit", edit_frameworks_evaluation_quick_edit_path(@evaluation, back_to: current_url_b64, redirect_back: current_url_b64), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %></li>
       </ul>
     </div>
 

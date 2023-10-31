@@ -1,0 +1,21 @@
+<% edit ||= false %>
+
+<%= form_for @evaluation do |f| %>
+  <%= f.govuk_select :framework_id, @frameworks.map {|framework| ["#{framework.reference_and_name} (#{framework.provider_name})", framework.id] },
+      disabled: edit,
+      options: { include_blank: "Select a framework" },
+      label: { text: "Framework", size: "m" } %>
+
+  <%= f.govuk_select :contact_id, @contacts.map {|contact| ["#{contact.name} (#{contact.provider_name})", contact.id] },
+      options: { include_blank: "Select a contact" },
+      label: { text: "Contact at provider", size: "m" } %>
+
+  <%= f.govuk_select :assignee_id, @agents.map {|agent| [agent.full_name, agent.id] },
+        options: { include_blank: "Select an agent" },
+        label: { text: "Case Owner", size: "m" } %>
+
+  <div class="govuk-button-group flex-align-center">
+    <%= f.govuk_submit edit ? "Save changes" : "Create evaluation" %>
+    <%= link_to "Cancel", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+<% end %>
