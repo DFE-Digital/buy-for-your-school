@@ -1,0 +1,8 @@
+<%= content_for :title, "GHBS | Frameworks | Evaluation | #{@evaluation.reference} | Edit" %>
+
+<span class="govuk-caption-l">[<%= @evaluation.reference %>] Framework Evaluation</span>
+<h1 class="govuk-heading-l">Edit Basic Details</h1>
+
+<div class="govuk-!-width-two-thirds">
+  <%= render "form", edit: true %>
+</div>

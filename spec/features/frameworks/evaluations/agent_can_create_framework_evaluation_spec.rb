@@ -9,7 +9,7 @@ describe "Agent can create new framework evaluations", js: true do
     visit frameworks_framework_path(framework)
     click_on "Evaluations"
     click_on "Add Evaluation"
-    select agent.full_name, from: "Assignee"
+    select agent.full_name, from: "Case Owner"
 
     expect { click_on "Create evaluation" }.to change { framework.reload.evaluations.count }.from(0).to(1)
   end

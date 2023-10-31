@@ -8,6 +8,6 @@ private
   def portal_namespace = :frameworks
 
   def set_back_url
-    @back_url = back_link_param if back_link_param.present?
+    @back_url = back_link_param || request.referer
   end
 end

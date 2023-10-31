@@ -1,7 +1,7 @@
 class Support::Case::QuickEditor
   include ActiveModel::Model
   include ActiveModel::Validations
-  include Support::Case::Validation::HasNextKeyDate
+  include Validation::HasNextKeyDate
 
   attr_accessor(
     :support_case,

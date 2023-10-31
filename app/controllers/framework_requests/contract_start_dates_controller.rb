@@ -1,6 +1,6 @@
 module FrameworkRequests
   class ContractStartDatesController < BaseController
-    include Support::Concerns::HasDateParams
+    include HasDateParams
 
     skip_before_action :authenticate_user!
 

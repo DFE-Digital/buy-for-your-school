@@ -2,7 +2,7 @@ module Support
   class Cases::ProcurementDetailsController < Cases::ApplicationController
     before_action :set_back_url, :set_enums
 
-    include Concerns::HasDateParams
+    include HasDateParams
     include Concerns::HasInteraction
 
     def edit
