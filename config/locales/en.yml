@@ -692,6 +692,11 @@ en:
       email: Email
       full_name: Full name
       header: Enter your contact details
+  frameworks:
+    evaluation:
+      quick_edit:
+        header: Quick edit evaluation %{reference}
+        add_note: Add a note
   generic:
     button:
       back: Back

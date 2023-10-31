@@ -6,6 +6,8 @@ class Frameworks::Evaluation < ApplicationRecord
   include StatusChangeable
   include Presentable
   include ActivityLogPresentable
+  include Noteable
+  include QuickEditable
 
   belongs_to :framework
   has_one :provider, through: :framework

@@ -41,6 +41,10 @@ en:
           attributes:
             next_key_date:
               blank: Enter a date for the description
+        frameworks/evaluation/quick_editor:
+          attributes:
+            next_key_date:
+              blank: Enter a date for the description
 
   forms:
     rules:
