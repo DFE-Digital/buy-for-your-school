@@ -3,18 +3,5 @@
 <h1 class="govuk-heading-l">New Framework Evaluation</h1>
 
 <div class="govuk-!-width-two-thirds">
-  <%= form_for @evaluation do |f| %>
-    <%= f.govuk_select :framework_id, @frameworks.map {|framework| [framework.reference_and_name, framework.id] },
-          options: { include_blank: "Select a framework" },
-          label: { text: "Framework" } %>
-
-    <%= f.govuk_select :assignee_id, @agents.map {|agent| [agent.full_name, agent.id] },
-          options: { include_blank: "Select an agent" },
-          label: { text: "Assignee" } %>
-
-    <div class="govuk-button-group flex-align-center">
-      <%= f.govuk_submit "Create evaluation" %>
-      <%= link_to "Cancel", @back_url, class: "govuk-link govuk-link--no-visited-state" %>
-    </div>
-  <% end %>
+  <%= render "form" %>
 </div>

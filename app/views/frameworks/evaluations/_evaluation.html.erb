@@ -1,44 +1,86 @@
 <div class="govuk-grid-row case-panel">
-  <div class="govuk-grid-column-one-half govuk-!-margin-bottom-3">
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Case ID</dt>
-        <dd class="govuk-summary-list__value"><%= link_to evaluation.reference, frameworks_evaluation_path(evaluation, back_to: current_url_b64(:evaluations)), class: "govuk-link", "data-turbo" => false %></dd>
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half govuk-!-margin-bottom-3">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Case ID</dt>
+            <dd class="govuk-summary-list__value"><%= link_to evaluation.reference, frameworks_evaluation_path(evaluation, back_to: current_url_b64(:evaluations)), class: "govuk-link", "data-turbo" => false %></dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Framework Name</dt>
+            <dd class="govuk-summary-list__value"><%= evaluation.framework_name %></dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Framework Provider</dt>
+            <dd class="govuk-summary-list__value"><%= evaluation.framework_provider_name %></dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Categories</dt>
+            <dd class="govuk-summary-list__value"><%= evaluation.framework_category_names %></dd>
+          </div>
+        </dl>
       </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Framework Name</dt>
-        <dd class="govuk-summary-list__value"><%= evaluation.framework_name %></dd>
-      </div>
+      <div class="govuk-grid-column-one-half">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Status</dt>
+            <dd class="govuk-summary-list__value"><%= evaluation.display_status %></dd>
+          </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Framework Provider</dt>
-        <dd class="govuk-summary-list__value"><%= evaluation.framework_provider_name %></dd>
-      </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Assignee</dt>
+            <dd class="govuk-summary-list__value"><%= evaluation.display_assignee %></dd>
+          </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Categories</dt>
-        <dd class="govuk-summary-list__value"><%= evaluation.framework_category_names %></dd>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Updated</dt>
+            <dd class="govuk-summary-list__value"><%= evaluation.display_last_updated %></dd>
+          </div>
+        </dl>
       </div>
-    </dl>
-  </div>
+    </div>
 
-  <div class="govuk-grid-column-one-half">
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Status</dt>
-        <dd class="govuk-summary-list__value"><%= evaluation.display_status %></dd>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body">
+          <%= link_to "Quick edit", edit_frameworks_evaluation_quick_edit_path(evaluation, back_to: current_url_b64(:evaluations)), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %>
+        </p>
       </div>
+    </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Assignee</dt>
-        <dd class="govuk-summary-list__value"><%= evaluation.display_assignee %></dd>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <% if evaluation.latest_note.present? %>
+          <%= simple_format("<b>Note:</b> #{evaluation.latest_note.date} #{evaluation.latest_note.author} - " + evaluation.latest_note.body, class: "govuk-body") %>
+        <% end %>
       </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Updated</dt>
-        <dd class="govuk-summary-list__value"><%= evaluation.display_last_updated %></dd>
+      <div class="govuk-grid-column-one-half">
+        <% if evaluation.next_key_date.present? %>
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <%= I18n.t("support.case.label.next_key_date.label") %>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= evaluation.next_key_date_formatted %>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                <%= I18n.t("support.case.label.next_key_date.description2") %>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= simple_format(evaluation.next_key_date_description, class: "govuk-body") %>
+              </dd>
+            </div>
+          </dl>
+        <% end %>
       </div>
-    </dl>
+    </div>
   </div>
 </div>

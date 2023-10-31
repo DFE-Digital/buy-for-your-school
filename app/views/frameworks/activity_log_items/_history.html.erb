@@ -23,9 +23,9 @@
       </p>
 
       <% if content_for?(:"#{activity_log_item.activity_id}_description") %>
-        <p class="hods-timeline__description">
+        <div class="hods-timeline__description">
           <%= yield :"#{activity_log_item.activity_id}_description" %>
-        </p>
+        </div>
       <% end %>
     </div>
   <% end %>

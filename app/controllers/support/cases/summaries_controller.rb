@@ -2,7 +2,7 @@ module Support
   class Cases::SummariesController < ::Support::Cases::ApplicationController
     before_action :set_back_url
 
-    include Concerns::HasDateParams
+    include HasDateParams
 
     def edit
       @case_summary = fields_pre_filled_in_params? ? current_case.summary(summary_params) : current_case.summary
