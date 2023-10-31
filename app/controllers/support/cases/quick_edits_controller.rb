@@ -1,7 +1,7 @@
 module Support
   module Cases
     class QuickEditsController < Cases::ApplicationController
-      include Concerns::HasDateParams
+      include HasDateParams
 
       before_action :back_url, only: %i[edit update]
       helper_method :back_to_param

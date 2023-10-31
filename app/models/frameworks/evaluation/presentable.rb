@@ -40,4 +40,10 @@ module Frameworks::Evaluation::Presentable
   def contact_phone
     contact.try(:phone)
   end
+
+  def next_key_date_formatted
+    return "Not set" if next_key_date.blank?
+
+    next_key_date.strftime("%d/%m/%Y")
+  end
 end

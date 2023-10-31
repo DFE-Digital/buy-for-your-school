@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Support::Case::Validation::HasNextKeyDate do
+describe Validation::HasNextKeyDate do
   subject(:has_next_key_date) { Support::Case::QuickEditor.new(params) }
 
   let(:next_key_date) { nil }

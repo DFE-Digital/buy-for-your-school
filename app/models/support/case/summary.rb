@@ -2,7 +2,7 @@ class Support::Case::Summary
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations
-  include Support::Case::Validation::HasNextKeyDate
+  include Validation::HasNextKeyDate
 
   attribute :support_case
   attribute :request_type, :boolean

@@ -334,6 +334,7 @@ Rails.application.routes.draw do
     resources :evaluations do
       scope module: :evaluations do
         resource :contacts, only: %i[edit update]
+        resource :quick_edit, only: %i[edit update]
       end
     end
     resources :frameworks do
