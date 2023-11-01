@@ -1,6 +1,7 @@
 class Email < ApplicationRecord
   self.table_name = "support_emails"
 
+  include Actionable
   include MessageCacheable
   include Presentable
   include Queryable

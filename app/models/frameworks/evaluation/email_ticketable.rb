@@ -13,6 +13,10 @@ module Frameworks::Evaluation::EmailTicketable
     "[#{reference}]"
   end
 
+  def default_recipients
+    Array(contact.try(:email)).to_json
+  end
+
   def unique_attachments(folder: "all")
     UniqueAttachments.new(ticket: self, folder:)
   end

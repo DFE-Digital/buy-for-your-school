@@ -6,7 +6,7 @@
       subject: activity_log_item.subject %>
 
     <div class="hods-timeline__item">
-      <h2 class="hods-timeline__title">
+      <h2 class="hods-timeline__title <%= "subtle" if content_for?(:"#{activity_log_item.activity_id}_subtle") %>">
         <%= yield :"#{activity_log_item.activity_id}_subject" %>
       </h2>
       <p class="hods-timeline__by">

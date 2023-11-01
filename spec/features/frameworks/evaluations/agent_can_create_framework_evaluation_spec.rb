@@ -1,6 +1,6 @@
 require "rails_helper"
 
-xdescribe "Agent can create new framework evaluations", js: true do
+describe "Agent can create new framework evaluations", js: true do
   include_context "with a framework evaluation agent"
 
   let(:framework) { create(:frameworks_framework, status: "pending_evaluation") }
@@ -10,6 +10,7 @@ xdescribe "Agent can create new framework evaluations", js: true do
     click_on "Evaluations"
     click_on "Add Evaluation"
     select agent.full_name, from: "Assignee"
-    click_on "Create Evaluation"
+
+    expect { click_on "Create evaluation" }.to change { framework.reload.evaluations.count }.from(0).to(1)
   end
 end

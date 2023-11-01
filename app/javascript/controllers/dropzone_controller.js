@@ -41,7 +41,7 @@ export default class extends Controller {
         clickable: this.btnDisplayFileDialogTarget,
         maxFilesize: 30,
         headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
         }
       }
     )
@@ -73,7 +73,7 @@ export default class extends Controller {
   }
 
   getFilesFromServer() {
-    fetch(this.listFilesUrlValue, { method: "get", headers: { "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content }})
+    fetch(this.listFilesUrlValue, { method: "get", headers: { "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content }})
       .then(res => res.json())
       .then(data => {
         data.forEach(file => {
