@@ -30,7 +30,7 @@ export default class extends Controller {
         maxFiles: 100,
         uploadMultiple: true,
         headers: {
-          "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").content
+          "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']")?.content
         }
       }
     );
@@ -85,7 +85,7 @@ export default class extends Controller {
     if (!this.attachmentListUrlValue)
       return;
 
-    fetch(this.attachmentListUrlValue, { method: "get", headers: { "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content }})
+    fetch(this.attachmentListUrlValue, { method: "get", headers: { "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content }})
       .then(res => res.json())
       .then(data => {
         data.forEach(attachment => {

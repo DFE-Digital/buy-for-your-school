@@ -1,7 +1,9 @@
 RSpec.shared_context "with an agent" do |roles: %w[procops]|
   around do |example|
     ClimateControl.modify(PROC_OPS_TEAM: "DSI Caseworkers") do
-      example.run
+      Current.set(actor: agent) do
+        example.run
+      end
     end
   end
 
@@ -23,5 +25,5 @@ RSpec.shared_context "with an agent" do |roles: %w[procops]|
 end
 
 RSpec.shared_context "with a framework evaluation agent" do
-  include_context "with an agent", roles: [:framework_evaluator]
+  include_context "with an agent", roles: %i[procops framework_evaluator]
 end

@@ -1,17 +1,12 @@
 class Tickets::MessageAttachmentsController < ApplicationController
   include SupportAgents
+  include HasTicket
 
-  ACCEPTABLE_TICKET_TYPES = [
-    "Support::Case",
-    "Frameworks::Evaluation"
-  ]
-
-  before_action :redirect_to_portal, unless: -> { turbo_frame_request? && params[:ticket_type].in?(ACCEPTABLE_TICKET_TYPES) }
-  before_action :find_ticket
+  before_action :redirect_to_portal, unless: :turbo_frame_request?
   before_action :set_filter_form
   before_action :set_back_url
   before_action :find_attachments, only: :index
-  before_action :find_attachment, only: [:edit, :update, :destroy]
+  before_action :find_attachment, only: %i[edit update destroy]
 
   def index; end
 
@@ -42,10 +37,6 @@ private
     @filter_form = FilterAttachmentsForm.new({ sent_received: "all" }.merge(filter_form_params))
   end
 
-  def find_ticket
-    @ticket = params[:ticket_type].safe_constantize.find(params[:ticket_id])
-  end
-
   def filter_form_params
     params.fetch(:filter_form, {}).permit(:sent_received)
   end
@@ -56,10 +47,6 @@ private
 
   def edit_form_params
     params.require(:email_attachment).permit(:custom_name, :description, :hidden)
-  end
-
-  def redirect_to_portal
-    redirect_to "/cms"
   end
 
   def set_back_url

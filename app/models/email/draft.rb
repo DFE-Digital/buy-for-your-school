@@ -76,5 +76,6 @@ private
   def cache_message(message)
     email = Email.cache_message(message, folder: "SentItems", ticket:)
     email.update!(template_id:)
+    email
   end
 end

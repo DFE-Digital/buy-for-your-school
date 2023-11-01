@@ -14,7 +14,7 @@
           </span>
         </summary>
         <div class="govuk-details__text">
-          <%= render "reply_form", email: @thread.last_received_reply %>
+          <%= render "tickets/message_threads/show/form", email: @thread.last_received_reply %>
         </div>
       </details>
     <% end %>

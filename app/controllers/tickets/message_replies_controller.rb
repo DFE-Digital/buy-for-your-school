@@ -1,7 +1,7 @@
 class Tickets::MessageRepliesController < ApplicationController
   include SupportAgents
 
-  before_action :redirect_to_portal, unless: -> { turbo_frame_request? }
+  before_action :redirect_to_portal, unless: :turbo_frame_request?
   before_action :find_email
   before_action :set_back_url
 
@@ -15,7 +15,7 @@ class Tickets::MessageRepliesController < ApplicationController
     end
   end
 
-  private
+private
 
   def form_params
     params.require(:"message_reply_form_#{params[:unique_id]}").permit(:html_content, :subject, :to_recipients, :cc_recipients, :bcc_recipients, :template_id, :blob_attachments, file_attachments: [])
@@ -27,10 +27,6 @@ class Tickets::MessageRepliesController < ApplicationController
 
   def set_back_url
     @back_url = back_link_param
-  end
-
-  def redirect_to_portal
-    redirect_to "/cms"
   end
 
   def authorize_agent_scope = :access_proc_ops_portal?

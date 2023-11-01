@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "frameworks/frameworks/show",
-          "line": 28,
+          "line": 27,
           "file": "app/views/frameworks/frameworks/show.html.erb",
           "rendered": {
             "name": "frameworks/frameworks/show/_framework_details",
@@ -82,7 +82,7 @@
           "type": "controller",
           "class": "Frameworks::EvaluationsController",
           "method": "index",
-          "line": 8,
+          "line": 12,
           "file": "app/controllers/frameworks/evaluations_controller.rb",
           "rendered": {
             "name": "frameworks/evaluations/index",
@@ -384,6 +384,29 @@
       "note": ""
     },
     {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "da7a3eb77351a0d4b1c6aa157fba8695f5d99f0467d8a2a2532bfb16599ee2d3",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `safe_constantize` called on parameter value",
+      "file": "app/controllers/concerns/has_ticket.rb",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "params[:ticket_type].safe_constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HasTicket",
+        "method": "find_ticket"
+      },
+      "user_input": "params[:ticket_type]",
+      "confidence": "High",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "e09a55726782a4df4a1d7a66771b0b700c06cb19214d3b3b628b34840106ba5e",
@@ -438,6 +461,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-10-13 15:06:40 +0100",
+  "updated": "2023-11-08 10:24:37 +0000",
   "brakeman_version": "6.0.1"
 }

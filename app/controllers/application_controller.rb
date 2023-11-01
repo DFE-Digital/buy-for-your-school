@@ -105,6 +105,10 @@ protected
     request.url.starts_with?("https://staging.")
   end
 
+  def redirect_to_portal
+    redirect_to "/cms"
+  end
+
   def record_ga?
     google_analytics_id.present? && (internal_portal? || cookie_policy.accepted?)
   end
