@@ -1,0 +1,119 @@
+<% unique_id = "A#{SecureRandom.uuid}" %>
+<% url = message_threads_path(@ticket, ticket_type: @ticket.class, unique_id:) %>
+<% submit_text = I18n.t("support.case.label.messages.reply.send_message") %>
+
+<%= form_with id: "message-form", model: @draft, scope: :"message_reply_form_#{unique_id}", url:, method: :post,
+    html: { "data-controller" => "email-attachment" } do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :to_recipients, value: @to_recipients || form.object.to_recipients.to_json  %>
+  <%= form.hidden_field :cc_recipients, value: @cc_recipients || nil  %>
+  <%= form.hidden_field :bcc_recipients, value: @bcc_recipients || nil  %>
+
+  <%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input" %>
+
+  <p class="govuk-label govuk-label--m"><%= I18n.t("support.case.label.message_threads.new.add_recipients") %></p>
+  <span class="recipient-input-group">
+    <%= form.govuk_text_field :to,
+          label: nil,
+          prefix_text: I18n.t("support.case.label.message_threads.new.to"),
+          placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_recipients"),
+          "data-collection" => "message_reply_form_#{unique_id}[to_recipients]",
+          "data-table" => "#{unique_id}_to" %>
+    <button class="govuk-button"
+            data-module="govuk-button"
+            data-component="add-recipients"
+            data-input-field=<%= "message_reply_form_#{unique_id}[to]" %>
+            type="button">
+      <%= I18n.t("support.case.label.message_threads.new.add_to") %>
+    </button>
+  </span>
+  <div id="cc" hidden="true">
+    <span class="recipient-input-group">
+      <%= form.govuk_text_field :cc,
+            label: nil,
+            prefix_text: I18n.t("support.case.label.message_threads.new.cc"),
+            placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_cc"),
+            "data-collection" => "message_reply_form_#{unique_id}[cc_recipients]",
+            "data-table" => "#{unique_id}_cc" %>
+      <button class="govuk-button"
+              data-module="govuk-button"
+              data-component="add-recipients"
+              data-input-field=<%= "message_reply_form_#{unique_id}[cc]" %>
+              type="button">
+        <%= I18n.t("support.case.label.message_threads.new.add_cc") %>
+      </button>
+    </span>
+  </div>
+
+  <div id="bcc" hidden="true">
+    <span class="recipient-input-group">
+      <%= form.govuk_text_field :bcc,
+            label: nil,
+            prefix_text: I18n.t("support.case.label.message_threads.new.bcc"),
+            placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_bcc"),
+            "data-collection" => "message_reply_form_#{unique_id}[bcc_recipients]",
+            "data-table" => "#{unique_id}_bcc" %>
+      <button class="govuk-button"
+              data-module="govuk-button"
+              data-component="add-recipients"
+              data-input-field=<%= "message_reply_form_#{unique_id}[bcc]" %>
+              type="button">
+        <%= I18n.t("support.case.label.message_threads.new.add_bcc") %>
+      </button>
+    </span>
+  </div>
+
+  <div class="govuk-button-group">
+    <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-cc" type="button">
+      <%= I18n.t("support.case.label.message_threads.new.show_cc") %>
+    </button>
+    <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-bcc" type="button">
+      <%= I18n.t("support.case.label.message_threads.new.show_bcc") %>
+    </button>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <table id="<%= unique_id %>_to" class="govuk-table added_recipients_table" data-row-label="TO" hidden="true">
+        <tbody class="govuk-table__body">
+          <% # to be populated by javascript %>
+        </tbody>
+      </table>
+      <table id="<%= unique_id %>_cc" class="govuk-table added_recipients_table" data-row-label="CC" hidden="true">
+        <tbody class="govuk-table__body">
+          <% # to be populated by javascript %>
+        </tbody>
+      </table>
+      <table id="<%= unique_id %>_bcc" class="govuk-table added_recipients_table" data-row-label="BCC" hidden="true">
+        <tbody class="govuk-table__body">
+          <% # to be populated by javascript %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
+    "data-component" => "tinymce",
+    "data-tinymce-profile" => "basic",
+    "data-tinymce-selector" => ".message-reply-box",
+    value: form.object.body
+  %>
+
+  <div class="govuk-button-group">
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-action" => "email-attachment#submit" %>
+    <span class="govuk-button govuk-button--secondary" role="button"
+      data-email-attachment-target="btnDisplayFileDialog">
+      <%= I18n.t("support.case.label.messages.reply.add_attachments") %>
+    </span>
+    <%= form.govuk_file_field :file_attachments, multiple: true, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
+    <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
+    <%= link_to I18n.t("support.case.label.messages.reply.delete"), @back_url, data: { confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= email_attachment_container %>
+    </div>
+  </div>
+<% end %>

@@ -42,6 +42,7 @@ RSpec.configure do |config|
   config.include SignInHelpers, type: :feature
   config.include SignInHelpers, type: :request
   config.include SignInHelpers, type: :controller
+  config.include TabHelpers, type: :feature
   config.include TinymceHelpers, type: :feature
   config.include ProcurementStageHelpers
 

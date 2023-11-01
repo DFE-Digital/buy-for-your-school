@@ -1,3 +1,7 @@
+<% content_for :"#{activity.id}_subtle" do %>
+  true
+<% end %>
+
 <% content_for :"#{activity.id}_subject" do %>
   Action Required flag <%= activity.field_changes["action_required"].last ? "set" : "removed" %>
 <% end %>

@@ -15,7 +15,7 @@ class Frameworks::Evaluation::EmailTicketable::UniqueAttachments
 private
 
   def filter_to_apply
-    return {} unless @folder.in?(["sent", "received"])
+    return {} unless @folder.in?(%w[sent received])
 
     { email: { folder: @folder == "received" ? :inbox : :sent_items } }
   end

@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "messages-frame" do %>
+  <div id="messages" class="govuk-tabs__panel">
+    <%= link_to I18n.t("support.case.label.message_threads.back"), message_threads_path(ticket_type: @ticket.class, ticket_id: @ticket.id), class: "govuk-back-link pull-up" %>
+
+    <h1 class="govuk-heading-m"><%= I18n.t("support.case.label.message_threads.new_thread") %></h1>
+
+    <div class="govuk-details__text">
+      <%= render "tickets/message_threads/new/form" %>
+    </div>
+  </div>
+<% end %>
