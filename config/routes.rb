@@ -368,8 +368,8 @@ Rails.application.routes.draw do
 
   scope module: :tickets do
     resource :message_replies, path: "/messages/:message_id/replies", only: [:create]
-    resources :message_threads, path: "/tickets/:ticket_id/threads", only: [:index, :show]
-    resources :message_attachments, path: "/tickets/:ticket_id/attachments", only: [:index, :edit, :update, :destroy]
+    resources :message_threads, path: "/tickets/:ticket_id/threads", only: %i[new index show create]
+    resources :message_attachments, path: "/tickets/:ticket_id/attachments", only: %i[index edit update destroy]
   end
 
   namespace :exit_survey do

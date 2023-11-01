@@ -79,6 +79,10 @@ protected
     :none
   end
 
+  def redirect_to_portal
+    redirect_to "/cms"
+  end
+
   def record_ga?
     !(support_portal? || engagement_portal? || frameworks_portal?)
   end

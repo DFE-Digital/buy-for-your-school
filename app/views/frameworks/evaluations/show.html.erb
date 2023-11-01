@@ -6,6 +6,13 @@
   <h1 class="govuk-heading-l"><%= @evaluation.framework_name %></h1>
 
   <div class="pull-up-10 govuk-!-margin-bottom-8 flex-align-center">
+    <% if @evaluation.action_required %>
+    <span>
+      <strong class="govuk-tag govuk-tag--red">
+        ACTION
+      </strong>
+    </span>
+    <% end %>
     <span><%= @evaluation.display_status %></span>
     <span class="govuk-body">Case Owner: <%= @evaluation.display_assignee %></span>
   </div>
