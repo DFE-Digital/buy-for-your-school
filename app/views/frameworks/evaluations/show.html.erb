@@ -7,11 +7,7 @@
 
   <div class="pull-up-10 govuk-!-margin-bottom-8 flex-align-center">
     <% if @evaluation.action_required %>
-    <span>
-      <strong class="govuk-tag govuk-tag--red">
-        ACTION
-      </strong>
-    </span>
+      <span><strong class="govuk-tag govuk-tag--red">ACTION</strong></span>
     <% end %>
     <span><%= @evaluation.display_status %></span>
     <span class="govuk-body">Case Owner: <%= @evaluation.display_assignee %></span>
@@ -66,6 +62,4 @@
       <% end %>
     </div>
   </div>
-
-
 <% end %>
