@@ -51,9 +51,6 @@ module BuyForYourSchool
     # Set London as the timezone - handles daylight savings automatically
     config.time_zone = "London"
 
-    # Allows to enable new connection handling API
-    config.active_record.legacy_connection_handling = false
-
     # detect bots in order to keep user journey data clean
     config.middleware.use Rack::CrawlerDetect
 
@@ -64,5 +61,7 @@ module BuyForYourSchool
 
     require "middleware/maintenance_mode"
     config.middleware.insert_before 0, MaintenanceMode
+
+    config.active_support.cache_format_version = 7.1
   end
 end
