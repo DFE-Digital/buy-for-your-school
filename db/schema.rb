@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_151247) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_18_151247) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1107,9 +1107,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_151247) do
       se.egroup_status AS establishment_group_status,
       se.establishment_type,
       array_length(fr.school_urns, 1) AS request_num_schools,
-      replace(TRIM(BOTH '{}"'::text FROM (fr.school_urns)::text), ','::text, ', '::text) AS request_school_urns,
+      replace(btrim((fr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS request_school_urns,
       array_length(cr.school_urns, 1) AS case_num_schools,
-      replace(TRIM(BOTH '{}"'::text FROM (cr.school_urns)::text), ','::text, ', '::text) AS case_school_urns,
+      replace(btrim((cr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS case_school_urns,
       sf.name AS framework_name,
       sp.reason_for_route_to_market,
       sp.required_agreement_type,
