@@ -58,7 +58,6 @@ Rails.application.configure do
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
-  config.log_format = ENV["RAILS_LOG_FORMAT"].present? ? ENV["RAILS_LOG_FORMAT"].to_sym : :json
 
   config.active_record.logger = nil # Don't log SQL
 
