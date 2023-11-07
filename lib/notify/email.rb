@@ -59,7 +59,7 @@ module Notify
     def call
       message = send_message
 
-      track_event("EmailSent\#{self.class.to_s}")
+      track_event("EmailSent/#{self.class}")
 
       message
     rescue ::ArgumentError,

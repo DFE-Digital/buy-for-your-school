@@ -12,11 +12,14 @@ private
   end
 
   def exception_notifier_data
-    {}.tap do |data|
-      data[:current_user] = current_user.id if current_user.present?
-      data[:current_agent] = current_agent.id if defined?(current_agent) && current_agent.present?
-      data[:controller] = controller_name
-      data[:action] = action_name
-    end
+    data = {}
+    data[:request_id] = request.request_id
+    data[:app_insights_request_id] = request.env["ApplicationInsights.request.id"]
+    data[:current_user] = current_user.id if current_user.present?
+    data[:current_agent] = current_agent.id if defined?(current_agent) && current_agent.present?
+    data[:url] = request.original_url
+    data[:controller] = controller_name
+    data[:action] = action_name
+    data
   end
 end
