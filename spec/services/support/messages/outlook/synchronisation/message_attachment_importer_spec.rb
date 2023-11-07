@@ -9,11 +9,7 @@ describe Support::Messages::Outlook::Synchronisation::MessageAttachmentImporter 
     let!(:existing_email_attachment) { create(:support_email_attachment, email:, outlook_id: "123") }
 
     it "does not import the attachment again" do
-      starting_updated_at = existing_email_attachment.updated_at
-
-      described_class.call(message_attachment, email)
-
-      expect(existing_email_attachment.reload.updated_at).to eq(starting_updated_at)
+      expect { described_class.call(message_attachment, email) }.not_to(change { existing_email_attachment.reload.attributes })
     end
   end
 

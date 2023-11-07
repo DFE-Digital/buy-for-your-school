@@ -9,7 +9,7 @@ RSpec.describe Support::EstablishmentGroups::Information, "#call" do
     before do
       travel_to Time.zone.local(2004, 11, 24, 0o1, 0o4, 44)
 
-      stub_request(:get, "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata20041124.csv")
+      stub_request(:get, "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata20041124.csv").to_return(body: "")
     end
 
     it "downloads the current GIAS establishment groups CSV data" do
