@@ -57,7 +57,10 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  config.log_tags = [
+    :request_id,
+    ->(request) { request.env["ApplicationInsights.request.id"] }, # app insights request id
+  ]
 
   config.active_record.logger = nil # Don't log SQL
 
