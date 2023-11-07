@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-l"><%= I18n.t("support.interaction.header.contact_with_school") %></h1>
 
-<%= form.govuk_collection_radio_buttons :event_type, form.object.contact_options, :id, :label,
+<%= form.govuk_collection_radio_buttons :event_type, @interaction.contact_options, :id, :label,
                                         legend: { text: I18n.t("support.interaction.header.type_of_contact"), size: "m" }
 %>
 
