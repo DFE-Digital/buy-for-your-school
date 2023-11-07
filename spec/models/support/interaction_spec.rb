@@ -41,6 +41,7 @@ RSpec.describe Support::Interaction, type: :model do
       case_procurement_stage_changed
       case_with_school_changed
       case_next_key_date_changed
+      case_transferred
     ])
   end
 

@@ -24,6 +24,7 @@ module Support
       case_modified
       first_contact
       change_case_summary
+      transfer_case
     ].freeze
 
     # @!attribute action

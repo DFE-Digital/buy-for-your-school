@@ -43,6 +43,9 @@
 
     <% if @current_case.initial? %>
       <li>
+        <%= link_to I18n.t("support.case.label.actions.transfer_to_framework_evaluation"), support_case_transfer_to_framework_evaluation_path(@current_case), class: "govuk-link govuk-link--no-visited-state" %>
+      </li>
+      <li>
         <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
       </li>
     <% end  %>
