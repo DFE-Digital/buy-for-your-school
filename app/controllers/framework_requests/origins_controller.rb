@@ -6,7 +6,6 @@ module FrameworkRequests
       if @form.valid?
         @form.save!
         session.delete(:support_journey) unless current_user.guest?
-        session.delete(:framework_request_id)
         redirect_to framework_request_path(@form.framework_request)
       else
         render :index
