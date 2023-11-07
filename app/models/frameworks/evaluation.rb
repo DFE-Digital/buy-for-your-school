@@ -8,6 +8,8 @@ class Frameworks::Evaluation < ApplicationRecord
   include ActivityLogPresentable
   include Noteable
   include QuickEditable
+  include Sourceable
+  include Transferable
 
   belongs_to :framework
   has_one :provider, through: :framework

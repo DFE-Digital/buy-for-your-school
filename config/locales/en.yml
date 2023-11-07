@@ -848,6 +848,8 @@ en:
         request_details: Request details
         school_detail: School details
       label:
+        actions:
+          transfer_to_framework_evaluation: Transfer to framework evaluation
         add_interaction: Log contact with school
         add_note: Add a case note
         additional_data:
@@ -1081,6 +1083,12 @@ en:
           L5: 5 - DfE buying by getting quotes or bids
           header: Case level
           unspecified: Not specified
+        transfer_to_framework_evaluation:
+          title: Buy for your school | Case %{reference} | Transfer to framework evaluation
+          header: Do you want to transfer Case %{reference} to a framework evaluation case?
+          body: This action will close this case and create a new framework evaluation case.
+          transfer: Transfer
+          cancel: Cancel
         user_selected_category: User selected options
         auto_assigned_category: Auto-assigned sub-category
         unassigned_category: Unassigned
@@ -1584,6 +1592,7 @@ en:
         savings_updated: Savings updated
         state_change: Status change
         support_request: Request for support
+        case_transferred: Case transferred
     management:
       agents:
         header: Agents
