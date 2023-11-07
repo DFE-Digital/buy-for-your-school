@@ -66,6 +66,7 @@ module Support
       case_procurement_stage_changed: 23,
       case_with_school_changed: 24,
       case_next_key_date_changed: 25,
+      case_transferred: 26,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }
