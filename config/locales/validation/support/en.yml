@@ -45,6 +45,12 @@ en:
           attributes:
             next_key_date:
               blank: Enter a date for the description
+        support/case/transferer:
+          attributes:
+            framework_id:
+              blank: Select a framework for the new evaluation
+            assignee_id:
+              blank: Select an agent for the new evaluation
 
   forms:
     rules:
