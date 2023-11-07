@@ -266,6 +266,8 @@ Rails.application.routes.draw do
             resource :participating_schools, only: %i[show]
           end
         end
+        get :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#index"
+        post :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#create"
       end
     end
 

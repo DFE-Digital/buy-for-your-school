@@ -18,6 +18,7 @@ module Support
     include QuickEditable
     include Summarisable
     include SchoolPickable
+    include Transferable
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true
@@ -70,7 +71,7 @@ module Support
     #   spam
     #   out_of_scope
     #   other
-    enum closure_reason: { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4 }, _suffix: true
+    enum closure_reason: { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5 }, _suffix: true
 
     # Source
     #
