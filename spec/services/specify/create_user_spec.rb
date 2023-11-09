@@ -58,6 +58,8 @@ RSpec.describe CreateUser do
     end
 
     context "when they have updated their details" do
+      let(:email) { "User@Example.com" }
+
       let(:omniauth_hash) do
         {
           "uid" => dfe_sign_in_uid,
@@ -72,6 +74,10 @@ RSpec.describe CreateUser do
       it "updates the user record" do
         expect(result.first_name).to eq "New First"
         expect(result.last_name).to eq "New Last"
+      end
+
+      it "downcases the email" do
+        expect(result.email).to eq("user@example.com")
       end
     end
 
@@ -116,8 +122,8 @@ RSpec.describe CreateUser do
 
     context "when they already have a support agent record" do
       let(:dfe_sign_in_uid) { "something-else-4caa-9ff2-07faff7351d2" }
-      let!(:existing_user) { create(:user, dfe_sign_in_uid:, email:) }
-      let!(:support_agent) { create(:support_agent, email:) }
+      let!(:existing_user) { create(:user, dfe_sign_in_uid:, email: email.upcase) }
+      let!(:support_agent) { create(:support_agent, email: email.downcase) }
       let(:orgs) { [] }
 
       context "when the user already exists (regardless of org)" do
@@ -131,6 +137,10 @@ RSpec.describe CreateUser do
 
         it "creates a new user record" do
           expect(result).to eq User.find_by(dfe_sign_in_uid:)
+        end
+
+        it "downcases the email on the created user" do
+          expect(result.email).to eq("user@example.com")
         end
 
         it "updates the agent to have the dsi uid of the user" do

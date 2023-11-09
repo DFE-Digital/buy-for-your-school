@@ -69,7 +69,7 @@ private
   end
 
   def current_support_agent
-    Support::Agent.find_by(email:)
+    Support::Agent.where("lower(email) = lower(?)", email).first
   end
 
   def update_support_agent!
@@ -132,7 +132,7 @@ private
 
   # @return [String] Unique identifier for the user
   def email
-    auth.dig("info", "email")
+    auth.dig("info", "email").downcase
   end
 
   # @return [String] Unique identifier for the user
