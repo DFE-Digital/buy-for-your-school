@@ -5,7 +5,7 @@
       <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" %>
     </li>
     <li>
-      <%= link_to I18n.t("support.case.label.move_email"), new_support_case_merge_emails_path(@current_case), class: "govuk-link" %>
+      <%= link_to I18n.t("support.case.label.move_email"), support_case_move_emails_path(@current_case), class: "govuk-link govuk-link--no-visited-state" %>
     </li>
     <% if @current_case.opened? %>
       <li>

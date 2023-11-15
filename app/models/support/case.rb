@@ -9,6 +9,7 @@ module Support
   #
   class Case < ApplicationRecord
     include EmailTicketable
+    include EmailMovable
     include Filterable
     include StateChangeable
     include Sortable

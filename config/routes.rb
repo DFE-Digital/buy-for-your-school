@@ -220,7 +220,6 @@ Rails.application.routes.draw do
         end
         resources :attachments, only: %i[index edit update destroy]
         resources :files, only: %i[index edit update destroy]
-        resource :merge_emails, only: %i[new create show], path: "merge-emails"
         resource :organisation, only: %i[edit update]
         resources :confirm_organisation, only: %i[show update]
         resource :contact_details, only: %i[edit update]
@@ -268,6 +267,9 @@ Rails.application.routes.draw do
         end
         get :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#index"
         post :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#create"
+        get "move_emails/", to: "move_emails#index", as: "move_emails"
+        post "move_emails/", to: "move_emails#create", as: nil
+        post "move_emails/confirm", to: "move_emails#confirm", as: "move_emails_confirm"
       end
     end
 
@@ -369,6 +371,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tickets, only: %i[index]
   scope module: :tickets do
     resource :message_replies, path: "/messages/:message_id/replies", only: [:create]
     resources :message_threads, path: "/tickets/:ticket_id/threads", only: %i[new index show create]
