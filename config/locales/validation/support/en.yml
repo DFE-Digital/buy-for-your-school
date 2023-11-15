@@ -51,6 +51,10 @@ en:
               blank: Select a framework for the new evaluation
             assignee_id:
               blank: Select an agent for the new evaluation
+        support/case/email_mover:
+          attributes:
+            destination_ref:
+              blank: Select the case or framework evaluation to move the emails to
 
   forms:
     rules:

@@ -12,6 +12,7 @@ describe "Agent can transfer a case to a framework evaluation" do
   end
 
   before do
+    create_list(:support_email, 2, ticket: support_case, is_read: false)
     support_case.transfer_to_framework_evaluation(framework_id: framework.id, assignee_id: assignee.id)
   end
 
@@ -52,9 +53,17 @@ describe "Agent can transfer a case to a framework evaluation" do
 
   it "creates an activity event about the case transfer on the framework evaluation" do
     evaluation = Frameworks::Evaluation.last
-    log_item = evaluation.activity_log_items.first
+    log_item = evaluation.activity_log_items[1]
 
     expect(log_item.activity.event).to eq("evaluation_transferred")
     expect(log_item.activity.data).to eq({ "source_id" => support_case.id, "source_type" => support_case.class.name })
+  end
+
+  it "moves emails from the case to the framework evaluation" do
+    evaluation = Frameworks::Evaluation.last
+
+    expect(support_case.emails.count).to eq(0)
+    expect(evaluation.emails.count).to eq(2)
+    expect(evaluation.action_required?).to eq(true)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_06_164140) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_10_154506) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1221,5 +1221,39 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_06_164140) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
+  SQL
+  create_view "ticket_searches", sql_definition: <<-SQL
+      SELECT scs.case_id AS id,
+      scs.case_ref AS reference,
+      scs.organisation_name,
+      scs.organisation_urn,
+      scs.organisation_ukprn,
+      NULL::character varying AS framework_name,
+      NULL::character varying AS framework_provider,
+      scs.agent_name,
+      scs.agent_first_name,
+      scs.agent_last_name,
+      scs.created_at,
+      scs.updated_at,
+      'Support::Case'::text AS source
+     FROM support_case_searches scs
+  UNION ALL
+   SELECT fe.id,
+      fe.reference,
+      NULL::character varying AS organisation_name,
+      NULL::character varying AS organisation_urn,
+      NULL::character varying AS organisation_ukprn,
+      ff.name AS framework_name,
+      fp.short_name AS framework_provider,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      fe.created_at,
+      fe.updated_at,
+      'Frameworks::Evaluation'::text AS source
+     FROM (((frameworks_evaluations fe
+       LEFT JOIN frameworks_frameworks ff ON ((ff.id = fe.framework_id)))
+       LEFT JOIN frameworks_providers fp ON ((fp.id = ff.provider_id)))
+       LEFT JOIN support_agents sa ON ((sa.id = fe.assignee_id)));
   SQL
 end
