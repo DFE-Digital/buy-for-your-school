@@ -39,7 +39,10 @@ import _ from "lodash";
         autocompleteDefaultValue: defaultValue,
 
         // key,value map of input name to result value and optional default value, each will become a hidden field on the form
-        autocompleteHiddenFields: hiddenFieldsRaw
+        autocompleteHiddenFields: hiddenFieldsRaw,
+
+        autocompleteTemplateField: templateField,
+        autocompleteTemplates: templates
       } = element.dataset;
 
       // Set up the required markup to make the autocomplete element function
@@ -90,6 +93,16 @@ import _ from "lodash";
         return `<span class="govuk-body">${output}</span>`;
       }
 
+      const determineTemplate = (suggestion, templateField, template) => {
+        if (_.isString(suggestion) || _.isEmpty(templateField)) {
+          return template;
+        }
+
+        const templateMap = JSON.parse(template);
+
+        return templateMap[suggestion[templateField]];
+      }
+
       // Set the hidden field values on selection of suggestion
       const setHiddenFields = (result) => {
         if (result === undefined) return;
@@ -113,7 +126,10 @@ import _ from "lodash";
         defaultValue: defaultValue,
         templates: {
           inputValue: i => i ? i[valueKey] : undefined,
-          suggestion: i => formatSuggestion(i, suggestionTemplate)
+          suggestion: i => {
+            const template = templates ? determineTemplate(i, templateField, templates) : suggestionTemplate;
+            return formatSuggestion(i, template);
+          }
         },
         source: _.throttle(doQueryLookup),
         onConfirm: setHiddenFields,

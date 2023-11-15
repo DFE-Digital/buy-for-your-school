@@ -1,0 +1,10 @@
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <% case @destination.class.name %>
+    <% when "Support::Case" %>
+      <%= render "success_support_case" %>
+    <% when "Frameworks::Evaluation" %>
+      <%= render "success_framework_evaluation" %>
+    <% end %>
+  </div>
+</div>
