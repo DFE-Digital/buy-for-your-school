@@ -1332,13 +1332,22 @@ en:
         from: From
         header: You are moving emails
         reminder: Once the emails have been moved, Case %{case_ref} will be closed.
-        table:
-        - Case
-        - Organisation
-        - Sub-category
-        - Status
-        - Assigned to
-        - Date received
+        support_case:
+          table:
+            - Case
+            - Organisation
+            - Sub-category
+            - Status
+            - Assigned to
+            - Date received
+        framework_evaluation:
+          table:
+            - Evaluation
+            - Framework
+            - Provider
+            - Status
+            - Assigned to
+            - Date received
         to: To
       search:
         header: Find an existing case
@@ -1348,6 +1357,7 @@ en:
         body:
           assigned: Assigned to %{agent}
           case_org: Case %{case_ref} - %{org}
+          evaluation_framework: Evaluation %{evaluation_ref} - %{framework}
           closed: Case %{case_ref} has been closed.
           moved: 'The emails have been moved to:'
         header: Success
@@ -1356,6 +1366,8 @@ en:
           my_cases: My Cases
           notifications: Notifications
           this_case: Go to Case %{case_ref}
+          this_evaluation: Go to Evaluation %{evaluation_ref}
+      move_emails: Move emails
     case_on_hold:
       flash:
         created: Case placed on hold successfully

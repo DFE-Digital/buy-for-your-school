@@ -1,0 +1,20 @@
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_merge_emails.preview.to") %></caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <% I18n.t("support.case_merge_emails.preview.framework_evaluation.table").each do |header| %>
+        <th scope="col" class="govuk-table__header"> <%= header %> </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" id="merge_emails_to">
+      <td class="govuk-table__cell"> <%= @destination.ref %> </td>
+      <td class="govuk-table__cell"> <%= @destination.framework.name %> </td>
+      <td class="govuk-table__cell"> <%= @destination.framework.provider.short_name %> </td>
+      <td class="govuk-table__cell"> <%= @destination.status %> </td>
+      <td class="govuk-table__cell"> <%= @destination.assignee&.full_name %> </td>
+      <td class="govuk-table__cell"> <%= @destination.created_at.strftime("%d %B %Y %H:%M") %> </td>
+    </tr>
+  </tbody>
+</table>

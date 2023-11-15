@@ -7,12 +7,17 @@ module Frameworks::Evaluation::Transferable
 
   class_methods do
     def transfer_from_support_case(support_case, framework_id, assignee_id)
-      create!(
-        creation_source: :transfer,
-        source: support_case,
-        framework_id:,
-        assignee_id:,
-      )
+      transaction do
+        evaluation = create!(
+          creation_source: :transfer,
+          source: support_case,
+          framework_id:,
+          assignee_id:,
+        )
+        support_case.emails.update_all(ticket_id: evaluation.id, ticket_type: evaluation.class.name)
+        evaluation.update!(action_required: evaluation.emails.any? { |email| !email.is_read? })
+        evaluation
+      end
     end
   end
 

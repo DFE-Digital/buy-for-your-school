@@ -1,0 +1,52 @@
+<%= form_with scope: :case_email_mover,
+              url: support_case_move_emails_path do |form|
+%>
+  <%= form.hidden_field :destination_id %>
+  <%= form.hidden_field :destination_type %>
+  <%= form.hidden_field :destination_ref %>
+
+  <h1 class="govuk-heading-l">
+    <%= I18n.t("support.case_merge_emails.preview.header") %>
+  </h1>
+
+  <!-- FROM CASE -->
+
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m"><%= I18n.t("support.case_merge_emails.preview.from") %></caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <% I18n.t("support.case_merge_emails.preview.support_case.table").each do |header| %>
+          <th scope="col" class="govuk-table__header"> <%= header %> </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row" id="merge_emails_from">
+        <td class="govuk-table__cell"> <%= @current_case.ref %> </td>
+        <td class="govuk-table__cell"> <%= @current_case.organisation_name %> </td>
+        <td class="govuk-table__cell"> <%= @current_case.category&.title %> </td>
+        <td class="govuk-table__cell"> <%= @current_case.state %> </td>
+        <td class="govuk-table__cell"> <%= @current_case.agent&.full_name %> </td>
+        <td class="govuk-table__cell"> <%= @current_case.created_at %> </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TO CASE -->
+
+  <% case @destination.class.name %>
+  <% when "Support::Case" %>
+    <%= render "confirm_support_case" %>
+  <% when "Frameworks::Evaluation" %>
+    <%= render "confirm_framework_evaluation" %>
+  <% end %>
+
+  <p class="govuk-body-m">
+    <%= I18n.t("support.case_merge_emails.preview.reminder", case_ref: @current_case.ref) %>
+  </p>
+
+  <div class="govuk-button-group">
+    <%= form.submit I18n.t("support.case_merge_emails.move_emails"), class: "govuk-button", data: { disable_with: "Moving emails..." } %>
+    <%= link_to I18n.t("support.generic.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+<% end %>
