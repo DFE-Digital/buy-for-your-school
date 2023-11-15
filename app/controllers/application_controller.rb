@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :cookie_policy, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :current_url_b64
+  helper_method :current_user, :cookie_policy, :internal_portal?, :google_analytics_id, :hosted_development?, :hosted_production?, :hosted_staging?, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :current_url_b64
 
   # @return [User, Guest]
   #
@@ -79,8 +79,34 @@ protected
     :none
   end
 
+  def google_analytics_id
+    if hosted_development?
+      "G-JHQ4K916N1"
+    elsif hosted_staging?
+      "G-8770N0RLNE"
+    elsif hosted_production?
+      "G-PT4157VC9D"
+    end
+  end
+
+  def internal_portal?
+    support_portal? || engagement_portal? || frameworks_portal?
+  end
+
+  def hosted_development?
+    request.url.starts_with?("https://dev.")
+  end
+
+  def hosted_production?
+    request.url.starts_with?("https://www.")
+  end
+
+  def hosted_staging?
+    request.url.starts_with?("https://staging.")
+  end
+
   def record_ga?
-    !(support_portal? || engagement_portal? || frameworks_portal?)
+    google_analytics_id.present? && (internal_portal? || cookie_policy.accepted?)
   end
 
   def cookie_policy
