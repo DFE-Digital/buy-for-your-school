@@ -2,12 +2,8 @@
 <html lang="en" class="govuk-template ">
 
   <head>
-    <% if Rails.env.production? && record_ga? %>
-      <%= javascript_include_tag "google-tag-manager/include" %>
-
-      <% if cookie_policy.accepted? %>
-        <%= javascript_include_tag "google-tag-manager/activate" %>
-      <% end %>
+    <% if record_ga? %>
+      <!-- Google tag (gtag.js) --> <script async nonce=<%= content_security_policy_nonce%> src="https://www.googletagmanager.com/gtag/js?id=<%= google_analytics_id %>"></script> <script nonce=<%= content_security_policy_nonce%>> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', "<%= google_analytics_id %>"); </script>
     <% end %>
 
     <% if Rails.env.production? && ENV['ApplicationInsights__ConnectionString'].present? %>
@@ -57,18 +53,12 @@
   </head>
 
   <body class="govuk-template__body">
-    <% if Rails.env.production? && record_ga? && cookie_policy.accepted? %>
-      <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXQDGR"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-      <!-- End Google Tag Manager (noscript) -->
-    <% end %>
 
     <%= javascript_tag nonce: true do -%>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     <% end -%>
 
-    <% if record_ga? %>
+    <% unless internal_portal? %>
       <%= render "cookie_preferences/banner" %>
     <% end %>
 
