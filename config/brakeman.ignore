@@ -70,6 +70,50 @@
     {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
+      "fingerprint": "0854fd9d7c5fab94107cd75a427609e602a65d82d13a9260fe9000ec71c3b24e",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/provider_contacts/show/_history.html.erb",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::ProviderContact.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::ProviderContactsController",
+          "method": "show",
+          "line": 13,
+          "file": "app/controllers/frameworks/provider_contacts_controller.rb",
+          "rendered": {
+            "name": "frameworks/provider_contacts/show",
+            "file": "app/views/frameworks/provider_contacts/show.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "frameworks/provider_contacts/show",
+          "line": 40,
+          "file": "app/views/frameworks/provider_contacts/show.html.erb",
+          "rendered": {
+            "name": "frameworks/provider_contacts/show/_history",
+            "file": "app/views/frameworks/provider_contacts/show/_history.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/provider_contacts/show/_history"
+      },
+      "user_input": "params[:activities_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
       "fingerprint": "0bb9d316930182410224e235ece8dd8591c92966fb97a1f3520c82420bf7a066",
       "check_name": "Render",
       "message": "Render path contains parameter value",
@@ -270,6 +314,84 @@
       "note": ""
     },
     {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "96a1220b12d66145810d7fd48dac7c64090c7910e0f886739c151af4b5df1682",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/providers/show/_history.html.erb",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Provider.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::ProvidersController",
+          "method": "show",
+          "line": 12,
+          "file": "app/controllers/frameworks/providers_controller.rb",
+          "rendered": {
+            "name": "frameworks/providers/show",
+            "file": "app/views/frameworks/providers/show.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "frameworks/providers/show",
+          "line": 49,
+          "file": "app/views/frameworks/providers/show.html.erb",
+          "rendered": {
+            "name": "frameworks/providers/show/_history",
+            "file": "app/views/frameworks/providers/show/_history.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/providers/show/_history"
+      },
+      "user_input": "params[:activities_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "980fba543310693da0639b846104e0423a33d4f9306cea00b5e33b5e877e0c7a",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/evaluations/show.html.erb",
+      "line": 59,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Evaluation.find(params[:id]).activity_log_items.order(\"created_at DESC\").paginate(:page => params[:activity_log_page])), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::EvaluationsController",
+          "method": "show",
+          "line": 17,
+          "file": "app/controllers/frameworks/evaluations_controller.rb",
+          "rendered": {
+            "name": "frameworks/evaluations/show",
+            "file": "app/views/frameworks/evaluations/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/evaluations/show"
+      },
+      "user_input": "params[:activity_log_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "99d9348274021d5d5093d76e49a06ac48b80c9ac2681cd5c9fcd89fa02d22ba7",
@@ -459,8 +581,52 @@
         79
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "faf7621a09154f735c29c0be769dc1a65f68ded0be082d38d833f8be5e74bd95",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/frameworks/frameworks/show/_framework_history.html.erb",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Framework.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Frameworks::FrameworksController",
+          "method": "show",
+          "line": 21,
+          "file": "app/controllers/frameworks/frameworks_controller.rb",
+          "rendered": {
+            "name": "frameworks/frameworks/show",
+            "file": "app/views/frameworks/frameworks/show.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "frameworks/frameworks/show",
+          "line": 50,
+          "file": "app/views/frameworks/frameworks/show.html.erb",
+          "rendered": {
+            "name": "frameworks/frameworks/show/_framework_history",
+            "file": "app/views/frameworks/frameworks/show/_framework_history.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "frameworks/frameworks/show/_framework_history"
+      },
+      "user_input": "params[:activities_page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
     }
   ],
-  "updated": "2023-11-08 10:24:37 +0000",
+  "updated": "2023-11-16 15:14:04 +0000",
   "brakeman_version": "6.0.1"
 }

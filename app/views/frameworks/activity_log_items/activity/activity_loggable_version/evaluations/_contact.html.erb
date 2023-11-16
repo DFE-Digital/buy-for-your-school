@@ -1,3 +1,0 @@
-<% content_for :"#{activity.id}_subject" do %>
-  Contact assigned: <%= link_to activity.item.contact_name, frameworks_provider_contact_path(activity.item.contact, back_to: current_url_b64), class: "govuk-link", "data-turbo" => false %>
-<% end %>

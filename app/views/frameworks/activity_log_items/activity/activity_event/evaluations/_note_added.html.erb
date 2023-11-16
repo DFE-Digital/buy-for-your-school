@@ -1,7 +1,0 @@
-<% content_for :"#{activity.id}_subject" do %>
-  Note Added
-<% end %>
-
-<% content_for :"#{activity.id}_description" do %>
-  <%= simple_format(activity.loaded_data.body) %>
-<% end %>

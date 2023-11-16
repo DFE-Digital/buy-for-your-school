@@ -6,7 +6,6 @@ class Frameworks::Evaluation < ApplicationRecord
   include Sortable
   include StatusChangeable
   include Presentable
-  include ActivityLogPresentable
   include Noteable
   include QuickEditable
   include Sourceable

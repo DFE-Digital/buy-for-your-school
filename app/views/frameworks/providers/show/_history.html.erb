@@ -1,2 +1,4 @@
-<%= render "frameworks/activity_log_items/history", activity_log_items: @activity_log_items %>
-<%= render "components/pagination", records: @activity_log_items, page_param_name: 'activities_page', pagination_params: { anchor: "provider-activity" } %>
+<%= render ActivityLog::HistoryComponent.new(activity_log_items: @activity_log_items) %>
+<div class="govuk-!-margin-top-2">
+  <%= render "components/pagination", records: @activity_log_items, page_param_name: 'activities_page', pagination_params: { anchor: "provider-activity" } %>
+</div>

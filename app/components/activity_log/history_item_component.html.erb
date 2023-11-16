@@ -1,0 +1,21 @@
+<div class="hods-timeline__item">
+  <h2 class="hods-timeline__title">
+    <%= title? ? title : @title %>
+  </h2>
+
+  <p class="hods-timeline__by">
+    by <%= @by %>
+  </p>
+
+  <p class="hods-timeline__date">
+    <time class="hods-date-time" datetime="<%= @date.utc.iso8601 %>">
+      <%= @date.strftime("%d %B %Y at %H:%M:%S") %>
+    </time>
+  </p>
+
+  <% if description? %>
+    <div class="hods-timeline__description">
+      <%= description %>
+    </div>
+  <% end %>
+</div>

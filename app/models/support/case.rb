@@ -152,5 +152,9 @@ module Support
     def request
       framework_request || case_request
     end
+
+    def reference
+      ref
+    end
   end
 end
