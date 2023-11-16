@@ -1,0 +1,7 @@
+<h2 class="govuk-heading-m"><%= @title %></h2>
+
+<div class="hods-timeline">
+  <% @history_items.each do |history_item| %>
+    <%= render history_item %>
+  <% end %>
+</div>

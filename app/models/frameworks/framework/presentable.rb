@@ -38,7 +38,7 @@ module Frameworks::Framework::Presentable
   end
 
   def display_status
-    ApplicationController.render(partial: "frameworks/frameworks/framework_status", locals: { status: })
+    ApplicationController.render(partial: "frameworks/frameworks/status", locals: { status: })
   end
 
   def display_dfe_start_date

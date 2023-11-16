@@ -1,0 +1,5 @@
+<%= render ActivityLog::HistoryItemComponent.new(by:, date:) do |component| %>
+  <% component.with_title do %>
+    Status changed from <%= status_badge(from_status) %> to <%= status_badge(to_status) %>
+  <% end %>
+<% end %>

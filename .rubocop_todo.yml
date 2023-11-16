@@ -141,3 +141,6 @@ Style/DateTime:
 Style/SoleNestedConditional:
   Exclude:
     - 'app/models/framework_request_flow.rb'
+
+Lint/MissingSuper:
+  Enabled: false

@@ -3,8 +3,27 @@ class Frameworks::ActivityLoggableVersion < PaperTrail::Version
 
   after_create_commit :save_default_attributes_on_item_created
 
+  before_create do
+    self.whodunnit = Current.actor.try(:email)
+  end
+
   def field_changes
     object_changes.except("id", "created_at", "updated_at")
+  end
+
+  def exclusive_field_change
+    return nil if field_changes.keys.count > 1
+
+    field_changes.keys.first
+  end
+
+  def activity_log_event_description
+    if exclusive_field_change.present?
+      description_from_model = item.try(:custom_activity_log_event_description_for, self)
+      description_from_model || "#{exclusive_field_change.split('_id').first}_updated"
+    else
+      "record_#{event}d"
+    end
   end
 
   def changed_fields_only?(*fields)

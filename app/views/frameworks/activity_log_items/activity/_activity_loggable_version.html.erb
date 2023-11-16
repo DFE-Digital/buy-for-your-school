@@ -1,5 +1,0 @@
-<% resolved_template = (activity.specific_change_template.present? \
-    ? "frameworks/activity_log_items/activity/activity_loggable_version/#{activity.specific_change_template}"
-    : "frameworks/activity_log_items/activity/activity_loggable_version/presentable_changes") %>
-
-<%= render resolved_template, activity_log_item:, activity:, subject: %>

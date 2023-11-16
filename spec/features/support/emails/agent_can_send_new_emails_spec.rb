@@ -30,12 +30,14 @@ describe "Agent can send new emails", js: true do
         to_add_button.click
 
         click_on "Show BCC"
+        click_on "Show CC"
+        sleep 0.2
+
         bcc_input = find("input[name$='[bcc]']")
         bcc_input.fill_in with: "bcc@email.com"
         bcc_add_button = find("button[data-input-field$='[bcc]']")
         bcc_add_button.click
 
-        click_on "Show CC"
         cc_input = find("input[name$='[cc]']")
         cc_input.fill_in with: "cc@email.com"
         cc_add_button = find("button[data-input-field$='[cc]']")

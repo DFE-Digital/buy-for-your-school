@@ -5,10 +5,6 @@ module Frameworks::ActivityLoggableVersion::Presentable
     Frameworks::ActivityLoggableVersion::PresentableChanges.new(self)
   end
 
-  def specific_change_template
-    item.specific_change_template_for(self)
-  end
-
   def display_field_version(field:, value:)
     display_value =
       if field.ends_with?("_id")
