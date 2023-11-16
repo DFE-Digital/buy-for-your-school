@@ -1,0 +1,7 @@
+<%= render ActivityLog::HistoryItemComponent.new(title:, by:, date:) do |component| %>
+  <% component.with_description do %>
+    <% if source %>
+      Transferred from <%= link_to "Case #{source.ref}", support_case_path(source), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %>
+    <% end %>
+  <% end %>
+<% end %>

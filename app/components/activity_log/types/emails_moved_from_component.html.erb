@@ -1,0 +1,5 @@
+<%= render ActivityLog::HistoryItemComponent.new(by:, date:) do |component| %>
+  <% component.with_title do %>
+    Emails moved from <%= link_to "Case #{from_case_reference}", support_case_path(from_case), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %>
+  <% end %>
+<% end %>

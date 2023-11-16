@@ -6,7 +6,7 @@ Capybara.register_driver :headless_chrome do |app|
   chrome_options.add_argument("headless")
   chrome_options.add_argument("disable-gpu")
   chrome_options.add_argument("window-size=1920,1080")
-  chrome_options.add_option("goog:loggingPrefs", browser: "ALL")
+  # chrome_options.add_option("goog:loggingPrefs", browser: "ALL")
 
   if ENV["SELENIUM_HUB_URL"]
     # use remote chrome (docker default)
