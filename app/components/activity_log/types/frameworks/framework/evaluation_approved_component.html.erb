@@ -1,0 +1,5 @@
+<%= render ActivityLog::HistoryItemComponent.new(by:, date:) do |component| %>
+  <% component.with_title do %>
+    Evaluation approved: <%= link_to evaluation_reference, evaluation, class: "govuk-link", "data-turbo" => false %>
+  <% end %>
+<% end %>

@@ -50,7 +50,7 @@
 
       <h2 class="govuk-heading-m">Actions</h2>
       <ul class="govuk-list">
-        <li><%= link_to "Quick edit", edit_frameworks_evaluation_quick_edit_path(@evaluation, back_to: current_url_b64, redirect_back: current_url_b64), class: "govuk-link govuk-link--no-visited-state", "target" => "_top" %></li>
+        <li><%= govuk_link_to "Quick edit", edit_frameworks_evaluation_quick_edit_path(@evaluation, back_to: current_url_b64, redirect_back: current_url_b64), "target" => "_top" %></li>
       </ul>
     </div>
 
