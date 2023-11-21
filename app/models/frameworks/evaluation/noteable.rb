@@ -2,7 +2,9 @@ module Frameworks::Evaluation::Noteable
   extend ActiveSupport::Concern
 
   def add_note(note)
-    log_activity_event("note_added", body: note)
+    if note.present? && note != latest_note.try(:body)
+      log_activity_event("note_added", body: note)
+    end
   end
 
   def latest_note

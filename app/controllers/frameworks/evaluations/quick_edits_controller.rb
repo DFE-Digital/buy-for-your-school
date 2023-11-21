@@ -42,6 +42,6 @@ private
   end
 
   def form_params
-    params.require(:quick_edit).permit(:note, :next_key_date, :next_key_date_description)
+    params.require(:quick_edit).permit(:note, :next_key_date, :next_key_date_description, :status)
   end
 end

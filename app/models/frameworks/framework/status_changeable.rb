@@ -5,15 +5,19 @@ module Frameworks::Framework::StatusChangeable
     include AASM
 
     enum status: {
-      pending_evaluation: 0,
-      evaluating: 1,
-      not_approved: 2,
+      not_approved: 0,
+      pending_evaluation: 1,
+      evaluating: 2,
       dfe_approved: 3,
       cab_approved: 4,
     }
 
     aasm column: :status, enum: true do
       Frameworks::Framework.statuses.each { |status, _| state status.to_sym }
+
+      event :draft_evaluation do
+        transitions from: %i[not_approved], to: :pending_evaluation, after: :after_drafting_evaluation
+      end
 
       event :start_evaluation do
         transitions from: %i[pending_evaluation not_approved], to: :evaluating, after: :after_starting_evaluation
@@ -34,6 +38,10 @@ module Frameworks::Framework::StatusChangeable
   end
 
 private
+
+  def after_drafting_evaluation(evaluation)
+    log_activity_event("evaluation_drafted", evaluation_id: evaluation.id)
+  end
 
   def after_starting_evaluation(evaluation)
     log_activity_event("evaluation_started", evaluation_id: evaluation.id)

@@ -8,8 +8,9 @@ class Frameworks::Evaluation::QuickEditor
   attribute :note
   attribute :next_key_date
   attribute :next_key_date_description
+  attribute :status
 
   def save!
-    frameworks_evaluation.quick_edit(note:, next_key_date:, next_key_date_description:)
+    frameworks_evaluation.quick_edit(note:, next_key_date:, next_key_date_description:, status:)
   end
 end

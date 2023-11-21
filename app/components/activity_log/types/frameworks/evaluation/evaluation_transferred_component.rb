@@ -1,4 +1,4 @@
-class ActivityLog::Types::EvaluationTransferredComponent < ViewComponent::Base
+class ActivityLog::Types::Frameworks::Evaluation::EvaluationTransferredComponent < ViewComponent::Base
   include ActivityLog::Types::BasicActivityDetails
 
   def initialize(activity_log_item:)
