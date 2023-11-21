@@ -17,4 +17,9 @@ class Frameworks::Evaluation < ApplicationRecord
   belongs_to :contact, class_name: "Frameworks::ProviderContact", optional: true
 
   alias_attribute :ref, :reference
+
+  before_save do
+    # prevent activity log items for "none"-changes
+    self.next_key_date_description = nil if changes.key?(:next_key_date_description) && next_key_date_description == ""
+  end
 end

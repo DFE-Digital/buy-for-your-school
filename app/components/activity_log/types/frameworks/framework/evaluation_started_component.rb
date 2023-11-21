@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActivityLog::Types::EvaluationStartedComponent < ViewComponent::Base
+class ActivityLog::Types::Frameworks::Framework::EvaluationStartedComponent < ViewComponent::Base
   include ActivityLog::Types::BasicActivityDetails
 
   def initialize(activity_log_item:)

@@ -15,7 +15,7 @@
               <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header"><%= changes.field.humanize %></th>
                 <td class="govuk-table__cell">
-                  <% unless @activity_log_item.subject_type.demodulize == "create" %>
+                  <% unless @activity_log_item.activity.event == "create" %>
                     <%= true_false_or_empty[changes.from] %>
                     <span class="activity-log-change-arrow">➔</span>
                   <% end %>

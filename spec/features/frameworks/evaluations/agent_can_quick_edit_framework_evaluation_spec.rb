@@ -17,13 +17,16 @@ describe "Agent can quick edit a framework evaluation", js: true do
       fill_in "Month", with: "08"
       fill_in "Year", with: "2023"
       fill_in "Description of next key date", with: "Key event"
+      choose "In progress"
       click_button "Save"
     end
 
     it "persists the changes" do
+      framework_evaluation.reload
       expect(framework_evaluation.latest_note.body).to eq("New note")
-      expect(framework_evaluation.reload.next_key_date).to eq(Date.parse("2023-08-10"))
-      expect(framework_evaluation.reload.next_key_date_description).to eq("Key event")
+      expect(framework_evaluation.next_key_date).to eq(Date.parse("2023-08-10"))
+      expect(framework_evaluation.next_key_date_description).to eq("Key event")
+      expect(framework_evaluation.status).to eq("in_progress")
     end
   end
 end
