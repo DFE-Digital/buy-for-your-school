@@ -6,6 +6,7 @@ module Support
 
     has_many :cases, class_name: "Support::Case", dependent: :nullify
     belongs_to :framework, class_name: "Support::Framework", optional: true
+    belongs_to :register_framework, class_name: "Frameworks::Framework", foreign_key: "frameworks_framework_id", optional: true
 
     # Stage
     #

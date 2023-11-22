@@ -36,11 +36,11 @@
                 label_class: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-bottom-2",
                 element_id: "framework-autocomplete",
                 element_name: "case_procurement_details_form[framework_name]",
-                template_suggestion: "<strong>{{name}}</strong>, {{supplier}}<br />{{category}}<br />Expires: {{expires_at}}",
-                value_field: :name,
+                template_suggestion: "{{display_status}} <strong>{{reference_and_name}}</strong>, {{provider_name}}<br />{{category_names}}<br />DfE Start: {{display_dfe_start_date}} - DfE End: {{display_dfe_end_date}}",
+                value_field: :reference_and_name,
                 default_value: form.object.framework_name,
                 hidden_fields: {
-                  'case_procurement_details_form[framework_id]' => [:id, form.object.framework_id]
+                  'case_procurement_details_form[frameworks_framework_id]' => [:id, form.object.frameworks_framework_id]
                 },
                 query_url: support_frameworks_path(format: :json, q: "{{QUERY}}") %>
 

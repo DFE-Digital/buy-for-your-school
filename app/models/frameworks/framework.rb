@@ -8,6 +8,7 @@ class Frameworks::Framework < ApplicationRecord
   include ActivityEventLoggable
   include Filterable
   include Sortable
+  include Searchable
   include Evaluatable
 
   belongs_to :provider
