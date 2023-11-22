@@ -35,6 +35,11 @@ module Frameworks::Evaluation::StatusChangeable
         transitions from: :in_progress, to: :cancelled, after: :after_cancelling
       end
     end
+
+    scope :active, -> { where(status: %i[draft in_progress]) }
+    scope :other_active_evaluations_for, ->(evaluation) { active.where.not(id: evaluation.id).where(framework: evaluation.framework) }
+
+    validate :framework_has_no_other_active_evaliations
   end
 
   def permissible_status_change_options(prepend_current_status: false)
@@ -52,6 +57,10 @@ module Frameworks::Evaluation::StatusChangeable
   end
 
 private
+
+  def framework_has_no_other_active_evaliations
+    errors.add(:framework, "Framework is already in active evaluation") if self.class.other_active_evaluations_for(self).any?
+  end
 
   def after_drafting_of_evaluation
     framework.draft_evaluation!(self)

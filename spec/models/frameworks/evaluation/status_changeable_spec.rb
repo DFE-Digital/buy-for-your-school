@@ -127,4 +127,31 @@ describe Frameworks::Evaluation::StatusChangeable do
       end
     end
   end
+
+  describe "validations" do
+    context "when framework is already in active evaluation" do
+      let(:framework) { create(:frameworks_framework) }
+
+      it "is invalid" do
+        # existing evaluation
+        create(:frameworks_evaluation, framework:, status: "in_progress")
+
+        # Check 1 : attempting to create a new one
+        new_evaluation = build(:frameworks_evaluation, framework:)
+
+        # does not allow a framework in active evaluation
+        expect(new_evaluation).not_to be_valid
+
+        # allows a non active framework
+        new_evaluation.framework = create(:frameworks_framework)
+        expect(new_evaluation).to be_valid
+
+        # Check 2 : saving an existing evaluation
+        another_existing_evaluation = create(:frameworks_evaluation, framework: create(:frameworks_framework), status: "in_progress")
+
+        # you can save the evaluation (the framework is in an active evaluation - BUT it is this one so its ok)
+        expect(another_existing_evaluation).to be_valid
+      end
+    end
+  end
 end
