@@ -24,5 +24,29 @@
         <% end %>
       <% end %>
     <% end %>
+
+    <%= expander title: "Assignee", subtitle: "#{@filtering.number_of_selected(:assignees)} selected", expanded: @filtering.number_of_selected(:assignees).positive? do %>
+      <%= form.govuk_check_boxes_fieldset :assignee, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% @filtering.available_assignee_options.each do |option| %>
+          <%= form.govuk_check_box :assignee, option.last, exclusive: false, label: { text: option.first } %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= expander title: "Provider", subtitle: "#{@filtering.number_of_selected(:providers)} selected", expanded: @filtering.number_of_selected(:providers).positive? do %>
+      <%= form.govuk_check_boxes_fieldset :provider, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% @filtering.available_provider_options.each do |option| %>
+          <%= form.govuk_check_box :provider, option.last, exclusive: false, label: { text: option.first } %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= expander title: "Category", subtitle: "#{@filtering.number_of_selected(:categories)} selected", expanded: @filtering.number_of_selected(:categories).positive? do %>
+      <%= form.govuk_check_boxes_fieldset :category, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% @filtering.available_category_options.each do |option| %>
+          <%= form.govuk_check_box :category, option.last, exclusive: false, label: { text: option.first } %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
