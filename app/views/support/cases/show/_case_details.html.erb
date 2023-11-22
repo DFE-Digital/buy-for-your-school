@@ -156,12 +156,24 @@
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>
+      <% if current_case.procurement&.framework %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.procurement_details.legacy_framework_name") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= current_case.procurement.framework.name %>, <%= current_case.procurement.framework.category %>
+          </dd>
+        </div>
+      <% end %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.framework_name") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= current_case.procurement&.framework_name %>
+          <% if current_case.procurement&.register_framework %>
+            <%= govuk_link_to current_case.procurement&.register_framework&.reference_and_name, frameworks_framework_path(current_case.procurement&.register_framework, back_to: current_url_b64(:case_details)), no_visited_state: true %>
+          <% end %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

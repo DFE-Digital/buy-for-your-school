@@ -991,6 +991,7 @@ en:
           end_date: End date
           framework_name: Framework name
           legacy_procurement_stage: Legacy procurement stage
+          legacy_framework_name: Legacy Framework
           procurement_end_date: Procurement end date
           procurement_start_date: Procurement start date
           reason_for_route_to_market: Reason for route to market
@@ -1042,7 +1043,7 @@ en:
           unspecified: "-"
         project:
           header: "Project"
-          unspecified: "-"  
+          unspecified: "-"
         discovery_method:
           legend: Case origin
           field: Origin
@@ -1516,7 +1517,7 @@ en:
           add_new_project: Add new project
           blank: Please select
           label: Case project
-          new_project: New project  
+          new_project: New project
       flash:
         updated: Case summary successfully updated
       invalid_date: Provide a valid date

@@ -13,7 +13,7 @@ module Support
     option :reason_for_route_to_market, optional: true
     # @!attribute [r] framework_id
     #   @return [String, nil]
-    option :framework_id, optional: true
+    option :frameworks_framework_id, optional: true
     # @!attribute [r] framework_name
     #   @return [String, nil]
     option :framework_name, optional: true
