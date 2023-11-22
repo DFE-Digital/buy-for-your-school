@@ -55,7 +55,7 @@ private
   def filter_form_params
     params.fetch(:evaluations_filter, {}).permit(
       :sort_by, :sort_order,
-      status: []
+      status: [], provider: [], assignee: [], category: []
     )
   end
 
