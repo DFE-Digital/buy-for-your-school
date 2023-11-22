@@ -49,8 +49,6 @@ private
       :dfe_approved
     elsif recommended.n?
       :not_approved
-    elsif recommended.x?
-      :evaluating
     end
   end
 
