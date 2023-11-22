@@ -45,7 +45,7 @@ module Support
     end
 
     def case_procurement_details_form_params
-      form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :framework_id)
+      form_params = params.require(:case_procurement_details_form).permit(:required_agreement_type, :route_to_market, :reason_for_route_to_market, :frameworks_framework_id)
       form_params[:started_at] = date_param(:case_procurement_details_form, :started_at)
       form_params[:ended_at] = date_param(:case_procurement_details_form, :ended_at)
       form_params
@@ -53,7 +53,7 @@ module Support
 
     # @return [Hash]
     def persisted_data
-      current_case.procurement.to_h.merge(framework_name: current_case.procurement.framework&.name)
+      current_case.procurement.to_h.merge(framework_name: current_case.procurement.register_framework&.reference_and_name)
     end
   end
 end

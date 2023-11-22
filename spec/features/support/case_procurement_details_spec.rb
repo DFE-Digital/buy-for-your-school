@@ -31,7 +31,7 @@ RSpec.feature "Case procurement details" do
     end
 
     context "and they are populated" do
-      let(:support_procurement) { create(:support_procurement, stage: :market_analysis) }
+      let(:support_procurement) { create(:support_procurement, stage: :market_analysis, register_framework: create(:frameworks_framework, reference: "F123", short_name: "Cool Framework")) }
 
       it "has a change link" do
         within("div#case-details") do
@@ -54,8 +54,12 @@ RSpec.feature "Case procurement details" do
             expect(page).to have_content("School Preference")
           end
 
-          within ".govuk-summary-list__row", text: "Framework name" do
+          within ".govuk-summary-list__row", text: "Legacy Framework" do
             expect(page).to have_content("Test framework")
+          end
+
+          within ".govuk-summary-list__row", text: "Framework name " do
+            expect(page).to have_content("F123 - Cool Framework")
           end
 
           within ".govuk-summary-list__row", text: "Procurement start date" do

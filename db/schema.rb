@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_10_154506) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_22_134925) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -833,6 +833,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_10_154506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "framework_id"
+    t.uuid "frameworks_framework_id"
     t.index ["framework_id"], name: "index_support_procurements_on_framework_id"
     t.index ["stage"], name: "index_support_procurements_on_stage"
   end
