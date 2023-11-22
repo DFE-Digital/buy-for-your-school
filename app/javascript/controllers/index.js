@@ -7,6 +7,9 @@ import { application } from "./application"
 import AutoFilterController from "./auto_filter_controller"
 application.register("auto-filter", AutoFilterController)
 
+import CaseFilesController from "./case_files_controller"
+application.register("case-files", CaseFilesController)
+
 import CaseQuickEditController from "./case_quick_edit_controller"
 application.register("case-quick-edit", CaseQuickEditController)
 

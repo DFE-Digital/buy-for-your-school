@@ -912,6 +912,16 @@ en:
             description: Description
             energy_bill: User submitted energy bill
         case: Case
+        case_files:
+          index:
+            upload: Upload files
+          new:
+            heading: Upload files
+            select: Select files...
+            upload: Upload files
+            selected: Files selected
+          errors:
+            unsafe: One or more selected files contained a virus and have been rejected
         case_history:
           table:
             created: Created
@@ -1593,6 +1603,7 @@ en:
       "no": "No"
       view: View
       confirm: Confirm
+      remove: Remove
     helpers:
       tag_bar:
         remove_tag: "Remove tag %{tag}"

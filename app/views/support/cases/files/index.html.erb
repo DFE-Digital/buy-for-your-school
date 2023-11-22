@@ -1,6 +1,9 @@
 <%= turbo_frame_tag "case-files-frame" do %>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-files">
-    <h2 class="govuk-heading-l">Case files</h2>
+    <div class="case-files__head">
+      <h2 class="govuk-heading-l">Case files</h2>
+      <%= link_to I18n.t("support.case.label.case_files.index.upload"), new_support_case_file_path, class: "govuk-button", role: "button"  %>
+    </div>
 
     <% if @case_files.any? %>
       <%= render "support/cases/files/table", attachments: @case_files, current_case: @current_case %>

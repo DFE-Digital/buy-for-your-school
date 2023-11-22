@@ -55,6 +55,10 @@ en:
           attributes:
             destination_ref:
               blank: Select the case or framework evaluation to move the emails to
+        support/case/file_uploader:
+          attributes:
+            files:
+              blank: Select files to upload
 
   forms:
     rules:
