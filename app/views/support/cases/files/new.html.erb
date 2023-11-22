@@ -1,0 +1,45 @@
+<%= turbo_frame_tag "case-files-frame" do %>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="case-files">
+    <%= link_to "Back to case files list", support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-back-link pull-up" %>
+
+    <%= form_with model: @file_uploader, scope: :file_uploader, url: support_case_files_path,
+          html: { "data-controller" => "case-files" } do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <h2 class="govuk-heading-l"><%= I18n.t("support.case.label.case_files.new.heading") %></h2>
+
+      <span class="govuk-button govuk-button--secondary" role="button"
+        data-case-files-target="btnDisplayFileDialog">
+        <%= I18n.t("support.case.label.case_files.new.select") %>
+      </span>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-!-display-none govuk-!-margin-bottom-7" data-case-files-target="fileList">
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.case.label.case_files.new.selected") %></h3>
+            <div data-case-files-target="filePreview">
+              <div data-case-files-target="previewTemplate">
+                <div class="case-files__file">
+                  <span class="case-files__file-name" data-dz-name></span>
+                  <div class="case-files__file-actions">
+                    <span class="case-files__file-remove">
+                      <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.generic.remove") %></a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-button-group">
+        <%= form.submit I18n.t("support.case.label.case_files.new.upload"), class: "govuk-button", role: "button", "data-action" => "case-files#submit", data: { disable_with: "Uploading..." } %>
+        <%= link_to I18n.t("support.generic.cancel"), support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+
+      <%= form.govuk_file_field :files, multiple: true, class: "govuk-!-display-none", "data-case-files-target" => "filesField", form_group: { class: "govuk-!-display-none" } %>
+
+    <% end %>
+  </div>
+<% end %>

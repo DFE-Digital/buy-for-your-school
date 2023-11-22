@@ -7,6 +7,20 @@ module Support
         .paginate(page: params[:page], per_page: 20)
     end
 
+    def new
+      @file_uploader = current_case.file_uploader
+    end
+
+    def create
+      @file_uploader = current_case.file_uploader(file_uploader_params)
+      if @file_uploader.valid?
+        @file_uploader.save!
+        redirect_to support_case_files_path
+      else
+        render :new
+      end
+    end
+
     def edit
       @case_file = Support::CaseAttachment.find(params[:id])
       @edit_file_form = Support::EditCaseAttachableForm.from(@case_file)
@@ -39,6 +53,10 @@ module Support
 
     def edit_file_form_params
       params.require(:edit_file).permit(:custom_name, :description)
+    end
+
+    def file_uploader_params
+      params.fetch(:file_uploader, {}).permit(files: [])
     end
 
     def redirect_to_files_tab

@@ -20,6 +20,7 @@ module Support
     include Summarisable
     include SchoolPickable
     include Transferable
+    include FileUploadable
     include Surveyable
     include Notifiable
 

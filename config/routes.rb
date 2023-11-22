@@ -219,7 +219,7 @@ Rails.application.routes.draw do
           resources :searches, only: %i[new index], as: :case_search, path: "find-a-case"
         end
         resources :attachments, only: %i[index edit update destroy]
-        resources :files, only: %i[index edit update destroy]
+        resources :files
         resource :organisation, only: %i[edit update]
         resources :confirm_organisation, only: %i[show update]
         resource :contact_details, only: %i[edit update]
