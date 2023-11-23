@@ -88,6 +88,7 @@ RSpec.configure do |config|
     Flipper.enable(:email_templates)
     Flipper.enable(:cms_triage_view)
     Flipper.enable(:cms_panel_view)
+    Flipper.enable(:framework_select_from_register)
   end
 
   config.before(:each, type: :feature) do

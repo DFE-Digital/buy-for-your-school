@@ -14,6 +14,7 @@ module Support
     # @!attribute [r] framework_id
     #   @return [String, nil]
     option :frameworks_framework_id, optional: true
+    option :framework_id, optional: true
     # @!attribute [r] framework_name
     #   @return [String, nil]
     option :framework_name, optional: true

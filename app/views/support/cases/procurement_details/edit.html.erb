@@ -30,7 +30,9 @@
         </div>
       <% end %>
 
-      <%= render "components/autocomplete",
+      <% if Flipper.enabled?(:framework_select_from_register) %>
+
+        <%= render "components/autocomplete",
                 container_id: "case-procurement-details-form-framework-field",
                 label_text: I18n.t("support.procurement_details.edit.framework_name.header"),
                 label_class: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-bottom-2",
@@ -43,6 +45,24 @@
                   'case_procurement_details_form[frameworks_framework_id]' => [:id, form.object.frameworks_framework_id]
                 },
                 query_url: support_frameworks_path(format: :json, q: "{{QUERY}}") %>
+
+      <% else %>
+
+        <%= render "components/autocomplete",
+                container_id: "case-procurement-details-form-framework-field",
+                label_text: I18n.t("support.procurement_details.edit.framework_name.header"),
+                label_class: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-bottom-2",
+                element_id: "framework-autocomplete",
+                element_name: "case_procurement_details_form[framework_name]",
+                template_suggestion: "<strong>{{name}}</strong>, {{supplier}}<br />{{category}}<br />Expires: {{expires_at}}",
+                value_field: :name,
+                default_value: form.object.framework_name,
+                hidden_fields: {
+                  'case_procurement_details_form[framework_id]' => [:id, form.object.framework_id]
+                },
+                query_url: support_frameworks_path(format: :json, q: "{{QUERY}}") %>
+
+      <% end %>
 
       <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.procurement_details.edit.started_at.header") } %>
 
