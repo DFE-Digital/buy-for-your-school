@@ -60,7 +60,7 @@ private
   def framework_params
     params.require(:frameworks_framework).permit(
       :name, :short_name, :url, :reference,
-      :dfe_start_date, :dfe_end_date, :provider_start_date, :provider_end_date,
+      :dfe_start_date, :dfe_review_date, :provider_start_date, :provider_end_date,
       :dps, :lot,
       :provider_id, :provider_contact_id,
       :status

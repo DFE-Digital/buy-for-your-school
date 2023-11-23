@@ -4,7 +4,7 @@ module Frameworks::Framework::Sortable
   included do
     scope :sort_by_updated, ->(direction = "descending") { order("frameworks_frameworks.updated_at #{safe_direction(direction)}") }
     scope :sort_by_dfe_start_date, ->(direction = "descending") { order("dfe_start_date #{safe_direction(direction)}") }
-    scope :sort_by_dfe_end_date, ->(direction = "descending") { order("dfe_end_date #{safe_direction(direction)}") }
+    scope :sort_by_dfe_review_date, ->(direction = "descending") { order("dfe_review_date #{safe_direction(direction)}") }
     scope :sort_by_provider_start_date, ->(direction = "descending") { order("provider_start_date #{safe_direction(direction)}") }
     scope :sort_by_provider_end_date, ->(direction = "descending") { order("provider_end_date #{safe_direction(direction)}") }
     scope :sort_by_reference, ->(direction = "descending") { order("frameworks_frameworks.reference #{safe_direction(direction)}") }
@@ -23,7 +23,7 @@ module Frameworks::Framework::Sortable
         ["Updated", "updated"],
         ["Reference", "reference"],
         ["DfE start date", "dfe_start_date"],
-        ["DfE end date", "dfe_end_date"],
+        ["DfE review date", "dfe_review_date"],
         ["Provider start date", "provider_start_date"],
         ["Provider end date", "provider_end_date"],
       ]

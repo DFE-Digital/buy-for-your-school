@@ -45,8 +45,8 @@ module Frameworks::Framework::Presentable
     dfe_start_date.strftime("%d/%m/%Y") if dfe_start_date.present?
   end
 
-  def display_dfe_end_date
-    dfe_end_date.strftime("%d/%m/%Y") if dfe_end_date.present?
+  def display_dfe_review_date
+    dfe_review_date.strftime("%d/%m/%Y") if dfe_review_date.present?
   end
 
   def display_provider_start_date
