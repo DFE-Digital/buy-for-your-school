@@ -4,6 +4,7 @@ module Frameworks::Framework::Sourceable
   included do
     enum source: {
       spreadsheet_import: 0,
+      register: 1,
     }
   end
 end

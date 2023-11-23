@@ -3,16 +3,13 @@ module Frameworks::Framework::SpreadsheetImportable
 
   class_methods do
     def import_from_spreadsheet(file)
-      frameworks_list = SimpleXlsxReader.open(file)
-        .sheets
+      frameworks_list = SimpleXlsxReader.open(file).sheets
         .find { |potential_sheet| potential_sheet.name == "Recommended Framework List" }
 
-      populated_rows = frameworks_list.rows
-        .each(headers: true)
-        .reject { |row| row[nil].nil? }
-
-      populated_rows
-        .each { |row| import_from_spreadsheet_row(RowMapping.new(row)) }
+      frameworks_list.rows.each(headers: true) do |row|
+        row_mapping = RowMapping.new(row)
+        import_from_spreadsheet_row(row_mapping) if row_mapping.valid?
+      end
     end
 
     def import_from_spreadsheet_row(row_mapping)
