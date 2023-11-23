@@ -23,7 +23,7 @@ describe "Agent can create frameworks", js: true do
         fill_in "Month", with: "02"
         fill_in "Year", with: "1993"
       end
-      within "fieldset", text: "DfE end date" do
+      within "fieldset", text: "DfE review date" do
         fill_in "Day", with: "02"
         fill_in "Month", with: "03"
         fill_in "Year", with: "1994"
@@ -58,7 +58,7 @@ describe "Agent can create frameworks", js: true do
     expect(page).to have_summary("Provider start date", "03/04/1995")
     expect(page).to have_summary("Provider End Date", "04/05/1996")
     expect(page).to have_summary("DfE Start Date", "01/02/1993")
-    expect(page).to have_summary("DfE End Date", "02/03/1994")
+    expect(page).to have_summary("DfE Review Date", "02/03/1994")
     click_on "Provider"
     expect(page).to have_summary("Provider", "ABC")
     expect(page).to have_summary("Framework Owner", "Anne Abelle")

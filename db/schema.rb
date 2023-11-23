@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_134925) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_23_152824) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -315,7 +315,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_134925) do
     t.date "provider_start_date"
     t.date "provider_end_date"
     t.date "dfe_start_date"
-    t.date "dfe_end_date"
+    t.date "dfe_review_date"
     t.string "sct_framework_owner"
     t.string "sct_framework_provider_lead"
     t.uuid "proc_ops_lead_id"

@@ -23,7 +23,7 @@ class Frameworks::Framework::SpreadsheetImportable::RowMapping
       url:,
       provider_reference:,
       dfe_start_date:,
-      dfe_end_date:,
+      dfe_review_date:,
       sct_framework_provider_lead:,
       proc_ops_lead:,
       e_and_o_lead:,
@@ -61,7 +61,7 @@ private
 
   def dfe_start_date = row["Date when added on FaF"]
 
-  def dfe_end_date = row["Contracted End Date on FaF as at 20.1.2023"]
+  def dfe_review_date = row["Contracted End Date on FaF as at 20.1.2023"]
 
   def sct_framework_provider_lead = row["Current PSBO Lead (Interim - To Be Confirmed)"]
 
