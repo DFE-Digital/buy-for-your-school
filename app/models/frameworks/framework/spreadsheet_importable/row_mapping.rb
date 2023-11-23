@@ -5,6 +5,11 @@ class Frameworks::Framework::SpreadsheetImportable::RowMapping
     @row = row
   end
 
+  def valid?
+    # If number column has a value, to prevent empty rows being imported
+    row[nil].present?
+  end
+
   def provider = Frameworks::Provider.find_or_create_by!(short_name: row["FWK Provider"])
 
   def provider_reference = row["Framework Reference "]

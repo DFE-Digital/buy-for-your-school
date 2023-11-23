@@ -22,6 +22,7 @@ class Frameworks::FrameworksController < Frameworks::ApplicationController
 
   def create
     @framework = Frameworks::Framework.new(framework_params)
+    @framework.source = :register
 
     if @framework.save(context: :creation_form)
       redirect_to frameworks_framework_path(@framework)
