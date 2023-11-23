@@ -156,26 +156,37 @@
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>
-      <% if current_case.procurement&.framework %>
+      <% if Flipper.enabled?(:framework_select_from_register) %>
+        <% if current_case.procurement&.framework %>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= I18n.t("support.case.label.procurement_details.legacy_framework_name") %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= current_case.procurement.framework.name %>, <%= current_case.procurement.framework.category %>
+            </dd>
+          </div>
+        <% end %>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case.label.procurement_details.legacy_framework_name") %>
+            <%= I18n.t("support.case.label.procurement_details.framework_name") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= current_case.procurement.framework.name %>, <%= current_case.procurement.framework.category %>
+            <% if current_case.procurement&.register_framework %>
+              <%= govuk_link_to current_case.procurement&.register_framework&.reference_and_name, frameworks_framework_path(current_case.procurement&.register_framework, back_to: current_url_b64(:case_details)), no_visited_state: true %>
+            <% end %>
+          </dd>
+        </div>
+      <% else %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.procurement_details.framework_name") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= current_case.procurement&.framework_name %>
           </dd>
         </div>
       <% end %>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.procurement_details.framework_name") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <% if current_case.procurement&.register_framework %>
-            <%= govuk_link_to current_case.procurement&.register_framework&.reference_and_name, frameworks_framework_path(current_case.procurement&.register_framework, back_to: current_url_b64(:case_details)), no_visited_state: true %>
-          <% end %>
-        </dd>
-      </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.procurement_details.procurement_start_date") %>
