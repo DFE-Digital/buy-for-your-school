@@ -1,4 +1,4 @@
-<% true_false_or_empty = -> (value) { value.nil? ? "empty" : value } %>
+<% true_false_or_empty = -> (value) { value.nil? || value.blank? ? "empty" : value  } %>
 
 <%= render ActivityLog::HistoryItemComponent.new(title:, by:, date:) do |component| %>
   <% component.with_description do %>
