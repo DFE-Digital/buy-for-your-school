@@ -56,4 +56,12 @@ module Frameworks::Framework::Presentable
   def display_provider_end_date
     provider_end_date.strftime("%d/%m/%Y") if provider_end_date.present?
   end
+
+  def display_faf_added_date
+    faf_added_date.strftime("%d/%m/%Y") if faf_added_date.present?
+  end
+
+  def display_faf_end_date
+    faf_end_date.strftime("%d/%m/%Y") if faf_end_date.present?
+  end
 end

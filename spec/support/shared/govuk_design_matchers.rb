@@ -1,3 +1,4 @@
+# NOTE: have_summary looks up the row by value first, so make sure the values in your test are unique!
 RSpec::Matchers.define :have_summary do |label, text|
   match do |page|
     page.find(".govuk-summary-list__value", text:)&.sibling(".govuk-summary-list__key", text: label).present?

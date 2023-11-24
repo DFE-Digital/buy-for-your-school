@@ -1,58 +1,96 @@
+<%=
+govuk_summary_card(title: "Basic Details") do |card|
+  card.with_action { govuk_link_to("Edit", edit_frameworks_framework_path(@framework), "data-turbo-frame" => dom_id(@framework)) }
 
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Url</dt>
-        <dd class="govuk-summary-list__value"><%= link_to @framework.url, @framework.url, target: "_blank", class: "govuk-link" if @framework.url.present? %></dd>
-      </div>
+  card.with_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "URL" }
+      row.with_value { @framework.url }
+      row.with_action(text: "View", href: @framework.url, visually_hidden_text: 'url', html_attributes: { "target" => "_blank" })
+    end
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Categories</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.category_names %></dd>
-        <dd class="govuk-summary-list__actions"><%= link_to "Change", edit_frameworks_framework_categorisations_path(@framework, back_to: current_url_b64(:framework_details)), class: "govuk-link", "data-turbo" => false %></dd>
-      </div>
+    summary_list.with_row do |row|
+      row.with_key { "Categories" }
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Single / Multi-lot</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.lot.humanize %></dd>
-      </div>
+      if @framework.support_categories.any?
+        row.with_value { @framework.category_names }
+        row.with_action(text: "Change", href: edit_frameworks_framework_categorisations_path(@framework, back_to: current_url_b64(:framework_details)), visually_hidden_text: 'name', html_attributes: { "data-turbo" => false })
+      else
+        row.with_value { govuk_link_to "Add Categories", edit_frameworks_framework_categorisations_path(@framework, back_to: current_url_b64(:framework_details)), "data-turbo" => false }
+      end
+    end
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">DPS?</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.dps? ? "Yes" : "No" %></dd>
-      </div>
+    summary_list.with_row do |row|
+      row.with_key { "Single / Multi-lot" }
+      row.with_value { @framework.lot.humanize }
+    end
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">SCT Framework Owner</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.sct_framework_owner %></dd>
-      </div>
+    summary_list.with_row do |row|
+      row.with_key { "DPS?" }
+      row.with_value { @framework.dps? ? "Yes" : "No" }
+    end
+  end
+end
+%>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Procurement Operations Lead</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.proc_ops_lead_name %></dd>
-      </div>
+<%=
+govuk_summary_card(title: "Ownership") do |card|
+  card.with_action { govuk_link_to("Edit", edit_frameworks_framework_path(@framework), "data-turbo-frame" => dom_id(@framework)) }
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Engagement and Outreach Lead</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.e_and_o_lead_name %></dd>
-      </div>
+  card.with_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "SCT Framework Owner" }
+      row.with_value { @framework.sct_framework_owner }
+    end
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Provider start date</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.display_provider_start_date %></dd>
-      </div>
+    summary_list.with_row do |row|
+      row.with_key { "Procurement Operations Lead" }
+      row.with_value { @framework.proc_ops_lead_name }
+    end
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Provider End Date</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.display_provider_end_date %></dd>
-      </div>
+    summary_list.with_row do |row|
+      row.with_key { "Engagement and Outreach Lead" }
+      row.with_value { @framework.e_and_o_lead_name }
+    end
+  end
+end
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">DfE Start Date</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.display_dfe_start_date %></dd>
-      </div>
+%>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">DfE Review Date</dt>
-        <dd class="govuk-summary-list__value"><%= @framework.display_dfe_review_date %></dd>
-      </div>
-    </dl>
+<%=
+govuk_summary_card(title: "Important Dates") do |card|
+  card.with_action { govuk_link_to("Edit", edit_frameworks_framework_path(@framework), "data-turbo-frame" => dom_id(@framework)) }
+
+  card.with_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Provider start date" }
+      row.with_value { @framework.display_provider_start_date }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Provider end date" }
+      row.with_value { @framework.display_provider_end_date }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "DfE start date" }
+      row.with_value { @framework.display_dfe_start_date }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "DfE review date" }
+      row.with_value { @framework.display_dfe_review_date }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Date added to FaF" }
+      row.with_value { @framework.display_faf_added_date }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "FaF end date" }
+      row.with_value { @framework.display_faf_end_date }
+    end
+  end
+end
+%>

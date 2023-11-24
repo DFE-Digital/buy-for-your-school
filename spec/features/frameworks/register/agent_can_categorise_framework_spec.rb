@@ -10,7 +10,7 @@ describe "Agent can categorise framework", js: true do
   it "saves the categories" do
     visit frameworks_framework_path(framework)
     within ".govuk-summary-list__row", text: "Categories" do
-      click_on "Change"
+      click_on "Add Categories"
     end
     check "Laptops"
     check "Electricity"

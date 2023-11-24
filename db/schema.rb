@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_152824) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_24_092722) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -325,6 +325,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_152824) do
     t.boolean "dps", default: true
     t.integer "lot", default: 0
     t.string "provider_reference"
+    t.datetime "faf_added_date"
+    t.datetime "faf_end_date"
   end
 
   create_table "frameworks_provider_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

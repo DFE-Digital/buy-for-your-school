@@ -34,6 +34,14 @@
       <%= f.govuk_date_field :provider_end_date, legend: { size: "s", text: "Provider end date" } %>
     </div>
   </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half" id="faf-added-date">
+      <%= f.govuk_date_field :faf_added_date, legend: { size: "s", text: "FaF Added date" } %>
+    </div>
+    <div class="govuk-grid-column-one-half" id="faf-removed-date">
+      <%= f.govuk_date_field :faf_end_date, legend: { size: "s", text: "Faf End date" } %>
+    </div>
+  </div>
 <% end %>
 
 <%= f.govuk_fieldset legend: { text: 'Other' } do %>
