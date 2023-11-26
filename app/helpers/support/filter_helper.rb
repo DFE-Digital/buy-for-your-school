@@ -36,6 +36,15 @@ module Support
         )
     end
 
+    def available_e_and_o_agents
+      CheckboxOption
+        .from(
+          Support::Agent.e_and_o_staff.by_first_name.map { |a| Support::AgentPresenter.new(a) },
+          title_field: :full_name,
+          include_all: true,
+        )
+    end
+
     def available_procurement_stages
       CheckboxOption
         .from(

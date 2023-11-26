@@ -1,0 +1,60 @@
+<div class="filters-panel">
+  <h2 class="govuk-heading-m"><%= I18n.t("support.case.label.filters") %></h2>
+
+  <%= form_with model: filter_form, scope: filter_form_scope, id: :case_filters, method: :get, url: filter_url, html: { "data-controller" => "case-filters" } do |form| %>
+    <%= link_to I18n.t("support.case.filter.buttons.clear"), clear_url, class: "govuk-button govuk-button--secondary", role: "button" %>
+
+    <%= form.govuk_select :sort_by,
+        options_for_select(eando_available_sort_options, filter_form.sort_by),
+        label: { text: I18n.t("support.case.label.sort_by"), size: "s" } %>
+
+    <%= form.govuk_collection_radio_buttons :sort_order,
+        available_sort_orders,
+        :id,
+        :title,
+        legend: nil,
+        small: true %>
+
+    <%= expander title: I18n.t("support.case.label.status"),
+                subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.state).length),
+                expanded: true do %>
+      <%= form.govuk_check_boxes_fieldset :state, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% available_states.each do |state| %>
+          <%= form.govuk_check_box :state, state.id, exclusive: state.exclusive, label: { text: state.title } %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= expander title: I18n.t("support.case.label.sub_category"),
+                 subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.category).length),
+                 expanded: true do %>
+      <%= form.govuk_check_boxes_fieldset :category, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% available_categories(form.object.tower).each do |category| %>
+          <%= form.govuk_check_box :category, category.id, exclusive: category.exclusive, label: { text: category.title } %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% unless tab == "my-cases" %>
+      <%= expander title: I18n.t("support.case.label.created_by"),
+                  subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.created_by).length),
+                  expanded: true do %>
+        <%= form.govuk_check_boxes_fieldset :created_by, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+          <% available_e_and_o_agents.each do |e_and_o_agent| %>
+            <%= form.govuk_check_box :created_by, e_and_o_agent.id, exclusive: e_and_o_agent.exclusive, label: { text: e_and_o_agent.title } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= expander title: I18n.t("support.case.label.level"),
+                 subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.level).length),
+                 expanded: true do %>
+      <%= form.govuk_check_boxes_fieldset :level, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+        <% available_levels.each do |level| %>
+          <%= form.govuk_check_box :level, level.id, exclusive: level.exclusive, label: { text: level.title } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

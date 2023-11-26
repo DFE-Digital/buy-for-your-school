@@ -1,16 +1,13 @@
-<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="all-cases">
-  <h1 class="govuk-heading-l">
-    <%= I18n.t("support.case.list.all_cases") %>
-  </h1>
-
-  <%= form_with id: :filter_all_cases_form,
-    model: @all_cases_filter_form,
-    scope: :filter_all_cases_form,
-    url: request.path,
-    method: :get,
-    class: "filter-case-form" do |f| %>
-  <% end %>
-
-  <%= render "engagement/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@cases), tab: :all_cases, sort_scope: :filter_all_cases_form, sort_form: @all_cases_filter_form, show_assigned: true %>
-  <%= render "components/pagination", records: @cases, page_param_name: 'cases_page', pagination_params: { anchor: "all-cases" } %>
+<div class="govuk-tabs__panel" id="all-cases">
+  <%= render partial: "engagement/cases/case_list/case_list",
+        locals: {
+          tab: "all-cases",
+          cases: @all_cases,
+					list_display_name: I18n.t("support.case.list.all_cases"),
+          page_param_name: "all_cases_page",
+          filter_form: @all_cases_filter_form,
+          filter_form_scope: :filter_all_cases_form,
+          filter_url: engagement_cases_path(anchor: "all-cases"),
+          clear_url: engagement_cases_path(anchor: "all-cases", clear: true),
+        } %>
 </div>

@@ -37,6 +37,7 @@ module Support
           :search_term,
           :category,
           :agent,
+          :created_by,
           :state,
           :tower,
           :procurement_stage,
@@ -47,6 +48,7 @@ module Support
           {
             category: [],
             agent: [],
+            created_by: [],
             tower: [],
             procurement_stage: [],
             legacy_stage: [],

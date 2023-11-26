@@ -44,8 +44,6 @@ module Support::Case::Sortable
 
     scope :sort_by_created, ->(direction = "ASC") { order("support_cases.created_at #{direction}") }
 
-    scope :sort_by_created_by, ->(direction = "ASC") { includes(:created_by).order("support_agents.first_name, support_agents.last_name #{direction}") }
-
     scope :sort_by_support_level, ->(direction = "ASC") { order("support_level #{direction}") }
 
     scope :sort_by_received, ->(direction = "ASC") { order("support_cases.created_at #{direction}") }

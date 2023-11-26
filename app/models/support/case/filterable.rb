@@ -40,6 +40,8 @@ module Support::Case::Filterable
     scope :high_level, -> { by_level([2, 3, 4]) }
 
     scope :created_by_e_and_o, -> { where(creation_source: :engagement_and_outreach_team) }
+
+    scope :created_by, ->(created_by_ids) { where(created_by_id: created_by_ids) }
   end
 
   class_methods do

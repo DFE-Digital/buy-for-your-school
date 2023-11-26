@@ -1,0 +1,48 @@
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.created_by") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.creator_full_name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.sub_category") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.category.title %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.case_value") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.value %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.school_count") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+			<%= kase.schools.count %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.local_authority.short").pluralize(kase.leas.count) %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+			<% if !kase.leas.count.positive? %>
+				<%= I18n.t("support.case.label.local_authority.unspecified") %>
+			<% else %>
+				<% kase.leas.each do |lea| %>
+	      	<%= lea %><br/>
+				<% end %>
+			<% end %>
+    </dd>
+  </div>
+</dl>
