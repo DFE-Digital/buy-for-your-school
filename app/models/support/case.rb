@@ -149,6 +149,19 @@ module Support
       interactions&.support_request&.first
     end
 
+    # If this case is associated with a MAT, there may be several participating_schools (including 0). Otherwise there should be 1 organisation.
+    def schools
+      organisation.is_a?(Support::Organisation) ? [organisation] : participating_schools
+    end
+
+    # The Local Education Authorities of the schools currently associated with the case, sorted alphabetically and with duplicates removed.
+    # The 'if sch.respond_to?(:local_authority)' catches the edge case where a MAT is the organisation but none of its schools are selected.
+    def leas
+      leas = []
+      schools.each { |sch| leas << sch.local_authority["name"] if sch.respond_to?(:local_authority) }
+      leas.uniq.sort
+    end
+
     def request
       framework_request || case_request
     end

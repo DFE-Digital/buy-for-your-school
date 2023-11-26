@@ -1,0 +1,22 @@
+<div class="case-list govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <%= render partial: "engagement/cases/case_list/filters", locals: { tab:, filter_form:, filter_form_scope:, filter_url:, clear_url: } %>
+  </div>
+  <div class="govuk-grid-column-three-quarters">
+	  <h1 class="govuk-heading-l">
+	    <%= list_display_name %>
+	  </h1>
+		
+    <% if cases.none? %>
+      <h2 class="govuk-heading-m"><%= I18n.t("support.case.list.no_cases") %></h2>
+      <p class="govuk-body"><%= I18n.t("support.case.list.no_cases_advice") %></p>
+    <% else %>
+      <ul>
+				<li>
+	        <%= render partial: "engagement/cases/case_list/case_panel/case_panel", collection: Support::CasePresenter.wrap_collection(cases), as: :kase, locals: { tab: }  %>
+				</li>
+      </ul>
+    <% end %>
+    <%= render "components/pagination", records: cases, page_param_name:, pagination_params: { anchor: tab } %>
+  </div>
+</div>

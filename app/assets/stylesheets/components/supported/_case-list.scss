@@ -5,6 +5,18 @@
     margin-top: 0;
   }
 
+	.govuk-summary-card__title {
+		span {
+			padding-right: 20px;
+		}
+	}
+
+	.govuk-summary-card__content {
+		.case-panel {
+			border-bottom: none;
+		}
+	}
+
   .case-panel {
     border-bottom: 1px solid $govuk-border-colour;
     margin-bottom: 15px;

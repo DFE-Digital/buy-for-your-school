@@ -1,0 +1,22 @@
+<div class="govuk-summary-card" id="case-panel-<%= kase.ref %>" aria-label="<%= "Case #{kase.ref}" %>">
+  <div class="govuk-summary-card__title-wrapper">
+		<h2 class="govuk-summary-card__title">
+      <span><%= kase.ref %></span> <span><%= kase.organisation_name %></span>
+    </h2>
+  </div>
+
+  <div class="govuk-summary-card__content">
+
+	  <div class="case-panel">
+	    <div class="govuk-grid-row">
+	      <div class="govuk-grid-column-one-half">
+	        <%= render partial: "engagement/cases/case_list/case_panel/left_pane", locals: { tab:, kase: } %>
+	      </div>
+	      <div class="govuk-grid-column-one-half">
+	        <%= render partial: "engagement/cases/case_list/case_panel/right_pane", locals: { kase: } %>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+

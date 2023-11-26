@@ -15,7 +15,8 @@ module Engagement
         end
 
         format.html do
-          @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page])
+          @all_cases = @all_cases_filter_form.results.paginate(page: params[:all_cases_page]).load_async
+          @my_cases = @my_cases_filter_form.results.paginate(page: params[:my_cases_page]).load_async
         end
       end
     end
@@ -33,6 +34,7 @@ module Engagement
 
     def filter_forms
       @all_cases_filter_form = Support::Case.created_by_e_and_o.filtering(filter_params_for(:filter_all_cases_form))
+      @my_cases_filter_form = Support::Case.created_by_e_and_o.created_by(current_agent.id).filtering(filter_params_for(:filter_my_cases_form))
     end
   end
 end

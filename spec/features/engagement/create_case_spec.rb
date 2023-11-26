@@ -6,7 +6,7 @@ RSpec.feature "Create case", js: true do
     define_basic_queries
 
     create(:support_category, :with_sub_category)
-    create(:support_organisation, name: "Hillside School", urn: "000001")
+    create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: { "code": "001", "name": "Timbuktoo" })
 
     visit "/engagement/cases"
     click_button "Create a new case"
@@ -72,32 +72,12 @@ RSpec.feature "Create case", js: true do
 
       click_on "Create case"
 
-      within table_cell(1, 1) do
-        expect(page).to have_content("000001")
+      within("div#my-cases") do
+        verify_case_panel
       end
 
-      within table_cell(1, 2) do
-        expect(page).to have_content("1")
-      end
-
-      within table_cell(1, 3) do
-        expect(page).to have_content("Hillside School")
-      end
-
-      within table_cell(1, 4) do
-        expect(page).to have_content("Other (General)")
-      end
-
-      within table_cell(1, 5) do
-        expect(page).to have_content("Procurement Specialist")
-      end
-
-      within table_cell(1, 6) do
-        expect(page).to have_content("45.22")
-      end
-
-      within table_cell(1, 7) do
-        expect(page).to have_content(Time.zone.now.strftime("%d %b %Y"))
+      within("div#all-cases") do
+        verify_case_panel
       end
     end
 
@@ -125,6 +105,56 @@ RSpec.feature "Create case", js: true do
   def complete_valid_form
     valid_form_data
     click_on "Save and continue"
+  end
+
+  def verify_case_panel
+    expect(page).to have_css(".govuk-summary-card#case-panel-000001")
+
+    within ".govuk-summary-card#case-panel-000001" do
+      within ".govuk-summary-card__title" do
+        expect(page).to have_content("000001 Hillside School")
+      end
+
+      within ".govuk-summary-list__row", text: "Created by" do
+        expect(page).to have_content("Procurement Specialist")
+      end
+
+      within ".govuk-summary-list__row", text: "Sub-category" do
+        expect(page).to have_content("Other (General)")
+      end
+
+      within ".govuk-summary-list__row", text: "Case value" do
+        expect(page).to have_content("£45.22")
+      end
+
+      within ".govuk-summary-list__row", text: "Number of schools" do
+        expect(page).to have_content("1")
+      end
+
+      within ".govuk-summary-list__row", text: "LEA" do
+        expect(page).to have_content("Timbuktoo")
+      end
+
+      within ".govuk-summary-list__row", text: "Stage" do
+        expect(page).to have_content("Not specified")
+      end
+
+      within ".govuk-summary-list__row", text: "Status" do
+        expect(page).to have_content("New")
+      end
+
+      within ".govuk-summary-list__row", text: "Level" do
+        expect(page).to have_content("1")
+      end
+
+      within ".govuk-summary-list__row", text: "Date created" do
+        expect(page).to have_content(Time.zone.now.strftime("%d %b %Y"))
+      end
+
+      within ".govuk-summary-list__row", text: "Updated" do
+        expect(page.text).to end_with("1 min ago").or end_with("moments ago") # Catches edge case where form is submitted at 59s and view renders into the next minute
+      end
+    end
   end
 
   def select_organisation(term)

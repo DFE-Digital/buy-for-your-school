@@ -7,6 +7,7 @@ class Support::Case::Filtering
   attribute :category, default: -> { [] }
   attribute :state, default: -> { [] }
   attribute :agent, default: -> { [] }
+  attribute :created_by, default: -> { [] }
   attribute :tower, default: -> { [] }
   attribute :level, default: -> { [] }
   attribute :has_org, default: -> { "" }
@@ -42,6 +43,7 @@ private
         state: Support::Concerns::ScopeFilter.new(state, scope: :by_state),
         category: Support::Concerns::ScopeFilter.new(category, scope: :by_category),
         agent: Support::Concerns::ScopeFilter.new(agent, scope: :by_agent),
+        created_by: Support::Concerns::ScopeFilter.new(created_by, scope: :created_by),
         tower: Support::Concerns::ScopeFilter.new(tower, scope: :by_tower),
         level: Support::Concerns::ScopeFilter.new(level, scope: :by_level),
         procurement_stage: Support::Concerns::ScopeFilter.new(procurement_stage, scope: :by_procurement_stage),
