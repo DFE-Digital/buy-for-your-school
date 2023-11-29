@@ -44,7 +44,7 @@ private
     if name.blank? && email.present?
       Frameworks::ProviderContact.create_with(name: email).find_or_create_by!(provider:, email:)
     elsif name.present? && email.present?
-      Frameworks::ProviderContact.find_or_create_by!(provider:, name:, email:)
+      Frameworks::ProviderContact.create_with(name:).find_or_create_by!(provider:, email:)
     end
   end
 

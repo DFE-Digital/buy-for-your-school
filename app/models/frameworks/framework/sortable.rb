@@ -8,7 +8,7 @@ module Frameworks::Framework::Sortable
     scope :sort_by_faf_end_date, ->(direction = "descending") { order("faf_end_date #{safe_direction(direction)}") }
     scope :sort_by_provider_start_date, ->(direction = "descending") { order("provider_start_date #{safe_direction(direction)}") }
     scope :sort_by_provider_end_date, ->(direction = "descending") { order("provider_end_date #{safe_direction(direction)}") }
-    scope :sort_by_reference, ->(direction = "descending") { order("frameworks_frameworks.reference #{safe_direction(direction)}") }
+    scope :sort_by_reference, ->(direction = "descending") { order(Arel.sql("regexp_replace(frameworks_frameworks.reference, 'F', '')::int #{safe_direction(direction)}")) }
     scope :sort_by_provider_reference, ->(direction = "descending") { order("provider_reference #{safe_direction(direction)}") }
   end
 
