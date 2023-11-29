@@ -25,6 +25,7 @@ class Frameworks::Framework::SpreadsheetImportable::RowMapping
       faf_added_date:,
       faf_end_date:,
       sct_framework_provider_lead:,
+      sct_framework_owner:,
       proc_ops_lead:,
       e_and_o_lead:,
     }
@@ -35,16 +36,14 @@ private
   def name = row["Framework Name"]
 
   def provider_contact
-    return nil if [
-      String(row["PBO Framework Owner"]),
-      String(row["PBO Framework Email"]),
-    ].any? { |value| value.strip == "-" || value.empty? }
+    name  = String(row["PBO Framework Owner"])
+    email = String(row["PBO Framework Email"])
 
-    Frameworks::ProviderContact.find_or_create_by!(
-      provider:,
-      name: row["PBO Framework Owner"],
-      email: row["PBO Framework Email"],
-    )
+    if name.blank? && email.present?
+      Frameworks::ProviderContact.find_or_create_by!(provider:, name: email, email:)
+    elsif name.present? && email.present?
+      Frameworks::ProviderContact.find_or_create_by!(provider:, name:, email:)
+    end
   end
 
   def status
@@ -64,6 +63,8 @@ private
   def faf_end_date = row["Contracted End Date on FaF as at 20.1.2023"]
 
   def sct_framework_provider_lead = row["Current PSBO Lead (Interim - To Be Confirmed)"]
+
+  def sct_framework_owner = row["SCT Framework Owner"]
 
   def proc_ops_lead = Support::Agent.find_or_create_by_full_name(row["Proc Ops Lead"])
 

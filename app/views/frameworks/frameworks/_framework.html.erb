@@ -20,6 +20,16 @@
         <dt class="govuk-summary-list__key">Categories</dt>
         <dd class="govuk-summary-list__value"><%= framework.category_names %></dd>
       </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Proc Ops Lead</dt>
+        <dd class="govuk-summary-list__value"><%= framework.proc_ops_lead_name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">E&O Lead</dt>
+        <dd class="govuk-summary-list__value"><%= framework.e_and_o_lead_name %></dd>
+      </div>
     </dl>
   </div>
 
@@ -46,13 +56,8 @@
       </div>
 
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Proc Ops Lead</dt>
-        <dd class="govuk-summary-list__value"><%= framework.proc_ops_lead_name %></dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">E&O Lead</dt>
-        <dd class="govuk-summary-list__value"><%= framework.e_and_o_lead_name %></dd>
+        <dt class="govuk-summary-list__key">FaF End date</dt>
+        <dd class="govuk-summary-list__value"><%= framework.display_faf_end_date %></dd>
       </div>
     </dl>
   </div>
