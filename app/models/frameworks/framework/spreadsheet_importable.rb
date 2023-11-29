@@ -6,7 +6,7 @@ module Frameworks::Framework::SpreadsheetImportable
       frameworks_list = SimpleXlsxReader.open(file).sheets
         .find { |potential_sheet| potential_sheet.name == "Recommended Framework List" }
 
-      frameworks_list.rows.each(headers: true) do |row|
+      frameworks_list.rows.each(headers: true).reverse_each do |row|
         row_mapping = RowMapping.new(row)
         import_from_spreadsheet_row(row_mapping) if row_mapping.valid?
       end
