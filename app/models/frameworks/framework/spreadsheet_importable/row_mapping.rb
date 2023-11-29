@@ -36,11 +36,13 @@ private
   def name = row["Framework Name"]
 
   def provider_contact
-    name  = String(row["PBO Framework Owner"])
-    email = String(row["PBO Framework Email"])
+    name  = String(row["PBO Framework Owner"]) == "-" ? "" : String(row["PBO Framework Owner"])
+    email = String(row["PBO Framework Email"]) == "-" ? "" : String(row["PBO Framework Email"])
+
+    return nil if email.blank?
 
     if name.blank? && email.present?
-      Frameworks::ProviderContact.find_or_create_by!(provider:, name: email, email:)
+      Frameworks::ProviderContact.create_with(name: email).find_or_create_by!(provider:, email:)
     elsif name.present? && email.present?
       Frameworks::ProviderContact.find_or_create_by!(provider:, name:, email:)
     end
