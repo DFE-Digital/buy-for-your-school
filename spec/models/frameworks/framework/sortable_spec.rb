@@ -10,16 +10,16 @@ describe Frameworks::Framework::Sortable do
       let(:sort_by) { "reference" }
 
       before do
-        create(:frameworks_framework, reference: "A")
-        create(:frameworks_framework, reference: "B")
-        create(:frameworks_framework, reference: "C")
+        create(:frameworks_framework, reference: "F3")
+        create(:frameworks_framework, reference: "F200")
+        create(:frameworks_framework, reference: "F1000")
       end
 
       describe "sorting ascending" do
         let(:sort_order) { "ascending" }
 
         it "returns all results ordered by reference alphabetically with lowest appearing first" do
-          expect(results.pluck(:reference)).to eq(%w[A B C])
+          expect(results.pluck(:reference)).to eq(%w[F3 F200 F1000])
         end
       end
 
@@ -27,7 +27,7 @@ describe Frameworks::Framework::Sortable do
         let(:sort_order) { "descending" }
 
         it "returns all results ordered by reference alphabetically with highest appearing first" do
-          expect(results.pluck(:reference)).to eq(%w[C B A])
+          expect(results.pluck(:reference)).to eq(%w[F1000 F200 F3])
         end
       end
     end
