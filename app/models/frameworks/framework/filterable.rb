@@ -8,6 +8,7 @@ module Frameworks::Framework::Filterable
     scope :by_e_and_o_lead, ->(e_and_o_lead_ids) { where(e_and_o_lead_id: Array(e_and_o_lead_ids)) }
     scope :by_proc_ops_lead, ->(proc_ops_lead_ids) { where(proc_ops_lead_id: Array(proc_ops_lead_ids)) }
     scope :by_provider_contact, ->(provider_contact_ids) { where(provider_contact_id: Array(provider_contact_ids)) }
+    scope :by_omnisearch, ->(query) { omnisearch(query) }
   end
 
   class_methods do

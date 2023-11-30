@@ -11,4 +11,5 @@ class Frameworks::Framework::Filtering
   filter_by :proc_ops_lead,    options: -> { get_agents[:proc_ops_lead_id].map { |agent| [agent.full_name, agent.id] } }
   filter_by :category,         options: -> { Support::Category.order("title ASC").where(id: Frameworks::FrameworkCategory.pluck(:support_category_id)).pluck(:title, :id) }
   filter_by :provider_contact, options: -> { Frameworks::ProviderContact.sort_by_name("ascending").pluck(:name, :id) }
+  filter_by :omnisearch, multiple: false
 end
