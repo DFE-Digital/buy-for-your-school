@@ -1,50 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "0100f43cff244a9642eb012b25ddde1dca8d0dfd7b9192b50575c0843c4ee7da",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/frameworks/frameworks/show/_framework_details.html.erb",
-      "line": 5,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(Frameworks::Framework.find(params[:id]).url, Frameworks::Framework.find(params[:id]).url, :target => \"_blank\", :class => \"govuk-link\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::FrameworksController",
-          "method": "show",
-          "line": 21,
-          "file": "app/controllers/frameworks/frameworks_controller.rb",
-          "rendered": {
-            "name": "frameworks/frameworks/show",
-            "file": "app/views/frameworks/frameworks/show.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "frameworks/frameworks/show",
-          "line": 27,
-          "file": "app/views/frameworks/frameworks/show.html.erb",
-          "rendered": {
-            "name": "frameworks/frameworks/show/_framework_details",
-            "file": "app/views/frameworks/frameworks/show/_framework_details.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "frameworks/frameworks/show/_framework_details"
-      },
-      "user_input": "Frameworks::Framework.find(params[:id]).url",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "026523acf8ab2c1d1771baf9186aa62b4cd4960b63e14946c372a5ae80cd6b05",
@@ -176,6 +132,29 @@
       "confidence": "Weak",
       "cwe_id": [
         22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "2ef6ebeba0d2146fb5e1de20d86b6c3b18fec55be2ce6d7ce57f73ee4d4de9e0",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/frameworks/framework/sortable.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Arel.sql(\"regexp_replace(frameworks_frameworks.reference, 'F', '')::int #{safe_direction(direction)}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Frameworks::Framework::Sortable",
+        "method": null
+      },
+      "user_input": "safe_direction(direction)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
       ],
       "note": ""
     },
@@ -627,6 +606,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-11-16 15:14:04 +0000",
+  "updated": "2023-11-30 09:13:54 +0000",
   "brakeman_version": "6.0.1"
 }
