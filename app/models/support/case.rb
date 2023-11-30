@@ -156,5 +156,9 @@ module Support
     def reference
       ref
     end
+
+    def agent_name
+      agent&.full_name || "UNASSIGNED"
+    end
   end
 end

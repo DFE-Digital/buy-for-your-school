@@ -21,6 +21,10 @@ module Frameworks::Evaluation::Presentable
     ApplicationController.render(partial: "frameworks/evaluations/status", locals: { status: })
   end
 
+  def agent_name
+    display_assignee || "UNASSIGNED"
+  end
+
   def display_assignee
     assignee.try(:full_name)
   end

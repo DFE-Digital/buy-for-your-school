@@ -22,11 +22,6 @@ module Support
     end
 
     # @return [String]
-    def agent_name
-      agent&.full_name || "UNASSIGNED"
-    end
-
-    # @return [String]
     def request_text
       String(super).strip.chomp
     end
