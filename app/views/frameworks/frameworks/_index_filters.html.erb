@@ -17,6 +17,8 @@
         legend: nil,
         small: true %>
 
+    <%= form.govuk_text_field :omnisearch, label: { text: "Search by name or reference", size: "s" }, hint: { text: "Press Enter to submit" } %>
+
     <%= expander title: "Status", subtitle: "#{@filtering.number_of_selected(:statuses)} selected", expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :status, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% @filtering.available_status_options.each do |status| %>

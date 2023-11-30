@@ -51,6 +51,7 @@ private
   def filter_form_params
     params.fetch(:frameworks_filter, {}).permit(
       :sort_by, :sort_order,
+      :omnisearch,
       status: [], provider: [],
       e_and_o_lead: [], proc_ops_lead: [],
       category: [], provider_contact: []
