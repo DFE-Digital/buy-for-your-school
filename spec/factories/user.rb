@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :user do
-    id { SecureRandom.uuid }
     dfe_sign_in_uid { SecureRandom.uuid }
 
     email       { "test@test"   }
@@ -34,7 +33,7 @@ FactoryBot.define do
       orgs do
         [{
           "id": "23F20E54-79EA-4146-8E39-18197576F023",
-          "name": "Unsupported School Name",
+          "name": "Unsupported School bundleName",
           "type": { "id": "11", "name": "Other Independent School" },
         }]
       end

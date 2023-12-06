@@ -12,7 +12,7 @@ RSpec.describe FrameworkRequestPresenter do
 
   describe "#dsi?" do
     it "returns true if user_id is present" do
-      framework_request.user = build(:user)
+      framework_request.user = create(:user)
       expect(presenter.dsi?).to be true
     end
 
@@ -24,7 +24,7 @@ RSpec.describe FrameworkRequestPresenter do
 
   describe "#user" do
     it "returns user presenter if user exists" do
-      framework_request.user = build(:user)
+      framework_request.user = create(:user)
       expect(presenter.user).to be_kind_of UserPresenter
     end
 
