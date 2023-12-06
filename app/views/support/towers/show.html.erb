@@ -3,40 +3,19 @@
 
 <%= turbo_frame_tag "#{tower_id}-frame" do %>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="<%= tower_id %>">
-    <% if Flipper.enabled?(:cms_panel_view) %>
-      <h1 class="govuk-heading-l">
-        <%= @tower.title %> Tower
-      </h1>
+    <h1 class="govuk-heading-l">
+      <%= @tower.title %> Tower
+    </h1>
 
-      <%= render partial: "support/cases/case_list/case_list",
-            locals: {
-              tab: tower_id,
-              cases: @cases,
-              page_param_name: nil,
-              filter_form: @filter_form,
-              filter_form_scope: "filter_#{scope}_cases",
-              filter_url: support_tower_path(@tower),
-              clear_url: support_tower_path(@tower, clear: true),
-            } %>
-    <% else %>
-      <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-<%= tower_id %>" data-component="toggle-panel-visibility">
-        <%= I18n.t("support.case.filter.filter_results") %>
-      </button>
-
-      <h1 class="govuk-heading-l">
-        <%= @tower.title %> Tower
-      </h1>
-
-      <%= render "support/cases/forms/filter_cases_form",
-            form: @filter_form,
-            scope: "filter_#{scope}_cases",
+    <%= render partial: "support/cases/case_list/case_list",
+          locals: {
+            tab: tower_id,
+            cases: @cases,
+            page_param_name: nil,
+            filter_form: @filter_form,
+            filter_form_scope: "filter_#{scope}_cases",
             filter_url: support_tower_path(@tower),
             clear_url: support_tower_path(@tower, clear: true),
-            tab: tower_id,
-            hide_towers: true %>
-
-      <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@cases), sort_scope: "filter_#{scope}_cases", sort_form: @filter_form, show_assigned: true %>
-      <%= render "components/pagination", records: @cases %>
-    <% end %>
+          } %>
   </div>
 <% end %>

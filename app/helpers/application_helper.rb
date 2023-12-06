@@ -23,6 +23,6 @@ module ApplicationHelper
     on_frameworks = request.path.starts_with?("/frameworks")
     on_eando_index = current_page?(engagement_cases_path) || current_page?("/engagement")
 
-    (on_cases_index && Flipper.enabled?(:cms_panel_view)) || on_frameworks || on_eando_index
+    on_cases_index || on_frameworks || on_eando_index
   end
 end
