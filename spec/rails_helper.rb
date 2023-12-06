@@ -86,7 +86,6 @@ RSpec.configure do |config|
   config.before do
     # Configure feature flags for test here
     Flipper.enable(:email_templates)
-    Flipper.enable(:cms_triage_view)
     Flipper.enable(:framework_select_from_register)
   end
 

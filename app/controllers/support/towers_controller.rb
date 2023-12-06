@@ -15,12 +15,8 @@ module Support
   private
 
     def tower_cases
-      if Flipper.enabled?(:cms_triage_view)
-        # filter on all tower cases if override == true (e.g. when coming in from case statistics)
-        override_filter ? @tower.cases : @tower.high_level_cases
-      else
-        @tower.cases
-      end
+      # filter on all tower cases if override == true (e.g. when coming in from case statistics)
+      override_filter ? @tower.cases : @tower.high_level_cases
     end
 
     def filter_scope = "filter_#{@tower.title.parameterize(separator: '_')}_cases"
