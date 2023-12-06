@@ -83,11 +83,6 @@ RSpec.configure do |config|
     Bullet.enable = true
   end
 
-  config.before do
-    # Configure feature flags for test here
-    Flipper.enable(:framework_select_from_register)
-  end
-
   config.before(:each, type: :feature) do
     define_basic_towers
   end
