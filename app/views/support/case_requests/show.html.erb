@@ -14,7 +14,7 @@
           <%= I18n.t("support.case_hub_migration.label.school_name") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @case_request.organisation.name %>
+          <%= @case_request.organisation&.name || "No organisation selected" %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
@@ -26,7 +26,7 @@
           <%= I18n.t("support.case_hub_migration.label.school_postcode") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @case_request.organisation.postcode %>
+          <%= @case_request.organisation&.postcode %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
@@ -66,7 +66,7 @@
           <%= I18n.t("support.case_hub_migration.label.school_ukprn") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= @case_request.organisation.ukprn %>
+          <%= @case_request.organisation&.ukprn %>
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
@@ -141,7 +141,7 @@
         </dd>
       </div>
     </dl>
-    
+
     <h2 class="govuk-heading-m">
       <%= I18n.t("support.case.label.discovery_method.legend") %>
     </h2>
@@ -178,7 +178,7 @@
         </dd>
       </div>
     </dl>
-    
+
 
     <h2 class="govuk-heading-m">
       <%= I18n.t("support.case_hub_migration.edit.section.case") %>
@@ -204,7 +204,7 @@
             <%= I18n.t("support.case_hub_migration.label.sub_category") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @case_request.category.title %>
+            <%= @case_request.category&.title %>
           </dd>
           <dd id="changeCategory" class="govuk-summary-list__actions">
             <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
@@ -216,7 +216,7 @@
             <%= I18n.t("support.case_hub_migration.label.query") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @case_request.query.title %>
+            <%= @case_request.query&.title %>
           </dd>
           <dd id="changeQuery" class="govuk-summary-list__actions">
             <%= link_to I18n.t("generic.button.change_answer"), edit_support_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
@@ -224,7 +224,7 @@
         </div>
       <% end %>
     </dl>
-    
+
     <h2 class="govuk-heading-m">
       <%= I18n.t("support.case_hub_migration.edit.section.request_text") %>
     </h2>

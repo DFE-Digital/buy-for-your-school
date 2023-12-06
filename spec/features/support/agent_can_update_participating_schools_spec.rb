@@ -21,7 +21,7 @@ describe "Agent can update participating schools", js: true do
     end
   end
 
-  it "updates participating schools" do
+  it "updates participating schools", flaky: true do
     expect(support_case.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
   end
 end

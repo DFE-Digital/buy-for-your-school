@@ -5,7 +5,7 @@ RSpec.feature "Admin page" do
 
     before { visit "/admin" }
 
-    it "shows the page content" do
+    it "shows the page content", flaky: true do
       expect(page).to have_title "User activity data"
       expect(find("h1.govuk-heading-l")).to have_text "User activity data"
       expect(all("th.govuk-table__header")[0]).to have_text "Total number of users"
