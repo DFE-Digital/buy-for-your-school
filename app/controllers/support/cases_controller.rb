@@ -25,10 +25,7 @@ module Support
           @cases = @all_cases_filter_form.results.paginate(page: params[:cases_page]).load_async
           @new_cases = @new_cases_filter_form.results.paginate(page: params[:new_cases_page]).load_async
           @my_cases = @my_cases_filter_form.results.paginate(page: params[:my_cases_page]).load_async
-
-          if Flipper.enabled?(:cms_triage_view)
-            @triage_cases = @triage_cases_filter_form.results.paginate(page: params[:triage_cases_page]).load_async
-          end
+          @triage_cases = @triage_cases_filter_form.results.paginate(page: params[:triage_cases_page]).load_async
         end
       end
     end
@@ -56,10 +53,7 @@ module Support
       @all_cases_filter_form = Case.filtering(filter_params_for(:filter_all_cases_form, defaults:, persist: !override_filter(:filter_all_cases_form)).except(:override))
       @new_cases_filter_form = Case.initial.filtering(filter_params_for(:filter_new_cases_form, defaults:))
       @my_cases_filter_form = Case.by_agent(current_agent.id).filtering(filter_params_for(:filter_my_cases_form, defaults: defaults.merge({ state: %w[live] })))
-
-      if Flipper.enabled?(:cms_triage_view)
-        @triage_cases_filter_form = Case.triage.filtering(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] })))
-      end
+      @triage_cases_filter_form = Case.triage.filtering(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] })))
     end
 
     def override_filter(filter_scope) = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"
