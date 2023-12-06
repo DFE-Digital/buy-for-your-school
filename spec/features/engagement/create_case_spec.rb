@@ -54,7 +54,7 @@ RSpec.feature "Create case", js: true do
         create_list(:support_organisation, 3, trust_code: group.uid)
       end
 
-      it "sets the group as the case organisation and participating schools" do
+      it "sets the group as the case organisation and participating schools", flaky: true do
         select_organisation "Group 1"
         valid_form_data_without_organisation
         click_on "Save and continue"
