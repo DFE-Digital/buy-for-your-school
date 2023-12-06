@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :support_organisation, class: "Support::Organisation" do
-    id { SecureRandom.uuid }
     urn { SecureRandom.hex[0..6] }
     sequence(:name) { |n| "School ##{n}" }
     address { {} }
