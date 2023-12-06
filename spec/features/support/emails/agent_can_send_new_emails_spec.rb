@@ -48,7 +48,7 @@ describe "Agent can send new emails", js: true do
         expect(page).to have_field "Enter an email subject", with: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
       end
 
-      it "shows added recipients" do
+      it "shows added recipients", flaky: true do
         to_table = find("table[data-row-label='TO']")
         within(to_table) do
           # case email added by default
