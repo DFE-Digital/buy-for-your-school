@@ -1,37 +1,15 @@
 <div class="govuk-tabs__panel" id="my-cases">
-  <% if Flipper.enabled?(:cms_panel_view) %>
-    <h1 class="govuk-heading-l">
-      <%= I18n.t("support.case.list.my_cases") %>
-    </h1>
-    <%= render partial: "support/cases/case_list/case_list",
-          locals: {
-            tab: "my-cases",
-            cases: @my_cases,
-            page_param_name: "my_cases_page",
-            filter_form: @my_cases_filter_form,
-            filter_form_scope: :filter_my_cases_form,
-            filter_url: support_cases_path(anchor: "my-cases"),
-            clear_url: support_cases_path(anchor: "my-cases", clear: true),
-          } %>
-  <% else %>
-    <button class="govuk-button govuk-button--secondary pull-right" data-panel="filter-my-cases" data-component="toggle-panel-visibility">
-      <%= I18n.t("support.case.filter.filter_results") %>
-    </button>
-
-    <h1 class="govuk-heading-l">
-      <%= I18n.t("support.case.list.my_cases") %>
-    </h1>
-
-    <%= render "support/cases/forms/filter_cases_form",
-                form: @my_cases_filter_form,
-                scope: :filter_my_cases_form,
-                filter_url: support_cases_path(anchor: "my-cases"),
-                clear_url: support_cases_path(anchor: "my-cases", clear: true),
-                tab: "my-cases" %>
-
-    <%= render "support/cases/index/detailed_cases", cases: Support::CasePresenter.wrap_collection(@my_cases), sort_scope: :filter_my_cases_form, sort_form: @my_cases_filter_form, show_assigned: false %>
-    <%= render "components/pagination", records: @my_cases, page_param_name: 'my_cases_page', pagination_params: { anchor: "my-cases" } %>
-
-    <br /><%= link_to I18n.t("support.case.label.view_resolved_cases"), support_cases_path(anchor: "my-cases", filter_my_cases_form: { state: "resolved" }), class: "govuk-link govuk-link--no-visited-state" %>
-  <% end %>
+  <h1 class="govuk-heading-l">
+    <%= I18n.t("support.case.list.my_cases") %>
+  </h1>
+  <%= render partial: "support/cases/case_list/case_list",
+        locals: {
+          tab: "my-cases",
+          cases: @my_cases,
+          page_param_name: "my_cases_page",
+          filter_form: @my_cases_filter_form,
+          filter_form_scope: :filter_my_cases_form,
+          filter_url: support_cases_path(anchor: "my-cases"),
+          clear_url: support_cases_path(anchor: "my-cases", clear: true),
+        } %>
 </div>
