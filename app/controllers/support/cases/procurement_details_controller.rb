@@ -53,12 +53,7 @@ module Support
 
     # @return [Hash]
     def persisted_data
-      framework_name = if Flipper.enabled?(:framework_select_from_register)
-                         current_case.procurement.register_framework&.reference_and_name
-                       else
-                         current_case.procurement.framework&.name
-                       end
-
+      framework_name = current_case.procurement.register_framework&.reference_and_name
       current_case.procurement.to_h.merge(framework_name:)
     end
   end
