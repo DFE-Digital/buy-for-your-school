@@ -19,10 +19,7 @@
 
   <% if policy(:cms_portal).access_proc_ops_portal? %>
     <li><%= link_to I18n.t("support.management.categories.header"), support_management_categories_path, class: "govuk-link" %></li>
-
-    <% if Flipper.enabled?(:email_templates) %>
-      <li><%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-link" %></li>
-    <% end %>
+    <li><%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-link" %></li>
   <% end %>
 </ul>
 

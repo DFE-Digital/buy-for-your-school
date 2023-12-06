@@ -253,7 +253,7 @@ Rails.application.routes.draw do
             resources :replies, only: %i[new create]
           end
         end
-        resources :email_templates, only: %i[index], constraints: ->(_request) { Flipper.enabled?(:email_templates) }
+        resources :email_templates, only: %i[index]
         resource :quick_edit, only: %i[edit update]
         resource :school_details, only: %i[show] do
           scope module: :school_details do
@@ -307,10 +307,10 @@ Rails.application.routes.draw do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]
       resources :categories, only: %i[index update]
-      resources :email_templates, constraints: ->(_request) { Flipper.enabled?(:email_templates) } do
+      resources :email_templates do
         get "/attachment-list", to: "email_templates#attachment_list", on: :member
       end
-      resources :email_template_groups, only: [], constraints: ->(_request) { Flipper.enabled?(:email_templates) } do
+      resources :email_template_groups, only: [] do
         get "subgroups/(:group_id)", to: "email_template_groups#subgroups", as: :subgroups, on: :collection
       end
       resource :category_detection, only: %i[new create]

@@ -27,6 +27,6 @@
     </tbody>
   </table>
 
-  <% new_thread_link = Flipper.enabled?(:email_templates) ? support_case_email_templates_path(back_to: Base64.encode64(@back_url)) : new_support_case_message_thread_path(back_to: Base64.encode64(@back_url)) %>
+  <% new_thread_link = support_case_email_templates_path(back_to: Base64.encode64(@back_url)) %>
   <%= link_to I18n.t("support.case.label.message_threads.new_thread"), new_thread_link, class: "govuk-button", role: "button"%>
 <% end %>

@@ -13,16 +13,11 @@
         </span>
       </summary>
       <div class="govuk-details__text">
-        <% if Flipper.enabled?(:email_templates) %>
-          <%= turbo_frame_tag "reply-frame", src: @reply_frame_url.presence do %>
-            <div class="govuk-button-group">
-              <%= link_to I18n.t("support.case.label.message_threads.reply_with_template"), support_case_email_templates_path(thread_id: @current_thread.id, message_id: @last_received_reply, back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", data: { turbo_frame: "messages-frame" }, role: "button" %>
-              <%= link_to I18n.t("support.case.label.message_threads.reply_using_signatory_template"), new_support_case_message_reply_path(message_id: @last_received_reply), class: "govuk-button govuk-button--secondary", role: "button" %>
-            </div>
-          <% end %>
-        <% else %>
-          <%= render "recipient_table", email: @last_received_reply %>
-          <%= render "support/cases/messages/replies/form", reply: true, email: @last_received_reply %>
+        <%= turbo_frame_tag "reply-frame", src: @reply_frame_url.presence do %>
+          <div class="govuk-button-group">
+            <%= link_to I18n.t("support.case.label.message_threads.reply_with_template"), support_case_email_templates_path(thread_id: @current_thread.id, message_id: @last_received_reply, back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", data: { turbo_frame: "messages-frame" }, role: "button" %>
+            <%= link_to I18n.t("support.case.label.message_threads.reply_using_signatory_template"), new_support_case_message_reply_path(message_id: @last_received_reply), class: "govuk-button govuk-button--secondary", role: "button" %>
+          </div>
         <% end %>
       </div>
     </details>
