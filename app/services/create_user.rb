@@ -163,5 +163,7 @@ private
     end
   end
 
-  def tracking_base_properties = { dsi_uid: user_id }
+  def tracking_base_properties = { dsi_uid: user_id, org_ids: }
+
+  def org_ids = orgs.pluck("id").join(",")
 end
