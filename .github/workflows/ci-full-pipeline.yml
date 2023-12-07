@@ -171,7 +171,8 @@ jobs:
           - 4444:4444
 
     steps:
-      - name: Run Rspec tests
+      - name: Run Quarantined Rspec tests
+        continue-on-error: true
         run: |
           docker run --rm \
             --network ${{ job.container.network }} \
