@@ -240,17 +240,20 @@ Rails.application.routes.draw do
             # resources :templates, only: %i[index], param: :template
           end
         end
-        resources :message_threads, only: %i[index show new] do
+        resources :message_threads, only: %i[index show create edit] do
           scope do
             collection do
               get "templated_messages"
               get "logged_contacts"
             end
+            post "submit", on: :member
           end
         end
         resources :messages, only: %i[create] do
           scope module: :messages do
-            resources :replies, only: %i[new create]
+            resources :replies, only: %i[create edit] do
+              post "submit", on: :member
+            end
           end
         end
         resources :email_templates, only: %i[index]
@@ -373,9 +376,20 @@ Rails.application.routes.draw do
 
   resources :tickets, only: %i[index]
   scope module: :tickets do
-    resource :message_replies, path: "/messages/:message_id/replies", only: [:create]
-    resources :message_threads, path: "/tickets/:ticket_id/threads", only: %i[new index show create]
+    resource :messages, path: "/messages/:message_id", only: %i[update destroy] do
+      get "/attachments", to: "messages#list_attachments", on: :member
+      post "/attachments", to: "messages#add_attachment", on: :member
+      delete "/attachments/remove", to: "messages#remove_attachment", on: :member
+    end
+    resources :message_replies, path: "/messages/:message_id/replies", only: %i[create edit] do
+      post "submit", on: :member
+    end
+    resources :message_threads, path: "/tickets/:ticket_id/threads", only: %i[index show create edit] do
+      post "submit", on: :member
+    end
     resources :message_attachments, path: "/tickets/:ticket_id/attachments", only: %i[index edit update destroy]
+    resources :attach_email_attachments, path: "/messages/:message_id/attach_email_attachments", only: %i[index create]
+    resources :attach_case_files, path: "/messages/:message_id/attach_case_files", only: %i[index create]
   end
 
   namespace :exit_survey do

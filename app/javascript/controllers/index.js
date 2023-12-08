@@ -10,6 +10,9 @@ application.register("auto-filter", AutoFilterController)
 import CaseFilesController from "./case_files_controller"
 application.register("case-files", CaseFilesController)
 
+import CaseFiltersController from "./case_filters_controller"
+application.register("case-filters", CaseFiltersController)
+
 import CaseQuickEditController from "./case_quick_edit_controller"
 application.register("case-quick-edit", CaseQuickEditController)
 
@@ -19,8 +22,14 @@ application.register("case-stage", CaseStageController)
 import CaseSummaryController from "./case_summary_controller"
 application.register("case-summary", CaseSummaryController)
 
-import CaseFiltersController from "./case_filters_controller"
-application.register("case-filters", CaseFiltersController)
+import ChecklistTableController from "./checklist_table_controller"
+application.register("checklist-table", ChecklistTableController)
+
+import ChecklistTableFilterController from "./checklist_table_filter_controller"
+application.register("checklist-table-filter", ChecklistTableFilterController)
+
+import DraftEmailController from "./draft_email_controller"
+application.register("draft-email", DraftEmailController)
 
 import DropzoneController from "./dropzone_controller"
 application.register("dropzone", DropzoneController)

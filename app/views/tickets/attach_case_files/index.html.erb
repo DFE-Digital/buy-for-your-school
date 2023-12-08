@@ -1,0 +1,29 @@
+<%= turbo_frame_tag @turbo_frame do %>
+  <%= link_to I18n.t("tickets.messages.attach_case_files.back"), @back_url, class: "govuk-back-link pull-up" %>
+
+  <h2 class="govuk-heading-m"><%= I18n.t("tickets.messages.attach_case_files.heading") %></h2>
+
+  <div class="checklist-table"
+       data-controller="checklist-table"
+       data-checklist-table-scope-value="blob_attachment_picker"
+       data-checklist-table-checklist-field-value="attachments"
+       data-checklist-table-count-phrase-value="Attach {{count}} {{noun}}"
+       data-checklist-table-count-phrase-noun-value="file">
+    <%= fields_for :blob_attachment_picker do |f| %>
+      <%= f.button("Attach files", type: "submit", name: nil, form: :blob_attachment_picker, disabled: true, class: "govuk-button", "data-checklist-table-target": "selectedCount submit") %>
+    <% end %>
+
+    <%= form_with id: :blob_attachment_picker, model: @blob_attachment_picker, scope: :blob_attachment_picker, url: attach_case_files_path(message_id: @email.id, back_to: params[:back_to]), html: { "data-checklist-table-target": "form" } do |form| %>
+      <%= hidden_field_tag :turbo_frame, params[:turbo_frame] %>
+      <% if @case_files.any? %>
+        <%= render "support/cases/attachments/checklist_table", attachments: @case_files, current_case: @email.ticket, form: %>
+        <%= render "components/pagination", records: @case_files, pagination_params: { anchor: "messages" } %>
+      <% else %>
+        <% form.object.attachments.each do |attachment| %>
+          <%= form.hidden_field :attachments, value: attachment, multiple: true %>
+        <% end %>
+        <p class="govuk-body govuk-!-font-weight-bold">No attachments found.</p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

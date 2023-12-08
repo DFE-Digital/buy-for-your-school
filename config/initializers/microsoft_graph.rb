@@ -26,6 +26,7 @@ if ENV["MS_GRAPH_CLIENT_ID"].present?
       email_address: ENV.fetch("MS_GRAPH_SHARED_MAILBOX_ADDRESS"),
     )
 
+    Email.on_new_message_cached_handlers.add ->(email) { EmailAttachment.delete_draft_attachments_for_email(email) }
     Email.on_new_message_cached_handlers.add ->(email) { EmailAttachment.cache_attachments_for_email(email) }
     Email.on_new_message_cached_handlers.add ->(email) { Frameworks::Evaluation.on_email_cached(email) }
     Email.on_new_message_cached_handlers.add ->(email) { Support::Case.on_email_cached(email) }

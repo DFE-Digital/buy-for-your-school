@@ -26,18 +26,21 @@ describe "Agent can add attachments to replies", :with_csrf_protection, js: true
 
     describe "allows agent to add attachments" do
       before do
-        attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt")) do
-          find("span.govuk-button.govuk-button--secondary.dz-clickable").click
-        end
+        attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"), class: "dz-hidden-input", make_visible: true)
+        sleep 0.1 # allow file to finish uploading
       end
 
       it "shows the attached file" do
-        expect(page).to have_text "attachment.txt"
+        within("#reply-frame") do
+          expect(page).to have_text "attachment.txt"
+        end
       end
 
       it "allows agent to remove attachments" do
-        click_on "Remove"
-        expect(page).not_to have_text "attachment.txt"
+        within("#reply-frame") do
+          click_on "Remove"
+          expect(page).not_to have_text "attachment.txt"
+        end
       end
     end
   end

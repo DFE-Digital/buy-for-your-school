@@ -77,3 +77,9 @@
 .govuk-table__cell.vertical_middle {
   vertical-align: middle;
 }
+
+.fake-link {
+  @extend .govuk-link;
+  color: $govuk-link-colour;
+  cursor: pointer;
+}

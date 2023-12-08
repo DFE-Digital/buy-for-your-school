@@ -1588,7 +1588,11 @@ en:
         subject: Subject
       attachments:
         attachments_added: Attachments added
+        attach_files: Attach files
+        case_files: Case files
         download: Download
+        email_attachments: Email attachments
+        files_from_your_computer: Files from your computer
         remove: Remove
     generic:
       cancel: Cancel
@@ -1891,3 +1895,11 @@ en:
       completed: Completed
       in_progress: In progress
       not_started: Not started
+  tickets:
+    messages:
+      attach_email_attachments:
+        heading: Email attachments
+        back: Back to message
+      attach_case_files:
+        heading: Case files
+        back: Back to message

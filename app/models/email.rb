@@ -16,4 +16,12 @@ class Email < ApplicationRecord
   enum folder: { inbox: 0, sent_items: 1 }
 
   scope :display_order, -> { order("sent_at DESC") }
+
+  def blob_attachment_picker(params = {})
+    Email::BlobAttachmentPicker.new(email: self, **params)
+  end
+
+  def file_attachment_uploader(params = {})
+    Email::FileAttachmentUploader.new(email: self, **params)
+  end
 end

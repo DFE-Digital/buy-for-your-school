@@ -6,15 +6,32 @@ describe "Agent can message from within an evaluation", js: true do
   let(:evaluation) { create(:frameworks_evaluation, reference: "FE123", contact:) }
   let(:contact) { create(:frameworks_provider_contact, email: "contact@email.com") }
 
+  def message_double(body)
+    double(
+      id: "1",
+      subject: "",
+      body: double(content: body),
+      unique_body: double(content: body),
+      from: double(email_address: double(address: "", name: "")),
+      to_recipients: [double(email_address: double(address: contact.email, name: contact.name))],
+      cc_recipients: [],
+      bcc_recipients: [],
+      sent_date_time: Time.zone.now,
+      received_date_time: nil,
+      internet_message_id: "",
+      conversation_id: "1",
+      has_attachments: false,
+      is_read: false,
+      is_draft: false,
+      in_reply_to_id: "",
+    )
+  end
+
   describe "replying to a recieved email" do
     before do
-      create(:email, :inbox, ticket: evaluation, subject: "Reply to this please")
+      create(:email, :inbox, ticket: evaluation, subject: "Reply to this please", outlook_conversation_id: "1")
 
-      created_message = double.as_null_object
-      allow(MicrosoftGraph).to receive(:client).and_return(created_message)
-      allow(Email).to receive(:cache_message).with(created_message, anything) do
-        create(:email, body: "This is a test reply", unique_body: "This is a test reply", ticket: evaluation)
-      end
+      allow(MicrosoftGraph).to receive(:client).and_return(double(create_and_send_new_reply: message_double("This is a test reply"), get_file_attachments: []))
     end
 
     it "displays the reply on the thread" do
@@ -23,6 +40,7 @@ describe "Agent can message from within an evaluation", js: true do
       within "tr", text: "Reply to this please" do
         click_link "View"
       end
+      click_button "Reply to message"
 
       fill_in_editor "Your message", with: "This is a test reply"
       click_button "Send reply"
@@ -32,17 +50,13 @@ describe "Agent can message from within an evaluation", js: true do
 
   describe "sending a new message" do
     before do
-      created_message = double.as_null_object
-      allow(MicrosoftGraph).to receive(:client).and_return(created_message)
-      allow(Email).to receive(:cache_message).with(created_message, anything) do
-        create(:email, body: "My new message", unique_body: "My new message", ticket: evaluation, recipients: [{ address: "contact@email.com" }])
-      end
+      allow(MicrosoftGraph).to receive(:client).and_return(double(create_and_send_new_message: message_double("My new message"), get_file_attachments: []))
     end
 
     it "displays the new email thread" do
       visit frameworks_evaluation_path(evaluation)
       go_to_tab "Messages"
-      click_link "Create a new message thread"
+      click_button "Create a new message thread"
 
       expect(page).to have_field "Enter an email subject", with: "[FE123] - DfE Get help buying for schools"
       expect(page).to have_css '[data-row-label="TO"]', text: "contact@email.com"

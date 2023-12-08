@@ -4,7 +4,7 @@
   </div>
   <div class="govuk-grid-column-two-thirds">
     <% if mode == :select %>
-      <%= form_with url: use_url, method: :get, html: { "data-controller" => "email-templates-select" } do |form| %>
+      <%= form_with url: use_url, html: { "data-controller" => "email-templates-select" } do |form| %>
         <% hidden_fields_hash.each do |k, v| %>
           <%= form.hidden_field k.to_sym, value: v %>
         <% end %>

@@ -1,23 +1,21 @@
 <%= turbo_frame_tag "messages-frame" do %>
-  <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-    <h2 class="govuk-heading-l"><%= I18n.t("support.case.header.messages") %></h2>
+  <h2 class="govuk-heading-l"><%= I18n.t("support.case.header.messages") %></h2>
 
-    <table class="govuk-table messages-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header name-column"><%= I18n.t("support.case.label.message_threads.recipients") %></th>
-          <th class="govuk-table__header"><%= I18n.t("support.case.label.message_threads.subject") %></th>
-          <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.last_update") %></th>
-          <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.status") %></th>
-          <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.action") %></th>
-        </tr>
-      </thead>
+  <table class="govuk-table messages-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header name-column"><%= I18n.t("support.case.label.message_threads.recipients") %></th>
+        <th class="govuk-table__header"><%= I18n.t("support.case.label.message_threads.subject") %></th>
+        <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.last_update") %></th>
+        <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.status") %></th>
+        <th class="govuk-table__header date-column"><%= I18n.t("support.case.label.message_threads.action") %></th>
+      </tr>
+    </thead>
 
-      <tbody class="govuk-table__body">
-        <%= render partial: "message_thread", collection: @threads, as: :thread %>
-      </tbody>
-    </table>
+    <tbody class="govuk-table__body">
+      <%= render partial: "message_thread", collection: @threads, as: :thread %>
+    </tbody>
+  </table>
 
-    <%= link_to I18n.t("support.case.label.message_threads.new_thread"), new_message_thread_path(ticket_id: @ticket.id, ticket_type: @ticket.class, back_to: current_url_b64(:messages)), class: "govuk-button", role: "button"%>
-  </div>
+  <%= button_to I18n.t("support.case.label.message_threads.new_thread"), message_threads_path(ticket_id: @ticket.id, ticket_type: @ticket.class, back_to: current_url_b64(:messages)), class: "govuk-button" %>
 <% end %>

@@ -3,18 +3,28 @@ module Support
     before_action :current_email
     before_action :back_url
 
-    def new
-      @reply_form = Email::Draft.new(
-        default_content: default_template,
-        template_id: params[:template_id],
-      )
-      @last_received_reply = Support::Messages::OutlookMessagePresenter.new(Support::Email.find(params[:message_id]))
+    def edit
+      @reply_form = Email::Draft.find(params[:id])
+      @last_received_reply = Support::Messages::OutlookMessagePresenter.new(current_email)
     end
 
     def create
-      @reply_form = Email::Draft.new(**form_params, reply_to_email: current_email)
+      @draft = Email::Draft.new(
+        default_content: default_template,
+        template_id: params[:template_id],
+        ticket: current_case.to_model,
+        reply_to_email: current_email,
+      ).save_draft!
 
+      redirect_to redirect_url
+    end
+
+    def submit
+      @reply_form = Email::Draft.find(params[:id])
+      @reply_form.reply_to_email = current_email
+      @reply_form.attributes = form_params
       if @reply_form.valid?
+        @reply_form.save_draft!
         @reply_form.delivery_as_reply
 
         respond_to do |format|
@@ -24,9 +34,7 @@ module Support
           format.html { redirect_to support_case_message_thread_path(id: @current_email.outlook_conversation_id, case_id: current_case.id) }
         end
       else
-        @body = form_params[:body]
-        @show_attachment_warning = Array(form_params[:attachments]).any?
-
+        @last_received_reply = Support::Messages::OutlookMessagePresenter.new(current_email)
         render :edit
       end
     end
@@ -41,6 +49,15 @@ module Support
 
     def current_email
       @current_email = Support::Email.find(params[:message_id]) if params[:message_id].present?
+    end
+
+    def redirect_url
+      return edit_support_case_message_reply_path(message_id: current_email.id, id: @draft.id) if params[:redirect_back].blank?
+
+      url = URI.parse(url_for(params[:redirect_back]))
+      query = URI.decode_www_form(url.query) << ["reply_frame_url", edit_support_case_message_reply_path(message_id: current_email.id, id: @draft.id)]
+      url.query = URI.encode_www_form(query)
+      url.to_s
     end
 
     def back_url

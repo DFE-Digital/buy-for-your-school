@@ -5,6 +5,7 @@ class EmailAttachment < ApplicationRecord
   include CustomNameable
   include DeDupable
   include Hideable
+  include Draftable
 
   has_one_attached :file
   belongs_to :email

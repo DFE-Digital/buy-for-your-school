@@ -1,8 +1,8 @@
 <% thread_id = params[:thread_id].presence %>
 <% message_id = params[:message_id].presence %>
 <% reply = thread_id && message_id %>
-<% signatory_template_path = reply ? support_case_message_thread_path(id: thread_id, back_to: Base64.encode64(@back_url), reply_frame_url: new_support_case_message_reply_path(message_id:)) : new_support_case_message_thread_path %>
-<% use_template_path = reply ? support_case_message_thread_path(id: thread_id) : new_support_case_message_thread_path %>
+<% signatory_template_path = reply ? support_case_message_replies_path(message_id:, redirect_back: support_case_message_thread_path(id: thread_id, back_to: Base64.encode64(@back_url))) : support_case_message_threads_path %>
+<% use_template_path = reply ? support_case_message_replies_path(message_id:, redirect_back: support_case_message_thread_path(id: thread_id, back_to: Base64.encode64(@back_url))) : support_case_message_threads_path %>
 
 <%= turbo_frame_tag "messages-frame" do %>
   <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
@@ -12,11 +12,11 @@
       <h1 class="govuk-heading-l"><%= I18n.t("support.case.label.message_threads.email_templates.header") %></h1>
     </div>
     <div class="govuk-grid-column-one-third">
-      <%= link_to I18n.t("support.case.label.message_threads.email_templates.signatory_template"), signatory_template_path, class: "govuk-button govuk-button--secondary pull-right", role: "button" %>
+      <%= button_to I18n.t("support.case.label.message_threads.email_templates.signatory_template"), signatory_template_path, class: "govuk-button govuk-button--secondary pull-right" %>
     </div>
   </div>
 
-  <%= email_template_manager_selector(filter_url: support_case_email_templates_path(back_to: Base64.encode64(@back_url)), use_url: use_template_path, hidden_fields_hash: reply ? { reply_frame_url: new_support_case_message_reply_path(message_id:) } : {}) %>
+  <%= email_template_manager_selector(filter_url: support_case_email_templates_path(back_to: Base64.encode64(@back_url)), use_url: use_template_path, hidden_fields_hash: reply ? { reply_frame_url: support_case_message_replies_path(message_id:) } : {}) %>
 
   <%= render "components/pagination", records: @templates %>
 <% end %>

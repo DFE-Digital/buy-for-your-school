@@ -1,0 +1,44 @@
+<%= turbo_frame_tag @turbo_frame do %>
+  <%= link_to I18n.t("tickets.messages.attach_email_attachments.back"), @back_url, class: "govuk-back-link pull-up" %>
+
+  <h2 class="govuk-heading-m"><%= I18n.t("tickets.messages.attach_email_attachments.heading") %></h2>
+
+  <div class="checklist-table"
+      data-controller="checklist-table"
+      data-checklist-table-scope-value="blob_attachment_picker"
+      data-checklist-table-checklist-field-value="attachments"
+      data-checklist-table-count-phrase-value="Attach {{count}} {{noun}}"
+      data-checklist-table-count-phrase-noun-value="file">
+    <%= fields_for :blob_attachment_picker do |f| %>
+      <%= f.button("Attach files", type: "submit", name: nil, form: :blob_attachment_picker, disabled: true, class: "govuk-button", "data-checklist-table-target": "selectedCount submit") %>
+    <% end %>
+
+    <%= form_with model: @filter_form, scope: :blob_attachment_picker, url: request.url, method: :get, class: "filter-form",
+        html: {
+            "data-controller": "checklist-table-filter",
+            "data-checklist-table-filter-scope-value": "blob_attachment_picker",
+            "data-checklist-table-filter-checklist-field-value": "attachments",
+            "data-checklist-table-filter-checklist-table-outlet": ".checklist-table" } do |f| %>
+      <div class="spread-out">
+        <% options = [[:received, "Received files"], [:sent, "Sent files"], [:all, "All files"]] %>
+
+        <%= f.govuk_collection_radio_buttons :sent_received, options, :first, :last, inline: true, small: true, legend: { text: 'Filter results', size: "s" }, form_group: { class: "govuk-!-margin-bottom-0" } %>
+        <%= hidden_field_tag :back_to, params[:back_to] %>
+        <%= hidden_field_tag :turbo_frame, params[:turbo_frame] %>
+        <%= hidden_field_tag :ticket_type, @email.ticket.class %>
+      </div>
+    <% end %>
+
+    <%= form_with id: :blob_attachment_picker, model: @blob_attachment_picker, scope: :blob_attachment_picker, url: attach_email_attachments_path(message_id: @email.id, back_to: params[:back_to]), html: { "data-checklist-table-target": "form" } do |form| %>
+      <% if @email_attachments.any? %>
+        <%= render "support/cases/attachments/checklist_table", attachments: @email_attachments, current_case: @email.ticket, form: %>
+        <%= render "components/pagination", records: @email_attachments, pagination_params: { anchor: "messages" } %>
+      <% else %>
+        <% form.object.attachments.each do |attachment| %>
+          <%= form.hidden_field :attachments, value: attachment, multiple: true %>
+        <% end %>
+        <p class="govuk-body govuk-!-font-weight-bold">No attachments found.</p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

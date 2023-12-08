@@ -11,6 +11,15 @@ module Email::MessageCacheable
     include Callbackable
   end
 
+  def cache_message(message, folder:)
+    email_details = Message.new(message).as_email
+    update!(**email_details, folder: FOLDER_MAP[folder])
+    if is_draft
+      Email.on_new_message_cached_handlers.call(self)
+      update!(is_draft: false)
+    end
+  end
+
   class_methods do
     def cache_messages_in_folder(folder, mailbox: default_mailbox, messages_after: 15.minutes.ago)
       messages = MicrosoftGraph.client.list_messages_in_folder(mailbox.user_id, folder, messages_after:)

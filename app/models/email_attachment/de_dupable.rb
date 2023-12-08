@@ -11,6 +11,7 @@ module EmailAttachment::DeDupable
       joins(file_attachment: :blob)
       .where("active_storage_blobs.checksum = ?", email_attachment.checksum)
       .where("active_storage_blobs.filename = ?", email_attachment.file_name)
+      .where.not(outlook_id: nil)
     }
   end
 

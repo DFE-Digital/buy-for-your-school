@@ -1,0 +1,65 @@
+<%= turbo_frame_tag "reply-frame" do %>
+  <% unique_id = "A#{SecureRandom.uuid}" %>
+  <% url = submit_message_reply_path(message_id: params[:message_id], id: params[:id], unique_id:, back_to: params[:back_to]) %>
+  <% submit_text = I18n.t("support.case.label.messages.reply.send_reply") %>
+
+  <%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
+      html: {
+        "data-controller" => "draft-email",
+        "data-draft-email-list-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
+        "data-draft-email-upload-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
+        "data-draft-email-remove-attachments-endpoint-value" => attachments_remove_messages_path(message_id: params[:id]),
+        "data-draft-email-update-endpoint-value" => messages_path(message_id: params[:id], unique_id: unique_id),
+        "data-draft-email-target" => "form"
+      } do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <%= render "support/cases/message_threads/recipient_table", email: @last_received_reply %>
+
+    <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
+      "data-component" => "tinymce",
+      "data-tinymce-profile" => "basic",
+      "data-tinymce-selector" => ".message-reply-box",
+      value: form.object.body
+    %>
+
+    <div class="govuk-button-group">
+      <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
+      <%= govuk_link_to I18n.t("support.case.label.messages.reply.delete"), messages_path(message_id: params[:id], redirect_back: message_thread_path(id: @last_received_reply.outlook_conversation_id, ticket_id: @last_received_reply.ticket.id, ticket_type: @last_received_reply.ticket.class)), data: { turbo_method: :delete, turbo_frame: "messages-frame", turbo_confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, no_visited_state: true %>
+    </div>
+
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attach_files") %></h2>
+    <ul class="govuk-list">
+      <li><%= govuk_link_to I18n.t("support.emails.attachments.email_attachments"), attach_email_attachments_path(message_id: params[:id], back_to: current_url_b64, turbo_frame: "reply-frame"), no_visited_state: true, "data-draft-email-target": "emailAttachmentsLink" %></li>
+      <li>
+        <span class="fake-link" role="link" data-draft-email-target="btnDisplayFileDialog">
+          <%= I18n.t("support.emails.attachments.files_from_your_computer") %>
+        </span>
+      </li>
+    </ul>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-!-display-none" data-draft-email-target="attachmentList">
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attachments_added") %></h2>
+          <div data-draft-email-target="attachmentPreview">
+            <div data-draft-email-target="previewTemplate">
+              <div class="template-edit__attachment">
+                <span class="template-edit__attachment-name" data-dz-name></span>
+                <span class="template-edit__attachment-error" data-dz-error></span>
+                <div class="template-edit__attachment-actions">
+                  <span class="template-edit__attachment-download govuk-!-display-none">
+                    <a class="govuk-link govuk-link--no-visited-state" href="#" target="_top" data-dz-url><%= I18n.t("support.emails.attachments.download") %></a>
+                  </span>
+                  <span class="template-edit__attachment-remove">
+                    <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.emails.attachments.remove") %></a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
