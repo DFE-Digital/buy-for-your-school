@@ -1,6 +1,6 @@
-<%= form.hidden_field :to_recipients, value: @to_recipients || nil  %>
-<%= form.hidden_field :cc_recipients, value: @cc_recipients || nil  %>
-<%= form.hidden_field :bcc_recipients, value: @bcc_recipients || nil  %>
+<%= form.hidden_field :to_recipients, value: @reply_form.to_recipients.to_s %>
+<%= form.hidden_field :cc_recipients, value: @reply_form.cc_recipients.to_s %>
+<%= form.hidden_field :bcc_recipients, value: @reply_form.bcc_recipients.to_s %>
 
 <%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input" %>
 

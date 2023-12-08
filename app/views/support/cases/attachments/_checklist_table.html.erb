@@ -1,0 +1,29 @@
+<table class="govuk-table" aria-label="Email attachments">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">
+        <%= form.govuk_check_boxes_fieldset :attachments, multiple: false, small: true, legend: nil, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+          <%= form.govuk_check_box :attachments, :all, label: { text: I18n.t("support.case.label.attachments.table.attachment_name"), class: "govuk-!-font-weight-bold" }, "data-checklist-table-target": "selectAll", "data-action": "checklist-table#toggleSelectAll" %>
+        <% end %>
+      </th>
+      <th class="govuk-table__header attachment-date-added-header"><%= I18n.t("support.case.label.attachments.table.added") %></th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body" data-checklist-table-target="tableBody">
+    <% attachments.each do |attachment| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <%= form.govuk_check_boxes_fieldset :attachments, multiple: true, small: true, legend: nil, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+            <%= form.govuk_check_box :attachments, { type: attachment.class, file_id: attachment.id }.to_json, label: { text: attachment.custom_name }, hint: { text: attachment.description.presence }, "data-action": "checklist-table#toggleSelection" %>
+          <% end %>
+        </td>
+        <td class="govuk-table__cell">
+          <span title="<%= attachment.created_at.strftime("%d %b %Y %H:%M") %>">
+            <%= relative_date_format(attachment.created_at) %>
+          <span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

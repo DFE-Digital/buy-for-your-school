@@ -35,11 +35,11 @@
           </div>
         <% end %>
 
-        <%= turbo_frame_tag "messages-frame", src: message_threads_path(ticket_type: @evaluation.class, ticket_id: @evaluation.id, back_to: current_url_b64(:messages)) do %>
-          <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
-            <p class="govuk-body">Loading...</p>
-          </div>
-        <% end %>
+        <div id="messages" class="govuk-tabs__panel govuk-tabs__panel--hidden">
+          <%= turbo_frame_tag "messages-frame", src: message_threads_path(ticket_type: @evaluation.class, ticket_id: @evaluation.id, back_to: current_url_b64(:messages)) do %>
+              <p class="govuk-body">Loading...</p>
+          <% end %>
+        </div>
 
         <%= turbo_frame_tag "attachments-frame", src: message_attachments_path(ticket_type: @evaluation.class, ticket_id: @evaluation.id) do %>
           <div id="attachments" class="govuk-tabs__panel govuk-tabs__panel--hidden">

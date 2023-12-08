@@ -6,6 +6,12 @@
   border-bottom: 1px solid $govuk-border-colour;
 }
 
+.template-edit__attachment.dz-error {
+  border: $govuk-border-width solid $govuk-error-colour;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .template-edit__attachment-name {
   @include govuk-font($size: 19);
 }
@@ -14,6 +20,13 @@
   display: flex;
   justify-content: space-between;
   gap: govuk-spacing(2);
+}
+
+.template-edit__attachment-error {
+  @include govuk-font($size: 19);
+  @include govuk-typography-weight-bold;
+
+  color: $govuk-error-colour;
 }
 
 .template-edit__attachment-download {

@@ -1,22 +1,22 @@
 <%= turbo_frame_tag "messages-frame" do %>
-  <div id="messages" class="govuk-tabs__panel">
-    <%= link_to I18n.t("support.case.label.message_threads.back"), message_threads_path(ticket_type: @thread.ticket_type, ticket_id: @thread.ticket_id, back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+  <%= link_to I18n.t("support.case.label.message_threads.back"), message_threads_path(ticket_type: @thread.ticket_type, ticket_id: @thread.ticket_id, back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
 
-    <h3 class="govuk-heading-m"><%= @thread.subject %></h3>
+  <h3 class="govuk-heading-m"><%= @thread.subject %></h3>
 
-    <%= render "tickets/message_threads/show/#{@thread.messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @thread.messages %>
+  <%= render "tickets/message_threads/show/#{@thread.messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @thread.messages %>
 
-    <% if @thread.last_received_reply&.inbox? %>
-      <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details" open="true">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            Reply to message
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <%= render "tickets/message_threads/show/form", email: @thread.last_received_reply %>
-        </div>
-      </details>
-    <% end %>
-  </div>
+  <% if @thread.last_received_reply&.inbox? %>
+    <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details" open="true">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Reply to message
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <%= turbo_frame_tag "reply-frame" do %>
+          <%= button_to "Reply to message", message_replies_path(message_id: @thread.last_received_reply), class: "govuk-button" %>
+        <% end %>
+      </div>
+    </details>
+  <% end %>
 <% end %>

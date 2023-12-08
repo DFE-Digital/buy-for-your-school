@@ -19,6 +19,10 @@ module Support::Case::EmailTicketable
     end
   end
 
+  def unique_attachments(folder: "all")
+    CaseFiles::UniqueAttachmentsForCase.new(case_id: id, filter_results: folder)
+  end
+
 private
 
   def on_email_attached(email)

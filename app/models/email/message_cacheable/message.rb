@@ -8,6 +8,7 @@ class Email::MessageCacheable::Message < SimpleDelegator
       body: body.content,
       unique_body: unique_body&.content,
       sent_at: sent_date_time,
+      outlook_internet_message_id: internet_message_id,
       outlook_conversation_id: conversation_id,
       outlook_received_at: received_date_time,
       outlook_has_attachments: has_attachments,

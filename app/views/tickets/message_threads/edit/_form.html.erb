@@ -1,9 +1,16 @@
 <% unique_id = "A#{SecureRandom.uuid}" %>
-<% url = message_threads_path(@ticket, ticket_type: @ticket.class, unique_id:) %>
+<% url = submit_message_thread_path(ticket_id: @ticket.id, ticket_type: @ticket.class, id: params[:id], unique_id:) %>
 <% submit_text = I18n.t("support.case.label.messages.reply.send_message") %>
 
 <%= form_with id: "message-form", model: @draft, scope: :"message_reply_form_#{unique_id}", url:, method: :post,
-    html: { "data-controller" => "email-attachment" } do |form| %>
+    html: {
+      "data-controller" => "draft-email",
+      "data-draft-email-list-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
+      "data-draft-email-upload-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
+      "data-draft-email-remove-attachments-endpoint-value" => attachments_remove_messages_path(message_id: params[:id]),
+      "data-draft-email-update-endpoint-value" => messages_path(message_id: params[:id], unique_id: unique_id),
+      "data-draft-email-target" => "form"
+    } do |form| %>
   <%= form.govuk_error_summary %>
 
   <%= form.hidden_field :to_recipients, value: @to_recipients || form.object.to_recipients.to_json  %>
@@ -101,19 +108,41 @@
   %>
 
   <div class="govuk-button-group">
-    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-action" => "email-attachment#submit" %>
-    <span class="govuk-button govuk-button--secondary" role="button"
-      data-email-attachment-target="btnDisplayFileDialog">
-      <%= I18n.t("support.case.label.messages.reply.add_attachments") %>
-    </span>
-    <%= form.govuk_file_field :file_attachments, multiple: true, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
-    <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
-    <%= link_to I18n.t("support.case.label.messages.reply.delete"), @back_url, data: { confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
+    <%= govuk_link_to I18n.t("support.case.label.messages.reply.delete"), messages_path(message_id: params[:id], redirect_back: message_threads_path(ticket_id: @ticket.id, ticket_type: @ticket.class)), data: { turbo_method: :delete, turbo_frame: "messages-frame", turbo_confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, no_visited_state: true %>
   </div>
+
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attach_files") %></h2>
+  <ul class="govuk-list">
+    <li><%= govuk_link_to I18n.t("support.emails.attachments.email_attachments"), attach_email_attachments_path(message_id: params[:id], back_to: current_url_b64, turbo_frame: "messages-frame"), no_visited_state: true, "data-draft-email-target": "emailAttachmentsLink" %></li>
+    <li>
+      <span class="fake-link" role="link" data-draft-email-target="btnDisplayFileDialog">
+        <%= I18n.t("support.emails.attachments.files_from_your_computer") %>
+      </span>
+    </li>
+  </ul>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= email_attachment_container %>
+      <div class="govuk-!-display-none" data-draft-email-target="attachmentList">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attachments_added") %></h2>
+        <div data-draft-email-target="attachmentPreview">
+          <div data-draft-email-target="previewTemplate">
+            <div class="template-edit__attachment">
+              <span class="template-edit__attachment-name" data-dz-name></span>
+              <span class="template-edit__attachment-error" data-dz-error></span>
+              <div class="template-edit__attachment-actions">
+                <span class="template-edit__attachment-download govuk-!-display-none">
+                  <a class="govuk-link govuk-link--no-visited-state" href="#" target="_top" data-dz-url><%= I18n.t("support.emails.attachments.download") %></a>
+                </span>
+                <span class="template-edit__attachment-remove">
+                  <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.emails.attachments.remove") %></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
