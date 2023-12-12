@@ -21,17 +21,33 @@ module Support
       kase = Case.find_by_ref(case_ref)
       return if kase.exit_survey_sent? || !kase.resolved?
 
-      survey = ExitSurveyResponse.create!(
-        case: kase,
-        status: :sent_out,
-        survey_sent_at: Time.zone.now,
-      )
+      if Flipper.enabled?(:customer_satisfaction_survey)
+        survey = CustomerSatisfactionSurveyResponse.create!(
+          service: :supported_journey,
+          source: :exit_survey,
+          status: :sent_out,
+          survey_sent_at: Time.zone.now,
+        )
 
-      ::Emails::ExitSurvey.new(
-        recipient: kase,
-        reference: case_ref,
-        survey_id: survey.id,
-      ).call
+        ::Emails::CustomerSatisfactionSurvey.new(
+          recipient: kase,
+          reference: case_ref,
+          survey_id: survey.id,
+          caseworker_name: kase.agent_for_satisfaction_survey,
+        ).call
+      else
+        survey = ExitSurveyResponse.create!(
+          case: kase,
+          status: :sent_out,
+          survey_sent_at: Time.zone.now,
+        )
+
+        ::Emails::ExitSurvey.new(
+          recipient: kase,
+          reference: case_ref,
+          survey_id: survey.id,
+        ).call
+      end
 
       update_case(kase)
     end

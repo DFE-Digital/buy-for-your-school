@@ -27,14 +27,15 @@ describe Support::SendExitSurveyJob do
   end
 
   describe "#perform" do
-    let!(:kase) { create(:support_case, :resolved, ref: "000001") }
+    let!(:kase) { create(:support_case, :resolved, ref: "000001", agent: create(:support_agent, first_name: "Kerry", last_name: "Oki")) }
     let(:exit_survey_service) { double("exit_survey_service", call: nil) }
 
     before do
-      allow(Emails::ExitSurvey).to receive(:new)
+      allow(Emails::CustomerSatisfactionSurvey).to receive(:new)
         .with(recipient: kase,
               reference: "000001",
-              survey_id: instance_of(String))
+              survey_id: instance_of(String),
+              caseworker_name: "Kerry Oki")
         .and_return(exit_survey_service)
 
       job.perform("000001")
@@ -67,6 +68,14 @@ describe Support::SendExitSurveyJob do
     it "creates a case note that the exit survey has been sent" do
       expect(kase.interactions.note.count).to eq 1
       expect(kase.interactions.note.first.body).to eq "The exit survey email has been sent"
+    end
+
+    it "creates a customer satisfaction survey with the right initial values" do
+      customer_satisfaction_survey = CustomerSatisfactionSurveyResponse.first
+      expect(customer_satisfaction_survey.sent_out?).to eq(true)
+      expect(customer_satisfaction_survey.survey_sent_at).to be_within(1.second).of(Time.zone.now)
+      expect(customer_satisfaction_survey.service_supported_journey?).to eq(true)
+      expect(customer_satisfaction_survey.source_exit_survey?).to eq(true)
     end
   end
 end

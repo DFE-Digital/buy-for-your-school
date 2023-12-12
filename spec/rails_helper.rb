@@ -77,6 +77,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.before do
     Bullet.enable = false
+    Flipper.enable(:customer_satisfaction_survey)
   end
 
   config.after do

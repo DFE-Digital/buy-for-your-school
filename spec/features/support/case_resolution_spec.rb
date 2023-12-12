@@ -11,18 +11,19 @@ describe "Resolving a case" do
     stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
       .with(body: {
         "email_address": "school@email.co.uk",
-        "template_id": "134bc268-2c6b-4b74-b6f4-4a58e22d6c8b",
+        "template_id": "bbee99cd-c718-42ef-9d2c-b8fc9b442bbf",
         "reference": "000001",
         "personalisation": {
           "reference": "000001",
           "first_name": "School",
           "last_name": "Contact",
           "email": "school@email.co.uk",
+          "caseworker_name": "first_name last_name",
+          "extremely_satisfied_link": %r{extremely_satisfied$},
           "very_satisfied_link": %r{very_satisfied$},
-          "satisfied_link": %r{satisfied$},
-          "neither_link": %r{neither$},
-          "dissatisfied_link": %r{dissatisfied$},
-          "very_dissatisfied_link": %r{very_dissatisfied$},
+          "neutral_link": %r{neutral$},
+          "slightly_satisfied_link": %r{slightly_satisfied$},
+          "not_satisfied_at_all_link": %r{not_satisfied_at_all$},
         },
       })
       .to_return(body: {}.to_json, status: 200, headers: {})
