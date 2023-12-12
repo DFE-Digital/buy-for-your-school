@@ -1,0 +1,17 @@
+<%= content_for :title, I18n.t("customer_satisfaction_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @customer_satisfaction_survey, scope: :customer_satisfaction_survey, url: customer_satisfaction_surveys_recommendation_likelihood_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %>
+
+      <%= form.govuk_radio_buttons_fieldset :recommendation_likelihood, legend: { text: I18n.t("customer_satisfaction_survey.recommendation_likelihood.question"), size: "l" }, hint: { text: I18n.t("customer_satisfaction_survey.recommendation_likelihood.hint") } do %>
+        <% available_recommendation_likelihood_ratings.each do |rating| %>
+          <%= form.govuk_radio_button :recommendation_likelihood, rating, label: { text: rating } %>
+        <% end %>
+      <% end %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

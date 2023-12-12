@@ -1,0 +1,23 @@
+<%= content_for :title, I18n.t("customer_satisfaction_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @customer_satisfaction_survey, scope: :customer_satisfaction_survey, url: customer_satisfaction_surveys_helped_how_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %> 
+            
+      <%= form.govuk_check_boxes_fieldset :helped_how, legend: { text: I18n.t("customer_satisfaction_survey.helped_how.question"), size: "l" } do %>
+          <% available_helped_how_options.each do |option| %>
+            <% if option.id == "other" %>
+              <%= form.govuk_check_box :helped_how, option.id, exclusive: option.exclusive, label: { text: option.title } do %>
+                <%= form.govuk_text_area :helped_how_other, label: { text: I18n.t("customer_satisfaction_survey.helped_how.other_text") }, class: "govuk-!-width-two-thirds" %>
+              <% end %>
+            <% else %>  
+              <%= form.govuk_check_box :helped_how, option.id, exclusive: option.exclusive, label: { text: option.title } %>
+            <% end %>
+          <% end %>  
+      <% end %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>

@@ -342,6 +342,42 @@ en:
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you - Get help buying for schools feedback
       header: Thank you
+  customer_satisfaction_survey:
+    title: Get help buying for schools feedback
+    satisfaction_level:
+      question: Overall, how satisfied are you with this service?
+    satisfaction_reason:
+      question: Please tell us why you gave the score '%{satisfaction_level}'
+    easy_to_use_rating:
+      question: This service was easy to use
+    helped_how:
+      question: How has this service helped you?
+      options:
+        saved_money: Saved me money
+        saved_time: Saved me time
+        helped_buy_better_quality_goods_services: Helped me to buy better quality goods or services
+        improved_confidence: Improved my confidence to buy for my school
+        improved_capability: Improved my capability to buy for my school
+        not_sure: Not sure
+        none: None of the above
+        other: Other
+      other_text: Please tell how else this service has helped you
+    clear_to_use_rating:
+      question: It was clear to me what I could use this service to do
+    recommendation_likelihood:
+      question: On a scale of 0 to 10, how likely are you to recommend us to a colleague?
+      hint: 10 being highly likely and 0 being not likely at all
+    improvements:
+      question: Please tell us how we could improve this service
+    research_opt_in:
+      question: Would you like to participate in research?
+      hint: The Department for Education (DfE) often carries out research with people like you, who have used our service. This helps us to understand your experience or to test new concepts and improvements.
+      email:
+        question: What is your email address?
+        hint: We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services.
+      job_title:
+        question: What is your job title?
+        hint: We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
   faf:
     bill_uploads:
       header:

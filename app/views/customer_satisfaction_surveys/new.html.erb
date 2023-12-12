@@ -1,0 +1,25 @@
+<%= content_for :title, I18n.t("customer_satisfaction_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= I18n.t("customer_satisfaction_survey.title") %>
+    </h1>
+
+    <p class="govuk-body">
+      Thank you for taking the time to give us your feedback.
+    </p>
+    <p class="govuk-body">
+      This will help us to understand how well the service has supported you so that we can continue to improve it.
+    </p>
+    <p class="govuk-body">
+      It should take about 5 minutes to complete.
+    </p>
+
+    <%= button_to I18n.t("generic.button.next"), customer_satisfaction_surveys_path, class: "govuk-button" %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to "Privacy policy", "/privacy" %>
+    </p>
+  </div>
+</div>

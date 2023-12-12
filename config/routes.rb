@@ -402,6 +402,24 @@ Rails.application.routes.draw do
     resources :thank_you, only: %i[show]
   end
 
+  resources :customer_satisfaction_surveys, only: %i[new create] do
+    scope module: :customer_satisfaction_surveys, as: :customer_satisfaction_surveys do
+      member do
+        resource :satisfaction_level, only: %i[edit update]
+        resource :satisfaction_reason, only: %i[edit update]
+        resource :easy_to_use_rating, only: %i[edit update]
+        resource :helped_how, only: %i[edit update]
+        resource :clear_to_use_rating, only: %i[edit update]
+        resource :recommendation_likelihood, only: %i[edit update]
+        resource :improvements, only: %i[edit update]
+        resource :research_opt_in, only: %i[edit update]
+      end
+      collection do
+        resource :thank_you, only: %i[show]
+      end
+    end
+  end
+
   if Rails.env.development?
     require "sidekiq/web"
     mount Sidekiq::Web, at: "/sidekiq"

@@ -1,0 +1,16 @@
+<%= content_for :title, I18n.t("customer_satisfaction_survey.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @customer_satisfaction_survey, scope: :customer_satisfaction_survey, url: customer_satisfaction_surveys_satisfaction_reason_path, method: :patch do |form| %>
+      <%= form.govuk_error_summary %> 
+            
+      <%= form.govuk_text_area :satisfaction_text,
+        rows: 5,
+        label: { text: I18n.t("customer_satisfaction_survey.satisfaction_reason.question", satisfaction_level: @customer_satisfaction_survey.satisfaction_level.humanize), size: "l" }
+      %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
