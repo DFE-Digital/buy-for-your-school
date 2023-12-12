@@ -6,13 +6,17 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
+# Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/models/exit_survey_response_spec.rb'
-    - 'spec/services/support/messages/outlook/resync_email_ids_spec.rb'
+
+# Offense count: 16
+# Configuration parameters: AllowedParentClasses.
+Lint/MissingSuper:
+  Enabled: false
 
 # Offense count: 8
 # Configuration parameters: AllowedPatterns.
@@ -23,7 +27,7 @@ Naming/MethodName:
   - 'lib/microsoft_graph/microsoft_graph.rb'
   - 'spec/support/given_when_then.rb'
 
-# Offense count: 20
+# Offense count: 17
 RSpec/AnyInstance:
   Exclude:
     - 'spec/jobs/specify/warm_entry_cache_job_spec.rb'
@@ -33,7 +37,6 @@ RSpec/AnyInstance:
     - 'spec/services/specify/create_task_spec.rb'
     - 'spec/services/specify/get_answers_for_steps_spec.rb'
     - 'spec/services/specify/save_answer_spec.rb'
-    - 'spec/services/support/messages/outlook/synchronisation/steps/attach_email_to_case_spec.rb'
     - 'spec/support/shared/notify_email_templates.rb'
     - 'spec/support/sign_in_helpers.rb'
 
@@ -45,26 +48,23 @@ RSpec/DescribedClass:
   Exclude:
     - 'spec/controllers/support_agents_spec.rb'
 
-# Offense count: 11
+# Offense count: 9
 RSpec/LetSetup:
   Exclude:
     - 'spec/jobs/support/send_exit_survey_job_spec.rb'
-    - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
     - 'spec/support/shared/duplicate_email_attachments.rb'
-    - 'spec/support/shared/support_agent.rb'
 
-# Offense count: 4
+# Offense count: 3
 RSpec/SubjectStub:
   Exclude:
     - 'spec/forms/framework_requests/special_requirements_form_spec.rb'
-    - 'spec/services/support/messages/outlook/synchronisation/message_case_detection_spec.rb'
 
-# Offense count: 125
+# Offense count: 52
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
   Enabled: false
 
-# Offense count: 14
+# Offense count: 17
 # Configuration parameters: Database, Include.
 # SupportedDatabases: mysql, postgresql
 # Include: db/**/*.rb
@@ -110,11 +110,12 @@ Rails/ReversibleMigration:
     - 'db/migrate/20210125171840_remove_next_entry_id.rb'
     - 'db/migrate/20230919092926_update_lot_frameworks_framework.rb'
 
-# Offense count: 1
+# Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowImplicitReturn, AllowedReceivers.
 Rails/SaveBang:
   Exclude:
+    - 'app/controllers/customer_satisfaction_surveys/satisfaction_levels_controller.rb'
     - 'app/controllers/exit_survey/satisfaction_controller.rb'
 
 # Offense count: 7
@@ -141,6 +142,3 @@ Style/DateTime:
 Style/SoleNestedConditional:
   Exclude:
     - 'app/models/framework_request_flow.rb'
-
-Lint/MissingSuper:
-  Enabled: false
