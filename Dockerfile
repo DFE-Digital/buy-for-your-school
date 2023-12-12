@@ -1,12 +1,14 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:3.2.2 as base
+FROM ruby:3.2.2-slim as base
 
 RUN apt-get update && apt-get install -qq -y \
     build-essential \
     libpq-dev \
     --fix-missing --no-install-recommends
+
+RUN apt-get install -y wget curl gnupg2 git --no-install-recommends
 
 ENV TZ="Europe/London"
 
@@ -24,10 +26,8 @@ RUN apt-get install -qq -y \
 
 # Yarn
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-RUN apt-get update -qq && apt-get install -y nodejs yarn
+RUN apt-get install -y nodejs npm --no-install-recommends
+RUN npm install --global yarn
 
 
 # ------------------------------------------------------------------------------

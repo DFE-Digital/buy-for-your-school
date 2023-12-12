@@ -6,3 +6,6 @@ log
 node_modules
 vendor
 public/assets/*
+tmp
+terraform
+storage
