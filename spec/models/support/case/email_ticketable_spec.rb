@@ -23,5 +23,26 @@ describe Support::Case::EmailTicketable do
         end
       end
     end
+
+    context "when the email was received today" do
+      it "creates a notification for the caseworker" do
+        support_case = create(:support_case, :initial)
+        email = Email.new(
+          folder: :inbox,
+          outlook_conversation_id: "123",
+          sender: { name: "Test User", address: "test@email.com" },
+          outlook_received_at: Time.zone.now,
+        )
+        support_case.emails << email
+
+        expect(Support::Notification.case_email_recieved.where(
+          support_case:,
+          assigned_to: support_case.agent,
+          subject: email,
+          assigned_by_system: true,
+          created_at: email.outlook_received_at,
+        ).count).to eq(1)
+      end
+    end
   end
 end

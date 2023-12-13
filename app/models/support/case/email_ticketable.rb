@@ -25,8 +25,19 @@ private
     email.inbox? ? on_incoming_email_attached(email) : on_outgoing_email_attached(email)
   end
 
-  def on_incoming_email_attached(_email)
+  def on_incoming_email_attached(email)
     reopen_due_to_incoming_email! if may_reopen_due_to_incoming_email?
+
+    if email.outlook_received_at.today? && agent.present?
+      Support::Notification.case_email_recieved.find_or_create_by!(
+        support_case: self,
+        assigned_to: agent,
+        assigned_by_system: true,
+        subject: email,
+        created_at: email.outlook_received_at,
+      )
+    end
+
     update!(action_required: true)
   end
 
