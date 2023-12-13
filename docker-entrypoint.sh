@@ -11,7 +11,7 @@ setup_database()
   echo "ENTRYPOINT: Finished database setup."
 }
 
-if [ ! "$RAILS_ENV" == "production" ]; then
+if [ "$RAILS_ENV" == "development" ]; then
   # Bundle any Gemfile changes in development without requiring a long image rebuild
   if bundle check; then echo "ENTRYPOINT: Skipping bundle for development"; else bundle; fi
 

@@ -40,6 +40,7 @@ runs:
         if [ "${{ inputs.target }}" == "test" ]; then
           echo main_tag=${BASE_IMAGE}:${TAG}-test >> $GITHUB_OUTPUT
           echo tags_to_push=${BASE_IMAGE}:${TAG}-test,${BASE_IMAGE}:latest-test >> $GITHUB_OUTPUT
+          echo build_args="BUNDLE_WITHOUT=assets" >> $GITHUB_OUTPUT
 
         elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
           echo main_tag=${BASE_IMAGE}:${TAG} >> $GITHUB_OUTPUT
@@ -68,9 +69,10 @@ runs:
       uses: docker/build-push-action@v3
       with:
         context: .
+        file: Dockerfile.alpine
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        target: ${{ inputs.target }}
+        build-args: ${{ steps.prep.outputs.build_args }}
         tags: ${{ steps.prep.outputs.tags_to_push }}
         cache-from: type=gha
         cache-to: type=gha,mode=max

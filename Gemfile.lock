@@ -358,6 +358,7 @@ GEM
     libv8-node (18.16.0.0-arm64-darwin)
     libv8-node (18.16.0.0-x86_64-darwin)
     libv8-node (18.16.0.0-x86_64-linux)
+    libv8-node (18.16.0.0-x86_64-linux-musl)
     liquid (5.4.0)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -728,6 +729,7 @@ PLATFORMS
   x86_64-darwin-22
   x86_64-darwin-23
   x86_64-linux
+  x86_64-linux-musl
 
 DEPENDENCIES
   aasm

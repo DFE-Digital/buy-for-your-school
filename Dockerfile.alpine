@@ -1,0 +1,75 @@
+FROM ruby:3.2.2-alpine AS builder
+
+ARG BUILD_PACKAGES="build-base curl-dev git"
+ARG DEV_PACKAGES="postgresql-dev yaml-dev zlib-dev nodejs yarn pandoc-cli"
+ARG RUBY_PACKAGES="tzdata"
+
+ARG RAILS_ROOT=/app
+ARG RAILS_ENV=production
+ARG NODE_ENV=production
+ARG SECRET_KEY_BASE=secret123
+ARG BUNDLE_WITHOUT='development:test:assets'
+ARG BUNDLE_APP_CONFIG="$RAILS_ROOT/.bundle"
+ARG BUNDLE_WITHOUT=$BUNDLE_WITHOUT
+ARG BUNDLE_PATH='vendor/bundle'
+ARG BUNDLE_FROZEN='1'
+
+WORKDIR $RAILS_ROOT
+
+# System dependencies
+
+RUN apk update \
+    && apk upgrade \
+    && apk add --update --no-cache $BUILD_PACKAGES $DEV_PACKAGES $RUBY_PACKAGES
+
+# Bundle install
+
+COPY Gemfile* package.json yarn.lock Rakefile $RAILS_ROOT
+RUN gem install bundler -v 2.4.12 \
+    && bundle install -j4 --retry 3 \
+    && rm -rf vendor/bundle/ruby/3.2.0/cache/*.gem \
+    && find vendor/bundle/ruby/3.2.0/gems/ -name "*.c" -delete \
+    && find vendor/bundle/ruby/3.2.0/gems/ -name "*.o" -delete
+
+# Copy minimum amount of files to allow asset compilation without other code changes causing asset build
+# We have to manually remove config/initializers later on
+
+COPY script/assets/copy-assets.sh script/assets/
+COPY app/assets app/assets
+COPY app/javascript app/javascript
+COPY config config
+COPY bin bin
+COPY lib lib
+
+# NOTE bundle exec rails assets:precompile runs yarn install
+
+RUN rm -rf config/initializers && bundle exec rails assets:precompile
+
+# All remaining project files
+
+COPY . .
+
+#################################################################################
+
+FROM ruby:3.2.2-alpine
+
+ARG RAILS_ROOT=/app
+ARG PACKAGES="tzdata postgresql-client bash texlive"
+
+ENV BUNDLE_APP_CONFIG="$RAILS_ROOT/.bundle"
+ENV BUNDLE_PATH='vendor/bundle'
+
+WORKDIR $RAILS_ROOT
+
+RUN apk update \
+    && apk upgrade \
+    && apk add --update --no-cache $PACKAGES
+
+COPY --from=builder $RAILS_ROOT $RAILS_ROOT
+COPY --from=builder /usr/bin/pandoc /usr/bin/pandoc
+
+EXPOSE 3000
+
+ENTRYPOINT ["sh", "docker-entrypoint.sh"]
+
+CMD ["bundle", "exec", "rails", "server"]
