@@ -21,6 +21,7 @@ module Support
     include SchoolPickable
     include Transferable
     include Surveyable
+    include Notifiable
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true
