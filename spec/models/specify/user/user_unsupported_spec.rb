@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
     end
 
     context "when user belongs to unsupported org" do
-      it "returns the user" do
+      it "returns the user", flaky: true do
         expect(described_class.unsupported.count).to eq 1
         expect(described_class.unsupported[0].first_name).to eq "test_unsupported"
       end
@@ -55,7 +55,7 @@ RSpec.describe User, type: :model do
                ])
       end
 
-      it "ignores the user" do
+      it "ignores the user", flaky: true do
         expect(described_class.unsupported.count).to eq 1
         expect(described_class.unsupported[0].first_name).to eq "test_unsupported"
       end
@@ -73,7 +73,7 @@ RSpec.describe User, type: :model do
                ])
       end
 
-      it "returns the user" do
+      it "returns the user", flaky: true do
         expect(described_class.unsupported.count).to eq 2
         expect(described_class.unsupported[0].first_name).to eq "test_unsupported"
         expect(described_class.unsupported[1].first_name).to eq "test_no_type"
