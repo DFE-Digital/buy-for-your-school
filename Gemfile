@@ -67,12 +67,15 @@ gem "wisper", "2.0.1"
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
+  gem "guard-rspec", require: false
   gem "i18n-tasks"
   gem "knapsack"
   gem "pry-byebug"
   gem "pry-rails"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
+  gem "terminal-notifier"
+  gem "terminal-notifier-guard", "~> 1.6.1"
 end
 
 group :development do
