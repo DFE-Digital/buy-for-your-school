@@ -240,6 +240,32 @@
           <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
         </dd>
       </div>
+      <% if @case_request.category.is_energy_or_services? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("faf.check_answers.details.contract_start_date") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_request.contract_start_date_formatted || I18n.t("faf.check_answers.not_known") %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_contract_start_date_path(@case_request, source: :change_link), class: "govuk-link", id: "edit-contract-start-date", "aria-label": I18n.t("faf.check_answers.aria.change_contract_start_date")  %>
+          </dd>
+        </div>
+      <% end %>
+      <% if @case_request.school_urns.count > 1 %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key"> 
+            <%= I18n.t("faf.check_answers.details.same_supplier_used") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_request.same_supplier_used_formatted %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_same_supplier_path(@case_request, source: :change_link), class: "govuk-link", id: "edit-same-supplier", "aria-label": I18n.t("faf.check_answers.aria.change_same_supplier_used")  %>
+          </dd>
+        </div>
+      <% end %>
     </dl>
 
     <h2 class="govuk-heading-m">

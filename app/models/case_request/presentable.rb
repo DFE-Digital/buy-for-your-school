@@ -17,9 +17,19 @@ module CaseRequest::Presentable
 
   def contract_length = nil
 
-  def flow = nil
+  def contract_start_date_formatted
+    return if contract_start_date.nil?
 
-  def same_supplier_used = nil
+    contract_start_date.strftime(I18n.t("date.formats.presenter"))
+  end
+
+  def same_supplier_used_formatted
+    return if same_supplier_used.nil?
+
+    I18n.t("faf.same_supplier.options.#{same_supplier_used}")
+  end
+
+  def flow = nil
 
   def origin = nil
 end

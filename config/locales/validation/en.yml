@@ -3,6 +3,16 @@ en:
   activemodel:
       errors:
         models:
+          case_request/contract_start_dater:
+            attributes:
+              contract_start_date_known:
+                blank: Select if you know when the contract should start
+              contract_start_date:
+                blank: Enter the date you want the contract to start
+          case_request/same_supplierer:
+            attributes:
+              same_supplier_used:
+                blank: Select if all schools are currently using the same supplier
           framework_requests/email_form:
             attributes:
               email:

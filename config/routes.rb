@@ -341,6 +341,8 @@ Rails.application.routes.draw do
       scope module: "case_requests" do
         member do
           resource :school_picker, only: %i[edit update], as: :case_request_school_picker
+          resource :contract_start_date, only: %i[edit update], as: :case_request_contract_start_date
+          resource :same_supplier, only: %i[edit update], as: :case_request_same_supplier
         end
       end
     end

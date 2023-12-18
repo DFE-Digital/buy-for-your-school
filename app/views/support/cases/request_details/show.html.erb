@@ -117,7 +117,7 @@
             <dd class="govuk-summary-list__actions"></dd>
           </div>
         <% end %>
-        <% if @request.flow.present? && @request.flow.energy_or_services? %>
+        <% if @request.flow.present? && @request.flow.energy_or_services? || @request.category.is_energy_or_services? %>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               <%= I18n.t("support.case.label.contract_start_date") %>

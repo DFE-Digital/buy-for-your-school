@@ -115,6 +115,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_131833) do
     t.uuid "support_case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "same_supplier_used"
+    t.boolean "contract_start_date_known"
+    t.date "contract_start_date"
     t.index ["category_id"], name: "index_case_requests_on_category_id"
     t.index ["created_by_id"], name: "index_case_requests_on_created_by_id"
     t.index ["query_id"], name: "index_case_requests_on_query_id"
