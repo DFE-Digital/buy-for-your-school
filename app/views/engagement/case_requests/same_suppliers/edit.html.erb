@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_with model: @same_supplierer, scope: :case_request, url: engagement_case_request_same_supplier_path, method: :patch do |form| %>
+
+      <%= form.govuk_error_summary %>
+
+      <%= form.govuk_collection_radio_buttons :same_supplier_used, available_same_supplier_options, :id, :title,
+            caption: { text: I18n.t("faf.same_supplier.caption"), size: "l" },
+            legend: { text: I18n.t("faf.same_supplier.title"), size: "l" } %>
+
+      <div class="govuk-grid-row">
+        <%= form.submit I18n.t("generic.button.save"), class: "govuk-button", role: "button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

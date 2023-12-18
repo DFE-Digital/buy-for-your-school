@@ -12,6 +12,7 @@ module Support
              -> { order(Arel.sql("CASE WHEN support_categories.title = 'Not yet known' THEN 2 WHEN support_categories.title LIKE 'Other (%' THEN 1 ELSE 0 END ASC, support_categories.title ASC")) },
              class_name: "Support::Category",
              foreign_key: "parent_id"
+    has_many :request_for_help_categories, foreign_key: "support_category_id"
 
     # Disabled due to https://github.com/rubocop/rubocop-rails/issues/231
     validates :title, presence: true, uniqueness: { scope: :parent_id }
@@ -38,6 +39,10 @@ module Support
       sub_category = sub_categories.find_by(title: sub_category_title)
       new_parent_category = find_by(title: new_parent_category_title)
       sub_category.update!(parent: new_parent_category)
+    end
+
+    def is_energy_or_services?
+      request_for_help_categories.first&.flow.in?(%w[energy services])
     end
   end
 end

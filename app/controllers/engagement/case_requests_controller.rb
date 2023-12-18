@@ -20,7 +20,13 @@ module Engagement
 
       if @case_request.valid?
         @case_request.save!
-        redirect_to(@case_request.eligible_for_school_picker? && @case_request.school_urns.empty? ? edit_engagement_case_request_school_picker_path(@case_request) : engagement_case_request_path(@case_request))
+        if @case_request.eligible_for_school_picker? && @case_request.school_urns.empty?
+          redirect_to edit_engagement_case_request_school_picker_path(@case_request)
+        elsif @case_request.category.is_energy_or_services?
+          redirect_to edit_engagement_case_request_contract_start_date_path(@case_request)
+        else
+          redirect_to engagement_case_request_path(@case_request)
+        end
       else
         render :edit
       end

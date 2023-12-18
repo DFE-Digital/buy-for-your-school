@@ -7,6 +7,8 @@ RSpec.feature "Create case", js: true do
     Support::Organisation.destroy_all
 
     create(:support_category, :with_sub_category)
+    create(:support_category, title: "EnergyCat", parent: Support::Category.find_by(title: "Energy"))
+    create(:request_for_help_category, title: "EnergyCat", slug: "energy-cat", support_category: Support::Category.find_by(title: "EnergyCat"), flow: :energy)
     create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: { "code": "001", "name": "Timbuktoo" })
 
     visit "/engagement/cases"
@@ -53,18 +55,52 @@ RSpec.feature "Create case", js: true do
 
       before do
         create_list(:support_organisation, 3, trust_code: group.uid)
-      end
-
-      it "sets the group as the case organisation and participating schools", flaky: true do
         select_organisation "Group 1"
         valid_form_data_without_organisation
         click_on "Save and continue"
+      end
+
+      it "navigates to the same supplier question when more than one school is chosen and saves answers", flaky: true do
         check "School #1"
         check "School #2"
         click_on "Save"
+        expect(page).to have_text "Do all the schools currently use the same supplier?"
+
+        choose "Yes"
+        click_on "Save"
+        expect(page).to have_text "Same supplier used"
+        expect(page).to have_text "2 of 3 schools"
+
         click_on "Create case"
         expect(Support::Case.last.organisation).to eq(group)
         expect(Support::Case.last.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
+        expect(CaseRequest.last.same_supplier_used).to eq("yes")
+      end
+    end
+
+    context "when selecting an energy or services category" do
+      before do
+        choose "Procurement" # request type
+        select "EnergyCat", from: "select_request_details_category_id"
+        valid_form_data_without_category
+      end
+
+      it "navigates to the contract start page and saves the answers" do
+        click_on "Save and continue"
+
+        expect(page).to have_text "Do you know when you want the contract to start?"
+
+        choose "Yes"
+        fill_in "Day", with: "01"
+        fill_in "Month", with: "02"
+        fill_in "Year", with: "2025"
+        click_on "Save"
+
+        expect(page).to have_text "Check your answers before creating a new case"
+        expect(page).to have_text "1 February 2025"
+
+        click_on "Create case"
+        expect(CaseRequest.last.contract_start_date).to eq(Date.parse("2025-02-01"))
       end
     end
 
@@ -106,6 +142,17 @@ RSpec.feature "Create case", js: true do
   def complete_valid_form
     valid_form_data
     click_on "Save and continue"
+  end
+
+  def valid_form_data_without_category
+    select_organisation "Hillside School"
+    fill_in "case_request[first_name]", with: "first_name"
+    fill_in "case_request[last_name]", with: "last_name"
+    fill_in "case_request[email]", with: "test@example.com"
+    fill_in "case_request[phone_number]", with: "0778974653"
+    choose "Non-DfE newsletter" # case origin
+    fill_in "case_request[request_text]", with: "This is an energy request"
+    fill_in "case_request[procurement_amount]", with: "45.22"
   end
 
   def verify_case_panel
