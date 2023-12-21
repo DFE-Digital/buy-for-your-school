@@ -8,7 +8,7 @@ class CustomerSatisfactionSurveyResponse < ApplicationRecord
   enum :satisfaction_level, { not_satisfied_at_all: 0, slightly_satisfied: 1, neutral: 2, very_satisfied: 3, extremely_satisfied: 4 }, prefix: true
   enum :easy_to_use_rating, { strongly_disagree: 0, disagree: 1, neutral: 2, agree: 3, strongly_agree: 4 }, prefix: true
   enum :clear_to_use_rating, { strongly_disagree: 0, disagree: 1, neutral: 2, agree: 3, strongly_agree: 4 }, prefix: true
-  enum :service, { find_a_framework: 0, create_a_spec: 1, supported_journey: 2 }, prefix: true
+  enum :service, { find_a_framework: 0, create_a_spec: 1, supported_journey: 2, request_for_help_form: 3 }, prefix: true
   enum :source, { exit_survey: 0, banner_link: 1 }, prefix: true
   enum :status, { sent_out: 0, in_progress: 1, completed: 2 }
 

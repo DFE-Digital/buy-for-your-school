@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_13_105737) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_21_104002) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -171,6 +171,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_13_105737) do
     t.datetime "survey_completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "referer"
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1076,7 +1077,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_13_105737) do
        LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
-  create_view "support_case_data", sql_definition: <<-SQL
+    create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
       sc.created_at,
@@ -1232,7 +1233,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_13_105737) do
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
-  create_view "support_message_threads", sql_definition: <<-SQL
+create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
       se.ticket_id,

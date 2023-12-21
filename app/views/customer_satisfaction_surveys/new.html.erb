@@ -16,7 +16,7 @@
       It should take about 5 minutes to complete.
     </p>
 
-    <%= button_to I18n.t("generic.button.next"), customer_satisfaction_surveys_path, class: "govuk-button" %>
+    <%= button_to I18n.t("generic.button.next"), customer_satisfaction_surveys_path, params: { source: params[:source], service: params[:service], referer: request.referer }, class: "govuk-button" %>
 
     <p class="govuk-body">
       <%= govuk_link_to "Privacy policy", "/privacy" %>
