@@ -111,8 +111,9 @@ jobs:
     steps:
       - name: Run Rspec tests
         run: |
-          docker run --rm \
+          docker run \
             --network ${{ job.container.network }} \
+            --name test_container \
             -e RAILS_ENV=test \
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
@@ -147,6 +148,17 @@ jobs:
             -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "bundle exec rake 'knapsack:rspec[--tag ~flaky]' || bundle exec rspec --only-failure"
+      - name: Get coverage from container
+        run: |
+          mkdir coverage
+          docker cp test_container:/srv/app/coverage/.resultset.json coverage/.resultset-${{ matrix.ci_node_index }}.json
+      - name: Remove test container
+        run: docker rm test_container
+      - name: Store test coverage
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: coverage-report-${{ matrix.ci_node_index }}
+          path: coverage/.resultset-${{ matrix.ci_node_index }}.json
 
   rspec_quarentine:
     name: Checks - Rspec (Quarantined tests)
@@ -175,8 +187,9 @@ jobs:
       - name: Run Quarantined Rspec tests
         continue-on-error: true
         run: |
-          docker run --rm \
+          docker run \
             --network ${{ job.container.network }} \
+            --name test_container \
             -e RAILS_ENV=test \
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
@@ -209,6 +222,50 @@ jobs:
             -e FAF_WEBHOOK_SECRET=test \
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "bundle exec rspec --tag flaky || bundle exec rspec --only-failure"
+      - name: Get coverage from container
+        run: |
+          mkdir coverage
+          docker cp test_container:/srv/app/coverage/.resultset.json coverage/.resultset-quarantine.json
+      - name: Remove test container
+        run: docker rm test_container
+      - name: Store test coverage
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: coverage-report-quarantine
+          path: coverage/.resultset-quarantine.json
+
+  collate_test_coverage:
+    name: Checks - Produce test coverage report
+    needs: [build_test, rspec, rspec_quarentine]
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.0.0
+      - name: Download all test coverage
+        uses: actions/download-artifact@v4.1.2
+        with:
+          path: coverage
+          pattern: coverage-report-*
+          merge-multiple: true
+      - name: Generate collated test coverage
+        run: |
+          CONTAINER_ID=$(docker run -di ${{ needs.build_test.outputs.docker_image }} "/bin/sh")
+          docker cp coverage $CONTAINER_ID:/srv/app
+          docker exec $CONTAINER_ID bash -c "ruby lib/code_coverage_collate.rb"
+          docker cp $CONTAINER_ID:/srv/app/coverage/index.html coverage
+          docker cp $CONTAINER_ID:/srv/app/coverage/assets coverage
+          docker stop $CONTAINER_ID
+          docker rm $CONTAINER_ID
+      - name: Store collated test coverage
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: full-coverage-report
+          path: coverage/*
+      - name: Delete intermediate artifacts
+        uses: geekyeggo/delete-artifact@v4.1.0
+        with:
+          name: coverage-report-*
 
   release_dev:
     name: Deploy release (Dev)
