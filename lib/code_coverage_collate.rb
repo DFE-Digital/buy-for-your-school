@@ -1,5 +1,9 @@
 require "simplecov"
 
-SimpleCov.collate Dir["#{ENV['COVERAGE_DIR']}/**/.resultset.json"], "rails" do
+SimpleCov.collate Dir["coverage/.resultset-*.json"], "rails" do
+  project_name "GHBS"
+  enable_coverage :branch
+  primary_coverage :branch
+
   formatter SimpleCov::Formatter::HTMLFormatter
 end

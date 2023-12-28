@@ -24,7 +24,33 @@ end
 unless ENV["SKIP_COVERAGE"] == "1"
   require "simplecov"
   # SimpleCov.minimum_coverage 98
-  SimpleCov.start "rails"
+  SimpleCov.start "rails" do
+    enable_coverage :branch
+    primary_coverage :branch
+    command_name "Job #{ENV['CI_NODE_INDEX']}" if ENV["CI_NODE_INDEX"]
+
+    if ENV["CI"]
+      formatter SimpleCov::Formatter::SimpleFormatter
+    else
+      formatter SimpleCov::Formatter::MultiFormatter.new([
+        SimpleCov::Formatter::SimpleFormatter,
+        SimpleCov::Formatter::HTMLFormatter,
+      ])
+    end
+
+    track_files "**/*.rb"
+  end
+
+  SimpleCov.at_exit do
+    SimpleCov.result.format!
+
+    result = SimpleCov.result
+    covered_branches_percent = 100.0 * result.covered_branches / result.total_branches if result.total_branches&.positive?
+    covered_lines_percent = 100.0 * result.covered_lines / result.total_lines if result.total_lines&.positive?
+
+    puts "Branch coverage: #{covered_branches_percent.round(2)}%"
+    puts "Line coverage: #{covered_lines_percent.round(2)}%"
+  end
 end
 
 # NOTE: This is necessary for sign_in helpers to work correctly when feature
