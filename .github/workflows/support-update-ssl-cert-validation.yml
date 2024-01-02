@@ -1,0 +1,92 @@
+name: "Support - Update SSL Cert Validation"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update_validation:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        environment: [az-dev, az-staging, az-production]
+
+    steps:
+      - name: Setup variables
+        id: vars
+        run: |
+          # To avoid adding multiple variables into the environment when the names
+          # are based on convention and therefor can be built programmatically
+          
+          if [[ "$ENVIRONMENT_STAGE" == "az-dev" ]]; then
+            customDomainName="devghbscustom-domain0"
+            profileName="devghbscdn"
+            zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+          elsif [[ "$ENVIRONMENT_STAGE" == "az-staging" ]]; then
+            customDomainName="stagingghbscustom-domain0"
+            profileName="stagingghbscdn"
+            zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+          elsif [[ "$ENVIRONMENT_STAGE" == "az-production" ]]; then
+            customDomainName="prodghbscustom-domain0"
+            profileName="prodghbscdn"
+            zoneName="www.get-help-buying-for-schools.service.gov.uk"
+          fi
+          
+          echo customDomainName=customDomainName >> $GITHUB_OUTPUT
+          echo profileName=profileName >> $GITHUB_OUTPUT
+          echo zoneName=zoneName >> $GITHUB_OUTPUT
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
+
+      - name: Check need for validation
+        id: checkValidationState
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: |
+            domainValidationState=$(az afd custom-domain show \
+              --profile-name ${{ steps.vars.profileName }} \
+              --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+              --custom-domain-name ${{ steps.vars.customDomainName }} \
+              --only-show-errors | jq --raw-output .domainValidationState)
+
+            needsToReEvaluate=$([[ "$(echo domainValidationState | grep "Pending")" == "" ]] && echo "no" || echo "yes")
+            echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
+
+      - name: Regenerate validation token
+        id: regenerateValidationToken
+        if: steps.checkValidationState.needsToReEvaluate == 'yes'
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: |
+            az afd custom-domain regenerate-validation-token \
+              --profile-name ${{ steps.vars.profileName }} \
+              --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+              --custom-domain-name ${{ steps.vars.customDomainName }} \
+              --only-show-errors
+  
+            newValidationToken=$(az afd custom-domain show \
+              --profile-name ${{ steps.vars.profileName }} \
+              --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+              --custom-domain-name ${{ steps.vars.customDomainName }} \
+              --only-show-errors | jq --raw-output .validationProperties.validationToken)
+  
+            echo newValidationToken=$newValidationToken >> $GITHUB_OUTPUT
+
+      - name: Update dns auth TXT record
+        if: steps.checkValidationState.needsToReEvaluate == 'yes'
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: |
+            newValidationToken = ${{ steps.regenerateValidationToken.newValidationToken }}
+            
+            az network dns record-set txt update \
+              --zone-name ${{ steps.vars.zoneName }} \
+              --name "_dnsauth" \
+              --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+              --set "txt_records[0].value=['$newValidationToken']"
