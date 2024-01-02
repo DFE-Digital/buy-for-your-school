@@ -11,6 +11,8 @@ jobs:
       matrix:
         environment: [az-dev, az-staging, az-production]
 
+    environment: ${{ matrix.environment }}
+
     steps:
       - name: Setup variables
         id: vars
