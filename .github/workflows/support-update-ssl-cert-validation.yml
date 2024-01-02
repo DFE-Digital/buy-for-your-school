@@ -17,21 +17,21 @@ jobs:
         run: |
           # To avoid adding multiple variables into the environment when the names
           # are based on convention and therefor can be built programmatically
-          
+
           if [[ "$ENVIRONMENT_STAGE" == "az-dev" ]]; then
             customDomainName="devghbscustom-domain0"
             profileName="devghbscdn"
             zoneName="dev.get-help-buying-for-schools.service.gov.uk"
-          elsif [[ "$ENVIRONMENT_STAGE" == "az-staging" ]]; then
+          elif [[ "$ENVIRONMENT_STAGE" == "az-staging" ]]; then
             customDomainName="stagingghbscustom-domain0"
             profileName="stagingghbscdn"
             zoneName="staging.get-help-buying-for-schools.service.gov.uk"
-          elsif [[ "$ENVIRONMENT_STAGE" == "az-production" ]]; then
+          elif [[ "$ENVIRONMENT_STAGE" == "az-production" ]]; then
             customDomainName="prodghbscustom-domain0"
             profileName="prodghbscdn"
             zoneName="www.get-help-buying-for-schools.service.gov.uk"
           fi
-          
+
           echo customDomainName=customDomainName >> $GITHUB_OUTPUT
           echo profileName=profileName >> $GITHUB_OUTPUT
           echo zoneName=zoneName >> $GITHUB_OUTPUT
@@ -53,7 +53,7 @@ jobs:
               --custom-domain-name ${{ steps.vars.customDomainName }} \
               --only-show-errors | jq --raw-output .domainValidationState)
 
-            needsToReEvaluate=$([[ "$(echo domainValidationState | grep "Pending")" == "" ]] && echo "no" || echo "yes")
+            needsToReEvaluate=$([ -z "$(echo domainValidationState | grep "Pending")" ] && echo "no" || echo "yes")
             echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
 
       - name: Regenerate validation token
@@ -68,13 +68,13 @@ jobs:
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
               --custom-domain-name ${{ steps.vars.customDomainName }} \
               --only-show-errors
-  
+
             newValidationToken=$(az afd custom-domain show \
               --profile-name ${{ steps.vars.profileName }} \
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
               --custom-domain-name ${{ steps.vars.customDomainName }} \
               --only-show-errors | jq --raw-output .validationProperties.validationToken)
-  
+
             echo newValidationToken=$newValidationToken >> $GITHUB_OUTPUT
 
       - name: Update dns auth TXT record
@@ -84,7 +84,7 @@ jobs:
           azcliversion: 2.51.0
           inlineScript: |
             newValidationToken = ${{ steps.regenerateValidationToken.newValidationToken }}
-            
+
             az network dns record-set txt update \
               --zone-name ${{ steps.vars.zoneName }} \
               --name "_dnsauth" \
