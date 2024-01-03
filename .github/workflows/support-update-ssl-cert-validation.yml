@@ -55,7 +55,7 @@ jobs:
               --custom-domain-name ${{ steps.vars.customDomainName }} \
               --only-show-errors | jq --raw-output .domainValidationState)
 
-            needsToReEvaluate=$([ -z "$(echo domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
+            needsToReEvaluate=$([ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
             echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
 
       - name: Regenerate validation token
