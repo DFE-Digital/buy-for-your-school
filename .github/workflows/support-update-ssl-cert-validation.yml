@@ -50,9 +50,9 @@ jobs:
           azcliversion: 2.51.0
           inlineScript: |
             domainValidationState=$(az afd custom-domain show \
-              --profile-name ${{ steps.vars.profileName }} \
+              --profile-name ${{ steps.vars.outputs.profileName }} \
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-              --custom-domain-name ${{ steps.vars.customDomainName }} \
+              --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors | jq --raw-output .domainValidationState)
 
             needsToReEvaluate=$([ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
@@ -61,40 +61,40 @@ jobs:
 
       - name: DEBUG
         run: |
-          echo "1 = ${{ steps.checkValidationState.needsToReEvaluate }}"
+          echo "1 = ${{ steps.checkValidationState.outputs.needsToReEvaluate }}"
           echo steps.checkValidationState.needsToReEvaluate
 
       - name: Regenerate validation token
         id: regenerateValidationToken
-        if: steps.checkValidationState.needsToReEvaluate == 'yes'
+        if: steps.checkValidationState.outputs.needsToReEvaluate == 'yes'
         uses: azure/CLI@v1
         with:
           azcliversion: 2.51.0
           inlineScript: |
             az afd custom-domain regenerate-validation-token \
-              --profile-name ${{ steps.vars.profileName }} \
+              --profile-name ${{ steps.vars.outputs.profileName }} \
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-              --custom-domain-name ${{ steps.vars.customDomainName }} \
+              --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors
 
             newValidationToken=$(az afd custom-domain show \
-              --profile-name ${{ steps.vars.profileName }} \
+              --profile-name ${{ steps.vars.outputs.profileName }} \
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
-              --custom-domain-name ${{ steps.vars.customDomainName }} \
+              --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors | jq --raw-output .validationProperties.validationToken)
 
             echo newValidationToken=$newValidationToken >> $GITHUB_OUTPUT
 
       - name: Update dns auth TXT record
-        if: steps.checkValidationState.needsToReEvaluate == 'yes'
+        if: steps.checkValidationState.outputs.needsToReEvaluate == 'yes'
         uses: azure/CLI@v1
         with:
           azcliversion: 2.51.0
           inlineScript: |
-            newValidationToken = ${{ steps.regenerateValidationToken.newValidationToken }}
+            newValidationToken = ${{ steps.regenerateValidationToken.outputs.newValidationToken }}
 
             az network dns record-set txt update \
-              --zone-name ${{ steps.vars.zoneName }} \
+              --zone-name ${{ steps.vars.outputs.zoneName }} \
               --name "_dnsauth" \
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
               --set "txt_records[0].value=['$newValidationToken']"
