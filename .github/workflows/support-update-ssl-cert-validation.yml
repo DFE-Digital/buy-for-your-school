@@ -56,7 +56,13 @@ jobs:
               --only-show-errors | jq --raw-output .domainValidationState)
 
             needsToReEvaluate=$([ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
+            echo "needsToReEvaluate = $needsToReEvaluate"
             echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
+
+      - name: DEBUG
+        run: |
+          echo "1 = ${{ steps.checkValidationState.needsToReEvaluate }}"
+          echo steps.checkValidationState.needsToReEvaluate
 
       - name: Regenerate validation token
         id: regenerateValidationToken
