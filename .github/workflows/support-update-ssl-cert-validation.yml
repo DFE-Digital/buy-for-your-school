@@ -91,7 +91,7 @@ jobs:
         with:
           azcliversion: 2.51.0
           inlineScript: |
-            newValidationToken = "${{ steps.regenerateValidationToken.outputs.newValidationToken }}"
+            newValidationToken="${{ steps.regenerateValidationToken.outputs.newValidationToken }}"
 
             az network dns record-set txt update \
               --zone-name ${{ steps.vars.outputs.zoneName }} \
