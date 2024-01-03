@@ -20,15 +20,15 @@ jobs:
           # To avoid adding multiple variables into the environment when the names
           # are based on convention and therefor can be built programmatically
 
-          if [[ "$ENVIRONMENT_STAGE" == "az-dev" ]]; then
+          if [[ "${{ matrix.environment }}" == "az-dev" ]]; then
             customDomainName="devghbscustom-domain0"
             profileName="devghbscdn"
             zoneName="dev.get-help-buying-for-schools.service.gov.uk"
-          elif [[ "$ENVIRONMENT_STAGE" == "az-staging" ]]; then
+          elif [[ "${{ matrix.environment }}" == "az-staging" ]]; then
             customDomainName="stagingghbscustom-domain0"
             profileName="stagingghbscdn"
             zoneName="staging.get-help-buying-for-schools.service.gov.uk"
-          elif [[ "$ENVIRONMENT_STAGE" == "az-production" ]]; then
+          elif [[ "${{ matrix.environment }}" == "az-production" ]]; then
             customDomainName="prodghbscustom-domain0"
             profileName="prodghbscdn"
             zoneName="www.get-help-buying-for-schools.service.gov.uk"
