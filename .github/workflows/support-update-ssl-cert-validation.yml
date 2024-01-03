@@ -34,9 +34,9 @@ jobs:
             zoneName="www.get-help-buying-for-schools.service.gov.uk"
           fi
 
-          echo customDomainName=customDomainName >> $GITHUB_OUTPUT
-          echo profileName=profileName >> $GITHUB_OUTPUT
-          echo zoneName=zoneName >> $GITHUB_OUTPUT
+          echo customDomainName=$customDomainName >> $GITHUB_OUTPUT
+          echo profileName=$profileName >> $GITHUB_OUTPUT
+          echo zoneName=$zoneName >> $GITHUB_OUTPUT
 
       - name: Azure login
         uses: azure/login@v1
@@ -91,7 +91,7 @@ jobs:
         with:
           azcliversion: 2.51.0
           inlineScript: |
-            newValidationToken = ${{ steps.regenerateValidationToken.outputs.newValidationToken }}
+            newValidationToken = "${{ steps.regenerateValidationToken.outputs.newValidationToken }}"
 
             az network dns record-set txt update \
               --zone-name ${{ steps.vars.outputs.zoneName }} \
