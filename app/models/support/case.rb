@@ -176,5 +176,10 @@ module Support
     def agent_name
       agent&.full_name || "UNASSIGNED"
     end
+
+    def assign_to_agent(agent, assigned_by: Current.agent)
+      update!(agent:)
+      agent.notify_assigned_to_case(support_case: self, assigned_by:)
+    end
   end
 end

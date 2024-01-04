@@ -18,11 +18,8 @@ module Support
       @case_assignment_form = CaseAssignmentForm.from_validation(validation)
 
       if validation.success?
-        CaseManagement::AssignCaseToAgent.new.call(
-          support_case_id: current_case.id,
-          assigned_by_agent_id: current_agent.id,
-          assigned_to_agent_id: @case_assignment_form.agent_id,
-        )
+        assignee = Support::Agent.find(@case_assignment_form.agent_id)
+        current_case.assigned_to_agent(assignee, assigned_by: current_agent)
 
         redirect_to support_case_path(current_case, anchor: "case-history"),
                     notice: I18n.t("support.case_assignment.flash.created")

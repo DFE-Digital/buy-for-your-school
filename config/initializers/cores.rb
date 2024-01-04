@@ -5,7 +5,6 @@ class CoresConfiguration
     CaseHistory::Configuration.new.call
     CaseManagement::Configuration.new.call
     CaseStatistics::Configuration.new.call
-    Notifications::Configuration.new.call
   end
 end
 
