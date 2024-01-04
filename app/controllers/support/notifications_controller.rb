@@ -1,7 +1,9 @@
 module Support
   class NotificationsController < ApplicationController
     def index
-      @notifications = ::Notifications::NotificationsForAgent.new(agent_id: current_agent.id)
+      @notifications = current_agent
+        .assigned_to_notifications
+        .unread
         .paginate(page: params[:page])
     end
   end

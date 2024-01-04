@@ -10,8 +10,7 @@ module Support
       case_email_recieved: 1,
     }
 
-    scope :unread, ->(assigned_to:) { where(assigned_to:, read: false) }
-    scope :feed, ->(assigned_to:) { where(assigned_to:).order("created_at DESC") }
+    scope :unread, -> { where(read: false) }
 
     after_create_commit lambda { |notification|
       broadcast_render_to(
