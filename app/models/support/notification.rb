@@ -29,5 +29,13 @@ module Support
     def case_created = support_case.created_at
     def assigned_by_name = assigned_by.full_name
     def received_at = created_at
+
+    def mark_as_read
+      update!(read_at: Time.zone.now, read: true)
+    end
+
+    def mark_as_unread
+      update!(read_at: nil, read: false)
+    end
   end
 end
