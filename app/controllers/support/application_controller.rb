@@ -19,7 +19,7 @@ module Support
     def notifications_unread?
       return false if current_agent.nil?
 
-      ::Notifications::NotificationsForAgent.new(agent_id: current_agent.id).any_unread?
+      current_agent.assigned_to_notifications.unread.any?
     end
 
     def current_url_b64(tab = "")
