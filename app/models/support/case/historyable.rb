@@ -6,6 +6,7 @@ module Support::Case::Historyable
 
     after_create_commit :log_created_due_to_incoming_email, if: :incoming_email?
 
+    after_update :log_assigned_to_agent, if: :saved_change_to_agent_id?
     after_update :log_with_school_changed_in_history, if: :saved_change_to_with_school?
     after_update :log_support_level_changed_in_history, if: :saved_change_to_support_level?
     after_update :log_procurement_stage_changed_in_history, if: :saved_change_to_procurement_stage_id?
@@ -22,6 +23,17 @@ module Support::Case::Historyable
   def latest_note = interactions.note.first
 
 protected
+
+  def log_assigned_to_agent
+    interactions.case_assigned.create!(
+      body: "Case assigned",
+      agent: Current.agent,
+      additional_data: {
+        format_version: "2",
+        assigned_to_agent_id: agent_id,
+      },
+    )
+  end
 
   def log_held_due_to_contact_with_school
     interactions.state_change.create!(body: "Case placed on hold due to making contact with school")

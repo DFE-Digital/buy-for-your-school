@@ -8,6 +8,12 @@ FactoryBot.define do
       association :support_case
     end
 
+    trait :case_email_recieved do
+      topic { :case_email_recieved }
+      association :support_case
+      association :subject, factory: :support_email
+    end
+
     trait :unread do
       read { false }
     end
