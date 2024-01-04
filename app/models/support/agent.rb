@@ -6,6 +6,8 @@ module Support
   # referred to as "worker", "case worker" or "proc ops worker" within the business.
   #
   class Agent < ApplicationRecord
+    include Notifyable
+
     ROLES = {
       global_admin: "Global Administrator",
       procops_admin: "Procurement Operations Admin",

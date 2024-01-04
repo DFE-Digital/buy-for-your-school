@@ -1,11 +1,9 @@
 module Support
   class Notifications::MarkAllReadsController < ApplicationController
     def create
-      ::Notifications::MarkAllAsRead.new.call(assigned_to_id: current_agent.id)
+      current_agent.assigned_to_notifications.mark_as_read
 
-      respond_to do |format|
-        format.html { redirect_to support_notifications_path }
-      end
+      redirect_to support_notifications_path
     end
   end
 end
