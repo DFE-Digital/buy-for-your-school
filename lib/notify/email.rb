@@ -123,10 +123,8 @@ module Notify
     # @return [Hash]
     #
     def link_to_file
-      csv = File.extname(attachment).eql?(".csv")
-
       File.open(attachment, "rb") do |file|
-        Notifications.prepare_upload(file, csv)
+        Notifications.prepare_upload(file, filename: File.basename(attachment))
       end
     end
   end
