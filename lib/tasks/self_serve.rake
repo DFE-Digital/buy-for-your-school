@@ -30,7 +30,7 @@ namespace :self_serve do
 
   desc "Backfill contentful text fields"
   task backfill_contentful_text: :environment do
-    ActivityLogItem.where(contentful_category: nil).each do |c|
+    ActivityLogItem.where(contentful_category: nil).find_each do |c|
       c.contentful_category = c.category&.title
       c.contentful_section = c.section&.title
       c.contentful_task = c.task&.title

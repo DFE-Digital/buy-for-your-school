@@ -13,7 +13,7 @@ module Frameworks::Framework::StatusChangeable
     }
 
     aasm column: :status, enum: true do
-      Frameworks::Framework.statuses.each { |status, _| state status.to_sym }
+      Frameworks::Framework.statuses.each_key { |status| state status.to_sym }
 
       event :draft_evaluation do
         transitions from: %i[not_approved], to: :pending_evaluation, after: :after_drafting_evaluation

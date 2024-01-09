@@ -105,7 +105,7 @@ RSpec.describe School::Mapper, "#call" do
           "SEN13 (name)" => "",
 
           # MAT/SAT registered company
-          "CHNumber" => "",                                                     # EG:
+          "CHNumber" => "", # EG:
 
         },
       ],

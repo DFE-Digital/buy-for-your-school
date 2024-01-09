@@ -85,7 +85,7 @@ CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST = [
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", # .xlsx,Microsoft Excel (OpenXML)
   "application/xml", # .xml,XML
   "application/vnd.mozilla.xul+xml", # .xul,XUL
-  "application/zip",  # .zip,ZIP archive
+  "application/zip", # .zip,ZIP archive
 ].freeze
 
 OUTLOOK_MESSAGE_FILE_TYPE_ALLOW_LIST = CASE_ATTACHMENT_FILE_TYPE_ALLOW_LIST

@@ -15,7 +15,7 @@ module Support
         cached_params = Hash(cached_filter_params_for(scope))
         submitted_params = Hash(user_submitted_filter_params(scope))
                             .delete_if { |_k, v| Array(v).all? { |e| e.to_s.strip.empty? } }
-                            .each { |_k, v| Array(v).reject!(&:blank?) }
+                            .each_value { |v| Array(v).reject!(&:blank?) }
 
         unless submitted_params.empty? || submitted_params == defaults || persist == false
           set_filter_params_cache(scope, submitted_params)
