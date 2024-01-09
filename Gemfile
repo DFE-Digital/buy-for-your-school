@@ -74,6 +74,8 @@ group :development, :test do
   gem "pry-rails"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
+  gem "ruby-lsp-rails"
+  gem "ruby-lsp-rspec", require: false
   gem "terminal-notifier"
   gem "terminal-notifier-guard", "~> 1.6.1"
 end
