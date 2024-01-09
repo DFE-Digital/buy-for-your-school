@@ -18,11 +18,11 @@ class PagePresenter < BasePresenter
 
   # @return [String, NilClass]
   def container_class
-    return "govuk-grid-row" if sidebar
+    "govuk-grid-row" if sidebar
   end
 
   # @return [String, NilClass]
   def body_class
-    return "govuk-grid-column-two-thirds" if sidebar
+    "govuk-grid-column-two-thirds" if sidebar
   end
 end

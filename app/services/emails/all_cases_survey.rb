@@ -16,7 +16,7 @@ private
   def satisfaction_level_links
     links = {}
     satisfaction_levels = AllCasesSurveyResponse.satisfaction_levels.dup
-    satisfaction_levels.each { |k, _v| links["#{k}_link"] = Rails.application.routes.url_helpers.edit_all_cases_survey_satisfaction_url(@survey_id, satisfaction_level: k.to_s) }
+    satisfaction_levels.each_key { |k| links["#{k}_link"] = Rails.application.routes.url_helpers.edit_all_cases_survey_satisfaction_url(@survey_id, satisfaction_level: k.to_s) }
     links.symbolize_keys
   end
 end

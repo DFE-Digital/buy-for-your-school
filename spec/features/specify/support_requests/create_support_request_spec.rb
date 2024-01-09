@@ -260,7 +260,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
       expect(answers[1]).to have_text "ghbfs@example.com"
       # expect(answers[2]).to have_text "" # phone number
       expect(answers[2]).to have_text "Specialist School for Testing" # school autoselected due to only having one to choose from
-      expect(answers[3]).to have_text "None"  # specification
+      expect(answers[3]).to have_text "None" # specification
       expect(answers[4]).to have_text "Laptops"
       expect(answers[5]).to have_text "I have a problem"
     end

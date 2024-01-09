@@ -143,7 +143,7 @@ private
       questions: visible_steps.that_are_questions.count,            # visible question steps
       answered: visible_questions_with_answers.count,               # visible completed question steps
       # TODO: check to be removed; this is for migration tests that rollback to a schema without skipped_ids
-      skipped: (skipped_ids.count if respond_to?(:skipped_ids)),    # visible skipped question steps
+      skipped: (skipped_ids.count if respond_to?(:skipped_ids)), # visible skipped question steps
     }
   end
 end

@@ -99,7 +99,8 @@ module Support
       return "case_categorisation_changed" if case_categorisation_changed?
       return "case_source_changed" if case_source_changed?
       return "state_changes/case_assigned" if case_assigned?
-      return "state_changes/case_opened" if case_opened?
+
+      "state_changes/case_opened" if case_opened?
     end
 
     def event_type

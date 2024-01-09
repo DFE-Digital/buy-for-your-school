@@ -17,7 +17,7 @@ module Frameworks::Evaluation::StatusChangeable
     }
 
     aasm column: :status, enum: true do
-      Frameworks::Evaluation.statuses.each { |status, _| state status.to_sym }
+      Frameworks::Evaluation.statuses.each_key { |status| state status.to_sym }
 
       event :mark_as_in_progress do
         transitions from: :draft, to: :in_progress, after: :after_starting_evaluation

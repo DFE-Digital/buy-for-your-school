@@ -54,7 +54,7 @@ namespace :case_management do
 
   desc "Backfill case procurement details"
   task backfill_procurement_details: :environment do
-    Support::Case.where(procurement: nil).each do |c|
+    Support::Case.where(procurement: nil).find_each do |c|
       c.procurement = Support::Procurement.create!
       c.new_contract = Support::NewContract.create!
       c.existing_contract = Support::ExistingContract.create!

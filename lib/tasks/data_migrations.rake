@@ -112,7 +112,7 @@ namespace :data_migrations do
         }
       end
 
-      Support::Framework.all.each do |framework|
+      Support::Framework.all.find_each do |framework|
         match = prepared_frameworks.select { |p| p[:name] == framework.name && p[:supplier] == framework.supplier }
         framework.update!(ref: match.first[:ref]) if match.present?
       end
