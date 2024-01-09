@@ -11,7 +11,7 @@ class CmsPortalPolicy
   def access_e_and_o_portal? = allow_any_of(%w[global_admin internal e_and_o_admin e_and_o])
   def access_admin_settings? = allow_any_of(%w[global_admin procops_admin e_and_o_admin framework_evaluator_admin])
   def access_establishment_search? = access_proc_ops_portal? || access_e_and_o_portal?
-  def access_frameworks_portal? = allow_any_of(%w[global_admin framework_evaluator_admin framework_evaluator])
+  def access_frameworks_portal? = allow_any_of(%w[global_admin framework_evaluator_admin framework_evaluator procops_admin procops internal])
 
   # Agent management
 
