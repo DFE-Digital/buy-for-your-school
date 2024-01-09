@@ -63,5 +63,7 @@ module BuyForYourSchool
     config.middleware.insert_before 0, MaintenanceMode
 
     config.active_support.cache_format_version = 7.1
+
+    config.flipper.strict = false
   end
 end

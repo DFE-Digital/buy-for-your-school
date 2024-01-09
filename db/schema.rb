@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_21_104002) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_09_155641) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -243,7 +243,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_104002) do
   create_table "flipper_gates", force: :cascade do |t|
     t.string "feature_key", null: false
     t.string "key", null: false
-    t.string "value"
+    t.text "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
@@ -1077,7 +1077,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_104002) do
        LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
-    create_view "support_case_data", sql_definition: <<-SQL
+  create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
       sc.created_at,
@@ -1233,7 +1233,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_104002) do
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
   SQL
-create_view "support_message_threads", sql_definition: <<-SQL
+  create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
       se.ticket_id,
