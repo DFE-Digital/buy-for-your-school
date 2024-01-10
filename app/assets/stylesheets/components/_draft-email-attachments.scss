@@ -1,0 +1,43 @@
+.draft-email__attachment {
+  display: grid;
+  grid-template-columns: 1fr .25fr .25fr auto;
+  grid-auto-rows: auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  padding-top: govuk-spacing(2);
+  padding-bottom: govuk-spacing(2);
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
+.draft-email__attachment.dz-error {
+  border: $govuk-border-width solid $govuk-error-colour;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.draft-email__attachment-name {
+  @include govuk-font($size: 19);
+  grid-column: 1;
+}
+
+.draft-email__attachment-error {
+  @include govuk-font($size: 19);
+  @include govuk-typography-weight-bold;
+  grid-column: 2;
+  color: $govuk-error-colour;
+}
+
+.draft-email__attachment-progress {
+  @include govuk-font($size: 19);
+  grid-column: 3;
+}
+
+.draft-email__attachment-remove {
+  @include govuk-font($size: 19);
+  display: flex;
+  justify-content: center;
+}
+
+.draft-email__attachment-actions {
+  grid-column: 4;
+}

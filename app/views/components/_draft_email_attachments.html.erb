@@ -1,0 +1,21 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-!-display-none" data-draft-email-target="attachmentList">
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attachments_added") %></h2>
+      <div data-draft-email-target="attachmentPreview">
+        <div data-draft-email-target="previewTemplate">
+          <div class="draft-email__attachment">
+            <span class="draft-email__attachment-name" data-dz-name></span>
+            <span class="draft-email__attachment-error govuk-!-display-none" data-dz-error></span>
+            <span class="draft-email__attachment-progress" data-dz-uploadprogress aria-valuenow="0"></span>
+            <div class="draft-email__attachment-actions">
+              <span class="draft-email__attachment-remove">
+                <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.emails.attachments.remove") %></a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import Dropzone from "dropzone"
-import { display } from "../misc/utilities"
+import { display, enable } from "../misc/utilities"
 
 // Connects to data-controller="draft-email"
 export default class extends Controller {
@@ -11,7 +11,8 @@ export default class extends Controller {
     "btnDisplayFileDialog",
     "attachmentList",
     "previewTemplate",
-    "attachmentPreview"
+    "attachmentPreview",
+    "btnSubmit"
   ];
   static values = {
     formScope: String,
@@ -48,6 +49,8 @@ export default class extends Controller {
     this.dropzone.on("success", this.onFileSuccess.bind(this));
     this.dropzone.on("removedfile", this.onFileRemoved.bind(this));
     this.dropzone.on("error", this.onFileError.bind(this));
+    this.dropzone.on("queuecomplete", this.onQueueComplete.bind(this));
+    this.dropzone.on("uploadprogress", this.onFileUploading.bind(this));
     this.getAttachmentsFromServer();
   }
 
@@ -89,6 +92,7 @@ export default class extends Controller {
 
   onFileAdded(file) {
     display(this.attachmentListTarget, true);
+    enable(this.btnSubmitTarget, false);
   }
 
   onFileSuccess(file, response) {
@@ -106,6 +110,27 @@ export default class extends Controller {
   }
 
   onFileError(file, response) {
-    file.previewTemplate.querySelector("[data-dz-error]").innerHTML = response.file[0];
+    const errorContainer = file.previewTemplate.querySelector("[data-dz-error]");
+    const progressContainer = this.progressContainer(file);
+    errorContainer.innerHTML = response.file[0];
+    display(errorContainer, true);
+    display(progressContainer, false);
+  }
+
+  onQueueComplete() {
+    enable(this.btnSubmitTarget, true);
+  }
+
+  onFileUploading(file, progress, bytesSent) {
+    const progressContainer = this.progressContainer(file);
+    progressContainer.innerHTML = progress === 100 ? "Complete" : `${progress.toFixed(0)}% uploaded`;
+    progressContainer.value = progress;
+    progressContainer.setAttribute("aria-valuenow", progress);
+
+    display(progressContainer, true);
+  }
+
+  progressContainer(file) {
+    return file.previewElement.querySelector("[data-dz-uploadprogress]");
   }
 }

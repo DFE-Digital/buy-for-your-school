@@ -37,7 +37,7 @@
   %>
 
   <div class="govuk-button-group">
-    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true %>
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-draft-email-target" => "btnSubmit" %>
     <%= govuk_link_to I18n.t("support.case.label.messages.reply.delete"), messages_path(message_id: params[:id], redirect_back: delete_redirect), data: { turbo_method: :delete, turbo_frame: "messages-frame", turbo_confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, no_visited_state: true %>
   </div>
 
@@ -52,27 +52,5 @@
     </li>
   </ul>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-!-display-none" data-draft-email-target="attachmentList">
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attachments_added") %></h2>
-        <div data-draft-email-target="attachmentPreview">
-          <div data-draft-email-target="previewTemplate">
-            <div class="template-edit__attachment">
-              <span class="template-edit__attachment-name" data-dz-name></span>
-              <span class="template-edit__attachment-error" data-dz-error></span>
-              <div class="template-edit__attachment-actions">
-                <span class="template-edit__attachment-download govuk-!-display-none">
-                  <a class="govuk-link govuk-link--no-visited-state" href="#" target="_top" data-dz-url><%= I18n.t("support.emails.attachments.download") %></a>
-                </span>
-                <span class="template-edit__attachment-remove">
-                  <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.emails.attachments.remove") %></a>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render "components/draft_email_attachments" %>
 <% end %>
