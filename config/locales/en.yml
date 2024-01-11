@@ -636,9 +636,9 @@ en:
       - 'read about <a href="https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start" class="govuk-link">what to consider for specific goods and services</a>'
       - 'read about <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">framework agreements</a>'
       - "<a href=\"/\" class=\"govuk-link\">create a specification</a> for catering or multi-functional devices if you don't have one yet"
-      we_can_offer: 'Our team of procurement specialists can offer:'
+      we_can_offer: 'Our team of procurement specialists can:'
       we_can_offer_points:
-      - offer advice and guidance to make sure you’re buying compliantly at any point, even if your procurement process is already in progress.
+      - offer advice and guidance to make sure you’re buying compliantly at any point, even if your procurement process is already in progress
       - review your documents to make sure they're complete and compliant. This includes advice on specification documents, tender documents and evaluation criteria
       - support you on choosing or using a framework agreement for your procurement
       - advise when you need to seek legal advice
