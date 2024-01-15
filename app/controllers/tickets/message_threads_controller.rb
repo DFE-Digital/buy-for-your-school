@@ -2,6 +2,8 @@ class Tickets::MessageThreadsController < ApplicationController
   include SupportAgents
   include HasTicket
 
+  helper_method :back_to_url_b64
+
   content_security_policy do |policy|
     policy.style_src_attr :unsafe_inline
   end
@@ -43,6 +45,12 @@ class Tickets::MessageThreadsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def back_to_url_b64
+    return Base64.encode64(edit_message_thread_path(ticket_type: @ticket.class, ticket_id: @ticket.id, id: params[:id])) if action_name == "submit"
+
+    current_url_b64
   end
 
 private

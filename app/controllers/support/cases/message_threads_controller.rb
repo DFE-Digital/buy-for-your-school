@@ -3,7 +3,9 @@ module Support
     class MessageThreadsController < Cases::ApplicationController
       before_action :redirect_to_messages_tab, unless: :turbo_frame_request?, only: %i[show templated_messages logged_contacts]
       before_action :current_thread, only: %i[show]
-      before_action :back_url, only: %i[index show edit templated_messages logged_contacts]
+      before_action :back_url, only: %i[index show edit submit templated_messages logged_contacts]
+
+      helper_method :back_to_url_b64
 
       content_security_policy do |policy|
         policy.style_src_attr :unsafe_inline
@@ -58,6 +60,12 @@ module Support
       def templated_messages; end
 
       def logged_contacts; end
+
+      def back_to_url_b64
+        return Base64.encode64(edit_support_case_message_thread_path(case_id: current_case.id, id: params[:id])) if action_name == "submit"
+
+        current_url_b64
+      end
 
     private
 

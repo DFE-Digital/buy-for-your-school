@@ -114,7 +114,7 @@
 
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attach_files") %></h2>
   <ul class="govuk-list">
-    <li><%= govuk_link_to I18n.t("support.emails.attachments.email_attachments"), attach_email_attachments_path(message_id: params[:id], back_to: current_url_b64, turbo_frame: "messages-frame"), no_visited_state: true, "data-draft-email-target": "emailAttachmentsLink" %></li>
+    <li><%= govuk_link_to I18n.t("support.emails.attachments.email_attachments"), attach_email_attachments_path(message_id: params[:id], back_to: back_to_url_b64, turbo_frame: "messages-frame"), no_visited_state: true, "data-draft-email-target": "emailAttachmentsLink" %></li>
     <li>
       <span class="fake-link" role="link" data-draft-email-target="btnDisplayFileDialog">
         <%= I18n.t("support.emails.attachments.files_from_your_computer") %>

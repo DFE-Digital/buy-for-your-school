@@ -4,6 +4,8 @@ class Tickets::MessageRepliesController < ApplicationController
   before_action :redirect_to_portal, unless: :turbo_frame_request?
   before_action :find_email
 
+  helper_method :back_to_url_b64
+
   def edit
     @reply_form = Email::Draft.find(params[:id])
     @last_received_reply = Support::Messages::OutlookMessagePresenter.new(@email)
@@ -38,6 +40,12 @@ class Tickets::MessageRepliesController < ApplicationController
       @last_received_reply = Support::Messages::OutlookMessagePresenter.new(@email)
       render :edit
     end
+  end
+
+  def back_to_url_b64
+    return Base64.encode64(edit_message_reply_path(message_id: params[:message_id], id: params[:id])) if action_name == "submit"
+
+    current_url_b64
   end
 
 private

@@ -24,4 +24,8 @@ class Email < ApplicationRecord
   def file_attachment_uploader(params = {})
     Email::FileAttachmentUploader.new(email: self, **params)
   end
+
+  def total_attachment_size
+    attachments.pluck(:file_size).reduce(:+)
+  end
 end

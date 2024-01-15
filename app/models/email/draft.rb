@@ -24,6 +24,7 @@ class Email::Draft
   validates :to_recipients, email_recipients: { at_least_one: true, message: "The TO recipients contains an invalid email address" }, on: :new_message
   validates :cc_recipients, email_recipients: { message: "The CC recipients contains an invalid email address" }, on: :new_message
   validates :bcc_recipients, email_recipients: { message: "The BCC recipients contain an invalid email address" }, on: :new_message
+  validate :attachment_size, if: -> { email.present? && email.attachments.present? }
 
   def self.find(id)
     email = Email.where(id:, is_draft: true).first
@@ -123,5 +124,9 @@ private
       )
       email_attachment
     end
+  end
+
+  def attachment_size
+    errors.add(:base, "The total attachment size cannot exceed 35 MB. Please reduce the size of your attachments.") if email.total_attachment_size > 35_000_000
   end
 end

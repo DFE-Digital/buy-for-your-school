@@ -3,6 +3,8 @@ module Support
     before_action :current_email
     before_action :back_url
 
+    helper_method :back_to_url_b64
+
     def edit
       @reply_form = Email::Draft.find(params[:id])
       @last_received_reply = Support::Messages::OutlookMessagePresenter.new(current_email)
@@ -37,6 +39,12 @@ module Support
         @last_received_reply = Support::Messages::OutlookMessagePresenter.new(current_email)
         render :edit
       end
+    end
+
+    def back_to_url_b64
+      return Base64.encode64(edit_support_case_message_reply_path(case_id: current_case.id, message_id: current_email.id, id: params[:id])) if action_name == "submit"
+
+      current_url_b64
     end
 
   private
