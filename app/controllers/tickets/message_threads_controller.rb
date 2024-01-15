@@ -38,7 +38,7 @@ class Tickets::MessageThreadsController < ApplicationController
   def submit
     @draft = Email::Draft.find(params[:id])
     @draft.attributes = new_thread_params
-    if @draft.valid?
+    if @draft.valid?(:new_message)
       @draft.save_draft!
       @draft.deliver_as_new_message
       redirect_to message_thread_path(ticket_id: @ticket.id, ticket_type: @ticket.class, id: @draft.email.outlook_conversation_id)
