@@ -1,5 +1,5 @@
 Sidekiq.configure_server do |config|
-  config.redis = { url: "#{ENV['REDIS_URL']}/0" }
+  config.redis = { url: ENV["REDIS_URL"] }
 
   # Sidekiq Cron
   schedule_file = "config/schedule.yml"
@@ -10,5 +10,5 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "#{ENV['REDIS_URL']}/0" }
+  config.redis = { url: ENV["REDIS_URL"] }
 end
