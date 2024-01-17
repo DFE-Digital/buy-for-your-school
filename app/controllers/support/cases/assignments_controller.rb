@@ -19,7 +19,7 @@ module Support
 
       if validation.success?
         assignee = Support::Agent.find(@case_assignment_form.agent_id)
-        current_case.assign_to_agent(assignee, assigned_by: current_agent)
+        current_case.assign_to_agent(assignee, assigned_by: current_agent.to_model)
 
         redirect_to support_case_path(current_case, anchor: "case-history"),
                     notice: I18n.t("support.case_assignment.flash.created")
