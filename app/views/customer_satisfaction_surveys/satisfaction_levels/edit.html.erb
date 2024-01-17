@@ -7,7 +7,13 @@
             
       <%= form.govuk_radio_buttons_fieldset :satisfaction_level, legend: { text: I18n.t("customer_satisfaction_survey.satisfaction_level.question"), size: "l" } do %>
         <% available_satisfaction_levels.each do |level| %>
-          <%= form.govuk_radio_button :satisfaction_level, level, label: { text: level.humanize } %>
+          <% if @customer_satisfaction_survey.source_exit_survey? %>
+            <%= form.govuk_radio_button :satisfaction_level, level, label: { text: level.humanize } %>
+          <% else %>
+            <%= form.govuk_radio_button :satisfaction_level, level, label: { text: level.humanize } do %>
+              <%= form.govuk_text_area "satisfaction_text_#{level}", label: { text: I18n.t("customer_satisfaction_survey.satisfaction_level.satisfaction_reason_label") } %>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
 

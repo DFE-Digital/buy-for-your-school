@@ -32,14 +32,31 @@ describe "Filling out a customer satisfaction survey" do
       before { patch customer_satisfaction_surveys_satisfaction_level_path(survey), params: }
 
       context "when valid" do
-        let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neutral" } } }
+        context "and the survey is created for an exit survey email" do
+          let!(:survey) { create(:customer_satisfaction_survey_response, source: :exit_survey) }
+          let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neutral" } } }
 
-        it "persists the answer" do
-          expect(survey.reload.satisfaction_level).to eq("neutral")
+          it "persists the answer" do
+            expect(survey.reload.satisfaction_level).to eq("neutral")
+          end
+
+          it "redirects to the next question" do
+            expect(response).to redirect_to(edit_customer_satisfaction_surveys_satisfaction_reason_path(survey))
+          end
         end
 
-        it "redirects to the next question" do
-          expect(response).to redirect_to(edit_customer_satisfaction_surveys_satisfaction_reason_path(survey))
+        context "and the survey is created via banner link" do
+          let!(:survey) { create(:customer_satisfaction_survey_response, source: :banner_link) }
+          let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neutral", satisfaction_text_neutral: "reason" } } }
+
+          it "persists the answer and reason" do
+            expect(survey.reload.satisfaction_level).to eq("neutral")
+            expect(survey.reload.satisfaction_text).to eq("reason")
+          end
+
+          it "redirects to the next question" do
+            expect(response).to redirect_to(edit_customer_satisfaction_surveys_easy_to_use_rating_path(survey))
+          end
         end
       end
 

@@ -346,6 +346,7 @@ en:
     title: Get help buying for schools feedback
     satisfaction_level:
       question: Overall, how satisfied are you with this service?
+      satisfaction_reason_label: Please tell us why you gave that score
     satisfaction_reason:
       question: Please tell us why you gave the score '%{satisfaction_level}'
     easy_to_use_rating:
