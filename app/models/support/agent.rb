@@ -28,6 +28,8 @@ module Support
     scope :e_and_o_staff, -> { by_role(%w[e_and_o e_and_o_admin]) }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
     scope :by_role, ->(roles) { where("ARRAY[?] && roles::text[]", Array(roles)) }
+    scope :disabled, -> { where("roles::text = '{}'::text") }
+    scope :enabled, -> { disabled.invert_where }
 
     scope :framework_evaluators, lambda {
       by_role(%w[

@@ -1675,6 +1675,13 @@ en:
           tower: Tower
           type: Type
           user_type: User type
+          no_records: No records to show
+          reenable_instructions: To re-enable an account, edit them to assign them a role
+        tabs:
+          disabled_accounts:
+            tab_heading: Disabled accounts
+          enabled_accounts:
+            tab_heading: Enabled accounts
       all_cases_surveys:
         header: All Cases Survey
         eligible_cases:
