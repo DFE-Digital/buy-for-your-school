@@ -1,0 +1,29 @@
+<table class="govuk-table" aria-label="Agents">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-third"><%= I18n.t("support.management.agents.table.name") %></th>
+      <th scope="col" class="govuk-table__header govuk-!-width-two-thirds">Roles</th>
+      <th scope="col" class="govuk-table__header"><%= I18n.t("support.management.agents.table.actions") %></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+		<% agents.each do |agent| %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><%= agent.full_name %></th>
+        <td class="govuk-table__cell">
+          <%= agent.labelled_roles.join("<br />").html_safe %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to "Edit", portal_edit_management_agent_path(agent), class: "govuk-link govuk-link--no-visited-state" %>
+        </td>
+      </tr>
+		<% end %>
+		<% if agents.empty? %>
+			<tr class="govuk-table__row">
+				<td colspan="3" class="govuk-table__cell">
+					<%= I18n.t("support.management.agents.table.no_records") %>
+				</td>
+			</tr>
+		<% end %>
+  </tbody>
+</table>

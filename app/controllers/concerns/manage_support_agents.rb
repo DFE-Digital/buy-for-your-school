@@ -11,7 +11,8 @@ module ManageSupportAgents
   end
 
   def index
-    @agents = Support::Agent.by_first_name.map { |agent| Support::AgentPresenter.new(agent) }
+    @enabled_agents = Support::Agent.enabled.by_first_name.map { |agent| Support::AgentPresenter.new(agent) }
+    @disabled_agents = Support::Agent.disabled.by_first_name.map { |agent| Support::AgentPresenter.new(agent) }
   end
 
   def new
