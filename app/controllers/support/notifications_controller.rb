@@ -3,7 +3,7 @@ module Support
     def index
       @notifications = current_agent
         .assigned_to_notifications
-        .unread
+        .order("created_at DESC")
         .paginate(page: params[:page])
     end
   end
