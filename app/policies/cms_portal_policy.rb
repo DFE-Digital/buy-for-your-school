@@ -25,6 +25,7 @@ class CmsPortalPolicy
   # Role management
 
   def grantable_roles = @grantable_roles ||= Support::Agent::ROLES.select { |role, _label| send("grant_#{role}_role?") }
+  def grantable_role_names = grantable_roles.transform_keys(&:to_s).keys
 
   def grant_global_admin_role? = allow_any_of(%w[global_admin])
   def grant_procops_admin_role? = allow_any_of(%w[global_admin procops_admin])

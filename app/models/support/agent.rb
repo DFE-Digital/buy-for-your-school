@@ -7,38 +7,15 @@ module Support
   #
   class Agent < ApplicationRecord
     include Notifyable
-
-    ROLES = {
-      global_admin: "Global Administrator",
-      procops_admin: "Procurement Operations Admin",
-      procops: "Procurement Operations Staff Member",
-      e_and_o_admin: "Engagement and Outreach Admin",
-      e_and_o: "Engagement and Outreach Staff Member",
-      internal: "Digital Team Staff Member",
-      analyst: "Data Analyst",
-      framework_evaluator: "Framework Evaluator",
-      framework_evaluator_admin: "Framework Evaluator Admin",
-    }.freeze
+    include RoleAssignable
 
     has_many :cases, class_name: "Support::Case"
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
-    scope :caseworkers, -> { by_role(%w[procops procops_admin]) }
-    scope :e_and_o_staff, -> { by_role(%w[e_and_o e_and_o_admin]) }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
-    scope :by_role, ->(roles) { where("ARRAY[?] && roles::text[]", Array(roles)) }
     scope :disabled, -> { where("roles::text = '{}'::text") }
     scope :enabled, -> { disabled.invert_where }
-
-    scope :framework_evaluators, lambda {
-      by_role(%w[
-        procops_admin
-        procops
-        framework_evaluator
-        framework_evaluator_admin
-      ])
-    }
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
@@ -72,7 +49,5 @@ module Support
     def full_name = "#{first_name} #{last_name}"
 
     def initials = "#{first_name.first}#{last_name.first}"
-
-    def labelled_roles = roles.map { |role| ROLES[role.to_sym] }
   end
 end

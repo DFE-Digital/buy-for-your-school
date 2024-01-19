@@ -29,15 +29,8 @@ module ManageSupportAgents
     @form = Support::Management::AgentForm.new(agent_form_params)
 
     if @form.valid?
-      create_agent = Agents::CreateAgent.new
-      @agent = create_agent.call(support_agent_details: agent_form_params.to_h.symbolize_keys)
-
-      assign_roles = Agents::AssignRoles.new
-      assign_roles.call(
-        support_agent_id: @agent.id,
-        new_roles: agent_form_params[:roles],
-        cms_policy: policy(:cms_portal),
-      )
+      @agent = Support::Agent.find_or_create_by!(agent_form_params.except(:roles))
+      @agent.assign_roles(new_roles: agent_form_params[:roles], using_policy: policy(:cms_portal))
 
       redirect_to support_management_agents_path
     else
@@ -50,18 +43,8 @@ module ManageSupportAgents
     @form = Support::Management::AgentForm.new(agent_form_params)
 
     if @form.valid?
-      update_agent = Agents::UpdateAgent.new
-      update_agent.call(
-        support_agent_id: @agent.id,
-        support_agent_details: agent_form_params.to_h.symbolize_keys,
-      )
-
-      assign_roles = Agents::AssignRoles.new
-      assign_roles.call(
-        support_agent_id: @agent.id,
-        new_roles: agent_form_params[:roles],
-        cms_policy: policy(:cms_portal),
-      )
+      @agent.update!(agent_form_params.except(:roles))
+      @agent.assign_roles(new_roles: agent_form_params[:roles], using_policy: policy(:cms_portal))
 
       redirect_to support_management_agents_path
     else
