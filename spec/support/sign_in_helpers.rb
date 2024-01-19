@@ -43,6 +43,7 @@ module SignInHelpers
     user = create(:user, :caseworker, admin:)
     agent ||= create(:support_agent, dsi_uid: user.dfe_sign_in_uid)
     agent.update!(roles:) if roles.any?
+    agent.update!(roles: []) if roles.empty?
     user_is_signed_in(user:)
     allow_any_instance_of(Support::ApplicationController).to receive(:current_agent).and_return(Support::AgentPresenter.new(agent))
   end

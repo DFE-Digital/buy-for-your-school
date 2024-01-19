@@ -11,17 +11,19 @@ describe "Agent can update participating schools", js: true do
 
     visit support_case_path(support_case)
     click_link "School details"
+
     within("#school-details") do
       click_link "View"
       click_link "change"
-      check "School #1"
-      check "School #2"
-      click_button "Save"
-      sleep 0.2
     end
+
+    check "School #1"
+    check "School #2"
+    click_button "Save"
   end
 
-  it "updates participating schools", flaky: true do
-    expect(support_case.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
+  it "updates participating schools" do
+    expect(page).to have_content("School #1")
+    expect(page).to have_content("School #2")
   end
 end

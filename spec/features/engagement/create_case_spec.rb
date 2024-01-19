@@ -4,6 +4,7 @@ RSpec.feature "Create case", js: true do
   before do
     define_basic_categories
     define_basic_queries
+    Support::Organisation.destroy_all
 
     create(:support_category, :with_sub_category)
     create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: { "code": "001", "name": "Timbuktoo" })

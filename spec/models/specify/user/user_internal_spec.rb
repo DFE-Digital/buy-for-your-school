@@ -1,5 +1,6 @@
 RSpec.describe User, type: :model do
   around do |example|
+    described_class.destroy_all
     ClimateControl.modify(PROC_OPS_TEAM: "DSI Caseworkers") do
       example.run
     end
