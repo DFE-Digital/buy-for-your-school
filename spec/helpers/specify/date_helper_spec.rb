@@ -57,23 +57,23 @@ RSpec.describe DateHelper, type: :helper do
     before { travel_to Time.zone.local(2023, 3, 7, 0, 0) }
     after { travel_back }
 
-    context "when the date is less than a year ago" do
+    context "when the date is the current date" do
       it "calls simple_distance_of_time_in_words" do
-        allow(helper).to receive(:simple_distance_of_time_in_words).with(Time.zone.parse("2023-02-25 15:58"), Time.zone.now)
+        allow(helper).to receive(:simple_distance_of_time_in_words).with(Time.zone.parse("2023-03-07 15:58"), Time.zone.now)
 
-        helper.relative_date_format("2023-02-25 15:58")
+        helper.relative_date_format("2023-03-07 15:58")
 
-        expect(helper).to have_received(:simple_distance_of_time_in_words).with(Time.zone.parse("2023-02-25 15:58"), Time.zone.now).once
+        expect(helper).to have_received(:simple_distance_of_time_in_words).with(Time.zone.parse("2023-03-07 15:58"), Time.zone.now).once
       end
     end
 
-    context "when the date is more than a year ago" do
+    context "when the date is not the current date" do
       it "calls short_date_format" do
-        allow(helper).to receive(:short_date_format).with(Time.zone.parse("2022-02-25 15:58"), show_time: false)
+        allow(helper).to receive(:short_date_format).with(Time.zone.parse("2023-03-06 15:58"), show_time: false)
 
-        helper.relative_date_format("2022-02-25 15:58")
+        helper.relative_date_format("2023-03-06 15:58")
 
-        expect(helper).to have_received(:short_date_format).with(Time.zone.parse("2022-02-25 15:58"), show_time: false).once
+        expect(helper).to have_received(:short_date_format).with(Time.zone.parse("2023-03-06 15:58"), show_time: false).once
       end
     end
   end
