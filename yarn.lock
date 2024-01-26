@@ -1056,51 +1056,51 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@hods/date-display@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@hods/date-display/-/date-display-0.3.7.tgz#21a63e5a9dcb59c92ca5eaa6b1ef2807ddcd256b"
-  integrity sha512-cZzRdHlXP0KlGgXJrtdlP3gZnBYNrQYhvzN9HUBYjD9IZMhkKlx27iTBAGCh5bbbuPXVpDOqg6UBiXfX0wO0ug==
+"@hods/date-display@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hods/date-display/-/date-display-0.4.0.tgz#90744e8c79e30080021c07494c3586208429bf2f"
+  integrity sha512-FLIDugJDPrgaCwggDlUB0I8ZDVGzIIQ62VghK/r1UVmRnv0Q/rNgTBvkeFSaj3jqh1m4KKGmzPZJPu3w/zmhRg==
   dependencies:
-    "@not-govuk/component-helpers" "^0.5.9"
+    "@not-govuk/component-helpers" "^0.7.2"
 
-"@hods/date-time@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@hods/date-time/-/date-time-0.3.7.tgz#f2d9eb6bdf628044807181ad551875979b87ba47"
-  integrity sha512-bHmGlV9CANNOe+c9oegLaCQ7EZbQP9NAK0nhEfYozGTVMYw9AEsxyeAHC5ZIDfKMOiZta6WOXHF8VU/tm2c+DA==
+"@hods/date-time@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hods/date-time/-/date-time-0.4.0.tgz#2ffe0b4612ca38f74c7a930dbdb7114f82f5c801"
+  integrity sha512-KrK33UHtBeMbTO3qO5SwA8SSn1z0UCKKN5wGrRgPFBN9630q+njdo+4tb38+J6GoyzeQ1ou0Dx8E+xLpAaOTkg==
   dependencies:
-    "@hods/date-display" "^0.3.7"
-    "@hods/time" "^0.3.7"
-    "@not-govuk/component-helpers" "^0.5.9"
+    "@hods/date-display" "^0.4.0"
+    "@hods/time" "^0.4.0"
+    "@not-govuk/component-helpers" "^0.7.2"
 
-"@hods/sass-base@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@hods/sass-base/-/sass-base-0.3.7.tgz#93e4afaf8791c5fe4f1ca0b6799fc0c33025301d"
-  integrity sha512-INj3T4h1zQy4WQDBykWhXnq55D/3zMtfN+0UORlwK8i3dzV/DGdP9wwA5niKFvGRE3xsi5mdGjDlVdTXMenXBQ==
+"@hods/sass-base@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hods/sass-base/-/sass-base-0.4.0.tgz#4e1f853f9e8108ff70beb8355328522554d99130"
+  integrity sha512-wl7l2obwuCblNn9IazIv+j1WjLn13DcjRV+pXxP+A1OVjIT1ua+52Kf4sxEL/ZbnUR/wrwPSg7Rv+DL6Ti2EEg==
   dependencies:
-    "@not-govuk/sass-base" "^0.5.9"
+    "@not-govuk/sass-base" "^0.7.2"
 
-"@hods/time@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@hods/time/-/time-0.3.7.tgz#11386dc53d7f4504f7e935ddf5231b411432b735"
-  integrity sha512-sxmUP8bpAOLAqOkxL+aE2M9oMyDbrS3JKMNAtcRCtDCTpbPtcby1rMYlNi9yARFoD/KPZwv1akEhEkEvcUDKpQ==
+"@hods/time@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hods/time/-/time-0.4.0.tgz#f4581396dd95509150b560939b06939b2628e738"
+  integrity sha512-UnUt7n/1ygIB13hRn/A1IrVJ4781/6+B4JPs9b++w680UWQe0ZR3XGY5jrzSojmlayM0/NKxybx7kBG2QZWt9g==
   dependencies:
-    "@not-govuk/component-helpers" "^0.5.9"
+    "@not-govuk/component-helpers" "^0.7.2"
 
-"@hods/timeline@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@hods/timeline/-/timeline-0.3.7.tgz#b587cc9d42f9c9027d38e52da15baf2b1537a08c"
-  integrity sha512-vR1UH8AeimKYD0FYJAMsTw6flEi3d7fLRDz7OokhfexNFepvowEexXwiaIOxblUU8uhfVns7+XHttBexi8jiMA==
+"@hods/timeline@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hods/timeline/-/timeline-0.4.0.tgz#bb23320e549fa0b845d68b8573d35c49d21832a8"
+  integrity sha512-bJg08blYkPbNahv+caNuSVwWepMr21Cgn2JCnC26MsaEwXwTNP3tr0HmwB2L3LFa2FBwYyEZscfenL+KxHD5Lg==
   dependencies:
-    "@hods/date-time" "^0.3.7"
-    "@hods/sass-base" "^0.3.7"
-    "@not-govuk/component-helpers" "^0.5.9"
+    "@hods/date-time" "^0.4.0"
+    "@hods/sass-base" "^0.4.0"
+    "@not-govuk/component-helpers" "^0.7.2"
 
-"@hotwired/stimulus@^3.2.1":
+"@hotwired/stimulus@^3.2.2":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
   integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
 
-"@hotwired/turbo-rails@^7.2.5":
+"@hotwired/turbo-rails@^7.3.0":
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.3.0.tgz#422c21752509f3edcd6c7b2725bbe9e157815f51"
   integrity sha512-fvhO64vp/a2UVQ3jue9WTc2JisMv9XilIC7ViZmXAREVwiQ2S4UC7Go8f9A1j4Xu7DBI6SbFdqILk5ImqVoqyA==
@@ -1366,24 +1366,24 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@not-govuk/component-helpers@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@not-govuk/component-helpers/-/component-helpers-0.5.9.tgz#8d946296c9a65c8e2b9897ddd5293a0ad6438767"
-  integrity sha512-QiR1oXiuRnzJpD+2es9rbb0SyAuy+pFIxM+hV1QgXYPRLnNSnufA9YWKCnC1tu/36yzCF728iBTPJtdM/YZ9Cw==
+"@not-govuk/component-helpers@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@not-govuk/component-helpers/-/component-helpers-0.7.2.tgz#9d9100d0302d4836305ea367a2c96506052acd5c"
+  integrity sha512-hVCUelN8tZIpGoAMf/Ey3RAaCQeP7g1wYM0Ksyou76jbwy8CDEQBFQMXkP9Q/yxj9wtZIE5tqDeVCaNApq7KbQ==
 
-"@not-govuk/sass-base@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@not-govuk/sass-base/-/sass-base-0.5.9.tgz#ed822b41c80b95c2370220a76275af8d37e148da"
-  integrity sha512-ZGcpMh7QFPItJZdNcCmwivzMlHEu1j3YL+IL8GeWX/Nz/n1mw28QqdHq62OkexzPkfuzJ3BvISm5YM1XNQzw8Q==
+"@not-govuk/sass-base@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@not-govuk/sass-base/-/sass-base-0.7.2.tgz#0b766b59a5b360a125b8f6d4d8c61588cd6db7ca"
+  integrity sha512-84bvYI73yt5f2nD26bMfwiOeLUq0bVdIkMnO2jPNGFEqKiqTSqGWjx1PeLJdrkUeZDKdZM+ByE/n6QcCexCvnA==
   dependencies:
-    govuk-frontend "3.11.0"
+    govuk-frontend "4.4.1"
 
 "@rails/actioncable@^7.0":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.1.3.tgz#4db480347775aeecd4dde2405659eef74a458881"
   integrity sha512-ojNvnoZtPN0pYvVFtlO7dyEN9Oml1B6IDM+whGKVak69MMYW99lC2NOWXWeE3bmwEydbP/nn6ERcpfjHVjYQjA==
 
-"@rails/ujs@^7.0.8":
+"@rails/ujs@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.1.3.tgz#6d94a68b7da5046147d31716e0c187a4ead4fb93"
   integrity sha512-FxtgKNvvIonoBE1TK7U10VMf6CYvzq8SIZ1XZ1Q8zcn/BEXzPzid3zC9qFiojuI5WXVwWhO8GFqApq0stD+OqQ==
@@ -1412,7 +1412,7 @@
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.2.14.tgz#20288c3627442339dd3d743c944f7043ee3590f0"
   integrity sha512-wpCQMhf5p5GhNg2MmGKXzUNwxe7zRiCsmqYsamez2beP7mKPCSiu+BjZcdN95yYSzO857kr0VfQewmGpS77nqA==
 
-"@testing-library/jest-dom@^6.1.3":
+"@testing-library/jest-dom@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-6.3.0.tgz#e8d308e0c0e91d882340cbbfdea0e4daa7987d36"
   integrity sha512-hJVIrkFizEQxoWsGBlycTcQhrpoCH4DhXfrnHFFXgkx3Xdm15zycsq5Ep+vpw4W8S0NJa8cxDHcuJib+1tEbhg==
@@ -3014,10 +3014,10 @@ gopd@^1.0.1:
   dependencies:
     get-intrinsic "^1.1.3"
 
-govuk-frontend@3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.11.0.tgz#5bc38629ec8b290220c2c389dcd664114a045db1"
-  integrity sha512-1hW/3etYBtKPM+PNdWVOijvWVI3mpYL8eb7WLTtlh/Qxf2mCp6LkCsZk9I034n4EJBYQ5jlUWsUlTOOIypftpg==
+govuk-frontend@4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.4.1.tgz#88857c4ad8508255a4e983030a3964d6e1674107"
+  integrity sha512-Jm1LUWiH9vy47b6HSH/ksSb4ueBrtTTgyLBk+3X2qqAmmFUc1AXWLSYHid07YYu1tvn9RnodWk5Bac5Ywqk6tA==
 
 govuk-frontend@^4.7.0:
   version "4.7.0"
@@ -5189,7 +5189,7 @@ webpack-sources@^3.2.3:
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.3.tgz#2d4daab8451fd4b240cc27055ff6a0c2ccea0cde"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
-webpack@^5.88.2:
+webpack@^5.9.0:
   version "5.90.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.90.0.tgz#313bfe16080d8b2fee6e29b6c986c0714ad4290e"
   integrity sha512-bdmyXRCXeeNIePv6R6tGPyy20aUobw4Zy8r0LUS2EWO+U+Ke/gYDgsCh7bl5rB6jPpr4r0SZa6dPxBxLooDT3w==
