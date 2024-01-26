@@ -2,6 +2,8 @@ class CustomerSatisfactionSurveyResponse < ApplicationRecord
   include Satisfactionable
   include Presentable
 
+  belongs_to :support_case, class_name: "Support::Case", optional: true
+
   before_validation :clean_helped_how, if: -> { helped_how_changed? }
   before_save :clean_helped_how_other, if: -> { helped_how_changed? && !helped_how.include?("other") }
   before_save :clean_research_opt_in_values, if: -> { research_opt_in_changed? && research_opt_in == false }

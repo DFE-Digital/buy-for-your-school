@@ -23,6 +23,7 @@ module Support
 
       if Flipper.enabled?(:customer_satisfaction_survey)
         survey = CustomerSatisfactionSurveyResponse.create!(
+          support_case: kase,
           service: :supported_journey,
           source: :exit_survey,
           status: :sent_out,
