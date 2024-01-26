@@ -76,6 +76,7 @@ describe Support::SendExitSurveyJob do
       expect(customer_satisfaction_survey.survey_sent_at).to be_within(1.second).of(Time.zone.now)
       expect(customer_satisfaction_survey.service_supported_journey?).to eq(true)
       expect(customer_satisfaction_survey.source_exit_survey?).to eq(true)
+      expect(customer_satisfaction_survey.support_case).to eq(kase)
     end
   end
 end
