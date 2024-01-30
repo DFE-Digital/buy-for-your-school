@@ -379,6 +379,16 @@ en:
       job_title:
         question: What is your job title?
         hint: We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+  end_of_journey_survey:
+    new:
+      heading: Before you go
+      body: Please could you let us know how easy it was to use the form? Your feedback helps us make our service better.
+      easy_to_use_rating: This form was easy to use
+      improvements: How could we improve this form?
+      send: Send feedback
+    thank_you:
+      heading: Thank you for your feedback
+      body: We will use your feedback to make our services better.
   faf:
     bill_uploads:
       header:

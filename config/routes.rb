@@ -436,6 +436,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :end_of_journey_surveys, only: %i[new create] do
+    scope module: :end_of_journey_surveys, as: :end_of_journey_surveys do
+      collection do
+        resource :thank_you, only: %i[show]
+      end
+    end
+  end
+
   if Rails.env.development?
     require "sidekiq/web"
     mount Sidekiq::Web, at: "/sidekiq"
