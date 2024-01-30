@@ -83,3 +83,8 @@
   color: $govuk-link-colour;
   cursor: pointer;
 }
+
+.divider-bottom {
+  border-bottom: 1px solid $govuk-border-colour;
+  margin-bottom: govuk-spacing(4);
+}

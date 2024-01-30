@@ -18,6 +18,14 @@
       <% else %>
         <%= render "default" %>
       <% end %>
+
+      <% if Flipper.enabled?(:rfh_usability_survey) %>
+        <div class="divider-bottom"></div>
+
+        <%= turbo_frame_tag "end-of-journey-feedback-frame", src: new_end_of_journey_survey_path(service: :request_for_help_form) do %>
+          <p class="govuk-body">Loading...</p>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
