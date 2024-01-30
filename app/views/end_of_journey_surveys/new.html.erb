@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "end-of-journey-feedback-frame" do %>
+  <h2 class="govuk-heading-m"><%= I18n.t("end_of_journey_survey.new.heading") %></h2>
+  <p class="govuk-body"><%= I18n.t("end_of_journey_survey.new.body") %></p>
+
+  <%= form_with model: @end_of_journey_survey, scope: :end_of_journey_survey, url: end_of_journey_surveys_path do |form| %>
+    <%= form.govuk_error_summary %> 
+    <%= form.hidden_field :service, value: @end_of_journey_survey.service %>
+          
+    <%= form.govuk_radio_buttons_fieldset :easy_to_use_rating, legend: { text: I18n.t("end_of_journey_survey.new.easy_to_use_rating"), size: "s" } do %>
+      <% EndOfJourneySurveyResponse.easy_to_use_ratings.keys.reverse.each do |rating| %>
+        <%= form.govuk_radio_button :easy_to_use_rating, rating, label: { text: rating.humanize } %>
+      <% end %>
+    <% end %>
+
+    <%= form.govuk_text_area :improvements,
+      rows: 10,
+      label: { text: I18n.t("end_of_journey_survey.new.improvements"), size: "s" }
+    %>
+
+    <%= form.submit I18n.t("end_of_journey_survey.new.send"), class: "govuk-button" %>
+  <% end %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to "Privacy policy", "/privacy", no_visited_state: true %>
+  </p>
+<% end %>

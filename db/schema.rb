@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_26_131833) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -188,6 +188,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_131833) do
     t.datetime "updated_at", null: false
     t.index ["framework_request_id"], name: "index_documents_on_framework_request_id"
     t.index ["support_case_id"], name: "index_documents_on_support_case_id"
+  end
+
+  create_table "end_of_journey_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "easy_to_use_rating"
+    t.text "improvements"
+    t.integer "service"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "energy_bills", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
