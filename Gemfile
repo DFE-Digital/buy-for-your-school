@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.0"
 
 gem "aasm"
+gem "active_model_otp"
 gem "application_insights"
 gem "ar-sequence"
 gem "aws-sdk-s3", require: false

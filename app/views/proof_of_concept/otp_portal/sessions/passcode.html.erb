@@ -1,0 +1,18 @@
+<h1 class="govuk-heading-xl">
+  Confirm your email address
+</h1>
+
+<p class="govuk-body">We've emailed a confirmation code to <%= @form.email %>.</p>
+
+<%= form_with model: @form, scope: :session, method: :post, url: proof_of_concept_otp_portal_sessions_path do |f| %>
+  <%= f.govuk_text_field :passcode, label: { text: "Confirmation Code", size: "s" }, width: 5 %>
+  <%= f.hidden_field :email %>
+  <%= f.govuk_submit %>
+<% end %>
+
+<hr />
+
+<p class="govuk-body">
+  Note for team mates: If your email is not added to the "Notify" team, you will not receive an email.
+  If you do not receive an email for this reason <%= govuk_link_to "I have simulated the email here", proof_of_concept_otp_portal_passcodes_path %>.
+</p>

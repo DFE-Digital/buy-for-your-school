@@ -1,0 +1,10 @@
+<h1 class="govuk-heading-xl">
+  Please enter your email address
+</h1>
+
+<p class="govuk-body">We will send a passcode to this email address </p>
+
+<%= form_with model: @form, scope: :session, url: passcode_proof_of_concept_otp_portal_sessions_path do |f| %>
+  <%= f.govuk_text_field :email, label: { size: "s" }, width: "two-thirds" %>
+  <%= f.govuk_submit %>
+<% end %>

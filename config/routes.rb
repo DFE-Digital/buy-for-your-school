@@ -376,6 +376,19 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :proof_of_concept do
+    namespace :otp_portal, constraints: -> { Flipper.enabled?(:poc_otp_portal) } do
+      get "/", to: "homes#show"
+
+      resource :home
+      resource :sessions do
+        post "/passcode", to: "sessions#passcode", as: :passcode
+      end
+      resource :passcodes
+      resource :welcomes
+    end
+  end
+
   resources :tickets, only: %i[index]
   scope module: :tickets do
     resource :messages, path: "/messages/:message_id", only: %i[update destroy] do

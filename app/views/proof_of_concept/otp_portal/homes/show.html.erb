@@ -1,0 +1,13 @@
+<h1 class="govuk-heading-xl">
+  Email OTP (One time passcode) proof of concept
+</h1>
+
+<p class="govuk-body">Steps:</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Attempt to access the protected resource <%= govuk_link_to "here", proof_of_concept_otp_portal_welcomes_path %>, if you have not already followed the steps below you should be redirected to the <%= govuk_link_to "login page", new_proof_of_concept_otp_portal_sessions_path %>.</li>
+  <li>Enter your email address and click "Continue".</li>
+  <li>At this point, you may receive an email from Notify with a passcode in it. NOTE: if you are not in the GHBS team on Notify you will not receive an email at all. In this case <%= govuk_link_to "visit a page that is designed to simulate the email", proof_of_concept_otp_portal_passcodes_path %> to get your code.</li>
+  <li>Enter the passcode into the system and click "Continue".</li>
+  <li>If your passcode was correct you should now see the protected resource from step 1.</li>
+</ol>

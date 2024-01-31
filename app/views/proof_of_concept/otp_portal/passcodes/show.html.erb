@@ -1,0 +1,22 @@
+<h1 class="govuk-heading-xl">
+  Pass codes demo
+</h1>
+
+<p class="govuk-body">An example email:</p>
+
+<%= govuk_summary_card(title: "to: #{current_agent.email}") do |card| %>
+
+  <%= govuk_header %>
+
+  <br />
+  <br />
+
+  <p class="govuk-body">Use this code to confirm your email address:</p>
+  <p class="govuk-body govuk-!-font-weight-bold"><%= @code %></p>
+  <p class="govuk-body">The code will expire after 5 minutes.</p>
+  <p class="govuk-body">This email address has been used for the Get Help Buying for Schools service. If this was not you, you can ignore this email.</p>
+  <p class="govuk-body">Department for Education</p>
+
+<% end %>
+
+<%= govuk_link_to "Log in with passcode &raquo;".html_safe, new_proof_of_concept_otp_portal_sessions_path %>
