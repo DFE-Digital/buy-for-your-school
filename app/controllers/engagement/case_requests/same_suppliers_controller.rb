@@ -13,7 +13,7 @@ module Engagement
 
         if @same_supplierer.valid?
           @same_supplierer.save!
-          if @case_request.category.is_energy_or_services?
+          if @case_request.is_energy_or_services?
             redirect_to edit_engagement_case_request_contract_start_date_path(@case_request)
           else
             redirect_to engagement_case_request_path(@case_request)

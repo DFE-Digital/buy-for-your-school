@@ -190,4 +190,11 @@ describe RequestForHelpCategory, type: :model do
       end
     end
   end
+
+  describe "#is_energy_or_services?" do
+    it { expect(described_class.new(flow: :services).is_energy_or_services?).to be(true) }
+    it { expect(described_class.new(flow: :goods).is_energy_or_services?).to be(false) }
+    it { expect(described_class.new(flow: :energy).is_energy_or_services?).to be(true) }
+    it { expect(described_class.new(flow: :not_fully_supported).is_energy_or_services?).to be(false) }
+  end
 end

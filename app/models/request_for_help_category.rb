@@ -62,4 +62,6 @@ class RequestForHelpCategory < ApplicationRecord
   def gas? = slug == "gas"
 
   def electricity? = slug == "electricity"
+
+  def is_energy_or_services? = flow.in?(%w[energy services])
 end

@@ -15,7 +15,7 @@ module Engagement
       def update
         @school_picker = @case_request.school_picker(school_urns: form_params[:school_urns].compact_blank.excluding("all"))
         @school_picker.save!
-        if @case_request.school_urns.count < 2 && @case_request.category.is_energy_or_services?
+        if @case_request.school_urns.count < 2 && @case_request.is_energy_or_services?
           redirect_to edit_engagement_case_request_contract_start_date_path(@case_request)
         elsif @case_request.school_urns.count > 1
           redirect_to edit_engagement_case_request_same_supplier_path(@case_request)

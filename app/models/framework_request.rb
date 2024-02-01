@@ -67,6 +67,10 @@ class FrameworkRequest < Request
     FrameworkRequestFlow.new(self)
   end
 
+  def is_energy_or_services?
+    flow&.is_energy_or_services? || category.is_energy_or_services?
+  end
+
 private
 
   def sat_selected?
