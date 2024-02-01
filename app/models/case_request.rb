@@ -35,6 +35,8 @@ class CaseRequest < ApplicationRecord
     result
   end
 
+  delegate :is_energy_or_services?, to: :category
+
 private
 
   def request_type_validation

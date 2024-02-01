@@ -42,7 +42,7 @@ module Support
     end
 
     def is_energy_or_services?
-      request_for_help_categories.first&.flow.in?(%w[energy services])
+      request_for_help_categories.first&.is_energy_or_services?
     end
   end
 end
