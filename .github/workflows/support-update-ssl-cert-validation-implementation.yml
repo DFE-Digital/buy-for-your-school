@@ -1,0 +1,118 @@
+name: "Support - Update SSL Cert Validation - Implementation"
+
+on:
+  workflow_call:
+    inputs:
+      chosen_environment:
+        required: true
+        type: string
+
+jobs:
+  check_need_for_validation_update:
+    runs-on: ubuntu-20.04
+
+    environment: ${{ inputs.chosen_environment == 'az-production' && 'az-production-read-only' ||  inputs.chosen_environment }}
+
+    outputs:
+      customDomainName: ${{ steps.vars.outputs.customDomainName }}
+      profileName: ${{ steps.vars.outputs.profileName }}
+      zoneName: ${{ steps.vars.outputs.zoneName }}
+      resourceGroup: ${{ steps.vars.outputs.resourceGroup }}
+      needsToReEvaluate: ${{ steps.checkValidationState.outputs.needsToReEvaluate }}
+
+    steps:
+      - name: Setup variables
+        id: vars
+        run: |
+          # To avoid adding multiple variables into the environment when the names
+          # are based on convention and therefor can be built programmatically
+
+          if [[ "${{ inputs.chosen_environment }}" == "az-dev" ]]; then
+            customDomainName="devghbscustom-domain0"
+            profileName="devghbscdn"
+            zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+          elif [[ "${{ inputs.chosen_environment }}" == "az-staging" ]]; then
+            customDomainName="stagingghbscustom-domain0"
+            profileName="stagingghbscdn"
+            zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+          elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
+            customDomainName="prodghbscustom-domain0"
+            profileName="prodghbscdn"
+            zoneName="www.get-help-buying-for-schools.service.gov.uk"
+          fi
+
+          echo customDomainName=$customDomainName >> $GITHUB_OUTPUT
+          echo profileName=$profileName >> $GITHUB_OUTPUT
+          echo zoneName=$zoneName >> $GITHUB_OUTPUT
+          echo resourceGroup=${{ secrets.RESOURCE_GROUP_NAME }} >> $GITHUB_OUTPUT
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
+
+      - name: Check need for validation
+        id: checkValidationState
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: |
+            domainValidationState=$(az afd custom-domain show \
+              --profile-name ${{ steps.vars.outputs.profileName }} \
+              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
+              --only-show-errors | jq --raw-output .domainValidationState)
+
+            needsToReEvaluate=$([ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
+            echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
+
+  update_validation:
+    runs-on: ubuntu-20.04
+
+    needs: [check_need_for_validation_update]
+
+    environment: ${{ inputs.chosen_environment }}
+
+    if: needs.check_need_for_validation_update.outputs.needsToReEvaluate == 'yes'
+
+    steps:
+      - name: Setup variables
+        id: vars
+        run: |
+          # Just to shorten the variable name paths
+          echo customDomainName=${{ needs.check_need_for_validation_update.outputs.customDomainName }} >> $GITHUB_OUTPUT
+          echo profileName=${{ needs.check_need_for_validation_update.outputs.profileName }} >> $GITHUB_OUTPUT
+          echo zoneName=${{ needs.check_need_for_validation_update.outputs.zoneName }} >> $GITHUB_OUTPUT
+          echo resourceGroup=${{ needs.check_need_for_validation_update.outputs.resourceGroup }} >> $GITHUB_OUTPUT
+          echo needsToReEvaluate=${{ needs.check_need_for_validation_update.outputs.needsToReEvaluate }} >> $GITHUB_OUTPUT
+
+      - name: Regenerate validation token
+        id: regenerateValidationToken
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: |
+            az afd custom-domain regenerate-validation-token \
+              --profile-name ${{ steps.vars.outputs.profileName }} \
+              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
+              --only-show-errors
+
+            newValidationToken=$(az afd custom-domain show \
+              --profile-name ${{ steps.vars.outputs.profileName }} \
+              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
+              --only-show-errors | jq --raw-output .validationProperties.validationToken)
+
+            echo newValidationToken=$newValidationToken >> $GITHUB_OUTPUT
+
+      - name: Update dns auth TXT record
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: |
+            az network dns record-set txt update \
+              --zone-name ${{ steps.vars.outputs.zoneName }} \
+              --name "_dnsauth" \
+              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --set "txt_records[0].value=['${{ steps.regenerateValidationToken.outputs.newValidationToken }}']"
