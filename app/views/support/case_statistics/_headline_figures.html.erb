@@ -1,0 +1,30 @@
+<div class="govuk-grid-row case-overview">
+  <div class="govuk-grid-column-one-third">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title govuk-!-margin-bottom-0 no_of_live_cases">
+        <%= @live_cases.count %>
+      </h1>
+      <div class="govuk-panel__body">
+        <%= I18n.t("support.case_statistics.body.no_of_live_cases", count: @live_cases) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row case-overview">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-inset-text border-left-colour-green opened-live-cases">
+      <strong><%= @live_cases.by_state("opened").count %> </strong> <%= I18n.t("support.case_statistics.states.opened") %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter on-hold-live-cases">
+    <div class="govuk-inset-text border-left-colour-yellow">
+      <strong><%= @live_cases.on_hold.count %> </strong><%= I18n.t("support.case_statistics.states.on_hold") %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter initial-live-cases">
+    <div class="govuk-inset-text border-left-colour-blue">
+      <strong><%= @live_cases.by_state("initial").count %> </strong><%= I18n.t("support.case_statistics.states.initial") %>
+    </div>
+  </div>
+</div>

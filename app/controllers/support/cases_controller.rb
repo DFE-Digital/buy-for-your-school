@@ -53,7 +53,7 @@ module Support
       @all_cases_filter_form = Case.filtering(filter_params_for(:filter_all_cases_form, defaults:, persist: !override_filter(:filter_all_cases_form)).except(:override))
       @new_cases_filter_form = Case.initial.filtering(filter_params_for(:filter_new_cases_form, defaults:))
       @my_cases_filter_form = Case.by_agent(current_agent.id).filtering(filter_params_for(:filter_my_cases_form, defaults: defaults.merge({ state: %w[live] })))
-      @triage_cases_filter_form = Case.triage.filtering(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] })))
+      @triage_cases_filter_form = Case.triage.filtering(filter_params_for(:filter_triage_cases_form, defaults: defaults.merge({ state: %w[live] }), persist: !override_filter(:filter_triage_cases_form)).except(:override))
     end
 
     def override_filter(filter_scope) = params.fetch(filter_scope, {}).permit(:override)[:override] == "true"

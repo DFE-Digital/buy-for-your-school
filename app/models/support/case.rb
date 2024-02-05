@@ -165,6 +165,10 @@ module Support
       leas.uniq.sort
     end
 
+    def self.triage_levels
+      %w[L1 L2 L3]
+    end
+
     def request
       framework_request || case_request
     end

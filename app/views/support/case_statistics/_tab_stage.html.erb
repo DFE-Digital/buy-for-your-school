@@ -1,0 +1,8 @@
+<div id="stats-by-stage">
+
+	<%= render partial: "support/case_statistics/by_top_level_stage" %>
+  <% @top_level_stages.each do |stage| %>
+    <%= render partial: "support/case_statistics/by_substage", locals: {parent_stage: stage} %>
+  <% end %>
+
+</div>

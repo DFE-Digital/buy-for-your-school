@@ -1,3 +1,26 @@
+a, span, em {
+  &:link,
+  &:visited {
+    color: $govuk-link-colour;
+  }
+}
+
+.govuk-summary-card__title {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
+}
+
+.govuk-summary-card__title_cell {
+  text-align: right;
+}
+
+.govuk-summary-card__title_cell:first-child {
+  margin-right: 20px;
+  text-align: left;
+}
+
 .border-left-colour-yellow {
     border-left-color: govuk-colour("yellow")
 }
@@ -8,6 +31,16 @@
 
 .border-left-colour-blue {
     border-left-color: govuk-colour("blue")
+}
+
+.govuk-summary-card__content {
+  th {
+    vertical-align: bottom;
+  }
+  tr:last-child > td {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
 }
 
 .overview-table {

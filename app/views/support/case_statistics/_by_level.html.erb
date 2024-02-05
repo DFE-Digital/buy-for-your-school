@@ -1,0 +1,82 @@
+<div class="govuk-summary-card" id="statistics-by-person-by-level" aria-label="<%= I18n.t("support.case_statistics.section_headings.by_level") %>">
+  <div class="govuk-summary-card__title-wrapper">
+		<h2 class="govuk-summary-card__title">
+      <div class="govuk-summary-card__title_cell"><%= I18n.t("support.case_statistics.section_headings.by_level") %></div>
+      <div class="govuk-summary-card__title_cell"><%= show_all_case_workers_link %></div>
+    </h2>
+  </div>
+
+  <div class="govuk-summary-card__content">
+	  <div class="case-panel">
+			<table class="govuk-table overview-table overview-by-level" aria-label="<%= "Table for #{I18n.t("support.case_statistics.section_headings.by_level")}" %>">
+			  <thead class="govuk-table__head">
+			    <tr class="govuk-table__row">
+			      <th scope="col" class="govuk-table__header agent-name"><%= I18n.t("support.case_statistics.column_headings.name") %></th>
+						<% @support_levels.each do |level| %>
+							<th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.support_levels.#{level[0]}") %></th>
+						<% end %>
+						<th scope="col" class="govuk-table__header result-value"><%= I18n.t("support.case_statistics.support_levels.unspecified") %></th>
+			    </tr>
+			  </thead>
+			  <tbody class="govuk-table__body">
+			    <% @caseworkers_to_display.each do |agent| %>
+			      <tr class="govuk-table__row">
+			        <td scope="row" class="govuk-table__header agent-name">
+			          <%= govuk_link_to agent.full_name, request.params.merge(selected_caseworker: agent.id), no_visited_state: true %>
+			        </td>
+							<% @support_levels.each do |level| %>
+				        <td class="govuk-table__cell result-value">
+                  <%= govuk_link_to @live_cases.by_agent(agent.id).by_level(level).count, filtered_cases_path(nil, { level: level[0], state: %w[live], agent: agent.id, category: "all" }), no_visited_state: true %>
+								</td>
+							<% end %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.by_agent(agent.id).by_level_unspecified.count, filtered_cases_path(nil, { level: "unspecified", state: %w[live], agent: agent.id }), no_visited_state: true %>
+							</td>
+			      </tr>
+			    <% end %>
+
+		      <tr class="govuk-table__row">
+		        <td scope="row" class="govuk-table__header agent-name">
+							<%= I18n.t("support.case_statistics.row_headings.assigned_to_non_caseworkers").upcase %>
+		        </td>
+						<% @support_levels.each do |level| %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.assigned_to_non_caseworkers.by_level(level).count, filtered_cases_path(nil, { level: level[0], state: %w[live], agent: "former", category: "all" }), no_visited_state: true %>
+							</td>
+						<% end %>
+		        <td class="govuk-table__cell result-value">
+              <%= govuk_link_to @live_cases.assigned_to_non_caseworkers.by_level_unspecified.count, filtered_cases_path(nil, { level: "unspecified", state: %w[live], agent: "former", category: "all" }), no_visited_state: true %>
+						</td>
+		      </tr>
+
+		      <tr class="govuk-table__row">
+		        <td scope="row" class="govuk-table__header agent-name">
+							<%= I18n.t("support.case_statistics.row_headings.unassigned").upcase %>
+		        </td>
+						<% @support_levels.each do |level| %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.unassigned.by_level(level).count, filtered_cases_path(nil, { level: level[0], state: %w[live], agent: "unassigned", category: "all" }), no_visited_state: true %>
+							</td>
+						<% end %>
+		        <td class="govuk-table__cell result-value">
+              <%= govuk_link_to @live_cases.unassigned.by_level_unspecified.count, filtered_cases_path(nil, { level: "unspecified", state: %w[live], agent: "unassigned", category: "all" }), no_visited_state: true %>
+						</td>
+		      </tr>
+		      <tr class="govuk-table__row">
+		        <td scope="row" class="govuk-table__header agent-name">
+							<%= I18n.t("support.case_statistics.row_headings.total").upcase %>
+		        </td>
+						<% @support_levels.each do |level| %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.by_level(level).count, filtered_cases_path(nil, { level: level[0], state: %w[live], category: "all" }), no_visited_state: true %>
+							</td>
+						<% end %>
+		        <td class="govuk-table__cell result-value">
+              <%= govuk_link_to @live_cases.by_level_unspecified.count, filtered_cases_path(nil, { level: "unspecified", state: %w[live], category: "all" }), no_visited_state: true %>
+						</td>
+		      </tr>
+			  </tbody>
+			</table>
+	  </div>
+	</div>
+</div>

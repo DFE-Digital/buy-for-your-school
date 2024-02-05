@@ -1,0 +1,80 @@
+<div class="govuk-summary-card" id="statistics-by-category" aria-label="<%= I18n.t("support.case_statistics.section_headings.by_category") %>">
+  <div class="govuk-summary-card__title-wrapper">
+		<h2 class="govuk-summary-card__title">
+      <div class="govuk-summary-card__title_cell"><%= I18n.t("support.case_statistics.section_headings.by_category") %></div>
+      <div class="govuk-summary-card__title_cell"><%= show_all_case_workers_link %></div>
+    </h2>
+  </div>
+
+  <div class="govuk-summary-card__content">
+	  <div class="case-panel">
+			<table class="govuk-table overview-table overview-by-category" aria-label="<%= "Table for #{I18n.t("support.case_statistics.section_headings.by_category")}" %>">
+			  <thead class="govuk-table__head">
+			    <tr class="govuk-table__row">
+			      <th scope="col" class="govuk-table__header agent-name"><%= I18n.t("support.case_statistics.column_headings.name") %></th>
+						<% @towers.each do |tower| %>
+							<th scope="col" class="govuk-table__header result-value"><%= tower.title %></th>
+						<% end %>
+						<th scope="col" class="govuk-table__header result-value"><%= Support::Tower.nil_tower.title %></th>
+			    </tr>
+			  </thead>
+			  <tbody class="govuk-table__body">
+			    <% @caseworkers_to_display.each do |agent| %>
+			      <tr class="govuk-table__row">
+			        <td scope="row" class="govuk-table__header agent-name">
+			          <%= govuk_link_to agent.full_name, request.params.merge(selected_caseworker: agent.id), no_visited_state: true %>
+			        </td>
+							<% @towers.each do |tower| %>
+				        <td class="govuk-table__cell result-value">
+                  <%= govuk_link_to @live_cases.by_tower(tower.id).by_agent(agent).count, filtered_cases_path(tower, { state: %w[live], agent: agent.id }), no_visited_state: true %>
+								</td>
+							<% end %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.without_tower.by_agent(agent).count, filtered_cases_path("no-tower", { state: %w[live], agent: agent.id }), no_visited_state: true %>
+							</td>
+			      </tr>
+			    <% end %>
+		      <tr class="govuk-table__row">
+		        <td scope="row" class="govuk-table__header agent-name">
+							<%= I18n.t("support.case_statistics.row_headings.assigned_to_non_caseworkers").upcase %>
+		        </td>
+						<% @towers.each do |tower| %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.by_tower(tower.id).assigned_to_non_caseworkers.count, filtered_cases_path(tower, { state: %w[live], agent: "former" }), no_visited_state: true %>
+							</td>
+						<% end %>
+		        <td class="govuk-table__cell result-value">
+              <%= govuk_link_to @live_cases.assigned_to_non_caseworkers.without_tower.count, filtered_cases_path("no-tower", { state: %w[live], agent: "former" }), no_visited_state: true %>
+						</td>
+		      </tr>
+		      <tr class="govuk-table__row">
+		        <td scope="row" class="govuk-table__header agent-name">
+							<%= I18n.t("support.case_statistics.row_headings.unassigned").upcase %>
+		        </td>
+						<% @towers.each do |tower| %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.by_tower(tower.id).unassigned.count, filtered_cases_path(tower, { state: %w[live], agent: "unassigned" }), no_visited_state: true %>
+							</td>
+						<% end %>
+		        <td class="govuk-table__cell result-value">
+              <%= govuk_link_to @live_cases.unassigned.without_tower.count, filtered_cases_path("no-tower", { state: %w[live], agent: "unassigned" }), no_visited_state: true %>
+						</td>
+		      </tr>
+		      <tr class="govuk-table__row">
+		        <td scope="row" class="govuk-table__header agent-name">
+							<%= I18n.t("support.case_statistics.row_headings.total").upcase %>
+		        </td>
+						<% @towers.each do |tower| %>
+			        <td class="govuk-table__cell result-value">
+                <%= govuk_link_to @live_cases.by_tower(tower.id).count, filtered_cases_path(tower, { state: %w[live] }), no_visited_state: true %>
+							</td>
+						<% end %>
+		        <td class="govuk-table__cell result-value">
+              <%= govuk_link_to @live_cases.without_tower.count, filtered_cases_path("no-tower", { state: %w[live] }), no_visited_state: true %>
+						</td>
+		      </tr>
+			  </tbody>
+			</table>
+	  </div>
+	</div>
+</div>
