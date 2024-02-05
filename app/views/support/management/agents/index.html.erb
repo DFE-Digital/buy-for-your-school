@@ -16,22 +16,22 @@
 <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <%= link_to I18n.t("support.management.agents.tabs.enabled_accounts.tab_heading"), "#enabled-accounts", class: "govuk-tabs__tab" %>
+      <%= link_to I18n.t("support.management.agents.tabs.current_accounts.tab_heading"), "#current-accounts", class: "govuk-tabs__tab" %>
     </li>
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <%= link_to I18n.t("support.management.agents.tabs.disabled_accounts.tab_heading"), "#disabled-accounts", class: "govuk-tabs__tab" %>
+      <%= link_to I18n.t("support.management.agents.tabs.former_accounts.tab_heading"), "#former-accounts", class: "govuk-tabs__tab" %>
     </li>
   </ul>
 
 	<div class="govuk-tabs__panel">
-		<div id="enabled-accounts">
+		<div id="current-accounts">
 			<%= render partial: "support/management/agents/agents", locals: {agents: @enabled_agents} %>
     	<h3 class="govuk-heading-m">Actions</h3>
     	<ul class="govuk-list">
     	  <li><%= link_to "New Agent", portal_new_management_agent_path , class: "govuk-link" %></li>
     	</ul>
 		</div>
-		<div id="disabled-accounts">
+		<div id="former-accounts">
 			<%= render partial: "support/management/agents/agents", locals: {agents: @disabled_agents} %>
       <% if !@disabled_agents.empty? %>
 				<p class="govuk-body">

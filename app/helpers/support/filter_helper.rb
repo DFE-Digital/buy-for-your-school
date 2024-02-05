@@ -30,7 +30,9 @@ module Support
     def available_agents
       CheckboxOption
         .from(
-          Support::Agent.caseworkers.by_first_name.map { |a| Support::AgentPresenter.new(a) },
+          Support::Agent.caseworkers.by_first_name.map { |a| Support::AgentPresenter.new(a) }
+          .append(OpenStruct.new(id: "former", full_name: I18n.t("support.case.filter.labels.former_staff")))
+          .append(OpenStruct.new(id: "unassigned", full_name: I18n.t("support.case.filter.labels.unassigned"))),
           title_field: :full_name,
           include_all: true,
         )

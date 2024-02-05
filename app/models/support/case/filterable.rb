@@ -2,7 +2,30 @@ module Support::Case::Filterable
   extend ActiveSupport::Concern
 
   included do
-    scope :by_agent, ->(agent_ids) { where(agent_id: agent_ids) }
+    scope :by_agent, lambda { |agent_ids|
+      find_unassigned = false
+      find_former = false
+
+      if Array(agent_ids).include?("unassigned")
+        find_unassigned = true
+        agent_ids -= %w[unassigned]
+      end
+      if Array(agent_ids).include?("former")
+        find_former = true
+        agent_ids -= %w[former]
+      end
+
+      results = where(agent_id: agent_ids)
+      results = results.or(unassigned) if find_unassigned
+      results = results.or(assigned_to_non_caseworkers) if find_former
+      results
+    }
+
+    scope :unassigned, -> { where(agent_id: nil) }
+
+    scope :assigned, -> { unassigned.invert_where }
+
+    scope :assigned_to_non_caseworkers, -> { by_agent(Support::Agent.non_caseworkers) }
 
     scope :by_state, lambda { |states|
       states = Array(states)

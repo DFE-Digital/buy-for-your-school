@@ -25,8 +25,13 @@ module Support
     scope :ordered_by_title, -> { order(Arel.sql("case when support_categories.title = 'Or' then 1 else 0 end ASC, support_categories.title ASC")) }
     scope :except_for, ->(title) { where.not(title:) }
     scope :active, -> { where(archived: false) }
+    scope :with_live_cases, -> { joins(:cases).merge(Case.live) }
 
     delegate :title, to: :tower, prefix: true, allow_nil: true
+
+    def self.unique_categories
+      order(title: :asc).uniq
+    end
 
     def self.other_category_id
       find_by(title: "Or")

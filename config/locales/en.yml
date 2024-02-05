@@ -883,6 +883,8 @@ en:
           stage: Filter by stage
           level: Filter by level
           selected: "%{count} selected"
+          unassigned: Unassigned
+          former_staff: Former staff
       header:
         action: Actions
         case_attachments: Attachments
@@ -1504,6 +1506,10 @@ en:
           one: Live case
           other: Live cases
           zero: Live cases
+      column_headings:
+        name: Name
+        triage: Triage
+        unspecified: Unspecified
       download:
         csv: Download CSV
       header: Case statistics
@@ -1526,6 +1532,21 @@ en:
           one: There is <strong>1</strong> live case with no organisation
           other: There are <strong>%{count}</strong> live cases that have no organisation
           zero: There are no live cases that have no organisation
+      row_headings:
+        total: Total
+        unassigned: Unassigned
+        assigned_to_non_caseworkers: Former staff
+      section_headings:
+        by_level: Live cases by level
+        by_top_level_stage: Live cases by top-level stage
+        by_substage: Live cases by sub-stage
+        by_status: Live cases by status
+        by_category: Live category cases (levels 1 - 5)
+        by_triage_level: Live triage cases (levels 1 - 3)
+        by_subcategory: Live cases by subcategory
+      selected_caseworker:
+        for: for
+        show_all: Show all case workers
       stages:
         contract_award: Contract award
         evaluation: Evaluation
@@ -1537,9 +1558,9 @@ en:
         unspecified: Unspecified
       states:
         live: Live
-        new: New
+        initial: New
         on_hold: On hold
-        open: Open
+        opened: Open
       states_by_tower:
         header: Overview by tower
         tower: Tower
@@ -1554,6 +1575,20 @@ en:
       support_levels_by_tower:
         header: Overview by case levels by tower
         tower: Tower
+      tabs:
+        by_person:
+          tab_heading: Overview by Person
+          content_heading: Overview by Person
+        by_stage:
+          tab_heading: Overview by Stage
+          content_heading: Overview by Stage
+        by_category:
+          tab_heading: Overview by Category
+          content_heading: Overview by Category
+          duplication_disclaimer: Please note, live cases that are <b>levels 1-3</b> will be counted in both the <b>Triage</b> and <b>Category</b> tables.
+        orig:
+          tab_heading: Original statistics
+          content_heading: Original Case statistics
       tower:
         header: "%{type} Statistics"
         level: Level
@@ -1688,10 +1723,10 @@ en:
           no_records: No records to show
           reenable_instructions: To re-enable an account, edit them to assign them a role
         tabs:
-          disabled_accounts:
-            tab_heading: Disabled accounts
-          enabled_accounts:
-            tab_heading: Enabled accounts
+          former_accounts:
+            tab_heading: Former staff
+          current_accounts:
+            tab_heading: Current staff
       all_cases_surveys:
         header: All Cases Survey
         eligible_cases:

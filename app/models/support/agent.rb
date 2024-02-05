@@ -10,12 +10,18 @@ module Support
     include RoleAssignable
 
     has_many :cases, class_name: "Support::Case"
+    has_many :live_cases, -> { live }, class_name: "Support::Case"
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
+    scope :caseworkers, -> { by_role(%w[procops procops_admin]) }
+    scope :non_caseworkers, -> { caseworkers.invert_where }
+    scope :e_and_o_staff, -> { by_role(%w[e_and_o e_and_o_admin]) }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
     scope :disabled, -> { where("roles::text = '{}'::text") }
     scope :enabled, -> { disabled.invert_where }
+    scope :with_cases, -> { where.associated(:cases).distinct }
+    scope :with_live_cases, -> { where.associated(:live_cases).distinct }
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
