@@ -3,6 +3,7 @@ RSpec.feature "Edit case procurement details" do
 
   let(:support_case) { create(:support_case, :opened, procurement: support_procurement) }
   let(:support_procurement) { create(:support_procurement, :blank) }
+  let(:framework) { create(:frameworks_framework, reference: "F123", short_name: "Example Framework") }
 
   before do
     visit edit_support_case_procurement_details_path(support_case)
@@ -43,6 +44,31 @@ RSpec.feature "Edit case procurement details" do
     within(all("div.govuk-form-group")[3]) do
       expect(find("label.govuk-label")).to have_text "Framework name"
       expect(page).to have_field "case_procurement_details_form[framework_name]"
+    end
+  end
+
+  context "when the framework dropdown does not contain a value", js: true do
+    it "does not have a clear framework link" do
+      within(all("div.govuk-form-group")[3]) do
+        expect(page).to have_css(".govuk-\\!-display-none")
+      end
+    end
+  end
+
+  context "when the framework dropdown contains a value", js: true do
+    let(:support_procurement) { create(:support_procurement, stage: :market_analysis, register_framework: framework) }
+
+    it "has a clear framework link, which removes the framework and link when clicked" do
+      within(all("div.govuk-form-group")[3]) do
+        expect(page).not_to have_css(".govuk-\\!-display-none", text: "Clear selected framework")
+      end
+
+      find("a.govuk-link", text: "Clear selected framework").click
+
+      within(all("div.govuk-form-group")[3]) do
+        expect(find("#framework-autocomplete")).to have_text ""
+        expect(page).to have_css(".govuk-\\!-display-none", text: "Clear selected framework")
+      end
     end
   end
 
