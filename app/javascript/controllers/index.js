@@ -58,6 +58,9 @@ application.register("error-summary", ErrorSummaryController)
 import ExpanderController from "./expander_controller"
 application.register("expander", ExpanderController)
 
+import FrameworkEditController from "./framework_edit_controller"
+application.register("framework-edit", FrameworkEditController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 

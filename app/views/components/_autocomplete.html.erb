@@ -1,4 +1,5 @@
-<div
+<div  
+  <%= tag.attributes defined?(element_html) ? element_html : nil %>
   id="<%= container_id %>"
   data-component="autocomplete"
   data-autocomplete-label-text="<%= label_text %>"
@@ -15,7 +16,7 @@
 
   <% if defined?(hidden_fields) %>
     <% hidden_fields.each do |field_name, key_or_key_and_default| %>
-      <input type="hidden" name="<%= field_name %>" value="<%= Array.wrap(key_or_key_and_default)[1] %>">
+      <input type="hidden" name="<%= field_name %>" value="<%= Array.wrap(key_or_key_and_default)[1] %>"<%= tag.attributes defined?(element_hidden_html) ? element_hidden_html : nil %>>
     <% end %>
   <% end %>
 </div>
