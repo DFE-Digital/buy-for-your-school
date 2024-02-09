@@ -68,7 +68,7 @@ class FrameworkRequest < Request
   end
 
   def is_energy_or_services?
-    flow&.is_energy_or_services? || category.is_energy_or_services?
+    flow&.energy_or_services? || category.is_energy_or_services?
   end
 
 private
