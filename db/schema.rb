@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_12_113720) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -414,8 +414,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id"
     t.text "sidebar"
     t.string "breadcrumbs", default: [], array: true
@@ -839,7 +839,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
     t.string "ukprn"
     t.string "telephone_number"
     t.jsonb "local_authority"
-    t.datetime "opened_date"
+    t.datetime "opened_date", precision: nil
     t.string "number"
     t.string "rsc_region"
     t.string "trust_name"
@@ -1089,6 +1089,57 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
        LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
     WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
+  create_view "support_message_threads", sql_definition: <<-SQL
+      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
+      se.case_id,
+      se.ticket_id,
+      se.ticket_type,
+      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
+             FROM support_emails se2,
+              LATERAL jsonb_array_elements(se2.recipients) elems(value)
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
+      se.subject,
+      ( SELECT se2.sent_at
+             FROM support_emails se2
+            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
+            ORDER BY se2.sent_at DESC
+           LIMIT 1) AS last_updated
+     FROM support_emails se;
+  SQL
+  create_view "ticket_searches", sql_definition: <<-SQL
+      SELECT scs.case_id AS id,
+      scs.case_ref AS reference,
+      scs.organisation_name,
+      scs.organisation_urn,
+      scs.organisation_ukprn,
+      NULL::character varying AS framework_name,
+      NULL::character varying AS framework_provider,
+      scs.agent_name,
+      scs.agent_first_name,
+      scs.agent_last_name,
+      scs.created_at,
+      scs.updated_at,
+      'Support::Case'::text AS source
+     FROM support_case_searches scs
+  UNION ALL
+   SELECT fe.id,
+      fe.reference,
+      NULL::character varying AS organisation_name,
+      NULL::character varying AS organisation_urn,
+      NULL::character varying AS organisation_ukprn,
+      ff.name AS framework_name,
+      fp.short_name AS framework_provider,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      fe.created_at,
+      fe.updated_at,
+      'Frameworks::Evaluation'::text AS source
+     FROM (((frameworks_evaluations fe
+       LEFT JOIN frameworks_frameworks ff ON ((ff.id = fe.framework_id)))
+       LEFT JOIN frameworks_providers fp ON ((fp.id = ff.provider_id)))
+       LEFT JOIN support_agents sa ON ((sa.id = fe.assignee_id)));
+  SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
       sc.ref AS case_ref,
@@ -1132,15 +1183,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
       se.rsc_region AS organisation_rsc_region,
       se.local_authority_name AS organisation_local_authority_name,
       se.local_authority_code AS organisation_local_authority_code,
+      se.gor_name,
       se.uid AS organisation_uid,
       se.phase AS organisation_phase,
       se.organisation_status,
       se.egroup_status AS establishment_group_status,
       se.establishment_type,
       array_length(fr.school_urns, 1) AS request_num_schools,
-      replace(btrim((fr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS request_school_urns,
+      replace(TRIM(BOTH '{}"'::text FROM (fr.school_urns)::text), ','::text, ', '::text) AS request_school_urns,
       array_length(cr.school_urns, 1) AS case_num_schools,
-      replace(btrim((cr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS case_school_urns,
+      replace(TRIM(BOTH '{}"'::text FROM (cr.school_urns)::text), ','::text, ', '::text) AS case_school_urns,
       sf.name AS framework_name,
       sp.reason_for_route_to_market,
       sp.required_agreement_type,
@@ -1200,6 +1252,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
               organisations.rsc_region,
               (organisations.local_authority ->> 'name'::text) AS local_authority_name,
               (organisations.local_authority ->> 'code'::text) AS local_authority_code,
+              organisations.gor_name,
               organisations.urn,
               organisations.ukprn,
               organisations.status AS organisation_status,
@@ -1216,6 +1269,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
               NULL::character varying AS rsc_region,
               NULL::text AS local_authority_name,
               NULL::text AS local_authority_code,
+              NULL::character varying AS gor_name,
               NULL::character varying AS urn,
               egroups.ukprn,
               NULL::integer AS organisation_status,
@@ -1244,56 +1298,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_153454) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
-  SQL
-  create_view "support_message_threads", sql_definition: <<-SQL
-      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
-      se.case_id,
-      se.ticket_id,
-      se.ticket_type,
-      ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
-             FROM support_emails se2,
-              LATERAL jsonb_array_elements(se2.recipients) elems(value)
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
-      se.subject,
-      ( SELECT se2.sent_at
-             FROM support_emails se2
-            WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
-            ORDER BY se2.sent_at DESC
-           LIMIT 1) AS last_updated
-     FROM support_emails se;
-  SQL
-  create_view "ticket_searches", sql_definition: <<-SQL
-      SELECT scs.case_id AS id,
-      scs.case_ref AS reference,
-      scs.organisation_name,
-      scs.organisation_urn,
-      scs.organisation_ukprn,
-      NULL::character varying AS framework_name,
-      NULL::character varying AS framework_provider,
-      scs.agent_name,
-      scs.agent_first_name,
-      scs.agent_last_name,
-      scs.created_at,
-      scs.updated_at,
-      'Support::Case'::text AS source
-     FROM support_case_searches scs
-  UNION ALL
-   SELECT fe.id,
-      fe.reference,
-      NULL::character varying AS organisation_name,
-      NULL::character varying AS organisation_urn,
-      NULL::character varying AS organisation_ukprn,
-      ff.name AS framework_name,
-      fp.short_name AS framework_provider,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      fe.created_at,
-      fe.updated_at,
-      'Frameworks::Evaluation'::text AS source
-     FROM (((frameworks_evaluations fe
-       LEFT JOIN frameworks_frameworks ff ON ((ff.id = fe.framework_id)))
-       LEFT JOIN frameworks_providers fp ON ((fp.id = ff.provider_id)))
-       LEFT JOIN support_agents sa ON ((sa.id = fe.assignee_id)));
   SQL
 end
