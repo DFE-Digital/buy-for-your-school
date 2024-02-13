@@ -16,7 +16,7 @@ module Support
 
       if @form.valid?(:searching)
         @results = @form.results.map { |c| CasePresenter.new(c) }.paginate(page: params[:my_cases_page])
-        @back_url = new_support_case_search_path
+        @back_url = url_from(back_link_param) || new_support_case_search_path
         render :index
       else
         @back_url = support_cases_path
