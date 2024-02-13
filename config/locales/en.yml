@@ -1042,6 +1042,7 @@ en:
         organisation_name: Organisation name
         organisation_type: Organisation type
         origin: Origin
+        other_cases: Other cases
         place_on_hold: Place on hold
         problem_description: Description of query
         initial_problem_description: Initial description of query
@@ -1160,6 +1161,8 @@ en:
         unavailable_category: Unavailable
         value:
           unspecified: Not specified
+        view_all: View all
+        view_all_cases: View all cases
         view_resolved_cases: View all my resolved cases
         view_tower_cases: View all cases in my tower
         with_school: with school

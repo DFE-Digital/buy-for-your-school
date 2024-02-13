@@ -41,4 +41,14 @@
       <span title="<%= kase.last_updated_at %>"><%= relative_date_format(kase.last_updated_at) %></span>
     </dd>
   </div>
+  <% if kase.organisation.present? && other_cases_by_case_org_exist?(kase.organisation) %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.other_cases") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= govuk_link_to I18n.t("support.case.label.view_all"), other_cases_by_case_org_path(kase.organisation, back_to: current_url_b64(tab)), no_visited_state: true, "target" => "_top" %>
+      </dd>
+    </div>
+  <% end %>
 </dl>
