@@ -77,7 +77,7 @@ group :development, :test do
   gem "ruby-lsp-rails"
   gem "ruby-lsp-rspec", require: false
   gem "terminal-notifier"
-  gem "terminal-notifier-guard", "~> 1.6.1"
+  gem "terminal-notifier-guard", "~> 1.7.0"
 end
 
 group :development do
