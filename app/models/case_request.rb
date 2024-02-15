@@ -35,7 +35,11 @@ class CaseRequest < ApplicationRecord
     result
   end
 
-  delegate :is_energy_or_services?, to: :category
+  def is_energy_or_services?
+    return false if category.nil?
+
+    category.is_energy_or_services?
+  end
 
 private
 
