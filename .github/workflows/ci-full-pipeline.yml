@@ -18,7 +18,7 @@ jobs:
     if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/development' }}
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4.1.1
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -35,7 +35,7 @@ jobs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4.1.1
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4.1.1
 
       - name: Install node modules
         run: yarn install
@@ -276,7 +276,7 @@ jobs:
     if: github.ref == 'refs/heads/development'
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4.1.1
       - uses: ./.github/workflows/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
@@ -293,7 +293,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4.1.1
       - uses: ./.github/workflows/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
@@ -310,7 +310,7 @@ jobs:
     if: github.ref == 'refs/heads/production'
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4.1.1
       - uses: ./.github/workflows/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
