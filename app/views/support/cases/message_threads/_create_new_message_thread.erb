@@ -1,0 +1,13 @@
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      <%= I18n.t("support.case.label.message_threads.new_thread") %>
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    <div class="govuk-button-group flex-align-center">
+      <%= link_to I18n.t("support.case.label.message_threads.create_with_template"), support_case_email_templates_path(back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", role: "button" %>
+      <%= button_to I18n.t("support.case.label.message_threads.create_using_signatory_template"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary" %>
+    </div>
+  </div>
+</details>

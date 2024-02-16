@@ -8,8 +8,10 @@ describe "Agent can send new emails", js: true do
     click_on "Messages"
   end
 
-  it "shows the new thread button" do
-    expect(page).to have_link "Create a new message thread"
+  it "shows the new thread expandable details button" do
+    within(all("details.govuk-details")[0]) do
+      expect(find("span.govuk-details__summary-text")).to have_text "Create a new message thread"
+    end
   end
 
   describe "creating a new thread", :with_csrf_protection, js: true do
@@ -17,12 +19,14 @@ describe "Agent can send new emails", js: true do
       template = create(:support_email_template, title: "Energy template", subject: "about energy", body: "energy body")
       create(:support_email_template_attachment, template:)
 
-      click_link "Create a new message thread"
+      first("span", text: "Create a new message thread").click
     end
 
     context "with a signatory template" do
       before do
-        click_on "Use signatory template"
+        within(all("details.govuk-details")[0]) do
+          click_on "Create using a signatory template"
+        end
 
         to_input = find("input[name$='[to]']")
         to_input.fill_in with: "to@email.com"
@@ -51,7 +55,6 @@ describe "Agent can send new emails", js: true do
       it "shows added recipients", flaky: true do
         to_table = find("table[data-row-label='TO']")
         within(to_table) do
-          # case email added by default
           expect(page).to have_text "contact@email.com"
           expect(page).to have_text "to@email.com"
         end
@@ -70,6 +73,9 @@ describe "Agent can send new emails", js: true do
 
     context "with a selected template" do
       before do
+        within(all("details.govuk-details")[0]) do
+          click_on "Create with an email template"
+        end
         choose "Energy template"
         click_on "Use selected template"
       end

@@ -971,6 +971,8 @@ en:
         message_threads:
           action: Action
           back: Back to message list
+          create_with_template: Create with an email template
+          create_using_signatory_template: Create using a signatory template
           email_templates:
             header: Select a template
             signatory_template: Use signatory template
