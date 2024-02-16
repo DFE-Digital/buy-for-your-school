@@ -1,6 +1,8 @@
 <%= turbo_frame_tag "messages-frame" do %>
   <h2 class="govuk-heading-l"><%= I18n.t("support.case.header.messages") %></h2>
 
+  <%= render "support/cases/message_threads/create_new_message_thread" %>
+
   <table class="govuk-table messages-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -27,6 +29,6 @@
     </tbody>
   </table>
 
-  <% new_thread_link = support_case_email_templates_path(back_to: Base64.encode64(@back_url)) %>
-  <%= link_to I18n.t("support.case.label.message_threads.new_thread"), new_thread_link, class: "govuk-button", role: "button"%>
+  <%= render "support/cases/message_threads/create_new_message_thread" %>
+  
 <% end %>

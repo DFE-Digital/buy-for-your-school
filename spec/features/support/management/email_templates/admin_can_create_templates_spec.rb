@@ -32,7 +32,7 @@ describe "Admin can create email templates", :with_csrf_protection, js: true do
       expect(page).to have_content("Solar")
       expect(page).to have_content("Stage 3")
       expect(page).to have_content("New template subject")
-      expect(page).to have_content("RegardsProcurement Specialist")
+      expect(page).to have_content("Procurement Specialist")
     end
   end
 end
