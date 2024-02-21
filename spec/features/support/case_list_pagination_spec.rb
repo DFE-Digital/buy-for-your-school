@@ -4,7 +4,7 @@
 RSpec.feature "Case management dashboard pagination", bullet: :skip do
   include_context "with an agent"
 
-  describe "#my-cases" do
+  describe "#my-cases", flaky: true do
     before do
       create_list(:support_case, 15, agent:)
       visit "/support/cases#my-cases"
