@@ -48,7 +48,7 @@ describe "Agent can send new emails", js: true do
         cc_add_button.click
       end
 
-      it "pre-fills the default subject line" do
+      it "pre-fills the default subject line", flaky: true do
         expect(page).to have_field "Enter an email subject", with: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
       end
 

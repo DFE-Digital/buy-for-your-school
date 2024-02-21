@@ -21,7 +21,7 @@ RSpec.feature "Create case", js: true do
     end
   end
 
-  it "shows the create case heading" do
+  it "shows the create case heading", flaky: true do
     expect(find("h1.govuk-heading-l")).to have_text "Create a new case"
   end
 

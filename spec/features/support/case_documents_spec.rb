@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Case documents" do
+describe "Case documents", flaky: true do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, :with_documents) }

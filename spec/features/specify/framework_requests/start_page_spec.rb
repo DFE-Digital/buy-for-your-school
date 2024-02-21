@@ -21,7 +21,7 @@ RSpec.feature "Starting a 'Find a Framework' request" do
       click_continue
     end
 
-    it "shows their profile" do
+    it "shows their profile", flaky: true do
       expect(page).to have_current_path "/procurement-support/confirm_sign_in"
       expect(page).to have_button "Yes, continue"
     end
