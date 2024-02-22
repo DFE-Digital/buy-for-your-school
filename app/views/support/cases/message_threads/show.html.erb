@@ -6,7 +6,7 @@
   <%= render "support/cases/message_threads/#{@messages.count > 4 ? "greater_than_four_messages" : "four_or_less_messages"}", messages: @messages, current_case: @current_case %>
 
   <% if @last_received_reply&.inbox? %>
-    <details class="govuk-details govuk-!-margin-top-5" data-module="govuk-details" open="true">
+    <details class="govuk-details govuk-!-margin-top-5" open="true">
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
           Reply to message

@@ -2,7 +2,7 @@ $govuk-assets-path: "/assets/";
 $govuk-images-path: "/assets/images/";
 $govuk-fonts-path: "/assets/fonts/";
 
-@import "govuk-frontend/govuk/all";
+@import "govuk-frontend/dist/govuk/all";
 
 .govuk-table__row.borderless .govuk-table__cell,
 .borderless {

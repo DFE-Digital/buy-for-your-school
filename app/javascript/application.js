@@ -6,7 +6,7 @@ import "regenerator-runtime/runtime"
 import Rails from "@rails/ujs"
 Rails.start()
 
-import { initAll } from "govuk-frontend/govuk/all"
+import { initAll } from "govuk-frontend/dist/govuk/govuk-frontend.min.js"
 (() => {
     document.addEventListener('DOMContentLoaded', initAll);
     document.addEventListener('turbo:frame-load', (event) => initAll({ scope: event.target }));
