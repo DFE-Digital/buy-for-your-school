@@ -2,7 +2,7 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe "#banner_tag" do
     it "returns the beta tag by default" do
       # banner.beta.tag
-      expect(helper.banner_tag).to eq "beta"
+      expect(helper.banner_tag).to eq "Beta"
     end
   end
 

@@ -13,7 +13,7 @@ RSpec.feature "Common layout element" do
     scenario "service name links back to the landing page" do
       within(".govuk-header__content") do
         # app.name
-        expect(page).to have_link "Get help buying for schools", href: "/", class: "govuk-header__link--service-name"
+        expect(page).to have_link "Get help buying for schools", href: "/", class: "govuk-header__service-name"
       end
     end
   end

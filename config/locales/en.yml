@@ -62,7 +62,7 @@ en:
     beta:
       feedback_link: feedback
       message: This is a new service – your %{feedback_link} will help us to improve it.
-      tag: beta
+      tag: Beta
     design: "%{env} Environment"
     session:
       destroy: You have been signed out.

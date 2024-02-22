@@ -12,9 +12,9 @@ Rails.application.config.assets.version = "1.0"
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 
 # Add the GOVUK Frontend assets paths
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets/images")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets/fonts")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
 
 ### PLEASE NOTE - DUE TO THE WAY govuk-frontend WORKS THE PRODUCTION SERVER SERVES NON DIGESTED
 ###               VERSIONS OF SOME ASSETS DUE TO THE CSS NOT REFERENCING DIGESTED VERSIONS
@@ -34,6 +34,12 @@ Rails.application.config.assets.precompile += [
   "images/govuk-logotype-crown.png",
   "images/govuk-mask-icon.svg",
   "images/govuk-opengraph-image.png",
+
+  "images/favicon.svg",
+  "images/govuk-icon-180.png",
+  "images/govuk-icon-192.png",
+  "images/govuk-icon-512.png",
+  "images/govuk-icon-mask.svg",
 ]
 
 # Add Yarn node_modules folder to the asset load path.
