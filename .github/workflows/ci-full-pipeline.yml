@@ -255,17 +255,50 @@ jobs:
           docker exec $CONTAINER_ID bash -c "ruby lib/code_coverage_collate.rb"
           docker cp $CONTAINER_ID:/srv/app/coverage/index.html coverage
           docker cp $CONTAINER_ID:/srv/app/coverage/assets coverage
+          docker cp $CONTAINER_ID:/srv/app/coverage/.last_run.json coverage
           docker stop $CONTAINER_ID
           docker rm $CONTAINER_ID
       - name: Store collated test coverage
         uses: actions/upload-artifact@v4.3.1
         with:
           name: full-coverage-report
-          path: coverage/*
+          path: |
+            coverage/*
+            !coverage/.last_run.json
+      - name: Store last run
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: last-run
+          path: coverage/.last_run.json
       - name: Delete intermediate artifacts
         uses: geekyeggo/delete-artifact@v4.1.0
         with:
           name: coverage-report-*
+
+  comment_coverage:
+    name: Comment coverage on PR
+    needs: collate_test_coverage
+    runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - name: Download coverage from current run
+        uses: actions/download-artifact@v4.1.2
+        with:
+          path: coverage/current
+          pattern: last-run
+      - run: echo current_coverage=$(cat coverage/current/last-run/.last_run.json) >> $GITHUB_ENV
+      - name: Store coverage from current run
+        id: current-run-coverage
+        run: |
+          echo branch=${{ fromJson(env.current_coverage).result.branch }} >> $GITHUB_OUTPUT
+          echo line=${{ fromJson(env.current_coverage).result.line }} >> $GITHUB_OUTPUT
+      - name: Post comment
+        uses: thollander/actions-comment-pull-request@v2.5.0
+        with:
+          message: |
+            # Test coverage
+            **Line:** ${{ steps.current-run-coverage.outputs.line }}%
+            **Branch:** ${{ steps.current-run-coverage.outputs.branch }}%
 
   release_dev:
     name: Deploy release (Dev)
