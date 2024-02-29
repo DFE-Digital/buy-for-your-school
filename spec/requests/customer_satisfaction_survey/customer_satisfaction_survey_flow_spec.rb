@@ -34,10 +34,10 @@ describe "Filling out a customer satisfaction survey" do
       context "when valid" do
         context "and the survey is created for an exit survey email" do
           let!(:survey) { create(:customer_satisfaction_survey_response, source: :exit_survey) }
-          let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neutral" } } }
+          let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neither" } } }
 
           it "persists the answer" do
-            expect(survey.reload.satisfaction_level).to eq("neutral")
+            expect(survey.reload.satisfaction_level).to eq("neither")
           end
 
           it "redirects to the next question" do
@@ -47,10 +47,10 @@ describe "Filling out a customer satisfaction survey" do
 
         context "and the survey is created via banner link" do
           let!(:survey) { create(:customer_satisfaction_survey_response, source: :banner_link) }
-          let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neutral", satisfaction_text_neutral: "reason" } } }
+          let(:params) { { customer_satisfaction_survey: { satisfaction_level: "neither", satisfaction_text_neither: "reason" } } }
 
           it "persists the answer and reason" do
-            expect(survey.reload.satisfaction_level).to eq("neutral")
+            expect(survey.reload.satisfaction_level).to eq("neither")
             expect(survey.reload.satisfaction_text).to eq("reason")
           end
 

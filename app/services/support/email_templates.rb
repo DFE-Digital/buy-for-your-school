@@ -11,7 +11,7 @@ module Support
       all_cases_survey_open: "76f6f7ba-26d1-4c00-addd-12dc9d8d49fc",
       all_cases_survey_resolved: "a56e5c50-78d1-4b5f-a2ff-73df78b7ad99",
       confirmation_energy: "a771c164-422a-4d70-8d2f-64f66c329dfa",
-      customer_satisfaction_survey: "bbee99cd-c718-42ef-9d2c-b8fc9b442bbf",
+      customer_satisfaction_survey: "16d745fd-38fb-4a1e-9204-ca9b95a4288b",
     }.freeze
 
     def self.label_for(id)

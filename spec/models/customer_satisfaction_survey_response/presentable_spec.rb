@@ -7,16 +7,6 @@ describe CustomerSatisfactionSurveyResponse::Presentable do
     let(:satisfaction_level) { nil }
     let(:satisfaction_text) { "reasons" }
 
-    context "when satisfaction_level is 'extremely_satisfied'" do
-      let(:satisfaction_level) { :extremely_satisfied }
-
-      describe "satisfaction_text_extremely_satisfied" do
-        it "returns satisfaction_text" do
-          expect(presentable.satisfaction_text_extremely_satisfied).to eq(satisfaction_text)
-        end
-      end
-    end
-
     context "when satisfaction_level is 'very_satisfied'" do
       let(:satisfaction_level) { :very_satisfied }
 
@@ -27,32 +17,42 @@ describe CustomerSatisfactionSurveyResponse::Presentable do
       end
     end
 
-    context "when satisfaction_level is 'neutral'" do
-      let(:satisfaction_level) { :neutral }
+    context "when satisfaction_level is 'satisfied'" do
+      let(:satisfaction_level) { :satisfied }
 
-      describe "satisfaction_text_neutral" do
+      describe "satisfaction_text_satisfied" do
         it "returns satisfaction_text" do
-          expect(presentable.satisfaction_text_neutral).to eq(satisfaction_text)
+          expect(presentable.satisfaction_text_satisfied).to eq(satisfaction_text)
         end
       end
     end
 
-    context "when satisfaction_level is 'slightly_satisfied'" do
-      let(:satisfaction_level) { :slightly_satisfied }
+    context "when satisfaction_level is 'neither'" do
+      let(:satisfaction_level) { :neither }
 
-      describe "satisfaction_text_slightly_satisfied" do
+      describe "satisfaction_text_neither" do
         it "returns satisfaction_text" do
-          expect(presentable.satisfaction_text_slightly_satisfied).to eq(satisfaction_text)
+          expect(presentable.satisfaction_text_neither).to eq(satisfaction_text)
         end
       end
     end
 
-    context "when satisfaction_level is 'not_satisfied_at_all'" do
-      let(:satisfaction_level) { :not_satisfied_at_all }
+    context "when satisfaction_level is 'dissatisfied'" do
+      let(:satisfaction_level) { :dissatisfied }
 
-      describe "satisfaction_text_not_satisfied_at_all" do
+      describe "satisfaction_text_dissatisfied" do
         it "returns satisfaction_text" do
-          expect(presentable.satisfaction_text_not_satisfied_at_all).to eq(satisfaction_text)
+          expect(presentable.satisfaction_text_dissatisfied).to eq(satisfaction_text)
+        end
+      end
+    end
+
+    context "when satisfaction_level is 'very_dissatisfied'" do
+      let(:satisfaction_level) { :very_dissatisfied }
+
+      describe "satisfaction_text_very_dissatisfied" do
+        it "returns satisfaction_text" do
+          expect(presentable.satisfaction_text_very_dissatisfied).to eq(satisfaction_text)
         end
       end
     end

@@ -5,17 +5,17 @@ RSpec.describe Emails::CustomerSatisfactionSurvey do
     let!(:template_values) { survey_email.personalisation }
 
     it "includes satisfaction links" do
-      extremely_satisfied_link = template_values[:extremely_satisfied_link]
       very_satisfied_link = template_values[:very_satisfied_link]
-      neutral_link = template_values[:neutral_link]
-      slightly_satisfied_link = template_values[:slightly_satisfied_link]
-      not_satisfied_at_all_link = template_values[:not_satisfied_at_all_link]
+      satisfied_link = template_values[:satisfied_link]
+      neither_link = template_values[:neither_link]
+      dissatisfied_link = template_values[:dissatisfied_link]
+      very_dissatisfied_link = template_values[:very_dissatisfied_link]
 
-      expect(extremely_satisfied_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=extremely_satisfied$})
       expect(very_satisfied_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=very_satisfied$})
-      expect(neutral_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=neutral$})
-      expect(slightly_satisfied_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=slightly_satisfied$})
-      expect(not_satisfied_at_all_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=not_satisfied_at_all$})
+      expect(satisfied_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=satisfied$})
+      expect(neither_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=neither})
+      expect(dissatisfied_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=dissatisfied$})
+      expect(very_dissatisfied_link).to match(%r{/customer_satisfaction_surveys/survey1/satisfaction_level/edit\?customer_satisfaction_survey%5Bsatisfaction_level%5D=very_dissatisfied$})
     end
 
     it "includes case reference" do
