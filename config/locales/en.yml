@@ -347,6 +347,12 @@ en:
     satisfaction_level:
       question: Overall, how satisfied are you with this service?
       satisfaction_reason_label: Please tell us why you gave that score
+      options:
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied nor dissatisfied
+        satisfied: Satisfied
+        very_dissatisfied: Very dissatisfied
+        very_satisfied: Very satisfied
     satisfaction_reason:
       question: Please tell us why you gave the score '%{satisfaction_level}'
     easy_to_use_rating:

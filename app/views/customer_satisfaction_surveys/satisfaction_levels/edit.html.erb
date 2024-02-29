@@ -8,9 +8,9 @@
       <%= form.govuk_radio_buttons_fieldset :satisfaction_level, legend: { text: I18n.t("customer_satisfaction_survey.satisfaction_level.question"), size: "l" } do %>
         <% available_satisfaction_levels.each do |level| %>
           <% if @customer_satisfaction_survey.source_exit_survey? %>
-            <%= form.govuk_radio_button :satisfaction_level, level, label: { text: level.humanize } %>
+            <%= form.govuk_radio_button :satisfaction_level, level, label: { text: I18n.t("customer_satisfaction_survey.satisfaction_level.options.#{level}") } %>
           <% else %>
-            <%= form.govuk_radio_button :satisfaction_level, level, label: { text: level.humanize } do %>
+            <%= form.govuk_radio_button :satisfaction_level, level, label: { text: I18n.t("customer_satisfaction_survey.satisfaction_level.options.#{level}") } do %>
               <%= form.govuk_text_area "satisfaction_text_#{level}", label: { text: I18n.t("customer_satisfaction_survey.satisfaction_level.satisfaction_reason_label") } %>
             <% end %>
           <% end %>
