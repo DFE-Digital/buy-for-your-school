@@ -35,7 +35,6 @@ describe "Agent can send new emails", js: true do
 
         click_on "Show BCC"
         click_on "Show CC"
-        sleep 0.2
 
         bcc_input = find("input[name$='[bcc]']")
         bcc_input.fill_in with: "bcc@email.com"
@@ -48,11 +47,11 @@ describe "Agent can send new emails", js: true do
         cc_add_button.click
       end
 
-      it "pre-fills the default subject line", flaky: true do
+      it "pre-fills the default subject line" do
         expect(page).to have_field "Enter an email subject", with: "Case 000001 – DfE Get help buying for schools: your request for advice and guidance"
       end
 
-      it "shows added recipients", flaky: true do
+      it "shows added recipients" do
         to_table = find("table[data-row-label='TO']")
         within(to_table) do
           expect(page).to have_text "contact@email.com"

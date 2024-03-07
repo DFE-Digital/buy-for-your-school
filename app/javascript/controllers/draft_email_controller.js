@@ -1,10 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 import Dropzone from "dropzone"
-import { display, enable } from "../misc/utilities"
+import { display, enable, isVisible } from "../misc/utilities"
 
 // Connects to data-controller="draft-email"
 export default class extends Controller {
   static targets = [
+    "btnToggleCc",
+    "btnToggleBcc",
+    "ccField",
+    "bccField",
     "emailAttachmentsLink",
     "caseFilesLink",
     "form",
@@ -132,5 +136,15 @@ export default class extends Controller {
 
   progressContainer(file) {
     return file.previewElement.querySelector("[data-dz-uploadprogress]");
+  }
+
+  toggleCc() {
+    display(this.ccFieldTarget, !isVisible(this.ccFieldTarget));
+    this.btnToggleCcTarget.innerText = isVisible(this.ccFieldTarget) === true ? "Hide CC" : "Show CC";
+  }
+
+  toggleBcc() {
+    display(this.bccFieldTarget, !isVisible(this.bccFieldTarget));
+    this.btnToggleBccTarget.innerText = isVisible(this.bccFieldTarget) === true ? "Hide BCC" : "Show BCC";
   }
 }

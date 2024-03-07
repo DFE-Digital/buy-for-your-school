@@ -20,7 +20,7 @@
     <%= I18n.t("support.case.label.message_threads.new.add_to") %>
   </button>
 </span>
-<div id="cc" hidden="true">
+<div class="govuk-!-display-none" data-draft-email-target="ccField">
   <span class="recipient-input-group">
     <%= form.govuk_text_field :cc,
           label: nil,
@@ -38,7 +38,7 @@
   </span>
 </div>
 
-<div id="bcc" hidden="true">
+<div class="govuk-!-display-none" data-draft-email-target="bccField">
   <span class="recipient-input-group">
     <%= form.govuk_text_field :bcc,
           label: nil,
@@ -57,10 +57,10 @@
 </div>
 
 <div class="govuk-button-group">
-  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-cc" type="button">
+  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" data-draft-email-target="btnToggleCc" data-action="draft-email#toggleCc">
     <%= I18n.t("support.case.label.message_threads.new.show_cc") %>
   </button>
-  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-component="display-bcc" type="button">
+  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" data-draft-email-target="btnToggleBcc" data-action="draft-email#toggleBcc">
     <%= I18n.t("support.case.label.message_threads.new.show_bcc") %>
   </button>
 </div>
