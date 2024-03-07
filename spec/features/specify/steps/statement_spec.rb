@@ -1,4 +1,4 @@
-RSpec.feature "Statements", flaky: true do
+RSpec.feature "Statements" do
   before do
     start_journey_from_category(category: "statement.json")
   end

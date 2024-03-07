@@ -4,7 +4,6 @@ RSpec.feature "Create case", js: true do
   before do
     define_basic_categories
     define_basic_queries
-    Support::Organisation.destroy_all
 
     create(:support_category, :with_sub_category)
     create(:support_category, title: "EnergyCat", parent: Support::Category.find_by(title: "Energy"))
@@ -21,7 +20,7 @@ RSpec.feature "Create case", js: true do
     end
   end
 
-  it "shows the create case heading", flaky: true do
+  it "shows the create case heading" do
     expect(find("h1.govuk-heading-l")).to have_text "Create a new case"
   end
 
@@ -60,7 +59,7 @@ RSpec.feature "Create case", js: true do
         click_on "Save and continue"
       end
 
-      it "navigates to the same supplier question when more than one school is chosen and saves answers", flaky: true do
+      it "navigates to the same supplier question when more than one school is chosen and saves answers" do
         check "School #1"
         check "School #2"
         click_on "Save"
