@@ -11,3 +11,7 @@ export const enable = (element, isEnabled) => {
   if (!isEnabled)
     element.setAttribute("disabled", true);
 }
+
+export const isVisible = (element) => {
+  return !element.classList.contains("govuk-!-display-none");
+}
