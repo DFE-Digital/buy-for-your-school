@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can update participating schools", js: true, flaky: true do
+describe "Agent can update participating schools", js: true do
   include_context "with an agent"
 
   let(:organisation) { create(:support_establishment_group, uid: "123", establishment_group_type: create(:support_establishment_group_type, code: "6")) }
