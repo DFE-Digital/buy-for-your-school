@@ -7,7 +7,7 @@ describe Support::SeedProcurementStages do
 
   it "populates the table" do
     expect { service.call }
-      .to change(stages, :count).from(0).to(17)
+      .to change(stages, :count).from(0).to(18)
   end
 
   it "sets expected values" do
