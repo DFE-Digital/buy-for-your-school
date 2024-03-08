@@ -2,43 +2,63 @@ procurement_stages:
   0:
     - title: Need
       key: need
+      lifecycle_order: 0
+    - title: Participation Agreement sent
+      key: participation_agreement_sent
+      lifecycle_order: 1
+    - title: Sign Participation agreement
+      key: sign_participation_agreement
+      lifecycle_order: 2
 
   1:
     - title: Information gathering
       key: information_gathering
+      lifecycle_order: 3
     - title: Market analysis
       key: market_analysis
-    - title: Sign Participation agreement
-      key: sign_participation_agreement
+      lifecycle_order: 4
     - title: Stage 1 Approval
       key: stage_1_approval
+      lifecycle_order: 5
   
   2:
     - title: Tender preparation
       key: tender_preparation
+      lifecycle_order: 6
     - title: School sign-off of tender pack
       key: school_sign_off_of_tender_pack
+      lifecycle_order: 7
     - title: Out to Tender
       key: out_to_tender
+      lifecycle_order: 8
     - title: Response compliance check
       key: response_compliance_check
+      lifecycle_order: 9
     - title: Stage 2 Approval
       key: stage_2_approval
+      lifecycle_order: 10
 
   3:
     - title: Stage 3 Evaluation
       key: stage_3_evaluation
+      lifecycle_order: 11
     - title: Moderation
       key: moderation
+      lifecycle_order: 12
     - title: School sign-off of moderation & award decision
       key: school_sign_off_of_moderation_and_award_decision
+      lifecycle_order: 13
     - title: Stage 3 Approval
       key: stage_3_approval
+      lifecycle_order: 14
 
   4:
     - title: Award & standstill
       key: award_and_standstill
+      lifecycle_order: 15
     - title: Handover
       key: handover
+      lifecycle_order: 16
     - title: Procurement complete
       key: procurement_complete
+      lifecycle_order: 17

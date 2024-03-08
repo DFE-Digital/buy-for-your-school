@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_22_164526) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_06_124300) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -858,6 +858,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_22_164526) do
     t.boolean "archived", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lifecycle_order"
     t.index ["key"], name: "index_support_procurement_stages_on_key", unique: true
   end
 
