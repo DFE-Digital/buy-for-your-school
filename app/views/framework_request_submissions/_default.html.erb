@@ -16,6 +16,10 @@
 </h1>
 
 <p class="govuk-body">
+  <%= I18n.t("faf_submissions.what_you_can_do_next.common.new_request", new_request_link: govuk_link_to(I18n.t("faf_submissions.what_you_can_do_next.common.new_request_link"), framework_requests_path, no_visited_state: true)).html_safe %>
+</p>
+
+<p class="govuk-body">
   <%= I18n.t("faf_submissions.what_you_can_do_next.default.list_start") %>
   <ul class="govuk-list govuk-list--bullet">
     <li>

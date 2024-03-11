@@ -709,6 +709,9 @@ en:
           - whether you can get a reduced rate VAT
           - how to choose between fixed, flexible or variable price contracts
           - what to think about when choosing contract length
+      common:
+        new_request: "%{new_request_link} if you need further support with your school procurement."
+        new_request_link: Create another request
   feedback:
     confirmation_details:
       message: Thank you for opting in to take part in user research.
