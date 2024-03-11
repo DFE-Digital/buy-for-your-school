@@ -1,4 +1,4 @@
-class FrameworkRequestsController < ApplicationController
+class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::ApplicationController
   skip_before_action :authenticate_user!
 
   before_action :framework_request, only: %i[show]

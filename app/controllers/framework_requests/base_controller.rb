@@ -52,7 +52,7 @@ module FrameworkRequests
       return params[:id] if params[:id]
       return session[:framework_request_id] if session[:framework_request_id]
 
-      session[:framework_request_id] = FrameworkRequest.create!.id
+      session[:framework_request_id] = FrameworkRequest.create!(user: current_user).id
       session[:framework_request_id]
     end
 

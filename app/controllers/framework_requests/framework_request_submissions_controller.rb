@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FrameworkRequestSubmissionsController < ApplicationController
+class FrameworkRequests::FrameworkRequestSubmissionsController < FrameworkRequests::ApplicationController
   skip_before_action :authenticate_user!
 
   def update

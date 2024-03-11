@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe FrameworkRequestsController do
+describe FrameworkRequests::FrameworkRequestsController do
   describe "index" do
     context "when referred_by parameter is given" do
       it "sets the referral url in the session" do

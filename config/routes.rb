@@ -90,8 +90,8 @@ Rails.application.routes.draw do
   end
 
   # Request for help
-  resources :framework_requests, only: %i[index show], path: "procurement-support" do
-    scope module: "framework_requests" do
+  scope module: "framework_requests" do
+    resources :framework_requests, only: %i[index show], path: "procurement-support" do
       collection do
         post "/start", to: "start#create"
 
@@ -197,8 +197,8 @@ Rails.application.routes.draw do
         resource :origin, only: %i[edit update], as: :framework_request_origin
       end
     end
+    resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
   end
-  resources :framework_request_submissions, only: %i[update show], path: "procurement-support-submissions"
 
   # Proc-Ops Portal
   namespace :support do
