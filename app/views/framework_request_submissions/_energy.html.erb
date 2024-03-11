@@ -19,6 +19,10 @@
 </h1>
 
 <p class="govuk-body">
+  <%= I18n.t("faf_submissions.what_you_can_do_next.common.new_request", new_request_link: govuk_link_to(I18n.t("faf_submissions.what_you_can_do_next.common.new_request_link"), framework_requests_path, no_visited_state: true)).html_safe %>
+</p>
+
+<p class="govuk-body">
   <%= I18n.t("faf_submissions.what_you_can_do_next.energy.list_start", guidance_link: link_to(I18n.t("faf_submissions.what_you_can_do_next.energy.guidance_link"), "https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start/energy", class: "govuk-link govuk-link--no-visited-state")).html_safe %>
   <ul class="govuk-list govuk-list--bullet">
     <% for bullet in I18n.t("faf_submissions.what_you_can_do_next.energy.bullets") %>
