@@ -4,14 +4,18 @@ class FrameworkRequests::FrameworkRequestSubmissionsController < FrameworkReques
   skip_before_action :authenticate_user!
 
   def update
-    unless framework_request.submitted?
-      SubmitFrameworkRequest.new(request: framework_request, referrer: session[:faf_referrer]).call
+    if framework_request.valid?(:complete)
+      unless framework_request.submitted?
+        SubmitFrameworkRequest.new(request: framework_request, referrer: session[:faf_referrer]).call
+      end
+
+      session.delete(:framework_request_id)
+      session.delete(:faf_referrer)
+
+      redirect_to framework_request_submission_path(framework_request)
+    else
+      redirect_to framework_request_path(framework_request)
     end
-
-    session.delete(:framework_request_id)
-    session.delete(:faf_referrer)
-
-    redirect_to framework_request_submission_path(framework_request)
   end
 
   def show

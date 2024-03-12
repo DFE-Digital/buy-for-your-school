@@ -9,6 +9,7 @@ class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::Applic
 
   def show
     @current_user = UserPresenter.new(current_user)
+    @framework_request.valid?(:complete)
 
     if framework_request.submitted?
       redirect_to framework_request_submission_path(framework_request)
@@ -22,6 +23,6 @@ private
   end
 
   def framework_request
-    @framework_request = FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
+    @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))
   end
 end
