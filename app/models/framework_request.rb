@@ -1,4 +1,6 @@
 class FrameworkRequest < Request
+  include AttributesInferrable
+
   DOCUMENT_TYPES = %w[current_contract communications_with_supplier floor_plans quotes specifications other none].freeze
 
   belongs_to :user, optional: true
