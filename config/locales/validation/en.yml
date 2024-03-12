@@ -137,6 +137,24 @@ en:
               blank: Enter the procurement category
             other_query:
               blank: Enter the type of query
+        framework_request:
+            attributes:
+              first_name:
+                blank: Enter your first name
+              last_name:
+                blank: Enter your last name
+              email:
+                blank: Enter your email address
+              org_id:
+                blank: Select the school or group you want help buying for
+              message_body:
+                blank: You must tell us how we can help
+              procurement_amount:
+                blank: Enter how much the school will be spending. The number must be greater than 0.
+              category:
+                blank: Select the type of goods or service you need
+              origin:
+                blank: Select where you heard about the service
 
   request:
     rules:

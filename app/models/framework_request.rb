@@ -1,5 +1,6 @@
 class FrameworkRequest < Request
   include AttributesInferrable
+  include Validatable
 
   DOCUMENT_TYPES = %w[current_contract communications_with_supplier floor_plans quotes specifications other none].freeze
 

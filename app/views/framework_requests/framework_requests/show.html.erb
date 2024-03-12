@@ -2,6 +2,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @framework_request do |form| %>
+      <%= form.govuk_error_summary %>
+    <% end %>
 
     <h1 class="govuk-heading-l"><%= I18n.t("faf.check_answers.header") %></h1>
 
