@@ -5,11 +5,7 @@ describe Support::Case::QuickEditable do
 
   let(:agent) { create(:support_agent) }
 
-  around do |example|
-    Current.set(agent:) do
-      example.run
-    end
-  end
+  before { Current.agent = agent }
 
   describe "#quick_edit" do
     it "updates the case with the given details" do

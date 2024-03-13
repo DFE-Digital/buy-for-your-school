@@ -2,9 +2,8 @@ require "rails_helper"
 
 describe "Assigning an agent to a case" do
   def assign_agent!
-    Current.set(agent: assigned_by_agent) do
-      support_case.assign_to_agent(assigned_to_agent)
-    end
+    Current.agent = assigned_by_agent
+    support_case.assign_to_agent(assigned_to_agent)
   end
 
   let(:support_case) { create(:support_case) }

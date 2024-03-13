@@ -5,11 +5,7 @@ describe Support::Case::Historyable do
 
   let(:agent) { create(:support_agent) }
 
-  around do |example|
-    Current.set(agent:) do
-      example.run
-    end
-  end
+  before { Current.agent = agent }
 
   describe "#add_note" do
     it "logs note in case history" do

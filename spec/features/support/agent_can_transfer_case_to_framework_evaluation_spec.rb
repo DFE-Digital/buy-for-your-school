@@ -5,13 +5,8 @@ describe "Agent can transfer a case to a framework evaluation" do
   let(:framework) { create(:frameworks_framework) }
   let(:assignee) { create(:support_agent) }
 
-  around do |example|
-    Current.set(actor: assignee) do
-      example.run
-    end
-  end
-
   before do
+    Current.actor = assignee
     create_list(:support_email, 2, ticket: support_case, is_read: false)
     support_case.transfer_to_framework_evaluation(framework_id: framework.id, assignee_id: assignee.id)
   end

@@ -13,11 +13,7 @@ describe "Agent can move emails to a framework evaluation" do
     )
   end
 
-  around do |example|
-    Current.set(actor: agent) do
-      example.run
-    end
-  end
+  before { Current.actor = agent }
 
   context "when source case has emails attached" do
     before do
