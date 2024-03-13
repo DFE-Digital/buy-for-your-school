@@ -12,12 +12,6 @@ describe "Outlook emails delivery integration" do
     )
   end
 
-  around do |example|
-    Current.set(actor: agent) do
-      example.run
-    end
-  end
-
   let(:ticket) { create(:support_case, ref: "000999") }
   let(:agent) { create(:support_agent, first_name: "Test", last_name: "Agent") }
   let(:subject_line) { nil }
@@ -27,6 +21,8 @@ describe "Outlook emails delivery integration" do
   let(:default_content) { nil }
   let(:file_attachments) { [] }
   let(:blob_attachments) { "[]" }
+
+  before { Current.actor = agent }
 
   describe "email body" do
     context "when no template has been chosen" do
