@@ -147,7 +147,7 @@ jobs:
             -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \
             -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
             ${{ needs.build_test.outputs.docker_image }} \
-            bash -c "bundle exec rake 'knapsack:rspec[--tag ~flaky]' || bundle exec rspec --only-failure"
+            bash -c "bundle exec rake 'knapsack:rspec[--tag ~flaky]'"
       - name: Get coverage from container
         run: |
           mkdir coverage
