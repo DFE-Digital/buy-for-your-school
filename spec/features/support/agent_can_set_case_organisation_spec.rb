@@ -62,7 +62,7 @@ describe "Agent can set a case's establishment", js: true do
       click_link add_or_change
     end
     fill_in "What Organisation do you want to add?", with: search_term
-    find(".autocomplete__option", text: option_to_select).click
+    select_autocomplete_option(option_to_select)
     click_button "Save selected organisation"
   end
 end

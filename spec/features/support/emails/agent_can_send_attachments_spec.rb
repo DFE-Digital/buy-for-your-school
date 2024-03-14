@@ -27,7 +27,7 @@ describe "Agent can add attachments to replies", :with_csrf_protection, js: true
     describe "allows agent to add attachments" do
       before do
         attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"), class: "dz-hidden-input", make_visible: true)
-        sleep 0.1 # allow file to finish uploading
+        sleep 0.5 # allow file to finish uploading
       end
 
       it "shows the attached file" do

@@ -20,14 +20,14 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   def autocomplete_school_step
     # missing last digit
     fill_in "Enter the name, postcode or unique reference number (URN) of your school", with: "10025"
-    find(".autocomplete__option", text: "Greendale Academy for Bright Sparks").click
+    select_autocomplete_option("Greendale Academy for Bright Sparks")
     click_continue
   end
 
   def autocomplete_group_step
     # missing last digit
     fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
-    find(".autocomplete__option", text: "Testing Multi Academy Trust").click
+    select_autocomplete_option("Testing Multi Academy Trust")
     click_continue
   end
 
