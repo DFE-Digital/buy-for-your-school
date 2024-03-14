@@ -12,6 +12,7 @@ class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::Applic
     @framework_request.valid?(:complete)
 
     if framework_request.submitted?
+      flash.clear
       redirect_to framework_request_submission_path(framework_request)
     end
   end
