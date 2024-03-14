@@ -22,11 +22,13 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
   let(:title) { "title" }
   let(:slug) { "slug" }
 
+  let(:auth_token) { ActionController::HttpAuthentication::Token.encode_credentials("test") }
+  let(:headers) { { "Authorization" => auth_token } }
+
   before do
-    has_valid_api_token
-    allow_any_instance_of(::Content::Page::Get).to(
-      receive(:call).and_return(contentful_page),
-    )
+    page_get = instance_double(::Content::Page::Get)
+    allow(page_get).to receive(:call).and_return(contentful_page)
+    allow(::Content::Page::Get).to receive(:new).and_return(page_get)
   end
 
   # POST /api/contentful/pages
@@ -35,6 +37,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
 
     post "/api/contentful/pages",
          params:,
+         headers:,
          as: :json
 
     expect(response).to have_http_status(:ok)
@@ -53,6 +56,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
 
       post "/api/contentful/pages",
            params:,
+           headers:,
            as: :json
 
       expect(response).to have_http_status(:ok)
@@ -71,6 +75,7 @@ RSpec.describe Api::Contentful::PagesController, type: :request do
       expect(Page.count).to eq 1
 
       delete "/api/contentful/pages/#{page.contentful_id}",
+             headers:,
              as: :json
 
       expect(response).to have_http_status(:ok)
