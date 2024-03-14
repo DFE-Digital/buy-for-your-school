@@ -29,7 +29,7 @@ describe "Agent sees emails in messages", js: true do
 
     it "allows to mark the email as read" do
       click_link "Mark as read"
-      sleep 0.1
+      sleep 0.5
       expect(email.reload.is_read).to be(true)
     end
   end
@@ -43,7 +43,7 @@ describe "Agent sees emails in messages", js: true do
 
     it "allows to mark the email as unread" do
       click_link "Mark as unread"
-      sleep 0.1
+      sleep 0.5
       expect(email.reload.is_read).to be(false)
     end
   end

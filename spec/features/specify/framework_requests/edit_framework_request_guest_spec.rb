@@ -127,7 +127,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
         choose "An academy trust or federation"
         click_continue
         fill_in "framework_support_form[org_id]", with: "2314"
-        find(".autocomplete__option", text: "2314").click
+        select_autocomplete_option("2314")
         click_continue
       end
 
@@ -164,7 +164,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     before do
       click_link "edit-school"
       fill_in "framework_support_form[org_id]", with: "100254"
-      find(".autocomplete__option", text: "100254").click
+      select_autocomplete_option("100254")
     end
 
     it "goes to the school search page" do
