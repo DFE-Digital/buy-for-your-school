@@ -8,13 +8,14 @@ class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::Applic
   end
 
   def show
-    @current_user = UserPresenter.new(current_user)
-    @framework_request.valid?(:complete)
-
     if framework_request.submitted?
       flash.clear
-      redirect_to framework_request_submission_path(framework_request)
+      return redirect_to framework_request_submission_path(framework_request)
     end
+
+    @current_user = UserPresenter.new(current_user)
+    @framework_request.valid?(:complete)
+    @error_summary_presenter = FrameworkRequests::ErrorSummaryPresenter.new(@framework_request.errors.messages, @framework_request.id, current_user)
   end
 
 private
