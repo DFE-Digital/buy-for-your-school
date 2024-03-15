@@ -84,7 +84,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "foreman"
-  gem "listen", ">= 3.8", "< 3.9"
+  gem "listen", ">= 3.8", "< 3.10"
   gem "rails_layout"
   gem "spring"
   gem "spring-commands-rspec"
