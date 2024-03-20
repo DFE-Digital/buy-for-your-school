@@ -1204,7 +1204,7 @@ en:
         button: Start a new search
         count: "%{count} cases found containing '%{term}'"
         heading: Find a case
-        hint: Enter the case ID, organisation name, establishment unique reference number (URN) or case owner.
+        hint: Enter the case ID, contact email, organisation name, establishment unique reference number (URN) or case owner.
         results: Search results
     case_assignment:
       agent_id:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_18_102215) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_19_170710) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1059,7 +1059,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_102215) do
       sc.created_at,
       sc.updated_at,
       sc.state AS case_state,
-      sc.email,
+      sc.email AS case_email,
       ses.name AS organisation_name,
       ses.urn AS organisation_urn,
       ses.ukprn AS organisation_ukprn,
