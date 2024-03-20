@@ -9,6 +9,7 @@ module Support
     scope :find_a_case, lambda { |query|
       sql = <<-SQL
         lower(organisation_name) LIKE :q OR
+        lower(case_email) LIKE :q OR
         lower(organisation_urn) LIKE :q OR
         lower(agent_first_name) LIKE :q OR
         lower(agent_last_name) LIKE :q
