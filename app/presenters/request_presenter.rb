@@ -10,7 +10,7 @@ class RequestPresenter < BasePresenter
 
   # return [String]
   def special_requirements
-    return "-" if super.blank?
+    return "No" if super.blank?
 
     super
   end
