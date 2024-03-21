@@ -50,7 +50,7 @@ module Support
     def available_procurement_stages
       CheckboxOption
         .from(
-          Support::ProcurementStage.all.map { |s| Support::ProcurementStagePresenter.new(s) },
+          Support::ProcurementStage.all.by_lifecycle_order.map { |s| Support::ProcurementStagePresenter.new(s) },
           title_field: :detailed_title_short,
           include_all: true,
           include_unspecified: true,
