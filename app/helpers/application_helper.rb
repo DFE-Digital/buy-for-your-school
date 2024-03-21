@@ -30,6 +30,10 @@ module ApplicationHelper
     new_customer_satisfaction_survey_path(source: :banner_link, service: identify_service_for_feedback)
   end
 
+  def sidebar_feedback_link
+    new_customer_satisfaction_survey_path(source: :sidebar_link, service: identify_service_for_feedback)
+  end
+
   def identify_service_for_feedback
     if request.path.starts_with?("/support", "/engagement", "/frameworks")
       :supported_journey
