@@ -44,7 +44,7 @@
     <h2 class="govuk-heading-m"> <%= I18n.t("journey.specification.show.sidebar.header") %> </h2>
     <ul class="govuk-list govuk-list--spaced">
       <li> <%= link_to I18n.t("journey.specification.show.sidebar.links.completed_specification"), @next_steps_path, class: "govuk-link", target: "_blank" %> </li>
-      <li> <%= link_to I18n.t("journey.specification.show.sidebar.links.feedback"), "https://dferesearch.fra1.qualtrics.com/jfe/form/SV_2gE5Us8IIKxYge2", class: "govuk-link", target: "_blank" %> </li>
+      <li> <%= link_to I18n.t("journey.specification.show.sidebar.links.feedback"), sidebar_feedback_link, class: "govuk-link", target: "_blank" %> </li>
     </ul>
   </div>
   <!-- END -->
