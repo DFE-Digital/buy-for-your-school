@@ -31,7 +31,7 @@ RSpec.feature "Users can see their catering specification" do
       # sidebar
       within ".govuk-grid-column-one-quarter" do
         expect(page).to have_link("What to do when you have completed a specification", href: "/next-steps-catering")
-        expect(page).to have_link("Give feedback", href: "https://dferesearch.fra1.qualtrics.com/jfe/form/SV_2gE5Us8IIKxYge2")
+        expect(page).to have_link("Give feedback", href: "/customer_satisfaction_surveys/new?service=create_a_spec&source=sidebar_link")
       end
 
       click_on "Download (.docx)"
