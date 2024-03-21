@@ -317,7 +317,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
       end
 
       it "updates the special requirements" do
-        expect(answers[7]).to have_text "-"
+        expect(answers[7]).to have_text "No"
         expect(support_request.reload.special_requirements).to eq ""
       end
     end

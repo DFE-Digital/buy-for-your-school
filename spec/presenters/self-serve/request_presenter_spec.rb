@@ -33,8 +33,8 @@ RSpec.describe RequestPresenter do
     context "when there are no special_requirements" do
       let(:support_request) { build(:support_request, special_requirements: nil) }
 
-      it "returns a dash" do
-        expect(presenter.special_requirements).to eq "-"
+      it "returns no" do
+        expect(presenter.special_requirements).to eq "No"
       end
     end
   end
