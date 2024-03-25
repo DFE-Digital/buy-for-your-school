@@ -62,6 +62,7 @@ const initializeTinymce = editorElement => {
     browser_spellcheck: true,
     relative_urls: false,
     remove_script_host: false,
+    license_key: "gpl",
     setup: (editor) => {
       if (tinymceKeyUpEvent) {
         editor.on("keyup", (e) => editorElement.dispatchEvent(new CustomEvent(tinymceKeyUpEvent)));
