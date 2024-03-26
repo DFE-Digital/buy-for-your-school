@@ -170,8 +170,8 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    crawler_detect (1.2.3)
-      qonfig (~> 0.24)
+    crawler_detect (1.2.4)
+      qonfig (>= 0.24)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
     database_cleaner (2.0.2)
