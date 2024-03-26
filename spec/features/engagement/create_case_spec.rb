@@ -8,7 +8,7 @@ RSpec.feature "Create case", js: true do
     create(:support_category, :with_sub_category)
     create(:support_category, title: "EnergyCat", parent: Support::Category.find_by(title: "Energy"))
     create(:request_for_help_category, title: "EnergyCat", slug: "energy-cat", support_category: Support::Category.find_by(title: "EnergyCat"), flow: :energy)
-    create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: { "code": "001", "name": "Timbuktoo" })
+    create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: create(:local_authority, la_code: "001", name: "Timbuktoo"))
 
     visit "/engagement/cases"
     click_button "Create a new case"
