@@ -1,4 +1,4 @@
-<h1 class="govuk-heading-l"><%= I18n.t("support.case_hub_migration.school_picker.title") %></h1>
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_hub_migration.school_picker.title", organisation_type: @school_picker.organisation_type) %></h1>
 
 <%= render "components/school_picker/school_picker",
   results_model: @school_picker,

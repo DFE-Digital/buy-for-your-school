@@ -16,6 +16,7 @@ class Support::Case::Filtering
   attribute :legacy_stage, default: -> { [] }
   attribute :sort_by
   attribute :sort_order
+  attribute :exact_match, default: -> { false }
 
   validates :search_term,
             presence: true,
@@ -48,7 +49,7 @@ private
         level: Support::Concerns::ScopeFilter.new(level, scope: :by_level),
         procurement_stage: Support::Concerns::ScopeFilter.new(procurement_stage, scope: :by_procurement_stage),
         has_org: Support::Concerns::ScopeFilter.new(ActiveModel::Type::Boolean.new.cast(has_org), scope: :by_has_org, multiple: false),
-        search_term: Support::Concerns::ScopeFilter.new(search_term, scope: :by_search_term, multiple: false),
+        search_term: Support::Concerns::ScopeFilterForSearch.new(search_term, exact_match: ActiveModel::Type::Boolean.new.cast(exact_match)),
         legacy_stage: Support::Concerns::ScopeFilter.new(legacy_stage, scope: :by_legacy_stage),
       }
   end

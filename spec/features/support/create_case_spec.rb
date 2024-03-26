@@ -57,6 +57,17 @@ RSpec.feature "Create case", js: true do
       end
     end
 
+    context "when selecting a local authority" do
+      it "sets the local authority as the case organisation" do
+        local_authority = create(:local_authority, name: "Camden")
+        select_organisation "Camden"
+        valid_form_data_without_organisation
+        click_on "Save and continue"
+        click_on "Create case"
+        expect(Support::Case.last.organisation).to eq(local_authority)
+      end
+    end
+
     it "allows case to be created" do
       complete_valid_form
 

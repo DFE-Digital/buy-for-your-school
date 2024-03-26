@@ -4,7 +4,7 @@ module Support
       class ParticipatingSchoolsController < Cases::ApplicationController
         def show
           @back_url = support_case_school_details_path
-          @participating_schools = @current_case.participating_schools.map { |s| Support::OrganisationPresenter.new(s) }
+          @participating_schools = @current_case.participating_schools.includes([:local_authority]).map { |s| Support::OrganisationPresenter.new(s) }
         end
 
         def edit

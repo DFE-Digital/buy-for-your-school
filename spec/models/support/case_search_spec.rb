@@ -26,4 +26,25 @@ describe Support::CaseSearch do
       expect(results.pluck(:case_ref)).to match_array(%w[000001 000002])
     end
   end
+
+  context "when searching by organisation name (exact match)" do
+    let(:search_term) { "Camden" }
+
+    before do
+      school = create(:support_organisation, name: "Camden Primary School")
+      group = create(:support_establishment_group, name: "Camden Academy Trust")
+      local_authority = create(:local_authority, name: "Camden")
+
+      create(:support_case, ref: "000001", organisation: school)
+      create(:support_case, ref: "000002", organisation: group)
+      create(:support_case, ref: "000003", organisation: local_authority)
+      create(:support_case, ref: "000004", organisation: local_authority)
+    end
+
+    it "finds the relevant cases" do
+      results = described_class.find_a_case(search_term, exact_match: true)
+      expect(results.count).to eq(2)
+      expect(results.pluck(:case_ref)).to match_array(%w[000003 000004])
+    end
+  end
 end

@@ -8,7 +8,7 @@ RSpec.feature "Create case", js: true do
     create(:support_category, :with_sub_category)
     create(:support_category, title: "EnergyCat", parent: Support::Category.find_by(title: "Energy"))
     create(:request_for_help_category, title: "EnergyCat", slug: "energy-cat", support_category: Support::Category.find_by(title: "EnergyCat"), flow: :energy)
-    create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: { "code": "001", "name": "Timbuktoo" })
+    create(:support_organisation, name: "Hillside School", urn: "000001", local_authority: create(:local_authority, la_code: "001", name: "Timbuktoo"))
 
     visit "/engagement/cases"
     click_button "Create a new case"
@@ -72,6 +72,34 @@ RSpec.feature "Create case", js: true do
 
         click_on "Create case"
         expect(Support::Case.last.organisation).to eq(group)
+        expect(Support::Case.last.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
+        expect(CaseRequest.last.same_supplier_used).to eq("yes")
+      end
+    end
+
+    context "when selecting a local authority" do
+      let(:local_authority) { create(:local_authority, name: "Camden") }
+
+      before do
+        create_list(:support_organisation, 3, local_authority:)
+        select_organisation "Camden"
+        valid_form_data_without_organisation
+        click_on "Save and continue"
+      end
+
+      it "navigates to the same supplier question when more than one school is chosen and saves answers" do
+        check "School #1"
+        check "School #2"
+        click_on "Save"
+        expect(page).to have_text "Do all the schools currently use the same supplier?"
+
+        choose "Yes"
+        click_on "Save"
+        expect(page).to have_text "Same supplier used"
+        expect(page).to have_text "2 of 3 schools"
+
+        click_on "Create case"
+        expect(Support::Case.last.organisation).to eq(local_authority)
         expect(Support::Case.last.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
         expect(CaseRequest.last.same_supplier_used).to eq("yes")
       end

@@ -1,5 +1,6 @@
 class CaseRequest::SchoolPicker
   include ActiveModel::Model
+  include CaseRequest::SchoolPicker::Presentable
 
   attr_accessor(
     :case_request,

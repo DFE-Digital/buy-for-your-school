@@ -7,7 +7,7 @@
         label_class: "govuk-!-font-weight-bold govuk-!-font-size-36 govuk-!-margin-bottom-5",
         element_id: "organisation-autocomplete",
         element_name: "case_organisation_form[organisation_name]",
-        template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
+        template_suggestion: "{{autocomplete_template}}",
         value_field: :name,
         hidden_fields: {
           'case_organisation_form[organisation_id]' => :id,
