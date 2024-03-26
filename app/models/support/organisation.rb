@@ -19,6 +19,9 @@ module Support
                counter_cache: true,
                class_name: "Support::EstablishmentType"
 
+    belongs_to :local_authority,
+               class_name: "LocalAuthority"
+
     has_many :cases, class_name: "Support::Case", as: :organisation
 
     validates :urn, uniqueness: true
@@ -62,7 +65,7 @@ module Support
       establishment_type&.name
     end
 
-    def local_authority
+    def local_authority_legacy
       return unless super
 
       super.transform_values(&:to_s)
