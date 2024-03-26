@@ -22,7 +22,7 @@ RSpec.describe Support::OrganisationPresenter do
   end
 
   context "with local authority defined" do
-    let(:organisation) { create(:support_organisation, local_authority: { "code": 1, "name": "Authority" }) }
+    let(:organisation) { create(:support_organisation, local_authority: create(:local_authority, la_code: "1", name: "Authority")) }
 
     describe "#local_authority" do
       it "returns the local authority name" do
@@ -32,7 +32,7 @@ RSpec.describe Support::OrganisationPresenter do
   end
 
   context "with no local authority defined" do
-    let(:organisation) { create(:support_organisation, local_authority: nil) }
+    let(:organisation) { build(:support_organisation, local_authority: nil) }
 
     describe "#local_authority" do
       it "returns 'not provided'" do

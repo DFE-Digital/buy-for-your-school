@@ -20,5 +20,6 @@ RSpec.configure do |config|
   config.append_after do
     DatabaseCleaner.clean
     FactoryBot.reload
+    Faker::UniqueGenerator.clear
   end
 end

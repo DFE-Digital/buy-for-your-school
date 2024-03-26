@@ -11,11 +11,14 @@ RSpec.shared_context "with schools and groups" do
 
   # TODO: let!
   before do
+    local_authority = create(:local_authority, name: "Camden")
+
     create(:support_organisation, :with_address,
            urn: "100253",
            name: "Specialist School for Testing",
            establishment_type: foundation,
-           trust_code: "2314")
+           trust_code: "2314",
+           local_authority:)
 
     create(:support_organisation, :with_address,
            urn: "100254",
@@ -24,7 +27,8 @@ RSpec.shared_context "with schools and groups" do
            number: "334",
            ukprn: "4346",
            establishment_type: community,
-           trust_code: "2314")
+           trust_code: "2314",
+           local_authority:)
 
     create(:support_establishment_group, :with_address,
            uid: "2314",

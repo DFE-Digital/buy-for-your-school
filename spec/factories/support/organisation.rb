@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:name) { |n| "School ##{n}" }
     address { {} }
     contact { { "role": "Head Teacher", "title": "Ms", "last_name": "Teacher", "first_name": "Head" } }
-    local_authority { { "code": 202, "name": "Camden" } }
+    local_authority_legacy { { "code": 202, "name": "Camden" } }
 
     phase  { (0..7).to_a.sample }
     gender { (0..3).to_a.sample }
@@ -12,6 +12,7 @@ FactoryBot.define do
 
     association :establishment_type,
                 factory: :support_establishment_type
+    association :local_authority, factory: :local_authority
 
     trait :with_address do
       address { { "town": "London", "county": "", "street": "St James's Passage", "locality": "Duke's Place", "postcode": "EC3A 5DE" } }

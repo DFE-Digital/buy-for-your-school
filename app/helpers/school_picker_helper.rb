@@ -18,7 +18,7 @@ module SchoolPickerHelper
   end
 
   def show_school_picker_la_filters?(organisations)
-    organisations.pluck(:local_authority).uniq.length > 1
+    organisations.map(&:local_authority).uniq.length > 1
   end
 
   def show_school_picker_filters?(organisations)
