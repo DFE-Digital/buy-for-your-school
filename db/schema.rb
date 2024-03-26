@@ -1263,8 +1263,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
        LEFT JOIN ( SELECT organisations.id,
               organisations.name,
               organisations.rsc_region,
-              (organisations.local_authority_legacy ->> 'name'::text) AS local_authority_name,
-              (organisations.local_authority_legacy ->> 'code'::text) AS local_authority_code,
+              local_authorities.name AS local_authority_name,
+              local_authorities.la_code AS local_authority_code,
               organisations.gor_name,
               organisations.urn,
               organisations.ukprn,
@@ -1274,14 +1274,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
               organisations.phase,
               etypes.name AS establishment_type,
               'Support::Organisation'::text AS source
-             FROM (support_organisations organisations
+             FROM ((support_organisations organisations
                JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-                         UNION ALL
+               JOIN local_authorities ON ((local_authorities.id = organisations.local_authority_id)))
+          UNION ALL
            SELECT egroups.id,
               egroups.name,
               NULL::character varying AS rsc_region,
-              NULL::text AS local_authority_name,
-              NULL::text AS local_authority_code,
+              NULL::character varying AS local_authority_name,
+              NULL::character varying AS local_authority_code,
               NULL::character varying AS gor_name,
               NULL::character varying AS urn,
               egroups.ukprn,
