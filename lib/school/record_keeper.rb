@@ -20,6 +20,11 @@ module School
           # The "Organisation" model is a starting point, but in addition an
           # "Establishment" model has been proposed.
           #
+          local_authority = LocalAuthority.find_or_initialize_by(la_code: record[:local_authority][:code]) do |la|
+            la.name = record[:local_authority][:name]
+            la.save!
+          end
+
           Support::Organisation.find_or_initialize_by(urn: record[:urn]).tap do |org|
             org.establishment_type_id = type(record).id
             org.name = record[:school][:name]
@@ -31,7 +36,8 @@ module School
             org.status = record[:establishment_status][:code]
             org.number = record[:school][:number]
             org.rsc_region = record[:rsc_region]
-            org.local_authority = record[:local_authority]
+            org.local_authority_legacy = record[:local_authority]
+            org.local_authority = local_authority
             org.opened_date = parse_opened_date(record[:school][:opened_date])
             org.ukprn = record[:ukprn]
             org.telephone_number = record[:school][:telephone_number]
