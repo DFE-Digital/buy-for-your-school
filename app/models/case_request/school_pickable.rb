@@ -19,7 +19,7 @@ module CaseRequest::SchoolPickable
   end
 
   def eligible_for_school_picker?
-    return false unless organisation.is_a?(Support::EstablishmentGroup)
+    return false unless organisation.class.in?([Support::EstablishmentGroup, LocalAuthority])
 
     organisation.eligible_for_school_picker?
   end

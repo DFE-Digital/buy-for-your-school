@@ -1,9 +1,12 @@
 module Support
   class EstablishmentSearch < ApplicationRecord
+    include Presentable
+
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
         urn LIKE :q OR
         ukprn LIKE :q OR
+        code LIKE :q OR
         lower(name) LIKE lower(:q) OR
         lower(postcode) LIKE lower(:q)
       SQL

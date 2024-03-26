@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_28_151344) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1049,7 +1049,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
       organisations.urn,
       organisations.ukprn,
       etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source
+      'Support::Organisation'::text AS source,
+      NULL::text AS code
      FROM (support_organisations organisations
        JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
     WHERE (organisations.status <> 2)
@@ -1060,10 +1061,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
       NULL::character varying AS urn,
       egroups.ukprn,
       egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source
+      'Support::EstablishmentGroup'::text AS source,
+      NULL::text AS code
      FROM (support_establishment_groups egroups
        JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE (egroups.status <> 2);
+    WHERE (egroups.status <> 2)
+  UNION ALL
+   SELECT local_authorities.id,
+      local_authorities.name,
+      NULL::text AS postcode,
+      NULL::character varying AS urn,
+      NULL::character varying AS ukprn,
+      'Local authority'::character varying AS establishment_type,
+      'LocalAuthority'::text AS source,
+      local_authorities.la_code AS code
+     FROM local_authorities;
   SQL
   create_view "support_case_searches", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
@@ -1263,8 +1275,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
        LEFT JOIN ( SELECT organisations.id,
               organisations.name,
               organisations.rsc_region,
-              (organisations.local_authority_legacy ->> 'name'::text) AS local_authority_name,
-              (organisations.local_authority_legacy ->> 'code'::text) AS local_authority_code,
+              local_authorities.name AS local_authority_name,
+              local_authorities.la_code AS local_authority_code,
               organisations.gor_name,
               organisations.urn,
               organisations.ukprn,
@@ -1274,14 +1286,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
               organisations.phase,
               etypes.name AS establishment_type,
               'Support::Organisation'::text AS source
-             FROM (support_organisations organisations
+             FROM ((support_organisations organisations
                JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-                         UNION ALL
+               JOIN local_authorities ON ((local_authorities.id = organisations.local_authority_id)))
+          UNION ALL
            SELECT egroups.id,
               egroups.name,
               NULL::character varying AS rsc_region,
-              NULL::text AS local_authority_name,
-              NULL::text AS local_authority_code,
+              NULL::character varying AS local_authority_name,
+              NULL::character varying AS local_authority_code,
               NULL::character varying AS gor_name,
               NULL::character varying AS urn,
               egroups.ukprn,

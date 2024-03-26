@@ -7,7 +7,7 @@
             label_class: "govuk-hint",
             element_id: "school-urn-autocomplete",
             element_name: "case_request[organisation_name]",
-            template_suggestion: "<strong>{{name}}</strong>, {{postcode}}<br />{{establishment_type}}<br />URN: {{urn}} - UKPRN: {{ukprn}}",
+            template_suggestion: "{{autocomplete_template}}",
             value_field: :name,
             default_value: form.object.organisation&.name,
             hidden_fields: {

@@ -3,7 +3,7 @@ module Support
     def index
       respond_to do |format|
         format.json do
-          render json: EstablishmentSearch.omnisearch(params[:q]).as_json
+          render json: EstablishmentSearch.omnisearch(params[:q]).as_json(methods: %i[autocomplete_template])
         end
       end
     end

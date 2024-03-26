@@ -82,6 +82,7 @@ en:
         selected: "of <b>%{total} schools selected</b> from %{group_name}"
       phases:
         no_phase: No phase
+        nursery: Nursery
         primary: Primary
         middle: Middle
         secondary: Secondary
@@ -1181,6 +1182,7 @@ en:
         change: change
         view_group_information: View group information (opens in a new tab)
         view_school_information: View school information (opens in a new tab)
+        view_local_authority_information: View local authority information (opens in a new tab)
       list:
         all_cases: All cases
         my_cases: My cases
@@ -1335,7 +1337,7 @@ en:
           subtitle: General advice about a frameworks
     case_hub_migration:
       school_picker:
-        title: Which schools in the academy trust or federation will be involved in this procurement?
+        title: Which schools in the %{organisation_type} will be involved in this procurement?
       edit:
         header: Check your answers before creating a new case
         label:
@@ -1370,6 +1372,7 @@ en:
         hub_case_ref_hint: We will use the existing Hub identification number to link the existing case data to a new case number
         hub_notes: Hub notes / comments %{optional}
         hub_notes_hint: Enter a summary of the query from the Hub case
+        la_code: Organisation code
         last_name: Contact last name
         message: Message
         name: Contact name

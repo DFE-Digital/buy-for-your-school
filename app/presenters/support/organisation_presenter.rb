@@ -21,7 +21,7 @@ module Support
     def local_authority
       return I18n.t("generic.not_provided") unless super
 
-      super["name"]
+      super.name
     end
 
     # @return [String]

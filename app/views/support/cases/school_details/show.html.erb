@@ -103,12 +103,14 @@
 
   <% if @current_case.organisation.present? %>
     <ul class="govuk-list">
-      <li>
-        <%= govuk_link_to @current_case.organisation_gias_label,
-            @current_case.organisation_gias_url,
-            target: "_blank", rel: "noreferrer noopener"
-        %>
-      </li>
+      <% if @current_case.organisation_gias_url.present? %>
+        <li>
+          <%= govuk_link_to @current_case.organisation_gias_label,
+              @current_case.organisation_gias_url,
+              target: "_blank", rel: "noreferrer noopener"
+          %>
+        </li>
+      <% end %>
       <% if other_cases_by_case_org_exist?(@current_case.organisation) %>
         <li>
           <%= govuk_link_to I18n.t("support.case.label.view_all_cases"), other_cases_by_case_org_path(@current_case.organisation, back_to: url_b64(support_case_path(@current_case, back_to: params[:back_to]))), no_visited_state: true, "target" => "_top" %>

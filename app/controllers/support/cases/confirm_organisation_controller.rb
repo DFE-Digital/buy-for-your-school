@@ -20,7 +20,12 @@ module Support
     private
 
       def get_organisation
-        type = params[:type] == Support::EstablishmentGroup.name ? Support::EstablishmentGroup : Support::Organisation
+        type =
+          case params[:type]
+          when "Support::Organisation" then Support::Organisation
+          when "Support::EstablishmentGroup" then Support::EstablishmentGroup
+          when "LocalAuthority" then LocalAuthority
+          end
         type.find(params[:id])
       end
     end

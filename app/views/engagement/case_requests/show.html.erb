@@ -17,21 +17,23 @@
           <%= @case_request.organisation.name %>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case_hub_migration.label.school_postcode") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @case_request.organisation.postcode %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
-        </dd>
-      </div>
+      <% if @case_request.organisation.respond_to?(:postcode) %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_postcode") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_request.organisation.postcode %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
+          </dd>
+        </div>
+      <% end %>
 
       <% if @case_request.organisation.respond_to?(:urn) %>
         <div class="govuk-summary-list__row">
@@ -42,7 +44,7 @@
             <%= @case_request.organisation.urn %>
           </dd>
           <dd id="changeSchool" class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
           </dd>
         </div>
       <% end %>
@@ -56,22 +58,38 @@
             <%= @case_request.organisation.uid %>
           </dd>
           <dd id="changeSchool" class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
           </dd>
         </div>
       <% end %>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case_hub_migration.label.school_ukprn") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @case_request.organisation.ukprn %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
-        </dd>
-      </div>
+      <% if @case_request.organisation.respond_to?(:la_code) %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.la_code") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_request.organisation.la_code %>
+          </dd>
+          <dd id="changeSchool" class="govuk-summary-list__actions">
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
+          </dd>
+        </div>
+      <% end %>
+
+      <% if @case_request.organisation.respond_to?(:ukprn) %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_hub_migration.label.school_ukprn") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @case_request.organisation.ukprn %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
+          </dd>
+        </div>
+      <% end %>
 
       <% if @case_request.multischool? %>
         <div class="govuk-summary-list__row">
@@ -82,7 +100,7 @@
             <%= I18n.t("support.case_hub_migration.label.school_number", selected: @case_request.school_urns.count, total: @case_request.organisation.organisations.length ) %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_school_picker_path(source: :change_link), class: "govuk-link govuk-link--no-visited-state" %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_school_picker_path(source: :change_link), no_visited_state: true %>
           </dd>
         </div>
       <% end %>
@@ -101,7 +119,7 @@
           <%= @case_request.full_name %>
         </dd>
         <dd id="changeName" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
 
@@ -113,7 +131,7 @@
           <%= @case_request.email %>
         </dd>
         <dd id="changeEmail" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
 
@@ -125,7 +143,7 @@
           <%= @case_request.phone_number %>
         </dd>
         <dd id="changePhoneNumber" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
 
@@ -137,7 +155,7 @@
           <%= @case_request.extension_number %>
         </dd>
         <dd id="changeExtensionNumber" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
     </dl>
@@ -156,7 +174,7 @@
           <%= if @case_request.discovery_method == Support::Case::discovery_methods[:other] && !@case_request.discovery_method_other_text.empty? then "- #{@case_request.discovery_method_other_text}" end %>
         </dd>
         <dd id="changeDiscoveryMethod" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
     </dl>
@@ -175,7 +193,7 @@
           <%= @case_request.type %>
         </dd>
         <dd id="changeRequestType" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
 
@@ -188,7 +206,7 @@
             <%= @case_request.category.title %>
           </dd>
           <dd id="changeCategory" class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
           </dd>
         </div>
       <% else %>
@@ -200,7 +218,7 @@
             <%= @case_request.query.title %>
           </dd>
           <dd id="changeQuery" class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
           </dd>
         </div>
       <% end %>
@@ -219,7 +237,7 @@
           <%= simple_format(@case_request.request_text, class: "govuk-body") %>
         </dd>
         <dd id="changeRequestText" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
     </dl>
@@ -237,7 +255,7 @@
           <%= number_to_currency(@case_request.procurement_amount, unit: "£", precision: 2) %>
         </dd>
         <dd id="changeRequestText" class="govuk-summary-list__actions">
-          <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+          <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
         </dd>
       </div>
       <% if @case_request.is_energy_or_services? %>
@@ -249,7 +267,7 @@
             <%= @case_request.contract_start_date_formatted || I18n.t("faf.check_answers.not_known") %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_contract_start_date_path(@case_request, source: :change_link), class: "govuk-link", id: "edit-contract-start-date", "aria-label": I18n.t("faf.check_answers.aria.change_contract_start_date")  %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_contract_start_date_path(@case_request, source: :change_link), class: "govuk-link", id: "edit-contract-start-date", "aria-label": I18n.t("faf.check_answers.aria.change_contract_start_date")  %>
           </dd>
         </div>
       <% end %>
@@ -262,7 +280,7 @@
             <%= @case_request.same_supplier_used_formatted %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_same_supplier_path(@case_request, source: :change_link), class: "govuk-link", id: "edit-same-supplier", "aria-label": I18n.t("faf.check_answers.aria.change_same_supplier_used")  %>
+            <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_same_supplier_path(@case_request, source: :change_link), class: "govuk-link", id: "edit-same-supplier", "aria-label": I18n.t("faf.check_answers.aria.change_same_supplier_used")  %>
           </dd>
         </div>
       <% end %>
@@ -280,7 +298,7 @@
               <%= f.filename %>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <%= link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, class: "govuk-link govuk-link--no-visited-state" %>
+              <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_path, no_visited_state: true %>
             </dd>
           </div>
         <% end %>

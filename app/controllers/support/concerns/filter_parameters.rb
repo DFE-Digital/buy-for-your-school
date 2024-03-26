@@ -45,6 +45,7 @@ module Support
           :level,
           :sort_by,
           :sort_order,
+          :exact_match,
           {
             category: [],
             agent: [],

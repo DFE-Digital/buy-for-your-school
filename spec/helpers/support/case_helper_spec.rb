@@ -10,6 +10,7 @@ describe Support::CaseHelper do
         search_case_form: {
           search_term: organisation.name,
           state: %w[initial opened resolved on_hold pipeline no_response],
+          exact_match: true,
         },
       }
     end
