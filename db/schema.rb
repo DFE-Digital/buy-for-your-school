@@ -394,6 +394,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
     t.index ["user_id"], name: "index_journeys_on_user_id"
   end
 
+  create_table "local_authorities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "la_code", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["la_code"], name: "index_local_authorities_on_la_code", unique: true
+    t.index ["name"], name: "index_local_authorities_on_name", unique: true
+  end
+
   create_table "long_text_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "step_id"
     t.text "response", null: false
@@ -838,7 +847,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
     t.datetime "updated_at", null: false
     t.string "ukprn"
     t.string "telephone_number"
-    t.jsonb "local_authority"
+    t.jsonb "local_authority_legacy"
     t.datetime "opened_date", precision: nil
     t.string "number"
     t.string "rsc_region"
@@ -847,7 +856,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
     t.string "gor_name"
     t.string "federation_name"
     t.string "federation_code"
+    t.uuid "local_authority_id"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
+    t.index ["local_authority_id"], name: "index_support_organisations_on_local_authority_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
   end
 
@@ -1024,6 +1035,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
   add_foreign_key "support_notifications", "support_agents", column: "assigned_by_id"
   add_foreign_key "support_notifications", "support_agents", column: "assigned_to_id"
   add_foreign_key "support_notifications", "support_cases"
+  add_foreign_key "support_organisations", "local_authorities"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
   add_foreign_key "user_journey_steps", "user_journeys"
@@ -1251,8 +1263,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_145304) do
        LEFT JOIN ( SELECT organisations.id,
               organisations.name,
               organisations.rsc_region,
-              (organisations.local_authority ->> 'name'::text) AS local_authority_name,
-              (organisations.local_authority ->> 'code'::text) AS local_authority_code,
+              (organisations.local_authority_legacy ->> 'name'::text) AS local_authority_name,
+              (organisations.local_authority_legacy ->> 'code'::text) AS local_authority_code,
               organisations.gor_name,
               organisations.urn,
               organisations.ukprn,
