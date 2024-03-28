@@ -21,7 +21,7 @@
     "lodash": "^4.17.21",
     "sass": "^1.72.0",
     "tinymce": "^7.0.0",
-    "webpack": "^5.9.0",
+    "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-middleware": "^7.0.0"
   },
