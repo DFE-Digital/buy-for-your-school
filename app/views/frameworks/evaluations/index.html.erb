@@ -3,7 +3,7 @@
     <div class="case-list govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
         <% unless params[:viewing_from_entity] == "true" %>
-          <%= link_to "Add Evalutaion", new_frameworks_evaluation_path(back_to: current_url_b64(:evaluations)), class: "govuk-button", "data-turbo" => false %>
+          <%= link_to "Add Evaluation", new_frameworks_evaluation_path(back_to: current_url_b64(:evaluations)), class: "govuk-button", "data-turbo" => false %>
         <% end %>
 
         <%= render "index_filters" %>

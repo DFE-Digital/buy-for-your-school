@@ -288,11 +288,11 @@ RSpec.feature "Case statistics page" do
 
     describe "case statistics downloads" do
       it "has a link to download the CSV of the case data" do
-        expect(page).to have_link "Download CSV", class: "govuk-button", href: support_case_statistics_path(format: :csv)
+        expect(page).to have_link "Download Cases CSV", class: "govuk-button", href: support_case_statistics_path(format: :csv)
       end
 
       it "provides a case data CSV download" do
-        click_on "Download CSV"
+        click_on "Download Cases CSV"
         expect(page.response_headers["Content-Type"]).to eq "text/csv"
         expect(page.response_headers["Content-Disposition"]).to match(/^attachment/)
         expect(page.response_headers["Content-Disposition"]).to match(/filename="case_data.csv"/)
