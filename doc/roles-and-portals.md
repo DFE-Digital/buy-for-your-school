@@ -5,7 +5,7 @@ Access to portals is dictated by the agents roles. The roles are checked on page
 |Portal|Endpoint|Roles required (either)|
 |-|-|-|
 |Support / ProcOps CMS|`/support`|`internal procops_admin procops`|
-|Frameworks Evalutaion|`/frameworks`|`framework_evaluator_admin framework_evaluator`|
+|Frameworks Evaluation|`/frameworks`|`framework_evaluator_admin framework_evaluator`|
 |Engagement & Outreach|`/engagement`|`internal e_and_o_admin e_and_o`|
 
 - See `app/models/support/agent.rb` for full list of roles.

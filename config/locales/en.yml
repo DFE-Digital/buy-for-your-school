@@ -754,6 +754,8 @@ en:
       quick_edit:
         header: Quick edit evaluation %{reference}
         add_note: Add a note
+    register:    
+      download_csv: Download Frameworks CSV    
   generic:
     button:
       back: Back
@@ -1528,7 +1530,7 @@ en:
         triage: Triage
         unspecified: Unspecified
       download:
-        csv: Download CSV
+        csv: Download Cases CSV
       header: Case statistics
       header_link: Case Statistics
       missing_data:

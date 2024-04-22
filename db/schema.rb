@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_151344) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_15_143752) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -423,8 +423,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_151344) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "contentful_id"
     t.text "sidebar"
     t.string "breadcrumbs", default: [], array: true
@@ -848,7 +848,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_151344) do
     t.string "ukprn"
     t.string "telephone_number"
     t.jsonb "local_authority_legacy"
-    t.datetime "opened_date", precision: nil
+    t.datetime "opened_date"
     t.string "number"
     t.string "rsc_region"
     t.string "trust_name"
@@ -1215,9 +1215,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_151344) do
       se.egroup_status AS establishment_group_status,
       se.establishment_type,
       array_length(fr.school_urns, 1) AS request_num_schools,
-      replace(TRIM(BOTH '{}"'::text FROM (fr.school_urns)::text), ','::text, ', '::text) AS request_school_urns,
+      replace(btrim((fr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS request_school_urns,
       array_length(cr.school_urns, 1) AS case_num_schools,
-      replace(TRIM(BOTH '{}"'::text FROM (cr.school_urns)::text), ','::text, ', '::text) AS case_school_urns,
+      replace(btrim((cr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS case_school_urns,
       sf.name AS framework_name,
       sp.reason_for_route_to_market,
       sp.required_agreement_type,
@@ -1324,5 +1324,54 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_151344) do
               si_1.case_id
              FROM support_interactions si_1
             WHERE (si_1.event_type = 8)) sir ON ((si.case_id = sir.case_id)));
+  SQL
+  create_view "frameworks_framework_data", sql_definition: <<-SQL
+      SELECT ff.id AS framework_id,
+      ff.source,
+      ff.status,
+      ff.name,
+      ff.short_name,
+      ff.url,
+      ff.reference,
+      fp.name AS provider_name,
+      fp.short_name AS provider_short_name,
+      fpc.name AS provider_contact_name,
+      fpc.email AS provider_contact_email,
+      ff.provider_start_date,
+      ff.provider_end_date,
+      ff.dfe_start_date,
+      ff.dfe_review_date,
+      ff.sct_framework_owner,
+      ff.sct_framework_provider_lead,
+      (((sap.first_name)::text || ' '::text) || (sap.last_name)::text) AS procops_lead_name,
+      sap.email AS procops_lead_email,
+      (((saeo.first_name)::text || ' '::text) || (saeo.last_name)::text) AS e_and_o_lead_name,
+      saeo.email AS e_and_o_lead_email,
+      (ff.created_at)::date AS created_at,
+      (ff.updated_at)::date AS updated_at,
+      ff.dps,
+      ff.lot,
+      ff.provider_reference,
+      (ff.faf_added_date)::date AS faf_added_date,
+      (ff.faf_end_date)::date AS faf_end_date,
+      cats.categories,
+          CASE
+              WHEN (evals.has_evaluation IS NOT NULL) THEN 'Yes'::text
+              ELSE 'No'::text
+          END AS has_evaluation
+     FROM ((((((frameworks_frameworks ff
+       LEFT JOIN frameworks_providers fp ON ((ff.provider_id = fp.id)))
+       LEFT JOIN frameworks_provider_contacts fpc ON ((ff.provider_contact_id = fpc.id)))
+       LEFT JOIN support_agents sap ON ((ff.proc_ops_lead_id = sap.id)))
+       LEFT JOIN support_agents saeo ON ((ff.e_and_o_lead_id = saeo.id)))
+       LEFT JOIN ( SELECT ffc.framework_id,
+              jsonb_agg(sc.title) AS categories
+             FROM (frameworks_framework_categories ffc
+               LEFT JOIN support_categories sc ON ((sc.id = ffc.support_category_id)))
+            GROUP BY ffc.framework_id) cats ON ((cats.framework_id = ff.id)))
+       LEFT JOIN ( SELECT ffe.framework_id,
+              count(ffe.id) AS has_evaluation
+             FROM frameworks_evaluations ffe
+            GROUP BY ffe.framework_id) evals ON ((evals.framework_id = ff.id)));
   SQL
 end
