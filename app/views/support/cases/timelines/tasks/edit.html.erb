@@ -1,0 +1,22 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Edit '<%= @task.title %>'</h1>
+    <%= form_for @editor, url: support_case_timeline_task_path(case_id: @current_case.id, timeline_id: @timeline.id, id: @task.id), method: :patch do |f| %>
+      <%= f.govuk_text_field :title, label: { text: "Title" } %>
+      <%= f.govuk_radio_buttons_fieldset(:timeframe_type, legend: { text: "Time frame" }) do %>
+        <%= f.govuk_radio_button :timeframe_type, :date_range, label: { text: "Date range" }, link_errors: true do %>
+          <%= f.govuk_date_field :start_date, legend: { text: "Start date", size: "s" } %>
+          <%= f.govuk_date_field :end_date, legend: { text: "End date", size: "s" } %>
+        <% end %>
+        <%= f.govuk_radio_button :timeframe_type, :working_days, label: { text: "Working days" } do %>
+          <%= f.govuk_number_field :duration, label: nil %>
+        <% end %>
+      <% end %>
+
+      <div class="govuk-button-group">
+        <%= govuk_link_to "Cancel", @back_url, class: "govuk-button govuk-button--secondary", role: "button" %>
+        <%= f.govuk_submit "Save and view" %>
+      </div>
+    <% end %>
+  </div>
+</div>

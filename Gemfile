@@ -13,10 +13,12 @@ gem "aws-sdk-s3", require: false
 # gem "azure-storage-blob", "~> 2.0", require: false
 gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby", ref: "patch-1", require: false
 gem "bootsnap", ">= 1.1.0", require: false
+gem "business_time"
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.17"
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.1"
+gem "draft_punk", git: "https://github.com/groupnews/draftpunk"
 gem "dry-struct"
 gem "dry-transformer"
 gem "dry-validation"
@@ -26,6 +28,7 @@ gem "flipper-active_record"
 gem "flipper-ui"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder", "~> 5"
+gem "holidays"
 gem "httparty"
 gem "httpclient"
 gem "jbuilder", "~> 2.11"

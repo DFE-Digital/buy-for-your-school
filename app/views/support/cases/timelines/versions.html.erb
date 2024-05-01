@@ -1,0 +1,12 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Timeline for Case <%= @current_case.ref %></h1>
+    <h2 class="govuk-heading-m">Versions</h1>
+
+    <% @versions.each do |version| %>
+      <h3 class="govuk-heading-s"><%= version.created_at %></h3>
+      <p class="govuk-body"><%= version.event %></p>
+      <p class="govuk-body"><%= version.changeset %></p>
+    <% end %>
+  </div>
+</div>

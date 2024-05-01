@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_15_143752) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_15_150234) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -912,6 +912,51 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_15_143752) do
     t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
+  create_table "support_timeline_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "stage"
+    t.string "title"
+    t.text "description"
+    t.datetime "complete_by"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.uuid "support_timeline_id"
+    t.uuid "approved_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_timeline_id"], name: "index_support_timeline_stages_on_support_timeline_id"
+  end
+
+  create_table "support_timeline_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "status"
+    t.integer "type"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.interval "duration"
+    t.integer "visibility"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.uuid "support_timeline_stage_id"
+    t.uuid "approved_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_timeline_stage_id"], name: "index_support_timeline_tasks_on_support_timeline_stage_id"
+  end
+
+  create_table "support_timelines", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.uuid "support_case_id"
+    t.uuid "approved_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_support_timelines_on_support_case_id"
+  end
+
   create_table "support_towers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1037,6 +1082,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_15_143752) do
   add_foreign_key "support_notifications", "support_cases"
   add_foreign_key "support_organisations", "local_authorities"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
+  add_foreign_key "support_timeline_stages", "support_timelines"
+  add_foreign_key "support_timeline_tasks", "support_timeline_stages"
+  add_foreign_key "support_timelines", "support_cases"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
   add_foreign_key "user_journey_steps", "user_journeys"
   add_foreign_key "user_journeys", "framework_requests"

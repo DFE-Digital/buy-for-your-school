@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="timeline__end-date-container">
+      <strong class="timeline__date-tag">End date: <%= @timeline.end_date.strftime("%-d %B %Y") %></strong>
+    </div>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Timeline for Case <%= @current_case.ref %></h1>
+    <%= govuk_link_to "Edit", edit_support_case_timeline_path(case_id: @current_case.id, id: @timeline.id), class: "govuk-button govuk-button--secondary", role: "button" %>
+
+    <% @timeline.stages.each do |stage| %>
+      <div class="timeline-stages__heading-box" data-stage="<%= stage.stage %>">
+        <span class="timeline-stages__heading-stage-indicator" title="<%= stage.stage_title %>"><%= stage.stage_shorthand %></span>
+        <div class="timeline-stages__heading-stage-title"><h2 class="govuk-heading-m govuk-!-static-margin-bottom-0"><%= stage.title %></h2></div>
+      </div>
+      <span class="govuk-caption-l govuk-!-margin-bottom-4">Complete by <%= stage.complete_by.strftime("%-d %B %Y") %></span>
+
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
+          <% stage.tasks.each do |task| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= task.title %></td>
+              <td class="govuk-table__cell"><strong class="timeline-tasks__timeframe-tag"><%= task.time_frame %></strong></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

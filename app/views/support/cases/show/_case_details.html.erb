@@ -3,6 +3,12 @@
     <%= I18n.t("support.case.header.case_detail") %>
   </h2>
 
+  <% if current_case.timelines.present? %>
+    <%= govuk_link_to "View timeline", support_case_timeline_path(current_case.latest_timeline, case_id: current_case), class: "govuk-button", role: "button" %>
+  <% else %>
+    <%= button_to "Create timeline", support_case_timelines_path(current_case), class: "govuk-button" %>
+  <% end %>
+
   <div role="tabpanel" aria-labelledby="tab_case-details" id="case_details_sections">
     <h3 class="govuk-heading-m">
       <%= I18n.t("support.case.case_details.case_summary.heading") %>

@@ -23,6 +23,7 @@ module Support
     include FileUploadable
     include Surveyable
     include Notifiable
+    include Timelineable
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true
