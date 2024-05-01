@@ -1,0 +1,5 @@
+.timeline-tasks__timeframe-tag {
+  @extend .govuk-tag;
+  @extend .govuk-tag--grey;
+  max-width: none;
+}

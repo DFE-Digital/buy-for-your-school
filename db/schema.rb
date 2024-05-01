@@ -938,6 +938,53 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
+  create_table "timeline_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "stage"
+    t.integer "state"
+    t.datetime "complete_by"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.uuid "timeline_id"
+    t.uuid "published_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["timeline_id"], name: "index_timeline_stages_on_timeline_id"
+  end
+
+  create_table "timeline_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "state"
+    t.integer "status"
+    t.integer "type"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.interval "duration"
+    t.integer "visibility"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.uuid "timeline_stage_id"
+    t.uuid "published_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["timeline_stage_id"], name: "index_timeline_tasks_on_timeline_stage_id"
+  end
+
+  create_table "timelines", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "state"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.uuid "support_case_id"
+    t.uuid "published_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_timelines_on_support_case_id"
+  end
+
   create_table "user_feedback", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "service", null: false
     t.integer "satisfaction", null: false
@@ -1041,6 +1088,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
   add_foreign_key "support_notifications", "support_cases"
   add_foreign_key "support_organisations", "local_authorities"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
+  add_foreign_key "timeline_stages", "timelines"
+  add_foreign_key "timeline_tasks", "timeline_stages"
+  add_foreign_key "timelines", "support_cases"
   add_foreign_key "user_feedback", "users", column: "logged_in_as_id"
   add_foreign_key "user_journey_steps", "user_journeys"
   add_foreign_key "user_journeys", "framework_requests"
