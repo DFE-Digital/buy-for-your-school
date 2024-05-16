@@ -1,0 +1,42 @@
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l"><%= @task.title %></h1>
+    <strong class="timeline-tasks__timeframe-tag"><%= @task.time_frame %></strong>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">
+        Contents
+      </h2>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <%= link_to "What to do", "#what-to-do", class: "govuk-tabs__tab" %>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <%= link_to "Messages", "#messages", class: "govuk-tabs__tab" %>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <%= link_to "Internal notes", "#internal-notes", class: "govuk-tabs__tab" %>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel" id="what-to-do">
+        <% @task.documents.each do |document| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <div>
+                <%= document.name %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </div>
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages">
+      </div>
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="internal-notes">
+      </div>
+    </div>
+  </div>
+</div>

@@ -36,8 +36,10 @@ class Collaboration::Timeline::Adjustor
 private
 
   def adjust_tasks
+    return if timeline.tasks.count <= 1
+
     original_duration = task.duration_int
-    new_duration = new_start_date.business_days_until(new_end_date).days
+    new_duration = new_start_date.to_date.business_days_until(new_end_date).days
     duration_difference = original_duration - new_duration.in_days.to_i
     original_task = task.dup
     task.start_date = new_start_date

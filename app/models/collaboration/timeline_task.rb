@@ -1,8 +1,9 @@
 module Collaboration
   class TimelineTask < ApplicationRecord
     include Editable
+    include Publishable
 
-    belongs_to :stage, class_name: "Collaboration::TimelineStage", foreign_key: :timeline_stage_id
+    belongs_to :stage, class_name: "Collaboration::TimelineStage", foreign_key: :timeline_stage_id, inverse_of: :tasks
 
     before_save :update_time_frame, if: :time_frame_needs_update?
     after_save :update_stage_complete_by

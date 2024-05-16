@@ -770,6 +770,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  amoeba
   application_insights
   ar-sequence
   aws-sdk-s3

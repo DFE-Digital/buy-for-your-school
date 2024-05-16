@@ -19,7 +19,7 @@ class Collaboration::TimelineTask::Creator
     @start_date = Date.civil(@start_date["year"].to_i, @start_date["month"].to_i, @start_date["day"].to_i) if @start_date.is_a?(Hash)
     @end_date = Date.civil(@end_date["year"].to_i, @end_date["month"].to_i, @end_date["day"].to_i) if @end_date.is_a?(Hash)
     @duration = @duration.to_i
-    @timeline_task = Collaboration::TimelineTask.new(title:, stage:, start_date:, end_date:, duration: duration.days)
+    @timeline_task = Collaboration::TimelineTask.new(title:, stage:, start_date:, end_date:, duration: duration.days, state: :draft)
   end
 
   def save!

@@ -4,7 +4,9 @@
   </h2>
 
   <% if current_case.timelines.present? %>
-    <%= govuk_link_to "View timeline", support_case_timeline_path(current_case.latest_timeline, case_id: current_case), class: "govuk-button", role: "button" %>
+    <% timeline = current_case.latest_timeline %>
+    <% timeline_path = timeline.draft? ? edit_support_case_timeline_draft_path(case_id: current_case, timeline_id: timeline, id: timeline) : support_case_timeline_path(timeline, case_id: current_case) %>
+    <%= govuk_link_to "View timeline", timeline_path, class: "govuk-button", role: "button" %>
   <% else %>
     <%= button_to "Create timeline", support_case_timelines_path(current_case), class: "govuk-button" %>
   <% end %>

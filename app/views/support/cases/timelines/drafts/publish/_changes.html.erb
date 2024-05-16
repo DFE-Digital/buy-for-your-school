@@ -1,0 +1,5 @@
+<%= govuk_warning_text(text: "You are about to publish the following changes.") %>
+
+<% @proposed_changes.each do |change| %>
+  <%= change %>
+<% end %>

@@ -268,11 +268,17 @@ Rails.application.routes.draw do
             resource :participating_schools, only: %i[show]
           end
         end
-        resources :timelines, only: %i[show create edit update] do
+        resources :timelines, only: %i[show create] do
           get :versions, to: "timelines#versions"
           scope module: :timelines do
-            resources :tasks, only: %i[new create edit update destroy]
-            # resources :versions, only: %i[index]
+            resources :tasks, only: %i[show edit update]
+            resources :drafts, only: %i[create edit update] do
+              scope module: :drafts do
+                resources :tasks, only: %i[new create edit update destroy]
+                get :publish, to: "publish#show"
+                post :publish, to: "publish#create"
+              end
+            end
           end
         end
         get :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#index"

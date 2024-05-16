@@ -3,8 +3,8 @@ module Support
     before_action :back_url
 
     def create
-      timeline = Collaboration::Timeline.create_demo!(case: current_case, start_date: Time.zone.now)
-      redirect_to support_case_timeline_path(case_id: current_case, id: timeline.id)
+      timeline = Collaboration::Timeline.create_default!(case: current_case, start_date: Time.zone.now)
+      redirect_to edit_support_case_timeline_draft_path(case_id: current_case, timeline_id: timeline, id: timeline)
     end
 
     def show
@@ -13,6 +13,8 @@ module Support
 
     def edit
       @timeline = Collaboration::Timeline.find_by(id: params[:id])
+      # @draft_timeline = @timeline.draft_version
+      @back_url = support_case_timeline_path(case_id: current_case, id: @timeline.id)
     end
 
     def versions

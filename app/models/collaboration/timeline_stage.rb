@@ -1,9 +1,11 @@
 module Collaboration
   class TimelineStage < ApplicationRecord
-    has_many :tasks, -> { order start_date: :asc }, class_name: "Collaboration::TimelineTask", foreign_key: :timeline_stage_id
-    belongs_to :timeline, class_name: "Collaboration::Timeline"
+    include Publishable
 
-    after_save :update_timeline_end_date
+    has_many :tasks, -> { order start_date: :asc }, class_name: "Collaboration::TimelineTask", foreign_key: :timeline_stage_id, inverse_of: :stage
+    belongs_to :timeline, class_name: "Collaboration::Timeline", inverse_of: :stages
+
+    after_save :update_timeline_end_date, if: -> { complete_by.present? }
 
     default_scope { order(stage: :asc) }
 

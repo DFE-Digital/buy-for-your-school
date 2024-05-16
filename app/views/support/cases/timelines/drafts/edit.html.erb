@@ -1,20 +1,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="timeline__end-date-container">
-      <strong class="timeline__date-tag">End date: <%= @timeline.end_date.strftime("%-d %B %Y") %></strong>
+      <strong class="timeline__date-tag">End date: <%= @draft.end_date.strftime("%-d %B %Y") %></strong>
     </div>
   </div>
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">Edit timeline for Case <%= @current_case.ref %></h1>
+    <%= govuk_link_to "Publish", support_case_timeline_draft_publish_path(case_id: @current_case, timeline_id: @timeline, draft_id: @draft), class: "govuk-button", role: "button" %>
 
-    <% @timeline.stages.each do |stage| %>
+    <% @draft.stages.each do |stage| %>
       <div class="timeline-stages__heading-box" data-stage="<%= stage.stage %>">
         <span class="timeline-stages__heading-stage-indicator" title="<%= stage.stage_title %>"><%= stage.stage_shorthand %></span>
         <div class="timeline-stages__heading-stage-title"><h2 class="govuk-heading-m govuk-!-static-margin-bottom-0"><%= stage.title %></h2></div>
       </div>
-      <span class="govuk-caption-l govuk-!-margin-bottom-4">Complete by <%= stage.complete_by.strftime("%-d %B %Y") %></span>
+      <% if stage.complete_by.present? %>
+        <span class="govuk-caption-l govuk-!-margin-bottom-4">Complete by <%= stage.complete_by.strftime("%-d %B %Y") %></span>
+      <% end %>
 
       <table class="govuk-table">
         <tbody class="govuk-table__body">
@@ -22,16 +25,20 @@
             <tr class="govuk-table__row">
               <td class="govuk-table__cell"><%= task.title %></td>
               <td class="govuk-table__cell"><strong class="timeline-tasks__timeframe-tag"><%= task.time_frame %></strong></td>
-              <td class="govuk-table__cell">Draft</td>
               <td class="govuk-table__cell">
-                <%= govuk_link_to "Edit", edit_support_case_timeline_task_path(timeline_id: @timeline.id, id: task.id), no_visited_state: true %>
+                <% if task.pending_changes? %>
+                  <strong class="govuk-tag">Draft</strong>
+                <% end %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= govuk_link_to "Edit", edit_support_case_timeline_draft_task_path(case_id: @current_case, timeline_id: @timeline, draft_id: @draft, id: task.id), no_visited_state: true %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
 
-      <%= govuk_link_to "Add task", new_support_case_timeline_task_path(case_id: @current_case.id, timeline_id: @timeline.id, stage: stage.id), class: "govuk-button govuk-button--secondary", role: "button" %>
+      <%= govuk_link_to "Add task", new_support_case_timeline_draft_task_path(case_id: @current_case, timeline_id: @timeline, draft_id: @draft, stage: stage.id), class: "govuk-button govuk-button--secondary", role: "button" %>
     <% end %>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">New task</h1>
-    <%= form_for @creator, url: support_case_timeline_tasks_path(case_id: @current_case.id, timeline_id: @timeline.id) do |f| %>
+    <%= form_for @creator, url: support_case_timeline_draft_tasks_path(case_id: @current_case, timeline_id: @timeline, draft_id: @draft) do |f| %>
       <%= f.hidden_field :stage, value: @stage.id %>
 
       <%= f.govuk_text_field :title, label: { text: "Title" } %>
