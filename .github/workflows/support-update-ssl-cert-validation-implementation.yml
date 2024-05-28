@@ -7,6 +7,9 @@ on:
         required: true
         type: string
 
+env:
+  RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+
 jobs:
   check_need_for_validation_update:
     runs-on: ubuntu-20.04
@@ -17,7 +20,6 @@ jobs:
       customDomainName: ${{ steps.vars.outputs.customDomainName }}
       profileName: ${{ steps.vars.outputs.profileName }}
       zoneName: ${{ steps.vars.outputs.zoneName }}
-      resourceGroup: ${{ steps.vars.outputs.resourceGroup }}
       needsToReEvaluate: ${{ steps.checkValidationState.outputs.needsToReEvaluate }}
 
     steps:
@@ -44,7 +46,6 @@ jobs:
           echo customDomainName=$customDomainName >> $GITHUB_OUTPUT
           echo profileName=$profileName >> $GITHUB_OUTPUT
           echo zoneName=$zoneName >> $GITHUB_OUTPUT
-          echo resourceGroup=${{ secrets.RESOURCE_GROUP_NAME }} >> $GITHUB_OUTPUT
 
       - name: Azure login
         uses: azure/login@v1
@@ -59,7 +60,7 @@ jobs:
           inlineScript: |
             domainValidationState=$(az afd custom-domain show \
               --profile-name ${{ steps.vars.outputs.profileName }} \
-              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
               --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors | jq --raw-output .domainValidationState)
 
@@ -83,7 +84,6 @@ jobs:
           echo customDomainName=${{ needs.check_need_for_validation_update.outputs.customDomainName }} >> $GITHUB_OUTPUT
           echo profileName=${{ needs.check_need_for_validation_update.outputs.profileName }} >> $GITHUB_OUTPUT
           echo zoneName=${{ needs.check_need_for_validation_update.outputs.zoneName }} >> $GITHUB_OUTPUT
-          echo resourceGroup=${{ needs.check_need_for_validation_update.outputs.resourceGroup }} >> $GITHUB_OUTPUT
           echo needsToReEvaluate=${{ needs.check_need_for_validation_update.outputs.needsToReEvaluate }} >> $GITHUB_OUTPUT
 
       - name: Regenerate validation token
@@ -94,13 +94,13 @@ jobs:
           inlineScript: |
             az afd custom-domain regenerate-validation-token \
               --profile-name ${{ steps.vars.outputs.profileName }} \
-              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
               --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors
 
             newValidationToken=$(az afd custom-domain show \
               --profile-name ${{ steps.vars.outputs.profileName }} \
-              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
               --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors | jq --raw-output .validationProperties.validationToken)
 
@@ -114,5 +114,5 @@ jobs:
             az network dns record-set txt update \
               --zone-name ${{ steps.vars.outputs.zoneName }} \
               --name "_dnsauth" \
-              --resource-group ${{ steps.vars.outputs.resourceGroup }} \
+              --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
               --set "txt_records[0].value=['${{ steps.regenerateValidationToken.outputs.newValidationToken }}']"
