@@ -19,12 +19,12 @@ runs:
   using: composite
   steps:
     - name: Azure login
-      uses: azure/login@v1
+      uses: azure/login@v2.1.1
       with:
         creds: ${{ inputs.az_credentials }}
 
     - name: Update Azure Container Apps Revision
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2.0.0
       with:
         azcliversion: 2.51.0
         inlineScript: |
