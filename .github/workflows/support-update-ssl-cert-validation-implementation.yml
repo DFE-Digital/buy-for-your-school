@@ -48,13 +48,13 @@ jobs:
           echo zoneName=$zoneName >> $GITHUB_OUTPUT
 
       - name: Azure login
-        uses: azure/login@v1
+        uses: azure/login@v2.1.1
         with:
           creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
 
       - name: Check need for validation
         id: checkValidationState
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2.0.0
         with:
           azcliversion: 2.51.0
           inlineScript: |
@@ -88,7 +88,7 @@ jobs:
 
       - name: Regenerate validation token
         id: regenerateValidationToken
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2.0.0
         with:
           azcliversion: 2.51.0
           inlineScript: |
@@ -107,7 +107,7 @@ jobs:
             echo newValidationToken=$newValidationToken >> $GITHUB_OUTPUT
 
       - name: Update dns auth TXT record
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2.0.0
         with:
           azcliversion: 2.51.0
           inlineScript: |

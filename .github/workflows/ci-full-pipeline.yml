@@ -18,7 +18,7 @@ jobs:
     if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/development' }}
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.6
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -35,7 +35,7 @@ jobs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.6
 
       - uses: ./.github/workflows/actions/build-docker-image
         name: Build docker image
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.3.0
 
       - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec brakeman
 
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.3.0
 
       - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
 
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.6
 
       - name: Install node modules
         run: yarn install
@@ -155,7 +155,7 @@ jobs:
       - name: Remove test container
         run: docker rm test_container
       - name: Store test coverage
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: coverage-report-${{ matrix.ci_node_index }}
           path: coverage/.resultset-${{ matrix.ci_node_index }}.json
@@ -229,7 +229,7 @@ jobs:
       - name: Remove test container
         run: docker rm test_container
       - name: Store test coverage
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: coverage-report-quarantine
           path: coverage/.resultset-quarantine.json
@@ -241,9 +241,9 @@ jobs:
 
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.3.0
       - name: Download all test coverage
-        uses: actions/download-artifact@v4.1.2
+        uses: actions/download-artifact@v4.1.7
         with:
           path: coverage
           pattern: coverage-report-*
@@ -259,19 +259,19 @@ jobs:
           docker stop $CONTAINER_ID
           docker rm $CONTAINER_ID
       - name: Store collated test coverage
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: full-coverage-report
           path: |
             coverage/*
             !coverage/.last_run.json
       - name: Store last run
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: last-run
           path: coverage/.last_run.json
       - name: Delete intermediate artifacts
-        uses: geekyeggo/delete-artifact@v4.1.0
+        uses: geekyeggo/delete-artifact@v5.0.0
         with:
           name: coverage-report-*
 
@@ -282,7 +282,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     steps:
       - name: Download coverage from current run
-        uses: actions/download-artifact@v4.1.2
+        uses: actions/download-artifact@v4.1.7
         with:
           path: coverage/current
           pattern: last-run
@@ -309,7 +309,7 @@ jobs:
     if: github.ref == 'refs/heads/development'
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.6
       - uses: ./.github/workflows/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
@@ -326,7 +326,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.6
       - uses: ./.github/workflows/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
@@ -343,7 +343,7 @@ jobs:
     if: github.ref == 'refs/heads/production'
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.6
       - uses: ./.github/workflows/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
