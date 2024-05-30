@@ -86,6 +86,11 @@ jobs:
           echo zoneName=${{ needs.check_need_for_validation_update.outputs.zoneName }} >> $GITHUB_OUTPUT
           echo needsToReEvaluate=${{ needs.check_need_for_validation_update.outputs.needsToReEvaluate }} >> $GITHUB_OUTPUT
 
+      - name: Azure login
+        uses: azure/login@v2.1.1
+        with:
+          creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
+
       - name: Regenerate validation token
         id: regenerateValidationToken
         uses: azure/CLI@v2.0.0
