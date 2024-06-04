@@ -38,7 +38,7 @@
         <%= link_to I18n.t("support.generic.cancel"), support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-link govuk-link--no-visited-state" %>
       </div>
 
-      <%= form.govuk_file_field :files, multiple: true, class: "govuk-!-display-none", "data-case-files-target" => "filesField", form_group: { class: "govuk-!-display-none" } %>
+      <%= form.govuk_file_field :files, multiple: true, include_hidden: false, class: "govuk-!-display-none", "data-case-files-target" => "filesField", form_group: { class: "govuk-!-display-none" } %>
 
     <% end %>
   </div>

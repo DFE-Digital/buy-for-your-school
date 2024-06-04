@@ -2,7 +2,6 @@ require "dry-initializer"
 require "csv"
 
 require "types"
-require "downloader"
 require "school/mapper"
 require "school/schema"
 
