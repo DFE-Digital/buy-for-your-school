@@ -1,5 +1,4 @@
 require "active_support/duration"
-require "support/form"
 
 module Support
   class CaseContractsForm < Form
