@@ -71,7 +71,7 @@
             </span>
             <%= link_to I18n.t("support.management.email_templates.new.cancel"), support_management_email_templates_path, class: "govuk-link govuk-link--no-visited-state" %>
           </div>
-          <%= form.govuk_file_field :file_attachments, multiple: true, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
+          <%= form.govuk_file_field :file_attachments, multiple: true, include_hidden: false, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
           <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
         </div>
       </div>

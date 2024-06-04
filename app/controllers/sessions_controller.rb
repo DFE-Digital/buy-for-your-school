@@ -44,7 +44,7 @@ class SessionsController < ApplicationController
     user_session.delete!
 
     if issuer_url
-      redirect_to issuer_url
+      redirect_to issuer_url, allow_other_host: true
     else
       redirect_to exit_path, notice: I18n.t("banner.session.destroy")
     end

@@ -1,5 +1,4 @@
 require "dry-initializer"
-require "guest"
 
 # Locate the authenticated person or return a guest entity
 #
