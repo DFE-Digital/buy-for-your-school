@@ -1,6 +1,5 @@
 <%=
 govuk_summary_card(title: "Basic Details") do |card|
-  card.with_action { govuk_link_to("Edit", edit_frameworks_framework_path(@framework), "data-turbo-frame" => dom_id(@framework)) }
 
   card.with_summary_list do |summary_list|
     summary_list.with_row do |row|
@@ -34,13 +33,17 @@ end
 %>
 
 <%=
-govuk_summary_card(title: "Ownership") do |card|
-  card.with_action { govuk_link_to("Edit", edit_frameworks_framework_path(@framework), "data-turbo-frame" => dom_id(@framework)) }
+govuk_summary_card(title: "DfE Ownership") do |card|
 
   card.with_summary_list do |summary_list|
     summary_list.with_row do |row|
       row.with_key { "SCT Framework Owner" }
       row.with_value { @framework.sct_framework_owner }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "SCT Framework Provider Lead" }
+      row.with_value { @framework.sct_framework_provider_lead }
     end
 
     summary_list.with_row do |row|
@@ -59,7 +62,6 @@ end
 
 <%=
 govuk_summary_card(title: "Important Dates") do |card|
-  card.with_action { govuk_link_to("Edit", edit_frameworks_framework_path(@framework), "data-turbo-frame" => dom_id(@framework)) }
 
   card.with_summary_list do |summary_list|
     summary_list.with_row do |row|
