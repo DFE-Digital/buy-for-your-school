@@ -44,6 +44,8 @@ class Frameworks::FrameworksController < Frameworks::ApplicationController
 private
 
   def load_form_options
+    @procops_agents = Support::Agent.caseworkers
+    @e_and_o_agents = Support::Agent.e_and_o_staff
     @providers = Frameworks::Provider.all
     @provider_contacts = Frameworks::ProviderContact.all
   end
@@ -60,7 +62,8 @@ private
 
   def framework_params
     params.require(:frameworks_framework).permit(
-      :name, :short_name, :url, :reference,
+      :name, :short_name, :url, :provider_reference,
+      :sct_framework_provider_lead, :sct_framework_owner, :proc_ops_lead_id, :e_and_o_lead_id,
       :dfe_start_date, :dfe_review_date, :provider_start_date, :provider_end_date,
       :faf_added_date, :faf_end_date,
       :dps, :lot,
