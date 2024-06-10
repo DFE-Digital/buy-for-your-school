@@ -7,7 +7,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/support/case/sortable.rb",
-      "line": 69,
+      "line": 67,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"        COALESCE(support_organisations.name, support_establishment_groups.name) #{direction}, support_cases.ref DESC\\n\")",
       "render_path": null,
@@ -270,6 +270,60 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "6651b1f2223a62c2cbcf295380224c9cd0ac277162840b77b7263fa9ffa643e1",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/components/school_picker/_school_picker_results.html.erb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "I18n.t(\"components.school_picker.table.selected\", :total => CaseRequest.find_by(:id => params[:id]).organisation.organisations_for_multi_school_picker.order(:name).count, :group_name => CaseRequest.find_by(:id => params[:id]).organisation.name)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Engagement::CaseRequests::SchoolPickersController",
+          "method": "edit",
+          "line": 14,
+          "file": "app/controllers/engagement/case_requests/school_pickers_controller.rb",
+          "rendered": {
+            "name": "engagement/case_requests/school_pickers/edit",
+            "file": "app/views/engagement/case_requests/school_pickers/edit.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "engagement/case_requests/school_pickers/edit",
+          "line": 3,
+          "file": "app/views/engagement/case_requests/school_pickers/edit.html.erb",
+          "rendered": {
+            "name": "components/school_picker/_school_picker",
+            "file": "app/views/components/school_picker/_school_picker.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "components/school_picker/_school_picker",
+          "line": 9,
+          "file": "app/views/components/school_picker/_school_picker.html.erb",
+          "rendered": {
+            "name": "components/school_picker/_school_picker_results",
+            "file": "app/views/components/school_picker/_school_picker_results.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "components/school_picker/_school_picker_results"
+      },
+      "user_input": "CaseRequest.find_by(:id => params[:id]).organisation",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "685d56364cd585b0ecd196abe6506956e712bc86ba063a99bd24ad57ea137dcf",
@@ -400,7 +454,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/support/cases_controller.rb",
-      "line": 69,
+      "line": 63,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
       "render_path": null,
@@ -568,7 +622,7 @@
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/frameworks/frameworks/show/_framework_history.html.erb",
-      "line": 1,
+      "line": 2,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Framework.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
       "render_path": [
@@ -606,6 +660,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-11-30 09:13:54 +0000",
-  "brakeman_version": "6.0.1"
+  "updated": "2024-07-05 23:02:00 +0100",
+  "brakeman_version": "6.1.2"
 }

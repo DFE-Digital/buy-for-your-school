@@ -43,7 +43,7 @@ export default class extends Controller {
   }
 
   schoolCheckboxes() {
-    return Array.from(this.schoolTableBodyTarget.querySelectorAll("input[type='checkbox']"));
+    return Array.from(this.schoolTableBodyTarget.querySelectorAll("tr:not([style*='visibility: collapse']) input[type='checkbox']"));
   }
 
   allSelected() {
