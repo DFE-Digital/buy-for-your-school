@@ -16,8 +16,12 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body" data-school-picker-target="schoolTableBody">
-        <% @filtered_schools.each do |school| %>
+        <% @all_selectable_schools.each do |school| %>
+          <% if organisation_should_display?(school) then %>
           <tr class="govuk-table__row">
+          <% else %>
+          <tr class="govuk-table__row" style="visibility: collapse">
+          <% end %>
             <td class="govuk-table__cell">
               <%= form.govuk_check_box :school_urns, school.urn, label: { text: school.name }, "data-action": "school-picker#toggleSelection" %>
             </td>

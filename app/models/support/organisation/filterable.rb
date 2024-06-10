@@ -2,8 +2,7 @@ module Support::Organisation::Filterable
   extend ActiveSupport::Concern
 
   included do
-    scope :by_local_authorities, ->(local_authorities) { where("local_authority->>'code' IN(?)", local_authorities) }
-
+    scope :by_local_authorities, ->(local_authority_codes) { joins(:local_authority).where("la_code IN(?)", local_authority_codes) }
     scope :by_phases, ->(phases) { where(phase: phases) }
   end
 
