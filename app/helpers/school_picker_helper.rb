@@ -3,13 +3,13 @@ module SchoolPickerHelper
     CheckboxOption
       .from(
         organisations.map(&:local_authority).uniq.sort_by { |k| k["name"] },
-        id_field: "code",
+        id_field: "la_code",
         title_field: "name",
       )
   end
 
   def school_picker_phase_filter_options(organisations)
-    phases = organisations.pluck(:phase).uniq.map { |phase| %w[middle_primary middle_secondary].include?(phase) ? "middle" : phase }.uniq
+    phases = organisations.pluck(:phase).uniq.map { |phase| %w[middle_primary middle_secondary].include?(phase) ? "middle" : phase }.uniq.sort
     CheckboxOption.from(I18nOption.from("components.school_picker.phases.%%key%%", phases))
   end
 
@@ -23,5 +23,9 @@ module SchoolPickerHelper
 
   def show_school_picker_filters?(organisations)
     show_school_picker_la_filters?(organisations) || show_school_picker_phase_filters?(organisations)
+  end
+
+  def organisation_should_display?(org, filtered_orgs)
+    filtered_orgs.any? { |o| o.urn == org.urn }
   end
 end

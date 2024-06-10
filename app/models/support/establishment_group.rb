@@ -26,4 +26,8 @@ class Support::EstablishmentGroup < ApplicationRecord
   def eligible_for_school_picker?
     (mat_or_trust? || federation?) && organisations.count > 1
   end
+
+  def organisations_for_multi_school_picker
+    organisations
+  end
 end

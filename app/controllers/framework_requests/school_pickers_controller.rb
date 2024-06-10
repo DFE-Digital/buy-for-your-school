@@ -4,6 +4,7 @@ module FrameworkRequests
 
     before_action :group
     before_action :all_schools
+    before_action :all_selectable_schools
     before_action :filtered_schools
     before_action :edit_back_url, only: %i[update]
 
@@ -31,6 +32,10 @@ module FrameworkRequests
 
     def all_schools
       @all_schools = framework_request.available_schools
+    end
+
+    def all_selectable_schools
+      @all_selectable_schools = filtered_schools
     end
 
     def filtered_schools

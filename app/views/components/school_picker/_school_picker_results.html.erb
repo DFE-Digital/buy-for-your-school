@@ -8,7 +8,7 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <%= form.govuk_check_box :school_urns, :all, label: { text: I18n.t("components.school_picker.table.school_name").html_safe }, "data-school-picker-target": "selectAll", "data-action": "school-picker#toggleSelectAll" %>
+            <%= form.govuk_check_box :school_urns, :all, label: { text: I18n.t('components.school_picker.table.school_name').html_safe }, "data-school-picker-target": "selectAll", "data-action": "school-picker#toggleSelectAll" %>
           </th>
           <th scope="col" class="govuk-table__header"><%= I18n.t("components.school_picker.table.address") %></th>
           <th scope="col" class="govuk-table__header"><%= I18n.t("components.school_picker.table.phase") %></th>
@@ -16,8 +16,12 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body" data-school-picker-target="schoolTableBody">
-        <% @filtered_schools.each do |school| %>
+        <% @all_selectable_schools.each do |school| %>
+          <% if organisation_should_display?(school, @filtered_schools) then %>
           <tr class="govuk-table__row">
+          <% else %>
+          <tr class="govuk-table__row" style="visibility: collapse">
+          <% end %>
             <td class="govuk-table__cell">
               <%= form.govuk_check_box :school_urns, school.urn, label: { text: school.name }, "data-action": "school-picker#toggleSelection" %>
             </td>

@@ -5,6 +5,10 @@ class LocalAuthority < ApplicationRecord
   validates :name, uniqueness: true
 
   def eligible_for_school_picker?
-    organisations.count > 1
+    organisations_for_multi_school_picker.count > 1
+  end
+
+  def organisations_for_multi_school_picker
+    organisations.local_authority_maintained
   end
 end
