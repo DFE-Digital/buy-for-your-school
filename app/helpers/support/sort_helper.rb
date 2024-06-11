@@ -10,6 +10,7 @@ module Support
         [I18n.t("support.case.label.status"), "state"],
         [I18n.t("support.case.label.updated"), "last_updated"],
         [I18n.t("support.case.label.key_action_date"), "next_key_date"],
+        [I18n.t("support.case.label.contract_start_date"), "contract_start_date"],
       ]
     end
 

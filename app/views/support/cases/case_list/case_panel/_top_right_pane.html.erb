@@ -41,6 +41,14 @@
       <span title="<%= kase.last_updated_at %>"><%= relative_date_format(kase.last_updated_at) %></span>
     </dd>
   </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.contract_start_date") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <span title="<%= kase.new_contract&.started_at %>"><%= kase.new_contract&.started_at %></span>
+    </dd>
+  </div>
   <% if kase.organisation.present? && other_cases_by_case_org_exist?(kase.organisation) %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">

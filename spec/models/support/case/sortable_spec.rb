@@ -19,16 +19,16 @@ describe Support::Case::Sortable do
   describe "scopes" do
     before do
       cat_e = create(:support_category, title: "E-cat")
-      create(:support_case, :opened, ref: "000500", action_required: true, value: 14_504.22, organisation: create(:support_organisation, name: "A-org"), category: create(:support_category, title: "A-cat"), agent: create(:support_agent, first_name: "Avery", last_name: "Jones"))
-      create(:support_case, :opened, ref: "000501", action_required: false, value: 26.99, organisation: create(:support_organisation, name: "B-org"), category: create(:support_category, title: "B-cat"), agent: create(:support_agent, first_name: "Brooke", last_name: "Davis"))
-      create(:support_case, :on_hold, ref: "000502", action_required: true, value: 56_228.00, organisation: create(:support_establishment_group, name: "C-org"), category: create(:support_category, title: "C-cat"), agent: create(:support_agent, first_name: "Chloe", last_name: "Hernandez"))
-      create(:support_case, :on_hold, ref: "000503", action_required: true, value: 50_000.40, organisation: create(:support_establishment_group, name: "D-org"), category: create(:support_category, title: "D-cat"), agent: create(:support_agent, first_name: "Daisy", last_name: "Carter"))
-      create(:support_case, :initial, ref: "000504", action_required: false, value: 576.50, organisation: create(:support_organisation, name: "E-org"), category: cat_e, agent: create(:support_agent, first_name: "Emma", last_name: "Lee"))
-      create(:support_case, :initial, ref: "000505", action_required: true, value: 1_034.05, organisation: create(:support_organisation, name: "F-org"), category: cat_e, agent: create(:support_agent, first_name: "Faith", last_name: "Rodriguez"))
-      create(:support_case, :closed, ref: "000506", action_required: false, value: 900.00, organisation: create(:support_establishment_group, name: "G-org"), category: create(:support_category, title: "F-cat"), agent: create(:support_agent, first_name: "Grace", last_name: "Patel"))
-      create(:support_case, :closed, ref: "000507", action_required: false, value: 125_899.00, organisation: create(:support_organisation, name: "H-org"), category: create(:support_category, title: "G-cat"), agent: create(:support_agent, first_name: "Harper", last_name: "Sims"))
-      create(:support_case, :resolved, ref: "000508", action_required: false, value: nil, organisation: create(:support_organisation, name: "I-org"), category: create(:support_category, title: "H-cat"), agent: create(:support_agent, first_name: "Harper", last_name: "Kim"))
-      create(:support_case, :resolved, ref: "000509", action_required: true, value: 2.50, organisation: create(:support_establishment_group, name: "I-org"), category: create(:support_category, title: "I-cat"), agent: create(:support_agent, first_name: "Isabella", last_name: "Singh"))
+      create(:support_case, :opened, ref: "000500", action_required: true, value: 14_504.22, organisation: create(:support_organisation, name: "A-org"), category: create(:support_category, title: "A-cat"), agent: create(:support_agent, first_name: "Avery", last_name: "Jones"), new_contract: create(:support_new_contract, started_at: "2024-05-01"))
+      create(:support_case, :opened, ref: "000501", action_required: false, value: 26.99, organisation: create(:support_organisation, name: "B-org"), category: create(:support_category, title: "B-cat"), agent: create(:support_agent, first_name: "Brooke", last_name: "Davis"), new_contract: create(:support_new_contract, started_at: "2024-06-01"))
+      create(:support_case, :on_hold, ref: "000502", action_required: true, value: 56_228.00, organisation: create(:support_establishment_group, name: "C-org"), category: create(:support_category, title: "C-cat"), agent: create(:support_agent, first_name: "Chloe", last_name: "Hernandez"), new_contract: create(:support_new_contract, started_at: "2024-07-01"))
+      create(:support_case, :on_hold, ref: "000503", action_required: true, value: 50_000.40, organisation: create(:support_establishment_group, name: "D-org"), category: create(:support_category, title: "D-cat"), agent: create(:support_agent, first_name: "Daisy", last_name: "Carter"), new_contract: create(:support_new_contract, started_at: "2024-04-01"))
+      create(:support_case, :initial, ref: "000504", action_required: false, value: 576.50, organisation: create(:support_organisation, name: "E-org"), category: cat_e, agent: create(:support_agent, first_name: "Emma", last_name: "Lee"), new_contract: create(:support_new_contract))
+      create(:support_case, :initial, ref: "000505", action_required: true, value: 1_034.05, organisation: create(:support_organisation, name: "F-org"), category: cat_e, agent: create(:support_agent, first_name: "Faith", last_name: "Rodriguez"), new_contract: create(:support_new_contract, started_at: "2025-01-01"))
+      create(:support_case, :closed, ref: "000506", action_required: false, value: 900.00, organisation: create(:support_establishment_group, name: "G-org"), category: create(:support_category, title: "F-cat"), agent: create(:support_agent, first_name: "Grace", last_name: "Patel"), new_contract: create(:support_new_contract, started_at: "2025-02-01"))
+      create(:support_case, :closed, ref: "000507", action_required: false, value: 125_899.00, organisation: create(:support_organisation, name: "H-org"), category: create(:support_category, title: "G-cat"), agent: create(:support_agent, first_name: "Harper", last_name: "Sims"), new_contract: create(:support_new_contract))
+      create(:support_case, :resolved, ref: "000508", action_required: false, value: nil, organisation: create(:support_organisation, name: "I-org"), category: create(:support_category, title: "H-cat"), agent: create(:support_agent, first_name: "Harper", last_name: "Kim"), new_contract: create(:support_new_contract))
+      create(:support_case, :resolved, ref: "000509", action_required: true, value: 2.50, organisation: create(:support_establishment_group, name: "I-org"), category: create(:support_category, title: "I-cat"), agent: create(:support_agent, first_name: "Isabella", last_name: "Singh"), new_contract: create(:support_new_contract))
     end
 
     describe ".sort_by_action" do
@@ -288,6 +288,32 @@ describe Support::Case::Sortable do
           expect(results).to eq(%w[
             000508 000507 000502 000503 000500 000505 000506 000504 000501 000509
           ])
+        end
+      end
+    end
+
+    describe ".sort_by_contract_start_date" do
+      context "without interactions" do
+        context "when ascending" do
+          let(:order) { "ASC" }
+
+          it "sorts in ascending order" do
+            results = Support::Case.sort_by_contract_start_date(order).map(&:ref)
+            expect(results).to eq(%w[
+              000503 000500 000501 000502 000505 000506 000504 000507 000508 000509
+            ])
+          end
+        end
+
+        context "when descending" do
+          let(:order) { "DESC" }
+
+          it "sorts in descending order" do
+            results = Support::Case.sort_by_contract_start_date(order).map(&:ref)
+            expect(results).to eq(%w[
+              000509 000508 000507 000504 000506 000505 000502 000501 000500 000503
+            ])
+          end
         end
       end
     end
