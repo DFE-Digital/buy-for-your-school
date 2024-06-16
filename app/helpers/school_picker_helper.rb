@@ -25,7 +25,7 @@ module SchoolPickerHelper
     show_school_picker_la_filters?(organisations) || show_school_picker_phase_filters?(organisations)
   end
 
-  def organisation_should_display?(org)
-    @filtered_schools.any? { |o| o.urn == org.urn}
+  def organisation_should_display?(org, filtered_orgs)
+    filtered_orgs.any? { |o| o.urn == org.urn }
   end
 end

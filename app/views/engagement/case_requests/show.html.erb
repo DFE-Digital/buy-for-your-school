@@ -97,7 +97,7 @@
             <%= I18n.t("support.case_hub_migration.label.participating_schools") %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= I18n.t("support.case_hub_migration.label.school_number", selected: @case_request.school_urns.count, total: @case_request.organisation.organisations.length ) %>
+            <%= I18n.t("support.case_hub_migration.label.school_number", selected: @case_request.school_urns.count, total: @case_request.organisation.organisations_for_multi_school_picker.length ) %>
           </dd>
           <dd class="govuk-summary-list__actions">
             <%= govuk_link_to I18n.t("generic.button.change_answer"), edit_engagement_case_request_school_picker_path(source: :change_link), no_visited_state: true %>

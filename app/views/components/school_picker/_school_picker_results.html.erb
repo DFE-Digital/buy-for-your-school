@@ -17,7 +17,7 @@
       </thead>
       <tbody class="govuk-table__body" data-school-picker-target="schoolTableBody">
         <% @all_selectable_schools.each do |school| %>
-          <% if organisation_should_display?(school) then %>
+          <% if organisation_should_display?(school, @filtered_schools) then %>
           <tr class="govuk-table__row">
           <% else %>
           <tr class="govuk-table__row" style="visibility: collapse">

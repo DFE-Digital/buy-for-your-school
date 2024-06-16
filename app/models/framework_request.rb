@@ -47,7 +47,7 @@ class FrameworkRequest < Request
   def available_schools
     return Support::Organisation.none unless group
 
-    organisation.organisations.order(:name)
+    organisation.organisations_for_multi_school_picker.order(:name)
   end
 
   def multischool?
