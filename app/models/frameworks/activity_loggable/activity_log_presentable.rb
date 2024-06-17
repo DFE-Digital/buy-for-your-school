@@ -12,4 +12,8 @@ module Frameworks::ActivityLoggable::ActivityLogPresentable
   def activity_log_display_short_name
     try(:short_name) || try(:reference)
   end
+
+  def activity_log_display_type
+    self.class.to_s.demodulize.underscore.humanize
+  end
 end
