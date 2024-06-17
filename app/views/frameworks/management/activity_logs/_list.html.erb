@@ -13,7 +13,7 @@
         <td class="govuk-table__cell"><code><%= activity_log_item.guid %></code></td>
         <td class="govuk-table__cell"><%= activity_log_item.display_created_at %></td>
         <td class="govuk-table__cell"><%= activity_log_item.display_actor %></td>
-        <td class="govuk-table__cell"><%= link_to activity_log_item.display_subject, activity_log_item.subject, class: "govuk-link" %> - <%= render activity_log_item %></td>
+        <td class="govuk-table__cell"><%= link_to activity_log_item.display_subject, activity_log_item.subject, class: "govuk-link" %> - <%= activity_log_item.event_description %></td>
       </tr>
     <% end %>
   </tbody>
