@@ -1,4 +1,6 @@
 class Frameworks::ActivityLogItem < ApplicationRecord
+  include Presentable
+
   belongs_to :actor, polymorphic: true, optional: true
   belongs_to :subject, polymorphic: true, optional: true
   delegated_type :activity, types: %w[Frameworks::ActivityLoggableVersion Frameworks::ActivityEvent]
