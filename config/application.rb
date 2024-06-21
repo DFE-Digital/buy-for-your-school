@@ -22,7 +22,7 @@ module BuyForYourSchool
     end
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.1
 
     # Make sure the `form_with` helper generates local forms, instead of defaulting
     # to remote and unobtrusive XHR forms

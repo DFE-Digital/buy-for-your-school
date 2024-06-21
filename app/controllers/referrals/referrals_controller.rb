@@ -13,7 +13,7 @@ module Referrals
     def faf
       session_id = SecureRandom.uuid
       request.current_user_journey.try(:update!, session_id:)
-      redirect_to faf_path(session_id)
+      redirect_to faf_path(session_id), allow_other_host: true
     end
 
   private
