@@ -75,7 +75,10 @@ module Support
     #   spam
     #   out_of_scope
     #   other
-    enum closure_reason: { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5 }, _suffix: true
+    #   transfer
+    #   no_engagement
+    #   test_case
+    enum closure_reason: { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5, no_engagement: 6, test_case: 7 }, _suffix: true
 
     # Source
     #
