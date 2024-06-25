@@ -22,7 +22,7 @@ module Support
     end
 
     def edit
-      unless current_case.initial? && current_case.incoming_email?
+      unless current_case.opened? || (current_case.initial? && current_case.incoming_email?)
         return redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error.initial")
       end
 
@@ -34,13 +34,12 @@ module Support
 
       if validation.success?
         current_case.transaction do
-          raise CaseCannotBeClosed unless current_case.initial? && current_case.incoming_email?
+          raise CaseCannotBeClosed unless current_case.opened? || (current_case.initial? && current_case.incoming_email?)
 
           reason = I18n.t("support.case_closures.edit.reasons.#{@form.reason}")
           change_case_state(
             to: :close,
-            reason: @form.reason,
-            info: ". Reason given: #{reason}",
+            body: "From #{I18n.t("support.case.label.state.state_#{current_case.state}").downcase} to rejected by #{current_agent.full_name} on #{Time.zone.now.to_formatted_s(:short)}. Reason given: #{reason}",
           )
         end
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @form.reason })
@@ -55,7 +54,7 @@ module Support
   private
 
     def set_reasons
-      @reasons = %i[spam out_of_scope other]
+      @reasons = %i[spam out_of_scope other no_engagement test_case]
     end
 
     def set_back_url
