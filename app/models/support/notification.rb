@@ -9,6 +9,7 @@ module Support
       case_assigned: 0,
       case_email_recieved: 1,
       case_reopened: 2,
+      case_closed: 3,
     }
 
     scope :unread, -> { where(read: false) }

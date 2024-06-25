@@ -1,9 +1,15 @@
-<%= form_with model: @form, scope: :case_closure_form, url: support_case_closures_path(@current_case), method: :patch, class: "govuk-!-display-inline" do |form| %>
+<%= form_with model: @case_closure_form, 
+              scope: :case_closure_form, 
+              url: support_case_closures_confirm_path(@current_case), 
+              method: :post, 
+              class: "govuk-!-display-inline" do |form| 
+%>
+
   <%= form.govuk_error_summary %>
 
   <%= form.govuk_radio_buttons_fieldset :reason, legend: { text: I18n.t("support.case_closures.edit.header"), size: "l" }, hint: { text: I18n.t("support.case_closures.edit.hint") } do %>
 
-  <%= form.hidden_field :reason, value: nil %>
+  <%= form.hidden_field :reason %>
 
     <div class="govuk-radios">
       <% @reasons.each do |reason| %>

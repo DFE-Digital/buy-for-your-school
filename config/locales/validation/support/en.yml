@@ -121,7 +121,7 @@ en:
 
         # Closing a new case
         reason:
-          missing: You must choose a reason for closing the case
+          missing: You must choose a reason for rejecting the case
 
   case_migration_form:
     rules:

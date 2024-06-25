@@ -223,14 +223,12 @@ Rails.application.routes.draw do
         resource :organisation, only: %i[edit update]
         resources :confirm_organisation, only: %i[show update]
         resource :contact_details, only: %i[edit update]
-        resource :closures, only: %i[edit update]
         resource :savings, only: %i[edit update]
         resource :procurement_details, only: %i[edit update]
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resources :assignments, only: %i[new create index]
         resource :opening, only: %i[new create]
-        resource :closure, only: %i[new create]
         resource :on_hold, only: %i[create]
         resource :summary, only: %i[edit update]
         resources :contracts, only: %i[edit update]
@@ -273,6 +271,9 @@ Rails.application.routes.draw do
         get "move_emails/", to: "move_emails#index", as: "move_emails"
         post "move_emails/", to: "move_emails#create", as: nil
         post "move_emails/confirm", to: "move_emails#confirm", as: "move_emails_confirm"
+        get "closures/", to: "closures#index", as: "closures"
+        post "closures/", to: "closures#create", as: "support_case_closures"
+        post "closures/confirm", to: "closures#confirm", as: "closures_confirm"
       end
     end
 

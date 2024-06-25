@@ -51,7 +51,6 @@ module Support::Case::StateChangeable
         transitions from: :initial, to: :closed
         transitions from: :opened, to: :closed
         transitions from: :on_hold, to: :closed
-        transitions from: :resolved, to: :closed
       end
     end
   end
