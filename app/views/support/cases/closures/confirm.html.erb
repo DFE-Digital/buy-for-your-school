@@ -1,0 +1,97 @@
+<%= content_for :title, I18n.t("support.case_closures.confirm.header") %>
+
+<%= form_with model: @case_closure_form,
+              scope: :case_closure_form,
+              method: :post,
+              url: support_case_closures_path do |form|
+%>
+
+<%= form.hidden_field :reason %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= I18n.t("support.case_closures.confirm.header") %></h1>
+    <h2 class="govuk-heading-m"><%= I18n.t("support.case_closures.confirm.sub_header") %></h2>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case_closures.confirm.table.case_id") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+            <%= @current_case.ref %></td>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case_closures.confirm.table.organisation") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_case.organisation_name %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_closures.confirm.table.sub_category") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @current_case.category.title %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_closures.confirm.table.contact_email") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @current_case.email %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_closures.confirm.table.date_received") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @current_case.received_at %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case_closures.confirm.table.last_updated") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @current_case.last_updated_at %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%=  I18n.t("support.case_closures.confirm.case_closure_reason") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= I18n.t("support.case_closures.edit.reasons.#{@case_closure_form.reason}") %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to "Change", support_case_closures_path, class: "govuk-link govuk-link--no-visited-state" %>
+          </dd>
+        </div>
+      </dl>
+
+    <div class="govuk-button-group">
+      <%= form.submit I18n.t("support.case_closures.confirm.close"), class: "govuk-button govuk-button--warning", role: "button" %>
+      <%= link_to I18n.t("support.case_closures.confirm.cancel"), support_case_path(@current_case, anchor: "case-details"), class: "govuk-link govuk-link--no-visited-state" %>
+    </div>
+  </div>
+</div>
+<% end %>
+

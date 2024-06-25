@@ -2,51 +2,47 @@ module Support
   class Cases::ClosuresController < Cases::ApplicationController
     class CaseCannotBeClosed < StandardError; end
 
-    before_action :set_back_url, :set_reasons
+    before_action :set_reasons, only: %i[index confirm]
 
-    def new
-      @current_case = CasePresenter.new(@current_case)
-    end
-
-    def create
-      if current_case.resolved?
-        change_case_state(to: :close, reason: :resolved)
-
-        record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: "Resolved case closed by agent" })
-
-        redirect_to support_case_path(current_case, anchor: "case-history"),
-                    notice: I18n.t("support.case_closures.flash.created")
-      else
-        redirect_to support_case_path(current_case), notice: I18n.t("support.case_closures.flash.error.other")
-      end
-    end
-
-    def edit
-      unless current_case.initial? && current_case.incoming_email?
+    def index
+      unless current_case.opened? || (current_case.initial? && current_case.incoming_email?)
         return redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error.initial")
       end
 
-      @form = CaseClosureForm.new
+      @back_url = support_case_path(@current_case, anchor: "case-details")
+      @case_closure_form = CaseClosureForm.new
     end
 
-    def update
-      @form = CaseClosureForm.from_validation(validation)
+    def confirm
+      @case_closure_form = CaseClosureForm.from_validation(validation)
+      if validation.success?
+        @back_url = support_case_closures_path
+        @current_case = CasePresenter.new(@current_case)
+        @reason = @case_closure_form.reason
+        render :confirm
+      else
+        render :index
+      end
+    end
 
+    def create
+      @case_closure_form = CaseClosureForm.from_validation(validation)
       if validation.success?
         current_case.transaction do
-          raise CaseCannotBeClosed unless current_case.initial? && current_case.incoming_email?
+          raise CaseCannotBeClosed unless current_case.opened? || (current_case.initial? && current_case.incoming_email?)
 
-          reason = I18n.t("support.case_closures.edit.reasons.#{@form.reason}")
+          reason = I18n.t("support.case_closures.edit.reasons.#{@case_closure_form.reason}")
           change_case_state(
             to: :close,
-            reason: @form.reason,
-            info: ". Reason given: #{reason}",
+            reason: @case_closure_form.reason,
+            body: "From #{I18n.t("support.case.label.state.state_#{current_case.state}").downcase} to rejected by #{current_agent.full_name} on #{Time.zone.now.to_formatted_s(:short)}. Reason given: #{reason}",
           )
         end
-        record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @form.reason })
+        record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @case_closure_form.reason })
+        current_case.notify_agent_of_case_closed if current_case.agent.present?
         redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.updated")
       else
-        render :edit
+        render :index
       end
     rescue CaseCannotBeClosed
       redirect_to support_cases_path, notice: I18n.t("support.case_closures.flash.error.initial")
@@ -55,11 +51,7 @@ module Support
   private
 
     def set_reasons
-      @reasons = %i[spam out_of_scope other]
-    end
-
-    def set_back_url
-      @back_url = support_case_path(@current_case, anchor: "case-details")
+      @reasons = %i[no_engagement spam out_of_scope test_case other]
     end
 
     def validation

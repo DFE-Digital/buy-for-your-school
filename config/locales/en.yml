@@ -957,7 +957,6 @@ en:
         case_value_short: Value
         category: Category
         change_owner: Change case owner
-        close: Close case
         contact_email: Contact email
         contact_extension_number: Contact extension
         contact_name: Contact name
@@ -1085,6 +1084,7 @@ en:
         procurement_stage: Procurement stage
         query: Query
         received_at: Received
+        reject: Reject case
         reopen: Reopen case
         resolve: Resolve case
         request_details:
@@ -1222,26 +1222,29 @@ en:
         none: Not applicable
         please_select: Please select
     case_closures:
-      action: Close case
+      action: Reject case
       edit:
-        header: Close case
-        hint: Select reason for closing case.
+        header: Reject case
+        hint: Select reason for rejecting case.
         reasons:
           other: Other
           out_of_scope: Out of scope
           spam: Spam
-        submit: Save and close case
+          no_engagement: No engagement
+          test_case: Test case
+        submit: Save and reject case
       flash:
-        created: Case closed successfully
+        created: Case rejected successfully
         error:
-          initial: Only new cases created from emails can be closed
-          other: Case cannot be closed
-        updated: Case has been closed
-      new:
-        body: This is a permanent action. Once you close this case, it cannot be reopened or edited. You will only be able to view the details of the case.
+          initial: Only new cases created from emails or open cases can be rejected
+          other: Case cannot be rejected
+        updated: Case has been rejected
+      confirm:
         cancel: Cancel
-        close: Permanently close case
-        header: Are you sure you want to close this case?
+        case_closure_reason: Case closure reason
+        close: Reject case
+        header: Are you sure you want to reject this case?
+        sub_header: This case will no longer count in the engagement and savings figures.
         table:
           case_id: Case ID
           contact_email: Contact email

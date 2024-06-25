@@ -24,4 +24,14 @@ module Support::Case::Notifiable
       created_at: updated_at,
     )
   end
+
+  def notify_agent_of_case_closed
+    notifications.case_closed.find_or_create_by!(
+      support_case: self,
+      assigned_to: agent,
+      assigned_by_system: true,
+      subject: self,
+      created_at: updated_at,
+    )
+  end
 end
