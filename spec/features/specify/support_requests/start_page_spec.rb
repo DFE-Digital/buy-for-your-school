@@ -15,7 +15,7 @@ RSpec.feature "Starting a 'Digital Support' request" do
 
     it "explains the form to the user" do
       expect(find("div.govuk-grid-column-two-thirds", text: "Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.")).to be_present
-      expect(find("div.govuk-grid-column-two-thirds", text: "The Get help buying for schools team will respond to you within 2 working days.")).to be_present
+      expect(find("div.govuk-grid-column-two-thirds", text: "The Get help buying for schools team will respond to you within 5 working days.")).to be_present
     end
 
     it "links to more information" do

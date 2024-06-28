@@ -434,7 +434,7 @@ en:
         category: Type of goods or service
         origin: Origin
       header: Send your request
-      response_time: Once you send this request, we will review it and get in touch within 2 working days.
+      response_time: Once you send this request, we will review it and get in touch within 5 working days.
       not_known: Not known
       aria:
         change_name: "Change your name"
@@ -1923,7 +1923,7 @@ en:
         We will not receive any new changes you make.
     intro:
     - Use this service to request free advice and support from our procurement experts for help with your catering or multi-functional devices specification.
-    - The Get help buying for schools team will respond to you within 2 working days.
+    - The Get help buying for schools team will respond to you within 5 working days.
     label:
       category: What are you buying?
       message: How can we help?
@@ -1931,7 +1931,7 @@ en:
       school: Which school are you buying for?
       specification: Which specification is this related to?
     link: Request free help and support with your specification
-    response_time: Once you send this request, we will review it and get in touch within 2 working days.
+    response_time: Once you send this request, we will review it and get in touch within 5 working days.
     section:
       about_you: About you
       request_summary: About your request for support
