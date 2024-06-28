@@ -51,7 +51,7 @@ RSpec.feature "Submitting a 'Digital Support' request" do
 
     # support_requests.response_time
     it "confirms the expected response time" do
-      expect(find("p.govuk-body", text: "Once you send this request, we will review it and get in touch within 2 working days.")).to be_present
+      expect(find("p.govuk-body", text: "Once you send this request, we will review it and get in touch within 5 working days.")).to be_present
     end
   end
 
