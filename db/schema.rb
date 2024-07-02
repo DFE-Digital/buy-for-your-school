@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_13_145023) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_02_145517) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -731,7 +731,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_13_145023) do
     t.uuid "ticket_id"
     t.boolean "is_draft", default: false
     t.index ["in_reply_to_id"], name: "index_support_emails_on_in_reply_to_id"
+    t.index ["outlook_conversation_id", "sent_at"], name: "index_support_emails_on_outlook_conversation_id_and_sent_at", order: { sent_at: :desc }
+    t.index ["outlook_conversation_id", "ticket_id", "ticket_type"], name: "idx_on_outlook_conversation_id_ticket_id_ticket_typ_9df6d5a50e"
     t.index ["template_id"], name: "index_support_emails_on_template_id"
+    t.index ["ticket_id", "ticket_type"], name: "index_support_emails_on_ticket_id_and_ticket_type"
   end
 
   create_table "support_establishment_group_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
