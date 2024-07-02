@@ -8,6 +8,7 @@ module Support
     enum :topic, {
       case_assigned: 0,
       case_email_recieved: 1,
+      case_reopened: 2,
     }
 
     scope :unread, -> { where(read: false) }

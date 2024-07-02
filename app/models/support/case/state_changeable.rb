@@ -30,6 +30,7 @@ module Support::Case::StateChangeable
         transitions from: :initial, to: :opened
         transitions from: :resolved, to: :opened
         transitions from: :on_hold, to: :opened
+        transitions from: :closed, to: :opened
       end
 
       event :reopen_due_to_incoming_email, after: :log_reopened_due_to_incoming_email do

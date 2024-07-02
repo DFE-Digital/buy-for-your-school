@@ -10,8 +10,8 @@ RSpec.describe "Case being changed to open", type: :request do
 
         it "redirects to support_cases_path with the state unchanged" do
           post support_case_opening_path(support_case)
-          expect(support_case.reload.state).to eq("closed")
-          expect(response).to redirect_to(support_case_path(support_case))
+          expect(support_case.reload.state).to eq("opened")
+          expect(response).to redirect_to(support_case_path(support_case).concat("#case-history"))
         end
       end
     end

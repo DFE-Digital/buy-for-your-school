@@ -229,7 +229,7 @@ Rails.application.routes.draw do
         resources :documents, only: %i[show]
         resource :resolution, only: %i[new create]
         resources :assignments, only: %i[new create index]
-        resource :opening, only: %i[create]
+        resource :opening, only: %i[new create]
         resource :closure, only: %i[new create]
         resource :on_hold, only: %i[create]
         resource :summary, only: %i[edit update]
