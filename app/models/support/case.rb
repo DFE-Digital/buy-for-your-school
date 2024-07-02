@@ -181,6 +181,14 @@ module Support
       agent&.full_name || "UNASSIGNED"
     end
 
+    def organisation_name
+      organisation&.name
+    end
+
+    def sub_category
+      category&.title || request&.category&.title
+    end
+
     def assign_to_agent(agent, assigned_by: Current.agent)
       update!(agent:)
       agent.notify_assigned_to_case(support_case: self, assigned_by:)

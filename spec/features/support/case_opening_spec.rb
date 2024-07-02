@@ -6,28 +6,39 @@ RSpec.feature "Case worker can open a case" do
     click_link "Reopen case"
   end
 
-  context "when re-opening a case" do
-    let(:support_case) { create(:support_case, :resolved) }
+  shared_examples "a reopened case" do |initial_state, old_state|
+    let(:support_case) { create(:support_case, initial_state) }
     let(:activity_log_item) { Support::ActivityLogItem.last }
 
-    it "redirects to the case" do
+    it "redirects to the dialog" do
+      expect(page).to have_current_path(new_support_case_opening_path(support_case), ignore_query: true)
+    end
+
+    it "redirects to the case and successfully change status to opened" do
+      visit current_path # Ensures the page is reloaded
+      click_on "Reopen the case"
       expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
     end
 
-    it "changes status of case to opened" do
+    it "records the case being reopened" do
+      visit current_path # Ensures the page is reloaded
+      click_on "Reopen the case"
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+
       support_case.reload
       expect(support_case.state).to eq "opened"
-    end
-
-    it "records the case being reopened" do
       expect(activity_log_item.support_case_id).to eq support_case.id
       expect(activity_log_item.action).to eq "change_state"
-      expect(activity_log_item.data).to eq({ "old_state" => "resolved", "new_state" => "opened" })
+      expect(activity_log_item.data).to eq({ "old_state" => old_state, "new_state" => "opened" })
     end
+  end
 
-    it "records the interaction for case history" do
-      expect(Support::Interaction.last.body).to eql "From resolved to open by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
-    end
+  context "when re-opening a case from resolved" do
+    it_behaves_like "a reopened case", :resolved, "resolved"
+  end
+
+  context "when re-opening a case from closed" do
+    it_behaves_like "a reopened case", :closed, "closed"
   end
 
   context "when a case is on hold" do

@@ -24,8 +24,8 @@ describe "Case view" do
       expect(page).to have_css(".case-status-badge", text: "Closed")
     end
 
-    it "has no available actions" do
-      expect(page).not_to have_css(".case-actions")
+    it "has available actions" do
+      expect(page).to have_css(".case-actions")
     end
   end
 end

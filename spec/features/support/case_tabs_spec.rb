@@ -95,7 +95,7 @@ RSpec.feature "Case summary", js: true do
 
     it "has action links" do
       within "ul.govuk-list" do
-        expect(page).to have_link "Reopen case", href: "/support/cases/#{support_case.id}/opening", class: "govuk-link"
+        expect(page).to have_link "Reopen case", href: "/support/cases/#{support_case.id}/opening/new", class: "govuk-link"
       end
     end
   end

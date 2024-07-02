@@ -14,4 +14,14 @@ module Support::Case::Notifiable
       created_at: email.outlook_received_at,
     )
   end
+
+  def notify_agent_of_case_reopened
+    notifications.case_reopened.find_or_create_by!(
+      support_case: self,
+      assigned_to: agent,
+      assigned_by_system: true,
+      subject: self,
+      created_at: updated_at,
+    )
+  end
 end

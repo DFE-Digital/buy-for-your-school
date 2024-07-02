@@ -37,18 +37,8 @@ RSpec.feature "Case closure" do
     context "when the case is resolved" do
       let(:state) { :resolved }
 
-      describe "asks to confirm case closure" do
-        context "when closure is confirmed" do
-          it "closes the case and records the interaction" do
-            click_link "Close case"
-            click_on "Permanently close case"
-
-            expect(page).to have_content("Case closed successfully")
-            within "#case-history tr", text: "Status change" do
-              expect(page).to have_text "From resolved to closed by first_name last_name on #{Time.zone.now.to_formatted_s(:short)}"
-            end
-          end
-        end
+      it "show the action link" do
+        expect(page).to have_link "Reopen case"
       end
     end
 
