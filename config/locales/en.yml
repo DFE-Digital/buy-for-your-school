@@ -1248,7 +1248,15 @@ en:
           date_received: Date received
           last_updated: Last updated
           organisation: Organisation
-          sub_category: Sub-category
+          sub_category: sub-category
+    case_openings:
+      new:
+        header: Are you sure you want to reopen this case?
+        reopen: Reopen the case
+        cancel: Cancel
+        table:
+          case_id: Case ID
+          status: Status   
     case_confirm_organisation:
       title: Confirm organisation update
       body: You are about to update the organisation for case %{ref}.

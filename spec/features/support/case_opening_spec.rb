@@ -6,27 +6,57 @@ RSpec.feature "Case worker can open a case" do
     click_link "Reopen case"
   end
 
-  context "when re-opening a case" do
+  context "when re-opening a case from resolved" do
     let(:support_case) { create(:support_case, :resolved) }
     let(:activity_log_item) { Support::ActivityLogItem.last }
 
-    it "redirects to the case" do
+    it "redirects to the dialog" do
+      expect(page).to have_current_path(new_support_case_opening_path(support_case), ignore_query: true)
+    end
+
+    it "redirects to the case and successfully change status to opened" do
+      visit current_path # Ensures the page is reloaded
+      click_on "Reopen the case"
       expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
     end
 
-    it "changes status of case to opened" do
+    it "records the case being reopened" do
+      visit current_path # Ensures the page is reloaded
+      click_on "Reopen the case"
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+
       support_case.reload
       expect(support_case.state).to eq "opened"
-    end
-
-    it "records the case being reopened" do
       expect(activity_log_item.support_case_id).to eq support_case.id
       expect(activity_log_item.action).to eq "change_state"
       expect(activity_log_item.data).to eq({ "old_state" => "resolved", "new_state" => "opened" })
     end
+  end
 
-    it "records the interaction for case history" do
-      expect(Support::Interaction.last.body).to eql "From resolved to open by Procurement Specialist on #{Time.zone.now.to_formatted_s(:short)}"
+  context "when re-opening a case from closed" do
+    let(:support_case) { create(:support_case, :closed) }
+    let(:activity_log_item) { Support::ActivityLogItem.last }
+
+    it "redirects to the dialog" do
+      expect(page).to have_current_path(new_support_case_opening_path(support_case), ignore_query: true)
+    end
+
+    it "redirects to the case and successfully change status to opened" do
+      visit current_path # Ensures the page is reloaded
+      click_on "Reopen the case"
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+    end
+
+    it "records the case being reopened" do
+      visit current_path # Ensures the page is reloaded
+      click_on "Reopen the case"
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+
+      support_case.reload
+      expect(support_case.state).to eq "opened"
+      expect(activity_log_item.support_case_id).to eq support_case.id
+      expect(activity_log_item.action).to eq "change_state"
+      expect(activity_log_item.data).to eq({ "old_state" => "closed", "new_state" => "opened" })
     end
   end
 

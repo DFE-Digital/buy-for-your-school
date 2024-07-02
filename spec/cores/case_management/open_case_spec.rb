@@ -8,8 +8,8 @@ describe CaseManagement::OpenCase do
   context "when the case cannot move to open" do
     let(:support_case) { create(:support_case, :closed) }
 
-    it "does not change the state" do
-      expect { open_case! }.not_to change { support_case.reload.state }.from("closed")
+    it "does change the state" do
+      expect { open_case! }.to change { support_case.reload.state }.from("closed")
     end
   end
 
