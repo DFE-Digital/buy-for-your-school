@@ -18,7 +18,7 @@ module Support
   private
 
     def find_email
-      @email = Support::Email.find(params[:email_id])
+      @email = ::Email.find(params[:email_id])
     end
 
     def new_status
