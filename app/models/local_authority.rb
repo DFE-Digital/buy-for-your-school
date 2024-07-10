@@ -11,4 +11,8 @@ class LocalAuthority < ApplicationRecord
   def organisations_for_multi_school_picker
     organisations.local_authority_maintained
   end
+
+  def org_type
+    name
+  end
 end

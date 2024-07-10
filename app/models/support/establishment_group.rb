@@ -21,6 +21,10 @@ class Support::EstablishmentGroup < ApplicationRecord
     Support::Organisation.where(trust_code: uid)
   end
 
+  def org_type
+    establishment_group_type&.name
+  end
+
   def mat_or_trust? = establishment_group_type.mat? || establishment_group_type.trust?
 
   def eligible_for_school_picker?
