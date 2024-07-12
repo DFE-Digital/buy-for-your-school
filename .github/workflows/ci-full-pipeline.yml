@@ -350,3 +350,48 @@ jobs:
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
           container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
           resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+
+  data_regression_copy_to_original:
+    name: Data regression testing - trigger copy to pre-release-original-data
+    needs: release_production
+    runs-on: ubuntu-20.04
+    environment: az-production
+
+    steps:
+      - uses: Azure/pipelines@v1.2
+        with:
+          azure-devops-project-url: "https://dfe-ssp.visualstudio.com/S174-Get%20Help%20Buying%20for%20Schools"
+          azure-pipeline-name: "Pre-release Original Data sync"
+          azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+
+  data_regression_copy_to_modified:
+    name: Data regression testing - trigger copy to pre-release-modified-data
+    needs: release_production
+    runs-on: ubuntu-20.04
+    environment: az-production
+
+    steps:
+      - uses: Azure/pipelines@v1.2
+        with:
+          azure-devops-project-url: "https://dfe-ssp.visualstudio.com/S174-Get%20Help%20Buying%20for%20Schools"
+          azure-pipeline-name: "Pre-release Modified Data sync"
+          azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+
+  data_regression_migrate_modified:
+    name: Data regression testing - apply migrations to pre-release-modified-data
+    needs: release_staging
+    runs-on: ubuntu-20.04
+    environment: az-staging
+    env:
+      PRE_RELEASE_MODIFIED_DATA_DB_URL: ${{ secrets.PRE_RELEASE_MODIFIED_DATA_DB_URL }}
+
+    steps:
+      - name: Run migrations against pre-release-modified-data
+        run: |
+          docker run --rm \
+            -e RAILS_ENV=production \
+            -e DATABASE_URL=${{ env.PRE_RELEASE_MODIFIED_DATA_DB_URL }} \
+            -e DOCKER=true \
+            -e SECRET_KEY_BASE=production \
+            ${{ needs.build_test.outputs.docker_image }} \
+            bash -c "bundle exec rails db:migrate"      
