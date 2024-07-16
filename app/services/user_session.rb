@@ -14,8 +14,15 @@ class UserSession
   #
   # @return [nil]
   def delete!
-    @session.delete(:dfe_sign_in_uid)
-    @session.delete(:dfe_sign_in_sign_out_token)
+    dfe_sign_in_uid = @session[:dfe_sign_in_uid]
+    # delete the redis session
+    session_lookup_key = session_lookup_uid_key(dfe_sign_in_uid)
+    redis_session_key = redis_session_lookup.get(session_lookup_key)
+    if redis_session_key
+      redis_sessions.del("session:#{redis_session_key}")
+    end
+    # delete the redis session lookup
+    redis_session_lookup.del(session_lookup_key)
   end
 
   # Token from issuer exists in the session
@@ -60,22 +67,64 @@ class UserSession
   # When the same DfE Sign-in user is signed into our service, invalidate the
   # first one, effectively signing it out.
   #
-  # We can't manipulate the key the redis_store gem sets as the session key as:
-  # redis:6379:2:2488646bef3bd44839efdb874fd133d578d729fb87fb004dd24a7e91cb3a3d62
-  #
   # @param auth [OmniAuth::AuthHash]
-  #
   def invalidate_other_user_sessions(auth:)
-    redis_sessions = RedisSessions.redis
-    redis_session_lookup = RedisSessionLookup.redis
     dfe_sign_in_uid = auth.fetch("uid")
-    session_lookup_key = "user_dsi_id:#{dfe_sign_in_uid}"
+    redis_session_lookup.set(session_lookup_uid_key(dfe_sign_in_uid), @session.id.private_id)
+    other_session_lookup_keys = other_session_lookups_for_user(dfe_sign_in_uid)
+    other_session_lookup_keys.each do |other_session_lookup_key| # eg. session_lookup:user_dsi_id:20864786-BE4B-4BCA-9EDD-BF5A694D2AA0-s_id:2::ef4d62cce6955b726e1eb9c626cd5da0857cba47ee4d15666780dcbd2568f95b
+      other_session_key = redis_session_lookup.get(other_session_lookup_key) # eg. session:2::ef4d62cce6955b726e1eb9c626cd5da0857cba47ee4d15666780dcbd2568f95b
+      next unless other_session_key
 
-    existing_redis_session_key = redis_session_lookup.get(session_lookup_key)
-    if existing_redis_session_key
-      redis_sessions.del("session:#{existing_redis_session_key}")
+      redis_session_as_string = redis_sessions.get("session:#{other_session_key}")
+      next if redis_session_as_string.nil?
+
+      # invalidate the other session: convert the session's Redis hash into a Ruby hash, set "invalidated" to true within it, convert it back into a Redis hash and save the Redis hash back into that session's row within Redis
+      # rubocop is disabled as the Redis Rails sessions won't unpack into JSON without error
+      # rubocop:disable Security/MarshalLoad
+      other_session_hash = Marshal.load redis_session_as_string
+      # rubocop:enable Security/MarshalLoad
+      other_session_hash["invalidated"] = true
+      redis_sessions.set("session:#{other_session_key}", Marshal.dump(other_session_hash))
     end
+  end
 
-    redis_session_lookup.set(session_lookup_key, @session.id.private_id)
+  def redis_sessions
+    RedisSessions.redis
+  end
+
+  def redis_session_lookup
+    RedisSessionLookup.redis
+  end
+
+  def session_lookup_key(dfe_sign_in_uid)
+    "user_dsi_id:#{dfe_sign_in_uid}"
+  end
+
+  def current_session_id_suffix
+    "s_id:#{@session.id.private_id}"
+  end
+
+  def session_lookup_uid_key(dfe_sign_in_uid)
+    "#{session_lookup_key(dfe_sign_in_uid)}-#{current_session_id_suffix}"
+  end
+
+  def concurrent_session_lookups_for_user(dfe_sign_in_uid)
+    redis_session_lookup = RedisSessionLookup.redis
+    session_lookup_key = "user_dsi_id:#{dfe_sign_in_uid}"
+    concurrent_session_keys = []
+    cursor = "0"
+    loop do
+      cursor, keys = redis_session_lookup.scan(cursor, match: "*#{session_lookup_key}*")
+      concurrent_session_keys.concat(keys)
+      break if cursor == "0"
+    end
+    concurrent_session_keys
+  end
+
+  def other_session_lookups_for_user(dfe_sign_in_uid)
+    concurrent_session_lookups_for_user(dfe_sign_in_uid).reject do |concurrent_session|
+      concurrent_session.include?(current_session_id_suffix)
+    end
   end
 end

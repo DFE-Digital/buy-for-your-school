@@ -38,10 +38,26 @@ protected
   # @return [nil]
   #
   def authenticate_user!
-    return unless current_user.guest?
+    if session[:invalidated] == true
+      log_out_user
+    else
+      return unless current_user.guest?
 
-    session.delete(:dfe_sign_in_uid)
-    redirect_to root_path, notice: I18n.t("banner.session.visitor")
+      session.delete(:dfe_sign_in_uid)
+      redirect_to root_path, notice: I18n.t("banner.session.visitor")
+    end
+  end
+
+  def log_out_user
+    user_session = UserSession.new(session:, redirect_url: issuer_redirect_url)
+    issuer_url = user_session.sign_out_url.dup
+    user_session.delete!
+    reset_session
+    if issuer_url
+      redirect_to issuer_url
+    else
+      redirect_to exit_path, notice: I18n.t("banner.session.destroy")
+    end
   end
 
   # @return [Journey]

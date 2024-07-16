@@ -7,10 +7,9 @@ class SessionsController < ApplicationController
   # @see CreateUser
   # @see UserSession
   def create
-    user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
     user_session.invalidate_other_user_sessions(auth: auth_hash)
+    user_session.persist_successful_dfe_sign_in_claim!(auth: auth_hash)
     user = CreateUser.new(auth: auth_hash).call
-
     case user
     when User
       redirect_to entry_path(user)
@@ -42,6 +41,7 @@ class SessionsController < ApplicationController
   def destroy
     issuer_url = user_session.sign_out_url.dup
     user_session.delete!
+    reset_session
 
     if issuer_url
       redirect_to issuer_url
@@ -61,14 +61,6 @@ private
   def auth_hash
     request.env["omniauth.auth"]
   end
-
-  # @return [String, nil] "https://localhost:3000/procurement-support/new"
-  # def origin
-  #   request.env["omniauth.origin"]
-  #   request.env["action_dispatch.request.unsigned_session_cookie"]["omniauth.origin"]
-  #   request.env["rack.session"]["omniauth.origin"]
-  #   request.env["omniauth.params"]
-  # end
 
   # @return [Boolean]
   def find_framework_entrypoint?
