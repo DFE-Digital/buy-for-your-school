@@ -377,7 +377,7 @@ jobs:
 
   data_regression_migrate_modified:
     name: Data regression testing - apply migrations to pre-release-modified-data
-    needs: release_staging
+    needs: [build_release, release_staging]
     runs-on: ubuntu-20.04
     env:
       PRE_RELEASE_MODIFIED_DATA_DB_URL: ${{ secrets.PRE_RELEASE_MODIFIED_DATA_DB_URL }}
