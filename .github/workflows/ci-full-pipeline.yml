@@ -355,7 +355,6 @@ jobs:
     name: Data regression testing - trigger copy to pre-release-original-data
     needs: release_production
     runs-on: ubuntu-20.04
-    environment: az-production
 
     steps:
       - uses: Azure/pipelines@v1.2
@@ -368,7 +367,6 @@ jobs:
     name: Data regression testing - trigger copy to pre-release-modified-data
     needs: release_production
     runs-on: ubuntu-20.04
-    environment: az-production
 
     steps:
       - uses: Azure/pipelines@v1.2
@@ -381,7 +379,6 @@ jobs:
     name: Data regression testing - apply migrations to pre-release-modified-data
     needs: release_staging
     runs-on: ubuntu-20.04
-    environment: az-staging
     env:
       PRE_RELEASE_MODIFIED_DATA_DB_URL: ${{ secrets.PRE_RELEASE_MODIFIED_DATA_DB_URL }}
 
@@ -393,5 +390,5 @@ jobs:
             -e DATABASE_URL=${{ env.PRE_RELEASE_MODIFIED_DATA_DB_URL }} \
             -e DOCKER=true \
             -e SECRET_KEY_BASE=production \
-            ${{ needs.build_test.outputs.docker_image }} \
+            ${{ needs.build_release.outputs.docker_image }} \
             bash -c "bundle exec rails db:migrate"      
