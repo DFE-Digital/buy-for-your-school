@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_095817) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1342,7 +1342,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
               organisations.gor_name,
               organisations.urn,
               organisations.ukprn,
-              organisations.trust_name,
+              parent.name AS trust_name,
               parent.ukprn AS trust_code,
               organisations.status AS organisation_status,
               NULL::integer AS egroup_status,
@@ -1353,7 +1353,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
              FROM (((support_organisations organisations
                JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
                JOIN local_authorities ON ((local_authorities.id = organisations.local_authority_id)))
-               JOIN support_establishment_groups parent ON (((parent.uid)::text = (organisations.trust_code)::text)))
+               LEFT JOIN support_establishment_groups parent ON (((parent.uid)::text = COALESCE(NULLIF((organisations.trust_code)::text, ''::text), (organisations.federation_code)::text))))
           UNION ALL
            SELECT egroups.id,
               egroups.name,
