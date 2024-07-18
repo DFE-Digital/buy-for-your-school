@@ -390,5 +390,6 @@ jobs:
             -e DATABASE_URL=${{ env.PRE_RELEASE_MODIFIED_DATA_DB_URL }} \
             -e DOCKER=true \
             -e SECRET_KEY_BASE=production \
+            -e APPLICATION_URL=https://www.get-help-buying-for-schools.service.gov.uk \
             ${{ needs.build_release.outputs.docker_image }} \
             bash -c "bundle exec rails db:migrate"      
