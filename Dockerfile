@@ -33,7 +33,7 @@ RUN npm install --global yarn
 # ------------------------------------------------------------------------------
 # Assets
 # ------------------------------------------------------------------------------
-FROM node:alpine as assets
+FROM node:22.4.1-alpine as assets
 
 ENV NODE_ENV ${NODE_ENV:-production}
 
