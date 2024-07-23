@@ -37,3 +37,8 @@ sync_frameworks:
   cron: "0 0,12 * * *" # every midnight and midday
   class: Support::SyncFrameworksJob
   description: Fetch and persist frameworks from FaF
+
+refresh_timeline_documents:
+  cron: "* * * * *" # every minute
+  class: Support::RefreshTimelineDocumentsJob
+  description: Update the attributes of all the timeline documents in SharePoint

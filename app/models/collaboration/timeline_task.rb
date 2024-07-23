@@ -2,13 +2,19 @@ module Collaboration
   class TimelineTask < ApplicationRecord
     include Editable
     include Publishable
+    include SharepointIntegratable
 
     belongs_to :stage, class_name: "Collaboration::TimelineStage", foreign_key: :timeline_stage_id, inverse_of: :tasks
+    has_many :documents, class_name: "Collaboration::TimelineDocument"
 
     before_save :update_time_frame, if: :time_frame_needs_update?
     after_save :update_stage_complete_by
 
     delegate :timeline, to: :stage, allow_nil: true
+
+    amoeba do
+      exclude_association :documents
+    end
 
     def time_frame
       start_date_format = start_date.month == end_date.month && start_date.year == end_date.year ? "%-d" : "%-d %B"

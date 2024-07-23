@@ -23,14 +23,8 @@
         </li>
       </ul>
       <div class="govuk-tabs__panel" id="what-to-do">
-        <% @task.documents.each do |document| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-              <div>
-                <%= document.name %>
-              </div>
-            </td>
-          </tr>
+        <%= turbo_frame_tag "what-to-do-frame", src: support_case_timeline_task_what_to_do_path(case_id: @current_case, timeline_id: @timeline, task_id: @task) do %>
+          <p class="govuk-body">Loading...</p>
         <% end %>
       </div>
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="messages">

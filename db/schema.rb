@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_155125) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -35,14 +35,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
-    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -86,8 +86,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.datetime "updated_at", null: false
     t.boolean "accessibility_research_opt_in"
     t.string "accessibility_research_email"
-    t.datetime "survey_sent_at"
-    t.datetime "survey_completed_at"
+    t.datetime "survey_sent_at", precision: nil
+    t.datetime "survey_completed_at", precision: nil
     t.index ["case_id"], name: "index_all_cases_survey_responses_on_case_id"
   end
 
@@ -240,8 +240,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.integer "status"
     t.string "user_ip"
     t.datetime "survey_started_at"
-    t.datetime "survey_sent_at"
-    t.datetime "survey_completed_at"
+    t.datetime "survey_sent_at", precision: nil
+    t.datetime "survey_completed_at", precision: nil
     t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
@@ -275,6 +275,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.decimal "procurement_amount", precision: 9, scale: 2
     t.integer "confidence_level"
     t.string "special_requirements"
+    t.uuid "organisation_id"
+    t.string "organisation_type"
     t.boolean "is_energy_request"
     t.integer "energy_request_about"
     t.boolean "have_energy_bill"
@@ -417,6 +419,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_number_answers_on_step_id"
+  end
+
+  create_table "otp_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email"
+    t.string "otp_secret_key"
+    t.integer "last_otp_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -590,8 +600,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.uuid "query_id"
     t.boolean "exit_survey_sent", default: false
     t.uuid "detected_category_id"
-    t.integer "creation_source"
     t.text "user_selected_category"
+    t.integer "creation_source"
     t.uuid "created_by_id"
     t.uuid "procurement_stage_id"
     t.string "initial_request_text"
@@ -601,6 +611,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.integer "discovery_method"
     t.string "discovery_method_other_text"
     t.string "project"
+    t.string "sharepoint_folder_id"
+    t.boolean "contact_invited_to_sharepoint"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -938,6 +950,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
   end
 
+  create_table "timeline_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "ms_graph_drive_item_id"
+    t.string "url"
+    t.integer "permissions"
+    t.string "last_modified_by"
+    t.datetime "last_modified_at"
+    t.uuid "timeline_task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["timeline_task_id"], name: "index_timeline_documents_on_timeline_task_id"
+  end
+
   create_table "timeline_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -1088,6 +1113,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_155237) do
   add_foreign_key "support_notifications", "support_cases"
   add_foreign_key "support_organisations", "local_authorities"
   add_foreign_key "support_procurements", "support_frameworks", column: "framework_id"
+  add_foreign_key "timeline_documents", "timeline_tasks"
   add_foreign_key "timeline_stages", "timelines"
   add_foreign_key "timeline_tasks", "timeline_stages"
   add_foreign_key "timelines", "support_cases"

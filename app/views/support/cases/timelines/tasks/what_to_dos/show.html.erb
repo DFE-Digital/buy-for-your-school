@@ -1,0 +1,45 @@
+<%= turbo_frame_tag "what-to-do-frame" do %>
+  <%= govuk_link_to "Edit", edit_support_case_timeline_task_what_to_do_path(case_id: @current_case, timeline_id: @timeline, task_id: @task), class: "govuk-button govuk-button--secondary", role: "button" %>
+  <%= button_to "Invite contact to collaborate", support_case_timeline_task_document_sharing_path(case_id: @current_case, timeline_id: @timeline, task_id: @task), class: "govuk-button", method: :post, data: { disable_with: "Inviting..." } %>
+  <table class="govuk-table" aria-label="Email attachments">
+    <caption class="govuk-table__caption govuk-table__caption--m">Documents</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">
+          Name
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Last modified by
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Last modified at
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Details
+        </th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @task.documents.each do |document| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <% if document.url.present? %>
+              <%= govuk_link_to document.name, document.url, new_tab: true, no_visited_state: true %>
+            <% else %>
+              <%= document.name %>
+            <% end %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= document.last_modified_by %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= document.last_modified_at.strftime("%d %B %Y %H:%M") %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= govuk_link_to "Version history", support_case_timeline_task_document_versions_path(case_id: @current_case, timeline_id: @timeline, task_id: @task, document_id: document), no_visited_state: true %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -7,7 +7,7 @@ module EmailAttachment::Cacheable
 
   class_methods do
     def cache_attachments_for_email(email, mailbox: Email.default_mailbox)
-      attachments = MicrosoftGraph.client.get_file_attachments(mailbox.user_id, email.outlook_id)
+      attachments = MicrosoftGraph.mail.get_file_attachments(mailbox.user_id, email.outlook_id)
       attachments.each { |attachment| cache_attachment(attachment, email:) }
     end
 

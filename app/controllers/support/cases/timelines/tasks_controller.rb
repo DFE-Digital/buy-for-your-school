@@ -2,14 +2,6 @@ module Support
   class Cases::Timelines::TasksController < Cases::ApplicationController
     before_action :timeline, :task, :back_url
 
-    def edit
-      # @files = @timeline.case.fetch_documents
-      @files = []
-    end
-
-    def update
-    end
-
   private
 
     def task

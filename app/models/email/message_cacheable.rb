@@ -22,7 +22,7 @@ module Email::MessageCacheable
 
   class_methods do
     def cache_messages_in_folder(folder, mailbox: default_mailbox, messages_after: 15.minutes.ago)
-      messages = MicrosoftGraph.client.list_messages_in_folder(mailbox.user_id, folder, messages_after:)
+      messages = MicrosoftGraph.mail.list_messages_in_folder(mailbox.user_id, folder, messages_after:)
       messages.each { |message| cache_message(message, folder:) }
     end
 
@@ -46,7 +46,7 @@ module Email::MessageCacheable
         "$expand=singleValueExtendedProperties($filter=id eq '#{MicrosoftGraph::Resource::SingleValueExtendedProperty::ID_PR_IN_REPLY_TO_ID}')",
       ]
 
-      recently_updated_messages = MicrosoftGraph.client.list_messages(default_mailbox.user_id, query:)
+      recently_updated_messages = MicrosoftGraph.mail.list_messages(default_mailbox.user_id, query:)
       recently_updated_messages.each { |message| resync_outlook_ids_of_moved_message(message) }
     end
 

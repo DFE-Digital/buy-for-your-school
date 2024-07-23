@@ -5,6 +5,10 @@ module Collaboration::TimelineTask::Editable
     Collaboration::TimelineTask::Editor.new(timeline_task: self, **params)
   end
 
+  def file_picker(document_source:)
+    Collaboration::TimelineTask::FilePicker.new(timeline_task: self, document_source:)
+  end
+
   def edit(details)
     update!(details)
   end
@@ -18,6 +22,12 @@ private
       start_date:,
       end_date:,
       duration: duration_int,
+    }
+  end
+
+  def file_picker_defaults
+    {
+      documents:,
     }
   end
 end

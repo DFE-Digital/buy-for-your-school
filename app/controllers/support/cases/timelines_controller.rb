@@ -4,6 +4,7 @@ module Support
 
     def create
       timeline = Collaboration::Timeline.create_default!(case: current_case, start_date: Time.zone.now)
+      current_case.initialise_default_documents!
       redirect_to edit_support_case_timeline_draft_path(case_id: current_case, timeline_id: timeline, id: timeline)
     end
 

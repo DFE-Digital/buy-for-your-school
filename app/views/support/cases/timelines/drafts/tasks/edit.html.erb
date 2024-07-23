@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Edit '<%= @task.title %>'</h1>
-    <%= form_for @editor, url: support_case_timeline_task_path(case_id: @current_case.id, timeline_id: @timeline.id, id: @task.id), method: :patch do |f| %>
+    <%= form_for @editor, url: support_case_timeline_draft_task_path(case_id: @current_case.id, timeline_id: @timeline.id, draft_id: @draft.id, id: @task.id), method: :patch do |f| %>
       <%= f.govuk_text_field :title, label: { text: "Title" } %>
       <%= f.govuk_radio_buttons_fieldset(:timeframe_type, legend: { text: "Time frame" }) do %>
         <%= f.govuk_radio_button :timeframe_type, :date_range, label: { text: "Date range" }, link_errors: true do %>

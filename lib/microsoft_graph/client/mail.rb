@@ -1,6 +1,7 @@
 module MicrosoftGraph
-  # Graph API v1.0
-  class Client
+  class Client::Mail
+    include Client::Queryable
+
     attr_reader :client_session
 
     DEFAULT_EMAIL_HEADERS = { "Prefer" => 'IdType="ImmutableId"' }.freeze
@@ -32,7 +33,7 @@ module MicrosoftGraph
     # https://docs.microsoft.com/en-us/graph/api/user-list-mailfolders?view=graph-rest-1.0
     def list_mail_folders(user_id)
       results = client_session.graph_api_get("users/#{user_id}/mailFolders")
-      Transformer::MailFolder.transform_collection(results, into: Resource::MailFolder)
+      Transformer::MailFolder.transform_collection(results.body, into: Resource::MailFolder)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0
@@ -48,7 +49,7 @@ module MicrosoftGraph
 
       results = client_session.graph_api_get("users/#{user_id}/mailFolders('#{mail_folder}')/messages".concat(format_query(query)))
 
-      Transformer::Message.transform_collection(results, into: Resource::Message)
+      Transformer::Message.transform_collection(results.body, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/user-list-messages?view=graph-rest-1.0&tabs=http
@@ -64,7 +65,7 @@ module MicrosoftGraph
 
       response = client_session.graph_api_get("users/#{user_id}/messages/#{message_id}".concat(format_query(query)), multiple_results: false)
 
-      Transformer::Message.transform(response, into: Resource::Message)
+      Transformer::Message.transform(response.body, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-update?view=graph-rest-1.0&tabs=http
@@ -76,20 +77,20 @@ module MicrosoftGraph
     # https://docs.microsoft.com/en-us/graph/api/message-list-attachments?view=graph-rest-1.0&tabs=http
     def get_file_attachments(user_id, message_ms_id)
       results = client_session.graph_api_get("users/#{user_id}/messages/#{message_ms_id}/attachments")
-      file_attachments = results.select { |item| item["@odata.type"] == "#microsoft.graph.fileAttachment" }
+      file_attachments = results.body.select { |item| item["@odata.type"] == "#microsoft.graph.fileAttachment" }
       Transformer::Attachment.transform_collection(file_attachments, into: Resource::Attachment)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-createreply?view=graph-rest-1.0&tabs=http
     def create_reply_message(user_id:, reply_to_id:, http_headers: {})
       response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReply", nil, http_headers)
-      Transformer::UpdateMessage.transform(response, into: Resource::Message)
+      Transformer::UpdateMessage.transform(response.body, into: Resource::Message)
     end
 
     # https://learn.microsoft.com/en-us/graph/api/message-createreplyall?view=graph-rest-1.0&tabs=http
     def create_reply_all_message(user_id:, reply_to_id:, http_headers: {})
       response = client_session.graph_api_post("users/#{user_id}/messages/#{reply_to_id}/createReplyAll", nil, http_headers)
-      Transformer::UpdateMessage.transform(response, into: Resource::Message)
+      Transformer::UpdateMessage.transform(response.body, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
@@ -101,7 +102,7 @@ module MicrosoftGraph
           "Content-Type" => "application/json",
         ),
       )
-      response["id"]
+      response.body["id"]
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-post-attachments?view=graph-rest-1.0&tabs=http#example-file-attachment
@@ -129,7 +130,7 @@ module MicrosoftGraph
           "Content-Type" => "application/json",
         ),
       )
-      Transformer::UpdateMessage.transform(response, into: Resource::Message)
+      Transformer::UpdateMessage.transform(response.body, into: Resource::Message)
     end
 
     # https://docs.microsoft.com/en-us/graph/api/message-send?view=graph-rest-1.0&tabs=http
@@ -194,10 +195,6 @@ module MicrosoftGraph
           "content" => "<html><body>#{draft.body}</body></html>#{draft_message.body.content}",
         },
       }
-    end
-
-    def format_query(query_parts)
-      query_parts.any? ? "?".concat(query_parts.join("&")) : ""
     end
   end
 end

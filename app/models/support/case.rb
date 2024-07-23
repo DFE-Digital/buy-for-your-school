@@ -24,6 +24,7 @@ module Support
     include Surveyable
     include Notifiable
     include Timelineable
+    include SharepointIntegratable
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true

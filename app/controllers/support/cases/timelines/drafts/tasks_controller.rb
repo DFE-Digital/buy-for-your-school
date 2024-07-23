@@ -10,7 +10,6 @@ module Support
     end
 
     def create
-      # byebug
       @creator = Collaboration::TimelineTask::Creator.new(creator_params.merge(timeline:, stage: Collaboration::TimelineStage.find(creator_params[:stage])))
       if @creator.valid?
         @creator.save!
@@ -27,7 +26,6 @@ module Support
 
     def update
       @task = Collaboration::TimelineTask.find_by(id: params[:id])
-      # byebug
       @editor = @task.editor(editor_params)
 
       if @editor.valid?
@@ -43,16 +41,16 @@ module Support
     def creator_params
       form_params(:collaboration_timeline_task_creator)
           .except("start_date(3i)", "start_date(2i)", "start_date(1i)", "end_date(3i)", "end_date(2i)", "end_date(1i)")
-          .merge(start_date: date_param(:support_timeline_task_creator, :start_date).compact_blank.presence || default_start_date)
-          .merge(end_date: date_param(:support_timeline_task_creator, :end_date).compact_blank)
+          .merge(start_date: date_param(:collaboration_timeline_task_creator, :start_date).compact_blank.presence || default_start_date)
+          .merge(end_date: date_param(:collaboration_timeline_task_creator, :end_date).compact_blank)
           .compact_blank
     end
 
     def editor_params
       form_params(:collaboration_timeline_task_editor)
           .except("start_date(3i)", "start_date(2i)", "start_date(1i)", "end_date(3i)", "end_date(2i)", "end_date(1i)")
-          .merge(start_date: date_param(:support_timeline_task_editor, :start_date).compact_blank)
-          .merge(end_date: date_param(:support_timeline_task_editor, :end_date).compact_blank)
+          .merge(start_date: date_param(:collaboration_timeline_task_editor, :start_date).compact_blank)
+          .merge(end_date: date_param(:collaboration_timeline_task_editor, :end_date).compact_blank)
           .compact_blank
     end
 

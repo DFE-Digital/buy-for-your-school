@@ -25,6 +25,10 @@ module MicrosoftGraph
       enact_request(:patch, api_path(path), body, headers)
     end
 
+    def graph_api_put(path, body, headers = {})
+      enact_request(:put, api_path(path), body, headers)
+    end
+
   private
 
     def api_path(path)
@@ -43,20 +47,26 @@ module MicrosoftGraph
     end
 
     def paginated_request(http_verb, request_url, body = {}, headers = {})
-      Enumerator.new do |yielder|
-        json = enact_request(http_verb, request_url, body, headers)
+      enum =
+        Enumerator.new do |yielder|
+          res = enact_request(http_verb, request_url, body, headers)
 
-        loop do
-          # yield values from current page
-          json["value"].each { |value| yielder << value }
+          loop do
+            # yield values from current page
+            res.body["value"].each { |value| yielder << value }
 
-          # No more pages left, break out of loop
-          break unless json.key?("@odata.nextLink")
+            # No more pages left, break out of loop
+            break unless res.body.key?("@odata.nextLink")
 
-          # Request next page, NOTE: body is not required for subsequent requests
-          json = enact_request(http_verb, json["@odata.nextLink"], {}, headers)
+            # Request next page, NOTE: body is not required for subsequent requests
+            res = enact_request(http_verb, json["body"]["@odata.nextLink"], {}, headers).body
+          end
         end
-      end
+
+      OpenStruct.new(
+        body: enum,
+        headers: nil,
+      )
     end
 
     def access_token
@@ -65,22 +75,18 @@ module MicrosoftGraph
 
     def handle_api_response(response)
       valid_response = response.code.to_s[0] == "2"
+      parsed_res = OpenStruct.new(
+        body: JSON.parse(response.body.presence || "{}"),
+        headers: response.headers,
+      )
 
-      if response.body == ""
-        unless valid_response
-          raise GraphRequestFailedError, "Status Code: #{response.code}"
-        end
+      if valid_response
+        parsed_res
       else
-        json = JSON.parse(response.body)
+        error_code = parsed_res.body.dig("error", "code")
+        error_message = parsed_res.body.dig("error", "message")
 
-        if valid_response
-          json
-        else
-          error_code = json.dig("error", "code")
-          error_message = json.dig("error", "message")
-
-          raise GraphRequestFailedError, "Code: #{error_code}, Message: #{error_message}"
-        end
+        raise GraphRequestFailedError, "Status Code: #{response.code}, Error Code: #{error_code}, Message: #{error_message}"
       end
     end
   end

@@ -1,7 +1,7 @@
 if ENV["MS_GRAPH_CLIENT_ID"].present?
   require "microsoft_graph/microsoft_graph"
 
-  configuration = MicrosoftGraph::ClientConfiguration.new(
+  live_configuration = MicrosoftGraph::ClientConfiguration.new(
     tenant: ENV.fetch("MS_GRAPH_TENANT"),
     client_id: ENV.fetch("MS_GRAPH_CLIENT_ID"),
     client_secret: ENV.fetch("MS_GRAPH_CLIENT_SECRET"),
@@ -9,11 +9,24 @@ if ENV["MS_GRAPH_CLIENT_ID"].present?
     grant_type: "client_credentials".freeze,
   )
 
-  client_session = MicrosoftGraph::ClientSession.new(
-    MicrosoftGraph::ApplicationAuthenticator.new(configuration),
+  test_configuration = MicrosoftGraph::ClientConfiguration.new(
+    tenant: ENV.fetch("TEST_MS_GRAPH_TENANT"),
+    client_id: ENV.fetch("TEST_MS_GRAPH_CLIENT_ID"),
+    client_secret: ENV.fetch("TEST_MS_GRAPH_CLIENT_SECRET"),
+    scope: "https://graph.microsoft.com/.default".freeze,
+    grant_type: "client_credentials".freeze,
   )
 
-  MicrosoftGraph.client = MicrosoftGraph::Client.new(client_session)
+  live_client_session = MicrosoftGraph::ClientSession.new(
+    MicrosoftGraph::ApplicationAuthenticator.new(live_configuration),
+  )
+
+  test_client_session = MicrosoftGraph::ClientSession.new(
+    MicrosoftGraph::ApplicationAuthenticator.new(test_configuration),
+  )
+
+  MicrosoftGraph.mail = MicrosoftGraph::Client::Mail.new(live_client_session)
+  MicrosoftGraph.files = MicrosoftGraph::Client::Files.new(test_client_session, ENV.fetch("TEST_MS_GRAPH_SHAREPOINT_SITE_ID"), ENV.fetch("TEST_MS_GRAPH_SHAREPOINT_DRIVE_ID"), ENV.fetch("TEST_MS_GRAPH_SHAREPOINT_TEMPLATE_FOLDER_ID"))
 
   SHARED_MAILBOX_USER_ID = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_USER_ID")
   SHARED_MAILBOX_NAME = ENV.fetch("MS_GRAPH_SHARED_MAILBOX_NAME")

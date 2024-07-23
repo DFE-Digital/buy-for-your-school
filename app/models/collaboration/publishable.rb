@@ -29,7 +29,7 @@ module Collaboration::Publishable
     return if draft_version.present?
 
     amoeba_dup.save!
-    amoeba_dup
+    drafts.reload.first
   end
 
   def initial_publish?
@@ -62,6 +62,14 @@ module Collaboration::Publishable
         live_version.assign_attributes(attributes.except(*excluded_fields))
         live_version.save!
       else
+        # assign live versions of associations if they exist
+        self.class.reflect_on_all_associations(:belongs_to).each do |association|
+          association_object = send(association.name)
+          next if association_object.nil? || association_object.try(:live_version).nil? || association_object.live_version.nil?
+
+          send("#{association.name}=", association_object.live_version)
+          save!
+        end
         published!
       end
 

@@ -1,0 +1,35 @@
+<%= turbo_frame_tag "what-to-do-frame" do %>
+  <%= link_to I18n.t("generic.button.back"), @back_url, class: "govuk-back-link pull-up" %>
+
+    <table class="govuk-table" aria-label="Email attachments">
+    <caption class="govuk-table__caption govuk-table__caption--m">Version history for <%= @document.name %></caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">
+          Version
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Last modified by
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Last modified at
+        </th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @versions.each do |version| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            <%= version.id %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= version.last_modified_by.dig("user", "displayName") %>
+          </td>
+          <td class="govuk-table__cell">
+            <%= version.last_modified_date_time.strftime("%d %B %Y %H:%M") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -28,7 +28,7 @@
         <tbody class="govuk-table__body">
           <% stage.tasks.each do |task| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= govuk_link_to task.title, edit_support_case_timeline_task_path(case_id: @current_case.id, timeline_id: @timeline.id, id: task.id), no_visited_state: true %></td>
+              <td class="govuk-table__cell"><%= govuk_link_to task.title, support_case_timeline_task_path(case_id: @current_case, timeline_id: @timeline, id: task), no_visited_state: true %></td>
               <td class="govuk-table__cell"><strong class="timeline-tasks__timeframe-tag"><%= task.time_frame %></strong></td>
             </tr>
           <% end %>

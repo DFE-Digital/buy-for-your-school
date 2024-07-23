@@ -22,7 +22,6 @@ class Collaboration::TimelineTask::Editor
 
   def save!
     timeline_task.transaction do
-      # byebug
       timeline_task.edit(title:)
       @timeline_adjustor.perform_adjustment!
     end

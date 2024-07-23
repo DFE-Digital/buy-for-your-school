@@ -271,7 +271,17 @@ Rails.application.routes.draw do
         resources :timelines, only: %i[show create] do
           get :versions, to: "timelines#versions"
           scope module: :timelines do
-            resources :tasks, only: %i[show edit update]
+            resources :tasks, only: %i[show edit update] do
+              scope module: :tasks do
+                resource :what_to_do, only: %i[show edit update]
+                post "document_sharing", to: "document_sharing#create"
+                resources :documents, only: [] do
+                  scope module: :documents do
+                    get :versions, to: "versions#show"
+                  end
+                end
+              end
+            end
             resources :drafts, only: %i[create edit update] do
               scope module: :drafts do
                 resources :tasks, only: %i[new create edit update destroy]

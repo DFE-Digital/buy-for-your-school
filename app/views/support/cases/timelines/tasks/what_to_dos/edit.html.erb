@@ -1,0 +1,30 @@
+<%= turbo_frame_tag "what-to-do-frame" do %>
+  <%= link_to I18n.t("generic.button.back"), @back_url, class: "govuk-back-link pull-up" %>
+
+  <%= form_with model: @file_picker, scope: :file_picker, url: support_case_timeline_task_what_to_do_path(case_id: @current_case, timeline_id: @timeline, task_id: @task), method: :patch do |form| %>
+    <%= form.govuk_check_boxes_fieldset :documents, multiple: true, small: true, legend: nil, form_group: { class: "govuk-!-margin-bottom-0" } do %>
+      <table class="govuk-table" aria-label="Email attachments">
+        <caption class="govuk-table__caption govuk-table__caption--m">Add documents</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">
+               Name
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @document_source.each do |doc| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                  <%= form.govuk_check_box :documents, doc.id, label: { text: doc.name } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <%= form.submit "Save", class: "govuk-button" %>
+  <% end %>
+<% end %>

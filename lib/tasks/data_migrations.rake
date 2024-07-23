@@ -63,7 +63,7 @@ namespace :data_migrations do
 
   desc "Backfill email recipients"
   task backfill_email_recipients: :environment do
-    messages = MicrosoftGraph.client.list_messages(SHARED_MAILBOX_USER_ID, query: [
+    messages = MicrosoftGraph.mail.list_messages(SHARED_MAILBOX_USER_ID, query: [
       "$select=internetMessageId,toRecipients,ccRecipients,bccRecipients",
       "$orderby=lastModifiedDateTime desc",
     ])

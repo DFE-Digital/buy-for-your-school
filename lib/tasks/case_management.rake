@@ -90,7 +90,7 @@ namespace :case_management do
 
   desc "Backfill email uniqueBody field"
   task backfill_email_unique_body: :environment do
-    messages = MicrosoftGraph.client.list_messages(SHARED_MAILBOX_USER_ID, query: [
+    messages = MicrosoftGraph.mail.list_messages(SHARED_MAILBOX_USER_ID, query: [
       "$select=internetMessageId,uniqueBody",
       "$orderby=lastModifiedDateTime desc",
     ])

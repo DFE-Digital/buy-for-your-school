@@ -5,7 +5,7 @@ describe "Outlook emails integration" do
     def run_sync_inbox_emails! = Email.cache_messages_in_folder("Inbox")
     def run_sync_sent_items_emails! = Email.cache_messages_in_folder("SentItems")
 
-    let(:ms_graph_client) { double("MicrosoftGraph.client") }
+    let(:ms_graph_client) { double("MicrosoftGraph.mail") }
     let(:inbox_messages) { [] }
     let(:sent_items_messages) { [] }
     let(:file_attachments) { {} }
@@ -17,7 +17,7 @@ describe "Outlook emails integration" do
       file_attachments.each do |message_id, attachments|
         allow(ms_graph_client).to receive(:get_file_attachments).with(SHARED_MAILBOX_USER_ID, message_id).and_return(attachments)
       end
-      MicrosoftGraph.client = ms_graph_client
+      MicrosoftGraph.mail = ms_graph_client
     end
 
     def stub_message(subject: "Important Email", id: "AAMkAGmnprAAA=")
