@@ -11,7 +11,7 @@ module Support
     def list_for_non_participating_establishment
       respond_to do |format|
         format.json do
-          render json: EstablishmentSearch.omnisearch(params[:q]).where("establishment_type not in (?)", ["Federation", "Trust", "Single-academy Trust", "Multi-academy Trust", "Umbrella trust"]).as_json(methods: %i[autocomplete_template])
+          render json: EstablishmentSearch.omnisearch(params[:q]).where("establishment_type not in (?)", ["Federation", "Trust", "Single-academy Trust", "Multi-academy Trust", "Umbrella trust", "Local authority"]).as_json(methods: %i[autocomplete_template])
         end
       end
     end
