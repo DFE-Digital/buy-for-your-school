@@ -233,6 +233,7 @@ Rails.application.routes.draw do
         resource :on_hold, only: %i[create]
         resource :summary, only: %i[edit update]
         resources :contracts, only: %i[edit update]
+        resources :additional_contacts
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template

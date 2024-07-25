@@ -40,8 +40,8 @@ describe "Case organisation details", js: true do
 
     it "displays the group name and type on the case page in CM" do
       within("#school-details") do
-        expect(all("dd.govuk-summary-list__value")[4]).to have_text "Group #1"
-        expect(all("dd.govuk-summary-list__value")[5]).to have_text "Multi-academy Trust"
+        expect(all("dd.govuk-summary-list__value")[5]).to have_text "Group #1"
+        expect(all("dd.govuk-summary-list__value")[6]).to have_text "Multi-academy Trust"
       end
     end
   end

@@ -57,6 +57,8 @@ module Support
     has_one :framework_request, class_name: "FrameworkRequest", foreign_key: :support_case_id
     has_one :case_request, class_name: "CaseRequest", foreign_key: :support_case_id
 
+    has_many :case_additional_contacts, class_name: "Support::CaseAdditionalContact", foreign_key: :support_case_id
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     # Support level

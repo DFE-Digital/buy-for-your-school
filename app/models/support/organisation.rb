@@ -22,6 +22,8 @@ module Support
     belongs_to :local_authority,
                class_name: "LocalAuthority"
 
+    has_many :case_additional_contacts, class_name: "Support::CaseAdditionalContact"
+
     has_many :cases, class_name: "Support::Case", as: :organisation
 
     validates :urn, uniqueness: true
