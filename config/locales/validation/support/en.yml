@@ -109,8 +109,8 @@ en:
           missing: Please enter contact last name for the case
 
         email:
-          missing: Please enter contact email for the case
-          invalid_format: Please enter a valid contact email for the case
+          missing: Please enter contact email address
+          invalid_format: Please enter a valid contact email address
 
         # Selecting an organisation
         organisation_id:

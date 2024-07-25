@@ -33,9 +33,13 @@ describe "Case school details", js: true do
         expect(all("dd.govuk-summary-list__value")[3]).to have_text "john.smith@email.com"
         expect(all("dd.govuk-summary-list__actions")[3]).to have_link "Change"
 
-        expect(all("dt.govuk-summary-list__key")[4]).to have_text "Organisation name"
-        expect(all("dd.govuk-summary-list__value")[4]).to have_text "School #1"
+        expect(all("dt.govuk-summary-list__key")[4]).to have_text "Additional contacts"
+        expect(all("dd.govuk-summary-list__value")[4]).to have_text "0"
         expect(all("dd.govuk-summary-list__actions")[4]).to have_link "Change"
+
+        expect(all("dt.govuk-summary-list__key")[5]).to have_text "Organisation name"
+        expect(all("dd.govuk-summary-list__value")[5]).to have_text "School #1"
+        expect(all("dd.govuk-summary-list__actions")[5]).to have_link "Change"
       end
     end
   end
@@ -61,9 +65,13 @@ describe "Case school details", js: true do
         expect(all("dd.govuk-summary-list__value")[3]).to have_text "bill.jones@email.com"
         expect(all("dd.govuk-summary-list__actions")[3]).not_to have_link "Change"
 
-        expect(all("dt.govuk-summary-list__key")[4]).to have_text "Organisation name"
-        expect(all("dd.govuk-summary-list__value")[4]).to have_text "School #1"
+        expect(all("dt.govuk-summary-list__key")[4]).to have_text "Additional contacts"
+        expect(all("dd.govuk-summary-list__value")[4]).to have_text "0"
         expect(all("dd.govuk-summary-list__actions")[4]).not_to have_link "Change"
+
+        expect(all("dt.govuk-summary-list__key")[5]).to have_text "Organisation name"
+        expect(all("dd.govuk-summary-list__value")[5]).to have_text "School #1"
+        expect(all("dd.govuk-summary-list__actions")[5]).not_to have_link "Change"
       end
     end
   end
