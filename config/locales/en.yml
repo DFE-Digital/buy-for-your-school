@@ -71,6 +71,7 @@ en:
   components:
     school_picker:
       filters:
+        status: Filter by school status
         phase: Filter by learning stage
         local_authority: Filter by local authority
         clear: Clear filters
@@ -88,6 +89,11 @@ en:
         secondary: Secondary
         all_through: All-through
         sixteen_plus: 16-plus
+      statuses:
+        opened: Open
+        closing: Open, but proposed to close
+        opening: Proposed to open
+        closed: Closed
   case_requests:
     validation:
       request_type: Select whether the request is related to a procurement category

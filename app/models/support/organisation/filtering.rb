@@ -5,6 +5,7 @@ class Support::Organisation::Filtering
   attribute :scoped_organisations, default: -> { Support::Organisation }
   attribute :local_authorities, default: -> { [] }
   attribute :phases, default: -> { [] }
+  attribute :statuses, default: -> { [] }
 
   def results
     filtered_organisations = scoped_organisations
@@ -21,6 +22,7 @@ private
       {
         local_authorities: Support::Concerns::ScopeFilter.new(local_authorities, scope: :by_local_authorities),
         phases: Support::Concerns::ScopeFilter.new(phases, scope: :by_phases, mapping: { "middle" => %w[middle_primary middle_secondary] }),
+        statuses: Support::Concerns::ScopeFilter.new(statuses, scope: :by_statuses),
       }
   end
 end

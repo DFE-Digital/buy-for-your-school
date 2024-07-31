@@ -8,7 +8,7 @@ module Support
         @school_picker = form_params[:school_urns].nil? ? @case_request.school_picker : @case_request.school_picker(school_urns: form_params[:school_urns].compact_blank.excluding("all"))
         @group = @case_request.organisation
         @all_schools = @group.organisations_for_multi_school_picker.order(:name)
-        @filters = @all_schools.filtering(form_params[:filters] || {})
+        @filters = @all_schools.filtering(form_params[:filters] || { statuses: %w[opened opening closing] })
         @filtered_schools = @filters.results.map { |s| Support::OrganisationPresenter.new(s) }
         @all_selectable_schools = @filtered_schools
       end
@@ -26,7 +26,7 @@ module Support
       end
 
       def form_params
-        params.fetch(:case_request, {}).permit(filters: params.key?(:clear) ? nil : { local_authorities: [], phases: [] }, school_urns: [])
+        params.fetch(:case_request, {}).permit(filters: params.key?(:clear) ? nil : { local_authorities: [], phases: [], statuses: [] }, school_urns: [])
       end
     end
   end

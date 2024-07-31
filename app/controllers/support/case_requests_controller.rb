@@ -8,7 +8,9 @@ module Support
       redirect_to edit_support_case_request_path(@case_request)
     end
 
-    def show; end
+    def show
+      @total_pickable_schools = total_pickable_schools
+    end
 
     def edit
       @back_url = @case_request.completed? ? support_case_request_path(@case_request) : support_cases_path
@@ -35,6 +37,10 @@ module Support
 
     def case_request
       @case_request = CaseRequest.find_by(id: params[:id])
+    end
+
+    def total_pickable_schools
+      @case_request.multischool? ? @case_request.organisation.organisations_for_multi_school_picker.count : 1
     end
 
     def form_params
