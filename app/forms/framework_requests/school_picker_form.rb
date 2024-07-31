@@ -6,7 +6,7 @@ module FrameworkRequests
 
     def initialize(attributes = {})
       super
-      @filters = framework_request.available_schools.filtering(filters || {})
+      @filters = framework_request.available_schools.filtering(filters || { statuses: %w[opened opening closing] })
       @school_urns ||= framework_request.school_urns
       @school_urns.compact_blank!
     end

@@ -47,7 +47,7 @@ module FrameworkRequests
     end
 
     def form_params
-      [school_urns: [], filters: params.key?(:clear) ? nil : { local_authorities: [], phases: [] }]
+      [school_urns: [], filters: params.key?(:clear) ? nil : { local_authorities: [], phases: [], statuses: [] }]
     end
 
     def back_url
