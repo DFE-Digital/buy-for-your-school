@@ -1065,7 +1065,8 @@ en:
         place_on_hold: Place on hold
         problem_description: Description of query
         initial_problem_description: Initial description of query
-        participating_schools: Participating schools
+        participating_schools: Beneficiary schools
+        non_participating_schools: Pending beneficiary schools
         procurement_amount: Procurement amount
         procurement_value: Procurement value
         procurement_details:
@@ -1107,12 +1108,39 @@ en:
           back: Back to school details
           participating_schools:
             edit:
-              back: Back to participating schools
+              back: Back to beneficiary schools
             table:
               school_name: School name
               address: Address
               phase: Phase of education
               local_authority: Local authority
+          non_participating_schools:
+            table:
+              school_name: School
+              address: Address
+              organisation_type: Organisation type
+              status: Status
+            heading: Pending beneficiary schools
+            description: "These schools are not part of the trust yet. This means that they will not be counted as beneficiaries in the service level reporting."
+            description_other: "When the school becomes part of the trust, you will need to add it to the list of beneficiary schools."
+            add_school: Select the school you want to add
+            add_school_hint: Enter the name, postcode or unique reference number (URN) of the school
+            success:
+              continue: Continue
+              message: Pending beneficiary school successfully added
+            removal_modal:
+              title: Are you sure you want to remove this school?
+              name: Name
+              organisation: Organisation type
+              status: Status
+              parent: Trust
+              archive_date: Archive Date
+              remove: Remove this school
+              cancel: Cancel
+            error:
+              already_a_member_message: "%{name} cannot be added as it is already in the list of Pending beneficiary schools"
+              part_of_group_message: "%{name} cannot be added because it is already part of the trust"  
+
         same_supplier_used: Same supplier used
         sort_by: Sort by
         source:
@@ -1281,7 +1309,7 @@ en:
       body: You are about to update the organisation for case %{ref}.
       from: From
       to: To
-      warning: This will remove all existing participating schools on the case.
+      warning: This will remove all existing beneficiary schools on the case.
     case_contact_details:
       flash:
         updated: Contact details updated successfully
@@ -1428,7 +1456,7 @@ en:
         source: Source
         sub_category: Procurement sub-category
         type: Type
-        participating_schools: Participating schools
+        participating_schools: Beneficiary schools
         procurement_value: Procurement value
         support_level: Support level
         old: Old
@@ -1492,6 +1520,10 @@ en:
         updated: Organisation updated successfully
       label: What Organisation do you want to add?
       submit: Save selected organisation
+    case_school:
+      label: What School do you want to add?
+      description: Enter the name, postcode or unique reference number (URN) of your school.
+      submit: Save selected school
     case_request_details:
       check_answers:
         change: Change

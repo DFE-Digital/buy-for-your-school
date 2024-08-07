@@ -160,6 +160,11 @@ module Support
       organisation.is_a?(Support::Organisation) ? [organisation] : participating_schools
     end
 
+    # If this case is associated with a MAT, there may be several participating_schools that may not be the part of MAT
+    def other_schools
+      other_school_urns.map { |urn| Support::Organisation.find_by(urn:) }
+    end
+
     # The Local Education Authorities of the schools currently associated with the case, sorted alphabetically and with duplicates removed.
     # The 'if sch.respond_to?(:local_authority)' catches the edge case where a MAT is the organisation but none of its schools are selected.
     def leas

@@ -1,0 +1,33 @@
+<h2 class="govuk-heading-l">
+<%= I18n.t("support.case.label.school_details.non_participating_schools.heading")%>
+</h2>
+<p class="govuk-hint"><%= I18n.t("support.case.label.school_details.non_participating_schools.description")%></p>
+<p class="govuk-hint"><%= I18n.t("support.case.label.school_details.non_participating_schools.description_other")%></p>
+<table class="govuk-table" aria-label="Non Participating schools">
+<thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+    <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.non_participating_schools.table.school_name") %></th>
+    <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.non_participating_schools.table.address") %></th>
+    <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.non_participating_schools.table.organisation_type") %></th>
+    <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.school_details.non_participating_schools.table.status") %></th>
+    <th scope="col" class="govuk-table__header"><%= %></th>
+    </tr>
+</thead>
+<tbody class="govuk-table__body">
+    <% @other_schools.each do |school| %>
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"><%= "#{school.name} <br>( URN #{school.urn} )".html_safe %></th>
+        <td class="govuk-table__cell"><%= school.formatted_address %></td>
+        <td class="govuk-table__cell"><%= school.org_type %></td>
+        <%time = (school.status == "opening" || school.status == "closing") && school.opened_date.present? ? " ( #{school.opened_date&.strftime("%B, %d, %Y")} )" : ""%>
+        <td class="govuk-table__cell"><%= I18n.t("components.school_picker.statuses.#{school.status}")%></td>
+        <td class="govuk-table__cell">
+        <%= link_to "remove", confirmation_message_support_case_school_details_other_schools_path(@current_case,  :school_id => school.id), class: "govuk-link", target: "_top" %>
+        </td>
+    </tr>
+    <% end %>
+</tbody>
+</table>
+<%= link_to "Add", other_school_support_case_school_details_other_schools_path(@current_case), class: "govuk-button govuk-button--secondary", target: "_top" %>
+
+
