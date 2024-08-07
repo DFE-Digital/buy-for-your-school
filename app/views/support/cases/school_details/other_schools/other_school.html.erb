@@ -1,0 +1,20 @@
+<%= form_with model:@other_school_form, scope: :other_school_form, url: add_other_school_support_case_school_details_other_schools_path(@current_case), method: :patch do |form| %>            
+    <%= form.govuk_error_summary %>
+        <%= link_to "Back", non_beneficiery_schools_support_case_school_details_other_schools_path(@current_case), class: "govuk-back-link pull-up" %>
+    <h1 class="govuk-heading-l">
+        <%= I18n.t("support.case.label.school_details.non_participating_schools.add_school") %>
+    </h1>
+    <%= render "components/autocomplete",
+            container_id: "organisation-autocomplete-container",
+            label_text: I18n.t("support.case.label.school_details.non_participating_schools.add_school_hint"),
+            label_class: "govuk-hint",
+            element_id: "organisation-autocomplete",
+            element_name: "case_organisation_form[organisation_name]",
+            template_suggestion: "{{autocomplete_template}}",
+            value_field: :name,
+            hidden_fields: {
+            'case_organisation_form[school_id]' => :id,
+            },
+            query_url: support_list_for_non_participating_establishment_path(format: :json, q: "{{QUERY}}") %>
+    <%= form.submit I18n.t("support.case.label.school_details.non_participating_schools.success.continue"), class: "govuk-button" %>
+<% end %>
