@@ -351,7 +351,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.8.1)
+    jwt (2.8.2)
       base64
     knapsack (4.0.0)
       rake
