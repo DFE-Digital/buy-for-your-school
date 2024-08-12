@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "3.3.0"
+ruby "3.3.3"
 
 gem "aasm"
 gem "application_insights"
