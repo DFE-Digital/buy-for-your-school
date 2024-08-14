@@ -1,6 +1,6 @@
 <%= content_for :title, "CMS Management | #{I18n.t("support.management.category_detection.header")}" %>
 
-<div class="govuk-breadcrumbs">
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
       <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
@@ -9,7 +9,7 @@
       <%= link_to I18n.t("support.management.category_detection.header"), new_support_management_category_detection_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
-</div>
+</nav>
 
 <h2 class="govuk-heading-l">Category Detection Statistics</h2>
 

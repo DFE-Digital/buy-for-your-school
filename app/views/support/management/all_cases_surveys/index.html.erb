@@ -1,6 +1,6 @@
 <%= content_for :title, "CMS Management | #{I18n.t("support.management.all_cases_surveys.header")}" %>
 
-<div class="govuk-breadcrumbs">
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
       <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
@@ -9,7 +9,7 @@
       <%= link_to I18n.t("support.management.all_cases_surveys.header"), support_management_all_cases_surveys_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
-</div>
+</nav>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
