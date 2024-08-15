@@ -1,6 +1,6 @@
 <%= content_for :title, "#{I18n.t("support.management.base.header")} | #{I18n.t("support.management.email_templates.header")} | #{I18n.t("support.management.email_templates.new.header")}" %>
 
-<div class="govuk-breadcrumbs">
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
       <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
@@ -9,7 +9,7 @@
       <%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
-</div>
+</nav>
 
 <h1 class="govuk-heading-l"><%= I18n.t("support.management.email_templates.new.header") %></h1>
 

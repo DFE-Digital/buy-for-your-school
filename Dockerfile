@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:3.3.0-slim as base
+FROM ruby:3.3.3-slim as base
 
 RUN apt-get update && apt-get install -qq -y \
     build-essential \

@@ -2,7 +2,6 @@ require "dry-initializer"
 require "csv"
 
 require "types"
-require "downloader"
 require "support/establishment_groups/mapper"
 require "support/establishment_groups/schema"
 

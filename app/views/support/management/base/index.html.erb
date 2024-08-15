@@ -1,12 +1,12 @@
 <%= content_for :title, "CMS Management" %>
 
-<div class="govuk-breadcrumbs">
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
       <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
-</div>
+</nav>
 
 <h1 class="govuk-heading-l"><%= I18n.t("support.management.base.header") %></h1>
 
