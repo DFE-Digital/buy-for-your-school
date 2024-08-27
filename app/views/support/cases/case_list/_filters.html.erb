@@ -1,27 +1,28 @@
-<div class="filters-panel">
+<div class="filters-panel" data-controller="scroll">
   <h2 class="govuk-heading-m"><%= I18n.t("support.case.label.filters") %></h2>
 
-  <%= form_with model: filter_form, scope: filter_form_scope, id: :case_filters, method: :get, url: filter_url, html: { "data-controller" => "case-filters" } do |form| %>
-    <%= link_to I18n.t("support.case.filter.buttons.clear"), clear_url, class: "govuk-button govuk-button--secondary", role: "button" %>
+  <%= form_with model: filter_form, scope: filter_form_scope, id: :case_filters, method: :get, url: filter_url, html: { "data-controller" => "case-filters", "data-action" => "submit->scroll#saveScrollPosition" } do |form| %>
+    <%= link_to I18n.t("support.case.filter.buttons.clear"), clear_url, class: "govuk-button govuk-button--secondary", role: "button", "data-action" => "click->scroll#saveScrollPosition" %>
 
     <%= form.govuk_select :sort_by,
         options_for_select(available_sort_options, filter_form.sort_by),
-        label: { text: I18n.t("support.case.label.sort_by"), size: "s" } %>
+        label: { text: I18n.t("support.case.label.sort_by"), size: "s" }, html_options: { "data-action" => "change->scroll#saveScrollPosition" } %>
     
     <%= form.govuk_collection_radio_buttons :sort_order,
         available_sort_orders,
         :id,
         :title,
         legend: nil,
-        small: true %>
+        small: true, html_options: { "data-action" => "change->scroll#saveScrollPosition" } %>
     
     <% unless tab == "new-cases" %>
       <%= expander title: I18n.t("support.case.label.status"),
                   subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.state).length),
-                  expanded: true do %>
+                  expanded: true, html: { "data-scroll-target" => "status" } do %>
         <%= form.govuk_check_boxes_fieldset :state, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
           <% available_states.each do |state| %>
-            <%= form.govuk_check_box :state, state.id, exclusive: state.exclusive, label: { text: state.title } %>
+            <%= form.govuk_check_box :state, state.id, exclusive: state.exclusive, label: { text: state.title }, 
+              html_options: { "data-action" => "change->scroll#saveScrollPosition click->scroll#setScrollTarget" } %>
           <% end %>
         <% end %>
       <% end %>
@@ -29,10 +30,11 @@
 
     <%= expander title: I18n.t("support.case.label.sub_category"),
                  subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.category).length),
-                 expanded: true do %>
+                 expanded: true, html: { "data-scroll-target" => "subCategory" } do %>
       <%= form.govuk_check_boxes_fieldset :category, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% available_categories(form.object.tower).each do |category| %>
-          <%= form.govuk_check_box :category, category.id, exclusive: category.exclusive, label: { text: category.title } %>
+          <%= form.govuk_check_box :category, category.id, exclusive: category.exclusive, label: { text: category.title },
+            html_options: { "data-action" => "change->scroll#saveScrollPosition click->scroll#setScrollTarget" } %>
         <% end %>
       <% end %>
     <% end %>
@@ -40,10 +42,11 @@
     <% unless tab == "my-cases" %>
       <%= expander title: I18n.t("support.case.label.assignee"),
                   subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.agent).length),
-                  expanded: true do %>
+                  expanded: true, html: { "data-scroll-target" => "assignee" } do %>
         <%= form.govuk_check_boxes_fieldset :agent, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
           <% available_agents.each do |agent| %>
-            <%= form.govuk_check_box :agent, agent.id, exclusive: agent.exclusive, label: { text: agent.title } %>
+            <%= form.govuk_check_box :agent, agent.id, exclusive: agent.exclusive, label: { text: agent.title },
+              html_options: { "data-action" => "change->scroll#saveScrollPosition click->scroll#setScrollTarget" } %>
           <% end %>
         <% end %>
       <% end %>
@@ -51,20 +54,22 @@
 
     <%= expander title: I18n.t("support.case.label.stage"),
                  subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.procurement_stage).length),
-                 expanded: true do %>
+                 expanded: true, html: { "data-scroll-target" => "stage" } do %>
       <%= form.govuk_check_boxes_fieldset :procurement_stage, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% available_procurement_stages.each do |stage| %>
-          <%= form.govuk_check_box :procurement_stage, stage.id, exclusive: stage.exclusive, label: { text: stage.title } %>
+          <%= form.govuk_check_box :procurement_stage, stage.id, exclusive: stage.exclusive, label: { text: stage.title },
+            html_options: { "data-action" => "change->scroll#saveScrollPosition click->scroll#setScrollTarget" } %>
         <% end %>
       <% end %>
     <% end %>
 
     <%= expander title: I18n.t("support.case.label.level"),
                  subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.level).length),
-                 expanded: true do %>
+                 expanded: true, html: { "data-scroll-target" => "level" } do %>
       <%= form.govuk_check_boxes_fieldset :level, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% available_levels.each do |level| %>
-          <%= form.govuk_check_box :level, level.id, exclusive: level.exclusive, label: { text: level.title } %>
+          <%= form.govuk_check_box :level, level.id, exclusive: level.exclusive, label: { text: level.title },
+            html_options: { "data-action" => "change->scroll#saveScrollPosition click->scroll#setScrollTarget" } %>
         <% end %>
       <% end %>
     <% end %>
