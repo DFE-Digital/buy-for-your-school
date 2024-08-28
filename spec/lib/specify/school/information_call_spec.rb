@@ -3,6 +3,14 @@ require "school/information"
 RSpec.describe School::Information, "#call" do
   include_context "with gias data"
 
+  before do
+    create(:support_organisation, urn: "106653", name: "Penistone Grammar School", local_authority: create(:local_authority, la_code: "370", name: "Barnsley"))
+    create(:support_organisation, urn: "126416", name: "St Thomas à Becket Church of England Aided Primary School", local_authority: create(:local_authority, la_code: "865", name: "Wiltshire"))
+    create(:support_organisation, urn: "117137", name: "Fleetville Junior School", local_authority: create(:local_authority, la_code: "919", name: "Hertfordshire"))
+    create(:support_organisation, urn: "123456", name: "School Not In Import", local_authority: create(:local_authority, la_code: "123", name: "Lancashire"))
+    create(:local_authority, la_code: "111", name: "Camden")
+  end
+
   context "with no file" do
     subject(:service) { described_class.new }
 
@@ -56,6 +64,18 @@ RSpec.describe School::Information, "#call" do
       output = service.call.map { |s| s[:ukprn] }
 
       expect(output).to eql [10_005_034, 10_076_257, ""]
+
+      expect(Support::Organisation.count).to be 4
+      expect(Support::Organisation.where(urn: "106653").first.archived).to eq(false)
+      expect(Support::Organisation.where(urn: "106653").first.archived_at).to eq(nil)
+      expect(Support::Organisation.where(urn: "123456").first.archived).to eq(true)
+      expect(Support::Organisation.where(urn: "123456").first.archived_at).to be_within(1.second).of(Time.zone.now)
+
+      expect(LocalAuthority.count).to be 5
+      expect(LocalAuthority.where(la_code: "370").first.archived).to eq(false)
+      expect(LocalAuthority.where(la_code: "370").first.archived_at).to eq(nil)
+      expect(LocalAuthority.where(la_code: "111").first.archived).to eq(true)
+      expect(LocalAuthority.where(la_code: "111").first.archived_at).to be_within(1.second).of(Time.zone.now)
     end
   end
 end

@@ -19,6 +19,8 @@ RSpec.describe Support::EstablishmentGroups::Schema, "#call" do
         county: "Hertfordshire",
         postcode: "WD25 0UU",
       },
+      opened_date: "06/01/2009",
+      closed_date: "31/08/2010",
     }
   end
 

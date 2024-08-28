@@ -104,6 +104,9 @@ module School
         required(:trust_name).filled(:string)
         required(:trust_code).filled(:string)
         required(:opened_date).maybe(:string)
+        required(:closed_date).maybe(:string)
+        required(:reason_establishment_opened).filled(:string)
+        required(:reason_establishment_closed).filled(:string)
       end
     end
   end

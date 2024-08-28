@@ -15,7 +15,9 @@ module Support
                       "UKPRN" => :ukprn, # UK Provider Reference Number
                       "Group Name" => :name,
                       "Group Type (code)" => :group_type_code,
-                      "Group Status (code)" => :status
+                      "Group Status (code)" => :status,
+                      "Open date" => :opened_date,
+                      "Closed Date" => :closed_date
 
           # School Address
           rename_keys "Group Street" => :street,

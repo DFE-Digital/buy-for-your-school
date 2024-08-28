@@ -62,6 +62,23 @@ module School
         exporter.call dataset
       end
 
+      urns_in_import = output.flatten.pluck(:urn)
+      Support::Organisation.where(urn: urns_in_import).update_all(archived: false, archived_at: nil)
+      Support::Organisation.where.not(urn: urns_in_import).where(archived_at: nil).update_all(archived: true, archived_at: Time.zone.now)
+
+      LocalAuthority.find_each do |la|
+        if la.organisations.count.zero? && !la.archived
+          la.archived = true
+          la.archived_at = Time.zone.now
+        elsif la.organisations.count.zero? && la.archived
+          next
+        else
+          la.archived = false
+          la.archived_at = nil
+        end
+        la.save!
+      end
+
       output.flatten
     end
 
