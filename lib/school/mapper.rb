@@ -111,10 +111,16 @@ module School
                     "OfstedRating (name)" => :ofsted_rating,
                     # Open date
                     "OpenDate" => :opened_date,
+                    # Close date
+                    "CloseDate" => :closed_date,
                     # Misc
                     "Trusts (name)" => :trust_name,
                     "Trusts (code)" => :trust_code,
-                    "GOR (name)" => :gor_name
+                    "GOR (name)" => :gor_name,
+                    # Reason Establishment Opened
+                    "ReasonEstablishmentOpened (name)" => :reason_establishment_opened,
+                    # Reason Establishment Closed
+                    "ReasonEstablishmentClosed (name)" => :reason_establishment_closed
 
         nest :school, %i[
           address
@@ -128,6 +134,7 @@ module School
           ofsted_last_inspection
           ofsted_rating
           opened_date
+          closed_date
           phase
           student_capacity
           student_number
@@ -135,6 +142,8 @@ module School
           trust_name
           trust_code
           website
+          reason_establishment_opened
+          reason_establishment_closed
         ]
       end
     end

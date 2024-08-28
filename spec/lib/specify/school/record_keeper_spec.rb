@@ -87,6 +87,9 @@ RSpec.describe School::RecordKeeper do
         },
         trust_name: "Legacy School Trust Name",
         trust_code: "Legacy School Trust Code",
+        closed_date: "31/03/2017",
+        reason_establishment_opened: "New Provision",
+        reason_establishment_closed: "Transferred to new sponsor",
       },
     }
   end
@@ -175,6 +178,9 @@ RSpec.describe School::RecordKeeper do
         },
         trust_name: "New School Trust Name",
         trust_code: "New School Trust Code",
+        closed_date: "01-09-2023",
+        reason_establishment_opened: "New Provision",
+        reason_establishment_closed: "Not applicable",
       },
     }
   end
@@ -195,7 +201,10 @@ RSpec.describe School::RecordKeeper do
         ukprn
         telephone_number
         trust_name
-        trust_code]
+        trust_code
+        closed_date
+        reason_establishment_opened
+        reason_establishment_closed]
   end
 
   describe "#call" do

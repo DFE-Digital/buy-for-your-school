@@ -11,6 +11,8 @@ RSpec.describe Support::EstablishmentGroups::RecordKeeper do
       status
       ukprn
       uid
+      opened_date
+      closed_date
     ]
   end
 
@@ -28,6 +30,8 @@ RSpec.describe Support::EstablishmentGroups::RecordKeeper do
         county: "West Midlands",
         postcode: "B30 3QG",
       },
+      opened_date: "06/01/2009",
+      closed_date: "31/08/2010",
     }
   end
 
