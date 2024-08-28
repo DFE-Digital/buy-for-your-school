@@ -9,6 +9,8 @@ module Support
         required(:ukprn).maybe(:string)
         required(:status).filled(:string)
         required(:group_type_code).filled(:integer)
+        required(:opened_date).maybe(:string)
+        required(:closed_date).maybe(:string)
 
         required(:address).hash do
           required(:street).maybe(:string)
