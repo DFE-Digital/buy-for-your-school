@@ -89,6 +89,9 @@ RSpec.describe School::Schema, "#call" do
         },
         trust_name: "Test Trust Name",
         trust_code: "Test Trust Code",
+        closed_date: "31/03/2017",
+        reason_establishment_opened: "New Provision",
+        reason_establishment_closed: "Transferred to new sponsor",
       },
     }
   end

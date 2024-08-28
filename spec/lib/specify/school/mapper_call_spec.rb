@@ -5,9 +5,9 @@ RSpec.describe School::Mapper, "#call" do
 
   let(:entity) { output.first[key] }
 
-  # The public GIAS "edubasealldata" CSV file is a historical cummulative record.
+  # The public GIAS "edubasealldata" CSV file is a historical cumulative record.
   # Consequently there are multiple entries for the same EstablishmentName if
-  # that establishment's status, type or laocation have changed over time.
+  # that establishment's status, type or location have changed over time.
   #
   let(:output) do
     mapper.call(
@@ -30,6 +30,10 @@ RSpec.describe School::Mapper, "#call" do
           # establishment_status
           "EstablishmentStatus (code)" => "1",                                  # J:
           "EstablishmentStatus (name)" => "Open",                               # K:
+          # Reason Establishment Opened
+          "ReasonEstablishmentOpened (name)" => "New Provision", # M:
+          # Reason Establishment Closed
+          "ReasonEstablishmentClosed (name)" => "Transferred to new sponsor", # O:
           # constituency
           "ParliamentaryConstituency (name)" => "Cities of London & Westminster",
           "ParliamentaryConstituency (code)" => "E14000639",
@@ -43,6 +47,8 @@ RSpec.describe School::Mapper, "#call" do
           # 4 to 5 digit integer
           "Federations (code)" => "1473", # AY:
           "Federations (name)" => "The Viridis Federation of Orchard, Southwold & Hoxton Garden Primary Schools", # AZ:
+          # Close date
+          "CloseDate" => "31/03/2017", # Q:
           # phase
           "PhaseOfEducation (code)" => "4",                                     # R:
           "PhaseOfEducation (name)" => "Secondary",                             # S:
@@ -59,9 +65,9 @@ RSpec.describe School::Mapper, "#call" do
           "ReligiousCharacter (code)" => "2",                                   # AC:
           "ReligiousCharacter (name)" => "Church of England",                   # AD:
           # Trust
-          "Trusts (name)" => "Cool Green School Trust", # AU:
-          "Trusts (code)" => "Cool Green School Trust CODE", # AT:
-          "GOR (name)" => "GOR NAME", # CZ:
+          "Trusts (name)" => "Cool Green School Trust",                         # AU:
+          "Trusts (code)" => "Cool Green School Trust CODE",                    # AT:
+          "GOR (name)" => "GOR NAME",                                           # CZ:
 
           "SchoolCapacity" => "100",
           "NumberofPupils" => "101",
@@ -187,5 +193,9 @@ RSpec.describe School::Mapper, "#call" do
         postcode: "WD25 0UU",
       )
     end
+
+    specify("reason_establishment_opened") { expect(output.first[:school][:reason_establishment_opened]).to eq("New Provision") }
+    specify("reason_establishment_closed") { expect(output.first[:school][:reason_establishment_closed]).to eq("Transferred to new sponsor") }
+    specify("closed_date") { expect(output.first[:school][:closed_date]).to eq("31/03/2017") }
   end
 end
