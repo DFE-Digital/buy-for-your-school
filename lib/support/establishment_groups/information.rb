@@ -63,6 +63,10 @@ module Support
           exporter.call dataset
         end
 
+        uids_in_import = output.flatten.pluck(:uid)
+        Support::EstablishmentGroup.where(uid: uids_in_import).update_all(archived: false, archived_at: nil)
+        Support::EstablishmentGroup.where.not(uid: uids_in_import).where(archived_at: nil).update_all(archived: true, archived_at: Time.zone.now)
+
         output.flatten
       end
 

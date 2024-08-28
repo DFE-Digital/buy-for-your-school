@@ -23,6 +23,8 @@ RSpec.describe Support::EstablishmentGroups::Mapper, "#call" do
         "Group Town" => "Birmingham",
         "Group County" => "West Midlands",
         "Group Postcode" => "B30 3QG",
+        "Open date" => "06/01/2009",
+        "Closed Date" => "31/08/2010",
       ],
     )
   end
@@ -78,6 +80,22 @@ RSpec.describe Support::EstablishmentGroups::Mapper, "#call" do
         county: "West Midlands",
         postcode: "B30 3QG",
       )
+    end
+  end
+
+  describe "opened_date" do
+    let(:key) { :opened_date }
+
+    specify do
+      expect(entity).to eql("06/01/2009")
+    end
+  end
+
+  describe "closed_date" do
+    let(:key) { :closed_date }
+
+    specify do
+      expect(entity).to eql("31/08/2010")
     end
   end
 end

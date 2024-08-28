@@ -20,7 +20,7 @@ module School
           # The "Organisation" model is a starting point, but in addition an
           # "Establishment" model has been proposed.
           #
-          local_authority = LocalAuthority.find_or_initialize_by(la_code: record[:local_authority][:code]) do |la|
+          local_authority = LocalAuthority.find_or_initialize_by(la_code: record[:local_authority][:code]).tap do |la|
             la.name = record[:local_authority][:name]
             la.save!
           end
@@ -38,7 +38,10 @@ module School
             org.rsc_region = record[:rsc_region]
             org.local_authority_legacy = record[:local_authority]
             org.local_authority = local_authority
-            org.opened_date = parse_opened_date(record[:school][:opened_date])
+            org.opened_date = parse_date(record[:school][:opened_date])
+            org.closed_date = parse_date(record[:school][:closed_date])
+            org.reason_establishment_opened = record[:school][:reason_establishment_opened].presence
+            org.reason_establishment_closed = record[:school][:reason_establishment_closed].presence
             org.ukprn = record[:ukprn]
             org.telephone_number = record[:school][:telephone_number]
             org.trust_name = record[:school][:trust_name].presence
@@ -77,10 +80,10 @@ module School
     # @param opened_date [String] DD-MM-YYYYY
     #
     # @return [Time, nil]
-    def parse_opened_date(opened_date)
-      return nil unless /\d{1,2}-\d{1,2}-\d{4}/.match? opened_date
+    def parse_date(opened_or_closed_date)
+      return nil unless /\d{1,2}-\d{1,2}-\d{4}/.match? opened_or_closed_date
 
-      Time.zone.parse(opened_date)
+      Time.zone.parse(opened_or_closed_date)
     end
   end
 end

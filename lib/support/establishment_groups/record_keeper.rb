@@ -2,8 +2,8 @@ module Support
   module EstablishmentGroups
     # Create/Update an array of EstablishmentGroup records
     #
-    # @note Changes to EstablishmnetGroups records may impact active cases.
-    # Ceeates ~5k Support:;EstablishmentGroup records
+    # @note Changes to EstablishmentGroups records may impact active cases.
+    # Creates ~5k Support::EstablishmentGroup records
     #
     class RecordKeeper
       def call(records)
@@ -14,6 +14,8 @@ module Support
               group.establishment_group_type = group_type(record)
               group.ukprn = record[:ukprn]
               group.status = record[:status].downcase
+              group.opened_date = record[:opened_date]
+              group.closed_date = record[:closed_date]
               group.address = record[:address]
               group.save!
             end
