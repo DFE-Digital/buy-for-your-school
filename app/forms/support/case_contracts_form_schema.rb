@@ -12,6 +12,7 @@ module Support
 
     rule :spend do
       key.failure(:invalid) if value == ""
+      key.failure(:too_large) if value.to_i > 99_999_999.999
     end
 
     rule :started_at do

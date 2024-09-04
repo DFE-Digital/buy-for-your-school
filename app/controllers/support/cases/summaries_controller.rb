@@ -11,8 +11,10 @@ module Support
 
     def update
       @case_summary = CaseSummaryPresenter.new(current_case.summary(summary_params))
-
-      if @case_summary.valid?
+      if @case_summary.value.to_i > 99_999_999
+        @case_summary.errors.add(:value, I18n.t("framework_request.errors.rules.procurement_amount.too_large"))
+        render :edit
+      elsif @case_summary.valid?
         return render :update if submit_action == "confirm"
         return render :edit   if submit_action == "change"
 
