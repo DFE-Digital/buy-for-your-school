@@ -1345,7 +1345,7 @@ en:
           supplier:
             header: Existing contract supplier
       flash:
-        updated: Successfully changed case contracts
+        updated: Case contract successfully changed
       new:
         edit:
           duration:
@@ -1579,7 +1579,7 @@ en:
             unrealised: Not realised
         submit: Continue
       flash:
-        updated: Successfully changed case savings
+        updated: Case savings successfully changed 
       show:
         header: Savings details
         link: change
@@ -1928,7 +1928,7 @@ en:
           header: Start date of the procurement
         submit: Continue
       flash:
-        updated: Successfully changed procurement details
+        updated: Procurement details successfully changed 
       reasons_for_route_to_market:
         better_than_dfe: Better Spec / Terms than DfE Deal
         dfe_deal: DfE Deal / Framework Selected
