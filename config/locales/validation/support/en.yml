@@ -150,6 +150,7 @@ en:
       request_text: "" # Omitted
       procurement_amount: "" # Omitted
 
+
     errors:
       rules:
         request_type:
@@ -236,7 +237,18 @@ en:
           invalid: is invalid
         spend:
           invalid: is invalid
+          too_large: cannot be larger than 99,999,999.99
 
+  case_savings_form:
+    rules:
+      savings_estimate: Saving estimate value
+      savings_actual: Saving actual value
+    errors:
+      rules:
+        savings_estimate:
+          too_large: cannot be larger than 99,999,999.99
+        savings_actual:
+          too_large: cannot be larger than 99,999,999.99
 
   case_search_form:
     rules:

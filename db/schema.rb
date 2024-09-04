@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_03_101832) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -589,11 +589,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
     t.integer "savings_status"
     t.integer "savings_estimate_method"
     t.integer "savings_actual_method"
-    t.decimal "savings_estimate", precision: 9, scale: 2
-    t.decimal "savings_actual", precision: 9, scale: 2
+    t.decimal "savings_estimate", precision: 10, scale: 2
+    t.decimal "savings_actual", precision: 10, scale: 2
     t.boolean "action_required", default: false
     t.string "organisation_type"
-    t.decimal "value", precision: 9, scale: 2
+    t.decimal "value", precision: 10, scale: 2
     t.integer "closure_reason"
     t.string "extension_number"
     t.string "other_category"
@@ -652,7 +652,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
     t.date "started_at"
     t.date "ended_at"
     t.interval "duration"
-    t.decimal "spend", precision: 9, scale: 2
+    t.decimal "spend", precision: 10, scale: 2
+    t.boolean "is_supplier_sme", default: false
   end
 
   create_table "support_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -904,6 +905,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
     t.datetime "updated_at", null: false
     t.uuid "framework_id"
     t.uuid "frameworks_framework_id"
+    t.string "e_portal_reference"
     t.index ["framework_id"], name: "index_support_procurements_on_framework_id"
     t.index ["stage"], name: "index_support_procurements_on_stage"
   end
@@ -1117,24 +1119,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
        LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
        LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
   SQL
-  create_view "support_tower_cases", sql_definition: <<-SQL
-      SELECT sc.id,
-      sc.state,
-      sc.value,
-      sc.procurement_id,
-      sc.organisation_id,
-      (sc.procurement_stage_id)::text AS procurement_stage_id,
-      COALESCE(sc.support_level, 99) AS support_level,
-      COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
-      lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
-      tow.id AS tower_id,
-      sc.created_at,
-      sc.updated_at
-     FROM ((support_cases sc
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
-       LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
-    WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
-  SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
@@ -1234,6 +1218,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
               count(ffe.id) AS has_evaluation
              FROM frameworks_evaluations ffe
             GROUP BY ffe.framework_id) evals ON ((evals.framework_id = ff.id)));
+  SQL
+  create_view "support_tower_cases", sql_definition: <<-SQL
+      SELECT sc.id,
+      sc.state,
+      sc.value,
+      sc.procurement_id,
+      sc.organisation_id,
+      (sc.procurement_stage_id)::text AS procurement_stage_id,
+      COALESCE(sc.support_level, 99) AS support_level,
+      COALESCE(tow.title, 'No Tower'::character varying) AS tower_name,
+      lower(replace((COALESCE(tow.title, 'No Tower'::character varying))::text, ' '::text, '-'::text)) AS tower_slug,
+      tow.id AS tower_id,
+      sc.created_at,
+      sc.updated_at
+     FROM ((support_cases sc
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)))
+       LEFT JOIN support_towers tow ON ((cat.support_tower_id = tow.id)))
+    WHERE (sc.state = ANY (ARRAY[0, 1, 3]));
   SQL
   create_view "support_case_data", sql_definition: <<-SQL
       SELECT sc.id AS case_id,
