@@ -53,7 +53,9 @@
 
       <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.procurement_details.edit.started_at.header") } %>
 
-      <%= form.govuk_date_field :ended_at, legend: { text: I18n.t("support.procurement_details.edit.ended_at.header") } %>
+      <%= form.govuk_date_field :ended_at, legend: { text: I18n.t("support.procurement_details.edit.ended_at.header")} %>
+
+      <%= form.govuk_text_field :e_portal_reference, label: { text: I18n.t("support.procurement_details.edit.e_portal_reference.header"), class: "govuk-label govuk-fieldset__legend govuk-fieldset__legend--m" } %>
 
       <%= form.submit I18n.t("support.procurement_details.edit.submit"), class: "govuk-button", role: "button" %>
     <% end %>

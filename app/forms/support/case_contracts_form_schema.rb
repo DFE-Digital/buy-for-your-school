@@ -8,6 +8,7 @@ module Support
       optional(:ended_at).maybe(:hash)
       optional(:spend).maybe(Types::DecimalField)
       optional(:duration).maybe(:integer)
+      optional(:is_supplier_sme).maybe(:string)
     end
 
     rule :spend do

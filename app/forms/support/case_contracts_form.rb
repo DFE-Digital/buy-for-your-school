@@ -7,6 +7,7 @@ module Support
     option :ended_at, Types::DateField, optional: true
     option :spend, Types::DecimalField, optional: true
     option :duration, optional: true
+    option :is_supplier_sme, optional: true
 
     # @return [Hash]
     def to_h

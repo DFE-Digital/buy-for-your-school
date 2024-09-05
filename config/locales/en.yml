@@ -1080,6 +1080,7 @@ en:
           legacy_framework_name: Legacy Framework
           procurement_end_date: Procurement end date
           procurement_start_date: Procurement start date
+          procurement_e_portal_reference: E-portal reference
           reason_for_route_to_market: Reason for route to market
           required_agreement_type: Required agreement type
           route_to_market: Route to market
@@ -1090,6 +1091,7 @@ en:
           savings_status: Status
           start_date: Start date
           supplier: Supplier
+          supplier_is_sme: Supplier is an SME
         procurement_stage: Procurement stage
         query: Query
         received_at: Received
@@ -1345,7 +1347,7 @@ en:
           supplier:
             header: Existing contract supplier
       flash:
-        updated: Case contract successfully changed
+        updated: Case contract details successfully changed
       new:
         edit:
           duration:
@@ -1926,6 +1928,8 @@ en:
           header: Procurement stage
         started_at:
           header: Start date of the procurement
+        e_portal_reference:
+          header: E-portal reference
         submit: Continue
       flash:
         updated: Procurement details successfully changed 

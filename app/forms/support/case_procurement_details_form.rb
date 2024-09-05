@@ -24,5 +24,8 @@ module Support
     # @!attribute [r] ended_at
     #   @return [Date, nil]
     option :ended_at, Types::DateField, optional: true
+    # @!attribute [r] e_portal_reference
+    #   @return [String, nil]
+    option :e_portal_reference, optional: true
   end
 end
