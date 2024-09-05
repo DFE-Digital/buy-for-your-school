@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_03_101832) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1303,6 +1303,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_101832) do
       sps.key AS procurement_stage_key,
       sp.started_at AS procurement_started_at,
       sp.ended_at AS procurement_ended_at,
+      sp.e_portal_reference AS procurement_e_portal_reference,
       ec.started_at AS previous_contract_started_at,
       ec.ended_at AS previous_contract_ended_at,
       ec.duration AS previous_contract_duration,
@@ -1313,6 +1314,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_101832) do
       nc.duration AS new_contract_duration,
       nc.spend AS new_contract_spend,
       nc.supplier AS new_contract_supplier,
+      nc.is_supplier_sme AS new_contract_supplier_sme_check,
       ps.created_at AS participation_survey_date,
       es.created_at AS exit_survey_date,
       sir.referrer

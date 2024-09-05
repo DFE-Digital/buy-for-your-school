@@ -10,6 +10,7 @@ module Support
       optional(:framework_id).value(:string)
       optional(:started_at).value(:hash)
       optional(:ended_at).value(:hash)
+      optional(:e_portal_reference).value(:string)
     end
 
     rule :started_at do

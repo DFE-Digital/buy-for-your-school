@@ -204,6 +204,15 @@
           <dd class="govuk-summary-list__actions"></dd>
         </div>
       <% end %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.procurement_details.procurement_e_portal_reference") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.procurement&.e_portal_reference || "-"%>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
     </dl>
 
     <h3 id="pd-existing-contract" class="govuk-heading-m">
@@ -248,7 +257,6 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
     </dl>
-
     <h3 id="pd-new-contract" class="govuk-heading-m">
       New contract details -
       <%= link_to I18n.t("support.case.link.change"), edit_support_case_contract_path(current_case, current_case.new_contract_id), class: "govuk-link govuk-link--no-visited-state"%>
@@ -287,6 +295,15 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <%= current_case.new_contract&.supplier %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.procurement_details.supplier_is_sme") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.new_contract&.is_supplier_sme ? "Yes" : "No" %>
         </dd>
         <dd class="govuk-summary-list__actions"></dd>
       </div>

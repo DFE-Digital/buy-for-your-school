@@ -44,7 +44,7 @@ module Support
     end
 
     def case_contracts_form_params
-      form_params = params.require(:case_contracts_form).permit(:supplier, :spend, :duration)
+      form_params = params.require(:case_contracts_form).permit(:supplier, :spend, :duration, :is_supplier_sme)
       form_params[:started_at] = date_param(:case_contracts_form, :started_at)
       form_params[:ended_at] = date_param(:case_contracts_form, :ended_at)
       form_params
