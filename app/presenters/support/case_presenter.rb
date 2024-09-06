@@ -152,11 +152,11 @@ module Support
 
     # return [String]
     def special_requirements
-      super || "-"
+      super || "No"
     end
 
     def has_special_requirements?
-      special_requirements != "-"
+      special_requirements != "No"
     end
 
     # @return [Array<MessageThreadPresenter>]
