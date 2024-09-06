@@ -7,7 +7,7 @@
   <%= form.govuk_text_field :spend, width: 5, label: { text: I18n.t("support.case_contract.new.edit.spend.header"), size: 'm' }, prefix_text: '£' %>
   <%= form.govuk_text_field :supplier, width: 20, label: { text: I18n.t("support.case_contract.new.edit.supplier.header"), size: 'm' } %>
   <%= form.hidden_field :is_supplier_sme, value: 'false' %>
-  <%= form.govuk_check_box :is_supplier_sme, 'true', unchecked_value: 'false', multiple: false, checked: @current_case.new_contract.is_supplier_sme, label: { text: "Supplier is a SME", size: 'm' } %>
+  <%= form.govuk_check_box :is_supplier_sme, 'true', unchecked_value: 'false', multiple: false, checked: @current_case.new_contract.is_supplier_sme, label: { text: I18n.t("support.case.label.procurement_details.supplier_is_sme"), size: 'm' } %>
   <br>
   <%= form.submit I18n.t("support.case_contract.new.edit.submit"), class: "govuk-button", role: "button" %>
 <% end %>
