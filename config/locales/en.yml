@@ -1091,7 +1091,7 @@ en:
           savings_status: Status
           start_date: Start date
           supplier: Supplier
-          supplier_is_sme: Supplier is an SME
+          supplier_is_sme: Supplier is a SME
         procurement_stage: Procurement stage
         query: Query
         received_at: Received

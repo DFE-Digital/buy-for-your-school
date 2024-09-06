@@ -90,6 +90,10 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
+  it "shows the e-portal reference" do
+    expect(page).to have_css("label.govuk-label", text: I18n.t("support.procurement_details.edit.e_portal_reference.header"))
+  end
+
   it "shows continue button" do
     expect(page).to have_button "Continue"
   end

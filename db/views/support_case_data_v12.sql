@@ -74,7 +74,7 @@ SELECT
   nc.duration as new_contract_duration,
   nc.spend AS new_contract_spend,
   nc.supplier AS new_contract_supplier,
-  nc.is_supplier_sme AS is_supplier_sme,
+  nc.is_supplier_sme AS supplier_is_a_sme,
   ps.created_at AS participation_survey_date,
   es.created_at AS exit_survey_date,
   sir.referrer AS referrer
