@@ -113,7 +113,10 @@
       </div>
     <% end %>
 
-    <% if @current_case.eligible_for_school_picker? %>
+    <%
+=begin%>
+ # This is temporarily removed, will be used later.
+ <% if @current_case.eligible_for_school_picker? %>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= I18n.t("support.case.label.non_participating_schools") %>
@@ -126,7 +129,9 @@
         </dd>
       </div>
     <% end %>
-  </dl>
+  </dl> 
+<%
+=end%>
 
   <% if @current_case.organisation.present? %>
     <ul class="govuk-list">
