@@ -71,6 +71,7 @@ en:
       category_id: "" # Omitted
       query_id: ""  # Omitted
       organisation_id: "" # Omitted
+      school_id: "" #Omitted
       organisation_formatted_name: "" # Omitted
       merge_into_case_ref: "" # Omitted
       reason: "" # Omitted
@@ -108,12 +109,17 @@ en:
           missing: Please enter contact last name for the case
 
         email:
-          missing: Please enter contact email for the case
-          invalid_format: Please enter a valid contact email for the case
+          missing: Please enter contact email address
+          invalid_format: Please enter a valid contact email address
 
         # Selecting an organisation
         organisation_id:
           missing: Please select an organisation or group
+
+        # Selecting an school
+        school_id: 
+          missing: Please select a School
+          already_in_list: This school is already in the list
 
         # Merge case email
         merge_into_case_ref:

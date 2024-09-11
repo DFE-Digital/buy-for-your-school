@@ -1,0 +1,50 @@
+<!-- app/views/support_case_additional_contacts/_form.html.erb -->
+<h1 class="govuk-heading-xl"><%= I18n.t("support.case_contact_details.header") %></h1>
+<%new_contact = action_name == 'new' || action_name == 'create'%>
+<p class="govuk-hint"><%= I18n.t("support.case_contact_details.description") %></p>
+<%= form_with(model: @case_additional_contact_form, scope: :case_additional_contacts_form, url: new_contact ? support_case_additional_contacts_path(@current_case) : support_case_additional_contact_path(@current_case, support_case_additional_contact), method: new_contact ? :post : :put, remote: true) do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_text_field :first_name, autofocus: true, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.first_name") } %>
+  <%= form.govuk_text_field :last_name, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.last_name") } %>
+  <%= form.govuk_text_field :email, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.email") } %>
+  <%= form.govuk_text_field :phone_number, width: 'one-quarter', label: { text: I18n.t("support.case_contact_details.label.phone") } %>
+  <%= form.govuk_text_field :extension_number, width: 'one-quarter', label: { text: I18n.t("support.case_contact_details.label.extension_number") } %>
+  
+  <%
+  
+=begin%>
+  #below code is commented because it can be used later. It is a field for organisation selection.
+ <%= render "components/autocomplete",
+            container_id: "case-contacts-organisation-field",
+            label_text: I18n.t("support.case_additional_contact.organisation.header"),
+            label_class: "govuk_text_field",
+            element_id: "additional_contacts-autocomplete",
+            element_name: "organisation_name",
+            template_suggestion: "{{autocomplete_template}}",
+            value_field: :name,
+            default_value: form.object.organisation&.name,
+            hidden_fields: {
+              'support_case_additional_contact[organisation_id]' => [:id, form.object.organisation&.id],
+            #   'case_request[organisation_type]' => [:source, form.object.organisation.class&.name],
+            },
+            query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %> 
+<%
+=end%>
+
+
+  <div class="govuk_text_field">
+
+    <%= form.govuk_collection_check_boxes :role, role_options, :id, :title, legend: { text: "Roles" } %>
+
+  </div>
+  <%= form.hidden_field :support_case_id, value: @current_case.id %>
+
+  <div class="actions">
+  <%= form.submit I18n.t("support.case_contact_details.submit"), class: "govuk-button" %>
+    <%if !new_contact%>
+      <%= link_to 'Delete', support_case_additional_contact_path(@current_case, support_case_additional_contact), method: :delete, data: { confirm: 'Are you sure you want to delete this contact?' }, class: 'govuk-button govuk-button--secondary' %>
+    <%end%>
+    <%= link_to 'Cancel changes', support_case_additional_contacts_path(@current_case), class: 'govuk-button govuk-button--secondary' %>
+  </div>
+<% end %>

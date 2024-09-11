@@ -1,16 +1,33 @@
 <% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
-    <div class="govuk-notification-banner govuk-notification-banner--<%= name %>" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          <%= name.capitalize %>
-        </h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <h3 class="govuk-notification-banner__heading">
-          <%= content_tag :div, msg, id: "flash_#{name}" %>
-        </h3>
-      </div>
+  <% if flash[:error].present? && flash[:error][:class].present? %>
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+            <h2 class="govuk-error-summary__title" data-error-summary-target="title">
+                There is a problem
+            </h2>
+            <div class="govuk-error-summary__body" data-error-summary-target="body" aria-live="polite">
+                <ul class="govuk-list govuk-error-summary__list">
+                    <li>
+                        <a data-turbo="false" href="#case-organisation-form-organisation-id-field-error"> <%= flash[:error][:message] %></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  <% end %>
+  <%else%>
+    <% if msg.is_a?(String) %>
+      <div class="govuk-notification-banner govuk-notification-banner--<%= name %>" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            <%= name.capitalize %>
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <h3 class="govuk-notification-banner__heading">
+            <%= content_tag :div, msg, id: "flash_#{name}" %>
+          </h3>
+        </div>
+      </div>
+    <% end %>
+  <%end%>
 <% end %>

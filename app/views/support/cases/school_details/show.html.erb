@@ -62,6 +62,20 @@
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.case_additional_contact") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @current_case.case_additional_contacts.count %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <% unless @current_case.closed? %>
+          <%= link_to "Change", support_case_additional_contacts_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.organisation_name") %>
       </dt>
       <dd class="govuk-summary-list__value">
@@ -74,7 +88,6 @@
         <% end %>
       </dd>
     </div>
-
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.organisation_type") %>
@@ -96,6 +109,20 @@
         </dd>
         <dd class="govuk-summary-list__actions">
           <%= link_to I18n.t("support.generic.view"), support_case_school_details_participating_schools_path(@current_case), class: "govuk-link" %>
+        </dd>
+      </div>
+    <% end %>
+
+    <% if @current_case.eligible_for_school_picker? %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.non_participating_schools") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @current_case.other_school_urns.size %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= link_to I18n.t("support.generic.view"), non_beneficiery_schools_support_case_school_details_other_schools_path(@current_case), class: "govuk-link", target: "_top"%>
         </dd>
       </div>
     <% end %>

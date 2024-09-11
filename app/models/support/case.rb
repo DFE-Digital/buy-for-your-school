@@ -57,6 +57,8 @@ module Support
     has_one :framework_request, class_name: "FrameworkRequest", foreign_key: :support_case_id
     has_one :case_request, class_name: "CaseRequest", foreign_key: :support_case_id
 
+    has_many :case_additional_contacts, class_name: "Support::CaseAdditionalContact", foreign_key: :support_case_id
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     # Support level
@@ -158,6 +160,11 @@ module Support
     # If this case is associated with a MAT, there may be several participating_schools (including 0). Otherwise there should be 1 organisation.
     def schools
       organisation.is_a?(Support::Organisation) ? [organisation] : participating_schools
+    end
+
+    # If this case is associated with a MAT, there may be several participating_schools that may not be the part of MAT
+    def other_schools
+      other_school_urns.map { |urn| Support::Organisation.find_by(urn:) }
     end
 
     # The Local Education Authorities of the schools currently associated with the case, sorted alphabetically and with duplicates removed.

@@ -13,7 +13,7 @@ describe "Agent can update participating schools", js: true do
     click_link "School details"
 
     within("#school-details") do
-      click_link "View"
+      click_link "View", match: :first
       click_link "change"
     end
 

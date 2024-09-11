@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_095817) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_18_210639) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -529,6 +529,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_095817) do
     t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"
   end
 
+  create_table "support_case_additional_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "role", default: [], array: true
+    t.string "phone_number"
+    t.string "extension_number"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "organisation_id"
+    t.index ["support_case_id"], name: "index_support_case_additional_contacts_on_support_case_id"
+  end
+
   create_table "support_case_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "support_case_id"
     t.uuid "support_email_attachment_id"
@@ -601,6 +615,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_095817) do
     t.integer "discovery_method"
     t.string "discovery_method_other_text"
     t.string "project"
+    t.boolean "is_evaluator", default: false
+    t.string "other_school_urns", default: [], array: true
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -1020,6 +1036,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_095817) do
   add_foreign_key "request_for_help_categories", "support_categories"
   add_foreign_key "short_text_answers", "steps", on_delete: :cascade
   add_foreign_key "support_agents", "support_towers"
+  add_foreign_key "support_case_additional_contacts", "support_cases"
   add_foreign_key "support_case_attachments", "support_cases"
   add_foreign_key "support_case_attachments", "support_email_attachments"
   add_foreign_key "support_case_organisations", "support_cases"

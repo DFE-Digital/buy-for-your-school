@@ -1,0 +1,32 @@
+<!-- app/views/support_case_additional_contacts/index.html.erb -->
+
+  <h1 class="govuk-heading-l"><%= I18n.t("support.case_contact_details.listing_heading") %></h1>
+  <p class="govuk-hint"><%= I18n.t("support.case_contact_details.listing_description") %></p>
+
+  <table class="govuk-table messages-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.contact_name") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.contact_email") %></th>
+        <th scope="col" class="govuk-table__header"><%= I18n.t("support.case.label.contact_role") %></th>
+        <th scope="col" class="govuk-table__header"></th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @additional_contacts&.each do |contact| %>
+        <div class="govuk-summary-list__row">
+          <tr>
+            <td class="govuk-table__cell"><%= contact.first_name %> <%= contact.last_name %></td>
+            <td class="govuk-table__cell"><%= contact.email %></td>
+            <td class="govuk-table__cell"><%= contact.role.join(", ").titleize if contact.role %></td>
+            <td class="govuk-table__cell"><%= link_to 'change', edit_support_case_additional_contact_path(@current_case, contact) %></td> 
+
+          </tr>
+        </div>  
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Add', new_support_case_additional_contact_path(@current_case), class: 'govuk-button' %>        
+   

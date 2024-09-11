@@ -209,6 +209,7 @@ Rails.application.routes.draw do
     resources :email_read_status, only: %i[update], param: :email_id
     resources :organisations, only: %i[index]
     resources :establishments, only: %i[index]
+    get "establishments/list_for_non_participating_establishment", as: :list_for_non_participating_establishment
     resources :establishment_groups, only: %i[index]
     resources :frameworks, only: %i[index]
     resources :towers, only: [:show]
@@ -232,6 +233,7 @@ Rails.application.routes.draw do
         resource :on_hold, only: %i[create]
         resource :summary, only: %i[edit update]
         resources :contracts, only: %i[edit update]
+        resources :additional_contacts
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template
@@ -259,6 +261,13 @@ Rails.application.routes.draw do
         resource :school_details, only: %i[show] do
           scope module: :school_details do
             resource :participating_schools, only: %i[show edit update]
+            resource :other_schools do
+              get :non_beneficiery_schools
+              get :other_school
+              get :confirmation_message
+              patch :add_other_school
+              patch :remove_school
+            end
           end
         end
         resource :request_details, only: %i[show] do
