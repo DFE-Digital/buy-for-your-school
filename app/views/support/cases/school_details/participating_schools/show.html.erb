@@ -1,7 +1,11 @@
 <%= turbo_frame_tag "school-details-frame" do %>
   <%= link_to I18n.t("support.case.label.school_details.back"), @back_url, class: "govuk-back-link pull-up" %>
   <h2 class="govuk-heading-l">
-    <%= I18n.t("support.case.label.participating_schools") %> - <%= link_to I18n.t("support.case.link.change"), edit_support_case_school_details_participating_schools_path, class: "govuk-link govuk-link--no-visited-state" %>
+    <%if @current_case.state != "resolved" && @current_case.state != "closed"%>
+      <%= I18n.t("support.case.label.participating_schools") %> - <%= link_to I18n.t("support.case.link.change"), edit_support_case_school_details_participating_schools_path, class: "govuk-link govuk-link--no-visited-state" %>
+    <%else%>
+      <%= I18n.t("support.case.label.participating_schools") %>
+    <%end%>
   </h2>
 
   <table class="govuk-table" aria-label="Participating schools">
