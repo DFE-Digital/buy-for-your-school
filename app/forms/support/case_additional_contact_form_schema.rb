@@ -3,8 +3,8 @@ module Support
     include Concerns::TranslatableFormSchema
 
     params do
-      required(:first_name).value(:string)
-      required(:last_name).value(:string)
+      optional(:first_name).value(:string)
+      optional(:last_name).value(:string)
       optional(:phone_number).value(:string)
       required(:email).value(:string)
       optional(:extension_number).value(:string)

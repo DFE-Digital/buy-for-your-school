@@ -14,7 +14,6 @@ module Support
     def create
       @case_additional_contact_form = CaseAdditionalContactForm.from_validation(validation)
       @current_case = Support::Case.find(case_additional_contact_form_params[:support_case_id]) if @current_case.blank?
-      @emails = @current_case.case_additional_contacts&.pluck(:email)
       if validation.success? && !@emails.include?(case_additional_contact_form_params[:email])
         Support::CaseAdditionalContact.create!(case_additional_contact_form_params)
         redirect_to support_case_additional_contacts_path(case_id: @current_case.id), notice: I18n.t("support.case_contact_details.flash.success")
