@@ -43,7 +43,7 @@ describe FrameworkRequests::ProcurementAmountForm, type: :model do
 
       it "returns the right error message" do
         expect(form).not_to be_valid
-        expect(form.errors.messages[:procurement_amount]).to eq ["The amount cannot be larger than 9,999,999.99"]
+        expect(form.errors.messages[:procurement_amount]).to eq ["The amount cannot be larger than 99,999,999.99"]
         expect(validator).to have_received(:too_large?).once
       end
     end
