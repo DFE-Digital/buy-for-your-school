@@ -166,7 +166,7 @@ en:
       rules:
         procurement_amount:
           invalid: Enter a valid number
-          too_large: The amount cannot be larger than 9,999,999.99
+          too_large: The amount cannot be larger than 99,999,999.99
         special_requirements_choice:
           missing: Select whether you want to tell us about any special requirements
         special_requirements:
@@ -184,7 +184,7 @@ en:
           group: Select whether this is the Group or Trust you're buying for
         procurement_amount:
           invalid: Enter a valid number
-          too_large: The amount cannot be larger than 9,999,999.99
+          too_large: The amount cannot be larger than 99,999,999.99
   
   support_request:
     rules:
