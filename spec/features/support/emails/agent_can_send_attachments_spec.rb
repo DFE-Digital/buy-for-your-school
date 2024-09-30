@@ -37,10 +37,10 @@ describe "Agent can add attachments to replies", :with_csrf_protection, js: true
       end
 
       it "allows agent to remove attachments" do
-        within("#reply-frame") do
+        within(".draft-email__attachment-remove") do
           click_on "Remove"
-          expect(page).not_to have_text "attachment.txt"
         end
+        expect(page).not_to have_text "attachment.txt"
       end
     end
   end
