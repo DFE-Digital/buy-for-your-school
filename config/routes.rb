@@ -253,6 +253,8 @@ Rails.application.routes.draw do
           scope module: :messages do
             resources :replies, only: %i[create edit] do
               post "submit", on: :member
+              post "add_recipient", on: :collection
+              post "remove_recipient", on: :collection
             end
           end
         end
