@@ -399,8 +399,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "archived"
-    t.datetime "archived_at"
     t.index ["la_code"], name: "index_local_authorities_on_la_code", unique: true
     t.index ["name"], name: "index_local_authorities_on_name", unique: true
   end
@@ -775,10 +773,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
     t.uuid "establishment_group_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "archived"
-    t.datetime "archived_at"
-    t.date "opened_date"
-    t.date "closed_date"
     t.index ["establishment_group_type_id"], name: "index_establishment_groups_on_establishment_group_type_id"
     t.index ["name"], name: "index_support_establishment_groups_on_name"
     t.index ["uid"], name: "index_support_establishment_groups_on_uid", unique: true
@@ -884,11 +878,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
     t.string "federation_name"
     t.string "federation_code"
     t.uuid "local_authority_id"
-    t.boolean "archived"
-    t.datetime "archived_at"
-    t.date "closed_date"
-    t.string "reason_establishment_opened"
-    t.string "reason_establishment_closed"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["local_authority_id"], name: "index_support_organisations_on_local_authority_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
