@@ -14,7 +14,8 @@ module Frameworks::Evaluation::EmailTicketable
   end
 
   def default_recipients
-    Array(contact.try(:email)).to_json
+    emails = contact.try(:email) || ""
+    Array([[emails, ""]]).to_json if emails.present?
   end
 
   def unique_attachments(folder: "all")
