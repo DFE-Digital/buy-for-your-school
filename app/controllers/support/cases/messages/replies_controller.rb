@@ -25,13 +25,16 @@ module Support
     def submit
       @reply_form = Email::Draft.find(params[:id])
       emails = @reply_form.to_recipients.map(&:first)
+      to_recipients_email = current_email.to_recipients.instance_of?(Array) ? current_email.to_recipients.map { |recipient| recipient["address"] } : [current_email.to_recipients["address"]]
+      cc_recipients_email = current_email.cc_recipients.instance_of?(Array) ? current_email.cc_recipients.map { |recipient| recipient["address"] } : [current_email.cc_recipients["address"]]
+      bcc_recipients_email = current_email.bcc_recipients.instance_of?(Array) ? current_email.bcc_recipients.map { |recipient| recipient["address"] } : [current_email.bcc_recipients["address"]]
       @reply_form.reply_to_email = current_email
-      @reply_form.to_recipients = emails.uniq.to_json
+      @reply_form.to_recipients = emails.present? ? emails.uniq.to_json : to_recipients_email.to_json
+      @reply_form.cc_recipients =  @reply_form.cc_recipients.present? ? @reply_form.cc_recipients.map(&:first).to_json : cc_recipients_email.to_json
+      @reply_form.bcc_recipients = @reply_form.bcc_recipients.present? ? @reply_form.bcc_recipients.map(&:first).to_json : bcc_recipients_email.to_json
       @reply_form.attributes = form_params
       @reply_form.email.to_recipients = emails
       @reply_form.reply_to_email.to_recipients = emails
-      @reply_form.cc_recipients = @reply_form.cc_recipients.map(&:first).to_json if @reply_form.cc_recipients.present?
-      @reply_form.bcc_recipients = @reply_form.bcc_recipients.map(&:first).to_json if @reply_form.bcc_recipients.present?
       if @reply_form.valid?
         @reply_form.save_draft!
         @reply_form.delivery_as_reply
@@ -86,6 +89,7 @@ module Support
 
     def remove_recipient
       @reply_form = Email::Draft.find(params[:id])
+      @sender_email = current_email.sender.instance_of?(Array) ? current_email.sender.map { |recipient| recipient["address"] } : [current_email.sender["address"]]
       recipient_to_remove = [params[:email], params[:role]]
       @reply_form.to_recipients.reject! { |recipient| recipient == recipient_to_remove }
       @reply_form.save_draft!
