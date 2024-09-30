@@ -1,6 +1,24 @@
-<% if recipients.present? %>
-  <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header"><%= recipient_type %></th>
-    <td class="govuk-table__cell"><%= recipients %></td>
-  </tr>
-<% end %>
+<% if recipients.present?%>
+  <%if params[:action] == "add_recipient" || params[:action] == "remove_recipient"%>
+    <%recipients.each do |recipient|%>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><%= recipient_type %></th>
+        <td class="govuk-table__cell"><%= recipient[0] %></td>
+        <td class="govuk-table__cell"><%= recipient[1].join(", ").titleize %></td>
+        <td class="govuk-table__cell">
+        <% unless @sender_email.present? && (@sender_email.include?(recipient[0]))%>
+          <%= link_to "remove", 
+            remove_recipient_support_case_message_replies_path(id: params[:id], email: recipient[0], role: recipient[1]), 
+            data: { turbo_frame: "recipient-frame", turbo_method: "post" }, 
+            class: "govuk-link" %>
+          <%end%>  
+        </td>
+      </tr>
+    <%end%>
+  <%else%>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><%= recipient_type %></th>
+      <td class="govuk-table__cell"><%= recipients %></td>
+    </tr>
+  <%end%>
+<%end%>
