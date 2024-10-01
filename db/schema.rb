@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -399,6 +399,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "archived"
+    t.datetime "archived_at"
     t.index ["la_code"], name: "index_local_authorities_on_la_code", unique: true
     t.index ["name"], name: "index_local_authorities_on_name", unique: true
   end
@@ -615,8 +617,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
     t.integer "discovery_method"
     t.string "discovery_method_other_text"
     t.string "project"
-    t.boolean "is_evaluator", default: false
     t.string "other_school_urns", default: [], array: true
+    t.boolean "is_evaluator", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -773,6 +775,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
     t.uuid "establishment_group_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "archived"
+    t.datetime "archived_at"
+    t.date "opened_date"
+    t.date "closed_date"
     t.index ["establishment_group_type_id"], name: "index_establishment_groups_on_establishment_group_type_id"
     t.index ["name"], name: "index_support_establishment_groups_on_name"
     t.index ["uid"], name: "index_support_establishment_groups_on_uid", unique: true
@@ -878,6 +884,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
     t.string "federation_name"
     t.string "federation_code"
     t.uuid "local_authority_id"
+    t.boolean "archived"
+    t.datetime "archived_at"
+    t.date "closed_date"
+    t.string "reason_establishment_opened"
+    t.string "reason_establishment_closed"
     t.index ["establishment_type_id"], name: "index_support_organisations_on_establishment_type_id"
     t.index ["local_authority_id"], name: "index_support_organisations_on_local_authority_id"
     t.index ["urn"], name: "index_support_organisations_on_urn", unique: true
@@ -1253,8 +1264,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
       (GREATEST(sc.updated_at, si.created_at))::date AS last_modified_date,
       to_char(((GREATEST(sc.updated_at, si.created_at))::date)::timestamp with time zone, 'yyyy'::text) AS last_modified_year,
       to_char(((GREATEST(sc.updated_at, si.created_at))::date)::timestamp with time zone, 'mm'::text) AS last_modified_month,
-      (first_resolved.created_at)::date AS first_resolved_date,
-      (last_resolved.created_at)::date AS last_resolved_date,
+      (rl.first_resolved_at)::date AS first_resolved_date,
+      (rl.last_resolved_at)::date AS last_resolved_date,
       sc.source AS case_source,
       sc.creation_source AS case_creation_source,
       sc.state AS case_state,
@@ -1318,7 +1329,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
       ps.created_at AS participation_survey_date,
       es.created_at AS exit_survey_date,
       sir.referrer
-     FROM ((((((((((((((((((support_cases sc
+     FROM (((((((((((((((((support_cases sc
        LEFT JOIN ( SELECT sa_1.id,
               sa_1.first_name,
               sa_1.last_name
@@ -1327,16 +1338,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_140017) do
               stc_1.procurement_id,
               stc_1.tower_name
              FROM support_tower_cases stc_1) stc ON ((sc.procurement_id = stc.procurement_id)))
-       LEFT JOIN support_activity_log_items first_resolved ON ((first_resolved.id = ( SELECT first_resolved_1.id
-             FROM support_activity_log_items first_resolved_1
-            WHERE (((sc.id)::text = (first_resolved_1.support_case_id)::text) AND ((first_resolved_1.action)::text = 'resolve_case'::text))
-            ORDER BY first_resolved_1.created_at
-           LIMIT 1))))
-       LEFT JOIN support_activity_log_items last_resolved ON ((last_resolved.id = ( SELECT last_resolved_1.id
-             FROM support_activity_log_items last_resolved_1
-            WHERE (((sc.id)::text = (last_resolved_1.support_case_id)::text) AND ((last_resolved_1.action)::text = 'resolve_case'::text))
-            ORDER BY last_resolved_1.created_at DESC
-           LIMIT 1))))
+       LEFT JOIN ( SELECT log.support_case_id AS case_id,
+              min(log.created_at) AS first_resolved_at,
+              max(log.created_at) AS last_resolved_at
+             FROM support_activity_log_items log
+            WHERE ((log.action)::text = 'resolve_case'::text)
+            GROUP BY log.support_case_id) rl ON ((((sc.id)::character varying)::text = (rl.case_id)::text)))
        LEFT JOIN ( SELECT fr_1.id,
               fr_1.support_case_id,
               fr_1.school_urns
