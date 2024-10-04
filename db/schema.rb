@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_04_084539) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1328,7 +1328,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
       nc.is_supplier_sme AS supplier_is_a_sme,
       ps.created_at AS participation_survey_date,
       es.created_at AS exit_survey_date,
-      sir.referrer
+      (sir.additional_data ->> 'referrer'::text) AS referrer
      FROM (((((((((((((((((support_cases sc
        LEFT JOIN ( SELECT sa_1.id,
               sa_1.first_name,
@@ -1425,21 +1425,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_01_150600) do
        LEFT JOIN support_frameworks sf ON ((sp.framework_id = sf.id)))
        LEFT JOIN support_contracts ec ON ((sc.existing_contract_id = ec.id)))
        LEFT JOIN support_contracts nc ON ((sc.new_contract_id = nc.id)))
-       LEFT JOIN ( SELECT si_1.created_at,
-              si_1.case_id
-             FROM support_interactions si_1
-            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = 'fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779'::text))
-            ORDER BY si_1.created_at
-           LIMIT 1) ps ON ((si.case_id = ps.case_id)))
-       LEFT JOIN ( SELECT si_1.created_at,
-              si_1.case_id
-             FROM support_interactions si_1
-            WHERE ((si_1.event_type = 3) AND ((si_1.additional_data ->> 'email_template'::text) = '134bc268-2c6b-4b74-b6f4-4a58e22d6c8b'::text))) es ON ((si.case_id = es.case_id)))
-       LEFT JOIN ( SELECT (si_1.additional_data ->> 'referrer'::text) AS referrer,
-              si_1.case_id
-             FROM support_interactions si_1
-            WHERE (si_1.event_type = 8)
-            ORDER BY si_1.created_at
-           LIMIT 1) sir ON ((si.case_id = sir.case_id)));
+       LEFT JOIN support_interactions ps ON ((ps.id = ( SELECT i.id
+             FROM support_interactions i
+            WHERE ((i.event_type = 3) AND (i.case_id = sc.id) AND ((i.additional_data ->> 'email_template'::text) = 'fd89b69e-7ff9-4b73-b4c4-d8c1d7b93779'::text))
+            ORDER BY i.created_at
+           LIMIT 1))))
+       LEFT JOIN support_interactions es ON ((es.id = ( SELECT i.id
+             FROM support_interactions i
+            WHERE ((i.case_id = sc.id) AND (i.body = ANY (ARRAY['The exit survey email has been sent'::text, 'The survey for resolved cases email has been sent'::text])))
+            ORDER BY i.created_at
+           LIMIT 1))))
+       LEFT JOIN support_interactions sir ON ((sir.id = ( SELECT i.id
+             FROM support_interactions i
+            WHERE ((i.event_type = 8) AND (i.case_id = sc.id))
+            ORDER BY i.created_at
+           LIMIT 1))));
   SQL
 end
