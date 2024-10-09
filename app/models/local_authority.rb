@@ -13,6 +13,6 @@ class LocalAuthority < ApplicationRecord
   end
 
   def org_type
-    name
+    "Local authority"
   end
 end
