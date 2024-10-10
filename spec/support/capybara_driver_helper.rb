@@ -29,12 +29,8 @@ Capybara.configure do |config|
   Capybara.app_host = "http://www.example.com:3000"
   Capybara.asset_host = "http://www.example.com"
 
-  config.server_host = ENV.fetch("CAPYBARA_SERVER_HOST") do
-    if RUBY_PLATFORM.match?(/linux/)
-      `/sbin/ip route|awk '/scope/ { print $9 }'`.chomp
-    else
-      "127.0.0.1"
-    end
+  if ENV.key?("CAPYBARA_SERVER_HOST")
+    config.server_host = ENV.fetch("CAPYBARA_SERVER_HOST")
   end
 end
 
