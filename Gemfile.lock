@@ -269,7 +269,7 @@ GEM
       sanitize (< 7)
     foreman (0.88.1)
     formatador (1.1.0)
-    fugit (1.11.0)
+    fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     globalid (1.2.1)
@@ -560,7 +560,7 @@ GEM
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
-    rexml (3.3.5)
+    rexml (3.3.6)
       strscan
     rollbar (3.5.2)
     rouge (4.2.1)
