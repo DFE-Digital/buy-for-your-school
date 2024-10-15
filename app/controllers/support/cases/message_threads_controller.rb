@@ -26,7 +26,7 @@ module Support
       end
 
       def new
-        @to_recipients = Array(current_case.email).to_json
+        @to_recipients = Array(current_case.email + @current_case.additional_contacts.pluck(:email)).to_json
       end
 
       def edit
@@ -34,12 +34,14 @@ module Support
       end
 
       def create
+        contact_email = [[current_case.email, current_case.is_evaluator ? "Lead, Evaluator" : "Lead"]] if current_case.email.present?
+        emails = Array(contact_email + current_case.additional_contacts_emails)
         draft = Email::Draft.new(
           default_content: default_template,
           default_subject:,
           template_id: params[:template_id],
           ticket: current_case.to_model,
-          to_recipients: Array(current_case.email).to_json,
+          to_recipients: emails.to_json,
         ).save_draft!
 
         redirect_to edit_support_case_message_thread_path(id: draft.id)
@@ -48,6 +50,10 @@ module Support
       def submit
         @reply_form = Email::Draft.find(params[:id])
         @reply_form.attributes = new_thread_params
+        emails = @reply_form.to_recipients.map(&:first)
+        @reply_form.to_recipients = emails.to_json
+        @reply_form.cc_recipients = @reply_form.cc_recipients.map(&:first).to_json if @reply_form.cc_recipients.present?
+        @reply_form.bcc_recipients = @reply_form.bcc_recipients.map(&:first).to_json if @reply_form.bcc_recipients.present?
         if @reply_form.valid?(:new_message)
           @reply_form.save_draft!
           @reply_form.deliver_as_new_message
