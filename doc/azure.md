@@ -1,4 +1,4 @@
-# Azure
+# Azure infrastructure
 
 ## Resource groups
 
