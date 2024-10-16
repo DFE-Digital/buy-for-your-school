@@ -1,4 +1,3 @@
-
 # Educational Establishment Personas
 
 A selection of real schools that can be used to develop against.
