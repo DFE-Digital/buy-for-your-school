@@ -29,7 +29,8 @@ module ManageSupportAgents
     @form = Support::Management::AgentForm.new(agent_form_params)
 
     if @form.valid?
-      @agent = Support::Agent.find_or_create_by!(agent_form_params.except(:roles))
+      @agent = Support::Agent.find_or_create_by!(agent_form_params.except(:roles, :first_name, :last_name))
+      @agent.update(first_name: agent_form_params[:first_name], last_name: agent_form_params[:last_name])
       @agent.assign_roles(new_roles: agent_form_params[:roles], using_policy: policy(:cms_portal))
 
       redirect_to support_management_agents_path
