@@ -139,13 +139,11 @@ module MicrosoftGraph
 
     def create_and_send_new_message(mailbox:, draft:)
       message_id = create_message(user_id: mailbox.user_id, http_headers: DEFAULT_EMAIL_HEADERS)
-
       add_content_and_send_message(draft, user_id: mailbox.user_id, message_id:, details: details_for_new_message(draft, mailbox))
     end
 
     def create_and_send_new_reply(mailbox:, draft:)
       draft_message = create_reply_all_message(user_id: mailbox.user_id, reply_to_id: draft.reply_to_id, http_headers: DEFAULT_EMAIL_HEADERS)
-
       add_content_and_send_message(draft, user_id: mailbox.user_id, message_id: draft_message.id, details: details_for_reply(draft, draft_message))
     end
 
@@ -157,7 +155,6 @@ module MicrosoftGraph
       draft.attachments.each do |file_attachment|
         add_file_attachment_to_message(user_id:, file_attachment:, message_id:)
       end
-
       send_message(user_id:, message_id:)
       get_message(user_id:, message_id:)
     end
@@ -186,6 +183,10 @@ module MicrosoftGraph
     end
 
     def details_for_reply(draft, draft_message)
+      email_addresses = lambda do |recipients|
+        recipients.map { |email| { "emailAddress" => { "address" => email } } }
+      end
+
       {
         body: {
           "ContentType" => "HTML",
@@ -193,6 +194,9 @@ module MicrosoftGraph
           # for it to appear under a "fold" in the email client
           "content" => "<html><body>#{draft.body}</body></html>#{draft_message.body.content}",
         },
+        toRecipients: email_addresses[draft.to_recipients],
+        ccRecipients: email_addresses[draft.cc_recipients],
+        bccRecipients: email_addresses[draft.bcc_recipients],
       }
     end
 
