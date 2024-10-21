@@ -55,6 +55,10 @@ $ xattr -d com.apple.quarantine `which chromedriver`
 
 You require the `.env.development.local` file for your development environment to run, please ask an existing member of the team for an up to date copy.
 
+The database is configured via the `DATABASE_URL` environment variable. You can
+set this to match your local environment in `.env.development.local` and
+`.env.test.local`.
+
 ## Create a self signed SSL certificate
 
 ```
@@ -65,6 +69,6 @@ $ openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout localhost.
 
 ```
 $ bundle install
-$ bundle db:reset
+$ bundle exec rails db:setup
 $ bundle exec rails assets:precompile
 ```
