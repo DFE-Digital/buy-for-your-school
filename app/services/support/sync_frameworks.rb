@@ -32,7 +32,7 @@ module Support
       prepared_frameworks = prepare_frameworks(@frameworks)
       Support::Framework.upsert_all(
         prepared_frameworks,
-        unique_by: %i[ref],
+        unique_by: %i[ref, index_support_frameworks_on_name_and_supplier],
       )
     end
 
