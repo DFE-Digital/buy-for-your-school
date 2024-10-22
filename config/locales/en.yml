@@ -46,6 +46,14 @@ en:
       x_years:
         one: "%{count} year"
         other: "%{count} years"
+  date:
+    formats:
+      compact: "%d %b %y"
+      default: "%-d %b %Y"
+      presenter: "%e %B %Y"
+  time:
+    formats:
+      compact: "%d %b %y"   
   admin:
     activity_log_header: Activity log
     body:
@@ -169,11 +177,7 @@ en:
     existing:
       body: Continue with a draft specification, and review completed specifications.
       header: Existing specifications
-    header: Specifications dashboard
-  date:
-    formats:
-      default: "%-d %b %Y"
-      presenter: "%e %B %Y"
+    header: Specifications dashboard 
   design:
     category_selection_header: Choose a category
     not_found: No categories found
@@ -1980,6 +1984,11 @@ en:
         header: Select all roles applicable to this individual
       organisation:
         header: Organisation (optional)
+    organisation_statuses:
+      opened: Open
+      closing: Open, but proposed to close %{date}
+      opening: Proposed to open %{date}
+      closed: Closed
 
   support_request:
     button:

@@ -2,6 +2,8 @@ module Support
   class EstablishmentSearch < ApplicationRecord
     include Presentable
 
+    enum :organisation_status, Organisation.statuses, prefix: :organisation
+
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
         urn LIKE :q OR
