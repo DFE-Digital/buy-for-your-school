@@ -1,1 +1,6 @@
-<strong><%= name %></strong>, <%= postcode %><br /><%= establishment_type %><br />URN: <%= urn %> - UKPRN: <%= ukprn %>
+<%= [
+  "<strong>#{name}</strong>, #{postcode}",
+  establishment_type,
+  proposed_open_or_closed,
+  "URN: #{urn} - UKPRN: #{ukprn}"
+].compact_blank.join('<br />').html_safe %>

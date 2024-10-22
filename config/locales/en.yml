@@ -1980,6 +1980,11 @@ en:
         header: Select all roles applicable to this individual
       organisation:
         header: Organisation (optional)
+    organisation_statuses:
+      opened: Open
+      closing: Open, but proposed to close %{date}
+      opening: Proposed to open %{date}
+      closed: Closed
 
   support_request:
     button:
