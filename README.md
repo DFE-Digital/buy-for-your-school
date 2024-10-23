@@ -16,17 +16,9 @@ These tender documents can then be used to start a procurement process saving sc
 
 ## Getting Started with Development
 
-Please read the [Getting Started](doc/getting-started.md) documentation for help on setting up your local environment and getting access to required systems.
+Read [Setting up a development environment](doc/developer-setup.md) to learn
+how to configure your local environment and get access to required systems.
 
 ## Documentation
 
-- [Accessibility](doc/accessibility.md)
-- [Azure infrastructure](doc/azure.md)
-- [Console Access](doc/console-access.md)
-- [Contentful](doc/contentful-updates.md)
-- [Contentful Webhooks](doc/webhooks.md)
-- [Continuous Integration](doc/continuous-integration.md)
-- [Logging](doc/logging.md)
-- [Managing Environment Variables](doc/managing-environment-variables.md)
-- [Notify](doc/notify.md)
-- [Roles and Portals](roles-and-portals.md)
+See the [index of documentation](doc/README.md).
