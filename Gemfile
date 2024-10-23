@@ -16,7 +16,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.17"
 gem "crawler_detect"
-gem "cssbundling-rails", "~> 1.1"
+gem "cssbundling-rails", "~> 1.4"
 gem "dry-struct"
 gem "dry-transformer"
 gem "dry-validation"
