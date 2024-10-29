@@ -46,7 +46,7 @@ RSpec.describe Support::CreateCase do
       expect(result.value).to eq 234.55
       expect(result.user_selected_category).to eq "Catering sub-category"
       expect(result.procurement_stage.title).to eq "Need"
-      expect(result.participating_schools.pluck(:name)).to match_array(["School 1", "School 2"])
+      expect(result.participating_schools.pluck(:name)).to contain_exactly("School 1", "School 2")
       expect(Support::Case.count).to be 1
     end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can set case contact details", js: true do
+describe "Agent can set case contact details", :js do
   include_context "with an agent"
 
   let(:support_case) do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can manage email attachments on an evaluation", js: true do
+describe "Agent can manage email attachments on an evaluation", :js do
   include_context "with a framework evaluation agent"
 
   def attachment_for_ticket(file, type = "text/plain")

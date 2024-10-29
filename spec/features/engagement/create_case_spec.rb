@@ -1,4 +1,4 @@
-RSpec.feature "Create case", js: true do
+RSpec.feature "Create case", :js do
   include_context "with an engagement agent"
 
   before do
@@ -72,7 +72,7 @@ RSpec.feature "Create case", js: true do
 
         click_on "Create case"
         expect(Support::Case.last.organisation).to eq(group)
-        expect(Support::Case.last.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
+        expect(Support::Case.last.participating_schools.pluck(:name)).to contain_exactly("School #1", "School #2")
         expect(CaseRequest.last.same_supplier_used).to eq("yes")
       end
     end
@@ -100,7 +100,7 @@ RSpec.feature "Create case", js: true do
 
         click_on "Create case"
         expect(Support::Case.last.organisation).to eq(local_authority)
-        expect(Support::Case.last.participating_schools.pluck(:name)).to match_array(["School #1", "School #2"])
+        expect(Support::Case.last.participating_schools.pluck(:name)).to contain_exactly("School #1", "School #2")
         expect(CaseRequest.last.same_supplier_used).to eq("yes")
       end
     end

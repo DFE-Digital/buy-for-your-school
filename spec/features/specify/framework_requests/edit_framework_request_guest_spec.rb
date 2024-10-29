@@ -110,7 +110,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     expect(values[6]).to have_text "I have a problem"
   end
 
-  describe "change organisation type and reselect", js: true do
+  describe "change organisation type and reselect", :js do
     before do
       click_link "edit-school-type"
     end
@@ -160,7 +160,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
     end
   end
 
-  describe "change organisation (same type)", js: true do
+  describe "change organisation (same type)", :js do
     before do
       click_link "edit-school"
       fill_in "framework_support_form[org_id]", with: "100254"

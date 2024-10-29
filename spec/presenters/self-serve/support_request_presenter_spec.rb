@@ -6,7 +6,7 @@ RSpec.describe SupportRequestPresenter do
 
   describe "#journey" do
     it "returns a journey presenter" do
-      expect(presenter.journey).to be_kind_of(JourneyPresenter)
+      expect(presenter.journey).to be_a(JourneyPresenter)
     end
   end
 end

@@ -19,25 +19,25 @@ describe Support::Emails::Templates::Filter do
   describe "#by_groups" do
     context "when filtering for all subgroups" do
       it "returns templates with all subgroups" do
-        expect(service.by_groups(group_fm.id, subgroups: %w[all]).results).to match_array([template_3, template_4, template_5])
+        expect(service.by_groups(group_fm.id, subgroups: %w[all]).results).to contain_exactly(template_3, template_4, template_5)
       end
     end
 
     context "when no subgroups specified" do
       it "returns templates with no subgroup" do
-        expect(service.by_groups(group_energy.id).results).to match_array([template_1])
+        expect(service.by_groups(group_energy.id).results).to contain_exactly(template_1)
       end
     end
 
     context "when filtering for specific subgroups" do
       it "returns templates with matching subgroups" do
-        expect(service.by_groups(group_fm.id, subgroups: [subgroup_fm_catering.id, subgroup_fm_cleaning.id]).results).to match_array([template_4, template_5])
+        expect(service.by_groups(group_fm.id, subgroups: [subgroup_fm_catering.id, subgroup_fm_cleaning.id]).results).to contain_exactly(template_4, template_5)
       end
     end
 
     context "when filtering for specific subgroups and none" do
       it "returns templates with matching subgroups" do
-        expect(service.by_groups(group_fm.id, subgroups: [subgroup_fm_catering.id, subgroup_fm_cleaning.id, "none"]).results).to match_array([template_3, template_4, template_5])
+        expect(service.by_groups(group_fm.id, subgroups: [subgroup_fm_catering.id, subgroup_fm_cleaning.id, "none"]).results).to contain_exactly(template_3, template_4, template_5)
       end
     end
   end
@@ -45,25 +45,25 @@ describe Support::Emails::Templates::Filter do
   describe "#by_stages" do
     context "when filtering for all stages" do
       it "returns templates with all stages" do
-        expect(service.by_stages(%w[all]).results).to match_array([template_1, template_2, template_3, template_4, template_5])
+        expect(service.by_stages(%w[all]).results).to contain_exactly(template_1, template_2, template_3, template_4, template_5)
       end
     end
 
     context "when no stages specified" do
       it "returns templates with all stages" do
-        expect(service.by_stages([]).results).to match_array([template_1, template_2, template_3, template_4, template_5])
+        expect(service.by_stages([]).results).to contain_exactly(template_1, template_2, template_3, template_4, template_5)
       end
     end
 
     context "when filtering for specific stages" do
       it "returns templates with matching stages" do
-        expect(service.by_stages(%w[2 4]).results).to match_array([template_3, template_4])
+        expect(service.by_stages(%w[2 4]).results).to contain_exactly(template_3, template_4)
       end
     end
 
     context "when filtering for specific stages and none" do
       it "returns templates with matching stages" do
-        expect(service.by_stages(%w[2 4 none]).results).to match_array([template_1, template_3, template_4, template_5])
+        expect(service.by_stages(%w[2 4 none]).results).to contain_exactly(template_1, template_3, template_4, template_5)
       end
     end
   end

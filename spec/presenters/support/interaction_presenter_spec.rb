@@ -32,7 +32,7 @@ RSpec.describe Support::InteractionPresenter do
 
   describe "#contact_options" do
     it "returns a formatted hash for the log contact form" do
-      expect(presenter.contact_options).to match_array([
+      expect(presenter.contact_options).to contain_exactly(
         have_attributes(id: "phone_call", label: "Phone call"),
         have_attributes(id: "email_from_school", label: "Email from school"),
         have_attributes(id: "email_to_school", label: "Email to school"),
@@ -40,7 +40,7 @@ RSpec.describe Support::InteractionPresenter do
         have_attributes(id: "case_contact_changed", label: "Case contact changed"),
         have_attributes(id: "case_level_changed", label: "Case level changed"),
         have_attributes(id: "case_with_school_changed", label: "Case with school changed"),
-      ])
+      )
     end
   end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can create frameworks", js: true do
+describe "Agent can create frameworks", :js do
   include_context "with a framework evaluation agent"
 
   before do

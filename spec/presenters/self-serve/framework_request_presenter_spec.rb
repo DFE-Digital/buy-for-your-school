@@ -25,12 +25,12 @@ RSpec.describe FrameworkRequestPresenter do
   describe "#user" do
     it "returns user presenter if user exists" do
       framework_request.user = create(:user)
-      expect(presenter.user).to be_kind_of UserPresenter
+      expect(presenter.user).to be_a UserPresenter
     end
 
     it "returns OpenStruct if user does not exist" do
       framework_request.user = nil
-      expect(presenter.user).to be_kind_of OpenStruct
+      expect(presenter.user).to be_a OpenStruct
     end
   end
 

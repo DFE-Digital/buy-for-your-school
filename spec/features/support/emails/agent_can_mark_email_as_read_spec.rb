@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent sees emails in messages", js: true do
+describe "Agent sees emails in messages", :js do
   include_context "with an agent"
 
   let(:is_read) { true }

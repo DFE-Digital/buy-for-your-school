@@ -15,7 +15,7 @@ RSpec.describe AnswerFactory do
       it "returns a new RadioAnswer object" do
         step = create(:step, :radio)
         result = described_class.new(step:).call
-        expect(result).to be_kind_of(RadioAnswer)
+        expect(result).to be_a(RadioAnswer)
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe AnswerFactory do
       it "returns a new ShortTextAnswer object" do
         step = create(:step, :short_text)
         result = described_class.new(step:).call
-        expect(result).to be_kind_of(ShortTextAnswer)
+        expect(result).to be_a(ShortTextAnswer)
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe AnswerFactory do
       it "returns a new LongTextAnswer object" do
         step = create(:step, :long_text)
         result = described_class.new(step:).call
-        expect(result).to be_kind_of(LongTextAnswer)
+        expect(result).to be_a(LongTextAnswer)
       end
     end
   end
@@ -40,7 +40,7 @@ RSpec.describe AnswerFactory do
     it "returns a new NumberAnswer object" do
       step = create(:step, :number)
       result = described_class.new(step:).call
-      expect(result).to be_kind_of(NumberAnswer)
+      expect(result).to be_a(NumberAnswer)
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe AnswerFactory do
     it "returns a new CurrencyAnswer object" do
       step = create(:step, :currency)
       result = described_class.new(step:).call
-      expect(result).to be_kind_of(CurrencyAnswer)
+      expect(result).to be_a(CurrencyAnswer)
     end
   end
 end

@@ -12,7 +12,7 @@ RSpec.feature "Users can see their catering specification" do
     visit "/journeys/#{journey.id}"
   end
 
-  context "when the journey has been completed", js: true do
+  context "when the journey has been completed", :js do
     scenario "HTML" do
       click_first_link_in_section_list
 
@@ -44,7 +44,7 @@ RSpec.feature "Users can see their catering specification" do
     end
   end
 
-  context "when the journey has not yet been completed", js: true do
+  context "when the journey has not yet been completed", :js do
     scenario "includes an incomple warning" do
       # Omit answering a question to simulate an incomplete spec
       click_view

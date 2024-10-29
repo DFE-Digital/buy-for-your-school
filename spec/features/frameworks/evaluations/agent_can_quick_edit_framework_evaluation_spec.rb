@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can quick edit a framework evaluation", js: true do
+describe "Agent can quick edit a framework evaluation", :js do
   include_context "with a framework evaluation agent"
 
   let!(:framework_evaluation) { create(:frameworks_evaluation, reference: "FE1") }

@@ -6,7 +6,7 @@ describe "Agent can view uploaded bills" do
     let(:bill) { create(:energy_bill, file: Rack::Test::UploadedFile.new("spec/fixtures/files/text-file.txt", "text/plain")) }
     let!(:case_attachment) { create(:support_case_attachment, case: support_case, custom_name: "energy_bill_1.pdf", attachable: bill) }
 
-    it "displays them within the Files tab", js: true do
+    it "displays them within the Files tab", :js do
       visit support_case_path(support_case)
 
       within "#case-files tr", text: "energy_bill_1.pdf" do

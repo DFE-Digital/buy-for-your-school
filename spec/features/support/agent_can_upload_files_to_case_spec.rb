@@ -11,7 +11,7 @@ describe "Agent can upload files to a case" do
   context "when files are uploaded" do
     it "attaches the files to the case" do
       expect { file_uploader.save! }.to change { support_case.case_attachments.count }.from(0).to(2)
-      expect(support_case.case_attachments.pluck(:custom_name)).to match_array(["text-file.txt", "another-text-file.txt"])
+      expect(support_case.case_attachments.pluck(:custom_name)).to contain_exactly("text-file.txt", "another-text-file.txt")
       expect(support_case.case_attachments.map { |a| a.file.attached? }.all?).to eq(true)
     end
   end

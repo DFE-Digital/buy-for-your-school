@@ -73,7 +73,7 @@ RSpec.feature "New case event" do
       expect(find("h1.govuk-heading-l")).to have_text "Contact with school"
     end
 
-    context "when choosing phone call", js: true do
+    context "when choosing phone call", :js do
       it "logs phone call in messages" do
         choose "Phone call"
         fill_in "interaction[body]", with: "this is an example phone call"
@@ -89,7 +89,7 @@ RSpec.feature "New case event" do
       end
     end
 
-    context "when choosing email from school", js: true do
+    context "when choosing email from school", :js do
       it "logs email from school in messages" do
         choose "Email from school"
         fill_in "interaction[body]", with: "this is an example email from the school"
@@ -106,7 +106,7 @@ RSpec.feature "New case event" do
       end
     end
 
-    context "when choosing email to school", js: true do
+    context "when choosing email to school", :js do
       it "logs email to school in messages" do
         choose "Email to school"
         fill_in "interaction[body]", with: "this is an example email to the school"

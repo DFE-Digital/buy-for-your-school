@@ -38,7 +38,7 @@ describe "Agent can view other cases raised by the same organisation" do
     end
   end
 
-  describe "In the individual case view", js: true do
+  describe "In the individual case view", :js do
     let!(:support_case) { create(:support_case, agent:, organisation:) }
 
     context "when there are no other cases raised by the same organisation" do

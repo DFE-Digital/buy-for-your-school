@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can set a case's establishment", js: true do
+describe "Agent can set a case's establishment", :js do
   include_context "with an agent"
 
   before do

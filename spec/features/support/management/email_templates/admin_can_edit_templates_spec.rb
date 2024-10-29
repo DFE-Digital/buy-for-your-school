@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Admin can edit email templates", :with_csrf_protection, js: true do
+describe "Admin can edit email templates", :js, :with_csrf_protection do
   include_context "with an agent", roles: %w[global_admin]
 
   before do

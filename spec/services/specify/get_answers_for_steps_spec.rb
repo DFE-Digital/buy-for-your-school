@@ -209,7 +209,7 @@ RSpec.describe GetAnswersForSteps do
     end
 
     context "when the answer includes script characters" do
-      it "removes them  from the answer that is then saved" do
+      it "removes them from the answer that is then saved" do
         answer = create(:short_text_answer,
                         response: "<script>alert('problem');</script>A little text")
 

@@ -15,7 +15,7 @@ RSpec.feature "Journey continue button behaviour" do
       visit "/journeys/#{journey.id}"
     end
 
-    scenario "the user is returned to the same place in the task list " do
+    scenario "the user is returned to the same place in the task list" do
       click_first_link_in_section_list
 
       fill_in "answer[response]", with: "This is my long answer"

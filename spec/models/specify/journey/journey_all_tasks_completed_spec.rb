@@ -18,7 +18,7 @@ RSpec.describe Journey, "#all_tasks_completed?", type: :model do
   end
 
   context "when no steps have been completed" do
-    it "returns false " do
+    it "returns false" do
       create_list(:step, 2, :radio, task:)
 
       expect(journey.all_tasks_completed?).to be false

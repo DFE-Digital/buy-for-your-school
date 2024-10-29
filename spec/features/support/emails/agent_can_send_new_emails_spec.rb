@@ -1,4 +1,4 @@
-describe "Agent can send new emails", js: true do
+describe "Agent can send new emails", :js do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, email: "contact@email.com") }
@@ -14,7 +14,7 @@ describe "Agent can send new emails", js: true do
     end
   end
 
-  describe "creating a new thread", :with_csrf_protection, js: true do
+  describe "creating a new thread", :js, :with_csrf_protection do
     before do
       template = create(:support_email_template, title: "Energy template", subject: "about energy", body: "energy body")
       create(:support_email_template_attachment, template:)

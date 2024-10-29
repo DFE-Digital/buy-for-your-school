@@ -25,7 +25,7 @@ describe Frameworks::Framework::Filterable do
       let(:params) { { status: %w[dfe_approved] } }
 
       it "returns all frameworks matching the given statuses only" do
-        expect(filtering.results.pluck(:name)).to match_array(["DfE Approved - Provider 1"])
+        expect(filtering.results.pluck(:name)).to contain_exactly("DfE Approved - Provider 1")
       end
     end
 
@@ -33,7 +33,7 @@ describe Frameworks::Framework::Filterable do
       let(:params) { { provider: [provider_1.id] } }
 
       it "returns all frameworks matching the given providers only" do
-        expect(filtering.results.pluck(:name)).to match_array(["DfE Approved - Provider 1", "Cab Approved - Provider 1", "Evaluating - Provider 1"])
+        expect(filtering.results.pluck(:name)).to contain_exactly("DfE Approved - Provider 1", "Cab Approved - Provider 1", "Evaluating - Provider 1")
       end
     end
 
@@ -41,7 +41,7 @@ describe Frameworks::Framework::Filterable do
       let(:params) { { category: [category_2.id] } }
 
       it "returns all frameworks matching the given categories only" do
-        expect(filtering.results.pluck(:name)).to match_array(["Not Approved - Provider 2", "Evaluating - Provider 1"])
+        expect(filtering.results.pluck(:name)).to contain_exactly("Not Approved - Provider 2", "Evaluating - Provider 1")
       end
     end
 
@@ -49,7 +49,7 @@ describe Frameworks::Framework::Filterable do
       let(:params) { { e_and_o_lead: [e_and_o_lead.id] } }
 
       it "returns all frameworks matching the given agents only" do
-        expect(filtering.results.pluck(:name)).to match_array(["Evaluating - Provider 2"])
+        expect(filtering.results.pluck(:name)).to contain_exactly("Evaluating - Provider 2")
       end
     end
 
@@ -57,7 +57,7 @@ describe Frameworks::Framework::Filterable do
       let(:params) { { proc_ops_lead: [proc_ops_lead.id] } }
 
       it "returns all frameworks matching the given agents only" do
-        expect(filtering.results.pluck(:name)).to match_array(["Evaluating - Provider 1"])
+        expect(filtering.results.pluck(:name)).to contain_exactly("Evaluating - Provider 1")
       end
     end
   end

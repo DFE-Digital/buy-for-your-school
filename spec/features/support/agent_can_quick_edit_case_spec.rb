@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can quick edit a case", js: true do
+describe "Agent can quick edit a case", :js do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, ref: "000001", agent:, support_level: :L1, category: gas_category, procurement_stage: need_stage) }
