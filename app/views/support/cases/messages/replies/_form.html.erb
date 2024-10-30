@@ -22,13 +22,8 @@
       <%= I18n.t("support.case.label.message_threads.using_template", template: @reply_form.template.title) %>
     </div>
   <% end %>
+
   <% if reply %>
-    <div class="govuk-button-group">
-      <%= link_to "Add Additional Contacts", 
-          add_recipient_support_case_message_replies_path(id: params[:id]), 
-          data: { turbo_frame: "recipient-frame", turbo_method: "post" }, 
-          class: "govuk-button" %>
-    </div>
     <%= render "support/cases/message_threads/recipient_table", email: %>
   <% else %>
     <%= render "support/cases/messages/replies/new_message_components", form:, unique_id: %>

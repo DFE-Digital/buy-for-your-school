@@ -7,7 +7,6 @@ class Email::Draft
   attribute :mailbox, default: -> { Email.default_mailbox }
   attribute :microsoft_graph, default: -> { MicrosoftGraph.client }
   attribute :reply_to_email
-  attribute :role
   attribute :ticket
   attribute :template_id
   attribute :template_parser, default: -> { Email::TemplateParser.new }

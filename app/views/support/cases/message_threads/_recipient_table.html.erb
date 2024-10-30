@@ -1,9 +1,11 @@
-<%= turbo_frame_tag "recipient-frame" do %>
-  <table id="recipient-table" class="govuk-table added_recipients_table">
-    <tbody id="recipient-table-body" class="govuk-table__body">
-      <%= render "support/cases/message_threads/recipients", recipients: email.to_recipients, recipient_type: "TO" %>
-      <%= render "support/cases/message_threads/recipients", recipients: email.cc_recipients, recipient_type: "CC" %>
-      <%= render "support/cases/message_threads/recipients", recipients: email.bcc_recipients, recipient_type: "BCC" %>
-    </tbody>
-  </table>
-<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <table id="recipient-table" class="govuk-table added_recipients_table">
+      <tbody class="govuk-table__body">
+        <%= render "support/cases/message_threads/recipients", recipients: email.to_recipients, recipient_type: "TO" %>
+        <%= render "support/cases/message_threads/recipients", recipients: email.cc_recipients, recipient_type: "CC" %>
+        <%= render "support/cases/message_threads/recipients", recipients: email.bcc_recipients, recipient_type: "BCC" %>
+      </tbody>
+    </table>
+  </div>
+</div>
