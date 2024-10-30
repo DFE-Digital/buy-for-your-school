@@ -147,10 +147,16 @@ useful.
 Don't squash a pull request into a single commit, as it undoes all the helpful
 work you've done in writing messages for each change.
 
-Instead, rebase and merge with `--no-ff` to create a linear history in which
-all the commits in a pull request are nested under a merge commit.
-This groups the commits together to explain the context, while preserving the
-information at each step.
+When the pull request is out of sync with `main` (when GitHub says "This branch
+is out-of-date with the base branch"), rebase your commit before merging.
+
+This can be done manually, or via the GitHub interface using the "Update with
+rebase" option.
+
+Merge the pull request with a merge commit (the equivalent of `--no-ff)` to
+create a history in which all the commits in a pull request are nested
+under a merge commit. This groups the commits together to explain the context,
+while preserving the information at each step.
 
 ## Prefer small pull requests
 
