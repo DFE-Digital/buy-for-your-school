@@ -24,7 +24,7 @@ class Frameworks::Framework < ApplicationRecord
 
   validates :provider_id, presence: { message: "Please select a provider" }, on: :creation_form
 
-  enum lot: {
+  enum :lot, {
     single: 0,
     multi: 1,
   }

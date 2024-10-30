@@ -17,20 +17,20 @@ module Support
     #   evaluation
     #   contract_award
     #   handover
-    enum stage: { need: 0, market_analysis: 1, sourcing_options: 2, go_to_market: 3, evaluation: 4, contract_award: 5, handover: 6 }
+    enum :stage, { need: 0, market_analysis: 1, sourcing_options: 2, go_to_market: 3, evaluation: 4, contract_award: 5, handover: 6 }
 
     # Required agreement type
     #
     #   one_off
     #   ongoing
-    enum required_agreement_type: { one_off: 0, ongoing: 1 }
+    enum :required_agreement_type, { one_off: 0, ongoing: 1 }
 
     # Route to market
     #
     #   dfe_approved  - DfE Approved Deal / Framework
     #   bespoke       -  Bespoke Procurement
     #   direct_award  - Direct Award
-    enum route_to_market: { dfe_approved: 0, bespoke: 1, direct_award: 2 }
+    enum :route_to_market, { dfe_approved: 0, bespoke: 1, direct_award: 2 }
 
     # Reason for route to market
     #
@@ -38,7 +38,7 @@ module Support
     #   dfe_deal        - DfE Deal/Framework Selected
     #   no_dfe_deal     -  No DfE Deal/Framework Available
     #   better_than_dfe - Better Spec/Terms than DfE Deal
-    enum reason_for_route_to_market: { school_pref: 0, dfe_deal: 1, no_dfe_deal: 2, better_than_dfe: 3 }
+    enum :reason_for_route_to_market, { school_pref: 0, dfe_deal: 1, no_dfe_deal: 2, better_than_dfe: 3 }
 
     # Ensure blank strings are stored as nil
     def normalize_blank_values

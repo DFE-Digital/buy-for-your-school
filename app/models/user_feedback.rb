@@ -8,7 +8,7 @@ class UserFeedback < ApplicationRecord
   # Service
   #
   #   create_a_specification
-  enum service: { create_a_specification: 0 }
+  enum :service, { create_a_specification: 0 }
 
   # Satisfaction rating
   #
@@ -17,5 +17,5 @@ class UserFeedback < ApplicationRecord
   #   neither - Neither satisfied or dissatisfied
   #   satisfied
   #   very_satisfied
-  enum satisfaction: { very_dissatisfied: 0, dissatisfied: 1, neither: 2, satisfied: 3, very_satisfied: 4 }
+  enum :satisfaction, { very_dissatisfied: 0, dissatisfied: 1, neither: 2, satisfied: 3, very_satisfied: 4 }
 end

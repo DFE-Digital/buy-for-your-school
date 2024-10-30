@@ -4,7 +4,7 @@ module Support::Case::StateChangeable
   included do
     include AASM
 
-    enum state: {
+    enum :state, {
       initial: 0,
       opened: 1,
       resolved: 2,

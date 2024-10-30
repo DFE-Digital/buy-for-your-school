@@ -6,7 +6,7 @@ class ExitSurveyResponse < ApplicationRecord
   #   sent_out
   #   in_progress
   #   completed
-  enum status: { sent_out: 0, in_progress: 1, completed: 2 }, _suffix: true
+  enum :status, { sent_out: 0, in_progress: 1, completed: 2 }, suffix: true
 
   # Satisfaction rating
   #
@@ -15,7 +15,7 @@ class ExitSurveyResponse < ApplicationRecord
   #   neither - Neither satisfied or dissatisfied
   #   satisfied
   #   very_satisfied
-  enum satisfaction_level: { very_dissatisfied: 0, dissatisfied: 1, neither: 2, satisfied: 3, very_satisfied: 4 }, _suffix: true
+  enum :satisfaction_level, { very_dissatisfied: 0, dissatisfied: 1, neither: 2, satisfied: 3, very_satisfied: 4 }, suffix: true
 
   # Saved time
   #
@@ -24,7 +24,7 @@ class ExitSurveyResponse < ApplicationRecord
   #   neither - Neither agree nor disagree
   #   agree
   #   strongly_agree
-  enum saved_time: { strongly_disagree: 0, disagree: 1, neither: 2, agree: 3, strongly_agree: 4 }, _suffix: true
+  enum :saved_time, { strongly_disagree: 0, disagree: 1, neither: 2, agree: 3, strongly_agree: 4 }, suffix: true
 
   # Better quality
   #
@@ -33,7 +33,7 @@ class ExitSurveyResponse < ApplicationRecord
   #   neither - Neither agree nor disagree
   #   agree
   #   strongly_agree
-  enum better_quality: { strongly_disagree: 0, disagree: 1, neither: 2, agree: 3, strongly_agree: 4 }, _suffix: true
+  enum :better_quality, { strongly_disagree: 0, disagree: 1, neither: 2, agree: 3, strongly_agree: 4 }, suffix: true
 
   # Future support
   #
@@ -42,7 +42,7 @@ class ExitSurveyResponse < ApplicationRecord
   #   neither - Neither agree nor disagree
   #   agree
   #   strongly_agree
-  enum future_support: { strongly_disagree: 0, disagree: 1, neither: 2, agree: 3, strongly_agree: 4 }, _suffix: true
+  enum :future_support, { strongly_disagree: 0, disagree: 1, neither: 2, agree: 3, strongly_agree: 4 }, suffix: true
 
   # Hear about the service
   #
@@ -55,7 +55,7 @@ class ExitSurveyResponse < ApplicationRecord
   #   social_media
   #   word_of_mouth
   #   other
-  enum hear_about_service: {  dfe_email: 0,
+  enum :hear_about_service, { dfe_email: 0,
                               dfe_event: 1,
                               non_dfe_event: 2,
                               dfe_promotion: 3,

@@ -39,7 +39,7 @@ module Support
     #   new_contract_updated
     #   savings_updated
     #   state_change
-    enum event_type: {
+    enum :event_type, {
       note: 0,
       phone_call: 1,
       email_from_school: 2,
