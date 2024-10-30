@@ -6,9 +6,7 @@ function getCollectionValues(collectionName) {
 function removeRecipient(value, collectionName) {
   const collection = document.getElementsByName(collectionName)[0];
   const collectionValues = getCollectionValues(collectionName);
-  collection.value = JSON.stringify(
-    collectionValues.filter(v => JSON.stringify(v) !== JSON.stringify(value))
-  );
+  collection.value = JSON.stringify(collectionValues.filter(v => v !== value));
 }
 
 function createRemoveLink(tableId, inputValue, collectionName) {
@@ -35,36 +33,20 @@ function createRecipientRow(tableId, label, value, collectionName) {
   labelTh.scope = "row";
   labelTh.appendChild(document.createTextNode(label));
 
-  const recipientEmailTd = document.createElement("td");
-  recipientEmailTd.classList.add("govuk-table__cell");
-  const recipientEmail = document.createTextNode(value[0]);
-  recipientEmailTd.appendChild(recipientEmail);
-
-  const recipientRoleTd = document.createElement("td");
-  recipientRoleTd.classList.add("govuk-table__cell", "recipient-spacing");
-  const rolevalue = value[1] && value[1].length > 0 
-  ? (value[1][1] && value[1][1].length > 1) 
-      ? [capitalizeFirstLetter(value[1][0]), capitalizeFirstLetter(value[1][1])] 
-      : value[1][0].length > 1
-        ? [capitalizeFirstLetter(value[1][0])] // Handle the single element correctly here
-        : [capitalizeFirstLetter(value[1])]
-  : "";  const recipientRole = document.createTextNode(rolevalue);
-  recipientRoleTd.appendChild(recipientRole);
+  const recipientTd = document.createElement("td");
+  recipientTd.classList.add("govuk-table__cell");
+  const recipientEmail = document.createTextNode(value);
+  recipientTd.appendChild(recipientEmail);
 
   const recipientRemoveTd = document.createElement("td");
   recipientRemoveTd.classList.add("govuk-table__cell", "govuk-table__cell--numeric");
   recipientRemoveTd.appendChild(createRemoveLink(tableId, value, collectionName));
 
   recipientRow.appendChild(labelTh);
-  recipientRow.appendChild(recipientEmailTd);
-  recipientRow.appendChild(recipientRoleTd);
+  recipientRow.appendChild(recipientTd);
   recipientRow.appendChild(recipientRemoveTd);
 
   return recipientRow;
-}
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function showTables(inputFieldName) {
@@ -87,18 +69,13 @@ function addRecipient(inputFieldName) {
   const inputField = document.getElementsByName(inputFieldName)[0];
   const collection = document.getElementsByName(inputField.dataset.collection)[0];
   var collectionValues = collection.value ? JSON.parse(collection.value) : [];
-
   const inputValue = inputField.value;
-  const newRecipient = [inputValue, []];
-  collectionValues.push(newRecipient);
-  collectionValues = collectionValues.filter((item, index, self) => 
-    item[0] && self.findIndex(r => r[0] === item[0]) === index
-  );
+  collectionValues.push(inputValue);
+  collectionValues = [...new Set(collectionValues)].filter(Boolean) // ensure values are unique and non-null
   collection.value = JSON.stringify(collectionValues);
   buildTable(inputField.dataset.table, inputField.dataset.collection);
   inputField.value = "";
 }
-
 
 function getRecipientsButtons() {
   return document.querySelectorAll('[data-component="add-recipients"]');

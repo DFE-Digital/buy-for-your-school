@@ -203,9 +203,5 @@ module Support
       update!(agent:)
       agent.notify_assigned_to_case(support_case: self, assigned_by:)
     end
-
-    def additional_contacts_emails
-      case_additional_contacts.pluck(:email, :role)
-    end
   end
 end

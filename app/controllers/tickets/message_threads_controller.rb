@@ -38,11 +38,6 @@ class Tickets::MessageThreadsController < ApplicationController
   def submit
     @draft = Email::Draft.find(params[:id])
     @draft.attributes = new_thread_params
-    emails = @draft.to_recipients.map(&:first)
-    @draft.to_recipients = emails.uniq.to_json
-    @draft.cc_recipients = @draft.cc_recipients.map(&:first).to_json if @draft.cc_recipients.present?
-    @draft.bcc_recipients = @draft.bcc_recipients.map(&:first).to_json if @draft.bcc_recipients.present?
-    @draft.email.to_recipients = emails.uniq.to_json
     if @draft.valid?(:new_message)
       @draft.save_draft!
       @draft.deliver_as_new_message
