@@ -8,7 +8,7 @@ module Frameworks::Evaluation::StatusChangeable
 
     before_save :call_permissable_event_for_manual_updates, if: -> { status_changed? && (aasm.from_state.nil? || aasm.to_state.nil?) }
 
-    enum status: {
+    enum :status, {
       draft: 0,
       in_progress: 1,
       approved: 2,

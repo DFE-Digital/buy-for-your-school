@@ -6,9 +6,9 @@ module Frameworks
 
     # Since these are all coming from other records, there is a risk of method collision
     # To avoid this, prefixes are used
-    enum source: Framework.sources, _prefix: :framework
-    enum status: Framework.statuses, _prefix: :framework
-    enum lot: Framework.lots, _prefix: :framework
+    enum :source, Framework.sources, prefix: :framework
+    enum :status, Framework.statuses, prefix: :framework
+    enum :lot, Framework.lots, prefix: :framework
 
     def readonly?
       true

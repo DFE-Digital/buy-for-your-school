@@ -283,7 +283,7 @@ RSpec.describe Task, type: :model do
 
     it "returns nil if there is only one skipped question" do
       task.skipped_ids << "1"
-      expect(task.next_skipped_id("1")).to be nil
+      expect(task.next_skipped_id("1")).to be_nil
     end
   end
 end

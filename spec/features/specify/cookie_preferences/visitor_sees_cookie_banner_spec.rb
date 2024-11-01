@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Visitor to GHBS service sees cookie banner", js: true do
+describe "Visitor to GHBS service sees cookie banner", :js do
   scenario "Visitor accepting cookie notice can be tracked by GA" do
     Given :"I am a new visitor to the GHBS service"
     When :"I accept the tracking of cookies"

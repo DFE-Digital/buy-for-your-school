@@ -46,11 +46,7 @@ describe MicrosoftGraph::ClientSession do
       it "calls each page and returns the combined results" do
         response = client_session.graph_api_get("test/endpoint")
 
-        expect(response).to match_array([
-          { "displayName" => "testResponse1" },
-          { "displayName" => "testResponse2" },
-          { "displayName" => "testResponse3" },
-        ])
+        expect(response).to contain_exactly({ "displayName" => "testResponse1" }, { "displayName" => "testResponse2" }, { "displayName" => "testResponse3" })
       end
     end
   end

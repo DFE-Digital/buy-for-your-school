@@ -9,7 +9,7 @@ RSpec.feature "User feedback details" do
         expect(feedback.full_name).to eq "Dave Georgiou"
         expect(feedback.email).to eq "dave@dave.com"
         expect(feedback.logged_in).to be false
-        expect(feedback.logged_in_as).to be nil
+        expect(feedback.logged_in_as).to be_nil
       end
     end
 

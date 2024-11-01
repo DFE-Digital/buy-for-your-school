@@ -74,7 +74,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a user" do
     expect(values[6]).to have_text "I have a problem"
   end
 
-  context "with many supported schools and groups", js: true do
+  context "with many supported schools and groups", :js do
     it "the school or group can be edited" do
       click_link "edit-school"
 

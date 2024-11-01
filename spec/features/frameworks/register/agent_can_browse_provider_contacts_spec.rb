@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can browse provider contacts", js: true do
+describe "Agent can browse provider contacts", :js do
   include_context "with a framework evaluation agent"
 
   before do

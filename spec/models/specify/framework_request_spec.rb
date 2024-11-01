@@ -44,7 +44,7 @@ RSpec.describe FrameworkRequest, type: :model do
     let(:school_urns) { %w[1 2 3] }
 
     it "returns all selected schools" do
-      expect(framework_request.selected_schools.pluck(:name)).to match_array(["School 1", "School 2", "School 3"])
+      expect(framework_request.selected_schools.pluck(:name)).to contain_exactly("School 1", "School 2", "School 3")
     end
   end
 

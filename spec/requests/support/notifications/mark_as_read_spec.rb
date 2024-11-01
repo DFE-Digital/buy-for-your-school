@@ -17,7 +17,7 @@ describe "Marking notifications as read/unread" do
     it "marks the notification as unread" do
       post support_notification_read_path(notificaction, mark_as: :unread)
       expect(notificaction.reload.read).to be(false)
-      expect(notificaction.read_at).to be(nil)
+      expect(notificaction.read_at).to be_nil
     end
   end
 

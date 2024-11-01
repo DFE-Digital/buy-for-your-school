@@ -149,10 +149,7 @@ describe FrameworkRequests::CategoryForm, type: :model do
       let(:category_path) { nil }
 
       it "returns all top level categories" do
-        expect(form.category_options).to match_array([
-          OpenStruct.new(slug: "ict", title: "ICT", description: nil, enable_conditional_content: false),
-          OpenStruct.new(slug: "energy", title: "Energy", description: "energy category", enable_conditional_content: false),
-        ])
+        expect(form.category_options).to contain_exactly(OpenStruct.new(slug: "ict", title: "ICT", description: nil, enable_conditional_content: false), OpenStruct.new(slug: "energy", title: "Energy", description: "energy category", enable_conditional_content: false))
       end
     end
 
@@ -160,18 +157,14 @@ describe FrameworkRequests::CategoryForm, type: :model do
       let(:category_path) { "energy" }
 
       it "returns current category's subcategories" do
-        expect(form.category_options).to match_array([
-          OpenStruct.new(slug: "solar", title: "Solar", description: nil, enable_conditional_content: false),
-          OpenStruct.new(slug: "gas", title: "Gas", description: nil, enable_conditional_content: false),
-          OpenStruct.new(slug: "other", title: "Other", description: nil, enable_conditional_content: true),
-        ])
+        expect(form.category_options).to contain_exactly(OpenStruct.new(slug: "solar", title: "Solar", description: nil, enable_conditional_content: false), OpenStruct.new(slug: "gas", title: "Gas", description: nil, enable_conditional_content: false), OpenStruct.new(slug: "other", title: "Other", description: nil, enable_conditional_content: true))
       end
     end
   end
 
   describe "#category_divider_options" do
     it "returns the 'multiple' option" do
-      expect(form.category_divider_options).to match_array([OpenStruct.new(slug: "multiple", title: "I'm buying more than one thing")])
+      expect(form.category_divider_options).to contain_exactly(OpenStruct.new(slug: "multiple", title: "I'm buying more than one thing"))
     end
   end
 

@@ -248,7 +248,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     end
   end
 
-  describe "step 6: providing the procurement amount", js: true do
+  describe "step 6: providing the procurement amount", :js do
     let(:support_request) do
       create(:support_request,
              user: journey.user,
@@ -285,7 +285,7 @@ RSpec.feature "Editing a 'Digital Support' request" do
     end
   end
 
-  describe "step 7: providing special requirements", js: true do
+  describe "step 7: providing special requirements", :js do
     let(:support_request) do
       create(:support_request,
              user: journey.user,

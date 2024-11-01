@@ -68,7 +68,7 @@ module Support
     #   L3       - Helping school run a framework but school doing system work
     #   L4       - Run framework on behalf of school
     #   L5       - Run bespoke procurement
-    enum support_level: { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4 }
+    enum :support_level, { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4 }
 
     # Closure reason
     #
@@ -80,7 +80,7 @@ module Support
     #   transfer
     #   no_engagement
     #   test_case
-    enum closure_reason: { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5, no_engagement: 6, test_case: 7 }, _suffix: true
+    enum :closure_reason, { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5, no_engagement: 6, test_case: 7 }, suffix: true
 
     # Source
     #
@@ -89,7 +89,7 @@ module Support
     #   sw_hub          - south west hub cases
     #   incoming_email  -
     #   faf             - find a framework
-    enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
+    enum :source, { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
 
     # Discovery Method
     #
@@ -102,20 +102,20 @@ module Support
     #   social_media        - Social media, such as LinkedIn, Facebook, X (formerly Twitter)
     #   website             - Website, such as GOV.UK
     #   other               - Other
-    enum discovery_method: { used_before: 0, meeting_or_event: 1, dfe_publication: 2, non_dfe_publication: 3, recommendation: 4, search_engine: 5, social_media: 6, website: 7, other: 8 }
+    enum :discovery_method, { used_before: 0, meeting_or_event: 1, dfe_publication: 2, non_dfe_publication: 3, recommendation: 4, search_engine: 5, social_media: 6, website: 7, other: 8 }
 
     # Creation Source
     #
     #   default                 - created by a member of the ProcOps team
     #   engagement_and_outreach - created by a member of the E&O team
-    enum creation_source: { default: 0, engagement_and_outreach_team: 5 }
+    enum :creation_source, { default: 0, engagement_and_outreach_team: 5 }
 
     # Savings status
     #
     #   realised   - Realised
     #   potential  - Potential
     #   unrealised - Not realised
-    enum savings_status: { realised: 0, potential: 1, unrealised: 2 }
+    enum :savings_status, { realised: 0, potential: 1, unrealised: 2 }
 
     # Savings estimate method
     #
@@ -123,14 +123,14 @@ module Support
     #   rrp_minus_cheapest       - [RRP] - [Cheapest quote]
     #   previous_minus_estimated - [Previous spend] - [Estimated Contract Value]
     #   rrp_minus_estimated      - [RRP] - [Estimated Contract Value]
-    enum savings_estimate_method: { previous_minus_cheapest: 0, rrp_minus_cheapest: 1, previous_minus_estimated: 2, rrp_minus_estimated: 3 }
+    enum :savings_estimate_method, { previous_minus_cheapest: 0, rrp_minus_cheapest: 1, previous_minus_estimated: 2, rrp_minus_estimated: 3 }
 
     # Savings actual method
     #
     #   previous_minus_award    - [Previous spend] - [Award Price ]
     #   alternative_minus_award - [Alternative received price] - [Award Price ]
     #   rrp_minus_award         - [RRP] - [Award Price ]
-    enum savings_actual_method: { previous_minus_award: 0, alternative_minus_award: 1, rrp_minus_award: 2 }
+    enum :savings_actual_method, { previous_minus_award: 0, alternative_minus_award: 1, rrp_minus_award: 2 }
 
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }

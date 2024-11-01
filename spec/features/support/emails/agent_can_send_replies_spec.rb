@@ -1,4 +1,4 @@
-describe "Agent can reply to incoming emails", js: true, bullet: :skip do
+describe "Agent can reply to incoming emails", :js, bullet: :skip do
   include_context "with an agent"
 
   let(:email) { create(:support_email, origin, ticket: support_case) }

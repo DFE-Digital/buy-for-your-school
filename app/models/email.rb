@@ -13,7 +13,7 @@ class Email < ApplicationRecord
   has_many   :replies, class_name: "Email", foreign_key: :in_reply_to_id, primary_key: :outlook_internet_message_id
   has_many   :attachments, class_name: "EmailAttachment"
 
-  enum folder: { inbox: 0, sent_items: 1 }
+  enum :folder, { inbox: 0, sent_items: 1 }
 
   scope :display_order, -> { order("sent_at DESC") }
 

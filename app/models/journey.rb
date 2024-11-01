@@ -21,7 +21,7 @@ class Journey < ApplicationRecord
   # archive (user-defined)   - hide in dashboard
   # remove (user-defined)    - delete (permanent/soft)
   # finished (user-definied) - marked as 'finished'
-  enum state: { initial: 0, stale: 1, archive: 2, remove: 3, finished: 4 }
+  enum :state, { initial: 0, stale: 1, archive: 2, remove: 3, finished: 4 }
 
   # TODO: test scopes
 

@@ -15,7 +15,7 @@ RSpec.describe GetStepsFromTask do
 
     it "returns the list of entry objects referenced by the step list" do
       result = service.call
-      expect(result).to be_kind_of Array
+      expect(result).to be_a Array
       expect(result.first.id).to eq "checkboxes-question"
     end
 

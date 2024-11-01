@@ -29,7 +29,7 @@ RSpec.describe Dsi::Uri do
     end
 
     it "defaults to have no query" do
-      expect(service.call.query).to be nil
+      expect(service.call.query).to be_nil
     end
 
     describe "strict typing" do

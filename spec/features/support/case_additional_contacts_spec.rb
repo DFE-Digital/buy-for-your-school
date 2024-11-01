@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Additional Contacts", type: :feature, js: true do
+RSpec.describe "Additional Contacts", :js, type: :feature do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case) }

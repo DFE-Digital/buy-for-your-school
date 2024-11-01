@@ -69,7 +69,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     end
   end
 
-  context "when selecting a single school", js: true do
+  context "when selecting a single school", :js do
     before do
       choose "A single school"
       click_continue
@@ -260,7 +260,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "the procurement amount page", js: true do
+    describe "the procurement amount page", :js do
       before do
         autocomplete_school_step
         confirm_choice_step
@@ -280,7 +280,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "the special requirements page", js: true do
+    describe "the special requirements page", :js do
       before do
         autocomplete_school_step
         confirm_choice_step
@@ -306,7 +306,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     end
   end
 
-  context "when selecting a group or trust", js: true do
+  context "when selecting a group or trust", :js do
     before do
       choose "An academy trust or federation"
       click_continue

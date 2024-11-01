@@ -29,7 +29,7 @@ RSpec.describe Support::CaseContractsForm, type: :model do
       end
 
       it "returns nil" do
-        expect(form.duration).to be nil
+        expect(form.duration).to be_nil
       end
 
       it { expect(form.to_h).to eq({ duration: nil }) }

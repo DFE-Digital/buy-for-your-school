@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can download frameworks register csv", js: true do
+describe "Agent can download frameworks register csv", :js do
   include_context "with a framework evaluation agent"
 
   before do

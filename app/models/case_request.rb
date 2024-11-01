@@ -13,8 +13,8 @@ class CaseRequest < ApplicationRecord
 
   has_many :engagement_case_uploads, class_name: "EngagementCaseUpload"
 
-  enum source: { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
-  enum creation_source: { default: 0, engagement_and_outreach_team: 5 }
+  enum :source, { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
+  enum :creation_source, { default: 0, engagement_and_outreach_team: 5 }
   enum :same_supplier_used, { no: 0, yes: 1, not_sure: 2 }, prefix: true
 
   validates :first_name, :last_name, :email, :source, presence: true

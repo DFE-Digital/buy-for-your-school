@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Admin can filter templates", js: true, bullet: :skip do
+describe "Admin can filter templates", :js, bullet: :skip do
   include_context "with an agent", roles: %w[global_admin]
 
   before do

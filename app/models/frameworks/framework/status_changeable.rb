@@ -4,7 +4,7 @@ module Frameworks::Framework::StatusChangeable
   included do
     include AASM
 
-    enum status: {
+    enum :status, {
       not_approved: 0,
       pending_evaluation: 1,
       evaluating: 2,

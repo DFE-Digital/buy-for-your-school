@@ -10,7 +10,7 @@ RSpec.describe GetTasksFromSection do
 
       result = described_class.new(section:).call
 
-      expect(result).to be_kind_of(Array)
+      expect(result).to be_a(Array)
       # INFO: We should test this is a Contentful::Entry however it wasn't
       # possible to create an instance_double due to an unusual way the object
       # is constructed within the gem. Creating the object seems overly complex.

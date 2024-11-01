@@ -1,4 +1,4 @@
-RSpec.feature "Create case", js: true do
+RSpec.feature "Create case", :js do
   include_context "with an agent"
 
   before do

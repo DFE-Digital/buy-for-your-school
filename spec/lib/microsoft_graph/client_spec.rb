@@ -29,7 +29,7 @@ describe MicrosoftGraph::Client do
           .with(graph_api_response, into: MicrosoftGraph::Resource::MailFolder)
           .and_return([mail_folder_1, mail_folder_2])
 
-        expect(client.list_mail_folders(user_id)).to match_array([mail_folder_1, mail_folder_2])
+        expect(client.list_mail_folders(user_id)).to contain_exactly(mail_folder_1, mail_folder_2)
       end
     end
   end
@@ -57,7 +57,7 @@ describe MicrosoftGraph::Client do
           .with(graph_api_response, into: MicrosoftGraph::Resource::Message)
           .and_return([message_1, message_2])
 
-      expect(client.list_messages_in_folder(user_id, mail_folder)).to match_array([message_1, message_2])
+      expect(client.list_messages_in_folder(user_id, mail_folder)).to contain_exactly(message_1, message_2)
     end
 
     context "when query parameter is passed" do
@@ -140,7 +140,7 @@ describe MicrosoftGraph::Client do
                                                        .with(graph_api_response, into: MicrosoftGraph::Resource::Attachment)
                                                        .and_return([file_1, file_2])
 
-      expect(client.get_file_attachments(user_id, message_id)).to match_array([file_1, file_2])
+      expect(client.get_file_attachments(user_id, message_id)).to contain_exactly(file_1, file_2)
     end
   end
 

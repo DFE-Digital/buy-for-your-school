@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can create providers", js: true do
+describe "Agent can create providers", :js do
   include_context "with a framework evaluation agent"
 
   it "creates and takes you to the new framework provider" do

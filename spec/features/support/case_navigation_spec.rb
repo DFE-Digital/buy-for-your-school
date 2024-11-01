@@ -1,4 +1,4 @@
-RSpec.feature "Case list navigation", js: true, bullet: :skip do
+RSpec.feature "Case list navigation", :js, bullet: :skip do
   include_context "with an agent"
 
   before do

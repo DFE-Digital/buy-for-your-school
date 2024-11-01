@@ -30,7 +30,7 @@ describe AllCasesSurvey::BaseForm, type: :model do
 
     it "returns the survey response" do
       expect(form.all_cases_survey_response).to eq all_cases_survey_response
-      expect(form.all_cases_survey_response).to be_kind_of AllCasesSurveyResponsePresenter
+      expect(form.all_cases_survey_response).to be_a AllCasesSurveyResponsePresenter
     end
   end
 

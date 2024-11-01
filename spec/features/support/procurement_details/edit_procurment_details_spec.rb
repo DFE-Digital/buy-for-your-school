@@ -40,14 +40,14 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
-  it "shows framework name dropdown", js: true do
+  it "shows framework name dropdown", :js do
     within(all("div.govuk-form-group")[3]) do
       expect(find("label.govuk-label")).to have_text "Framework name"
       expect(page).to have_field "case_procurement_details_form[framework_name]"
     end
   end
 
-  context "when the framework dropdown does not contain a value", js: true do
+  context "when the framework dropdown does not contain a value", :js do
     it "does not have a clear framework link" do
       within(all("div.govuk-form-group")[3]) do
         expect(page).to have_css(".govuk-\\!-display-none")
@@ -55,7 +55,7 @@ RSpec.feature "Edit case procurement details" do
     end
   end
 
-  context "when the framework dropdown contains a value", js: true do
+  context "when the framework dropdown contains a value", :js do
     let(:support_procurement) { create(:support_procurement, stage: :market_analysis, register_framework: framework) }
 
     it "has a clear framework link, which removes the framework and link when clicked" do

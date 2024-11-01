@@ -20,9 +20,9 @@ describe Frameworks::Framework::Searchable do
 
     describe "by framework name" do
       it "fuzzy searches the whole name case insensitively" do
-        expect(searchable.omnisearch("ground").pluck(:name)).to match_array(["Playground Equipment", "Grounds maintenence"])
-        expect(searchable.omnisearch("equip").pluck(:name)).to match_array(["Playground Equipment", "ICT equipment"])
-        expect(searchable.omnisearch("maintenence").pluck(:name)).to match_array(["Grounds maintenence"])
+        expect(searchable.omnisearch("ground").pluck(:name)).to contain_exactly("Playground Equipment", "Grounds maintenence")
+        expect(searchable.omnisearch("equip").pluck(:name)).to contain_exactly("Playground Equipment", "ICT equipment")
+        expect(searchable.omnisearch("maintenence").pluck(:name)).to contain_exactly("Grounds maintenence")
       end
     end
   end

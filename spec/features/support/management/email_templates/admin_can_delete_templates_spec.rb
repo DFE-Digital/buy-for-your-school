@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Admin can delete email templates", js: true do
+describe "Admin can delete email templates", :js do
   include_context "with an agent", roles: %w[global_admin]
 
   before do

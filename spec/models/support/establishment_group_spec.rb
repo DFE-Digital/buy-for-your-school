@@ -21,7 +21,7 @@ RSpec.describe Support::EstablishmentGroup, type: :model do
       end
 
       it "returns associated organisations" do
-        expect(establishment_group.organisations.pluck(:name)).to match_array(["Fed School 1", "Fed School 2"])
+        expect(establishment_group.organisations.pluck(:name)).to contain_exactly("Fed School 1", "Fed School 2")
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe Support::EstablishmentGroup, type: :model do
       end
 
       it "returns associated organisations" do
-        expect(establishment_group.organisations.pluck(:name)).to match_array(["Trust School 1", "Trust School 2"])
+        expect(establishment_group.organisations.pluck(:name)).to contain_exactly("Trust School 1", "Trust School 2")
       end
     end
   end

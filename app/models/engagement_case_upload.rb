@@ -2,7 +2,7 @@
 
 class EngagementCaseUpload < ApplicationRecord
   has_one_attached :file
-  enum upload_status: { pending: 0, submitted: 1 }
+  enum :upload_status, { pending: 0, submitted: 1 }
 
   def name = filename
   def file_name = filename

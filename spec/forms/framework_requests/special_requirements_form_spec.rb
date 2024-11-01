@@ -46,7 +46,7 @@ describe FrameworkRequests::SpecialRequirementsForm, type: :model do
       it "saves special_requirements as nil" do
         form.save!
 
-        expect(framework_request.special_requirements).to be nil
+        expect(framework_request.special_requirements).to be_nil
       end
     end
 
@@ -62,7 +62,7 @@ describe FrameworkRequests::SpecialRequirementsForm, type: :model do
   end
 
   describe "#special_requirements_choice?" do
-    context "when special_requirements_choice is 'yes " do
+    context "when special_requirements_choice is 'yes" do
       subject(:form) { described_class.new(id: framework_request.id, special_requirements_choice: "yes") }
 
       it "returns true" do
@@ -70,7 +70,7 @@ describe FrameworkRequests::SpecialRequirementsForm, type: :model do
       end
     end
 
-    context "when special_requirements_choice is 'no " do
+    context "when special_requirements_choice is 'no" do
       subject(:form) { described_class.new(id: framework_request.id, special_requirements_choice: "no") }
 
       it "returns false" do

@@ -9,7 +9,7 @@ describe "Agent can rename case files" do
     create(:support_case_attachment, case: support_case, custom_name: "text-file.txt")
   end
 
-  it "adds a custom name and description to the file", js: true do
+  it "adds a custom name and description to the file", :js do
     visit support_case_path(support_case)
 
     click_link "Files"

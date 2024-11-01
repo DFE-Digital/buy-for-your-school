@@ -102,7 +102,7 @@ describe FrameworkRequests::SearchForOrganisationForm, type: :model do
   describe "#formatted_org_name" do
     context "when the org_id is not set" do
       it "returns nil" do
-        expect(form.formatted_org_name).to be nil
+        expect(form.formatted_org_name).to be_nil
       end
     end
 

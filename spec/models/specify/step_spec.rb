@@ -48,7 +48,7 @@ RSpec.describe Step, type: :model do
       it "returns the NumberAnswer object" do
         answer = create(:number_answer)
         question = create(:step, :number, number_answer: answer)
-        expect(question.answer).to be_kind_of NumberAnswer
+        expect(question.answer).to be_a NumberAnswer
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Step, type: :model do
       it "returns the CurrencyAnswer object" do
         answer = create(:currency_answer)
         question = create(:step, :currency, currency_answer: answer)
-        expect(question.answer).to be_kind_of CurrencyAnswer
+        expect(question.answer).to be_a CurrencyAnswer
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe Step, type: :model do
       it "returns the RadioAnswer object" do
         answer = create(:radio_answer)
         question = create(:step, :radio, radio_answer: answer)
-        expect(question.answer).to be_kind_of RadioAnswer
+        expect(question.answer).to be_a RadioAnswer
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Step, type: :model do
       it "returns the ShortTextAnswer object" do
         answer = create(:short_text_answer)
         question = create(:step, :short_text, short_text_answer: answer)
-        expect(question.answer).to be_kind_of ShortTextAnswer
+        expect(question.answer).to be_a ShortTextAnswer
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Step, type: :model do
       it "returns the LongTextAnswer object" do
         answer = create(:long_text_answer)
         question = create(:step, :long_text, long_text_answer: answer)
-        expect(question.answer).to be_kind_of LongTextAnswer
+        expect(question.answer).to be_a LongTextAnswer
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe Step, type: :model do
       it "returns the SingleDateAnswer object" do
         answer = create(:single_date_answer)
         question = create(:step, :single_date, single_date_answer: answer)
-        expect(question.answer).to be_kind_of SingleDateAnswer
+        expect(question.answer).to be_a SingleDateAnswer
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Step, type: :model do
       it "returns the CheckboxAnswers object" do
         answer = create(:checkbox_answers)
         question = create(:step, :checkbox, checkbox_answers: answer)
-        expect(question.answer).to be_kind_of CheckboxAnswers
+        expect(question.answer).to be_a CheckboxAnswers
       end
     end
   end

@@ -33,7 +33,7 @@ RSpec.describe JourneyPresenter do
 
   describe "#category" do
     it "returns a decorated category" do
-      expect(presenter.category).to be_kind_of(CategoryPresenter)
+      expect(presenter.category).to be_a(CategoryPresenter)
     end
   end
 end

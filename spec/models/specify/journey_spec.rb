@@ -29,8 +29,8 @@ RSpec.describe Journey, type: :model do
       create(:section, :with_tasks, tasks_count: 2, journey:)
       expect(journey.sections_with_tasks.count).to eq 1
       expect(journey.sections_with_tasks.first.tasks.count).to eq 2
-      expect(journey.sections_with_tasks.first.tasks[0]).not_to be nil
-      expect(journey.sections_with_tasks.first.tasks[1]).not_to be nil
+      expect(journey.sections_with_tasks.first.tasks[0]).not_to be_nil
+      expect(journey.sections_with_tasks.first.tasks[1]).not_to be_nil
     end
   end
 end

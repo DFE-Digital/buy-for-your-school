@@ -29,7 +29,7 @@ module Support
     validates :urn, uniqueness: true
     validates :name, presence: true
 
-    enum phase: {
+    enum :phase, {
       no_phase: 0,
       nursery: 1,
       primary: 2,
@@ -40,7 +40,7 @@ module Support
       all_through: 7,
     }
 
-    enum gender: {
+    enum :gender, {
       ungendered: 0,
       boys: 1,
       girls: 2,
@@ -48,7 +48,7 @@ module Support
       no_recorded_gender: 9, # historical records
     }
 
-    enum status: {
+    enum :status, {
       opened: 1,
       closed: 2,
       closing: 3,

@@ -25,7 +25,7 @@ describe FrameworkRequests::ConfirmOrganisationForm, type: :model do
       it "does not persist the organisation" do
         form.save!
 
-        expect(form.framework_request.org_id).to be nil
+        expect(form.framework_request.org_id).to be_nil
       end
     end
   end

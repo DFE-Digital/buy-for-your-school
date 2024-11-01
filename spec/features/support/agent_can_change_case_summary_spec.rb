@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can change case summary", js: true do
+describe "Agent can change case summary", :js do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, support_level: :L1, value: nil, source: "nw_hub", project: "test project", category: gas_category, procurement_stage: need_stage) }

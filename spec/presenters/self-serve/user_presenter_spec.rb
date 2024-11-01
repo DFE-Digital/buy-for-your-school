@@ -23,7 +23,7 @@ RSpec.describe UserPresenter do
     let(:user) { build(:user, journeys: [build(:journey), build(:journey)]) }
 
     it "decorates the journeys" do
-      expect(presenter.active_journeys).to be_kind_of(Array)
+      expect(presenter.active_journeys).to be_a(Array)
       expect(presenter.active_journeys.all? { |j| j.instance_of?(JourneyPresenter) }).to be true
     end
   end
@@ -80,10 +80,8 @@ RSpec.describe UserPresenter do
 
         results = described_class.new(user).supported_schools
 
-        expect(results.map(&:name)).to match_array([
-          "Supported School 1",
-          "Supported School 2",
-        ])
+        expect(results.map(&:name))
+          .to contain_exactly("Supported School 1", "Supported School 2")
       end
     end
   end
@@ -140,10 +138,8 @@ RSpec.describe UserPresenter do
 
         results = described_class.new(user).supported_groups
 
-        expect(results.map(&:name)).to match_array([
-          "Supported Group 1",
-          "Supported Group 2",
-        ])
+        expect(results.map(&:name))
+          .to contain_exactly("Supported Group 1", "Supported Group 2")
       end
     end
   end
@@ -182,12 +178,12 @@ RSpec.describe UserPresenter do
 
       results = described_class.new(user).supported_orgs
 
-      expect(results.map(&:name)).to match_array([
+      expect(results.map(&:name)).to contain_exactly(
         "A-Supported Group 1",
         "B-Supported School 2",
         "C-Supported Group 2",
         "D-Supported School 1",
-      ])
+      )
     end
   end
 

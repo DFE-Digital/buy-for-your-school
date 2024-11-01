@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can message from within an evaluation", js: true do
+describe "Agent can message from within an evaluation", :js do
   include_context "with a framework evaluation agent"
 
   let(:evaluation) { create(:frameworks_evaluation, reference: "FE123", contact:) }

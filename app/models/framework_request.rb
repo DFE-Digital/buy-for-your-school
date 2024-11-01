@@ -16,8 +16,8 @@ class FrameworkRequest < Request
   before_save :clear_attributes_by_flow, if: -> { attribute_changed?(:category_id) }
   before_save :auto_assign_sat_school, if: -> { sat_selected? }
 
-  enum energy_request_about: { energy_contract: 1, not_energy_contract: 0 }, _suffix: true
-  enum energy_alternative: { different_format: 0, email_later: 1, no_bill: 2, no_thanks: 3 }, _suffix: true
+  enum :energy_request_about, { energy_contract: 1, not_energy_contract: 0 }, suffix: true
+  enum :energy_alternative, { different_format: 0, email_later: 1, no_bill: 2, no_thanks: 3 }, suffix: true
   enum :contract_length, { not_sure: 0, one_year: 1, two_years: 2, three_years: 3, four_years: 4, five_years: 5 }, prefix: true
   enum :same_supplier_used, { no: 0, yes: 1, not_sure: 2 }, prefix: true
   enum :origin, { used_before: 0, meeting_or_event: 1, dfe_publication: 2, non_dfe_publication: 3, recommendation: 4, search_engine: 5, social_media: 6, website: 7, other: 8 }, prefix: true
