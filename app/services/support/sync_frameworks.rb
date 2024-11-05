@@ -34,9 +34,30 @@ module Support
       prepared_frameworks.each do |faf|
         is_exist = Frameworks::Framework.find_by(name: faf[:name], provider_id: faf[:provider_id])
         if is_exist
-          Frameworks::Framework.find_by(name: faf[:name], provider_id: faf[:provider_id]).update(faf_slug_ref: faf[:faf_slug_ref], faf_category: faf[:faf_category], provider_end_date: faf[:provider_end_date], url: faf[:url], description: faf[:description], source: 2, status: get_expired_status(faf[:provider_end_date]))
+          Frameworks::Framework.find_by(
+            name: faf[:name], 
+            provider_id: faf[:provider_id])
+            .update(
+              faf_slug_ref: faf[:faf_slug_ref],
+              faf_category: faf[:faf_category],
+              provider_end_date: faf[:provider_end_date],
+              url: faf[:url],
+              description: faf[:description],
+              source: 2,
+              status: get_expired_status(faf[:provider_end_date])
+            )
         else
-          new_record = Frameworks::Framework.new(name: faf[:name], provider_id: faf[:provider_id], faf_slug_ref: faf[:faf_slug_ref], faf_category: faf[:faf_category], provider_end_date: faf[:provider_end_date], url: faf[:url], description: faf[:description], source: 2, status: get_expired_status(faf[:provider_end_date]))
+          new_record = Frameworks::Framework.new(
+            name: faf[:name],
+            provider_id: faf[:provider_id],
+            faf_slug_ref: faf[:faf_slug_ref],
+            faf_category: faf[:faf_category],
+            provider_end_date: faf[:provider_end_date],
+            url: faf[:url],
+            description: faf[:description],
+            source: 2,
+            status: get_expired_status(faf[:provider_end_date])
+          )
           new_record.save!
         end
       end
@@ -100,7 +121,14 @@ module Support
         end
         if !is_exist
           #update framewok data as archived when no matching data found in FAF end point
-          Frameworks::Framework.find_by(name: cms_framework.name, provider_id: cms_framework.provider_id).update(status: 6, is_archived: true, faf_archived_at: Date.today)
+          Frameworks::Framework.find_by(
+            name: cms_framework.name, 
+            provider_id: cms_framework.provider_id)
+            .update(
+              status: 6,
+              is_archived: true,
+              faf_archived_at: Date.today
+            )
         end
       end
     end
