@@ -22,7 +22,27 @@ class Frameworks::Framework < ApplicationRecord
                                 after_add: :log_framework_category_added,
                                 after_remove: :log_framework_category_removed
 
-  validates :provider_id, presence: { message: "Please select a provider" }, on: :creation_form
+
+  validates :name_provider_combination_must_be_unique, presence: { message: "" }, on: :creation_form
+  validates :url, presence: { message: "Enter the provider url of the framework" }, on: :creation_form
+  validates :provider_reference, presence: { message: "Enter the provider reference of the framework" }, on: :creation_form
+  validates :proc_ops_lead_id, presence: { message: "Please select a procurement operations lead" }, on: :creation_form
+  validates :dfe_review_date, presence: { message: "Enter DfE review date" }, on: :creation_form
+  validates :provider_start_date, presence: { message: "Enter provider start date" }, on: :creation_form
+  validates :provider_end_date, presence: { message: "Enter provider end date" }, on: :creation_form
+
+  def name_provider_combination_must_be_unique
+    if name.blank?
+      errors.add(:name, "Enter the name of the framework")
+    end
+    if provider_id.blank?
+      errors.add(:provider_id, "Please select a provider")
+    end
+    if name && provider_id && Frameworks::Framework.where(name: name, provider_id: provider_id).exists?
+      errors.add(:name, "The combination of name and provider must be unique")
+      errors.add(:provider_id, "")
+    end
+  end
 
   enum lot: {
     single: 0,
