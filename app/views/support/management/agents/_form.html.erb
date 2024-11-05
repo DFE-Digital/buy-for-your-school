@@ -1,4 +1,4 @@
-<%= form_with(model: form, url:, method:, scope: :agent) do |form| %>
+<%= form_with(model: agent, url:, method:, scope: :agent) do |form| %>
   <%= form.govuk_text_field :first_name, width: 'two-thirds', label: { text: "First name" } %>
   <%= form.govuk_text_field :last_name, width: 'two-thirds', label: { text: "Last name" } %>
 

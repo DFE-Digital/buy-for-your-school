@@ -2,4 +2,4 @@
 
 <h2 class="govuk-heading-l">Edit <%= @agent.full_name %></h2>
 
-<%= render "support/management/agents/form", form: @form, url: support_management_agent_path(@agent), method: :patch, disable_email_field: @agent.email.present? %>
+<%= render "support/management/agents/form", agent: @agent, url: support_management_agent_path(@agent), method: :patch, disable_email_field: @agent.email.present? %>
