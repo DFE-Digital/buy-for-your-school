@@ -14,23 +14,15 @@ describe "Agent can create frameworks", :js do
     visit frameworks_root_path
     click_on "Add Framework"
     fill_in "Name", with: "New Framework 1"
-    fill_in "Abbreviated name", with: "NF1"
     fill_in "Providers URL", with: "https://localhost:3000/nf1"
     fill_in "Provider reference", with: "abcnf1"
     select "ABC", from: "Provider"
     select "Anne Abelle (anne.abelle@email.com)", from: "Provider framework owner"
     within "fieldset", text: "DfE Ownership" do
-      fill_in "SCT Framework Owner", with: "John Smith"
-      fill_in "SCT Framework Provider Lead", with: "Jane Doe"
       select "ProcOps User", from: "Procurement Operations Lead"
       select "E&O User", from: "Engagement and Outreach Lead"
     end
     within "fieldset", text: "Availability" do
-      within "fieldset", text: "DfE start date" do
-        fill_in "Day", with: "01"
-        fill_in "Month", with: "02"
-        fill_in "Year", with: "1993"
-      end
       within "fieldset", text: "DfE review date" do
         fill_in "Day", with: "02"
         fill_in "Month", with: "03"
@@ -45,16 +37,6 @@ describe "Agent can create frameworks", :js do
         fill_in "Day", with: "04"
         fill_in "Month", with: "05"
         fill_in "Year", with: "1996"
-      end
-      within "fieldset", text: "FaF Added date" do
-        fill_in "Day", with: "05"
-        fill_in "Month", with: "06"
-        fill_in "Year", with: "1997"
-      end
-      within "fieldset", text: "Faf End date" do
-        fill_in "Day", with: "06"
-        fill_in "Month", with: "07"
-        fill_in "Year", with: "1998"
       end
     end
     within "fieldset", text: "Other" do
@@ -76,17 +58,12 @@ describe "Agent can create frameworks", :js do
 
     expect(page).to have_summary("URL", "https://localhost:3000/nf1")
 
-    expect(page).to have_summary("SCT Framework Owner", "John Smith")
-    expect(page).to have_summary("SCT Framework Provider Lead", "Jane Doe")
     expect(page).to have_summary("Procurement Operations Lead", "ProcOps User")
     expect(page).to have_summary("Engagement and Outreach Lead", "E&O User")
 
     expect(page).to have_summary("Provider start date", "03/04/1995")
     expect(page).to have_summary("Provider end date", "04/05/1996")
-    expect(page).to have_summary("DfE start date", "01/02/1993")
     expect(page).to have_summary("DfE review date", "02/03/1994")
-    expect(page).to have_summary("Date added to FaF", "05/06/1997")
-    expect(page).to have_summary("FaF end date", "06/07/1998")
 
     click_on "Provider"
     expect(page).to have_summary("Provider", "ABC")
