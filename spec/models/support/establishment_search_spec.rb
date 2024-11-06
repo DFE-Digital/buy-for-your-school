@@ -42,5 +42,5 @@ describe Support::EstablishmentSearch do
         expect(results.pluck(:name)).to contain_exactly("Test Opening School", "Test Open School")
       end
     end
-  end  
+  end
 end

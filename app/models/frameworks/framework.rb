@@ -22,7 +22,6 @@ class Frameworks::Framework < ApplicationRecord
                                 after_add: :log_framework_category_added,
                                 after_remove: :log_framework_category_removed
 
-
   validates :name_provider_combination_must_be_unique, presence: { message: "" }, on: :creation_form
   validates :url, presence: { message: "Enter the provider url of the framework" }, on: :creation_form
   validates :provider_reference, presence: { message: "Enter the provider reference of the framework" }, on: :creation_form
@@ -38,7 +37,7 @@ class Frameworks::Framework < ApplicationRecord
     if provider_id.blank?
       errors.add(:provider_id, "Please select a provider")
     end
-    if name && provider_id && Frameworks::Framework.where(name: name, provider_id: provider_id).exists?
+    if name && provider_id && Frameworks::Framework.where(name:, provider_id:).exists?
       errors.add(:name, "The combination of name and provider must be unique")
       errors.add(:provider_id, "")
     end
