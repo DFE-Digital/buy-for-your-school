@@ -10,6 +10,7 @@ module Frameworks::Framework::StatusChangeable
       evaluating: 2,
       expired: 5,
       not_approved: 0,
+      pending_evaluation: 1,
       archived: 6,
     }
 

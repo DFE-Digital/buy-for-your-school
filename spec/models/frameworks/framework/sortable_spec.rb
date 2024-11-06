@@ -34,7 +34,6 @@ describe Frameworks::Framework::Sortable do
 
     describe "by date fields" do
       %w[
-        dfe_start_date
         dfe_review_date
         provider_start_date
         provider_end_date

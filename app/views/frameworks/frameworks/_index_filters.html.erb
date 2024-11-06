@@ -22,7 +22,9 @@
     <%= expander title: "Status", subtitle: "#{@filtering.number_of_selected(:statuses)} selected", expanded: true do %>
       <%= form.govuk_check_boxes_fieldset :status, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
         <% @filtering.available_status_options.each do |status| %>
-          <%= form.govuk_check_box :status, status.last, exclusive: false, label: { text: status.last == 'dfe_approved'? 'DfE approved': status.last == 'cab_approved'? 'CAB approved': status.first } %>
+          <% if status.last != 'pending_evaluation' %>
+            <%= form.govuk_check_box :status, status.last, exclusive: false, label: { text: status.last == 'dfe_approved'? 'DfE approved': status.last == 'cab_approved'? 'CAB approved': status.first } %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
