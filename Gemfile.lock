@@ -272,10 +272,10 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (5.4.0)
+    govuk-components (5.7.0)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
-      pagy (>= 6, < 9)
-      view_component (>= 3.9, < 3.13)
+      pagy (>= 6, < 10)
+      view_component (>= 3.9, < 3.17)
     govuk_design_system_formbuilder (5.4.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -437,7 +437,7 @@ GEM
       tzinfo
       validate_url
       webfinger (~> 2.0)
-    pagy (8.4.4)
+    pagy (9.1.1)
     pandoc-ruby (2.1.10)
     paper_trail (15.2.0)
       activerecord (>= 6.1)
@@ -700,7 +700,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    view_component (3.12.1)
+    view_component (3.16.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
