@@ -114,16 +114,15 @@ module Support
       cms_frameworks = Frameworks::Framework.where(source: 2)
 
       cms_frameworks.each do |cms_framework|
-        is_exist = false
+        is_exist = 0
         prepared_frameworks.each do |faf_framework|
           if cms_framework.name == faf_framework[:name] && cms_framework.provider_id == faf_framework[:provider_id]
-            is_exist = true
+            is_exist = 1
           end
         end
 
-        next unless is_exist
+        next unless is_exist.zero?
 
-        # update framewok data as archived when no matching data found in FAF end point
         Frameworks::Framework.find_by(
           name: cms_framework.name,
           provider_id: cms_framework.provider_id,
