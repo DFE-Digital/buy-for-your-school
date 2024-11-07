@@ -71,7 +71,7 @@
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Provider end date</legend>
           <div class="govuk-form-group">
-            <p class="govuk-body-l"><%= @framework.provider_end_date.to_formatted_s(:default)%></p>
+            <p class="govuk-body-l"><%= I18n.l(@framework.provider_end_date, format: :compact)%></p>
           </div>
         </fieldset>
 

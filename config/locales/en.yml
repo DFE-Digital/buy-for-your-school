@@ -2076,6 +2076,3 @@ en:
       archived: Archived
     validation:
       unique_name_and_provider: The combination of name and provider must be unique
-  date:
-    formats:
-      default: "%d/%m/%Y"
