@@ -4,6 +4,9 @@ module Support
 
     def initialize(endpoint: ENV["FAF_FRAMEWORK_ENDPOINT"])
       @endpoint = endpoint
+      @dfe_approved = Frameworks::Framework.statuses["dfe_approved"]
+      @expired = Frameworks::Framework.statuses["expired"]
+      @archived = Frameworks::Framework.statuses["archived"]
     end
 
     def call
@@ -45,7 +48,6 @@ module Support
               url: faf[:url],
               description: faf[:description],
               source: 2,
-              status: get_expired_status(faf[:provider_end_date]),
             )
         else
           new_record = Frameworks::Framework.new(
@@ -85,25 +87,25 @@ module Support
       end
     end
 
-    def check_expired_status(provider_end_date)
-      provider_end_date && provider_end_date < Time.zone.today ? true : false
+    def expired?(provider_end_date)
+      provider_end_date && provider_end_date < Time.zone.today
     end
 
     def get_expired_status(provider_end_date)
-      provider_end_date && provider_end_date < Time.zone.today ? 5 : 3
+      provider_end_date && provider_end_date < Time.zone.today ? @expired : @dfe_approved
     end
 
     def get_provider_id(provider_short_name, provider_name)
       # check provider name exist
-      provider_detail = Frameworks::Provider.where("lower(short_name) = ?", provider_short_name.downcase).first
+      provider_detail = Frameworks::Provider.find_by("lower(short_name) = lower(?)", provider_short_name)
       if provider_detail
         if provider_detail.name != provider_name
-          Frameworks::Provider.find_by(id: provider_detail.id).update!(name: provider_name) # to update provider name when title is diff
+          Frameworks::Provider.find_by!(id: provider_detail.id).update!(name: provider_name) # to update provider name when title is diff
         end
         provider_detail.id
       else
         @provider = Frameworks::Provider.new(short_name: provider_short_name, name: provider_name)
-        if @provider.save
+        if @provider.save!
           provider_id = @provider.id # This will give you the ID of the inserted record
         end
         provider_id
@@ -123,12 +125,12 @@ module Support
 
         next unless is_exist.zero?
 
-        Frameworks::Framework.find_by(
+        Frameworks::Framework.find_by!(
           name: cms_framework.name,
           provider_id: cms_framework.provider_id,
         )
           .update!(
-            status: 6,
+            status: @archived,
             is_archived: true,
             faf_archived_at: Time.zone.today,
           )
@@ -139,8 +141,8 @@ module Support
       cms_frameworks = Frameworks::Framework.all
 
       cms_frameworks.each do |cms_framework|
-        if check_expired_status(cms_framework.provider_end_date)
-          Frameworks::Framework.find_by(id: cms_framework.id).update!(status: 5)
+        if expired?(cms_framework.provider_end_date) && cms_framework.status != "archived"
+          Frameworks::Framework.find_by!(id: cms_framework.id).update!(status: @expired)
         end
       end
     end

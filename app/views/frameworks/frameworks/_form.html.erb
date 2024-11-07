@@ -37,11 +37,9 @@
 
     <div class="govuk-form-group">
       <label for="frameworks-framework-provider-id-field" class="govuk-label">Provider</label>
-      <% @providers.each do |provider| %>
-        <% if @framework.provider_id == provider.id %>
-          <p class="govuk-body-l"><%= provider.short_name%></p>
-        <% end %>
-      <% end %>
+      <p class="govuk-body-l">
+        <%= @providers.find { |p| p.id == @framework.provider_id }.short_name %>
+      </p>
     </div>
 
   <% end%>
@@ -73,7 +71,7 @@
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Provider end date</legend>
           <div class="govuk-form-group">
-            <p class="govuk-body-l"><%= @framework.provider_end_date.strftime("%d/%m/%Y")%></p>
+            <p class="govuk-body-l"><%= @framework.provider_end_date.to_formatted_s(:default)%></p>
           </div>
         </fieldset>
 
@@ -102,7 +100,7 @@
 
   <% if @framework.source!='faf_import' %>
 
-    <% status_options = Frameworks::Framework.statuses.select{|status| status != 'pending_evaluation'}.map {|status, id| [status, status.humanize] } %>
+    <% status_options = Frameworks::Framework.statuses.select{|status| status != 'pending_evaluation'}.map {|status, id| [status,I18n.t(@framework.status, scope: "framework.framework_statuses")] } %>
     <%= f.govuk_collection_radio_buttons :status, status_options, :first, :last, legend: { size: 's', text: 'Status' } %>
 
   <% else %>
@@ -110,7 +108,7 @@
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Status</legend>
-        <p class="govuk-body-l"><%= @framework.status == 'dfe_approved'? 'DfE approved': @framework.status == 'cab_approved'? 'CAB approved': @framework.status.humanize %></p>
+        <p class="govuk-body-l"><%= I18n.t(@framework.status, scope: "framework.framework_statuses")%></p>
       </fieldset>
     </div>
 
