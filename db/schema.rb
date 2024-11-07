@@ -1080,71 +1080,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_154535) do
   add_foreign_key "user_journeys", "framework_requests"
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
-  create_view "support_establishment_searches", sql_definition: <<-SQL
-      SELECT organisations.id,
-      organisations.name,
-      (organisations.address ->> 'postcode'::text) AS postcode,
-      organisations.urn,
-      organisations.ukprn,
-      etypes.name AS establishment_type,
-      'Support::Organisation'::text AS source,
-      NULL::text AS code,
-      organisations.status AS organisation_status,
-      organisations.opened_date,
-      organisations.closed_date
-     FROM (support_organisations organisations
-       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
-    WHERE ((organisations.status <> 2) AND (organisations.archived IS NOT TRUE))
-  UNION ALL
-   SELECT egroups.id,
-      egroups.name,
-      (egroups.address ->> 'postcode'::text) AS postcode,
-      NULL::character varying AS urn,
-      egroups.ukprn,
-      egtypes.name AS establishment_type,
-      'Support::EstablishmentGroup'::text AS source,
-      NULL::text AS code,
-      NULL::integer AS organisation_status,
-      egroups.opened_date,
-      egroups.closed_date
-     FROM (support_establishment_groups egroups
-       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
-    WHERE ((egroups.status <> 2) AND (egroups.archived IS NOT TRUE))
-  UNION ALL
-   SELECT local_authorities.id,
-      local_authorities.name,
-      NULL::text AS postcode,
-      NULL::character varying AS urn,
-      NULL::character varying AS ukprn,
-      'Local authority'::character varying AS establishment_type,
-      'LocalAuthority'::text AS source,
-      local_authorities.la_code AS code,
-      NULL::integer AS organisation_status,
-      NULL::timestamp without time zone AS opened_date,
-      NULL::date AS closed_date
-     FROM local_authorities
-    WHERE (local_authorities.archived IS NOT TRUE)
-    ORDER BY 9;
-  SQL
-  create_view "support_case_searches", sql_definition: <<-SQL
-      SELECT sc.id AS case_id,
-      sc.ref AS case_ref,
-      sc.created_at,
-      sc.updated_at,
-      sc.state AS case_state,
-      sc.email AS case_email,
-      ses.name AS organisation_name,
-      ses.urn AS organisation_urn,
-      ses.ukprn AS organisation_ukprn,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      cat.title AS category_title
-     FROM (((support_cases sc
-       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
-       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
-       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
-  SQL
   create_view "support_message_threads", sql_definition: <<-SQL
       SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
       se.case_id,
@@ -1161,40 +1096,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_154535) do
             ORDER BY se2.sent_at DESC
            LIMIT 1) AS last_updated
      FROM support_emails se;
-  SQL
-  create_view "ticket_searches", sql_definition: <<-SQL
-      SELECT scs.case_id AS id,
-      scs.case_ref AS reference,
-      scs.organisation_name,
-      scs.organisation_urn,
-      scs.organisation_ukprn,
-      NULL::character varying AS framework_name,
-      NULL::character varying AS framework_provider,
-      scs.agent_name,
-      scs.agent_first_name,
-      scs.agent_last_name,
-      scs.created_at,
-      scs.updated_at,
-      'Support::Case'::text AS source
-     FROM support_case_searches scs
-  UNION ALL
-   SELECT fe.id,
-      fe.reference,
-      NULL::character varying AS organisation_name,
-      NULL::character varying AS organisation_urn,
-      NULL::character varying AS organisation_ukprn,
-      ff.name AS framework_name,
-      fp.short_name AS framework_provider,
-      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
-      sa.first_name AS agent_first_name,
-      sa.last_name AS agent_last_name,
-      fe.created_at,
-      fe.updated_at,
-      'Frameworks::Evaluation'::text AS source
-     FROM (((frameworks_evaluations fe
-       LEFT JOIN frameworks_frameworks ff ON ((ff.id = fe.framework_id)))
-       LEFT JOIN frameworks_providers fp ON ((fp.id = ff.provider_id)))
-       LEFT JOIN support_agents sa ON ((sa.id = fe.assignee_id)));
   SQL
   create_view "frameworks_framework_data", sql_definition: <<-SQL
       SELECT ff.id AS framework_id,
@@ -1455,5 +1356,104 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_154535) do
             WHERE ((i.event_type = 8) AND (i.case_id = sc.id))
             ORDER BY i.created_at
            LIMIT 1))));
+  SQL
+  create_view "support_establishment_searches", sql_definition: <<-SQL
+      SELECT organisations.id,
+      organisations.name,
+      (organisations.address ->> 'postcode'::text) AS postcode,
+      organisations.urn,
+      organisations.ukprn,
+      etypes.name AS establishment_type,
+      'Support::Organisation'::text AS source,
+      NULL::text AS code,
+      organisations.status AS organisation_status,
+      organisations.opened_date,
+      organisations.closed_date
+     FROM (support_organisations organisations
+       JOIN support_establishment_types etypes ON ((etypes.id = organisations.establishment_type_id)))
+    WHERE ((organisations.status <> 2) AND (organisations.archived IS NOT TRUE))
+  UNION ALL
+   SELECT egroups.id,
+      egroups.name,
+      (egroups.address ->> 'postcode'::text) AS postcode,
+      NULL::character varying AS urn,
+      egroups.ukprn,
+      egtypes.name AS establishment_type,
+      'Support::EstablishmentGroup'::text AS source,
+      NULL::text AS code,
+      NULL::integer AS organisation_status,
+      egroups.opened_date,
+      egroups.closed_date
+     FROM (support_establishment_groups egroups
+       JOIN support_establishment_group_types egtypes ON ((egtypes.id = egroups.establishment_group_type_id)))
+    WHERE ((egroups.status <> 2) AND (egroups.archived IS NOT TRUE))
+  UNION ALL
+   SELECT local_authorities.id,
+      local_authorities.name,
+      NULL::text AS postcode,
+      NULL::character varying AS urn,
+      NULL::character varying AS ukprn,
+      'Local authority'::character varying AS establishment_type,
+      'LocalAuthority'::text AS source,
+      local_authorities.la_code AS code,
+      NULL::integer AS organisation_status,
+      NULL::timestamp without time zone AS opened_date,
+      NULL::date AS closed_date
+     FROM local_authorities
+    WHERE (local_authorities.archived IS NOT TRUE)
+    ORDER BY 9;
+  SQL
+  create_view "support_case_searches", sql_definition: <<-SQL
+      SELECT sc.id AS case_id,
+      sc.ref AS case_ref,
+      sc.created_at,
+      sc.updated_at,
+      sc.state AS case_state,
+      sc.email AS case_email,
+      ses.name AS organisation_name,
+      ses.urn AS organisation_urn,
+      ses.ukprn AS organisation_ukprn,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      cat.title AS category_title
+     FROM (((support_cases sc
+       LEFT JOIN support_agents sa ON ((sa.id = sc.agent_id)))
+       LEFT JOIN support_establishment_searches ses ON (((sc.organisation_id = ses.id) AND ((sc.organisation_type)::text = ses.source))))
+       LEFT JOIN support_categories cat ON ((sc.category_id = cat.id)));
+  SQL
+  create_view "ticket_searches", sql_definition: <<-SQL
+      SELECT scs.case_id AS id,
+      scs.case_ref AS reference,
+      scs.organisation_name,
+      scs.organisation_urn,
+      scs.organisation_ukprn,
+      NULL::character varying AS framework_name,
+      NULL::character varying AS framework_provider,
+      scs.agent_name,
+      scs.agent_first_name,
+      scs.agent_last_name,
+      scs.created_at,
+      scs.updated_at,
+      'Support::Case'::text AS source
+     FROM support_case_searches scs
+  UNION ALL
+   SELECT fe.id,
+      fe.reference,
+      NULL::character varying AS organisation_name,
+      NULL::character varying AS organisation_urn,
+      NULL::character varying AS organisation_ukprn,
+      ff.name AS framework_name,
+      fp.short_name AS framework_provider,
+      (((sa.first_name)::text || ' '::text) || (sa.last_name)::text) AS agent_name,
+      sa.first_name AS agent_first_name,
+      sa.last_name AS agent_last_name,
+      fe.created_at,
+      fe.updated_at,
+      'Frameworks::Evaluation'::text AS source
+     FROM (((frameworks_evaluations fe
+       LEFT JOIN frameworks_frameworks ff ON ((ff.id = fe.framework_id)))
+       LEFT JOIN frameworks_providers fp ON ((fp.id = ff.provider_id)))
+       LEFT JOIN support_agents sa ON ((sa.id = fe.assignee_id)));
   SQL
 end

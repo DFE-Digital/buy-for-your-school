@@ -17,9 +17,9 @@ private
   def proposed_open_or_closed
     case organisation_status
     when "opening"
-      I18n.t(organisation_status, scope: "support.organisation_statuses", date: I18n.l(opened_date, format: "%d %b %y"))
+      I18n.t(organisation_status, scope: "support.organisation_statuses", date: I18n.l(opened_date, format: :compact))
     when "closing"
-      I18n.t(organisation_status, scope: "support.organisation_statuses", date: I18n.l(closed_date, format: "%d %b %y"))
+      I18n.t(organisation_status, scope: "support.organisation_statuses", date: I18n.l(closed_date, format: :compact))
     else ""
     end
   end

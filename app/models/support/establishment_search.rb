@@ -2,7 +2,7 @@ module Support
   class EstablishmentSearch < ApplicationRecord
     include Presentable
 
-    enum organisation_status: Organisation.statuses, _prefix: :organisation
+    enum :organisation_status, Organisation.statuses, prefix: :organisation
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
