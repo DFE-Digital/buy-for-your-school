@@ -23,11 +23,11 @@ class Frameworks::Framework < ApplicationRecord
                                 after_remove: :log_framework_category_removed
 
   validates :name, :url, :provider_reference, :provider_id, :proc_ops_lead_id, :dfe_review_date, :provider_start_date, :provider_end_date, presence: true, on: :creation_form
-  validates :unique_name_and_provider, presence: true, on: :creation_form
+  validate :unique_name_and_provider, if: -> { name.present? }
 
   def unique_name_and_provider
     if name && provider_id && Frameworks::Framework.where(name:, provider_id:).exists?
-      errors.add(:name, I18n.t("framework.validation.unique_name_and_provider"))
+      errors.add(:name, :unique_name_and_provider)
     end
   end
 

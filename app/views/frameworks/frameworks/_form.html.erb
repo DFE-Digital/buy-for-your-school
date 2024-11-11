@@ -100,7 +100,7 @@
 
   <% if @framework.source!='faf_import' %>
 
-    <% status_options = Frameworks::Framework.statuses.select{|status| status != 'pending_evaluation'}.map {|status, id| [status,I18n.t(@framework.status, scope: "framework.framework_statuses")] } %>
+    <% status_options = Frameworks::Framework.statuses.select{|status| status != 'pending_evaluation'}.map {|status, id| [status, I18n.t(status, scope: "framework.framework_statuses")] } %>
     <%= f.govuk_collection_radio_buttons :status, status_options, :first, :last, legend: { size: 's', text: 'Status' } %>
 
   <% else %>
