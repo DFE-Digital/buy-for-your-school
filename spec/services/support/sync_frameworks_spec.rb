@@ -38,10 +38,11 @@ describe Support::SyncFrameworks do
       end
 
       context "when there are frameworks to update" do
-        let!(:existing_framework) { create(:frameworks_frameworks, name: "Framework 1", provider_id: "604dfe8e-6c7d-489b-9020-8df8d509abe0", faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: 3) }
+        let(:provider) { create(:frameworks_provider, short_name: "ABC") }
+        let!(:existing_framework) { create(:frameworks_framework, name: "Framework 1", provider_id: provider.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: "dfe_approved") }
 
         it "creates new frameworks and updates existing ones" do
-          expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
+          expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(3)
             .and(change { existing_framework.reload.provider_end_date }.from(Date.parse("2025-11-15")).to(Date.parse("2026-11-15")))
             .and(not_change { existing_framework.reload.name })
             .and(not_change { existing_framework.reload.provider_id })
@@ -50,25 +51,25 @@ describe Support::SyncFrameworks do
             .and(not_change { existing_framework.reload.url })
             .and(not_change { existing_framework.reload.description })
             .and(not_change { existing_framework.reload.source })
-            .and(not_change { existing_framework.reload.status })
 
           new_framework = Frameworks::Framework.find_by(name: "Framework 2")
-          expect(new_framework.provider_id).to eq("604dfe8e-6c7d-489b-9020-8df8d509abe0")
+          expect(new_framework.provider_id).to eq(provider.id)
           expect(new_framework.faf_slug_ref).to eq("ref-2")
           expect(new_framework.faf_category).to eq("Catering")
           expect(new_framework.provider_end_date).to eq(Date.parse("2020-06-30"))
           expect(new_framework.url).to eq("https://localhost:3000/nf2")
           expect(new_framework.source).to eq(2)
-          expect(new_framework.status).to eq(3)
+          expect(new_framework.status).to eq("dfe_approved")
         end
       end
 
       context "when there are no frameworks to update" do
-        let!(:existing_framework1) { create(:frameworks_frameworks, name: "Framework 1", provider_id: "604dfe8e-6c7d-489b-9020-8df8d509abe0", faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: 3) }
-        let!(:existing_framework2) { create(:frameworks_frameworks, name: "Framework 2", provider_id: "604dfe8e-6c7d-489b-9020-8df8d509abe0", faf_slug_ref: "ref-2", faf_category: "Catering", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf2", description: "Desc", source: 2, status: 3) }
+        let(:provider) { create(:frameworks_provider, short_name: "XYZ") }
+        let!(:existing_framework1) { create(:frameworks_framework, name: "Framework 1", provider_id: provider.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: "dfe_approved") }
+        let!(:existing_framework2) { create(:frameworks_framework, name: "Framework 2", provider_id: provider.id, faf_slug_ref: "ref-2", faf_category: "Catering", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf2", description: "Desc", source: 2, status: "dfe_approved") }
 
         it "makes no changes to existing frameworks" do
-          expect { service.call }.to not_change(Frameworks::Framework, :count)
+          expect { service.call }.to change(Frameworks::Framework, :count).from(2).to(4)
           .and(not_change { existing_framework1.reload.name })
           .and(not_change { existing_framework1.reload.provider_id })
           .and(not_change { existing_framework1.reload.faf_slug_ref })
@@ -77,7 +78,6 @@ describe Support::SyncFrameworks do
           .and(not_change { existing_framework1.reload.url })
           .and(not_change { existing_framework1.reload.description })
           .and(not_change { existing_framework1.reload.source })
-          .and(not_change { existing_framework1.reload.status })
           .and(not_change { existing_framework2.reload.name })
           .and(not_change { existing_framework2.reload.provider_id })
           .and(not_change { existing_framework2.reload.faf_slug_ref })
@@ -86,7 +86,6 @@ describe Support::SyncFrameworks do
           .and(not_change { existing_framework2.reload.url })
           .and(not_change { existing_framework2.reload.description })
           .and(not_change { existing_framework2.reload.source })
-          .and(not_change { existing_framework2.reload.status })
         end
       end
     end
