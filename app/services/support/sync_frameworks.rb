@@ -80,7 +80,7 @@ module Support
       provider = Frameworks::Provider.find_by("lower(short_name) = lower(?)", provider_short_name)
       if provider
         if provider.name != provider_name
-          Frameworks::Provider.find_by!(id: provider.id).update!(name: provider_name) # to update provider name when title is diff
+          provider.update!(name: provider_name) # to update provider name when title is diff
         end
       else
         provider = Frameworks::Provider.new(short_name: provider_short_name, name: provider_name)
