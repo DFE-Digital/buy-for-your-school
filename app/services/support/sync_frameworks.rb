@@ -77,7 +77,7 @@ module Support
 
     def existing_provider(provider_short_name, provider_name)
       # check provider name exist
-      provider_detail = Frameworks::Provider.find_by("lower(short_name) = lower(?)", provider_short_name)
+      provider_detail = Frameworks::Provider.find_by!("lower(short_name) = lower(?)", provider_short_name)
       if provider_detail
         if provider_detail.name != provider_name
           provider_detail.update!(name: provider_name) # to update provider name when title is diff
