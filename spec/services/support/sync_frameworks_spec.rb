@@ -42,8 +42,8 @@ describe Support::SyncFrameworks do
       end
 
       context "when there are frameworks to update" do
-        let(:provider) { create(:frameworks_provider, short_name: "ABC") }
-        let!(:existing_framework) { create(:frameworks_framework, name: "Framework 1", provider_id: provider.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: "dfe_approved") }
+        let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
+        let!(:existing_framework) { create(:frameworks_framework, name: "Framework 1", provider_id: provider_detail.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2025-11-15"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: "dfe_approved") }
 
         it "creates new frameworks and updates existing ones" do
           expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
@@ -69,9 +69,9 @@ describe Support::SyncFrameworks do
       end
 
       context "when there are no frameworks to update" do
-        let(:provider) { create(:frameworks_provider, short_name: "ABC") }
-        let!(:existing_framework1) { create(:frameworks_framework, name: "Framework 1", provider_id: provider.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2026-08-31"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: "dfe_approved") }
-        let!(:existing_framework2) { create(:frameworks_framework, name: "Framework 2", provider_id: provider.id, faf_slug_ref: "ref-2", faf_category: "Catering", provider_end_date: Date.parse("2026-06-30"), url: "https://localhost:3000/nf2", description: "Desc", source: 2, status: "dfe_approved") }
+        let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
+        let!(:existing_framework1) { create(:frameworks_framework, name: "Framework 1", provider_id: provider_detail.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2026-08-31"), url: "https://localhost:3000/nf1", description: "Desc", source: 2, status: "dfe_approved") }
+        let!(:existing_framework2) { create(:frameworks_framework, name: "Framework 2", provider_id: provider_detail.id, faf_slug_ref: "ref-2", faf_category: "Catering", provider_end_date: Date.parse("2026-06-30"), url: "https://localhost:3000/nf2", description: "Desc", source: 2, status: "dfe_approved") }
 
         it "makes no changes to existing frameworks" do
           expect { service.call }.to not_change(Frameworks::Framework, :count)
