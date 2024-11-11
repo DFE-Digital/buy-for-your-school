@@ -77,16 +77,16 @@ module Support
 
     def existing_provider(provider_short_name, provider_name)
       # check provider name exist
-      provider = Frameworks::Provider.find_by("lower(short_name) = lower(?)", provider_short_name)
-      if provider
-        if provider.name != provider_name
-          provider.update!(name: provider_name) # to update provider name when title is diff
+      provider_detail = Frameworks::Provider.find_by("lower(short_name) = lower(?)", provider_short_name)
+      if provider_detail
+        if provider_detail.name != provider_name
+          provider_detail.update!(name: provider_name) # to update provider name when title is diff
         end
       else
-        provider = Frameworks::Provider.new(short_name: provider_short_name, name: provider_name)
-        provider.save!
+        provider_detail = Frameworks::Provider.new(short_name: provider_short_name, name: provider_name)
+        provider_detail.save!
       end
-      provider.id
+      provider_detail.id
     end
 
     def update_archive_status(prepared_frameworks)
