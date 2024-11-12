@@ -23,6 +23,8 @@ module Support
     scope :with_cases, -> { where.associated(:cases).distinct }
     scope :with_live_cases, -> { where.associated(:live_cases).distinct }
 
+    validates :email, uniqueness: true
+
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
         lower(first_name) LIKE lower(:q) OR
