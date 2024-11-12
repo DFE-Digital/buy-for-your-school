@@ -58,7 +58,7 @@ describe Support::SyncFrameworks do
             .and(not_change { existing_framework.reload.status })
 
           new_framework = Frameworks::Framework.find_by(name: "Framework 2")
-          expect(new_framework.provider_id).to eq(provider.id)
+          expect(new_framework.provider_id).to eq(provider_detail.id)
           expect(new_framework.faf_slug_ref).to eq("ref-2")
           expect(new_framework.faf_category).to eq("Catering")
           expect(new_framework.provider_end_date).to eq(Date.parse("2026-06-30"))
