@@ -1,113 +1,113 @@
 # config/validation/en.yml
 en:
   activemodel:
-      errors:
-        models:
-          case_request/contract_start_dater:
-            attributes:
-              contract_start_date_known:
-                blank: Select if you know when the contract should start
-              contract_start_date:
-                blank: Enter the date you want the contract to start
-          case_request/same_supplierer:
-            attributes:
-              same_supplier_used:
-                blank: Select if all schools are currently using the same supplier
-          framework_requests/email_form:
-            attributes:
-              email:
-                blank: Enter an email address
-                invalid: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-          framework_requests/category_form:
-            attributes:
-              category_slug:
-                blank: Select the type of goods or service you need
-              category_other:
-                blank: Specify the type of goods or service you need
-          framework_requests/message_form:
-            attributes:
-              message_body:
-                blank: You must tell us how we can help
-          framework_requests/name_form:
-            attributes:
-              first_name:
-                blank: Enter your first name
-              last_name:
-                blank: Enter your last name
-          framework_requests/organisation_type_form:
-            attributes:
-              school_type:
-                blank: Select what type of organisation you're buying for
-          framework_requests/sign_in_form:
-            attributes:
-              dsi:
-                blank: Select whether you want to use a DfE Sign-in account
-          framework_requests/special_requirements_form:
-            attributes:
-              special_requirements:
-                blank: Enter your access needs
-              special_requirements_choice:
-                blank: Select yes if you have access needs
-          framework_requests/select_organisation_form:
-            attributes:
-              org_id:
-                blank: Select the school or group you want help buying for
-          framework_requests/energy_request_form:
-            attributes:
-              is_energy_request:
-                blank: Select whether your request is about energy
-          framework_requests/energy_request_about_form:
-            attributes:
-              energy_request_about:
-                blank: Select what your energy request is about
-          framework_requests/energy_bill_form:
-            attributes:
-              have_energy_bill:
-                blank: Select whether you have a recent energy bill you can upload
-          framework_requests/energy_alternative_form:
-            attributes:
-              energy_alternative:
-                blank: Select how you would like to provide your energy information
-          framework_requests/school_picker_form:
-            attributes:
-              school_urns:
-                blank: Select the schools involved in this procurement
-          framework_requests/confirm_schools_form:
-            attributes:
-              school_urns_confirmed:
-                blank: Select whether these are the schools you're buying for
-          framework_requests/contract_length_form:
-            attributes:
-              contract_length:
-                blank: Select the amount of time you want the contract for including any extensions. Choose 'not sure' if you do not know.
-          framework_requests/contract_start_date_form:
-            attributes:
-              contract_start_date_known:
-                blank: Select if you know when the contract should start
-              contract_start_date:
-                blank: Enter the date you want the contract to start
-          framework_requests/same_supplier_form:
-            attributes:
-              same_supplier_used:
-                blank: Select if all schools are currently using the same supplier
-          framework_requests/documents_form:
-            attributes:
-              document_types:
-                blank: Select the documents that you want to upload or 'I do not have any to upload at this time' if there are none to share right now.
-              document_type_other:
-                blank: Specify the type of documents that you want to upload
-          framework_requests/procurement_amount_form:
-            attributes:
-              procurement_amount:
-                blank: Enter how much the school will be spending. The number must be greater than 0.
-                greater_than: The number must be greater than 0
-                not_a_number: Enter a valid number
-          framework_requests/origin_form:
-            attributes:
-              origin:
-                blank: Select where you heard about the service
-              origin_other:
-                blank: Specify where you heard about the service
+    errors:
+      models:
+        case_request/contract_start_dater:
+          attributes:
+            contract_start_date_known:
+              blank: Select if you know when the contract should start
+            contract_start_date:
+              blank: Enter the date you want the contract to start
+        case_request/same_supplierer:
+          attributes:
+            same_supplier_used:
+              blank: Select if all schools are currently using the same supplier
+        framework_requests/email_form:
+          attributes:
+            email:
+              blank: Enter an email address
+              invalid: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
+        framework_requests/category_form:
+          attributes:
+            category_slug:
+              blank: Select the type of goods or service you need
+            category_other:
+              blank: Specify the type of goods or service you need
+        framework_requests/message_form:
+          attributes:
+            message_body:
+              blank: You must tell us how we can help
+        framework_requests/name_form:
+          attributes:
+            first_name:
+              blank: Enter your first name
+            last_name:
+              blank: Enter your last name
+        framework_requests/organisation_type_form:
+          attributes:
+            school_type:
+              blank: Select what type of organisation you're buying for
+        framework_requests/sign_in_form:
+          attributes:
+            dsi:
+              blank: Select whether you want to use a DfE Sign-in account
+        framework_requests/special_requirements_form:
+          attributes:
+            special_requirements:
+              blank: Enter your access needs
+            special_requirements_choice:
+              blank: Select yes if you have access needs
+        framework_requests/select_organisation_form:
+          attributes:
+            org_id:
+              blank: Select the school or group you want help buying for
+        framework_requests/energy_request_form:
+          attributes:
+            is_energy_request:
+              blank: Select whether your request is about energy
+        framework_requests/energy_request_about_form:
+          attributes:
+            energy_request_about:
+              blank: Select what your energy request is about
+        framework_requests/energy_bill_form:
+          attributes:
+            have_energy_bill:
+              blank: Select whether you have a recent energy bill you can upload
+        framework_requests/energy_alternative_form:
+          attributes:
+            energy_alternative:
+              blank: Select how you would like to provide your energy information
+        framework_requests/school_picker_form:
+          attributes:
+            school_urns:
+              blank: Select the schools involved in this procurement
+        framework_requests/confirm_schools_form:
+          attributes:
+            school_urns_confirmed:
+              blank: Select whether these are the schools you're buying for
+        framework_requests/contract_length_form:
+          attributes:
+            contract_length:
+              blank: Select the amount of time you want the contract for including any extensions. Choose 'not sure' if you do not know.
+        framework_requests/contract_start_date_form:
+          attributes:
+            contract_start_date_known:
+              blank: Select if you know when the contract should start
+            contract_start_date:
+              blank: Enter the date you want the contract to start
+        framework_requests/same_supplier_form:
+          attributes:
+            same_supplier_used:
+              blank: Select if all schools are currently using the same supplier
+        framework_requests/documents_form:
+          attributes:
+            document_types:
+              blank: Select the documents that you want to upload or 'I do not have any to upload at this time' if there are none to share right now.
+            document_type_other:
+              blank: Specify the type of documents that you want to upload
+        framework_requests/procurement_amount_form:
+          attributes:
+            procurement_amount:
+              blank: Enter how much the school will be spending. The number must be greater than 0.
+              greater_than: The number must be greater than 0
+              not_a_number: Enter a valid number
+        framework_requests/origin_form:
+          attributes:
+            origin:
+              blank: Select where you heard about the service
+            origin_other:
+              blank: Specify where you heard about the service
 
   activerecord:
     errors:
@@ -138,30 +138,48 @@ en:
             other_query:
               blank: Enter the type of query
         framework_request:
-            attributes:
-              first_name:
-                blank: Enter your first name
-              last_name:
-                blank: Enter your last name
-              email:
-                blank: Enter your email address
-              org_id:
-                blank: Select the school or group you want help buying for
-              message_body:
-                blank: You must tell us how we can help
-              procurement_amount:
-                blank: Enter how much the school will be spending. The number must be greater than 0.
-              category:
-                blank: Select the type of goods or service you need
-              origin:
-                blank: Select where you heard about the service
-
+          attributes:
+            first_name:
+              blank: Enter your first name
+            last_name:
+              blank: Enter your last name
+            email:
+              blank: Enter your email address
+            org_id:
+              blank: Select the school or group you want help buying for
+            message_body:
+              blank: You must tell us how we can help
+            procurement_amount:
+              blank: Enter how much the school will be spending. The number must be greater than 0.
+            category:
+              blank: Select the type of goods or service you need
+            origin:
+              blank: Select where you heard about the service
+        frameworks/framework:
+          attributes:
+            name:
+              blank: Enter the name of the framework
+            url:
+              blank: Enter the provider URL of the framework
+            provider_reference:
+              blank: Enter the provider reference of the framework
+            provider_id:
+              blank: Please select a provider
+            proc_ops_lead_id:
+              blank: Please select a procurement operations lead
+            dfe_review_date:
+              blank: Enter DfE review date
+            provider_start_date:
+              blank: Enter provider start date
+            provider_end_date:
+              blank: Enter provider end date
+          unique_name_and_provider: The combination of name and provider must be unique
   request:
     rules:
       procurement_amount: "" # Omitted
       special_requirements_choice: "" # Omitted
       special_requirements: "" # Omitted
-    
+
     errors:
       rules:
         procurement_amount:
@@ -185,7 +203,7 @@ en:
         procurement_amount:
           invalid: Enter a valid number
           too_large: The amount cannot be larger than 99,999,999.99
-  
+
   support_request:
     rules:
       phone_number: Your phone number
@@ -246,13 +264,13 @@ en:
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-  
+
   # New journey form
   new_journey:
     rules:
       category: "" # Omitted
       name: "" # Omitted
-    
+
     errors:
       rules:
         category:
@@ -265,13 +283,13 @@ en:
   edit_journey:
     rules:
       name: "" # Omitted
-    
+
     errors:
       rules:
         name:
           missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less  
- 
+          max_size?: The name must be 30 characters or less
+
   # Exit survey form
   exit_survey:
     rules:
@@ -285,7 +303,7 @@ en:
       satisfaction_level: "" # Omitted
       satisfaction_text: "" # Omitted
       saved_time: "" # Omitted
-      
+
     errors:
       rules:
         better_quality:
@@ -309,6 +327,3 @@ en:
           missing: Enter why you felt this way about the service you received.
         saved_time:
           missing: Select whether you agree or disagree that using the service helped save you or your school time.
-         
-
-
