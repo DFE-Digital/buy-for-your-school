@@ -4,14 +4,12 @@ module Frameworks::Framework::StatusChangeable
   included do
     include AASM
 
-    enum status: {
-      dfe_approved: 3,
-      cab_approved: 4,
-      evaluating: 2,
-      expired: 5,
+    enum :status, {
       not_approved: 0,
       pending_evaluation: 1,
-      archived: 6,
+      evaluating: 2,
+      dfe_approved: 3,
+      cab_approved: 4,
     }
 
     aasm column: :status, enum: true do

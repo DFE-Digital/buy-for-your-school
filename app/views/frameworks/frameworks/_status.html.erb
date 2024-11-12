@@ -5,7 +5,6 @@
   <%= "govuk-tag--yellow" if the_status.pending_evaluation? %>
   <%= "govuk-tag--grey" if the_status.not_approved? %>
   <%= "govuk-tag--purple" if the_status.evaluating? %>
-  <%= "govuk-tag--red" if the_status.expired? %>
 ">
   <%= the_status.humanize %>
 </strong>

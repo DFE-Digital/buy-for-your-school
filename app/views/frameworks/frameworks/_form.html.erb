@@ -1,48 +1,15 @@
-<%= f.govuk_error_summary %>
-
 <%= f.govuk_fieldset legend: { text: 'Basic Details' } do %>
-
-  <% if @framework.source!='faf_import' %>
-
-    <%= f.govuk_text_field :name %>
-    <%= f.govuk_text_field :url, label: { text: "Providers URL" } %>
-
-  <% else %>
-
-    <div class="govuk-form-group">
-      <label for="frameworks-framework-name-field" class="govuk-label">Name</label>
-        <p class="govuk-body-l"><%= @framework.name%></p>
-    </div>
-    <div class="govuk-form-group">
-      <label for="frameworks-framework-url-field" class="govuk-label">Providers URL</label>
-        <p class="govuk-body-l">
-          <a href="<%= @framework.url%>" class="govuk-link govuk-link--no-visited-state"><%= @framework.url%></a>
-        </p>
-    </div>
-
-  <% end%>
-  
+  <%= f.govuk_text_field :name %>
+  <%= f.govuk_text_field :short_name, width: "one-third", label: { text: "Abbreviated name" } %>
+  <%= f.govuk_text_field :url, label: { text: "Providers URL" } %>
   <%= f.govuk_text_field :provider_reference, width: "one-third", label: { text: "Provider reference" } %>
 <% end %>
 
 <div data-controller="select-option-filter" data-select-option-filter-param-name-value="providerId">
-  <% if @framework.source!='faf_import' %>
-
-    <%= f.govuk_select :provider_id, @providers.map {|provider| [provider.short_name, provider.id] },
-                        "data-select-option-filter-target" => "input",
-                        options: { include_blank: "Select a provider" },
-                        label: { text: "Provider" } %>
-
-  <% else %>
-
-    <div class="govuk-form-group">
-      <label for="frameworks-framework-provider-id-field" class="govuk-label">Provider</label>
-      <p class="govuk-body-l">
-        <%= @providers.find { |p| p.id == @framework.provider_id }.short_name %>
-      </p>
-    </div>
-
-  <% end%>
+  <%= f.govuk_select :provider_id, @providers.map {|provider| [provider.short_name, provider.id] },
+                      "data-select-option-filter-target" => "input",
+                      options: { include_blank: "Select a provider" },
+                      label: { text: "Provider" } %>
 
   <%= f.govuk_select :provider_contact_id, @provider_contacts.map {|contact| [contact.display_name, contact.id, { "data-provider-id" => contact.provider_id }] },
                       "data-select-option-filter-target" => "output",
@@ -51,35 +18,24 @@
 </div>
 
 <%= f.govuk_fieldset legend: { text: 'DfE Ownership' } do %>
+  <%= f.govuk_text_field :sct_framework_owner, width: "one-third", label: { text: "SCT Framework Owner" } %>
+
+  <%= f.govuk_text_field :sct_framework_provider_lead, width: "one-third", label: { text: "SCT Framework Provider Lead" } %>
 
   <%= f.govuk_select :proc_ops_lead_id, @procops_agents.map {|agent| [agent.full_name, agent.id] },
       options: { include_blank: "Select a lead" },
       label: { text: "Procurement Operations Lead" } %>
 
+  <%= f.govuk_select :e_and_o_lead_id, @e_and_o_agents.map {|agent| [agent.full_name, agent.id] },
+      options: { include_blank: "Select a lead" },
+      label: { text: "Engagement and Outreach Lead" } %>
 <% end %>
 
 <%= f.govuk_fieldset legend: { text: 'Availability' } do %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half" id="provider-end-date">
-
-      <% if @framework.source!='faf_import' %>
-
-         <%= f.govuk_date_field :provider_end_date, legend: { size: "s", text: "Provider end date" } %>
-
-      <% else %>
-
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Provider end date</legend>
-          <div class="govuk-form-group">
-            <p class="govuk-body-l"><%= I18n.l(@framework.provider_end_date, format: :compact)%></p>
-          </div>
-        </fieldset>
-
-      <% end%>
-
+    <div class="govuk-grid-column-one-half" id="dfe-start-date">
+      <%= f.govuk_date_field :dfe_start_date, legend: { size: "s", text: "DfE start date" } %>
     </div>
-  </div>
-  <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half" id="dfe-review-date">
       <%= f.govuk_date_field :dfe_review_date, legend: { size: "s", text: "DfE review date" } %>
     </div>
@@ -87,6 +43,17 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half" id="provider-start-date">
       <%= f.govuk_date_field :provider_start_date, legend: { size: "s", text: "Provider start date" } %>
+    </div>
+    <div class="govuk-grid-column-one-half" id="provider-end-date">
+      <%= f.govuk_date_field :provider_end_date, legend: { size: "s", text: "Provider end date" } %>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half" id="faf-added-date">
+      <%= f.govuk_date_field :faf_added_date, legend: { size: "s", text: "FaF Added date" } %>
+    </div>
+    <div class="govuk-grid-column-one-half" id="faf-removed-date">
+      <%= f.govuk_date_field :faf_end_date, legend: { size: "s", text: "Faf End date" } %>
     </div>
   </div>
 <% end %>
@@ -98,22 +65,8 @@
   <% lot_options = Frameworks::Framework.lots.map {|status, id| [status, status.humanize + "-lot"] } %>
   <%= f.govuk_collection_radio_buttons :lot, lot_options, :first, :last, inline: true, legend: { size: 's', text: 'Is this framework a single or multi lot?' } %>
 
-  <% if @framework.source!='faf_import' %>
-
-    <% status_options = Frameworks::Framework.statuses.select{|status| status != 'pending_evaluation'}.map {|status, id| [status, I18n.t(status, scope: "framework.framework_statuses")] } %>
-    <%= f.govuk_collection_radio_buttons :status, status_options, :first, :last, legend: { size: 's', text: 'Status' } %>
-
-  <% else %>
-
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Status</legend>
-        <p class="govuk-body-l"><%= I18n.t(@framework.status, scope: "framework.framework_statuses")%></p>
-      </fieldset>
-    </div>
-
-  <% end %>
-
+  <% status_options = Frameworks::Framework.statuses.map {|status, id| [status, status.humanize] } %>
+  <%= f.govuk_collection_radio_buttons :status, status_options, :first, :last, legend: { size: 's', text: 'Approval Status' } %>
 <% end %>
 
 <div class="govuk-button-group flex-align-center">

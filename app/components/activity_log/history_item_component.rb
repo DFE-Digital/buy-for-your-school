@@ -4,7 +4,7 @@ class ActivityLog::HistoryItemComponent < ViewComponent::Base
 
   def initialize(by:, date:, title: nil)
     @title = title
-    @by    = by || "FaF Admin tool"
+    @by    = by
     @date  = date
   end
 end

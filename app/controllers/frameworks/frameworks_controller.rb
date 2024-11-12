@@ -46,8 +46,8 @@ private
   def load_form_options
     @procops_agents = Support::Agent.caseworkers
     @e_and_o_agents = Support::Agent.e_and_o_staff
-    @providers = Frameworks::Provider.all.order(:short_name)
-    @provider_contacts = Frameworks::ProviderContact.all.order(:name)
+    @providers = Frameworks::Provider.all
+    @provider_contacts = Frameworks::ProviderContact.all
   end
 
   def filter_form_params

@@ -13,21 +13,21 @@ describe Support::EstablishmentSearch::Presentable do
     context "when the search result is an opening school with a date" do
       it "returns an autocomplete template with the name, postcode, school type, status, open date, urn and ukprn" do
         search_result = presentable.omnisearch(opening_school.urn).to_a.first
-        expect(search_result.autocomplete_template).to eq("<strong>Test Opening School</strong>, EC3A 5DE<br />Foundation school<br />Proposed to open 30 Jul 24<br />URN: 3 - UKPRN: 333\n")
+        expect(search_result.autocomplete_template).to eq("<strong>Test Opening School</strong>, EC3A 5DE<br />Foundation school<br />Proposed to open 30 Jul 24<br />URN: 3 - UKPRN: 333")
       end
     end
 
     context "when the search result is a closing school with a date" do
       it "returns an autocomplete template with the name, postcode, school type, status, closed date, urn and ukprn" do
         search_result = presentable.omnisearch(closing_school.urn).to_a.first
-        expect(search_result.autocomplete_template).to eq("<strong>Test Closing School</strong>, EC3A 5DE<br />Academy sponsor led<br />Open, but proposed to close 30 Aug 24<br />URN: 2 - UKPRN: 222\n")
+        expect(search_result.autocomplete_template).to eq("<strong>Test Closing School</strong>, EC3A 5DE<br />Academy sponsor led<br />Open, but proposed to close 30 Aug 24<br />URN: 2 - UKPRN: 222")
       end
     end
 
     context "when the search result is an open school" do
       it "returns an autocomplete template with the name, postcode, school type, urn and ukprn" do
         search_result = presentable.omnisearch(open_school.urn).to_a.first
-        expect(search_result.autocomplete_template).to eq("<strong>Test Primary School</strong>, EC3A 5DE<br />Community school<br />URN: 1 - UKPRN: 123\n")
+        expect(search_result.autocomplete_template).to eq("<strong>Test Primary School</strong>, EC3A 5DE<br />Community school<br />URN: 1 - UKPRN: 123")
       end
     end
 
