@@ -24,11 +24,8 @@ module Support
     end
 
     def create
-      @agent = Support::Management::AgentForm.find_or_initialize_by(
-        email: agent_form_params[:email],
-        first_name: agent_form_params[:first_name],
-        last_name: agent_form_params[:last_name],
-      )
+      @agent = Support::Management::AgentForm
+        .find_or_initialize_by(email: agent_form_params[:email])
       @agent.assign_attributes(agent_form_params)
 
       if @agent.valid?
