@@ -20,7 +20,7 @@ describe "Engagement Admin can create an Agent" do
   end
 
   scenario "Admin with same email already exists" do
-    agent = create(:support_agent, email: "abbeydale@education.gov.uk", roles: [])
+    agent = create(:support_agent, email: "AbbeyDale@education.gov.uk", roles: [])
 
     visit engagement_root_path
     click_on "Management"
@@ -28,7 +28,7 @@ describe "Engagement Admin can create an Agent" do
     click_on "New Agent"
     fill_in "First name", with: "Abbey"
     fill_in "Last name", with: "Dale"
-    fill_in "Email", with: "abbeydale@education.gov.uk"
+    fill_in "Email", with: "abbeydale@EDUCATION.gov.uk"
     check "Engagement and Outreach Staff Member"
     click_on "Save"
 

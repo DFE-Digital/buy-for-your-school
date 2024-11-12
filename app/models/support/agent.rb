@@ -23,7 +23,9 @@ module Support
     scope :with_cases, -> { where.associated(:cases).distinct }
     scope :with_live_cases, -> { where.associated(:live_cases).distinct }
 
-    validates :email, uniqueness: true
+    validates :email, uniqueness: { case_sensitive: false }
+
+    before_validation :normalize_email
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
@@ -57,5 +59,11 @@ module Support
     def full_name = "#{first_name} #{last_name}"
 
     def initials = "#{first_name.first}#{last_name.first}"
+
+  private
+
+    def normalize_email
+      email&.downcase!
+    end
   end
 end
