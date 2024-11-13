@@ -8,7 +8,7 @@ ruby "3.3.3"
 # See https://github.com/puma/puma/pull/3532
 # `require: false` is needed because you can't actually `require "rackup"`
 # due to a different bug: https://github.com/rack/rackup/commit/d03e1789
-gem "rackup", "1.0.0", require: false
+gem "rackup", "1.0.1", require: false
 
 gem "aasm"
 gem "application_insights"
