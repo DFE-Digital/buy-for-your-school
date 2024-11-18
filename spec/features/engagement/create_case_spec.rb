@@ -54,9 +54,15 @@ RSpec.feature "Create case", :js do
 
       before do
         create_list(:support_organisation, 3, trust_code: group.uid)
+        create(:support_organisation, name: "Archived School", archived: true, trust_code: group.uid)
         select_organisation "Group 1"
         valid_form_data_without_organisation
         click_on "Save and continue"
+      end
+
+      it "does not show an archived school as an option to select" do
+        expect(page).to have_text "0 of 3 schools"
+        expect(page).not_to have_text "Archived School"
       end
 
       it "navigates to the same supplier question when more than one school is chosen and saves answers" do

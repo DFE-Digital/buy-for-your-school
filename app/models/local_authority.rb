@@ -9,7 +9,7 @@ class LocalAuthority < ApplicationRecord
   end
 
   def organisations_for_multi_school_picker
-    organisations.local_authority_maintained
+    organisations.local_authority_maintained.where.not(archived: true)
   end
 
   def org_type

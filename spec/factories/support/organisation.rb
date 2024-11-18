@@ -9,6 +9,7 @@ FactoryBot.define do
     phase  { (0..7).to_a.sample }
     gender { (0..3).to_a.sample }
     status { 1 }
+    archived { false }
 
     association :establishment_type,
                 factory: :support_establishment_type
