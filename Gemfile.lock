@@ -437,6 +437,7 @@ GEM
       tzinfo
       validate_url
       webfinger (~> 2.0)
+    ostruct (0.6.1)
     pagy (9.1.1)
     pandoc-ruby (2.1.10)
     paper_trail (16.0.0)
@@ -726,9 +727,10 @@ GEM
     wisper (2.0.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.36)
-    yard-junk (0.0.9)
+    yard (0.9.37)
+    yard-junk (0.0.10)
       backports (>= 3.18)
+      ostruct
       rainbow
       yard
     zeitwerk (2.7.1)
