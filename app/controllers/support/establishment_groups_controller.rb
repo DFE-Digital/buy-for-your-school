@@ -6,9 +6,10 @@ module Support
 
     def index
       query = <<-SQL
-        ukprn LIKE :q OR
+        (ukprn LIKE :q OR
         uid LIKE :q OR
-        lower(name) LIKE lower(:q)
+        lower(name) LIKE lower(:q)) AND
+        archived != true
       SQL
 
       respond_to do |format|

@@ -9,6 +9,7 @@ FactoryBot.define do
                 factory: :support_establishment_group_type
 
     address { {} }
+    archived { false }
 
     trait :with_no_address do
       address { { "town": "", "county": "", "street": "", "locality": "", "postcode": "" } }

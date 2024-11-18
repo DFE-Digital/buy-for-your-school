@@ -6,9 +6,10 @@ module Support
 
     def index
       query = <<-SQL
-        urn LIKE :q OR
+        (urn LIKE :q OR
         lower(name) LIKE lower(:q) OR
-        lower(address->>'postcode') LIKE lower(:q)
+        lower(address->>'postcode') LIKE lower(:q)) AND
+        archived != true
       SQL
 
       results = Organisation
