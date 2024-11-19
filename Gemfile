@@ -68,7 +68,7 @@ gem "thor"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "will_paginate", "~> 4.0.0"
-gem "wisper", "2.0.1"
+gem "wisper", "3.0.0"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
