@@ -253,7 +253,7 @@
   "spec/services/specify/content/connector_instance_spec.rb": 0.017257364999977653,
   "spec/models/page_spec.rb": 0.06481021100000817,
   "spec/models/user_journey_spec.rb": 0.30293321800002104,
-  "spec/features/frameworks/evaluations/agent_can_manage_evaulation_email_attachments_spec.rb": 0.22941185500008032,
+  "spec/features/frameworks/evaluations/agent_can_manage_evaluation_email_attachments_spec.rb": 0.22941185500008032,
   "spec/services/specify/liquid_parser_spec.rb": 0.01458348100004514,
   "spec/lib/support/frameworks/record_keeper_spec.rb": 0.04091207999999824,
   "spec/requests/support/admin/stats_downloads_spec.rb": 0.27343406199997844,
