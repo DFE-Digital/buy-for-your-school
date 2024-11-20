@@ -59,6 +59,8 @@ module Support
 
     has_many :case_additional_contacts, class_name: "Support::CaseAdditionalContact", foreign_key: :support_case_id
 
+    has_many :evaluators, class_name: "Support::Evaluator", foreign_key: :support_case_id
+
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
 
     # Support level

@@ -800,6 +800,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
     t.index ["name"], name: "index_support_establishment_types_on_name", unique: true
   end
 
+  create_table "support_evaluators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.string "dsi_uid", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_uid"], name: "index_support_evaluators_on_dsi_uid"
+    t.index ["email", "support_case_id"], name: "index_support_evaluators_on_email_and_support_case_id", unique: true
+    t.index ["support_case_id"], name: "index_support_evaluators_on_support_case_id"
+  end
+
   create_table "support_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "supplier"
