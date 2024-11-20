@@ -8,5 +8,9 @@ module Support
               presence: true,
               uniqueness: { case_sensitive: false, scope: :support_case_id }
     validates :first_name, :last_name, presence: true
+
+    def name
+      [first_name, last_name].compact_blank.join(" ")
+    end
   end
 end

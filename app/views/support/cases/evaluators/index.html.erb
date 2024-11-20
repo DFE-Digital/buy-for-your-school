@@ -1,0 +1,31 @@
+<h1 class="govuk-heading-l"><%= I18n.t("support.case_evaluators.listing_heading") %></h1>
+
+<table class="govuk-table messages-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"
+        ><%= I18n.t(:name, scope: "helpers.label.support_evaluator") %></th>
+      <th scope="col" class="govuk-table__header"
+        ><%= I18n.t(:email, scope: "helpers.label.support_evaluator") %></th>
+      <th scope="col" class="govuk-table__header"></th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @evaluators.each do |evaluator| %>
+      <div class="govuk-summary-list__row">
+        <tr>
+          <td class="govuk-table__cell"><%= evaluator.name %></td>
+          <td class="govuk-table__cell"><%= evaluator.email %></td>
+          <td class="govuk-table__cell"
+            ><%= link_to I18n.t("generic.link.change"),
+                 edit_support_case_evaluator_path(evaluator, case_id: @current_case) %></td>
+        </tr>
+      </div>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to I18n.t("generic.button.add"),
+            new_support_case_evaluator_path(case_id: @current_case), class: 'govuk-button' %>
