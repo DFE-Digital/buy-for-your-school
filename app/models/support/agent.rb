@@ -8,6 +8,7 @@ module Support
   class Agent < ApplicationRecord
     include Notifyable
     include RoleAssignable
+    include HasNormalizedEmail
 
     has_many :cases, class_name: "Support::Case"
     has_many :live_cases, -> { live }, class_name: "Support::Case"
@@ -24,8 +25,6 @@ module Support
     scope :with_live_cases, -> { where.associated(:live_cases).distinct }
 
     validates :email, uniqueness: { case_sensitive: false }
-
-    before_validation :normalize_email
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL
@@ -59,11 +58,5 @@ module Support
     def full_name = "#{first_name} #{last_name}"
 
     def initials = "#{first_name.first}#{last_name.first}"
-
-  private
-
-    def normalize_email
-      email&.downcase!
-    end
   end
 end
