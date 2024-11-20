@@ -1,11 +1,12 @@
 FactoryBot.define do
   factory :support_agent, class: "Support::Agent" do
     dsi_uid     { SecureRandom.uuid }
-    email       { "test@test" }
     first_name  { "first_name" }
     last_name   { "last_name" }
     internal    { false }
     roles       { %w[procops] }
+
+    sequence(:email) { |n| sprintf("test.%04d@example.com", n) }
 
     trait :admin do
       roles { %w[admin] }

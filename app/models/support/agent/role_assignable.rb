@@ -27,12 +27,5 @@ module Support::Agent::RoleAssignable
     }
   end
 
-  def assign_roles(new_roles:, using_policy:)
-    removed = using_policy.grantable_role_names & (roles - new_roles)
-    added   = using_policy.grantable_role_names & new_roles
-
-    update!(roles: (roles - removed + added).uniq)
-  end
-
   def labelled_roles = roles.map { |role| ROLES[role.to_sym] }
 end

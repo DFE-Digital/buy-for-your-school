@@ -8,6 +8,7 @@ module Support
   class Agent < ApplicationRecord
     include Notifyable
     include RoleAssignable
+    include HasNormalizedEmail
 
     has_many :cases, class_name: "Support::Case"
     has_many :live_cases, -> { live }, class_name: "Support::Case"
@@ -22,6 +23,8 @@ module Support
     scope :enabled, -> { disabled.invert_where }
     scope :with_cases, -> { where.associated(:cases).distinct }
     scope :with_live_cases, -> { where.associated(:live_cases).distinct }
+
+    validates :email, uniqueness: { case_sensitive: false }
 
     scope :omnisearch, lambda { |query|
       sql = <<-SQL

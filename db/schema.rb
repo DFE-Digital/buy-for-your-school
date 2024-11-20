@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_16_093636) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_12_123453) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -527,7 +527,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_093636) do
     t.uuid "support_tower_id"
     t.string "roles", default: [], array: true
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
-    t.index ["email"], name: "index_support_agents_on_email"
+    t.index ["email"], name: "index_support_agents_on_email", unique: true
     t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"
   end
 

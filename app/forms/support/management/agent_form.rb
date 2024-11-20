@@ -1,26 +1,22 @@
 module Support
   module Management
-    class AgentForm
-      include ActiveModel::Model
+    class AgentForm < ::Support::Agent
+      validates :email, :first_name, :last_name, presence: true
 
-      validates :email, presence: true
-      validates :first_name, presence: true
-      validates :last_name, presence: true
+      alias_attribute :__roles, :roles
+      attr_writer :roles, :policy
 
-      attr_accessor(
-        :email,
-        :first_name,
-        :last_name,
-        :roles,
-      )
+      before_save :assign_roles
 
-      def self.from_agent(agent)
-        new(
-          email: agent.email,
-          first_name: agent.first_name,
-          last_name: agent.last_name,
-          roles: agent.roles,
-        )
+    private
+
+      def assign_roles
+        new_roles = (@roles || []).reject(&:blank?)
+
+        removable = @policy.grantable_role_names & (__roles - new_roles)
+        addable = @policy.grantable_role_names & new_roles
+
+        self.__roles = (__roles - removable + addable).uniq
       end
     end
   end
