@@ -1429,8 +1429,10 @@ en:
         success: "%{name} successfully added"
         destroyed: "%{name} successfully removed"
       delete_confirmation: Are you sure you want to remove %{name}?
-      header: Update evaluator details
-      listing_heading: Evaluators
+      header:
+        edit: Update evaluator details
+        new: Add evaluator details
+        index: Evaluators
       submit: Save changes
     case_hub_migration:
       school_picker:
