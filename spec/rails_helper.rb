@@ -79,6 +79,7 @@ RSpec.configure do |config|
   config.before do
     Bullet.enable = false
     Flipper.enable(:customer_satisfaction_survey)
+    Flipper.enable(:sc_tasklist_tab)
   end
 
   config.after do

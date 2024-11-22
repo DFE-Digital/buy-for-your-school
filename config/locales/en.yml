@@ -933,6 +933,8 @@ en:
         request: Request
         request_details: Request details
         school_detail: School details
+        tasklist: Tasklist
+        procurement_task_list: Procurement task list
       label:
         actions:
           transfer_to_framework_evaluation: Transfer to framework evaluation
@@ -1220,6 +1222,19 @@ en:
           L5: 5 - DfE buying by getting quotes or bids
           header: Case level
           unspecified: Not specified
+        tasklist:
+          complete_evaluation: Complete evaluation
+          item:
+            add_evaluators: Add evaluators
+            set_due_date: Set due date
+            upload_documents: Upload documents
+            email_evaluators: Email evaluators
+            review_evaluations: Review evaluations  
+          status:
+            to_do: To do
+            in_progress: In progress
+            complete: Complete
+            cannot_start: Cannot start  
         transfer_to_framework_evaluation:
           title: Buy for your school | Case %{reference} | Transfer to framework evaluation
           header: Do you want to transfer Case %{reference} to a framework evaluation case?
