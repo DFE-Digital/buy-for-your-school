@@ -33,8 +33,9 @@ class Frameworks::FrameworksController < Frameworks::ApplicationController
 
   def update
     @framework = Frameworks::Framework.find(params[:id])
+    @framework.assign_attributes(framework_params)
 
-    if @framework.update(framework_params)
+    if @framework.save(context: :updation_form)
       redirect_to frameworks_framework_path(@framework)
     else
       render :edit
@@ -46,8 +47,8 @@ private
   def load_form_options
     @procops_agents = Support::Agent.caseworkers
     @e_and_o_agents = Support::Agent.e_and_o_staff
-    @providers = Frameworks::Provider.all
-    @provider_contacts = Frameworks::ProviderContact.all
+    @providers = Frameworks::Provider.all.order(:short_name)
+    @provider_contacts = Frameworks::ProviderContact.all.order(:name)
   end
 
   def filter_form_params

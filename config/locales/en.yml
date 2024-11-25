@@ -2066,3 +2066,12 @@ en:
       attach_case_files:
         heading: Case files
         back: Back to message
+  framework:
+    framework_statuses:
+      cab_approved: CAB approved
+      dfe_approved: DfE approved
+      evaluating: Evaluating
+      expired: Expired
+      not_approved: Not approved
+      archived: Archived
+      pending_evaluation: Pending evaluation

@@ -10,10 +10,17 @@ module Frameworks::Framework::StatusChangeable
       evaluating: 2,
       dfe_approved: 3,
       cab_approved: 4,
+      expired: 5,
+      archived: 6,
     }
 
+    # Method to return statuses in approval order
+    def self.ordered_statuses_by_approval
+      %w[dfe_approved cab_approved evaluating expired not_approved pending_evaluation archived]
+    end
+
     aasm column: :status, enum: true do
-      Frameworks::Framework.statuses.each_key { |status| state status.to_sym }
+      Frameworks::Framework.ordered_statuses_by_approval.each { |status| state status.to_sym }
 
       event :draft_evaluation do
         transitions from: %i[not_approved], to: :pending_evaluation, after: :after_drafting_evaluation
