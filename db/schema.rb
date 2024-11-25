@@ -362,6 +362,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_12_123453) do
     t.string "provider_reference"
     t.datetime "faf_added_date"
     t.datetime "faf_end_date"
+    t.string "faf_slug_ref"
+    t.string "faf_category"
+    t.date "faf_archived_at"
+    t.boolean "is_archived", default: false
   end
 
   create_table "frameworks_provider_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
