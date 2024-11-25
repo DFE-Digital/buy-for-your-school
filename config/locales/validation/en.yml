@@ -155,6 +155,25 @@ en:
                 blank: Select the type of goods or service you need
               origin:
                 blank: Select where you heard about the service
+        frameworks/framework:
+          attributes:
+            name:
+              blank: Enter the name of the framework
+            url:
+              blank: Enter the provider URL of the framework
+            provider_reference:
+              blank: Enter the provider reference of the framework
+            provider_id:
+              blank: Please select a provider
+            proc_ops_lead_id:
+              blank: Please select a procurement operations lead
+            dfe_review_date:
+              blank: Enter DfE review date
+            provider_start_date:
+              blank: Enter provider start date
+            provider_end_date:
+              blank: Enter provider end date
+          unique_name_and_provider: The combination of name and provider must be unique
 
   request:
     rules:
