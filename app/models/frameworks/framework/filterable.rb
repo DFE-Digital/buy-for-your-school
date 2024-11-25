@@ -9,6 +9,7 @@ module Frameworks::Framework::Filterable
     scope :by_proc_ops_lead, ->(proc_ops_lead_ids) { where(proc_ops_lead_id: Array(proc_ops_lead_ids)) }
     scope :by_provider_contact, ->(provider_contact_ids) { where(provider_contact_id: Array(provider_contact_ids)) }
     scope :by_omnisearch, ->(query) { omnisearch(query) }
+    scope :approved_status, -> { where(status: %w[dfe_approved cab_approved]) }
   end
 
   class_methods do
