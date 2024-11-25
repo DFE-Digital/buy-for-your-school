@@ -37,23 +37,8 @@ govuk_summary_card(title: "DfE Ownership") do |card|
 
   card.with_summary_list do |summary_list|
     summary_list.with_row do |row|
-      row.with_key { "SCT Framework Owner" }
-      row.with_value { @framework.sct_framework_owner }
-    end
-
-    summary_list.with_row do |row|
-      row.with_key { "SCT Framework Provider Lead" }
-      row.with_value { @framework.sct_framework_provider_lead }
-    end
-
-    summary_list.with_row do |row|
       row.with_key { "Procurement Operations Lead" }
       row.with_value { @framework.proc_ops_lead_name }
-    end
-
-    summary_list.with_row do |row|
-      row.with_key { "Engagement and Outreach Lead" }
-      row.with_value { @framework.e_and_o_lead_name }
     end
   end
 end
@@ -65,18 +50,8 @@ govuk_summary_card(title: "Important Dates") do |card|
 
   card.with_summary_list do |summary_list|
     summary_list.with_row do |row|
-      row.with_key { "Provider start date" }
-      row.with_value { @framework.display_provider_start_date }
-    end
-
-    summary_list.with_row do |row|
       row.with_key { "Provider end date" }
       row.with_value { @framework.display_provider_end_date }
-    end
-
-    summary_list.with_row do |row|
-      row.with_key { "DfE start date" }
-      row.with_value { @framework.display_dfe_start_date }
     end
 
     summary_list.with_row do |row|
@@ -85,13 +60,8 @@ govuk_summary_card(title: "Important Dates") do |card|
     end
 
     summary_list.with_row do |row|
-      row.with_key { "Date added to FaF" }
-      row.with_value { @framework.display_faf_added_date }
-    end
-
-    summary_list.with_row do |row|
-      row.with_key { "FaF end date" }
-      row.with_value { @framework.display_faf_end_date }
+      row.with_key { "Provider start date" }
+      row.with_value { @framework.display_provider_start_date }
     end
   end
 end
