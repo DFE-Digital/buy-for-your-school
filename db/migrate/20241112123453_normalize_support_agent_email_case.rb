@@ -7,6 +7,6 @@ class NormalizeSupportAgentEmailCase < ActiveRecord::Migration[7.2]
   end
 
   def down
-    raise IrreversibleMigration
+    raise ActiveRecord::IrreversibleMigration
   end
 end
