@@ -1,4 +1,4 @@
-<span class="govuk-caption-l"><%= @current_case.organisation_name %></span>
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
 <h1 class="govuk-heading-l"><%= I18n.t("support.case_evaluators.header.index") %></h1>
 
 <table class="govuk-table messages-table">
