@@ -5,7 +5,7 @@ class Frameworks::Framework::Filtering
 
   initial_scope -> { Frameworks::Framework }
 
-  filter_by :status,           options: -> { Frameworks::Framework.statuses.map { |label, _id| [label.humanize, label] } }
+  filter_by :status,           options: -> { Frameworks::Framework.ordered_statuses_by_approval.map { |label, _id| [I18n.t(label, scope: "framework.framework_statuses"), label] } }
   filter_by :provider,         options: -> { Frameworks::Provider.order("short_name ASC").pluck(:short_name, :id) }
   filter_by :e_and_o_lead,     options: -> { get_agents[:e_and_o_lead_id].map { |agent| [agent.full_name, agent.id] } }
   filter_by :proc_ops_lead,    options: -> { get_agents[:proc_ops_lead_id].map { |agent| [agent.full_name, agent.id] } }
