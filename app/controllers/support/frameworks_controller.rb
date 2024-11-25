@@ -12,6 +12,7 @@ module Support
 
           render json: ::Frameworks::Framework
             .not_evaluating
+            .where(status: %w[dfe_approved cab_approved])
             .omnisearch(params[:q])
             .order("reference DESC")
             .as_json(methods:)
