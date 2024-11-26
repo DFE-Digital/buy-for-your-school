@@ -3,60 +3,6 @@ en:
   activerecord:
     attributes:
       support:
-  datetime:
-    distance_in_words:
-      just_now: 'moments'
-      about_x_minutes:
-        one: ~ 1 min
-        other: ~ %{count} mins
-      about_x_hours:
-        one: ~ %{count} hr
-        other: ~ %{count} hrs
-      about_x_months:
-        one: ~ %{count} month
-        other: ~ %{count} months
-      about_x_years:
-        one: ~ %{count} year
-        other: ~ %{count} years
-      almost_x_years:
-        one: almost %{count} year
-        other: almost %{count} years
-      half_a_minute: 30 secs
-      less_than_x_seconds:
-        one: less than %{count} sec
-        other: less than %{count} secs
-      less_than_x_minutes:
-        one: < 30 mins
-        other: < %{count} mins
-      over_x_years:
-        one: over %{count} year
-        other: over %{count} years
-      x_seconds:
-        one: "%{count} sec"
-        other: "%{count} secs"
-      x_minutes:
-        one: "%{count} min"
-        other: "%{count} mins"
-      x_hours:
-        one: "%{count} hr"
-        other: "%{count} hrs"
-      x_days:
-        one: "%{count} day"
-        other: "%{count} days"
-      x_months:
-        one: "%{count} month"
-        other: "%{count} months"
-      x_years:
-        one: "%{count} year"
-        other: "%{count} years"
-  date:
-    formats:
-      compact: "%d %b %y"
-      default: "%-d %b %Y"
-      presenter: "%e %B %Y"
-  time:
-    formats:
-      compact: "%d %b %y"   
   admin:
     activity_log_header: Activity log
     body:
@@ -67,6 +13,58 @@ en:
     download_json: Download (.json)
     header: User activity data
     users_header: Users
+  all_cases_survey:
+    about_outcomes:
+      question: Tell us about the outcomes you were able to achieve because of the support you received
+    accessibility_research:
+      email: Please provide your email address. We will only use this to contact you about research.
+      options:
+        'no': 'No'
+        'yes': 'Yes'
+      question: Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?
+      question_dates: The research session will be taking place in November and December 2022.
+      question_examples:
+      - Cognitive, for example dyslexia, autism, ADHD, memory, speech
+      - Sight, for example colourblind, low vision, blind
+      - Hearing, for example Deaf or hard of hearing, users of British sign language (BSL)
+      - Mobility, for example fine motor impairment such as difficulty using your hands, speech, users of mobility aids, neurological
+      - Temporary, for example an injury
+      question_examples_end: Or you might be a user of assisted digital technology and software such as screen readers.
+      question_examples_start: 'Examples of an accessibility need might be:'
+      question_info: We need to make sure our new service for school buyers is accessible for all users. If you have a disability or accessibility need, we would like you to take part in a research session. We'll pay you £50 for 45 to 60 minutes of your time.
+    improvements:
+      question: Please tell us how we can improve this service?
+    outcome_achieved:
+      options:
+        agree: Agree
+        disagree: Disagree
+        neither: Neither agree nor disagree
+        strongly_agree: Strongly agree
+        strongly_disagree: Strongly disagree
+      question: I achieved the outcome I wanted as a result of the support I received from Get help buying for schools
+    satisfaction:
+      options:
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied nor dissatisfied
+        satisfied: Satisfied
+        very_dissatisfied: Very dissatisfied
+        very_satisfied: Very satisfied
+      question_opened_cases: How do you feel about the service you have received so far?
+      question_resolved_cases: How do you feel about the service you received?
+    satisfaction_reason:
+      question_opened_cases: Tell us why you feel %{previous_response} with the service so far?
+      question_resolved_cases: Tell us why you felt %{previous_response} with the service?
+    start:
+      body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.
+      header: Get help buying for schools feedback
+      privacy_policy: Privacy policy
+      title: Start - Get help buying for schools feedback
+    thank_you:
+      contact_us: Contact us again and use the %{ghbs_link} if you need support with what you're buying next.
+      header: Thank you
+      link: Get help buying for schools service
+      text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
+      title: Thank you - Get help buying for schools feedback
   app:
     name: Get help buying for schools
   banner:
@@ -79,36 +77,36 @@ en:
       destroy: You have been signed out.
       failure: Sign in failed unexpectedly, please try again.
       visitor: You must sign in.
+  case_requests:
+    validation:
+      discovery_method: Case origin is missing
+      request_type: Select whether the request is related to a procurement category
   components:
     school_picker:
       filters:
-        status: Filter by school status
-        phase: Filter by learning stage
-        local_authority: Filter by local authority
         clear: Clear filters
-      table:
-        school_name: <b>School name</b> (select all)
-        address: Address
-        phase: Phase of education
-        local_authority: Local authority
-        selected: "of <b>%{total} schools selected</b> from %{group_name}"
+        local_authority: Filter by local authority
+        phase: Filter by learning stage
+        status: Filter by school status
       phases:
+        all_through: All-through
+        middle: Middle
         no_phase: No phase
         nursery: Nursery
         primary: Primary
-        middle: Middle
         secondary: Secondary
-        all_through: All-through
         sixteen_plus: 16-plus
       statuses:
-        opened: Open
-        closing: Open, but proposed to close
-        opening: Proposed to open
         closed: Closed
-  case_requests:
-    validation:
-      request_type: Select whether the request is related to a procurement category
-      discovery_method: Case origin is missing
+        closing: Open, but proposed to close
+        opened: Open
+        opening: Proposed to open
+      table:
+        address: Address
+        local_authority: Local authority
+        phase: Phase of education
+        school_name: "<b>School name</b> (select all)"
+        selected: of <b>%{total} schools selected</b> from %{group_name}
   cookies:
     banner:
       accepted:
@@ -168,6 +166,49 @@ en:
           go_back: Go back to the homepage
           header: Success
           message: Your cookie settings were saved
+  customer_satisfaction_survey:
+    clear_to_use_rating:
+      question: It was clear to me what I could use this service to do
+    easy_to_use_rating:
+      question: This service was easy to use
+    helped_how:
+      options:
+        helped_buy_better_quality_goods_services: Helped me to buy better quality goods or services
+        improved_capability: Improved my capability to buy for my school
+        improved_confidence: Improved my confidence to buy for my school
+        none: None of the above
+        not_sure: Not sure
+        other: Other
+        saved_money: Saved me money
+        saved_time: Saved me time
+      other_text: Please tell how else this service has helped you
+      question: How has this service helped you?
+    improvements:
+      question: Please tell us how we could improve this service
+    recommendation_likelihood:
+      hint: 10 being highly likely and 0 being not likely at all
+      question: On a scale of 0 to 10, how likely are you to recommend us to a colleague?
+    research_opt_in:
+      email:
+        hint: We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services.
+        question: What is your email address?
+      hint: The Department for Education (DfE) often carries out research with people like you, who have used our service. This helps us to understand your experience or to test new concepts and improvements.
+      job_title:
+        hint: We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+        question: What is your job title?
+      question: Would you like to participate in research?
+    satisfaction_level:
+      options:
+        dissatisfied: Dissatisfied
+        neither: Neither satisfied nor dissatisfied
+        satisfied: Satisfied
+        very_dissatisfied: Very dissatisfied
+        very_satisfied: Very satisfied
+      question: Overall, how satisfied are you with this service?
+      satisfaction_reason_label: Please tell us why you gave that score
+    satisfaction_reason:
+      question: Please tell us why you gave the score '%{satisfaction_level}'
+    title: Get help buying for schools feedback
   dashboard:
     create:
       body: Create a new specification for a procurement.
@@ -180,11 +221,72 @@ en:
     existing:
       body: Continue with a draft specification, and review completed specifications.
       header: Existing specifications
-    header: Specifications dashboard 
+    header: Specifications dashboard
+  date:
+    formats:
+      compact: "%d %b %y"
+      default: "%-d %b %Y"
+      presenter: "%e %B %Y"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "~ %{count} hr"
+        other: "~ %{count} hrs"
+      about_x_minutes:
+        one: "~ 1 min"
+        other: "~ %{count} mins"
+      about_x_months:
+        one: "~ %{count} month"
+        other: "~ %{count} months"
+      about_x_years:
+        one: "~ %{count} year"
+        other: "~ %{count} years"
+      almost_x_years:
+        one: almost %{count} year
+        other: almost %{count} years
+      half_a_minute: 30 secs
+      just_now: moments
+      less_than_x_minutes:
+        one: "< 30 mins"
+        other: "< %{count} mins"
+      less_than_x_seconds:
+        one: less than %{count} sec
+        other: less than %{count} secs
+      over_x_years:
+        one: over %{count} year
+        other: over %{count} years
+      x_days:
+        one: "%{count} day"
+        other: "%{count} days"
+      x_hours:
+        one: "%{count} hr"
+        other: "%{count} hrs"
+      x_minutes:
+        one: "%{count} min"
+        other: "%{count} mins"
+      x_months:
+        one: "%{count} month"
+        other: "%{count} months"
+      x_seconds:
+        one: "%{count} sec"
+        other: "%{count} secs"
+      x_years:
+        one: "%{count} year"
+        other: "%{count} years"
   design:
     category_selection_header: Choose a category
     not_found: No categories found
     spec_template_tag_title: Specification tag
+  end_of_journey_survey:
+    new:
+      body: Please could you let us know how easy it was to use the form? Your feedback helps us make our service better.
+      easy_to_use_rating: This form was easy to use
+      heading: Before you go
+      improvements: How could we improve this form?
+      send: Send feedback
+    thank_you:
+      body: We will use your feedback to make our services better.
+      heading: Thank you for your feedback
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
@@ -304,167 +406,62 @@ en:
       text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
       title: Thank you
     title: Get help buying for schools feedback
-  all_cases_survey:
-    start:
-      title: Start - Get help buying for schools feedback
-      header: Get help buying for schools feedback
-      body: Thank you for taking the time to give us your feedback about case %{ref}. <br><br> This will help us to understand how well the service has supported you so that we can continue to improve it. <br><br> It should take about 5 minutes to complete.
-      privacy_policy: Privacy policy
-    satisfaction:
-      question_resolved_cases: How do you feel about the service you received?
-      question_opened_cases: How do you feel about the service you have received so far?
-      options:
-        dissatisfied: Dissatisfied
-        neither: Neither satisfied nor dissatisfied
-        satisfied: Satisfied
-        very_dissatisfied: Very dissatisfied
-        very_satisfied: Very satisfied
-    satisfaction_reason:
-      question_resolved_cases: Tell us why you felt %{previous_response} with the service?
-      question_opened_cases: Tell us why you feel %{previous_response} with the service so far?
-    outcome_achieved:
-      question: I achieved the outcome I wanted as a result of the support I received from Get help buying for schools
-      options:
-        agree: Agree
-        disagree: Disagree
-        neither: Neither agree nor disagree
-        strongly_agree: Strongly agree
-        strongly_disagree: Strongly disagree
-    about_outcomes:
-      question: Tell us about the outcomes you were able to achieve because of the support you received
-    improvements:
-      question: Please tell us how we can improve this service?
-    accessibility_research:
-      question: Would you like to take part in a research session to help us improve our service for disabled users and users with accessibility needs?
-      question_info: We need to make sure our new service for school buyers is accessible for all users. If you have a disability or accessibility need, we would like you to take part in a research session. We'll pay you £50 for 45 to 60 minutes of your time.
-      question_examples_start: 'Examples of an accessibility need might be:'
-      question_examples:
-        - Cognitive, for example dyslexia, autism, ADHD, memory, speech
-        - Sight, for example colourblind, low vision, blind
-        - Hearing, for example Deaf or hard of hearing, users of British sign language (BSL)
-        - Mobility, for example fine motor impairment such as difficulty using your hands, speech, users of mobility aids, neurological
-        - Temporary, for example an injury
-      question_examples_end: Or you might be a user of assisted digital technology and software such as screen readers.
-      question_dates: The research session will be taking place in November and December 2022.
-      options:
-        'yes': 'Yes'
-        'no': 'No'
-      email: Please provide your email address. We will only use this to contact you about research.
-    thank_you:
-      link: Get help buying for schools service
-      contact_us: Contact us again and use the %{ghbs_link} if you need support with what you're buying next.
-      text: We appreciate you taking the time to give us feedback. <br><br> Your response will help us to improve the service for schools.
-      title: Thank you - Get help buying for schools feedback
-      header: Thank you
-  customer_satisfaction_survey:
-    title: Get help buying for schools feedback
-    satisfaction_level:
-      question: Overall, how satisfied are you with this service?
-      satisfaction_reason_label: Please tell us why you gave that score
-      options:
-        dissatisfied: Dissatisfied
-        neither: Neither satisfied nor dissatisfied
-        satisfied: Satisfied
-        very_dissatisfied: Very dissatisfied
-        very_satisfied: Very satisfied
-    satisfaction_reason:
-      question: Please tell us why you gave the score '%{satisfaction_level}'
-    easy_to_use_rating:
-      question: This service was easy to use
-    helped_how:
-      question: How has this service helped you?
-      options:
-        saved_money: Saved me money
-        saved_time: Saved me time
-        helped_buy_better_quality_goods_services: Helped me to buy better quality goods or services
-        improved_confidence: Improved my confidence to buy for my school
-        improved_capability: Improved my capability to buy for my school
-        not_sure: Not sure
-        none: None of the above
-        other: Other
-      other_text: Please tell how else this service has helped you
-    clear_to_use_rating:
-      question: It was clear to me what I could use this service to do
-    recommendation_likelihood:
-      question: On a scale of 0 to 10, how likely are you to recommend us to a colleague?
-      hint: 10 being highly likely and 0 being not likely at all
-    improvements:
-      question: Please tell us how we could improve this service
-    research_opt_in:
-      question: Would you like to participate in research?
-      hint: The Department for Education (DfE) often carries out research with people like you, who have used our service. This helps us to understand your experience or to test new concepts and improvements.
-      email:
-        question: What is your email address?
-        hint: We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services.
-      job_title:
-        question: What is your job title?
-        hint: We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
-  end_of_journey_survey:
-    new:
-      heading: Before you go
-      body: Please could you let us know how easy it was to use the form? Your feedback helps us make our service better.
-      easy_to_use_rating: This form was easy to use
-      improvements: How could we improve this form?
-      send: Send feedback
-    thank_you:
-      heading: Thank you for your feedback
-      body: We will use your feedback to make our services better.
   faf:
     bill_uploads:
       header:
         initial: Upload your energy information
-        uploading: Your files are uploading
         uploaded: Your files have been uploaded
+        uploading: Your files are uploading
     categories:
-      title: What type of goods or service do you need?
       category_title: What do you need in %{category}?
-      subtitle: Type of goods or service
-      please_specify: Please specify
       multiple:
-        title: I'm buying more than one thing
-        paragraphs:
-          - We support procurements for individual categories of goods or services, for example catering, energy, furniture and so on.
-          - This is because separate procurements need to be run for each.
-          - If you're buying more than one category of goods or services, you will need to make a separate request for each one.
         button: Choose category
+        paragraphs:
+        - We support procurements for individual categories of goods or services, for example catering, energy, furniture and so on.
+        - This is because separate procurements need to be run for each.
+        - If you're buying more than one category of goods or services, you will need to make a separate request for each one.
+        title: I'm buying more than one thing
+      please_specify: Please specify
+      subtitle: Type of goods or service
+      title: What type of goods or service do you need?
     check_answers:
+      aria:
+        change_bills_attached: Change bills attached
+        change_category: Change type of goods or service
+        change_contract_length: Change the length of your contract
+        change_contract_start_date: Change the start date of your contract
+        change_documents_attached: Change documents attached
+        change_email: Change your email
+        change_message: Change the description of your request
+        change_name: Change your name
+        change_origin: Change the origin of your request
+        change_procurement_amount: Change procurement amount
+        change_same_supplier_used: Change whether the same supplier is used for all your schools
+        change_school: Change your school
+        change_school_picker: Change the schools you're buying for
+        change_school_type: Change your school type
+        change_special_requirements: Change special requirements
       button:
         send: Send request
       details:
-        email: Your email address
-        name: Your name
-        problem: Description of request
+        bills_attached: Bills attached
+        category: Type of goods or service
         contract_length: Contract length
         contract_start_date: Contract start date
+        documents_attached: Documents attached
+        email: Your email address
+        name: Your name
+        origin: Origin
+        problem: Description of request
         same_supplier_used: Same supplier used
         school: Your school
+        school_number: "%{selected} of %{total} schools"
         school_type: School type
         schools_buying_for: Schools you're buying for
-        school_number: "%{selected} of %{total} schools"
         single: Single
-        bills_attached: Bills attached
-        documents_attached: Documents attached
-        category: Type of goods or service
-        origin: Origin
       header: Send your request
-      response_time: Once you send this request, we will review it and get in touch within 5 working days.
       not_known: Not known
-      aria:
-        change_name: "Change your name"
-        change_email: "Change your email"
-        change_school: "Change your school"
-        change_school_type: "Change your school type"
-        change_school_picker: "Change the schools you're buying for"
-        change_message: "Change the description of your request"
-        change_contract_length: "Change the length of your contract"
-        change_contract_start_date: "Change the start date of your contract"
-        change_same_supplier_used: "Change whether the same supplier is used for all your schools"
-        change_procurement_amount: "Change procurement amount"
-        change_bills_attached: "Change bills attached"
-        change_documents_attached: "Change documents attached"
-        change_special_requirements: "Change special requirements"
-        change_category: "Change type of goods or service"
-        change_origin: "Change the origin of your request"
+      response_time: Once you send this request, we will review it and get in touch within 5 working days.
     confirm_group_or_trust:
       caption: About your school
       choice:
@@ -495,51 +492,51 @@ en:
         urn: URN
     confirm_schools:
       caption: About your school
-      title: Are these the schools you're buying for?
       'no': No, I need to change my selection
       table:
         school_name: School name
+      title: Are these the schools you're buying for?
     contract_length:
       caption: About your procurement
-      title: How long do you want the contract for including any extensions?
       hint: Tell us how long you want the contract for at this time. We know this can change. We do not recommend contracts that are shorter than one year.
       options:
-        one_year: 1 year
-        two_years: 2 years
-        three_years: 3 years
-        four_years: 4 years
         five_years: 5 years
+        four_years: 4 years
         not_sure: Not sure
+        one_year: 1 year
+        three_years: 3 years
+        two_years: 2 years
+      title: How long do you want the contract for including any extensions?
     contract_start_date:
       caption: About your procurement
-      title: Do you know when you want the contract to start?
-      options:
-        'yes': "Yes"
-        'no': "No"
       date:
-        label: Enter the date
         hint: For example, 27 3 2007
         invalid: Provide a valid date
+        label: Enter the date
+      options:
+        'no': 'No'
+        'yes': 'Yes'
+      title: Do you know when you want the contract to start?
+    document_upload:
+      body: You can upload any type of document smaller than 30MB. Upload as many documents as you want.
+      caption: About your request
+      hint: 'Upload the documents you told us about. These were:'
+      title: Upload your documents
     documents:
       caption: About your request
-      title: Are there any documents that you would like to upload and share with us?
       hint:
-        - This may help us to answer your query. We can still help if you cannot upload any documents right now.
-        - You'll also be able to share documents with us at a later date.
-        - Select all that apply.
+      - This may help us to answer your query. We can still help if you cannot upload any documents right now.
+      - You'll also be able to share documents with us at a later date.
+      - Select all that apply.
       options:
-        current_contract: Current contract
         communications_with_supplier: Communications with your supplier, such as an email
+        current_contract: Current contract
         floor_plans: Floor plans or site maps
+        none: I do not have anything to upload right now
+        other: Other, please specify
         quotes: Quotes
         specifications: Specifications
-        other: Other, please specify
-        none: I do not have anything to upload right now
-    document_upload:
-      caption: About your request
-      title: Upload your documents
-      body: You can upload any type of document smaller than 30MB. Upload as many documents as you want.
-      hint: "Upload the documents you told us about. These were:"
+      title: Are there any documents that you would like to upload and share with us?
     dsi_or_search:
       header: Do you have a DfE Sign-in account linked to the school that your request is about?
       link:
@@ -554,52 +551,27 @@ en:
       subtitle: About you
       title: What is your email address?
     energy_alternative:
-      header: Would you like to provide us with your energy information in another way?
-      subtitle: About your request
-      body: "By uploading your energy information, we'll be able to deal with your request quicker. If you don't have them, we'll need to know:"
+      body: 'By uploading your energy information, we''ll be able to deal with your request quicker. If you don''t have them, we''ll need to know:'
       body_bullets:
-        - your current energy provider
-        - when your current contract ends
-        - how much energy you use
-        - what tariff you are on
-        - how many meters you have
+      - your current energy provider
+      - when your current contract ends
+      - how much energy you use
+      - what tariff you are on
+      - how many meters you have
+      email_later_hint: We will email you instructions on how to do this
+      header: Would you like to provide us with your energy information in another way?
       options:
         different_format: I can upload my energy information in a different format, such as in a document or a spreadsheet
         email_later: I want to email my bills at a later date
         no_bill: I've never had an energy bill before
         no_thanks: No thank you
-      email_later_hint: We will email you instructions on how to do this
+      subtitle: About your request
     energy_bill:
+      body:
+      - Your recent energy bills give us the information we need to help you. You'll be able to upload more than one bill if you have them.
+      - We'll review your bills and use the information to suggest a suitable framework for buying energy. We won't share this information without your permission.
       header: Do you have a recent energy bill you can upload?
       subtitle: About your request
-      body:
-        - Your recent energy bills give us the information we need to help you. You'll be able to upload more than one bill if you have them.
-        - We'll review your bills and use the information to suggest a suitable framework for buying energy. We won't share this information without your permission.
-    origin:
-      caption: About your procurement
-      title: How did you first find out about this service?
-      options:
-        used_before: I've used this service before
-        meeting_or_event: Meeting or event
-        dfe_publication: DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
-        non_dfe_publication: Non-DfE newsletter
-        recommendation: Recommendation
-        search_engine: Search engine, such as Google
-        social_media: Social media, such as LinkedIn, Facebook, X (formerly Twitter)
-        website: Website, such as GOV.UK
-        other: Other
-      please_specify: Please specify
-    same_supplier:
-      caption: About your procurement
-      title: Do all the schools currently use the same supplier?
-      options:
-        'yes': "Yes"
-        'no': "No"
-        not_sure: We're not sure
-    school_picker:
-      title: Which schools in your academy trust or federation will be involved in this procurement?
-      caption: About your school
-      subtitle: Select all that apply
     name:
       first_name:
         label: First Name
@@ -607,6 +579,27 @@ en:
         label: Last Name
       subtitle: About you
       title: What is your name?
+    origin:
+      caption: About your procurement
+      options:
+        dfe_publication: DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
+        meeting_or_event: Meeting or event
+        non_dfe_publication: Non-DfE newsletter
+        other: Other
+        recommendation: Recommendation
+        search_engine: Search engine, such as Google
+        social_media: Social media, such as LinkedIn, Facebook, X (formerly Twitter)
+        used_before: I've used this service before
+        website: Website, such as GOV.UK
+      please_specify: Please specify
+      title: How did you first find out about this service?
+    same_supplier:
+      caption: About your procurement
+      options:
+        'no': 'No'
+        not_sure: We're not sure
+        'yes': 'Yes'
+      title: Do all the schools currently use the same supplier?
     school_or_group_or_trust:
       header: What type of organisation are you buying for?
       hint: If you're buying together informally as a group, choose a 'single school' to represent the group.
@@ -616,6 +609,10 @@ en:
         single_school:
           hint: A local authority maintained school or an academy in a single or multi-academy trust
           label: A single school
+    school_picker:
+      caption: About your school
+      subtitle: Select all that apply
+      title: Which schools in your academy trust or federation will be involved in this procurement?
     search_for_a_group:
       details:
         body:
@@ -627,16 +624,6 @@ en:
         search_for_a_school_link: Search for a single school instead.
       heading: Search for an academy trust or federation
       hint: Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)
-    search_for_org:
-      caption: About your school
-      details:
-        body:
-          p2:
-            body: "You can use the %{gias_link} service if:"
-          p3: This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
-          p4: Private, voluntary-aided and independent early years providers, and institutions which only have pupils aged 16 years and above, are not eligible for this service.
-        summary: Can't find it?
-        gias_link: Get information about schools
     search_for_a_school:
       details:
         body:
@@ -648,25 +635,35 @@ en:
         search_for_a_group_link: Search for an academy trust or federation instead.
       heading: Search for your school
       hint: Enter the name, postcode or unique reference number (URN) of your school
+    search_for_org:
+      caption: About your school
+      details:
+        body:
+          p2:
+            body: 'You can use the %{gias_link} service if:'
+          p3: This service is available to all state-funded primary, secondary, special and alternative provision schools with pupils aged between 5 to 16 years old.
+          p4: Private, voluntary-aided and independent early years providers, and institutions which only have pupils aged 16 years and above, are not eligible for this service.
+        gias_link: Get information about schools
+        summary: Can't find it?
     start_page:
       header: Request help and support for your procurement
-      overview_purpose: Use this service if you’re a state-funded school in England and need free help with your school procurement.
       our_specialists: 'Our specialists may also offer to help run more complex or high value procurements. Some of the reasons they may offer to do this are:'
       our_specialists_points:
       - when contracts are long term or multi-year
       - you’re buying for multiple schools
-      - 'the value is above the <a class="govuk-link" href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy#when-to-run-a-pcr-compliant-buying-process">public contracts regulations (PCR) threshold</a>'
+      - the value is above the <a class="govuk-link" href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy#when-to-run-a-pcr-compliant-buying-process">public contracts regulations (PCR) threshold</a>
       - the procurement requires inclusion of transferring personnel contracts under the Transfer of Undertakings (Protection of Employment) regulations (TUPE)
       - you're new or not experienced in running these types of procurements
       - there are problems with supply or prices change regularly, for example energy costs
       - it's challenging to find suppliers
+      overview_purpose: Use this service if you’re a state-funded school in England and need free help with your school procurement.
       tools_and_guidance: Tools and guidance
       tools_and_guidance_also: 'You can also:'
       tools_and_guidance_points:
-      - 'read information on <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools" class="govuk-link">finding the right route to buy what you need</a> for your school'
-      - 'read about <a href="https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start" class="govuk-link">what to consider for specific goods and services</a>'
-      - 'read about <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">framework agreements</a>'
-      - "<a href=\"/\" class=\"govuk-link\">create a specification</a> for catering or multi-functional devices if you don't have one yet"
+      - read information on <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools" class="govuk-link">finding the right route to buy what you need</a> for your school
+      - read about <a href="https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start" class="govuk-link">what to consider for specific goods and services</a>
+      - read about <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">framework agreements</a>
+      - <a href="/" class="govuk-link">create a specification</a> for catering or multi-functional devices if you don't have one yet
       we_can_offer: 'Our team of procurement specialists can:'
       we_can_offer_points:
       - offer advice and guidance to make sure you’re buying compliantly at any point, even if your procurement process is already in progress
@@ -678,54 +675,54 @@ en:
     user_query:
       caption: About your request
       hint: Describe how we can help in a few sentences.
-      hint_list_start: "We'd like to know:"
       hint_bullets:
-        - the start and end dates of your current contract, if you have one
-        - if you're buying goods, when you need them
-        - anything else about your procurement you think we should know
+      - the start and end dates of your current contract, if you have one
+      - if you're buying goods, when you need them
+      - anything else about your procurement you think we should know
       hint_list_end: Please provide as much information as you can. This will help us to answer your question.
+      hint_list_start: 'We''d like to know:'
       label: How can we help?
     which_school:
       caption: About your school
       legend: Which school are you buying for?
   faf_submissions:
-    title: Support Request Confirmed - Get help buying for schools
     body:
       what_happens_next:
-        default:
-          - The Get help buying for schools team will review your request. We'll be in touch within %{days} working days.
-        energy:
-          - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
-          - If you chose to email your bills, there will be instructions in the confirmation email telling you how to do this.
         common:
-          - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it.
-          - You'll need to submit your request again if you do not receive an email from us because this is how we'll be contacting you.
+        - Please check to make sure you receive an email confirmation from us within the next 10 minutes. Check your junk folder if you do not see it.
+        - You'll need to submit your request again if you do not receive an email from us because this is how we'll be contacting you.
+        default:
+        - The Get help buying for schools team will review your request. We'll be in touch within %{days} working days.
+        energy:
+        - The Get help buying for schools team will now review your request and energy bills if you've sent them. We'll be in touch within %{days} working days to find a convenient time to discuss your options.
+        - If you chose to email your bills, there will be instructions in the confirmation email telling you how to do this.
     header:
       confirmation: Your request for support has been sent
       what_happens_next: What happens next
       what_you_can_do_next: What you can do next
     sub_header:
-      confirmation: 'We have sent a confirmation email to'
+      confirmation: We have sent a confirmation email to
+    title: Support Request Confirmed - Get help buying for schools
     what_you_can_do_next:
-      default:
-        list_start: 'Read guidance about:'
-        how_to_buy_what_you_need_link: how to buy what you need
-        what_to_consider_link: what to consider before buying specific goods and services
-        agreements_and_faf_link: framework agreements and the find a framework tool
-        bullets:
-          how_to_buy_what_you_need: "%{how_to_buy_what_you_need_link} to learn more about the buying process"
-          what_to_consider: "%{what_to_consider_link}"
-          agreements_and_faf: "%{agreements_and_faf_link}"
-      energy:
-        list_start: 'You can  %{guidance_link}. It includes:'
-        guidance_link: read our guidance about buying energy for your school
-        bullets:
-          - whether you can get a reduced rate VAT
-          - how to choose between fixed, flexible or variable price contracts
-          - what to think about when choosing contract length
       common:
         new_request: "%{new_request_link} if you need further support with your school procurement."
         new_request_link: Create another request
+      default:
+        agreements_and_faf_link: framework agreements and the find a framework tool
+        bullets:
+          agreements_and_faf: "%{agreements_and_faf_link}"
+          how_to_buy_what_you_need: "%{how_to_buy_what_you_need_link} to learn more about the buying process"
+          what_to_consider: "%{what_to_consider_link}"
+        how_to_buy_what_you_need_link: how to buy what you need
+        list_start: 'Read guidance about:'
+        what_to_consider_link: what to consider before buying specific goods and services
+      energy:
+        bullets:
+        - whether you can get a reduced rate VAT
+        - how to choose between fixed, flexible or variable price contracts
+        - what to think about when choosing contract length
+        guidance_link: read our guidance about buying energy for your school
+        list_start: 'You can  %{guidance_link}. It includes:'
   feedback:
     confirmation_details:
       message: Thank you for opting in to take part in user research.
@@ -762,34 +759,43 @@ en:
       email: Email
       full_name: Full name
       header: Enter your contact details
+  framework:
+    framework_statuses:
+      archived: Archived
+      cab_approved: CAB approved
+      dfe_approved: DfE approved
+      evaluating: Evaluating
+      expired: Expired
+      not_approved: Not approved
+      pending_evaluation: Pending evaluation
   frameworks:
     evaluation:
       quick_edit:
-        header: Quick edit evaluation %{reference}
         add_note: Add a note
-    register:    
-      download_csv: Download Frameworks CSV    
+        header: Quick edit evaluation %{reference}
+    register:
+      download_csv: Download Frameworks CSV
   generic:
     button:
       add: Add
       back: Back
       cancel: Cancel
-      delete: Delete
-      remove: Remove
       change_answer: Change
+      delete: Delete
       next: Continue
+      remove: Remove
       save: Save
       sign_out: Sign out
       start: Start now
       submit: Submit
       update: Update
-    link:
-      change: Change
     label:
       what_is: What is %{label}?
+    link:
+      change: Change
     'no': 'No'
-    'yes': 'Yes'
     not_provided: Not provided
+    'yes': 'Yes'
   helpers:
     label:
       support_evaluator:
@@ -913,21 +919,21 @@ en:
         labels:
           all: All
           assignee: Filter by assignee
+          former_staff: Former staff
+          level: Filter by level
           none: None
+          selected: "%{count} selected"
+          stage: Filter by stage
           state: Filter by status
           sub_category: Filter by sub-category
           tower: Filter by tower
-          stage: Filter by stage
-          level: Filter by level
-          selected: "%{count} selected"
           unassigned: Unassigned
-          former_staff: Former staff
       header:
         action: Actions
         case_attachments: Attachments
         case_detail: Case details
-        case_history: Case history
         case_files: Files
+        case_history: Case history
         messages: Messages
         procurement_detail: Procurement details
         request: Request
@@ -959,21 +965,23 @@ en:
         attached_specification_none: None
         attachments:
           table:
-            attachment_name: Attachment name
             added: Added
+            attachment_name: Attachment name
             description: Description
             energy_bill: User submitted energy bill
+        auto_assigned_category: Auto-assigned sub-category
         case: Case
+        case_additional_contact: Additional contacts
         case_files:
+          errors:
+            unsafe: One or more selected files contained a virus and have been rejected
           index:
             upload: Upload files
           new:
             heading: Upload files
             select: Select files...
-            upload: Upload files
             selected: Files selected
-          errors:
-            unsafe: One or more selected files contained a virus and have been rejected
+            upload: Upload files
         case_history:
           table:
             created: Created
@@ -988,74 +996,87 @@ en:
         contact_extension_number: Contact extension
         contact_name: Contact name
         contact_phone: Contact phone
+        contact_role: Contact role
         contract_length: Contract length
         contract_start_date: Contract start date
         create: Create a new case
-        files: Attach files
+        created: Date created
+        created_by: Created by
         date_received: Date received
         descending: Descending
+        discovery_method:
+          dfe_publication: DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
+          field: Origin
+          legend: Case origin
+          meeting_or_event: Meeting or event
+          non_dfe_publication: Non-DfE newsletter
+          other: Other
+          other_text_field: Please specify origin
+          please_select: Please select
+          recommendation: Recommendation
+          search_engine: Search engine, such as Google
+          social_media: Social media, such as LinkedIn, Facebook, X (formerly Twitter)
+          used_before: Used this service before
+          website: Website, such as GOV.UK
+        files: Attach files
         filters: Filters
         flag: Flag
+        initial_problem_description: Initial description of query
+        key_action_date: Key action date
         last_updated: Last updated
         level: Level
-        case_additional_contact: Additional contacts
-        contact_role: Contact role
         local_authority:
-          short: LEA
           long: Local Education Authority
+          short: LEA
           unspecified: "-"
-        updated: Updated
-        received: Received
-        created_by: Created by
-        created: Date created
         message_threads:
           action: Action
           back: Back to message list
-          create_with_template: Create with an email template
           create_using_signatory_template: Create using a signatory template
+          create_with_template: Create with an email template
           email_templates:
             header: Select a template
             signatory_template: Use signatory template
             use_template: Use selected template
           last_update: Last update
           logged_contacts: Logged contacts
-          status: Status
           new:
-            add_to: "Add To: recipient"
-            add_cc: "Add Cc: recipient"
-            add_bcc: "Add Bcc: recipient"
+            add_bcc: 'Add Bcc: recipient'
+            add_cc: 'Add Cc: recipient'
             add_recipients: Add recipients to the email
+            add_to: 'Add To: recipient'
             bcc: BCC
             cc: CC
             enter_subject: Enter an email subject
-            show_cc: Show CC
-            show_bcc: Show BCC
             press_enter_to_add_bcc: Press Enter to add recipients as BCC
             press_enter_to_add_cc: Press Enter to add recipients as CC
             press_enter_to_add_recipients: Press Enter to add recipients
+            show_bcc: Show BCC
+            show_cc: Show CC
             to: TO
           new_thread: Create a new message thread
           recipients: Recipients
+          reply_using_signatory_template: Reply using a signatory template
+          reply_with_template: Reply with an email template
+          status: Status
           subject: Subject
           templated_messages: Templated messages
-          using_template: "Template: %{template}"
+          using_template: 'Template: %{template}'
           view: View
-          reply_with_template: Reply with an email template
-          reply_using_signatory_template: Reply using a signatory template
         messages:
           back_to_subject: Back to %{subject}
           reply:
             add_attachments: Add attachments
+            back: Back to message thread
             body: Your message
+            delete: Delete
+            delete_confirmation: Are you sure you want to delete this message?
             edit_header: Edit reply
             send_message: Send message
             send_reply: Send reply
             summary_text: Reply to message
             warning: Warning
             warning_body: You must upload your attachments again
-            back: Back to message thread
-            delete: Delete
-            delete_confirmation: Are you sure you want to delete this message?
           table:
             added_by: Added by
             caseworker: Caseworker
@@ -1070,8 +1091,6 @@ en:
             save_attachments: Save attachments
             using_template: 'Template: "%{template}"'
         move_email: Move emails to existing case
-        note: Note
-        key_action_date: Key action date
         next_key_date:
           description: Description of next key date
           description2: Key date description
@@ -1079,29 +1098,28 @@ en:
           hint: For example, 12 11 2007
           label: Next key date
           label_optional: Next key date (optional)
+        non_participating_schools: Pending beneficiary schools
         not_known: Not known
+        note: Note
         organisation: Organisation
         organisation_name: Organisation name
         organisation_type: Organisation type
         origin: Origin
         other_cases: Other cases
+        participating_schools: Beneficiary schools
         place_on_hold: Place on hold
         problem_description: Description of query
-        initial_problem_description: Initial description of query
-        participating_schools: Beneficiary schools
-        non_participating_schools: Pending beneficiary schools
         procurement_amount: Procurement amount
-        procurement_value: Procurement value
         procurement_details:
           contract_duration: Contract duration
           contract_spend: Contract spend
           end_date: End date
           framework_name: Framework name
-          legacy_procurement_stage: Legacy procurement stage
           legacy_framework_name: Legacy Framework
+          legacy_procurement_stage: Legacy procurement stage
+          procurement_e_portal_reference: E-portal reference
           procurement_end_date: Procurement end date
           procurement_start_date: Procurement start date
-          procurement_e_portal_reference: E-portal reference
           reason_for_route_to_market: Reason for route to market
           required_agreement_type: Required agreement type
           route_to_market: Route to market
@@ -1114,59 +1132,63 @@ en:
           supplier: Supplier
           supplier_is_sme: Supplier is a SME
         procurement_stage: Procurement stage
+        procurement_value: Procurement value
+        project:
+          header: Project
+          unspecified: "-"
         query: Query
+        received: Received
         received_at: Received
         reject: Reject case
         reopen: Reopen case
-        resolve: Resolve case
         request_details:
           back: Back to request details
           participating_schools:
             table:
-              school_name: School name
               address: Address
-              phase: Phase of education
               local_authority: Local authority
+              phase: Phase of education
+              school_name: School name
           uploaded_files: Uploaded files
+        resolve: Resolve case
+        same_supplier_used: Same supplier used
         school_count: Number of schools
         school_details:
           back: Back to school details
+          non_participating_schools:
+            add_school: Select the school you want to add
+            add_school_hint: Enter the name, postcode or unique reference number (URN) of the school
+            description: These schools are not part of the trust yet. This means that they will not be counted as beneficiaries in the service level reporting.
+            description_other: When the school becomes part of the trust, you will need to add it to the list of beneficiary schools.
+            error:
+              already_a_member_message: "%{name} cannot be added as it is already in the list of Pending beneficiary schools"
+              part_of_group_message: "%{name} cannot be added because it is already part of the trust"
+            heading: Pending beneficiary schools
+            removal_modal:
+              archive_date: Archive Date
+              cancel: Cancel
+              name: Name
+              organisation: Organisation type
+              parent: Trust
+              remove: Remove this school
+              status: Status
+              title: Are you sure you want to remove this school?
+            success:
+              continue: Continue
+              message: Pending beneficiary school successfully added
+            table:
+              address: Address
+              organisation_type: Organisation type
+              school_name: School
+              status: Status
           participating_schools:
             edit:
               back: Back to beneficiary schools
             table:
-              school_name: School name
               address: Address
-              phase: Phase of education
               local_authority: Local authority
-          non_participating_schools:
-            table:
-              school_name: School
-              address: Address
-              organisation_type: Organisation type
-              status: Status
-            heading: Pending beneficiary schools
-            description: "These schools are not part of the trust yet. This means that they will not be counted as beneficiaries in the service level reporting."
-            description_other: "When the school becomes part of the trust, you will need to add it to the list of beneficiary schools."
-            add_school: Select the school you want to add
-            add_school_hint: Enter the name, postcode or unique reference number (URN) of the school
-            success:
-              continue: Continue
-              message: Pending beneficiary school successfully added
-            removal_modal:
-              title: Are you sure you want to remove this school?
-              name: Name
-              organisation: Organisation type
-              status: Status
-              parent: Trust
-              archive_date: Archive Date
-              remove: Remove this school
-              cancel: Cancel
-            error:
-              already_a_member_message: "%{name} cannot be added as it is already in the list of Pending beneficiary schools"
-              part_of_group_message: "%{name} cannot be added because it is already part of the trust"  
-
-        same_supplier_used: Same supplier used
+              phase: Phase of education
+              school_name: School name
         sort_by: Sort by
         source:
           digital: Specify case
@@ -1179,23 +1201,6 @@ en:
           schools_commercial_team: Schools Commercial Team (SCT)
           sw_hub: South West (SW) Hub
           unspecified: "-"
-        project:
-          header: "Project"
-          unspecified: "-"
-        discovery_method:
-          legend: Case origin
-          field: Origin
-          please_select: Please select
-          other_text_field: Please specify origin
-          used_before: Used this service before
-          meeting_or_event: Meeting or event
-          dfe_publication: DfE publication (e.g. ESFA update, SBP update, Sector Bulletin)
-          non_dfe_publication: Non-DfE newsletter
-          recommendation: Recommendation
-          search_engine: Search engine, such as Google
-          social_media: Social media, such as LinkedIn, Facebook, X (formerly Twitter)
-          website: Website, such as GOV.UK
-          other: Other
         special_requirements: Accessibility
         stage: Stage
         state:
@@ -1204,6 +1209,7 @@ en:
           state_closed: Closed
           state_hold: On Hold
           state_initial: New
+          state_live: Live
           state_no_response: No Response
           state_on_hold: On Hold
           state_open: Open
@@ -1211,7 +1217,6 @@ en:
           state_pipeline: Pipeline
           state_resolve: Resolved
           state_resolved: Resolved
-          state_live: Live
         status: Status
         sub_category: Sub-category
         support_level:
@@ -1236,15 +1241,15 @@ en:
             complete: Complete
             cannot_start: Cannot start  
         transfer_to_framework_evaluation:
-          title: Buy for your school | Case %{reference} | Transfer to framework evaluation
-          header: Do you want to transfer Case %{reference} to a framework evaluation case?
           body: This action will close this case and create a new framework evaluation case.
-          transfer: Transfer
           cancel: Cancel
-        user_selected_category: User selected options
-        auto_assigned_category: Auto-assigned sub-category
+          header: Do you want to transfer Case %{reference} to a framework evaluation case?
+          title: Buy for your school | Case %{reference} | Transfer to framework evaluation
+          transfer: Transfer
         unassigned_category: Unassigned
         unavailable_category: Unavailable
+        updated: Updated
+        user_selected_category: User selected options
         value:
           unspecified: Not specified
         view_all: View all
@@ -1255,21 +1260,21 @@ en:
       link:
         change: change
         view_group_information: View group information (opens in a new tab)
-        view_school_information: View school information (opens in a new tab)
         view_local_authority_information: View local authority information (opens in a new tab)
+        view_school_information: View school information (opens in a new tab)
       list:
         all_cases: All cases
+        improve_results: 'Improve your results by:'
+        improve_results_list:
+        - removing filters
+        - choosing different filters
         my_cases: My cases
         new_cases: New cases
-        triage_cases: Triage cases
-        not_found: No cases found.
-        tower: Tower
         no_cases: No cases found
         no_cases_advice: Try clearing or changing your filters.
-        improve_results: "Improve your results by:"
-        improve_results_list:
-          - removing filters
-          - choosing different filters
+        not_found: No cases found.
+        tower: Tower
+        triage_cases: Triage cases
       new:
         request_text:
           header: Description of query
@@ -1282,6 +1287,14 @@ en:
         heading: Find a case
         hint: Enter the case ID, contact email, organisation name, establishment unique reference number (URN) or case owner.
         results: Search results
+    case_additional_contact:
+      organisation:
+        header: Organisation (optional)
+      role:
+        header: Select all roles applicable to this individual
+        options:
+          evaluator: Evaluator
+          lead: Lead
     case_assignment:
       agent_id:
         label: Search for caseworker name
@@ -1295,22 +1308,6 @@ en:
         please_select: Please select
     case_closures:
       action: Reject case
-      edit:
-        header: Reject case
-        hint: Select reason for rejecting case.
-        reasons:
-          other: Other
-          out_of_scope: Out of scope
-          spam: Spam
-          no_engagement: No engagement
-          test_case: Test case
-        submit: Save and reject case
-      flash:
-        created: Case rejected successfully
-        error:
-          initial: Only new cases created from emails or open cases can be rejected
-          other: Case cannot be rejected
-        updated: Case has been rejected
       confirm:
         cancel: Cancel
         case_closure_reason: Case closure reason
@@ -1324,48 +1321,46 @@ en:
           last_updated: Last updated
           organisation: Organisation
           sub_category: sub-category
-    case_openings:
-      new:
-        header: Are you sure you want to reopen this case?
-        reopen: Reopen the case
-        cancel: Cancel
-        table:
-          case_id: Case ID
-          status: Status
-          reason: Reason Closed
-          email: Contact Email
-          organisation: Organisation
-          request_category: Sub-category
-          reasons:
-            no_engagement: No Engagement
-            spam: Spam
-            out_of_scope: Out of scope
-            test_case: Test case
-            other: Other
+      edit:
+        header: Reject case
+        hint: Select reason for rejecting case.
+        reasons:
+          no_engagement: No engagement
+          other: Other
+          out_of_scope: Out of scope
+          spam: Spam
+          test_case: Test case
+        submit: Save and reject case
+      flash:
+        created: Case rejected successfully
+        error:
+          initial: Only new cases created from emails or open cases can be rejected
+          other: Case cannot be rejected
+        updated: Case has been rejected
     case_confirm_organisation:
-      title: Confirm organisation update
       body: You are about to update the organisation for case %{ref}.
       from: From
+      title: Confirm organisation update
       to: To
       warning: This will remove all existing beneficiary schools on the case.
     case_contact_details:
+      description: Only add school contacts to the case. DO NOT add supplier contact details.
       flash:
-        updated: Contact details successfully updated
+        already_a_contact: This email address is already linked to another contact on this case
+        destroyed: Additional contact successfully removed
         success: Additional contact successfully created
         update_success: Additional contact successfully updated.
-        already_a_contact: This email address is already linked to another contact on this case
+        updated: Contact details successfully updated
         validation_failed_message: Please enter contact email address
-        destroyed: Additional contact successfully removed
       header: Update contact details
-      listing_heading: Additional contacts
-      listing_description: Additional contacts for this case. These individuals will be included by default on all emails to the school and any automated emails.
-      description: Only add school contacts to the case. DO NOT add supplier contact details.
       label:
         email: Email address
         extension_number: Extension number
         first_name: First name
         last_name: Last name
         phone: Phone number
+      listing_description: Additional contacts for this case. These individuals will be included by default on all emails to the school and any automated emails.
+      listing_heading: Additional contacts
       submit: Save changes
     case_contract:
       existing:
@@ -1439,31 +1434,29 @@ en:
           link_text: What is a framework?
           subtitle: General advice about a frameworks
     case_evaluators:
-      flash:
-        updated: "%{name} successfully updated"
-        success: "%{name} successfully added"
-        destroyed: "%{name} successfully removed"
       delete_confirmation: Are you sure you want to remove %{name}?
+      flash:
+        destroyed: "%{name} successfully removed"
+        success: "%{name} successfully added"
+        updated: "%{name} successfully updated"
       header:
         edit: Update evaluator details
-        new: Add evaluator details
         index: Evaluators
+        new: Add evaluator details
       submit: Save changes
     case_hub_migration:
-      school_picker:
-        title: Which schools in the %{organisation_type} will be involved in this procurement?
       edit:
         header: Check your answers before creating a new case
         label:
           confirm: Check all the details before submitting as it is not currently possible to edit case details once they are created.
         section:
+          attached_files: Attached files
           case: Request type
+          case_details: Case details
           contact: Contact details
           establishment: Organisation details
           request_text: Description of query
           source: Case source
-          case_details: Case details
-          attached_files: Attached files
         submit: Create case
       label:
         bills: Uploaded bills
@@ -1490,60 +1483,63 @@ en:
         last_name: Contact last name
         message: Message
         name: Contact name
+        new: New
         non_procurement: Non-procurement
+        old: Old
         organisation_name: Organisation name
         other_category: Other
         other_query: Other
+        participating_schools: Beneficiary schools
         phone_number: Contact phone number %{optional}
         procurement: Procurement
         procurement_sub_category_details: Procurement sub-category details
+        procurement_value: Procurement value
         progress_notes: Progress notes from CRM %{optional}
         progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
         query: Query
         query_details: Query details
-        referrer: Referrer
         referer: Referrer
+        referrer: Referrer
         request_text: Summary
         school_name: Organisation name
         school_number: "%{selected} of %{total} schools"
         school_postcode: Organisation postcode
+        school_uid: Organisation UID
         school_ukprn: Organisation UKPRN
         school_urn: Organisation URN
-        school_uid: Organisation UID
         source: Source
         sub_category: Procurement sub-category
-        type: Type
-        participating_schools: Beneficiary schools
-        procurement_value: Procurement value
         support_level: Support level
-        old: Old
-        new: New
+        type: Type
       request_type:
         legend: Request type
+      school_picker:
+        title: Which schools in the %{organisation_type} will be involved in this procurement?
       submit: Save and continue
     case_merge_emails:
       flash:
         case_not_new: The case being merged is not 'New' and cannot be merged
+      move_emails: Move emails
       preview:
+        framework_evaluation:
+          table:
+          - Evaluation
+          - Framework
+          - Provider
+          - Status
+          - Assigned to
+          - Date received
         from: From
         header: You are moving emails
         reminder: Once the emails have been moved, Case %{case_ref} will be closed.
         support_case:
           table:
-            - Case
-            - Organisation
-            - Sub-category
-            - Status
-            - Assigned to
-            - Date received
-        framework_evaluation:
-          table:
-            - Evaluation
-            - Framework
-            - Provider
-            - Status
-            - Assigned to
-            - Date received
+          - Case
+          - Organisation
+          - Sub-category
+          - Status
+          - Assigned to
+          - Date received
         to: To
       search:
         header: Find an existing case
@@ -1553,8 +1549,8 @@ en:
         body:
           assigned: Assigned to %{agent}
           case_org: Case %{case_ref} - %{org}
-          evaluation_framework: Evaluation %{evaluation_ref} - %{framework}
           closed: Case %{case_ref} has been closed.
+          evaluation_framework: Evaluation %{evaluation_ref} - %{framework}
           moved: 'The emails have been moved to:'
         header: Success
         links:
@@ -1563,7 +1559,6 @@ en:
           notifications: Notifications
           this_case: Go to Case %{case_ref}
           this_evaluation: Go to Evaluation %{evaluation_ref}
-      move_emails: Move emails
     case_on_hold:
       flash:
         created: Case placed on hold successfully
@@ -1572,15 +1567,29 @@ en:
       flash:
         error: Case cannot be reopened
         reopened: Case reopened successfully
+    case_openings:
+      new:
+        cancel: Cancel
+        header: Are you sure you want to reopen this case?
+        reopen: Reopen the case
+        table:
+          case_id: Case ID
+          email: Contact Email
+          organisation: Organisation
+          reason: Reason Closed
+          reasons:
+            no_engagement: No Engagement
+            other: Other
+            out_of_scope: Out of scope
+            spam: Spam
+            test_case: Test case
+          request_category: Sub-category
+          status: Status
     case_organisation:
       flash:
         updated: Organisation updated successfully
       label: What Organisation do you want to add?
       submit: Save selected organisation
-    case_school:
-      label: What School do you want to add?
-      description: Enter the name, postcode or unique reference number (URN) of your school.
-      submit: Save selected school
     case_request_details:
       check_answers:
         change: Change
@@ -1626,10 +1635,14 @@ en:
             unrealised: Not realised
         submit: Continue
       flash:
-        updated: Case savings successfully changed 
+        updated: Case savings successfully changed
       show:
         header: Savings details
         link: change
+    case_school:
+      description: Enter the name, postcode or unique reference number (URN) of your school.
+      label: What School do you want to add?
+      submit: Save selected school
     case_source:
       header: Case source
       select:
@@ -1655,6 +1668,10 @@ en:
           one: There is <strong>1</strong> live case with no level
           other: There are <strong>%{count}</strong> live cases that have no level
           zero: There are no live cases that have no level
+        no_org:
+          one: There is <strong>1</strong> live case with no organisation
+          other: There are <strong>%{count}</strong> live cases that have no organisation
+          zero: There are no live cases that have no organisation
         no_stage:
           one: There is <strong>1</strong> live case with no stage
           other: There are <strong>%{count}</strong> live cases that have no stage
@@ -1663,22 +1680,18 @@ en:
           one: There is <strong>1</strong> live case with no value
           other: There are <strong>%{count}</strong> live cases that have no value
           zero: There are no live cases that have no value
-        no_org:
-          one: There is <strong>1</strong> live case with no organisation
-          other: There are <strong>%{count}</strong> live cases that have no organisation
-          zero: There are no live cases that have no organisation
       row_headings:
+        assigned_to_non_caseworkers: Former staff
         total: Total
         unassigned: Unassigned
-        assigned_to_non_caseworkers: Former staff
       section_headings:
-        by_level: Live cases by level
-        by_top_level_stage: Live cases by top-level stage
-        by_substage: Live cases by sub-stage
-        by_status: Live cases by status
         by_category: Live category cases (levels 1 - 5)
-        by_triage_level: Live triage cases (levels 1 - 3)
+        by_level: Live cases by level
+        by_status: Live cases by status
         by_subcategory: Live cases by subcategory
+        by_substage: Live cases by sub-stage
+        by_top_level_stage: Live cases by top-level stage
+        by_triage_level: Live triage cases (levels 1 - 3)
       selected_caseworker:
         for: for
         show_all: Show all case workers
@@ -1692,8 +1705,8 @@ en:
         sourcing_options: Sourcing options
         unspecified: Unspecified
       states:
-        live: Live
         initial: New
+        live: Live
         on_hold: On hold
         opened: Open
       states_by_tower:
@@ -1711,19 +1724,19 @@ en:
         header: Overview by case levels by tower
         tower: Tower
       tabs:
-        by_person:
-          tab_heading: Overview by Person
-          content_heading: Overview by Person
-        by_stage:
-          tab_heading: Overview by Stage
-          content_heading: Overview by Stage
         by_category:
-          tab_heading: Overview by Category
           content_heading: Overview by Category
           duplication_disclaimer: Please note, live cases that are <b>levels 1-3</b> will be counted in both the <b>Triage</b> and <b>Category</b> tables.
+          tab_heading: Overview by Category
+        by_person:
+          content_heading: Overview by Person
+          tab_heading: Overview by Person
+        by_stage:
+          content_heading: Overview by Stage
+          tab_heading: Overview by Stage
         orig:
-          tab_heading: Original statistics
           content_heading: Original Case statistics
+          tab_heading: Original statistics
       tower:
         header: "%{type} Statistics"
         level: Level
@@ -1732,24 +1745,24 @@ en:
         stage: Stage
         unspecified: Unspecified
       value_presence:
-        true: Specified
-        false: Unspecified
+        'false': Unspecified
+        'true': Specified
     case_summary:
       edit:
         header: Update case summary
-        submit: Continue
-        support_level:
-          label: Case level
-        value:
-          label: Case value or estimated contract value (optional)
-        source:
-          blank: Please select
-          label: Case source
         project:
           add_new_project: Add new project
           blank: Please select
           label: Case project
           new_project: New project
+        source:
+          blank: Please select
+          label: Case source
+        submit: Continue
+        support_level:
+          label: Case level
+        value:
+          label: Case value or estimated contract value (optional)
       flash:
         updated: Case summary successfully updated
       invalid_date: Provide a valid date
@@ -1761,40 +1774,40 @@ en:
       my_cases:
         header_link: My cases
     emails:
+      attachments:
+        attach_files: Attach files
+        attachments_added: Attachments added
+        case_files: Case files
+        download: Download
+        email_attachments: Email attachments
+        files_from_your_computer: Files from your computer
+        remove: Remove
       button:
         mark_as_read: Mark as read
         mark_as_unread: Mark as unread
       show:
         sender: Sender
         subject: Subject
-      attachments:
-        attachments_added: Attachments added
-        attach_files: Attach files
-        case_files: Case files
-        download: Download
-        email_attachments: Email attachments
-        files_from_your_computer: Files from your computer
-        remove: Remove
     generic:
       cancel: Cancel
+      confirm: Confirm
       continue: Continue
       form:
         optional: "(optional)"
       link:
         opens_in_new_tab: "(opens in new tab)"
+      'no': 'No'
       not_specified: Not specified
-      search: Search
-      "yes": "Yes"
-      "no": "No"
-      view: View
-      confirm: Confirm
       remove: Remove
+      search: Search
+      view: View
+      'yes': 'Yes'
     helpers:
       tag_bar:
-        remove_tag: "Remove tag %{tag}"
+        remove_tag: Remove tag %{tag}
     interaction:
       header:
-        add_case_note: "Add a note to case %{ref}"
+        add_case_note: Add a note to case %{ref}
         contact_with_school: Contact with school
         type_of_contact: Type of contact
       label:
@@ -1807,25 +1820,26 @@ en:
         email_unread: Unread
       link_to_email_preview: Open email preview in new tab
       message:
-        created_flash: "%{type} added to case"
-        exit_survey_sent: The exit survey email has been sent
         all_cases_open_survey_sent: The survey for open cases email has been sent
         all_cases_resolved_survey_sent: The survey for resolved cases email has been sent
+        created_flash: "%{type} added to case"
+        exit_survey_sent: The exit survey email has been sent
       type:
         case_assigned: Case assigned
-        case_opened: Status change
         case_categorisation_changed:
           category: Category changed
-          query: Query changed
           category_to_query: Category changed to query
+          query: Query changed
           query_to_category: Query changed to category
-        case_source_changed: Source changed
+        case_contact_changed: Contact changed
         case_level_changed: Support level changed
+        case_next_key_date_changed: Next key date changed
+        case_opened: Status change
         case_organisation_changed: Organisation changed
         case_procurement_stage_changed: Procurement stage changed
-        case_contact_changed: Contact changed
+        case_source_changed: Source changed
+        case_transferred: Case transferred
         case_with_school_changed: "'With School' flag changed"
-        case_next_key_date_changed: Next key date changed
         create_case: Case created
         email_from_school: Email from school
         email_merge: Email merge
@@ -1842,7 +1856,6 @@ en:
         savings_updated: Savings updated
         state_change: Status change
         support_request: Request for support
-        case_transferred: Case transferred
     management:
       agents:
         header: Agents
@@ -1850,36 +1863,25 @@ en:
           actions: Actions
           admin: Admin
           name: Name
+          no_records: No records to show
           no_tower_selected: "- No Tower Selected -"
+          reenable_instructions: To re-enable an account, edit them to assign them a role
           save: Save
           tower: Tower
           type: Type
           user_type: User type
-          no_records: No records to show
-          reenable_instructions: To re-enable an account, edit them to assign them a role
         tabs:
-          former_accounts:
-            tab_heading: Former staff
           current_accounts:
             tab_heading: Current staff
+          former_accounts:
+            tab_heading: Former staff
       all_cases_surveys:
-        header: All Cases Survey
         eligible_cases:
-          label: Eligible cases
           hint: List of case references that will receive the survey
+          label: Eligible cases
           send: Send
+        header: All Cases Survey
         notice: Jobs queued
-      category_detection:
-        header: Category Detection
-        request_for_help_text: Test algorithm
-        submit: Detect category
-        results:
-          category: Category
-          matching_words: Matching words
-          header: Results
-          tower: Tower
-          similarity: Similarity
-
       base:
         configuration: Configuration
         debug: Debug
@@ -1894,70 +1896,87 @@ en:
           num_cases: "# Cases"
           parent: Parent
           parent_category: Parent-category
-          sub_category: Sub-category
           save: Save
+          sub_category: Sub-category
           title: Title
           tower: Tower
+      category_detection:
+        header: Category Detection
+        request_for_help_text: Test algorithm
+        results:
+          category: Category
+          header: Results
+          matching_words: Matching words
+          similarity: Similarity
+          tower: Tower
+        submit: Detect category
       email_templates:
-        header: Email templates
         common:
           stage: Stage
-          variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
           unsafe_attachments: One or more attachments contain a virus
+          variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
+        create:
+          notice: Your template has been saved
+        destroy:
+          notice: Your template has been deleted
+        edit:
+          save: Save updates
+        header: Email templates
         index:
           new: Create new template
           template_manager:
             filters:
-              header: Filters
-              select_group: Select group
-              all_groups: All groups
-              subgroups: Subgroups
-              stages: Stages
               about: About
-              all_subgroups: All subgroups
-              no_subgroups: No subgroup
+              all_groups: All groups
               all_stages: All stages
+              all_subgroups: All subgroups
+              header: Filters
               no_stage: No stage
+              no_subgroups: No subgroup
+              select_group: Select group
               selected: "%{count} selected"
+              stages: Stages
+              subgroups: Subgroups
             templates:
               count:
                 one: 1 template
                 other: "%{count} templates"
                 zero: 0 templates
-              edit: Edit
               delete: Delete
-              subject: "Subject line: %{subject}"
-              preview: Preview template
               delete_confirmation: Are you sure you want to delete this template?
+              edit: Edit
+              preview: Preview template
+              subject: 'Subject line: %{subject}'
         new:
-          header: Create a template
+          cancel: Cancel
+          create: Create template
+          description: Template guidance
           group: Template group
+          header: Create a template
           select_group: Select group
-          subgroup: Subgroup (optional)
+          select_stage: Select stage
           select_subgroup: Select subgroup
           stage: Stage (optional)
-          select_stage: Select stage
-          title: Template name
-          description: Template guidance
+          subgroup: Subgroup (optional)
           subject: Subject line for email (optional)
-          create: Create template
-          cancel: Cancel
-        edit:
-          save: Save updates
-        create:
-          notice: Your template has been saved
+          title: Template name
         update:
           notice: Updates to your template have been saved
-        destroy:
-          notice: Your template has been deleted
       sync_frameworks:
-        header: Synchronise frameworks
         body:
-          - Frameworks are fetched from Find a Framework and saved automatically every midnight and midday.
-          - Click <strong>Synchronise</strong> to trigger the task manually.
+        - Frameworks are fetched from Find a Framework and saved automatically every midnight and midday.
+        - Click <strong>Synchronise</strong> to trigger the task manually.
+        header: Synchronise frameworks
         sync: Synchronise
+    organisation_statuses:
+      closed: Closed
+      closing: Open, but proposed to close %{date}
+      opened: Open
+      opening: Proposed to open %{date}
     procurement_details:
       edit:
+        e_portal_reference:
+          header: E-portal reference
         ended_at:
           header: End date of the procurement
         framework_name:
@@ -1973,11 +1992,9 @@ en:
           header: Procurement stage
         started_at:
           header: Start date of the procurement
-        e_portal_reference:
-          header: E-portal reference
         submit: Continue
       flash:
-        updated: Procurement details successfully changed 
+        updated: Procurement details successfully changed
       reasons_for_route_to_market:
         better_than_dfe: Better Spec / Terms than DfE Deal
         dfe_deal: DfE Deal / Framework Selected
@@ -2017,20 +2034,6 @@ en:
           header:
             attachment: Attachment
             description: Description
-    case_additional_contact:
-      role:
-        options:
-          lead: Lead
-          evaluator: Evaluator
-        header: Select all roles applicable to this individual
-      organisation:
-        header: Organisation (optional)
-    organisation_statuses:
-      opened: Open
-      closing: Open, but proposed to close %{date}
-      opening: Proposed to open %{date}
-      closed: Closed
-
   support_request:
     button:
       send: Send request
@@ -2081,7 +2084,7 @@ en:
       what_you_can_do_next: What you can do next
       you_can_also: 'You can also:'
     sub_header:
-      confirmation: 'We have sent a confirmation to'
+      confirmation: We have sent a confirmation to
     what_you_can_do_next:
       continue_link: Continue with your specification
       start_new_link: Start a new specification
@@ -2101,18 +2104,12 @@ en:
       not_started: Not started
   tickets:
     messages:
-      attach_email_attachments:
-        heading: Email attachments
-        back: Back to message
       attach_case_files:
-        heading: Case files
         back: Back to message
-  framework:
-    framework_statuses:
-      cab_approved: CAB approved
-      dfe_approved: DfE approved
-      evaluating: Evaluating
-      expired: Expired
-      not_approved: Not approved
-      archived: Archived
-      pending_evaluation: Pending evaluation
+        heading: Case files
+      attach_email_attachments:
+        back: Back to message
+        heading: Email attachments
+  time:
+    formats:
+      compact: "%d %b %y"
