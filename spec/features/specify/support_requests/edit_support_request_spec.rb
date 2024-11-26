@@ -11,46 +11,6 @@ RSpec.feature "Editing a 'Digital Support' request" do
     visit "/support-requests/#{support_request.id}"
   end
 
-  xdescribe "step 1: adding a phone number" do
-    let(:support_request) do
-      create(:support_request,
-             user: journey.user,
-             journey:,
-             category: nil,
-             phone_number: "invalid phone number",
-             message_body: "",
-             school_urn: "123")
-    end
-
-    it "adds a valid phone number" do
-      click_link "edit-phone-number"
-
-      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=1"
-
-      expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
-
-      fill_in "support_form[phone_number]", with: "01234567890"
-      click_continue
-
-      expect(find("div#flash_notice")).to have_text "Support request updated"
-      expect(page).to have_current_path "/support-requests/#{support_request.id}"
-      expect(answers[2]).to have_text "01234567890"
-    end
-
-    it "rejects an invalid phone number" do
-      click_link "edit-phone-number"
-
-      expect(page).to have_current_path "/support-requests/#{support_request.id}/edit?step=1"
-
-      expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
-
-      fill_in "support_form[phone_number]", with: "not a valid number"
-      click_continue
-
-      expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-    end
-  end
-
   describe "step 2: choosing a school" do
     let(:support_request) do
       create(:support_request,
