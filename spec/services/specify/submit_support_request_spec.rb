@@ -82,11 +82,6 @@ RSpec.describe SubmitSupportRequest do
           end
         end
       end
-
-      context "with a find a framework support request" do
-        xit "submits the request and creates a case" do
-        end
-      end
     end
 
     it "send a confirmation email" do
