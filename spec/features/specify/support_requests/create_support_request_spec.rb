@@ -82,7 +82,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
     end
   end
 
-  xcontext "when the user has not started a spec" do
+  context "when the user has not started a spec" do
     before do
       create(:category, title: "Maintenance")
       create(:category, title: "Broadband")
