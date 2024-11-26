@@ -37,7 +37,7 @@ class Content::Connector
   def self.create_client(space_id:, access_token:, preview: false)
     api_url = preview ? "preview.contentful.com" : "cdn.contentful.com"
 
-    options = {
+    ::Contentful::Client.new(
       api_url:,
       space: space_id,
       access_token:,
@@ -45,9 +45,7 @@ class Content::Connector
       raise_errors: true,
       application_name: "DfE: Buy For Your School",
       application_version: "1.0.0",
-    }
-
-    ::Contentful::Client.new(options)
+    )
   end
 
   # @param api [Symbol, String]
