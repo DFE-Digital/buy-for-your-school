@@ -54,7 +54,7 @@ module Support
         @updated_by = @agent if @agent.present?
         @files = @file_attachments
         @file_attachments = @files&.map { |file| Support::EmailTemplateAttachment.new(file:) } || []
-        @blob_attachments = @blob_attachments.present? ? Support::Emails::Attachments.resolve_blob_attachments(JSON.parse(@blob_attachments)) : []
+        @blob_attachments = resolve_blob_attachments(@blob_attachments)
       end
 
       def files_safe
@@ -97,6 +97,18 @@ module Support
           )
           .except("created_at", "updated_at")
           .compact
+      end
+
+      def resolve_blob_attachments(blob_attachments)
+        return [] if blob_attachments.blank?
+
+        JSON.parse(blob_attachments).map do |attrs|
+          type = attrs["type"]
+          id = attrs["file_id"]
+          raise "Unexpected attachment type #{type}" unless type == "Support::EmailTemplateAttachment"
+
+          Support::EmailTemplateAttachment.find(id)
+        end
       end
     end
   end
