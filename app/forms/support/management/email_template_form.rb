@@ -54,7 +54,7 @@ module Support
         @updated_by = @agent if @agent.present?
         @files = @file_attachments
         @file_attachments = @files&.map { |file| Support::EmailTemplateAttachment.new(file:) } || []
-        @blob_attachments = @blob_attachments.present? ? Support::Emails::Attachments.resolve_blob_attachments(JSON.parse(@blob_attachments)) : []
+        @blob_attachments = []
       end
 
       def files_safe
