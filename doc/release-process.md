@@ -17,6 +17,7 @@ Production deployment is automated with github actions, but you will need to upd
 Switch to the `production` branch, ensure it is updated from origin, then rebase it with `main`.
 
 ```
+$ git fetch
 $ git checkout main
 $ git reset --hard origin/main
 $ git checkout production
@@ -29,6 +30,8 @@ NOTE: `git push --force-with-lease` is important, the force push will be rejecte
 
 Monitor the [github actions page](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml) to check status of the automated deployment.
 
+After a successful deployment, you will need to update the release log [here](https://dfedigital.atlassian.net/wiki/spaces/GHBFS/pages/3535732763/Development+Release+log). 
+To get the docker image, find the latest version with the tag `production` on [the container registry page](https://github.com/DFE-Digital/buy-for-your-school/pkgs/container/buy-for-your-school). 
 
 ## Staging
 
@@ -43,6 +46,7 @@ Development deployment is automated with github actions, but you will need to up
 Switch to the `development` branch, ensure it is updated from origin, then rebase it with `main`.
 
 ```
+$ git fetch
 $ git checkout development
 $ git reset --hard origin/development
 $ git rebase your-feature-branch
