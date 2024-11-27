@@ -25,6 +25,13 @@
 
 <div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
   <ul class="govuk-tabs__list">
+    <% if Flipper.enabled?(:sc_tasklist_tab) %>
+      <% if @current_case.L4? || @current_case.L5? %>
+        <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "tasklist" || tab.nil? %>">
+          <%= link_to I18n.t("support.case.header.tasklist"), "#tasklist", class: "govuk-tabs__tab" %>
+        </li>
+      <% end %>
+    <% end %>
     <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if tab == "school_detail" || tab.nil? %>">
       <%= link_to I18n.t("support.case.header.school_detail"), "#school-details", class: "govuk-tabs__tab" %>
     </li>
@@ -52,4 +59,3 @@
 </div>
 
 <%= render "support/cases/show/case_actions" %>
-

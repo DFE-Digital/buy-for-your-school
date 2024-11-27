@@ -99,4 +99,32 @@ RSpec.feature "Case summary", :js do
       end
     end
   end
+
+  context "when the case is level 4" do
+    let(:support_case) { create(:support_case, support_level: "L4") }
+
+    it "has 8 visible tabs" do
+      expect(all(".govuk-tabs__list-item", visible: true).count).to eq(8)
+    end
+
+    it "has the tasklist tab" do
+      expect(page).to have_css(".govuk-tabs__list-item", text: "Tasklist")
+    end
+  end
+
+  context "when the case is level 5" do
+    let(:support_case) { create(:support_case, support_level: "L5") }
+
+    it "has the tasklist tab" do
+      expect(page).to have_css(".govuk-tabs__list-item", text: "Tasklist")
+    end
+  end
+
+  context "when the case is level 1" do
+    let(:support_case) { create(:support_case, support_level: "L1") }
+
+    it "does not have the tasklist tab" do
+      expect(page).not_to have_css(".govuk-tabs__list-item", text: "Tasklist")
+    end
+  end
 end

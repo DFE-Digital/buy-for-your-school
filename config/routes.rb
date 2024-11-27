@@ -276,6 +276,7 @@ Rails.application.routes.draw do
             resource :participating_schools, only: %i[show]
           end
         end
+        resource :tasklist, only: %i[show]
         get :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#index"
         post :transfer_to_framework_evaluation, to: "transfer_to_framework_evaluation#create"
         get "move_emails/", to: "move_emails#index", as: "move_emails"
