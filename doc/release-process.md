@@ -40,6 +40,10 @@ To get the docker image, find the latest version with the tag `production` on
 [the container registry
 page](https://github.com/DFE-Digital/buy-for-your-school/pkgs/container/buy-for-your-school).
 
+In certain circumstances, you might see multiple images listed. In this case,
+you can find the correct one by looking in Azure under _Home → Container Apps →
+prodghbs-buyforyourschool → Containers → Properties → Image and tag_.
+
 ## Staging
 
 Staging is automatically deployed with changes appear in `main`.
