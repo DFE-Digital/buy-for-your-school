@@ -8,7 +8,7 @@
 
 ### 1. Check what will be released
 
-To do this, get the diff between `main` and `production` branches. [Comapare here](https://github.com/DFE-Digital/buy-for-your-school/compare/production...main).
+To do this, get the diff between `main` and `production` branches. [Compare here](https://github.com/DFE-Digital/buy-for-your-school/compare/production...main).
 
 ### 2. Start the deployment process
 
