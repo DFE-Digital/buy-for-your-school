@@ -14,15 +14,13 @@ To do this, get the diff between `main` and `production` branches. [Compare here
 
 Production deployment is automated with github actions, but you will need to update the `production` branch for it to deploy changes.
 
-Switch to the `production` branch, ensure it is updated from origin, then rebase it with `main`.
+Switch to the `production` branch, ensure it is updated from origin, then rebase it with `origin/main`.
 
 ```
 $ git fetch
-$ git checkout main
-$ git reset --hard origin/main
 $ git checkout production
 $ git reset --hard origin/production
-$ git rebase main
+$ git rebase origin/main
 $ git push --force-with-lease
 ```
 
