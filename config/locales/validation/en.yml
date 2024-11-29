@@ -175,6 +175,12 @@ en:
               blank: Enter provider end date
           unique_name_and_provider: The combination of name and provider must be unique
 
+        support/case:
+          attributes:
+            evaluation_due_date:
+              blank: Enter valid evaluation due date
+          evaluation_due_date_must_be_in_the_future: Evaluation due date must be in the future
+
   request:
     rules:
       procurement_amount: "" # Omitted

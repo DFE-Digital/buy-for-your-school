@@ -1,0 +1,12 @@
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("support.cases.evaluation_due_date.header") %></h1>
+
+<%= form_with model: @evaluation_due_date, url: support_case_evaluation_due_dates_path(@current_case), method: :patch do |form| %>
+    <%= form.govuk_error_summary %>
+    <%= form.govuk_date_field :evaluation_due_date, legend: { text: I18n.t("support.cases.evaluation_due_date.date.label"),  }, hint: { text: I18n.t("support.cases.evaluation_due_date.date.hint") } %>
+
+    <div class="govuk-button-group flex-align-center">
+        <%= form.submit I18n.t("support.cases.evaluation_due_date.submit"), class: "govuk-button" %>
+        <%= link_to I18n.t("support.cases.evaluation_due_date.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+    </div>
+<% end %>

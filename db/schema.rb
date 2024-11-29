@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_122758) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -623,6 +623,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
     t.string "project"
     t.string "other_school_urns", default: [], array: true
     t.boolean "is_evaluator", default: false
+    t.date "evaluation_due_date"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"

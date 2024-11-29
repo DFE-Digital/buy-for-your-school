@@ -137,6 +137,9 @@ module Support
     before_validation :generate_ref
     validates :ref, uniqueness: true, length: { is: 6 }, format: { with: /\A\d+\z/, message: "numbers only" }
 
+    validates :evaluation_due_date, presence: true, on: :update_due_date_form
+    validate :evaluation_due_date_must_be_in_the_future, on: :update_due_date_form
+
     # @return [String]
     def self.to_csv
       CSV.generate(headers: true) do |csv|
@@ -204,6 +207,14 @@ module Support
     def assign_to_agent(agent, assigned_by: Current.agent)
       update!(agent:)
       agent.notify_assigned_to_case(support_case: self, assigned_by:)
+    end
+
+  private
+
+    def evaluation_due_date_must_be_in_the_future
+      if evaluation_due_date.present? && evaluation_due_date <= Time.zone.today
+        errors.add(:evaluation_due_date, :evaluation_due_date_must_be_in_the_future)
+      end
     end
   end
 end
