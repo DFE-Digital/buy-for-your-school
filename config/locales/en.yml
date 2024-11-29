@@ -1760,6 +1760,13 @@ en:
     cases:
       my_cases:
         header_link: My cases
+      evaluation_due_date:
+        header: Set due date
+        date:
+          label: When does the evaluation need to be completed by?
+          hint: For example, 27 3 2025
+        submit: Continue
+        cancel: Cancel
       upload_documents:
         header: Upload documents
         hint: Upload documents to share with each evaluator.
