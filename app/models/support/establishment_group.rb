@@ -32,6 +32,6 @@ class Support::EstablishmentGroup < ApplicationRecord
   end
 
   def organisations_for_multi_school_picker
-    organisations.where.not(archived: true)
+    organisations.active
   end
 end

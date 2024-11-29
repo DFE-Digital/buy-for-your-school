@@ -14,6 +14,7 @@ module Support
   #
   class Organisation < ApplicationRecord
     include Filterable
+    include Support::Concerns::ScopeActive
 
     belongs_to :establishment_type,
                counter_cache: true,
