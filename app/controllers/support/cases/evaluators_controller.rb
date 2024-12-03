@@ -2,7 +2,7 @@ module Support
   class Cases::EvaluatorsController < Cases::ApplicationController
     before_action :set_current_case
     before_action :set_evaluator, only: %i[edit update destroy]
-
+    before_action { @back_url = "/support/cases/#{params[:case_id]}#tasklist" }
     def index
       @evaluators = @current_case.evaluators.all
     end
