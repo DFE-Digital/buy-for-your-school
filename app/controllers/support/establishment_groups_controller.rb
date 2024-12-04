@@ -6,15 +6,15 @@ module Support
 
     def index
       query = <<-SQL
-        (ukprn LIKE :q OR
+        ukprn LIKE :q OR
         uid LIKE :q OR
-        lower(name) LIKE lower(:q)) AND
-        archived != true
+        lower(name) LIKE lower(:q)
       SQL
 
       respond_to do |format|
         format.json do
           render json: EstablishmentGroup
+            .active
             .where(query, q: "%#{params.fetch(:q)}%")
             .limit(50)
             .each { |g| g.ukprn = "N/A" if g.ukprn.nil? }

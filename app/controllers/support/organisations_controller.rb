@@ -6,13 +6,13 @@ module Support
 
     def index
       query = <<-SQL
-        (urn LIKE :q OR
+        urn LIKE :q OR
         lower(name) LIKE lower(:q) OR
-        lower(address->>'postcode') LIKE lower(:q)) AND
-        archived != true
+        lower(address->>'postcode') LIKE lower(:q)
       SQL
 
       results = Organisation
+        .active
         .includes([:establishment_type])
         .where(query, q: "%#{params.fetch(:q)}%")
         .limit(50)
