@@ -8,26 +8,7 @@
   <%= form.govuk_text_field :phone_number, width: 'one-quarter', label: { text: I18n.t("support.case_contact_details.label.phone") } %>
   <%= form.govuk_text_field :extension_number, width: 'one-quarter', label: { text: I18n.t("support.case_contact_details.label.extension_number") } %>
   <%= form.govuk_text_field :email, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.email") } %>
-  <%
   
-=begin%>
- #below code is commented because it can be used later. It is a field for organisation selection.
- <%= render "components/autocomplete",
-            container_id: "case-contacts-organisation-field",
-            label_text: I18n.t("support.case_additional_contact.organisation.header"),
-            label_class: "govuk_text_field",
-            element_id: "additional_contacts-autocomplete",
-            element_name: "organisation_name",
-            template_suggestion: "{{autocomplete_template}}",
-            value_field: :name,
-            default_value: @current_case&.organisation&.name,
-            hidden_fields: {
-              'case_contact_details_form[organisation_id]' => :id,
-              'case_contact_details_form[organisation_type]' => :source,
-            },
-            query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %> 
-<%
-=end%>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Roles</legend>
 
     <div class="govuk-form-group">
