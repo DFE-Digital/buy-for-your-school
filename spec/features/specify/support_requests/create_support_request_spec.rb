@@ -11,90 +11,8 @@ RSpec.feature "Creating a 'Digital Support' request" do
       expect(find_all("pre.debug_dump")).to be_empty
     end
 
-    # step 1
-    xit "asks for a phone number" do
-      expect(find("span.govuk-caption-l")).to have_text "About you"
-      expect(find("label.govuk-label--l")).to have_text "What is your phone number?"
-      expect(find(".govuk-hint")).to have_text "Your phone number will be used by DfE's supported buying team to contact you about your request for help. It will not be used for marketing or any other purposes. You do not need to provide a phone number."
-    end
-
     it "starts off at step 4" do
       expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
-    end
-
-    # step 1 > step 4
-    xit "does not require a phone number" do
-      click_continue
-      expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
-    end
-
-    xcontext "with valid data" do
-      # step 1 > step 4
-      it "validates a phone number (valid)" do
-        fill_in "support_form[phone_number]", with: "01234567890"
-        click_continue
-        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
-      end
-
-      it "validates a phone number (valid +44)" do
-        fill_in "support_form[phone_number]", with: "+441234567890"
-        click_continue
-        expect(find("legend.govuk-fieldset__legend--l")).to have_text "What are you buying?"
-      end
-    end
-
-    xcontext "with invalid data it validates a phone number" do
-      # step 1
-      it "(min size)" do
-        fill_in "support_form[phone_number]", with: "0123"
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-      end
-
-      it "(international code)" do
-        fill_in "support_form[phone_number]", with: "+3551234567"
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-      end
-
-      it "(white space)" do
-        fill_in "support_form[phone_number]", with: "0208 590 1465"
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-      end
-
-      # step 1
-      it "(leading zero)" do
-        fill_in "support_form[phone_number]", with: "11234567890"
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-      end
-
-      # step 1
-      it "(only numbers)" do
-        fill_in "support_form[phone_number]", with: "0123456789x"
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits"
-      end
-
-      # step 1
-      it "(max size)" do
-        fill_in "support_form[phone_number]", with: "+4412345678901343"
-        click_continue
-        expect(find("h2.govuk-error-summary__title")).to have_text "There is a problem"
-        expect(page).to have_link "Your phone number can not have more than 12 digits", href: "#support-form-phone-number-field-error"
-        expect(find(".govuk-error-message")).to have_text "Your phone number can not have more than 12 digits"
-      end
     end
   end
 
@@ -164,7 +82,7 @@ RSpec.feature "Creating a 'Digital Support' request" do
     end
   end
 
-  xcontext "when the user has not started a spec" do
+  context "when the user has not started a spec" do
     before do
       create(:category, title: "Maintenance")
       create(:category, title: "Broadband")
