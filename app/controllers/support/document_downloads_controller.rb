@@ -8,6 +8,7 @@ module Support
       "Support::CaseAttachment",
       "EnergyBill",
       "Support::EmailTemplateAttachment",
+      "Support::CaseUploadDocument",
     ].freeze
 
     def show
