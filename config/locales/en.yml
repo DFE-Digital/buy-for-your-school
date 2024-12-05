@@ -1762,7 +1762,7 @@ en:
         header_link: My cases
       upload_documents:
         header: Upload documents
-        hint: Upload documents to share with each evaluaror.
+        hint: Upload documents to share with each evaluator.
         file_uploaded: File uploaded
         radio_buttons:
           yes: "Yes, I have uploaded all documents"
