@@ -3,6 +3,13 @@ module Support
     before_action :set_current_case
     before_action :set_evaluator, only: %i[edit update destroy]
 
+    before_action only: %i[new create edit update destroy] do
+      @back_url = support_case_evaluators_path(@current_case)
+    end
+
+    before_action only: [:index] do
+      @back_url = support_case_path(@current_case, anchor: "tasklist")
+    end
     def index
       @evaluators = @current_case.evaluators.all
     end
