@@ -339,6 +339,10 @@ en:
     unexpected_contentful_step_type:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
       page_title: An unexpected error occurred
+  evaluation:
+    tasks:
+      not_permitted: "You aren’t an evaluator for this procurement"
+      header: "Evaluator task list"
   exit_survey:
     better_quality:
       options:
