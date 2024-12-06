@@ -12,6 +12,7 @@ module Support
       SQL
 
       results = Organisation
+        .active
         .includes([:establishment_type])
         .where(query, q: "%#{params.fetch(:q)}%")
         .limit(50)

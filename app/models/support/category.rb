@@ -5,6 +5,8 @@ module Support
   # Types of procurement or "categories of spend"
   #
   class Category < ApplicationRecord
+    include Support::Concerns::ScopeActive
+
     belongs_to :tower, class_name: "Support::Tower", foreign_key: "support_tower_id", optional: true
     has_many :cases, class_name: "Support::Case"
     belongs_to :parent, class_name: "Support::Category", optional: true
@@ -24,7 +26,6 @@ module Support
     scope :sub_categories, -> { where.not(parent_id: nil) }
     scope :ordered_by_title, -> { order(Arel.sql("case when support_categories.title = 'Or' then 1 else 0 end ASC, support_categories.title ASC")) }
     scope :except_for, ->(title) { where.not(title:) }
-    scope :active, -> { where(archived: false) }
     scope :with_live_cases, -> { joins(:cases).merge(Case.live) }
 
     delegate :title, to: :tower, prefix: true, allow_nil: true

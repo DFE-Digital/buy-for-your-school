@@ -30,6 +30,14 @@ RSpec.shared_context "with schools and groups" do
            trust_code: "2314",
            local_authority:)
 
+    create(:support_organisation, :with_address,
+           urn: "100255",
+           name: "Archived Org",
+           establishment_type: foundation,
+           trust_code: "2314",
+           local_authority:,
+           archived: true)
+
     create(:support_establishment_group, :with_address,
            uid: "2314",
            name: "Testing Multi Academy Trust",
@@ -39,5 +47,11 @@ RSpec.shared_context "with schools and groups" do
            uid: "2315",
            name: "New Academy Trust",
            establishment_group_type: sat)
+
+    create(:support_establishment_group, :with_address,
+           uid: "2316",
+           name: "Archived Group",
+           establishment_group_type: sat,
+           archived: true)
   end
 end

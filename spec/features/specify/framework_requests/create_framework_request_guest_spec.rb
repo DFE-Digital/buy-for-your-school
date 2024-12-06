@@ -101,13 +101,18 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(page).not_to have_text "There is a problem"
         expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
-
         autocomplete_group_step
 
         expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
 
         expect(values[0]).to have_text "Testing Multi Academy Trust"
         expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
+      end
+
+      it "doesn't include archived schools in the dropdown" do
+        fill_in "Enter the name, postcode or unique reference number (URN) of your school", with: "10025"
+        expect(page).to have_text "Greendale Academy for Bright Sparks"
+        expect(page).not_to have_text "Archived Org"
       end
     end
 
@@ -343,6 +348,12 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
       end
+
+      it "doesn't include archived establishment groups in the dropdown" do
+        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "10025"
+        expect(page).to have_text "Testing Multi Academy Trust"
+        expect(page).not_to have_text "Archived Group"
+      end
     end
 
     describe "the group confirmation page" do
@@ -379,16 +390,19 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       describe "allows to select and confirm schools in the group" do
-        before do
+        it "does not show an archived school as an option to select" do
+          expect(page).to have_text "0 of 2 schools"
+          expect(page).not_to have_text "Archived Org"
+        end
+
+        it "saves selected schools" do
           check "Specialist School for Testing"
           check "Greendale Academy for Bright Sparks"
           click_continue
 
           choose "Yes"
           click_continue
-        end
 
-        it "saves selected schools" do
           expect(FrameworkRequest.first.school_urns).to match_array(%w[100253 100254])
         end
       end
