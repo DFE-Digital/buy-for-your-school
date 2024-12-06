@@ -20,6 +20,11 @@ module SpecScreenshotHelper
     save_timestamped_screenshot
     super
   end
+
+  def visit(*, **, &)
+    super
+    save_timestamped_screenshot
+  end
 end
 
 RSpec.configure do |config|
