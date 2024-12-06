@@ -1,4 +1,6 @@
 class Support::EstablishmentGroup < ApplicationRecord
+  include Support::Concerns::ScopeActive
+
   belongs_to :establishment_group_type, class_name: "Support::EstablishmentGroupType"
   has_many :cases, class_name: "Support::Case", as: :organisation
 
@@ -32,6 +34,6 @@ class Support::EstablishmentGroup < ApplicationRecord
   end
 
   def organisations_for_multi_school_picker
-    organisations
+    organisations.active
   end
 end

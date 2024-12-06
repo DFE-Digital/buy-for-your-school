@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_115728) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -403,7 +403,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "archived"
+    t.boolean "archived", default: false, null: false
     t.datetime "archived_at"
     t.index ["la_code"], name: "index_local_authorities_on_la_code", unique: true
     t.index ["name"], name: "index_local_authorities_on_name", unique: true
@@ -644,7 +644,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
     t.uuid "parent_id"
     t.string "tower"
     t.uuid "support_tower_id"
-    t.boolean "archived", default: false
+    t.boolean "archived", default: false, null: false
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["support_tower_id"], name: "index_support_categories_on_support_tower_id"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
@@ -779,7 +779,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
     t.uuid "establishment_group_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "archived"
+    t.boolean "archived", default: false, null: false
     t.datetime "archived_at"
     t.date "opened_date"
     t.date "closed_date"
@@ -901,7 +901,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_131721) do
     t.string "federation_name"
     t.string "federation_code"
     t.uuid "local_authority_id"
-    t.boolean "archived"
+    t.boolean "archived", default: false, null: false
     t.datetime "archived_at"
     t.date "closed_date"
     t.string "reason_establishment_opened"

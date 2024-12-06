@@ -14,6 +14,7 @@ module Support
       respond_to do |format|
         format.json do
           render json: EstablishmentGroup
+            .active
             .where(query, q: "%#{params.fetch(:q)}%")
             .limit(50)
             .each { |g| g.ukprn = "N/A" if g.ukprn.nil? }
