@@ -235,6 +235,7 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[edit update]
         resources :additional_contacts
         resources :evaluators, except: %i[show]
+        resource :evaluation_due_dates, only: %i[edit update]
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template
