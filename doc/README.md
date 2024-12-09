@@ -16,6 +16,7 @@
 - [Continuous Integration](continuous-integration.md)
 - [DfE Sign-In](dfe-sign-in.md)
 - [Educational Establishment Personas](school-personas.md)
+- [Feature Flags](feature-flags.md)
 - [Get Information About Schools](gias.md)
 - [Logging](logging.md)
 - [Managing environment variables](managing-environment-variables.md)
