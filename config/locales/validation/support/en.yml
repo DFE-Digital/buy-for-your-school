@@ -290,3 +290,13 @@ en:
           infected: One or more of the files you uploaded contained a virus and have been rejected
           incorrect_file_type: One or more of the files you uploaded was an incorrect file type
 
+  case_evaluation_due_date_form:
+    rules:
+      evaluation_due_date: ""
+    errors:
+      rules:
+        evaluation_due_date:
+          missing: Enter valid evaluation due date
+          invalid: Enter valid evaluation due date
+          must_be_in_the_future: Evaluation due date must be in the future
+
