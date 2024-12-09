@@ -1780,6 +1780,21 @@ en:
           hint: For example, 27 3 2025
         submit: Continue
         cancel: Cancel
+      upload_documents:
+        header: Upload documents
+        hint: Upload documents to share with each evaluator.
+        choose_file_title: Upload a file
+        file_uploaded: File uploaded
+        file_upload_confirmation: Have you uploaded all documents?
+        radio_buttons:
+          yes: "Yes, I have uploaded all documents"
+          no: "No"
+        button:
+          choose_file: Choose file
+        flash:
+          destroyed: "%{name} successfully removed"
+        delete_confirmation: Are you sure you want to delete %{name}?
+        is_document_uploaded: Please select uploaded option
     emails:
       attachments:
         attach_files: Attach files

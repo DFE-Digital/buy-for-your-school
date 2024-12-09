@@ -59,6 +59,14 @@ en:
           attributes:
             files:
               blank: Select files to upload
+        support/case/document_uploader:
+          attributes:
+            files:
+              blank: Select files to upload
+            has_uploaded_documents: 
+              blank: Please confirm that you uploaded all documents
+            
+
 
   forms:
     rules:

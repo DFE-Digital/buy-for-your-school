@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_122758) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_09_104836) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -573,6 +573,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_122758) do
     t.index ["support_organisation_id"], name: "index_support_case_organisations_on_support_organisation_id"
   end
 
+  create_table "support_case_upload_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "attachable_id"
+    t.string "attachable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_support_case_upload_documents_on_support_case_id"
+  end
+
   create_table "support_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "ref"
     t.uuid "category_id"
@@ -624,6 +636,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_122758) do
     t.string "other_school_urns", default: [], array: true
     t.boolean "is_evaluator", default: false
     t.date "evaluation_due_date"
+    t.boolean "has_uploaded_documents"
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
