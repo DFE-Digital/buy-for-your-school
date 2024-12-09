@@ -23,6 +23,7 @@ module Support
     include FileUploadable
     include Surveyable
     include Notifiable
+    include DocumentUploadable
 
     belongs_to :category, class_name: "Support::Category", optional: true
     belongs_to :query, class_name: "Support::Query", optional: true
@@ -62,6 +63,8 @@ module Support
     has_many :evaluators, class_name: "Support::Evaluator", foreign_key: :support_case_id
 
     accepts_nested_attributes_for :hub_transition, allow_destroy: true, reject_if: :all_blank
+
+    has_many :upload_documents, class_name: "Support::CaseUploadDocument", foreign_key: :support_case_id
 
     # Support level
     #
