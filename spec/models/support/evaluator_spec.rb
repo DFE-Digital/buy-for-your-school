@@ -23,5 +23,19 @@ RSpec.describe Support::Evaluator, type: :model do
       evaluator.support_case = case_b
       expect(evaluator).to be_valid
     end
+
+    it "doesn't allow invalid email formats" do
+      support_case = create(:support_case)
+      evaluator = build(:support_evaluator, support_case:)
+
+      evaluator.email = "test.example.com"
+      expect(evaluator).not_to be_valid
+
+      evaluator.email = "@example.com"
+      expect(evaluator).not_to be_valid
+
+      evaluator.email = "example"
+      expect(evaluator).not_to be_valid
+    end
   end
 end
