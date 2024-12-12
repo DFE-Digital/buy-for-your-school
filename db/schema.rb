@@ -634,6 +634,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_11_171744) do
     t.string "discovery_method_other_text"
     t.string "project"
     t.string "other_school_urns", default: [], array: true
+    t.boolean "is_evaluator", default: false
     t.date "evaluation_due_date"
     t.boolean "has_uploaded_documents"
     t.boolean "sent_email_to_evaluators", default: false
