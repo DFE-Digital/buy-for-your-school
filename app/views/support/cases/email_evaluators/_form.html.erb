@@ -1,0 +1,22 @@
+<%= form_with model: @email_evaluators, scope: :email_evaluators, url: support_case_email_evaluators_path(@current_case, id: @support_email_id), method: :patch do |form| %>
+
+<%= render "email_list" %>
+<%= render "document_list"%>
+
+<h2 class="govuk-heading-m"><%= I18n.t("support.cases.email_evaluators.preview_template") %></h2>
+<%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 5, class: "message-reply-box",
+    "data-component" => "tinymce",
+    "data-tinymce-profile" => "basic",
+    "data-tinymce-selector" => ".message-reply-box",
+    value:  form.object.body
+%>
+
+<%= form.hidden_field :to_recipients, value: @to_recipients %>
+<%= form.hidden_field :id, value: @support_email_id %>
+
+<div class="govuk-button-group flex-align-center">
+    <%= form.submit I18n.t("support.cases.email_evaluators.submit"), class: "govuk-button" %>
+    <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+</div>
+
+<% end %>
