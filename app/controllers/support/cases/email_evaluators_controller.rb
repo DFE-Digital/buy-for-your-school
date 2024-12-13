@@ -1,5 +1,11 @@
 module Support
   class Cases::EmailEvaluatorsController < Cases::ApplicationController
+    helper_method :back_to_url_b64
+
+    content_security_policy do |policy|
+      policy.style_src_attr :unsafe_inline
+    end
+
     before_action :set_current_case
     before_action :set_email_addresses
     before_action :set_documents
@@ -34,6 +40,12 @@ module Support
       else
         render :edit
       end
+    end
+
+    def back_to_url_b64
+      return Base64.encode64(edit_support_case_message_thread_path(case_id: current_case.id, id: params[:id])) if action_name == "submit"
+
+      current_url_b64
     end
 
   private
