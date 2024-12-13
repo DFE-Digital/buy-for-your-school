@@ -69,23 +69,12 @@ module Support
       @template_id = template.id if template
     end
 
-    def formatted_date(date)
-      day = date.day
-      suffix = case day
-               when 1, 21, 31 then "st"
-               when 2, 22 then "nd"
-               when 3, 23 then "rd"
-               else "th"
-               end
-      "#{day}#{suffix} #{current_case.evaluation_due_date.strftime('%B %Y')}"
-    end
-
     def parse_template
       variables = {
         "organisation_name" => current_case.organisation_name || current_case.email,
         "sub_category" => current_case.sub_category || "[sub_category]",
         "unique_case_specific_link" => "<a target='_blank' rel='noopener noreferrer' href='#{support_case_path(@current_case, anchor: 'tasklist', host: request.host)}'>unique case-specific link</a>",
-        "evaluation_due_date" => formatted_date(current_case.evaluation_due_date),
+        "evaluation_due_date" => current_case.evaluation_due_date.strftime("%d %B %Y"),
       }
 
       @parse_template = Liquid::Template.parse(@email_evaluators.body, error_mode: :strict).render(variables)
