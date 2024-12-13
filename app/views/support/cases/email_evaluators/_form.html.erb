@@ -1,4 +1,14 @@
-<%= form_with model: @email_evaluators, scope: :email_evaluators, url: support_case_email_evaluators_path(@current_case, id: @support_email_id), method: :patch do |form| %>
+<% unique_id = "A#{SecureRandom.uuid}" %>
+<% turbo_frame = "messages-frame" %>
+<%= form_with model: @email_evaluators, scope: :email_evaluators, url: support_case_email_evaluators_path(@current_case, id: @support_email_id), method: :patch,
+html: {
+      "data-controller" => "draft-email",
+      "data-draft-email-list-attachments-endpoint-value" => attachments_messages_path(message_id: @support_email_id),
+      "data-draft-email-upload-attachments-endpoint-value" => attachments_messages_path(message_id: @support_email_id),
+      "data-draft-email-remove-attachments-endpoint-value" => attachments_remove_messages_path(message_id: @support_email_id),
+      "data-draft-email-update-endpoint-value" => messages_path(message_id: @support_email_id, unique_id: unique_id),
+      "data-draft-email-target" => "form"
+    } do |form| %>
 
 <%= render "email_list" %>
 <%= render "document_list"%>
@@ -15,8 +25,21 @@
 <%= form.hidden_field :id, value: @support_email_id %>
 
 <div class="govuk-button-group flex-align-center">
-    <%= form.submit I18n.t("support.cases.email_evaluators.submit"), class: "govuk-button" %>
+    <%= form.submit I18n.t("support.cases.email_evaluators.submit"), class: "govuk-button" , "data-prevent-double-click" => true, "data-draft-email-target" => "btnSubmit" %>
     <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
 </div>
+
+ <h2 class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-display-none"><%= I18n.t("support.emails.attachments.attach_files") %></h2>
+  <ul class="govuk-list govuk-!-display-none">
+    <li><%= govuk_link_to I18n.t("support.emails.attachments.email_attachments"), attach_email_attachments_path(message_id: @support_email_id, back_to: back_to_url_b64, turbo_frame: turbo_frame), no_visited_state: true, "data-draft-email-target": "emailAttachmentsLink" %></li>
+    <li><%= govuk_link_to I18n.t("support.emails.attachments.case_files"), attach_case_files_path(message_id: @support_email_id, back_to: back_to_url_b64, turbo_frame: turbo_frame), no_visited_state: true, "data-draft-email-target": "caseFilesLink" %></li>
+    <li>
+      <span class="fake-link" role="link" data-draft-email-target="btnDisplayFileDialog">
+        <%= I18n.t("support.emails.attachments.files_from_your_computer") %>
+      </span>
+    </li>
+  </ul>
+
+<%= render "components/draft_email_attachments" %>
 
 <% end %>
