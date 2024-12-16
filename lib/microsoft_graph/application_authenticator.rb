@@ -31,7 +31,7 @@ module MicrosoftGraph
 
         @access_token
       else
-        raise AuthenticationFailureError, json["error"]
+        raise AuthenticationFailureError, [json["error"], json["error_description"]].compact.join(": ")
       end
     end
 
