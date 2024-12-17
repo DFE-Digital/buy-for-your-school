@@ -1795,6 +1795,19 @@ en:
           destroyed: "%{name} successfully removed"
         delete_confirmation: Are you sure you want to delete %{name}?
         is_document_uploaded: Please select uploaded option
+      email_evaluators:
+        header: Email evaluators
+        hint: Check and then send the emails to notify people that the files have been shared. Files will only be accessible to email addresses added.
+        check_list:
+          header: "You should check the:"
+          item:
+            email_addresses: email addresses
+            documents_available: documents available to download
+            email_template: email template
+        sharing_with: Sharing with
+        documents: Documents
+        preview_template: Preview template
+        submit: Send email and continue
     emails:
       attachments:
         attach_files: Attach files
