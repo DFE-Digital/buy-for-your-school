@@ -1,6 +1,7 @@
 # Microsoft Graph
 
-This library (currently located at `lib/microsoft_graph`) has been developed to aid with interacting with the Microsoft Graph API using ruby.
+This library (currently located at `lib/microsoft_graph`) has been developed to
+aid with interacting with the Microsoft Graph API using ruby.
 
 ## Environment variables setup
 
