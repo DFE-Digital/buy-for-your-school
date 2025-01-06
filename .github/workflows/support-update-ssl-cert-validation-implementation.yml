@@ -34,7 +34,7 @@ jobs:
             profileName="devghbscdn"
             zoneName="dev.get-help-buying-for-schools.service.gov.uk"
           elif [[ "${{ inputs.chosen_environment }}" == "az-staging" ]]; then
-            customDomainName="stagingghbscustom-domain0"
+            customDomainName="stagghbscustom-domain0"
             profileName="stagghbscdn"
             zoneName="staging.get-help-buying-for-schools.service.gov.uk"
           elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
