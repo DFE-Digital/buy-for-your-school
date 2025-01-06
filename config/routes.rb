@@ -337,6 +337,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :evaluation do
+    resources :tasks, only: %i[show]
+  end
+
   # E&O Portal
   namespace :engagement do
     root to: "cases#index"
