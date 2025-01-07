@@ -338,7 +338,9 @@ Rails.application.routes.draw do
   end
 
   namespace :evaluation do
-    resources :tasks, only: %i[show]
+    resources :tasks, only: %i[show edit]
+
+    get 'verify/evaluator/link/:id', to: 'tasks#edit', as: :verify_evaluators_unique_link
   end
 
   # E&O Portal
