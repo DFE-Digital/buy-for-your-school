@@ -343,6 +343,11 @@ en:
     tasks:
       not_permitted: "You aren’t an evaluator for this procurement"
       header: "Evaluator task list"
+    task_list:
+      item:
+        download_documents: Download documents
+        upload_completed_documents: Upload completed documents
+        evaluation_approved_by_dfe: Evaluation approved by DfE
   exit_survey:
     better_quality:
       options:
