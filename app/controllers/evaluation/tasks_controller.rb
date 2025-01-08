@@ -22,7 +22,7 @@ module Evaluation
     end
 
     def check_user_is_evaluator
-      return if current_user == current_evaluator.user
+      return if @current_evaluator.nil? || current_user == @current_evaluator.user
 
       redirect_to root_path, notice: I18n.t("evaluation.tasks.not_permitted")
     end
