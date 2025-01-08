@@ -18,7 +18,7 @@ module Evaluation
 
     def set_current_case
       @current_case = Support::Case.find(params[:id])
-      @evaluation_due_date = @current_case.evaluation_due_date.strftime("%d %B %Y")
+      @evaluation_due_date = @current_case.evaluation_due_date? ? @current_case.evaluation_due_date.strftime("%d %B %Y") : nil
     end
 
     def check_user_is_evaluator
