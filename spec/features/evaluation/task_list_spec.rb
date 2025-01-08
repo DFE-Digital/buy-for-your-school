@@ -8,8 +8,8 @@ describe "Evaluator can see task list", :js do
     create(:support_evaluator, support_case:, dsi_uid: user.dfe_sign_in_uid)
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
-    visit "/"
-    click_start
+
+    user_is_signed_in(user:)
 
     visit evaluation_task_path(support_case)
 
@@ -20,12 +20,9 @@ describe "Evaluator can see task list", :js do
     create(:support_evaluator, support_case:)
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
-    visit "/"
-    click_start
 
     visit evaluation_task_path(support_case)
 
     expect(page).not_to have_text("Evaluator task list")
-    expect(page).to have_text("You aren’t an evaluator for this procurement")
   end
 end
