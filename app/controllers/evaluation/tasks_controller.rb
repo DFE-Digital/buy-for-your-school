@@ -11,6 +11,11 @@ module Evaluation
       redirect_to evaluation_task_path(@current_case)
     end
 
+    def edit
+      session[:email_evaluator_link] = evaluation_task_path(@current_case, host: request.host)
+      redirect_to evaluation_task_path(@current_case)
+    end
+
     def show; end
 
   private
