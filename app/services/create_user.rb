@@ -27,6 +27,7 @@ class CreateUser
 
     update_user! if current_user
     update_support_agent! if current_support_agent.present?
+    update_support_evaluator! if current_support_evaluator.present?
 
     if member_of_a_supported_establishment? || internal_staff_member?
       current_user || create_user!
@@ -75,6 +76,15 @@ private
   def update_support_agent!
     current_support_agent.update!(dsi_uid: user_id)
     track_event("CreateUser/AgentUpdated", agent_id: current_support_agent.id)
+  end
+
+  def current_support_evaluator
+    Support::Evaluator.where("lower(email) = lower(?)", email)
+  end
+
+  def update_support_evaluator!
+    current_support_evaluator.update!(dsi_uid: user_id)
+    track_event("CreateUser/EvaluatorUpdated", evaluator_email: email)
   end
 
   # @return [User, nil]
