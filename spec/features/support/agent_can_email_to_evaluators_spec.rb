@@ -42,7 +42,7 @@ describe "Agent can email to evaluators", :js, :with_csrf_protection do
 
     expect(page).to have_content("Email evaluators")
 
-    create(:support_email, :inbox, ticket: support_case, outlook_conversation_id: "OCID1", subject: "Email Vealuators", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1", is_read: false)
+    create(:support_email, :inbox, ticket: support_case, outlook_conversation_id: "OCID1", subject: "Email Evaluators", recipients: [{ "name" => "Test 1", "address" => "test1@email.com" }], unique_body: "Email 1", is_read: false)
     support_case.update!(sent_email_to_evaluators: true)
 
     visit support_case_path(support_case, anchor: "tasklist")

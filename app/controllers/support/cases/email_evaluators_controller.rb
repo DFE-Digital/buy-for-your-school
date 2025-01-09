@@ -83,12 +83,7 @@ module Support
 
     def parse_template
       unique_link = evaluation_verify_evaluators_unique_link_path(@current_case, host: request.host)
-      variables = {
-        "organisation_name" => current_case.organisation_name || current_case.email,
-        "sub_category" => current_case.sub_category || "[sub_category]",
-        "unique_case_specific_link" => "<a target='_blank' rel='noopener noreferrer' href='#{unique_link}'>unique case-specific link</a>",
-        "evaluation_due_date" => current_case.evaluation_due_date.strftime("%d %B %Y"),
-      }
+      variables = Support::EmailEvaluatorsVariableParser.new(@current_case, unique_link).variables
 
       @parse_template = Liquid::Template.parse(@email_evaluators.body, error_mode: :strict).render(variables)
       @email_evaluators.html_content = @parse_template
