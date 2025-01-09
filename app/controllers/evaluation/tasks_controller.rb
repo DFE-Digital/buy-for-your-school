@@ -13,7 +13,7 @@ module Evaluation
   private
 
     helper_method def current_evaluator
-      @current_evaluator ||= Support::Evaluator.find_by(support_case_id: params[:id], email: current_user.email)
+      @current_evaluator ||= Support::Evaluator.find_by!(support_case_id: params[:id], email: current_user.email)
     end
 
     def set_current_case
