@@ -1,11 +1,18 @@
 <%= render partial: "support/cases/components/case_header",
   locals: { current_case: @current_case } %>
 <h1 class="govuk-heading-l"><%= I18n.t("evaluation.tasks.header") %></h1>
-
 <p class="govuk-body govuk-!-static-margin-bottom-8">Work through the tasklist to complete your evaluation and upload it by <%= @evaluation_due_date%></p>
-
 <%= govuk_task_list(id_prefix: "evaluator_task") do |task_list|
-  task_list.with_item(title: I18n.t("evaluation.task_list.item.download_documents"), href: '#', status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+
+  if @download_document_status == 'complete'
+    download_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+  elsif @download_document_status == 'in_progress'
+    download_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
+  else
+    download_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
+  end
+
+  task_list.with_item(title: I18n.t("evaluation.task_list.item.download_documents"), href: evaluation_download_document_path(@current_case), status: download_status)
 
   task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents")) do | item | 
     item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
