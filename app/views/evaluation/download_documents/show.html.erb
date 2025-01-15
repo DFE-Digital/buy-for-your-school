@@ -1,0 +1,16 @@
+<%= render partial: "support/cases/components/case_header",
+  locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("evaluation.download_documents.header") %></h1>
+
+<p class="govuk-body">Use these documents to complete your evaluation of each supplier</p>
+
+<p class="govuk-body govuk-!-static-margin-bottom-8">If you have a problem or conflict of interest, 
+   <%= link_to "contact us", "https://www.gov.uk/guidance/get-help-buying-for-schools", class: "govuk-link" %>
+</p>
+
+<%= render "document_list"%>
+
+<div class="govuk-button-group flex-align-center">
+  <%= link_to I18n.t("generic.button.continue"), @back_url, class: "govuk-button" %>
+  <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+</div>
