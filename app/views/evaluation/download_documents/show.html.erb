@@ -2,10 +2,11 @@
   locals: { current_case: @current_case } %>
 <h1 class="govuk-heading-l"><%= I18n.t("evaluation.download_documents.header") %></h1>
 
-<p class="govuk-body">Use these documents to complete your evaluation of each supplier</p>
+<p class="govuk-body">Use these documents to complete your evaluation of each supplier.</p>
 
 <p class="govuk-body govuk-!-static-margin-bottom-8">If you have a problem or conflict of interest, 
-   <%= link_to "contact us", "https://www.gov.uk/guidance/get-help-buying-for-schools", class: "govuk-link" %>
+  <% mail_to_address = "mailto:#{ENV.fetch('MS_GRAPH_SHARED_MAILBOX_ADDRESS')}" %>
+  <%= link_to "contact us", mail_to_address , class: "govuk-link" %>
 </p>
 
 <%= render "document_list"%>
