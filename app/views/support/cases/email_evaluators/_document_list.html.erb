@@ -1,0 +1,12 @@
+<div class="govuk-form-group govuk-!-static-margin-bottom-8">
+  <h2 class="govuk-heading-m"><%= I18n.t("support.cases.email_evaluators.documents") %></h2>
+
+  <dl class="govuk-summary-list">
+    <% @documents.each do |document| %>
+      <div class="govuk-summary-list__row">
+        <dd class="govuk-summary-list__value"><%= link_to document.file_name, support_document_download_path(document, type: document.class), class: "govuk-link", target: "_blank" %></dd>
+      </div>
+    <% end %>
+  </dl>
+
+</div>

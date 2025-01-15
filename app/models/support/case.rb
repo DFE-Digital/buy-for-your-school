@@ -208,5 +208,9 @@ module Support
       update!(agent:)
       agent.notify_assigned_to_case(support_case: self, assigned_by:)
     end
+
+    def sub_category_aeiou_format
+      sub_category.starts_with?("A", "E", "I", "O", "U") ? "an #{sub_category}" : "a #{sub_category}"
+    end
   end
 end
