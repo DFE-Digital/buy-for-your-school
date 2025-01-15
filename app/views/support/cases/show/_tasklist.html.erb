@@ -20,9 +20,17 @@
         end
 
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.upload_documents"), href: edit_support_case_document_uploads_path(@current_case), status: document_upload_Status)
-        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.email_evaluators")) do | item | 
-        item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
+
+        if (@current_case.evaluators.count > 0 && @current_case.evaluation_due_date && @current_case.has_uploaded_documents && @current_case.sent_email_to_evaluators)
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.email_evaluators"), href: edit_support_case_email_evaluators_path(@current_case), status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green"))
+        elsif (@current_case.evaluators.count > 0 && @current_case.evaluation_due_date && @current_case.has_uploaded_documents && @current_case.sent_email_to_evaluators == false)
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.email_evaluators"), href: edit_support_case_email_evaluators_path(@current_case), status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+        else
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.email_evaluators")) do | item | 
+          item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
+          end
         end
+
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations")) do | item | 
         item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
         end
