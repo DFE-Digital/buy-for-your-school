@@ -1,9 +1,7 @@
 <%= render partial: "support/cases/components/case_header",
   locals: { current_case: @current_case } %>
 <h1 class="govuk-heading-l"><%= I18n.t("evaluation.tasks.header") %></h1>
-
 <p class="govuk-body govuk-!-static-margin-bottom-8">Work through the tasklist to complete your evaluation and upload it by <%= @evaluation_due_date%></p>
-
 <%= govuk_task_list(id_prefix: "evaluator_task") do |task_list|
 
   if @download_document_status == 'complete'
