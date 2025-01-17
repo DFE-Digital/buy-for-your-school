@@ -1,0 +1,39 @@
+<%= form_with model: @document_uploader,  scope: :document_uploader, url: evaluation_upload_completed_documents_path,
+  html: { "data-controller" => "case-files" } do |form| %>
+
+  <h2 class="govuk-heading-m"><%= I18n.t("support.cases.upload_documents.choose_file_title") %></h2>
+
+  <%= form.govuk_error_summary %>
+
+  <span class="govuk-button govuk-button--secondary" role="button"
+    data-case-files-target="btnDisplayFileDialog">
+    <%= I18n.t("support.cases.upload_documents.button.choose_file") %>
+  </span>
+
+  <%= render "uploaded_documents" %>
+
+  <div class="govuk-form-group govuk-!-margin-top-7">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s"><%= I18n.t("evaluation.upload_evaluation.file_upload_confirmation") %></legend>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <%= form.radio_button :has_uploaded_documents, true, checked: current_evaluator.present? && current_evaluator.has_uploaded_documents == true, class: "govuk-radios__input" %>
+          <%= form.label :has_uploaded_documents, "Yes, I have uploaded all documents", value: true, class: "govuk-label govuk-radios__label" %>
+        </div>
+        <div class="govuk-radios__item">
+          <%= form.radio_button :has_uploaded_documents, false, checked: current_evaluator.present? && current_evaluator.has_uploaded_documents == false, class: "govuk-radios__input" %>
+          <%= form.label :has_uploaded_documents, "No", value: false, class: "govuk-label govuk-radios__label" %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-button-group flex-align-center">
+    <%= form.submit I18n.t("generic.button.continue"), class: "govuk-button", role: "button", "data-action" => "case-files#submit", data: { disable_with: "Uploading..." } %>
+    <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+
+  <%= hidden_field_tag :case_id, @current_case.id %>
+  <%= form.govuk_file_field :files, multiple: true, include_hidden: false, class: "govuk-!-display-none", "data-case-files-target" => "filesField", form_group: { class: "govuk-!-display-none" } %>
+
+<% end %>

@@ -1,0 +1,11 @@
+<%= render partial: "support/cases/components/case_header",
+  locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("evaluation.upload_evaluation.header") %></h1>
+
+<p class="govuk-body">
+  <%= I18n.t("evaluation.upload_evaluation.page_body_text1") %>
+  <br>
+  <%= I18n.t("evaluation.upload_evaluation.page_body_text2") %>
+</p>
+
+<%= render "form" %>

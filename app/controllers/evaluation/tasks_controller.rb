@@ -11,11 +11,6 @@ module Evaluation
       redirect_to evaluation_task_path(@current_case)
     end
 
-    def edit
-      session[:email_evaluator_link] = evaluation_task_path(@current_case, host: request.host)
-      redirect_to evaluation_task_path(@current_case)
-    end
-
     def show; end
 
   private
@@ -30,7 +25,7 @@ module Evaluation
     end
 
     def check_user_is_evaluator
-      return if @current_evaluator.nil? || current_user == @current_evaluator.user
+      return if current_evaluator.present? && current_user.email == current_evaluator.email
 
       redirect_to root_path, notice: I18n.t("evaluation.tasks.not_permitted")
     end
@@ -44,9 +39,9 @@ module Evaluation
     end
 
     def download_document_status
-      @download_document_status = if @documents.count == @downloaded_documents.count && @documents.count.positive?
+      @download_document_status = if @documents.count == @downloaded_documents.count && @documents.any?
                                     "complete"
-                                  elsif @documents.count > @downloaded_documents.count && @downloaded_documents.count.positive?
+                                  elsif @documents.count > @downloaded_documents.count && @downloaded_documents.any?
                                     "in_progress"
                                   else
                                     "to_do"

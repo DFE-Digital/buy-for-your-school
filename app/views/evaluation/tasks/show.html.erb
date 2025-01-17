@@ -14,9 +14,22 @@
 
   task_list.with_item(title: I18n.t("evaluation.task_list.item.download_documents"), href: evaluation_download_document_path(@current_case), status: download_status)
 
-  task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents")) do | item | 
-    item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+  if @download_document_status == 'complete' && current_evaluator.present? && current_evaluator.has_uploaded_documents == true
+    upload_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+  elsif @download_document_status == 'complete' && (current_evaluator.present? && current_evaluator.has_uploaded_documents == false)
+    upload_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
+  else
+    upload_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
   end
+
+  if @download_document_status == 'complete'
+    task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents"), href: evaluation_upload_completed_document_path(@current_case), status: upload_status)
+  else
+    task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents")) do | item | 
+      item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+    end
+  end
+  
 
   task_list.with_item(title: I18n.t("evaluation.task_list.item.evaluation_approved_by_dfe")) do | item | 
     item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)

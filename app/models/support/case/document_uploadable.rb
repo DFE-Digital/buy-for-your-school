@@ -17,4 +17,18 @@ module Support::Case::DocumentUploadable
       )
     end
   end
+
+  def upload_evaluation_document_files(files:, email:)
+    return if files.blank?
+
+    files.each do |file|
+      evaluators_upload_documents.create!(
+        attachable: Support::Document.create!(case: self, file_type: file.content_type, file:),
+        file_type: file.content_type,
+        file_name: file.original_filename,
+        file_size: file.size,
+        email:,
+      )
+    end
+  end
 end
