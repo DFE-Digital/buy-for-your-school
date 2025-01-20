@@ -12,6 +12,12 @@ private
   def home_page
     policy = policy(:cms_portal)
 
+    if session[:email_evaluator_link].present?
+      email_evaluator_link = session[:email_evaluator_link]
+      session.delete(:email_evaluator_link)
+      return email_evaluator_link
+    end
+
     return support_root_path if policy.access_proc_ops_portal?
     return engagement_root_path if policy.access_e_and_o_portal?
     return support_case_statistics_path if policy.access_statistics?
