@@ -196,5 +196,16 @@ RSpec.describe CreateUser do
         end
       end
     end
+
+    context "when there's a support evaluator" do
+      let(:dfe_sign_in_uid) { "evaluator-uid" }
+      let(:email) { "evaluator@example.com" }
+      let!(:support_evaluator) { create(:support_evaluator, email: email.downcase) }
+
+      it "updates the support evaluator to have the dsi uid of the user" do
+        service.call
+        expect(support_evaluator.reload.dsi_uid).to eq(dfe_sign_in_uid)
+      end
+    end
   end
 end
