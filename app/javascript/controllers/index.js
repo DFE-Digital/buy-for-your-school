@@ -81,3 +81,6 @@ application.register("select-option-filter", SelectOptionFilterController)
 
 import SelectOptionTextFieldController from "./select_option_text_field_controller"
 application.register("select-option-text-field", SelectOptionTextFieldController)
+
+import DownloadDocumentsController from "./download_documents_controller"
+application.register("download_documents", DownloadDocumentsController)
