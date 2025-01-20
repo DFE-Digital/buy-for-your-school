@@ -237,6 +237,7 @@ Rails.application.routes.draw do
         resources :evaluators, except: %i[show]
         resource :evaluation_due_dates, only: %i[edit update]
         resource :document_uploads, except: %i[show]
+        resource :email_evaluators, except: %i[show]
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template
@@ -334,6 +335,11 @@ Rails.application.routes.draw do
       resources :all_cases_surveys, only: %i[index create]
       resources :sync_frameworks, only: %i[index create]
     end
+  end
+
+  namespace :evaluation do
+    resources :tasks, only: %i[show edit]
+    get "verify/evaluator/link/:id", to: "tasks#edit", as: :verify_evaluators_unique_link
   end
 
   # E&O Portal

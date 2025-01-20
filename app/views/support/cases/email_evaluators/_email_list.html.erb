@@ -1,0 +1,12 @@
+<div class="govuk-form-group govuk-!-static-margin-bottom-8">
+  <h2 class="govuk-heading-m"><%= I18n.t("support.cases.email_evaluators.sharing_with") %></h2>
+
+  <dl class="govuk-summary-list">
+    <% @evaluators.each do |item| %>
+      <div class="govuk-summary-list__row">
+        <dd class="govuk-summary-list__value"><%= item.email %></dd>
+      </div>
+    <% end %>
+  </dl>
+
+</div>
