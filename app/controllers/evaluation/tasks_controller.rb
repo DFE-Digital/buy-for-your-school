@@ -39,9 +39,9 @@ module Evaluation
     end
 
     def download_document_status
-      @download_document_status = if @documents.count == @downloaded_documents.count && @documents.count.positive?
+      @download_document_status = if @documents.count == @downloaded_documents.count && @documents.any?
                                     "complete"
-                                  elsif @documents.count > @downloaded_documents.count && @downloaded_documents.count.positive?
+                                  elsif @documents.count > @downloaded_documents.count && @downloaded_documents.any?
                                     "in_progress"
                                   else
                                     "to_do"
