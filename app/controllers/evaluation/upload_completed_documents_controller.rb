@@ -24,6 +24,7 @@ module Evaluation
     def destroy
       @uploaded_document = Support::EvaluatorsUploadDocument.find(params[:document_id])
       @support_document = Support::Document.find(@uploaded_document.attachable_id)
+      @back_url = evaluation_upload_completed_document_path(@current_case)
       return unless params[:confirm]
 
       @uploaded_document.destroy!
