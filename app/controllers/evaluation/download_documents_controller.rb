@@ -6,7 +6,6 @@ module Evaluation
     before_action :set_downloaded_documents
     before_action :set_download_document, only: %i[update]
     before_action { @back_url = evaluation_task_path(@current_case) }
-
     SUPPORTED_TYPES = [
       "Support::EmailAttachment",
       "EmailAttachment",
@@ -14,8 +13,8 @@ module Evaluation
       "EnergyBill",
       "Support::EmailTemplateAttachment",
       "Support::CaseUploadDocument",
+      "Support::EvaluatorsUploadDocument",
     ].freeze
-
     def show; end
 
     def update
@@ -28,7 +27,6 @@ module Evaluation
     helper_method def current_evaluator
       @current_evaluator ||= Support::Evaluator.find_by(support_case_id: params[:id], email: current_user.email)
     end
-
     def set_current_case
       @current_case = Support::Case.find(params[:id])
       @evaluation_due_date = @current_case.evaluation_due_date? ? @current_case.evaluation_due_date.strftime("%d %B %Y") : nil
@@ -58,7 +56,6 @@ module Evaluation
 
     def set_download_document
       @requested_file_type = CGI.unescape(params[:document_type])
-
       if SUPPORTED_TYPES.include?(@requested_file_type)
         @download_document = @requested_file_type.safe_constantize.find(params[:document_id])
       else
