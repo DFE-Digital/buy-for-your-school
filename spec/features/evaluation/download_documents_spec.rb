@@ -7,7 +7,7 @@ describe "Evaluator can see uploaded documents", :js do
   let(:document_uploader) { support_case.document_uploader(files: [file_1, file_2]) }
 
   specify "Evaluator can download documents" do
-    create(:support_evaluator, support_case:, dsi_uid: user.dfe_sign_in_uid)
+    create(:support_evaluator, support_case:, dsi_uid: user.dfe_sign_in_uid, email: user.email)
 
     Current.user = user
 

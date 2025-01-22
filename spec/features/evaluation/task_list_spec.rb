@@ -5,7 +5,7 @@ describe "Evaluator can see task list", :js do
   let(:user) { create(:user) }
 
   specify "Authenticating and seeing the task list" do
-    create(:support_evaluator, support_case:, dsi_uid: user.dfe_sign_in_uid)
+    create(:support_evaluator, support_case:, dsi_uid: user.dfe_sign_in_uid, email: user.email)
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
 
