@@ -348,6 +348,8 @@ en:
         download_documents: Download documents
         upload_completed_documents: Upload completed documents
         evaluation_approved_by_dfe: Evaluation approved by DfE
+    download_documents:
+      header: Download documents
   exit_survey:
     better_quality:
       options:
@@ -798,6 +800,7 @@ en:
       start: Start now
       submit: Submit
       update: Update
+      continue: Continue
     label:
       what_is: What is %{label}?
     link:
