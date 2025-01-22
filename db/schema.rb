@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_11_171744) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_10_150114) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -826,6 +826,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_11_171744) do
     t.index ["dsi_uid"], name: "index_support_evaluators_on_dsi_uid"
     t.index ["email", "support_case_id"], name: "index_support_evaluators_on_email_and_support_case_id", unique: true
     t.index ["support_case_id"], name: "index_support_evaluators_on_support_case_id"
+  end
+
+  create_table "support_evaluators_download_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.uuid "support_case_upload_document_id"
+    t.string "email", null: false
+    t.boolean "has_downloaded_documents", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email", "support_case_id", "support_case_upload_document_id"], name: "idx_on_email_support_case_id_support_case_upload_do_e4a88327e6", unique: true
+    t.index ["support_case_id"], name: "index_support_evaluators_download_documents_on_support_case_id"
+    t.index ["support_case_upload_document_id"], name: "idx_on_support_case_upload_document_id_fbb53116e2"
   end
 
   create_table "support_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
