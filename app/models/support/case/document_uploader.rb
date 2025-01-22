@@ -8,12 +8,16 @@ class Support::Case::DocumentUploader
   attribute :support_case
   attribute :has_uploaded_documents
 
-  validates :files, presence: true, if: -> { support_case.has_uploaded_documents.nil? }
+  validates :files, presence: true, if: -> { has_uploaded_documents.blank? }
   validate :files_safe, if: -> { files.present? }
   validates :has_uploaded_documents, presence: true
 
   def save!
     support_case.upload_document_files(files:)
+  end
+
+  def save_evaluation_document!(email)
+    support_case.upload_evaluation_document_files(files:, email:)
   end
 
 private

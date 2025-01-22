@@ -13,6 +13,7 @@ module Evaluation
       "EnergyBill",
       "Support::EmailTemplateAttachment",
       "Support::CaseUploadDocument",
+      "Support::EvaluatorsUploadDocument",
     ].freeze
     def show; end
 
