@@ -90,5 +90,9 @@ FactoryBot.define do
     trait :stage_unspecified do
       association :procurement, factory: %i[support_procurement stage_unspecified]
     end
+
+    trait :with_support_category do
+      association :category, factory: :support_category, title: "Audit Accessibility (buildings and digital)"
+    end
   end
 end
