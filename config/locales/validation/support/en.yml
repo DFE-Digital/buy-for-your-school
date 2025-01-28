@@ -315,4 +315,11 @@ en:
           missing: Enter valid evaluation due date
           invalid: Enter valid evaluation due date
           must_be_in_the_future: Evaluation due date must be in the future
+  review_evaluations_form:
+    rules:
+      evaluation_approved: ""
+    errors:
+      rules:
+        evaluation_approved:
+          select_at_least_one: Select at least one evaluation to approve
 
