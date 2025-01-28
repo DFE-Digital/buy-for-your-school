@@ -3,6 +3,8 @@ module Support
     require "will_paginate/array"
     before_action :filter_forms, only: %i[index]
     before_action :current_case, only: %i[show]
+    before_action :set_evaluation_status, only: %i[show]
+    before_action :enable_evaluation_link, only: %i[show]
 
     helper_method :tower_tab_params
 
@@ -61,6 +63,21 @@ module Support
     def tower_tab_params(tab)
       tab_params = params.fetch(:tower, {})
       tab_params.fetch(tab, {}).permit!
+    end
+
+    def set_evaluation_status
+      evaluation_count = Support::Evaluator.where(support_case_id: params[:id], evaluation_approved: true).count
+      @evaluation_status = if @current_case.evaluators.all.count == evaluation_count
+                             "complete"
+                           elsif @current_case.evaluators.all.count > evaluation_count && evaluation_count > 0
+                             "in_progress"
+                           else
+                             "to_do"
+                           end
+    end
+
+    def enable_evaluation_link
+      @enable_evaluation_link = @current_case.evaluators.any?(&:has_uploaded_documents)
     end
   end
 end
