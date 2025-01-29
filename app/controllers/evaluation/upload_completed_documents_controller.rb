@@ -3,11 +3,10 @@ module Evaluation
     before_action :set_current_case
     before_action :check_user_is_evaluator
     before_action { @back_url = evaluation_task_path(@current_case) }
-    before_action { @uploaded_files = @current_case.evaluators_upload_documents }
+    before_action :set_uploaded_files
 
     def show
       @document_uploader = @current_case.document_uploader
-      @uploaded_files =  @current_case.evaluators_upload_documents
     end
 
     def create
@@ -64,6 +63,10 @@ module Evaluation
 
     def reset_uploaded_documents
       current_evaluator.update!(has_uploaded_documents: nil)
+    end
+
+    def set_uploaded_files
+      @uploaded_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:case_id], email: current_user.email)
     end
   end
 end
