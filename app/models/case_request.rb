@@ -17,7 +17,8 @@ class CaseRequest < ApplicationRecord
   enum :creation_source, { default: 0, engagement_and_outreach_team: 5 }
   enum :same_supplier_used, { no: 0, yes: 1, not_sure: 2 }, prefix: true
 
-  validates :first_name, :last_name, :email, :source, presence: true
+  validates :first_name, :last_name, :source, presence: true
+  validates :email, email_address: { format: true }
   validates :phone_number, length: { maximum: 12 }
   validates :phone_number, format: /\A(0|\+?44)[12378]\d{8,9}\z/, if: -> { phone_number.present? }
   validate :discovery_method_validation
