@@ -22,11 +22,13 @@ module Support
     def destroy
       @uploaded_document = Support::CaseUploadDocument.find(params[:document_id])
       @support_document = Support::Document.find(@uploaded_document.attachable_id)
+      evaluator_downloaed_document = Support::EvaluatorsDownloadDocument.find_by!(support_case_upload_document_id: params[:document_id])
       @back_url = edit_support_case_document_uploads_path
       return unless params[:confirm]
 
       @uploaded_document.destroy!
       @support_document.destroy!
+      evaluator_downloaed_document.destroy!
 
       if @uploaded_files.empty?
         reset_uploaded_documents
