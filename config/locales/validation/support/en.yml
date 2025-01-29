@@ -11,7 +11,6 @@ en:
           attributes:
             email:   
               blank: Enter the email address of the evaluator
-              invalid: Enter an email address in the correct format, like name@example.com
               taken: This email address has already been added as an evaluator
             first_name:
               blank: Enter the first name of the evaluator
@@ -305,6 +304,11 @@ en:
         file_attachments:
           infected: One or more of the files you uploaded contained a virus and have been rejected
           incorrect_file_type: One or more of the files you uploaded was an incorrect file type
+
+  errors:
+    messages:
+      invalid_email_address: Enter an email address in the correct format, like name@example.com
+      not_school_email: Enter a school email address in the correct format, like name@example.sch.uk. You cannot use a personal email address such as %{domain}
 
   case_evaluation_due_date_form:
     rules:
