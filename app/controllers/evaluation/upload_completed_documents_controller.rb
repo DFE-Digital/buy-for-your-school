@@ -41,6 +41,7 @@ module Evaluation
 
       @current_evaluator = Support::Evaluator.where("support_case_id = ? AND LOWER(email) = LOWER(?)", params[:case_id], current_user.email).first
     end
+
     def set_current_case
       @current_case = Support::Case.find(params[:case_id])
       @evaluation_due_date = @current_case.evaluation_due_date? ? @current_case.evaluation_due_date.strftime("%d %B %Y") : nil
