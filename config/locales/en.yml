@@ -914,6 +914,20 @@ en:
       who_can_use_list:
       - are procuring for a single school in England - either a local authority maintained school or an academy in a single or multi-academy trust
       - are procuring a single contract
+    evaluation_page:
+      page_title: Complete procurement evaluation
+      overview_purpose: 'Use this service to complete the supplier evaluation stage of the procurement. You will be able to:'
+      overview_supported_category_list:
+      - view bids from potential suppliers
+      - evaluate bids using a pre-populated evaluation sheet
+      - complete the evaluation tasks
+      overview_declaration: Before starting the evaluation, you must complete the declaration of interest form attached to the email inviting you to complete the procurement evaluation.
+      watch_video: You can watch the
+      watch_video_link: Evaluation Guidance training video on YouTube (opens in new tab)
+      evaluate_independently: Bids must be evaluated independently of each other and other evaluators.
+      justification: Insufficient justification for scores will result in evaluations being returned, which could delay the procurement.
+      before_you_start_body:
+      - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.
   step:
     button:
       skip: Skip for now
