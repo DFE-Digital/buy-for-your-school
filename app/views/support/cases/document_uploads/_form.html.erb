@@ -34,5 +34,5 @@
     </div>
 
     <%= form.govuk_file_field :files, multiple: true, include_hidden: false, class: "govuk-!-display-none", "data-case-files-target" => "filesField", form_group: { class: "govuk-!-display-none" } %>
-  
+    <%= form.hidden_field :edit_form, value: @uploaded_files.any? ? true: false %>
 <% end %>

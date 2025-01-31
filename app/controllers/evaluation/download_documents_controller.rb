@@ -13,6 +13,7 @@ module Evaluation
       "EnergyBill",
       "Support::EmailTemplateAttachment",
       "Support::CaseUploadDocument",
+      "Support::EvaluatorsUploadDocument",
     ].freeze
     def show; end
 
@@ -24,7 +25,9 @@ module Evaluation
   private
 
     helper_method def current_evaluator
-      @current_evaluator ||= Support::Evaluator.find_by(support_case_id: params[:id], email: current_user.email)
+      return @current_evaluator if defined? @current_evaluator
+
+      @current_evaluator = Support::Evaluator.find_by(support_case_id: params[:id], email: current_user.email)
     end
     def set_current_case
       @current_case = Support::Case.find(params[:id])
