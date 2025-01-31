@@ -5,6 +5,7 @@ module Evaluation
     before_action :set_uploaded_documents
     before_action :set_downloaded_documents
     before_action :download_document_status
+    before_action :uploaded_evalaution_files
 
     def edit
       session[:email_evaluator_link] = evaluation_task_path(@current_case, host: request.host)
@@ -16,7 +17,7 @@ module Evaluation
   private
 
     helper_method def current_evaluator
-      @current_evaluator ||= Support::Evaluator.find_by!(support_case_id: params[:id], email: current_user.email)
+      @current_evaluator ||= Support::Evaluator.find_by(support_case_id: params[:id], email: current_user.email)
     end
 
     def set_current_case
@@ -46,6 +47,10 @@ module Evaluation
                                   else
                                     "to_do"
                                   end
+    end
+
+    def uploaded_evalaution_files
+      @uploaded_evalaution_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:id], email: current_user.email)
     end
   end
 end
