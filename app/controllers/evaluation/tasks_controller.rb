@@ -1,5 +1,6 @@
 module Evaluation
   class TasksController < ApplicationController
+    before_action :authenticate_user!, only: %i[edit]
     before_action :set_current_case
     before_action :check_user_is_evaluator
     before_action :set_uploaded_documents
@@ -16,7 +17,9 @@ module Evaluation
   private
 
     helper_method def current_evaluator
-      @current_evaluator ||= Support::Evaluator.find_by!(support_case_id: params[:id], email: current_user.email)
+      return @current_evaluator if defined? @current_evaluator
+
+      @current_evaluator = Support::Evaluator.where("support_case_id = ? AND LOWER(email) = LOWER(?)", params[:id], current_user.email).first
     end
 
     def set_current_case
@@ -46,6 +49,12 @@ module Evaluation
                                   else
                                     "to_do"
                                   end
+    end
+
+    def authenticate_user!
+      super
+
+      session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
     end
   end
 end
