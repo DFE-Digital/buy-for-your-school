@@ -13,18 +13,21 @@ module Evaluation
       "EnergyBill",
       "Support::EmailTemplateAttachment",
       "Support::CaseUploadDocument",
+      "Support::EvaluatorsUploadDocument",
     ].freeze
     def show; end
 
     def update
       update_support_details
-      send_data @download_document.file.download, type: @download_document.file_type, disposition: "inline", filename: @download_document.file_name
+      send_data @download_document.file.download, type: @download_document.file_type, disposition: "attachment", filename: @download_document.file_name
     end
 
   private
 
     helper_method def current_evaluator
-      @current_evaluator ||= Support::Evaluator.find_by(support_case_id: params[:id], email: current_user.email)
+      return @current_evaluator if defined? @current_evaluator
+
+      @current_evaluator = Support::Evaluator.where("support_case_id = ? AND LOWER(email) = LOWER(?)", params[:id], current_user.email).first
     end
     def set_current_case
       @current_case = Support::Case.find(params[:id])
@@ -36,17 +39,13 @@ module Evaluation
     end
 
     def check_user_is_evaluator
-      return if @current_evaluator.nil? || current_user == @current_evaluator.user
+      return if current_evaluator.present? && current_user.email.downcase == current_evaluator.email.downcase
 
       redirect_to root_path, notice: I18n.t("evaluation.tasks.not_permitted")
     end
 
     def set_documents
       @documents = @current_case.upload_documents
-    end
-
-    def download_document_data
-      [@download_document.file.download, { type: @download_document.file_type, disposition: "inline", filename: @download_document.file_name }]
     end
 
     def update_support_details

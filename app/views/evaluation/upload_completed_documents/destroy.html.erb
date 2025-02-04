@@ -1,0 +1,13 @@
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l">
+  <%= I18n.t("support.cases.upload_documents.delete_confirmation", name:@uploaded_document.file_name) %>
+</h1>
+<div class="govuk-button-group flex-align-center">
+  <%= link_to I18n.t("generic.button.delete"),
+              evaluation_upload_completed_document_path(case_id: @current_case, confirm: true, document_id: @uploaded_document.id),
+              method: :delete,
+              class: "govuk-button govuk-button--warning" %>
+  <%= link_to I18n.t("generic.button.cancel"),
+              evaluation_upload_completed_document_path(@current_case),
+              class: "govuk-link govuk-link--no-visited-state" %>
+</div>
