@@ -61,5 +61,11 @@ module Evaluation
     def uploaded_evalaution_files
       @uploaded_evalaution_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:id], email: current_user.email)
     end
+
+    def authenticate_user!
+      super
+
+      session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
+    end
   end
 end
