@@ -32,7 +32,13 @@
     end
   end
 
-  task_list.with_item(title: I18n.t("evaluation.task_list.item.evaluation_approved_by_dfe")) do | item | 
-    item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+  if current_evaluator.present? && current_evaluator.evaluation_approved == true
+    task_list.with_item(title: I18n.t("evaluation.task_list.item.evaluation_approved_by_dfe")) do | item | 
+      item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green"), cannot_start_yet: true)
+    end
+  else
+    task_list.with_item(title: I18n.t("evaluation.task_list.item.evaluation_approved_by_dfe")) do | item | 
+      item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+    end
   end
 end %>

@@ -1,0 +1,28 @@
+<%= form_with scope: :review_evaluations_form,  url: support_case_review_evaluation_path(@current_case), method: :patch do |form| %>
+
+  <%= @moderation_stage_id %>
+  <%= form.hidden_field :evaluation_approved, { multiple: true } %>
+  <% @current_case.evaluators.all.each do |evaluator| %>
+    <div class="govuk-form-group">
+      <%= form.govuk_check_box :evaluation_approved, evaluator.email, label: { text: evaluator.email }, checked:  evaluator.evaluation_approved, disabled: !evaluator.has_uploaded_documents %>
+      <details class="govuk-details govuk-!-margin-left-9 govuk-!-margin-top-3">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            View <%= evaluator.name %>'s evaluation files
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <% @evalution_files.select {|file| file.email.downcase == evaluator.email.downcase}.each do |uploaded_file| %>
+            <p><%= link_to uploaded_file.file_name, evaluation_download_document_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %></p>
+          <% end %>
+        </div>
+      </details>
+    </div>
+  <% end %>
+
+  <div class="govuk-button-group flex-align-center">
+      <%= form.submit I18n.t("generic.button.continue"), class: "govuk-button", role: "button" %>
+      <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+  
+<% end %>

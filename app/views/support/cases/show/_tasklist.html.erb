@@ -31,8 +31,24 @@
           end
         end
 
-        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations")) do | item | 
-        item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
+        evaluation_count = @current_case.evaluators.all.select(&:evaluation_approved).count
+
+        if @current_case.evaluators.all.count == evaluation_count
+          review_evaluation_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+        elsif @current_case.evaluators.all.count > evaluation_count && evaluation_count > 0
+          review_evaluation_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
+        else
+          review_evaluation_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
+        end
+
+        enable_evaluation_link = @current_case.evaluators.any?(&:has_uploaded_documents)
+
+        if enable_evaluation_link
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations"), href: edit_support_case_review_evaluation_path(@current_case), status: review_evaluation_Status)
+        else
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations")) do | item | 
+          item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
+          end
         end
       end %>
     </div>      
