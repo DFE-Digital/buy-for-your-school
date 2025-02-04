@@ -1839,6 +1839,10 @@ en:
         documents: Documents
         preview_template: Preview template
         submit: Send email and continue
+      review_evaluations:
+        header: Review evaluations
+        body: Check each evaluation has been correctly completed. If there is a problem then contact that evaluator and ask them to upload an updated version for you to approve.
+        hint: Tick which evaluations have been correctly completed
     emails:
       attachments:
         attach_files: Attach files

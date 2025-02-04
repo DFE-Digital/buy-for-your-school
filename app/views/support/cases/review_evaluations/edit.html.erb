@@ -1,0 +1,8 @@
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("support.cases.review_evaluations.header") %></h1>
+
+<p class="govuk-body govuk-!-static-margin-bottom-8"><%= I18n.t("support.cases.review_evaluations.body") %></p>
+
+<h2 class="govuk-heading-m"><%= I18n.t("support.cases.review_evaluations.hint") %></h2>
+
+<%= render "form" %>
