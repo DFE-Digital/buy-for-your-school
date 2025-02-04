@@ -14,7 +14,6 @@ private
 
     if session[:email_evaluator_link].present?
       email_evaluator_link = session[:email_evaluator_link]
-      session.delete(:email_evaluator_link)
       return email_evaluator_link
     end
 
