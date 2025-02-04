@@ -1,0 +1,44 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.cases.upload_documents.file_uploaded") %></h3>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-!-display-none" data-case-files-target="fileList">
+        <div data-case-files-target="filePreview">
+        <div data-case-files-target="previewTemplate">
+            <div class="case-files__file">
+                <span class="case-files__file-name" data-dz-name></span>
+                <div class="case-files__file-actions">
+                    <span class="case-files__file-remove">
+                        <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("generic.button.delete") %></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <% @uploaded_files.each do |uploaded_file| %>
+            <div class="case-files__file">
+                <span class="case-files__file-name">
+                    <%= link_to uploaded_file.file_name, evaluation_download_document_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %>
+                </span>
+                <div class="case-files__file-actions">
+                    <span class="case-files__file-remove">
+                        <%= link_to I18n.t("generic.button.delete"),
+                            evaluation_upload_completed_document_path(case_id: @current_case, document_id: uploaded_file),
+                            method: :delete,
+                            class: "govuk-link govuk-link--no-visited-state" %>
+                    </span>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

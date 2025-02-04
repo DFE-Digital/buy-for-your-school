@@ -13,7 +13,7 @@
 
         if @current_case.has_uploaded_documents == true
           document_upload_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-        elsif @current_case.has_uploaded_documents == false
+        elsif @current_case.has_uploaded_documents == false && @current_case.upload_documents.any?
           document_upload_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
         else
           document_upload_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
