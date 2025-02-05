@@ -11,9 +11,9 @@
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.add_evaluators"), href: support_case_evaluators_path(@current_case), status: @current_case.evaluators.present? ? govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green") : govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.set_due_date"), href: edit_support_case_evaluation_due_dates_path(@current_case), status: @current_case.evaluation_due_date ? govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green") : govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
 
-        if @current_case.has_uploaded_documents == true
+        if @current_case.document_upload_complete?
           document_upload_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-        elsif @current_case.has_uploaded_documents == false && @current_case.upload_documents.any?
+        elsif @current_case.document_upload_in_progress?
           document_upload_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
         else
           document_upload_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
