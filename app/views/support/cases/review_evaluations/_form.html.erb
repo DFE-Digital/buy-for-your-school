@@ -12,7 +12,7 @@
           </span>
         </summary>
         <div class="govuk-details__text">
-          <% @evalution_files.select {|file| file.email.downcase == evaluator.email.downcase}.each do |uploaded_file| %>
+          <% @evaluation_files.select {|file| file.email.downcase == evaluator.email.downcase}.each do |uploaded_file| %>
             <p><%= link_to uploaded_file.file_name, evaluation_download_document_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %></p>
           <% end %>
         </div>

@@ -229,6 +229,18 @@ module Support
       !has_uploaded_documents && upload_documents.any?
     end
 
+    def evaluation_in_progress?
+      evaluators.where(evaluation_approved: false).any? && evaluators.where(evaluation_approved: true).any?
+    end
+
+    def evaluation_complete?
+      evaluators.count == evaluators.where(evaluation_approved: true).count
+    end
+
+    def enable_evaluation_link?
+      evaluators.any?(&:has_uploaded_documents)
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
