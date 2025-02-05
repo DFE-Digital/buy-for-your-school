@@ -28,7 +28,9 @@
       <div class="govuk-grid-column-two-thirds">
          <% @uploaded_files.each do |uploaded_file| %>
             <div class="case-files__file">
-              <span class="case-files__file-name"><%= link_to uploaded_file.file_name, support_document_download_path(uploaded_file, type: uploaded_file.class), class: "govuk-link", target: "_blank" %></span>
+                <span class="case-files__file-name">
+                    <%= link_to uploaded_file.file_name, evaluation_download_document_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %>
+                </span>
                   <div class="case-files__file-actions">
                     <span class="case-files__file-remove">
                        <%= link_to I18n.t("generic.button.delete"),
