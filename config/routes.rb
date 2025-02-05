@@ -339,6 +339,7 @@ Rails.application.routes.draw do
 
   namespace :evaluation do
     resources :download_documents, only: %i[show update]
+    resources :upload_completed_documents, except: %i[new], param: :case_id
     resources :tasks, only: %i[show edit]
     get "verify/evaluator/link/:id", to: "tasks#edit", as: :verify_evaluators_unique_link
   end
