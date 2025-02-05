@@ -221,6 +221,14 @@ module Support
       simple_format(next_key_date_description, class: "govuk-body")
     end
 
+    def document_upload_complete?
+      has_uploaded_documents
+    end
+
+    def document_upload_in_progress?
+      !has_uploaded_documents && upload_documents.any?
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00

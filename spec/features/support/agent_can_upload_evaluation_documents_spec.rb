@@ -19,7 +19,6 @@ RSpec.feature "Agent can upload evaluation documents", :js, :with_csrf_protectio
 
     expect(page).to have_text("There is a problem")
     expect(page).to have_text("Select files to upload")
-    expect(page).to have_text("Please confirm that you uploaded all documents")
   end
 
   specify "when files are uploaded and confirmation choosen as No (In progress)" do

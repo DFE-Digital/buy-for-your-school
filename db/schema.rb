@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_10_150114) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_31_133341) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -636,7 +636,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_10_150114) do
     t.string "other_school_urns", default: [], array: true
     t.boolean "is_evaluator", default: false
     t.date "evaluation_due_date"
-    t.boolean "has_uploaded_documents"
+    t.boolean "has_uploaded_documents", default: false
     t.boolean "sent_email_to_evaluators", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
@@ -823,6 +823,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_10_150114) do
     t.string "dsi_uid", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "has_uploaded_documents", default: false
+    t.boolean "evaluation_approved", default: false
     t.index ["dsi_uid"], name: "index_support_evaluators_on_dsi_uid"
     t.index ["email", "support_case_id"], name: "index_support_evaluators_on_email_and_support_case_id", unique: true
     t.index ["support_case_id"], name: "index_support_evaluators_on_support_case_id"
@@ -838,6 +840,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_10_150114) do
     t.index ["email", "support_case_id", "support_case_upload_document_id"], name: "idx_on_email_support_case_id_support_case_upload_do_e4a88327e6", unique: true
     t.index ["support_case_id"], name: "index_support_evaluators_download_documents_on_support_case_id"
     t.index ["support_case_upload_document_id"], name: "idx_on_support_case_upload_document_id_fbb53116e2"
+  end
+
+  create_table "support_evaluators_upload_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.string "email", null: false
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "attachable_id"
+    t.string "attachable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_support_evaluators_upload_documents_on_support_case_id"
   end
 
   create_table "support_frameworks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
