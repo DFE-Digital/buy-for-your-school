@@ -31,19 +31,16 @@
           end
         end
 
-        evaluation_count = @current_case.evaluators.all.select(&:evaluation_approved).count
-
-        if @current_case.evaluators.all.count == evaluation_count
+        if @current_case.evaluation_complete?
           review_evaluation_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-        elsif @current_case.evaluators.all.count > evaluation_count && evaluation_count > 0
+        elsif @current_case.evaluation_in_progress?
           review_evaluation_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
         else
           review_evaluation_Status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
         end
 
-        enable_evaluation_link = @current_case.evaluators.any?(&:has_uploaded_documents)
 
-        if enable_evaluation_link
+        if @current_case.enable_evaluation_link?
           task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations"), href: edit_support_case_review_evaluation_path(@current_case), status: review_evaluation_Status)
         else
           task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations")) do | item | 
