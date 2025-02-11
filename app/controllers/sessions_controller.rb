@@ -75,6 +75,10 @@ private
     session[:faf_referrer].present?
   end
 
+  def external_user_path
+    session[:email_evaluator_link].presence || dashboard_path
+  end
+
   # Routing logic for users after authentication
   #
   # @return [String]
@@ -85,7 +89,7 @@ private
     else
       # - default to the specify dashboard
       # - support request journeys start from the profile page
-      find_framework_entrypoint? ? confirm_sign_in_framework_requests_path : dashboard_path
+      find_framework_entrypoint? ? confirm_sign_in_framework_requests_path : external_user_path
     end
   end
 

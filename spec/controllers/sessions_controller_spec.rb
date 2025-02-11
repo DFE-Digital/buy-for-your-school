@@ -63,5 +63,14 @@ describe SessionsController do
         expect(response).to render_template("sessions/unsupported_organisation_error")
       end
     end
+
+    context "when user logging in from unique_link evaluation journey" do
+      let(:support_case) { create(:support_case) }
+      let(:session) { { email_evaluator_link: evaluation_verify_evaluators_unique_link_path(support_case) } }
+
+      it "redirects to evaluation_verify_evaluators_unique_link_path" do
+        expect(response).to redirect_to(evaluation_verify_evaluators_unique_link_path(support_case))
+      end
+    end
   end
 end
