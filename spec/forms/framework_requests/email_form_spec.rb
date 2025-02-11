@@ -13,7 +13,7 @@ describe FrameworkRequests::EmailForm, type: :model do
 
         it "gives an error message" do
           expect(form).not_to be_valid
-          expect(form.errors.messages[:email]).to eq ["Enter an email address", "Enter an email in the correct format. For example, 'someone@school.sch.uk'."]
+          expect(form.errors.messages[:email]).to eq ["Enter an email address", "Enter an email address in the correct format, like name@example.com"]
         end
       end
 
@@ -22,7 +22,7 @@ describe FrameworkRequests::EmailForm, type: :model do
 
         it "gives an error message" do
           expect(form).not_to be_valid
-          expect(form.errors.messages[:email]).to eq ["Enter an email in the correct format. For example, 'someone@school.sch.uk'."]
+          expect(form.errors.messages[:email]).to eq ["Enter an email address in the correct format, like name@example.com"]
         end
       end
 
