@@ -15,7 +15,6 @@ module Support
       reset_evaluation_approvals
       approve_selected_evaluations
       update_procurement_stage_if_needed
-      send_approval_email
 
       redirect_to @back_url
     end
