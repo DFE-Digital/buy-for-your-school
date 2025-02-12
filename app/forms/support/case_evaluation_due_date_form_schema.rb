@@ -17,6 +17,15 @@ module Support
     rule :evaluation_due_date do
       if value.present?
         date = hash_to_date.call(value)
+        if date && date.year > 9999
+          key.failure(:invalid)
+        end
+      end
+    end
+
+    rule :evaluation_due_date do
+      if value.present?
+        date = hash_to_date.call(value)
         if date && date <= Time.zone.today
           key.failure(:must_be_in_the_future)
         end
