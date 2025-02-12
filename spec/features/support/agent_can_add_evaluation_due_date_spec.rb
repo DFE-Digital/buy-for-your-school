@@ -24,5 +24,12 @@ describe "Edit evaluation due date", :js do
     click_button "Continue"
 
     expect(page).to have_text("Evaluation due date must be in the future")
+
+    fill_in "Day", with: "11"
+    fill_in "Month", with: "11"
+    fill_in "Year", with: "0123456789"
+    click_button "Continue"
+
+    expect(page).to have_text("Enter valid evaluation due date")
   end
 end
