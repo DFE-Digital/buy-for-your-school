@@ -43,6 +43,12 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
 
     click_button "Continue"
 
+    evaluation_approved_email = Email.last
+
+    expect(Email.count).to eq(2)
+
+    expect(evaluation_approved_email.subject).to eq("Case #{support_case.ref} - procurement evaluation accepted")
+
     visit edit_support_case_review_evaluation_path(support_case)
 
     expect(find_all(".govuk-checkboxes__input")[0]).to be_checked
@@ -56,6 +62,12 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
     find_all(".govuk-checkboxes__input")[0].click
 
     click_button "Continue"
+
+    evaluation_revoked_email = Email.last
+
+    expect(Email.count).to eq(3)
+
+    expect(evaluation_revoked_email.subject).to eq("Case #{support_case.ref} - procurement evaluation scoring requires additional input")
 
     expect(find("#complete-evaluation-5-status")).to have_text("To do")
   end
