@@ -27,7 +27,7 @@
           task_list.with_item(title: I18n.t("support.case.label.tasklist.item.email_evaluators"), href: edit_support_case_email_evaluators_path(@current_case), status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
         else
           task_list.with_item(title: I18n.t("support.case.label.tasklist.item.email_evaluators")) do | item | 
-          item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
+          item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
           end
         end
 
@@ -44,7 +44,7 @@
           task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations"), href: edit_support_case_review_evaluation_path(@current_case), status: review_evaluation_Status)
         else
           task_list.with_item(title: I18n.t("support.case.label.tasklist.item.review_evaluations")) do | item | 
-          item.with_status(text: I18n.t("support.case.label.tasklist.status.cannot_start"), cannot_start_yet: true)
+          item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
           end
         end
       end %>
