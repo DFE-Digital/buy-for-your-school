@@ -2,7 +2,7 @@ module Support
   class EmailEvaluatorsVariableParser
     include ActionView::Helpers::UrlHelper
 
-    def initialize(current_case, email_evaluators, unique_link)
+    def initialize(current_case, email_evaluators, unique_link = "")
       @current_case = current_case
       @email_evaluators = email_evaluators
       @unique_link = unique_link
