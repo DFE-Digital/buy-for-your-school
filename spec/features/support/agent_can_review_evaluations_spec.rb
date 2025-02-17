@@ -39,9 +39,7 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
     expect(page).to have_content("email@address")
     expect(page).to have_content("View Momo Taro's evaluation files")
 
-    find_all(".govuk-checkboxes__input")[0].click
-
-    click_button "Continue"
+    support_case.evaluators.update_all(evaluation_approved: true)
 
     visit edit_support_case_review_evaluation_path(support_case)
 
@@ -53,9 +51,9 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
 
     visit edit_support_case_review_evaluation_path(support_case)
 
-    find_all(".govuk-checkboxes__input")[0].click
+    support_case.evaluators.update_all(evaluation_approved: false)
 
-    click_button "Continue"
+    visit support_case_path(support_case, anchor: "tasklist")
 
     expect(find("#complete-evaluation-5-status")).to have_text("To do")
   end
