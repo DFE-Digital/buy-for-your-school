@@ -23,7 +23,9 @@
   <%= "Case owner: #{@current_case.agent.full_name}" if @current_case.agent %>
 </p>
 
-<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+<% govuk_tabs_overflow_fix = Flipper.enabled?(:sc_tasklist_tab) && (@current_case.L4? || @current_case.L5?) ? 'govuk-tabs-overflow-fix': '' %>
+
+<div class="govuk-tabs <%= govuk_tabs_overflow_fix %>" data-module="govuk-tabs" data-component="select-tab">
   <ul class="govuk-tabs__list">
     <% if Flipper.enabled?(:sc_tasklist_tab) %>
       <% if @current_case.L4? || @current_case.L5? %>
