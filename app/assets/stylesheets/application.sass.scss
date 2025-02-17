@@ -60,3 +60,14 @@
     }
   }
  }
+
+// Override govuk-frontend tabs styles to make sure tabs fit in same row
+@media (min-width: 40.0625em) {
+  .govuk-tabs-overflow-fix .govuk-tabs__list-item--selected {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .govuk-tabs-overflow-fix .govuk-tabs__list-item {
+    padding: 10px 15px;
+  }
+}
