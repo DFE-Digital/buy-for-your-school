@@ -83,9 +83,9 @@ module Support
 
     def send_evaluations_approved_email
       filtered_params = filter_blank_evaluations(review_evaluations_params)
-      pending_evaluatons = filtered_params[:evaluation_approved] - @approved_evaluations
-      if pending_evaluatons.any?
-        pending_evaluatons.each do |evaluator_email|
+      pending_evaluations = filtered_params[:evaluation_approved] - @approved_evaluations
+      if pending_evaluations.any?
+        pending_evaluations.each do |evaluator_email|
           draft_and_send_email(evaluator_email.to_json)
         end
       end
