@@ -204,7 +204,7 @@ Rails.application.routes.draw do
   namespace :support do
     root to: "cases#index"
 
-    resources :document_downloads, only: %i[show]
+    resources :document_downloads, only: %i[show update]
     resources :agents, only: %i[create]
     resources :email_read_status, only: %i[update], param: :email_id
     resources :organisations, only: %i[index]
