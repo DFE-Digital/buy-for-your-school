@@ -65,6 +65,15 @@ jobs:
 
       - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
 
+  spelling:
+    name: Checks - Spelling and typos
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Actions Repository
+      uses: actions/checkout@v4
+    - name: Spell Check Repo
+      uses: crate-ci/typos@v1.29.7
+
   jest:
     name: Checks - Jest
     needs: build_test
