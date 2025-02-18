@@ -46,7 +46,7 @@ $ terraform plan -var-file=envname-i-downloaded-before.tfvars
 
 1. Create a new `.tfvars` file for your new environment and fill out the appropriate fields
 2. Create the resource group manually in Azure CIP
-3. Ensure you have requested for privilidges to be able to create a new public IP
+3. Ensure you have requested for privileges to be able to create a new public IP
 4. Create and switch to a new terraform workspace
 5. Run terraform apply with your new environment's `.tfvars` file
 
@@ -277,7 +277,7 @@ Each environment should be set up with the following environment secrets:
 | <a name="input_enable_worker_container"></a> [enable\_worker\_container](#input\_enable\_worker\_container) | Conditionally launch a worker container. This container uses the same image and environment variables as the default container app, but allows a different container command to be run. The worker container does not expose any ports. | `bool` | `false` | no |
 | <a name="input_worker_container_command"></a> [worker\_container\_command](#input\_worker\_container\_command) | Container command for the Worker container. `enable_worker_container` must be set to true for this to have any effect. | `list(string)` | `[]` | no |
 | <a name="input_worker_container_min_replicas"></a> [worker\_container\_min\_replicas](#input\_worker\_container\_min\_replicas) | Worker container min replicas | `number` | `1` | no |
-| <a name="input_worker_container_max_replicas"></a> [worker\_container\_max\_replicas](#input\_worker\_container\_max\_replicas) | Worker ontainer max replicas | `number` | `2` | no |
+| <a name="input_worker_container_max_replicas"></a> [worker\_container\_max\_replicas](#input\_worker\_container\_max\_replicas) | Worker container max replicas | `number` | `2` | no |
 | <a name="input_enable_container_health_probe"></a> [enable\_container\_health\_probe](#input\_enable\_container\_health\_probe) | Enable liveness probes for the Container | `bool` | `true` | no |
 | <a name="input_container_health_probe_interval"></a> [container\_health\_probe\_interval](#input\_container\_health\_probe\_interval) | How often in seconds to poll the Container to determine liveness | `number` | `30` | no |
 | <a name="input_container_health_probe_path"></a> [container\_health\_probe\_path](#input\_container\_health\_probe\_path) | Specifies the path that is used to determine the liveness of the Container | `string` | `"/"` | no |
@@ -303,7 +303,7 @@ Each environment should be set up with the following environment secrets:
 | <a name="input_cdn_frontdoor_health_probe_interval"></a> [cdn\_frontdoor\_health\_probe\_interval](#input\_cdn\_frontdoor\_health\_probe\_interval) | Specifies the number of seconds between health probes. | `number` | `120` | no |
 | <a name="input_cdn_frontdoor_health_probe_path"></a> [cdn\_frontdoor\_health\_probe\_path](#input\_cdn\_frontdoor\_health\_probe\_path) | Specifies the path relative to the origin that is used to determine the health of the origin. | `string` | `"/"` | no |
 | <a name="input_cdn_frontdoor_health_probe_request_type"></a> [cdn\_frontdoor\_health\_probe\_request\_type](#input\_cdn\_frontdoor\_health\_probe\_request\_type) | Specifies the type of health probe request that is made. | `string` | `"GET"` | no |
-| <a name="input_cdn_frontdoor_origin_host_header_override"></a> [cdn\_frontdoor\_origin\_host\_header\_override](#input\_cdn\_frontdoor\_origin\_host\_header\_override) | Manually specify the host header that the CDN sends to the target. Defaults to the recieved host header. Set to null to set it to the host\_name (`cdn_frontdoor_origin_fqdn_override`) | `string` | `""` | no |
+| <a name="input_cdn_frontdoor_origin_host_header_override"></a> [cdn\_frontdoor\_origin\_host\_header\_override](#input\_cdn\_frontdoor\_origin\_host\_header\_override) | Manually specify the host header that the CDN sends to the target. Defaults to the received host header. Set to null to set it to the host\_name (`cdn_frontdoor_origin_fqdn_override`) | `string` | `""` | no |
 | <a name="input_enable_redis_cache"></a> [enable\_redis\_cache](#input\_enable\_redis\_cache) | Set to true to create an Azure Redis Cache, with a private endpoint within the virtual network | `bool` | `false` | no |
 | <a name="input_redis_cache_version"></a> [redis\_cache\_version](#input\_redis\_cache\_version) | Redis Cache version | `number` | `6` | no |
 | <a name="input_redis_cache_family"></a> [redis\_cache\_family](#input\_redis\_cache\_family) | Redis Cache family | `string` | `"C"` | no |
@@ -316,12 +316,12 @@ Each environment should be set up with the following environment secrets:
 | <a name="input_postgresql_server_version"></a> [postgresql\_server\_version](#input\_postgresql\_server\_version) | Specify the version of postgres server to run (either 11,12,13 or 14) | `string` | `""` | no |
 | <a name="input_postgresql_administrator_login"></a> [postgresql\_administrator\_login](#input\_postgresql\_administrator\_login) | Specify a login that will be assigned to the administrator when creating the Postgres server | `string` | `""` | no |
 | <a name="input_postgresql_administrator_password"></a> [postgresql\_administrator\_password](#input\_postgresql\_administrator\_password) | Specify a password that will be assigned to the administrator when creating the Postgres server | `string` | `""` | no |
-| <a name="input_postgresql_availability_zone"></a> [postgresql\_availability\_zone](#input\_postgresql\_availability\_zone) | Specify the availibility zone in which the Postgres server should be located | `string` | `"1"` | no |
+| <a name="input_postgresql_availability_zone"></a> [postgresql\_availability\_zone](#input\_postgresql\_availability\_zone) | Specify the availability zone in which the Postgres server should be located | `string` | `"1"` | no |
 | <a name="input_postgresql_max_storage_mb"></a> [postgresql\_max\_storage\_mb](#input\_postgresql\_max\_storage\_mb) | Specify the max amount of storage allowed for the Postgres server | `number` | `32768` | no |
 | <a name="input_postgresql_sku_name"></a> [postgresql\_sku\_name](#input\_postgresql\_sku\_name) | Specify the SKU to be used for the Postgres server | `string` | `"B_Standard_B1ms"` | no |
 | <a name="input_postgresql_collation"></a> [postgresql\_collation](#input\_postgresql\_collation) | Specify the collation to be used for the Postgres database | `string` | `"en_US.utf8"` | no |
 | <a name="input_postgresql_charset"></a> [postgresql\_charset](#input\_postgresql\_charset) | Specify the charset to be used for the Postgres database | `string` | `"utf8"` | no |
-| <a name="input_postgresql_enabled_extensions"></a> [postgresql\_enabled\_extensions](#input\_postgresql\_enabled\_extensions) | Specify a comma seperated list of Postgres extensions to enable. See https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions#postgres-14-extensions | `string` | `""` | no |
+| <a name="input_postgresql_enabled_extensions"></a> [postgresql\_enabled\_extensions](#input\_postgresql\_enabled\_extensions) | Specify a comma separated list of Postgres extensions to enable. See https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions#postgres-14-extensions | `string` | `""` | no |
 | <a name="input_postgresql_network_connectivity_method"></a> [postgresql\_network\_connectivity\_method](#input\_postgresql\_network\_connectivity\_method) | Specify postgresql networking method, public or private. See https://learn.microsoft.com/en-gb/azure/postgresql/flexible-server/concepts-networking | `string` | `"private"` | no |
 | <a name="input_postgresql_firewall_ipv4_allow"></a> [postgresql\_firewall\_ipv4\_allow](#input\_postgresql\_firewall\_ipv4\_allow) | Map of IP address ranges to add into the postgres firewall. Note: only applicable if postgresql\_network\_connectivity\_method is set to public. | <pre>map(object({<br>    start_ip_address = string<br>    end_ip_address   = string<br>  }))</pre> | `{}` | no |
 | <a name="input_enable_container_app_blob_storage"></a> [enable\_container\_app\_blob\_storage](#input\_enable\_container\_app\_blob\_storage) | Create an Azure Storage Account and Storage Container to be used for this app | `bool` | `false` | no |
@@ -330,7 +330,7 @@ Each environment should be set up with the following environment secrets:
 | <a name="input_enable_key_vault_tfvars"></a> [enable\_key\_vault\_tfvars](#input\_enable\_key\_vault\_tfvars) | Enable keyvault tfvars backup | `bool` | `false` | no |
 | <a name="input_key_vault_access_users"></a> [key\_vault\_access\_users](#input\_key\_vault\_access\_users) | List of users that require access to the Key Vault. This should be a list of User Principle Names (Found in Active Directory) that need to run terraform | `list(string)` | n/a | yes |
 | <a name="input_key_vault_access_ipv4"></a> [key\_vault\_access\_ipv4](#input\_key\_vault\_access\_ipv4) | List of IPv4 Addresses that are permitted to access the Key Vault | `list(string)` | n/a | yes |
-| <a name="input_key_vault_tfvars_filename"></a> [key\_vault\_tfvars\_filename](#input\_key\_vault\_tfvars\_filename) | tfvars filename. This file is uploaded and stored encrupted within Key Vault, to ensure that the latest tfvars are stored in a shared place. | `string` | n/a | yes |
+| <a name="input_key_vault_tfvars_filename"></a> [key\_vault\_tfvars\_filename](#input\_key\_vault\_tfvars\_filename) | tfvars filename. This file is uploaded and stored encrypted within Key Vault, to ensure that the latest tfvars are stored in a shared place. | `string` | n/a | yes |
 | <a name="input_key_vault_enable_diagnostic_setting"></a> [key\_vault\_enable\_diagnostic\_setting](#input\_key\_vault\_enable\_diagnostic\_setting) | Enable Azure Diagnostics setting for the Key Vault | `bool` | `true` | no |
 
 ## Outputs

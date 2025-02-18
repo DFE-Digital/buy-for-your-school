@@ -1,8 +1,8 @@
 module Support::Case::Transferable
   extend ActiveSupport::Concern
 
-  def transferer(params = {})
-    Support::Case::Transferer.new(support_case: self, **params)
+  def transferrer(params = {})
+    Support::Case::Transferrer.new(support_case: self, **params)
   end
 
   def transfer_to_framework_evaluation(framework_id:, assignee_id:)

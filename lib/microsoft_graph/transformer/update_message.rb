@@ -1,7 +1,7 @@
 module MicrosoftGraph
   module Transformer
     # When using update message endpoint, you don't get all the required fields
-    # so this is a cut down version of Messsage transformer
+    # so this is a cut down version of Message transformer
     class UpdateMessage < BasePipe
       import Dry::Transformer::ArrayTransformations
       import Dry::Transformer::HashTransformations

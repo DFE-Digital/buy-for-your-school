@@ -5,7 +5,7 @@ describe Support::Notification do
     let(:another_agent) { create(:support_agent) }
     let!(:unread_notification1) { create(:support_notification, :case_assigned, :unread) }
     let!(:unread_notification2) { create(:support_notification, :case_assigned, :unread) }
-    let!(:other_type_of_notification) { create(:support_notification, :case_email_recieved, :unread) }
+    let!(:other_type_of_notification) { create(:support_notification, :case_email_received, :unread) }
     let!(:read_notification) { create(:support_notification, :case_assigned, :read, read_at: Time.zone.parse("01/01/2023 10:00")) }
 
     describe "marking notifications as read" do

@@ -27,7 +27,7 @@ describe "Agent can message from within an evaluation", :js do
     )
   end
 
-  describe "replying to a recieved email" do
+  describe "replying to a received email" do
     before do
       create(:email, :inbox, ticket: evaluation, subject: "Reply to this please", outlook_conversation_id: "1")
 

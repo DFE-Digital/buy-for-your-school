@@ -1,4 +1,4 @@
-module Frameworks::Evaluation::Noteable
+module Frameworks::Evaluation::Notable
   extend ActiveSupport::Concern
 
   def add_note(note)

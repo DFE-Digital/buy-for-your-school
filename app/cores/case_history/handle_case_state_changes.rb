@@ -2,7 +2,7 @@ module CaseHistory
   class HandleCaseStateChanges
     def case_opened(payload)
       Support::Interaction.case_opened.create!(
-        body: "Case openend",
+        body: "Case opened",
         case_id: payload[:support_case_id],
         agent_id: payload[:agent_id],
         additional_data: {

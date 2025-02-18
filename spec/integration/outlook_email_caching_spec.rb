@@ -52,7 +52,7 @@ describe "Outlook emails integration" do
       double("messageAttachment", id:, content_bytes: "1234", content_type: "plain/text", name: "test.txt", is_inline: false, content_id: "CID1")
     end
 
-    describe "email persistance" do
+    describe "email persistence" do
       context "when message is in the inbox" do
         let(:inbox_messages) { [stub_message(subject: "Test Message 1")] }
 

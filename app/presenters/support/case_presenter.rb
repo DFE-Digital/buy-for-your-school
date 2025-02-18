@@ -161,7 +161,7 @@ module Support
 
     # @return [Array<MessageThreadPresenter>]
     def message_threads
-      # there are occassional emails with no conversation_id?
+      # there are occasional emails with no conversation_id?
       super.includes([:messages]).filter { |t| t.id.present? }.map { |thread| MessageThreadPresenter.new(thread) }
     end
 

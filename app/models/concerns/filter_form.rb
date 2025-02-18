@@ -23,7 +23,7 @@ module FilterForm
 private
 
   def filters
-    self.class.filter_attibutes.map do |attr, options|
+    self.class.filter_attributes.map do |attr, options|
       Support::Concerns::ScopeFilter.new(send(attr), **options)
     end
   end
@@ -48,15 +48,15 @@ private
     def filter_by(name, default: -> { [] }, multiple: true, options: -> { [] }, scope: nil)
       attribute(name, default:)
 
-      filter_attibutes[name] = { scope: scope.presence || "by_#{name}", multiple: }
+      filter_attributes[name] = { scope: scope.presence || "by_#{name}", multiple: }
 
       define_method "available_#{name}_options" do
         options.call
       end
     end
 
-    def filter_attibutes
-      @filter_attibutes ||= {}
+    def filter_attributes
+      @filter_attributes ||= {}
     end
   end
 end

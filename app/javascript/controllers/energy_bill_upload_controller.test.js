@@ -14,12 +14,12 @@ describe('EnergyBillUploadController', () => {
   const createDropZone = ({
     anyFilesQueuedForUpload,
     anyFilesUploadedSuccessfully,
-    anyFileUploadErrorsOccured
+    anyFileUploadErrorsOccurred
   } = {}) => {
     return new DummyDropzoneController(
       anyFilesQueuedForUpload,
       anyFilesUploadedSuccessfully,
-      anyFileUploadErrorsOccured
+      anyFileUploadErrorsOccurred
     )
   }
 
@@ -30,16 +30,16 @@ describe('EnergyBillUploadController', () => {
     constructor(
       anyFilesQueuedForUpload = false,
       anyFilesUploadedSuccessfully = false,
-      anyFileUploadErrorsOccured = false
+      anyFileUploadErrorsOccurred = false
     ) {
       this._anyFilesQueuedForUpload = anyFilesQueuedForUpload
       this._anyFilesUploadedSuccessfully = anyFilesUploadedSuccessfully
-      this._anyFileUploadErrorsOccured = anyFileUploadErrorsOccured
+      this._anyFileUploadErrorsOccurred = anyFileUploadErrorsOccurred
     }
 
     anyFilesQueuedForUpload() { return this._anyFilesQueuedForUpload }
     anyFilesUploadedSuccessfully() { return this._anyFilesUploadedSuccessfully }
-    anyFileUploadErrorsOccured() { return this._anyFileUploadErrorsOccured }
+    anyFileUploadErrorsOccurred() { return this._anyFileUploadErrorsOccurred }
   }
 
   class DummyErrorSummaryController {
@@ -243,7 +243,7 @@ describe('EnergyBillUploadController', () => {
     beforeEach(() => { errorSummarySpy = jest.spyOn(subject.errorSummaryOutlet, 'addError')})
 
     describe('when an error has occurred but hasnt been fixed', () => {
-      beforeEach(() => subject.dropzoneOutlet = createDropZone({ anyFileUploadErrorsOccured: true }))
+      beforeEach(() => subject.dropzoneOutlet = createDropZone({ anyFileUploadErrorsOccurred: true }))
 
       it('alerts the user to fix errors before they can move on', () => {
         subject.continueToPageTwo()

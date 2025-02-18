@@ -44,7 +44,7 @@ RSpec.describe Support::InteractionPresenter do
     end
   end
 
-  context "with additonal data" do
+  context "with additional data" do
     let(:additional_data) do
       {
         organisation_name: organisation.name,
@@ -54,7 +54,7 @@ RSpec.describe Support::InteractionPresenter do
     end
 
     describe "#additional_data" do
-      it "returns a formatted hash with the organsiation name" do
+      it "returns a formatted hash with the organisation name" do
         expect(presenter.additional_data).to include("organisation_name" => "Example Organisation")
       end
 

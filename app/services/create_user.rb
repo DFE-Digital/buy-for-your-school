@@ -164,7 +164,7 @@ private
     []
   end
 
-  # @return [Array] User's affliated organisations from DSI API
+  # @return [Array] User's affiliated organisations from DSI API
   def orgs
     @orgs ||= begin
       client.orgs(user_id:)

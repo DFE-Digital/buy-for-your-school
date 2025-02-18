@@ -41,7 +41,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     expect(page).to have_text("Select files to upload")
   end
 
-  specify "when files are uploaded and confirmation choosen as No (In progress)" do
+  specify "when files are uploaded and confirmation chosen as No (In progress)" do
     upload_documents
 
     support_evaluator.update!(has_uploaded_documents: false)
@@ -55,7 +55,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     expect(find(evaluator_task_status)).to have_text("In progress")
   end
 
-  specify "when files are uploaded and confirmation choosen as Yes (Complete)" do
+  specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
     upload_documents
 
     support_evaluator.update!(has_uploaded_documents: true)

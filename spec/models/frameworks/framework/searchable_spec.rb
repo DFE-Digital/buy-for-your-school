@@ -6,7 +6,7 @@ describe Frameworks::Framework::Searchable do
   describe "searching" do
     before do
       create(:frameworks_framework, reference: "F3", name: "Playground Equipment")
-      create(:frameworks_framework, reference: "F300", name: "Grounds maintenence")
+      create(:frameworks_framework, reference: "F300", name: "Grounds maintenance")
       create(:frameworks_framework, reference: "F3000", name: "ICT equipment")
     end
 
@@ -20,9 +20,9 @@ describe Frameworks::Framework::Searchable do
 
     describe "by framework name" do
       it "fuzzy searches the whole name case insensitively" do
-        expect(searchable.omnisearch("ground").pluck(:name)).to contain_exactly("Playground Equipment", "Grounds maintenence")
+        expect(searchable.omnisearch("ground").pluck(:name)).to contain_exactly("Playground Equipment", "Grounds maintenance")
         expect(searchable.omnisearch("equip").pluck(:name)).to contain_exactly("Playground Equipment", "ICT equipment")
-        expect(searchable.omnisearch("maintenence").pluck(:name)).to contain_exactly("Grounds maintenence")
+        expect(searchable.omnisearch("maintenance").pluck(:name)).to contain_exactly("Grounds maintenance")
       end
     end
   end

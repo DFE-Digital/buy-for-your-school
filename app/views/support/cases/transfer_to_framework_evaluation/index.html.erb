@@ -1,7 +1,7 @@
 <%= content_for :title, I18n.t("support.case.label.transfer_to_framework_evaluation.title", reference: @current_case.ref) %>
 
-<%= form_with model: @case_transferer,
-  scope: :case_transferer,
+<%= form_with model: @case_transferrer,
+  scope: :case_transferrer,
   url: support_case_transfer_to_framework_evaluation_path(back_to: Base64.encode64(@back_url), redirect_back: params[:redirect_back]) do |form| %>
     <%= form.govuk_error_summary %>
 
