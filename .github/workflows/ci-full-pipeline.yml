@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.6
 
-      - uses: ./.github/workflows/actions/build-docker-image
+      - uses: ./.github/actions/build-docker-image
         name: Build docker image
         id: build
         with:
@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.6
 
-      - uses: ./.github/workflows/actions/build-docker-image
+      - uses: ./.github/actions/build-docker-image
         name: Build docker image
         id: build
         with:
@@ -310,7 +310,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/workflows/actions/deploy-az
+      - uses: ./.github/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
@@ -327,7 +327,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/workflows/actions/deploy-az
+      - uses: ./.github/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
@@ -344,7 +344,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/workflows/actions/deploy-az
+      - uses: ./.github/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
