@@ -160,7 +160,7 @@ jobs:
           name: coverage-report-${{ matrix.ci_node_index }}
           path: coverage/.resultset-${{ matrix.ci_node_index }}.json
 
-  rspec_quarentine:
+  rspec_quarantine:
     name: Checks - Rspec (Quarantined tests)
     needs: build_test
     runs-on: ubuntu-latest
@@ -236,7 +236,7 @@ jobs:
 
   collate_test_coverage:
     name: Checks - Produce test coverage report
-    needs: [build_test, rspec, rspec_quarentine]
+    needs: [build_test, rspec, rspec_quarantine]
     runs-on: ubuntu-latest
 
     steps:
