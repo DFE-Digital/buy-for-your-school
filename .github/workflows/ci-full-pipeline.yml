@@ -11,7 +11,7 @@ on:
 jobs:
   build_test:
     name: Build (Test)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
@@ -30,7 +30,7 @@ jobs:
 
   build_release:
     name: Build (Release)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
@@ -48,7 +48,7 @@ jobs:
   brakeman:
     name: Checks - Brakeman
     needs: build_test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.3.0
@@ -58,7 +58,7 @@ jobs:
   rubocop:
     name: Checks - Rubocop
     needs: build_test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.3.0
@@ -68,7 +68,7 @@ jobs:
   jest:
     name: Checks - Jest
     needs: build_test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4.1.6
@@ -82,7 +82,7 @@ jobs:
   rspec:
     name: Checks - Rspec
     needs: build_test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -160,10 +160,10 @@ jobs:
           name: coverage-report-${{ matrix.ci_node_index }}
           path: coverage/.resultset-${{ matrix.ci_node_index }}.json
 
-  rspec_quarentine:
+  rspec_quarantine:
     name: Checks - Rspec (Quarantined tests)
     needs: build_test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     services:
       postgres:
@@ -236,8 +236,8 @@ jobs:
 
   collate_test_coverage:
     name: Checks - Produce test coverage report
-    needs: [build_test, rspec, rspec_quarentine]
-    runs-on: ubuntu-20.04
+    needs: [build_test, rspec, rspec_quarantine]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set up Docker Buildx
@@ -278,7 +278,7 @@ jobs:
   comment_coverage:
     name: Comment coverage on PR
     needs: collate_test_coverage
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
       - name: Download coverage from current run
@@ -302,7 +302,7 @@ jobs:
 
   release_dev:
     name: Deploy release (Dev)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build_release
     environment: az-dev
 
@@ -319,7 +319,7 @@ jobs:
 
   release_staging:
     name: Deploy release (Staging)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build_release
     environment: az-staging
 
@@ -336,7 +336,7 @@ jobs:
 
   release_production:
     name: Deploy release (Production)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build_release
     environment: az-production
 
@@ -354,7 +354,7 @@ jobs:
   data_regression_copy_to_original:
     name: Data regression testing - trigger copy to pre-release-original-data
     needs: release_production
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: Azure/pipelines@v1.2
@@ -366,7 +366,7 @@ jobs:
   data_regression_copy_to_modified:
     name: Data regression testing - trigger copy to pre-release-modified-data
     needs: release_production
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: Azure/pipelines@v1.2
@@ -378,7 +378,7 @@ jobs:
   data_regression_migrate_modified:
     name: Data regression testing - apply migrations to pre-release-modified-data
     needs: [build_release, release_staging]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       PRE_RELEASE_MODIFIED_DATA_DB_URL: ${{ secrets.PRE_RELEASE_MODIFIED_DATA_DB_URL }}
 
