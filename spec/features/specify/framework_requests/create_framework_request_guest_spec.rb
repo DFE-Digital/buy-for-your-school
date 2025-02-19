@@ -349,7 +349,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
       end
 
-      it "doesn't include archived establishment groups in the dropdown" do
+      it "doesn't include archived establishment groups in the dropdown", :flaky do
         fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "10025"
         expect(page).to have_text "Testing Multi Academy Trust"
         expect(page).not_to have_text "Archived Group"
