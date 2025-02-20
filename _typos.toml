@@ -1,0 +1,12 @@
+[default.extend-identifiers]
+Wisper = "Wisper"
+answer_4HfGoYL6s806Azx93jp5IY = "answer_4HfGoYL6s806Azx93jp5IY"
+outcome_achieveds = "outcome_achieveds"
+
+[default.extend-words]
+inferrable = "inferrable"
+SME = "SME"
+MIS = "MIS"
+
+[files]
+extend-exclude = ["Gemfile", "spec/lib/specify/school/mapper_call_spec.rb"]

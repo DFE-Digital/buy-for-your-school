@@ -6,7 +6,7 @@ class Form
   # extend Dry::Initializer[undefined: false]
 
   # @!attribute [r] user
-  #   @return [?] form respondent, overriden in subclassed forms
+  #   @return [?] form respondent, overridden in subclassed forms
   option :user, optional: true, reader: :private
 
   # @!attribute [r] messages
@@ -65,7 +65,7 @@ class Form
   end
 
   # FIXME
-  # @return [Hash] form parms as request attributes
+  # @return [Hash] form params as request attributes
   # def back_data
   #   data.except(:messages).merge(back: true).compact
   # end

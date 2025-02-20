@@ -7,7 +7,7 @@
           <%= link_to document.file_name, evaluation_download_document_path(@current_case, document_type: document.class, document_id: document.id), method: :put, class: "govuk-link" %>
         </dd>
         <% hideClass = @downloaded_documents.present? && @downloaded_documents.map(&:support_case_upload_document_id).include?(document.id) ? '' : 'govuk-!-display-none' %>
-          <dd class="govuk-summary-list__value govuk-!-padding-top-4 dowloaded-icon <%= hideClass%>">
+          <dd class="govuk-summary-list__value govuk-!-padding-top-4 downloaded-icon <%= hideClass%>">
           <%= image_tag "tick.svg", alt: "Already downloaded", width: "24", height: "24" %>
           </dd>
       </div>

@@ -53,7 +53,7 @@ protected
 
   # `Before Action` on:
   #   - steps_controller
-  #   - answers_contorller
+  #   - answers_controller
   #   - journeys_controller
   #   - specifications_controller
   #

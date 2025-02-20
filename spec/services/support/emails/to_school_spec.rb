@@ -33,7 +33,7 @@ describe Support::Emails::ToSchool do
       end
     end
 
-    context "when recipent case has more than one email interaction already" do
+    context "when recipient case has more than one email interaction already" do
       before do
         2.times do
           support_case.interactions.email_to_school.create!(

@@ -1,6 +1,6 @@
 RSpec.describe Emails::ExitSurvey do
   describe "#personalisation" do
-    it "includes the link to the exit survey and satisfcation level links" do
+    it "includes the link to the exit survey and satisfaction level links" do
       personalisation = described_class.new(recipient: OpenStruct.new(email: "test@email.com"), reference: "000003", survey_id: "survey1").personalisation
       very_satisfied_link = personalisation[:very_satisfied_link]
       satisfied_link = personalisation[:satisfied_link]

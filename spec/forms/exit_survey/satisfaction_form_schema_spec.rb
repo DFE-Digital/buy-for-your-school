@@ -8,7 +8,7 @@ RSpec.describe ExitSurvey::SatisfactionFormSchema do
 
         it "raises a validation error" do
           expect(schema.errors.messages.size).to eq 1
-          expect(schema.errors.messages[0].to_s).to eq "Select how you feel about the service you recieved."
+          expect(schema.errors.messages[0].to_s).to eq "Select how you feel about the service you received."
         end
       end
 

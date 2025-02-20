@@ -28,7 +28,7 @@ $ git push --force-with-lease
 ```
 
 NOTE: `git push --force-with-lease` is important, the force push will be
-rejected if changes have been made in orgin that differ from your local branch.
+rejected if changes have been made in origin that differ from your local branch.
 
 Monitor the [github actions
 page](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml)
@@ -69,7 +69,7 @@ $ git push --force-with-lease
 ```
 
 NOTE: `git push --force-with-lease` is important, the force push will be
-rejected if changes have been made in orgin that differ from your local branch.
+rejected if changes have been made in origin that differ from your local branch.
 This ensures you don't overwrite other developer's changes on development.
 
 If you need to make repeated changes, always reset `development` and then

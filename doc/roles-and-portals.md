@@ -1,6 +1,6 @@
 # Roles and Portals
 
-Access to portals is dictated by the agents roles. The roles are checked on page load and the agent will be redirected if they do not have sufficient roles required to access (as definied in the policy).
+Access to portals is dictated by the agents roles. The roles are checked on page load and the agent will be redirected if they do not have sufficient roles required to access (as defined in the policy).
 
 |Portal|Endpoint|Roles required (either)|
 |-|-|-|

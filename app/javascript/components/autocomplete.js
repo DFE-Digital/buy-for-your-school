@@ -23,7 +23,7 @@ import _ from "lodash";
         // id attribute for the autocomplete field
         autocompleteElementId: elementId,
 
-        // name attribute for the autcomplete field
+        // name attribute for the autocomplete field
         autocompleteElementName: elementName,
 
         // The format applied to result suggestions with fields substituted
