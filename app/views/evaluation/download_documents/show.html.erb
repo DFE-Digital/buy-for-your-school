@@ -3,8 +3,7 @@
 <h1 class="govuk-heading-l"><%= I18n.t("evaluation.download_documents.header") %></h1>
 <p class="govuk-body">Use these documents to complete your evaluation of each supplier.</p>
 <p class="govuk-body govuk-!-static-margin-bottom-8">If you have a problem or conflict of interest, 
-  <% mail_to_address = "mailto:#{ENV.fetch('MS_GRAPH_SHARED_MAILBOX_ADDRESS')}?subject= Case #{ @current_case.ref} - query" %>
-  <%= link_to "contact us", mail_to_address , class: "govuk-link" %>
+  <%= mail_to ENV.fetch('MS_GRAPH_SHARED_MAILBOX_ADDRESS'), "contact us", subject: "Case #{ @current_case.ref} - Evaluation query from #{current_evaluator.name}", class: "govuk-link" %>
 </p>
 <%= render "document_list"%>
 <div class="govuk-button-group flex-align-center">
