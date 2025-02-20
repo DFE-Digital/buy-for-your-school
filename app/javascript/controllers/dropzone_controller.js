@@ -198,7 +198,7 @@ export default class extends Controller {
     return this.totalUploadedFiles() > 0
   }
 
-  anyFileUploadErrorsOccured() {
+  anyFileUploadErrorsOccurred() {
     return Object.keys(this.fileUploadErrors).length > 0
   }
 

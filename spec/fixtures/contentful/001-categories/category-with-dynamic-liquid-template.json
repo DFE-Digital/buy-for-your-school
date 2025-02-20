@@ -40,7 +40,7 @@
             }
           }
         ],
-        "specificationTemplate": "<article id='specification'>\n  <section>\n    <h2>Menus and ordering</h2>\n    <h3>Food standards</h2>\n    <ol>\n      {% if answer_radio-question %}\n        <li>\n          <p class='govuk-body'>The school also requires the service to comply with the following non-mandatory food standards or schemes:</p>\n          <p class='govuk-body'>{{answer_radio-question}}</p>\n        </li>\n      {% endif %}\n    </ol>\n  </section>\n</artcile>",
+        "specificationTemplate": "<article id='specification'>\n  <section>\n    <h2>Menus and ordering</h2>\n    <h3>Food standards</h2>\n    <ol>\n      {% if answer_radio-question %}\n        <li>\n          <p class='govuk-body'>The school also requires the service to comply with the following non-mandatory food standards or schemes:</p>\n          <p class='govuk-body'>{{answer_radio-question}}</p>\n        </li>\n      {% endif %}\n    </ol>\n  </section>\n</article>",
         "slug": "catering"
     }
 }

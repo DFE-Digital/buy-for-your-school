@@ -1526,7 +1526,7 @@ en:
         procurement_sub_category_details: Procurement sub-category details
         procurement_value: Procurement value
         progress_notes: Progress notes from CRM %{optional}
-        progress_notes_hint: Enter any additional information relating to the correspondance between the Hub and the establishment
+        progress_notes_hint: Enter any additional information relating to the correspondence between the Hub and the establishment
         query: Query
         query_details: Query details
         referer: Referrer

@@ -1,4 +1,4 @@
-class Support::Case::Transferer
+class Support::Case::Transferrer
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations

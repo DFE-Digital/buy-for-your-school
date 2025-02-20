@@ -6,7 +6,7 @@ module Support::Case::Notifiable
   end
 
   def notify_agent_of_email_received(email)
-    notifications.case_email_recieved.find_or_create_by!(
+    notifications.case_email_received.find_or_create_by!(
       support_case: self,
       assigned_to: agent,
       assigned_by_system: true,

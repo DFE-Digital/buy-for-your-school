@@ -39,7 +39,7 @@ describe "Agent can browse provider contacts", :js do
   end
 
   describe "editing of a contact" do
-    it "can edit a contacts detials" do
+    it "can edit a contacts details" do
       visit frameworks_root_path
       click_on "Provider Contacts"
       click_on "Anne Abelle"

@@ -1,5 +1,5 @@
 class Specify::ApplicationController < ApplicationController
 private
 
-  def portal_namesapce = :specify
+  def portal_namespace = :specify
 end

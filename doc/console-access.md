@@ -6,7 +6,7 @@ Please read [this documentation on console access](https://learn.microsoft.com/e
 
 ## Console access links
 
-|Enviroment|Console Link|
+|Environment|Console Link|
 |--|--|
 |Development|[Console](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/cb3dd736-2dc8-4296-9894-16d3ecabe85d/resourceGroups/s174d01-ghbs-app/providers/Microsoft.App/containerApps/devghbs-buyforyourschool/console)|
 |Staging|[Console](https://portal.azure.com/#@platform.education.gov.uk/resource/subscriptions/bc55c4cf-d75d-42d1-9017-a457b6b2cfc8/resourceGroups/s174t01-ghbs-app/providers/Microsoft.App/containerApps/stagghbs-buyforyourschool/console)|

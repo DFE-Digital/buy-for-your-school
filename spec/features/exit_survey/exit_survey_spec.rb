@@ -104,7 +104,7 @@ RSpec.feature "Completing the Exit Survey" do
     end
   end
 
-  describe "futre support page" do
+  describe "future support page" do
     before do
       visit "exit_survey/future_support/#{exit_survey.id}/edit"
     end

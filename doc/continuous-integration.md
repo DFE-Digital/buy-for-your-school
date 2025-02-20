@@ -10,7 +10,7 @@ Select secrets are stored in github "Environments". We store as little secrets a
 
 |Secret|Description|
 |-|-|
-|`AZURE_SP_CREDENTIALS`|Service principle credentails stored in JSON form|
+|`AZURE_SP_CREDENTIALS`|Service principle credentials stored in JSON form|
 |`CONTAINER_APP_NAME`|Name of the container-app|
 |`RESOURCE_GROUP_NAME`|Name of the resource group|
 

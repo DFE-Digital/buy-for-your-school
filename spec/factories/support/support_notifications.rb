@@ -8,8 +8,8 @@ FactoryBot.define do
       association :support_case
     end
 
-    trait :case_email_recieved do
-      topic { :case_email_recieved }
+    trait :case_email_received do
+      topic { :case_email_received }
       association :support_case
       association :subject, factory: :support_email
     end

@@ -37,7 +37,7 @@ RSpec.describe FrameworkRequestPresenter do
   describe "#bill_count" do
     before { create_list(:energy_bill, 2, framework_request:) }
 
-    it "returns the number of associted energy bills" do
+    it "returns the number of associated energy bills" do
       expect(presenter.bill_count).to eq 2
     end
   end

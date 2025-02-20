@@ -161,7 +161,7 @@ variable "worker_container_min_replicas" {
 }
 
 variable "worker_container_max_replicas" {
-  description = "Worker ontainer max replicas"
+  description = "Worker container max replicas"
   type        = number
   default     = 2
 }
@@ -314,7 +314,7 @@ variable "cdn_frontdoor_health_probe_request_type" {
 }
 
 variable "cdn_frontdoor_origin_host_header_override" {
-  description = "Manually specify the host header that the CDN sends to the target. Defaults to the recieved host header. Set to null to set it to the host_name (`cdn_frontdoor_origin_fqdn_override`)"
+  description = "Manually specify the host header that the CDN sends to the target. Defaults to the received host header. Set to null to set it to the host_name (`cdn_frontdoor_origin_fqdn_override`)"
   type        = string
   default     = ""
   nullable    = true
@@ -395,7 +395,7 @@ variable "postgresql_administrator_password" {
 
 variable "postgresql_availability_zone" {
   type        = string
-  description = "Specify the availibility zone in which the Postgres server should be located"
+  description = "Specify the availability zone in which the Postgres server should be located"
   default     = "1"
 }
 
@@ -425,7 +425,7 @@ variable "postgresql_charset" {
 
 variable "postgresql_enabled_extensions" {
   type        = string
-  description = "Specify a comma seperated list of Postgres extensions to enable. See https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions#postgres-14-extensions"
+  description = "Specify a comma separated list of Postgres extensions to enable. See https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions#postgres-14-extensions"
   default     = ""
 }
 
@@ -483,7 +483,7 @@ variable "key_vault_access_ipv4" {
 }
 
 variable "key_vault_tfvars_filename" {
-  description = "tfvars filename. This file is uploaded and stored encrupted within Key Vault, to ensure that the latest tfvars are stored in a shared place."
+  description = "tfvars filename. This file is uploaded and stored encrypted within Key Vault, to ensure that the latest tfvars are stored in a shared place."
   type        = string
 }
 

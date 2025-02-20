@@ -55,7 +55,7 @@ en:
           attributes:
             next_key_date:
               blank: Enter a date for the description
-        support/case/transferer:
+        support/case/transferrer:
           attributes:
             framework_id:
               blank: Select a framework for the new evaluation

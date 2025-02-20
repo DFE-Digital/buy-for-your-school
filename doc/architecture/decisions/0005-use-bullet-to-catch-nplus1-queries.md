@@ -8,7 +8,7 @@ Date: 2019-09-19
 
 ## Context
 
-It can be easy to miss an inefficient database query during code review. These can build up and have detremental performance on the application and effect the user experience.
+It can be easy to miss an inefficient database query during code review. These can build up and have detrimental performance on the application and effect the user experience.
 
 ## Decision
 

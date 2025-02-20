@@ -8,8 +8,8 @@ Accepted
 
 ## Context
 
-```Support::Case``` has a number of states that it can be in and a set of transistions between those states that need to be managed.
-AASM has a simple DSL and set of inbuilt methods that will make managing these states and transistions easy
+```Support::Case``` has a number of states that it can be in and a set of transitions between those states that need to be managed.
+AASM has a simple DSL and set of inbuilt methods that will make managing these states and transitions easy
 
 ## Consequences
 

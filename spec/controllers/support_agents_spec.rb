@@ -38,7 +38,7 @@ describe SupportAgents, type: :controller do
         end
       end
 
-      it "authorizes the agent against the overriden scope" do
+      it "authorizes the agent against the overridden scope" do
         get(:protected_action, session:)
         expect(controller).to have_received(:authorize).with(:cms_portal, :another_scope)
       end

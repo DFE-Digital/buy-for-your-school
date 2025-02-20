@@ -5,7 +5,7 @@ RSpec.describe Support::EstablishmentGroups::Mapper, "#call" do
 
   let(:entity) { output.first[key] }
 
-  # The public GIAS "allgroups" CSV file is a historical cummulative record.
+  # The public GIAS "allgroups" CSV file is a historical cumulative record.
   # Consequently there are multiple entries for the same EstablshmentGroup if
   # that establishment group's status or type have changed over time. In some cases
   # there are entries whose only difference is the UID

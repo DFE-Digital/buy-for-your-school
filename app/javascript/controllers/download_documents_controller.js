@@ -7,7 +7,7 @@ export default class extends Controller {
   connect() {
     this.downloadLinksTarget.querySelectorAll('.govuk-link').forEach(link => {
       link.addEventListener("click", (e) => {
-        e.target.closest('.govuk-summary-list__row').querySelector('.dowloaded-icon').classList.remove('govuk-!-display-none');
+        e.target.closest('.govuk-summary-list__row').querySelector('.downloaded-icon').classList.remove('govuk-!-display-none');
       });
     });
   }

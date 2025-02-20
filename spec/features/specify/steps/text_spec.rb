@@ -26,12 +26,12 @@ RSpec.feature "Text Question" do
       start_journey_from_category(category: "long-text-question.json")
       click_first_link_in_section_list
 
-      fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\nThey must be able to supply us for 3 years minumum."
+      fill_in "answer[response]", with: "We would like a supplier to provide catering from September 2020.\nThey must be able to supply us for 3 years minimum."
       click_continue
 
       click_first_link_in_section_list
 
-      expect(answer).to eql "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minumum."
+      expect(answer).to eql "We would like a supplier to provide catering from September 2020.\r\nThey must be able to supply us for 3 years minimum."
     end
   end
 end
