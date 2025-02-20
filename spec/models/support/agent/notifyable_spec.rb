@@ -17,7 +17,7 @@ describe Support::Agent::Notifyable do
 
   describe "#notify_assigned_to_case" do
     context "when assigning case to yourself" do
-      it "does not create a new notifcation" do
+      it "does not create a new notification" do
         support_case = create(:support_case)
         expect { agent.notify_assigned_to_case(support_case:, assigned_by: agent) }
           .not_to(change(Support::Notification, :count))

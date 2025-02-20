@@ -35,7 +35,7 @@ describe Support::Case::EmailTicketable do
         )
         support_case.emails << email
 
-        expect(Support::Notification.case_email_recieved.where(
+        expect(Support::Notification.case_email_received.where(
           support_case:,
           assigned_to: support_case.agent,
           subject: email,

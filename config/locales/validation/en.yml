@@ -323,7 +323,7 @@ en:
         opt_in_name:
           missing: Enter your full name.
         satisfaction_level:
-          missing: Select how you feel about the service you recieved.
+          missing: Select how you feel about the service you received.
         satisfaction_text:
           missing: Enter why you felt this way about the service you received.
         saved_time:

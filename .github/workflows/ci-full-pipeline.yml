@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.6
 
-      - uses: ./.github/workflows/actions/build-docker-image
+      - uses: ./.github/actions/build-docker-image
         name: Build docker image
         id: build
         with:
@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.6
 
-      - uses: ./.github/workflows/actions/build-docker-image
+      - uses: ./.github/actions/build-docker-image
         name: Build docker image
         id: build
         with:
@@ -64,6 +64,15 @@ jobs:
         uses: docker/setup-buildx-action@v3.3.0
 
       - run: docker run ${{ needs.build_test.outputs.docker_image }} bundle exec rubocop
+
+  spelling:
+    name: Checks - Spelling and typos
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Actions Repository
+      uses: actions/checkout@v4
+    - name: Spell Check Repo
+      uses: crate-ci/typos@v1.29.7
 
   jest:
     name: Checks - Jest
@@ -310,7 +319,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/workflows/actions/deploy-az
+      - uses: ./.github/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
@@ -327,7 +336,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/workflows/actions/deploy-az
+      - uses: ./.github/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
@@ -344,7 +353,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/workflows/actions/deploy-az
+      - uses: ./.github/actions/deploy-az
         with:
           docker_image_and_tag: ${{ needs.build_release.outputs.docker_image }}
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}

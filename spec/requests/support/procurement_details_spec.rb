@@ -54,7 +54,7 @@ describe "Updating case procurement details" do
       }
     end
 
-    it "does not update the procurment" do
+    it "does not update the procurement" do
       expect(support_procurement).to eq(support_procurement.reload)
     end
   end

@@ -6,7 +6,7 @@ Date: 2021-06-23
 
 ![Accepted](https://img.shields.io/badge/adr-accepted-green)
 
-Supercedes [3. Use Standard for Ruby linting](0003-use-standard-rb.md)
+Supersedes [3. Use Standard for Ruby linting](0003-use-standard-rb.md)
 
 ## Context
 

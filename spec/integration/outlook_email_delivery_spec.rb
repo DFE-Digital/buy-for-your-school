@@ -82,7 +82,7 @@ describe "Outlook emails delivery integration" do
   end
 
   describe "subject line" do
-    context "when a subject line has been specifed" do
+    context "when a subject line has been specified" do
       let(:subject_line) { "User specified subject line" }
 
       it "uses the specified subject" do
@@ -98,7 +98,7 @@ describe "Outlook emails delivery integration" do
       end
     end
 
-    context "when a template has been specified and none specifed by the user" do
+    context "when a template has been specified and none specified by the user" do
       let(:template_id) { create(:support_email_template, subject: "Subject line from the template").id }
       let(:subject_line) { nil }
 

@@ -58,7 +58,7 @@ export default class extends Controller {
   }
 
   onSubmitClicked() {
-    // noop, allow the form submit event to propogate
+    // noop, allow the form submit event to propagate
   }
 
   // Routing
@@ -74,7 +74,7 @@ export default class extends Controller {
   }
 
   continueToPageTwo() {
-    if (this.anyFileUploadErrorsOccured()) {
+    if (this.anyFileUploadErrorsOccurred()) {
       this.errorInvalidFiles.show()
       return
     }
@@ -111,7 +111,7 @@ export default class extends Controller {
   }
 
   onDropzoneFileRemoved() {
-    if (!this.anyFileUploadErrorsOccured())
+    if (!this.anyFileUploadErrorsOccurred())
       this.errorInvalidFiles.hide()
 
     if (this.currentPage === 3 && !this.anyFilesUploadedSuccessfully())
@@ -214,7 +214,7 @@ export default class extends Controller {
     return this.dropzoneOutlet.anyFilesUploadedSuccessfully()
   }
 
-  anyFileUploadErrorsOccured() {
-    return this.dropzoneOutlet.anyFileUploadErrorsOccured()
+  anyFileUploadErrorsOccurred() {
+    return this.dropzoneOutlet.anyFileUploadErrorsOccurred()
   }
 }

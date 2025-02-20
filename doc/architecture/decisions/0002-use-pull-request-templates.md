@@ -8,7 +8,7 @@ Date: 2019-08-16
 
 ## Context
 
-The quality of information included in our pull requests varies greatly which can lead to code reviews which take longer and are harder for the person to understand the considerations, outcomes and consquences of a series of changes.
+The quality of information included in our pull requests varies greatly which can lead to code reviews which take longer and are harder for the person to understand the considerations, outcomes and consequences of a series of changes.
 
 A couple of recent projects have found a GitHub pull request template to have been a positive change. Prompting what pull request descriptions should include has lead to better documented changes that have been easier to review on the whole. 
 

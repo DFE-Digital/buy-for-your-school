@@ -2,7 +2,7 @@
 #
 # @author Peter Hamilton
 #
-#   1: phone_number   (temporarily disbaled until the service supports calls)
+#   1: phone_number   (temporarily disabled until the service supports calls)
 #   2: school_urn     (skipped if only one supported school)
 #   3: journey_id     (option for 'none')
 #   4: category_id    (skipped if journey)

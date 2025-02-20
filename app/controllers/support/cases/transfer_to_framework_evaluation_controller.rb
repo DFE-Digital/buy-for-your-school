@@ -4,14 +4,14 @@ module Support
     before_action :set_form_options, only: %i[index create]
 
     def index
-      @case_transferer = current_case.transferer
+      @case_transferrer = current_case.transferrer
     end
 
     def create
-      @case_transferer = current_case.transferer(form_params)
+      @case_transferrer = current_case.transferrer(form_params)
 
-      if @case_transferer.valid?
-        evaluation = @case_transferer.save!
+      if @case_transferrer.valid?
+        evaluation = @case_transferrer.save!
         redirect_to frameworks_evaluation_path(evaluation), notice: "Case transferred"
       else
         render :index
@@ -30,7 +30,7 @@ module Support
     end
 
     def form_params
-      params.require(:case_transferer).permit(:framework_id, :assignee_id)
+      params.require(:case_transferrer).permit(:framework_id, :assignee_id)
     end
   end
 end

@@ -100,7 +100,7 @@ export default class extends Controller {
         return this.dropzoneOutlet.anyFilesUploadedSuccessfully()
     }
 
-    anyFileUploadErrorsOccured() {
-        return this.dropzoneOutlet.anyFileUploadErrorsOccured()
+    anyFileUploadErrorsOccurred() {
+        return this.dropzoneOutlet.anyFileUploadErrorsOccurred()
     }
 }

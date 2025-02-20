@@ -21,7 +21,7 @@ RSpec.feature "Agent can upload evaluation documents", :js, :with_csrf_protectio
     expect(page).to have_text("Select files to upload")
   end
 
-  specify "when files are uploaded and confirmation choosen as No (In progress)" do
+  specify "when files are uploaded and confirmation chosen as No (In progress)" do
     support_case.update!(has_uploaded_documents: false)
 
     expect { document_uploader.save! }.to change { support_case.upload_documents.count }.from(0).to(2)
@@ -33,7 +33,7 @@ RSpec.feature "Agent can upload evaluation documents", :js, :with_csrf_protectio
     expect(find("#complete-evaluation-3-status")).to have_text("In progress")
   end
 
-  specify "when files are uploaded and confirmation choosen as Yes (Complete)" do
+  specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
     support_case.update!(has_uploaded_documents: true)
 
     expect { document_uploader.save! }.to change { support_case.upload_documents.count }.from(0).to(2)
