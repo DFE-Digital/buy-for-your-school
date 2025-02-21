@@ -1,5 +1,9 @@
 module Support
   class Evaluator < ApplicationRecord
+    include Support::Evaluator::Actionable
+
+    after_update_commit :set_support_case_action_required, if: :has_uploaded_documents_previously_changed?
+
     belongs_to :support_case, class_name: "Support::Case"
 
     validates :email,
