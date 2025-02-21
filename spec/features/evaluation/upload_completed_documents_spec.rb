@@ -53,6 +53,18 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     visit evaluation_task_path(support_case)
 
     expect(find(evaluator_task_status)).to have_text("In progress")
+
+    specify "and there are unread emails in the inbox" do
+      create(:support_email, :inbox, ticket: support_case, is_read: false)
+
+      expect(support_case.reload).to be_action_required
+    end
+
+    specify "and there are no unread emails in the inbox" do
+      create(:support_email, :inbox, ticket: support_case, is_read: true)
+
+      expect(support_case.reload).not_to be_action_required
+    end
   end
 
   specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
@@ -67,6 +79,18 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     visit evaluation_task_path(support_case)
 
     expect(find(evaluator_task_status)).to have_text("Complete")
+
+    specify "and there are unread emails in the inbox" do
+      create(:support_email, :inbox, ticket: support_case, is_read: false)
+
+      expect(support_case.reload).to be_action_required
+    end
+
+    specify "and there are no unread emails in the inbox" do
+      create(:support_email, :inbox, ticket: support_case, is_read: true)
+
+      expect(support_case.reload).to be_action_required
+    end
   end
 
   specify "viewing uploaded files" do
@@ -96,7 +120,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_case.reload
 
-    support_evaluator.update!(has_uploaded_documents: nil)
+    support_evaluator.update!(has_uploaded_documents: false)
 
     expect(support_case.evaluators_upload_documents.count).to eq(0)
 

@@ -4,7 +4,11 @@ module Support
 
     def update
       @email.update!(is_read: new_status)
-      @email.ticket.update!(action_required: @email.ticket.emails.unread.inbox.any?) if @email.ticket.present?
+      if Flipper.enabled?(:sc_notify_procops)
+        @email.ticket.update!(action_required: @email.ticket.emails.unread.inbox.any? || Support::Evaluator.where(support_case_id: @email.ticket_id, has_uploaded_documents: true, evaluation_approved: false).any?) if @email.ticket.present?
+      elsif @email.ticket.present?
+        @email.ticket.update!(action_required: @email.ticket.emails.unread.inbox.any?)
+      end
 
       respond_to do |format|
         format.turbo_stream do
