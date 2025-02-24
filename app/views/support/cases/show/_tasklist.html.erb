@@ -49,5 +49,26 @@
         end
       end %>
     </div>      
-  </div>    
+  </div>
+
+  <div class="govuk-grid-row govuk-!-static-margin-top-5">
+    <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-m">
+        <%= I18n.t("support.case.label.tasklist.handover_contract") %>
+      </h3>
+      <%= govuk_task_list(id_prefix: "handover_contract") do |task_list|
+        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.add_contract_recipients"), href: '#', status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+
+        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.upload_contract_handover_pack"), href: '#', status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+
+        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.share_handover_pack")) do | item | 
+          item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+        end
+
+        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.download_contract_handover_pack")) do | item | 
+          item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+        end
+      end %>
+    </div>
+  </div>
 </div>
