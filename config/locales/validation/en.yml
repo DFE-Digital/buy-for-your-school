@@ -17,7 +17,6 @@ en:
             attributes:
               email:
                 blank: Enter an email address
-                invalid: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           framework_requests/category_form:
             attributes:
               category_slug:
@@ -118,8 +117,6 @@ en:
               blank: Enter the first name of the contact
             last_name:
               blank: Enter the last name of the contact
-            email:
-              blank: Enter an email in the correct format. For example, 'someone@school.sch.uk'
             phone_number:
               too_long: Phone number cannot have more than 12 digits
               invalid: Phone number must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
@@ -217,8 +214,6 @@ en:
 
     errors:
       rules:
-        email:
-          invalid: Enter a school email address in the correct format, like name@example.sch.uk. You cannot use a personal email address such as %{domain}
         phone_number:
           missing: is missing
           # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number

@@ -1260,12 +1260,17 @@ en:
           unspecified: Not specified
         tasklist:
           complete_evaluation: Complete evaluation
+          handover_contract: Handover contract
           item:
             add_evaluators: Add evaluators
             set_due_date: Set due date
             upload_documents: Upload documents
             email_evaluators: Email evaluators
-            review_evaluations: Review evaluations  
+            review_evaluations: Review evaluations
+            add_contract_recipients: Add contract recipients
+            upload_contract_handover_pack: Upload contract handover pack
+            share_handover_pack: Share handover pack
+            download_contract_handover_pack: Download contract handover pack
           status:
             to_do: To do
             in_progress: In progress
