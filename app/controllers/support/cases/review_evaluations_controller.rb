@@ -13,6 +13,7 @@ module Support
       reset_evaluation_approvals
       approve_selected_evaluations
       update_procurement_stage_if_needed
+      set_support_case_action_required
 
       redirect_to @back_url
     end
@@ -51,6 +52,15 @@ module Support
                            Support::ProcurementStage.find_by(stage: "3", title: "Moderation")
                          end
       @current_case.update!(procurement_stage_id: moderation_stage.id) if moderation_stage
+    end
+
+    def set_support_case_action_required
+      return unless Flipper.enabled?(:sc_notify_procops)
+
+      pending_evaluations = @current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).any?
+      action_required = pending_evaluations || unread_emails
+      @current_case.update!(action_required:)
     end
 
     def review_evaluations_params

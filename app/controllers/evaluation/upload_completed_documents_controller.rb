@@ -13,6 +13,7 @@ module Evaluation
       if @document_uploader.valid?
         @document_uploader.save_evaluation_document!(current_user.email)
         current_evaluator.update!(case_document_uploader_params)
+        update_action_required
         redirect_to @back_url
       else
         render :show
@@ -29,6 +30,7 @@ module Evaluation
       @support_document.destroy!
       if @uploaded_files.empty?
         reset_uploaded_documents
+        update_action_required
       end
       redirect_to evaluation_upload_completed_document_path(case_id: @current_case.id),
                   notice: I18n.t("support.cases.upload_documents.flash.destroyed", name: @uploaded_document.file_name)
@@ -66,6 +68,18 @@ module Evaluation
 
     def uploaded_files
       @uploaded_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:case_id], email: current_user.email)
+    end
+
+    def update_action_required
+      return unless Flipper.enabled?(:sc_notify_procops)
+
+      @current_case.update!(action_required: notify_procops_action_required?)
+    end
+
+    def notify_procops_action_required?
+      unread_emails = Email.where(ticket_id: params[:case_id], folder: 0, is_read: false).any?
+      pending_evaluations = Support::Evaluator.where(support_case_id: params[:case_id], has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails || pending_evaluations
     end
   end
 end

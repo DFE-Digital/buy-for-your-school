@@ -59,8 +59,11 @@ describe "Updating email read status" do
     context "when the case is not currently marked as action required" do
       let(:support_case) { create(:support_case, action_required: true) }
 
-      context "when there are other unread emails in the inbox" do
-        before { create(:support_email, :inbox, ticket: support_case, is_read: false) }
+      context "when there are other unread emails in the inbox and no evaluations for review" do
+        before do
+          create(:support_email, :inbox, ticket: support_case, is_read: false)
+          support_case.evaluators.create!(first_name: "Momo", last_name: "Taro", email: "email@address", has_uploaded_documents: false, evaluation_approved: false)
+        end
 
         specify "then the case remains as action required" do
           patch support_email_read_status_path(email, status: "read")
@@ -68,8 +71,11 @@ describe "Updating email read status" do
         end
       end
 
-      context "when there are other unread emails in the sent items folder" do
-        before { create(:support_email, :sent_items, ticket: support_case, is_read: false) }
+      context "when there are other unread emails in the Sent Items folder and no evaluations for review" do
+        before do
+          create(:support_email, :sent_items, ticket: support_case, is_read: false)
+          support_case.evaluators.create!(first_name: "Momo", last_name: "Taro", email: "email@address", has_uploaded_documents: false, evaluation_approved: false)
+        end
 
         specify "then the case is not longer marked as action required" do
           patch support_email_read_status_path(email, status: "read")
@@ -77,10 +83,35 @@ describe "Updating email read status" do
         end
       end
 
-      context "when there are no unread emails in the inbox but there are unread sent items" do
+      context "when there are no unread emails in the inbox, unread sent items, and no evaluations pending for review" do
         before do
           create(:support_email, :inbox, ticket: support_case, is_read: true)
           create(:support_email, :sent_items, ticket: support_case, is_read: false)
+          support_case.evaluators.create!(first_name: "Momo", last_name: "Taro", email: "email@address", has_uploaded_documents: false, evaluation_approved: false)
+        end
+
+        specify "then the case is not longer marked as action required" do
+          patch support_email_read_status_path(email, status: "read")
+          expect(support_case.reload).not_to be_action_required
+        end
+      end
+
+      context "when there are no unread emails in the inbox and there are evaluations for review" do
+        before do
+          create(:support_email, :inbox, ticket: support_case, is_read: true)
+          support_case.evaluators.create!(first_name: "Momo", last_name: "Taro", email: "email@address", has_uploaded_documents: true, evaluation_approved: false)
+        end
+
+        specify "then the case is marked as action required" do
+          patch support_email_read_status_path(email, status: "read")
+          expect(support_case.reload).to be_action_required
+        end
+      end
+
+      context "when there are no unread emails in the inbox and no evaluations for review" do
+        before do
+          create(:support_email, :inbox, ticket: support_case, is_read: true)
+          support_case.evaluators.create!(first_name: "Momo", last_name: "Taro", email: "email@address", has_uploaded_documents: true, evaluation_approved: true)
         end
 
         specify "then the case is not longer marked as action required" do
