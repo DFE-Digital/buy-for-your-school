@@ -16,6 +16,16 @@ en:
               blank: Enter the first name of the evaluator
             last_name:
               blank: Enter the last name of the evaluator
+        support/contract_recipient:
+          attributes:
+            email:   
+              blank: Enter the email address of the contract recipient
+              invalid: Enter an email address in the correct format, like name@example.com
+              taken: This email address has already been added as a contract recipient
+            first_name:
+              blank: Enter the first name of the contract recipient
+            last_name:
+              blank: Enter the last name of the contract recipient
   
   activemodel:
     errors:

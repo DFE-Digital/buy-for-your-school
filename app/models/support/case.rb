@@ -68,6 +68,8 @@ module Support
 
     has_many :evaluators_upload_documents, class_name: "Support::EvaluatorsUploadDocument", foreign_key: :support_case_id
 
+    has_many :contract_recipients, class_name: "Support::ContractRecipient", foreign_key: :support_case_id
+
     # Support level
     #
     #   L1       - Advice and guidance only

@@ -1,0 +1,32 @@
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("support.contract_recipients.header.index") %></h1>
+
+<table class="govuk-table messages-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"
+        ><%= I18n.t(:name, scope: "helpers.label.support_contract_recipient") %></th>
+      <th scope="col" class="govuk-table__header"
+        ><%= I18n.t(:email, scope: "helpers.label.support_contract_recipient") %></th>
+      <th scope="col" class="govuk-table__header"></th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @contract_recipients.each do |contract_recipient| %>
+      <div class="govuk-summary-list__row">
+        <tr>
+          <td class="govuk-table__cell"><%= contract_recipient.name %></td>
+          <td class="govuk-table__cell"><%= contract_recipient.email %></td>
+          <td class="govuk-table__cell"
+            ><%= link_to I18n.t("generic.link.change"),
+                 edit_support_case_contract_recipient_path(contract_recipient, case_id: @current_case) %></td>
+        </tr>
+      </div>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to I18n.t("generic.button.add"),
+            new_support_case_contract_recipient_path(case_id: @current_case), class: 'govuk-button' %>
