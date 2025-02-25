@@ -240,6 +240,7 @@ Rails.application.routes.draw do
         resource :email_evaluators, except: %i[show]
         resource :review_evaluation, except: %i[show]
         resources :contract_recipients, except: %i[show]
+        resource :upload_contract_handover, except: %i[show]
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template

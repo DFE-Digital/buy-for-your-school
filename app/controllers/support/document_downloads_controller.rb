@@ -11,6 +11,7 @@ module Support
       "Support::EmailTemplateAttachment",
       "Support::CaseUploadDocument",
       "Support::EvaluatorsUploadDocument",
+      "Support::UploadContractHandover",
     ].freeze
 
     def show

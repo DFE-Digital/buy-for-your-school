@@ -1,0 +1,8 @@
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("support.cases.upload_contract_handover.header") %></h1>
+<p class="govuk-body-m govuk-!-static-margin-bottom-8">
+    <%= I18n.t("support.cases.upload_contract_handover.hint1") %><br>
+    <%= I18n.t("support.cases.upload_contract_handover.hint2") %>
+</p>
+
+<%= render "form" %>
