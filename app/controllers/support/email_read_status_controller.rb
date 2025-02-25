@@ -4,7 +4,7 @@ module Support
 
     def update
       @email.update!(is_read: new_status)
-      @email.ticket.update!(action_required: @email.ticket.emails.unread.inbox.any?) if @email.ticket.present?
+      update_action_required
 
       respond_to do |format|
         format.turbo_stream do
@@ -23,6 +23,28 @@ module Support
 
     def new_status
       params[:status] == "read"
+    end
+
+    def update_action_required
+      return if @email.ticket.blank?
+
+      action_required = if Flipper.enabled?(:sc_notify_procops)
+                          notify_procops_action_required?
+                        else
+                          default_action_required?
+                        end
+
+      @email.ticket.update!(action_required:)
+    end
+
+    def notify_procops_action_required?
+      unread_emails = @email.ticket.emails.unread.inbox.any?
+      pending_evaluations = Support::Evaluator.where(support_case_id: @email.ticket_id, has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails || pending_evaluations
+    end
+
+    def default_action_required?
+      @email.ticket.emails.unread.inbox.any?
     end
   end
 end
