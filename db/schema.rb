@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_31_133341) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_24_123310) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -663,6 +663,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133341) do
     t.index ["slug"], name: "index_support_categories_on_slug", unique: true
     t.index ["support_tower_id"], name: "index_support_categories_on_support_tower_id"
     t.index ["title", "parent_id"], name: "index_support_categories_on_title_and_parent_id", unique: true
+  end
+
+  create_table "support_contract_recipients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.string "dsi_uid", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_uid"], name: "index_support_contract_recipients_on_dsi_uid"
+    t.index ["email", "support_case_id"], name: "index_support_contract_recipients_on_email_and_support_case_id", unique: true
+    t.index ["support_case_id"], name: "index_support_contract_recipients_on_support_case_id"
   end
 
   create_table "support_contracts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

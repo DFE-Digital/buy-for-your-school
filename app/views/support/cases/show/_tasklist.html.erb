@@ -57,7 +57,14 @@
         <%= I18n.t("support.case.label.tasklist.handover_contract") %>
       </h3>
       <%= govuk_task_list(id_prefix: "handover_contract") do |task_list|
-        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.add_contract_recipients"), href: '#', status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+
+        if @current_case.contract_recipients.any?
+          add_contract_recipients_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+        else
+          add_contract_recipients_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
+        end
+
+        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.add_contract_recipients"), href: support_case_contract_recipients_path(@current_case), status: add_contract_recipients_status)
 
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.upload_contract_handover_pack"), href: '#', status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
 

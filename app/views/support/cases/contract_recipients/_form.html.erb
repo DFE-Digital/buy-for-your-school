@@ -1,0 +1,27 @@
+<%= form_with(
+      model: @contract_recipient,
+      url: @contract_recipient.new_record? ? support_case_contract_recipients_path(case_id: @current_case)
+                                  : support_case_contract_recipient_path(@contract_recipient, case_id: @current_case)
+    ) do |form| %>
+
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_text_field :first_name, autofocus: true, width: "one-half" %>
+  <%= form.govuk_text_field :last_name, width: "one-half" %>
+  <%= form.govuk_text_field :email, width: "one-half" %>
+
+  <div class="govuk-button-group flex-align-center">
+    <%= form.submit I18n.t("support.contract_recipients.submit"), class: "govuk-button" %>
+
+    <% unless @contract_recipient.new_record? %>
+      <%= link_to I18n.t("generic.button.remove"),
+                  support_case_contract_recipient_path(@contract_recipient, case_id: @current_case),
+                  method: :delete,
+                  class: "govuk-button govuk-button--secondary" %>
+    <%end%>
+
+    <%= link_to I18n.t("generic.button.cancel"),
+                support_case_contract_recipients_path(case_id: @current_case),
+                class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
+<% end %>
