@@ -229,6 +229,14 @@ module Support
       !has_uploaded_documents && upload_documents.any?
     end
 
+    def upload_contract_handover_complete?
+      has_uploaded_contract_handovers
+    end
+
+    def upload_contract_handover_in_progress?
+      !has_uploaded_contract_handovers && upload_contract_handovers.any?
+    end
+
     def evaluation_in_progress?
       evaluators.where(evaluation_approved: false).any? && evaluators.where(evaluation_approved: true).any?
     end

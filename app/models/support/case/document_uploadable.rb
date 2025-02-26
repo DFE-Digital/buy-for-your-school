@@ -31,4 +31,17 @@ module Support::Case::DocumentUploadable
       )
     end
   end
+
+  def upload_contract_handover_files(files:)
+    return if files.blank?
+
+    files.each do |file|
+      upload_contract_handovers.create!(
+        attachable: Support::Document.create!(case: self, file_type: file.content_type, file:),
+        file_type: file.content_type,
+        file_name: file.original_filename,
+        file_size: file.size,
+      )
+    end
+  end
 end
