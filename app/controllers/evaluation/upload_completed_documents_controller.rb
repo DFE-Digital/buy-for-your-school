@@ -88,7 +88,7 @@ module Evaluation
     end
 
     def agent_present_and_documents_uploaded?
-      @current_case.agent.present? && case_document_uploader_params[:has_uploaded_documents] == "true"
+      @current_case.agent.present? && current_evaluator.has_uploaded_documents?
     end
 
     def notify_procops_document_uploaded
