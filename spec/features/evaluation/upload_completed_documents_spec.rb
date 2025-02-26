@@ -62,6 +62,12 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     email.update!(is_read: false)
 
     expect(support_case.reload).to be_action_required
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    click_button "Continue"
+
+    expect(Support::Notification.count).to eq(0)
   end
 
   specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
@@ -84,6 +90,12 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     email.update!(is_read: false)
 
     expect(support_case.reload).to be_action_required
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    click_button "Continue"
+
+    expect(Support::Notification.count).to eq(1)
   end
 
   specify "viewing uploaded files" do

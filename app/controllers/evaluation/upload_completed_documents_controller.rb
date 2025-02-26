@@ -14,6 +14,7 @@ module Evaluation
         @document_uploader.save_evaluation_document!(current_user.email)
         current_evaluator.update!(case_document_uploader_params)
         update_action_required
+        notify_procops_document_uploaded
         redirect_to @back_url
       else
         render :show
@@ -70,8 +71,12 @@ module Evaluation
       @uploaded_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:case_id], email: current_user.email)
     end
 
+    def procops_notify_enabled?
+      Flipper.enabled?(:sc_notify_procops)
+    end
+
     def update_action_required
-      return unless Flipper.enabled?(:sc_notify_procops)
+      return unless procops_notify_enabled?
 
       @current_case.update!(action_required: notify_procops_action_required?)
     end
@@ -80,6 +85,22 @@ module Evaluation
       unread_emails = Email.where(ticket_id: params[:case_id], folder: 0, is_read: false).any?
       pending_evaluations = Support::Evaluator.where(support_case_id: params[:case_id], has_uploaded_documents: true, evaluation_approved: false).any?
       unread_emails || pending_evaluations
+    end
+
+    def agent_present_and_documents_uploaded?
+      @current_case.agent.present? && current_evaluator.has_uploaded_documents?
+    end
+
+    def notify_procops_document_uploaded
+      return unless procops_notify_enabled?
+
+      notify_agent_if_documents_uploaded
+    end
+
+    def notify_agent_if_documents_uploaded
+      return unless agent_present_and_documents_uploaded?
+
+      @current_case.notify_agent_of_evaluation_submitted
     end
   end
 end
