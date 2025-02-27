@@ -10,6 +10,7 @@ module Support
       case_email_received: 1,
       case_reopened: 2,
       case_closed: 3,
+      evaluation_documents_uploaded: 4,
     }
 
     scope :unread, -> { where(read: false) }

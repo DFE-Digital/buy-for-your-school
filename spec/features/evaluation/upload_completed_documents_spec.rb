@@ -10,6 +10,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   let(:file_name_2) { "another-text-file.txt" }
   let(:evaluator_task_status) { "#evaluator_task-2-status" }
   let(:email) { create(:support_email, :inbox, ticket: support_case, is_read: false) }
+  let(:support_agent) { create(:support_agent) }
 
   before do
     Current.user = user
@@ -62,6 +63,26 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     email.update!(is_read: false)
 
     expect(support_case.reload).to be_action_required
+
+    support_case.update!(agent_id: nil)
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    support_case.reload
+
+    click_button "Continue"
+
+    expect(Support::Notification.count).to eq(0)
+
+    support_case.update!(agent_id: support_agent.id)
+
+    support_case.reload
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    click_button "Continue"
+
+    expect(Support::Notification.count).to eq(0)
   end
 
   specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
@@ -84,6 +105,26 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     email.update!(is_read: false)
 
     expect(support_case.reload).to be_action_required
+
+    support_case.update!(agent_id: nil)
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    support_case.reload
+
+    click_button "Continue"
+
+    expect(Support::Notification.count).to eq(0)
+
+    support_case.update!(agent_id: support_agent.id)
+
+    support_case.reload
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    click_button "Continue"
+
+    expect(Support::Notification.count).to eq(1)
   end
 
   specify "viewing uploaded files" do
