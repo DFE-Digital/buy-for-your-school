@@ -1847,6 +1847,10 @@ en:
           destroyed: "%{name} successfully removed"
         delete_confirmation: Are you sure you want to delete %{name}?
         is_document_uploaded: Please select uploaded option
+      upload_contract_handover:
+        header: Upload handover pack
+        hint1: Select the relevant contract documents to share and upload them.
+        hint2: You may want to upload these as a zip file.
       email_evaluators:
         header: Email evaluators
         hint: Check and then send the emails to notify people that the files have been shared. Files will only be accessible to email addresses added.
