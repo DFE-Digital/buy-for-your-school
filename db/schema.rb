@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_24_123310) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_25_122027) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -638,6 +638,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_24_123310) do
     t.date "evaluation_due_date"
     t.boolean "has_uploaded_documents", default: false
     t.boolean "sent_email_to_evaluators", default: false
+    t.boolean "has_uploaded_contract_handovers", default: false
     t.index ["category_id"], name: "index_support_cases_on_category_id"
     t.index ["existing_contract_id"], name: "index_support_cases_on_existing_contract_id"
     t.index ["new_contract_id"], name: "index_support_cases_on_new_contract_id"
@@ -1021,6 +1022,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_24_123310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
+  end
+
+  create_table "support_upload_contract_handovers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.string "file_type"
+    t.string "file_name"
+    t.bigint "file_size"
+    t.uuid "attachable_id"
+    t.string "attachable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_case_id"], name: "index_support_upload_contract_handovers_on_support_case_id"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
