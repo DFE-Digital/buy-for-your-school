@@ -19,6 +19,10 @@ class Support::Case::DocumentUploader
     support_case.upload_evaluation_document_files(files:, email:)
   end
 
+  def save_contract_handover_pack!
+    support_case.upload_contract_handover_files(files:)
+  end
+
 private
 
   def files_safe

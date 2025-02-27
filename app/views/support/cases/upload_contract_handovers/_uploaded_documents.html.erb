@@ -26,15 +26,15 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-         <% @uploaded_files.each do |uploaded_file| %>
+         <% @uploaded_handover_packs.each do |handover_pack| %>
             <div class="case-files__file">
                 <span class="case-files__file-name">
-                    <%= link_to uploaded_file.file_name, support_document_download_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %>
+                    <%= link_to handover_pack.file_name, support_document_download_path(@current_case, document_type: handover_pack.class, document_id: handover_pack.id), method: :put, class: "govuk-link" %>
                 </span>
                   <div class="case-files__file-actions">
                     <span class="case-files__file-remove">
                        <%= link_to I18n.t("generic.button.delete"),
-                          support_case_document_uploads_path(case_id: @current_case, document_id: uploaded_file),
+                          support_case_upload_contract_handover_path(case_id: @current_case, document_id: handover_pack),
                           method: :delete,
                           class: "govuk-link govuk-link--no-visited-state" %>
                     </span>

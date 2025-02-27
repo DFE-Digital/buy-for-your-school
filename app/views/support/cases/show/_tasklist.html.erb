@@ -66,7 +66,15 @@
 
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.add_contract_recipients"), href: support_case_contract_recipients_path(@current_case), status: add_contract_recipients_status)
 
-        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.upload_contract_handover_pack"), href: '#', status: govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+        if @current_case.upload_contract_handover_complete?
+          upload_contract_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+        elsif @current_case.upload_contract_handover_in_progress?
+          upload_contract_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
+        else
+          upload_contract_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
+        end
+
+        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.upload_contract_handover_pack"), href: edit_support_case_upload_contract_handover_path(@current_case), status: upload_contract_handover_status)
 
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.share_handover_pack")) do | item | 
           item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)

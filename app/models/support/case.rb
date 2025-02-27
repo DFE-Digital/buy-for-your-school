@@ -70,6 +70,8 @@ module Support
 
     has_many :contract_recipients, class_name: "Support::ContractRecipient", foreign_key: :support_case_id
 
+    has_many :upload_contract_handovers, class_name: "Support::UploadContractHandover", foreign_key: :support_case_id
+
     # Support level
     #
     #   L1       - Advice and guidance only
