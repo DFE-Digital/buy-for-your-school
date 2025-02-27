@@ -34,4 +34,14 @@ module Support::Case::Notifiable
       created_at: updated_at,
     )
   end
+
+  def notify_agent_of_evaluation_submitted
+    notifications.evaluation_documents_uploaded.find_or_create_by!(
+      support_case: self,
+      assigned_to: agent,
+      assigned_by_system: true,
+      subject: self,
+      created_at: updated_at,
+    )
+  end
 end
