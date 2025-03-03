@@ -1864,6 +1864,20 @@ en:
         documents: Documents
         preview_template: Preview template
         submit: Send email and continue
+      share_handover_pack:
+        header: Share handover pack
+        hint: Check and then send the emails to notify people that the files have been shared. Files will only be accessible to email addresses added.
+        default_subject: "Case %{current_ref} - procurement contract handover"
+        check_list:
+          header: "You should check the:"
+          item:
+            email_addresses: email addresses
+            documents_available: documents available to download
+            email_template: email template
+        sharing_with: Sharing with
+        documents: Documents
+        preview_template: Preview template
+        submit: Send email and continue
       review_evaluations:
         header: Review evaluations
         body: Check each evaluation has been correctly completed. If there is a problem then contact that evaluator and ask them to upload an updated version for you to approve.
