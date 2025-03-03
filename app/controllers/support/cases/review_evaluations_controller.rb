@@ -117,7 +117,7 @@ module Support
       parse_template
 
       @email_evaluators.save_draft!
-      @email_evaluators.deliver_as_new_message
+      @email_evaluators.queue_delivery(:as_new_message)
     end
   end
 end

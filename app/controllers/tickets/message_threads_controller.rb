@@ -40,7 +40,7 @@ class Tickets::MessageThreadsController < ApplicationController
     @draft.attributes = new_thread_params
     if @draft.valid?(:new_message)
       @draft.save_draft!
-      @draft.deliver_as_new_message
+      @draft.queue_delivery(:as_new_message)
       redirect_to message_thread_path(ticket_id: @ticket.id, ticket_type: @ticket.class, id: @draft.email.outlook_conversation_id)
     else
       render :edit

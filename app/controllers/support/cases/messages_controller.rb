@@ -6,7 +6,7 @@ module Support
       @reply_form = Email::Draft.new(form_params)
 
       if @reply_form.valid?(context: :new_message)
-        @reply_form.deliver_as_new_message
+        @reply_form.queue_delivery(:as_new_message)
 
         redirect_to support_case_message_threads_path(case_id: current_case.id)
       else
