@@ -1,0 +1,14 @@
+<%= render partial: "support/cases/components/case_header", locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("support.cases.share_handover_pack.header") %></h1>
+
+<p class="govuk-body-m govuk-!-static-margin-bottom-8"><%= I18n.t("support.cases.share_handover_pack.hint") %></p>
+
+<p class="govuk-body-m"><%= I18n.t("support.cases.share_handover_pack.check_list.header") %></p>
+
+<ul class="govuk-list govuk-list--bullet govuk-!-static-margin-bottom-8">
+  <li><%= I18n.t("support.cases.share_handover_pack.check_list.item.email_addresses") %></li>
+  <li><%= I18n.t("support.cases.share_handover_pack.check_list.item.documents_available") %></li>
+  <li><%= I18n.t("support.cases.share_handover_pack.check_list.item.email_template") %></li>
+</ul>
+
+<%= render "form" %>
