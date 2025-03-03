@@ -76,8 +76,18 @@
 
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.upload_contract_handover_pack"), href: edit_support_case_upload_contract_handover_path(@current_case), status: upload_contract_handover_status)
 
-        task_list.with_item(title: I18n.t("support.case.label.tasklist.item.share_handover_pack")) do | item | 
-          item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+        if @current_case.share_handover_pack_complete?
+          share_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+        else
+          share_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
+        end
+
+        if @current_case.contract_recipients.any? && @current_case.upload_contract_handover_complete?
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.share_handover_pack"), href: edit_support_case_share_handover_pack_path(@current_case), status: share_handover_status)
+        else
+          task_list.with_item(title: I18n.t("support.case.label.tasklist.item.share_handover_pack")) do | item | 
+            item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+          end
         end
 
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.download_contract_handover_pack")) do | item | 

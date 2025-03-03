@@ -241,6 +241,7 @@ Rails.application.routes.draw do
         resource :review_evaluation, except: %i[show]
         resources :contract_recipients, except: %i[show]
         resource :upload_contract_handover, except: %i[show]
+        resources :share_handover_packs, except: %i[show]
         resource :email, only: %i[create] do
           scope module: :emails do
             resources :content, only: %i[show], param: :template
@@ -345,6 +346,11 @@ Rails.application.routes.draw do
     resources :upload_completed_documents, except: %i[new], param: :case_id
     resources :tasks, only: %i[show edit]
     get "verify/evaluator/link/:id", to: "tasks#edit", as: :verify_evaluators_unique_link
+  end
+
+  namespace :my_procurements do
+    resources :tasks, only: %i[show edit]
+    get "verify/link/:id", to: "tasks#edit", as: :verify_unique_link
   end
 
   # E&O Portal

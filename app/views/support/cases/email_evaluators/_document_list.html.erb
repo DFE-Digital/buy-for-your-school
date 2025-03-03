@@ -4,7 +4,9 @@
   <dl class="govuk-summary-list">
     <% @documents.each do |document| %>
       <div class="govuk-summary-list__row">
-        <dd class="govuk-summary-list__value"><%= link_to document.file_name, support_document_download_path(document, type: document.class), class: "govuk-link", target: "_blank" %></dd>
+        <dd class="govuk-summary-list__value">
+          <%= link_to document.file_name, support_document_download_path(@current_case, document_type: document.class, document_id: document.id), method: :put, class: "govuk-link" %>
+        </dd>
       </div>
     <% end %>
   </dl>

@@ -249,6 +249,10 @@ module Support
       evaluators.any?(&:has_uploaded_documents)
     end
 
+    def share_handover_pack_complete?
+      has_shared_handover_pack
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
