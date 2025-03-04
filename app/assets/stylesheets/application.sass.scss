@@ -48,18 +48,9 @@
    white-space: nowrap !important;
 }
 
-.govuk-width-container {
-  &.wide-container {
-    max-width: 2000px;
-  }
-
-  @media (min-width: 1020px) {
-    &.wide-container {
-      margin-left: 30px;
-      margin-right: 30px;
-    }
-  }
- }
+.govuk-width-container, .dfe-width-container, .dfe-header__container, .dfe-header__navigation{
+  max-width: 1200px !important;
+}
 
 // Override govuk-frontend tabs styles to make sure tabs fit in same row
 @media (min-width: 40.0625em) {
