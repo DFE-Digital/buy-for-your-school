@@ -12,6 +12,8 @@ import { initAll } from "govuk-frontend/dist/govuk/govuk-frontend.min.js"
     document.addEventListener('turbo:frame-load', (event) => initAll({ scope: event.target }));
 })();
 
+import 'dfe-frontend/packages/dfefrontend';
+
 import { Turbo } from "@hotwired/turbo-rails"
 Turbo.StreamActions.redirect = function () {
     const url = this.getAttribute("url");

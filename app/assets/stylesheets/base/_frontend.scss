@@ -4,6 +4,7 @@ $govuk-fonts-path: "/assets/fonts/";
 $govuk-new-organisation-colours: true;
 
 @import "govuk-frontend/dist/govuk/all";
+@import "dfe-frontend/packages/dfefrontend";
 
 .govuk-table__row.borderless .govuk-table__cell,
 .borderless {
@@ -13,3 +14,7 @@ $govuk-new-organisation-colours: true;
 td.govuk-table__cell :first-child {
    margin-top: 0;
 }
+
+.dfe-page-hero {
+   color: #fff;
+ }
