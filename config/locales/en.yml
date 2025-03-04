@@ -355,6 +355,14 @@ en:
       page_body_text1: Upload your evaluation, this is usually only the scoring form but you can upload multiple files.
       page_body_text2: DfE will then review and approve your evaluation. You will receive an email with instructions if any changes are required.
       file_upload_confirmation: Have you uploaded all the completed documents?
+  my_procurements:
+    tasks:
+      not_permitted: "You aren’t a school buying professional for this procurement" 
+      header: "Procurement task list"
+      page_body: "Here you can see some of your tasks that need to happen as part of this procurement."
+    task_list:
+      item:
+        download_contract_handover_pack: Download contract handover pack
   exit_survey:
     better_quality:
       options:
