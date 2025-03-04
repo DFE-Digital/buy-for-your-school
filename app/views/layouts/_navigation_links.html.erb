@@ -1,74 +1,66 @@
-<nav aria-label="Menu" class="govuk-header__navigation">
-  <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu">Menu</button>
+<nav class="dfe-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation" aria-labelledby="label-navigation">
+  <div class="govuk-width-container">
+    <ul id="navigation" class="dfe-header__navigation-list" aria-label="Top level navigation">
+      <% unless current_user.guest? %>
+        <% if support_portal? %>
+          <%= turbo_stream_from current_agent, "notifications" %>
+          <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
 
-  <ul id="navigation" class="govuk-header__navigation-list" aria-label="Top level navigation">
-    <% unless current_user.guest? %>
-      <li id="userInfo" class="navbar-component__navigation-item--right govuk-header__navigation-item">
-        Signed in as <%= current_user.first_name %> <%= current_user.last_name %>
-      </li>
-
-      <% if support_portal? %>
-        <%= turbo_stream_from current_agent, "notifications" %>
-        <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
-
-        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-          <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
-        </li>
-
-        <% if policy(:cms_portal).access_admin_settings? %>
-          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-            <%= link_to 'Management', support_management_path, class: "govuk-header__link" %>
+          <li class="dfe-header__navigation-item">
+            <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "dfe-header__navigation-link" %>
           </li>
+
+          <% if policy(:cms_portal).access_admin_settings? %>
+            <li class="dfe-header__navigation-item">
+              <%= link_to 'Management', support_management_path, class: "dfe-header__navigation-link" %>
+            </li>
+          <% end %>
+
+          <li class="dfe-header__navigation-item">
+            <%= link_to I18n.t("support.cases.my_cases.header_link"), support_cases_path(anchor: 'my-cases'), class: "dfe-header__navigation-link" %>
+          </li>
+
+          <li class="dfe-header__navigation-item">
+            <%= link_to I18n.t("support.case.search.heading"), new_support_case_search_path, class: "dfe-header__navigation-link" %>
+          </li>
+
+          <% if policy(:cms_portal).access_frameworks_portal? %>
+            <li class="dfe-header__navigation-item">
+              <%= link_to 'Frameworks', frameworks_root_path, class: "dfe-header__navigation-link" %>
+            </li>
+          <% end %>
         <% end %>
 
-        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-          <%= link_to I18n.t("support.cases.my_cases.header_link"), support_cases_path(anchor: 'my-cases'), class: "govuk-header__link" %>
-        </li>
-
-        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-          <%= link_to I18n.t("support.case.search.heading"), new_support_case_search_path, class: "govuk-header__link" %>
-        </li>
-
-        <% if policy(:cms_portal).access_frameworks_portal? %>
-          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-            <%= link_to 'Frameworks', frameworks_root_path, class: "govuk-header__link" %>
+        <% if engagement_portal? %>
+          <li class="dfe-header__navigation-item">
+            <%= link_to "Cases", engagement_root_path, class: "dfe-header__navigation-link" %>
           </li>
-        <% end %>
-      <% end %>
 
-      <% if engagement_portal? %>
-        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-          <%= link_to "Cases", engagement_root_path, class: "govuk-header__link" %>
-        </li>
-
-        <% if policy(:cms_portal).access_admin_settings? %>
-          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-            <%= link_to 'Management', engagement_management_path, class: "govuk-header__link" %>
-          </li>
-        <% end %>
-      <% end %>
-
-      <% if frameworks_portal? %>
-        <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-          <%= link_to 'Frameworks', frameworks_root_path, class: "govuk-header__link" %>
-        </li>
-
-        <% if policy(:cms_portal).access_admin_settings? %>
-          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-            <%= link_to 'Management', frameworks_management_path, class: "govuk-header__link" %>
-          </li>
+          <% if policy(:cms_portal).access_admin_settings? %>
+            <li class="dfe-header__navigation-item">
+              <%= link_to 'Management', engagement_management_path, class: "dfe-header__navigation-link" %>
+            </li>
+          <% end %>
         <% end %>
 
-        <% if policy(:cms_portal).access_proc_ops_portal? %>
-          <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-            <%= link_to 'Case Management', support_root_path, class: "govuk-header__link" %>
+        <% if frameworks_portal? %>
+          <li class="dfe-header__navigation-item">
+            <%= link_to 'Frameworks', frameworks_root_path, class: "dfe-header__navigation-link" %>
           </li>
+
+          <% if policy(:cms_portal).access_admin_settings? %>
+            <li class="dfe-header__navigation-item">
+              <%= link_to 'Management', frameworks_management_path, class: "dfe-header__navigation-link" %>
+            </li>
+          <% end %>
+
+          <% if policy(:cms_portal).access_proc_ops_portal? %>
+            <li class="dfe-header__navigation-item">
+              <%= link_to 'Case Management', support_root_path, class: "dfe-header__navigation-link" %>
+            </li>
+          <% end %>
         <% end %>
       <% end %>
-
-      <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
-        <%= link_to I18n.t("generic.button.sign_out"), sign_out_path, method: :delete, class: "govuk-header__link" %>
-      </li>
-    <% end %>
-  </ul>
+    </ul>
+  </div>
 </nav>
