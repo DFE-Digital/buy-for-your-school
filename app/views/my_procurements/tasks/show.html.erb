@@ -1,0 +1,11 @@
+<%= render partial: "support/cases/components/case_header",
+  locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("my_procurements.tasks.header") %></h1>
+
+<p class="govuk-body govuk-!-static-margin-bottom-8"><%= I18n.t("my_procurements.tasks.page_body") %></p>
+
+<%= govuk_task_list(id_prefix: "my_procurements_task") do |task_list|
+
+  task_list.with_item(title: I18n.t("my_procurements.task_list.item.download_contract_handover_pack"), href: "#", status:  govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do")))
+
+end %>
