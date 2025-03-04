@@ -2894,6 +2894,13 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
   integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
+dfe-frontend@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/dfe-frontend/-/dfe-frontend-2.0.1.tgz#b214c9866c8eca022623707090373560bc4c6b66"
+  integrity sha512-HwNu93gFPHKe0CvuXN9JAQrZIYsFa81IsY5kyt1AAV3zsLQpBXZQXnJyVPtbAZ+n0unV/Uimv3vHrGVHqzmxXA==
+  dependencies:
+    govuk-frontend "^5.3.1"
+
 diff-sequences@^29.6.3:
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-29.6.3.tgz#4deaf894d11407c51efc8418012f9e70b84ea921"
@@ -3365,6 +3372,11 @@ govuk-frontend@4.4.1:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.4.1.tgz#88857c4ad8508255a4e983030a3964d6e1674107"
   integrity sha512-Jm1LUWiH9vy47b6HSH/ksSb4ueBrtTTgyLBk+3X2qqAmmFUc1AXWLSYHid07YYu1tvn9RnodWk5Bac5Ywqk6tA==
+
+govuk-frontend@^5.3.1:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.8.0.tgz#da1b03cb4f2ba1f6036be0dac3c5327c3405174c"
+  integrity sha512-6l3f/YhDUCWjpmSW3CL95Hg8B+ZLzTf2WYo25ZtCs2Lb8UIzxxxFI8LxG7Ey/z04UuPhUunqFhTwSkQyJ69XbQ==
 
 govuk-frontend@^5.5.0:
   version "5.5.0"
