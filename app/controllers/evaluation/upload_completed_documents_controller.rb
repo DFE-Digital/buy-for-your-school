@@ -72,7 +72,7 @@ module Evaluation
     end
 
     def procops_notify_enabled?
-      Flipper.enabled?(:sc_notify_procops)
+      Flipper.enabled?(:sc_tasklist_tab)
     end
 
     def update_action_required

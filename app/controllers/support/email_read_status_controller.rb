@@ -28,7 +28,7 @@ module Support
     def update_action_required
       return if @email.ticket.blank?
 
-      action_required = if Flipper.enabled?(:sc_notify_procops)
+      action_required = if Flipper.enabled?(:sc_tasklist_tab)
                           notify_procops_action_required?
                         else
                           default_action_required?
