@@ -1,10 +1,20 @@
 <div class="notification-details">
+  <% evaluator_with_document = notification.support_case.evaluators.find { |evaluator| evaluator.has_uploaded_documents } %>
+  <% 
+  if notification.subject.respond_to?(:sender)
+    sender_email = notification.subject.sender["address"]
+    sender_name = notification.subject.sender["name"]
+  else
+    sender_email = evaluator_with_document&.email
+    sender_name = evaluator_with_document&.first_name
+  end 
+  %>
   <div class="major">
     <span class="action">
-      <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case, notification.subject.ref, back_to: Base64.encode64(support_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
-        Case <%= notification.subject.ref %> - procurement evaluation documents submitted by <%= current_user.email %>
+      <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case, notification.support_case.ref, back_to: Base64.encode64(support_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
+        Case <%= notification.support_case.ref %> - procurement evaluation documents submitted by <%= sender_email %>
       <% end %>
     </span>
-    <span class="by">from <%= notification.subject.agent.first_name %></span>
+    <span class="by">from <%= sender_name %></span>
   </div>
 </div>
