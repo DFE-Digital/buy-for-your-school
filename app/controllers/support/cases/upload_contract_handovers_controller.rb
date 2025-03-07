@@ -30,6 +30,10 @@ module Support
       Support::DownloadContractHandover.destroy_by(support_upload_contract_handover_id: params[:document_id])
       @uploaded_document.destroy!
 
+      if contract_handover_downloaded_document
+        contract_handover_downloaded_document.destroy!
+      end
+
       if @uploaded_handover_packs.empty?
         reset_uploaded_contract_handover
       end

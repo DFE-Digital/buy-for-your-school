@@ -377,6 +377,9 @@ en:
       - view all completed tasks and what actions you still need to perform
       - find all relevant documentation and forms
       - keep on top of due dates so the procurement process stays on track
+    download_contract_handover_pack:
+      header: Download contract handover pack
+      page_body: Save the contract handover pack to a safe location.
   exit_survey:
     better_quality:
       options:
