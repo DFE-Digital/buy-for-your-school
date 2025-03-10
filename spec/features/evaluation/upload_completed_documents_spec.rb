@@ -10,7 +10,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   let(:file_name_2) { "another-text-file.txt" }
   let(:evaluator_task_status) { "#evaluator_task-2-status" }
   let(:email) { create(:support_email, :inbox, ticket: support_case, is_read: false) }
-  let(:support_agent) { create(:support_agent) }
+  let(:support_agent) { create(:support_agent, :proc_ops) }
 
   before do
     Current.user = user
@@ -125,6 +125,16 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     click_button "Continue"
 
     expect(Support::Notification.count).to eq(1)
+
+    expect(Email.count).to eq(2)
+
+    expect(Email.last).to have_attributes(subject: "procurement evaluation documents submitted", ticket_id: support_case.id)
+
+    agent_is_signed_in(agent: support_agent)
+
+    visit support_notifications_path
+
+    expect(page).to have_text("Case #{support_case.ref} - procurement evaluation documents submitted by #{user.email}")
   end
 
   specify "viewing uploaded files" do

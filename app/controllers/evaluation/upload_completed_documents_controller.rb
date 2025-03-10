@@ -100,7 +100,18 @@ module Evaluation
     def notify_agent_if_documents_uploaded
       return unless agent_present_and_documents_uploaded?
 
-      @current_case.notify_agent_of_evaluation_submitted
+      email = Email.create!(
+        ticket_id: @current_case.id,
+        folder: 0,
+        is_read: false,
+        subject: "procurement evaluation documents submitted",
+        body: "Evaluation documents uploaded",
+        sender: { name: current_user.first_name, address: current_user.email },
+        recipients: { name: @current_case.agent.full_name, address: @current_case.agent.email },
+        ticket_type: @current_case.class.name,
+      )
+
+      @current_case.notify_agent_of_evaluation_submitted(email)
     end
   end
 end
