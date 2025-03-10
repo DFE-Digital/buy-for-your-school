@@ -55,7 +55,7 @@ module Support
     end
 
     def set_support_case_action_required
-      return unless Flipper.enabled?(:sc_tasklist_tab)
+      return unless Flipper.enabled?(:sc_tasklist_case)
 
       pending_evaluations = @current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
       unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).any?

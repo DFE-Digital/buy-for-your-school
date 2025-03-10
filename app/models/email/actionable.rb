@@ -6,7 +6,7 @@ module Email::Actionable
   end
 
   def set_ticket_action_required
-    action_required = if Flipper.enabled?(:sc_tasklist_tab)
+    action_required = if Flipper.enabled?(:sc_tasklist_case)
                         procops_action_required?
                       else
                         default_action_required?
