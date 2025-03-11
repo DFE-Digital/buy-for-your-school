@@ -1,0 +1,13 @@
+<%= render partial: "support/cases/components/case_header",
+  locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("my_procurements.download_contract_handover_pack.header") %></h1>
+<p class="govuk-body"><%= I18n.t("my_procurements.download_contract_handover_pack.page_body") %></p>
+<p class="govuk-body govuk-!-static-margin-bottom-8">
+  <%= mail_to ENV.fetch('MS_GRAPH_SHARED_MAILBOX_ADDRESS'), "contact us", subject: "Case #{ @current_case.ref} - Contract handover pack query from #{school_buying_professional.name}", class: "govuk-link" %>
+  if you have any problems.
+</p>
+<%= render "document_list"%>
+<div class="govuk-button-group flex-align-center">
+  <%= link_to I18n.t("generic.button.continue"), @back_url, class: "govuk-button" %>
+  <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+</div>

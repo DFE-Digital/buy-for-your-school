@@ -90,8 +90,16 @@
           end
         end
 
+        if @current_case.downloaded_all_contract_handover_pack?
+          download_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
+        elsif @current_case.downloaded_any_contract_handover_pack?
+          download_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
+        else
+          download_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey")
+        end
+
         task_list.with_item(title: I18n.t("support.case.label.tasklist.item.download_contract_handover_pack")) do | item | 
-          item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey"), cannot_start_yet: true)
+          item.with_status(text: download_handover_status, cannot_start_yet: true)
         end
       end %>
     </div>

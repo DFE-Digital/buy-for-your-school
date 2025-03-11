@@ -61,6 +61,32 @@ RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protect
     expect(page).to have_content("text-file.txt")
   end
 
+  specify "When uploaded files are deleted, download files data will be deleted" do
+    support_case.update!(has_uploaded_contract_handovers: true)
+    create(:support_contract_recipient, support_case:, dsi_uid: user.dfe_sign_in_uid, email: user.email)
+
+    document_uploader.save_contract_handover_pack!
+
+    visit my_procurements_download_handover_pack_path(support_case)
+
+    expect(page).to have_text("Download contract handover pack")
+
+    expect(page).to have_content("text-file.txt")
+    expect(page).to have_content("another-text-file.txt")
+
+    find_all("dl[data-download_documents-target] .govuk-link")[0].click
+
+    expect(Support::DownloadContractHandover.count).to eq(1)
+
+    visit edit_support_case_upload_contract_handover_path(case_id: support_case)
+
+    find_all(".case-files__file-remove a")[0].click
+
+    click_link "Delete"
+
+    expect(Support::DownloadContractHandover.count).to eq(0)
+  end
+
   specify "when all files are deleted" do
     support_case.reload
 

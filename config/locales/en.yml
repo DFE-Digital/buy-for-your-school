@@ -363,6 +363,9 @@ en:
     task_list:
       item:
         download_contract_handover_pack: Download contract handover pack
+    download_contract_handover_pack:
+      header: Download contract handover pack
+      page_body: Save the contract handover pack to a safe location.
   exit_survey:
     better_quality:
       options:

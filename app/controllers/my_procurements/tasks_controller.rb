@@ -3,6 +3,9 @@ module MyProcurements
     before_action :authenticate_user!, only: %i[edit]
     before_action :set_current_case
     before_action :check_user_is_school_buying_professional
+    before_action :set_uploaded_handover_packs
+    before_action :set_downloaded_handover_packs
+    before_action :downloaded_handover_pack_status
 
     def edit
       session[:email_sbp_link] = my_procurements_task_path(@current_case, host: request.host)
@@ -33,6 +36,24 @@ module MyProcurements
       super
 
       session[:email_sbp_link] = my_procurements_task_path(id: params[:id], host: request.host)
+    end
+
+    def set_uploaded_handover_packs
+      @uploaded_handover_packs = @current_case.upload_contract_handovers
+    end
+
+    def set_downloaded_handover_packs
+      @downloaded_handover_packs = Support::DownloadContractHandover.where(support_case_id: params[:id], email: current_user.email)
+    end
+
+    def downloaded_handover_pack_status
+      @downloaded_handover_pack_status = if @uploaded_handover_packs.count == @downloaded_handover_packs.count && @uploaded_handover_packs.any?
+                                           :complete
+                                         elsif @uploaded_handover_packs.count > @downloaded_handover_packs.count && @downloaded_handover_packs.any?
+                                           :in_progress
+                                         else
+                                           :to_do
+                                         end
     end
   end
 end

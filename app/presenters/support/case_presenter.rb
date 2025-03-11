@@ -253,6 +253,24 @@ module Support
       has_shared_handover_pack
     end
 
+    def downloaded_all_contract_handover_pack?
+      download_handovers = Support::DownloadContractHandover.where(support_case_id: id)
+      contract_recipients.all? do |recipient|
+        upload_contract_handovers.all? do |handover|
+          download_handovers.exists?(support_upload_contract_handover_id: handover.id, email: recipient.email)
+        end
+      end
+    end
+
+    def downloaded_any_contract_handover_pack?
+      download_handovers = Support::DownloadContractHandover.where(support_case_id: id)
+      contract_recipients.any? do |recipient|
+        upload_contract_handovers.any? do |handover|
+          download_handovers.exists?(support_upload_contract_handover_id: handover.id, email: recipient.email)
+        end
+      end
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
