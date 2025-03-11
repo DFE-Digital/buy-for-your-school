@@ -21,13 +21,13 @@ module Support
 
     def destroy
       @uploaded_document = Support::UploadContractHandover.find(params[:document_id])
-      @support_document = Support::Document.find(@uploaded_document.attachable_id)
 
       @back_url = edit_support_case_upload_contract_handover_path
       return unless params[:confirm]
 
+      Support::Document.destroy_by(id: @uploaded_document.attachable_id)
+      Support::DownloadContractHandover.destroy_by(support_upload_contract_handover_id: params[:document_id])
       @uploaded_document.destroy!
-      @support_document.destroy!
 
       if @uploaded_handover_packs.empty?
         reset_uploaded_contract_handover

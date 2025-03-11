@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_27_165048) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_07_112416) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -699,6 +699,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_27_165048) do
     t.datetime "updated_at", null: false
     t.uuid "case_id"
     t.index ["case_id"], name: "index_support_documents_on_case_id"
+  end
+
+  create_table "support_download_contract_handovers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_case_id"
+    t.uuid "support_upload_contract_handover_id"
+    t.string "email", null: false
+    t.boolean "has_downloaded_documents", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email", "support_case_id", "support_upload_contract_handover_id"], name: "idx_on_email_support_case_id_support_upload_contract_e4763cd05c", unique: true
+    t.index ["support_case_id"], name: "index_support_download_contract_handovers_on_support_case_id"
+    t.index ["support_upload_contract_handover_id"], name: "idx_on_support_upload_contract_handover_id_044312d42c"
   end
 
   create_table "support_email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
