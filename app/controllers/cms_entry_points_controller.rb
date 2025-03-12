@@ -17,6 +17,7 @@ private
       return email_evaluator_link
     end
 
+    return session[:email_school_buyer_link] if session[:email_school_buyer_link].present?
     return support_root_path if policy.access_proc_ops_portal?
     return engagement_root_path if policy.access_e_and_o_portal?
     return support_case_statistics_path if policy.access_statistics?

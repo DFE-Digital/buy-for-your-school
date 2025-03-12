@@ -76,7 +76,7 @@ private
   end
 
   def external_user_path
-    session[:email_evaluator_link].presence || dashboard_path
+    session[:email_evaluator_link].presence || session[:email_school_buyer_link].presence || dashboard_path
   end
 
   # Routing logic for users after authentication
@@ -95,6 +95,13 @@ private
 
   # @return [String]
   def exit_path
+    if session[:school_buyer_signin_link]
+      school_buyer_signin_link = session[:school_buyer_signin_link]
+      session.delete(:email_school_buyer_link)
+      session.delete(:school_buyer_signin_link)
+      return school_buyer_signin_link
+    end
+
     if find_framework_entrypoint?
       session.delete(:faf_referrer)
       return framework_requests_path
