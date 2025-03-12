@@ -366,6 +366,13 @@ en:
     download_contract_handover_pack:
       header: Download contract handover pack
       page_body: Save the contract handover pack to a safe location.
+    signin_page:
+      page_title: Access the online procurement portal
+      overview_purpose: 'By using this service you will be able to:'
+      overview_supported_category_list:
+      - view all completed tasks and what actions you still need to perform
+      - find all relevant documentation and forms
+      - keep on top of due dates so the procurement process stays on track
   exit_survey:
     better_quality:
       options:

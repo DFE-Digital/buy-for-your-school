@@ -1,14 +1,14 @@
 module MyProcurements
   class TasksController < ApplicationController
     before_action :authenticate_user!, only: %i[edit]
-    before_action :set_current_case
+    before_action :set_current_case, only: %i[edit show]
     before_action :check_user_is_school_buying_professional
     before_action :set_uploaded_handover_packs
     before_action :set_downloaded_handover_packs
     before_action :downloaded_handover_pack_status
 
     def edit
-      session[:email_sbp_link] = my_procurements_task_path(@current_case, host: request.host)
+      session[:email_school_buyer_link] = my_procurements_task_path(@current_case, host: request.host)
       redirect_to my_procurements_task_path(@current_case)
     end
 
@@ -24,18 +24,22 @@ module MyProcurements
 
     def set_current_case
       @current_case = Support::Case.find(params[:id])
+      session[:school_buyer_signin_link] = my_procurements_signin_path(id: params[:id])
     end
 
     def check_user_is_school_buying_professional
       return if school_buying_professional.present? && current_user.email.downcase == school_buying_professional.email.downcase
 
-      redirect_to root_path, notice: I18n.t("my_procurements.tasks.not_permitted")
+      redirect_to my_procurements_signin_path, notice: I18n.t("my_procurements.tasks.not_permitted")
     end
 
     def authenticate_user!
-      super
+      return unless current_user.guest?
 
-      session[:email_sbp_link] = my_procurements_task_path(id: params[:id], host: request.host)
+      session.delete(:dfe_sign_in_uid)
+      session[:email_school_buyer_link] = my_procurements_task_path(id: params[:id], host: request.host)
+      session[:school_buyer_signin_link] = my_procurements_signin_path(id: params[:id])
+      redirect_to my_procurements_signin_path(id: params[:id]), notice: I18n.t("banner.session.visitor")
     end
 
     def set_uploaded_handover_packs

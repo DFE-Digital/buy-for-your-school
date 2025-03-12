@@ -351,6 +351,7 @@ Rails.application.routes.draw do
   namespace :my_procurements do
     resources :download_handover_packs, only: %i[show update]
     resources :tasks, only: %i[show edit]
+    resources :signin, only: %i[show edit]
     get "verify/link/:id", to: "tasks#edit", as: :verify_unique_link
   end
 
