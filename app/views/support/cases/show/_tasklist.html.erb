@@ -90,9 +90,9 @@
           end
         end
 
-        if @current_case.downloaded_all_contract_handover_pack?
+        if @current_case.downloaded_all_contract_handover_pack_status?
           download_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-        elsif @current_case.downloaded_any_contract_handover_pack?
+        elsif @current_case.downloaded_any_contract_handover_pack_status?
           download_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
         else
           download_handover_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.cannot_start"), colour: "grey")

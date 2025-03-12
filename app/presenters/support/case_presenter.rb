@@ -271,6 +271,14 @@ module Support
       end
     end
 
+    def downloaded_all_contract_handover_pack_status?
+      contract_recipients.any? && upload_contract_handover_complete? && downloaded_all_contract_handover_pack?
+    end
+
+    def downloaded_any_contract_handover_pack_status?
+      contract_recipients.any? && upload_contract_handover_complete? && downloaded_any_contract_handover_pack?
+    end
+
   private
 
     # @return [String] 20 March 2021 at 12:00
