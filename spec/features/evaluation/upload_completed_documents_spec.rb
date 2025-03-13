@@ -101,7 +101,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
     upload_documents
 
-    support_evaluator.update!(has_uploaded_documents: true)
+    support_evaluator.update!(has_uploaded_documents: true, evaluation_submitted: true)
 
     expect { document_uploader.save_evaluation_document!(user, true) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
