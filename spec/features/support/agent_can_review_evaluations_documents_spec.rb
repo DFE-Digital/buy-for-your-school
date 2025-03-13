@@ -11,7 +11,7 @@ describe "Agent can review evaluations", type: :request do
     Current.actor = agent
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
-    document_uploader.save_evaluation_document!(user.email)
+    document_uploader.save_evaluation_document!(user.email, true)
   end
 
   it "check agent can download the document evaluation" do
