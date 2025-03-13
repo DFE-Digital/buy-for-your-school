@@ -6,7 +6,8 @@ module Evaluation
     before_action :set_uploaded_documents
     before_action :set_downloaded_documents
     before_action :download_document_status
-    before_action :uploaded_evalaution_files
+    before_action :uploaded_evaluation_files
+    before_action :upload_document_status
 
     def edit
       session[:email_evaluator_link] = evaluation_task_path(@current_case, host: request.host)
@@ -44,12 +45,24 @@ module Evaluation
 
     def download_document_status
       @download_document_status = if @documents.count == @downloaded_documents.count && @documents.any?
-                                    "complete"
+                                    :complete
                                   elsif @documents.count > @downloaded_documents.count && @downloaded_documents.any?
-                                    "in_progress"
+                                    :in_progress
                                   else
-                                    "to_do"
+                                    :to_do
                                   end
+    end
+
+    def upload_document_status
+      all_documents_downloaded = @documents.count == @downloaded_documents.count && @documents.any?
+      partial_uploaded = current_evaluator && !current_evaluator.has_uploaded_documents && @uploaded_evaluation_files.any?
+      @upload_document_status = if all_documents_downloaded && current_evaluator&.has_uploaded_documents?
+                                  :complete
+                                elsif all_documents_downloaded && partial_uploaded
+                                  :in_progress
+                                else
+                                  :to_do
+                                end
     end
 
     def authenticate_user!
@@ -58,8 +71,8 @@ module Evaluation
       session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
     end
 
-    def uploaded_evalaution_files
-      @uploaded_evalaution_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:id], email: current_user.email)
+    def uploaded_evaluation_files
+      @uploaded_evaluation_files ||= Support::EvaluatorsUploadDocument.where(support_case_id: params[:id], email: current_user.email)
     end
   end
 end

@@ -18,7 +18,7 @@ module Support::Case::DocumentUploadable
     end
   end
 
-  def upload_evaluation_document_files(files:, email:)
+  def upload_evaluation_document_files(files:, email:, evaluation_submitted:)
     return if files.blank?
 
     files.each do |file|
@@ -28,6 +28,7 @@ module Support::Case::DocumentUploadable
         file_name: file.original_filename,
         file_size: file.size,
         email:,
+        evaluation_submitted:,
       )
     end
   end

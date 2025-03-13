@@ -20,7 +20,7 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
 
     document_uploader.save!
 
-    document_uploader.save_evaluation_document!(user.email)
+    document_uploader.save_evaluation_document!(user.email, true)
 
     send_email_to_evaluators(support_case)
 

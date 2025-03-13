@@ -48,7 +48,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_evaluator.update!(has_uploaded_documents: false)
 
-    expect { document_uploader.save_evaluation_document!(user.email) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
+    expect { document_uploader.save_evaluation_document!(user.email, false) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
     expect(support_case.evaluators_upload_documents.map { |a| a.file.attached? }.all?).to eq(true)
 
@@ -83,6 +83,11 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     click_button "Continue"
 
     expect(Support::Notification.count).to eq(0)
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    expect(find_all(".case-files__file")[0]).to have_text("Delete")
+    expect(find_all(".case-files__file")[1]).to have_text("Delete")
   end
 
   specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
@@ -90,7 +95,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_evaluator.update!(has_uploaded_documents: true)
 
-    expect { document_uploader.save_evaluation_document!(user.email) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
+    expect { document_uploader.save_evaluation_document!(user.email, true) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
     expect(support_case.evaluators_upload_documents.map { |a| a.file.attached? }.all?).to eq(true)
 
@@ -135,14 +140,19 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     visit support_notifications_path
 
     expect(page).to have_text("Case #{support_case.ref} - procurement evaluation documents submitted by #{user.email}")
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    expect(find_all(".case-files__file")[0]).not_to have_text("Delete")
+    expect(find_all(".case-files__file")[1]).not_to have_text("Delete")
   end
 
   specify "viewing uploaded files" do
     upload_documents
 
-    support_evaluator.update!(has_uploaded_documents: true)
+    support_evaluator.update!(has_uploaded_documents: false)
 
-    document_uploader.save_evaluation_document!(user.email)
+    document_uploader.save_evaluation_document!(user.email, false)
 
     visit evaluation_upload_completed_document_path(support_case)
 

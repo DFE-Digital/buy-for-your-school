@@ -2,7 +2,7 @@
 
   <%= @moderation_stage_id %>
   <%= form.hidden_field :evaluation_approved, { multiple: true } %>
-  <% @current_case.evaluators.all.each do |evaluator| %>
+  <% @current_case.evaluators.order(:email).each do |evaluator| %>
     <div class="govuk-form-group">
       <%= form.govuk_check_box :evaluation_approved, evaluator.email, label: { text: evaluator.email }, checked:  evaluator.evaluation_approved, disabled: !evaluator.has_uploaded_documents %>
       <details class="govuk-details govuk-!-margin-left-9 govuk-!-margin-top-3">
@@ -12,7 +12,7 @@
           </span>
         </summary>
         <div class="govuk-details__text">
-          <% @evaluation_files.select {|file| file.email.downcase == evaluator.email.downcase}.each do |uploaded_file| %>
+          <% @evaluation_files.select {|file| file.email.downcase == evaluator.email.downcase && file.evaluation_submitted}.each do |uploaded_file| %>
             <p><%= link_to uploaded_file.file_name, support_document_download_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %></p>
           <% end %>
         </div>

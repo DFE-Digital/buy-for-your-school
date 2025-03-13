@@ -4,6 +4,7 @@ module Evaluation
     before_action :check_user_is_evaluator
     before_action { @back_url = evaluation_task_path(@current_case) }
     before_action :uploaded_files
+    before_action :evaluation_approved_by_dfe?
     def show
       @document_uploader = @current_case.document_uploader
     end
@@ -11,10 +12,11 @@ module Evaluation
     def create
       @document_uploader = @current_case.document_uploader(document_uploader_params)
       if @document_uploader.valid?
-        @document_uploader.save_evaluation_document!(current_user.email)
+        @document_uploader.save_evaluation_document!(current_user.email, case_document_uploader_params[:has_uploaded_documents])
         current_evaluator.update!(case_document_uploader_params)
         update_action_required
         notify_procops_document_uploaded
+        update_evaluation_submitted
         redirect_to @back_url
       else
         render :show
@@ -47,6 +49,16 @@ module Evaluation
     def set_current_case
       @current_case = Support::Case.find(params[:case_id])
       @evaluation_due_date = @current_case.evaluation_due_date? ? @current_case.evaluation_due_date.strftime("%d %B %Y") : nil
+    end
+
+    def update_evaluation_submitted
+      return unless current_evaluator.has_uploaded_documents?
+
+      evaluation_submit = Support::EvaluatorsUploadDocument.where(email: current_user.email, support_case_id: params[:case_id], evaluation_submitted: false)
+
+      if evaluation_submit.exists?
+        evaluation_submit.update_all(evaluation_submitted: true)
+      end
     end
 
     def document_uploader_params
@@ -112,6 +124,12 @@ module Evaluation
       )
 
       @current_case.notify_agent_of_evaluation_submitted(email)
+    end
+
+    def evaluation_approved_by_dfe?
+      return unless current_evaluator.evaluation_approved?
+
+      redirect_to evaluation_task_path(@current_case)
     end
   end
 end

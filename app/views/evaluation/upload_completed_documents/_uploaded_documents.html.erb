@@ -30,6 +30,7 @@
                 <span class="case-files__file-name">
                     <%= link_to uploaded_file.file_name, evaluation_download_document_path(@current_case, document_type: uploaded_file.class, document_id: uploaded_file.id), method: :put, class: "govuk-link" %>
                 </span>
+                <% unless uploaded_file.evaluation_submitted? %>
                 <div class="case-files__file-actions">
                     <span class="case-files__file-remove">
                         <%= link_to I18n.t("generic.button.delete"),
@@ -38,6 +39,7 @@
                             class: "govuk-link govuk-link--no-visited-state" %>
                     </span>
                 </div>
+                <% end %>
             </div>
         <% end %>
     </div>

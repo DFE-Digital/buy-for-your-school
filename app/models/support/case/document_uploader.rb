@@ -15,8 +15,8 @@ class Support::Case::DocumentUploader
     support_case.upload_document_files(files:)
   end
 
-  def save_evaluation_document!(email)
-    support_case.upload_evaluation_document_files(files:, email:)
+  def save_evaluation_document!(email, evaluation_submitted)
+    support_case.upload_evaluation_document_files(files:, email:, evaluation_submitted:)
   end
 
   def save_contract_handover_pack!
