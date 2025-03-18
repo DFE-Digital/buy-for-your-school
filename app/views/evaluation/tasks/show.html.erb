@@ -6,17 +6,19 @@
 
 <%= govuk_task_list(id_prefix: "evaluator_task") do |task_list|
 
-  if @download_document_status == 'complete'
+  case @download_document_status
+  when :complete
     download_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-  elsif @download_document_status == 'in_progress'
+  when :in_progress
     download_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
   else
     download_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
   end
 
-  if @download_document_status == 'complete' && current_evaluator&.has_uploaded_documents?
+  case @upload_document_status
+  when :complete
     upload_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-  elsif @download_document_status == 'complete' && ( current_evaluator && !current_evaluator.has_uploaded_documents && @uploaded_evalaution_files.any? )
+  when :in_progress
     upload_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
   else
     upload_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
@@ -24,7 +26,11 @@
 
   task_list.with_item(title: I18n.t("evaluation.task_list.item.download_documents"), href: evaluation_download_document_path(@current_case), status: download_status)
 
-  if @download_document_status == 'complete'
+  if current_evaluator&.evaluation_approved?
+    task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents")) do | item | 
+      item.with_status(text: govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green"))
+    end
+  elsif @download_document_status == :complete
     task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents"), href: evaluation_upload_completed_document_path(@current_case), status: upload_status)
   else
     task_list.with_item(title: I18n.t("evaluation.task_list.item.upload_completed_documents")) do | item | 

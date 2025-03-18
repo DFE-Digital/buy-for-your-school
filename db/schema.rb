@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_11_101923) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_13_122622) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -879,6 +879,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_11_101923) do
     t.string "attachable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "evaluation_submitted", default: true
     t.index ["support_case_id"], name: "index_support_evaluators_upload_documents_on_support_case_id"
   end
 
