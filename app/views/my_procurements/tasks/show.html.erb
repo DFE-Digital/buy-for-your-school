@@ -2,7 +2,7 @@
   locals: { current_case: @current_case } %>
 <h1 class="govuk-heading-l"><%= I18n.t("my_procurements.tasks.header") %></h1>
 
-<p class="govuk-body govuk-!-static-margin-bottom-8"><%= I18n.t("my_procurements.tasks.page_body") %></p>
+<br>
 
 <%= govuk_task_list(id_prefix: "my_procurements_task") do |task_list|
 
