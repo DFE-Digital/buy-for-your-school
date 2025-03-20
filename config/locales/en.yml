@@ -359,7 +359,6 @@ en:
     tasks:
       not_permitted: "You aren’t a school buying professional for this procurement" 
       header: "Procurement task list"
-      page_body: "Here you can see some of your tasks that need to happen as part of this procurement."
     task_list:
       item:
         download_contract_handover_pack: Download contract handover pack
