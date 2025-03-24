@@ -86,6 +86,29 @@ describe Support::SyncFrameworks do
           end
         end
       end
+
+      context "when there ia a archived framework" do
+        let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
+        let!(:existing_framework1) do
+          create(
+            :frameworks_framework,
+            name: "Framework 3",
+            provider_id: provider_detail.id,
+            faf_slug_ref: "ref-1",
+            faf_category: "Energy",
+            provider_end_date: Date.parse("2026-08-31"),
+            url: testurl1,
+            description: "Desc",
+            source: 2,
+            status: "dfe_approved",
+            faf_archived_at: Date.parse("2024-12-31"),
+          )
+        end
+
+        it "makes no changes to existing frameworks" do
+          expect { service.call }.to(not_change { existing_framework1.reload.faf_archived_at })
+        end
+      end
     end
   end
 end

@@ -124,7 +124,7 @@ module Support
     end
 
     def update_archive_status(prepared_frameworks)
-      cms_frameworks = ::Frameworks::Framework.where(source: 2)
+      cms_frameworks = ::Frameworks::Framework.where(source: 2, faf_archived_at: nil)
 
       cms_frameworks.each do |cms_framework|
         exists = prepared_frameworks.any? do |faf_framework|
