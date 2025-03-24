@@ -30,8 +30,8 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     user_is_signed_in(user:)
 
     document_uploader.save!
-    visit_and_click_link(evaluation_download_document_path(support_case), 0)
-    visit_and_click_link(evaluation_download_document_path(support_case), 1)
+    visit_and_click_link(evaluation_download_document_path(id: support_case.id), 0)
+    visit_and_click_link(evaluation_download_document_path(id: support_case.id), 1)
   end
   specify "when no files are selected" do
     upload_documents
