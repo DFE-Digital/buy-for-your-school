@@ -582,6 +582,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_20_104722) do
     t.string "attachable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "evaluation_submitted", default: false
     t.index ["support_case_id"], name: "index_support_case_upload_documents_on_support_case_id"
   end
 
@@ -708,7 +709,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_20_104722) do
     t.boolean "has_downloaded_documents", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email", "support_case_id", "support_upload_contract_handover_id"], name: "idx_on_email_support_case_id_support_upload_contract_e4763cd05c", unique: true
+    t.index ["email", "support_case_id", "support_upload_contract_handover_id"], name: "idx_on_email_support_case_id_support_upload_contrac_e4763cd05c", unique: true
     t.index ["support_case_id"], name: "index_support_download_contract_handovers_on_support_case_id"
     t.index ["support_upload_contract_handover_id"], name: "idx_on_support_upload_contract_handover_id_044312d42c"
   end
@@ -852,6 +853,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_20_104722) do
     t.datetime "updated_at", null: false
     t.boolean "has_uploaded_documents", default: false
     t.boolean "evaluation_approved", default: false
+    t.boolean "evaluation_submitted", default: false
     t.index ["dsi_uid"], name: "index_support_evaluators_on_dsi_uid"
     t.index ["email", "support_case_id"], name: "index_support_evaluators_on_email_and_support_case_id", unique: true
     t.index ["support_case_id"], name: "index_support_evaluators_on_support_case_id"
