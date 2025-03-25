@@ -13,7 +13,7 @@
     </thead>
 
     <tbody class="govuk-table__body">
-      <%= render partial: "support/cases/case_history/interaction", collection: interactions, as: :interaction %>
+      <%= render partial: "support/cases/case_history/interaction", collection: interactions.select { |interaction| interaction.show_case_history? }, as: :interaction %>
     </tbody>
   </table>
 </div>

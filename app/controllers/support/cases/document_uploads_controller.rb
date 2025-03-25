@@ -13,6 +13,7 @@ module Support
       if @document_uploader.valid?
         @document_uploader.save!
         @current_case.update!(case_document_uploader_params)
+        log_all_completed_documents_uploaded
         redirect_to @back_url
       else
         render :edit
@@ -35,6 +36,9 @@ module Support
       if @uploaded_files.empty?
         reset_uploaded_documents
       end
+
+      log_documents_deleted(@uploaded_document.file_name)
+
       redirect_to edit_support_case_document_uploads_path,
                   notice: I18n.t("support.cases.upload_documents.flash.destroyed", name: @uploaded_document.file_name)
     end
@@ -55,6 +59,20 @@ module Support
 
     def reset_uploaded_documents
       @current_case.update!(has_uploaded_documents: false)
+    end
+
+    def log_documents_deleted(file_name)
+      body = "#{file_name} deleted by #{Current.agent.first_name} #{Current.agent.last_name}"
+      additional_data = { event: "document_delete", file_name:, document_id: params[:document_id] }
+      Support::EvaluationJourneyTracking.new(:documents_deleted, params[:case_id], body, additional_data).call
+    end
+
+    def log_all_completed_documents_uploaded
+      return unless @current_case.has_uploaded_documents?
+
+      body = "Upload documents marked complete by #{Current.agent.first_name} #{Current.agent.last_name}"
+      additional_data = { event: "all_completed_documents_uploaded", uploaded_all: "Yes" }
+      Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, params[:case_id], body, additional_data).call
     end
   end
 end

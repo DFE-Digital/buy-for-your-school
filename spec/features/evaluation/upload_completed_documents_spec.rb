@@ -5,17 +5,18 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   let(:file_1) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
   let(:file_2) { fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain") }
   let(:document_uploader) { support_case.document_uploader(files: [file_1, file_2]) }
-  let!(:support_evaluator) { create(:support_evaluator, support_case:, email: user.email, dsi_uid: user.dfe_sign_in_uid) }
+  let!(:support_evaluator) { create(:support_evaluator, support_case:, email: user.email, dsi_uid: user.dfe_sign_in_uid, first_name: "Momo", last_name: "Taro") }
   let(:file_name_1) { "text-file.txt" }
   let(:file_name_2) { "another-text-file.txt" }
   let(:evaluator_task_status) { "#evaluator_task-2-status" }
   let(:email) { create(:support_email, :inbox, ticket: support_case, is_read: false) }
+  let(:given_roles) { %w[procops] }
+  let(:user_agent) { create(:user, :caseworker) }
   let(:support_agent) { create(:support_agent, :proc_ops) }
+  let(:agent) { Support::Agent.find_or_create_by_user(user_agent).tap { |agent| agent.update!(roles: given_roles) } }
 
   before do
-    Current.user = user
-    user_exists_in_dfe_sign_in(user:)
-    user_is_signed_in(user:)
+    Current.agent = agent
   end
 
   def visit_and_click_link(path, link_index)
@@ -24,6 +25,10 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   end
 
   def upload_documents
+    Current.user = user
+    user_exists_in_dfe_sign_in(user:)
+    user_is_signed_in(user:)
+
     document_uploader.save!
     visit_and_click_link(evaluation_download_document_path(support_case), 0)
     visit_and_click_link(evaluation_download_document_path(support_case), 1)
@@ -48,13 +53,16 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_evaluator.update!(has_uploaded_documents: false)
 
-    expect { document_uploader.save_evaluation_document!(user.email, false) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
+    expect { document_uploader.save_evaluation_document!(user, false) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
     expect(support_case.evaluators_upload_documents.map { |a| a.file.attached? }.all?).to eq(true)
 
     visit evaluation_task_path(support_case)
 
     expect(find(evaluator_task_status)).to have_text("In progress")
+
+    expect(Support::Interaction.count).to eq(6)
+    expect(Support::Interaction.all[5].body).to eq("text-file.txt added by Procurement Specialist")
 
     email.update!(is_read: true)
 
@@ -95,13 +103,19 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_evaluator.update!(has_uploaded_documents: true)
 
-    expect { document_uploader.save_evaluation_document!(user.email, true) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
+    expect { document_uploader.save_evaluation_document!(user, true) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
     expect(support_case.evaluators_upload_documents.map { |a| a.file.attached? }.all?).to eq(true)
 
     visit evaluation_task_path(support_case)
 
     expect(find(evaluator_task_status)).to have_text("Complete")
+
+    expect(Support::Interaction.count).to eq(6)
+
+    expect(Support::Interaction.all[0].body).to eq("another-text-file.txt added by evaluator first_name last_name")
+
+    expect(Support::Interaction.all[1].body).to eq("text-file.txt added by evaluator first_name last_name")
 
     email.update!(is_read: true)
 
@@ -152,7 +166,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_evaluator.update!(has_uploaded_documents: false)
 
-    document_uploader.save_evaluation_document!(user.email, false)
+    document_uploader.save_evaluation_document!(user, false)
 
     visit evaluation_upload_completed_document_path(support_case)
 

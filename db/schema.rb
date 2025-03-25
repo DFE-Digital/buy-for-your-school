@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_13_122622) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_20_104722) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -926,6 +926,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_13_122622) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "additional_data", default: {}, null: false
+    t.boolean "show_case_history", default: true
     t.index ["agent_id"], name: "index_support_interactions_on_agent_id"
     t.index ["case_id"], name: "index_support_interactions_on_case_id"
     t.index ["event_type"], name: "index_support_interactions_on_event_type"

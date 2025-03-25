@@ -14,6 +14,7 @@ module Support
       approve_selected_evaluations
       update_procurement_stage_if_needed
       set_support_case_action_required
+      log_evaluation_completed
 
       redirect_to @back_url
     end
@@ -118,6 +119,14 @@ module Support
 
       @email_evaluators.save_draft!
       @email_evaluators.deliver_as_new_message
+    end
+
+    def log_evaluation_completed
+      return if evaluation_pending?
+
+      body = "Evaluation marked complete by #{Current.agent.first_name} #{Current.agent.last_name}"
+      additional_data = { event: "evaluation_completed", agent_id: Current.agent.id }
+      Support::EvaluationJourneyTracking.new(:evaluation_completed, params[:case_id], body, additional_data).call
     end
   end
 end

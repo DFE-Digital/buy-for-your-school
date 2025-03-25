@@ -8,6 +8,10 @@ RSpec.feature "Agent can upload evaluation documents", :js, :with_csrf_protectio
   let(:file_2) { fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain") }
   let(:document_uploader) { support_case.document_uploader(files: [file_1, file_2]) }
 
+  before do
+    Current.agent = agent
+  end
+
   specify "when no files are selected" do
     visit edit_support_case_document_uploads_path(case_id: support_case)
 
@@ -43,6 +47,9 @@ RSpec.feature "Agent can upload evaluation documents", :js, :with_csrf_protectio
     visit support_case_path(support_case, anchor: "tasklist")
 
     expect(find("#complete-evaluation-3-status")).to have_text("Complete")
+
+    expect(Support::Interaction.count).to eq(2)
+    expect(Support::Interaction.first.body).to eq("another-text-file.txt added by Procurement Specialist")
   end
 
   specify "viewing uploaded files" do

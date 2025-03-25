@@ -10,6 +10,8 @@ describe "Agent can add evaluators", :js do
 
     click_link "Add"
 
+    expect(Support::Interaction.count).to eq(0)
+
     fill_in "First name", with: "Momo"
     fill_in "Last name", with: "Taro"
     fill_in "Email address", with: "momotaro@example.com"
@@ -18,6 +20,9 @@ describe "Agent can add evaluators", :js do
 
     expect(page).to have_text("Momo Taro successfully added")
     expect(page).to have_text("momotaro@example.com")
+
+    expect(Support::Interaction.count).to eq(1)
+    expect(Support::Interaction.last.body).to eq("Evaluator Momo Taro added by Procurement Specialist")
 
     click_link "Change"
 
@@ -30,6 +35,10 @@ describe "Agent can add evaluators", :js do
     expect(page).to have_text("Oni Baba successfully updated")
     expect(page).to have_text("onibaba@example.com")
 
+    expect(Support::Interaction.count).to eq(3)
+    expect(Support::Interaction.all[0].body).to eq("Evaluator email for Oni Baba updated by Procurement Specialist")
+    expect(Support::Interaction.all[1].body).to eq("Evaluator Momo Taro changed to Oni Baba by Procurement Specialist")
+
     click_link "Change"
     click_link "Remove"
 
@@ -39,5 +48,8 @@ describe "Agent can add evaluators", :js do
 
     expect(page).to have_text("Oni Baba successfully removed")
     expect(page).not_to have_text("onibaba@example.com")
+
+    expect(Support::Interaction.count).to eq(4)
+    expect(Support::Interaction.all[0].body).to eq("Evaluator Oni Baba removed by Procurement Specialist")
   end
 end

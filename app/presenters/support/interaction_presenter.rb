@@ -140,7 +140,42 @@ module Support
     # @return [Array] with
     def contact_events
       Support::Interaction.event_types.reject do |key, _int|
-        %w[note support_request hub_notes hub_progress_notes hub_migration faf_support_request procurement_updated existing_contract_updated new_contract_updated savings_updated state_change email_merge create_case case_categorisation_changed case_source_changed case_assigned case_opened case_procurement_stage_changed case_next_key_date_changed case_transferred].include?(key)
+        %w[
+          note
+          support_request
+          hub_notes
+          hub_progress_notes
+          hub_migration
+          faf_support_request
+          procurement_updated
+          existing_contract_updated
+          new_contract_updated
+          savings_updated
+          state_change
+          email_merge
+          create_case
+          case_categorisation_changed
+          case_source_changed
+          case_assigned
+          case_opened
+          case_procurement_stage_changed
+          case_next_key_date_changed
+          case_transferred
+          evaluator_added
+          evaluator_updated
+          evaluator_removed
+          evaluation_due_date_added
+          evaluation_due_date_updated
+          documents_uploaded
+          documents_deleted
+          all_documents_uploaded
+          email_evaluators
+          documents_downloaded
+          completed_documents_uploaded
+          completed_documents_deleted
+          all_completed_documents_uploaded
+          evaluation_completed
+        ].include?(key)
       end
     end
 
