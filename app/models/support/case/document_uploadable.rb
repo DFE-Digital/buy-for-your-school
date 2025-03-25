@@ -9,27 +9,31 @@ module Support::Case::DocumentUploadable
     return if files.blank?
 
     files.each do |file|
-      upload_documents.create!(
+      uploaded_document = upload_documents.create!(
         attachable: Support::Document.create!(case: self, file_type: file.content_type, file:),
         file_type: file.content_type,
         file_name: file.original_filename,
         file_size: file.size,
       )
+
+      log_documents_uploaded(file.original_filename, uploaded_document.id)
     end
   end
 
-  def upload_evaluation_document_files(files:, email:, evaluation_submitted:)
+  def upload_evaluation_document_files(files:, evaluator:, evaluation_submitted:)
     return if files.blank?
 
     files.each do |file|
-      evaluators_upload_documents.create!(
+      uploaded_document = evaluators_upload_documents.create!(
         attachable: Support::Document.create!(case: self, file_type: file.content_type, file:),
         file_type: file.content_type,
         file_name: file.original_filename,
         file_size: file.size,
-        email:,
+        email: evaluator.email,
         evaluation_submitted:,
       )
+
+      log_completed_documents_uploaded(file.original_filename, uploaded_document.id, evaluator)
     end
   end
 
@@ -44,5 +48,17 @@ module Support::Case::DocumentUploadable
         file_size: file.size,
       )
     end
+  end
+
+  def log_documents_uploaded(file_name, document_id)
+    body = "#{file_name} added by #{Current.agent.first_name} #{Current.agent.last_name}"
+    additional_data = { event: "document_upload", file_name:, document_id: }
+    Support::EvaluationJourneyTracking.new(:documents_uploaded, id, body, additional_data).call
+  end
+
+  def log_completed_documents_uploaded(file_name, document_id, evaluator)
+    body = "#{file_name} added by evaluator #{evaluator.first_name} #{evaluator.last_name}"
+    additional_data = { event: "document_upload", file_name:, document_id:, evaluator_id: evaluator.id }
+    Support::EvaluationJourneyTracking.new(:completed_documents_uploaded, id, body, additional_data).call
   end
 end

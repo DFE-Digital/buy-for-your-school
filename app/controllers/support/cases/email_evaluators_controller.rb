@@ -36,6 +36,8 @@ module Support
 
         @current_case.update!(sent_email_to_evaluators: true)
 
+        log_email_evaluators
+
         redirect_to @back_url
       else
         render :edit
@@ -84,6 +86,12 @@ module Support
 
     def parse_template
       @email_evaluators.html_content = Support::EmailEvaluatorsVariableParser.new(@current_case, @email_evaluators, @unique_link).parse_template
+    end
+
+    def log_email_evaluators
+      body = "Email sent to #{@to_recipients}"
+      additional_data = { email_id: params[:id] }
+      Support::EvaluationJourneyTracking.new(:email_evaluators, @current_case.id, body, additional_data).call
     end
   end
 end

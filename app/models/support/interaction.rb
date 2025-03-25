@@ -67,6 +67,20 @@ module Support
       case_with_school_changed: 24,
       case_next_key_date_changed: 25,
       case_transferred: 26,
+      evaluator_added: 27,
+      evaluator_updated: 28,
+      evaluator_removed: 29,
+      evaluation_due_date_added: 30,
+      evaluation_due_date_updated: 31,
+      documents_uploaded: 32,
+      documents_deleted: 33,
+      all_documents_uploaded: 34,
+      email_evaluators: 35,
+      documents_downloaded: 36,
+      completed_documents_uploaded: 37,
+      completed_documents_deleted: 38,
+      all_completed_documents_uploaded: 39,
+      evaluation_completed: 40,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

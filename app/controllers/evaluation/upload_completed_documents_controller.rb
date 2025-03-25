@@ -12,11 +12,12 @@ module Evaluation
     def create
       @document_uploader = @current_case.document_uploader(document_uploader_params)
       if @document_uploader.valid?
-        @document_uploader.save_evaluation_document!(current_user.email, case_document_uploader_params[:has_uploaded_documents])
+        @document_uploader.save_evaluation_document!(current_evaluator, case_document_uploader_params[:has_uploaded_documents])
         current_evaluator.update!(case_document_uploader_params)
         update_action_required
         notify_procops_document_uploaded
         update_evaluation_submitted
+        log_all_completed_documents_uploaded
         redirect_to @back_url
       else
         render :show
@@ -35,6 +36,9 @@ module Evaluation
         reset_uploaded_documents
         update_action_required
       end
+
+      log_completed_documents_deleted(@uploaded_document.file_name)
+
       redirect_to evaluation_upload_completed_document_path(case_id: @current_case.id),
                   notice: I18n.t("support.cases.upload_documents.flash.destroyed", name: @uploaded_document.file_name)
     end
@@ -130,6 +134,20 @@ module Evaluation
       return unless current_evaluator.evaluation_approved?
 
       redirect_to evaluation_task_path(@current_case)
+    end
+
+    def log_completed_documents_deleted(file_name)
+      body = "#{file_name} removed by evaluator #{current_evaluator.name}"
+      additional_data = { event: "document_delete", file_name:, document_id: params[:document_id], evaluator_id: current_evaluator.id }
+      Support::EvaluationJourneyTracking.new(:completed_documents_deleted, params[:case_id], body, additional_data).call
+    end
+
+    def log_all_completed_documents_uploaded
+      return unless current_evaluator.has_uploaded_documents?
+
+      body = "Upload documents marked complete by evaluator #{current_evaluator.name}"
+      additional_data = { event: "all_completed_documents_uploaded", evaluator_id: current_evaluator.id, uploaded_all: "Yes" }
+      Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, params[:case_id], body, additional_data).call
     end
   end
 end

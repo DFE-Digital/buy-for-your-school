@@ -49,6 +49,10 @@ module Evaluation
     end
 
     def update_support_details
+      unless downloaded_details_exist?
+        log_documents_downloaded(@download_document.file_name)
+      end
+
       Support::EvaluatorsDownloadDocument.upsert(
         {
           support_case_upload_document_id: params[:document_id],
@@ -67,6 +71,20 @@ module Evaluation
       else
         head :unsupported_media_type
       end
+    end
+
+    def downloaded_details_exist?
+      Support::EvaluatorsDownloadDocument.find_by(
+        support_case_upload_document_id: params[:document_id],
+        support_case_id: @download_document.support_case_id,
+        email: current_user.email,
+      )
+    end
+
+    def log_documents_downloaded(file_name)
+      body = "#{file_name} downloaded by #{current_evaluator.name}"
+      additional_data = { event: "document_download", file_name:, document_id: params[:document_id], evaluator_id: current_evaluator.id }
+      Support::EvaluationJourneyTracking.new(:documents_downloaded, @current_case.id, body, additional_data).call
     end
   end
 end

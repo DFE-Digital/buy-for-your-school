@@ -7,6 +7,13 @@ describe "Evaluator can see task list", :js do
   let(:file_2) { fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain") }
   let(:document_uploader) { support_case.document_uploader(files: [file_1, file_2]) }
   let!(:support_evaluator) { create(:support_evaluator, support_case:, email: user.email, dsi_uid: user.dfe_sign_in_uid) }
+  let(:given_roles) { %w[procops] }
+  let(:support_agent) { create(:user, :caseworker) }
+  let(:agent) { Support::Agent.find_or_create_by_user(support_agent).tap { |agent| agent.update!(roles: given_roles) } }
+
+  before do
+    Current.agent = agent
+  end
 
   specify "Authenticating and seeing the task list" do
     Current.user = user
@@ -64,7 +71,7 @@ describe "Evaluator can see task list", :js do
 
     support_evaluator.update!(has_uploaded_documents: true)
 
-    document_uploader.save_evaluation_document!(user.email, true)
+    document_uploader.save_evaluation_document!(user, true)
 
     visit evaluation_task_path(support_case)
 
@@ -86,7 +93,7 @@ describe "Evaluator can see task list", :js do
 
     support_evaluator.update!(has_uploaded_documents: true, evaluation_approved: true)
 
-    document_uploader.save_evaluation_document!(user.email, true)
+    document_uploader.save_evaluation_document!(user, true)
 
     visit evaluation_task_path(support_case)
 

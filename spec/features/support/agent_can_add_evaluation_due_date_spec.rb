@@ -31,5 +31,14 @@ describe "Edit evaluation due date", :js do
     click_button "Continue"
 
     expect(page).to have_text("Enter valid evaluation due date")
+
+    fill_in "Day", with: "11"
+    fill_in "Month", with: "11"
+    fill_in "Year", with:  Time.zone.today.year + 1
+    click_button "Continue"
+
+    expect(page).not_to have_text("Enter valid evaluation due date")
+    expect(Support::Interaction.count).to eq(1)
+    expect(Support::Interaction.last.body).to eq("Due date set to #{Time.zone.today.year + 1}-11-11 by Procurement Specialist")
   end
 end

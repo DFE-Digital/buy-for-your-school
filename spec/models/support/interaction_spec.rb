@@ -42,6 +42,20 @@ RSpec.describe Support::Interaction, type: :model do
       case_with_school_changed
       case_next_key_date_changed
       case_transferred
+      evaluator_added
+      evaluator_updated
+      evaluator_removed
+      evaluation_due_date_added
+      evaluation_due_date_updated
+      documents_uploaded
+      documents_deleted
+      all_documents_uploaded
+      email_evaluators
+      documents_downloaded
+      completed_documents_uploaded
+      completed_documents_deleted
+      all_completed_documents_uploaded
+      evaluation_completed
     ])
   end
 

@@ -9,6 +9,7 @@ describe "Agent can email to evaluators", :js, :with_csrf_protection do
   let(:document_uploader) { support_case.document_uploader(files: [file_1, file_2]) }
 
   before do
+    Current.agent = agent
     create(:support_email_template, title: "Invitation to complete procurement evaluation", subject: "about energy", body: "Test body {{sub_category}} ")
   end
 
