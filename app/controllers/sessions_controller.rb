@@ -95,6 +95,13 @@ private
 
   # @return [String]
   def exit_path
+    if session[:evaluator_signin_link]
+      evaluator_signin_link = session[:evaluator_signin_link]
+      session.delete(:email_evaluator_link)
+      session.delete(:evaluator_signin_link)
+      return evaluator_signin_link
+    end
+
     if session[:school_buyer_signin_link]
       school_buyer_signin_link = session[:school_buyer_signin_link]
       session.delete(:email_school_buyer_link)

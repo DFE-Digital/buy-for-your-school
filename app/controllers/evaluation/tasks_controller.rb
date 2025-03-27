@@ -32,7 +32,7 @@ module Evaluation
     def check_user_is_evaluator
       return if current_evaluator.present? && current_user.email.downcase == current_evaluator.email.downcase
 
-      redirect_to root_path, notice: I18n.t("evaluation.tasks.not_permitted")
+      redirect_to evaluation_signin_path, notice: I18n.t("evaluation.tasks.not_permitted")
     end
 
     def set_downloaded_documents
@@ -66,9 +66,12 @@ module Evaluation
     end
 
     def authenticate_user!
-      super
+      return unless current_user.guest?
 
+      session.delete(:dfe_sign_in_uid)
       session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
+      session[:evaluator_signin_link] = evaluation_signin_path(id: params[:id])
+      redirect_to evaluation_signin_path(id: params[:id]), notice: I18n.t("banner.session.visitor")
     end
 
     def uploaded_evaluation_files
