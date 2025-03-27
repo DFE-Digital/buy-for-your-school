@@ -47,7 +47,7 @@ describe "Evaluator can see uploaded documents", :js do
     expect(Support::Interaction.count).to eq(3)
     expect(Support::Interaction.all[2].body).to eq("text-file.txt added by Procurement Specialist")
     expect(Support::Interaction.all[1].body).to eq("another-text-file.txt added by Procurement Specialist")
-    expect(Support::Interaction.all[0].body).to eq("text-file.txt downloaded by Momo Taro")
+    expect(Support::Interaction.all[0].body).to eq("text-file.txt downloaded by evaluator Momo Taro")
 
     visit evaluation_download_document_path(support_case)
 
@@ -58,6 +58,6 @@ describe "Evaluator can see uploaded documents", :js do
     expect(find("#evaluator_task-1-status")).to have_text("Complete")
 
     expect(Support::Interaction.count).to eq(4)
-    expect(Support::Interaction.first.body).to eq("another-text-file.txt downloaded by Momo Taro")
+    expect(Support::Interaction.first.body).to eq("another-text-file.txt downloaded by evaluator Momo Taro")
   end
 end

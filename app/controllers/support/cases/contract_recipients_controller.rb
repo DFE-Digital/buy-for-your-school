@@ -22,6 +22,7 @@ module Support
       @contract_recipient = @current_case.contract_recipients.new(contract_recipient_params)
 
       if @contract_recipient.save
+        log_contract_recipient_added
         redirect_to support_case_contract_recipients_path(case_id: @current_case),
                     notice: I18n.t("support.contract_recipients.flash.success", name: @contract_recipient.name)
       else
@@ -33,6 +34,7 @@ module Support
 
     def update
       if @contract_recipient.update(contract_recipient_params)
+        log_contract_recipient_updated
         redirect_to support_case_contract_recipients_path(case_id: @current_case),
                     notice: I18n.t("support.contract_recipients.flash.updated", name: @contract_recipient.name)
       else
@@ -44,6 +46,7 @@ module Support
       return unless params[:confirm]
 
       @contract_recipient.destroy!
+      log_contract_recipient_removed
       redirect_to support_case_contract_recipients_path(case_id: @current_case),
                   notice: I18n.t("support.contract_recipients.flash.destroyed", name: @contract_recipient.name)
     end
@@ -60,6 +63,20 @@ module Support
 
     def contract_recipient_params
       params.require(:support_contract_recipient).permit(:first_name, :last_name, :email)
+    end
+
+    def log_contract_recipient_added
+      Support::EvaluationJourneyTracking.new(:contract_recipient_added, @contract_recipient).call
+    end
+
+    def log_contract_recipient_updated
+      return unless @contract_recipient.saved_changes?
+
+      Support::EvaluationJourneyTracking.new(:contract_recipient_updated, @contract_recipient).call
+    end
+
+    def log_contract_recipient_removed
+      Support::EvaluationJourneyTracking.new(:contract_recipient_removed, @contract_recipient).call
     end
   end
 end

@@ -89,9 +89,8 @@ module Support
     end
 
     def log_email_evaluators
-      body = "Email sent to #{@to_recipients}"
-      additional_data = { email_id: params[:id] }
-      Support::EvaluationJourneyTracking.new(:email_evaluators, @current_case.id, body, additional_data).call
+      data = { support_case_id: @current_case.id, email_id: params[:id], to_recipients: @to_recipients }
+      Support::EvaluationJourneyTracking.new(:email_evaluators, data).call
     end
   end
 end

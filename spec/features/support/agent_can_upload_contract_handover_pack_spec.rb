@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protection do
   include_context "with an agent"
 
+  before do
+    Current.agent = agent
+  end
+
   let(:support_case) { create(:support_case) }
   let(:file_1) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
   let(:file_2) { fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain") }
@@ -43,6 +47,10 @@ RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protect
     visit support_case_path(support_case, anchor: "tasklist")
 
     expect(find("#handover_contract-2-status")).to have_text("Complete")
+
+    expect(Support::Interaction.count).to eq(2)
+    expect(Support::Interaction.last.body).to eq("text-file.txt added by Procurement Specialist")
+    expect(Support::Interaction.first.body).to eq("another-text-file.txt added by Procurement Specialist")
   end
 
   specify "viewing uploaded files" do
@@ -85,6 +93,9 @@ RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protect
     click_link "Delete"
 
     expect(Support::DownloadContractHandover.count).to eq(0)
+
+    expect(Support::Interaction.count).to eq(4)
+    expect(Support::Interaction.first.body).to eq("text-file.txt deleted by Procurement Specialist")
   end
 
   specify "when all files are deleted" do

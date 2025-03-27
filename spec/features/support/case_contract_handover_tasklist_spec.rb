@@ -5,6 +5,13 @@ describe "Agent can view contract handover task list", :js do
   let(:file_1) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
   let(:file_2) { fixture_file_upload(Rails.root.join("spec/fixtures/support/another-text-file.txt"), "text/plain") }
   let(:document_uploader) { support_case.document_uploader(files: [file_1, file_2]) }
+  let(:given_roles) { %w[procops] }
+  let(:support_agent) { create(:user, :caseworker) }
+  let(:agent) { Support::Agent.find_or_create_by_user(support_agent).tap { |agent| agent.update!(roles: given_roles) } }
+
+  before do
+    Current.agent = agent
+  end
 
   specify "contract handover task list status" do
     visit support_case_path(support_case, anchor: "tasklist")
