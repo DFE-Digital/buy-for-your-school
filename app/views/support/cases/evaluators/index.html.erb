@@ -9,8 +9,6 @@
       <th scope="col" class="govuk-table__header"
         ><%= I18n.t(:email, scope: "helpers.label.support_evaluator") %></th>
       <th scope="col" class="govuk-table__header"></th>
-
-      <th></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -19,9 +17,11 @@
         <tr>
           <td class="govuk-table__cell"><%= evaluator.name %></td>
           <td class="govuk-table__cell"><%= evaluator.email %></td>
-          <td class="govuk-table__cell"
-            ><%= link_to I18n.t("generic.link.change"),
-                 edit_support_case_evaluator_path(evaluator, case_id: @current_case) %></td>
+          <td class="govuk-table__cell">
+              <%= link_to safe_join([I18n.t("generic.link.change"), 
+                  content_tag(:span, evaluator.name, class: "govuk-visually-hidden")]),
+                      edit_support_case_evaluator_path(evaluator, case_id: @current_case) %>
+          </td>
         </tr>
       </div>
     <% end %>

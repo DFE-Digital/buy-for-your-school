@@ -3,7 +3,7 @@
   <%= I18n.t("support.case_evaluators.delete_confirmation", name: @evaluator.name) %>
 </h1>
 
-<div class="actions">
+<div class="govuk-button-group flex-align-center">
   <%= link_to I18n.t("generic.button.remove"),
               support_case_evaluator_path(@evaluator, case_id: @current_case, confirm: true),
               method: :delete,
@@ -11,5 +11,5 @@
 
   <%= link_to I18n.t("generic.button.cancel"),
               support_case_evaluators_path(case_id: @current_case),
-              class: "govuk-button govuk-button--secondary" %>
+              class: "govuk-link govuk-link--no-visited-state" %>
 </div>

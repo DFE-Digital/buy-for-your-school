@@ -17,7 +17,7 @@
       <%= link_to I18n.t("generic.button.remove"),
                   support_case_contract_recipient_path(@contract_recipient, case_id: @current_case),
                   method: :delete,
-                  class: "govuk-button govuk-button--secondary" %>
+                  class: "govuk-button govuk-button--warning" %>
     <%end%>
 
     <%= link_to I18n.t("generic.button.cancel"),
