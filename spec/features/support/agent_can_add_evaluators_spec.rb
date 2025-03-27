@@ -19,6 +19,8 @@ describe "Agent can add evaluators", :js do
     expect(page).to have_text("Momo Taro successfully added")
     expect(page).to have_text("momotaro@example.com")
 
+    expect(page).to have_css(".govuk-visually-hidden", text: "Momo Taro")
+
     click_link "Change"
 
     fill_in "First name", with: "Oni"
