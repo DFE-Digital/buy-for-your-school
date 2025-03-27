@@ -13,6 +13,7 @@ module Support
       if @document_uploader.valid?
         @document_uploader.save_contract_handover_pack!
         @current_case.update!(case_contract_handover_params)
+        log_all_handover_packs_uploaded
         redirect_to @back_url
       else
         render :edit
@@ -32,6 +33,9 @@ module Support
       if @uploaded_handover_packs.empty?
         reset_uploaded_contract_handover
       end
+
+      log_documents_deleted(@uploaded_document.file_name)
+
       redirect_to edit_support_case_upload_contract_handover_path,
                   notice: I18n.t("support.cases.upload_documents.flash.destroyed", name: @uploaded_document.file_name)
     end
@@ -52,6 +56,24 @@ module Support
 
     def reset_uploaded_contract_handover
       @current_case.update!(has_uploaded_contract_handovers: false)
+    end
+
+    def log_documents_deleted(file_name)
+      data = {
+        file_name:,
+        document_id: params[:document_id],
+        support_case_id: @current_case.id,
+        name: "#{Current.agent.first_name} #{Current.agent.last_name}",
+        user_id: Current.agent.id,
+      }
+      Support::EvaluationJourneyTracking.new(:handover_packs_deleted, data).call
+    end
+
+    def log_all_handover_packs_uploaded
+      return unless @current_case.has_uploaded_contract_handovers?
+
+      data = { support_case_id: @current_case.id, name: "#{Current.agent.first_name} #{Current.agent.last_name}", user_id: Current.agent.id }
+      Support::EvaluationJourneyTracking.new(:all_handover_packs_uploaded, data).call
     end
   end
 end

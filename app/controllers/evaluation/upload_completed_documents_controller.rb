@@ -137,17 +137,25 @@ module Evaluation
     end
 
     def log_completed_documents_deleted(file_name)
-      body = "#{file_name} removed by evaluator #{current_evaluator.name}"
-      additional_data = { event: "document_delete", file_name:, document_id: params[:document_id], evaluator_id: current_evaluator.id }
-      Support::EvaluationJourneyTracking.new(:completed_documents_deleted, params[:case_id], body, additional_data).call
+      data = {
+        file_name:,
+        document_id: params[:document_id],
+        support_case_id: @current_case.id,
+        name: "evaluator #{current_evaluator.name}",
+        user_id: current_evaluator.id,
+      }
+      Support::EvaluationJourneyTracking.new(:completed_documents_deleted, data).call
     end
 
     def log_all_completed_documents_uploaded
       return unless current_evaluator.has_uploaded_documents?
 
-      body = "Upload documents marked complete by evaluator #{current_evaluator.name}"
-      additional_data = { event: "all_completed_documents_uploaded", evaluator_id: current_evaluator.id, uploaded_all: "Yes" }
-      Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, params[:case_id], body, additional_data).call
+      data = {
+        support_case_id: @current_case.id,
+        name: "evaluator #{current_evaluator.name}",
+        user_id: current_evaluator.id,
+      }
+      Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, data).call
     end
   end
 end

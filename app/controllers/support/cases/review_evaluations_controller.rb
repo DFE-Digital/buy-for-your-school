@@ -124,9 +124,8 @@ module Support
     def log_evaluation_completed
       return if evaluation_pending?
 
-      body = "Evaluation marked complete by #{Current.agent.first_name} #{Current.agent.last_name}"
-      additional_data = { event: "evaluation_completed", agent_id: Current.agent.id }
-      Support::EvaluationJourneyTracking.new(:evaluation_completed, params[:case_id], body, additional_data).call
+      data = { support_case_id: @current_case.id }
+      Support::EvaluationJourneyTracking.new(:evaluation_completed, data).call
     end
   end
 end

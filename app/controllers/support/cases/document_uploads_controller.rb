@@ -13,7 +13,7 @@ module Support
       if @document_uploader.valid?
         @document_uploader.save!
         @current_case.update!(case_document_uploader_params)
-        log_all_completed_documents_uploaded
+        log_all_documents_uploaded
         redirect_to @back_url
       else
         render :edit
@@ -62,17 +62,21 @@ module Support
     end
 
     def log_documents_deleted(file_name)
-      body = "#{file_name} deleted by #{Current.agent.first_name} #{Current.agent.last_name}"
-      additional_data = { event: "document_delete", file_name:, document_id: params[:document_id] }
-      Support::EvaluationJourneyTracking.new(:documents_deleted, params[:case_id], body, additional_data).call
+      data = {
+        file_name:,
+        document_id: params[:document_id],
+        support_case_id: @current_case.id,
+        name: "#{Current.agent.first_name} #{Current.agent.last_name}",
+        user_id: Current.agent.id,
+      }
+      Support::EvaluationJourneyTracking.new(:documents_deleted, data).call
     end
 
-    def log_all_completed_documents_uploaded
+    def log_all_documents_uploaded
       return unless @current_case.has_uploaded_documents?
 
-      body = "Upload documents marked complete by #{Current.agent.first_name} #{Current.agent.last_name}"
-      additional_data = { event: "all_completed_documents_uploaded", uploaded_all: "Yes" }
-      Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, params[:case_id], body, additional_data).call
+      data = { support_case_id: @current_case.id, name: "#{Current.agent.first_name} #{Current.agent.last_name}", user_id: Current.agent.id }
+      Support::EvaluationJourneyTracking.new(:all_documents_uploaded, data).call
     end
   end
 end

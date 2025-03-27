@@ -30,6 +30,8 @@ module Support
 
         @current_case.update!(has_shared_handover_pack: true)
 
+        log_share_handover_packs
+
         redirect_to @back_url
       else
         render :edit
@@ -72,6 +74,11 @@ module Support
 
     def parse_template
       @share_handover.html_content = Support::EmailEvaluatorsVariableParser.new(@current_case, @share_handover, @unique_link).parse_template
+    end
+
+    def log_share_handover_packs
+      data = { support_case_id: @current_case.id, email_id: params[:id], to_recipients: @to_recipients }
+      Support::EvaluationJourneyTracking.new(:share_handover_packs, data).call
     end
   end
 end

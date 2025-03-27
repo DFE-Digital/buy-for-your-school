@@ -81,6 +81,14 @@ module Support
       completed_documents_deleted: 38,
       all_completed_documents_uploaded: 39,
       evaluation_completed: 40,
+      contract_recipient_added: 41,
+      contract_recipient_updated: 42,
+      contract_recipient_removed: 43,
+      handover_packs_uploaded: 44,
+      handover_packs_deleted: 45,
+      all_handover_packs_uploaded: 46,
+      share_handover_packs: 47,
+      handover_packs_downloaded: 48,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

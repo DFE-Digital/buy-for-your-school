@@ -82,9 +82,14 @@ module Evaluation
     end
 
     def log_documents_downloaded(file_name)
-      body = "#{file_name} downloaded by #{current_evaluator.name}"
-      additional_data = { event: "document_download", file_name:, document_id: params[:document_id], evaluator_id: current_evaluator.id }
-      Support::EvaluationJourneyTracking.new(:documents_downloaded, @current_case.id, body, additional_data).call
+      data = {
+        support_case_id: @current_case.id,
+        file_name:,
+        document_id: params[:document_id],
+        user_id: current_evaluator.id,
+        name: "evaluator #{current_evaluator.name}",
+      }
+      Support::EvaluationJourneyTracking.new(:documents_downloaded, data).call
     end
   end
 end

@@ -56,6 +56,14 @@ RSpec.describe Support::Interaction, type: :model do
       completed_documents_deleted
       all_completed_documents_uploaded
       evaluation_completed
+      contract_recipient_added
+      contract_recipient_updated
+      contract_recipient_removed
+      handover_packs_uploaded
+      handover_packs_deleted
+      all_handover_packs_uploaded
+      share_handover_packs
+      handover_packs_downloaded
     ])
   end
 

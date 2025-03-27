@@ -42,6 +42,10 @@ module MyProcurements
     end
 
     def update_support_details
+      unless downloaded_details_exist?
+        log_handover_packs_downloaded(@download_document.file_name)
+      end
+
       Support::DownloadContractHandover.upsert(
         {
           support_upload_contract_handover_id: params[:document_id],
@@ -60,6 +64,25 @@ module MyProcurements
       else
         head :unsupported_media_type
       end
+    end
+
+    def downloaded_details_exist?
+      Support::DownloadContractHandover.find_by(
+        support_upload_contract_handover_id: params[:document_id],
+        support_case_id: @download_document.support_case_id,
+        email: current_user.email,
+      )
+    end
+
+    def log_handover_packs_downloaded(file_name)
+      data = {
+        support_case_id: @current_case.id,
+        file_name:,
+        document_id: params[:document_id],
+        user_id: school_buying_professional.id,
+        name: "school buyer #{school_buying_professional.name}",
+      }
+      Support::EvaluationJourneyTracking.new(:handover_packs_downloaded, data).call
     end
   end
 end
