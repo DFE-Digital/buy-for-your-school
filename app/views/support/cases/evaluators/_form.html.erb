@@ -10,18 +10,18 @@
   <%= form.govuk_text_field :last_name, width: "one-half" %>
   <%= form.govuk_text_field :email, width: "one-half" %>
 
-  <div class="actions">
+  <div class="govuk-button-group flex-align-center">
     <%= form.submit I18n.t("support.case_evaluators.submit"), class: "govuk-button" %>
 
     <% unless @evaluator.new_record? %>
       <%= link_to I18n.t("generic.button.remove"),
                   support_case_evaluator_path(@evaluator, case_id: @current_case),
                   method: :delete,
-                  class: "govuk-button govuk-button--secondary" %>
+                  class: "govuk-button govuk-button--warning" %>
     <%end%>
 
     <%= link_to I18n.t("generic.button.cancel"),
                 support_case_evaluators_path(case_id: @current_case),
-                class: "govuk-button govuk-button--secondary" %>
+                class: "govuk-link govuk-link--no-visited-state" %>
   </div>
 <% end %>

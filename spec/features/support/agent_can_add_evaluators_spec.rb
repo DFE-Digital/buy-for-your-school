@@ -24,6 +24,8 @@ describe "Agent can add evaluators", :js do
     expect(Support::Interaction.count).to eq(1)
     expect(Support::Interaction.last.body).to eq("Evaluator Momo Taro added by Procurement Specialist")
 
+    expect(page).to have_css(".govuk-visually-hidden", text: "Momo Taro")
+
     click_link "Change"
 
     fill_in "First name", with: "Oni"
