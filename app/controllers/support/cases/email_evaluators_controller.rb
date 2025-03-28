@@ -32,7 +32,7 @@ module Support
       parse_template
       if @email_evaluators.valid?(:new_message)
         @email_evaluators.save_draft!
-        @email_evaluators.deliver_as_new_message
+        @email_evaluators.queue_delivery(:as_new_message)
 
         @current_case.update!(sent_email_to_evaluators: true)
 
