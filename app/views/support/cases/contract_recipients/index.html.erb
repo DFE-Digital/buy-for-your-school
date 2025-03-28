@@ -19,7 +19,7 @@
           <td class="govuk-table__cell"><%= contract_recipient.email %></td>
           <td class="govuk-table__cell">
             <%= link_to safe_join([I18n.t("generic.link.change"), 
-                content_tag(:span, contract_recipient.name, class: "govuk-visually-hidden")]),
+                content_tag(:span, "Change details for #{contract_recipient.name}", class: "govuk-visually-hidden")]),
                   edit_support_case_contract_recipient_path(contract_recipient, case_id: @current_case) %>
           </td>
         </tr>

@@ -19,7 +19,7 @@
           <td class="govuk-table__cell"><%= evaluator.email %></td>
           <td class="govuk-table__cell">
               <%= link_to safe_join([I18n.t("generic.link.change"), 
-                  content_tag(:span, evaluator.name, class: "govuk-visually-hidden")]),
+                  content_tag(:span, "Change details for #{evaluator.name}", class: "govuk-visually-hidden")]),
                       edit_support_case_evaluator_path(evaluator, case_id: @current_case) %>
           </td>
         </tr>
