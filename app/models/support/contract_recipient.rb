@@ -9,8 +9,16 @@ module Support
     validates :first_name, :last_name, presence: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
+    validate :maximum_contract_recipients_per_case, on: :create
+
     def name
       [first_name, last_name].compact_blank.join(" ")
+    end
+
+    def maximum_contract_recipients_per_case
+      if support_case.contract_recipients.count >= 100
+        errors.add(:base, I18n.t("helpers.label.support_contract_recipient.maximum_contract_recipients_per_case"))
+      end
     end
   end
 end

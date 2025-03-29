@@ -37,5 +37,18 @@ RSpec.describe Support::Evaluator, type: :model do
       evaluator.email = "example"
       expect(evaluator).not_to be_valid
     end
+
+    it "does not allow more than 100 evaluators per support case" do
+      support_case = create(:support_case)
+
+      100.times do |i|
+        create(:support_evaluator, support_case:, email: "evaluator#{i}@example.com")
+      end
+
+      evaluator = build(:support_evaluator, support_case:, email: "extra@example.com")
+
+      expect(evaluator).not_to be_valid
+      expect(evaluator.errors[:base]).to include("Maximum number of evaluators reached")
+    end
   end
 end
