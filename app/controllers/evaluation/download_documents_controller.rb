@@ -18,8 +18,14 @@ module Evaluation
     def show; end
 
     def update
-      update_support_details
-      send_data @download_document.file.download, type: @download_document.file_type, disposition: "attachment", filename: @download_document.file_name
+      if params[:confirm]
+        @current_evaluator.update!(case_document_download_params)
+        log_all_documents_downloaded
+        redirect_to @back_url
+      else
+        update_support_details
+        send_data @download_document.file.download, type: @download_document.file_type, disposition: "attachment", filename: @download_document.file_name
+      end
     end
 
   private
@@ -48,6 +54,10 @@ module Evaluation
       @documents = @current_case.upload_documents
     end
 
+    def case_document_download_params
+      params.require(:document_download).permit(:has_downloaded_documents)
+    end
+
     def update_support_details
       unless downloaded_details_exist?
         log_documents_downloaded(@download_document.file_name)
@@ -65,6 +75,8 @@ module Evaluation
     end
 
     def set_download_document
+      return if params[:confirm]
+
       @requested_file_type = CGI.unescape(params[:document_type])
       if SUPPORTED_TYPES.include?(@requested_file_type)
         @download_document = @requested_file_type.safe_constantize.find(params[:document_id])
@@ -90,6 +102,17 @@ module Evaluation
         name: "evaluator #{current_evaluator.name}",
       }
       Support::EvaluationJourneyTracking.new(:documents_downloaded, data).call
+    end
+
+    def log_all_documents_downloaded
+      return unless @current_evaluator.saved_change_to_has_downloaded_documents? && @current_evaluator.has_downloaded_documents?
+
+      data = {
+        support_case_id: @current_case.id,
+        user_id: current_evaluator.id,
+        name: "evaluator #{current_evaluator.name}",
+      }
+      Support::EvaluationJourneyTracking.new(:all_documents_downloaded, data).call
     end
   end
 end

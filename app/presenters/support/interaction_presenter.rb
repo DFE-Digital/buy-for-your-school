@@ -187,6 +187,7 @@ module Support
           completed_documents_uploaded_in_complete
           handover_packs_uploaded_in_complete
           evaluation_in_completed
+          all_documents_downloaded
         ].include?(key)
       end
     end

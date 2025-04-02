@@ -38,7 +38,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     visit evaluation_upload_completed_document_path(support_case)
 
-    expect(page).to have_text("Upload evaluation")
+    expect(page).to have_text("Upload evaluation scoring document")
     expect(page).to have_text("Upload a file")
     expect(page).to have_text("Have you uploaded all the completed documents?")
 
@@ -51,7 +51,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   specify "when files are uploaded and confirmation chosen as No (In progress)" do
     upload_documents
 
-    support_evaluator.update!(has_uploaded_documents: false)
+    support_evaluator.update!(has_downloaded_documents: true, has_uploaded_documents: false)
 
     expect { document_uploader.save_evaluation_document!(user, false) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
@@ -101,7 +101,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   specify "when files are uploaded and confirmation chosen as Yes (Complete)" do
     upload_documents
 
-    support_evaluator.update!(has_uploaded_documents: true)
+    support_evaluator.update!(has_downloaded_documents: true, has_uploaded_documents: true)
 
     expect { document_uploader.save_evaluation_document!(user, true) }.to change { support_case.evaluators_upload_documents.count }.from(0).to(2)
     expect(support_case.evaluators_upload_documents.pluck(:file_name)).to contain_exactly(file_name_1, file_name_2)
@@ -164,7 +164,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
   specify "viewing uploaded files" do
     upload_documents
 
-    support_evaluator.update!(has_uploaded_documents: false)
+    support_evaluator.update!(has_downloaded_documents: true, has_uploaded_documents: false)
 
     document_uploader.save_evaluation_document!(user, false)
 
@@ -188,7 +188,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     support_case.reload
 
-    support_evaluator.update!(has_uploaded_documents: false)
+    support_evaluator.update!(has_downloaded_documents: true, has_uploaded_documents: false)
 
     expect(support_case.evaluators_upload_documents.count).to eq(0)
 
