@@ -1,0 +1,10 @@
+<%= render partial: "support/cases/components/case_header",
+  locals: { current_case: @current_case } %>
+<h1 class="govuk-heading-l"><%= I18n.t("evaluation.evaluation_approved.header") %></h1>
+<p class="govuk-body"><%= I18n.t("evaluation.evaluation_approved.page_body_text1") %></p>
+<p class="govuk-body"><%= I18n.t("evaluation.evaluation_approved.page_body_text2") %></p>
+
+<div class="govuk-button-group flex-align-center">
+  <%= link_to I18n.t("generic.button.continue"), @back_url, class: "govuk-button" %>
+  <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
+</div>

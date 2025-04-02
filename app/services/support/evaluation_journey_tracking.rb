@@ -88,6 +88,12 @@ module Support
       log_action(@method, @data[:support_case_id], body, additional_data)
     end
 
+    def all_documents_downloaded
+      body = "All documents downloaded by #{@data[:name]}"
+      additional_data = { event: @method, user_id: @data[:user_id] }
+      log_action(@method, @data[:support_case_id], body, additional_data)
+    end
+
     def evaluation_process(status)
       body = "Evaluation marked #{status} by #{Current.agent.first_name} #{Current.agent.last_name}"
       additional_data = { event: @method, agent_id: Current.agent.id }

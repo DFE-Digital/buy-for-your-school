@@ -18,7 +18,7 @@
         <div class="govuk-radios">
           <div class="govuk-radios__item">
             <%= form.radio_button :has_uploaded_documents, true, checked: current_evaluator.present? && current_evaluator.has_uploaded_documents == true, class: "govuk-radios__input" %>
-            <%= form.label :has_uploaded_documents, "Yes, I have uploaded all documents", value: true, class: "govuk-label govuk-radios__label" %>
+            <%= form.label :has_uploaded_documents, "Yes, I have uploaded all the completed documents", value: true, class: "govuk-label govuk-radios__label" %>
           </div>
           <div class="govuk-radios__item">
             <%= form.radio_button :has_uploaded_documents, false, checked: current_evaluator.present? && current_evaluator.has_uploaded_documents == false, class: "govuk-radios__input" %>

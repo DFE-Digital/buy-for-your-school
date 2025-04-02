@@ -346,6 +346,7 @@ Rails.application.routes.draw do
     resources :upload_completed_documents, except: %i[new], param: :case_id
     resources :tasks, only: %i[show edit]
     resources :signin, only: %i[show edit]
+    resources :evaluation_approved, only: %i[show]
     get "verify/evaluator/link/:id", to: "tasks#edit", as: :verify_evaluators_unique_link
   end
 

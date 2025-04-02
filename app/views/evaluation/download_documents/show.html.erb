@@ -1,12 +1,32 @@
 <%= render partial: "support/cases/components/case_header",
   locals: { current_case: @current_case } %>
 <h1 class="govuk-heading-l"><%= I18n.t("evaluation.download_documents.header") %></h1>
-<p class="govuk-body">Use these documents to complete your evaluation of each supplier.</p>
+<p class="govuk-body">Below you will find the documents provided by potential suppliers.</p>
+<p class="govuk-body">Click each individual file to download it, including evaluation scoring template.</p>
 <p class="govuk-body govuk-!-static-margin-bottom-8">If you have a problem or conflict of interest, 
   <%= mail_to ENV.fetch('MS_GRAPH_SHARED_MAILBOX_ADDRESS'), "contact us", subject: "Case #{ @current_case.ref} - Evaluation query from #{current_evaluator.name}", class: "govuk-link" %>
 </p>
 <%= render "document_list"%>
+
+<%= form_with model: @current_evaluator, scope: :document_download, url: evaluation_download_document_path(id: @current_case, confirm: true)  do |form| %>
+<div class="govuk-form-group govuk-!-margin-top-7">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s"><%= I18n.t("evaluation.download_documents.file_download_confirmation") %></legend>
+    <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <%= form.radio_button :has_downloaded_documents, true, checked: current_evaluator.has_downloaded_documents?, class: "govuk-radios__input" %>
+        <%= form.label :has_downloaded_documents, "Yes, I have downloaded all documents", value: true, class: "govuk-label govuk-radios__label" %>
+      </div>
+      <div class="govuk-radios__item">
+        <%= form.radio_button :has_downloaded_documents, false, checked: !current_evaluator.has_downloaded_documents?, class: "govuk-radios__input" %>
+        <%= form.label :has_downloaded_documents, "No", value: false, class: "govuk-label govuk-radios__label" %>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
 <div class="govuk-button-group flex-align-center">
-  <%= link_to I18n.t("generic.button.continue"), @back_url, class: "govuk-button" %>
+  <%= form.submit I18n.t("generic.button.continue"), class: "govuk-button" %>
   <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
 </div>
+<% end %>
