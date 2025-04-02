@@ -73,10 +73,15 @@ module Support
     end
 
     def log_all_documents_uploaded
-      return unless @current_case.has_uploaded_documents?
+      return unless @current_case.saved_change_to_has_uploaded_documents?
 
       data = { support_case_id: @current_case.id, name: "#{Current.agent.first_name} #{Current.agent.last_name}", user_id: Current.agent.id }
-      Support::EvaluationJourneyTracking.new(:all_documents_uploaded, data).call
+
+      if @current_case.has_uploaded_documents?
+        Support::EvaluationJourneyTracking.new(:all_documents_uploaded, data).call
+      else
+        Support::EvaluationJourneyTracking.new(:documents_uploaded_in_complete, data).call
+      end
     end
   end
 end

@@ -51,6 +51,15 @@ RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protect
     expect(Support::Interaction.count).to eq(2)
     expect(Support::Interaction.last.body).to eq("text-file.txt added by Procurement Specialist")
     expect(Support::Interaction.first.body).to eq("another-text-file.txt added by Procurement Specialist")
+
+    visit edit_support_case_upload_contract_handover_path(case_id: support_case)
+
+    choose("No")
+
+    click_button "Continue"
+
+    expect(Support::Interaction.count).to eq(3)
+    expect(Support::Interaction.first.body).to eq("Upload documents marked incomplete by Procurement Specialist")
   end
 
   specify "viewing uploaded files" do
