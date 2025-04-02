@@ -183,6 +183,10 @@ module Support
           all_handover_packs_uploaded
           share_handover_packs
           handover_packs_downloaded
+          documents_uploaded_in_complete
+          completed_documents_uploaded_in_complete
+          handover_packs_uploaded_in_complete
+          evaluation_in_completed
         ].include?(key)
       end
     end

@@ -122,10 +122,13 @@ module Support
     end
 
     def log_evaluation_completed
-      return if evaluation_pending?
-
       data = { support_case_id: @current_case.id }
-      Support::EvaluationJourneyTracking.new(:evaluation_completed, data).call
+
+      if evaluation_pending?
+        Support::EvaluationJourneyTracking.new(:evaluation_in_completed, data).call
+      else
+        Support::EvaluationJourneyTracking.new(:evaluation_completed, data).call
+      end
     end
   end
 end
