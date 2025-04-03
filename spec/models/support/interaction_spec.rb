@@ -69,6 +69,7 @@ RSpec.describe Support::Interaction, type: :model do
       handover_packs_uploaded_in_complete
       evaluation_in_completed
       all_documents_downloaded
+      all_handover_packs_downloaded
     ])
   end
 

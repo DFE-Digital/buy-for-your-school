@@ -8,6 +8,7 @@ describe "Agent can view contract handover task list", :js do
   let(:given_roles) { %w[procops] }
   let(:support_agent) { create(:user, :caseworker) }
   let(:agent) { Support::Agent.find_or_create_by_user(support_agent).tap { |agent| agent.update!(roles: given_roles) } }
+  let!(:recipient) { create(:support_contract_recipient, support_case:, email: "recipient@example.com") }
 
   before do
     Current.agent = agent
@@ -32,6 +33,8 @@ describe "Agent can view contract handover task list", :js do
 
     find_all(".govuk-summary-list__row a")[0].click
 
+    recipient.update!(has_downloaded_documents: true)
+
     visit support_case_path(support_case, anchor: "tasklist")
 
     expect(find("#handover_contract-4-status")).to have_text("In progress")
@@ -39,6 +42,12 @@ describe "Agent can view contract handover task list", :js do
     visit my_procurements_download_handover_pack_path(support_case)
 
     find_all(".govuk-summary-list__row a")[1].click
+
+    choose "Yes, I have downloaded all documents"
+
+    click_button "Continue"
+
+    expect(find("#my_procurements_task-1-status")).to have_text("Complete")
 
     visit support_case_path(support_case, anchor: "tasklist")
 

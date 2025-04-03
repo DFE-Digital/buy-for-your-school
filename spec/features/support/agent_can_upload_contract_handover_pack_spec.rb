@@ -91,7 +91,7 @@ RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protect
     expect(page).to have_content("text-file.txt")
     expect(page).to have_content("another-text-file.txt")
 
-    find_all("dl[data-download_documents-target] .govuk-link")[0].click
+    find_all("dl .govuk-link")[0].click
 
     expect(Support::DownloadContractHandover.count).to eq(1)
 

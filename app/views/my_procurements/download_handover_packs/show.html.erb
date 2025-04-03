@@ -7,7 +7,26 @@
   if you have any problems.
 </p>
 <%= render "document_list"%>
+
+<%= form_with model: @school_buying_professional, scope: :handover_packs, url: my_procurements_download_handover_pack_path(id: @current_case, confirm: true)  do |form| %>
+<div class="govuk-form-group govuk-!-margin-top-7">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s"><%= I18n.t("evaluation.download_documents.file_download_confirmation") %></legend>
+    <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <%= form.radio_button :has_downloaded_documents, true, checked: school_buying_professional.has_downloaded_documents?, class: "govuk-radios__input" %>
+        <%= form.label :has_downloaded_documents, "Yes, I have downloaded all documents", value: true, class: "govuk-label govuk-radios__label" %>
+      </div>
+      <div class="govuk-radios__item">
+        <%= form.radio_button :has_downloaded_documents, false, checked: !school_buying_professional.has_downloaded_documents?, class: "govuk-radios__input" %>
+        <%= form.label :has_downloaded_documents, "No", value: false, class: "govuk-label govuk-radios__label" %>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
 <div class="govuk-button-group flex-align-center">
-  <%= link_to I18n.t("generic.button.continue"), @back_url, class: "govuk-button" %>
+  <%= form.submit I18n.t("generic.button.continue"), class: "govuk-button" %>
   <%= link_to I18n.t("generic.button.cancel"), @back_url, class: "govuk-link govuk-link--no-visited-state" %>
 </div>
+<% end %>

@@ -254,21 +254,11 @@ module Support
     end
 
     def downloaded_all_contract_handover_pack?
-      download_handovers = Support::DownloadContractHandover.where(support_case_id: id)
-      contract_recipients.all? do |recipient|
-        upload_contract_handovers.all? do |handover|
-          download_handovers.exists?(support_upload_contract_handover_id: handover.id, email: recipient.email)
-        end
-      end
+      contract_recipients.all?(&:has_downloaded_documents)
     end
 
     def downloaded_any_contract_handover_pack?
-      download_handovers = Support::DownloadContractHandover.where(support_case_id: id)
-      contract_recipients.any? do |recipient|
-        upload_contract_handovers.any? do |handover|
-          download_handovers.exists?(support_upload_contract_handover_id: handover.id, email: recipient.email)
-        end
-      end
+      contract_recipients.any?(&:has_downloaded_documents)
     end
 
     def downloaded_all_contract_handover_pack_status?

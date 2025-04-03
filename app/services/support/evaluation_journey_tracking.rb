@@ -33,10 +33,11 @@ module Support
     def handover_packs_downloaded = documents_downloaded
     def completed_documents_uploaded_in_complete = documents_uploaded_in_complete
     def handover_packs_uploaded_in_complete = documents_uploaded_in_complete
+    def all_handover_packs_downloaded = all_documents_downloaded
 
     # Evaluation-related actions
     def evaluation_completed = evaluation_process("complete")
-    def evaluation_in_completed = evaluation_process("incomplete")
+    def evaluation_in_completed = evaluation_process("in-progress")
 
     # Email-related actions
     def email_evaluators = email_user
