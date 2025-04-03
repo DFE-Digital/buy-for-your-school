@@ -42,7 +42,7 @@ describe "School buying professional can see uploaded contract handover packs", 
 
     visit my_procurements_task_path(support_case)
 
-    expect(find("#my_procurements_task-1-status")).to have_text("In progress")
+    expect(find("#my_procurements_task-1-status")).to have_text("To do")
 
     expect(Support::Interaction.count).to eq(3)
     expect(Support::Interaction.all[2].body).to eq("text-file.txt added by Procurement Specialist")
@@ -53,11 +53,18 @@ describe "School buying professional can see uploaded contract handover packs", 
 
     find_all(".govuk-summary-list__row a")[1].click
 
+    choose "Yes, I have downloaded all documents"
+
+    click_button "Continue"
+
+    support_case.reload
+
     visit my_procurements_task_path(support_case)
 
     expect(find("#my_procurements_task-1-status")).to have_text("Complete")
 
-    expect(Support::Interaction.count).to eq(4)
-    expect(Support::Interaction.first.body).to eq("another-text-file.txt downloaded by school buyer Momo Taro")
+    expect(Support::Interaction.count).to eq(5)
+    expect(Support::Interaction.all[0].body).to eq("All documents downloaded by school buyer Momo Taro")
+    expect(Support::Interaction.all[1].body).to eq("another-text-file.txt downloaded by school buyer Momo Taro")
   end
 end

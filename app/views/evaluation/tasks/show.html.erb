@@ -38,7 +38,7 @@
   if current_evaluator&.evaluation_approved?
     evaluation_complete = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"), colour: "green")
     task_list.with_item(title: I18n.t("evaluation.task_list.item.evaluation_approved_by_dfe"), href: evaluation_evaluation_approved_path(@current_case), status: evaluation_complete)
-  elsif current_evaluator.has_uploaded_documents? && !current_evaluator&.evaluation_approved?
+  elsif current_evaluator.has_downloaded_documents? && current_evaluator.has_uploaded_documents? && !current_evaluator&.evaluation_approved?
     evaluation_in_progress = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"), colour: "yellow")
     task_list.with_item(title: I18n.t("evaluation.task_list.item.evaluation_approved_by_dfe"), href: evaluation_evaluation_approved_path(@current_case), status: evaluation_in_progress)
   else

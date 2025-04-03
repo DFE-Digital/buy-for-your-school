@@ -94,6 +94,7 @@ module Support
       handover_packs_uploaded_in_complete: 51,
       evaluation_in_completed: 52,
       all_documents_downloaded: 53,
+      all_handover_packs_downloaded: 54,
     }
 
     validates :body, presence: true, unless: proc { |a| a.support_request? || a.faf_support_request? }

@@ -77,7 +77,7 @@ module Support
     end
 
     def log_share_handover_packs
-      recipient_emails = @email_addresses.join(",")
+      recipient_emails = @email_addresses.join(", ")
       data = { support_case_id: @current_case.id, email_id: params[:id], to_recipients: recipient_emails }
       Support::EvaluationJourneyTracking.new(:share_handover_packs, data).call
     end

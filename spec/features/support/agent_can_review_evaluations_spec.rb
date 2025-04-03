@@ -66,7 +66,7 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
 
     expect(Support::Interaction.count).to eq(5)
 
-    expect(Support::Interaction.first.body).to eq("Evaluation marked incomplete by Procurement Specialist")
+    expect(Support::Interaction.first.body).to eq("Evaluation marked in-progress by Procurement Specialist")
 
     support_case.evaluators.update_all(evaluation_approved: false)
 

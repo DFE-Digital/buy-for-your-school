@@ -89,7 +89,7 @@ module Support
     end
 
     def log_email_evaluators
-      evaluator_emails = @email_addresses.join(",")
+      evaluator_emails = @email_addresses.join(", ")
       data = { support_case_id: @current_case.id, email_id: params[:id], to_recipients: evaluator_emails }
       Support::EvaluationJourneyTracking.new(:email_evaluators, data).call
     end
