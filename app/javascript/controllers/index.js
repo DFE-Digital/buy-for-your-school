@@ -84,3 +84,6 @@ application.register("select-option-text-field", SelectOptionTextFieldController
 
 import DownloadDocumentsController from "./download_documents_controller"
 application.register("download_documents", DownloadDocumentsController)
+
+import DateValidationController from "./date_validation_controller"
+application.register("date_validation", DateValidationController)
