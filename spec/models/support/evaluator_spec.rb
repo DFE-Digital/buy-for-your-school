@@ -48,5 +48,19 @@ RSpec.describe Support::Evaluator, type: :model do
       expect(evaluator).not_to be_valid
       expect(evaluator.errors[:base]).to include("Maximum number of evaluators reached")
     end
+
+    it "does not allow more than 60 characters for first name and last name" do
+      support_case = create(:support_case)
+
+      evaluator = build(:support_evaluator, support_case:, first_name: "a" * 61)
+
+      expect(evaluator).not_to be_valid
+      expect(evaluator.errors[:first_name]).to include("First name must be 60 characters or fewer")
+
+      evaluator = build(:support_evaluator, support_case:, last_name: "b" * 61)
+
+      expect(evaluator).not_to be_valid
+      expect(evaluator.errors[:last_name]).to include("Last name must be 60 characters or fewer")
+    end
   end
 end
