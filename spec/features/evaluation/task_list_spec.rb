@@ -24,6 +24,9 @@ describe "Evaluator can see task list", :js do
     visit evaluation_task_path(support_case)
 
     expect(page).to have_text("Evaluator task list")
+    expect(page).to have_text("Download documents")
+    expect(page).to have_text("Upload evaluation scoring document")
+    expect(page).to have_text("Evaluation approved by DfE")
   end
 
   specify "Authenticating when not an evaluator" do
@@ -69,13 +72,13 @@ describe "Evaluator can see task list", :js do
     find_all(".govuk-summary-list__row a")[0].click
     find_all(".govuk-summary-list__row a")[1].click
 
-    support_evaluator.update!(has_uploaded_documents: true)
+    support_evaluator.update!(has_downloaded_documents: true, has_uploaded_documents: true)
 
     document_uploader.save_evaluation_document!(user, true)
 
     visit evaluation_task_path(support_case)
 
-    expect(page).to have_link("Upload completed documents")
+    expect(page).to have_link("Upload evaluation scoring document")
   end
 
   specify "Verify the upload completed documents link when evaluation is approved" do
@@ -91,12 +94,12 @@ describe "Evaluator can see task list", :js do
     find_all(".govuk-summary-list__row a")[0].click
     find_all(".govuk-summary-list__row a")[1].click
 
-    support_evaluator.update!(has_uploaded_documents: true, evaluation_approved: true)
+    support_evaluator.update!(has_downloaded_documents: true, has_uploaded_documents: true, evaluation_approved: true)
 
     document_uploader.save_evaluation_document!(user, true)
 
     visit evaluation_task_path(support_case)
 
-    expect(page).not_to have_link("Upload completed documents")
+    expect(page).not_to have_link("Upload evaluation scoring document")
   end
 end

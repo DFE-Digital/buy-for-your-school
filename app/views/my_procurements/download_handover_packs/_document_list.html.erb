@@ -1,15 +1,11 @@
 <%= form_with url: my_procurements_download_handover_pack_path(@current_case), method: :patch do |form| %>
-<div class="govuk-form-group govuk-!-static-margin-bottom-8" data-controller="download_documents">
-  <dl class="govuk-summary-list" data-download_documents-target="downloadLinks">
+<div class="govuk-form-group govuk-!-static-margin-bottom-8">
+  <dl class="govuk-summary-list">
     <% @documents.each do |document| %>
       <div class="govuk-summary-list__row">
         <dd class="govuk-summary-list__value">
           <%= link_to document.file_name, my_procurements_download_handover_pack_path(@current_case, document_type: document.class, document_id: document.id), method: :put, class: "govuk-link" %>
         </dd>
-        <% hideClass = @downloaded_documents.present? && @downloaded_documents.map(&:support_upload_contract_handover_id).include?(document.id) ? '' : 'govuk-!-display-none' %>
-          <dd class="govuk-summary-list__value govuk-!-padding-top-4 downloaded-icon <%= hideClass%>">
-          <%= image_tag "tick.svg", alt: "Already downloaded", width: "24", height: "24" %>
-          </dd>
       </div>
     <% end %>
   </dl>

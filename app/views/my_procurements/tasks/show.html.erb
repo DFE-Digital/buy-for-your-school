@@ -6,11 +6,8 @@
 
 <%= govuk_task_list(id_prefix: "my_procurements_task") do |task_list|
 
-  case @downloaded_handover_pack_status
-  when :complete
+ if @school_buying_professional.has_downloaded_documents?
     downloaded_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.complete"), colour: "green")
-  when :in_progress
-    downloaded_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.in_progress"))
   else
     downloaded_status = govuk_tag(text: I18n.t("support.case.label.tasklist.status.to_do"))
   end

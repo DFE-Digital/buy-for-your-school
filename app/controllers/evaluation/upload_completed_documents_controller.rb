@@ -148,14 +148,19 @@ module Evaluation
     end
 
     def log_all_completed_documents_uploaded
-      return unless current_evaluator.has_uploaded_documents?
+      return unless current_evaluator.saved_change_to_has_uploaded_documents?
 
       data = {
         support_case_id: @current_case.id,
         name: "evaluator #{current_evaluator.name}",
         user_id: current_evaluator.id,
       }
-      Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, data).call
+
+      if current_evaluator.has_uploaded_documents?
+        Support::EvaluationJourneyTracking.new(:all_completed_documents_uploaded, data).call
+      else
+        Support::EvaluationJourneyTracking.new(:completed_documents_uploaded_in_complete, data).call
+      end
     end
   end
 end

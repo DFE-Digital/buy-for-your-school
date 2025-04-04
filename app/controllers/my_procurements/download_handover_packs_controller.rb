@@ -12,8 +12,14 @@ module MyProcurements
     def show; end
 
     def update
-      update_support_details
-      send_data @download_document.file.download, type: @download_document.file_type, disposition: "attachment", filename: @download_document.file_name
+      if params[:confirm]
+        @school_buying_professional.update!(case_handover_packs_download_params)
+        log_all_handover_packs_downloaded
+        redirect_to @back_url
+      else
+        update_support_details
+        send_data @download_document.file.download, type: @download_document.file_type, disposition: "attachment", filename: @download_document.file_name
+      end
     end
 
   private
@@ -41,6 +47,10 @@ module MyProcurements
       @documents = @current_case.upload_contract_handovers
     end
 
+    def case_handover_packs_download_params
+      params.require(:handover_packs).permit(:has_downloaded_documents)
+    end
+
     def update_support_details
       unless downloaded_details_exist?
         log_handover_packs_downloaded(@download_document.file_name)
@@ -58,6 +68,8 @@ module MyProcurements
     end
 
     def set_download_handover_pack
+      return if params[:confirm]
+
       @requested_file_type = CGI.unescape(params[:document_type])
       if SUPPORTED_TYPES.include?(@requested_file_type)
         @download_document = @requested_file_type.safe_constantize.find(params[:document_id])
@@ -83,6 +95,17 @@ module MyProcurements
         name: "school buyer #{school_buying_professional.name}",
       }
       Support::EvaluationJourneyTracking.new(:handover_packs_downloaded, data).call
+    end
+
+    def log_all_handover_packs_downloaded
+      return unless @school_buying_professional.saved_change_to_has_downloaded_documents? && @school_buying_professional.has_downloaded_documents?
+
+      data = {
+        support_case_id: @current_case.id,
+        user_id: school_buying_professional.id,
+        name: "school buyer #{school_buying_professional.name}",
+      }
+      Support::EvaluationJourneyTracking.new(:all_handover_packs_downloaded, data).call
     end
   end
 end

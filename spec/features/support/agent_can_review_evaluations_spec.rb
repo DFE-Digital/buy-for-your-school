@@ -58,6 +58,16 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
 
     visit edit_support_case_review_evaluation_path(support_case)
 
+    find_all(".govuk-checkboxes__input")[0].click
+
+    expect(find_all(".govuk-checkboxes__input")[0]).not_to be_checked
+
+    click_button "Continue"
+
+    expect(Support::Interaction.count).to eq(5)
+
+    expect(Support::Interaction.first.body).to eq("Evaluation marked in-progress by Procurement Specialist")
+
     support_case.evaluators.update_all(evaluation_approved: false)
 
     visit support_case_path(support_case, anchor: "tasklist")

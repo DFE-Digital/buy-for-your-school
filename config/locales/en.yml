@@ -346,15 +346,20 @@ en:
     task_list:
       item:
         download_documents: Download documents
-        upload_completed_documents: Upload completed documents
+        upload_evaluation_scoring_document: Upload evaluation scoring document
         evaluation_approved_by_dfe: Evaluation approved by DfE
     download_documents:
       header: Download documents
+      file_download_confirmation: Have you downloaded all the documents?
     upload_evaluation:
-      header: Upload evaluation
+      header: Upload evaluation scoring document
       page_body_text1: Upload your evaluation, this is usually only the scoring form but you can upload multiple files.
       page_body_text2: DfE will then review and approve your evaluation. You will receive an email with instructions if any changes are required.
       file_upload_confirmation: Have you uploaded all the completed documents?
+    evaluation_approved:
+      header: Evaluation approved by DfE
+      page_body_text1: Once your evaluation has been submitted, it will need to be approved by a procurement lead at DfE to ensure that its has been fully completed in a compliant way.
+      page_body_text2: The procurement lead will either approve the evaluation or request changes. You will receive an email in both cases. The evaluation and any changes must be complete by the due date shown on task list.
   my_procurements:
     tasks:
       not_permitted: "You aren’t a school buying professional for this procurement" 
@@ -837,11 +842,13 @@ en:
         first_name: First name
         last_name: Last name
         name: Name
+        maximum_evaluators_per_case: Maximum number of evaluators reached
       support_contract_recipient:
         email: Email address
         first_name: First name
         last_name: Last name
         name: Name
+        maximum_contract_recipients_per_case: Maximum number of contract recipients reached
   journey:
     edit:
       name:

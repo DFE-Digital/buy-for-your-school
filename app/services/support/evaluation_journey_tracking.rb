@@ -31,6 +31,13 @@ module Support
     def handover_packs_deleted = documents_deleted
     def all_handover_packs_uploaded = all_documents_uploaded
     def handover_packs_downloaded = documents_downloaded
+    def completed_documents_uploaded_in_complete = documents_uploaded_in_complete
+    def handover_packs_uploaded_in_complete = documents_uploaded_in_complete
+    def all_handover_packs_downloaded = all_documents_downloaded
+
+    # Evaluation-related actions
+    def evaluation_completed = evaluation_process("complete")
+    def evaluation_in_completed = evaluation_process("in-progress")
 
     # Email-related actions
     def email_evaluators = email_user
@@ -70,14 +77,26 @@ module Support
       log_action(@method, @data[:support_case_id], body, additional_data)
     end
 
+    def documents_uploaded_in_complete
+      body = "Upload documents marked incomplete by #{@data[:name]}"
+      additional_data = { event: "documents_uploaded_in_complete", uploaded_all: "No", user_id: @data[:user_id] }
+      log_action(@method, @data[:support_case_id], body, additional_data)
+    end
+
     def documents_downloaded
       body = "#{@data[:file_name]} downloaded by #{@data[:name]}"
       additional_data = { event: @method, file_name: @data[:file_name], document_id: @data[:document_id], user_id: @data[:user_id] }
       log_action(@method, @data[:support_case_id], body, additional_data)
     end
 
-    def evaluation_completed
-      body = "Evaluation marked complete by #{Current.agent.first_name} #{Current.agent.last_name}"
+    def all_documents_downloaded
+      body = "All documents downloaded by #{@data[:name]}"
+      additional_data = { event: @method, user_id: @data[:user_id] }
+      log_action(@method, @data[:support_case_id], body, additional_data)
+    end
+
+    def evaluation_process(status)
+      body = "Evaluation marked #{status} by #{Current.agent.first_name} #{Current.agent.last_name}"
       additional_data = { event: @method, agent_id: Current.agent.id }
       log_action(@method, @data[:support_case_id], body, additional_data)
     end
