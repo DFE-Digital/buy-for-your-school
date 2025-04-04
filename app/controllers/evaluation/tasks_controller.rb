@@ -5,7 +5,6 @@ module Evaluation
     before_action :check_user_is_evaluator
     before_action :set_uploaded_documents
     before_action :set_downloaded_documents
-    before_action :download_document_status
     before_action :uploaded_evaluation_files
     before_action :upload_document_status
 
@@ -43,22 +42,11 @@ module Evaluation
       @documents = @current_case.upload_documents
     end
 
-    def download_document_status
-      @download_document_status = if @documents.count == @downloaded_documents.count && @documents.any?
-                                    :complete
-                                  elsif @documents.count > @downloaded_documents.count && @downloaded_documents.any?
-                                    :in_progress
-                                  else
-                                    :to_do
-                                  end
-    end
-
     def upload_document_status
-      all_documents_downloaded = @documents.count == @downloaded_documents.count && @documents.any?
       partial_uploaded = current_evaluator && !current_evaluator.has_uploaded_documents && @uploaded_evaluation_files.any?
-      @upload_document_status = if all_documents_downloaded && current_evaluator&.has_uploaded_documents?
+      @upload_document_status = if current_evaluator&.has_downloaded_documents? && current_evaluator&.has_uploaded_documents?
                                   :complete
-                                elsif all_documents_downloaded && partial_uploaded
+                                elsif current_evaluator&.has_downloaded_documents? && partial_uploaded
                                   :in_progress
                                 else
                                   :to_do

@@ -102,4 +102,35 @@ describe "Evaluator can see task list", :js do
 
     expect(page).not_to have_link("Upload evaluation scoring document")
   end
+
+  specify "Verify the evaluation scoring document task status" do
+    Current.user = user
+    user_exists_in_dfe_sign_in(user:)
+
+    user_is_signed_in(user:)
+
+    document_uploader.save!
+
+    support_evaluator.update!(has_downloaded_documents: true)
+
+    visit evaluation_task_path(support_case)
+
+    expect(find("#evaluator_task-2-status")).to have_text("To do")
+
+    document_uploader.save_evaluation_document!(user, true)
+
+    support_evaluator.reload
+
+    visit evaluation_task_path(support_case)
+
+    expect(find("#evaluator_task-2-status")).to have_text("In progress")
+
+    support_evaluator.update!(has_uploaded_documents: true)
+
+    support_evaluator.reload
+
+    visit evaluation_task_path(support_case)
+
+    expect(find("#evaluator_task-2-status")).to have_text("Complete")
+  end
 end
