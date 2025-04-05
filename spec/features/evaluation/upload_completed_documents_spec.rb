@@ -196,4 +196,19 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
 
     expect(find(evaluator_task_status, wait: 10)).to have_text("To do")
   end
+
+  specify "when proc ops have approved the evaluation" do
+    upload_documents
+
+    support_evaluator.update!(evaluation_approved: true)
+
+    visit evaluation_upload_completed_document_path(support_case)
+
+    span_button = find('span[role="button"][data-case-files-target="btnDisplayFileDialog"]')
+
+    expect(span_button[:disabled]).to be_truthy
+    expect(page).to have_field("Yes, I have uploaded all the completed documents", disabled: true)
+    expect(page).to have_field("No", disabled: true)
+    expect(page).to have_button("Continue", disabled: true)
+  end
 end
