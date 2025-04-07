@@ -48,5 +48,19 @@ RSpec.describe Support::ContractRecipient, type: :model do
       expect(contract_recipient).not_to be_valid
       expect(contract_recipient.errors[:base]).to include("Maximum number of contract recipients reached")
     end
+
+    it "does not allow more than 60 characters for first name and last name" do
+      support_case = create(:support_case)
+
+      contract_recipient = build(:support_contract_recipient, support_case:, first_name: "a" * 61)
+
+      expect(contract_recipient).not_to be_valid
+      expect(contract_recipient.errors[:first_name]).to include("First name must be 60 characters or fewer")
+
+      contract_recipient = build(:support_contract_recipient, support_case:, last_name: "b" * 61)
+
+      expect(contract_recipient).not_to be_valid
+      expect(contract_recipient.errors[:last_name]).to include("Last name must be 60 characters or fewer")
+    end
   end
 end
