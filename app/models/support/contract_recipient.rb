@@ -6,7 +6,7 @@ module Support
               presence: true,
               format: { with: URI::MailTo::EMAIL_REGEXP },
               uniqueness: { case_sensitive: false, scope: :support_case_id }
-    validates :first_name, :last_name, presence: true
+    validates :first_name, :last_name, presence: true, length: { maximum: 60 }
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
     validate :maximum_contract_recipients_per_case, on: :create

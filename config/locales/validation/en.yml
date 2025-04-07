@@ -171,6 +171,18 @@ en:
             provider_end_date:
               blank: Enter provider end date
           unique_name_and_provider: The combination of name and provider must be unique
+        support/evaluator:
+          attributes:
+            first_name:
+              too_long: "First name must be %{count} characters or fewer"
+            last_name:
+              too_long: "Last name must be %{count} characters or fewer"
+        support/contract_recipient:
+          attributes:
+            first_name:
+              too_long: "First name must be %{count} characters or fewer"
+            last_name:
+              too_long: "Last name must be %{count} characters or fewer"
 
   request:
     rules:
