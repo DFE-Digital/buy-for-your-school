@@ -168,6 +168,7 @@ jobs:
         with:
           name: coverage-report-${{ matrix.ci_node_index }}
           path: coverage/.resultset-${{ matrix.ci_node_index }}.json
+          include-hidden-files: true
 
   rspec_quarantine:
     name: Checks - Rspec (Quarantined tests)
@@ -242,6 +243,7 @@ jobs:
         with:
           name: coverage-report-quarantine
           path: coverage/.resultset-quarantine.json
+          include-hidden-files: true
 
   collate_test_coverage:
     name: Checks - Produce test coverage report
@@ -274,11 +276,13 @@ jobs:
           path: |
             coverage/*
             !coverage/.last_run.json
+          include-hidden-files: true
       - name: Store last run
         uses: actions/upload-artifact@v4
         with:
           name: last-run
           path: coverage/.last_run.json
+          include-hidden-files: true
       - name: Delete intermediate artifacts
         uses: geekyeggo/delete-artifact@v5
         with:
