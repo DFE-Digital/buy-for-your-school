@@ -100,7 +100,7 @@ describe "Evaluator can see task list", :js do
 
     visit evaluation_task_path(support_case)
 
-    expect(page).not_to have_link("Upload evaluation scoring document")
+    expect(page).to have_link("Upload evaluation scoring document")
   end
 
   specify "Verify the evaluation scoring document task status" do

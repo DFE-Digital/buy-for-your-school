@@ -4,7 +4,6 @@ module Evaluation
     before_action :check_user_is_evaluator
     before_action { @back_url = evaluation_task_path(@current_case) }
     before_action :uploaded_files
-    before_action :evaluation_approved_by_dfe?
     def show
       @document_uploader = @current_case.document_uploader
     end
@@ -128,12 +127,6 @@ module Evaluation
       )
 
       @current_case.notify_agent_of_evaluation_submitted(email)
-    end
-
-    def evaluation_approved_by_dfe?
-      return unless current_evaluator.evaluation_approved?
-
-      redirect_to evaluation_task_path(@current_case)
     end
 
     def log_completed_documents_deleted(file_name)
