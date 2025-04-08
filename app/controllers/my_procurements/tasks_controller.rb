@@ -37,6 +37,8 @@ module MyProcurements
       return unless current_user.guest?
 
       session.delete(:dfe_sign_in_uid)
+      session.delete(:email_evaluator_link)
+      session.delete(:evaluator_signin_link)
       session[:email_school_buyer_link] = my_procurements_task_path(id: params[:id], host: request.host)
       session[:school_buyer_signin_link] = my_procurements_signin_path(id: params[:id])
       redirect_to my_procurements_signin_path(id: params[:id]), notice: I18n.t("banner.session.visitor")

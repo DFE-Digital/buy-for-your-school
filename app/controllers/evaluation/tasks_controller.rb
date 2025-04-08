@@ -57,6 +57,8 @@ module Evaluation
       return unless current_user.guest?
 
       session.delete(:dfe_sign_in_uid)
+      session.delete(:email_school_buyer_link)
+      session.delete(:school_buyer_signin_link)
       session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
       session[:evaluator_signin_link] = evaluation_signin_path(id: params[:id])
       redirect_to evaluation_signin_path(id: params[:id]), notice: I18n.t("banner.session.visitor")
