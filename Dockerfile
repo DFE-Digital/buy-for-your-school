@@ -3,33 +3,31 @@
 # ------------------------------------------------------------------------------
 FROM ruby:3.3.8-slim AS base
 
-RUN apt-get update && apt-get install -qq -y \
-    build-essential \
-    libpq-dev \
-    libyaml-dev \
-    --fix-missing --no-install-recommends
-
-RUN apt-get install -y wget curl gnupg2 git --no-install-recommends
-
 ENV TZ="Europe/London"
 
-# https://github.com/jgm/pandoc/releases/download/2.17.0.1/pandoc-2.17.0.1-1-arm64.deb
-
-RUN wget -q https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb; \
-    apt-get install ./pandoc-2.14.2-1-amd64.deb; \
-    rm pandoc-2.14.2-1-amd64.deb
-
-RUN apt-get install -qq -y \
+RUN \
+  apt-get update && \
+  apt-get install -qq -y --fix-missing --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    gnupg2 \
+    libpq-dev \
+    libyaml-dev \
+    lmodern \
+    nodejs \
+    npm \
     texlive \
     texlive-latex-recommended \
-    lmodern \
-    --fix-missing --no-install-recommends
-
-# Yarn
-
-RUN apt-get install -y nodejs npm --no-install-recommends
-RUN npm install --global yarn
-
+    wget \
+    && \
+  curl --silent --location --output pandoc.deb \
+    https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb && \
+  apt-get install -qq -y --fix-missing --no-install-recommends ./pandoc.deb && \
+  rm pandoc.deb && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  npm install --global yarn
 
 # ------------------------------------------------------------------------------
 # Assets
@@ -40,8 +38,7 @@ ARG NODE_ENV=production
 
 ENV NODE_ENV=${NODE_ENV}
 
-RUN mkdir -p /deps/config/webpack
-RUN mkdir -p /deps/script/assets
+RUN mkdir -p /deps/config/webpack /deps/script/assets
 
 WORKDIR /deps
 
@@ -70,10 +67,11 @@ COPY .ruby-version ${APP_HOME}/.ruby-version
 COPY Gemfile $APP_HOME/Gemfile
 COPY Gemfile.lock $APP_HOME/Gemfile.lock
 
-RUN bundle config set frozen true
-RUN bundle config set no-cache true
-RUN bundle config set without development test
-RUN bundle install --no-binstubs --retry=10 --jobs=4
+RUN \
+  bundle config set frozen true && \
+  bundle config set no-cache true && \
+  bundle config set without development test && \
+  bundle install --no-binstubs --retry=10 --jobs=4
 
 COPY config.ru ${APP_HOME}/config.ru
 COPY Rakefile ${APP_HOME}/Rakefile
@@ -92,8 +90,9 @@ COPY .browserslistrc ${APP_HOME}/.browserslistrc
 COPY --from=assets /deps/node_modules /srv/node_modules
 COPY --from=assets /deps/node_modules $APP_HOME/node_modules
 
-RUN yarn config set ignore-engines true
-RUN RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=key bundle exec rake assets:precompile
+RUN \
+  yarn config set ignore-engines true && \
+  RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=key bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
 
@@ -109,20 +108,28 @@ CMD ["bundle", "exec", "rails", "server"]
 # ------------------------------------------------------------------------------
 FROM app AS dev
 
-RUN bundle config unset without
-RUN bundle config set without test
-RUN bundle install --no-binstubs --retry=10 --jobs=4
+RUN \
+  bundle config unset without && \
+  bundle config set without test && \
+  bundle install --no-binstubs --retry=10 --jobs=4
 
 # ------------------------------------------------------------------------------
 # Test Stage
 # ------------------------------------------------------------------------------
 FROM app AS test
 
-RUN bundle config unset without
-RUN bundle config set without development
-RUN bundle install --no-binstubs --retry=10 --jobs=4
-
-RUN apt-get install -qq -y shellcheck wait-for-it iproute2
+RUN \
+  bundle config unset without && \
+  bundle config set without development && \
+  bundle install --no-binstubs --retry=10 --jobs=4 && \
+  apt-get update && \
+  apt-get install -qq -y --fix-missing --no-install-recommends \
+    iproute2 \
+    shellcheck \
+    wait-for-it \
+    && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 COPY .rubocop.yml ${APP_HOME}/.rubocop.yml
 COPY .rubocop_todo.yml ${APP_HOME}/.rubocop_todo.yml
