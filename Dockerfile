@@ -93,7 +93,7 @@ COPY --from=assets /deps/node_modules /srv/node_modules
 COPY --from=assets /deps/node_modules $APP_HOME/node_modules
 
 RUN yarn config set ignore-engines true
-RUN RAILS_ENV=production SECRET_KEY_BASE=key bundle exec rake assets:precompile
+RUN RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=key bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
 
