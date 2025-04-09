@@ -36,7 +36,9 @@ RUN npm install --global yarn
 # ------------------------------------------------------------------------------
 FROM node:22.4.1-alpine AS assets
 
-ENV NODE_ENV ${NODE_ENV:-production}
+ARG NODE_ENV=production
+
+ENV NODE_ENV=${NODE_ENV}
 
 RUN mkdir -p /deps/config/webpack
 RUN mkdir -p /deps/script/assets
@@ -54,9 +56,11 @@ RUN yarn install
 # ------------------------------------------------------------------------------
 FROM base AS app
 
-ENV APP_HOME /srv/app
-ENV RAILS_ENV ${RAILS_ENV:-production}
-ENV PATH $PATH:/usr/local/bundle/bin:/usr/local/bin
+ARG RAILS_ENV=production
+
+ENV APP_HOME=/srv/app
+ENV RAILS_ENV=${RAILS_ENV}
+ENV PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin
 
 RUN mkdir -p ${APP_HOME}/tmp/pids ${APP_HOME}/log
 
