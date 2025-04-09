@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:3.3.8-slim as base
+FROM ruby:3.3.8-slim AS base
 
 RUN apt-get update && apt-get install -qq -y \
     build-essential \
@@ -34,7 +34,7 @@ RUN npm install --global yarn
 # ------------------------------------------------------------------------------
 # Assets
 # ------------------------------------------------------------------------------
-FROM node:22.4.1-alpine as assets
+FROM node:22.4.1-alpine AS assets
 
 ENV NODE_ENV ${NODE_ENV:-production}
 
@@ -103,7 +103,7 @@ CMD ["bundle", "exec", "rails", "server"]
 # ------------------------------------------------------------------------------
 # Development Stage
 # ------------------------------------------------------------------------------
-FROM app as dev
+FROM app AS dev
 
 RUN bundle config unset without
 RUN bundle config set without test
@@ -112,7 +112,7 @@ RUN bundle install --no-binstubs --retry=10 --jobs=4
 # ------------------------------------------------------------------------------
 # Test Stage
 # ------------------------------------------------------------------------------
-FROM app as test
+FROM app AS test
 
 RUN bundle config unset without
 RUN bundle config set without development
