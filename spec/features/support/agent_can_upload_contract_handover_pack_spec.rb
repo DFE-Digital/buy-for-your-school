@@ -105,6 +105,9 @@ RSpec.feature "Agent can upload contract handover pack", :js, :with_csrf_protect
 
     expect(Support::Interaction.count).to eq(4)
     expect(Support::Interaction.first.body).to eq("text-file.txt deleted by Procurement Specialist")
+
+    visit support_case_path(support_case, anchor: "case-history")
+    expect(page).to have_text "text-file.txt deleted by Procurement Specialist"
   end
 
   specify "when all files are deleted" do

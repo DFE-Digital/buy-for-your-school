@@ -1989,6 +1989,34 @@ en:
         savings_updated: Savings updated
         state_change: Status change
         support_request: Request for support
+        evaluator_added: Evaluator added
+        evaluator_updated: Evaluator updated
+        evaluator_removed: Evaluator removed
+        evaluation_due_date_added: Due date added
+        evaluation_due_date_updated: Due date updated
+        documents_uploaded: Documents uploaded
+        documents_deleted: Documents deleted
+        all_documents_uploaded: Uploaded all documents
+        email_evaluators: Email evaluators
+        documents_downloaded: Documents downloaded
+        completed_documents_uploaded: Completed document uploaded
+        completed_documents_deleted: Completed document deleted
+        all_completed_documents_uploaded: Uploaded all completed documents
+        evaluation_completed: Evaluation completed
+        contract_recipient_added: Contract recipient added
+        contract_recipient_updated: Contract recipient updated
+        contract_recipient_removed: Contract recipient removed
+        handover_packs_uploaded: Handover pack uploaded
+        handover_packs_deleted: Handover pack deleted
+        all_handover_packs_uploaded: Uploaded all handover packs
+        share_handover_packs: Handover pack shared
+        handover_packs_downloaded: Handover pack downloaded
+        documents_uploaded_in_complete: Uploaded all documents
+        completed_documents_uploaded_in_complete: Uploaded all completed documents
+        handover_packs_uploaded_in_complete: Uploaded all handover packs
+        evaluation_in_completed: Evaluation in progress
+        all_documents_downloaded: Downloaded all documents
+        all_handover_packs_downloaded: Downloaded all handover packs
     management:
       agents:
         header: Agents

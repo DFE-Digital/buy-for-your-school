@@ -50,6 +50,10 @@ RSpec.feature "Agent can upload evaluation documents", :js, :with_csrf_protectio
 
     expect(Support::Interaction.count).to eq(2)
     expect(Support::Interaction.first.body).to eq("another-text-file.txt added by Procurement Specialist")
+
+    visit support_case_path(support_case, anchor: "case-history")
+    expect(page).to have_text "text-file.txt added by Procurement Specialist"
+    expect(page).to have_text "another-text-file.txt added by Procurement Specialist"
   end
 
   specify "viewing uploaded files" do

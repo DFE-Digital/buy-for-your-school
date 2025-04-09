@@ -40,5 +40,8 @@ describe "Edit evaluation due date", :js do
     expect(page).not_to have_text("Enter valid evaluation due date")
     expect(Support::Interaction.count).to eq(1)
     expect(Support::Interaction.last.body).to eq("Due date set to #{Time.zone.today.year + 1}-11-11 by Procurement Specialist")
+
+    visit support_case_path(support_case, anchor: "case-history")
+    expect(page).to have_text "Due date set to #{Time.zone.today.year + 1}-11-11 by Procurement Specialist"
   end
 end
