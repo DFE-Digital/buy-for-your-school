@@ -53,5 +53,11 @@ describe "Agent can add evaluators", :js do
 
     expect(Support::Interaction.count).to eq(4)
     expect(Support::Interaction.all[0].body).to eq("Evaluator Oni Baba removed by Procurement Specialist")
+
+    visit support_case_path(support_case, anchor: "case-history")
+    expect(page).to have_text "Evaluator Momo Taro added by Procurement Specialist"
+    expect(page).to have_text "Evaluator email for Oni Baba updated by Procurement Specialist"
+    expect(page).to have_text "Evaluator Momo Taro changed to Oni Baba by Procurement Specialist"
+    expect(page).to have_text "Evaluator Oni Baba removed by Procurement Specialist"
   end
 end

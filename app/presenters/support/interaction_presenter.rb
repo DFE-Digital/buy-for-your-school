@@ -122,6 +122,8 @@ module Support
         Support::CaseNextKeyDateChangePresenter.new(self).show_additional_data?
       elsif case_transferred?
         Support::CaseTransferredPresenter.new(self).show_additional_data?
+      elsif hide_additional_data?(event_type)
+        false
       else
         true
       end
@@ -201,6 +203,42 @@ module Support
     # @return [Support::CategoryPresenter]
     def category(category_id)
       @category ||= CategoryPresenter.new(Category.find(category_id))
+    end
+
+    def hide_additional_data?(interaction_type)
+      case interaction_type
+      when "evaluator_added",
+           "evaluator_updated",
+           "evaluator_removed",
+           "evaluation_due_date_added",
+           "evaluation_due_date_updated",
+           "documents_uploaded",
+           "documents_deleted",
+           "all_documents_uploaded",
+           "email_evaluators",
+           "documents_downloaded",
+           "completed_documents_uploaded",
+           "completed_documents_deleted",
+           "all_completed_documents_uploaded",
+           "evaluation_completed",
+           "contract_recipient_added",
+           "contract_recipient_updated",
+           "contract_recipient_removed",
+           "handover_packs_uploaded",
+           "handover_packs_deleted",
+           "all_handover_packs_uploaded",
+           "share_handover_packs",
+           "handover_packs_downloaded",
+           "documents_uploaded_in_complete",
+           "completed_documents_uploaded_in_complete",
+           "handover_packs_uploaded_in_complete",
+           "evaluation_in_completed",
+           "all_documents_downloaded",
+           "all_handover_packs_downloaded"
+        true
+      else
+        false
+      end
     end
   end
 end

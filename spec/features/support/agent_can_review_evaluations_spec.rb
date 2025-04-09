@@ -73,5 +73,9 @@ describe "Agent can review evaluations", :js, :with_csrf_protection do
     visit support_case_path(support_case, anchor: "tasklist")
 
     expect(find("#complete-evaluation-5-status")).to have_text("To do")
+
+    visit support_case_path(support_case, anchor: "case-history")
+    expect(page).to have_text "another-text-file.txt added by evaluator Procurement Specialist"
+    expect(page).to have_text "Evaluation marked in-progress by Procurement Specialist"
   end
 end

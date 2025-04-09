@@ -53,5 +53,11 @@ describe "Agent can add contract recipient", :js do
 
     expect(Support::Interaction.count).to eq(4)
     expect(Support::Interaction.first.body).to eq("Recipient Oni Baba removed by Procurement Specialist")
+
+    visit support_case_path(support_case, anchor: "case-history")
+    expect(page).to have_text "Recipient Momo Taro added by Procurement Specialist"
+    expect(page).to have_text "Recipient email for Oni Baba updated by Procurement Specialist"
+    expect(page).to have_text "Recipient Momo Taro changed to Oni Baba by Procurement Specialist"
+    expect(page).to have_text "Recipient Oni Baba removed by Procurement Specialist"
   end
 end
