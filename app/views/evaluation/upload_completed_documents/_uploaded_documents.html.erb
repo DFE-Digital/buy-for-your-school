@@ -16,6 +16,12 @@
                         <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("generic.button.delete") %></a>
                     </span>
                 </div>
+                <div class="upload-row progress-status-container govuk-!-display-none">
+                  <p class="govuk-body-s progress-status govuk-!-display-none" data-dz-errormessage></p>
+                  <div class="upload-progress-container govuk-!-display-none">
+                    <div data-dz-uploadprogress class="upload-progress" aria-valuenow="0"></div>
+                  </div>
+                </div>
             </div>
         </div>
         </div>
