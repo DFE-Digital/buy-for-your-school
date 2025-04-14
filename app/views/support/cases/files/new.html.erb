@@ -3,10 +3,21 @@
     <%= link_to "Back to case files list", support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-back-link pull-up" %>
 
     <%= form_with model: @file_uploader, scope: :file_uploader, url: support_case_files_path,
-          html: { "data-controller" => "case-files" } do |form| %>
+          html: { "data-controller" => "case-files", "data-case-files-error-summary-outlet"=>".govuk-error-summary" } do |form| %>
       <%= form.govuk_error_summary %>
 
       <h2 class="govuk-heading-l"><%= I18n.t("support.case.label.case_files.new.heading") %></h2>
+
+      <div class="govuk-error-summary govuk-!-display-none"
+        data-controller="error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title" data-error-summary-target="title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body" data-error-summary-target="body" aria-live="polite">
+          </div>
+        </div>
+      </div>
 
       <span class="govuk-button govuk-button--secondary" role="button"
         data-case-files-target="btnDisplayFileDialog">
@@ -25,6 +36,12 @@
                     <span class="case-files__file-remove">
                       <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.generic.remove") %></a>
                     </span>
+                  </div>
+                  <div class="upload-row progress-status-container govuk-!-display-none">
+                    <p class="govuk-body-s progress-status govuk-!-display-none" data-dz-errormessage></p>
+                    <div class="upload-progress-container govuk-!-display-none">
+                      <div data-dz-uploadprogress class="upload-progress" aria-valuenow="0"></div>
+                    </div>
                   </div>
                 </div>
               </div>

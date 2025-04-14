@@ -1,7 +1,18 @@
 <%= form_with model: @document_uploader,  scope: :document_uploader, url: support_case_upload_contract_handover_path,
-          html: { "data-controller" => "case-files" } do |form| %>
+          html: { "data-controller" => "case-files",  "data-case-files-error-summary-outlet"=>".govuk-error-summary" } do |form| %>
 
     <h2 class="govuk-heading-m"><%= I18n.t("support.cases.upload_documents.choose_file_title") %></h2>
+
+    <div class="govuk-error-summary govuk-!-display-none"
+      data-controller="error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title" data-error-summary-target="title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body" data-error-summary-target="body" aria-live="polite">
+        </div>
+      </div>
+    </div>
 
     <%= form.govuk_error_summary %>  
  
