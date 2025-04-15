@@ -1,0 +1,7 @@
+<%= render BackLinkComponent.new(url: onboarding_path(@prev_step)) %>
+<h1 class="govuk-heading-xl"><%= I18n.t("energy.before_you_start.title") %></h1>
+<h2 class="govuk-heading-m"><%= I18n.t("energy.before_you_start.subtitle") %></h2>
+<%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.need")) %>
+<%= render BulletListComponent.new(items: I18n.t("energy.before_you_start.need_list")) %>
+<%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.time_required")) %>
+<%= render ContinueButtonComponent.new(url: onboarding_path(@next_step)) %>
