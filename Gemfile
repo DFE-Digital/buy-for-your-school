@@ -110,6 +110,7 @@ group :test do
   gem "faker"
   gem "mock_redis"
   gem "rails-controller-testing"
+  gem "redis-client"
   gem "rspec-rails"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
