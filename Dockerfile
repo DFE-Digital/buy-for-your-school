@@ -61,6 +61,7 @@ RUN mkdir -p ${APP_HOME}/tmp/pids ${APP_HOME}/log
 
 WORKDIR ${APP_HOME}
 
+COPY .ruby-version ${APP_HOME}/.ruby-version
 COPY Gemfile $APP_HOME/Gemfile
 COPY Gemfile.lock $APP_HOME/Gemfile.lock
 

@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "3.3.3"
+ruby file: ".ruby-version"
 
 # TODO: remove after next version of Puma is released
 # See https://github.com/puma/puma/pull/3532
