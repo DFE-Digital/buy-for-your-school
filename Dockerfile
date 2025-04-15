@@ -1,11 +1,12 @@
 # ------------------------------------------------------------------------------
 # Base
 # ------------------------------------------------------------------------------
-FROM ruby:3.3.3-slim as base
+FROM ruby:3.3.8-slim as base
 
 RUN apt-get update && apt-get install -qq -y \
     build-essential \
     libpq-dev \
+    libyaml-dev \
     --fix-missing --no-install-recommends
 
 RUN apt-get install -y wget curl gnupg2 git --no-install-recommends
@@ -61,6 +62,7 @@ RUN mkdir -p ${APP_HOME}/tmp/pids ${APP_HOME}/log
 
 WORKDIR ${APP_HOME}
 
+COPY .ruby-version ${APP_HOME}/.ruby-version
 COPY Gemfile $APP_HOME/Gemfile
 COPY Gemfile.lock $APP_HOME/Gemfile.lock
 
