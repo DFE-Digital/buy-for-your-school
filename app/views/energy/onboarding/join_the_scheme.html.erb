@@ -1,0 +1,19 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= I18n.t("energy.join.title") %></h1>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.explanations")) %>
+
+    <h2 class="govuk-heading-m"><%= I18n.t("energy.join.benefits.title") %></h2>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.benefits.text")) %>
+    <%= render BulletListComponent.new(items: I18n.t("energy.join.benefits.list")) %>
+
+    <%= render StartButtonComponent.new(url: onboarding_path(@next_step)) %>
+    <p><%= link_to I18n.t('energy.join.more_info'), '#', class: "govuk-link" %></p>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m"><%= I18n.t("energy.join.sidebar.title") %></h2>
+    <p><%= link_to I18n.t('energy.join.sidebar.guidance_page'), '#', class: "govuk-link" %></p>
+    <p><%= link_to I18n.t('energy.join.sidebar.find_a_buying_solution'), '#', class: "govuk-link" %></p>
+  </div>
+</div>
