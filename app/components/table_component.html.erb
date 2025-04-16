@@ -1,0 +1,19 @@
+<%= govuk_table do |t| %>
+  <% t.with_head do |th| %>
+    <% th.with_row do |tr| %>
+      <% @headings.each do |heading| %>
+        <% tr.with_cell(text: heading) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% t.with_body do |tb| %>
+    <% @rows.each do |row| %>
+      <% tb.with_row do |tr| %>
+        <% row.each_with_index do |cell, i| %>
+          <% tr.with_cell(header: i == 0, text: cell) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
