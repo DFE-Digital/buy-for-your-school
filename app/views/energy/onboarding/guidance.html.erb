@@ -4,7 +4,16 @@
     <h1 class="govuk-heading-xl"><%= I18n.t("energy.guidance.title") %></h1>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.intro"), size: :l) %>
 
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.guidance.about.title") %></h2>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.contents")) %>
+    <%= govuk_list [
+      govuk_link_to(I18n.t("energy.guidance.about.title"), "#about"),
+      govuk_link_to(I18n.t("energy.guidance.v30contract.title"), "#v30contract"),
+      govuk_link_to(I18n.t("energy.guidance.compliance.title"), "#compliance"),
+      govuk_link_to(I18n.t("energy.guidance.considerations.title"), "#considerations"),
+      govuk_link_to(I18n.t("energy.guidance.how_to_join.title"), "#how_to_join"),
+    ].map {|text| "&mdash; #{text}".html_safe} %>
+
+    <h2 class="govuk-heading-m" id="about"><%= I18n.t("energy.guidance.about.title") %></h2>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.about.body")) %>
 
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.benefits.title") %></h3>
@@ -12,7 +21,7 @@
     <%= govuk_list I18n.t("energy.guidance.benefits.list"), type: :bullet %>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.benefits.body2")) %>
 
-    <h3 class="govuk-heading-m"><%= I18n.t("energy.guidance.v30contract.title") %></h3>
+    <h3 class="govuk-heading-m" id="v30contract"><%= I18n.t("energy.guidance.v30contract.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.v30contract.body", email: I18n.t("energy.guidance.email"))) %>
 
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.start_date.title") %></h3>
@@ -29,10 +38,10 @@
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.billing.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.billing.body")) %>
 
-    <h3 class="govuk-heading-m"><%= I18n.t("energy.guidance.compliance.title") %></h3>
+    <h3 class="govuk-heading-m" id="compliance"><%= I18n.t("energy.guidance.compliance.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.compliance.body")) %>
 
-    <h3 class="govuk-heading-m"><%= I18n.t("energy.guidance.considerations.title") %></h3>
+    <h3 class="govuk-heading-m" id="considerations"><%= I18n.t("energy.guidance.considerations.title") %></h3>
 
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.vat_declaration.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.vat_declaration.body")) %>
@@ -45,7 +54,7 @@
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.objections.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.objections.body")) %>
 
-    <h3 class="govuk-heading-m"><%= I18n.t("energy.guidance.how_to_join.title") %></h3>
+    <h3 class="govuk-heading-m" id="how_to_join"><%= I18n.t("energy.guidance.how_to_join.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body")) %>
 
     <%= govuk_button_link_to(I18n.t("energy.guidance.button.primary"), onboarding_path(:join_the_scheme)) %>
