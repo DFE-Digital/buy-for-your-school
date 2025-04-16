@@ -12,18 +12,7 @@ module Energy
 
     # This will probably end up as a separate class - a routing brain
     def set_routing
-      routing = %w[
-        join_the_scheme
-        before_you_start
-        sign_in
-        enter_password
-      ]
-
-      @current_step = params[:step] || routing[0]
-      return unless routing.include?(@current_step)
-
-      @next_step = routing[routing.index(@current_step) + 1]
-      @prev_step = routing[routing.index(@current_step) - 1]
+      @current_step = params[:step] || :join_the_scheme
     end
   end
 end
