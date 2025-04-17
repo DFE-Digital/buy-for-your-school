@@ -165,7 +165,7 @@ GEM
       qonfig (>= 0.24)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
-    csv (3.3.0)
+    csv (3.3.4)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.0)
@@ -311,7 +311,7 @@ GEM
     http-cookie (1.0.6)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    httparty (0.22.0)
+    httparty (0.23.1)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
