@@ -6,7 +6,7 @@ describe CustomerSatisfactionSurveys::EasyToUseRatingsController, type: :control
       before { get :edit, params: { id: survey.id } }
 
       it "goes back to the satisfaction reason question" do
-        expect(controller.view_assigns["back_url"]).to eq "/customer_satisfaction_surveys/#{survey.id}/satisfaction_reason/edit"
+        expect(controller.view_assigns["back_url"]).to eq edit_customer_satisfaction_surveys_improvements_path(survey)
       end
     end
 
@@ -16,7 +16,7 @@ describe CustomerSatisfactionSurveys::EasyToUseRatingsController, type: :control
       before { get :edit, params: { id: survey.id } }
 
       it "goes back to the satisfaction level question" do
-        expect(controller.view_assigns["back_url"]).to eq "/customer_satisfaction_surveys/#{survey.id}/satisfaction_level/edit"
+        expect(controller.view_assigns["back_url"]).to eq edit_customer_satisfaction_surveys_improvements_path(survey)
       end
     end
   end
