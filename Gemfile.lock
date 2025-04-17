@@ -671,7 +671,7 @@ GEM
     simplecov_json_formatter (0.1.4)
     slack-notifier (2.4.0)
     sorbet-runtime (0.5.11647)
-    spring (4.2.1)
+    spring (4.3.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (4.2.1)
