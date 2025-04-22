@@ -20,6 +20,7 @@ RUN \
     texlive \
     texlive-latex-recommended \
     wget \
+    pdftk-java \
     && \
   curl --silent --location --output pandoc.deb \
     https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb && \
@@ -27,7 +28,9 @@ RUN \
   rm pandoc.deb && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
-  npm install --global yarn
+  npm install --global yarn && \
+  ln -s /usr/bin/pdftk-java /usr/local/bin/pdftk && \
+  ln -sf /usr/bin/pdftk /usr/local/bin/pdftk
 
 # ------------------------------------------------------------------------------
 # Assets
