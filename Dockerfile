@@ -28,9 +28,9 @@ RUN \
   rm pandoc.deb && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
-  npm install --global yarn && \
   ln -s /usr/bin/pdftk-java /usr/local/bin/pdftk && \
-  ln -sf /usr/bin/pdftk /usr/local/bin/pdftk
+  ln -sf /usr/bin/pdftk /usr/local/bin/pdftk && \
+  npm install --global yarn
 
 # ------------------------------------------------------------------------------
 # Assets
