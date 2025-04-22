@@ -112,7 +112,7 @@ en:
       accepted:
         action_link: change your cookie settings
         hide: Hide cookie message
-        message: You've accepted analytics cookies. %{action_link} at any time.
+        message: You’ve accepted analytics cookies. %{action_link} at any time.
       actions:
         accept: Accept analytics cookies
         reject: Reject analytics cookies
@@ -1066,7 +1066,7 @@ en:
     special_requirements:
       caption: Accessibility
       heading: Do you have any access needs that we need to be aware of when we contact you?
-      hint: We'll contact you by email first. If we need more information we'll arrange a video call with you later. Let us know if either of these need to be made accessible to you and how you'd like us to do that.
+      hint: We’ll contact you by email first. If we need more information we’ll arrange a video call with you later. Let us know if either of these need to be made accessible to you and how you’d like us to do that.
       requirements: Tell us about your access needs
       requirements_hint: For example, I have difficulty hearing so I cannot do video calls
   specifying:
