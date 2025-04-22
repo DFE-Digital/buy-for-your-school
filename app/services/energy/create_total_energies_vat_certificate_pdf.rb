@@ -25,7 +25,7 @@ module Energy
       @output_pdf_file ||= OUTPUT_PDF_PATH.join("filled_totalenergies_vat_declare_certificate_#{Time.current.to_i}.pdf")
     end
 
-    private
+  private
 
     def form_field_values
       {
