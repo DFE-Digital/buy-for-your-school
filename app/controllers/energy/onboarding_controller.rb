@@ -17,7 +17,9 @@ module Energy
 
     # This will probably end up as a separate class - a routing brain
     def set_routing
-      @current_step = params[:step] || :join_the_scheme
+      permitted_steps = %w[join_the_scheme before_you_start guidance]
+      step_postion = permitted_steps.index(params[:step])
+      @current_step = permitted_steps[step_postion] || permitted_steps.first
     end
   end
 end
