@@ -5,8 +5,9 @@
 
 ![main](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml/badge.svg?branch=main)
 
-A service to help school buying professionals create tender documents that comply with the relevant government policy.
-These tender documents can then be used to start a procurement process saving schools time and money.
+A service to help school buying professionals create tender documents that
+comply with the relevant government policy. These tender documents can then be
+used to start a procurement process saving schools time and money.
 
 |Environment|URL|
 |-|-|
