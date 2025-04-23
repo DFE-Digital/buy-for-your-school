@@ -56,6 +56,7 @@ gem "redis", "~> 4.8"
 gem "redis-namespace"
 gem "redis-rails"
 gem "rollbar"
+gem "rubyXL"
 gem "scenic"
 gem "sidekiq", "~> 6.4"
 gem "sidekiq-cron", "~> 1.10"
@@ -69,7 +70,6 @@ gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "will_paginate", "~> 4.0.0"
 gem "wisper", "3.0.0"
-gem "rubyXL"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
