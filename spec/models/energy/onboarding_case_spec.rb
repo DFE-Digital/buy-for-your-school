@@ -38,5 +38,9 @@ RSpec.describe Energy::OnboardingCase, type: :model do
     oco.save!
     expect(oco.support_establishment_group).to eq(support_establishment_group)
     expect(support_establishment_group.energy_onboarding_case_organisation).to eq(oco)
+
+    gas_meter = oco.gas_meters.create(mprn: "12345")
+    expect(oco.gas_meters).to eq([gas_meter])
+    expect(gas_meter.onboarding_case_organisation).to eq(oco)
   end
 end
