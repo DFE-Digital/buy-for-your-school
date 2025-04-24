@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_22_143429) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_03_085542) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -209,14 +209,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_22_143429) do
     t.boolean "hidden", default: false
     t.index ["framework_request_id"], name: "index_energy_bills_on_framework_request_id"
     t.index ["support_case_id"], name: "index_energy_bills_on_support_case_id"
-  end
-
-  create_table "energy_onboarding_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "support_case_id"
-    t.boolean "are_you_authorised"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["support_case_id"], name: "index_energy_onboarding_cases_on_support_case_id"
   end
 
   create_table "engagement_case_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -1432,11 +1424,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_22_143429) do
       se.egroup_status AS establishment_group_status,
       se.establishment_type,
       array_length(fr.school_urns, 1) AS framework_request_num_schools,
-      replace(btrim((fr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS framework_request_school_urns,
+      replace(TRIM(BOTH '{}"'::text FROM (fr.school_urns)::text), ','::text, ', '::text) AS framework_request_school_urns,
       array_length(cr.school_urns, 1) AS case_request_num_schools,
-      replace(btrim((cr.school_urns)::text, '{}"'::text), ','::text, ', '::text) AS case_request_school_urns,
+      replace(TRIM(BOTH '{}"'::text FROM (cr.school_urns)::text), ','::text, ', '::text) AS case_request_school_urns,
       jsonb_array_length(cps.participating_schools) AS case_num_participating_schools,
-      replace(btrim((cps.participating_schools)::text, '[]'::text), '"'::text, ''::text) AS case_participating_school_urns,
+      replace(TRIM(BOTH '[]'::text FROM (cps.participating_schools)::text), '"'::text, ''::text) AS case_participating_school_urns,
       sf.name AS legacy_framework,
       ff.name AS framework_name,
       sp.reason_for_route_to_market,

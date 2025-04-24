@@ -72,8 +72,6 @@ module Support
 
     has_many :upload_contract_handovers, class_name: "Support::UploadContractHandover", foreign_key: :support_case_id
 
-    has_one :energy_onboarding_case, class_name: "Energy::OnboardingCase", foreign_key: :support_case_id
-
     # Support level
     #
     #   L1       - Advice and guidance only
