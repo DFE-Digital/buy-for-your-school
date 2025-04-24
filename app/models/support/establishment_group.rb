@@ -4,6 +4,8 @@ class Support::EstablishmentGroup < ApplicationRecord
   belongs_to :establishment_group_type, class_name: "Support::EstablishmentGroupType"
   has_many :cases, class_name: "Support::Case", as: :organisation
 
+  has_one :energy_onboarding_case_organisation, class_name: "Energy::OnboardingCaseOrganisation", foreign_key: "support_establishment_group_id"
+
   enum :status, { proposed_to_open: 0, open: 1, closed: 2, proposed_to_close: 3 }
 
   delegate :federation?, to: :establishment_group_type
