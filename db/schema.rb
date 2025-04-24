@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_22_162050) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_22_143429) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -209,16 +209,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_22_162050) do
     t.boolean "hidden", default: false
     t.index ["framework_request_id"], name: "index_energy_bills_on_framework_request_id"
     t.index ["support_case_id"], name: "index_energy_bills_on_support_case_id"
-  end
-
-  create_table "energy_onboarding_case_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "energy_onboarding_case_id", null: false
-    t.uuid "support_case_organisation_id", null: false
-    t.integer "switching_energy_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
-    t.index ["support_case_organisation_id"], name: "idx_on_support_case_organisation_id_036a46c655"
   end
 
   create_table "energy_onboarding_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
