@@ -79,7 +79,7 @@ module Support
     #   L3       - Helping school run a framework but school doing system work
     #   L4       - Run framework on behalf of school
     #   L5       - Run bespoke procurement
-    enum :support_level, { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4 }
+    enum :support_level, { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4, L6: 5, L7: 6 }
 
     # Closure reason
     #
@@ -100,7 +100,7 @@ module Support
     #   sw_hub          - south west hub cases
     #   incoming_email  -
     #   faf             - find a framework
-    enum :source, { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7 }
+    enum :source, { digital: 0, nw_hub: 1, sw_hub: 2, incoming_email: 3, faf: 4, engagement_and_outreach: 5, schools_commercial_team: 6, engagement_and_outreach_cms: 7, energy_onboarding: 8 }
 
     # Discovery Method
     #

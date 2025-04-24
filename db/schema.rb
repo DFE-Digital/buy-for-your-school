@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_03_085542) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_23_151553) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -709,7 +709,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_03_085542) do
     t.boolean "has_downloaded_documents", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email", "support_case_id", "support_upload_contract_handover_id"], name: "idx_on_email_support_case_id_support_upload_contract_e4763cd05c", unique: true
+    t.index ["email", "support_case_id", "support_upload_contract_handover_id"], name: "idx_on_email_support_case_id_support_upload_contrac_e4763cd05c", unique: true
     t.index ["support_case_id"], name: "index_support_download_contract_handovers_on_support_case_id"
     t.index ["support_upload_contract_handover_id"], name: "idx_on_support_upload_contract_handover_id_044312d42c"
   end
