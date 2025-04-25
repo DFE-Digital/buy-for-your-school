@@ -58,14 +58,12 @@
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body")) %>
 
     <%= govuk_button_link_to(I18n.t("energy.guidance.button.primary"), onboarding_path(:join_the_scheme)) %>
-    <%= govuk_button_link_to(I18n.t("energy.guidance.button.secondary"), '#', secondary: true) %>
   <% end %>
 
   <% c.with_right do %>
     <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
     <%= govuk_list [
       link_to(I18n.t('energy.related_actions.join'), onboarding_path(:join_the_scheme), class: "govuk-link"),
-      link_to(I18n.t('energy.related_actions.request_support'), '#', class: "govuk-link")
     ] %>
   <% end %>
 <% end %>
