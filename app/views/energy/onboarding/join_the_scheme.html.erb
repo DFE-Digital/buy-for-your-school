@@ -1,0 +1,20 @@
+<%= render Column21Component.new do |c| %>
+  <% c.with_left do %>
+    <h1 class="govuk-heading-xl"><%= I18n.t("energy.join.title") %></h1>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.explanations")) %>
+
+    <h2 class="govuk-heading-m"><%= I18n.t("energy.join.benefits.title") %></h2>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.benefits.text")) %>
+    <%= govuk_list I18n.t("energy.join.benefits.list"), type: :bullet %>
+
+    <%= govuk_start_button(text: I18n.t("generic.button.start"), href: onboarding_path(:before_you_start)) %>
+    <p><%= link_to I18n.t('energy.join.more_info'), onboarding_path(:guidance), class: "govuk-link" %></p>
+  <% end %>
+
+  <% c.with_right do %>
+    <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
+    <%= govuk_list [
+      link_to(I18n.t('energy.related_actions.guidance_page'), onboarding_path(:guidance), class: "govuk-link"),
+    ] %>
+  <% end %>
+<% end %>

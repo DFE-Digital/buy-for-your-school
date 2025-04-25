@@ -119,17 +119,17 @@ en:
         view_cookies: View cookies
       description:
       - We use some essential cookies to make this service work.
-      - We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+      - We'd also like to use analytics cookies so we can understand how you use the service and make improvements.
       header: Cookies on Get Help Buying for Schools
       rejected:
         action_link: change your cookie settings
         hide: Hide cookie message
-        message: You’ve rejected analytics cookies. %{action_link} at any time.
+        message: You've rejected analytics cookies. %{action_link} at any time.
     information:
       analytics_cookies:
-        _ga_description: Checks if you’ve visited Get Help Buying for Schools before. This helps us count how many people visit our site.
+        _ga_description: Checks if you've visited Get Help Buying for Schools before. This helps us count how many people visit our site.
         _gat_ua__description: Used to throttle request rate to Google Analytics.
-        _gid_description: Checks if you’ve visited Get Help Buying for Schools before. This helps us count how many people visit our site.
+        _gid_description: Checks if you've visited Get Help Buying for Schools before. This helps us count how many people visit our site.
         action:
           choice_no: 'No'
           choice_yes: 'Yes'
@@ -287,6 +287,143 @@ en:
     thank_you:
       body: We will use your feedback to make our services better.
       heading: Thank you for your feedback
+  energy:
+    related_actions:
+      title: Related actions
+      join: Join the scheme
+      guidance_page: Guidance page
+      find_a_buying_solution: Find a buying solution
+      request_support: Request support
+    join:
+      title: Energy for schools
+      explanations:
+      - The Energy for Schools scheme helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
+      - Schools and trusts that join the scheme are added to the Department for Education's energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
+      benefits:
+        title: Benefits
+        text: "Schools that join the scheme could save up to 36% on their energy bills, based on DfE's estimates. The scheme also helps schools:"
+        list:
+        - protect from market volatility and high prices
+        - save time spent on procurement process
+        - remove risk associated with unregulated energy brokers
+        - comply with procurement regulations
+      more_info: Get more information
+    guidance:
+      contents: Contents
+      email: dfe-energy.services-team@education.gov.uk
+      title: Energy for schools
+      intro:
+      - How state-funded schools and trusts can join the Energy for Schools scheme, an alternative to energy procurement, which may save time and money.
+      - Applies to England
+      about:
+        title: About the scheme
+        body:
+        - The Energy for Schools scheme offers schools a simpler, safer way to manage their energy needs by helping schools switch to the same energy contract as the Department for Education (DfE).
+        - DfE manages the contract on behalf of schools through procurement specialists Crown Commercial Service (CCS). On the current contract, called V30, electricity is supplied by EDF, and gas is supplied by TotalEnergies.
+        - This scheme differs to other frameworks because it allows schools to benefit from the bulk purchasing power of a government-wide contract. It also saves schools from pouring over complex energy contracts because DfE handles the paperwork.
+      benefits:
+        title: Benefits
+        body:
+        - All central government departments are on the V30 contract to compliantly procure their energy supply.
+        - Customers are protected from market volatility and soaring prices because the CCS trades over a long timeframe (42 months).
+        - V30 has outperformed the energy market by an average of 12% over the past 7 years.
+        - If your school or trust joins the scheme, DfE will handle contractual responsibilities and administrative paperwork with the energy suppliers.
+        - This means schools
+        list:
+        - save time by using our simplified onboarding process
+        - don't have to deal with complex energy contracts
+        - are exempt from the usual requirements around procurement
+        body2:
+        - Unlike brokers, this process is free to access and use.
+      v30contract:
+        title: V30 contract
+        body:
+        - V30 is a low-risk variable rate contract.
+        - Prices can go up and down, but changes are less drastic than other variable rates. However, it may not always give you the lowest price.
+        - CCS cannot provide potential customers with energy prices before they join the scheme due to commercial sensitivity.
+        - To get an estimate of prices, email <a href="mailto:%{email}">%{email}</a> and request DfE's benchmarking service. The service provides a price comparison based on your energy bills from the last financial year.
+        - V30 is a rolling contract, meaning your school will remain on the contract until you give notice to exit. 30 months' notice is required.
+      start_date:
+        title: Start date
+        body:
+        - New customers are added to the V30 contract every April. Your application date and current contract's expiry date will determine which year you'll join.
+        table:
+          headings:
+          - Application deadline
+          - V30 start dates
+          rows:
+            -
+              - 25 September 2025
+              - 1 April 2026
+            -
+              - September 2026
+              - 1 April 2027
+            -
+              - September 2027
+              - 1 April 2028
+        body2:
+        - Check your current contract's termination terms and notice period. You will need to serve out your notice period and inform your supplier if you join the Energy for Schools scheme. DfE cannot undertake this for you.
+        - If your school's energy contract is already through CCS, DfE will transfer (novate) you onto the new account. In this instance, you'll not need to give notice to your current supplier.
+      interim_rate:
+        title: Interim rate
+        body:
+        - You'll be placed on an interim rate if there's a gap between your current contract's expiry date and the next available start date for the V30 contract.
+        - An interim rate contract is a temporary arrangement that bridges the gap until the new contract begins. You'll still benefit from all framework protections, including procurement compliance, social value commitments and data security measures.
+        - Interim rates are available on request. They are similar to the V30 rate but may vary due to market conditions.
+        - If you apply to the Energy for Schools scheme and need to go on an interim rate for electricity, the supplier EDF will inform you of prices within 6 weeks of completing the scheme's application.
+        - For gas, you should receive interim prices from the supplier Total roughly 30 days prior to receiving supply.
+        - We'll automatically move you onto the V30 contract when your interim contract ends.
+        - If you're out of contract and need an immediate energy supply, you'll receive interim rates. Interim rates are a reflection of the current energy market.
+      billing:
+        title: Billing
+        body:
+        - Your electricity and gas invoices will be issues separately by the relevant suppliers. You can choose whether you'd like to receive invoices via post or on the suppliers' portals when you join the scheme.
+        - You'll be granted portal access once your contract begins. Portal access also allows you to view a breakdown of your energy consumption.
+        - Schools will receive a monthly email from DfE with forecast updates of what your unit rates are projected to be for the following year.
+      compliance:
+        title: Compliance
+        body:
+        - The Energy for Schools scheme is a contract and not a procurement process. By joining the scheme, you'll be switching to the CCS framework used by DfE.
+        - The CCS framework complies with Public Contracts Regulation 2015 in place at the time the framework was established and is therefore procurement compliant.
+        - Schools joining the scheme will have complied with DfE's Buying Procedures and Procurement Law for Schools.
+        - That means you're exempt from the procurement protocol of securing 3 quotes or going out to market.
+      considerations:
+        title: Considerations
+      vat_declaration:
+        title: VAT declaration
+        body:
+        - You'll be asked to declare your VAT status when joining the scheme. This is to ensure you're charged the correct amount of VAT on your energy supplies.
+        - If you're unsure how much VAT you're currently charged for gas and electricity, check with your tax advisor. If you're a local authority-maintained school, check with your local authority.
+      renewable_energy:
+        title: Renewable energy
+        body:
+        - The energy supply is from the supplier's standard 'Brown' product. Everyone who uses this supply gets between 30-40% renewable energy through the UK power grid. This percentage is increasing as more renewable energy sources are added to the grid.
+        - You can choose to pay more for a product that contains more renewable energy. Email <a href="mailto:%{email}">%{email}</a> to discuss renewable options.
+        - Energy savings made through renewable energy, such as solar panels, are not factored into this contract. You should continue your current arrangement or contact EDF about setting up a Smart Export Guarantee if you wish to export energy back to the grid.
+      objections:
+        title: Objections
+        body:
+        - In some cases, the current energy supplier may raise an objection to switching contracts. Common reasons for objections include unpaid invoices, incorrect site address information, incorrect meter point reference numbers or termination notice not served.
+        - DfE will inform you if an objection is raised. You'll need to contact your existing supplier to resolve the issue and switch contracts – DfE does not have the authority to do this for you.
+      how_to_join:
+        title: How to join the scheme
+        body:
+        - State-funded schools and trusts in England that want to switch to the contract can do so by filling in an online form.
+        - DfE will then share your information with the new suppliers and send you an email confirming the contract’s start date and any interim rate arrangements, if applicable.
+      button:
+        primary: Join the scheme
+        secondary: Request support
+
+    before_you_start:
+      title: Energy for schools scheme
+      subtitle: Before you start
+      need: 'You will need:'
+      need_list:
+      - authorisation from your school or trust to switch energy supplier
+      - electricity and/or gas bills from the past 12 months, to estimate annual usage in kilowatt hours
+      - your electricity and/or gas contract end date
+      - your trust's VAT details
+      time_required: This form has 4 sections and may take up to 20 minutes to complete, providing you have your bills and VAT details to hand. Please allow longer if you're switching contracts for multiple schools or using a screenreader.
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
@@ -341,7 +478,7 @@ en:
       page_title: An unexpected error occurred
   evaluation:
     tasks:
-      not_permitted: "You aren’t an evaluator for this procurement"
+      not_permitted: "You aren't an evaluator for this procurement"
       header: "Evaluator task list"
     task_list:
       item:
@@ -362,7 +499,7 @@ en:
       page_body_text2: The procurement lead will either approve the evaluation or request changes. You will receive an email in both cases. The evaluation and any changes must be complete by the due date shown on task list.
   my_procurements:
     tasks:
-      not_permitted: "You aren’t a school buying professional for this procurement" 
+      not_permitted: "You aren't a school buying professional for this procurement"
       header: "Procurement task list"
     task_list:
       item:
@@ -657,7 +794,7 @@ en:
           p1: This search lists academy trusts and federations. %{search_for_a_school_link}
           p2:
             list:
-            - you want to find your academy trust or federation’s UID or UKPRN to help with the search
+            - you want to find your academy trust or federation's UID or UKPRN to help with the search
             - you cannot find your academy trust or federation in the search and want to check that the DfE has the correct details
         search_for_a_school_link: Search for a single school instead.
       heading: Search for an academy trust or federation
@@ -668,7 +805,7 @@ en:
           p1: This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}
           p2:
             list:
-            - you want to find your school’s URN to help with the search
+            - you want to find your school's URN to help with the search
             - you cannot find your school in the search and want to check that the DfE has the correct details
         search_for_a_group_link: Search for an academy trust or federation instead.
       heading: Search for your school
@@ -688,13 +825,13 @@ en:
       our_specialists: 'Our specialists may also offer to help run more complex or high value procurements. Some of the reasons they may offer to do this are:'
       our_specialists_points:
       - when contracts are long term or multi-year
-      - you’re buying for multiple schools
+      - you're buying for multiple schools
       - the value is above the <a class="govuk-link" href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy#when-to-run-a-pcr-compliant-buying-process">public contracts regulations (PCR) threshold</a>
       - the procurement requires inclusion of transferring personnel contracts under the Transfer of Undertakings (Protection of Employment) regulations (TUPE)
       - you're new or not experienced in running these types of procurements
       - there are problems with supply or prices change regularly, for example energy costs
       - it's challenging to find suppliers
-      overview_purpose: Use this service if you’re a state-funded school in England and need free help with your school procurement.
+      overview_purpose: Use this service if you're a state-funded school in England and need free help with your school procurement.
       tools_and_guidance: Tools and guidance
       tools_and_guidance_also: 'You can also:'
       tools_and_guidance_points:
@@ -704,7 +841,7 @@ en:
       - <a href="/" class="govuk-link">create a specification</a> for catering or multi-functional devices if you don't have one yet
       we_can_offer: 'Our team of procurement specialists can:'
       we_can_offer_points:
-      - offer advice and guidance to make sure you’re buying compliantly at any point, even if your procurement process is already in progress
+      - offer advice and guidance to make sure you're buying compliantly at any point, even if your procurement process is already in progress
       - review your documents to make sure they're complete and compliant. This includes advice on specification documents, tender documents and evaluation criteria
       - support you on choosing or using a framework agreement for your procurement
       - advise when you need to seek legal advice
@@ -1304,7 +1441,7 @@ en:
             to_do: To do
             in_progress: In progress
             complete: Complete
-            cannot_start: Cannot start  
+            cannot_start: Cannot start
         transfer_to_framework_evaluation:
           body: This action will close this case and create a new framework evaluation case.
           cancel: Cancel
