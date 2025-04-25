@@ -10,7 +10,7 @@ RSpec.describe Energy::OnboardingCase, type: :model do
     support_organisation = create(:support_organisation)
     support_establishment_group = create(:support_establishment_group)
 
-    # Create energy entites
+    # Create energy entities
     onboarding_case = described_class.create!(support_case:, are_you_authorised: true)
     oco1 = onboarding_case.onboarding_case_organisations.create!(switching_energy_type: 1, onboardable: support_organisation)
     oco2 = onboarding_case.onboarding_case_organisations.create!(switching_energy_type: 2, onboardable: support_establishment_group)
