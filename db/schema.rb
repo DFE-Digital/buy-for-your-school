@@ -229,16 +229,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
 
   create_table "energy_onboarding_case_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "energy_onboarding_case_id"
-    t.uuid "support_case_organisation_id"
-    t.uuid "support_organisation_id"
-    t.uuid "support_establishment_group_id"
+    t.uuid "onboardable_id"
+    t.string "onboardable_type"
     t.integer "switching_energy_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
-    t.index ["support_case_organisation_id"], name: "idx_on_support_case_organisation_id_036a46c655"
-    t.index ["support_establishment_group_id"], name: "idx_on_support_establishment_group_id_f8cf4d85fa"
-    t.index ["support_organisation_id"], name: "idx_on_support_organisation_id_e6ed6b2d5b"
+    t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end
 
   create_table "energy_onboarding_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
