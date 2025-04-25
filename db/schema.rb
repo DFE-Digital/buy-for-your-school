@@ -213,7 +213,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
 
   create_table "energy_electricity_meters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "energy_onboarding_case_organisation_id", null: false
-    t.string "mpan"
+    t.string "mpan", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["energy_onboarding_case_organisation_id"], name: "idx_on_energy_onboarding_case_organisation_id_8c71bc911c"
