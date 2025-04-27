@@ -2415,3 +2415,6 @@ en:
     school_selections:
       title: About your school
       heading: Which school are you buying for?
+    authorisation:
+      heading: Are you authorised to switch energy suppliers for these schools?
+      warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
