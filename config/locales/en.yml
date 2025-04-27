@@ -2411,3 +2411,7 @@ en:
   time:
     formats:
       compact: "%d %b %y"
+  energy:
+    school_selections:
+      title: About your school
+      heading: Which school are you buying for?

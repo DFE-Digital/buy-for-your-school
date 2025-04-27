@@ -1,0 +1,51 @@
+module Energy
+  class SchoolSelectionsController < ApplicationController
+    before_action :check_flag
+    before_action :form, only: %i[update]
+    before_action :select_schools
+    def show
+      @form = Energy::SchoolSelectionsForm.new(**select_schools.to_h)
+    end
+
+    def update
+      if validation.success?
+        if form_params[:select_school].start_with?("urn_")
+          urn = form_params[:select_school]&.sub(/^urn_/, "")
+          redirect_to energy_authorisation_path(urn)
+        else
+          redirect_to energy_school_selection_path
+        end
+      else
+        render :show
+      end
+    end
+
+  private
+
+    def check_flag
+      render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
+    end
+
+    def select_schools
+      @select_schools = current_user.orgs.map do |org|
+        key = org["urn"] ? "urn_#{org['urn']}" : "uid_#{org['uid']}"
+        [key, org["name"]]
+      end
+    end
+
+    def form
+      @form = Energy::SchoolSelectionsForm.new(
+        messages: validation.errors(full: true).to_h,
+        **validation.to_h,
+      )
+    end
+
+    def validation
+      @validation ||= Energy::SchoolSelectionsFormSchema.new.call(**form_params)
+    end
+
+    def form_params
+      params.fetch(:school_selection_form, {}).permit(:select_school)
+    end
+  end
+end
