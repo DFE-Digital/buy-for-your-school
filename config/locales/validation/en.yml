@@ -335,6 +335,11 @@ en:
           missing: Enter why you felt this way about the service you received.
         saved_time:
           missing: Select whether you agree or disagree that using the service helped save you or your school time.
-         
 
-
+  switch_energy_form:
+    rules:
+      switching_energy_type: ""
+    errors:
+      rules:
+        switching_energy_type:
+          missing: Please select at least one option to proceed

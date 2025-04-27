@@ -493,6 +493,13 @@ Rails.application.routes.draw do
   end
   mount flipper_app, at: "/flipper"
 
+  #  Energy
+  namespace :energy do
+    get "authorisation", to: "authorisation#index", as: "authorisation"
+    post "authorisation", to: "authorisation#update", as: "update_authorisation"
+    resources :switch_energy, only: %i[show update]
+  end
+
   # Routes any/all Contentful Pages that are mirrored in t.pages
   get ":slug", to: "pages#show"
 end
