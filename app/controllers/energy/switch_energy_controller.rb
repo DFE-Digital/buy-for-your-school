@@ -2,6 +2,7 @@ class Energy::SwitchEnergyController < ApplicationController
   before_action :check_flag
   before_action :form, only: %i[update]
   before_action :switching_energy
+  before_action :organisation_detail
   before_action { @back_url = energy_switch_energy_path }
   def show
     @form = Energy::SwitchEnergyForm.new(**switching_energy.to_h.compact)
@@ -24,6 +25,10 @@ private
 
   def switching_energy
     @switching_energy = Energy::OnboardingCaseOrganisation.find_by(id: params[:id])
+  end
+
+  def organisation_detail
+    @organisation_detail = @switching_energy&.onboardable_type&.constantize&.find(@switching_energy.onboardable_id) || render("errors/not_found", status: :not_found)
   end
 
   def form
