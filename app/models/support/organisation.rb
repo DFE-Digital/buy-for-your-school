@@ -27,6 +27,8 @@ module Support
 
     has_many :cases, class_name: "Support::Case", as: :organisation
 
+    has_one :energy_onboarding_case_organisation, as: "onboardable", class_name: "Energy::OnboardingCaseOrganisation"
+
     validates :urn, uniqueness: true
     validates :name, presence: true
 
