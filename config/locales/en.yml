@@ -2274,3 +2274,10 @@ en:
   time:
     formats:
       compact: "%d %b %y"
+  energy:
+    switching_electricity:
+      heading: Are you switching electricity, gas or both?
+      energy_type:
+        electricity: Electricity only
+        gas: Gas only
+        gas_electricity: Gas and electricity
