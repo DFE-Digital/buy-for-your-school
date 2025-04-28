@@ -7,14 +7,14 @@
     <%= render ParagraphComponent.new(text: I18n.t("energy.join.benefits.text")) %>
     <%= govuk_list I18n.t("energy.join.benefits.list"), type: :bullet %>
 
-    <%= govuk_start_button(text: I18n.t("generic.button.start"), href: onboarding_path(:before_you_start)) %>
-    <p><%= link_to I18n.t('energy.join.more_info'), onboarding_path(:guidance), class: "govuk-link" %></p>
+    <%= govuk_start_button(text: I18n.t("generic.button.start"), href: energy_onboarding_path(:before_you_start)) %>
+    <p><%= link_to I18n.t('energy.join.more_info'), energy_onboarding_path(:guidance), class: "govuk-link" %></p>
   <% end %>
 
   <% c.with_right do %>
     <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
     <%= govuk_list [
-      link_to(I18n.t('energy.related_actions.guidance_page'), onboarding_path(:guidance), class: "govuk-link"),
+      link_to(I18n.t('energy.related_actions.guidance_page'), energy_onboarding_path(:guidance), class: "govuk-link"),
     ] %>
   <% end %>
 <% end %>
