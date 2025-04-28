@@ -424,6 +424,9 @@ en:
       - your electricity and/or gas contract end date
       - your trust's VAT details
       time_required: This form has 4 sections and may take up to 20 minutes to complete, providing you have your bills and VAT details to hand. Please allow longer if you're switching contracts for multiple schools or using a screenreader.
+    school_selections:
+      title: About your school
+      heading: Which school are you buying for?
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
