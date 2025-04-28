@@ -496,9 +496,12 @@ Rails.application.routes.draw do
   mount flipper_app, at: "/flipper"
 
   #  Energy
-  scope module: :energy do
-    get "/energy/onboarding(/:step)", to: "onboarding#show", as: "onboarding"
-    post "/energy/onboarding/:step", to: "onboarding#update", as: "update_onboarding"
+  namespace :energy do
+    get "/onboarding(/:step)", to: "onboarding#show", as: "onboarding"
+    post "/onboarding/:step", to: "onboarding#update", as: "update_onboarding"
+    resource :school_selection, only: %i[show update]
+    resources :authorisation, only: %i[show update]
+    resources :switch_energy, only: %i[show update]
   end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages

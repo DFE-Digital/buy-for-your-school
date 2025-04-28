@@ -338,3 +338,10 @@ en:
          
 
 
+  school_selection_form:
+    rules:
+      select_school: ""
+    errors:
+      rules:
+        select_school:
+          missing: Please select at least one option to proceed
