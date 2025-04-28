@@ -1,6 +1,5 @@
-<li id="navbar_notifications_icon" class="navbar-component__navigation-item--right dfe-header__navigation-item">
-  <%= link_to "Notifications", cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) ? cec_notifications_path : support_notifications_path, class: "dfe-header__navigation-link" %>
-
+<li id="navbar_notifications_icon" class="navbar-component__navigation-item--right dfe-header__navigation-item <%= "dfe-header__navigation-item--current" if current_page?(support_notifications_path)%>">
+  <%= link_to "Notifications", cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) ? cec_notifications_path : support_notifications_path, class: "dfe-header__navigation_link" %>
   <% if notifications_unread %>
     <span class="notification-unread-icon"></span>
   <% end %>
