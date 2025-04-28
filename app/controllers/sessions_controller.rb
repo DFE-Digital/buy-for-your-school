@@ -11,11 +11,6 @@ class SessionsController < ApplicationController
     user_session.invalidate_other_user_sessions(auth: auth_hash)
     user = CreateUser.new(auth: auth_hash).call
 
-    if session[:energy_onboarding] == true
-      session.delete(:energy_onboarding)
-      redirect_to energy_school_selection_path and return
-    end
-
     case user
     when User
       redirect_to entry_path(user)
@@ -88,7 +83,10 @@ private
   #
   # @return [String]
   def entry_path(user)
-    if user.internal?
+    if session[:energy_onboarding] == true
+      session.delete(:energy_onboarding)
+      energy_school_selection_path
+    elsif user.internal?
       # proc ops / internal team members go to case management
       cms_entrypoint_path
     else
