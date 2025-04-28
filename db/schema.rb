@@ -212,7 +212,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
   end
 
   create_table "energy_electricity_meters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "energy_onboarding_case_organisation_id", null: false
+    t.uuid "energy_onboarding_case_organisation_id"
     t.string "mpan", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -220,7 +220,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
   end
 
   create_table "energy_gas_meters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "energy_onboarding_case_organisation_id", null: false
+    t.uuid "energy_onboarding_case_organisation_id"
     t.string "mprn", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1187,6 +1187,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
   add_foreign_key "documents", "framework_requests"
   add_foreign_key "documents", "support_cases"
   add_foreign_key "energy_electricity_meters", "energy_onboarding_case_organisations"
+  add_foreign_key "energy_gas_meters", "energy_onboarding_case_organisations"
+  add_foreign_key "energy_onboarding_case_organisations", "energy_onboarding_cases"
+  add_foreign_key "energy_onboarding_cases", "support_cases"
   add_foreign_key "engagement_case_uploads", "case_requests"
   add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
