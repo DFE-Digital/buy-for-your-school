@@ -11,6 +11,11 @@ class SessionsController < ApplicationController
     user_session.invalidate_other_user_sessions(auth: auth_hash)
     user = CreateUser.new(auth: auth_hash).call
 
+    if session[:energy_onboarding] == true
+      session.delete(:energy_onboarding)
+      redirect_to energy_school_selection_path and return
+    end
+
     case user
     when User
       redirect_to entry_path(user)
