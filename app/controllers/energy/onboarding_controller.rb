@@ -5,6 +5,7 @@ class Energy::OnboardingController < ApplicationController
 
   # /energy/onboarding/:step
   def show
+    session[:energy_onboarding] = true
     render @current_step
   end
 
