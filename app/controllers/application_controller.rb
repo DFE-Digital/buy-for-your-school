@@ -128,7 +128,7 @@ protected
   end
 
   def header_link
-    return framework_requests_path if procurement_support_portal?
+    return support_cases_path if current_user.internal?
 
     root_path
   end
