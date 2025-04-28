@@ -528,6 +528,8 @@ Rails.application.routes.draw do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]
     end
+    resources :authorisation, only: %i[show update]
+    resources :switch_energy, only: %i[show update]
   end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages

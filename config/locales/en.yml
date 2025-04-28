@@ -507,8 +507,7 @@ en:
         single: Single meter
         multi: Multi meter
       
-
-  errors:
+errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
       page_title: An unexpected error occurred
