@@ -1,11 +1,13 @@
 class AddCurrentSupplierToOnboardingCaseOrganisations < ActiveRecord::Migration[7.2]
   def change
-    add_column :energy_onboarding_case_organisations, :gas_current_supplier, :integer
-    add_column :energy_onboarding_case_organisations, :gas_current_supplier_other, :string
-    add_column :energy_onboarding_case_organisations, :gas_current_contract_end_date, :date
+    change_table :energy_onboarding_case_organisations, bulk: true do |t|
+      t.integer :gas_current_supplier
+      t.string :gas_current_supplier_other
+      t.date :gas_current_contract_end_date
 
-    add_column :energy_onboarding_case_organisations, :electric_current_supplier, :integer
-    add_column :energy_onboarding_case_organisations, :electric_current_supplier_other, :string
-    add_column :energy_onboarding_case_organisations, :electric_current_contract_end_date, :date
+      t.integer :electric_current_supplier
+      t.string :electric_current_supplier_other
+      t.date :electric_current_contract_end_date
+    end
   end
 end

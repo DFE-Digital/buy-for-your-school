@@ -26,7 +26,7 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   #   octopus_energy  - Octopus Energy
   #   other           - Other
 
-  enum :current_supplier, {
+  CURRENT_SUPPLIERS = {
     british_gas: 0,
     edf_energy: 1,
     eon_next: 2,
@@ -34,5 +34,8 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
     ovo_energy: 4,
     octopus_energy: 5,
     other: 6,
-  }
+  }.freeze
+
+  enum :gas_current_supplier, CURRENT_SUPPLIERS, prefix: true
+  enum :electric_current_supplier, CURRENT_SUPPLIERS, prefix: true
 end
