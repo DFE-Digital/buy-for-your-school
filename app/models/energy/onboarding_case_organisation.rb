@@ -15,4 +15,24 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   #   gas               - Gas only
   #   electricity_gas   - Gas and electricity
   enum :switching_energy_type, { electricity: 0, gas: 1, gas_electricity: 2 }, suffix: true
+
+  # Current suppliers
+  #
+  #   british_gas     - British Gas
+  #   edf_energy      - EDF Energy
+  #   eon_next        - E.ON Next
+  #   scotish_power   - Scotish Power
+  #   ovo_energy      - OVO Energy
+  #   octopus_energy  - Octopus Energy
+  #   other           - Other
+
+  enum :current_supplier, {
+    british_gas: 0,
+    edf_energy: 1,
+    eon_next: 2,
+    scotish_power: 3,
+    ovo_energy: 4,
+    octopus_energy: 5,
+    other: 6,
+  }
 end

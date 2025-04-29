@@ -470,7 +470,14 @@ en:
         heading: Are you sure you want to remove this MPRN?
         remove_mprn: Remove MPRN
         removed: MPRN successfully removed
-
+    suppliers:
+      british_gas: British Gas
+      edf_energy: EDF Energy
+      eon_next: E.ON Next
+      scotish_power: Scotish Power
+      ovo_energy: OVO Energy
+      octopus_energy: Octopus Energy
+      other: Other
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
