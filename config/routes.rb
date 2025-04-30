@@ -500,6 +500,7 @@ Rails.application.routes.draw do
     resource :school_selection, only: %i[show update]
     resources :authorisation, only: %i[show update]
     resources :switch_energy, only: %i[show update]
+    resources :tasks, only: %i[show update]
   end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
