@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :cookie_policy, :internal_portal?, :google_analytics_id, :hosted_development?, :hosted_production?, :hosted_staging?, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :current_url_b64, :header_link
+  helper_method :current_user, :cookie_policy, :internal_portal?, :google_analytics_id, :hosted_development?, :hosted_production?, :hosted_staging?, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :cec_portal?, :current_url_b64, :header_link
 
   # @return [User, Guest]
   #
@@ -79,6 +79,10 @@ protected
     portal_namespace.to_s.inquiry.procurement_support?
   end
 
+  def cec_portal?
+    portal_namespace.to_s.inquiry.cec?
+  end
+
   def portal_namespace
     :none
   end
@@ -94,7 +98,7 @@ protected
   end
 
   def internal_portal?
-    support_portal? || engagement_portal? || frameworks_portal?
+    support_portal? || engagement_portal? || frameworks_portal? || cec_portal?
   end
 
   def hosted_development?
