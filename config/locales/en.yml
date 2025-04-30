@@ -430,6 +430,21 @@ en:
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
       warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
+    tasks:
+      heading: Provide information about your schools
+      task_list:
+        item:
+          current_contract_details: Current contract details
+          gas_meter_and_usage: Gas meter and usage
+          electricity_meter_and_usage: Electricity meter and usage
+          site_contact_details: Site contact details
+          vat_declaration: VAT declaration
+          billing_preferences: Billing preferences
+        status:
+            to_do: To do
+            in_progress: In progress
+            complete: Complete
+            not_started: Not started
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
