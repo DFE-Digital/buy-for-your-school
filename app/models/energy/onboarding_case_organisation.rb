@@ -9,4 +9,10 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
 
   has_many :gas_meters, class_name: "Energy::GasMeter", foreign_key: "energy_onboarding_case_organisation_id"
   has_many :electricity_meters, class_name: "Energy::ElectricityMeter", foreign_key: "energy_onboarding_case_organisation_id"
+
+  # Energy type
+  #   electricity       - Electricity only
+  #   gas               - Gas only
+  #   electricity_gas   - Gas and electricity
+  enum :switching_energy_type, { electricity: 0, gas: 1, gas_electricity: 2 }, suffix: true
 end

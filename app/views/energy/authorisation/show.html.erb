@@ -3,7 +3,13 @@
         <p class="govuk-caption-l"><%= @support_organisation.name%></p>
         <h1 class="govuk-heading-l"><%= I18n.t("energy.authorisation.heading") %></h1>
         <ul class="govuk-list govuk-list--bullet">
-            <li><%= @support_organisation.name%></li>
+            <% if params[:type] == 'mat'%>
+                <% @school_list.each do |school|%>
+                    <li><%= school.name%></li>
+                <% end %>
+            <% else %>
+                <li><%= @support_organisation.name%>
+            <% end %>
         </ul>
 
         <div class="govuk-warning-text">
@@ -16,7 +22,7 @@
 
         <div class="govuk-button-group flex-align-center">
             <%= link_to I18n.t("generic.button.continue"),
-                energy_authorisation_path,
+                school_type_energy_authorisation_path(id: params[:id], type: params[:type]),
                 method: :patch,
                 class: "govuk-button" %>
         </div>
