@@ -430,6 +430,12 @@ en:
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
       warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
+    switching_electricity:
+      heading: Are you switching electricity, gas or both?
+      energy_type:
+        electricity: Electricity only
+        gas: Gas only
+        gas_electricity: Gas and electricity
     tasks:
       heading: Provide information about your schools
       task_list:
@@ -986,6 +992,8 @@ en:
       submit: Submit
       update: Update
       continue: Continue
+      save_continue: Save and continue
+      save_go_to_tasks: Save and go to tasks
     label:
       what_is: What is %{label}?
     link:

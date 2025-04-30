@@ -500,7 +500,12 @@ Rails.application.routes.draw do
     get "/onboarding(/:step)", to: "onboarding#show", as: "onboarding"
     post "/onboarding/:step", to: "onboarding#update", as: "update_onboarding"
     resource :school_selection, only: %i[show update]
-    resources :authorisation, only: %i[show update]
+    resources :authorisation, only: %i[show update] do
+      member do
+        get ":type", to: "authorisation#show", as: :school_type
+        patch ":type", to: "authorisation#update"
+      end
+    end
     resources :switch_energy, only: %i[show update]
     resources :tasks, only: %i[show update]
   end
