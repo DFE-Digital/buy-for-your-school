@@ -491,6 +491,8 @@ en:
         ovo_energy: OVO Energy
         octopus_energy: Octopus Energy
         other: Other
+      other_gas_supplier: Gas supplier
+      other_electricity_supplier: Electricity supplier
       when_contract_ends: When does the contract end?
       date_for_example: For example, 27 3 2025
       end_day: Day
