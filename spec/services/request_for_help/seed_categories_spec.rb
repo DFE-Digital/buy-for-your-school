@@ -9,7 +9,7 @@ describe RequestForHelp::SeedCategories do
   it "populates the table" do
     expect { service.call }
       .to change(categories, :count).from(0).to(15)
-      .and change(sub_categories, :count).from(0).to(99)
+      .and change(sub_categories, :count).from(0).to(100)
   end
 
   context "when a category has sub-categories" do
