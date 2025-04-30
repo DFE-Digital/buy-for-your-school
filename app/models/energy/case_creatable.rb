@@ -11,7 +11,7 @@ module Energy::CaseCreatable
       }
       kase = Support::CreateCase.new(attrs).call
       onboarding_case = Energy::OnboardingCase.create!(are_you_authorised: true, support_case: kase)
-      Energy::OnboardingCaseOrganisation.create!(energy_onboarding_case_id: onboarding_case.id, onboardable: support_organisation)
+      Energy::OnboardingCaseOrganisation.create!(onboarding_case:, onboardable: support_organisation)
     end
   end
 end
