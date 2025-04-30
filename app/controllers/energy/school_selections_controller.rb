@@ -8,9 +8,12 @@ module Energy
 
     def update
       if validation.success?
-        if form_params[:select_school].start_with?("urn_")
-          urn = form_params[:select_school]&.sub(/^urn_/, "")
-          redirect_to energy_authorisation_path(urn)
+        id, type = form_params[:select_school].split("_", 2)
+        case id
+        when "urn"
+          redirect_to school_type_energy_authorisation_path(id: type, type: "single")
+        when "uid"
+          redirect_to school_type_energy_authorisation_path(id: type, type: "mat")
         else
           redirect_to energy_school_selection_path
         end

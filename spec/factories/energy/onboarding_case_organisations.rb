@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :energy_onboarding_case_organisation, class: "Energy::OnboardingCaseOrganisation" do
-    energy_onboarding_case { nil }
-    support_case_organisation { nil }
-    what_are_you_switching { "MyString" }
+    association :onboarding_case, factory: :onboarding_case
+    association :onboardable, factory: :support_organisation
+    switching_energy_type { 0 }
   end
 end
