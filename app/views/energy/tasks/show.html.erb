@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @organisation_detail.name%></span>
+    <h1 class="govuk-heading-xl"><%= I18n.t("energy.tasks.heading") %></h1>
+
+    <h2 class="govuk-heading-m"><%= @organisation_detail.name%></h2>
+
+    <%= govuk_task_list(id_prefix: "evaluator_task") do |task_list|
+
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.current_contract_details"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.gas_meter_and_usage"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.electricity_meter_and_usage"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+      
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.site_contact_details"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.vat_declaration"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.billing_preferences"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+
+    end %>
+
+    <div class="govuk-button-group flex-align-center">
+        <%= link_to I18n.t("generic.button.continue"),
+          energy_task_path,
+          method: :patch,
+          class: "govuk-button" 
+        %>
+    </div>
+  </div>
+</div>
