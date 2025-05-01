@@ -513,9 +513,7 @@ Rails.application.routes.draw do
         resources :gas_meter, except: %i[show]
       end
     end
-    # resources :gas_supplier, only: %i[show update]
-    get "mat-gas-contract", to: "gas_supplier#show"
-    patch "mat-gas-contract", to: "gas_supplier#update"
+    resources :gas_supplier, only: %i[show update]
   end
 
   # Cec

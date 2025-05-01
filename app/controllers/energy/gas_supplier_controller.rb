@@ -1,47 +1,45 @@
 module Energy
   class GasSupplierController < ApplicationController
-    def show; end
+    include HasDateParams
+    before_action :set_onboarding_case_organisation
+    before_action :form, only: %i[update]
+
+    before_action { @back_url = energy_switch_energy_path }
+
+    def show
+      @form = Energy::GasSupplierForm.new(**@onboarding_case_organisation.to_h.compact)
+    end
 
     def update
-      if valid_gas_supplier_params?
-        energy_onboarding_case_organisation.update!(
-          gas_current_supplier: gas_supplier_form_params[:gas_current_supplier].to_i,
-          gas_current_contract_end_date: contract_end_date,
-        )
-        redirect_to energy_mat_gas_contract_path
+      if validation.success?
+        @onboarding_case_organisation.update!(**form.data)
+        redirect_to energy_gas_supplier_path
       else
-        flash[:error] = { message: "Please fill in all fields", class: "govuk-error" }
         render :show
       end
     end
 
-    private
+  private
 
-    def energy_onboarding_case_organisation
-      @energy_onboarding_case_organisation ||= Energy::OnboardingCaseOrganisation.first
+    def set_onboarding_case_organisation
+      @onboarding_case_organisation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: params[:id])
     end
 
-    def gas_supplier_form_params
-      params.require(:gas_supplier).permit(
-        :gas_current_supplier,
-        :contract_end_day,
-        :contract_end_month,
-        :contract_end_year,
+    def form
+      @form = Energy::GasSupplierForm.new(
+        messages: validation.errors(full: true).to_h,
+        **validation.to_h,
       )
     end
 
-    def contract_end_date
-      Date.new(
-        gas_supplier_form_params[:contract_end_year].to_i,
-        gas_supplier_form_params[:contract_end_month].to_i,
-        gas_supplier_form_params[:contract_end_day].to_i,
-      )
-    rescue ArgumentError
-      nil
+    def validation
+      @validation ||= Energy::GasSupplierFormSchema.new.call(**form_params)
     end
 
-    def valid_gas_supplier_params?
-      gas_supplier_form_params[:gas_current_supplier].present? && contract_end_date.present?
+    def form_params
+      gas_supplier_params = params.fetch(:gas_supplier_form, {}).permit(*%i[gas_current_supplier gas_current_contract_end_date])
+      gas_supplier_params[:gas_current_contract_end_date] = date_param(:gas_supplier_form, :gas_current_contract_end_date)
+      gas_supplier_params
     end
   end
 end
