@@ -24,7 +24,17 @@ private
   end
 
   def redirect_path
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_switch_energy_path : energy_case_tasks_path
+    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_switch_energies_path : energy_case_tasks_path
+  end
+
+  def organisation_detail
+    onboardable_class = @switching_energy&.onboardable_type
+
+    if ALLOWED_CLASSES.include?(onboardable_class)
+      @organisation_detail = onboardable_class.safe_constantize.find(@switching_energy.onboardable_id)
+    else
+      render("errors/not_found", status: :not_found)
+    end
   end
 
   def form
