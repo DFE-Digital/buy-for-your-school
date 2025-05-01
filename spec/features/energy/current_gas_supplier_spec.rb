@@ -24,7 +24,7 @@ describe "Current Gas supplier", :js do
     fill_in "contract-end-month", with: "11"
     fill_in "contract-end-year", with: "2025"
 
-    # todo: add more tests
+    # TODO: add more tests
     # click_button "Save and continue"
   end
 end

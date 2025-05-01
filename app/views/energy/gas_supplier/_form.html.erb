@@ -1,59 +1,17 @@
-<%= form_with(scope: :gas_supplier, url: energy_mat_gas_contract_path, method: :patch, local: true) do |form| %>
-  <div class="govuk-form-group">
-    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-        <%= I18n.t("energy.current_contract.current_supplier") %>
-      </legend>
-      <div class="govuk-radios" data-module="govuk-radios">
-    
-      <% Energy::OnboardingCaseOrganisation::CURRENT_SUPPLIERS.each do |supplier, value| %>
-        <% if supplier == :other %>
-          <div class="govuk-radios__divider"><%= I18n.t("energy.or")%></div>
+<%= form_with model: @form, scope: :gas_supplier_form, url: energy_gas_supplier_path, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
 
-        <% end %>
-        <%= render "energy/gas_supplier/supplier", { form: form, supplier: supplier, value: value } %>
+  <%= form.hidden_field :gas_current_supplier, value: form.object.gas_current_supplier %>
 
-      <% if supplier == :other %>
-        <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-e-supplier-8">
-          <div class="govuk-form-group">
-            <label class="govuk-label" for="e-supplier">
-              <%= I18n.t("energy.current_contract.other_gas_supplier") %>
-            </label>
-            <input class="govuk-input govuk-!-width-one-third" id="e-supplier" name="e-supplier" type="tel" autocomplete="tel">  
-          </div>
-        </div>
-      <% end %>
+  <%= form.govuk_radio_buttons_fieldset :gas_current_supplier , legend: { text: I18n.t("energy.current_contract.current_supplier"), size: "m" } do %>
+    <% form.object.current_supllier_options.each do |supplier| %>
+      <%= form.govuk_radio_button :gas_current_supplier, supplier, label: { text: I18n.t("energy.current_contract.suppliers.#{supplier}") } %>
+    <% end %>
+  <% end %>
+  
+  <%= form.govuk_date_field :gas_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
 
-      <% end %>
-      </div>
-    </fieldset>
+  <div class="govuk-button-group flex-align-center">
+    <%= form.submit I18n.t("generic.button.save_continue"), class: "govuk-button"  %>
   </div>
-  <div class="govuk-form-group">
-    <fieldset class="govuk-fieldset" role="group" aria-describedby="contract-end-issued-hint">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-        <%= I18n.t("energy.current_contract.when_contract_ends") %>
-      </legend>
-      <div id="contract-end-hint" class="govuk-hint">
-        <%= I18n.t("energy.current_contract.date_for_example") %>
-      </div>
-      <% date_parts = [
-        { id_suffix: 'day', width: 2 },
-        { id_suffix: 'month', width: 2 },
-        { id_suffix: 'year', width: 4 }
-      ] %>
-
-      <div class="govuk-date-input" id="contract-end">
-        <% date_parts.each do |part| %>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <%= form.label "contract_end_#{part[:id_suffix]}", I18n.t("energy.current_contract.end_#{part[:id_suffix]}"), class: "govuk-label govuk-date-input__label" %>
-              <%= form.text_field "contract_end_#{part[:id_suffix]}", class: "govuk-input govuk-date-input__input govuk-input--width-#{part[:width]}", id: "contract-end-#{part[:id_suffix]}", inputmode: "numeric" %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-
-    </fieldset>
-  </div>
-  <%= form.submit "Save and continue", class: "govuk-button" %>
 <% end %>

@@ -359,3 +359,16 @@ en:
       rules:
         switching_energy_type:
           missing: Please select at least one option to proceed
+  gas_supplier_form:
+    rules:
+      gas_current_supplier: ""
+      gas_current_contract_end_date: ""
+    errors:
+      rules:
+        gas_current_supplier:
+          missing: Please select current gas supplier
+        gas_current_contract_end_date:
+          missing: Please enter gas current contract end date
+
+
+
