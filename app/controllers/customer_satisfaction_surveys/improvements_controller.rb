@@ -3,7 +3,6 @@ class CustomerSatisfactionSurveys::ImprovementsController < CustomerSatisfaction
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?
       @customer_satisfaction_survey.save!
-      # handle_post_save_redirect
       redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     else
       render :edit
@@ -26,12 +25,9 @@ private
     @back_url = edit_customer_satisfaction_surveys_recommendation_likelihood_path(@customer_satisfaction_survey)
   end
 
-  def handle_post_save_redirect
-    if @customer_satisfaction_survey.service == "find_a_buying_solution"
-      @customer_satisfaction_survey.complete_survey!
-      redirect_to customer_satisfaction_surveys_thank_you_path
-    else
-      redirect_to redirect_path
-    end
+  def redirect_path
+    return edit_customer_satisfaction_surveys_research_opt_in_path(@customer_satisfaction_survey) if session[:net_promoter_score].present?
+
+    edit_customer_satisfaction_surveys_easy_to_use_rating_path(@customer_satisfaction_survey)
   end
 end
