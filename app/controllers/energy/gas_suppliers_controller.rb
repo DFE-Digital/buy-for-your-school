@@ -1,10 +1,10 @@
 module Energy
-  class GasSupplierController < ApplicationController
+  class GasSuppliersController < ApplicationController
     include HasDateParams
-    before_action :set_onboarding_case_organisation
+    before_action :organisation_details
     before_action :form, only: %i[update]
 
-    before_action { @back_url = energy_switch_energy_path }
+    before_action { @back_url = energy_case_switch_energy_path }
 
     def show
       @form = Energy::GasSupplierForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -13,17 +13,13 @@ module Energy
     def update
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
-        redirect_to energy_gas_supplier_path
+        redirect_to energy_case_gas_supplier_path
       else
         render :show
       end
     end
 
   private
-
-    def set_onboarding_case_organisation
-      @onboarding_case_organisation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: params[:id])
-    end
 
     def form
       @form = Energy::GasSupplierForm.new(
