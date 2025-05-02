@@ -9,7 +9,7 @@ module Energy
       return unless params[:type] == "single"
 
       onboarding_case = existing_onboarding_case? || create_onboarding_case
-      redirect_to energy_switch_energy_path(id: onboarding_case.energy_onboarding_case_id)
+      redirect_to energy_case_switch_energy_path(case_id: onboarding_case.energy_onboarding_case_id)
     end
 
   private

@@ -460,6 +460,16 @@ en:
       gas_usage_label: Estimated annual gas usage for this meter, in kilowatt hours
       gas_usage_hint: Check your latest gas bill. Some suppliers include your annual estimated usage on the bill. Alternatively, add up the kWh from your last 12 gas bills to calculate your total usage.
       gas_usage_suffix: kWh
+      list_item:
+        heading: MPRN summary
+        total_mprn: 'You have added %{total} MPRNs'
+        mprn: MPRN
+        gas_usage: Estimated annual gas usage
+        add_another_mprn: Add another MPRN
+      remove_page:
+        heading: Are you sure you want to remove this MPRN?
+        remove_mprn: Remove MPRN
+        removed: MPRN successfully removed
 
   errors:
     contentful_entry_not_found:
