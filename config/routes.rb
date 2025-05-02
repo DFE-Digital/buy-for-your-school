@@ -506,10 +506,11 @@ Rails.application.routes.draw do
         patch ":type", to: "authorisation#update"
       end
     end
-    resources :switch_energy, only: %i[show update]
-    resources :tasks, only: %i[show update]
-    resources :onboarding_case, only: %i[show] do
-      resources :gas_meter_details, except: %i[index] do
+    resources :case, only: %i[show] do
+      resource :switch_energy, only: %i[show update]
+      resource :tasks, only: %i[show update]
+      resources :org, except: %i[show] do
+        resources :gas_meter, except: %i[show]
       end
     end
   end
