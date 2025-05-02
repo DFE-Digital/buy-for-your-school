@@ -13,12 +13,12 @@ module Energy
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
     end
 
-    def organisation_details(id = params[:onboarding_case_id])
-      @onboarding_organisation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: id)
-      onboardable_type = @onboarding_organisation.onboardable_type
+    def organisation_details(id = params[:case_id])
+      @onboarding_case_organisation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: id)
+      onboardable_type = @onboarding_case_organisation.onboardable_type
 
       if ALLOWED_CLASSES.include?(onboardable_type)
-        @organisation_detail = onboardable_type.safe_constantize.find(@onboarding_organisation.onboardable_id)
+        @organisation_detail = onboardable_type.safe_constantize.find(@onboarding_case_organisation.onboardable_id)
         user_has_access_to_organisation?
       else
         render("errors/not_found", status: :not_found)
