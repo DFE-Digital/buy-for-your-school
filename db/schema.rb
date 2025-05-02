@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_30_164718) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -224,6 +224,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_152507) do
     t.string "mprn", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "gas_usage"
     t.index ["energy_onboarding_case_organisation_id"], name: "idx_on_energy_onboarding_case_organisation_id_9ef1acd25b"
   end
 

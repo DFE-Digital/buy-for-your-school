@@ -451,6 +451,16 @@ en:
             in_progress: In progress
             complete: Complete
             not_started: Not started
+    gas_meter_details:
+      title: Gas meters and usage
+      heading: Gas meter details
+      heading_info: You can usually find this information on your gas bill. Please check all pages.
+      mprn_label: Add a Meter Point Reference Number (MPRN)
+      mprn_hint: This is a 6 to 12 digit number on your gas bill. It may also be called MPR or M number.
+      gas_usage_label: Estimated annual gas usage for this meter, in kilowatt hours
+      gas_usage_hint: Check your latest gas bill. Some suppliers include your annual estimated usage on the bill. Alternatively, add up the kWh from your last 12 gas bills to calculate your total usage.
+      gas_usage_suffix: kWh
+
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
