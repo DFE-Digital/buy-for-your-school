@@ -183,6 +183,15 @@ en:
               too_long: "First name must be %{count} characters or fewer"
             last_name:
               too_long: "Last name must be %{count} characters or fewer"
+        energy/gas_meter:
+            attributes:
+              mprn:
+                blank: Enter the MPRN
+                invalid: Enter a valid MPRN
+              gas_usage:
+                blank: Enter the gas usage
+                invalid: Enter a valid gas usage
+                not_a_number: Enter a valid gas usage
 
   request:
     rules:
