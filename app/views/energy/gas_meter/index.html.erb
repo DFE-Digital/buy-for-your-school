@@ -1,0 +1,55 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.gas_meter_details.title") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("energy.gas_meter_details.list_item.heading") %></h1>
+    <table class="govuk-table messages-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        <%= I18n.t("energy.gas_meter_details.list_item.total_mprn", total: @gas_meter_details.count) %>
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"
+            ><%= I18n.t("energy.gas_meter_details.list_item.mprn") %></th>
+          <th scope="col" class="govuk-table__header"
+            ><%= I18n.t("energy.gas_meter_details.list_item.gas_usage") %></th>
+          <th scope="col" class="govuk-table__header"></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @gas_meter_details.each do |gas_meter| %>
+          <div class="govuk-summary-list__row">
+            <tr>
+              <td class="govuk-table__cell"><%= gas_meter.mprn %></td>
+              <td class="govuk-table__cell"><%= gas_meter.gas_usage %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                  <%= link_to safe_join([I18n.t("generic.link.change"),
+                      content_tag(:span, "Change details for #{gas_meter.mprn}", class: "govuk-visually-hidden")]),
+                          edit_energy_case_org_gas_meter_path(id: gas_meter.id),
+                           class: "govuk-link govuk-!-margin-right-3" %>
+                  <%= link_to safe_join([I18n.t("generic.button.remove"), 
+                      content_tag(:span, "Remove details for #{gas_meter.mprn}", class: "govuk-visually-hidden")]),
+                          energy_case_org_gas_meter_path(id: gas_meter.id),
+                          class: "govuk-link", method: :delete %>
+              </td>
+            </tr>
+          </div>
+        <% end %>
+      </tbody>
+    </table>
+
+<%= link_to I18n.t("energy.gas_meter_details.list_item.add_another_mprn"),
+            new_energy_case_org_gas_meter_path(onboarding_case_id: @onboarding_case_organisation.energy_onboarding_case_id), 
+            class: 'govuk-button govuk-button--secondary' %>
+
+<br>
+
+<%= link_to I18n.t("generic.button.save_continue"),
+            new_energy_case_org_gas_meter_path(onboarding_case_id: @onboarding_case_organisation.energy_onboarding_case_id),
+            class: 'govuk-button' %>
+
+
+
+  </div>
+</div>
+
+

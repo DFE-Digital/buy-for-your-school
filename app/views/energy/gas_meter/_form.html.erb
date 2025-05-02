@@ -1,7 +1,7 @@
 <%= form_with(
       model: @gas_meter_detail,
-      url: @gas_meter_detail.new_record? ? energy_onboarding_case_gas_meter_details_path(onboarding_case_id: params[:onboarding_case_id])
-                                  : energy_onboarding_case_gas_meter_detail_path(onboarding_case_id: @onboarding_organisation.energy_onboarding_case_id, id: params[:id]),
+      url: @gas_meter_detail.new_record? ? energy_case_org_gas_meter_index_path
+                                  : energy_case_org_gas_meter_path(id: params[:id]),
     ) do |form| %>
     <%= form.govuk_error_summary %>
 
