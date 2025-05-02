@@ -480,17 +480,9 @@ en:
       other: Other
     or: or
     current_contract:
-      heading: 'About your schools: Current contract details'
+      heading: Current contract details
       gas_contract: Gas Contract
       current_supplier: Current gas supplier
-      suppliers:
-        british_gas: British Gas
-        edf_energy: EDF Energy
-        eon_next: E.ON Next
-        scotish_power: Scotish Power
-        ovo_energy: OVO Energy
-        octopus_energy: Octopus Energy
-        other: Other
       other_gas_supplier: Gas supplier
       other_electricity_supplier: Electricity supplier
       when_contract_ends: When does the contract end?
