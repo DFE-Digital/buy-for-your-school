@@ -508,6 +508,10 @@ Rails.application.routes.draw do
     end
     resources :switch_energy, only: %i[show update]
     resources :tasks, only: %i[show update]
+    resources :onboarding_case, only: %i[show] do
+      resources :gas_meter_details, except: %i[index] do
+      end
+    end
   end
 
   # Cec
