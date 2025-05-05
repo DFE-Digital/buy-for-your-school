@@ -1,16 +1,15 @@
 class Energy::SwitchEnergiesController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
-  before_action :switching_energy
   before_action { @back_url = school_type_energy_authorisation_path(id: @organisation_detail.urn, type: "single") }
 
   def show
-    @form = Energy::SwitchEnergyForm.new(**switching_energy.to_h.compact)
+    @form = Energy::SwitchEnergyForm.new(**@onboarding_case_organisation.to_h.compact)
   end
 
   def update
     if validation.success?
-      switching_energy.update!(**form.data)
+      @onboarding_case_organisation.update!(**form.data)
       redirect_to redirect_path
     else
       render :show
@@ -19,12 +18,12 @@ class Energy::SwitchEnergiesController < Energy::ApplicationController
 
 private
 
-  def switching_energy
-    @switching_energy = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: params[:case_id])
+  def redirect_path
+    params[:commit] == I18n.t("generic.button.save_continue") ? energy_supplier_path : energy_case_tasks_path
   end
 
-  def redirect_path
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_gas_supplier_path : energy_case_tasks_path
+  def energy_supplier_path
+    @onboarding_case_organisation.switching_energy_type_electricity? ? energy_case_electric_supplier_path : energy_case_gas_supplier_path
   end
 
   def form

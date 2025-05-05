@@ -14,7 +14,7 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   #   electricity       - Electricity only
   #   gas               - Gas only
   #   electricity_gas   - Gas and electricity
-  enum :switching_energy_type, { electricity: 0, gas: 1, gas_electricity: 2 }, suffix: true
+  enum :switching_energy_type, { electricity: 0, gas: 1, gas_electricity: 2 }, prefix: true
 
   # Current suppliers
   #
