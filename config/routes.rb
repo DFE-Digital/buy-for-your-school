@@ -509,6 +509,7 @@ Rails.application.routes.draw do
     resources :case, only: %i[show] do
       resource :switch_energy, only: %i[show update]
       resource :gas_supplier, only: %i[show update]
+      resource :electric_supplier, only: %i[show update]
       resource :tasks, only: %i[show update]
       resources :org, except: %i[show] do
         resources :gas_meter, except: %i[show]
