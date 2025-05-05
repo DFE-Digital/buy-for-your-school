@@ -370,6 +370,13 @@ en:
           missing: Please select current gas supplier
         gas_current_contract_end_date:
           missing: Please enter gas current contract end date
-
-
-
+  electric_supplier_form:
+    rules:
+      electric_current_supplier: ""
+      electric_current_contract_end_date: ""
+    errors:
+      rules:
+        electric_current_supplier:
+          missing: Please select current electric supplier
+        electric_current_contract_end_date:
+          missing: Please enter electric current contract end date
