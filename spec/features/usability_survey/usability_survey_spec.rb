@@ -1,11 +1,17 @@
 require "rails_helper"
 
 RSpec.feature "Completing the Usability Survey" do
-  let(:signed_url) { UrlVerifier.verifier.generate("https://example.com") }
+  let(:example_url) { "https://example.com" }
+  let(:test_improvement) { "Make it better" }
+  let(:signed_url) { UrlVerifier.verifier.generate(example_url) }
+
+  def submit_form
+    click_button I18n.t("usability_survey.send")
+  end
 
   before do
     allow(UrlVerifier).to receive(:verify_url) do |url|
-      url == signed_url ? "https://example.com" : nil
+      url == signed_url ? example_url : nil
     end
   end
 
@@ -20,7 +26,7 @@ RSpec.feature "Completing the Usability Survey" do
     end
 
     it "has a skip survey link" do
-      expect(page).to have_link "Skip survey", href: "https://example.com"
+      expect(page).to have_link "Skip survey", href: example_url
     end
 
     context "when selecting 'other' usage reason" do
@@ -39,7 +45,7 @@ RSpec.feature "Completing the Usability Survey" do
 
     context "when submitting without filling required fields" do
       it "shows validation errors" do
-        click_button I18n.t("usability_survey.send")
+        submit_form
         expect(page).to have_text "At least one field must be filled in"
       end
     end
@@ -48,14 +54,14 @@ RSpec.feature "Completing the Usability Survey" do
       it "creates the survey and redirects" do
         check I18n.t("usability_survey.usage_reasons.options.browsing")
         choose I18n.t("generic.yes", default: "Yes")
-        fill_in I18n.t("usability_survey.improvements"), with: "Make it better"
-        click_button I18n.t("usability_survey.send")
+        fill_in I18n.t("usability_survey.improvements"), with: test_improvement
+        submit_form
 
         expect(UsabilitySurveyResponse.last.usage_reasons).to include("browsing")
         expect(UsabilitySurveyResponse.last.service_helpful).to be true
-        expect(UsabilitySurveyResponse.last.improvements).to eq("Make it better")
+        expect(UsabilitySurveyResponse.last.improvements).to eq(test_improvement)
         expect(UsabilitySurveyResponse.last.service).to eq("find_a_buying_solution")
-        expect(page).to have_current_path("https://example.com")
+        expect(page).to have_current_path(example_url)
       end
     end
   end
@@ -68,12 +74,12 @@ RSpec.feature "Completing the Usability Survey" do
     it "redirects to root after submission" do
       check I18n.t("usability_survey.usage_reasons.options.browsing")
       choose I18n.t("generic.yes", default: "Yes")
-      fill_in I18n.t("usability_survey.improvements"), with: "Make it better"
-      click_button I18n.t("usability_survey.send")
+      fill_in I18n.t("usability_survey.improvements"), with: test_improvement
+      submit_form
 
       expect(UsabilitySurveyResponse.last.usage_reasons).to include("browsing")
       expect(UsabilitySurveyResponse.last.service_helpful).to be true
-      expect(UsabilitySurveyResponse.last.improvements).to eq("Make it better")
+      expect(UsabilitySurveyResponse.last.improvements).to eq(test_improvement)
       expect(UsabilitySurveyResponse.last.service).to eq("find_a_buying_solution")
       expect(page).to have_current_path("/")
     end
