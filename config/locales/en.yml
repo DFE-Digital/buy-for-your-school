@@ -470,7 +470,26 @@ en:
         heading: Are you sure you want to remove this MPRN?
         remove_mprn: Remove MPRN
         removed: MPRN successfully removed
-
+    suppliers:
+      british_gas: British Gas
+      edf_energy: EDF Energy
+      eon_next: E.ON Next
+      scotish_power: Scotish Power
+      ovo_energy: OVO Energy
+      octopus_energy: Octopus Energy
+      other: Other
+    or: or
+    current_contract:
+      heading: Current contract details
+      gas_contract: Gas Contract
+      current_supplier: Current gas supplier
+      other_gas_supplier: Gas supplier
+      other_electricity_supplier: Electricity supplier
+      when_contract_ends: When does the contract end?
+      date_for_example: For example, 27 3 2025
+      end_day: Day
+      end_month: Month
+      end_year: Year
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.

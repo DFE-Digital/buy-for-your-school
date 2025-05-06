@@ -235,6 +235,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_164718) do
     t.integer "switching_energy_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gas_current_supplier"
+    t.string "gas_current_supplier_other"
+    t.date "gas_current_contract_end_date"
+    t.integer "electric_current_supplier"
+    t.string "electric_current_supplier_other"
+    t.date "electric_current_contract_end_date"
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end

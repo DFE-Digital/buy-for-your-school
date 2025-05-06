@@ -1,0 +1,15 @@
+<%= form_with model: @form, scope: :gas_supplier_form, url: energy_case_gas_supplier_path, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :gas_current_supplier, value: form.object.gas_current_supplier %>
+
+  <%= form.govuk_radio_buttons_fieldset :gas_current_supplier , legend: { text: I18n.t("energy.current_contract.current_supplier"), size: "m" } do %>
+    <% form.object.current_supllier_options.each do |supplier| %>
+      <%= form.govuk_radio_button :gas_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
+    <% end %>
+  <% end %>
+  
+  <%= form.govuk_date_field :gas_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
+
+  <%= render EnergyFormButtonsComponent.new(form)%>
+<% end %>
