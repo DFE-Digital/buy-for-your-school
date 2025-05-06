@@ -4,7 +4,7 @@
 <%= form_with model: @usability_survey, scope: :usability_survey, url: usability_surveys_path do |form| %>
   <%= form.govuk_error_summary %>
   <%= form.hidden_field :service, value: @usability_survey.service %>
-  <%= hidden_field_tag :return_url, @decoded_url %>
+  <%= hidden_field_tag :return_url, params[:return_url] %>
 
   <%= form.govuk_check_boxes_fieldset :usage_reasons, legend: { text: "What did you use the service for today?", size: "s" } do %>
     <% UsabilitySurveyResponse::USAGE_REASONS.each do |reason| %>

@@ -11,8 +11,9 @@ class UsabilitySurveysController < ApplicationController
       format.html do
         @usability_survey = UsabilitySurveyResponse.new(usability_survey_params)
         @usability_survey.service ||= usability_survey_params[:service]
+        @decoded_url = decode_return_url
         if @usability_survey.save
-          redirect_to decode_return_url || root_path
+          redirect_to @decoded_url || root_path, allow_other_host: true
         else
           render :new
         end
