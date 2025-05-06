@@ -363,21 +363,29 @@ en:
   gas_supplier_form:
     rules:
       gas_current_supplier: ""
+      gas_current_supplier_other: ""
       gas_current_contract_end_date: ""
     errors:
       rules:
         gas_current_supplier:
           missing: Please select current gas supplier
+        gas_current_supplier_other:
+          missing: Please select other gas supplier
         gas_current_contract_end_date:
           missing: Please enter gas current contract end date
+          invalid_date: Please enter a valid gas current contract end date
+          invalid_range: Please enter a date within the range of - 1 and + 5 years of the current date
   electric_supplier_form:
     rules:
       electric_current_supplier: ""
+      electric_current_supplier_other: ""
       electric_current_contract_end_date: ""
     errors:
       rules:
         electric_current_supplier:
           missing: Please select current electric supplier
+        electric_current_supplier_other:
+          missing: Please select other electric supplier
         electric_current_contract_end_date:
           missing: Please enter electric current contract end date
   gas_bill_consolidation_form:
@@ -394,3 +402,5 @@ en:
       rules:
         electricity_meter_type:
           missing: Please select at least one option to proceed
+          invalid_date: Please enter a valid electric current contract end date
+          invalid_range: Please enter a date within the range of - 1 and + 5 years of the current date
