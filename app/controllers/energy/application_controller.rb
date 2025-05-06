@@ -13,6 +13,10 @@ module Energy
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
     end
 
+    def onboarding_case
+      @onboarding_case ||= Energy::OnboardingCase.find(params[:case_id])
+    end
+
     def organisation_details(id = params[:case_id])
       @onboarding_case_organisation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: id)
       onboardable_type = @onboarding_case_organisation.onboardable_type

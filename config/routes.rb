@@ -495,7 +495,7 @@ Rails.application.routes.draw do
   end
   mount flipper_app, at: "/flipper"
 
-  #  Energy
+  # Energy
   namespace :energy do
     get "/onboarding(/:step)", to: "onboarding#show", as: "onboarding"
     post "/onboarding/:step", to: "onboarding#update", as: "update_onboarding"
@@ -515,6 +515,7 @@ Rails.application.routes.draw do
         resources :gas_meter, except: %i[show]
         resource :gas_bill_consolidation, only: %i[show update]
         resource :electricity_meter_type, only: %i[show update]
+        resource :gas_single_multi, only: %i[show update]
       end
     end
   end
