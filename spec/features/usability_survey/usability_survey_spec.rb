@@ -16,8 +16,8 @@ RSpec.feature "Completing the Usability Survey" do
     end
 
     it "shows the survey form" do
-      expect(page).to have_text "Before you go"
-      expect(page).to have_text "Please could you let us know how easy it was to use this service"
+      expect(page).to have_text I18n.t("usability_survey.heading")
+      expect(page).to have_text I18n.t("usability_survey.body")
     end
 
     it "has a skip survey link" do
@@ -26,31 +26,31 @@ RSpec.feature "Completing the Usability Survey" do
 
     context "when selecting 'other' usage reason" do
       it "shows the other reason text area" do
-        check "Other"
-        expect(page).to have_field "Label - text area"
+        check I18n.t("usability_survey.usage_reasons.options.other")
+        expect(page).to have_field I18n.t("usability_survey.usage_reasons.usage_reason_other")
       end
     end
 
     context "when selecting service not helpful" do
       it "shows the reason text area" do
-        choose "No"
-        expect(page).to have_field "Why not?"
+        choose I18n.t("generic.no", default: "No")
+        expect(page).to have_field I18n.t("usability_survey.service_not_helpful_reason")
       end
     end
 
     context "when submitting without filling required fields" do
       it "shows validation errors" do
-        click_button "Send feedback"
+        click_button I18n.t("usability_survey.send")
         expect(page).to have_text "At least one field must be filled in"
       end
     end
 
     context "when submitting with valid data" do
       it "creates the survey and redirects" do
-        check "Browsing"
-        choose "Yes"
-        fill_in "How could we improve this service?", with: "Make it better"
-        click_button "Send feedback"
+        check I18n.t("usability_survey.usage_reasons.options.browsing")
+        choose I18n.t("generic.yes", default: "Yes")
+        fill_in I18n.t("usability_survey.improvements"), with: "Make it better"
+        click_button I18n.t("usability_survey.send")
 
         expect(UsabilitySurveyResponse.last.usage_reasons).to include("browsing")
         expect(UsabilitySurveyResponse.last.service_helpful).to be true
@@ -67,10 +67,10 @@ RSpec.feature "Completing the Usability Survey" do
     end
 
     it "redirects to root after submission" do
-      check "Browsing"
-      choose "Yes"
-      fill_in "How could we improve this service?", with: "Make it better"
-      click_button "Send feedback"
+      check I18n.t("usability_survey.usage_reasons.options.browsing")
+      choose I18n.t("generic.yes", default: "Yes")
+      fill_in I18n.t("usability_survey.improvements"), with: "Make it better"
+      click_button I18n.t("usability_survey.send")
 
       expect(UsabilitySurveyResponse.last.usage_reasons).to include("browsing")
       expect(UsabilitySurveyResponse.last.service_helpful).to be true

@@ -34,11 +34,11 @@ describe UsabilitySurveyResponse do
     end
 
     it "accepts all valid usage reasons" do
-      UsabilitySurveyResponse::USAGE_REASONS.each do |reason|
-        survey_response.usage_reasons = [reason]
+      I18n.t("usability_survey.usage_reasons.options").each_key do |reason|
+        survey_response.usage_reasons = [reason.to_s]
         survey_response.service_helpful = true
         survey_response.service = "find_a_buying_solution"
-        if reason == "other"
+        if reason.to_s == "other"
           survey_response.usage_reason_other = "Other reason"
         end
         expect(survey_response).to be_valid

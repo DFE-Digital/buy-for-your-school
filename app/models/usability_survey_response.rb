@@ -1,6 +1,4 @@
 class UsabilitySurveyResponse < ApplicationRecord
-  USAGE_REASONS = %w[browsing finding_a_framework guidance request_for_help other].freeze
-
   enum :service, { find_a_buying_solution: 0 }, prefix: true
 
   validates :service_helpful, inclusion: { in: [true, false], message: "Select if the service helped you" }, on: :service_helpful
