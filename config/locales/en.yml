@@ -493,6 +493,14 @@ en:
       end_day: Day
       end_month: Month
       end_year: Year
+    gas_bill_consolidation:
+      title: Gas meters and usage
+      option_heading: Do you want your MPRNs consolidated on one bill?
+      radio_buttons:
+        option_yes: "Yes"
+        option_no: "No, I want a separate bill for each MPRN"
+      
+
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
