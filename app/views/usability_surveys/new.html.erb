@@ -1,0 +1,33 @@
+<h2 class="govuk-heading-m">Before you go</h2>
+<p class="govuk-body">Please could you let us know how easy it was to use this service. Your feedback helps us make our service better.</p>
+
+<%= form_with model: @usability_survey, scope: :usability_survey, url: usability_surveys_path do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.hidden_field :service, value: @usability_survey.service %>
+  <%= hidden_field_tag :return_url, @decoded_url %>
+
+  <%= form.govuk_check_boxes_fieldset :usage_reasons, legend: { text: "What did you use the service for today?", size: "s" } do %>
+    <% UsabilitySurveyResponse::USAGE_REASONS.each do |reason| %>
+      <%= form.govuk_check_box :usage_reasons, reason, label: { text: reason == "other" ? "Other" : reason.humanize } do %>
+        <% if reason == "other" %>
+          <%= form.govuk_text_area :usage_reason_other, label: { text: "Label - text area" }, form_group: { class: "govuk-!-margin-left-6" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= form.govuk_radio_buttons_fieldset :service_helpful, legend: { text: "Did this service help you get what you were looking for?", size: "s" } do %>
+    <%= form.govuk_radio_button :service_helpful, true, label: { text: "Yes" } %>
+    <%= form.govuk_radio_button :service_helpful, false, label: { text: "No" } do %>
+      <%= form.govuk_text_area :service_not_helpful_reason, label: { text: "Why not?" } %>
+    <% end %>
+  <% end %>
+
+  <%= form.govuk_text_area :improvements,
+    rows: 5,
+    label: { text: "How could we improve this service?" }
+  %>
+
+  <%= form.submit "Send feedback", class: "govuk-button" %>
+  <%= link_to "Skip survey", @decoded_url || root_path, class: "govuk-link govuk-link--no-visited-state govuk-!-margin-left-3" %>
+<% end %>
