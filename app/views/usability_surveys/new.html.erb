@@ -28,6 +28,8 @@
     label: { text: "How could we improve this service?" }
   %>
 
-  <%= form.submit "Send feedback", class: "govuk-button" %>
-  <%= link_to "Skip survey", @decoded_url || root_path, class: "govuk-link govuk-link--no-visited-state govuk-!-margin-left-3" %>
+  <div class="govuk-button-group">
+    <%= form.submit "Send feedback", class: "govuk-button" %>
+    <%= link_to "Skip survey", @decoded_url || root_path, class: "govuk-link govuk-link--no-visited-state" %>
+  </div>
 <% end %>
