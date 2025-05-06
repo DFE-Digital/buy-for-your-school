@@ -192,6 +192,7 @@ en:
                 blank: Enter the gas usage
                 invalid: Enter a valid gas usage
                 not_a_number: Enter a valid gas usage
+            maximum_mprn_per_organisation: Maximum number of MPRNs reached
 
   request:
     rules:
