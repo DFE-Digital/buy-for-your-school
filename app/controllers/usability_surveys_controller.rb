@@ -21,7 +21,7 @@ class UsabilitySurveysController < ApplicationController
     end
   end
 
-  private
+private
 
   def usability_survey_params
     params.fetch(:usability_survey, {}).permit(:service, :usage_reason_other, :service_helpful, :service_not_helpful_reason, :improvements, usage_reasons: [])
