@@ -8,7 +8,7 @@ class CustomerSatisfactionSurveys::SatisfactionLevelsController < CustomerSatisf
     if @customer_satisfaction_survey.valid?(:satisfaction_level)
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.start_survey!
-      redirect_to redirect_path
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
     else
       render :edit
     end
