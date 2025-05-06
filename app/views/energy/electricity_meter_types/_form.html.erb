@@ -1,0 +1,16 @@
+<%= form_with model: @form, scope: :electricity_meter_type_form, url: energy_case_org_electricity_meter_type_path, method: :patch do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <%= form.hidden_field :electricity_meter_type, value: '' %>
+
+    <%= form.govuk_radio_buttons_fieldset :electricity_meter_type, 
+            legend: { text: I18n.t("energy.electricity_meter_type.question"), size: "l" },
+            hint:  { text: I18n.t("energy.electricity_meter_type.hint") } do %>
+      <% form.object.electricity_meter_type_options.each do |meter_type| %>
+        <%= form.govuk_radio_button :electricity_meter_type, meter_type, label: { text: I18n.t(meter_type, scope: "energy.electricity_meter_type.meter_types") } %>
+      <% end %>
+    <% end %>
+
+    <%= render EnergyFormButtonsComponent.new(form)%>
+
+<% end %>

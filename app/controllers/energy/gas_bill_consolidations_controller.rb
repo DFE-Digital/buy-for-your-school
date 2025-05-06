@@ -24,7 +24,7 @@ private
   end
 
   def redirect_path
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_gas_bill_consolidation_path : energy_case_tasks_path
+    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_electricity_meter_type_path : energy_case_tasks_path
   end
 
   def form
