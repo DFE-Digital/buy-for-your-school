@@ -5,7 +5,14 @@
 
   <%= form.govuk_radio_buttons_fieldset :electric_current_supplier , legend: { text: I18n.t("energy.current_contract.current_electric_supplier"), size: "m" } do %>
     <% form.object.current_supllier_options.each do |supplier| %>
-      <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
+      <% if supplier == :other %>
+        <%= form.govuk_radio_divider %>
+        <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } do %>
+          <%= form.govuk_text_field :electric_current_supplier_other, label: { text: I18n.t("energy.current_contract.other_electric_supplier") } %>
+        <% end %>
+      <% else %>
+        <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
+      <% end %>
     <% end %>
   <% end %>
   

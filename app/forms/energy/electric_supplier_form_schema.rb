@@ -4,6 +4,7 @@ class Energy::ElectricSupplierFormSchema < ::Support::Schema
   params do
     required(:electric_current_supplier).value(:string)
     required(:electric_current_contract_end_date).value(:hash)
+    required(:electric_current_supplier_other).value(:string)
   end
 
   rule(:electric_current_supplier) do
@@ -17,7 +18,23 @@ class Energy::ElectricSupplierFormSchema < ::Support::Schema
   rule(:electric_current_contract_end_date) do
     if value.values.all?(&:present?)
       date = hash_to_date.call(value)
-      key.failure(:invalid) if date && date.year > 9999
+
+      min_date = Date.current - 1.year
+      max_date = Date.current + 5.years
+
+      if date.present?
+        key.failure(:invalid_range) unless date.between?(min_date, max_date)
+      else
+        key.failure(:invalid_date)
+      end
+    end
+  end
+
+  rule(:electric_current_supplier_other) do
+    if values[:electric_current_supplier] == "other"
+      key.failure(:missing) if value.blank?
+    else
+      values[:electric_current_supplier_other] = ""
     end
   end
 end
