@@ -483,9 +483,11 @@ en:
     current_contract:
       heading: Current contract details
       gas_contract: Gas Contract
+      electric_contract: Electricity Contract
       current_supplier: Current gas supplier
+      current_electric_supplier: Current electricity supplier
       other_gas_supplier: Gas supplier
-      other_electricity_supplier: Electricity supplier
+      other_electric_supplier: Electricity supplier
       when_contract_ends: When does the contract end?
       date_for_example: For example, 27 3 2025
       end_day: Day
