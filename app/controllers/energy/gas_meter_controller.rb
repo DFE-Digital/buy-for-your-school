@@ -2,11 +2,11 @@ class Energy::GasMeterController < Energy::ApplicationController
   before_action :organisation_details
   before_action :set_gas_meter_detail, only: %i[edit update destroy]
 
-  before_action only: %i[new index] do
-    @back_url = energy_case_switch_energy_path
+  before_action only: %i[index] do
+    @back_url = energy_case_gas_supplier_path
   end
 
-  before_action only: %i[edit destroy] do
+  before_action except: %i[index] do
     @back_url = energy_case_org_gas_meter_index_path
   end
 
@@ -25,7 +25,7 @@ class Energy::GasMeterController < Energy::ApplicationController
 
     if @gas_meter_detail.save
       # redirect path will be updated later
-      redirect_to energy_case_tasks_path
+      redirect_to redirect_path
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Energy::GasMeterController < Energy::ApplicationController
   def update
     if @gas_meter_detail.update(form_params)
       # redirect path will be updated later
-      redirect_to energy_case_tasks_path
+      redirect_to redirect_path
     else
       render :edit
     end
@@ -52,6 +52,10 @@ private
 
   def set_gas_meter_detail
     @gas_meter_detail = @onboarding_case_organisation.gas_meters.find(params[:id])
+  end
+
+  def redirect_path
+    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_gas_meter_index_path : energy_case_tasks_path
   end
 
   def form_params

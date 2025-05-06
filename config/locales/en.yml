@@ -463,6 +463,7 @@ en:
       list_item:
         heading: MPRN summary
         total_mprn: 'You have added %{total} MPRNs'
+        one_mprn: 'You have added 1 MPRN'
         mprn: MPRN
         gas_usage: Estimated annual gas usage
         add_another_mprn: Add another MPRN
