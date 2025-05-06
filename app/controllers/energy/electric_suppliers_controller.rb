@@ -12,7 +12,7 @@ module Energy
     def update
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
-        redirect_to energy_case_electric_supplier_path
+        redirect_to redirect_path
         # single or multi meter site ticket controller
       else
         render :show
@@ -36,6 +36,10 @@ module Energy
       electric_supplier_params = params.fetch(:electric_supplier_form, {}).permit(*%i[electric_current_supplier electric_current_contract_end_date])
       electric_supplier_params[:electric_current_contract_end_date] = date_param(:electric_supplier_form, :electric_current_contract_end_date)
       electric_supplier_params
+    end
+
+    def redirect_path
+      energy_case_org_gas_meter_index_path(case_id: params[:case_id], org_id: @onboarding_case_organisation.onboardable_id)
     end
   end
 end
