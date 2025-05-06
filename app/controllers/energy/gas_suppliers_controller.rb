@@ -13,7 +13,7 @@ module Energy
     def update
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
-        redirect_to energy_case_gas_supplier_path
+        redirect_to energy_case_org_gas_meter_index_path(case_id: params[:case_id], org_id: @onboarding_case_organisation.onboardable_id)
       else
         render :show
       end
