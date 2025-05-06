@@ -33,7 +33,7 @@ module Energy
     end
 
     def form_params
-      electric_supplier_params = params.fetch(:electric_supplier_form, {}).permit(*%i[electric_current_supplier electric_current_contract_end_date])
+      electric_supplier_params = params.fetch(:electric_supplier_form, {}).permit(*%i[electric_current_supplier electric_current_contract_end_date electric_current_supplier_other])
       electric_supplier_params[:electric_current_contract_end_date] = date_param(:electric_supplier_form, :electric_current_contract_end_date)
       electric_supplier_params
     end
