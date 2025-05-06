@@ -11,9 +11,8 @@ class CustomerSatisfactionSurveys::SatisfactionLevelsController < CustomerSatisf
     @customer_satisfaction_survey.attributes = params_to_persist
     if @customer_satisfaction_survey.valid?(:satisfaction_level)
       @customer_satisfaction_survey.save!
-      @customer_satisfaction_survey.start_survey! if session[:net_promoter_score].present?
-      @customer_satisfaction_survey.complete_survey! unless @customer_satisfaction_survey.source_exit_survey?
-      redirect_to redirect_path
+      @customer_satisfaction_survey.start_survey!
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     else
       render :edit
     end

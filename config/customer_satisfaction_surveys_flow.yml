@@ -1,0 +1,38 @@
+create_a_spec:
+  - satisfaction_level
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - recommendation_likelihood
+  - improvement
+  - research_opt_in
+  - thank_you
+
+supported_journey:
+  - satisfaction_level
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - recommendation_likelihood
+  - improvement
+  - research_opt_in
+  - thank_you
+
+request_for_help_form:
+  - satisfaction_level
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - recommendation_likelihood
+  - improvement
+  - research_opt_in
+  - thank_you
+
+find_a_buying_solution:
+  - satisfaction_level
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - recommendation_likelihood
+  - improvement
+  - thank_you

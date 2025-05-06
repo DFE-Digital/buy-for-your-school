@@ -1,11 +1,10 @@
 class CustomerSatisfactionSurveys::ImprovementsController < CustomerSatisfactionSurveys::BaseController
-  before_action :back_url
-
   def update
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?
       @customer_satisfaction_survey.save!
-      handle_post_save_redirect
+      # handle_post_save_redirect
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     else
       render :edit
     end
