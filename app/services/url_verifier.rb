@@ -8,4 +8,8 @@ class UrlVerifier
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     nil
   end
+
+  def self.generate(url)
+    verifier.generate(url)
+  end
 end

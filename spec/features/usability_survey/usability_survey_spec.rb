@@ -4,7 +4,6 @@ RSpec.feature "Completing the Usability Survey" do
   let(:signed_url) { UrlVerifier.verifier.generate("https://example.com") }
 
   before do
-    # Mock URL verification to return the decoded URL for the signed URL
     allow(UrlVerifier).to receive(:verify_url) do |url|
       url == signed_url ? "https://example.com" : nil
     end
