@@ -387,3 +387,10 @@ en:
       rules:
         gas_bill_consolidation:
           missing: Please select at least one option to proceed
+  electricity_meter_type_form:
+    rules:
+      electricity_meter_type: ""
+    errors:
+      rules:
+        electricity_meter_type:
+          missing: Please select at least one option to proceed

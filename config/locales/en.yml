@@ -499,6 +499,13 @@ en:
       radio_buttons:
         option_yes: "Yes"
         option_no: "No, I want a separate bill for each MPRN"
+    electricity_meter_type:
+      title: Electricity meters and usage
+      question: Is this a single or multi meter site?
+      hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
+      meter_types:
+        single: Single meter
+        multi: Multi meter
       
 
   errors:
