@@ -235,6 +235,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_06_163749) do
     t.integer "switching_energy_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gas_single_multi"
     t.integer "gas_current_supplier"
     t.string "gas_current_supplier_other"
     t.date "gas_current_contract_end_date"
