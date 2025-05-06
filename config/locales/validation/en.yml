@@ -380,3 +380,10 @@ en:
           missing: Please select current electric supplier
         electric_current_contract_end_date:
           missing: Please enter electric current contract end date
+  gas_bill_consolidation_form:
+    rules:
+      gas_bill_consolidation: ""
+    errors:
+      rules:
+        gas_bill_consolidation:
+          missing: Please select at least one option to proceed
