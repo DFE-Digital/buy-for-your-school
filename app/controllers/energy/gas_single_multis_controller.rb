@@ -35,11 +35,9 @@ module Energy
     end
 
     def redirect_path
-      if params[:commit] == I18n.t("generic.button.save_continue")
-        energy_case_org_gas_single_multi_path(onboarding_case, @onboarding_case_organisation)
-      else
-        energy_case_tasks_path
-      end
+      return energy_case_tasks_path if going_to_tasks?
+
+      new_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation)
     end
   end
 end
