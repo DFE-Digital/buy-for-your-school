@@ -499,6 +499,12 @@ en:
       radio_buttons:
         option_yes: "Yes"
         option_no: "No, I want a separate bill for each MPRN"
+    electricity_bill_consolidation:
+      title: Electricity meters and usage
+      option_heading: Do you want your MPANs consolidated on one bill?
+      radio_buttons:
+        option_yes: "Yes"
+        option_no: "No, I want a separate bill for each MPAN"
     electricity_meter_type:
       title: Electricity meters and usage
       question: Is this a single or multi meter site?
