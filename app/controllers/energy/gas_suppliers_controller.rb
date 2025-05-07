@@ -39,8 +39,11 @@ module Energy
     end
 
     def redirect_path
-      gas_meter_index_path = energy_case_org_gas_meter_index_path(case_id: params[:case_id], org_id: @onboarding_case_organisation.onboardable_id)
-      @onboarding_case_organisation.switching_energy_type_gas_electricity? ? energy_case_electric_supplier_path : gas_meter_index_path
+      return energy_case_tasks_path if going_to_tasks?
+      return energy_case_org_gas_single_multi_path(onboarding_case, @onboarding_case_organisation) if switching_gas?
+
+      # They must be switching both
+      energy_case_electric_supplier_path(onboarding_case)
     end
   end
 end

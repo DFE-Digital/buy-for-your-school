@@ -1,16 +1,15 @@
 class Energy::GasBillConsolidationsController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
-  before_action :gas_bill_consolidation
   before_action { @back_url = energy_case_org_gas_meter_index_path }
 
   def show
-    @form = Energy::GasBillConsolidationForm.new(**gas_bill_consolidation.to_h.compact)
+    @form = Energy::GasBillConsolidationForm.new(**@onboarding_case_organisation.to_h.compact)
   end
 
   def update
     if validation.success?
-      gas_bill_consolidation.update!(**form.data)
+      @onboarding_case_organisation.update!(**form.data)
       redirect_to redirect_path
     else
       render :show
@@ -19,12 +18,13 @@ class Energy::GasBillConsolidationsController < Energy::ApplicationController
 
 private
 
-  def gas_bill_consolidation
-    @gas_bill_consolidation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: params[:case_id], onboardable_id: params[:org_id])
-  end
-
   def redirect_path
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_electricity_meter_type_path : energy_case_tasks_path
+    return energy_case_tasks_path if going_to_tasks?
+    return energy_case_org_electricity_meter_type_path if switching_both?
+
+    # They must be switching gas only
+    # Change this to 'Who manages site access' when we have the screen
+    energy_case_org_gas_bill_consolidation_path(onboarding_case, @onboarding_case_organisation)
   end
 
   def form

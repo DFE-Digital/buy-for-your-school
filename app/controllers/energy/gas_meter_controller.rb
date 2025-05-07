@@ -55,7 +55,13 @@ private
   end
 
   def redirect_path
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_gas_meter_index_path : energy_case_tasks_path
+    return energy_case_tasks_path if going_to_tasks?
+    return energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation) if multiple_meters?
+    return energy_case_electric_supplier_path(onboarding_case) if switching_both?
+
+    # They must be switching gas only
+    # Change this to Who manages site access? when we have the screen
+    energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation)
   end
 
   def form_params
