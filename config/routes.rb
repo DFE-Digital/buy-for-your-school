@@ -530,19 +530,6 @@ Rails.application.routes.draw do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]
     end
-    resources :authorisation, only: %i[show update]
-    resources :switch_energy, only: %i[show update]
-  end
-
-  # Cec
-  namespace :cec do
-    root to: "onboarding_cases#index"
-    resources :onboarding_cases, only: %i[index]
-
-    namespace :management do
-      get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
-    end
   end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
