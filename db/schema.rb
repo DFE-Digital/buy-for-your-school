@@ -243,7 +243,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_06_163749) do
     t.date "electric_current_contract_end_date"
     t.boolean "gas_bill_consolidation"
     t.integer "electricity_meter_type"
-    t.boolean "electricity_bill_consolidation"
+    t.boolean "is_electricity_bill_consolidated"
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end

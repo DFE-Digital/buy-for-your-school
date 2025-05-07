@@ -35,6 +35,6 @@ private
   end
 
   def form_params
-    params.fetch(:electricity_bill_consolidation_form, {}).permit(*%i[electricity_bill_consolidation])
+    params.fetch(:electricity_bill_consolidation_form, {}).permit(*%i[is_electricity_bill_consolidated])
   end
 end

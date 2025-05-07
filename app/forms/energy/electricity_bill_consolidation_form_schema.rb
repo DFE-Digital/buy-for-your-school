@@ -2,10 +2,10 @@ class Energy::ElectricityBillConsolidationFormSchema < Schema
   config.messages.top_namespace = :electricity_bill_consolidation_form
 
   params do
-    required(:electricity_bill_consolidation).value(:string)
+    required(:is_electricity_bill_consolidated).value(:string)
   end
 
-  rule(:electricity_bill_consolidation) do
+  rule(:is_electricity_bill_consolidated) do
     key.failure(:missing) if value.blank?
   end
 end
