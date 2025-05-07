@@ -14,9 +14,6 @@ module Energy
           redirect_to school_type_energy_authorisation_path(id: type, type: "single")
         when "uid"
           redirect_to school_type_energy_authorisation_path(id: type, type: "mat")
-        if form_params[:select_school].start_with?("urn_")
-          urn = form_params[:select_school]&.sub(/^urn_/, "")
-          redirect_to energy_authorisation_path(urn)
         else
           redirect_to energy_school_selection_path
         end

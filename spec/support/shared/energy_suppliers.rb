@@ -10,7 +10,7 @@ RSpec.shared_context "with energy suppliers" do
       "British Gas",
       "EDF Energy",
       "E.ON Next",
-      "Scotish Power",
+      "Scottish Power",
       "OVO Energy",
       "Octopus Energy",
       "Other",

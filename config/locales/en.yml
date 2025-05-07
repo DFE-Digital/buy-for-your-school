@@ -475,7 +475,7 @@ en:
       british_gas: British Gas
       edf_energy: EDF Energy
       eon_next: E.ON Next
-      scotish_power: Scotish Power
+      scottish_power: Scottish Power
       ovo_energy: OVO Energy
       octopus_energy: Octopus Energy
       other: Other
@@ -512,8 +512,7 @@ en:
       meter_types:
         single: Single meter
         multi: Multi meter
-      
-errors:
+  errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
       page_title: An unexpected error occurred
