@@ -1,5 +1,6 @@
 class UsabilitySurveysController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :check_usability_surveys_feature
 
   def new
     @usability_survey = UsabilitySurveyResponse.new(service: params[:service])
@@ -31,5 +32,9 @@ private
     return nil unless params[:return_url]
 
     UrlVerifier.verify_url(params[:return_url])
+  end
+
+  def check_usability_surveys_feature
+    redirect_to root_path unless Flipper.enabled?(:usability_surveys)
   end
 end
