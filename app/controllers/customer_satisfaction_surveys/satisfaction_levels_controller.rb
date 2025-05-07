@@ -12,6 +12,7 @@ class CustomerSatisfactionSurveys::SatisfactionLevelsController < CustomerSatisf
     if @customer_satisfaction_survey.valid?(:satisfaction_level)
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.start_survey! if session[:net_promoter_score].present?
+
       @customer_satisfaction_survey.complete_survey! unless @customer_satisfaction_survey.source_exit_survey?
       redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
     else
@@ -37,5 +38,9 @@ private
   def form_params
     satisfaction_text_params = CustomerSatisfactionSurveyResponse.satisfaction_levels.keys.map { |level| "satisfaction_text_#{level}" }
     params.fetch(:customer_satisfaction_survey, {}).permit(:satisfaction_level, satisfaction_text_params)
+  end
+
+  def back_url
+    @back_url = edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey) if session[:net_promoter_score].present?
   end
 end
