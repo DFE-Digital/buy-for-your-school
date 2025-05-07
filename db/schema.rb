@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_03_085542) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_04_120000) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1067,6 +1067,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_03_085542) do
     t.index ["section_id"], name: "index_tasks_on_section_id"
     t.index ["skipped_ids"], name: "index_tasks_on_skipped_ids", using: :gin
     t.index ["statement_ids"], name: "index_tasks_on_statement_ids"
+  end
+
+  create_table "usability_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "usage_reasons", default: [], array: true
+    t.text "usage_reason_other"
+    t.boolean "service_helpful"
+    t.text "service_not_helpful_reason"
+    t.text "improvements"
+    t.integer "service"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_feedback", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
