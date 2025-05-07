@@ -15,12 +15,12 @@ private
     params.fetch(:customer_satisfaction_survey, {}).permit(:easy_to_use_rating)
   end
 
-  # def back_url
-  #   @back_url =
-  #     if @customer_satisfaction_survey.source_exit_survey?
-  #       edit_customer_satisfaction_surveys_satisfaction_reason_path(@customer_satisfaction_survey)
-  #     else
-  #       edit_customer_satisfaction_surveys_satisfaction_level_path(@customer_satisfaction_survey)
-  #     end
-  # end
+  def back_url
+    @back_url = if session[:net_promoter_score].present?
+                  edit_customer_satisfaction_surveys_satisfaction_reason_path(@customer_satisfaction_survey)
+                else
+                  super
+                end
+  end
+
 end

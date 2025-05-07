@@ -1,9 +1,17 @@
 class CustomerSatisfactionSurveys::RecommendationLikelihoodsController < CustomerSatisfactionSurveys::BaseController
+  def edit
+    if form_params.present?
+      session.delete(:net_promoter_score)
+      update
+    end
+  end
+
   def update
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?(:recommendation_likelihood)
       @customer_satisfaction_survey.save!
-      redirect_to_path(@survey_flow.next_path,@customer_satisfaction_survey )
+      @customer_satisfaction_survey.start_survey! if session[:net_promoter_score].blank?
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
     else
       render :edit
     end

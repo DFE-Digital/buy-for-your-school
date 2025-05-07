@@ -181,6 +181,7 @@ Rails/SaveBang:
   Exclude:
     - 'app/controllers/customer_satisfaction_surveys/satisfaction_levels_controller.rb'
     - 'app/controllers/exit_survey/satisfaction_controller.rb'
+    - 'app/controllers/customer_satisfaction_surveys/recommendation_likelihoods_controller.rb'
 
 # Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).
