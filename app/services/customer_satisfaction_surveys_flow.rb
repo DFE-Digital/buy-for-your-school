@@ -7,6 +7,10 @@ class CustomerSatisfactionSurveysFlow
     @current_step = current_step || @flow.first
   end
 
+  def all_steps
+    @flow
+  end
+
   def current_path
     convert_step_to_path(@current_step)
   end
@@ -21,7 +25,9 @@ class CustomerSatisfactionSurveysFlow
     previous_step ? convert_step_to_path(previous_step) : nil
   end
 
-  private
+  def current_step
+    @current_step
+  end
 
   def next_step
     idx = @flow.index(@current_step)

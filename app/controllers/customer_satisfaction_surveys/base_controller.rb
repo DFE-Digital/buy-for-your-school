@@ -36,7 +36,10 @@ private
   end
 
   def redirect_to_path(path, survey)
+    if @survey_flow.all_steps.index(@survey_flow.current_step) == @survey_flow.all_steps.length - 2
+      @customer_satisfaction_survey.complete_survey! unless @customer_satisfaction_survey.source_exit_survey?
+    end
     redirect_to Rails.application.routes.url_helpers.
       public_send(path, survey)
-  end
+    end
 end
