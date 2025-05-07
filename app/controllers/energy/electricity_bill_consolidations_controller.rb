@@ -1,0 +1,40 @@
+class Energy::ElectricityBillConsolidationsController < Energy::ApplicationController
+  before_action :organisation_details
+  before_action :form, only: %i[update]
+  before_action { @back_url = energy_case_org_gas_meter_index_path }
+
+  def show
+    @form = Energy::ElectricityBillConsolidationForm.new(**@onboarding_case_organisation.to_h.compact)
+  end
+
+  def update
+    if validation.success?
+      @onboarding_case_organisation.update!(**form.data)
+      redirect_to redirect_path
+    else
+      render :show
+    end
+  end
+
+private
+
+  def redirect_path
+    # TODO: should redirect to "Who manages site access and maintenance?"
+    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_gas_meter_index_path : energy_case_tasks_path
+  end
+
+  def form
+    @form = Energy::ElectricityBillConsolidationForm.new(
+      messages: validation.errors(full: true).to_h,
+      **validation.to_h,
+    )
+  end
+
+  def validation
+    @validation ||= Energy::ElectricityBillConsolidationFormSchema.new.call(**form_params)
+  end
+
+  def form_params
+    params.fetch(:electricity_bill_consolidation_form, {}).permit(*%i[electricity_bill_consolidation])
+  end
+end
