@@ -1,3 +1,3 @@
 class Energy::ElectricityBillConsolidationForm < Energy::Form
-  option :electricity_bill_consolidation, Types::ConfirmationField, optional: true
+  option :is_electricity_bill_consolidated, Types::ConfirmationField, optional: true
 end
