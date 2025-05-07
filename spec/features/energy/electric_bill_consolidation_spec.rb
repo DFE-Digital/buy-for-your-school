@@ -8,7 +8,7 @@ describe "User can update the electricity cosolidation", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
-    visit energy_case_org_electricity_bill_consolidation_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
+    visit energy_case_org_electric_bill_consolidation_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
 
     expect(page).to have_text("Electricity meters and usage")
     expect(page).to have_text("Do you want your MPANs consolidated on one bill?")

@@ -1,10 +1,10 @@
-class Energy::ElectricityBillConsolidationsController < Energy::ApplicationController
+class Energy::ElectricBillConsolidationsController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
   before_action { @back_url = energy_case_org_gas_meter_index_path }
 
   def show
-    @form = Energy::ElectricityBillConsolidationForm.new(**@onboarding_case_organisation.to_h.compact)
+    @form = Energy::ElectricBillConsolidationForm.new(**@onboarding_case_organisation.to_h.compact)
   end
 
   def update
@@ -24,17 +24,17 @@ private
   end
 
   def form
-    @form = Energy::ElectricityBillConsolidationForm.new(
+    @form = Energy::ElectricBillConsolidationForm.new(
       messages: validation.errors(full: true).to_h,
       **validation.to_h,
     )
   end
 
   def validation
-    @validation ||= Energy::ElectricityBillConsolidationFormSchema.new.call(**form_params)
+    @validation ||= Energy::ElectricBillConsolidationFormSchema.new.call(**form_params)
   end
 
   def form_params
-    params.fetch(:electricity_bill_consolidation_form, {}).permit(*%i[is_electricity_bill_consolidated])
+    params.fetch(:electric_bill_consolidation_form, {}).permit(*%i[is_electric_bill_consolidated])
   end
 end
