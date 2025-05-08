@@ -51,11 +51,14 @@
       text: I18n.t("energy.guidance.renewable_energy.body", email: I18n.t("energy.guidance.email"))
     ) %>
 
-    <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.objections.title") %></h3>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.objections.body")) %>
-
     <h3 class="govuk-heading-m" id="how_to_join"><%= I18n.t("energy.guidance.how_to_join.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body")) %>
+    <%= govuk_list I18n.t("energy.guidance.how_to_join.list"), type: :bullet %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body2")) %>
+
+    <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.objections.title") %></h3>
+    <%= render ParagraphComponent.new(
+      text: I18n.t("energy.guidance.objections.body", email: I18n.t("energy.guidance.email"))) %>
 
     <%= govuk_button_link_to(I18n.t("energy.guidance.button.primary"), energy_onboarding_path(:join_the_scheme)) %>
   <% end %>
