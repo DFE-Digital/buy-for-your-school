@@ -29,8 +29,6 @@ private
   end
 
   def back_url
-    #@back_url = @survey_flow.back_path ? redirect_to_path(@survey_flow.back_path, @customer_satisfaction_survey) : ""
-    #@back_url = edit_customer_satisfaction_surveys_easy_to_use_rating_path(@customer_satisfaction_survey)
     @back_url = if @survey_flow.back_path
                   Rails.application.routes.url_helpers.public_send(
                   @survey_flow.back_path,
