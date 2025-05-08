@@ -526,6 +526,39 @@ en:
       meter_types:
         single: Single meter
         multi: Multi meter
+    electricity_meter:
+      title: Electricity meters and usage
+      heading: Electricity meter details
+      mpan_label: Add an MPAN
+      mpan_hint: You can usually find the 13-digit MPAN on your electricity bill. Please check all pages.
+      mpan_details_link: Where can I find my MPAN?
+      mpan_details: Your MPAN is on your electricity bill. It’s the last 13 digits of the Supply number.
+      half_hourly_label: Is this a half hourly meter?
+      half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
+      half_hourly_yes_text: Half-hourly meters are sometimes managed by a separate company. Ask your electricity supplier if you need help answering the following questions.
+      supplier_capacity_label: What is the supply capacity?
+      supplier_capacity_suffix: kVA
+      data_aggregator_label: Who is the data aggregator?
+      data_collector_label: Who is the data collector?
+      meter_operator_label: Who is the meter operator?
+      electricity_usage_label: Estimated annual electricity usage
+      electricity_usage_suffix: kWh
+      electricity_usage_details_link: Where can I find annual electricity usage?
+      electricity_usage_details: If your annual estimated usage for this meter is not on your bill, add up the kWh for this meter from your last 12 electricity bills to calculate your total usage.
+      list_item:
+        heading: MPAN summary
+        total_mpan: 'You have added %{total} MPANs'
+        one_mpan: 'You have added 1 MPAN'
+        mpan: MPAN
+        is_half_hourly: Half-hourly
+        electricity_usage: Estimated annual electricity usage
+        add_another_mpan: Add another MPAN
+      remove_page:
+        heading: Are you sure you want to remove this MPAN?
+        remove_mpan: Remove MPAN
+        removed: MPAN successfully removed
+      
+
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.

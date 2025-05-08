@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_06_163749) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_07_085245) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -216,6 +216,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_06_163749) do
     t.string "mpan", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_half_hourly"
+    t.string "supply_capacity"
+    t.string "data_aggregator"
+    t.string "data_collector"
+    t.string "meter_operator"
+    t.string "electricity_usage"
     t.index ["energy_onboarding_case_organisation_id"], name: "idx_on_energy_onboarding_case_organisation_id_8c71bc911c"
   end
 
