@@ -61,7 +61,7 @@ private
 
     # They must be switching gas only
     # Change this to Who manages site access? when we have the screen
-    energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation)
+    energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation)
   end
 
   def form_params
