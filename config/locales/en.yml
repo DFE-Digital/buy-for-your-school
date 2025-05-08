@@ -424,15 +424,15 @@ en:
         secondary: Request support
 
     before_you_start:
-      title: Energy for schools scheme
+      title: Energy for Schools
       subtitle: Before you start
       need: 'You will need:'
       need_list:
       - authorisation from your school or trust to switch energy supplier
       - electricity and/or gas bills from the past 12 months, to estimate annual usage in kilowatt hours
       - your electricity and/or gas contract end date
-      - your trust's VAT details
-      time_required: This form has 4 sections and may take up to 20 minutes to complete, providing you have your bills and VAT details to hand. Please allow longer if you're switching contracts for multiple schools or using a screenreader.
+      - your school or trust’s VAT details
+      time_required: This form may take up to 20 minutes to complete, providing you have your bills and VAT details to hand. Please allow longer if you’re switching contracts for multiple schools or using a screen reader.
     school_selections:
       title: About your school
       heading: Which school are you buying for?
