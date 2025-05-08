@@ -21,8 +21,8 @@ class CustomerSatisfactionSurveysFlow
   end
 
   def back_path
-    previous_step = previous_step
-    previous_step ? convert_step_to_path(previous_step) : nil
+    prev_step = previous_step
+    prev_step ? convert_step_to_path(prev_step) : nil
   end
 
   def current_step
