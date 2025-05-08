@@ -20,7 +20,9 @@ private
 
   def redirect_path
     # TODO: should redirect to "Who manages site access and maintenance?"
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_case_org_electric_bill_consolidation_path : energy_case_tasks_path
+    return energy_case_tasks_path if going_to_tasks?
+
+    energy_case_org_electric_bill_consolidation_path
   end
 
   def form
