@@ -19,6 +19,7 @@ private
   def set_flow
     @survey_flow = CustomerSatisfactionSurveysFlow.new(@customer_satisfaction_survey.service, current_step)
   end
+
   def current_step
     resource = controller_path.split('/').last.singularize
   end
