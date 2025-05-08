@@ -87,3 +87,6 @@ application.register("download_documents", DownloadDocumentsController)
 
 import DateValidationController from "./date_validation_controller"
 application.register("date_validation", DateValidationController)
+
+import ElectricityMeterConditionalOptionController from "./electricity_meter_conditional_option_controller"
+application.register("electricity_meter_conditional_option", ElectricityMeterConditionalOptionController)

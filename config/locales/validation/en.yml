@@ -193,6 +193,31 @@ en:
                 invalid: Enter a valid gas usage
                 not_a_number: Enter a valid gas usage
             maximum_mprn_per_organisation: Maximum number of MPRNs reached
+        energy/electricity_meter:
+            attributes:
+              mpan:
+                blank: Enter the MPAN
+                invalid: Enter a valid MPAN
+              is_half_hourly:
+                inclusion: Select whether the meter is half hourly
+              supply_capacity:
+                blank: Enter the supply capacity
+                invalid: Enter a valid supply capacity
+                not_a_number: Enter a valid supply capacity
+              data_aggregator:
+                blank: Enter the data aggregator
+                invalid: Enter a valid data aggregator
+              data_collector:
+                blank: Enter the data collector
+                invalid: Enter a valid data collector
+              meter_operator:
+                blank: Enter the meter operator
+                invalid: Enter a valid meter operator
+              electricity_usage:
+                blank: Enter the electricity usage
+                invalid: Enter a valid electricity usage
+                not_a_number: Enter a valid electricity usage
+            maximum_mpan_per_organisation: Maximum number of MPANs reached
 
   request:
     rules:
