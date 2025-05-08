@@ -22,7 +22,7 @@ describe "Current Gas supplier", :js do
     expect(page).to have_text("Please select current gas supplier")
     expect(page).to have_text("Please enter gas current contract end date")
 
-    choose "Scotish Power"
+    choose "Scottish Power"
 
     fill_in "Day", with: "10"
     fill_in "Month", with: "5"

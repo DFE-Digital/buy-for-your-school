@@ -21,7 +21,7 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   #   british_gas     - British Gas
   #   edf_energy      - EDF Energy
   #   eon_next        - E.ON Next
-  #   scotish_power   - Scotish Power
+  #   scottish_power   - Scottish Power
   #   ovo_energy      - OVO Energy
   #   octopus_energy  - Octopus Energy
   #   other           - Other
@@ -30,7 +30,7 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
     british_gas: 0,
     edf_energy: 1,
     eon_next: 2,
-    scotish_power: 3,
+    scottish_power: 3,
     ovo_energy: 4,
     octopus_energy: 5,
     other: 6,

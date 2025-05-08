@@ -475,7 +475,7 @@ en:
       british_gas: British Gas
       edf_energy: EDF Energy
       eon_next: E.ON Next
-      scotish_power: Scotish Power
+      scottish_power: Scottish Power
       ovo_energy: OVO Energy
       octopus_energy: Octopus Energy
       other: Other
@@ -499,6 +499,12 @@ en:
       radio_buttons:
         option_yes: "Yes"
         option_no: "No, I want a separate bill for each MPRN"
+    electric_bill_consolidation:
+      title: Electricity meters and usage
+      option_heading: Do you want your MPANs consolidated on one bill?
+      radio_buttons:
+        option_yes: "Yes"
+        option_no: "No, I want a separate bill for each MPAN"
     electricity_meter_type:
       title: Electricity meters and usage
       question: Is this a single or multi meter site?
@@ -506,8 +512,6 @@ en:
       meter_types:
         single: Single meter
         multi: Multi meter
-      
-
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
