@@ -518,6 +518,7 @@ Rails.application.routes.draw do
         resource :electric_bill_consolidation, only: %i[show update]
         resource :electricity_meter_type, only: %i[show update]
         resource :gas_single_multi, only: %i[show update]
+        resources :electricity_meter, except: %i[show]
       end
     end
   end

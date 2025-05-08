@@ -1,0 +1,95 @@
+<%= form_with(
+      model: @electricity_meter_detail,
+      url: @electricity_meter_detail.new_record? ? energy_case_org_electricity_meter_index_path
+                                  : energy_case_org_electricity_meter_path(id: params[:id]),
+    ) do |form| %>
+    <%= form.govuk_error_summary %>
+
+
+    <%= form.govuk_text_field :mpan,
+        label: { text: I18n.t("energy.electricity_meter.mpan_label"), size: "s" },
+        hint: -> do
+          tag.div(I18n.t("energy.electricity_meter.mpan_hint").html_safe) +
+          tag.details(class: "govuk-details") do
+            tag.summary(class: "govuk-details__summary") do
+              tag.span(I18n.t("energy.electricity_meter.mpan_details_link"), class: "govuk-details__summary-text")
+            end +
+            tag.div(class: "govuk-details__text") do
+              I18n.t("energy.electricity_meter.mpan_details").html_safe +
+              tag.img(
+                src: image_path("mpan.png"),
+                alt: "mpan",
+                width: 187,
+                height: 55
+              )
+            end
+          end
+        end,
+        width: 10,
+        class: "govuk-input--width-10" %>
+
+    <div data-controller="electricity_meter_conditional_option">
+      <%= form.govuk_radio_buttons_fieldset :is_half_hourly, 
+        legend: { text: I18n.t("energy.electricity_meter.half_hourly_label") },
+        hint: { text: I18n.t("energy.electricity_meter.half_hourly_hint") }  do %>
+
+        <img src="<%=image_path('mpan-half-hourly.png') %>" alt="" width="30%">
+        <div class="govuk-radios" data-electricity_meter_conditional_option-target = "input">
+          <div class="govuk-radios__item">
+            <%= form.radio_button :is_half_hourly, true, class: "govuk-radios__input" %>
+            <%= form.label :is_half_hourly, "Yes", value: true, class: "govuk-label govuk-radios__label" %>
+          </div>
+
+          <div class="govuk-radios__conditional <%= form.object.is_half_hourly == true ? '' : 'govuk-!-display-none' %>" data-electricity_meter_conditional_option-target="output" >
+            <div class="govuk-inset-text">
+              <%= I18n.t("energy.electricity_meter.half_hourly_yes_text") %>
+            </div>
+            <div class="govuk-form-group">
+              <%= form.govuk_text_field :supply_capacity,
+                  label: { text: I18n.t("energy.electricity_meter.supplier_capacity_label"), class: 'govuk-label' },
+                  suffix_text: I18n.t("energy.electricity_meter.supplier_capacity_suffix"),
+                  width: 5 %>
+
+              <%= form.govuk_text_field :data_aggregator,
+                  label: { text: I18n.t("energy.electricity_meter.data_aggregator_label"), class: 'govuk-label' },
+                  width: 20 %>
+
+              <%= form.govuk_text_field :data_collector,
+                  label: { text: I18n.t("energy.electricity_meter.data_collector_label"), class: 'govuk-label' },
+                  width: 20 %>
+
+              <%= form.govuk_text_field :meter_operator,
+                  label: { text: I18n.t("energy.electricity_meter.meter_operator_label"), class: 'govuk-label' },
+                  width: 20 %>
+
+            </div>
+          </div>
+          <div class="govuk-radios__item">
+            <%= form.radio_button :is_half_hourly, false, class: "govuk-radios__input"%>
+            <%= form.label :is_half_hourly, "No", value: false, class: "govuk-label govuk-radios__label" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+   
+    <%= form.govuk_text_field :electricity_usage,
+      label: { text: I18n.t("energy.electricity_meter.electricity_usage_label"), class: 'govuk-label govuk-label govuk-label--s' },
+      suffix_text: I18n.t("energy.electricity_meter.electricity_usage_suffix"),
+      width: 5,
+      hint: -> do
+          content_tag(:div) do
+            tag.details(class: "govuk-details", data: { module: "govuk-details" }) do
+              tag.summary(class: "govuk-details__summary") do
+                tag.span(I18n.t("energy.electricity_meter.electricity_usage_details_link"), class: "govuk-details__summary-text")
+              end +
+              tag.div(class: "govuk-details__text") do
+              I18n.t("energy.electricity_meter.electricity_usage_details").html_safe
+              end
+            end
+          end
+        end %>
+
+    <%= render EnergyFormButtonsComponent.new(form)%>
+
+<% end %>
