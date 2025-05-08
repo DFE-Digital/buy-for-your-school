@@ -436,6 +436,11 @@ en:
         electricity: Electricity only
         gas: Gas only
         gas_electricity: Gas and electricity
+    gas_single_multi:
+      heading: Is this a single or multi meter site?
+      hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
+      single: Single meter
+      multi: Multi meter
     tasks:
       heading: Provide information about your schools
       task_list:

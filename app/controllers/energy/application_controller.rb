@@ -13,6 +13,10 @@ module Energy
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
     end
 
+    def onboarding_case
+      @onboarding_case ||= Energy::OnboardingCase.find(params[:case_id])
+    end
+
     def organisation_details(id = params[:case_id])
       @onboarding_case_organisation = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: id)
       onboardable_type = @onboarding_case_organisation.onboardable_type
@@ -33,6 +37,26 @@ module Energy
       elsif @organisation_detail.respond_to?(:uid) && !valid_orgs.include?(@organisation_detail.uid)
         render("errors/not_found", status: :not_found)
       end
+    end
+
+    def switching_electricity?
+      @onboarding_case_organisation.switching_energy_type_electricity?
+    end
+
+    def switching_gas?
+      @onboarding_case_organisation.switching_energy_type_gas?
+    end
+
+    def switching_both?
+      @onboarding_case_organisation.switching_energy_type_gas_electricity?
+    end
+
+    def going_to_tasks?
+      params[:commit] != I18n.t("generic.button.save_continue")
+    end
+
+    def multiple_meters?
+      @onboarding_case_organisation.gas_single_multi_multi?
     end
   end
 end

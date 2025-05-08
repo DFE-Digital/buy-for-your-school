@@ -199,7 +199,7 @@ en:
       procurement_amount: "" # Omitted
       special_requirements_choice: "" # Omitted
       special_requirements: "" # Omitted
-    
+
     errors:
       rules:
         procurement_amount:
@@ -223,7 +223,7 @@ en:
         procurement_amount:
           invalid: Enter a valid number
           too_large: The amount cannot be larger than 99,999,999.99
-  
+
   support_request:
     rules:
       phone_number: Your phone number
@@ -282,13 +282,13 @@ en:
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-  
+
   # New journey form
   new_journey:
     rules:
       category: "" # Omitted
       name: "" # Omitted
-    
+
     errors:
       rules:
         category:
@@ -301,13 +301,13 @@ en:
   edit_journey:
     rules:
       name: "" # Omitted
-    
+
     errors:
       rules:
         name:
           missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less  
- 
+          max_size?: The name must be 30 characters or less
+
   # Exit survey form
   exit_survey:
     rules:
@@ -321,7 +321,7 @@ en:
       satisfaction_level: "" # Omitted
       satisfaction_text: "" # Omitted
       saved_time: "" # Omitted
-      
+
     errors:
       rules:
         better_quality:
@@ -411,3 +411,10 @@ en:
           missing: Please select at least one option to proceed
           invalid_date: Please enter a valid electric current contract end date
           invalid_range: Please enter a date within the range of - 1 and + 5 years of the current date
+  gas_single_multi:
+    rules:
+      gas_single_multi: ""
+    errors:
+      rules:
+        gas_single_multi:
+          missing: Please select at least one option to proceed

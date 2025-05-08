@@ -7,8 +7,11 @@ describe Support::EstablishmentSearch do
     create(:support_organisation, :with_address, name: "Test Open School", urn: "1233", ukprn: "7", status: 1)
     create(:support_organisation, :with_address, name: "Test Archived School", urn: "1234", ukprn: "7", status: 1, archived: true)
     create(:support_establishment_group, :with_address, name: "Test MAT", uid: "1", ukprn: "8")
-    create(:local_authority, name: "Camden", la_code: "456")
+    create(:local_authority, name: la_name)
   end
+
+  let(:la_code) { LocalAuthority.find_by(name: la_name).la_code }
+  let(:la_name) { "Camden" }
 
   describe "establishment search" do
     context "when searching for an establishment by name" do
@@ -29,7 +32,7 @@ describe Support::EstablishmentSearch do
 
     context "when searching for an establishment by code" do
       it "returns establishments that contain the same string and are not closed or archived" do
-        results = described_class.omnisearch("456")
+        results = described_class.omnisearch(la_code)
         expect(results.count).to eq(1)
         expect(results.pluck(:name)).to contain_exactly("Camden")
       end

@@ -19,7 +19,11 @@ class Energy::SwitchEnergiesController < Energy::ApplicationController
 private
 
   def redirect_path
-    params[:commit] == I18n.t("generic.button.save_continue") ? energy_supplier_path : energy_case_tasks_path
+    return energy_case_tasks_path if going_to_tasks?
+    return energy_case_electric_supplier_path(onboarding_case) if switching_electricity?
+
+    # They must be switching both or gas only
+    energy_case_gas_supplier_path(onboarding_case)
   end
 
   def energy_supplier_path
