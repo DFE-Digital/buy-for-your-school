@@ -2497,3 +2497,20 @@ en:
   time:
     formats:
       compact: "%d %b %y"
+  usability_survey:
+    body: Please could you let us know how easy it was to use this service. Your feedback helps us make our service better.
+    heading: Before you go
+    improvements: How could we improve this service?
+    send: Send feedback
+    service_helpful: Did this service help you get what you were looking for?
+    service_not_helpful_reason: Please tell us why not
+    skip: Skip survey
+    usage_reasons:
+      options:
+        browsing: Browsing
+        finding_a_framework: Finding a framework
+        guidance: Guidance
+        request_for_help: Request for help
+        other: Other
+      question: What did you use the service for today?
+      usage_reason_other: Please tell how else this service has helped you

@@ -479,6 +479,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :usability_surveys, only: %i[new create]
+
   if Rails.env.development?
     require "sidekiq/web"
     mount Sidekiq::Web, at: "/sidekiq"
