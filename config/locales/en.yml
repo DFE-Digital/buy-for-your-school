@@ -295,15 +295,15 @@ en:
       find_a_buying_solution: Find a buying solution
       request_support: Request support
     join:
-      title: Energy for schools
+      title: Join Energy for Schools
       explanations:
-      - The Energy for Schools scheme helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
-      - Schools and trusts that join the scheme are added to the Department for Education's energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
+      - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
+      - Schools and trusts that use the service are added to the Department for Education’s energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
         title: Benefits
-        text: "Schools that join the scheme could save up to 36% on their energy bills, based on DfE's estimates. The scheme also helps schools:"
+        text: "Schools could save up to 36% on their energy bills, based on DfE’s estimates. The service also helps:"
         list:
-        - protect from market volatility and high prices
+        - protect schools from market volatility and high prices
         - save time spent on procurement process
         - remove risk associated with unregulated energy brokers
         - comply with procurement regulations
@@ -557,7 +557,7 @@ en:
         heading: Are you sure you want to remove this MPAN?
         remove_mpan: Remove MPAN
         removed: MPAN successfully removed
-      
+
 
   errors:
     contentful_entry_not_found:
