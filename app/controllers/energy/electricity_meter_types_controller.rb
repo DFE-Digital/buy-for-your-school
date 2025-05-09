@@ -1,7 +1,7 @@
 class Energy::ElectricityMeterTypesController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
-  before_action { @back_url = energy_case_org_gas_bill_consolidation_path }
+  before_action { @back_url = back_url }
 
   def show
     @form = Energy::ElectricityMeterTypeForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -19,9 +19,29 @@ class Energy::ElectricityMeterTypesController < Energy::ApplicationController
 private
 
   def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
+    if going_to_tasks?
+      energy_case_tasks_path
+    elsif electricity_multiple_meters?
+      new_energy_case_org_electricity_meter_path
+    else
+      electricity_usage_exist? ? edit_electric_usage_path : new_energy_case_org_electricity_meter_path
+    end
+  end
 
-    energy_case_org_electricity_meter_type_path
+  def edit_electric_usage_path
+    edit_energy_case_org_electricity_meter_path(onboarding_case, @onboarding_case_organisation, electricity_usage_details.first)
+  end
+
+  def edit_gas_usage_path
+    edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.first)
+  end
+
+  def back_url
+    if switching_both?
+      gas_multiple_meters? ? energy_case_org_gas_bill_consolidation_path : edit_gas_usage_path
+    elsif switching_electricity?
+      energy_case_electric_supplier_path
+    end
   end
 
   def form

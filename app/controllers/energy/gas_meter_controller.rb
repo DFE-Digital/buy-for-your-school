@@ -1,15 +1,8 @@
 class Energy::GasMeterController < Energy::ApplicationController
   before_action :organisation_details
+  before_action :add_another_mprn_enabled?
   before_action :set_gas_meter_detail, only: %i[edit update destroy]
-
-  before_action only: %i[index] do
-    @back_url = energy_case_gas_supplier_path
-  end
-
-  before_action except: %i[index] do
-    @back_url = energy_case_org_gas_meter_index_path
-  end
-
+  before_action :back_url
   def index
     @gas_meter_details = @onboarding_case_organisation.gas_meters.all
   end
@@ -50,18 +43,34 @@ class Energy::GasMeterController < Energy::ApplicationController
 
 private
 
+  helper_method def add_another_mprn_enabled?
+    gas_multiple_meters? || !gas_meter_usage_exist?
+  end
+
   def set_gas_meter_detail
     @gas_meter_detail = @onboarding_case_organisation.gas_meters.find(params[:id])
   end
 
   def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
-    return energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation) if multiple_meters?
-    return energy_case_electric_supplier_path(onboarding_case) if switching_both?
+    if going_to_tasks?
+      energy_case_tasks_path
+    elsif switching_both? && !gas_multiple_meters?
+      energy_case_org_electricity_meter_type_path
+    else
+      energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation)
+    end
+  end
 
-    # They must be switching gas only
-    # Change this to Who manages site access? when we have the screen
-    energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation)
+  def back_url
+    @back_url =
+      case action_name.to_sym
+      when :index
+        energy_case_org_gas_single_multi_path
+      when :new, :edit, :create, :update
+        gas_multiple_meters? ? energy_case_org_gas_meter_index_path : energy_case_org_gas_single_multi_path
+      when :destroy
+        energy_case_org_gas_meter_index_path
+      end
   end
 
   def form_params

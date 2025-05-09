@@ -48,11 +48,13 @@
       </tbody>
     </table>
 
+<% if add_another_mpan_enabled? %>
 <%= link_to I18n.t("energy.electricity_meter.list_item.add_another_mpan"),
             new_energy_case_org_electricity_meter_path, 
             class: 'govuk-button govuk-button--secondary' %>
 
 <br>
+<% end %>
 
 <%= link_to I18n.t("generic.button.save_continue"),
             energy_case_org_electric_bill_consolidation_path,

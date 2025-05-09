@@ -45,11 +45,13 @@
       </tbody>
     </table>
 
+<% if add_another_mprn_enabled? %>
 <%= link_to I18n.t("energy.gas_meter_details.list_item.add_another_mprn"),
             new_energy_case_org_gas_meter_path, 
             class: 'govuk-button govuk-button--secondary' %>
 
 <br>
+<% end %>
 
 <%= link_to I18n.t("generic.button.save_continue"),
             energy_case_org_gas_bill_consolidation_path,
