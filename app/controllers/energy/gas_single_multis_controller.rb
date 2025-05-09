@@ -1,7 +1,7 @@
 module Energy
   class GasSingleMultisController < ApplicationController
     before_action :organisation_details
-    before_action { @back_url = energy_case_gas_supplier_path(onboarding_case) }
+    before_action :back_url
     before_action :form, only: %i[update]
 
     def show
@@ -35,9 +35,25 @@ module Energy
     end
 
     def redirect_path
-      return energy_case_tasks_path if going_to_tasks?
+      if going_to_tasks?
+        energy_case_tasks_path
+      elsif gas_multiple_meters?
+        new_gas_usage_path
+      else
+        gas_meter_usage_exist? ? edit_gas_usage_path : new_gas_usage_path
+      end
+    end
 
+    def edit_gas_usage_path
+      edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.first)
+    end
+
+    def new_gas_usage_path
       new_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation)
+    end
+
+    def back_url
+      @back_url = switching_both? ? energy_case_electric_supplier_path(onboarding_case) : energy_case_gas_supplier_path(onboarding_case)
     end
   end
 end

@@ -12,6 +12,12 @@ describe "User can update gas usage details", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
+    visit energy_case_org_gas_single_multi_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
+
+    choose "Multi meter"
+
+    click_button "Save and continue"
+
     visit energy_case_org_gas_meter_index_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
 
     expect(page).to have_text("MPRN summary")
