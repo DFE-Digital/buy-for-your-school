@@ -5,13 +5,15 @@
 
     <h2 class="govuk-heading-m"><%= @organisation_detail.name%></h2>
 
+    <% gas_meter_path = energy_case_org_gas_single_multi_path(case_id: params[:case_id], org_id: @organisation_detail.id)%>
+
     <% electricity_meter_path = energy_case_org_electricity_meter_type_path(case_id: params[:case_id], org_id: @organisation_detail.id)%>
 
     <%= govuk_task_list(id_prefix: "evaluator_task") do |task_list|
 
-      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.current_contract_details"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.current_contract_details"), href: energy_case_gas_supplier_path, status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
 
-      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.gas_meter_and_usage"), href:"#", status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
+      task_list.with_item(title: I18n.t("energy.tasks.task_list.item.gas_meter_and_usage"), href: gas_meter_path, status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
 
       task_list.with_item(title: I18n.t("energy.tasks.task_list.item.electricity_meter_and_usage"), href: electricity_meter_path, status: govuk_tag(text: I18n.t("energy.tasks.task_list.status.not_started"), colour: "grey"))
       

@@ -46,8 +46,13 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
 
   enum :gas_single_multi, GAS_SINGLE_MULTI, prefix: true
 
+  ELECTRICITY_SINGLE_MULTI = {
+    single: 0,
+    multi: 1,
+  }.freeze
+
   # Electricity meter type type
   #   single  - Single meter
   #   multi   - Multi meter
-  enum :electricity_meter_type, { single: 0, multi: 1 }
+  enum :electricity_meter_type, ELECTRICITY_SINGLE_MULTI, prefix: true
 end

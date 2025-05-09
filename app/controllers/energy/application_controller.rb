@@ -55,8 +55,28 @@ module Energy
       params[:commit] != I18n.t("generic.button.save_continue")
     end
 
-    def multiple_meters?
+    def gas_multiple_meters?
       @onboarding_case_organisation.gas_single_multi_multi?
+    end
+
+    def gas_meter_usage_exist?
+      @onboarding_case_organisation.gas_meters.any?
+    end
+
+    def gas_meter_usage_details
+      @onboarding_case_organisation.gas_meters.all
+    end
+
+    def electricity_multiple_meters?
+      @onboarding_case_organisation.electricity_meter_type_multi?
+    end
+
+    def electricity_usage_exist?
+      @onboarding_case_organisation.electricity_meters.any?
+    end
+
+    def electricity_usage_details
+      @onboarding_case_organisation.electricity_meters.all
     end
   end
 end
