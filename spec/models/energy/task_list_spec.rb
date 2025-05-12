@@ -6,10 +6,10 @@ RSpec.describe Energy::TaskList do
   let(:electric_current_supplier) { :edf_energy }
 
   let(:energy_onboarding_case_organisation) do
-    create(:energy_onboarding_case_organisation, gas_current_supplier:, electric_current_supplier:)
+    create(:energy_onboarding_case_organisation, :with_energy_details, gas_current_supplier:, electric_current_supplier:)
   end
-  let(:gas_meters) { create(:energy_gas_meter, energy_onboarding_case_organisation_id: energy_onboarding_case_organisation.id) }
-  let(:electricity_meters) { create(:energy_electricity_meter, energy_onboarding_case_organisation_id: energy_onboarding_case_organisation.id) }
+  let(:gas_meters) { create(:energy_gas_meter, :with_valid_data, energy_onboarding_case_organisation_id: energy_onboarding_case_organisation.id) }
+  let(:electricity_meters) { create(:energy_electricity_meter, :with_valid_data, energy_onboarding_case_organisation_id: energy_onboarding_case_organisation.id) }
   let(:task_list) { described_class.new(energy_onboarding_case_organisation.energy_onboarding_case_id) }
 
   before do

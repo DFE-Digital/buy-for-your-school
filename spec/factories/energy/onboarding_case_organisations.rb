@@ -3,12 +3,15 @@ FactoryBot.define do
     association :onboarding_case, factory: :onboarding_case
     association :onboardable, factory: :support_organisation
     switching_energy_type { 0 }
-    gas_current_supplier { :british_gas }
-    gas_current_contract_end_date { Date.new(2025, 10, 31) }
-    electric_current_supplier { :edf_energy }
-    electric_current_contract_end_date { Date.new(2025, 11, 30) }
-    gas_bill_consolidation { true }
-    electricity_meter_type { 1 }
-    is_electric_bill_consolidated { false }
+
+    trait :with_energy_details do
+      gas_current_supplier { :british_gas }
+      gas_current_contract_end_date { Date.new(2025, 10, 31) }
+      electric_current_supplier { :edf_energy }
+      electric_current_contract_end_date { Date.new(2025, 11, 30) }
+      gas_bill_consolidation { true }
+      electricity_meter_type { 1 }
+      is_electric_bill_consolidated { false }
+    end
   end
 end
