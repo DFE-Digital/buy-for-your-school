@@ -454,9 +454,10 @@ en:
       heading: Provide information about your schools
       task_list:
         item:
-          current_contract_details: Current contract details
-          gas_meter_and_usage: Gas meter and usage
-          electricity_meter_and_usage: Electricity meter and usage
+          gas_contract_information: Gas contract information
+          gas_meters_and_usage: Gas meter and usage
+          electric_contract_information: Electricity contract information
+          electric_meters_and_usage: Electricity meter and usage
           site_contact_details: Site contact details
           vat_declaration: VAT declaration
           billing_preferences: Billing preferences
