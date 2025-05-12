@@ -9,15 +9,34 @@ class Energy::TaskList
   end
 
   def call
-    [
-      gas_contract_information,
-      gas_meters_and_usage,
-      electric_contract_information,
-      electric_meters_and_usage,
+    build_task_list
+  end
+
+private
+
+  def build_task_list
+    @static_list = [
       site_contact_details,
       vat_declaration,
       billing_preferences,
     ]
+    add_contract_information
+  end
+
+  def add_contract_information
+    gas_only = [gas_contract_information, gas_meters_and_usage]
+    electric_only = [electric_contract_information, electric_meters_and_usage]
+    energy_tasks = if case_org.switching_energy_type_gas?
+                     gas_only
+                   elsif case_org.switching_energy_type_electricity?
+                     electric_only
+                   elsif case_org.switching_energy_type_gas_electricity?
+                     gas_only + electric_only
+                   else
+                     []
+                   end
+
+    @static_list.unshift(*energy_tasks)
   end
 
   def gas_contract_information
@@ -61,8 +80,6 @@ class Energy::TaskList
     path = DEFAULT_PATH
     Task.new(title: __method__, status:, path:)
   end
-
-private
 
   def case_org
     @case_org ||= Energy::OnboardingCaseOrganisation.includes(:gas_meters, :electricity_meters)

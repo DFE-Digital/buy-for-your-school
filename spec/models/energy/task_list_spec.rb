@@ -17,17 +17,57 @@ RSpec.describe Energy::TaskList do
   end
 
   describe "#call" do
-    it "returns all task objects in order" do
-      tasks = task_list.call
-      expect(tasks.map(&:title)).to eq %i[
-        gas_contract_information
-        gas_meters_and_usage
-        electric_contract_information
-        electric_meters_and_usage
-        site_contact_details
-        vat_declaration
-        billing_preferences
-      ]
+    context "when switching to gas only" do
+      before do
+        energy_onboarding_case_organisation.update!(switching_energy_type: :gas)
+      end
+
+      it "builds the correct task list with gas tasks" do
+        tasks = task_list.call
+        expect(tasks.map(&:title)).to eq(%i[
+          gas_contract_information
+          gas_meters_and_usage
+          site_contact_details
+          vat_declaration
+          billing_preferences
+        ])
+      end
+    end
+
+    context "when switching to electricity only" do
+      before do
+        energy_onboarding_case_organisation.update!(switching_energy_type: :electricity)
+      end
+
+      it "builds the correct task list with electricity tasks" do
+        tasks = task_list.call
+        expect(tasks.map(&:title)).to eq(%i[
+          electric_contract_information
+          electric_meters_and_usage
+          site_contact_details
+          vat_declaration
+          billing_preferences
+        ])
+      end
+    end
+
+    context "when switching to both gas and electricity only" do
+      before do
+        energy_onboarding_case_organisation.update!(switching_energy_type: :gas_electricity)
+      end
+
+      it "builds the correct task list with both gas and electricity tasks" do
+        tasks = task_list.call
+        expect(tasks.map(&:title)).to eq(%i[
+          gas_contract_information
+          gas_meters_and_usage
+          electric_contract_information
+          electric_meters_and_usage
+          site_contact_details
+          vat_declaration
+          billing_preferences
+        ])
+      end
     end
   end
 
@@ -36,14 +76,13 @@ RSpec.describe Energy::TaskList do
       let(:gas_current_supplier) { nil }
 
       it "returns a not_started task" do
-        expect(task_list.gas_contract_information.status).to eq :not_started
+        expect(task_list.send(:gas_contract_information).status).to eq :not_started
       end
     end
 
     context "when supplier and contract end date exist" do
       it "returns a completed task" do
-        task = task_list.gas_contract_information
-        expect(task.status).to eq :completed
+        expect(task_list.send(:gas_contract_information).status).to eq :completed
       end
     end
   end
@@ -53,7 +92,7 @@ RSpec.describe Energy::TaskList do
       let(:gas_meters) { [] }
 
       it "returns a not_started task" do
-        expect(task_list.gas_meters_and_usage.status).to eq :not_started
+        expect(task_list.send(:gas_meters_and_usage).status).to eq :not_started
       end
     end
 
@@ -63,7 +102,7 @@ RSpec.describe Energy::TaskList do
       end
 
       it "returns a completed task" do
-        expect(task_list.gas_meters_and_usage.status).to eq :completed
+        expect(task_list.send(:gas_meters_and_usage).status).to eq :completed
       end
     end
   end
@@ -73,13 +112,13 @@ RSpec.describe Energy::TaskList do
       let(:electric_current_supplier) { nil }
 
       it "returns a not_started task" do
-        expect(task_list.electric_contract_information.status).to eq :not_started
+        expect(task_list.send(:electric_contract_information).status).to eq :not_started
       end
     end
 
     context "when supplier and contract end date exist" do
       it "returns a completed task" do
-        expect(task_list.electric_contract_information.status).to eq :completed
+        expect(task_list.send(:electric_contract_information).status).to eq :completed
       end
     end
   end
@@ -89,7 +128,7 @@ RSpec.describe Energy::TaskList do
       let(:electricity_meters) { [] }
 
       it "returns a not_started task" do
-        expect(task_list.electric_meters_and_usage.status).to eq :not_started
+        expect(task_list.send(:electric_meters_and_usage).status).to eq :not_started
       end
     end
 
@@ -99,7 +138,7 @@ RSpec.describe Energy::TaskList do
       end
 
       it "returns a completed task" do
-        expect(task_list.electric_meters_and_usage.status).to eq :completed
+        expect(task_list.send(:electric_meters_and_usage).status).to eq :completed
       end
     end
   end
