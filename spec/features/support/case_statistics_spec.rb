@@ -113,7 +113,9 @@ RSpec.feature "Case statistics page" do
               expect(all(".result-value")[2]).to have_text "1"
               expect(all(".result-value")[3]).to have_text "1"
               expect(all(".result-value")[4]).to have_text "1"
-              expect(all(".result-value")[5]).to have_text "1"
+              expect(all(".result-value")[5]).to have_text "0" # Level 6
+              expect(all(".result-value")[6]).to have_text "0" # Level 7
+              expect(all(".result-value")[7]).to have_text "1"
             end
             within all(".govuk-table__row")[2] do
               expect(page).to have_text "FORMER STAFF"
@@ -122,7 +124,9 @@ RSpec.feature "Case statistics page" do
               expect(all(".result-value")[2]).to have_text "2"
               expect(all(".result-value")[3]).to have_text "2"
               expect(all(".result-value")[4]).to have_text "2"
-              expect(all(".result-value")[5]).to have_text "2"
+              expect(all(".result-value")[5]).to have_text "0" # Level 6
+              expect(all(".result-value")[6]).to have_text "0" # Level 7
+              expect(all(".result-value")[7]).to have_text "2"
             end
             within all(".govuk-table__row")[3] do
               expect(page).to have_text "UNASSIGNED"
@@ -131,7 +135,9 @@ RSpec.feature "Case statistics page" do
               expect(all(".result-value")[2]).to have_text "1"
               expect(all(".result-value")[3]).to have_text "1"
               expect(all(".result-value")[4]).to have_text "1"
-              expect(all(".result-value")[5]).to have_text "1"
+              expect(all(".result-value")[5]).to have_text "0" # Level 6
+              expect(all(".result-value")[6]).to have_text "0" # Level 7
+              expect(all(".result-value")[7]).to have_text "1"
             end
           end
         end

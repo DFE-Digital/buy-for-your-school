@@ -1529,6 +1529,7 @@ en:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
           engagement_and_outreach_cms: E&O CMS
+          energy_onboarding: Energy Onboarding
           faf: Find a Framework
           header: Source
           incoming_email: Email
@@ -1560,6 +1561,8 @@ en:
           L3: 3 - Support with buying
           L4: 4 - DfE buying through a framework
           L5: 5 - DfE buying by getting quotes or bids
+          L6: 6 - DfE Energy for Schools support case
+          L7: 7 - DfE Energy for Schools onboarding case
           header: Case level
           unspecified: Not specified
         tasklist:
@@ -2070,6 +2073,8 @@ en:
         L3: 3
         L4: 4
         L5: 5
+        L6: 6
+        L7: 7
         unspecified: Unspecified
       support_levels_by_tower:
         header: Overview by case levels by tower

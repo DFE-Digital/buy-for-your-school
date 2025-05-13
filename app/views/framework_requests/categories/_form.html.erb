@@ -8,6 +8,7 @@
 
 <%= form.govuk_radio_buttons_fieldset(:category_slug, legend: { text: @page_title, tag: :h1, size: "l" }) do %>
   <% form.object.category_options.each_with_index do |category, index| %>
+    <% next if category.title == "DfE Energy for Schools service" %>
     <% conditional_content = category.enable_conditional_content ? ->{ form.govuk_text_area :category_other, rows: 5, label: { text: I18n.t("faf.categories.please_specify") } } : nil %>
     <%= form.govuk_radio_button :category_slug, category.slug, label: { text: category.title }, hint: { text: category.description }, link_errors: index == 0, &conditional_content %>
   <% end %>
