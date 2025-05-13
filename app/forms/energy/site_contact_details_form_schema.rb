@@ -14,16 +14,8 @@ class Energy::SiteContactDetailsFormSchema < Schema
     key.failure(:missing) if value.blank?
   end
 
-  rule(:site_contact_first_name) do
-    key.failure(:format?) if value && !value.match?(/\A[a-zA-Z\s-]+\z/)
-  end
-
   rule(:site_contact_last_name) do
     key.failure(:missing) if value.blank?
-  end
-
-  rule(:site_contact_last_name) do
-    key.failure(:format?) if value && !value.match?(/\A[a-zA-Z\s-]+\z/)
   end
 
   rule(:site_contact_email) do
