@@ -1,4 +1,4 @@
-not class CustomerSatisfactionSurveys::BaseController < ApplicationController
+class CustomerSatisfactionSurveys::BaseController < ApplicationController
   skip_before_action :authenticate_user!
 
   before_action :customer_satisfaction_survey
