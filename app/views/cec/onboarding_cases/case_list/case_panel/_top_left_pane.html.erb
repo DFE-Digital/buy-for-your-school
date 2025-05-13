@@ -1,0 +1,37 @@
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <span class="case-label">
+        <%= render "support/cases/action_flag" if kase.action_required? && !kase.closed? %>
+        <%= I18n.t("support.case.label.case") %>
+      </span>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.ref %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.organisation") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.organisation_name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.level") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.support_level.nil? ? "Not set" : 1 + kase.read_attribute_before_type_cast(:support_level) %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      <%= I18n.t("support.case.label.sub_category") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= kase.category.title %>
+    </dd>
+  </div>
+</dl>
